@@ -8,32 +8,32 @@
     </mx:Canvas>
     <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
 		
-		<mx:Canvas width="100%" id="banner" verticalScrollPolicy="off" horizontalScrollPolicy="off" height="35">
-			<mx:HBox styleName="TopBanner" x="0" y="0" width="100%">
-				<mx:Canvas width="341" height="36">
-					<mx:Button label="Customers" x="9" y="6"/>
-					<mx:Button label="Users" x="104" y="6"/>
-					<mx:Button label="Invoices" x="170" y="6"/>
-				</mx:Canvas>
-				<mx:Canvas width="70%">
-					<mx:Spacer width="100%"/>
-				</mx:Canvas>
-				<mx:Canvas width="203">
-					<mx:VBox width="203" verticalAlign="middle" x="0">
-						<mx:Spacer height="5"/>
-						<mx:HBox width="100%" horizontalAlign="right" paddingRight="5" verticalAlign="middle">
-							<mx:Text id="preferencesText" text="Preferences   |" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="onPreferences()"/>
-							<mx:Text text="Help   |" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="showHelp();"/>
-							<mx:Text text="Logout" styleName="rightMessageBot" useHandCursor="true" buttonMode="true" mouseChildren="false" click="onLogout();"/>
-						</mx:HBox>
-					</mx:VBox>
-				</mx:Canvas>
-			</mx:HBox>
-		</mx:Canvas>		
-		
 		<mx:Canvas height="100%" width="100%" id="mainWindow">
-			<ns1:ListUsers x="10" y="10" height="95%">
-			</ns1:ListUsers>
+			<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+			<mx:Button x="176" y="10" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
+			<mx:Button x="342" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')"/>
+			<mx:Button x="342" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')"/>
+			<mx:Button x="342" y="198" label="Post Payments" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
+			<mx:Button x="342" y="292" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
+			<mx:Button x="342" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
+			<mx:Button x="176" y="104" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
+			<mx:Button x="176" y="198" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
+			<mx:Button x="176" y="292" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')"/>
+			<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+			<mx:Button x="10" y="198" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
+			<mx:Button x="10" y="292" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')"/>
+			<mx:Button x="10" y="386" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')"/>
+			<mx:Button x="10" y="480" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')"/>
+			<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
+			<mx:Button x="674" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')"/>
+			<mx:Button x="675" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')"/>
+			<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')"/>
+			<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')"/>
+			<mx:Button x="675" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')"/>
+			<mx:Button x="675" y="480" label="Document Preferences" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+			<mx:Button x="508" y="104" label="Mailing Labels" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
+			<mx:Button x="508" y="198" label="Report Manager" width="158" height="86" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')"/>
+			<mx:Button x="508" y="292" label="Report Writer" width="158" height="86" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')"/>
 		</mx:Canvas>
 		
 		<mx:Canvas height="2" width="100%">
