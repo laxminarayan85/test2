@@ -55,9 +55,8 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 					
 	private function messageHandler(message:IMessage):void
 	{
-	 var messageBody:String = message.body as String;
-     Alert.show(messageBody,messageBody, Alert.OK, null, null, null, Alert.OK);
-   		loadUsers();
+		var messageBody:String = message.body as String;
+  		loadUsers();
 	}
                                   
 private function deleteUser():void {              
