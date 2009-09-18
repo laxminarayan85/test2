@@ -47,7 +47,6 @@ import org.hibernate.annotations.Type;
 	@NamedQuery(name = "Account.byId", query = "select a from Account a where a.id= :id")
 })
 
-
 @DiscriminatorValue("com.efi.printsmith.data.Account")
 @DiscriminatorColumn(name="dtype", length=255)
 @Table(name = "account")

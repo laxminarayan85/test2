@@ -13,7 +13,7 @@
 			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess">
 				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
 				<mx:Button x="176" y="10" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
-				<mx:Button x="342" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')"/>
+				<mx:Button x="342" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
 				<mx:Button x="176" y="386" label="Users" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
 				<mx:Button x="342" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')"/>
 				<mx:Button x="342" y="198" label="Post Payments" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
@@ -44,9 +44,13 @@
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 </mx:HBox>
-    
+<mx:RemoteObject id="loginService" destination="loginService"
+	result="handleLoginResult(event)"  fault="handleFault(event)"
+	showBusyCursor="true" />
+
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.CustomerEditor;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -75,6 +79,9 @@
 		
 		private var remoteObject:RemoteObject;
 		
+		public var userName:String;
+		public var userPass:String;
+
 		public var localeString : String = "en_US";
         private static var thisInstance = null;  
 
@@ -105,10 +112,13 @@
 			
 		}
 		
+		private function doAccounts():void {
+			var child:CustomerEditor = new CustomerEditor();
+			addUniqueTab(child);
+		}
 		private function doUsers():void {
 			var child:ListUsers = new ListUsers();
 			addUniqueTab(child);
-			//mainNavigator.selectedChild=child;
 		}
 		
 		private function addUniqueTab(tab:DisplayObject):void {
@@ -131,7 +141,28 @@
 		private function init() : void {
 			thisInstance = this;
 			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
-			showLogin();
+			
+			userName = Application.application.parameters.userName;
+			userPass = Application.application.parameters.userPass;
+			
+			if (userName == null && userPass == null) { 
+				showLogin();
+			} else {
+				loginService.validateLogin(userName, userPass);
+			}
+		}
+		
+		private function handleLoginResult(event:ResultEvent):void	{
+			var res:Boolean = event.result as Boolean;
+			if (res) {
+			} else {
+				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
+				showLogin();
+			}
+		}
+		
+		private function handleFault(ev:FaultEvent):void {                
+			Alert.show(ev.fault.faultCode,ev.fault.faultDetail, Alert.OK, null, null, null, Alert.OK);
 		}
 ]]>		
 </mx:Script>

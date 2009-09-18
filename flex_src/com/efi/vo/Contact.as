@@ -15,32 +15,37 @@ public function Contact()
 {
 
 }
+public var id:Number;
 
-public var Title:String;
+public var created:Date;
 
-public var Address:Address;
+public var modified:Date;
 
-public var Contact:Contact;
+public var title:String;
 
-public var UserAcctId:String;
+public var address:Address;
 
-public var WebAcctNameIncomplete:Boolean;
+public var contact:Contact;
 
-public var WebCatalogChange:Boolean;
+public var userAcctId:String;
 
-public var WebStateChange:Boolean;
+public var webAcctNameIncomplete:Boolean;
 
-public var Transmitted:Boolean;
+public var webCatalogChange:Boolean;
 
-public var DoNotMail:Boolean;
+public var webStateChange:Boolean;
 
-public var UseContactAddress:Boolean;
+public var transmitted:Boolean;
 
-public var IsIndividual:Boolean;
+public var doNotMail:Boolean;
 
-public var DefaultSalesRep:SalesRep;
+public var useContactAddress:Boolean;
 
-public var MailerCampaigns:Boolean;
+public var isIndividual:Boolean;
+
+public var defaultSalesRep:SalesRep;
+
+public var mailerCampaigns:Boolean;
 
 
 }

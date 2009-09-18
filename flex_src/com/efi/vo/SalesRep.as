@@ -15,8 +15,13 @@ public function SalesRep()
 {
 
 }
+public var id:Number;
 
-public var Name:String;
+public var created:Date;
+
+public var modified:Date;
+
+public var name:String;
 
 
 }

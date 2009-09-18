@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*"
-width="100%" height="100%" title="Found {accountRecords} accounts."
+width="100%" height="100%" title="Customer Editor"
 creationComplete="init()">
                              
 <mx:RemoteObject id="loaderService" destination="accountService"
@@ -40,6 +40,9 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		loadAccounts();
+	     var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	     titleWindow.setStyle("borderAlpha", 0.9);
+	     titleWindow.formIsEmpty = true;
 	}      
 	                                                   	
 	public function loadAccounts():void {   
@@ -58,62 +61,182 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
    		loadAccounts();
 	}
                                   
-private function deleteAccount():void {              
-     if(dataGrid.selectedItem != null) {
-          var selectedItem:Account = dataGrid.selectedItem as Account;
-          deleteService.deleteAccount(selectedItem.id);                                     
-     }
-                                         
-}
-
-private function createAccount():void {
-//     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
-//     titleWindow.setStyle("borderAlpha", 0.9);
-//     titleWindow.formIsEmpty = true;
-}
-                                                         
-private function updateUser():void {
-//     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
-//     titleWindow.setStyle("borderAlpha", 0.9);
-//     titleWindow.user = dataGrid.selectedItem as User;
-//     titleWindow.formIsEmpty = false;
-}
-                                         
-private function handleLoadResult(ev:ResultEvent):void {
-     accounts = ev.result as ArrayCollection;
-     accountRecords = accounts.length;
-}
-                                 
-private function handleDeleteResult(ev:ResultEvent):void {
-     loadAccounts();
-     send();
-}
-                   
-private function handleFault(ev:FaultEvent):void {                
-message = "Error: "                          
-+ ev.fault.faultCode + " - "                                  
-+ ev.fault.faultDetail + " - "                                  
-+ ev.fault.faultString;                                 
-}
+	private function deleteAccount():void {              
+	                                         
+	}
+	
+	private function createAccount():void {
+	//     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	//     titleWindow.setStyle("borderAlpha", 0.9);
+	//     titleWindow.formIsEmpty = true;
+	}
+	                                                         
+	private function updateUser():void {
+	//     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	//     titleWindow.setStyle("borderAlpha", 0.9);
+	//     titleWindow.user = dataGrid.selectedItem as User;
+	//     titleWindow.formIsEmpty = false;
+	}
+	                                         
+	private function handleLoadResult(ev:ResultEvent):void {
+	     accounts = ev.result as ArrayCollection;
+	     accountRecords = accounts.length;
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     loadAccounts();
+	     send();
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {                
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;                                 
+	}
                                    
 ]]>
                              
 </mx:Script>
 
 <mx:VBox width="100%" height="100%">
-<mx:Label text="{message}" fontWeight="bold" includeInLayout="false" />
-<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{accounts}"
-doubleClickEnabled="true" doubleClick="updateAccount()" >               
-<mx:columns>
-     <mx:DataGridColumn dataField="id" headerText="User ID" width="100"/>                                   
-</mx:columns>
-</mx:DataGrid>
-                       
-<mx:ControlBar horizontalAlign="center">                        
-     <mx:Button label="Create Account" click="createUser()" toolTip="Create a new account and store it in the database." />
-     <mx:Button label="Update Account" click="updateUser()" enabled="{dataGrid.selectedItem}" toolTip="Update an existing database account." />
-     <mx:Button label="Delete Account" click="deleteUser()" enabled="{dataGrid.selectedItem}" toolTip="Delete the account from the database." />
-     <mx:Button label="Reload Data" click="loadUsers()" toolTip="Reload the account list from the database." />
-</mx:ControlBar>
+	<mx:Canvas width="851" height="704">
+		<mx:TabNavigator x="0" y="70" width="851" height="634">
+			<mx:Canvas label="Address" width="100%" height="100%">
+				<mx:TextInput x="282" y="10" id="name_edit" width="387"/>
+				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
+				<mx:Text x="55" y="12" width="76" id="acct_text"/>
+				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
+				<mx:TextInput x="282" y="38" id="external_ref_edit"/>
+				<mx:TextInput x="282" y="66" id="name_edit1"/>
+				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
+				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
+				<mx:Panel x="10" y="94" width="325" height="182" layout="absolute" title="Invoice Address">
+					<mx:TextInput x="85" y="10" text="&#xd;" width="210" id="company_edit"/>
+					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
+					<mx:TextInput x="85" y="36" text="&#xd;" width="210" id="street_edit1"/>
+					<mx:TextInput x="85" y="62" text="&#xd;" width="210" id="street_edit2"/>
+					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
+					<mx:TextInput x="85" y="88" text="&#xd;" width="123" id="city_edit"/>
+					<mx:TextInput x="85" y="114" text="&#xd;" width="75" id="zip_edit"/>
+					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
+					<mx:TextInput x="233" y="114" text=" " width="62" id="country_edit"/>
+					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
+					<mx:TextInput x="263" y="88" text="&#xd;" width="32" id="state_edit"/>
+					<mx:Label x="216" y="88" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
+				</mx:Panel>
+				<mx:Panel x="344" y="94" width="325" height="182" layout="absolute" title="Statement Address">
+					<mx:TextInput x="85" y="10" text="&#xd;" width="210" id="company_edit0"/>
+					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
+					<mx:TextInput x="85" y="36" text="&#xd;" width="210" id="street_edit0"/>
+					<mx:TextInput x="85" y="62" text="&#xd;" width="210" id="street_edit3"/>
+					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
+					<mx:TextInput x="85" y="88" text="&#xd;" width="123" id="city_edit0"/>
+					<mx:TextInput x="85" y="114" text="&#xd;" width="75" id="zip_edit0"/>
+					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
+					<mx:TextInput x="233" y="114" text=" " width="62" id="country_edit0"/>
+					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
+					<mx:TextInput x="263" y="88" text="&#xd;" width="32" id="state_edit0"/>
+					<mx:Label x="216" y="88" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact">
+					<mx:TextInput x="101" y="10" text="&#xd;" width="194" id="company_edit1"/>
+					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
+					<mx:TextInput x="101" y="38" text="&#xd;" width="194" id="street_edit4"/>
+					<mx:TextInput x="101" y="66" text="&#xd;" width="46" id="street_edit5"/>
+					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
+					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
+					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
+					<mx:TextInput x="249" y="68" text="&#xd;" width="46" id="street_edit9"/>
+					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
+					<mx:TextInput x="101" y="94" text="&#xd;" width="194" id="city_edit1"/>
+					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
+					<mx:TextInput x="101" y="122" text="&#xd;" width="194" id="city_edit5"/>
+					<mx:TextInput x="172" y="150" text="&#xd;" width="123" id="city_edit3"/>
+					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit4"/>
+					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit6"/>
+					<mx:TextInput x="172" y="210" text="&#xd;" width="123" id="city_edit7"/>
+					<mx:ComboBox x="10" y="180" width="137"></mx:ComboBox>
+					<mx:ComboBox x="10" y="150" width="137"></mx:ComboBox>
+					<mx:ComboBox x="10" y="210" width="137"></mx:ComboBox>
+				</mx:Panel>
+				<mx:Panel x="344" y="284" width="325" height="282" layout="absolute" title="Statement Contact">
+					<mx:TextInput x="101" y="10" text="&#xd;" width="194" id="company_edit2"/>
+					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
+					<mx:TextInput x="101" y="38" text="&#xd;" width="194" id="street_edit6"/>
+					<mx:TextInput x="101" y="66" text="&#xd;" width="46" id="street_edit7"/>
+					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
+					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
+					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
+					<mx:TextInput x="249" y="68" text="&#xd;" width="46" id="street_edit8"/>
+					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
+					<mx:TextInput x="101" y="94" text="&#xd;" width="194" id="city_edit2"/>
+					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
+					<mx:TextInput x="101" y="122" text="&#xd;" width="194" id="city_edit8"/>
+					<mx:TextInput x="172" y="150" text="&#xd;" width="123" id="city_edit9"/>
+					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit10"/>
+					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit11"/>
+					<mx:TextInput x="172" y="210" text="&#xd;" width="123" id="city_edit12"/>
+					<mx:ComboBox x="10" y="180" width="137"></mx:ComboBox>
+					<mx:ComboBox x="10" y="150" width="137"></mx:ComboBox>
+					<mx:ComboBox x="10" y="210" width="137"></mx:ComboBox>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Credit Control" width="100%" height="100%">
+				<mx:TextInput x="181" y="10" id="name_edit0" width="160"/>
+				<mx:Label x="99" y="12" text="Credit Limit:" textAlign="right"/>
+				<mx:TextInput x="181" y="38" id="external_ref_edit0"/>
+				<mx:TextInput x="181" y="66" id="name_edit2"/>
+				<mx:Label x="10" y="68" text="Monthly Finance Charge Pct:" textAlign="right"/>
+				<mx:Label x="45" y="94" text="Finance Charges YTD:" textAlign="right"/>
+				<mx:Label x="45" y="120" text="Current Balance:" textAlign="right" width="128"/>
+				<mx:Label x="181" y="120" text="0.00" textAlign="right" width="160"/>
+				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160"/>
+				<mx:Label x="36" y="40" text="Due days from posting:" textAlign="right"/>
+				<mx:Text x="349" y="12" text="(Using system limit of 2,500.00)&#xd;" width="348" fontWeight="bold"/>
+				<mx:Text x="349" y="40" text="Avg. Days to Pay&#xd;" width="348" fontWeight="bold"/>
+				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)&#xd;" width="348" fontWeight="bold"/>
+				<mx:CheckBox x="384" y="92" label="Never calculate finance charges"/>
+				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="Automatic Discount">
+					<mx:TextInput x="85" y="10" text="&#xd;" width="132" id="street_edit10"/>
+					<mx:TextInput x="85" y="40" text="&#xd;" width="132" id="street_edit11"/>
+					<mx:RadioButton x="10" y="10" label="Percent:"/>
+					<mx:RadioButton x="10" y="40" label="Dollars:"/>
+					<mx:CheckBox x="225" y="40" label="One-time discount"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="Account Status">
+					<mx:RadioButton x="10" y="10" label="New"/>
+					<mx:RadioButton x="138" y="10" label="Current"/>
+					<mx:RadioButton x="138" y="40" label="Delinquent"/>
+					<mx:RadioButton x="303" y="10" label="Inactive"/>
+					<mx:RadioButton x="303" y="40" label="Frozen"/>
+					<mx:RadioButton x="10" y="40" label="Past Due"/>
+				</mx:Panel>
+				<mx:Panel x="420" y="146" width="402" height="241" layout="absolute" title="Type">
+					<mx:RadioButton x="10" y="10" label="Full Deposit"/>
+					<mx:RadioButton x="10" y="40" label="Cash only"/>
+					<mx:RadioButton x="10" y="70" label="Cash/Check/Credit Card"/>
+					<mx:RadioButton x="10" y="100" label="Charge Account"/>
+					<mx:RadioButton x="10" y="130" label="Credit Card on File"/>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Settings" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Sales Info" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Log" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Notes" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Marketing" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Templates" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Web" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>

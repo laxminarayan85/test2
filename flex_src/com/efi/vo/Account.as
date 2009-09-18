@@ -15,62 +15,67 @@ public function Account()
 {
 
 }
+public var id:Number;
 
-public var AccountId:Long;
+public var created:Date;
 
-public var Status:String;
+public var modified:Date;
 
-public var MasterAcct:Long;
+public var accountId:Number;
 
-public var ResaleNumber:String;
+public var status:String;
 
-public var Title:String;
+public var masterAcct:Number;
 
-public var CustomerPO:String;
+public var resaleNumber:String;
 
-public var ShipToAddress:Address;
+public var title:String;
 
-public var BillToAddress:Address;
+public var customerPO:String;
 
-public var Contact:Contact;
+public var shipToAddress:Address;
 
-public var BillToContact:Contact;
+public var billToAddress:Address;
 
-public var SalesRank:Long;
+public var contact:Contact;
 
-public var UserAcctId:String;
+public var billToContact:Contact;
 
-public var ExternalAcctId:String;
+public var salesRank:Number;
 
-public var DollarDiscount:Boolean;
+public var userAcctId:String;
 
-public var FileOriginals:Boolean;
+public var externalAcctId:String;
 
-public var WebAccessEnabled:Boolean;
+public var dollarDiscount:Boolean;
 
-public var Prospect:Boolean;
+public var fileOriginals:Boolean;
 
-public var AutoPayEnabled:Boolean;
+public var webAccessEnabled:Boolean;
 
-public var OptOutMarketing:Boolean;
+public var prospect:Boolean;
 
-public var AcctIsIndividual:Boolean;
+public var autoPayEnabled:Boolean;
 
-public var TaxExempt:Boolean;
+public var optOutMarketing:Boolean;
 
-public var PayCommissions:String;
+public var acctIsIndividual:Boolean;
 
-public var PoRequired:Boolean;
+public var taxExempt:Boolean;
 
-public var ApplyFinanceCharges:Boolean;
+public var payCommissions:String;
 
-public var GenerateStatements:Boolean;
+public var poRequired:Boolean;
 
-public var BusinessType:String;
+public var applyFinanceCharges:Boolean;
 
-public var SalesRep:SalesRep;
+public var generateStatements:Boolean;
 
-public var ShippingMode:String;
+public var businessType:String;
+
+public var salesRep:SalesRep;
+
+public var shippingMode:String;
 
 
 }

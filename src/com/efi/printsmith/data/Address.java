@@ -50,6 +50,7 @@ import org.hibernate.annotations.Type;
 
 @DiscriminatorValue("com.efi.printsmith.data.Address")
 @DiscriminatorColumn(name="dtype", length=255)
+
 @Table(name = "address")
 public class Address extends ModelBase {
 	/**

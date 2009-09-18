@@ -15,10 +15,15 @@ public function ComLink()
 {
 
 }
+public var id:Number;
 
-public var Type:String;
+public var created:Date;
 
-public var Value:String;
+public var modified:Date;
+
+public var type:String;
+
+public var value:String;
 
 
 }

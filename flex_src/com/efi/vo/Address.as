@@ -15,38 +15,43 @@ public function Address()
 {
 
 }
+public var id:Number;
 
-public var Name:String;
+public var created:Date;
 
-public var Street1:String;
+public var modified:Date;
 
-public var Street2:String;
+public var name:String;
 
-public var City:String;
+public var street1:String;
 
-public var State:String;
+public var street2:String;
 
-public var Zip:String;
+public var city:String;
 
-public var Country:String;
+public var state:String;
 
-public var Zone:String;
+public var zip:String;
 
-public var FirstName:String;
+public var country:String;
 
-public var LastName:String;
+public var zone:String;
 
-public var JobTitle:String;
+public var firstName:String;
 
-public var Salutation:String;
+public var lastName:String;
 
-public var ComLinks:ComLink;
+public var jobTitle:String;
 
-public var Prefix:String;
+public var salutation:String;
 
-public var Suffix:String;
+public var comLinks:ComLink;
 
-public var TakenBy:String;
+public var prefix:String;
+
+public var suffix:String;
+
+public var takenBy:String;
 
 
 }

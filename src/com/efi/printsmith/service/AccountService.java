@@ -3,6 +3,7 @@ package com.efi.printsmith.service;
 import com.efi.printsmith.data.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,8 +39,9 @@ public class AccountService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query findAllQuery = em.createNamedQuery("accounts.findAll");
-	
+			Query findAllQuery = em.createQuery("from Account");
+			//Query findAllQuery = em.createNamedQuery("Account.findall");
+			
 			List<Account> accounts = findAllQuery.getResultList();
 	
 			if (accounts != null)
@@ -50,7 +52,7 @@ public class AccountService {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return null;
+		return new ArrayList<Account>();
 	}
 
 	public void addUpdateAccount(Account account) throws Exception {
