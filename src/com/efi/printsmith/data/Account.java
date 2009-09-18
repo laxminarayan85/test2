@@ -47,8 +47,10 @@ import org.hibernate.annotations.Type;
 	@NamedQuery(name = "Account.byId", query = "select a from Account a where a.id= :id")
 })
 
+
 @DiscriminatorValue("com.efi.printsmith.data.Account")
 @DiscriminatorColumn(name="dtype", length=255)
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "account")
 public class Account extends ModelBase {
 	/**

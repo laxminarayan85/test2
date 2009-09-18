@@ -45,7 +45,7 @@ public var jobTitle:String;
 
 public var salutation:String;
 
-public var comLinks:ComLink;
+public var comLinks:Address;
 
 public var prefix:String;
 

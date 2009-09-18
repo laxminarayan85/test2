@@ -50,7 +50,7 @@ import org.hibernate.annotations.Type;
 
 @DiscriminatorValue("com.efi.printsmith.data.Address")
 @DiscriminatorColumn(name="dtype", length=255)
-
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "address")
 public class Address extends ModelBase {
 	/**
@@ -342,19 +342,19 @@ public class Address extends ModelBase {
 	}
  	
 	
-	private java.util.List<ComLink> comLinks;
+	private java.util.List<Address> comLinks;
 	/**
 	 * @generated
  	 */
 	@ManyToOne( cascade = CascadeType.ALL )	
-	public java.util.List<ComLink> getComLinks(){
+	public java.util.List<Address> getComLinks(){
 		return comLinks; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public java.util.List<ComLink> setComLinks(java.util.List<ComLink> newVal) {
+	public java.util.List<Address> setComLinks(java.util.List<Address> newVal) {
 		return this.comLinks = newVal;
 	}
  	
@@ -455,7 +455,7 @@ public class Address extends ModelBase {
 		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
 		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
 		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
-		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
+		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<Address>)newValue); else
 		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
 		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
 		if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
@@ -493,7 +493,7 @@ public class Address extends ModelBase {
 		if (SALUTATION.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (COMLINKS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ComLink.class};		
+			return new Class<?>[] {java.util.List.class, Address.class};		
 		if (PREFIX.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SUFFIX.equals(propertyName)) 

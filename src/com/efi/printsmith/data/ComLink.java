@@ -50,6 +50,7 @@ import org.hibernate.annotations.Type;
 
 @DiscriminatorValue("com.efi.printsmith.data.ComLink")
 @DiscriminatorColumn(name="dtype", length=255)
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "comlink")
 public class ComLink extends ModelBase {
 	/**

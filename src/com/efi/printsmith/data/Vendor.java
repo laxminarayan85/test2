@@ -43,16 +43,16 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SalesRep.findall", query = "from SalesRep"),
-	@NamedQuery(name = "SalesRep.byId", query = "select a from SalesRep a where a.id= :id")
+	@NamedQuery(name = "Vendor.findall", query = "from Vendor"),
+	@NamedQuery(name = "Vendor.byId", query = "select a from Vendor a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.SalesRep")
+@DiscriminatorValue("com.efi.printsmith.data.Vendor")
 @DiscriminatorColumn(name="dtype", length=255)
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
-@Table(name = "salesrep")
-public class SalesRep extends ModelBase {
+@Table(name = "vendor")
+public class Vendor extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public class SalesRep extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public SalesRep() {
+	public Vendor() {
 	}
 
  	
@@ -121,7 +121,7 @@ public class SalesRep extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return SalesRep.class;
+		if (NAME.equals(propertyName)) return Vendor.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -132,7 +132,7 @@ public class SalesRep extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		SalesRep objT = (SalesRep)obj;
+		Vendor objT = (Vendor)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;
