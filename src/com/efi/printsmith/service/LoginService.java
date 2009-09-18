@@ -1,4 +1,6 @@
-package com.efi.data;
+package com.efi.printsmith.service;
+
+import com.efi.printsmith.data.*;
 
 import java.util.List;
 

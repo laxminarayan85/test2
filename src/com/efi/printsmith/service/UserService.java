@@ -1,4 +1,6 @@
-package com.efi.data;
+package com.efi.printsmith.service;
+
+import com.efi.printsmith.data.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,48 +14,48 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
-import com.efi.messaging.MessageServiceAdapter;
+import com.efi.printsmith.messaging.MessageServiceAdapter;
 
-public class AccountService {
+public class UserService {
 
 	private static final String PERSISTENCE_UNIT = "printsmith_db";
 
-	private static Logger log = Logger.getLogger(AccountService.class);
+	private static Logger logger = Logger.getLogger(UserService.class);
 
-	public AccountService() {
+	public UserService() {
 
 		super();
 
 	}
 
-	public List<Account> getAccounts() {
+	public List<User> getUsers() {
 
 		try {
-			log.debug("** getAccounts called...");
-	
+			logger.debug("** getUsers called...");
+
 			EntityManagerFactory entityManagerFactory = Persistence
 					.createEntityManagerFactory(PERSISTENCE_UNIT);
-	
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-	
-			Query findAllQuery = em.createNamedQuery("accounts.findAll");
-	
-			List<Account> accounts = findAllQuery.getResultList();
-	
-			if (accounts != null)
-	
-				log.debug("** Found " + accounts.size() + "records:");
-	
-			return accounts;
+
+			Query findAllQuery = em.createNamedQuery("users.findAll");
+
+			List<User> users = findAllQuery.getResultList();
+
+			if (users != null)
+
+				logger.debug("** Found " + users.size() + "records:");
+
+			return users;
 		} catch (Exception e) {
-			log.error(e);
+			logger.error(e);
 		}
 		return null;
 	}
 
-	public void addUpdateAccount(Account account) throws Exception {
+	public void addUpdateUser(User user) throws Exception {
 
-		log.debug("** addUpdateAccount called...");
+		logger.debug("** addUpdateUser called...");
 
 		try {
 			EntityManager em;
@@ -70,18 +72,11 @@ public class AccountService {
 
 		// byte.
 
-		if (account.getId() == null || account.getId() == 0) {
-
-			// New consultant is created
-
-			account.setId(null);
-
-			account.setCreated(new Timestamp(new Date().getTime()));
-
+		if (user.getId() == null || user.getId() == 0) {
+			// New user is created
+			user.setId(null);
+			user.setCreated(new Date());
 		} else {
-
-			// Existing consultant is updated - do nothing.
-
 		}
 
 		EntityTransaction tx = em.getTransaction();
@@ -89,51 +84,45 @@ public class AccountService {
 		tx.begin();
 
 		try {
-
-			em.merge(account);
-
+			user.setModified(new Date());
+			em.merge(user);
 			tx.commit();
-			
-			MessageServiceAdapter.sendNotification("Account Created");
-			
+			MessageServiceAdapter.sendNotification("User Created");
 		} catch (Exception e) {
-
-			log.error("** Error: " + e.getMessage());
-
+			logger.error("** Error: " + e.getMessage());
 			tx.rollback();
-
 			throw new Exception(e.getMessage());
 
 		} finally {
 
-			log.info("** Closing Entity Manager.");
+			logger.info("** Closing Entity Manager.");
 
 			em.close();
 
 		}
 		}
 		catch (Exception e) {
-			log.error("Exception caught");
+			logger.error("Exception caught");
 		}
 
 	}
 
-	public void deleteAccount(Long id) {
+	public void deleteUser(Long userId) {
 
-		log.debug("** deleteAccount called...");
+		logger.debug("** deleteUser called...");
 
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(PERSISTENCE_UNIT);
 
 		EntityManager em = emf.createEntityManager();
 
-		Query q = em.createNamedQuery("accounts.byId");
+		Query q = em.createNamedQuery("users.byId");
 
-		q.setParameter("id", id);
+		q.setParameter("id", userId);
 
-		Account account = (Account) q.getSingleResult();
+		User user = (User) q.getSingleResult();
 
-		if (account != null) {
+		if (user != null) {
 
 			EntityTransaction tx = em.getTransaction();
 
@@ -142,20 +131,20 @@ public class AccountService {
 
 			try {
 
-				em.remove(account);
+				em.remove(user);
 
 				tx.commit();
 				
-				MessageServiceAdapter.sendNotification("Account Deleted");
+				MessageServiceAdapter.sendNotification("User Deleted");
 			} catch (Exception e) {
 
-				log.error("** Error: " + e.getMessage());
+				logger.error("** Error: " + e.getMessage());
 
 				tx.rollback();
 
 			} finally {
 
-				log.info("** Closing Entity Manager.");
+				logger.info("** Closing Entity Manager.");
 
 				em.close();
 

@@ -5,7 +5,7 @@
     <adapters>
         <adapter-definition id="actionscript" class="flex.messaging.services.messaging.adapters.ActionScriptAdapter" default="true" />
         <!-- <adapter-definition id="jms" class="flex.messaging.services.messaging.adapters.JMSAdapter"/> -->
-    	<adapter-definition id="MessageServiceAdapter" class="com.efi.messaging.MessageServiceAdapter"/>
+    	<adapter-definition id="MessageServiceAdapter" class="com.efi.printsmith.messaging.MessageServiceAdapter"/>
     </adapters>
 
     <default-channels>

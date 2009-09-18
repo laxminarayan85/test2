@@ -93,7 +93,7 @@
 		
 		private function showLogin():void	{
 			var loginPopup : Login = Login(PopUpManager.createPopUp(this, Login, true));
-			this.mainContainer.visible=false;
+		//	this.mainContainer.visible=false;
 			PopUpManager.centerPopUp(loginPopup);
 		}
 		

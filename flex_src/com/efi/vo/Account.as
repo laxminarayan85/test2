@@ -1,87 +1,77 @@
 package com.efi.vo
 {
-                             
+	import mx.controls.List;
+	import com.efi.vo.*;
 [Bindable]
-                             
-[RemoteClass(alias="com.efi.data.Account")]
-                             
+
+[RemoteClass(alias="com.efi.printsmith.data.Account")]
+
 public class Account
-                             
+
 {
-                                   
+
 public function Account()
-                                   
+
 {
-                                   
+
 }
-                                   
 
-                                   
-public var id:Number;
-                                   
-public var created:Date;
-                                   
-public var modified:Date;
-                                                                      
-public var created:Date;
+public var AccountId:Long;
 
-public var accountId:Number;
+public var Status:String;
 
-public var status:String;
+public var MasterAcct:Long;
 
-public var masterAcct:Number;
+public var ResaleNumber:String;
 
-public var resaleNumber:Number;
+public var Title:String;
 
-public var title:String;
+public var CustomerPO:String;
 
-public var customerPO:String;
+public var ShipToAddress:Address;
 
-public var salesRank:Number;
+public var BillToAddress:Address;
 
-public var userAcctId:String;
+public var Contact:Contact;
 
-public var externalAcctId:String;
+public var BillToContact:Contact;
 
-public var dollarDiscount:Boolean;
+public var SalesRank:Long;
 
-public var oneTimeDiscount:Boolean;
+public var UserAcctId:String;
 
-public var fileOriginals:Boolean;
+public var ExternalAcctId:String;
 
-public var webAccessEnabled:Boolean;
+public var DollarDiscount:Boolean;
 
-public var autoPayEnabled:Boolean;
+public var FileOriginals:Boolean;
 
-public var marketingOptOut:Boolean;
+public var WebAccessEnabled:Boolean;
 
-public var doPayCommissions:Boolean;
+public var Prospect:Boolean;
 
-public var poRequired:Boolean;
+public var AutoPayEnabled:Boolean;
 
-public var applyFinanceCharges:Boolean;
+public var OptOutMarketing:Boolean;
 
-public var generateStatements:Boolean;
+public var AcctIsIndividual:Boolean;
 
-public var businessType:String;
+public var TaxExempt:Boolean;
 
-public var shippingMethod:String;
+public var PayCommissions:String;
 
-public var lastInvoiced:Date;
+public var PoRequired:Boolean;
 
-public var lastEstimate:Date;
+public var ApplyFinanceCharges:Boolean;
 
-public var firstInvoice:Date;
+public var GenerateStatements:Boolean;
 
-public var firstEstimate:Date;
+public var BusinessType:String;
 
-public var lastAged:Date;
+public var SalesRep:SalesRep;
 
-public var lastPayment:Date;
+public var ShippingMode:String;
 
-public var lastPosted:Date;
 
-public var salesRankCalcDate:Date;
 }
 }
-    

@@ -35,10 +35,12 @@
 				
 			private function handleLoginResult(event:ResultEvent):void	{
 				var res:Boolean = event.result as Boolean;
-				PopUpManager.removePopUp(this);
 				if (res) {
 					var application:Snowmass = Snowmass.getInstance();
+					PopUpManager.removePopUp(this);
 					application.mainContainer.visible = true;
+				} else {
+					Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				}
 			}
 			private function handleFault(ev:FaultEvent):void {                

@@ -19,7 +19,7 @@
 	<destination id="userService">
 		<properties>
 			<source>
-				com.efi.data.UserService
+				com.efi.printsmith.service.UserService
 			</source>
 		</properties>
 	</destination>
@@ -27,7 +27,7 @@
 	<destination id="accountService">
 		<properties>
 			<source>
-				com.efi.data.AccountService
+				com.efi.printsmith.service.AccountService
 			</source>
 		</properties>
 	</destination>
@@ -35,7 +35,7 @@
 	<destination id="loginService">
 		<properties>
 			<source>
-				com.efi.data.LoginService
+				com.efi.printsmith.service.LoginService
 			</source>
 		</properties>
 	</destination>

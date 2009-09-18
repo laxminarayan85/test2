@@ -1,9 +1,10 @@
-package com.efi.data;
+package com.efi.printsmith.data;
 
 import java.sql.Timestamp;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.Index;
 		@NamedQuery(name = "users.byName", query = "select u from User u where upper(u.name)= upper(:name)")
 })
 		
-public class User extends BaseDataObject{
+public class User extends ModelBase{
 	@Basic
 	@Column(name = "name", nullable = true, unique = true)
 	private String name;

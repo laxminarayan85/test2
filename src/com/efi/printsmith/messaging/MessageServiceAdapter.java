@@ -1,4 +1,4 @@
-package com.efi.messaging;
+package com.efi.printsmith.messaging;
 
 import flex.messaging.MessageBroker;
 import flex.messaging.messages.AsyncMessage; 
@@ -7,7 +7,7 @@ import flex.messaging.services.MessageService;
 import flex.messaging.services.ServiceAdapter; 
 import flex.messaging.util.UUIDUtils;
 
-import com.efi.messaging.MessageBody;
+import com.efi.printsmith.messaging.MessageBody;
 
 public class MessageServiceAdapter extends ServiceAdapter {
 	static public void sendNotification(String message) {

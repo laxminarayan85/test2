@@ -59,43 +59,43 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
   		loadUsers();
 	}
                                   
-private function deleteUser():void {              
-     if(dataGrid.selectedItem != null) {
-          var selectedItem:User = dataGrid.selectedItem as User;
-          deleteService.deleteUser(selectedItem.id);                                     
-     }
+	private function deleteUser():void {              
+		if(dataGrid.selectedItem != null) {
+			var selectedItem:User = dataGrid.selectedItem as User;
+			deleteService.deleteUser(selectedItem.id);                                     
+     	}
                                          
-}
+	}
 
-private function createUser():void {
-     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
-     titleWindow.setStyle("borderAlpha", 0.9);
-     titleWindow.formIsEmpty = true;
-}
+	private function createUser():void {
+	     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	     titleWindow.setStyle("borderAlpha", 0.9);
+	     titleWindow.formIsEmpty = true;
+	}
                                                          
-private function updateUser():void {
-     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
-     titleWindow.setStyle("borderAlpha", 0.9);
-     titleWindow.user = dataGrid.selectedItem as User;
-     titleWindow.formIsEmpty = false;
-}
-                                         
-private function handleLoadResult(ev:ResultEvent):void {
-     users = ev.result as ArrayCollection;
-     userRecords = users.length;
-}
-                                 
-private function handleDeleteResult(ev:ResultEvent):void {
-     loadUsers();
-     send();
-}
-                   
-private function handleFault(ev:FaultEvent):void {                
-message = "Error: "                          
-+ ev.fault.faultCode + " - "                                  
-+ ev.fault.faultDetail + " - "                                  
-+ ev.fault.faultString;                                 
-}
+	private function updateUser():void {
+	     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	     titleWindow.setStyle("borderAlpha", 0.9);
+	     titleWindow.user = dataGrid.selectedItem as User;
+	     titleWindow.formIsEmpty = false;
+	}
+	                                         
+	private function handleLoadResult(ev:ResultEvent):void {
+	     users = ev.result as ArrayCollection;
+	     userRecords = users.length;
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     loadUsers();
+	     send();
+	}
+	                   
+	private function handleFault(ev:FaultEvent):void {                
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;                                 
+	}
                                    
 ]]>
                              

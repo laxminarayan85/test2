@@ -1,4 +1,4 @@
-package com.efi.messaging;
+package com.efi.printsmith.messaging;
 
 public class MessageBody {
 	String id;

@@ -1,0 +1,573 @@
+package com.efi.printsmith.data;
+
+import java.util.Date;
+
+import com.efi.printsmith.data.*;
+import com.efi.printsmith.exceptions.*;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
+
+
+/**
+ * @generated
+ */
+ 
+ 
+/**
+ * @!generated
+ */	
+@NamedQueries({
+	@NamedQuery(name = "Address.findall", query = "from Address"),
+	@NamedQuery(name = "Address.byId", query = "select a from Address a where a.id= :id")
+})
+
+
+@DiscriminatorValue("com.efi.printsmith.data.Address")
+@DiscriminatorColumn(name="dtype", length=255)
+@Table(name = "address")
+public class Address extends ModelBase {
+	/**
+	 * @generated
+	 */
+	public static final String NAME = "Name";
+	/**
+	 * @generated
+	 */
+	public static final String STREET1 = "Street1";
+	/**
+	 * @generated
+	 */
+	public static final String STREET2 = "Street2";
+	/**
+	 * @generated
+	 */
+	public static final String CITY = "City";
+	/**
+	 * @generated
+	 */
+	public static final String STATE = "State";
+	/**
+	 * @generated
+	 */
+	public static final String ZIP = "Zip";
+	/**
+	 * @generated
+	 */
+	public static final String COUNTRY = "Country";
+	/**
+	 * @generated
+	 */
+	public static final String ZONE = "Zone";
+	/**
+	 * @generated
+	 */
+	public static final String FIRSTNAME = "FirstName";
+	/**
+	 * @generated
+	 */
+	public static final String LASTNAME = "LastName";
+	/**
+	 * @generated
+	 */
+	public static final String JOBTITLE = "JobTitle";
+	/**
+	 * @generated
+	 */
+	public static final String SALUTATION = "Salutation";
+	/**
+	 * @generated
+	 */
+	public static final String COMLINKS = "ComLinks";
+	/**
+	 * @generated
+	 */
+	public static final String PREFIX = "Prefix";
+	/**
+	 * @generated
+	 */
+	public static final String SUFFIX = "Suffix";
+	/**
+	 * @generated
+	 */
+	public static final String TAKENBY = "TakenBy";
+
+	/**
+	 * @generated
+	 */
+	public Address() {
+	}
+
+ 	
+	
+	private String name;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="name", nullable=true, unique=false)
+	public String getName(){
+		return name; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setName(String newVal) {
+		return this.name = newVal;
+	}
+ 	
+	
+	private String street1;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="street1", nullable=true, unique=false)
+	public String getStreet1(){
+		return street1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setStreet1(String newVal) {
+		return this.street1 = newVal;
+	}
+ 	
+	
+	private String street2;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="street2", nullable=true, unique=false)
+	public String getStreet2(){
+		return street2; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setStreet2(String newVal) {
+		return this.street2 = newVal;
+	}
+ 	
+	
+	private String city;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="city", nullable=true, unique=false)
+	public String getCity(){
+		return city; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setCity(String newVal) {
+		return this.city = newVal;
+	}
+ 	
+	
+	private String state;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="state", nullable=true, unique=false)
+	public String getState(){
+		return state; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setState(String newVal) {
+		return this.state = newVal;
+	}
+ 	
+	
+	private String zip;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="zip", nullable=true, unique=false)
+	public String getZip(){
+		return zip; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setZip(String newVal) {
+		return this.zip = newVal;
+	}
+ 	
+	
+	private String country;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="country", nullable=true, unique=false)
+	public String getCountry(){
+		return country; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setCountry(String newVal) {
+		return this.country = newVal;
+	}
+ 	
+	
+	private String zone;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="zone", nullable=true, unique=false)
+	public String getZone(){
+		return zone; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setZone(String newVal) {
+		return this.zone = newVal;
+	}
+ 	
+	
+	private String firstName;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="firstname", nullable=true, unique=false)
+	public String getFirstName(){
+		return firstName; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setFirstName(String newVal) {
+		return this.firstName = newVal;
+	}
+ 	
+	
+	private String lastName;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="lastname", nullable=true, unique=false)
+	public String getLastName(){
+		return lastName; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setLastName(String newVal) {
+		return this.lastName = newVal;
+	}
+ 	
+	
+	private String jobTitle;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="jobtitle", nullable=true, unique=false)
+	public String getJobTitle(){
+		return jobTitle; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setJobTitle(String newVal) {
+		return this.jobTitle = newVal;
+	}
+ 	
+	
+	private String salutation;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="salutation", nullable=true, unique=false)
+	public String getSalutation(){
+		return salutation; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setSalutation(String newVal) {
+		return this.salutation = newVal;
+	}
+ 	
+	
+	private java.util.List<ComLink> comLinks;
+	/**
+	 * @generated
+ 	 */
+	@ManyToOne( cascade = CascadeType.ALL )	
+	public java.util.List<ComLink> getComLinks(){
+		return comLinks; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public java.util.List<ComLink> setComLinks(java.util.List<ComLink> newVal) {
+		return this.comLinks = newVal;
+	}
+ 	
+	
+	private String prefix;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="prefix", nullable=true, unique=false)
+	public String getPrefix(){
+		return prefix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setPrefix(String newVal) {
+		return this.prefix = newVal;
+	}
+ 	
+	
+	private String suffix;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="suffix", nullable=true, unique=false)
+	public String getSuffix(){
+		return suffix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setSuffix(String newVal) {
+		return this.suffix = newVal;
+	}
+ 	
+	
+	private String takenBy;
+	/**
+	 * @generated
+ 	 */
+ 	@Basic(fetch=FetchType.LAZY)
+	@Column(name="takenby", nullable=true, unique=false)
+	public String getTakenBy(){
+		return takenBy; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public String setTakenBy(String newVal) {
+		return this.takenBy = newVal;
+	}
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
+		if (NAME.equals(propertyName)) return getName();
+		if (STREET1.equals(propertyName)) return getStreet1();
+		if (STREET2.equals(propertyName)) return getStreet2();
+		if (CITY.equals(propertyName)) return getCity();
+		if (STATE.equals(propertyName)) return getState();
+		if (ZIP.equals(propertyName)) return getZip();
+		if (COUNTRY.equals(propertyName)) return getCountry();
+		if (ZONE.equals(propertyName)) return getZone();
+		if (FIRSTNAME.equals(propertyName)) return getFirstName();
+		if (LASTNAME.equals(propertyName)) return getLastName();
+		if (JOBTITLE.equals(propertyName)) return getJobTitle();
+		if (SALUTATION.equals(propertyName)) return getSalutation();
+		if (COMLINKS.equals(propertyName)) return getComLinks();
+		if (PREFIX.equals(propertyName)) return getPrefix();
+		if (SUFFIX.equals(propertyName)) return getSuffix();
+		if (TAKENBY.equals(propertyName)) return getTakenBy();
+		return super.getProperty(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (STREET1.equals(propertyName)) setStreet1((String)newValue); else
+		if (STREET2.equals(propertyName)) setStreet2((String)newValue); else
+		if (CITY.equals(propertyName)) setCity((String)newValue); else
+		if (STATE.equals(propertyName)) setState((String)newValue); else
+		if (ZIP.equals(propertyName)) setZip((String)newValue); else
+		if (COUNTRY.equals(propertyName)) setCountry((String)newValue); else
+		if (ZONE.equals(propertyName)) setZone((String)newValue); else
+		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
+		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
+		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
+		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
+		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
+		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
+		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
+		if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+		if (NAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (STREET1.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (STREET2.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (CITY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (STATE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (ZIP.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COUNTRY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (ZONE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FIRSTNAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (LASTNAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (JOBTITLE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SALUTATION.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMLINKS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ComLink.class};		
+		if (PREFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SUFFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (TAKENBY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		return super.getPropertyClass(propertyName);
+	}
+	
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+		if (NAME.equals(propertyName)) return Address.class;
+		if (STREET1.equals(propertyName)) return Address.class;
+		if (STREET2.equals(propertyName)) return Address.class;
+		if (CITY.equals(propertyName)) return Address.class;
+		if (STATE.equals(propertyName)) return Address.class;
+		if (ZIP.equals(propertyName)) return Address.class;
+		if (COUNTRY.equals(propertyName)) return Address.class;
+		if (ZONE.equals(propertyName)) return Address.class;
+		if (FIRSTNAME.equals(propertyName)) return Address.class;
+		if (LASTNAME.equals(propertyName)) return Address.class;
+		if (JOBTITLE.equals(propertyName)) return Address.class;
+		if (SALUTATION.equals(propertyName)) return Address.class;
+		if (COMLINKS.equals(propertyName)) return Address.class;
+		if (PREFIX.equals(propertyName)) return Address.class;
+		if (SUFFIX.equals(propertyName)) return Address.class;
+		if (TAKENBY.equals(propertyName)) return Address.class;
+		return super.getPropertyOwner(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */			
+	@Override
+	public boolean deepEquals(Object obj) {
+		if (! super.deepEquals(obj))
+			return false;
+		Address objT = (Address)obj;
+		if (! SmartEquals(getName(), objT.getName()))
+			return false;
+		if (! SmartEquals(getStreet1(), objT.getStreet1()))
+			return false;
+		if (! SmartEquals(getStreet2(), objT.getStreet2()))
+			return false;
+		if (! SmartEquals(getCity(), objT.getCity()))
+			return false;
+		if (! SmartEquals(getState(), objT.getState()))
+			return false;
+		if (! SmartEquals(getZip(), objT.getZip()))
+			return false;
+		if (! SmartEquals(getCountry(), objT.getCountry()))
+			return false;
+		if (! SmartEquals(getZone(), objT.getZone()))
+			return false;
+		if (! SmartEquals(getFirstName(), objT.getFirstName()))
+			return false;
+		if (! SmartEquals(getLastName(), objT.getLastName()))
+			return false;
+		if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
+			return false;
+		if (! SmartEquals(getSalutation(), objT.getSalutation()))
+			return false;
+		if (! SmartEquals(getComLinks(), objT.getComLinks()))
+			return false;
+		if (! SmartEquals(getPrefix(), objT.getPrefix()))
+			return false;
+		if (! SmartEquals(getSuffix(), objT.getSuffix()))
+			return false;
+		if (! SmartEquals(getTakenBy(), objT.getTakenBy()))
+			return false;
+		return true;
+	}			
+}
