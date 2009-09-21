@@ -31,6 +31,13 @@
 			</source>
 		</properties>
 	</destination>
+	<destination id="PressDefintionsService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.PressDefinitionsService
+			</source>
+		</properties>
+	</destination>
 	
 	<destination id="loginService">
 		<properties>
