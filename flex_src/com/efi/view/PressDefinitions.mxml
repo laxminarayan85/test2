@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="722" height="770">
+	<mx:Label x="10" y="169" text="Name:" width="45"/>
+	<mx:Label x="10" y="195" text="Machine Name:"/>
+	<mx:DataGrid x="10" y="19" width="687">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+			<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+			<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Label x="10" y="221" text="Output Description:"/>
+	<mx:Label x="10" y="247" text="Production Location:"/>
+	<mx:Label x="10" y="273" text="Cost Center:"/>
+	<mx:Label x="10" y="299" text="OEM Device ID:"/>
+	<mx:TextInput x="63" y="167" width="231" id="Name"/>
+	<mx:TextInput x="109" y="193" width="231" id="MachineName"/>
+	<mx:TextInput x="131" y="219" id="OutPutDescription"/>
+	<mx:TextInput x="131" y="245" id="ProductionLocation"/>
+	<mx:TextInput x="94" y="271" id="CostCenter"/>
+	<mx:TextInput x="109" y="297" id="OEMDeviceID"/>
+	<mx:Label x="333" y="169" text="Machine ID:"/>
+	<mx:TextInput x="413" y="167" width="83"/>
+	<mx:CheckBox x="357" y="195" label="Costing Printing" id="CostingPrinting"/>
+	<mx:CheckBox x="333" y="297" label="Integrated Device" id="IntegratedDevice"/>
+	<mx:RadioButtonGroup id="PaperStyle"/>
+	<mx:RadioButton x="533" y="167" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" selected="false"/>
+	<mx:RadioButton x="533" y="195" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true"/>
+	<mx:HRule x="10" y="325" width="702" height="16"/>
+	<mx:Label x="10" y="349" text="Max Paper Size:"/>
+	<mx:Label x="10" y="375" text="Min Paper Size:"/>
+	<mx:Label x="10" y="401" text="Labor Rate:"/>
+	<mx:Label x="10" y="427" text="Minimum labor:"/>
+	<mx:Label x="10" y="453" text="Setup (Minutes):"/>
+	<mx:Label x="10" y="479" text="Setup Add'l Run:"/>
+	<mx:Label x="51" y="505" text="Setup Add'l Signatures:"/>
+	<mx:Label x="10" y="529" text="Work and Turn  2nd Side Setup"/>
+	<mx:TextInput x="114" y="347" id="MaxPaperSize"/>
+	<mx:TextInput x="114" y="373" id="MinPaperSize"/>
+	<mx:TextInput x="111" y="399" width="76" id="LaborRate"/>
+	<mx:TextInput x="111" y="425" width="92" id="MinLabor"/>
+	<mx:TextInput x="111" y="455" width="92" id="SetupMin"/>
+	<mx:TextInput x="111" y="479" width="92" id="SetupAddRun"/>
+	<mx:TextInput x="195" y="503" id="SetupAddSig"/>
+	<mx:TextInput x="195" y="527" id="WorkTurn"/>
+	<mx:Label x="219" y="427" text="(Minutes)"/>
+	<mx:Label x="219" y="457" text="# Heads"/>
+	<mx:TextInput x="279" y="455" width="37" id="NumberHeads"/>
+	<mx:TextInput x="606" y="347" width="106"/>
+	<mx:TextInput x="606" y="388" width="106"/>
+	<mx:TextInput x="633" y="418" width="79"/>
+	<mx:TextInput x="633" y="451" width="79"/>
+	<mx:TextInput x="606" y="479" width="106"/>
+	<mx:TextInput x="606" y="503" width="106"/>
+	<mx:Label x="648" y="529" text="(per wash)"/>
+	<mx:TextInput x="606" y="559" width="106"/>
+	<mx:TextInput x="516" y="527" width="106"/>
+	<mx:Label x="445" y="349" text="Avg. Impression per Hour:"/>
+	<mx:Label x="516" y="390" text="Labor Markup:"/>
+	<mx:Label x="546" y="420" text="Fixed Waste:"/>
+	<mx:Label x="524" y="453" text="Setup Add'l Head:"/>
+	<mx:Label x="524" y="481" text="Washup Fee:"/>
+	<mx:Label x="439" y="505" text="Add'l Signatures Add'l Head:"/>
+	<mx:Label x="411" y="529" text="Washup Minutes:"/>
+	<mx:Label x="439" y="561" text="Washup Time per fountain:"/>
+	<mx:HRule x="0" y="598" width="722" height="0"/>
+	<mx:HRule x="10" y="606" width="702" height="6"/>
+	<mx:Button x="16" y="620" label="Speed Table "/>
+	<mx:Button x="16" y="650" label="Waste Chart"/>
+	<mx:Button x="16" y="680" label="Add Charges"/>
+	<mx:CheckBox x="346" y="650" label="Perfector" id="Perfector"/>
+	
+</mx:Module>
