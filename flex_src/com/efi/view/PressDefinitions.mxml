@@ -1,73 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="722" height="770">
-	<mx:Label x="10" y="169" text="Name:" width="45"/>
-	<mx:Label x="10" y="195" text="Machine Name:"/>
-	<mx:DataGrid x="10" y="19" width="687">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="752" height="800" creationComplete="init()" xmlns:vo="com.efi.vo.*">
+	<mx:RemoteObject id="saveService" destination="pressDefinitionsService"
+	result="handleSaveResult(event)" fault="handleFault(event)"
+	showBusyCursor="true" />
+	
+	<mx:RemoteObject id="loaderService" destination="pressDefinitionsService"
+	result="handleLoadResult(event)"  fault="handleFault(event)"
+	showBusyCursor="true" />
+	                             
+	<mx:RemoteObject id="deleteService" destination="pressDefinitionsService"
+	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+	
+	<mx:Producer id="producer" destination="accounts"/>
+	<mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.vo.PressDefinition;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+                   
+    private var enableSave:Boolean = true;
+                         
+//	[Bindable]                                         
+//	private var pressDefinition:PressDefinition;
+                                                                                  	
+	[Bindable]                                
+	private var pressDefinitionArray:ArrayCollection = new ArrayCollection();
+                                                                         
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    loaderService.getPressDefinitions();
+	    pressDefinition = new PressDefinition();
+	}      
+	                                                   	
+	public function loadPressDefinitions():void {   
+	    loaderService.getPressDefinitions();
+	}
+					
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+		          
+	private function doAddPress():void {
+		saveService.addUpdatePressDefinitions(pressDefinition);                                        		
+	}     
+	             
+	private function doDeletePress():void {              
+		deleteService.deletePressDefinitions(pressDefinition.id);             
+	}
+
+	private function doPressGridClick():void {
+		pressDefinition = dataGrid.selectedItem as PressDefinition;
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+    	loadPressDefinitions();
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     pressDefinitionArray = ev.result as ArrayCollection;
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     loadPressDefinitions();
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,null);                                 
+	}
+                                   
+]]>
+                             
+</mx:Script>	
+<vo:PressDefinition id="pressDefinition" pressDefName="{Name.text}"                             
+machineName="{MachineName.text}"/>
+
+	<mx:Label x="78" y="169" text="Name:" width="45" textAlign="right"/>
+	<mx:Label x="32" y="195" text="Machine Name:" textAlign="right"/>
+	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-			<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-			<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			<mx:DataGridColumn headerText="Default Sheet-Fed" dataField="id"/>
+			<mx:DataGridColumn headerText="Default Roll-Fed" dataField="id"/>
+			<mx:DataGridColumn headerText="Name" dataField="pressDefName"/>
+			<mx:DataGridColumn headerText="Paper Style" dataField="machineName"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:Label x="10" y="221" text="Output Description:"/>
-	<mx:Label x="10" y="247" text="Production Location:"/>
-	<mx:Label x="10" y="273" text="Cost Center:"/>
-	<mx:Label x="10" y="299" text="OEM Device ID:"/>
-	<mx:TextInput x="63" y="167" width="231" id="Name"/>
-	<mx:TextInput x="109" y="193" width="231" id="MachineName"/>
-	<mx:TextInput x="131" y="219" id="OutPutDescription"/>
-	<mx:TextInput x="131" y="245" id="ProductionLocation"/>
-	<mx:TextInput x="94" y="271" id="CostCenter"/>
-	<mx:TextInput x="109" y="297" id="OEMDeviceID"/>
-	<mx:Label x="333" y="169" text="Machine ID:"/>
-	<mx:TextInput x="413" y="167" width="83"/>
-	<mx:CheckBox x="357" y="195" label="Costing Printing" id="CostingPrinting"/>
-	<mx:CheckBox x="333" y="297" label="Integrated Device" id="IntegratedDevice"/>
+	<mx:Label x="10" y="221" text="Output Description:" textAlign="right"/>
+	<mx:Label x="5" y="247" text="Production Location:" textAlign="right"/>
+	<mx:Label x="47" y="273" text="Cost Center:" textAlign="right"/>
+	<mx:Label x="32" y="299" text="OEM Device ID:" textAlign="right"/>	
+	<mx:TextInput x="131" y="165" width="263" id="Name" text="{pressDefinition.pressDefName}"/>
+	<mx:TextInput x="131" y="191" width="263" id="MachineName" text="{pressDefinition.machineName}"/>
+	<mx:TextInput x="131" y="217" id="OutPutDescription" width="263"/>
+	<mx:TextInput x="131" y="243" id="ProductionLocation" width="263"/>
+	<mx:TextInput x="131" y="269" id="CostCenter" width="263"/>
+	<mx:TextInput x="131" y="295" id="OEMDeviceID" width="263"/>
+	<mx:Label x="402" y="169" text="Machine ID:"/>
+	<mx:TextInput x="479" y="166" width="83"/>
+	<mx:CheckBox x="570" y="297" label="Costing Press" id="CostingPrinting"/>
+	<mx:CheckBox x="402" y="297" label="Integrated Device" id="IntegratedDevice"/>
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:RadioButton x="533" y="167" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" selected="false"/>
-	<mx:RadioButton x="533" y="195" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true"/>
 	<mx:HRule x="10" y="325" width="702" height="16"/>
 	<mx:Label x="10" y="349" text="Max Paper Size:"/>
-	<mx:Label x="10" y="375" text="Min Paper Size:"/>
-	<mx:Label x="10" y="401" text="Labor Rate:"/>
-	<mx:Label x="10" y="427" text="Minimum labor:"/>
-	<mx:Label x="10" y="453" text="Setup (Minutes):"/>
-	<mx:Label x="10" y="479" text="Setup Add'l Run:"/>
-	<mx:Label x="51" y="505" text="Setup Add'l Signatures:"/>
-	<mx:Label x="10" y="529" text="Work and Turn  2nd Side Setup"/>
+	<mx:Label x="14" y="375" text="Min Paper Size:"/>
+	<mx:Label x="35" y="401" text="Labor Rate:"/>
+	<mx:Label x="13" y="427" text="Minimum labor:"/>
+	<mx:Label x="7" y="453" text="Setup (Minutes):"/>
+	<mx:Label x="7" y="479" text="Setup Add'l Run:"/>
+	<mx:Label x="56" y="505" text="Setup Add'l Signatures:"/>
+	<mx:Label x="10" y="530" text="Work and Turn 2nd Side Setup:"/>
 	<mx:TextInput x="114" y="347" id="MaxPaperSize"/>
 	<mx:TextInput x="114" y="373" id="MinPaperSize"/>
-	<mx:TextInput x="111" y="399" width="76" id="LaborRate"/>
-	<mx:TextInput x="111" y="425" width="92" id="MinLabor"/>
-	<mx:TextInput x="111" y="455" width="92" id="SetupMin"/>
-	<mx:TextInput x="111" y="479" width="92" id="SetupAddRun"/>
-	<mx:TextInput x="195" y="503" id="SetupAddSig"/>
-	<mx:TextInput x="195" y="527" id="WorkTurn"/>
-	<mx:Label x="219" y="427" text="(Minutes)"/>
-	<mx:Label x="219" y="457" text="# Heads"/>
-	<mx:TextInput x="279" y="455" width="37" id="NumberHeads"/>
+	<mx:TextInput x="114" y="399" width="76" id="LaborRate"/>
+	<mx:TextInput x="114" y="425" width="92" id="MinLabor"/>
+	<mx:TextInput x="114" y="451" width="92" id="SetupMin"/>
+	<mx:TextInput x="114" y="477" width="92" id="SetupAddRun"/>
+	<mx:TextInput x="180" y="503" id="SetupAddSig"/>
+	<mx:TextInput x="180" y="528" id="WorkTurn"/>
+	<mx:Label x="214" y="427" text="(Minutes)"/>
+	<mx:Label x="226" y="453" text="# Heads:"/>
+	<mx:TextInput x="291" y="451" width="37" id="NumberHeads"/>
 	<mx:TextInput x="606" y="347" width="106"/>
-	<mx:TextInput x="606" y="388" width="106"/>
-	<mx:TextInput x="633" y="418" width="79"/>
-	<mx:TextInput x="633" y="451" width="79"/>
-	<mx:TextInput x="606" y="479" width="106"/>
+	<mx:TextInput x="606" y="399" width="106"/>
+	<mx:TextInput x="606" y="425" width="79"/>
+	<mx:TextInput x="606" y="451" width="79"/>
+	<mx:TextInput x="606" y="477" width="106"/>
 	<mx:TextInput x="606" y="503" width="106"/>
 	<mx:Label x="648" y="529" text="(per wash)"/>
-	<mx:TextInput x="606" y="559" width="106"/>
-	<mx:TextInput x="516" y="527" width="106"/>
+	<mx:TextInput x="534" y="556" width="106"/>
+	<mx:TextInput x="534" y="529" width="106"/>
 	<mx:Label x="445" y="349" text="Avg. Impression per Hour:"/>
-	<mx:Label x="516" y="390" text="Labor Markup:"/>
-	<mx:Label x="546" y="420" text="Fixed Waste:"/>
-	<mx:Label x="524" y="453" text="Setup Add'l Head:"/>
-	<mx:Label x="524" y="481" text="Washup Fee:"/>
+	<mx:Label x="512" y="401" text="Labor Markup:"/>
+	<mx:Label x="519" y="427" text="Fixed Waste:"/>
+	<mx:Label x="492" y="455" text="Setup Add'l Head:"/>
+	<mx:Label x="519" y="479" text="Washup Fee:"/>
 	<mx:Label x="439" y="505" text="Add'l Signatures Add'l Head:"/>
-	<mx:Label x="411" y="529" text="Washup Minutes:"/>
-	<mx:Label x="439" y="561" text="Washup Time per fountain:"/>
-	<mx:HRule x="0" y="598" width="722" height="0"/>
-	<mx:HRule x="10" y="606" width="702" height="6"/>
-	<mx:Button x="16" y="620" label="Speed Table "/>
-	<mx:Button x="16" y="650" label="Waste Chart"/>
-	<mx:Button x="16" y="680" label="Add Charges"/>
-	<mx:CheckBox x="346" y="650" label="Perfector" id="Perfector"/>
-	
-</mx:Module>
+	<mx:Label x="424" y="531" text="Washup Minutes:"/>
+	<mx:Label x="367" y="558" text="Washup Time per fountain:" textAlign="right"/>
+	<mx:HRule x="4" y="598" width="722" height="0"/>
+	<mx:HRule x="20" y="696" width="702" height="6"/>
+	<mx:HRule x="10" y="696" width="702" height="6"/>
+	<mx:Button x="10" y="606" label="Speed Table "/>
+	<mx:Button x="10" y="710" label="Stock Price List"/>
+	<mx:Button x="131" y="710" label="Press Price List"/>
+	<mx:Button x="512" y="710" label="Delete Press" click="doDeletePress();"/>
+	<mx:Button x="628" y="710" label="Add Press" click="doAddPress();"/>
+	<mx:Button x="10" y="636" label="Waste Chart"/>
+	<mx:Button x="10" y="666" label="Add Charges"/>
+	<mx:CheckBox x="340" y="636" label="Perfector" id="Perfector"/>
+	<mx:Panel x="570" y="166" width="127" height="109" layout="absolute" title="Paper Style">
+		<mx:RadioButton x="10" y="9" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" selected="false"/>
+		<mx:RadioButton x="10" y="38" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true"/>
+	</mx:Panel>
+</mx:Panel>

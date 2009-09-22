@@ -68,13 +68,13 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 	}
 
 	private function createUser():void {
-	     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	     var titleWindow:EditUser = EditUser(PopUpManager.createPopUp(this, EditUser, true));
 	     titleWindow.setStyle("borderAlpha", 0.9);
 	     titleWindow.formIsEmpty = true;
 	}
                                                          
 	private function updateUser():void {
-	     var titleWindow:UserForm = UserForm(PopUpManager.createPopUp(this, UserForm, true));
+	     var titleWindow:EditUser = EditUser(PopUpManager.createPopUp(this, EditUser, true));
 	     titleWindow.setStyle("borderAlpha", 0.9);
 	     titleWindow.user = dataGrid.selectedItem as User;
 	     titleWindow.formIsEmpty = false;

@@ -21,10 +21,8 @@ public var created:Date;
 
 public var modified:Date;
 
-public var type:String;
-
-public var value:String;
-
+public var type:String = "";
+public var value:String = "";
 
 }
 }

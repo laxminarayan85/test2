@@ -21,32 +21,19 @@ public var created:Date;
 
 public var modified:Date;
 
-public var title:String;
-
+public var title:String = "";
 public var address:Address;
-
 public var contact:Contact;
-
-public var userAcctId:String;
-
-public var webAcctNameIncomplete:Boolean;
-
-public var webCatalogChange:Boolean;
-
-public var webStateChange:Boolean;
-
-public var transmitted:Boolean;
-
-public var doNotMail:Boolean;
-
-public var useContactAddress:Boolean;
-
-public var isIndividual:Boolean;
-
+public var userAcctId:String = "";
+public var webAcctNameIncomplete:Boolean = true;
+public var webCatalogChange:Boolean = true;
+public var webStateChange:Boolean = true;
+public var transmitted:Boolean = true;
+public var doNotMail:Boolean = true;
+public var useContactAddress:Boolean = true;
+public var isIndividual:Boolean = true;
 public var defaultSalesRep:SalesRep;
-
-public var mailerCampaigns:Boolean;
-
+public var mailerCampaigns:Boolean = true;
 
 }
 }
