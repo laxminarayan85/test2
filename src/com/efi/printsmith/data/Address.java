@@ -329,7 +329,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-    @OneToMany(mappedBy="type",cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
+    @OneToMany
 	private java.util.List<Address> comLinks;
 	/**
 	 * @generated
