@@ -44,8 +44,8 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "salesrep.findall", query = "from salesrep"),
-	@NamedQuery(name = "salesrep.byId", query = "select a from salesrep a where a.id= :id")
+	@NamedQuery(name = "SalesRep.findall", query = "from SalesRep"),
+	@NamedQuery(name = "SalesRep.byId", query = "select a from SalesRep a where a.id= :id")
 })
 
 

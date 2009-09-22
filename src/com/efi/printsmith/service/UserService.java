@@ -38,8 +38,10 @@ public class UserService {
 
 			EntityManager em = entityManagerFactory.createEntityManager();
 
-			Query findAllQuery = em.createNamedQuery("users.findAll");
+//			Query findAllQuery = em.createNamedQuery("users.findAll");
 
+			Query findAllQuery = em.createQuery("from User");
+			
 			List<User> users = findAllQuery.getResultList();
 
 			if (users != null)

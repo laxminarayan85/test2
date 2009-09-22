@@ -44,8 +44,8 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "comlink.findall", query = "from comlink"),
-	@NamedQuery(name = "comlink.byId", query = "select a from comlink a where a.id= :id")
+	@NamedQuery(name = "ComLink.findall", query = "from ComLink"),
+	@NamedQuery(name = "ComLink.byId", query = "select a from ComLink a where a.id= :id")
 })
 
 

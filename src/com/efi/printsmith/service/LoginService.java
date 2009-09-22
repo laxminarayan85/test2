@@ -27,7 +27,7 @@ public class LoginService {
 			log.info("Attempting login for " + userName);
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 			EntityManager em = entityManagerFactory.createEntityManager();
-			Query q = em.createNamedQuery("users.byName");
+			Query q = em.createNamedQuery("User.byName");
 			q.setParameter("name", userName);
 			
 			List<User> users = q.getResultList();

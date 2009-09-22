@@ -44,8 +44,8 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "address.findall", query = "from address"),
-	@NamedQuery(name = "address.byId", query = "select a from address a where a.id= :id")
+	@NamedQuery(name = "Address.findall", query = "from Address"),
+	@NamedQuery(name = "Address.byId", query = "select a from Address a where a.id= :id")
 })
 
 
@@ -330,18 +330,18 @@ public class Address extends ModelBase {
  	
 	
     @OneToMany
-	private java.util.List<Address> comLinks;
+	private java.util.List<ComLink> comLinks;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Address> getComLinks(){
+	public java.util.List<ComLink> getComLinks(){
 		return comLinks; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setComLinks(java.util.List<Address> newVal) {
+	public void setComLinks(java.util.List<ComLink> newVal) {
 		this.comLinks = newVal;
 	}
  	
@@ -439,7 +439,7 @@ public class Address extends ModelBase {
 		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
 		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
 		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
-		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<Address>)newValue); else
+		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
 		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
 		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
 		if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
@@ -477,7 +477,7 @@ public class Address extends ModelBase {
 		if (SALUTATION.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (COMLINKS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Address.class};		
+			return new Class<?>[] {java.util.List.class, ComLink.class};		
 		if (PREFIX.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SUFFIX.equals(propertyName)) 

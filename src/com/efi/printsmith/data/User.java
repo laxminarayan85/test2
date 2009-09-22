@@ -17,9 +17,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Index;
 
 @NamedQueries( {
-		@NamedQuery(name = "users.findAll", query = "from User"),
-		@NamedQuery(name = "users.byId", query = "select u from User u where u.id= :id"),
-		@NamedQuery(name = "users.byName", query = "select u from User u where upper(u.name)= upper(:name)")
+		@NamedQuery(name = "User.findAll", query = "from User"),
+		@NamedQuery(name = "User.byId", query = "select u from User u where u.id= :id"),
+		@NamedQuery(name = "User.byName", query = "select u from User u where upper(u.name)= upper(:name)")
 })
 
 @Entity

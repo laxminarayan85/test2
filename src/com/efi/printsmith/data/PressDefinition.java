@@ -44,8 +44,8 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "pressdefinition.findall", query = "from pressdefinition"),
-	@NamedQuery(name = "pressdefinition.byId", query = "select a from pressdefinition a where a.id= :id")
+	@NamedQuery(name = "PressDefinition.findall", query = "from PressDefinition"),
+	@NamedQuery(name = "PressDefinition.byId", query = "select a from PressDefinition a where a.id= :id")
 })
 
 

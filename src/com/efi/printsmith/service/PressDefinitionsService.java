@@ -39,9 +39,9 @@ public class PressDefinitionsService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query findAllQuery = em.createQuery("from pressdefinition");
-			
-			List<PressDefinition> pressDefinitions = findAllQuery.getResultList();
+			Query q = em.createNamedQuery("PressDefinition.findall");
+
+			List<PressDefinition> pressDefinitions = q.getResultList();
 	
 			if (pressDefinitions != null)
 				log.debug("** Found " + pressDefinitions.size() + "records:");
@@ -130,7 +130,7 @@ public class PressDefinitionsService {
 
 		EntityManager em = emf.createEntityManager();
 
-		Query q = em.createNamedQuery("accounts.byId");
+		Query q = em.createNamedQuery("PressDefinition.byId");
 
 		q.setParameter("id", id);
 

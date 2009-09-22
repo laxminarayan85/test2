@@ -112,7 +112,7 @@ machineName="{MachineName.text}"/>
 	<mx:TextInput x="131" y="269" id="CostCenter" width="263"/>
 	<mx:TextInput x="131" y="295" id="OEMDeviceID" width="263"/>
 	<mx:Label x="402" y="169" text="Machine ID:"/>
-	<mx:TextInput x="479" y="166" width="83"/>
+	<mx:TextInput x="479" y="166" width="83" id="MachineId" text="{pressDefinition.machineID}"/>
 	<mx:CheckBox x="570" y="297" label="Costing Press" id="CostingPrinting"/>
 	<mx:CheckBox x="402" y="297" label="Integrated Device" id="IntegratedDevice"/>
 	<mx:RadioButtonGroup id="PaperStyle"/>
