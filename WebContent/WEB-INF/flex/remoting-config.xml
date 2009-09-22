@@ -31,7 +31,7 @@
 			</source>
 		</properties>
 	</destination>
-	<destination id="PressDefintionsService">
+	<destination id="pressDefinitionsService">
 		<properties>
 			<source>
 				com.efi.printsmith.service.PressDefinitionsService
