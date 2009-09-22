@@ -29,7 +29,7 @@ public class PressDefinitionsService {
 
 	}
 
-	public List<PressDefinitions> getPressDefinitions() {
+	public List<PressDefinition> getPressDefinitions() {
 
 		try {
 			log.debug("** getPressDefinitions called...");
@@ -39,23 +39,21 @@ public class PressDefinitionsService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query findAllQuery = em.createQuery("from Pressdefinitions");
-			//Query findAllQuery = em.createNamedQuery("Account.findall");
+			Query findAllQuery = em.createQuery("from pressdefinition");
 			
-			List<PressDefinitions> pressdefinitions = findAllQuery.getResultList();
+			List<PressDefinition> pressDefinitions = findAllQuery.getResultList();
 	
-			if (pressdefinitions != null)
+			if (pressDefinitions != null)
+				log.debug("** Found " + pressDefinitions.size() + "records:");
 	
-				log.debug("** Found " + pressdefinitions.size() + "records:");
-	
-			return pressdefinitions;
+			return pressDefinitions;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList<PressDefinitions>();
+		return new ArrayList<PressDefinition>();
 	}
 
-	public void addUpdatepressdefinitions(PressDefinitions pressdefinitions) throws Exception {
+	public void addUpdatePressDefinitions(PressDefinition pressDefinitions) throws Exception {
 
 		log.debug("** addUpdatePressDefinitions called...");
 
@@ -74,13 +72,14 @@ public class PressDefinitionsService {
 
 		// byte.
 
-		if (pressdefinitions.getId() == null || pressdefinitions.getId() == 0) {
+		if (pressDefinitions.getId() == null || pressDefinitions.getId() == 0) {
 
 			// New consultant is created
 
-			pressdefinitions.setId(null);
+			pressDefinitions.setId(null);
 
-			pressdefinitions.setCreated(new Timestamp(new Date().getTime()));
+			pressDefinitions.setCreated(new Timestamp(new Date().getTime()));
+			pressDefinitions.setModified(new Timestamp(new Date().getTime()));
 
 		} else {
 
@@ -94,7 +93,7 @@ public class PressDefinitionsService {
 
 		try {
 
-			em.merge(pressdefinitions);
+			em.merge(pressDefinitions);
 
 			tx.commit();
 			
@@ -135,7 +134,7 @@ public class PressDefinitionsService {
 
 		q.setParameter("id", id);
 
-		PressDefinitions pressdefinitions = (PressDefinitions) q.getSingleResult();
+		PressDefinition pressdefinitions = (PressDefinition) q.getSingleResult();
 
 		if (pressdefinitions != null) {
 

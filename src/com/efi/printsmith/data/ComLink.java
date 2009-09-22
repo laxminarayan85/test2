@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,14 +44,12 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ComLink.findall", query = "from ComLink"),
-	@NamedQuery(name = "ComLink.byId", query = "select a from ComLink a where a.id= :id")
+	@NamedQuery(name = "comlink.findall", query = "from comlink"),
+	@NamedQuery(name = "comlink.byId", query = "select a from comlink a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.ComLink")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "comlink")
 public class ComLink extends ModelBase {
 	/**
@@ -70,12 +69,11 @@ public class ComLink extends ModelBase {
 
  	
 	
+ 	@Basic
 	private String type;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="type", nullable=true, unique=false)
 	public String getType(){
 		return type; 
 	}
@@ -83,17 +81,16 @@ public class ComLink extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setType(String newVal) {
-		return this.type = newVal;
+	public void setType(String newVal) {
+		this.type = newVal;
 	}
  	
 	
+ 	@Basic
 	private String value;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="value", nullable=true, unique=false)
 	public String getValue(){
 		return value; 
 	}
@@ -101,8 +98,8 @@ public class ComLink extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setValue(String newVal) {
-		return this.value = newVal;
+	public void setValue(String newVal) {
+		this.value = newVal;
 	}
 
 	/**

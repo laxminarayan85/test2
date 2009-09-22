@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,14 +44,12 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Address.findall", query = "from Address"),
-	@NamedQuery(name = "Address.byId", query = "select a from Address a where a.id= :id")
+	@NamedQuery(name = "address.findall", query = "from address"),
+	@NamedQuery(name = "address.byId", query = "select a from address a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.Address")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "address")
 public class Address extends ModelBase {
 	/**
@@ -126,12 +125,11 @@ public class Address extends ModelBase {
 
  	
 	
+ 	@Basic
 	private String name;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="name", nullable=true, unique=false)
 	public String getName(){
 		return name; 
 	}
@@ -139,17 +137,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setName(String newVal) {
-		return this.name = newVal;
+	public void setName(String newVal) {
+		this.name = newVal;
 	}
  	
 	
+ 	@Basic
 	private String street1;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="street1", nullable=true, unique=false)
 	public String getStreet1(){
 		return street1; 
 	}
@@ -157,17 +154,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setStreet1(String newVal) {
-		return this.street1 = newVal;
+	public void setStreet1(String newVal) {
+		this.street1 = newVal;
 	}
  	
 	
+ 	@Basic
 	private String street2;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="street2", nullable=true, unique=false)
 	public String getStreet2(){
 		return street2; 
 	}
@@ -175,17 +171,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setStreet2(String newVal) {
-		return this.street2 = newVal;
+	public void setStreet2(String newVal) {
+		this.street2 = newVal;
 	}
  	
 	
+ 	@Basic
 	private String city;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="city", nullable=true, unique=false)
 	public String getCity(){
 		return city; 
 	}
@@ -193,17 +188,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCity(String newVal) {
-		return this.city = newVal;
+	public void setCity(String newVal) {
+		this.city = newVal;
 	}
  	
 	
+ 	@Basic
 	private String state;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="state", nullable=true, unique=false)
 	public String getState(){
 		return state; 
 	}
@@ -211,17 +205,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setState(String newVal) {
-		return this.state = newVal;
+	public void setState(String newVal) {
+		this.state = newVal;
 	}
  	
 	
+ 	@Basic
 	private String zip;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="zip", nullable=true, unique=false)
 	public String getZip(){
 		return zip; 
 	}
@@ -229,17 +222,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setZip(String newVal) {
-		return this.zip = newVal;
+	public void setZip(String newVal) {
+		this.zip = newVal;
 	}
  	
 	
+ 	@Basic
 	private String country;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="country", nullable=true, unique=false)
 	public String getCountry(){
 		return country; 
 	}
@@ -247,17 +239,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCountry(String newVal) {
-		return this.country = newVal;
+	public void setCountry(String newVal) {
+		this.country = newVal;
 	}
  	
 	
+ 	@Basic
 	private String zone;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="zone", nullable=true, unique=false)
 	public String getZone(){
 		return zone; 
 	}
@@ -265,17 +256,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setZone(String newVal) {
-		return this.zone = newVal;
+	public void setZone(String newVal) {
+		this.zone = newVal;
 	}
  	
 	
+ 	@Basic
 	private String firstName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="firstname", nullable=true, unique=false)
 	public String getFirstName(){
 		return firstName; 
 	}
@@ -283,17 +273,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setFirstName(String newVal) {
-		return this.firstName = newVal;
+	public void setFirstName(String newVal) {
+		this.firstName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String lastName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="lastname", nullable=true, unique=false)
 	public String getLastName(){
 		return lastName; 
 	}
@@ -301,17 +290,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setLastName(String newVal) {
-		return this.lastName = newVal;
+	public void setLastName(String newVal) {
+		this.lastName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String jobTitle;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="jobtitle", nullable=true, unique=false)
 	public String getJobTitle(){
 		return jobTitle; 
 	}
@@ -319,17 +307,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setJobTitle(String newVal) {
-		return this.jobTitle = newVal;
+	public void setJobTitle(String newVal) {
+		this.jobTitle = newVal;
 	}
  	
 	
+ 	@Basic
 	private String salutation;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="salutation", nullable=true, unique=false)
 	public String getSalutation(){
 		return salutation; 
 	}
@@ -337,16 +324,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setSalutation(String newVal) {
-		return this.salutation = newVal;
+	public void setSalutation(String newVal) {
+		this.salutation = newVal;
 	}
  	
 	
+    @OneToMany(mappedBy="type",cascade=CascadeType.ALL, fetch=FetchType.EAGER)	
 	private java.util.List<Address> comLinks;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public java.util.List<Address> getComLinks(){
 		return comLinks; 
 	}
@@ -354,17 +341,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public java.util.List<Address> setComLinks(java.util.List<Address> newVal) {
-		return this.comLinks = newVal;
+	public void setComLinks(java.util.List<Address> newVal) {
+		this.comLinks = newVal;
 	}
  	
 	
+ 	@Basic
 	private String prefix;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="prefix", nullable=true, unique=false)
 	public String getPrefix(){
 		return prefix; 
 	}
@@ -372,17 +358,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setPrefix(String newVal) {
-		return this.prefix = newVal;
+	public void setPrefix(String newVal) {
+		this.prefix = newVal;
 	}
  	
 	
+ 	@Basic
 	private String suffix;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="suffix", nullable=true, unique=false)
 	public String getSuffix(){
 		return suffix; 
 	}
@@ -390,17 +375,16 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setSuffix(String newVal) {
-		return this.suffix = newVal;
+	public void setSuffix(String newVal) {
+		this.suffix = newVal;
 	}
  	
 	
+ 	@Basic
 	private String takenBy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="takenby", nullable=true, unique=false)
 	public String getTakenBy(){
 		return takenBy; 
 	}
@@ -408,8 +392,8 @@ public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setTakenBy(String newVal) {
-		return this.takenBy = newVal;
+	public void setTakenBy(String newVal) {
+		this.takenBy = newVal;
 	}
 
 	/**

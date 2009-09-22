@@ -58,19 +58,19 @@ abstract public class ModelBase {
 		this.modified = modified;
 	}
 	
-	public static final String GUID = "GUID";
-	protected String guid;
-	@Column(name = "guid", nullable = false, length = 36)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public String getGuid() {
-		return guid;
-	}
-
-	// this set was needed to satisfy hibernate's requirement that
-	// persisted get methods have a corresponding set method.
-	private void setGuid(String newVal) {
-		guid = newVal;
-	}
+//	public static final String GUID = "GUID";
+//	protected String guid;
+//	@Column(name = "guid", nullable = false, length = 36)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	public String getGuid() {
+//		return guid;
+//	}
+//
+//	// this set was needed to satisfy hibernate's requirement that
+//	// persisted get methods have a corresponding set method.
+//	private void setGuid(String newVal) {
+//		guid = newVal;
+//	}
 	
 	/**
 	 * 
@@ -202,12 +202,12 @@ abstract public class ModelBase {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (getGuid() == null)
-			return false;
+//		if (getGuid() == null)
+//			return false;
 		if (!(obj instanceof ModelBase))
 			return false;
-
-		return this.getGuid().equals(((ModelBase) obj).getGuid());
+		return true;
+//		return this.getGuid().equals(((ModelBase) obj).getGuid());
 	}
 	
 	/**
@@ -221,9 +221,9 @@ abstract public class ModelBase {
 			throws UnknownPropertyException {
 		if (propertyName == null)
 			throw new IllegalArgumentException("propertyName must not be null");
-		if (GUID.equals(propertyName))
-			return ModelBase.class;
-
+//		if (GUID.equals(propertyName))
+//			return ModelBase.class;
+//
 		throw new UnknownPropertyException(this.getClass(), propertyName);
 	}
 	
@@ -232,9 +232,9 @@ abstract public class ModelBase {
 			throws UnknownPropertyException {
 		if (propertyName == null)
 			throw new IllegalArgumentException("propertyName must not be null");
-		if (GUID.equals(propertyName))
-			return getGuid();
-
+//		if (GUID.equals(propertyName))
+//			return getGuid();
+//
 		throw new UnknownPropertyException(this.getClass(), propertyName);
 	}
 
@@ -242,9 +242,9 @@ abstract public class ModelBase {
 			throws PropertyException {
 		if (propertyName == null)
 			throw new IllegalArgumentException("propertyName must not be null");
-		if (GUID.equals(propertyName))
-			throw new UnmodifiablePropertyException(this.getClass(),
-					propertyName);
+//		if (GUID.equals(propertyName))
+//			throw new UnmodifiablePropertyException(this.getClass(),
+//					propertyName);
 		throw new UnknownPropertyException(this.getClass(), propertyName);
 	}
 }

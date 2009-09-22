@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,14 +44,12 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Contact.findall", query = "from Contact"),
-	@NamedQuery(name = "Contact.byId", query = "select a from Contact a where a.id= :id")
+	@NamedQuery(name = "contact.findall", query = "from contact"),
+	@NamedQuery(name = "contact.byId", query = "select a from contact a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.Contact")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "contact")
 public class Contact extends ModelBase {
 	/**
@@ -114,12 +113,11 @@ public class Contact extends ModelBase {
 
  	
 	
+ 	@Basic
 	private String title;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="title", nullable=true, unique=false)
 	public String getTitle(){
 		return title; 
 	}
@@ -127,16 +125,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setTitle(String newVal) {
-		return this.title = newVal;
+	public void setTitle(String newVal) {
+		this.title = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Address address;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Address getAddress(){
 		return address; 
 	}
@@ -144,16 +142,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Address setAddress(Address newVal) {
-		return this.address = newVal;
+	public void setAddress(Address newVal) {
+		this.address = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Contact contact;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Contact getContact(){
 		return contact; 
 	}
@@ -161,17 +159,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Contact setContact(Contact newVal) {
-		return this.contact = newVal;
+	public void setContact(Contact newVal) {
+		this.contact = newVal;
 	}
  	
 	
+ 	@Basic
 	private String userAcctId;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="useracctid", nullable=true, unique=false)
 	public String getUserAcctId(){
 		return userAcctId; 
 	}
@@ -179,17 +176,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setUserAcctId(String newVal) {
-		return this.userAcctId = newVal;
+	public void setUserAcctId(String newVal) {
+		this.userAcctId = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean webAcctNameIncomplete;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="webacctnameincomplete", nullable=true, unique=false)
 	public Boolean getWebAcctNameIncomplete(){
 		return webAcctNameIncomplete; 
 	}
@@ -197,17 +193,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setWebAcctNameIncomplete(Boolean newVal) {
-		return this.webAcctNameIncomplete = newVal;
+	public void setWebAcctNameIncomplete(Boolean newVal) {
+		this.webAcctNameIncomplete = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean webCatalogChange;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="webcatalogchange", nullable=true, unique=false)
 	public Boolean getWebCatalogChange(){
 		return webCatalogChange; 
 	}
@@ -215,17 +210,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setWebCatalogChange(Boolean newVal) {
-		return this.webCatalogChange = newVal;
+	public void setWebCatalogChange(Boolean newVal) {
+		this.webCatalogChange = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean webStateChange;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="webstatechange", nullable=true, unique=false)
 	public Boolean getWebStateChange(){
 		return webStateChange; 
 	}
@@ -233,17 +227,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setWebStateChange(Boolean newVal) {
-		return this.webStateChange = newVal;
+	public void setWebStateChange(Boolean newVal) {
+		this.webStateChange = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean transmitted;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="transmitted", nullable=true, unique=false)
 	public Boolean getTransmitted(){
 		return transmitted; 
 	}
@@ -251,17 +244,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setTransmitted(Boolean newVal) {
-		return this.transmitted = newVal;
+	public void setTransmitted(Boolean newVal) {
+		this.transmitted = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean doNotMail;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="donotmail", nullable=true, unique=false)
 	public Boolean getDoNotMail(){
 		return doNotMail; 
 	}
@@ -269,17 +261,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setDoNotMail(Boolean newVal) {
-		return this.doNotMail = newVal;
+	public void setDoNotMail(Boolean newVal) {
+		this.doNotMail = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean useContactAddress;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="usecontactaddress", nullable=true, unique=false)
 	public Boolean getUseContactAddress(){
 		return useContactAddress; 
 	}
@@ -287,17 +278,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setUseContactAddress(Boolean newVal) {
-		return this.useContactAddress = newVal;
+	public void setUseContactAddress(Boolean newVal) {
+		this.useContactAddress = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean isIndividual;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="isindividual", nullable=true, unique=false)
 	public Boolean getIsIndividual(){
 		return isIndividual; 
 	}
@@ -305,16 +295,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setIsIndividual(Boolean newVal) {
-		return this.isIndividual = newVal;
+	public void setIsIndividual(Boolean newVal) {
+		this.isIndividual = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private SalesRep defaultSalesRep;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public SalesRep getDefaultSalesRep(){
 		return defaultSalesRep; 
 	}
@@ -322,17 +312,16 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public SalesRep setDefaultSalesRep(SalesRep newVal) {
-		return this.defaultSalesRep = newVal;
+	public void setDefaultSalesRep(SalesRep newVal) {
+		this.defaultSalesRep = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean mailerCampaigns;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="mailercampaigns", nullable=true, unique=false)
 	public Boolean getMailerCampaigns(){
 		return mailerCampaigns; 
 	}
@@ -340,8 +329,8 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setMailerCampaigns(Boolean newVal) {
-		return this.mailerCampaigns = newVal;
+	public void setMailerCampaigns(Boolean newVal) {
+		this.mailerCampaigns = newVal;
 	}
 
 	/**

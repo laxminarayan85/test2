@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,14 +44,12 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Account.findall", query = "from Account"),
-	@NamedQuery(name = "Account.byId", query = "select a from Account a where a.id= :id")
+	@NamedQuery(name = "account.findall", query = "from account"),
+	@NamedQuery(name = "account.byId", query = "select a from account a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.Account")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "account")
 public class Account extends ModelBase {
 	/**
@@ -174,12 +173,11 @@ public class Account extends ModelBase {
 
  	
 	
+ 	@Basic
 	private Long accountId;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="accountid", nullable=true, unique=false)
 	public Long getAccountId(){
 		return accountId; 
 	}
@@ -187,17 +185,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Long setAccountId(Long newVal) {
-		return this.accountId = newVal;
+	public void setAccountId(Long newVal) {
+		this.accountId = newVal;
 	}
  	
 	
+ 	@Basic
 	private String status;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="status", nullable=true, unique=false)
 	public String getStatus(){
 		return status; 
 	}
@@ -205,17 +202,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setStatus(String newVal) {
-		return this.status = newVal;
+	public void setStatus(String newVal) {
+		this.status = newVal;
 	}
  	
 	
+ 	@Basic
 	private Long masterAcct;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="masteracct", nullable=true, unique=false)
 	public Long getMasterAcct(){
 		return masterAcct; 
 	}
@@ -223,17 +219,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Long setMasterAcct(Long newVal) {
-		return this.masterAcct = newVal;
+	public void setMasterAcct(Long newVal) {
+		this.masterAcct = newVal;
 	}
  	
 	
+ 	@Basic
 	private String resaleNumber;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="resalenumber", nullable=true, unique=false)
 	public String getResaleNumber(){
 		return resaleNumber; 
 	}
@@ -241,17 +236,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setResaleNumber(String newVal) {
-		return this.resaleNumber = newVal;
+	public void setResaleNumber(String newVal) {
+		this.resaleNumber = newVal;
 	}
  	
 	
+ 	@Basic
 	private String title;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="title", nullable=true, unique=false)
 	public String getTitle(){
 		return title; 
 	}
@@ -259,17 +253,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setTitle(String newVal) {
-		return this.title = newVal;
+	public void setTitle(String newVal) {
+		this.title = newVal;
 	}
  	
 	
+ 	@Basic
 	private String customerPO;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="customerpo", nullable=true, unique=false)
 	public String getCustomerPO(){
 		return customerPO; 
 	}
@@ -277,16 +270,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCustomerPO(String newVal) {
-		return this.customerPO = newVal;
+	public void setCustomerPO(String newVal) {
+		this.customerPO = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Address shipToAddress;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Address getShipToAddress(){
 		return shipToAddress; 
 	}
@@ -294,16 +287,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Address setShipToAddress(Address newVal) {
-		return this.shipToAddress = newVal;
+	public void setShipToAddress(Address newVal) {
+		this.shipToAddress = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Address billToAddress;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Address getBillToAddress(){
 		return billToAddress; 
 	}
@@ -311,16 +304,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Address setBillToAddress(Address newVal) {
-		return this.billToAddress = newVal;
+	public void setBillToAddress(Address newVal) {
+		this.billToAddress = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Contact contact;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Contact getContact(){
 		return contact; 
 	}
@@ -328,16 +321,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Contact setContact(Contact newVal) {
-		return this.contact = newVal;
+	public void setContact(Contact newVal) {
+		this.contact = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private Contact billToContact;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public Contact getBillToContact(){
 		return billToContact; 
 	}
@@ -345,17 +338,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Contact setBillToContact(Contact newVal) {
-		return this.billToContact = newVal;
+	public void setBillToContact(Contact newVal) {
+		this.billToContact = newVal;
 	}
  	
 	
+ 	@Basic
 	private Long salesRank;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="salesrank", nullable=true, unique=false)
 	public Long getSalesRank(){
 		return salesRank; 
 	}
@@ -363,17 +355,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Long setSalesRank(Long newVal) {
-		return this.salesRank = newVal;
+	public void setSalesRank(Long newVal) {
+		this.salesRank = newVal;
 	}
  	
 	
+ 	@Basic
 	private String userAcctId;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="useracctid", nullable=true, unique=false)
 	public String getUserAcctId(){
 		return userAcctId; 
 	}
@@ -381,17 +372,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setUserAcctId(String newVal) {
-		return this.userAcctId = newVal;
+	public void setUserAcctId(String newVal) {
+		this.userAcctId = newVal;
 	}
  	
 	
+ 	@Basic
 	private String externalAcctId;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="externalacctid", nullable=true, unique=false)
 	public String getExternalAcctId(){
 		return externalAcctId; 
 	}
@@ -399,17 +389,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setExternalAcctId(String newVal) {
-		return this.externalAcctId = newVal;
+	public void setExternalAcctId(String newVal) {
+		this.externalAcctId = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean dollarDiscount;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="dollardiscount", nullable=true, unique=false)
 	public Boolean getDollarDiscount(){
 		return dollarDiscount; 
 	}
@@ -417,17 +406,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setDollarDiscount(Boolean newVal) {
-		return this.dollarDiscount = newVal;
+	public void setDollarDiscount(Boolean newVal) {
+		this.dollarDiscount = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean fileOriginals;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="fileoriginals", nullable=true, unique=false)
 	public Boolean getFileOriginals(){
 		return fileOriginals; 
 	}
@@ -435,17 +423,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setFileOriginals(Boolean newVal) {
-		return this.fileOriginals = newVal;
+	public void setFileOriginals(Boolean newVal) {
+		this.fileOriginals = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean webAccessEnabled;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="webaccessenabled", nullable=true, unique=false)
 	public Boolean getWebAccessEnabled(){
 		return webAccessEnabled; 
 	}
@@ -453,17 +440,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setWebAccessEnabled(Boolean newVal) {
-		return this.webAccessEnabled = newVal;
+	public void setWebAccessEnabled(Boolean newVal) {
+		this.webAccessEnabled = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean prospect;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="prospect", nullable=true, unique=false)
 	public Boolean getProspect(){
 		return prospect; 
 	}
@@ -471,17 +457,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setProspect(Boolean newVal) {
-		return this.prospect = newVal;
+	public void setProspect(Boolean newVal) {
+		this.prospect = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean autoPayEnabled;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="autopayenabled", nullable=true, unique=false)
 	public Boolean getAutoPayEnabled(){
 		return autoPayEnabled; 
 	}
@@ -489,17 +474,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setAutoPayEnabled(Boolean newVal) {
-		return this.autoPayEnabled = newVal;
+	public void setAutoPayEnabled(Boolean newVal) {
+		this.autoPayEnabled = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean optOutMarketing;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="optoutmarketing", nullable=true, unique=false)
 	public Boolean getOptOutMarketing(){
 		return optOutMarketing; 
 	}
@@ -507,17 +491,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setOptOutMarketing(Boolean newVal) {
-		return this.optOutMarketing = newVal;
+	public void setOptOutMarketing(Boolean newVal) {
+		this.optOutMarketing = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean acctIsIndividual;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="acctisindividual", nullable=true, unique=false)
 	public Boolean getAcctIsIndividual(){
 		return acctIsIndividual; 
 	}
@@ -525,17 +508,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setAcctIsIndividual(Boolean newVal) {
-		return this.acctIsIndividual = newVal;
+	public void setAcctIsIndividual(Boolean newVal) {
+		this.acctIsIndividual = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean taxExempt;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="taxexempt", nullable=true, unique=false)
 	public Boolean getTaxExempt(){
 		return taxExempt; 
 	}
@@ -543,17 +525,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setTaxExempt(Boolean newVal) {
-		return this.taxExempt = newVal;
+	public void setTaxExempt(Boolean newVal) {
+		this.taxExempt = newVal;
 	}
  	
 	
+ 	@Basic
 	private String payCommissions;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="paycommissions", nullable=true, unique=false)
 	public String getPayCommissions(){
 		return payCommissions; 
 	}
@@ -561,17 +542,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setPayCommissions(String newVal) {
-		return this.payCommissions = newVal;
+	public void setPayCommissions(String newVal) {
+		this.payCommissions = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean poRequired;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="porequired", nullable=true, unique=false)
 	public Boolean getPoRequired(){
 		return poRequired; 
 	}
@@ -579,17 +559,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setPoRequired(Boolean newVal) {
-		return this.poRequired = newVal;
+	public void setPoRequired(Boolean newVal) {
+		this.poRequired = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean applyFinanceCharges;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="applyfinancecharges", nullable=true, unique=false)
 	public Boolean getApplyFinanceCharges(){
 		return applyFinanceCharges; 
 	}
@@ -597,17 +576,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setApplyFinanceCharges(Boolean newVal) {
-		return this.applyFinanceCharges = newVal;
+	public void setApplyFinanceCharges(Boolean newVal) {
+		this.applyFinanceCharges = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean generateStatements;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="generatestatements", nullable=true, unique=false)
 	public Boolean getGenerateStatements(){
 		return generateStatements; 
 	}
@@ -615,17 +593,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setGenerateStatements(Boolean newVal) {
-		return this.generateStatements = newVal;
+	public void setGenerateStatements(Boolean newVal) {
+		this.generateStatements = newVal;
 	}
  	
 	
+ 	@Basic
 	private String businessType;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="businesstype", nullable=true, unique=false)
 	public String getBusinessType(){
 		return businessType; 
 	}
@@ -633,16 +610,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setBusinessType(String newVal) {
-		return this.businessType = newVal;
+	public void setBusinessType(String newVal) {
+		this.businessType = newVal;
 	}
  	
 	
+	@ManyToOne( cascade = CascadeType.ALL )	
 	private SalesRep salesRep;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
 	public SalesRep getSalesRep(){
 		return salesRep; 
 	}
@@ -650,17 +627,16 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public SalesRep setSalesRep(SalesRep newVal) {
-		return this.salesRep = newVal;
+	public void setSalesRep(SalesRep newVal) {
+		this.salesRep = newVal;
 	}
  	
 	
+ 	@Basic
 	private String shippingMode;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="shippingmode", nullable=true, unique=false)
 	public String getShippingMode(){
 		return shippingMode; 
 	}
@@ -668,8 +644,8 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setShippingMode(String newVal) {
-		return this.shippingMode = newVal;
+	public void setShippingMode(String newVal) {
+		this.shippingMode = newVal;
 	}
 
 	/**

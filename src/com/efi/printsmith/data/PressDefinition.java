@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,16 +44,14 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PressDefinitions.findall", query = "from PressDefinitions"),
-	@NamedQuery(name = "PressDefinitions.byId", query = "select a from PressDefinitions a where a.id= :id")
+	@NamedQuery(name = "pressdefinition.findall", query = "from pressdefinition"),
+	@NamedQuery(name = "pressdefinition.byId", query = "select a from pressdefinition a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.PressDefinitions")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
-@Table(name = "pressdefinitions")
-public class PressDefinitions extends ModelBase {
+@Entity
+@Table(name = "pressdefinition")
+public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -80,7 +79,7 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String OEMDEIVEID = "OEMDeiveID";
+	public static final String OEMDEVICEID = "OEMDeviceID";
 	/**
 	 * @generated
 	 */
@@ -169,35 +168,33 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public PressDefinitions() {
+	public PressDefinition() {
 	}
 
  	
 	
-	private Integer pressDefID;
+ 	@Basic
+	private Long pressDefID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="pressdefid", nullable=true, unique=false)
-	public Integer getPressDefID(){
+	public Long getPressDefID(){
 		return pressDefID; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setPressDefID(Integer newVal) {
-		return this.pressDefID = newVal;
+	public void setPressDefID(Long newVal) {
+		this.pressDefID = newVal;
 	}
  	
 	
+ 	@Basic
 	private String pressDefName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="pressdefname", nullable=true, unique=false)
 	public String getPressDefName(){
 		return pressDefName; 
 	}
@@ -205,17 +202,16 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setPressDefName(String newVal) {
-		return this.pressDefName = newVal;
+	public void setPressDefName(String newVal) {
+		this.pressDefName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String machineName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="machinename", nullable=true, unique=false)
 	public String getMachineName(){
 		return machineName; 
 	}
@@ -223,17 +219,16 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMachineName(String newVal) {
-		return this.machineName = newVal;
+	public void setMachineName(String newVal) {
+		this.machineName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String outputDescrip;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="outputdescrip", nullable=true, unique=false)
 	public String getOutputDescrip(){
 		return outputDescrip; 
 	}
@@ -241,17 +236,16 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setOutputDescrip(String newVal) {
-		return this.outputDescrip = newVal;
+	public void setOutputDescrip(String newVal) {
+		this.outputDescrip = newVal;
 	}
  	
 	
+ 	@Basic
 	private String productionLocation;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="productionlocation", nullable=true, unique=false)
 	public String getProductionLocation(){
 		return productionLocation; 
 	}
@@ -259,17 +253,16 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setProductionLocation(String newVal) {
-		return this.productionLocation = newVal;
+	public void setProductionLocation(String newVal) {
+		this.productionLocation = newVal;
 	}
  	
 	
+ 	@Basic
 	private String costCenter;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="costcenter", nullable=true, unique=false)
 	public String getCostCenter(){
 		return costCenter; 
 	}
@@ -277,121 +270,118 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCostCenter(String newVal) {
-		return this.costCenter = newVal;
+	public void setCostCenter(String newVal) {
+		this.costCenter = newVal;
 	}
  	
 	
-	private Integer oEMDeiveID;
+ 	@Basic
+	private String oEMDeviceID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="oemdeiveid", nullable=true, unique=false)
-	public Integer getOEMDeiveID(){
-		return oEMDeiveID; 
+	public String getOEMDeviceID(){
+		return oEMDeviceID; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setOEMDeiveID(Integer newVal) {
-		return this.oEMDeiveID = newVal;
+	public void setOEMDeviceID(String newVal) {
+		this.oEMDeviceID = newVal;
 	}
  	
 	
-	private Integer machineID;
+ 	@Basic
+	private Long machineID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="machineid", nullable=true, unique=false)
-	public Integer getMachineID(){
+	public Long getMachineID(){
 		return machineID; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setMachineID(Integer newVal) {
-		return this.machineID = newVal;
+	public void setMachineID(Long newVal) {
+		this.machineID = newVal;
 	}
  	
 	
-	private Short costingPress;
+ 	@Basic
+	private Boolean costingPress;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
-	public Short getCostingPress(){
+	public Boolean getCostingPress(){
 		return costingPress; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Short setCostingPress(Short newVal) {
-		return this.costingPress = newVal;
+	public void setCostingPress(Boolean newVal) {
+		this.costingPress = newVal;
 	}
  	
 	
-	private Short sheetFed;
+ 	@Basic
+	private Boolean sheetFed;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
-	public Short getSheetFed(){
+	public Boolean getSheetFed(){
 		return sheetFed; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Short setSheetFed(Short newVal) {
-		return this.sheetFed = newVal;
+	public void setSheetFed(Boolean newVal) {
+		this.sheetFed = newVal;
 	}
  	
 	
-	private Short rolltoRoll;
+ 	@Basic
+	private Boolean rolltoRoll;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
-	public Short getRolltoRoll(){
+	public Boolean getRolltoRoll(){
 		return rolltoRoll; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Short setRolltoRoll(Short newVal) {
-		return this.rolltoRoll = newVal;
+	public void setRolltoRoll(Boolean newVal) {
+		this.rolltoRoll = newVal;
 	}
  	
 	
-	private Short integratedDevice;
+ 	@Basic
+	private Boolean integratedDevice;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
-	public Short getIntegratedDevice(){
+	public Boolean getIntegratedDevice(){
 		return integratedDevice; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Short setIntegratedDevice(Short newVal) {
-		return this.integratedDevice = newVal;
+	public void setIntegratedDevice(Boolean newVal) {
+		this.integratedDevice = newVal;
 	}
  	
 	
+ 	@Basic
 	private String maxPaperSize;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="maxpapersize", nullable=true, unique=false)
 	public String getMaxPaperSize(){
 		return maxPaperSize; 
 	}
@@ -399,17 +389,16 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMaxPaperSize(String newVal) {
-		return this.maxPaperSize = newVal;
+	public void setMaxPaperSize(String newVal) {
+		this.maxPaperSize = newVal;
 	}
  	
 	
+ 	@Basic
 	private String minPaperSize;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="minpapersize", nullable=true, unique=false)
 	public String getMinPaperSize(){
 		return minPaperSize; 
 	}
@@ -417,259 +406,246 @@ public class PressDefinitions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMinPaperSize(String newVal) {
-		return this.minPaperSize = newVal;
+	public void setMinPaperSize(String newVal) {
+		this.minPaperSize = newVal;
 	}
  	
 	
-	private Integer laborRate;
+ 	@Basic
+	private Double laborRate;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="laborrate", nullable=true, unique=false)
-	public Integer getLaborRate(){
+	public Double getLaborRate(){
 		return laborRate; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setLaborRate(Integer newVal) {
-		return this.laborRate = newVal;
+	public void setLaborRate(Double newVal) {
+		this.laborRate = newVal;
 	}
  	
 	
-	private Integer laborMarkup;
+ 	@Basic
+	private Double laborMarkup;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="labormarkup", nullable=true, unique=false)
-	public Integer getLaborMarkup(){
+	public Double getLaborMarkup(){
 		return laborMarkup; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setLaborMarkup(Integer newVal) {
-		return this.laborMarkup = newVal;
+	public void setLaborMarkup(Double newVal) {
+		this.laborMarkup = newVal;
 	}
  	
 	
-	private Integer fixedWaste;
+ 	@Basic
+	private Double fixedWaste;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="fixedwaste", nullable=true, unique=false)
-	public Integer getFixedWaste(){
+	public Double getFixedWaste(){
 		return fixedWaste; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setFixedWaste(Integer newVal) {
-		return this.fixedWaste = newVal;
+	public void setFixedWaste(Double newVal) {
+		this.fixedWaste = newVal;
 	}
  	
 	
-	private Integer minLabor;
+ 	@Basic
+	private Double minLabor;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="minlabor", nullable=true, unique=false)
-	public Integer getMinLabor(){
+	public Double getMinLabor(){
 		return minLabor; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setMinLabor(Integer newVal) {
-		return this.minLabor = newVal;
+	public void setMinLabor(Double newVal) {
+		this.minLabor = newVal;
 	}
  	
 	
-	private Integer setupMin;
+ 	@Basic
+	private Double setupMin;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="setupmin", nullable=true, unique=false)
-	public Integer getSetupMin(){
+	public Double getSetupMin(){
 		return setupMin; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setSetupMin(Integer newVal) {
-		return this.setupMin = newVal;
+	public void setSetupMin(Double newVal) {
+		this.setupMin = newVal;
 	}
  	
 	
-	private Integer setupAddSig;
+ 	@Basic
+	private Long setupAddSig;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="setupaddsig", nullable=true, unique=false)
-	public Integer getSetupAddSig(){
+	public Long getSetupAddSig(){
 		return setupAddSig; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setSetupAddSig(Integer newVal) {
-		return this.setupAddSig = newVal;
+	public void setSetupAddSig(Long newVal) {
+		this.setupAddSig = newVal;
 	}
  	
 	
-	private Integer workTurnSetup;
+ 	@Basic
+	private Double workTurnSetup;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="workturnsetup", nullable=true, unique=false)
-	public Integer getWorkTurnSetup(){
+	public Double getWorkTurnSetup(){
 		return workTurnSetup; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setWorkTurnSetup(Integer newVal) {
-		return this.workTurnSetup = newVal;
+	public void setWorkTurnSetup(Double newVal) {
+		this.workTurnSetup = newVal;
 	}
  	
 	
-	private Integer setupAddHead;
+ 	@Basic
+	private Long setupAddHead;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="setupaddhead", nullable=true, unique=false)
-	public Integer getSetupAddHead(){
+	public Long getSetupAddHead(){
 		return setupAddHead; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setSetupAddHead(Integer newVal) {
-		return this.setupAddHead = newVal;
+	public void setSetupAddHead(Long newVal) {
+		this.setupAddHead = newVal;
 	}
  	
 	
-	private Integer washupFee;
+ 	@Basic
+	private Double washupFee;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="washupfee", nullable=true, unique=false)
-	public Integer getWashupFee(){
+	public Double getWashupFee(){
 		return washupFee; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setWashupFee(Integer newVal) {
-		return this.washupFee = newVal;
+	public void setWashupFee(Double newVal) {
+		this.washupFee = newVal;
 	}
  	
 	
-	private Integer addSigAddHead;
+ 	@Basic
+	private Long addSigAddHead;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="addsigaddhead", nullable=true, unique=false)
-	public Integer getAddSigAddHead(){
+	public Long getAddSigAddHead(){
 		return addSigAddHead; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setAddSigAddHead(Integer newVal) {
-		return this.addSigAddHead = newVal;
+	public void setAddSigAddHead(Long newVal) {
+		this.addSigAddHead = newVal;
 	}
  	
 	
-	private Integer washupMin;
+ 	@Basic
+	private Long washupMin;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="washupmin", nullable=true, unique=false)
-	public Integer getWashupMin(){
+	public Long getWashupMin(){
 		return washupMin; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setWashupMin(Integer newVal) {
-		return this.washupMin = newVal;
+	public void setWashupMin(Long newVal) {
+		this.washupMin = newVal;
 	}
  	
 	
-	private Integer washupPerFountain;
+ 	@Basic
+	private Double washupPerFountain;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="washupperfountain", nullable=true, unique=false)
-	public Integer getWashupPerFountain(){
+	public Double getWashupPerFountain(){
 		return washupPerFountain; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setWashupPerFountain(Integer newVal) {
-		return this.washupPerFountain = newVal;
+	public void setWashupPerFountain(Double newVal) {
+		this.washupPerFountain = newVal;
 	}
  	
 	
-	private Integer gripEdge;
+ 	@Basic
+	private Double gripEdge;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="gripedge", nullable=true, unique=false)
-	public Integer getGripEdge(){
+	public Double getGripEdge(){
 		return gripEdge; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Integer setGripEdge(Integer newVal) {
-		return this.gripEdge = newVal;
+	public void setGripEdge(Double newVal) {
+		this.gripEdge = newVal;
 	}
  	
 	
-	private Short perfector;
+ 	@Basic
+	private Boolean perfector;
 	/**
 	 * @generated
  	 */
-	@ManyToOne( cascade = CascadeType.ALL )	
-	public Short getPerfector(){
+	public Boolean getPerfector(){
 		return perfector; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public Short setPerfector(Short newVal) {
-		return this.perfector = newVal;
+	public void setPerfector(Boolean newVal) {
+		this.perfector = newVal;
 	}
 
 	/**
@@ -684,7 +660,7 @@ public class PressDefinitions extends ModelBase {
 		if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
 		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
 		if (COSTCENTER.equals(propertyName)) return getCostCenter();
-		if (OEMDEIVEID.equals(propertyName)) return getOEMDeiveID();
+		if (OEMDEVICEID.equals(propertyName)) return getOEMDeviceID();
 		if (MACHINEID.equals(propertyName)) return getMachineID();
 		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
 		if (SHEETFED.equals(propertyName)) return getSheetFed();
@@ -715,34 +691,34 @@ public class PressDefinitions extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PRESSDEFID.equals(propertyName)) setPressDefID((Integer)newValue); else
+		if (PRESSDEFID.equals(propertyName)) setPressDefID((Long)newValue); else
 		if (PRESSDEFNAME.equals(propertyName)) setPressDefName((String)newValue); else
 		if (MACHINENAME.equals(propertyName)) setMachineName((String)newValue); else
 		if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
 		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
 		if (COSTCENTER.equals(propertyName)) setCostCenter((String)newValue); else
-		if (OEMDEIVEID.equals(propertyName)) setOEMDeiveID((Integer)newValue); else
-		if (MACHINEID.equals(propertyName)) setMachineID((Integer)newValue); else
-		if (COSTINGPRESS.equals(propertyName)) setCostingPress((Short)newValue); else
-		if (SHEETFED.equals(propertyName)) setSheetFed((Short)newValue); else
-		if (ROLLTOROLL.equals(propertyName)) setRolltoRoll((Short)newValue); else
-		if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Short)newValue); else
+		if (OEMDEVICEID.equals(propertyName)) setOEMDeviceID((String)newValue); else
+		if (MACHINEID.equals(propertyName)) setMachineID((Long)newValue); else
+		if (COSTINGPRESS.equals(propertyName)) setCostingPress((Boolean)newValue); else
+		if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
+		if (ROLLTOROLL.equals(propertyName)) setRolltoRoll((Boolean)newValue); else
+		if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
 		if (MAXPAPERSIZE.equals(propertyName)) setMaxPaperSize((String)newValue); else
 		if (MINPAPERSIZE.equals(propertyName)) setMinPaperSize((String)newValue); else
-		if (LABORRATE.equals(propertyName)) setLaborRate((Integer)newValue); else
-		if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Integer)newValue); else
-		if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Integer)newValue); else
-		if (MINLABOR.equals(propertyName)) setMinLabor((Integer)newValue); else
-		if (SETUPMIN.equals(propertyName)) setSetupMin((Integer)newValue); else
-		if (SETUPADDSIG.equals(propertyName)) setSetupAddSig((Integer)newValue); else
-		if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((Integer)newValue); else
-		if (SETUPADDHEAD.equals(propertyName)) setSetupAddHead((Integer)newValue); else
-		if (WASHUPFEE.equals(propertyName)) setWashupFee((Integer)newValue); else
-		if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Integer)newValue); else
-		if (WASHUPMIN.equals(propertyName)) setWashupMin((Integer)newValue); else
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Integer)newValue); else
-		if (GRIPEDGE.equals(propertyName)) setGripEdge((Integer)newValue); else
-		if (PERFECTOR.equals(propertyName)) setPerfector((Short)newValue); else
+		if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+		if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Double)newValue); else
+		if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Double)newValue); else
+		if (MINLABOR.equals(propertyName)) setMinLabor((Double)newValue); else
+		if (SETUPMIN.equals(propertyName)) setSetupMin((Double)newValue); else
+		if (SETUPADDSIG.equals(propertyName)) setSetupAddSig((Long)newValue); else
+		if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((Double)newValue); else
+		if (SETUPADDHEAD.equals(propertyName)) setSetupAddHead((Long)newValue); else
+		if (WASHUPFEE.equals(propertyName)) setWashupFee((Double)newValue); else
+		if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Long)newValue); else
+		if (WASHUPMIN.equals(propertyName)) setWashupMin((Long)newValue); else
+		if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Double)newValue); else
+		if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
+		if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -753,7 +729,7 @@ public class PressDefinitions extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (PRESSDEFID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (PRESSDEFNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (MACHINENAME.equals(propertyName)) 
@@ -764,50 +740,50 @@ public class PressDefinitions extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (COSTCENTER.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (OEMDEIVEID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+		if (OEMDEVICEID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		if (MACHINEID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (COSTINGPRESS.equals(propertyName)) 
-			return new Class<?>[] {Short.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (SHEETFED.equals(propertyName)) 
-			return new Class<?>[] {Short.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (ROLLTOROLL.equals(propertyName)) 
-			return new Class<?>[] {Short.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (INTEGRATEDDEVICE.equals(propertyName)) 
-			return new Class<?>[] {Short.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (MAXPAPERSIZE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (MINPAPERSIZE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (LABORRATE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (LABORMARKUP.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (FIXEDWASTE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (MINLABOR.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (SETUPMIN.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (SETUPADDSIG.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (WORKTURNSETUP.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (SETUPADDHEAD.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (WASHUPFEE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (ADDSIGADDHEAD.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (WASHUPMIN.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Long.class};		
 		if (WASHUPPERFOUNTAIN.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (GRIPEDGE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (PERFECTOR.equals(propertyName)) 
-			return new Class<?>[] {Short.class};		
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -818,34 +794,34 @@ public class PressDefinitions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PRESSDEFID.equals(propertyName)) return PressDefinitions.class;
-		if (PRESSDEFNAME.equals(propertyName)) return PressDefinitions.class;
-		if (MACHINENAME.equals(propertyName)) return PressDefinitions.class;
-		if (OUTPUTDESCRIP.equals(propertyName)) return PressDefinitions.class;
-		if (PRODUCTIONLOCATION.equals(propertyName)) return PressDefinitions.class;
-		if (COSTCENTER.equals(propertyName)) return PressDefinitions.class;
-		if (OEMDEIVEID.equals(propertyName)) return PressDefinitions.class;
-		if (MACHINEID.equals(propertyName)) return PressDefinitions.class;
-		if (COSTINGPRESS.equals(propertyName)) return PressDefinitions.class;
-		if (SHEETFED.equals(propertyName)) return PressDefinitions.class;
-		if (ROLLTOROLL.equals(propertyName)) return PressDefinitions.class;
-		if (INTEGRATEDDEVICE.equals(propertyName)) return PressDefinitions.class;
-		if (MAXPAPERSIZE.equals(propertyName)) return PressDefinitions.class;
-		if (MINPAPERSIZE.equals(propertyName)) return PressDefinitions.class;
-		if (LABORRATE.equals(propertyName)) return PressDefinitions.class;
-		if (LABORMARKUP.equals(propertyName)) return PressDefinitions.class;
-		if (FIXEDWASTE.equals(propertyName)) return PressDefinitions.class;
-		if (MINLABOR.equals(propertyName)) return PressDefinitions.class;
-		if (SETUPMIN.equals(propertyName)) return PressDefinitions.class;
-		if (SETUPADDSIG.equals(propertyName)) return PressDefinitions.class;
-		if (WORKTURNSETUP.equals(propertyName)) return PressDefinitions.class;
-		if (SETUPADDHEAD.equals(propertyName)) return PressDefinitions.class;
-		if (WASHUPFEE.equals(propertyName)) return PressDefinitions.class;
-		if (ADDSIGADDHEAD.equals(propertyName)) return PressDefinitions.class;
-		if (WASHUPMIN.equals(propertyName)) return PressDefinitions.class;
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) return PressDefinitions.class;
-		if (GRIPEDGE.equals(propertyName)) return PressDefinitions.class;
-		if (PERFECTOR.equals(propertyName)) return PressDefinitions.class;
+		if (PRESSDEFID.equals(propertyName)) return PressDefinition.class;
+		if (PRESSDEFNAME.equals(propertyName)) return PressDefinition.class;
+		if (MACHINENAME.equals(propertyName)) return PressDefinition.class;
+		if (OUTPUTDESCRIP.equals(propertyName)) return PressDefinition.class;
+		if (PRODUCTIONLOCATION.equals(propertyName)) return PressDefinition.class;
+		if (COSTCENTER.equals(propertyName)) return PressDefinition.class;
+		if (OEMDEVICEID.equals(propertyName)) return PressDefinition.class;
+		if (MACHINEID.equals(propertyName)) return PressDefinition.class;
+		if (COSTINGPRESS.equals(propertyName)) return PressDefinition.class;
+		if (SHEETFED.equals(propertyName)) return PressDefinition.class;
+		if (ROLLTOROLL.equals(propertyName)) return PressDefinition.class;
+		if (INTEGRATEDDEVICE.equals(propertyName)) return PressDefinition.class;
+		if (MAXPAPERSIZE.equals(propertyName)) return PressDefinition.class;
+		if (MINPAPERSIZE.equals(propertyName)) return PressDefinition.class;
+		if (LABORRATE.equals(propertyName)) return PressDefinition.class;
+		if (LABORMARKUP.equals(propertyName)) return PressDefinition.class;
+		if (FIXEDWASTE.equals(propertyName)) return PressDefinition.class;
+		if (MINLABOR.equals(propertyName)) return PressDefinition.class;
+		if (SETUPMIN.equals(propertyName)) return PressDefinition.class;
+		if (SETUPADDSIG.equals(propertyName)) return PressDefinition.class;
+		if (WORKTURNSETUP.equals(propertyName)) return PressDefinition.class;
+		if (SETUPADDHEAD.equals(propertyName)) return PressDefinition.class;
+		if (WASHUPFEE.equals(propertyName)) return PressDefinition.class;
+		if (ADDSIGADDHEAD.equals(propertyName)) return PressDefinition.class;
+		if (WASHUPMIN.equals(propertyName)) return PressDefinition.class;
+		if (WASHUPPERFOUNTAIN.equals(propertyName)) return PressDefinition.class;
+		if (GRIPEDGE.equals(propertyName)) return PressDefinition.class;
+		if (PERFECTOR.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -856,7 +832,7 @@ public class PressDefinitions extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		PressDefinitions objT = (PressDefinitions)obj;
+		PressDefinition objT = (PressDefinition)obj;
 		if (! SmartEquals(getPressDefID(), objT.getPressDefID()))
 			return false;
 		if (! SmartEquals(getPressDefName(), objT.getPressDefName()))
@@ -869,7 +845,7 @@ public class PressDefinitions extends ModelBase {
 			return false;
 		if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
 			return false;
-		if (! SmartEquals(getOEMDeiveID(), objT.getOEMDeiveID()))
+		if (! SmartEquals(getOEMDeviceID(), objT.getOEMDeviceID()))
 			return false;
 		if (! SmartEquals(getMachineID(), objT.getMachineID()))
 			return false;

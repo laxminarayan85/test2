@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,21 +16,21 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
-@Entity
-@Table(name = "users")
 @NamedQueries( {
 		@NamedQuery(name = "users.findAll", query = "from User"),
 		@NamedQuery(name = "users.byId", query = "select u from User u where u.id= :id"),
 		@NamedQuery(name = "users.byName", query = "select u from User u where upper(u.name)= upper(:name)")
 })
-		
+
+@Entity
+@Table(name = "users")		
 public class User extends ModelBase{
 	@Basic
-	@Column(name = "name", nullable = true, unique = true)
+	@Column(name = "name", nullable = false, unique = false)
 	private String name;
 
 	@Basic
-	@Column(name = "password", nullable = true, unique = false)
+	@Column(name = "password", nullable = false, unique = false)
 	private String password;
 
 	public User() {

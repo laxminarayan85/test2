@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -43,14 +44,12 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SalesRep.findall", query = "from SalesRep"),
-	@NamedQuery(name = "SalesRep.byId", query = "select a from SalesRep a where a.id= :id")
+	@NamedQuery(name = "salesrep.findall", query = "from salesrep"),
+	@NamedQuery(name = "salesrep.byId", query = "select a from salesrep a where a.id= :id")
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.SalesRep")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "salesrep")
 public class SalesRep extends ModelBase {
 	/**
@@ -66,12 +65,11 @@ public class SalesRep extends ModelBase {
 
  	
 	
+ 	@Basic
 	private String name;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="name", nullable=true, unique=false)
 	public String getName(){
 		return name; 
 	}
@@ -79,8 +77,8 @@ public class SalesRep extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setName(String newVal) {
-		return this.name = newVal;
+	public void setName(String newVal) {
+		this.name = newVal;
 	}
 
 	/**

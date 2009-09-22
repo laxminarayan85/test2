@@ -81,7 +81,7 @@ public class AccountService {
 			account.setId(null);
 
 			account.setCreated(new Timestamp(new Date().getTime()));
-
+			account.setModified(new Timestamp(new Date().getTime()));
 		} else {
 
 			// Existing consultant is updated - do nothing.
