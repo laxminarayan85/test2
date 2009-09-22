@@ -3,6 +3,7 @@
 		width="100%" height="100%" 
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.view.*" xmlns:flexlib="http://code.google.com/p/flexlib/">
     <!--mx:TraceTarget/-->
+ 	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
     <mx:HBox x="0" y="0" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
@@ -50,7 +51,7 @@
 
 <mx:Script>
 	<![CDATA[
-		import com.efi.view.CustomerEditor;
+		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
@@ -70,6 +71,7 @@
 		import flash.events.TimerEvent;
 		import flash.external.ExternalInterface;
 		import flash.utils.Timer;
+		import com.efi.view.EditCustomer;
 		import com.efi.view.ListUsers;
 		import flexlib.controls.SuperTabBar;
 		import flexlib.events.TabReorderEvent;
@@ -114,13 +116,14 @@
 		}
 		
 		private function doAccounts():void {
-			var child:CustomerEditor = new CustomerEditor();
+			var child:EditCustomer = new EditCustomer();
 			addUniqueTab(child);
 		}
 		private function doUsers():void {
 			var child:ListUsers = new ListUsers();
 			addUniqueTab(child);
 		}
+		
 		private function doPressDefinitions():void {
 			var child:PressDefinitions = new PressDefinitions();
 			addUniqueTab(child);
