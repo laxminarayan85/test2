@@ -76,6 +76,7 @@ public class UserService {
 			// New user is created
 			user.setId(null);
 			user.setCreated(new Date());
+			user.setModified(new Date());
 		} else {
 		}
 
