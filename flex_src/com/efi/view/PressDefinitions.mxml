@@ -43,6 +43,7 @@ width="772" height="845" title="Press Definitions"
 		notification_consumer.subscribe();     
 	    loaderService.getPressDefinitions();
 	    pressDefinition = new PressDefinition();
+	
 	}      
 	                                                   	
 	public function loadPressDefinitions():void {   
@@ -94,43 +95,65 @@ width="772" height="845" title="Press Definitions"
 	 pressDefinition.washupPerFountain = parseInt(WashupTimeFountain.text);
 	 pressDefinition.gripEdge = parseInt(GripEdge.text);
 	 pressDefinition.perfector = Perfector.selected;
+	 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
+	 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
+	 pressDefinition.numberHeads= parseInt(NumberHeads.text);
 	}
 	private function doSave():void {
 	 
 		mapAccountData()
 		saveService.addUpdatePressDefinitions(pressDefinition);                                          		
 	}       
-/* 	private function doRefresh():void {           
-	
-	 pressDefinition.pressDefID
-	 pressDefinition.pressDefName 
-	 pressDefinition.machineName
-	 pressDefinition.outputDescrip
-	 pressDefinition.productionLocation
-	 pressDefinition.costCenter
-	 pressDefinition.oEMDeviceID 
-	 pressDefinition.machineID 
-	 pressDefinition.costingPress 
-	 pressDefinition.sheetFed
-	 pressDefinition.rolltoRoll
-	 pressDefinition.integratedDevice 
-	 pressDefinition.maxPaperSize 
-	 pressDefinition.minPaperSize 
-	 pressDefinition.laborRate 
-	 pressDefinition.laborMarkup 
-	 pressDefinition.fixedWaste 
-	 pressDefinition.minLabor 
-	 pressDefinition.setupMin 
-	 pressDefinition.setupAddSig
-	 pressDefinition.workTurnSetup
-	 pressDefinition.setupAddHead 
-	 pressDefinition.washupFee
-	 pressDefinition.addSigAddHead
-	 pressDefinition.washupMin 
-	 pressDefinition.washupPerFountain 
-	 pressDefinition.gripEdge 
-	 pressDefinition.perfector
-	} */
+	private function doNext():void {
+	 
+	  
+		doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex+1;
+		dataGrid.setFocus();
+		doPressGridClick();
+		                                        		
+	}       
+	private function doPrev():void {
+	  
+	 	doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex-1;
+		dataGrid.setFocus();
+		doPressGridClick();                          		
+	}       
+	private function doNew():void {
+	    pressDefinition = new PressDefinition();
+	 	/* Name.text = ' ';
+		MachineName.text = ' ';
+	 	OutPutDescription.text = ' ';
+		ProductionLocation.text = ' ';
+	  	CostCenter.text = ' ';
+	 	OEMDeviceID.text = ' ';
+		MachineId.text = ' ';
+	 	CostingPress.selected = false; 
+	 	SheetFed.selected = true;
+	 	RollFed.selected = false;
+	 	IntegratedDevice.selected = false;
+	 	MaxPaperSize.text= ' ';
+	 	MinPaperSize.text= ' ';
+	 	LaborRate.text= '0';
+	 	laborMarkup.text= '0';
+	 	FixedWaste.text='0';
+	 	MinLabor.text='0';
+	 	SetupMin.text= '0';
+	 	SetupAddSig.text= '0';
+	 	WorkTurn.text = '0';
+		setupAddHead.text = '0';
+	 	WashupFee.text ='0';
+		AddSigAddHead.text = '0';
+	 	WashupMin.text = '0 ';
+	 	WashupTimeFountain.text = '0';
+	 	GripEdge.text = '0';
+		Perfector.selected = false;
+	 	AvgImpressPerhour.text = '0';
+		SetupAddRun.text = '0';
+	 	NumberHeads.text = '0';   
+	 	dataGrid.          		 */
+	}       
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadPressDefinitions();
 	}
@@ -158,12 +181,13 @@ width="772" height="845" title="Press Definitions"
 </mx:Script>	
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
-	<mx:DataGrid x="10" y="71" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116">
+	<mx:DataGrid x="10" y="71" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" 
+		itemClick="doPressGridClick()" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="Default Sheet-Fed" dataField="SheetFed"/>
 			<mx:DataGridColumn headerText="Default Roll-Fed" dataField="RollFed"/>
 			<mx:DataGridColumn headerText="Name" dataField="pressDefName"/>
-			<mx:DataGridColumn headerText="Paper Style" dataField="machineName"/>
+			<mx:DataGridColumn headerText="Paper Style" dataField="if SheetFed then 'Sheet' else 'roll'"  />
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
@@ -208,7 +232,7 @@ width="772" height="845" title="Press Definitions"
 	<mx:TextInput x="606" y="500" width="106" id="WashupFee" text="{pressDefinition.washupFee}"/>
 	<mx:TextInput x="606" y="530" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}"/>
 	<mx:Label x="648" y="560" text="(per wash)"/>
-	<mx:TextInput x="534" y="590" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}"/>
+	<mx:TextInput x="606" y="588" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}"/>
 	<mx:TextInput x="534" y="560" width="106" id="WashupMin" text="{pressDefinition.washupMin}"/>
 	<mx:Label x="445" y="397" text="Avg. Impression per Hour:"/>
 	<mx:Label x="512" y="430" text="Labor Markup:"/>
@@ -217,7 +241,7 @@ width="772" height="845" title="Press Definitions"
 	<mx:Label x="519" y="510" text="Washup Fee:"/>
 	<mx:Label x="439" y="535" text="Add'l Signatures Add'l Head:"/>
 	<mx:Label x="424" y="569" text="Washup Minutes:"/>
-	<mx:Label x="367" y="590" text="Washup Time per fountain:" textAlign="right"/>
+	<mx:Label x="439" y="590" text="Washup Time per fountain:" textAlign="right"/>
 	<mx:HRule x="0" y="642" width="722" height="6"/>
 	<mx:HRule x="20" y="730" width="702" height="6"/>
 	<mx:HRule x="10" y="730" width="702" height="6"/>
@@ -228,16 +252,16 @@ width="772" height="845" title="Press Definitions"
 	<mx:Button x="10" y="700" label="Add Charges"/>
 	<mx:CheckBox x="340" y="670" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Panel x="570" y="195" width="127" height="127" layout="absolute" title="Paper Style">
-		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" selected="false" id="SheetFed"/>
-		<mx:RadioButton x="10" y="41" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" />
+		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="SheetFed" selected="{pressDefinition.sheetFed}"/>
+		<mx:RadioButton x="10" y="41" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" selected="{pressDefinition.rolltoRoll}"/>
 	</mx:Panel>
-	<mx:Button x="10" y="10" width="38" height="38">
+	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="56" y="10" width="38" height="38">
+		<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
 			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center" />
 		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
 		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
@@ -247,7 +271,7 @@ width="772" height="845" title="Press Definitions"
 			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
-		<mx:Button x="263" y="10" width="38" height="38">
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 		</mx:Button>
 		<mx:Button x="370" y="10" width="38" height="38">
