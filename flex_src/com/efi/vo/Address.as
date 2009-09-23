@@ -33,7 +33,7 @@ public var firstName:String = "";
 public var lastName:String = "";
 public var jobTitle:String = "";
 public var salutation:String = "";
-public var comLinks:Address;
+public var comLinks:ComLink;
 public var prefix:String = "";
 public var suffix:String = "";
 public var takenBy:String = "";

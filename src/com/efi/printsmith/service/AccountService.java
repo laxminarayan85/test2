@@ -22,7 +22,8 @@ public class AccountService {
 	private static final String PERSISTENCE_UNIT = "printsmith_db";
 
 	private static Logger log = Logger.getLogger(AccountService.class);
-
+	
+	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 	public AccountService() {
 
 		super();
@@ -33,10 +34,7 @@ public class AccountService {
 
 		try {
 			log.debug("** getAccounts called...");
-	
-			EntityManagerFactory entityManagerFactory = Persistence
-					.createEntityManagerFactory(PERSISTENCE_UNIT);
-	
+		
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
 			Query findAllQuery = em.createQuery("from Account");
@@ -55,25 +53,36 @@ public class AccountService {
 		return new ArrayList<Account>();
 	}
 
+	public List<Account> getAccountsByPartialName(String name) throws Exception {
+		try {
+			log.debug("** getAccountsByPartialName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "from Account where title like '" + name+ "%'";
+			Query query = em.createQuery(queryString);
+			List<Account> accounts = query.getResultList();
+	
+			if (accounts != null)
+	
+				log.debug("** Found " + accounts.size() + "records:");
+	
+			return accounts;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return new ArrayList<Account>();		
+	}
+	
 	public void addUpdateAccount(Account account) throws Exception {
 
 		log.debug("** addUpdateAccount called...");
 
 		try {
 			EntityManager em;
-			EntityManagerFactory emf;
-			emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 
-			em = emf.createEntityManager();
+			em = entityManagerFactory.createEntityManager();
 						
-		// When passing Boolean and Number values from the Flash client to a
-
-		// Java object, Java interprets null values as the default values for
-
-		// primitive types; for example, 0 for double, float, long, int, short,
-
-		// byte.
-
 		if (account.getId() == null || account.getId() == 0) {
 
 			// New consultant is created
@@ -126,10 +135,7 @@ public class AccountService {
 
 		log.debug("** deleteAccount called...");
 
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory(PERSISTENCE_UNIT);
-
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = entityManagerFactory.createEntityManager();
 
 		Query q = em.createNamedQuery("accounts.byId");
 

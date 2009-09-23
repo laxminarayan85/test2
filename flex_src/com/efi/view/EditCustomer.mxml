@@ -21,6 +21,7 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.Contact;
 	import com.efi.vo.Address;
                                          
 	import com.efi.vo.Account;                                         
@@ -45,10 +46,13 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
 	    account = new Account();
-	    account.title = "Brad Knabel";
+	    /* Note - the following constructors NEED to live in the .vo object constructor for the respective objects... */
 	    account.shipToAddress = new Address();
-	    account.shipToAddress.firstName = "Jenny";
-	    account.shipToAddress.lastName = "Goldsmith";
+	    account.billToAddress = new Address();
+	    account.billToContact = new Contact();
+	    account.contact = new Contact();
+	    account.contact.address = new Address();
+	    account.billToContact.address = new Address();
 	}      
 	                                                   	
 	public function loadAccounts():void {   
@@ -83,13 +87,48 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 	//     titleWindow.user = dataGrid.selectedItem as User;
 	//     titleWindow.formIsEmpty = false;
 	}
-	          
+	
+	private function mapAccountData():void {
+		account.title = name_edit.text;
+		account.externalAcctId = external_ref_edit.text;
+		account.externalAcctId = external_acct_id_edit.text;
+		
+		account.shipToAddress.name = ship_company_edit.text;
+		account.shipToAddress.street1 = ship_street1_edit.text;
+		account.shipToAddress.street2 = ship_street2_edit.text;
+		account.shipToAddress.city = ship_city_edit.text;
+		account.shipToAddress.zip = ship_zip_edit.text;
+		account.shipToAddress.country = ship_country_edit.text;
+		account.shipToAddress.state = ship_state_edit.text;
+		
+		account.billToAddress.name = bill_company_edit.text;
+		account.billToAddress.street1 =	bill_street1_edit.text;		
+		account.billToAddress.street2 =	bill_street2_edit.text;		
+		account.billToAddress.city = bill_city_edit.text;
+		account.billToAddress.zip =	bill_zip_edit.text;		     
+		account.billToAddress.country =	bill_country_edit.text;
+		account.billToAddress.state	= bill_state_edit.text;
+
+		account.contact.address.firstName = ship_contact_first_name_edit.text;
+		account.contact.address.lastName = ship_contact_last_name_edit.text;		
+		account.contact.address.prefix = ship_contact_prefix_edit.text;			
+		account.contact.address.suffix = ship_contact_suffix_edit.text;			
+		account.contact.address.jobTitle = ship_contact_job_title_edit.text;		
+		account.contact.address.salutation = ship_contact_salutation_edit.text;
+
+		account.billToContact.address.firstName = bill_contact_first_name_edit.text;
+		account.billToContact.address.lastName = bill_contact_last_name_edit.text;
+		account.billToContact.address.prefix = bill_contact_prefix_edit.text;	
+		account.billToContact.address.suffix = bill_contact_suffix_edit.text;
+		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
+		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
+	}
+	
 	private function doSave():void {
-//		account.created = new Date();
-//		account.modified = new Date();
-		account.title = "Brad";
+		mapAccountData();
 		saveService.addUpdateAccount(account);                                        		
 	}                  
+	
 	private function handleSaveResult(ev:ResultEvent):void {
 	}
 
@@ -123,81 +162,79 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.id}"/>
 				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
-				<mx:TextInput x="282" y="38" id="external_ref_edit" />
-				<mx:TextInput x="282" y="66" id="external_acct_id_edit"/>
+				<mx:TextInput x="282" y="38" id="external_ref_edit"  text="{account.externalAcctId}"/>
+				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
 				<mx:Panel x="10" y="94" width="325" height="182" layout="absolute" title="Invoice Address">
-					<mx:TextInput x="85" y="10" width="210" id="company_edit"/>
+					<mx:TextInput x="85" y="10" width="210" id="ship_company_edit" text="{account.shipToAddress.name}"/>
 					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="36" text="&#xd;" width="210" id="street_edit1"/>
-					<mx:TextInput x="85" y="62" text="&#xd;" width="210" id="street_edit2"/>
+					<mx:TextInput x="85" y="36" width="210" id="ship_street1_edit" text="{account.shipToAddress.street1}"/>
+					<mx:TextInput x="85" y="62" width="210" id="ship_street2_edit" text="{account.shipToAddress.street2}"/>
 					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="88" text="&#xd;" width="123" id="city_edit"/>
-					<mx:TextInput x="85" y="114" text="&#xd;" width="75" id="zip_edit"/>
+					<mx:TextInput x="85" y="88" width="123" id="ship_city_edit" text="{account.shipToAddress.city}"/>
+					<mx:TextInput x="263" y="88" width="32" id="ship_state_edit" text="{account.shipToAddress.state}"/>
+					<mx:TextInput x="85" y="114" width="75" id="ship_zip_edit" text="{account.shipToAddress.zip}"/>
 					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
-					<mx:TextInput x="233" y="114" text=" " width="62" id="country_edit"/>
+					<mx:TextInput x="233" y="114" width="62" id="ship_country_edit" text="{account.shipToAddress.country}"/>
 					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
-					<mx:TextInput x="263" y="88" text="&#xd;" width="32" id="state_edit"/>
 					<mx:Label x="216" y="88" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
 				</mx:Panel>
 				<mx:Panel x="344" y="94" width="325" height="182" layout="absolute" title="Statement Address">
-					<mx:TextInput x="85" y="10" text="&#xd;" width="210" id="company_edit0"/>
+					<mx:TextInput x="85" y="10" width="210" id="bill_company_edit" text="{account.billToAddress.name}"/>
 					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="36" text="&#xd;" width="210" id="street_edit0"/>
-					<mx:TextInput x="85" y="62" text="&#xd;" width="210" id="street_edit3"/>
+					<mx:TextInput x="85" y="36" width="210" id="bill_street1_edit" text="{account.billToAddress.street1}"/>
+					<mx:TextInput x="85" y="62" width="210" id="bill_street2_edit" text="{account.billToAddress.street2}"/>
 					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="88" text="&#xd;" width="123" id="city_edit0"/>
-					<mx:TextInput x="85" y="114" text="&#xd;" width="75" id="zip_edit0"/>
+					<mx:TextInput x="85" y="88" width="123" id="bill_city_edit" text="{account.billToAddress.city}"/>
+					<mx:TextInput x="263" y="88" width="32" id="bill_state_edit" text="{account.billToAddress.state}"/>
+					<mx:TextInput x="85" y="114" width="75" id="bill_zip_edit" text="{account.billToAddress.zip}"/>
 					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
-					<mx:TextInput x="233" y="114" text=" " width="62" id="country_edit0"/>
+					<mx:TextInput x="233" y="114" width="62" id="bill_country_edit" text="{account.billToAddress.country}"/>
 					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
-					<mx:TextInput x="263" y="88" text="&#xd;" width="32" id="state_edit0"/>
 					<mx:Label x="216" y="88" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact">
-					<mx:TextInput x="101" y="10" text="&#xd;" width="194" id="company_edit1"/>
+					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.address.firstName}"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
-					<mx:TextInput x="101" y="38" text="&#xd;" width="194" id="street_edit4"/>
-					<mx:TextInput x="101" y="66" text="&#xd;" width="46" id="street_edit5"/>
+					<mx:TextInput x="101" y="38" width="194" id="ship_contact_last_name_edit" text="{account.contact.address.lastName}"/>
+					<mx:TextInput x="101" y="66" width="46" id="ship_contact_prefix_edit" text="{account.contact.address.prefix}"/>
 					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
 					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
 					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
-					<mx:TextInput x="249" y="68" text="&#xd;" width="46" id="street_edit9"/>
+					<mx:TextInput x="249" y="68" width="46" id="ship_contact_suffix_edit" text="{account.contact.address.suffix}"/>
 					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
-					<mx:TextInput x="101" y="94" text="&#xd;" width="194" id="city_edit1"/>
+					<mx:TextInput x="101" y="94" width="194" id="ship_contact_job_title_edit" text="{account.contact.address.jobTitle}"/>
 					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
-					<mx:TextInput x="101" y="122" text="&#xd;" width="194" id="city_edit5"/>
-					<mx:TextInput x="172" y="150" text="&#xd;" width="123" id="city_edit3"/>
-					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit4"/>
-					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit6"/>
-					<mx:TextInput x="172" y="210" text="&#xd;" width="123" id="city_edit7"/>
-					<mx:ComboBox x="10" y="180" width="137"></mx:ComboBox>
-					<mx:ComboBox x="10" y="150" width="137"></mx:ComboBox>
-					<mx:ComboBox x="10" y="210" width="137"></mx:ComboBox>
+					<mx:TextInput x="101" y="122" width="194" id="ship_contact_salutation_edit" text="{account.contact.address.salutation}"/>
+					<mx:TextInput x="172" y="150" width="123" id="ship_contact_comlink1_edit"/>
+					<mx:TextInput x="172" y="180" width="123" id="ship_contact_comlink2_edit"/>
+					<mx:TextInput x="172" y="210" width="123" id="ship_contact_comlink3_edit"/>
+					<mx:ComboBox x="10" y="180" width="137" id="ship_contact_comlink2_combo"></mx:ComboBox>
+					<mx:ComboBox x="10" y="150" width="137" id="ship_contact_comlink1_combo"></mx:ComboBox>
+					<mx:ComboBox x="10" y="210" width="137" id="ship_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
 				<mx:Panel x="344" y="284" width="325" height="282" layout="absolute" title="Statement Contact">
-					<mx:TextInput x="101" y="10" text="&#xd;" width="194" id="company_edit2"/>
+					<mx:TextInput x="101" y="10" width="194" id="bill_contact_first_name_edit" text="{account.billToContact.address.firstName}"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
-					<mx:TextInput x="101" y="38" text="&#xd;" width="194" id="street_edit6"/>
-					<mx:TextInput x="101" y="66" text="&#xd;" width="46" id="street_edit7"/>
+					<mx:TextInput x="101" y="38" width="194" id="bill_contact_last_name_edit" text="{account.billToContact.address.lastName}"/>
+					<mx:TextInput x="101" y="66" width="46" id="bill_contact_prefix_edit" text="{account.billToContact.address.prefix}"/>
 					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
 					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
 					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
-					<mx:TextInput x="249" y="68" text="&#xd;" width="46" id="street_edit8"/>
+					<mx:TextInput x="249" y="68" width="46" id="bill_contact_suffix_edit" text="{account.billToContact.address.suffix}"/>
 					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
-					<mx:TextInput x="101" y="94" text="&#xd;" width="194" id="city_edit2"/>
+					<mx:TextInput x="101" y="94" width="194" id="bill_contact_job_title_edit" text="{account.billToContact.address.jobTitle}"/>
 					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
-					<mx:TextInput x="101" y="122" text="&#xd;" width="194" id="city_edit8"/>
-					<mx:TextInput x="172" y="150" text="&#xd;" width="123" id="city_edit9"/>
-					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit10"/>
-					<mx:TextInput x="172" y="180" text="&#xd;" width="123" id="city_edit11"/>
-					<mx:TextInput x="172" y="210" text="&#xd;" width="123" id="city_edit12"/>
-					<mx:ComboBox x="10" y="180" width="137"></mx:ComboBox>
-					<mx:ComboBox x="10" y="150" width="137"></mx:ComboBox>
-					<mx:ComboBox x="10" y="210" width="137"></mx:ComboBox>
+					<mx:TextInput x="101" y="122" width="194" id="bill_contact_salutation_edit" text="{account.billToContact.address.salutation}"/>
+					<mx:TextInput x="172" y="150" width="123" id="bill_contact_comlink1_edit"/>
+					<mx:TextInput x="172" y="180" width="123" id="bill_contact_comlink2_edit"/>
+					<mx:TextInput x="172" y="210" width="123" id="bill_contact_comlink3_edit"/>
+					<mx:ComboBox x="10" y="180" width="137" id="bill_contact_comlink2_combo"></mx:ComboBox>
+					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
+					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
@@ -216,8 +253,8 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)&#xd;" width="348" fontWeight="bold"/>
 				<mx:CheckBox x="384" y="92" label="Never calculate finance charges"/>
 				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="Automatic Discount">
-					<mx:TextInput x="85" y="10" text="&#xd;" width="132" id="street_edit10"/>
-					<mx:TextInput x="85" y="40" text="&#xd;" width="132" id="street_edit11"/>
+					<mx:TextInput x="85" y="10" width="132" id="street_edit10"/>
+					<mx:TextInput x="85" y="40" width="132" id="street_edit11"/>
 					<mx:RadioButton x="10" y="10" label="Percent:"/>
 					<mx:RadioButton x="10" y="40" label="Dollars:"/>
 					<mx:CheckBox x="225" y="40" label="One-time discount"/>

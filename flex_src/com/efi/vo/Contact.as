@@ -23,7 +23,6 @@ public var modified:Date;
 
 public var title:String = "";
 public var address:Address;
-public var contact:Contact;
 public var userAcctId:String = "";
 public var webAcctNameIncomplete:Boolean = true;
 public var webCatalogChange:Boolean = true;
@@ -34,6 +33,8 @@ public var useContactAddress:Boolean = true;
 public var isIndividual:Boolean = true;
 public var defaultSalesRep:SalesRep;
 public var mailerCampaigns:Boolean = true;
+public var firstName:String = "";
+public var lastName:String = "";
 
 }
 }
