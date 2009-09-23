@@ -33,8 +33,6 @@ public var useContactAddress:Boolean = true;
 public var isIndividual:Boolean = true;
 public var defaultSalesRep:SalesRep;
 public var mailerCampaigns:Boolean = true;
-public var firstName:String = "";
-public var lastName:String = "";
 
 }
 }

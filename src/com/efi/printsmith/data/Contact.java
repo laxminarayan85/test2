@@ -100,14 +100,6 @@ public class Contact extends ModelBase {
 	 * @generated
 	 */
 	public static final String MAILERCAMPAIGNS = "MailerCampaigns";
-	/**
-	 * @generated
-	 */
-	public static final String FIRSTNAME = "FirstName";
-	/**
-	 * @generated
-	 */
-	public static final String LASTNAME = "LastName";
 
 	/**
 	 * @generated
@@ -319,40 +311,6 @@ public class Contact extends ModelBase {
 	public void setMailerCampaigns(Boolean newVal) {
 		this.mailerCampaigns = newVal;
 	}
- 	
-	
- 	@Basic
-	private String firstName;
-	/**
-	 * @generated
- 	 */
-	public String getFirstName(){
-		return firstName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setFirstName(String newVal) {
-		this.firstName = newVal;
-	}
- 	
-	
- 	@Basic
-	private String lastName;
-	/**
-	 * @generated
- 	 */
-	public String getLastName(){
-		return lastName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setLastName(String newVal) {
-		this.lastName = newVal;
-	}
 
 	/**
 	 * @generated
@@ -372,8 +330,6 @@ public class Contact extends ModelBase {
 		if (ISINDIVIDUAL.equals(propertyName)) return getIsIndividual();
 		if (DEFAULTSALESREP.equals(propertyName)) return getDefaultSalesRep();
 		if (MAILERCAMPAIGNS.equals(propertyName)) return getMailerCampaigns();
-		if (FIRSTNAME.equals(propertyName)) return getFirstName();
-		if (LASTNAME.equals(propertyName)) return getLastName();
 		return super.getProperty(propertyName);
 	}
 	
@@ -395,8 +351,6 @@ public class Contact extends ModelBase {
 		if (ISINDIVIDUAL.equals(propertyName)) setIsIndividual((Boolean)newValue); else
 		if (DEFAULTSALESREP.equals(propertyName)) setDefaultSalesRep((SalesRep)newValue); else
 		if (MAILERCAMPAIGNS.equals(propertyName)) setMailerCampaigns((Boolean)newValue); else
-		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
-		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -430,10 +384,6 @@ public class Contact extends ModelBase {
 			return new Class<?>[] {SalesRep.class};		
 		if (MAILERCAMPAIGNS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (FIRSTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (LASTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -456,8 +406,6 @@ public class Contact extends ModelBase {
 		if (ISINDIVIDUAL.equals(propertyName)) return Contact.class;
 		if (DEFAULTSALESREP.equals(propertyName)) return Contact.class;
 		if (MAILERCAMPAIGNS.equals(propertyName)) return Contact.class;
-		if (FIRSTNAME.equals(propertyName)) return Contact.class;
-		if (LASTNAME.equals(propertyName)) return Contact.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -492,10 +440,6 @@ public class Contact extends ModelBase {
 		if (! SmartEquals(getDefaultSalesRep(), objT.getDefaultSalesRep()))
 			return false;
 		if (! SmartEquals(getMailerCampaigns(), objT.getMailerCampaigns()))
-			return false;
-		if (! SmartEquals(getFirstName(), objT.getFirstName()))
-			return false;
-		if (! SmartEquals(getLastName(), objT.getLastName()))
 			return false;
 		return true;
 	}			

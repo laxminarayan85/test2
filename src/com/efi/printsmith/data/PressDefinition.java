@@ -164,6 +164,18 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String PERFECTOR = "Perfector";
+	/**
+	 * @generated
+	 */
+	public static final String AVGIMPRESSPERHOUR = "AvgImpressPerHour";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERHEADS = "NumberHeads";
+	/**
+	 * @generated
+	 */
+	public static final String SETUPADDRUN = "SetupAddRun";
 
 	/**
 	 * @generated
@@ -647,6 +659,57 @@ public class PressDefinition extends ModelBase {
 	public void setPerfector(Boolean newVal) {
 		this.perfector = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Long avgImpressPerHour;
+	/**
+	 * @generated
+ 	 */
+	public Long getAvgImpressPerHour(){
+		return avgImpressPerHour; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAvgImpressPerHour(Long newVal) {
+		this.avgImpressPerHour = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long numberHeads;
+	/**
+	 * @generated
+ 	 */
+	public Long getNumberHeads(){
+		return numberHeads; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumberHeads(Long newVal) {
+		this.numberHeads = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long setupAddRun;
+	/**
+	 * @generated
+ 	 */
+	public Long getSetupAddRun(){
+		return setupAddRun; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSetupAddRun(Long newVal) {
+		this.setupAddRun = newVal;
+	}
 
 	/**
 	 * @generated
@@ -682,6 +745,9 @@ public class PressDefinition extends ModelBase {
 		if (WASHUPPERFOUNTAIN.equals(propertyName)) return getWashupPerFountain();
 		if (GRIPEDGE.equals(propertyName)) return getGripEdge();
 		if (PERFECTOR.equals(propertyName)) return getPerfector();
+		if (AVGIMPRESSPERHOUR.equals(propertyName)) return getAvgImpressPerHour();
+		if (NUMBERHEADS.equals(propertyName)) return getNumberHeads();
+		if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
 		return super.getProperty(propertyName);
 	}
 	
@@ -719,6 +785,9 @@ public class PressDefinition extends ModelBase {
 		if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Double)newValue); else
 		if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
 		if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
+		if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
+		if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
+		if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -784,6 +853,12 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (PERFECTOR.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (AVGIMPRESSPERHOUR.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (NUMBERHEADS.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (SETUPADDRUN.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -822,6 +897,9 @@ public class PressDefinition extends ModelBase {
 		if (WASHUPPERFOUNTAIN.equals(propertyName)) return PressDefinition.class;
 		if (GRIPEDGE.equals(propertyName)) return PressDefinition.class;
 		if (PERFECTOR.equals(propertyName)) return PressDefinition.class;
+		if (AVGIMPRESSPERHOUR.equals(propertyName)) return PressDefinition.class;
+		if (NUMBERHEADS.equals(propertyName)) return PressDefinition.class;
+		if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -888,6 +966,12 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getGripEdge(), objT.getGripEdge()))
 			return false;
 		if (! SmartEquals(getPerfector(), objT.getPerfector()))
+			return false;
+		if (! SmartEquals(getAvgImpressPerHour(), objT.getAvgImpressPerHour()))
+			return false;
+		if (! SmartEquals(getNumberHeads(), objT.getNumberHeads()))
+			return false;
+		if (! SmartEquals(getSetupAddRun(), objT.getSetupAddRun()))
 			return false;
 		return true;
 	}			

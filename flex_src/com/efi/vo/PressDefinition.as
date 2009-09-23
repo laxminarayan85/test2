@@ -49,6 +49,9 @@ public var washupMin:Number = 0;
 public var washupPerFountain:Number = 0;
 public var gripEdge:Number = 0;
 public var perfector:Boolean = true;
+public var avgImpressPerHour:Number = 0;
+public var numberHeads:Number = 0;
+public var setupAddRun:Number = 0;
 
 }
 }
