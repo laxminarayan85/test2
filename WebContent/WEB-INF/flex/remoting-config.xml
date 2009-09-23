@@ -23,6 +23,14 @@
 			</source>
 		</properties>
 	</destination>
+
+	<destination id="StockDefinitionsService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.StockDefinitionsService
+			</source>
+		</properties>
+	</destination>
 	
 	<destination id="accountService">
 		<properties>

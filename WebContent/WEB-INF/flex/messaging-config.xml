@@ -15,6 +15,7 @@
 	<destination id="users"/>
 	<destination id="accounts"/>
 	<destination id="pressdefinitions"/>
+	<destination id="stockdefinitions"/>
 	
 	<destination id="notifications">
 		<channels>

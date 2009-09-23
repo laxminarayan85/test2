@@ -29,7 +29,7 @@
 				<mx:Button x="10" y="386" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')"/>
 				<mx:Button x="10" y="480" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')"/>
 				<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
-				<mx:Button x="674" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')"/>
+				<mx:Button x="674" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="675" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
 				<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')"/>
 				<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')"/>
@@ -126,6 +126,11 @@
 		
 		private function doPressDefinitions():void {
 			var child:PressDefinitions = new PressDefinitions();
+			addUniqueTab(child);
+		}
+
+		private function doStockDefinitions():void {
+			var child:StockDefinitions = new StockDefinitions();
 			addUniqueTab(child);
 		}
 		
