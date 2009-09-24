@@ -56,84 +56,87 @@ public class StockComments extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String VALUE = "Value";
-
-	/**
-	 * @generated
-	 */
-	public StockComments() {
-	}
-
- 	
-	
-//	@ManyToOne( cascade = CascadeType.ALL )	
-//	public UnlimitedNatural value;
-//	/**
-//	 * @generated
-// 	 */
-//	public UnlimitedNatural getValue(){
-//		return value; 
-//	}
+}
+//	public static final String VALUE = "Value"{
 //
 //	/**
 //	 * @generated
-//	 */	
-//	public UnlimitedNatural setValue(UnlimitedNatural newVal) {
-//		return this.value = newVal;
+//	 */
 //	}
-
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (VALUE.equals(propertyName)) return getValue();
-		return super.getProperty(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (VALUE.equals(propertyName)) setProperty((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (VALUE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
-	
-
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (VALUE.equals(propertyName)) return StockComments.class;
-		return super.getPropertyOwner(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */			
-	@Override
-	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		StockComments objT = (StockComments)obj;
-		if (! SmartEquals(getValue(), objT.getValue()))
-			return false;
-		return true;
-	}			
-}
+//	public StockComments() {
+//	}
+//
+// 	
+//	
+////	@ManyToOne( cascade = CascadeType.ALL )	
+////	public UnlimitedNatural value;
+////	/**
+////	 * @generated
+//// 	 */
+////	public UnlimitedNatural getValue(){
+////		return value; 
+////	}
+////
+////	/**
+////	 * @generated
+////	 */	
+////	public UnlimitedNatural setValue(UnlimitedNatural newVal) {
+////		return this.value = newVal;
+////	}
+//
+//	/**
+//	 * @generated
+//	 */		
+////	@Transient
+////	@Override
+////	public Object getProperty(String propertyName) throws UnknownPropertyException {
+////		if (VALUE.equals(propertyName)) return getValue();
+////		return super.getProperty(propertyName);
+////	}
+////	
+////	/**
+////	 * @generated
+////	 */		
+////	@SuppressWarnings("unchecked")
+////	@Override
+////	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+////		if (VALUE.equals(propertyName)) setProperty((String)newValue); else
+////		super.setProperty(propertyName, newValue);
+////	}
+//	
+//	/**
+//	 * @generated
+//	 */		
+//	@Transient
+//	@Override
+//	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+//		if (VALUE.equals(propertyName)) 
+//			return new Class<?>[] {String.class};		
+//		return super.getPropertyClass(propertyName);
+//	}
+//	
+//
+//	/**
+//	 * @generated
+//	 */		
+////	@Transient
+////	@Override
+////	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException 
+////	{	
+////		if (VALUE.equals(propertyName)) return StockComments.class;
+////		return super.getPropertyOwner(propertyName);
+////	}
+//	
+//	/**
+//	 * @generated
+//	 */			
+////	@Override
+////	public boolean deepEquals(Object obj) {
+////		if (! super.deepEquals(obj))
+////			return false;
+////		StockComments objT = (StockComments)obj;
+////		if (! SmartEquals(getValue(), objT.getValue()))
+////			return false;
+////		return true;
+////	}			
+//}
