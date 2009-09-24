@@ -47,7 +47,7 @@ width="902" height="663" title="Copier Definitions"
 	}      
 	                                                   	
 	public function loadCopierDefinitions():void {   
-	    loaderService.getCopierDefinitions();
+	    loaderService.getCopyDefinitions();
 	}
 					
 	private function messageHandler(message:IMessage):void
