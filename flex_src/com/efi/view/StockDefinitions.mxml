@@ -39,7 +39,9 @@
 	private var stockDefinition:Stock;
 	
 	[Bindable]                                         
-	private var stockQty:StockQty;                              
+	private var stockQty:StockQty;     
+	
+	[Bindable]                         
 	private var stockInventory:StockInventory;
                                                                                   	
 	[Bindable]                                
