@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
+width="902" height="663" title="Copier Definitions"
+ label="Copier Definitions" name="Copier Definitions">
+
+	<mx:RemoteObject id="saveService" destination="copyDefinitionsService"
+	result="handleSaveResult(event)" fault="handleFault(event)"
+	showBusyCursor="true" />
+	
+	<mx:RemoteObject id="loaderService" destination="copyDefinitionsService"
+	result="handleLoadResult(event)"  fault="handleFault(event)"
+	showBusyCursor="true" />
+	                             
+	<mx:RemoteObject id="deleteService" destination="copyDefinitionsService"
+	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+	
+	<mx:Producer id="producer" destination="copydefinitions"/>
+	<mx:Consumer id="consumer" destination="copydefinitions" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.vo.CopierDefinition;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+                   
+    private var enableSave:Boolean = true;
+                         
+	[Bindable]                                         
+     private var copyDefinition:CopierDefinition;
+                                                                                  	
+	[Bindable]                                
+	private var copyDefinitionArray:ArrayCollection = new ArrayCollection();
+                                                                         
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    loaderService.getCopyDefinitions();
+	    copyDefinition = new CopierDefinition();
+	
+	}      
+	                                                   	
+	public function loadCopierDefinitions():void {   
+	    loaderService.getCopierDefinitions();
+	}
+					
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+		          
+	private function doAddCopier():void {
+		saveService.addUpdateCopyDefinitions(copyDefinition);                                        		
+	}     
+	             
+	private function doDeleteCopier():void {              
+		deleteService.deleteCopyDefinitions(copyDefinition.id);             
+	}
+
+	private function doCopierGridClick():void {
+		copyDefinition = dataGrid.selectedItem as CopierDefinition;
+	}
+	private function mapAccountData():void {
+	 //copyDefinition.copyDefID = CopierDefID;
+	 copyDefinition.copyDefName = Name.text;
+	 copyDefinition.machineName = MachineName.text;
+	 copyDefinition.outputDescrip = OutPutDescription.text;
+	 copyDefinition.productionLocation = ProductionLocation.text;
+	 copyDefinition.costCenter = CostCenter.text;
+	 copyDefinition.oEMDeviceID = OEMDeviceID.text;
+	 copyDefinition.copyID = parseInt(copyID.text); 
+	 copyDefinition.costingCopy = CostingCopier.selected;
+	 copyDefinition.clickCost = parseInt(clickCost.text);
+	 copyDefinition.integratedDevice = IntegratedDevice.selected;
+	 copyDefinition.maxSize = MaxSize.text;
+	 copyDefinition.minSize= minSize.text;
+	 copyDefinition.maxWidth = maxWidthsize.text;
+	 copyDefinition.minWidth = minWidthsize.text;
+	 copyDefinition.monthlyLabor= parseInt(monthlyLabor.text);
+	 copyDefinition.blackwhite = blackwhitecheck.selected;
+	 copyDefinition.color = colorcheck.selected;
+	 copyDefinition.copyMarkup= parseInt(copyMarkup.text);
+	 copyDefinition.largeFormat = largeformatCheck.selected;
+	 copyDefinition.tonerCopy = parseInt(tonerCopy.text);
+	 copyDefinition.laborCopy = parseInt(laborCopy.text);
+	 copyDefinition.daysOpen = parseInt(openDays.text);
+	 copyDefinition.developerCopy = parseInt(developerCopy.text);
+	 copyDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
+	 copyDefinition.hoursOpen = parseInt(openhours.text);
+	 copyDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
+	 /* copyDefinition.method = ' '; */
+	 copyDefinition.percentUsage = percentageUse.text;
+	 copyDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
+	 copyDefinition.copyMarkup = parseInt(copyMarkup.text);
+	 copyDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
+	 copyDefinition.copyMinutes = parseInt(copyMinutes.text);
+	 
+
+	}
+	private function doSave():void {
+	 
+		mapAccountData()
+		saveService.addUpdateCopyDefinitions(copyDefinition);                                          		
+	}       
+	private function doNext():void {
+	 
+	  
+		doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex+1;
+		dataGrid.setFocus();
+		doCopierGridClick();
+		                                        		
+	}       
+	private function doPrev():void {
+	  
+	 	doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex-1;
+		dataGrid.setFocus();
+		doCopierGridClick();                          		
+	}       
+	private function doNew():void {
+	    copyDefinition = new CopierDefinition();
+	 	
+	}       
+	private function handleSaveResult(ev:ResultEvent):void {
+    	loadCopierDefinitions();
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     copyDefinitionArray = ev.result as ArrayCollection;
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     loadCopierDefinitions();
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,null);                                 
+	}
+                                   
+]]>
+                             
+</mx:Script>	
+	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
+	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
+	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
+		itemClick="doCopierGridClick()" >
+		<mx:columns>
+			<mx:DataGridColumn headerText="Default BW"/>
+			<mx:DataGridColumn headerText="Default Color" />
+			<mx:DataGridColumn headerText="Default LF" />
+			<mx:DataGridColumn headerText="Name" dataField="CopyDefName"/>
+			<mx:DataGridColumn headerText="Default BW" dataField= "blackwhite"/>
+			<mx:DataGridColumn headerText="Default Color" dataField= "Color"/>
+			<mx:DataGridColumn headerText="Default LF" dataField= "LargeFormat"/>
+	</mx:columns>
+	</mx:DataGrid>
+	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
+	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
+	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
+	<mx:Label x="32" y="332" text="OEM Device ID:" textAlign="right"/>	
+	<mx:TextInput x="131" y="195" width="263" id="Name" text="{copyDefinition.copyDefName}"/>
+	<mx:TextInput x="131" y="221" width="263" id="MachineName" text="{copyDefinition.machineName}"/>
+	<mx:TextInput x="131" y="247" width="263" id="OutPutDescription" text="{copyDefinition.outputDescrip}"/>
+	<mx:TextInput x="131" y="277" id="ProductionLocation" width="263" text="{copyDefinition.productionLocation}" />
+	<mx:TextInput x="131" y="307" id="CostCenter" width="263" text="{copyDefinition.costCenter}"/>
+	<mx:TextInput x="131" y="330" id="OEMDeviceID" width="263" text="{copyDefinition.oEMDeviceID}"/>
+	<mx:Label x="402" y="200" text=" ID:"/>
+	<mx:TextInput x="437" y="198" width="83" id="copyID" text="{copyDefinition.copyID}" editable="true"/>
+	<mx:CheckBox x="413" y="226" label="Costing Copier" id="CostingCopier" selected="{copyDefinition.costingCopy}"/>
+	<mx:CheckBox x="402" y="256" label="Integrated Device" id="IntegratedDevice" selected="{copyDefinition.integratedDevice}"/>
+	<mx:RadioButtonGroup id="PaperStyle"/>
+	<mx:HRule x="10" y="371" width="702" height="16"/>
+	<mx:Label x="71" y="484" text="Max Size:"/>
+	<mx:Label x="71" y="510" text="Min Size:"/>
+	<mx:TextInput x="139" y="482" id="MaxSize" text="{copyDefinition.maxSize}"/>
+	<mx:TextInput x="139" y="508" id="minSize" text="{copyDefinition.minSize}"/>
+	<mx:HRule x="0" y="642" width="722" height="6"/>
+	<mx:HRule x="20" y="730" width="702" height="6"/>
+	<mx:HRule x="10" y="730" width="702" height="6"/>
+	<mx:Button x="131" y="670" label="Speed Table "/>
+	<mx:Button x="10" y="740" label="Stock Price List"/>
+	<mx:Button x="131" y="740" label="Copier Price List"/>
+	<mx:Button x="10" y="670" label="Waste Chart"/>
+	<mx:Button x="10" y="700" label="Add Charges"/>
+	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
+			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
+			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center" />
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="217" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+		<mx:Label x="13" y="358" text="Printer Type: "/>
+		<mx:CheckBox x="102" y="356" label="BW" id="blackwhitecheck" selected="{copyDefinition.blackwhite}"/>
+		<mx:CheckBox x="153" y="356" label="Color" id="colorcheck" selected="{copyDefinition.color}"/>
+		<mx:CheckBox x="215" y="356" label="LargeFormat" id="largeformatCheck" selected="{copyDefinition.largeFormat}"/>
+		<mx:Label x="637" y="309" text="Method:"/>
+		<mx:Label x="628" y="339" text="Sales cat:"/>
+		<mx:List x="700" y="306" height="21" id="method"></mx:List>
+		<mx:List x="700" y="336" height="21" id="salescat"></mx:List>
+		<mx:Label x="62" y="535" text="Max Width:"/>
+		<mx:Label x="66" y="562" text="Min Width:"/>
+		<mx:TextInput x="139" y="533" id="maxWidthsize" text="{copyDefinition.maxWidth}"/>
+		<mx:TextInput x="139" y="560" id="minWidthsize" text="{copyDefinition.minWidth}"/>
+		<mx:Label x="50" y="384" text="Copy/Minutes:"/>
+		<mx:Label x="10" y="404" text="Monthly Burden Rate:"/>
+		<mx:Label x="48" y="430" text="Monthly Labor:"/>
+		<mx:Label x="71" y="460" text="Click Cost:" height="16"/>
+		<mx:TextInput x="139" y="382" id="copyMinutes" text="{copyDefinition.copyMinutes}"/>
+		<mx:TextInput x="139" y="402" id="monthlyBurdenRate" text="{copyDefinition.monthlyBurdenRate}"/>
+		<mx:TextInput x="139" y="428" id="monthlyLabor" text="{copyDefinition.monthlyLabor}"/>
+		<mx:TextInput x="139" y="458" id="clickCost" text="{copyDefinition.clickCost}"/>
+		<mx:Label x="582" y="384" text="Open Hours /Day:"/>
+		<mx:TextInput x="696" y="382" id="openhours" text="{copyDefinition.hoursOpen}"/>
+		<mx:Label x="561" y="410" text="Monthly Maintenance:"/>
+    	<mx:TextInput x="696" y="408" id="monthlyMaintenance" text="{copyDefinition.monthlyMaintenance}"/>
+		<mx:Label x="550" y="436" text="Machine Cost Per Copy:"/>
+		<mx:TextInput x="696" y="434" id="machineCostperCopy" text = "{copyDefinition.machineCostPerCopy}"/>
+		<mx:Label x="364" y="384" text="Open Days/ Year:"/>
+		<mx:TextInput x="471" y="382" width="71" id="openDays" text= "{copyDefinition.daysOpen}"/>
+		<mx:Label x="363" y="404" text="Monthly Payment:"/>
+		<mx:TextInput x="471" y="402" width="71" id="monthlyPayment" text ="{copyDefinition.monthlyPayment}"/>
+		<mx:Label x="377" y="430" text= "% Time in Use:"/>
+		<mx:TextInput x="471" y="428" width="71" id="percentageUse" text = "{copyDefinition.percentUsage}"/>
+		<mx:Label x="348" y="460" text="Hourly Costing Rate:"/>
+		<mx:TextInput x="471" y="458" width="71" id="hourlyCostingRate" text="{copyDefinition.hourCostRate}"/>
+		<mx:Label x="389" y="488" text="Labor/Copy:"/>
+		<mx:Label x="388" y="518" text="Toner/Copy:"/>
+		<mx:Label x="364" y="545" text="Developer/Copy:"/>
+		<mx:Label x="380" y="575" text="Copy Markup:"/>
+		<mx:TextInput x="471" y="486" width="71" id="laborCopy" text ="{copyDefinition.laborCopy}"/>
+		<mx:TextInput x="471" y="516" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}"/>
+		<mx:TextInput x="471" y="543" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}"/>
+		<mx:TextInput x="471" y="573" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}"/>
+		
+</mx:Panel>

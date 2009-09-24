@@ -46,6 +46,13 @@
 			</source>
 		</properties>
 	</destination>
+	<destination id="copyDefinitionsService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.CopyDefinitionsService
+			</source>
+		</properties>
+	</destination>
 	
 	<destination id="loginService">
 		<properties>

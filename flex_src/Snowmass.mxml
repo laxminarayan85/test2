@@ -31,7 +31,7 @@
 				<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
 				<mx:Button x="674" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="675" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
-				<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')"/>
+				<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
 				<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')"/>
 				<mx:Button x="675" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')"/>
 				<mx:Button x="675" y="480" label="Document Preferences" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
@@ -54,6 +54,7 @@
 		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
 		import com.efi.view.StockDefinitions;
+		import com.efi.view.CopierDefinitions;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -127,6 +128,10 @@
 		
 		private function doPressDefinitions():void {
 			var child:PressDefinitions = new PressDefinitions();
+			addUniqueTab(child);
+		}
+		private function doCopyDefinitions():void {
+			var child:CopierDefinitions = new CopierDefinitions();
 			addUniqueTab(child);
 		}
 

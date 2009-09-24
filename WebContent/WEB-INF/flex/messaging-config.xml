@@ -19,6 +19,7 @@
 	<destination id="customerlogs"/>
 	<destination id="shippingmethods"/>
 	<destination id="stockdefinitions"/>
+	<destination id="copydefinitions"/>
 	
 	<destination id="notifications">
 		<channels>
