@@ -55,5 +55,28 @@
 		</properties>
 	</destination>
 	
+	<destination id="customerLogService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.CustomerLogService
+			</source>
+		</properties>
+	</destination>
 	
+	<destination id="salesRepService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.SalesRepService
+			</source>
+		</properties>
+	</destination>
+
+	<destination id="shippingMethodService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ShippingMethodService
+			</source>
+		</properties>
+	</destination>
+
 </service>

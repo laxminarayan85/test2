@@ -111,6 +111,10 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String ONETIMEDISCOUNT = "OneTimeDiscount";
+	/**
+	 * @generated
+	 */
 	public static final String FILEORIGINALS = "FileOriginals";
 	/**
 	 * @generated
@@ -164,6 +168,198 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public static final String SHIPPINGMODE = "ShippingMode";
+	/**
+	 * @generated
+	 */
+	public static final String LASTINVOICEDATE = "LastInvoiceDate";
+	/**
+	 * @generated
+	 */
+	public static final String LASTESTIMATEDATE = "LastEstimateDate";
+	/**
+	 * @generated
+	 */
+	public static final String FIRSTINVOICEDATE = "FirstInvoiceDate";
+	/**
+	 * @generated
+	 */
+	public static final String FIRSTESTIMATEDATE = "FirstEstimateDate";
+	/**
+	 * @generated
+	 */
+	public static final String LASTAGEDDATE = "LastAgedDate";
+	/**
+	 * @generated
+	 */
+	public static final String LASTBILLEDDATE = "LastBilledDate";
+	/**
+	 * @generated
+	 */
+	public static final String ATTRIBUTE1 = "Attribute1";
+	/**
+	 * @generated
+	 */
+	public static final String LASTPAYMENTDATE = "LastPaymentDate";
+	/**
+	 * @generated
+	 */
+	public static final String LASTPOSTINGDATE = "LastPostingDate";
+	/**
+	 * @generated
+	 */
+	public static final String LASTRANKINGDATE = "LastRankingDate";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITCARDEXPIRATION = "CreditCardExpiration";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITCARDINFO = "CreditCardInfo";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYMODE = "AutoPayMode";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYINTERVAL = "AutoPayInterval";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITCARDTYPE = "CreditCardType";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYMINIMUM = "AutoPayMinimum";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYMAXIMUM = "AutoPayMaximum";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYTOTAL = "AutoPayTotal";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYAMOUNT = "AutoPayAmount";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYSTOP = "AutoPayStop";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYSTART = "AutoPayStart";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYLASTPOSTED = "AutoPayLastPosted";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOPAYPAYMENTQTY = "AutoPayPaymentQty";
+	/**
+	 * @generated
+	 */
+	public static final String LASTNOTIFIEDDATE = "LastNotifiedDate";
+	/**
+	 * @generated
+	 */
+	public static final String RESALECERTEXPIRATIONDATE = "ResaleCertExpirationDate";
+	/**
+	 * @generated
+	 */
+	public static final String ONACCOUNT = "OnAccount";
+	/**
+	 * @generated
+	 */
+	public static final String BALANCE = "Balance";
+	/**
+	 * @generated
+	 */
+	public static final String SALESMONTH = "SalesMonth";
+	/**
+	 * @generated
+	 */
+	public static final String ORDERSMONTH = "OrdersMonth";
+	/**
+	 * @generated
+	 */
+	public static final String SALESYEAR = "SalesYear";
+	/**
+	 * @generated
+	 */
+	public static final String SALESPRIORYEAR = "SalesPriorYear";
+	/**
+	 * @generated
+	 */
+	public static final String ORDERSYEAR = "OrdersYear";
+	/**
+	 * @generated
+	 */
+	public static final String ORDERSTOTAL = "OrdersTotal";
+	/**
+	 * @generated
+	 */
+	public static final String ESTIMATECOUNT = "EstimateCount";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITLIMIT = "CreditLimit";
+	/**
+	 * @generated
+	 */
+	public static final String DISCOUNT = "Discount";
+	/**
+	 * @generated
+	 */
+	public static final String TERMSNET = "TermsNet";
+	/**
+	 * @generated
+	 */
+	public static final String TERMSDISCOUNT = "TermsDiscount";
+	/**
+	 * @generated
+	 */
+	public static final String FINANCERATE = "FinanceRate";
+	/**
+	 * @generated
+	 */
+	public static final String FINANCEYEAR = "FinanceYear";
+	/**
+	 * @generated
+	 */
+	public static final String ESTIMATESWON = "EstimatesWon";
+	/**
+	 * @generated
+	 */
+	public static final String ESTIMATESLOST = "EstimatesLost";
+	/**
+	 * @generated
+	 */
+	public static final String DISCOUNTDOLLARAMT = "DiscountDollarAmt";
+	/**
+	 * @generated
+	 */
+	public static final String BALANCE30DAY = "Balance30Day";
+	/**
+	 * @generated
+	 */
+	public static final String BALANCE60DAY = "Balance60Day";
+	/**
+	 * @generated
+	 */
+	public static final String BALANCE90DAY = "Balance90Day";
+	/**
+	 * @generated
+	 */
+	public static final String BALANCECURRENT = "BalanceCurrent";
+	/**
+	 * @generated
+	 */
+	public static final String TYPE = "Type";
 
 	/**
 	 * @generated
@@ -412,6 +608,23 @@ public class Account extends ModelBase {
  	
 	
  	@Basic
+	private Boolean oneTimeDiscount;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOneTimeDiscount(){
+		return oneTimeDiscount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOneTimeDiscount(Boolean newVal) {
+		this.oneTimeDiscount = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Boolean fileOriginals;
 	/**
 	 * @generated
@@ -647,6 +860,822 @@ public class Account extends ModelBase {
 	public void setShippingMode(String newVal) {
 		this.shippingMode = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Date lastInvoiceDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastInvoiceDate(){
+		return lastInvoiceDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastInvoiceDate(Date newVal) {
+		this.lastInvoiceDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastEstimateDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastEstimateDate(){
+		return lastEstimateDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastEstimateDate(Date newVal) {
+		this.lastEstimateDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date firstInvoiceDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getFirstInvoiceDate(){
+		return firstInvoiceDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFirstInvoiceDate(Date newVal) {
+		this.firstInvoiceDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date firstEstimateDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getFirstEstimateDate(){
+		return firstEstimateDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFirstEstimateDate(Date newVal) {
+		this.firstEstimateDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastAgedDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastAgedDate(){
+		return lastAgedDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastAgedDate(Date newVal) {
+		this.lastAgedDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastBilledDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastBilledDate(){
+		return lastBilledDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastBilledDate(Date newVal) {
+		this.lastBilledDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer attribute1;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAttribute1(){
+		return attribute1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAttribute1(Integer newVal) {
+		this.attribute1 = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastPaymentDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastPaymentDate(){
+		return lastPaymentDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastPaymentDate(Date newVal) {
+		this.lastPaymentDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer lastPostingDate;
+	/**
+	 * @generated
+ 	 */
+	public Integer getLastPostingDate(){
+		return lastPostingDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastPostingDate(Integer newVal) {
+		this.lastPostingDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastRankingDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastRankingDate(){
+		return lastRankingDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastRankingDate(Date newVal) {
+		this.lastRankingDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date creditCardExpiration;
+	/**
+	 * @generated
+ 	 */
+	public Date getCreditCardExpiration(){
+		return creditCardExpiration; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditCardExpiration(Date newVal) {
+		this.creditCardExpiration = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String creditCardInfo;
+	/**
+	 * @generated
+ 	 */
+	public String getCreditCardInfo(){
+		return creditCardInfo; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditCardInfo(String newVal) {
+		this.creditCardInfo = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long autoPayMode;
+	/**
+	 * @generated
+ 	 */
+	public Long getAutoPayMode(){
+		return autoPayMode; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayMode(Long newVal) {
+		this.autoPayMode = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long autoPayInterval;
+	/**
+	 * @generated
+ 	 */
+	public Long getAutoPayInterval(){
+		return autoPayInterval; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayInterval(Long newVal) {
+		this.autoPayInterval = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String creditCardType;
+	/**
+	 * @generated
+ 	 */
+	public String getCreditCardType(){
+		return creditCardType; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditCardType(String newVal) {
+		this.creditCardType = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double autoPayMinimum;
+	/**
+	 * @generated
+ 	 */
+	public Double getAutoPayMinimum(){
+		return autoPayMinimum; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayMinimum(Double newVal) {
+		this.autoPayMinimum = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double autoPayMaximum;
+	/**
+	 * @generated
+ 	 */
+	public Double getAutoPayMaximum(){
+		return autoPayMaximum; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayMaximum(Double newVal) {
+		this.autoPayMaximum = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double autoPayTotal;
+	/**
+	 * @generated
+ 	 */
+	public Double getAutoPayTotal(){
+		return autoPayTotal; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayTotal(Double newVal) {
+		this.autoPayTotal = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double autoPayAmount;
+	/**
+	 * @generated
+ 	 */
+	public Double getAutoPayAmount(){
+		return autoPayAmount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayAmount(Double newVal) {
+		this.autoPayAmount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date autoPayStop;
+	/**
+	 * @generated
+ 	 */
+	public Date getAutoPayStop(){
+		return autoPayStop; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayStop(Date newVal) {
+		this.autoPayStop = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date autoPayStart;
+	/**
+	 * @generated
+ 	 */
+	public Date getAutoPayStart(){
+		return autoPayStart; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayStart(Date newVal) {
+		this.autoPayStart = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date autoPayLastPosted;
+	/**
+	 * @generated
+ 	 */
+	public Date getAutoPayLastPosted(){
+		return autoPayLastPosted; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayLastPosted(Date newVal) {
+		this.autoPayLastPosted = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long autoPayPaymentQty;
+	/**
+	 * @generated
+ 	 */
+	public Long getAutoPayPaymentQty(){
+		return autoPayPaymentQty; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoPayPaymentQty(Long newVal) {
+		this.autoPayPaymentQty = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date lastNotifiedDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getLastNotifiedDate(){
+		return lastNotifiedDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastNotifiedDate(Date newVal) {
+		this.lastNotifiedDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Date resaleCertExpirationDate;
+	/**
+	 * @generated
+ 	 */
+	public Date getResaleCertExpirationDate(){
+		return resaleCertExpirationDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setResaleCertExpirationDate(Date newVal) {
+		this.resaleCertExpirationDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double onAccount;
+	/**
+	 * @generated
+ 	 */
+	public Double getOnAccount(){
+		return onAccount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOnAccount(Double newVal) {
+		this.onAccount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double balance;
+	/**
+	 * @generated
+ 	 */
+	public Double getBalance(){
+		return balance; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBalance(Double newVal) {
+		this.balance = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double salesMonth;
+	/**
+	 * @generated
+ 	 */
+	public Double getSalesMonth(){
+		return salesMonth; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalesMonth(Double newVal) {
+		this.salesMonth = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long ordersMonth;
+	/**
+	 * @generated
+ 	 */
+	public Long getOrdersMonth(){
+		return ordersMonth; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOrdersMonth(Long newVal) {
+		this.ordersMonth = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double salesYear;
+	/**
+	 * @generated
+ 	 */
+	public Double getSalesYear(){
+		return salesYear; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalesYear(Double newVal) {
+		this.salesYear = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double salesPriorYear;
+	/**
+	 * @generated
+ 	 */
+	public Double getSalesPriorYear(){
+		return salesPriorYear; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalesPriorYear(Double newVal) {
+		this.salesPriorYear = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long ordersYear;
+	/**
+	 * @generated
+ 	 */
+	public Long getOrdersYear(){
+		return ordersYear; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOrdersYear(Long newVal) {
+		this.ordersYear = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long ordersTotal;
+	/**
+	 * @generated
+ 	 */
+	public Long getOrdersTotal(){
+		return ordersTotal; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOrdersTotal(Long newVal) {
+		this.ordersTotal = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long estimateCount;
+	/**
+	 * @generated
+ 	 */
+	public Long getEstimateCount(){
+		return estimateCount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEstimateCount(Long newVal) {
+		this.estimateCount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double creditLimit;
+	/**
+	 * @generated
+ 	 */
+	public Double getCreditLimit(){
+		return creditLimit; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditLimit(Double newVal) {
+		this.creditLimit = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double discount;
+	/**
+	 * @generated
+ 	 */
+	public Double getDiscount(){
+		return discount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDiscount(Double newVal) {
+		this.discount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long termsNet;
+	/**
+	 * @generated
+ 	 */
+	public Long getTermsNet(){
+		return termsNet; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTermsNet(Long newVal) {
+		this.termsNet = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double termsDiscount;
+	/**
+	 * @generated
+ 	 */
+	public Double getTermsDiscount(){
+		return termsDiscount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTermsDiscount(Double newVal) {
+		this.termsDiscount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double financeRate;
+	/**
+	 * @generated
+ 	 */
+	public Double getFinanceRate(){
+		return financeRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFinanceRate(Double newVal) {
+		this.financeRate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double financeYear;
+	/**
+	 * @generated
+ 	 */
+	public Double getFinanceYear(){
+		return financeYear; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFinanceYear(Double newVal) {
+		this.financeYear = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long estimatesWon;
+	/**
+	 * @generated
+ 	 */
+	public Long getEstimatesWon(){
+		return estimatesWon; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEstimatesWon(Long newVal) {
+		this.estimatesWon = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long estimatesLost;
+	/**
+	 * @generated
+ 	 */
+	public Long getEstimatesLost(){
+		return estimatesLost; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEstimatesLost(Long newVal) {
+		this.estimatesLost = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double discountDollarAmt;
+	/**
+	 * @generated
+ 	 */
+	public Double getDiscountDollarAmt(){
+		return discountDollarAmt; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDiscountDollarAmt(Double newVal) {
+		this.discountDollarAmt = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double balance30Day;
+	/**
+	 * @generated
+ 	 */
+	public Double getBalance30Day(){
+		return balance30Day; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBalance30Day(Double newVal) {
+		this.balance30Day = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double balance60Day;
+	/**
+	 * @generated
+ 	 */
+	public Double getBalance60Day(){
+		return balance60Day; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBalance60Day(Double newVal) {
+		this.balance60Day = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double balance90Day;
+	/**
+	 * @generated
+ 	 */
+	public Double getBalance90Day(){
+		return balance90Day; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBalance90Day(Double newVal) {
+		this.balance90Day = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double balanceCurrent;
+	/**
+	 * @generated
+ 	 */
+	public Double getBalanceCurrent(){
+		return balanceCurrent; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBalanceCurrent(Double newVal) {
+		this.balanceCurrent = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String type;
+	/**
+	 * @generated
+ 	 */
+	public String getType(){
+		return type; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setType(String newVal) {
+		this.type = newVal;
+	}
 
 	/**
 	 * @generated
@@ -668,6 +1697,7 @@ public class Account extends ModelBase {
 		if (USERACCTID.equals(propertyName)) return getUserAcctId();
 		if (EXTERNALACCTID.equals(propertyName)) return getExternalAcctId();
 		if (DOLLARDISCOUNT.equals(propertyName)) return getDollarDiscount();
+		if (ONETIMEDISCOUNT.equals(propertyName)) return getOneTimeDiscount();
 		if (FILEORIGINALS.equals(propertyName)) return getFileOriginals();
 		if (WEBACCESSENABLED.equals(propertyName)) return getWebAccessEnabled();
 		if (PROSPECT.equals(propertyName)) return getProspect();
@@ -682,6 +1712,54 @@ public class Account extends ModelBase {
 		if (BUSINESSTYPE.equals(propertyName)) return getBusinessType();
 		if (SALESREP.equals(propertyName)) return getSalesRep();
 		if (SHIPPINGMODE.equals(propertyName)) return getShippingMode();
+		if (LASTINVOICEDATE.equals(propertyName)) return getLastInvoiceDate();
+		if (LASTESTIMATEDATE.equals(propertyName)) return getLastEstimateDate();
+		if (FIRSTINVOICEDATE.equals(propertyName)) return getFirstInvoiceDate();
+		if (FIRSTESTIMATEDATE.equals(propertyName)) return getFirstEstimateDate();
+		if (LASTAGEDDATE.equals(propertyName)) return getLastAgedDate();
+		if (LASTBILLEDDATE.equals(propertyName)) return getLastBilledDate();
+		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
+		if (LASTPAYMENTDATE.equals(propertyName)) return getLastPaymentDate();
+		if (LASTPOSTINGDATE.equals(propertyName)) return getLastPostingDate();
+		if (LASTRANKINGDATE.equals(propertyName)) return getLastRankingDate();
+		if (CREDITCARDEXPIRATION.equals(propertyName)) return getCreditCardExpiration();
+		if (CREDITCARDINFO.equals(propertyName)) return getCreditCardInfo();
+		if (AUTOPAYMODE.equals(propertyName)) return getAutoPayMode();
+		if (AUTOPAYINTERVAL.equals(propertyName)) return getAutoPayInterval();
+		if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
+		if (AUTOPAYMINIMUM.equals(propertyName)) return getAutoPayMinimum();
+		if (AUTOPAYMAXIMUM.equals(propertyName)) return getAutoPayMaximum();
+		if (AUTOPAYTOTAL.equals(propertyName)) return getAutoPayTotal();
+		if (AUTOPAYAMOUNT.equals(propertyName)) return getAutoPayAmount();
+		if (AUTOPAYSTOP.equals(propertyName)) return getAutoPayStop();
+		if (AUTOPAYSTART.equals(propertyName)) return getAutoPayStart();
+		if (AUTOPAYLASTPOSTED.equals(propertyName)) return getAutoPayLastPosted();
+		if (AUTOPAYPAYMENTQTY.equals(propertyName)) return getAutoPayPaymentQty();
+		if (LASTNOTIFIEDDATE.equals(propertyName)) return getLastNotifiedDate();
+		if (RESALECERTEXPIRATIONDATE.equals(propertyName)) return getResaleCertExpirationDate();
+		if (ONACCOUNT.equals(propertyName)) return getOnAccount();
+		if (BALANCE.equals(propertyName)) return getBalance();
+		if (SALESMONTH.equals(propertyName)) return getSalesMonth();
+		if (ORDERSMONTH.equals(propertyName)) return getOrdersMonth();
+		if (SALESYEAR.equals(propertyName)) return getSalesYear();
+		if (SALESPRIORYEAR.equals(propertyName)) return getSalesPriorYear();
+		if (ORDERSYEAR.equals(propertyName)) return getOrdersYear();
+		if (ORDERSTOTAL.equals(propertyName)) return getOrdersTotal();
+		if (ESTIMATECOUNT.equals(propertyName)) return getEstimateCount();
+		if (CREDITLIMIT.equals(propertyName)) return getCreditLimit();
+		if (DISCOUNT.equals(propertyName)) return getDiscount();
+		if (TERMSNET.equals(propertyName)) return getTermsNet();
+		if (TERMSDISCOUNT.equals(propertyName)) return getTermsDiscount();
+		if (FINANCERATE.equals(propertyName)) return getFinanceRate();
+		if (FINANCEYEAR.equals(propertyName)) return getFinanceYear();
+		if (ESTIMATESWON.equals(propertyName)) return getEstimatesWon();
+		if (ESTIMATESLOST.equals(propertyName)) return getEstimatesLost();
+		if (DISCOUNTDOLLARAMT.equals(propertyName)) return getDiscountDollarAmt();
+		if (BALANCE30DAY.equals(propertyName)) return getBalance30Day();
+		if (BALANCE60DAY.equals(propertyName)) return getBalance60Day();
+		if (BALANCE90DAY.equals(propertyName)) return getBalance90Day();
+		if (BALANCECURRENT.equals(propertyName)) return getBalanceCurrent();
+		if (TYPE.equals(propertyName)) return getType();
 		return super.getProperty(propertyName);
 	}
 	
@@ -705,6 +1783,7 @@ public class Account extends ModelBase {
 		if (USERACCTID.equals(propertyName)) setUserAcctId((String)newValue); else
 		if (EXTERNALACCTID.equals(propertyName)) setExternalAcctId((String)newValue); else
 		if (DOLLARDISCOUNT.equals(propertyName)) setDollarDiscount((Boolean)newValue); else
+		if (ONETIMEDISCOUNT.equals(propertyName)) setOneTimeDiscount((Boolean)newValue); else
 		if (FILEORIGINALS.equals(propertyName)) setFileOriginals((Boolean)newValue); else
 		if (WEBACCESSENABLED.equals(propertyName)) setWebAccessEnabled((Boolean)newValue); else
 		if (PROSPECT.equals(propertyName)) setProspect((Boolean)newValue); else
@@ -719,6 +1798,54 @@ public class Account extends ModelBase {
 		if (BUSINESSTYPE.equals(propertyName)) setBusinessType((String)newValue); else
 		if (SALESREP.equals(propertyName)) setSalesRep((SalesRep)newValue); else
 		if (SHIPPINGMODE.equals(propertyName)) setShippingMode((String)newValue); else
+		if (LASTINVOICEDATE.equals(propertyName)) setLastInvoiceDate((Date)newValue); else
+		if (LASTESTIMATEDATE.equals(propertyName)) setLastEstimateDate((Date)newValue); else
+		if (FIRSTINVOICEDATE.equals(propertyName)) setFirstInvoiceDate((Date)newValue); else
+		if (FIRSTESTIMATEDATE.equals(propertyName)) setFirstEstimateDate((Date)newValue); else
+		if (LASTAGEDDATE.equals(propertyName)) setLastAgedDate((Date)newValue); else
+		if (LASTBILLEDDATE.equals(propertyName)) setLastBilledDate((Date)newValue); else
+		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
+		if (LASTPAYMENTDATE.equals(propertyName)) setLastPaymentDate((Date)newValue); else
+		if (LASTPOSTINGDATE.equals(propertyName)) setLastPostingDate((Integer)newValue); else
+		if (LASTRANKINGDATE.equals(propertyName)) setLastRankingDate((Date)newValue); else
+		if (CREDITCARDEXPIRATION.equals(propertyName)) setCreditCardExpiration((Date)newValue); else
+		if (CREDITCARDINFO.equals(propertyName)) setCreditCardInfo((String)newValue); else
+		if (AUTOPAYMODE.equals(propertyName)) setAutoPayMode((Long)newValue); else
+		if (AUTOPAYINTERVAL.equals(propertyName)) setAutoPayInterval((Long)newValue); else
+		if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((String)newValue); else
+		if (AUTOPAYMINIMUM.equals(propertyName)) setAutoPayMinimum((Double)newValue); else
+		if (AUTOPAYMAXIMUM.equals(propertyName)) setAutoPayMaximum((Double)newValue); else
+		if (AUTOPAYTOTAL.equals(propertyName)) setAutoPayTotal((Double)newValue); else
+		if (AUTOPAYAMOUNT.equals(propertyName)) setAutoPayAmount((Double)newValue); else
+		if (AUTOPAYSTOP.equals(propertyName)) setAutoPayStop((Date)newValue); else
+		if (AUTOPAYSTART.equals(propertyName)) setAutoPayStart((Date)newValue); else
+		if (AUTOPAYLASTPOSTED.equals(propertyName)) setAutoPayLastPosted((Date)newValue); else
+		if (AUTOPAYPAYMENTQTY.equals(propertyName)) setAutoPayPaymentQty((Long)newValue); else
+		if (LASTNOTIFIEDDATE.equals(propertyName)) setLastNotifiedDate((Date)newValue); else
+		if (RESALECERTEXPIRATIONDATE.equals(propertyName)) setResaleCertExpirationDate((Date)newValue); else
+		if (ONACCOUNT.equals(propertyName)) setOnAccount((Double)newValue); else
+		if (BALANCE.equals(propertyName)) setBalance((Double)newValue); else
+		if (SALESMONTH.equals(propertyName)) setSalesMonth((Double)newValue); else
+		if (ORDERSMONTH.equals(propertyName)) setOrdersMonth((Long)newValue); else
+		if (SALESYEAR.equals(propertyName)) setSalesYear((Double)newValue); else
+		if (SALESPRIORYEAR.equals(propertyName)) setSalesPriorYear((Double)newValue); else
+		if (ORDERSYEAR.equals(propertyName)) setOrdersYear((Long)newValue); else
+		if (ORDERSTOTAL.equals(propertyName)) setOrdersTotal((Long)newValue); else
+		if (ESTIMATECOUNT.equals(propertyName)) setEstimateCount((Long)newValue); else
+		if (CREDITLIMIT.equals(propertyName)) setCreditLimit((Double)newValue); else
+		if (DISCOUNT.equals(propertyName)) setDiscount((Double)newValue); else
+		if (TERMSNET.equals(propertyName)) setTermsNet((Long)newValue); else
+		if (TERMSDISCOUNT.equals(propertyName)) setTermsDiscount((Double)newValue); else
+		if (FINANCERATE.equals(propertyName)) setFinanceRate((Double)newValue); else
+		if (FINANCEYEAR.equals(propertyName)) setFinanceYear((Double)newValue); else
+		if (ESTIMATESWON.equals(propertyName)) setEstimatesWon((Long)newValue); else
+		if (ESTIMATESLOST.equals(propertyName)) setEstimatesLost((Long)newValue); else
+		if (DISCOUNTDOLLARAMT.equals(propertyName)) setDiscountDollarAmt((Double)newValue); else
+		if (BALANCE30DAY.equals(propertyName)) setBalance30Day((Double)newValue); else
+		if (BALANCE60DAY.equals(propertyName)) setBalance60Day((Double)newValue); else
+		if (BALANCE90DAY.equals(propertyName)) setBalance90Day((Double)newValue); else
+		if (BALANCECURRENT.equals(propertyName)) setBalanceCurrent((Double)newValue); else
+		if (TYPE.equals(propertyName)) setType((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -756,6 +1883,8 @@ public class Account extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (DOLLARDISCOUNT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (ONETIMEDISCOUNT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		if (FILEORIGINALS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (WEBACCESSENABLED.equals(propertyName)) 
@@ -784,6 +1913,102 @@ public class Account extends ModelBase {
 			return new Class<?>[] {SalesRep.class};		
 		if (SHIPPINGMODE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (LASTINVOICEDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (LASTESTIMATEDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (FIRSTINVOICEDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (FIRSTESTIMATEDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (LASTAGEDDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (LASTBILLEDDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (ATTRIBUTE1.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (LASTPAYMENTDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (LASTPOSTINGDATE.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (LASTRANKINGDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (CREDITCARDEXPIRATION.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (CREDITCARDINFO.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (AUTOPAYMODE.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (AUTOPAYINTERVAL.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (CREDITCARDTYPE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (AUTOPAYMINIMUM.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (AUTOPAYMAXIMUM.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (AUTOPAYTOTAL.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (AUTOPAYAMOUNT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (AUTOPAYSTOP.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (AUTOPAYSTART.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (AUTOPAYLASTPOSTED.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (AUTOPAYPAYMENTQTY.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (LASTNOTIFIEDDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (RESALECERTEXPIRATIONDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (ONACCOUNT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BALANCE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (SALESMONTH.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (ORDERSMONTH.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (SALESYEAR.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (SALESPRIORYEAR.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (ORDERSYEAR.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (ORDERSTOTAL.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (ESTIMATECOUNT.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (CREDITLIMIT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (DISCOUNT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (TERMSNET.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (TERMSDISCOUNT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (FINANCERATE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (FINANCEYEAR.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (ESTIMATESWON.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (ESTIMATESLOST.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (DISCOUNTDOLLARAMT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BALANCE30DAY.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BALANCE60DAY.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BALANCE90DAY.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BALANCECURRENT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (TYPE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -808,6 +2033,7 @@ public class Account extends ModelBase {
 		if (USERACCTID.equals(propertyName)) return Account.class;
 		if (EXTERNALACCTID.equals(propertyName)) return Account.class;
 		if (DOLLARDISCOUNT.equals(propertyName)) return Account.class;
+		if (ONETIMEDISCOUNT.equals(propertyName)) return Account.class;
 		if (FILEORIGINALS.equals(propertyName)) return Account.class;
 		if (WEBACCESSENABLED.equals(propertyName)) return Account.class;
 		if (PROSPECT.equals(propertyName)) return Account.class;
@@ -822,6 +2048,54 @@ public class Account extends ModelBase {
 		if (BUSINESSTYPE.equals(propertyName)) return Account.class;
 		if (SALESREP.equals(propertyName)) return Account.class;
 		if (SHIPPINGMODE.equals(propertyName)) return Account.class;
+		if (LASTINVOICEDATE.equals(propertyName)) return Account.class;
+		if (LASTESTIMATEDATE.equals(propertyName)) return Account.class;
+		if (FIRSTINVOICEDATE.equals(propertyName)) return Account.class;
+		if (FIRSTESTIMATEDATE.equals(propertyName)) return Account.class;
+		if (LASTAGEDDATE.equals(propertyName)) return Account.class;
+		if (LASTBILLEDDATE.equals(propertyName)) return Account.class;
+		if (ATTRIBUTE1.equals(propertyName)) return Account.class;
+		if (LASTPAYMENTDATE.equals(propertyName)) return Account.class;
+		if (LASTPOSTINGDATE.equals(propertyName)) return Account.class;
+		if (LASTRANKINGDATE.equals(propertyName)) return Account.class;
+		if (CREDITCARDEXPIRATION.equals(propertyName)) return Account.class;
+		if (CREDITCARDINFO.equals(propertyName)) return Account.class;
+		if (AUTOPAYMODE.equals(propertyName)) return Account.class;
+		if (AUTOPAYINTERVAL.equals(propertyName)) return Account.class;
+		if (CREDITCARDTYPE.equals(propertyName)) return Account.class;
+		if (AUTOPAYMINIMUM.equals(propertyName)) return Account.class;
+		if (AUTOPAYMAXIMUM.equals(propertyName)) return Account.class;
+		if (AUTOPAYTOTAL.equals(propertyName)) return Account.class;
+		if (AUTOPAYAMOUNT.equals(propertyName)) return Account.class;
+		if (AUTOPAYSTOP.equals(propertyName)) return Account.class;
+		if (AUTOPAYSTART.equals(propertyName)) return Account.class;
+		if (AUTOPAYLASTPOSTED.equals(propertyName)) return Account.class;
+		if (AUTOPAYPAYMENTQTY.equals(propertyName)) return Account.class;
+		if (LASTNOTIFIEDDATE.equals(propertyName)) return Account.class;
+		if (RESALECERTEXPIRATIONDATE.equals(propertyName)) return Account.class;
+		if (ONACCOUNT.equals(propertyName)) return Account.class;
+		if (BALANCE.equals(propertyName)) return Account.class;
+		if (SALESMONTH.equals(propertyName)) return Account.class;
+		if (ORDERSMONTH.equals(propertyName)) return Account.class;
+		if (SALESYEAR.equals(propertyName)) return Account.class;
+		if (SALESPRIORYEAR.equals(propertyName)) return Account.class;
+		if (ORDERSYEAR.equals(propertyName)) return Account.class;
+		if (ORDERSTOTAL.equals(propertyName)) return Account.class;
+		if (ESTIMATECOUNT.equals(propertyName)) return Account.class;
+		if (CREDITLIMIT.equals(propertyName)) return Account.class;
+		if (DISCOUNT.equals(propertyName)) return Account.class;
+		if (TERMSNET.equals(propertyName)) return Account.class;
+		if (TERMSDISCOUNT.equals(propertyName)) return Account.class;
+		if (FINANCERATE.equals(propertyName)) return Account.class;
+		if (FINANCEYEAR.equals(propertyName)) return Account.class;
+		if (ESTIMATESWON.equals(propertyName)) return Account.class;
+		if (ESTIMATESLOST.equals(propertyName)) return Account.class;
+		if (DISCOUNTDOLLARAMT.equals(propertyName)) return Account.class;
+		if (BALANCE30DAY.equals(propertyName)) return Account.class;
+		if (BALANCE60DAY.equals(propertyName)) return Account.class;
+		if (BALANCE90DAY.equals(propertyName)) return Account.class;
+		if (BALANCECURRENT.equals(propertyName)) return Account.class;
+		if (TYPE.equals(propertyName)) return Account.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -861,6 +2135,8 @@ public class Account extends ModelBase {
 			return false;
 		if (! SmartEquals(getDollarDiscount(), objT.getDollarDiscount()))
 			return false;
+		if (! SmartEquals(getOneTimeDiscount(), objT.getOneTimeDiscount()))
+			return false;
 		if (! SmartEquals(getFileOriginals(), objT.getFileOriginals()))
 			return false;
 		if (! SmartEquals(getWebAccessEnabled(), objT.getWebAccessEnabled()))
@@ -888,6 +2164,102 @@ public class Account extends ModelBase {
 		if (! SmartEquals(getSalesRep(), objT.getSalesRep()))
 			return false;
 		if (! SmartEquals(getShippingMode(), objT.getShippingMode()))
+			return false;
+		if (! SmartEquals(getLastInvoiceDate(), objT.getLastInvoiceDate()))
+			return false;
+		if (! SmartEquals(getLastEstimateDate(), objT.getLastEstimateDate()))
+			return false;
+		if (! SmartEquals(getFirstInvoiceDate(), objT.getFirstInvoiceDate()))
+			return false;
+		if (! SmartEquals(getFirstEstimateDate(), objT.getFirstEstimateDate()))
+			return false;
+		if (! SmartEquals(getLastAgedDate(), objT.getLastAgedDate()))
+			return false;
+		if (! SmartEquals(getLastBilledDate(), objT.getLastBilledDate()))
+			return false;
+		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+			return false;
+		if (! SmartEquals(getLastPaymentDate(), objT.getLastPaymentDate()))
+			return false;
+		if (! SmartEquals(getLastPostingDate(), objT.getLastPostingDate()))
+			return false;
+		if (! SmartEquals(getLastRankingDate(), objT.getLastRankingDate()))
+			return false;
+		if (! SmartEquals(getCreditCardExpiration(), objT.getCreditCardExpiration()))
+			return false;
+		if (! SmartEquals(getCreditCardInfo(), objT.getCreditCardInfo()))
+			return false;
+		if (! SmartEquals(getAutoPayMode(), objT.getAutoPayMode()))
+			return false;
+		if (! SmartEquals(getAutoPayInterval(), objT.getAutoPayInterval()))
+			return false;
+		if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
+			return false;
+		if (! SmartEquals(getAutoPayMinimum(), objT.getAutoPayMinimum()))
+			return false;
+		if (! SmartEquals(getAutoPayMaximum(), objT.getAutoPayMaximum()))
+			return false;
+		if (! SmartEquals(getAutoPayTotal(), objT.getAutoPayTotal()))
+			return false;
+		if (! SmartEquals(getAutoPayAmount(), objT.getAutoPayAmount()))
+			return false;
+		if (! SmartEquals(getAutoPayStop(), objT.getAutoPayStop()))
+			return false;
+		if (! SmartEquals(getAutoPayStart(), objT.getAutoPayStart()))
+			return false;
+		if (! SmartEquals(getAutoPayLastPosted(), objT.getAutoPayLastPosted()))
+			return false;
+		if (! SmartEquals(getAutoPayPaymentQty(), objT.getAutoPayPaymentQty()))
+			return false;
+		if (! SmartEquals(getLastNotifiedDate(), objT.getLastNotifiedDate()))
+			return false;
+		if (! SmartEquals(getResaleCertExpirationDate(), objT.getResaleCertExpirationDate()))
+			return false;
+		if (! SmartEquals(getOnAccount(), objT.getOnAccount()))
+			return false;
+		if (! SmartEquals(getBalance(), objT.getBalance()))
+			return false;
+		if (! SmartEquals(getSalesMonth(), objT.getSalesMonth()))
+			return false;
+		if (! SmartEquals(getOrdersMonth(), objT.getOrdersMonth()))
+			return false;
+		if (! SmartEquals(getSalesYear(), objT.getSalesYear()))
+			return false;
+		if (! SmartEquals(getSalesPriorYear(), objT.getSalesPriorYear()))
+			return false;
+		if (! SmartEquals(getOrdersYear(), objT.getOrdersYear()))
+			return false;
+		if (! SmartEquals(getOrdersTotal(), objT.getOrdersTotal()))
+			return false;
+		if (! SmartEquals(getEstimateCount(), objT.getEstimateCount()))
+			return false;
+		if (! SmartEquals(getCreditLimit(), objT.getCreditLimit()))
+			return false;
+		if (! SmartEquals(getDiscount(), objT.getDiscount()))
+			return false;
+		if (! SmartEquals(getTermsNet(), objT.getTermsNet()))
+			return false;
+		if (! SmartEquals(getTermsDiscount(), objT.getTermsDiscount()))
+			return false;
+		if (! SmartEquals(getFinanceRate(), objT.getFinanceRate()))
+			return false;
+		if (! SmartEquals(getFinanceYear(), objT.getFinanceYear()))
+			return false;
+		if (! SmartEquals(getEstimatesWon(), objT.getEstimatesWon()))
+			return false;
+		if (! SmartEquals(getEstimatesLost(), objT.getEstimatesLost()))
+			return false;
+		if (! SmartEquals(getDiscountDollarAmt(), objT.getDiscountDollarAmt()))
+			return false;
+		if (! SmartEquals(getBalance30Day(), objT.getBalance30Day()))
+			return false;
+		if (! SmartEquals(getBalance60Day(), objT.getBalance60Day()))
+			return false;
+		if (! SmartEquals(getBalance90Day(), objT.getBalance90Day()))
+			return false;
+		if (! SmartEquals(getBalanceCurrent(), objT.getBalanceCurrent()))
+			return false;
+		if (! SmartEquals(getType(), objT.getType()))
 			return false;
 		return true;
 	}			

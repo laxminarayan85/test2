@@ -11,8 +11,8 @@ showBusyCursor="true" />
 
 <mx:Script>
                                    
-<![CDATA[
-                                         
+<![CDATA[           
+    import com.efi.vo.Account;                
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -22,6 +22,7 @@ showBusyCursor="true" />
 	import mx.validators.Validator;       
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
 	                             
 	[Bindable]                             
 	private var message:String;                                   
@@ -64,12 +65,14 @@ showBusyCursor="true" />
 		
 	}   
 	
-	private function selectAccount():void {
-		
+	private function selectAccount():void {	
+		var editCustomerPage:EditCustomer = Snowmass.getInstance().mainNavigator.selectedChild as EditCustomer;
+		editCustomerPage.setAccount(dataGrid.selectedItem as Account);
+		PopUpManager.removePopUp(this);
 	}     
 	
 	private function newAccount():void {
-		
+		PopUpManager.removePopUp(this);
 	}
 	
 	private function updateDataGrid():void {
@@ -82,14 +85,14 @@ showBusyCursor="true" />
                              
 	<mx:Canvas width="583" height="541">
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{accounts}"
-		doubleClickEnabled="true" doubleClick="editAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
+		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="title" headerText="Name" />                         
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="selectAccount();"  width="108" x="465" y="10"/>
-		<mx:Button label="New" enabled="true" click="newAccount();"  id="new_button" width="108" x="465" y="40"/>
-		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this);" width="108" x="465" y="93"/>
+		<mx:Button label="New" enabled="true" click="newAccount();" id="new_button" width="108" x="465" y="40"/>
+		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="465" y="93"/>
 		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
