@@ -39,7 +39,7 @@ public class CopyDefinitionsService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query q = em.createNamedQuery("CopyDefinition.findall");
+			Query q = em.createNamedQuery("CopierDefinition.findall");
 
 			List<CopierDefinition> copyDefinitions = q.getResultList();
 	

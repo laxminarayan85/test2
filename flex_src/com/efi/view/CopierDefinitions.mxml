@@ -161,10 +161,10 @@ width="902" height="663" title="Copier Definitions"
 			<mx:DataGridColumn headerText="Default BW"/>
 			<mx:DataGridColumn headerText="Default Color" />
 			<mx:DataGridColumn headerText="Default LF" />
-			<mx:DataGridColumn headerText="Name" dataField="CopyDefName"/>
+			<mx:DataGridColumn headerText="Name" dataField="copyDefName"/>
 			<mx:DataGridColumn headerText="Default BW" dataField= "blackwhite"/>
-			<mx:DataGridColumn headerText="Default Color" dataField= "Color"/>
-			<mx:DataGridColumn headerText="Default LF" dataField= "LargeFormat"/>
+			<mx:DataGridColumn headerText="Default Color" dataField= "color"/>
+			<mx:DataGridColumn headerText="Default LF" dataField= "largeFormat"/>
 	</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>

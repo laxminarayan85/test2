@@ -1,6 +1,7 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
@@ -48,9 +49,7 @@ import org.hibernate.annotations.Type;
 })
 
 
-@DiscriminatorValue("com.efi.printsmith.data.CopierDefinition")
-@DiscriminatorColumn(name="dtype", length=255)
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Entity
 @Table(name = "copierdefinition")
 public class CopierDefinition extends ModelBase {
 	/**
@@ -198,12 +197,11 @@ public class CopierDefinition extends ModelBase {
 
  	
 	
+ 	@Basic
 	private Long copyDefID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="copydefid", nullable=true, unique=false)
 	public Long getCopyDefID(){
 		return copyDefID; 
 	}
@@ -211,17 +209,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Long setCopyDefID(Long newVal) {
-		return this.copyDefID = newVal;
+	public void setCopyDefID(Long newVal) {
+		this.copyDefID = newVal;
 	}
  	
 	
+ 	@Basic
 	private String copyDefName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="copydefname", nullable=true, unique=false)
 	public String getCopyDefName(){
 		return copyDefName; 
 	}
@@ -229,17 +226,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCopyDefName(String newVal) {
-		return this.copyDefName = newVal;
+	public void setCopyDefName(String newVal) {
+		this.copyDefName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String machineName;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="machinename", nullable=true, unique=false)
 	public String getMachineName(){
 		return machineName; 
 	}
@@ -247,17 +243,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMachineName(String newVal) {
-		return this.machineName = newVal;
+	public void setMachineName(String newVal) {
+		this.machineName = newVal;
 	}
  	
 	
+ 	@Basic
 	private String outputDescrip;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="outputdescrip", nullable=true, unique=false)
 	public String getOutputDescrip(){
 		return outputDescrip; 
 	}
@@ -265,17 +260,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setOutputDescrip(String newVal) {
-		return this.outputDescrip = newVal;
+	public void setOutputDescrip(String newVal) {
+		this.outputDescrip = newVal;
 	}
  	
 	
+ 	@Basic
 	private String productionLocation;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="productionlocation", nullable=true, unique=false)
 	public String getProductionLocation(){
 		return productionLocation; 
 	}
@@ -283,17 +277,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setProductionLocation(String newVal) {
-		return this.productionLocation = newVal;
+	public void setProductionLocation(String newVal) {
+		this.productionLocation = newVal;
 	}
  	
 	
+ 	@Basic
 	private String costCenter;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="costcenter", nullable=true, unique=false)
 	public String getCostCenter(){
 		return costCenter; 
 	}
@@ -301,17 +294,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setCostCenter(String newVal) {
-		return this.costCenter = newVal;
+	public void setCostCenter(String newVal) {
+		this.costCenter = newVal;
 	}
  	
 	
+ 	@Basic
 	private String oEMDeviceID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="oemdeviceid", nullable=true, unique=false)
 	public String getOEMDeviceID(){
 		return oEMDeviceID; 
 	}
@@ -319,17 +311,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setOEMDeviceID(String newVal) {
-		return this.oEMDeviceID = newVal;
+	public void setOEMDeviceID(String newVal) {
+		this.oEMDeviceID = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean costingCopy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="costingcopy", nullable=true, unique=false)
 	public Boolean getCostingCopy(){
 		return costingCopy; 
 	}
@@ -337,17 +328,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setCostingCopy(Boolean newVal) {
-		return this.costingCopy = newVal;
+	public void setCostingCopy(Boolean newVal) {
+		this.costingCopy = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean blackwhite;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="blackwhite", nullable=true, unique=false)
 	public Boolean getBlackwhite(){
 		return blackwhite; 
 	}
@@ -355,17 +345,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setBlackwhite(Boolean newVal) {
-		return this.blackwhite = newVal;
+	public void setBlackwhite(Boolean newVal) {
+		this.blackwhite = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean color;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="color", nullable=true, unique=false)
 	public Boolean getColor(){
 		return color; 
 	}
@@ -373,17 +362,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setColor(Boolean newVal) {
-		return this.color = newVal;
+	public void setColor(Boolean newVal) {
+		this.color = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean integratedDevice;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="integrateddevice", nullable=true, unique=false)
 	public Boolean getIntegratedDevice(){
 		return integratedDevice; 
 	}
@@ -391,17 +379,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setIntegratedDevice(Boolean newVal) {
-		return this.integratedDevice = newVal;
+	public void setIntegratedDevice(Boolean newVal) {
+		this.integratedDevice = newVal;
 	}
  	
 	
+ 	@Basic
 	private String maxSize;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="maxsize", nullable=true, unique=false)
 	public String getMaxSize(){
 		return maxSize; 
 	}
@@ -409,17 +396,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMaxSize(String newVal) {
-		return this.maxSize = newVal;
+	public void setMaxSize(String newVal) {
+		this.maxSize = newVal;
 	}
  	
 	
+ 	@Basic
 	private String minSize;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="minsize", nullable=true, unique=false)
 	public String getMinSize(){
 		return minSize; 
 	}
@@ -427,17 +413,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMinSize(String newVal) {
-		return this.minSize = newVal;
+	public void setMinSize(String newVal) {
+		this.minSize = newVal;
 	}
  	
 	
+ 	@Basic
 	private Double monthlyLabor;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="monthlylabor", nullable=true, unique=false)
 	public Double getMonthlyLabor(){
 		return monthlyLabor; 
 	}
@@ -445,17 +430,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Double setMonthlyLabor(Double newVal) {
-		return this.monthlyLabor = newVal;
+	public void setMonthlyLabor(Double newVal) {
+		this.monthlyLabor = newVal;
 	}
  	
 	
+ 	@Basic
 	private Double clickCost;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="clickcost", nullable=true, unique=false)
 	public Double getClickCost(){
 		return clickCost; 
 	}
@@ -463,17 +447,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Double setClickCost(Double newVal) {
-		return this.clickCost = newVal;
+	public void setClickCost(Double newVal) {
+		this.clickCost = newVal;
 	}
  	
 	
+ 	@Basic
 	private Double laborCopy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="laborcopy", nullable=true, unique=false)
 	public Double getLaborCopy(){
 		return laborCopy; 
 	}
@@ -481,17 +464,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Double setLaborCopy(Double newVal) {
-		return this.laborCopy = newVal;
+	public void setLaborCopy(Double newVal) {
+		this.laborCopy = newVal;
 	}
  	
 	
+ 	@Basic
 	private Boolean largeFormat;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="largeformat", nullable=true, unique=false)
 	public Boolean getLargeFormat(){
 		return largeFormat; 
 	}
@@ -499,17 +481,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Boolean setLargeFormat(Boolean newVal) {
-		return this.largeFormat = newVal;
+	public void setLargeFormat(Boolean newVal) {
+		this.largeFormat = newVal;
 	}
  	
 	
+ 	@Basic
 	private String maxWidth;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="maxwidth", nullable=true, unique=false)
 	public String getMaxWidth(){
 		return maxWidth; 
 	}
@@ -517,17 +498,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMaxWidth(String newVal) {
-		return this.maxWidth = newVal;
+	public void setMaxWidth(String newVal) {
+		this.maxWidth = newVal;
 	}
  	
 	
+ 	@Basic
 	private String minWidth;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="minwidth", nullable=true, unique=false)
 	public String getMinWidth(){
 		return minWidth; 
 	}
@@ -535,17 +515,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMinWidth(String newVal) {
-		return this.minWidth = newVal;
+	public void setMinWidth(String newVal) {
+		this.minWidth = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer daysOpen;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="daysopen", nullable=true, unique=false)
 	public Integer getDaysOpen(){
 		return daysOpen; 
 	}
@@ -553,17 +532,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setDaysOpen(Integer newVal) {
-		return this.daysOpen = newVal;
+	public void setDaysOpen(Integer newVal) {
+		this.daysOpen = newVal;
 	}
  	
 	
+ 	@Basic
 	private Double monthlyPayment;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="monthlypayment", nullable=true, unique=false)
 	public Double getMonthlyPayment(){
 		return monthlyPayment; 
 	}
@@ -571,17 +549,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Double setMonthlyPayment(Double newVal) {
-		return this.monthlyPayment = newVal;
+	public void setMonthlyPayment(Double newVal) {
+		this.monthlyPayment = newVal;
 	}
  	
 	
+ 	@Basic
 	private String percentUsage;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="percentusage", nullable=true, unique=false)
 	public String getPercentUsage(){
 		return percentUsage; 
 	}
@@ -589,17 +566,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setPercentUsage(String newVal) {
-		return this.percentUsage = newVal;
+	public void setPercentUsage(String newVal) {
+		this.percentUsage = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer hourCostRate;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="hourcostrate", nullable=true, unique=false)
 	public Integer getHourCostRate(){
 		return hourCostRate; 
 	}
@@ -607,17 +583,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setHourCostRate(Integer newVal) {
-		return this.hourCostRate = newVal;
+	public void setHourCostRate(Integer newVal) {
+		this.hourCostRate = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer tonerCopy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="tonercopy", nullable=true, unique=false)
 	public Integer getTonerCopy(){
 		return tonerCopy; 
 	}
@@ -625,17 +600,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setTonerCopy(Integer newVal) {
-		return this.tonerCopy = newVal;
+	public void setTonerCopy(Integer newVal) {
+		this.tonerCopy = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer developerCopy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="developercopy", nullable=true, unique=false)
 	public Integer getDeveloperCopy(){
 		return developerCopy; 
 	}
@@ -643,17 +617,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setDeveloperCopy(Integer newVal) {
-		return this.developerCopy = newVal;
+	public void setDeveloperCopy(Integer newVal) {
+		this.developerCopy = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer copyMarkup;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="copymarkup", nullable=true, unique=false)
 	public Integer getCopyMarkup(){
 		return copyMarkup; 
 	}
@@ -661,17 +634,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setCopyMarkup(Integer newVal) {
-		return this.copyMarkup = newVal;
+	public void setCopyMarkup(Integer newVal) {
+		this.copyMarkup = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer hoursOpen;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="hoursopen", nullable=true, unique=false)
 	public Integer getHoursOpen(){
 		return hoursOpen; 
 	}
@@ -679,17 +651,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setHoursOpen(Integer newVal) {
-		return this.hoursOpen = newVal;
+	public void setHoursOpen(Integer newVal) {
+		this.hoursOpen = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer monthlyMaintenance;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="monthlymaintenance", nullable=true, unique=false)
 	public Integer getMonthlyMaintenance(){
 		return monthlyMaintenance; 
 	}
@@ -697,17 +668,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setMonthlyMaintenance(Integer newVal) {
-		return this.monthlyMaintenance = newVal;
+	public void setMonthlyMaintenance(Integer newVal) {
+		this.monthlyMaintenance = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer machineCostPerCopy;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="machinecostpercopy", nullable=true, unique=false)
 	public Integer getMachineCostPerCopy(){
 		return machineCostPerCopy; 
 	}
@@ -715,17 +685,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setMachineCostPerCopy(Integer newVal) {
-		return this.machineCostPerCopy = newVal;
+	public void setMachineCostPerCopy(Integer newVal) {
+		this.machineCostPerCopy = newVal;
 	}
  	
 	
+ 	@Basic
 	private String method;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="method", nullable=true, unique=false)
 	public String getMethod(){
 		return method; 
 	}
@@ -733,17 +702,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setMethod(String newVal) {
-		return this.method = newVal;
+	public void setMethod(String newVal) {
+		this.method = newVal;
 	}
  	
 	
+ 	@Basic
 	private String salesCat;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="salescat", nullable=true, unique=false)
 	public String getSalesCat(){
 		return salesCat; 
 	}
@@ -751,17 +719,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public String setSalesCat(String newVal) {
-		return this.salesCat = newVal;
+	public void setSalesCat(String newVal) {
+		this.salesCat = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer copyID;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="copyid", nullable=true, unique=false)
 	public Integer getCopyID(){
 		return copyID; 
 	}
@@ -769,17 +736,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setCopyID(Integer newVal) {
-		return this.copyID = newVal;
+	public void setCopyID(Integer newVal) {
+		this.copyID = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer monthlyBurdenRate;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="monthlyburdenrate", nullable=true, unique=false)
 	public Integer getMonthlyBurdenRate(){
 		return monthlyBurdenRate; 
 	}
@@ -787,17 +753,16 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setMonthlyBurdenRate(Integer newVal) {
-		return this.monthlyBurdenRate = newVal;
+	public void setMonthlyBurdenRate(Integer newVal) {
+		this.monthlyBurdenRate = newVal;
 	}
  	
 	
+ 	@Basic
 	private Integer copyMinutes;
 	/**
 	 * @generated
  	 */
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="copyminutes", nullable=true, unique=false)
 	public Integer getCopyMinutes(){
 		return copyMinutes; 
 	}
@@ -805,8 +770,8 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public Integer setCopyMinutes(Integer newVal) {
-		return this.copyMinutes = newVal;
+	public void setCopyMinutes(Integer newVal) {
+		this.copyMinutes = newVal;
 	}
 
 	/**
