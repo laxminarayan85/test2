@@ -21,7 +21,7 @@ public class StockDefinitionsService {
 
 	private static final String PERSISTENCE_UNIT = "printsmith_db";
 
-	private static Logger log = Logger.getLogger(StockService.class);
+	private static Logger log = Logger.getLogger(StockDefinitionsService.class);
 
 	public StockDefinitionsService() {
 
@@ -55,7 +55,7 @@ public class StockDefinitionsService {
 		return new ArrayList<Account>();
 	}
 
-	public void addUpdateStockDefinitions(StockDefinitions stockDefinitions) throws Exception {
+	public void addUpdateStockDefinitions(Stock stockDefinitions) throws Exception {
 
 		log.debug("** addUpdateStockDefinitions called...");
 
@@ -74,13 +74,13 @@ public class StockDefinitionsService {
 
 		// byte.
 
-		if (stock.getId() == null || stock.getId() == 0) {
+		if (stockDefinitions.getId() == null || stockDefinitions.getId() == 0) {
 
 			// New consultant is created
 
-			stock.setId(null);
+			stockDefinitions.setId(null);
 
-			stock.setCreated(new Timestamp(new Date().getTime()));
+			stockDefinitions.setCreated(new Timestamp(new Date().getTime()));
 
 		} else {
 
@@ -94,7 +94,7 @@ public class StockDefinitionsService {
 
 		try {
 
-			em.merge(stock);
+			em.merge(stockDefinitions);
 
 			tx.commit();
 			
@@ -135,7 +135,7 @@ public class StockDefinitionsService {
 
 		q.setParameter("id", id);
 
-		StockDefinitions stockDefinitions = (StockDefinitions) q.getSingleResult();
+		Stock stockDefinitions = (Stock) q.getSingleResult();
 
 		if (stockDefinitions != null) {
 

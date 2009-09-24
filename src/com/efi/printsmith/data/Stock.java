@@ -1,9 +1,9 @@
-package com.efi.printsmith;
+package com.efi.printsmith.data
+;
 
 import java.util.Date;
 import java.util.List;
 
-import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
 
 import javax.persistence.Basic;
@@ -210,40 +210,40 @@ public class Stock extends ModelBase {
 	}
  	
 	
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="class", nullable=true, unique=false)
-	private String class;
-	/**
-	 * @generated
- 	 */
-	public String getClass(){
-		return class; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public String setClass(String newVal) {
-		return this.class = newVal;
-	}
+// 	@Basic(fetch=FetchType.LAZY)
+//	@Column(name="class", nullable=true, unique=false)
+//	private String class;
+//	/**
+//	 * @generated
+// 	 */
+//	public String getClass(){
+//		return class; 
+//	}
+//
+//	/**
+//	 * @generated
+//	 */	
+//	public String setClass(String newVal) {
+//		return this.class = newVal;
+//	}
  	
 	
- 	@Basic(fetch=FetchType.LAZY)
-	@Column(name="ismetric", nullable=true, unique=false)
-	private Boolean ismetric;
-	/**
-	 * @generated
- 	 */
-	public Boolean getIsmetric(){
-		return ismetric; 
-	}
+// 	@Basic(fetch=FetchType.LAZY)
+//	@Column(name="ismetric", nullable=true, unique=false)
+//	private Boolean ismetric;
+//	/**
+//	 * @generated
+// 	 */
+//	public Boolean getIsmetric(){
+//		return ismetric; 
+//	}
 
 	/**
 	 * @generated
 	 */	
-	public Boolean setIsmetric(Boolean newVal) {
-		return this.ismetric = newVal;
-	}
+	//public Boolean setIsmetric(Boolean newVal) {
+	//	return this.ismetric = newVal;
+	//}
  	
 	
  	@Basic(fetch=FetchType.LAZY)
@@ -675,7 +675,7 @@ public class Stock extends ModelBase {
 		if (STOCKID.equals(propertyName)) return getStockId();
 		if (GROUP.equals(propertyName)) return getGroup();
 		if (CLASS.equals(propertyName)) return getClass();
-		if (ISMETRIC.equals(propertyName)) return getIsmetric();
+	//	if (ISMETRIC.equals(propertyName)) return getIsmetric();
 		if (NAME.equals(propertyName)) return getName();
 		if (FINISH.equals(propertyName)) return getFinish();
 		if (WEIGHT.equals(propertyName)) return getWeight();
@@ -711,8 +711,8 @@ public class Stock extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (STOCKID.equals(propertyName)) setStockId((Integer)newValue); else
 		if (GROUP.equals(propertyName)) setGroup((StockGroup)newValue); else
-		if (CLASS.equals(propertyName)) setClass((String)newValue); else
-		if (ISMETRIC.equals(propertyName)) setIsmetric((Boolean)newValue); else
+	//	if (CLASS.equals(propertyName)) setClass((String)newValue); else
+	//	if (ISMETRIC.equals(propertyName)) setIsmetric((Boolean)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
 		if (WEIGHT.equals(propertyName)) setWeight((Float)newValue); else
@@ -857,8 +857,8 @@ public class Stock extends ModelBase {
 			return false;
 		if (! SmartEquals(getClass(), objT.getClass()))
 			return false;
-		if (! SmartEquals(getIsmetric(), objT.getIsmetric()))
-			return false;
+	//	if (! SmartEquals(getIsmetric(), objT.getIsmetric()))
+	//		return false;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		if (! SmartEquals(getFinish(), objT.getFinish()))

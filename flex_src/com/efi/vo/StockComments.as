@@ -1,7 +1,7 @@
 package com.efi.vo
 {
 	import mx.controls.List;
-	import com.efi.vo.*;
+	import com.efi.vo.Stock;
 [Bindable]
 
 [RemoteClass(alias="com.efi.printsmith.StockComments")]
@@ -21,7 +21,8 @@ public var created:Date;
 
 public var modified:Date;
 
-public var value:UnlimitedNatural;
+//public var value:UnlimitedNatural;
+public var value:String;
 
 
 }

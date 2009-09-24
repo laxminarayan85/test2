@@ -1,9 +1,9 @@
-package com.efi.printsmith;
+package com.efi.printsmith.data;
 
 import java.util.Date;
 import java.util.List;
 
-import com.efi.printsmith.data.*;
+
 import com.efi.printsmith.exceptions.*;
 
 import javax.persistence.Basic;

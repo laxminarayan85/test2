@@ -25,7 +25,7 @@ public var stockId:Number;
 
 public var group:StockGroup;
 
-public var class:String;
+//public var class:String;
 
 public var ismetric:Boolean;
 

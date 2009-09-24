@@ -1,9 +1,8 @@
-package com.efi.printsmith;
+package com.efi.printsmith.data;
 
 import java.util.Date;
 import java.util.List;
 
-import com.efi.printsmith.data.*;
 import com.efi.printsmith.exceptions.*;
 
 import javax.persistence.Basic;
@@ -67,21 +66,21 @@ public class StockComments extends ModelBase {
 
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private UnlimitedNatural value;
-	/**
-	 * @generated
- 	 */
-	public UnlimitedNatural getValue(){
-		return value; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public UnlimitedNatural setValue(UnlimitedNatural newVal) {
-		return this.value = newVal;
-	}
+//	@ManyToOne( cascade = CascadeType.ALL )	
+//	public UnlimitedNatural value;
+//	/**
+//	 * @generated
+// 	 */
+//	public UnlimitedNatural getValue(){
+//		return value; 
+//	}
+//
+//	/**
+//	 * @generated
+//	 */	
+//	public UnlimitedNatural setValue(UnlimitedNatural newVal) {
+//		return this.value = newVal;
+//	}
 
 	/**
 	 * @generated
@@ -99,7 +98,7 @@ public class StockComments extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (VALUE.equals(propertyName)) setValue((UnlimitedNatural)newValue); else
+		if (VALUE.equals(propertyName)) setProperty((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -110,7 +109,7 @@ public class StockComments extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (VALUE.equals(propertyName)) 
-			return new Class<?>[] {UnlimitedNatural.class};		
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

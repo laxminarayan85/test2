@@ -16,7 +16,13 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.vo.StockDefinitions;
+	import com.efi.vo.Stock;
+	import com.efi.vo.StockBlankSheets;
+	import com.efi.vo.StockInventory;
+	import com.efi.vo.StockQty;
+	import com.efi.vo.StockPricing;
+	import com.efi.vo.StockQtyBreak;
+	import com.efi.vo.StockComments;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -29,8 +35,8 @@
                    
     private var enableSave:Boolean = true;
                          
-//	[Bindable]                                         
-//	private var stockDefinition:PressDefinition;
+	[Bindable]                                         
+	private var stockDefinition:Stock;
                                                                                   	
 	[Bindable]                                
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
@@ -38,8 +44,8 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    loaderService.getPressDefinitions();
-	    stockDefinition = new StockDefinition();
+	    loaderService.getStockDefinitions();
+	    stockDefinition = new Stock();
 	}      
 	                                                   	
 	public function loadStockDefinitions():void {   
@@ -60,7 +66,7 @@
 	}
 
 	private function doStockGridClick():void {
-		pressDefinition = dataGrid.selectedItem as StockDefinition;
+		//pressDefinition = dataGrid.selectedItem as StockDefinition;
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
@@ -68,7 +74,7 @@
 	}
 
 	private function handleLoadResult(ev:ResultEvent):void {
-	     stockDefinitionArray = ev.result as ArrayCollection;
+	     StockDefinitionArray = ev.result as ArrayCollection;
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
@@ -88,28 +94,28 @@
 ]]>
                              
 </mx:Script>	
-<vo:StockDefinition id="stockDefinition" stockDefName="{Name.text}"                             
-machineName="{MachineName.text}"/>
+<vo:Stock id="stock"  />                           
+
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:ComboBox x="92" y="68" width="116"></mx:ComboBox>
 	<mx:Label x="49" y="70" text="Group:"/>
 	<mx:Label x="216" y="70" text="Class:"/>
-	<mx:TextInput x="264" y="68" width="105" text="{stock.class}"/>
+	<!--<mx:TextInput x="264" y="68" width="105" text="{stock.class}"/>-->
 	<mx:CheckBox x="393" y="68" label="Metric"/>
 	<mx:Label x="49" y="93" text="Name:"/>
 	<mx:Label x="71" y="117" text="Color:"/>
-	<mx:TextInput x="118" y="115" width="138" text="{stock.color}"/>
+	<!--<mx:TextInput x="118" y="115" width="138" text="{stock.color}"/>-->
 	<mx:Label x="264" y="91" text="Finish:"/>
 	<mx:TextInput x="96" y="91" width="160" text="{stock.name}"/>
 	<mx:TextInput x="313.5" y="91" width="105" text="{stock.finish}"/>
 	<mx:Label x="71" y="142" text="Generic Color:"/>
-	<mx:TextInput x="163" y="140" width="93" text="{stock.genericcolor}"/>
+	<mx:TextInput x="163" y="140" width="93" text="{stockDefinition.genericcolor}"/>
 	<mx:Label x="264" y="117" text="Grade:"/>
-	<mx:TextInput x="313.5" y="117" width="105" text="{stock.grade}"/>
+	<mx:TextInput x="313.5" y="117" width="105" text="{stockDefinition.grade}"/>
 	<mx:Label x="426.5" y="97" text="Weight:"/>
-	<mx:TextInput x="483.5" y="93" width="55" text="{stock.weight}"/>
+	<mx:TextInput x="483.5" y="93" width="55" text="{stockDefinition.weight}"/>
 	<mx:Label x="426.5" y="121" text="Coated:"/>
-	<mx:TextInput x="483.5" y="117" width="55" text="{stock.coated}"/>
+	<mx:TextInput x="483.5" y="117" width="55" text="{stockDefinition.coated}"/>
 	<mx:RadioButtonGroup id="stockunit"/>
 	<mx:RadioButton x="564" y="68" label="Envelope" groupName="stockunit"/>
 	<mx:RadioButton x="564" y="94" label="Sheet Stock" groupName="stockunit"/>
@@ -121,9 +127,9 @@ machineName="{MachineName.text}"/>
 				<mx:Label x="56.5" y="6" text="Vendor:"/>
 				<mx:TextInput x="113.5" y="4" text="{stock.vendor}"/>
 				<mx:Label x="34.5" y="35" text="Stock Type:"/>
-				<mx:TextInput x="113.5" y="30" width="128" text="{stock.type}"/>
+				<mx:TextInput x="113.5" y="30" width="128" text="{stockDefinition.type}"/>
 				<mx:Label x="281.5" y="6" text="Stock #:"/>
-				<mx:TextInput x="341.5" y="4" width="93" text="{stock.stocknumber}"/>
+				<mx:TextInput x="341.5" y="4" width="93" text="{stockDefinition.stocknumber}"/>
 				<mx:Label x="51" y="59" text="Parent Size:"/>
 				<mx:TextInput x="132" y="57" width="132" text="{stock.parentsize}"/>
 				<mx:Label x="275" y="57" text="Thickness:"/>
@@ -136,7 +142,7 @@ machineName="{MachineName.text}"/>
 				<mx:Label x="51" y="137" text="Min. Order:"/>
 				<mx:TextInput x="127" y="135" width="137" text="{stock.minorder}"/>
 				<mx:Label x="272" y="111" text="Carton Weight:"/>
-				<mx:TextInput x="370" y="109" width="64.5" text="{stock.cartonweight}"/>
+				<mx:TextInput x="370" y="109" width="64.5" text="{stockDefinition.cartonweight}"/>
 				<mx:Text x="354.5" y="32" text="{stock.basicsize}" width="103"/>
 				<mx:CheckBox x="272" y="135" label="Charge Customer for Entire Order"/>
 				<mx:ComboBox x="413" y="55" width="80"></mx:ComboBox>

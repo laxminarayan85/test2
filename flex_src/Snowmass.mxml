@@ -53,6 +53,7 @@
 	<![CDATA[
 		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
+		import com.efi.view.StockDefinitions;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
