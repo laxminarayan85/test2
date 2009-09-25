@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
-width="902" height="663" title="Copier Definitions"
+width="902" height="873" title="Copier Definitions"
  label="Copier Definitions" name="Copier Definitions">
 
 	<mx:RemoteObject id="saveService" destination="copyDefinitionsService"
@@ -187,14 +187,12 @@ width="902" height="663" title="Copier Definitions"
 	<mx:Label x="71" y="510" text="Min Size:"/>
 	<mx:TextInput x="139" y="482" id="MaxSize" text="{copyDefinition.maxSize}"/>
 	<mx:TextInput x="139" y="508" id="minSize" text="{copyDefinition.minSize}"/>
-	<mx:HRule x="0" y="642" width="722" height="6"/>
-	<mx:HRule x="20" y="730" width="702" height="6"/>
-	<mx:HRule x="10" y="730" width="702" height="6"/>
-	<mx:Button x="131" y="670" label="Speed Table "/>
-	<mx:Button x="10" y="740" label="Stock Price List"/>
-	<mx:Button x="131" y="740" label="Copier Price List"/>
-	<mx:Button x="10" y="670" label="Waste Chart"/>
-	<mx:Button x="10" y="700" label="Add Charges"/>
+	<mx:HRule x="0" y="601" width="892" height="6"/>
+	<mx:HRule x="10" y="781" width="872" height="12"/>
+	<mx:Button x="10" y="801" label="Stock Price List"/>
+	<mx:Button x="131" y="801" label="Copier Price List"/>
+	<mx:Button x="590" y="247" label="Waste Chart"/>
+	<mx:Button x="590" y="198" label="Add Charges"/>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
@@ -265,5 +263,25 @@ width="902" height="663" title="Copier Definitions"
 		<mx:TextInput x="471" y="516" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}"/>
 		<mx:TextInput x="471" y="543" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}"/>
 		<mx:TextInput x="471" y="573" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}"/>
+		<mx:Text x="695" y="249" text="Text" width="137" id="WasteChart"/>
+		<mx:Label x="10" y="704" text="Copy Markup:"/>
+		<mx:TextInput x="101" y="702" width="71" id="copyMarkup2"/>
+		<mx:Label x="10" y="730" text="Stock Markup:"/>
+		<mx:Label x="10" y="755" text="Side 2 Factor:" width="83"/>
+		<mx:TextInput x="101" y="728" width="71" id="stockMarkup"/>
+		<mx:TextInput x="101" y="753" width="71" id="side2Factor"/>
+		<mx:Label x="246" y="706" text="Stock Price is" height="14"/>
+		<mx:CheckBox x="246" y="728" label="Use Copier/Digital Stock Markup" id="copierDigitalStockmarkup"/>
+		<mx:Label x="246" y="755" text="Price 2 Sided by"/>
+		<mx:List x="348" y="703" height="25"></mx:List>
+		<mx:List x="348" y="752" height="25"></mx:List>
+		<mx:Button x="10" y="615" label="Edit Matrix"/>
+		<mx:CheckBox x="139" y="615" label="Matrix is Copy Cost" id="matrixcopycost"/>
+		<mx:CheckBox x="139" y="636" label="Matrix is Discount Table" id="matrixdiscount"/>
+		<mx:CheckBox x="139" y="659" label="Matrix is Step Table" id="matrixstep"/>
+		<mx:CheckBox x="349" y="615" label="Square Area for Run Size" id="squarerunsize"/>
+		<mx:CheckBox x="349" y="636" label="Square Are for Finish Size" id="squarefinishsize"/>
+		<mx:CheckBox x="349" y="659" label="Interpolate Matrix Values" id="interpolatematrix"/>
+		<mx:HRule x="0" y="689" width="882" height="7"/>
 		
 </mx:Panel>
