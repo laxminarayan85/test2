@@ -11,8 +11,8 @@
 	<mx:RemoteObject id="deleteService" destination="StockDefinitionsService"
 	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
 	
-	<mx:Producer id="producer" destination="stock"/>
-	<mx:Consumer id="consumer" destination="stock" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="stockdefinitions"/>
+	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[

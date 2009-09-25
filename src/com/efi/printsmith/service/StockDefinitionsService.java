@@ -39,8 +39,7 @@ public class StockDefinitionsService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query findAllQuery = em.createQuery("from Stock");
-			//Query findAllQuery = em.createNamedQuery("Account.findall");
+			Query findAllQuery = em.createNamedQuery("Stock.findall");
 			
 			List<Account> stockDefinitions = findAllQuery.getResultList();
 	
