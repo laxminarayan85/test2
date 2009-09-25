@@ -106,20 +106,20 @@ public class PriceListElement extends ModelBase {
 
  	
 	
-    @OneToMany
-	private java.util.List<Long> quantitys;
+ 	@Basic
+	private Long quantity;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Long> getQuantitys(){
-		return quantitys; 
+	public Long getQuantity(){
+		return quantity; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setQuantitys(java.util.List<Long> newVal) {
-		this.quantitys = newVal;
+	public void setQuantity(Long newVal) {
+		this.quantity = newVal;
 	}
  	
 	
@@ -298,7 +298,7 @@ public class PriceListElement extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (QUANTITY.equals(propertyName)) return getQuantitys();
+		if (QUANTITY.equals(propertyName)) return getQuantity();
 		if (AMOUNT.equals(propertyName)) return getAmount();
 		if (IGNOREPRICEADJUSTMENTS.equals(propertyName)) return getIgnorePriceAdjustments();
 		if (ISDISCOUNT.equals(propertyName)) return getIsDiscount();
@@ -318,7 +318,7 @@ public class PriceListElement extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (QUANTITY.equals(propertyName)) setQuantitys((java.util.List<Long>)newValue); else
+		if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
 		if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
 		if (IGNOREPRICEADJUSTMENTS.equals(propertyName)) setIgnorePriceAdjustments((Boolean)newValue); else
 		if (ISDISCOUNT.equals(propertyName)) setIsDiscount((Boolean)newValue); else
@@ -339,7 +339,7 @@ public class PriceListElement extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Long.class};		
+			return new Class<?>[] {Long.class};		
 		if (AMOUNT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (IGNOREPRICEADJUSTMENTS.equals(propertyName)) 
@@ -392,7 +392,7 @@ public class PriceListElement extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		PriceListElement objT = (PriceListElement)obj;
-		if (! SmartEquals(getQuantitys(), objT.getQuantitys()))
+		if (! SmartEquals(getQuantity(), objT.getQuantity()))
 			return false;
 		if (! SmartEquals(getAmount(), objT.getAmount()))
 			return false;

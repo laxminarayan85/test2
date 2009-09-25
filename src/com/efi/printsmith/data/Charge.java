@@ -279,87 +279,87 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private ChargeQtyType quantityType;
+ 	@Basic
+	private String quantityType;
 	/**
 	 * @generated
  	 */
-	public ChargeQtyType getQuantityType(){
+	public String getQuantityType(){
 		return quantityType; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setQuantityType(ChargeQtyType newVal) {
+	public void setQuantityType(String newVal) {
 		this.quantityType = newVal;
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private ChargeMarkupType markupType;
+ 	@Basic
+	private String markupType;
 	/**
 	 * @generated
  	 */
-	public ChargeMarkupType getMarkupType(){
+	public String getMarkupType(){
 		return markupType; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setMarkupType(ChargeMarkupType newVal) {
+	public void setMarkupType(String newVal) {
 		this.markupType = newVal;
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private ChargeJobQuantity jobQty;
+ 	@Basic
+	private String jobQty;
 	/**
 	 * @generated
  	 */
-	public ChargeJobQuantity getJobQty(){
+	public String getJobQty(){
 		return jobQty; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setJobQty(ChargeJobQuantity newVal) {
+	public void setJobQty(String newVal) {
 		this.jobQty = newVal;
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private ChargePriceMethod priceMethod;
+ 	@Basic
+	private String priceMethod;
 	/**
 	 * @generated
  	 */
-	public ChargePriceMethod getPriceMethod(){
+	public String getPriceMethod(){
 		return priceMethod; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPriceMethod(ChargePriceMethod newVal) {
+	public void setPriceMethod(String newVal) {
 		this.priceMethod = newVal;
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
-	private ChargeInkCoverage inkCoverage;
+ 	@Basic
+	private String inkCoverage;
 	/**
 	 * @generated
  	 */
-	public ChargeInkCoverage getInkCoverage(){
+	public String getInkCoverage(){
 		return inkCoverage; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setInkCoverage(ChargeInkCoverage newVal) {
+	public void setInkCoverage(String newVal) {
 		this.inkCoverage = newVal;
 	}
  	
@@ -1177,11 +1177,11 @@ public class Charge extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (METHOD.equals(propertyName)) setMethod((String)newValue); else
-		if (QUANTITYTYPE.equals(propertyName)) setQuantityType((ChargeQtyType)newValue); else
-		if (MARKUPTYPE.equals(propertyName)) setMarkupType((ChargeMarkupType)newValue); else
-		if (JOBQTY.equals(propertyName)) setJobQty((ChargeJobQuantity)newValue); else
-		if (PRICEMETHOD.equals(propertyName)) setPriceMethod((ChargePriceMethod)newValue); else
-		if (INKCOVERAGE.equals(propertyName)) setInkCoverage((ChargeInkCoverage)newValue); else
+		if (QUANTITYTYPE.equals(propertyName)) setQuantityType((String)newValue); else
+		if (MARKUPTYPE.equals(propertyName)) setMarkupType((String)newValue); else
+		if (JOBQTY.equals(propertyName)) setJobQty((String)newValue); else
+		if (PRICEMETHOD.equals(propertyName)) setPriceMethod((String)newValue); else
+		if (INKCOVERAGE.equals(propertyName)) setInkCoverage((String)newValue); else
 		if (USESIDES.equals(propertyName)) setUseSides((Boolean)newValue); else
 		if (NODISCOUNT.equals(propertyName)) setNoDiscount((Boolean)newValue); else
 		if (NOMATERIALQUANTITY.equals(propertyName)) setNoMaterialQuantity((Boolean)newValue); else
@@ -1238,15 +1238,15 @@ public class Charge extends ModelBase {
 		if (METHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (QUANTITYTYPE.equals(propertyName)) 
-			return new Class<?>[] {ChargeQtyType.class};		
+			return new Class<?>[] {String.class};		
 		if (MARKUPTYPE.equals(propertyName)) 
-			return new Class<?>[] {ChargeMarkupType.class};		
+			return new Class<?>[] {String.class};		
 		if (JOBQTY.equals(propertyName)) 
-			return new Class<?>[] {ChargeJobQuantity.class};		
+			return new Class<?>[] {String.class};		
 		if (PRICEMETHOD.equals(propertyName)) 
-			return new Class<?>[] {ChargePriceMethod.class};		
+			return new Class<?>[] {String.class};		
 		if (INKCOVERAGE.equals(propertyName)) 
-			return new Class<?>[] {ChargeInkCoverage.class};		
+			return new Class<?>[] {String.class};		
 		if (USESIDES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (NODISCOUNT.equals(propertyName)) 
