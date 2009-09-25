@@ -45,14 +45,14 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WasteCharts.findall", query = "from WasteCharts"),
-	@NamedQuery(name = "WasteCharts.byId", query = "select a from WasteCharts a where a.id= :id")
+	@NamedQuery(name = "Location.findall", query = "from Location"),
+	@NamedQuery(name = "Location.byId", query = "select a from Location a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "wastecharts")
-public class WasteCharts extends ModelBase {
+@Table(name = "location")
+public class Location extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -61,7 +61,7 @@ public class WasteCharts extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public WasteCharts() {
+	public Location() {
 	}
 
  	
@@ -120,7 +120,7 @@ public class WasteCharts extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return WasteCharts.class;
+		if (NAME.equals(propertyName)) return Location.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -131,7 +131,7 @@ public class WasteCharts extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		WasteCharts objT = (WasteCharts)obj;
+		Location objT = (Location)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;

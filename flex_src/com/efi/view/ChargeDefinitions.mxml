@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*"
+width="100%" height="100%" title="Customer Editor"
+creationComplete="init()" label="Customer Editor" name="Customer Editor">
+                             
+<mx:RemoteObject id="saveService" destination="accountService"
+result="handleSaveResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
+
+<mx:RemoteObject id="loaderService" destination="accountService"
+result="handleLoadResult(event)"  fault="handleFault(event)"
+showBusyCursor="true" />
+                             
+<mx:RemoteObject id="deleteService" destination="accountService"
+result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+
+<mx:RemoteObject id="loadLogsService" destination="customerLogService"
+result="handleLoadCustomerLogs(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+
+<mx:RemoteObject id="saveLogService" destination="customerLogService"
+result="handleSaveLogResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
+
+<mx:RemoteObject id="deleteLogService" destination="customerLogService"
+result="handleDeleteLogResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+
+<mx:RemoteObject id="loadSalesRepService" destination="salesRepService"
+result="handleLoadSalesReps(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+
+<mx:RemoteObject id="loadShippingMethodService" destination="shippingMethodService"
+result="handleLoadShippingMethods(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+
+
+<mx:Producer id="producer" destination="accounts"/>
+<mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.vo.SalesRep;
+	import com.efi.vo.Contact;
+	import com.efi.vo.Address;
+    import com.efi.vo.CustomerLog;
+                             
+	import com.efi.vo.Account;                                         
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    
+    private var enableSave:Boolean = true;
+    private var accounts:ArrayCollection = new ArrayCollection();
+                 
+	[Bindable]                                         
+	private var account:Account;
+                
+	[Bindable]
+	private var autoDiscountRadioValue:String = "discount_dollars";
+	
+	[Bindable]
+	private var acctStatusRadioValue:String = "acct_status_new_radio";
+	
+	[Bindable]
+	private var acctTypeRadioValue:String = "cash_only";
+	               
+	[Bindable]
+	private var balances:ArrayCollection = new ArrayCollection([
+            {Aged:"Current", Value:0},
+            {Aged:"30", Value:0},
+            {Aged:"60", Value:0},
+            {Aged:"90", Value:0}
+         ]);                   
+    
+    [Bindable]
+    private var customerLogs:ArrayCollection = new ArrayCollection();
+                     
+    [Bindable]
+    private var salesReps:ArrayCollection = new ArrayCollection();
+                           	
+    [Bindable]
+    private var shippingMethods:ArrayCollection = new ArrayCollection();
+
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+	    account = new Account();
+	    /* Note - the following constructors NEED to live in the .vo object constructor for the respective objects... */
+	    account.shipToAddress = new Address();
+	    account.billToAddress = new Address();
+	    account.billToContact = new Contact();
+	    account.contact = new Contact();
+	    account.contact.address = new Address();
+	    account.billToContact.address = new Address();
+	    loadSalesRepService.getSalesReps();
+	    loadShippingMethodService.getShippingMethods();
+	}      
+	                                                   	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.accounts = "*";
+		//producer.send(message);
+	}
+		
+	public function setAccount(account:Account):void
+	{
+		this.account = account;
+		if (account.shipToAddress == null) account.shipToAddress = new Address();
+		if (account.billToAddress == null) account.billToAddress = new Address();
+		if (account.billToContact == null) account.billToContact = new Contact();
+		if (account.contact == null) account.contact = new Contact();
+		if (account.billToContact.address == null) account.billToContact.address = new Address();
+		if (account.contact.address == null) account.contact.address = new Address();
+		mapFromAccountData();
+	}			
+	
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+	private function deleteAccount():void {              
+	                                         
+	}
+	
+	private function createAccount():void {
+	}
+	                                                         
+	private function updateUser():void {
+	}
+	
+	private function mapToAccountData():void {
+		account.title = name_edit.text;
+		account.externalAcctId = external_ref_edit.text;
+		account.externalAcctId = external_acct_id_edit.text;
+		
+		account.shipToAddress.name = ship_company_edit.text;
+		account.shipToAddress.street1 = ship_street1_edit.text;
+		account.shipToAddress.street2 = ship_street2_edit.text;
+		account.shipToAddress.city = ship_city_edit.text;
+		account.shipToAddress.zip = ship_zip_edit.text;
+		account.shipToAddress.country = ship_country_edit.text;
+		account.shipToAddress.state = ship_state_edit.text;
+		
+		account.billToAddress.name = bill_company_edit.text;
+		account.billToAddress.street1 =	bill_street1_edit.text;		
+		account.billToAddress.street2 =	bill_street2_edit.text;		
+		account.billToAddress.city = bill_city_edit.text;
+		account.billToAddress.zip =	bill_zip_edit.text;		     
+		account.billToAddress.country =	bill_country_edit.text;
+		account.billToAddress.state	= bill_state_edit.text;
+
+		account.contact.address.firstName = ship_contact_first_name_edit.text;
+		account.contact.address.lastName = ship_contact_last_name_edit.text;		
+		account.contact.address.prefix = ship_contact_prefix_edit.text;			
+		account.contact.address.suffix = ship_contact_suffix_edit.text;			
+		account.contact.address.jobTitle = ship_contact_job_title_edit.text;		
+		account.contact.address.salutation = ship_contact_salutation_edit.text;
+
+		account.billToContact.address.firstName = bill_contact_first_name_edit.text;
+		account.billToContact.address.lastName = bill_contact_last_name_edit.text;
+		account.billToContact.address.prefix = bill_contact_prefix_edit.text;	
+		account.billToContact.address.suffix = bill_contact_suffix_edit.text;
+		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
+		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
+		
+		account.salesRep = sales_rep_combo.selectedItem as SalesRep;
+		
+		
+		
+	}
+	
+	private function mapFromAccountData():void{
+		balances = new ArrayCollection([
+			{Aged:"Current", Value:account.balanceCurrent},
+			{Aged:"30", Value:account.balance30Day},
+			{Aged:"60", Value:account.balance60Day},
+			{Aged:"90", Value:account.balance90Day}
+		]);
+		if (account.dollarDiscount) {
+			autoDiscountRadioValue = "discount_dollars";
+		} else {
+			autoDiscountRadioValue = "discount_percent";			
+		}
+		acctStatusRadioValue = account.status;
+		acctTypeRadioValue = account.type;
+		loaderService.getAccounts();
+		loadLogsService.getCustomerLogs();
+	}
+	
+	private function doSave():void {
+		mapToAccountData();
+		saveService.addUpdateAccount(account);                                        		
+	}                 
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+	}
+
+	private function handleLoadSalesReps(ev:ResultEvent):void {
+		salesReps = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadShippingMethods(ev:ResultEvent):void {
+		shippingMethods = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadCustomerLogs(ev:ResultEvent):void {
+		customerLogs = ev.result as ArrayCollection;
+	}
+	
+	private function handleSaveLogResult(ev:ResultEvent):void {
+		loadLogsService.getCustomerLogs();
+	}
+	
+	private function handleDeleteLogResult(ev:ResultEvent):void {
+		loadLogsService.getCustomerLogs();
+	}
+	
+	private function handleLoadResult(ev:ResultEvent):void {
+		accounts = ev.result as ArrayCollection;
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,null);                                 
+	}
+ 
+ 	private function deleteCustomerLog():void {
+ 		deleteLogService.deleteCustomerLog(log_dataGrid.selectedItem as CustomerLog);
+ 	}
+ 	
+ 	private function printCustomerLog():void {
+		var myPrintJob:FlexPrintJob = new FlexPrintJob();
+	
+		if (myPrintJob.start()) {
+			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	
+			//Set the print view properties.
+			myPrintDataGrid.width = myPrintJob.pageWidth;
+			myPrintDataGrid.height = myPrintJob.pageHeight;
+	
+			// Set the data provider of the FormPrintView component's data grid
+			// to be the data provider of the displayed data grid.
+			myPrintDataGrid.dataProvider = log_dataGrid.dataProvider;
+			myPrintDataGrid.columns = log_dataGrid.columns;
+			myPrintDataGrid.visible = false;
+			myPrintDataGrid.includeInLayout = false;
+			
+			Application.application.addChild(myPrintDataGrid);
+	
+			if(!myPrintDataGrid.validNextPage) {
+				myPrintJob.addObject(myPrintDataGrid);
+			} else {
+				myPrintJob.addObject(myPrintDataGrid);
+	
+				while(true) {
+					// Move the next page of data to the top of the print grid.
+					myPrintDataGrid.nextPage();
+	
+					if(!myPrintDataGrid.validNextPage) {
+						// This is the last page; queue it and exit the print loop.
+						myPrintJob.addObject(myPrintDataGrid);
+	
+						break;
+					} else {
+						myPrintJob.addObject(myPrintDataGrid);
+					}
+				}
+	
+			}
+	
+			Application.application.removeChild(myPrintDataGrid);
+			myPrintJob.send();
+	 	}
+ 	}
+ 	
+ 	private function addCustomerLog():void {
+ 		var customerLog:CustomerLog = new CustomerLog();
+ 		customerLog.id = 0; // Always created new log entries - don't allow editing old ones.
+ 		customerLog.logEntry = selected_comment_edit.text;
+ 		saveLogService.addUpdateCustomerLog(customerLog);
+ 	}
+]]>
+                             
+</mx:Script>
+
+<mx:VBox width="100%" height="100%">
+	<mx:Canvas width="880" height="704">
+		<mx:Button x="10" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="217" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+		<mx:Tree x="10" y="72" width="266" height="515"></mx:Tree>
+		<mx:TextInput x="409" y="73" width="371"/>
+		<mx:Label x="418" y="548" text="Name:" textAlign="right"/>
+		<mx:TextInput x="384" y="353" width="158"/>
+		<mx:Label x="284" y="355" text="Fixed Spoilage:" textAlign="right"/>
+		<mx:TextInput x="409" y="101" width="132"/>
+		<mx:TextInput x="633" y="101" width="147"/>
+		<mx:Label x="549" y="103" text="Cost Center:" textAlign="right"/>
+		<mx:Label x="284" y="103" text="Production Location:" textAlign="right"/>
+		<mx:Label x="284" y="217" text="Prod Code:" textAlign="right"/>
+		<mx:Label x="301" y="129" text="Method:" textAlign="right"/>
+		<mx:Label x="359" y="75" text="Name:" textAlign="right"/>
+		<mx:ComboBox x="360" y="129" width="132"></mx:ComboBox>
+		<mx:Label x="295" y="157" text="Quantity:" textAlign="right"/>
+		<mx:ComboBox x="360" y="157" width="132"></mx:ComboBox>
+		<mx:Label x="289" y="185" text="Sales Cat:" textAlign="right"/>
+		<mx:ComboBox x="360" y="185" width="132"></mx:ComboBox>
+		<mx:CheckBox x="518" y="129" label="No overrides"/>
+		<mx:CheckBox x="518" y="157" label="Adjustable sets"/>
+		<mx:CheckBox x="518" y="185" label="Adjustable rate"/>
+		<mx:CheckBox x="518" y="215" label="Adjustable material"/>
+		<mx:CheckBox x="518" y="245" label="Adjustable up"/>
+		<mx:CheckBox x="518" y="275" label="Do not discount"/>
+		<mx:CheckBox x="659" y="131" label="Hide price only"/>
+		<mx:CheckBox x="659" y="159" label="Hide charge in printouts"/>
+		<mx:CheckBox x="659" y="187" label="Bindery operation"/>
+		<mx:CheckBox x="659" y="217" label="Excluded from production"/>
+		<mx:CheckBox x="659" y="247" label="Tracker pre-production"/>
+		<mx:CheckBox x="659" y="277" label="Ignore global price changes"/>
+		<mx:CheckBox x="659" y="307" label="Integrated CTP device"/>
+		<mx:ComboBox x="360" y="215" width="132" editable="true"></mx:ComboBox>
+		<mx:HRule x="284" y="337" width="596" height="8"/>
+		<mx:HRule x="284" y="413" width="596" height="8"/>
+		<mx:CheckBox x="564" y="353" label="Minimum Charge:"/>
+		<mx:CheckBox x="564" y="383" label="Minimum Time:"/>
+		<mx:TextInput x="697" y="353"/>
+		<mx:TextInput x="697" y="383"/>
+		<mx:RadioButtonGroup id="Pricing Method"/>
+		<mx:RadioButton x="284" y="429" label="Cost Plus" groupName="Pricing Method"/>
+		<mx:RadioButton x="284" y="455" label="Piece Pricing" groupName="Pricing Method"/>
+		<mx:ViewStack x="458" y="483" id="viewstack1" width="294" height="200">
+			<mx:Canvas label="View 1" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:Canvas>
+</mx:VBox>
+</mx:Panel>

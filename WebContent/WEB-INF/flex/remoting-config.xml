@@ -86,4 +86,11 @@
 		</properties>
 	</destination>
 
+	<destination id="chargeService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ChargeService
+			</source>
+		</properties>
+	</destination>
 </service>

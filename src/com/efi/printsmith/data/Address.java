@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.efi.printsmith.data.*;
+import com.efi.printsmith.data.enums.*;
 import com.efi.printsmith.exceptions.*;
 
 import javax.persistence.Basic;
