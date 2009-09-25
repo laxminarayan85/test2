@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="752" height="800" creationComplete="init()" xmlns:vo="com.efi.vo.*" title="Stock Definition">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="752" height="800" creationComplete="init()" xmlns:vo="com.efi.vo.*" title="Stock Definition" label="Stock Definition" name="Stock Definition">
 	<mx:RemoteObject id="saveService" destination="StockDefinitionsService"
 	result="handleSaveResult(event)" fault="handleFault(event)"
 	showBusyCursor="true" />
@@ -16,13 +16,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.vo.Stock;
-	import com.efi.vo.StockBlankSheets;
-	import com.efi.vo.StockInventory;
-	import com.efi.vo.StockQty;
-	import com.efi.vo.StockPricing;
-	import com.efi.vo.StockQtyBreak;
-	import com.efi.vo.StockComments;
+	import com.efi.vo.StockDefinition;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -36,14 +30,8 @@
     private var enableSave:Boolean = true;
                          
 	[Bindable]                                         
-	private var stockDefinition:Stock;
+	private var stockDefinition:StockDefinition;
 	
-	[Bindable]                                         
-	private var stockQty:StockQty;     
-	
-	[Bindable]                         
-	private var stockInventory:StockInventory;
-                                                                                  	
 	[Bindable]                                
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
                                                                          
@@ -51,9 +39,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    loaderService.getStockDefinitions();
-	    stockDefinition = new Stock();
-		stockQty = new StockQty();
-		stockInventory = new StockInventory();
+	    stockDefinition = new StockDefinition();
 	}      
 	                                                   	
 	public function loadStockDefinitions():void {   
@@ -64,11 +50,14 @@
 	{
 	}
                                   
+	private function mapAccountData():void {
+	 //stockDefinition.stockDefID = stockDefID;
+	}
 	private function doSave():void {
 	 
-		
+		mapAccountData()
 		saveService.addUpdateStockDefinitions(stockDefinition);                                          		
-	}       	          
+	}       
 	private function doAddStock():void {
 		saveService.addUpdateStockDefinitions(stockDefinition);                                        		
 	}     
@@ -112,16 +101,16 @@
 	<mx:ComboBox x="92" y="68" width="116"></mx:ComboBox>
 	<mx:Label x="49" y="70" text="Group:"/>
 	<mx:Label x="216" y="70" text="Class:"/>
-	<!--<mx:TextInput x="264" y="68" width="105" text="{stock.class}"/>-->
+	<mx:TextInput x="264" y="68" width="105" text="{stockDefinition.stkclass}"/>
 	<mx:CheckBox x="393" y="68" label="Metric"/>
 	<mx:Label x="49" y="93" text="Name:"/>
 	<mx:Label x="71" y="117" text="Color:"/>
-	<!--<mx:TextInput x="118" y="115" width="138" text="{stock.color}"/>-->
+	<mx:TextInput x="118" y="115" width="138" text="{stockDefinition.color}"/>
 	<mx:Label x="264" y="91" text="Finish:"/>
-	<mx:TextInput x="96" y="91" width="160" text="{stock.name}"/>
-	<mx:TextInput x="313.5" y="91" width="105" text="{stock.finish}"/>
+	<mx:TextInput x="96" y="91" width="160" text="{stockDefinition.name}"/>
+	<mx:TextInput x="313.5" y="91" width="105" text="{stockDefinition.finish}"/>
 	<mx:Label x="71" y="142" text="Generic Color:"/>
-	<mx:TextInput x="163" y="140" width="93" text="{stockDefinition.genericColor}"/>
+	<mx:TextInput x="163" y="140" width="93" text="{stockDefinition.genericcolor}"/>
 	<mx:Label x="264" y="117" text="Grade:"/>
 	<mx:TextInput x="313.5" y="117" width="105" text="{stockDefinition.grade}"/>
 	<mx:Label x="426.5" y="97" text="Weight:"/>
@@ -137,105 +126,105 @@
 		<mx:Canvas label="Specification and Pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="630" height="225" layout="absolute">
 				<mx:Label x="56.5" y="6" text="Vendor:"/>
-				<mx:TextInput x="113.5" y="4" text="{stock.vendor}"/>
+				<mx:TextInput x="113.5" y="4" text="{stockDefinition.vendor}"/>
 				<mx:Label x="34.5" y="35" text="Stock Type:"/>
-				<mx:TextInput x="113.5" y="30" width="128" text="{stockDefinition.type}"/>
+				<mx:TextInput x="113.5" y="30" width="128" text="{stockDefinition.stktype}"/>
 				<mx:Label x="281.5" y="6" text="Stock #:"/>
-				<mx:TextInput x="341.5" y="4" width="93" text="{stockDefinition.stockNumber}"/>
+				<mx:TextInput x="341.5" y="4" width="93" text="{stockDefinition.stocknumber}" height="22"/>
 				<mx:Label x="51" y="59" text="Parent Size:"/>
-				<mx:TextInput x="132" y="57" width="132" text="{stock.parentsize}"/>
+				<mx:TextInput x="132" y="57" width="132" text="{stockDefinition.parentsize}"/>
 				<mx:Label x="275" y="57" text="Thickness:"/>
 				<mx:Label x="281.5" y="32" text="Basic Size:"/>
-				<mx:TextInput x="341.5" y="55" width="64" text="{stock.basicsize"/>
+				<mx:TextInput x="341.5" y="55" width="64" text="{stockDefinition.basicsize"/>
 				<mx:Label x="51" y="111" text="Sheets / Carton:"/>
-				<mx:TextInput x="157" y="109" width="107" text="{stock.sheetspercarton}"/>
+				<mx:TextInput x="157" y="109" width="107" text="{stockDefinition.sheetspercarton}"/>
 				<mx:Label x="275" y="84" text="M Weight:"/>
-				<mx:TextInput x="345" y="82" width="89.5" text="{stock.mweight}"/>
+				<mx:TextInput x="345" y="82" width="89.5" text="{stockDefinition.mweight}"/>
 				<mx:Label x="51" y="137" text="Min. Order:"/>
-				<mx:TextInput x="127" y="135" width="137" text="{stock.minorder}"/>
+				<mx:TextInput x="127" y="135" width="137" text="{stockDefinition.minorder}"/>
 				<mx:Label x="272" y="111" text="Carton Weight:"/>
 				<mx:TextInput x="370" y="109" width="64.5" text=""/>
-				<mx:Text x="354.5" y="32" text="{stock.basicsize}" width="103"/>
+				<mx:Text x="354.5" y="32" text="{stockDefinition.basicsize}" width="103" height="18"/>
 				<mx:CheckBox x="272" y="135" label="Charge Customer for Entire Order"/>
 				<mx:ComboBox x="413" y="55" width="80"></mx:ComboBox>
 			</mx:Panel>
 			<mx:Panel x="10" y="233" width="630" height="200" layout="absolute" title="Qty. Adjustments">
-				<mx:TextInput x="88" y="28" width="66" text=""/>
-				<mx:TextInput x="88" y="48" width="66" text=""/>
-				<mx:TextInput x="88" y="68" width="66" text=""/>
-				<mx:TextInput x="88" y="89" width="66" text=""/>
-				<mx:TextInput x="88" y="110" width="66" text=""/>
-				<mx:TextInput x="151" y="28" width="66"/>
-				<mx:TextInput x="151" y="48" width="66"/>
-				<mx:TextInput x="151" y="68" width="66"/>
-				<mx:TextInput x="151" y="89" width="66"/>
-				<mx:TextInput x="151" y="110" width="66"/>
-				<mx:TextInput x="214" y="28" width="66"/>
-				<mx:TextInput x="214" y="48" width="66"/>
-				<mx:TextInput x="214" y="68" width="66"/>
-				<mx:TextInput x="214" y="89" width="66"/>
-				<mx:TextInput x="214" y="110" width="66"/>
-				<mx:TextInput x="275.5" y="28" width="66"/>
-				<mx:TextInput x="275.5" y="48" width="66"/>
-				<mx:TextInput x="275.5" y="68" width="66"/>
-				<mx:TextInput x="275.5" y="89" width="66"/>
-				<mx:TextInput x="275.5" y="110" width="66"/>
 				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
 				<mx:Label x="44" y="50" text="Costs:"/>
 				<mx:Label x="49" y="70" text="CWT:"/>
 				<mx:Label x="34" y="91" text="Markup:"/>
 				<mx:Label x="34" y="112" text="List / M:"/>
-				<mx:TextInput x="339" y="28" width="66"/>
-				<mx:TextInput x="339" y="48" width="66"/>
-				<mx:TextInput x="339" y="68" width="66"/>
-				<mx:TextInput x="339" y="89" width="66"/>
-				<mx:TextInput x="339" y="110" width="66"/>
-				<mx:TextInput x="403" y="28" width="66"/>
-				<mx:TextInput x="403" y="48" width="66"/>
-				<mx:TextInput x="403" y="68" width="66"/>
-				<mx:TextInput x="403" y="89" width="66"/>
-				<mx:TextInput x="403" y="110" width="66"/>
+				<mx:TextInput x="88" y="28" width="66" text="{stockDefinition.qtybreak1}"/>
+				<mx:TextInput x="88" y="48" width="66" text="{stockDefinition.cost1}"/>
+				<mx:TextInput x="88" y="68" width="66" text="{stockDefinition.cwt1}"/>
+				<mx:TextInput x="88" y="89" width="66" text="{stockDefinition.markup1}"/>
+				<mx:TextInput x="88" y="110" width="66" text="{stockDefinition.listPerM1}"/>
+				<mx:TextInput x="151" y="28" width="66" text="{stockDefinition.qtybreak2}"/>
+				<mx:TextInput x="151" y="48" width="66" text="{stockDefinition.cost2}"/>
+				<mx:TextInput x="151" y="68" width="66" text="{stockDefinition.cwt2}"/>
+				<mx:TextInput x="151" y="89" width="66" text="{stockDefinition.markup2}"/>
+				<mx:TextInput x="151" y="110" width="66" text="{stockDefinition.listPerM2}"/>
+				<mx:TextInput x="214" y="28" width="66" text="{stockDefinition.qtybreak3}"/>
+				<mx:TextInput x="214" y="48" width="66" text="{stockDefinition.cost3}"/>
+				<mx:TextInput x="214" y="68" width="66" text="{stockDefinition.cwt3}"/>
+				<mx:TextInput x="214" y="89" width="66" text="{stockDefinition.markup3}"/>
+				<mx:TextInput x="214" y="110" width="66" text="{stockDefinition.listPerM3}"/>
+				<mx:TextInput x="275.5" y="28" width="66" text="{stockDefinition.qtybreak4}"/>
+				<mx:TextInput x="275.5" y="48" width="66" text="{stockDefinition.cost4}"/>
+				<mx:TextInput x="275.5" y="68" width="66" text="{stockDefinition.cwt4}"/>
+				<mx:TextInput x="275.5" y="89" width="66" text="{stockDefinition.markup4}"/>
+				<mx:TextInput x="275.5" y="110" width="66" text="{stockDefinition.listPerM4}"/>
+				<mx:TextInput x="339" y="28" width="66" text="{stockDefinition.qtybreak5}"/>
+				<mx:TextInput x="339" y="48" width="66" text="{stockDefinition.cost5}"/>
+				<mx:TextInput x="339" y="68" width="66" text="{stockDefinition.cwt5}"/>
+				<mx:TextInput x="339" y="89" width="66" text="{stockDefinition.markup5}"/>
+				<mx:TextInput x="339" y="110" width="66" text="{stockDefinition.listPerM5}"/>
+				<mx:TextInput x="403" y="28" width="66" text="{stockDefinition.qtybreak6}"/>
+				<mx:TextInput x="403" y="48" width="66" text="{stockDefinition.cost6}"/>
+				<mx:TextInput x="403" y="68" width="66" text="{stockDefinition.cwt6}"/>
+				<mx:TextInput x="403" y="89" width="66" text="{stockDefinition.markup6}"/>
+				<mx:TextInput x="403" y="110" width="66" text="{stockDefinition.listPerM6}"/>
 				<mx:Label x="69" y="2" text="Costing Units:"/>
 				<mx:Label x="257" y="2" text="# Sheets / Set:"/>
-				<mx:TextInput x="151" y="0" width="87" text="{stockQty.costUnits}"/>
-				<mx:TextInput x="352" y="0" width="81" text="{stockQty.sheetsPerSet}"/>
+				<mx:TextInput x="151" y="0" width="87" text="{stockDefinition.costUnits}"/>
+				<mx:TextInput x="352" y="0" width="81" text="{stockDefinition.sheetsPerSet}"/>
 				<mx:CheckBox x="450" y="0" label="Cost is in Sets"/>
 				<mx:Label x="74" y="140" text="Price Expires:"/>
-				<mx:TextInput x="162" y="138" width="87" text="{stockQty.priceExpires}"/>
+				<mx:TextInput x="162" y="138" width="87" text="{stockDefinition.priceExpires}"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="441" width="621" height="93" layout="absolute" title="Comments">
-				<mx:TextArea x="0" y="-6" width="570" height="49" text="{stock.comments}"/>
+				<mx:TextArea x="0" y="-6" width="570" height="49" text="{stockDefinition.comments}"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Pricing Options" width="100%" height="100%">
 			<mx:Panel x="10" y="51" width="270" height="78" layout="absolute" title="Select Press for Printing">
 				<mx:Label x="10" y="12" text="Press:"/>
-				<mx:TextInput x="58" y="10" width="182" text=""/>
+				<mx:TextInput x="58" y="10" width="182" text="{stockDefinition.defaultPress}"/>
 			</mx:Panel>
 			<mx:Panel x="313" y="51" width="290" height="78" layout="absolute" title="Schedule for List Pricing">
 				<mx:Button x="10" y="6" label="Select Schedule"/>
 				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="115"/>
 			</mx:Panel>
-			<mx:TextInput x="111" y="21" width="85" text=""/>
-			<mx:TextInput x="266" y="21" width="50" text=""/>
-			<mx:TextInput x="407" y="21" width="50" text=""/>
+			<mx:TextInput x="111" y="21" width="85" text="{stockDefinition.normalRunSize}"/>
+			<mx:TextInput x="266" y="21" width="50" text="{stockDefinition.cutsPer100}"/>
+			<mx:TextInput x="407" y="21" width="50" text="{stockDefinition.minCutCharge}"/>
 			<mx:Label x="10" y="23" text="Normal Run Size:"/>
 			<mx:Label x="204" y="23" text="Cut / 100:"/>
 			<mx:Label x="324" y="23" text="Min. Cut Chg.:"/>
 			<mx:Button x="475" y="21" label="Import One Stock"/>
 			<mx:Panel x="10" y="137" width="593" height="108" layout="absolute" title="Pricing for Blank Sheets">
-				<mx:TextInput x="65" y="2" width="80" text=""/>
-				<mx:TextInput x="143" y="2" width="80"/>
-				<mx:TextInput x="221" y="2" width="80"/>
-				<mx:TextInput x="299" y="2" width="80"/>
-				<mx:TextInput x="378" y="2" width="80"/>
-				<mx:TextInput x="456" y="2" width="80"/>
-				<mx:TextInput x="65" y="23" width="80" text=""/>
-				<mx:TextInput x="143" y="23" width="80"/>
-				<mx:TextInput x="221" y="23" width="80"/>
-				<mx:TextInput x="299" y="23" width="80"/>
-				<mx:TextInput x="378" y="23" width="80"/>
-				<mx:TextInput x="456" y="23" width="80"/>
+				<mx:TextInput x="65" y="2" width="80" text="{stockDefinition.blankSheetqty1}"/>
+				<mx:TextInput x="143" y="2" width="80" text="{stockDefinition.blankSheetqty2}"/>
+				<mx:TextInput x="221" y="2" width="80" text="{stockDefinition.blankSheetqty3}"/>
+				<mx:TextInput x="299" y="2" width="80" text="{stockDefinition.blankSheetqty4}"/>
+				<mx:TextInput x="378" y="2" width="80" text="{stockDefinition.blankSheetqty5}"/>
+				<mx:TextInput x="456" y="2" width="80" text="{stockDefinition.blankSheetqty6}"/>
+				<mx:TextInput x="65" y="23" width="80" text="{stockDefinition.blankSheetPrice1}"/>
+				<mx:TextInput x="143" y="23" width="80" text="{stockDefinition.blankSheetPrice2}"/>
+				<mx:TextInput x="221" y="23" width="80" text="{stockDefinition.blankSheetPrice3}"/>
+				<mx:TextInput x="299" y="23" width="80" text="{stockDefinition.blankSheetPrice4}"/>
+				<mx:TextInput x="378" y="23" width="80" text="{stockDefinition.blankSheetPrice5}"/>
+				<mx:TextInput x="456" y="23" width="80" text="{stockDefinition.blankSheetPrice6}"/>
 				<mx:Label x="0" y="4" text="Quantity:"/>
 				<mx:Label x="21" y="25" text="Price:"/>
 				<mx:CheckBox x="65" y="47" label="Auto Calculate Blank Stock"/>
@@ -254,9 +243,9 @@
 				<mx:Label x="82" y="1" text="B&amp;W:"/>
 				<mx:Label x="78" y="27" text="Color:"/>
 				<mx:Label x="33" y="51" text="Large Format:"/>
-				<mx:TextInput x="125" y="-1" width="90"/>
-				<mx:TextInput x="125" y="25" width="90"/>
-				<mx:TextInput x="125" y="51" width="90"/>
+				<mx:TextInput x="125" y="-1" width="90" text="{stockDefinition.defaultBW}"/>
+				<mx:TextInput x="125" y="25" width="90" text="{stockDefinition.defaultColor}"/>
+				<mx:TextInput x="125" y="51" width="90" text="{stockDefinition.defaultLargeFormat}"/>
 				<mx:TextInput x="223" y="-1" width="201"/>
 				<mx:TextInput x="223" y="25" width="201"/>
 				<mx:TextInput x="223" y="51" width="201"/>
@@ -275,22 +264,22 @@
 				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item"/>
 				<mx:Label x="30" y="30" text="Stock On Hand:"/>
 				<mx:Label x="51" y="58" text="Committed:"/>
-				<mx:TextInput x="131" y="28" width="84" text="{stockInventory.onHand}"/>
-				<mx:TextInput x="131" y="56" width="84" text="{stockInventory.committed}"/>
+				<mx:TextInput x="131" y="28" width="84" text="{stockDefinition.onHand}"/>
+				<mx:TextInput x="131" y="56" width="84" text="{stockDefinition.committed}"/>
 				<mx:Label x="63" y="88" text="Available:"/>
 				<mx:Label x="30" y="154" text="Stock Expires:"/>
 				<mx:Label x="37" y="176" text="Bin Location:"/>
-				<mx:TextInput x="131" y="86" width="84" text="{stockInventory.available}"/>
+				<mx:TextInput x="131" y="86" width="84" text="{stockDefinition.available}"/>
 				<mx:Label x="268" y="30" text="On Order:"/>
-				<mx:TextInput x="337" y="28" width="84" text="{stockInventory.onOrder}"/>
+				<mx:TextInput x="337" y="28" width="84" text="{stockDefinition.onOrder}"/>
 				<mx:Label x="250" y="58" text="Target Level:"/>
-				<mx:TextInput x="337" y="56" width="84" text="{stockInventory.targetLevel}"/>
+				<mx:TextInput x="337" y="56" width="84" text="{stockDefinition.targetLevel}"/>
 				<mx:Label x="243" y="88" text="Reorder Point:"/>
-				<mx:TextInput x="337" y="86" width="84" text="{stockInventory.reOrderPoint}"/>
+				<mx:TextInput x="337" y="86" width="84" text="{stockDefinition.reOrderPoint}"/>
 				<mx:Label x="234" y="118" text="Min. Order Qty.:"/>
-				<mx:TextInput x="337" y="116" width="84" text="{stockInventory.minOrderQty}"/>
-				<mx:Text x="122" y="154" width="81" text="{stockInventory.expires}" />
-				<mx:Text x="122" y="176" text="{stockInventory.binLocation}"/>
+				<mx:TextInput x="337" y="116" width="84" text="{stockDefinition.minOrderQty}"/>
+				<mx:Text x="122" y="154" width="81" text="{stockDefinition.expires}" />
+				<mx:Text x="122" y="176" text="{stockDefinition.binLocation}"/>
 				<mx:CheckBox x="250" y="154" label="Shell Item"/>
 				<mx:Button x="341" y="154" label="Assign Customer Account..."/>
 			</mx:Panel>
