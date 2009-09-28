@@ -37,10 +37,20 @@
                                                                          
 	public function init():void {
 		consumer.subscribe();
-		notification_consumer.subscribe();     
-	    loaderService.getStockDefinitions();
+		notification_consumer.subscribe(); 
+	    var titleWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+
 	    stockDefinition = new StockDefinition();
+    
+	    loaderService.getStockDefinitions();
 	}      
+
+	public function setStockDefinition(stockDefinition:StockDefinition):void
+	{
+		mapFromStockDefinitionData();
+	}			
 	                                                   	
 	public function loadStockDefinitions():void {   
 	    loaderService.getStockDefinitions();
@@ -50,11 +60,6 @@
 	{
 	}
 
-	private function doSave():void {
-	 
-		mapAccountData()
-		saveService.addUpdateStockDefinitions(stockDefinition);                                          		
-	}
 	private function doNext():void {
 	 
 	  
@@ -68,23 +73,26 @@
 		doStockGridClick();                          		
 	}       
 
+	private function doSave():void {
+	 
+		mapAccountData()
+		saveService.addUpdateStockDefinitions(stockDefinition);                                          		
+	}
+
 	private function doNew():void {
   	    stockDefinition = new StockDefinition();
 
 	}       
 
-	private function doAddStock():void {
-		saveService.addUpdateStockDefinitions(stockDefinition);                                        		
-	}     
-	             
-	private function doDeleteStock():void {              
+	private function doDelete():void {              
 		deleteService.deleteStockDefinitions(stockDefinition.id);             
 	}
 
 	private function doStockGridClick():void {
 		//pressDefinition = dataGrid.selectedItem as StockDefinition;
 	}
-	
+
+
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadStockDefinitions();
 	}
@@ -105,6 +113,9 @@
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,4);                                 
+	}
+
+	private function mapFromStockDefinitionData():void {
 	}
 
 	private function mapAccountData():void {
@@ -186,7 +197,7 @@
 	 stockDefinition.targetLevel = parseInt(TargetLevel.text);
 	 stockDefinition.reOrderPoint = parseInt(ReOrderPoint.text);
 	 stockDefinition.minOrderQty = parseInt(MinOrderQty.text);
-	 stockDefinition.expires = Date(Expires.text);
+	 stockDefinition.expires = Expires.text as Date;
 	 stockDefinition.binLocation = BinLocation.text;
 
 	}
@@ -415,7 +426,7 @@
 	<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 		<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="370" y="10" width="38" height="38">
+	<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
 		<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
