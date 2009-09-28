@@ -49,15 +49,30 @@
 	private function messageHandler(message:IMessage):void
 	{
 	}
-                                  
-	private function mapAccountData():void {
-	 //stockDefinition.stockDefID = stockDefID;
-	}
+
 	private function doSave():void {
 	 
 		mapAccountData()
 		saveService.addUpdateStockDefinitions(stockDefinition);                                          		
+	}
+	private function doNext():void {
+	 
+	  
+		doSave();  
+		doStockGridClick();
+		                                        		
 	}       
+	private function doPrev():void {
+	  
+	 	doSave();  
+		doStockGridClick();                          		
+	}       
+
+	private function doNew():void {
+  	    stockDefinition = new StockDefinition();
+
+	}       
+
 	private function doAddStock():void {
 		saveService.addUpdateStockDefinitions(stockDefinition);                                        		
 	}     
@@ -89,7 +104,91 @@
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error", 0, null, null, null,4);                                 
+	}
+
+	private function mapAccountData():void {
+	 //stockDefinition.stockDefID = stockDefID;
+	 stockDefinition.stkclass = stockClass.text;
+	 stockDefinition.color = stkcolor.text;
+	 stockDefinition.name = stockName.text;
+	 stockDefinition.finish = parseInt(finish.text);
+	 stockDefinition.genericcolor = genericColor.text;
+	 stockDefinition.grade = stockGrade.text;
+	 stockDefinition.weight = parseInt(weight.text);
+	 stockDefinition.coated = coated.text;
+	 stockDefinition.stocknumber = stockNumber.text;
+	 stockDefinition.vendor = Vendor.text;
+	 stockDefinition.basicsize = Basicsize.text;
+	 stockDefinition.parentsize = parentSize.text;
+	 stockDefinition.thickness = parseInt(thickNess.text);
+	 stockDefinition.mweight = parseInt(mWeight.text);
+	 stockDefinition.sheetspercarton = parseInt(sheetsPerCarton.text);
+	 stockDefinition.minorder = parseInt(minOrder.text);
+	 stockDefinition.comments = Comments.text;
+	 stockDefinition.uom = Uom.text;
+	 stockDefinition.costunits = parseInt(Costunits.text);
+	 stockDefinition.sheetsPerSet = parseInt(SheetsPerSet.text);
+	 stockDefinition.priceExpires = PriceExpires.text as Date;
+	 stockDefinition.qtybreak1 = parseInt(Qtybreak1.text);
+	 stockDefinition.qtybreak2 = parseInt(Qtybreak2.text);
+	 stockDefinition.qtybreak3 = parseInt(Qtybreak3.text);
+	 stockDefinition.qtybreak4 = parseInt(Qtybreak4.text);
+	 stockDefinition.qtybreak5 = parseInt(Qtybreak5.text);
+	 stockDefinition.qtybreak6 = parseInt(Qtybreak6.text);
+	 stockDefinition.cost1 = parseInt(Cost1.text);
+	 stockDefinition.cost2 = parseInt(Cost2.text);
+	 stockDefinition.cost3 = parseInt(Cost3.text);
+	 stockDefinition.cost4 = parseInt(Cost4.text);
+	 stockDefinition.cost5 = parseInt(Cost5.text);
+	 stockDefinition.cost6 = parseInt(Cost6.text);
+	 stockDefinition.cwt1 = parseInt(Cwt1.text);
+	 stockDefinition.cwt2 = parseInt(Cwt2.text);
+	 stockDefinition.cwt3 = parseInt(Cwt3.text);
+	 stockDefinition.cwt4 = parseInt(Cwt4.text);
+	 stockDefinition.cwt5 = parseInt(Cwt5.text);
+	 stockDefinition.cwt6 = parseInt(Cwt6.text);
+	 stockDefinition.markup1 = parseInt(Markup1.text);
+	 stockDefinition.markup2 = parseInt(Markup2.text);
+	 stockDefinition.markup3 = parseInt(Markup3.text);
+	 stockDefinition.markup4 = parseInt(Markup4.text);
+	 stockDefinition.markup5 = parseInt(Markup5.text);
+	 stockDefinition.markup6 = parseInt(Markup6.text);
+	 stockDefinition.listPerM1 = parseInt(ListPerM1.text);
+	 stockDefinition.listPerM2 = parseInt(ListPerM2.text);
+	 stockDefinition.listPerM3 = parseInt(ListPerM3.text);
+	 stockDefinition.listPerM4 = parseInt(ListPerM4.text);
+	 stockDefinition.listPerM5 = parseInt(ListPerM5.text);
+	 stockDefinition.listPerM6 = parseInt(ListPerM6.text);
+	 stockDefinition.normalRunSize = parseInt(NormalRunSize.text);
+	 stockDefinition.cutsPer100 = parseInt(CutsPer100.text);
+	 stockDefinition.minCutCharge = parseInt(MinCutCharge.text);
+	 stockDefinition.defaultPress = DefaultPress.text;
+	 stockDefinition.blankSheetqty1 = parseInt(BlankSheetqty1.text);
+	 stockDefinition.blankSheetqty2 = parseInt(BlankSheetqty2.text);
+	 stockDefinition.blankSheetqty3 = parseInt(BlankSheetqty3.text);
+	 stockDefinition.blankSheetqty4 = parseInt(BlankSheetqty4.text);
+	 stockDefinition.blankSheetqty5 = parseInt(BlankSheetqty5.text);
+	 stockDefinition.blankSheetqty6 = parseInt(BlankSheetqty6.text);
+	 stockDefinition.blankSheetPrice1 = parseInt(BlankSheetPrice1.text);
+	 stockDefinition.blankSheetPrice2 = parseInt(BlankSheetPrice2.text);
+	 stockDefinition.blankSheetPrice3 = parseInt(BlankSheetPrice3.text);
+	 stockDefinition.blankSheetPrice4 = parseInt(BlankSheetPrice4.text);
+	 stockDefinition.blankSheetPrice5 = parseInt(BlankSheetPrice5.text);
+	 stockDefinition.blankSheetPrice6 = parseInt(BlankSheetPrice6.text);
+	 stockDefinition.defaultBW = DefaultBW.text;
+	 stockDefinition.defaultColor = DefaultColor.text;
+	 stockDefinition.defaultLargeFormat = DefaultLargeFormat.text;
+	 stockDefinition.onHand = parseInt(OnHand.text);
+	 stockDefinition.committed = parseInt(Committed.text);
+	 stockDefinition.available = parseInt(Available.text);
+	 stockDefinition.onOrder = parseInt(OnOrder.text);
+	 stockDefinition.targetLevel = parseInt(TargetLevel.text);
+	 stockDefinition.reOrderPoint = parseInt(ReOrderPoint.text);
+	 stockDefinition.minOrderQty = parseInt(MinOrderQty.text);
+	 stockDefinition.expires = Date(Expires.text);
+	 stockDefinition.binLocation = BinLocation.text;
+
 	}
                                    
 ]]>
@@ -98,25 +197,25 @@
 <vo:Stock id="stock"  />                           
 
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:ComboBox x="92" y="68" width="116"></mx:ComboBox>
+	<mx:ComboBox x="92" y="68" width="116" id="stockGroup" ></mx:ComboBox>
 	<mx:Label x="49" y="70" text="Group:"/>
 	<mx:Label x="216" y="70" text="Class:"/>
-	<mx:TextInput x="264" y="68" width="105" text="{stockDefinition.stkclass}"/>
-	<mx:CheckBox x="393" y="68" label="Metric"/>
+	<mx:TextInput x="264" y="68" width="105" id="stockClass" text="{stockDefinition.stkclass}"/>
+	<mx:CheckBox x="393" y="68" id="isMetric" label="Metric"/>
 	<mx:Label x="49" y="93" text="Name:"/>
 	<mx:Label x="71" y="117" text="Color:"/>
-	<mx:TextInput x="118" y="115" width="138" text="{stockDefinition.color}"/>
+	<mx:TextInput x="118" y="115" width="138" id="stkcolor" text="{stockDefinition.color}"/>
 	<mx:Label x="264" y="91" text="Finish:"/>
-	<mx:TextInput x="96" y="91" width="160" text="{stockDefinition.name}"/>
-	<mx:TextInput x="313.5" y="91" width="105" text="{stockDefinition.finish}"/>
+	<mx:TextInput x="96" y="91" width="160" id="stockName" text="{stockDefinition.name}"/>
+	<mx:TextInput x="313.5" y="91" width="105" id ="finish" text="{stockDefinition.finish}"/>
 	<mx:Label x="71" y="142" text="Generic Color:"/>
-	<mx:TextInput x="163" y="140" width="93" text="{stockDefinition.genericcolor}"/>
+	<mx:TextInput x="163" y="140" width="93" id="genericColor" text="{stockDefinition.genericcolor}"/>
 	<mx:Label x="264" y="117" text="Grade:"/>
-	<mx:TextInput x="313.5" y="117" width="105" text="{stockDefinition.grade}"/>
+	<mx:TextInput x="313.5" y="117" width="105" id="stockGrade" text="{stockDefinition.grade}"/>
 	<mx:Label x="426.5" y="97" text="Weight:"/>
-	<mx:TextInput x="483.5" y="93" width="55" text="{stockDefinition.weight}"/>
+	<mx:TextInput x="483.5" y="93" width="55" id="weight" text="{stockDefinition.weight}"/>
 	<mx:Label x="426.5" y="121" text="Coated:"/>
-	<mx:TextInput x="483.5" y="117" width="55" text="{stockDefinition.coated}"/>
+	<mx:TextInput x="483.5" y="117" width="55" id="coated" text="{stockDefinition.coated}"/>
 	<mx:RadioButtonGroup id="stockunit"/>
 	<mx:RadioButton x="564" y="68" label="Envelope" groupName="stockunit"/>
 	<mx:RadioButton x="564" y="94" label="Sheet Stock" groupName="stockunit"/>
@@ -126,27 +225,27 @@
 		<mx:Canvas label="Specification and Pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="630" height="225" layout="absolute">
 				<mx:Label x="56.5" y="6" text="Vendor:"/>
-				<mx:TextInput x="113.5" y="4" text="{stockDefinition.vendor}"/>
+				<mx:TextInput x="113.5" y="4" id="Vendor" text="{stockDefinition.vendor}"/>
 				<mx:Label x="34.5" y="35" text="Stock Type:"/>
-				<mx:TextInput x="113.5" y="30" width="128" text="{stockDefinition.stktype}"/>
+				<mx:TextInput x="113.5" y="30" id="stkType" width="128" text="{stockDefinition.stktype}"/>
 				<mx:Label x="281.5" y="6" text="Stock #:"/>
-				<mx:TextInput x="341.5" y="4" width="93" text="{stockDefinition.stocknumber}" height="22"/>
+				<mx:TextInput x="341.5" y="4" width="93" id="stockNumber" text="{stockDefinition.stocknumber}" height="22"/>
 				<mx:Label x="51" y="59" text="Parent Size:"/>
-				<mx:TextInput x="132" y="57" width="132" text="{stockDefinition.parentsize}"/>
+				<mx:TextInput x="132" y="57" width="132" id="parentSize" text="{stockDefinition.parentsize}"/>
 				<mx:Label x="275" y="57" text="Thickness:"/>
 				<mx:Label x="281.5" y="32" text="Basic Size:"/>
-				<mx:TextInput x="341.5" y="55" width="64" text="{stockDefinition.basicsize"/>
+				<mx:TextInput x="341.5" y="55" width="64" id="thickNess" text="{stockDefinition.thickness}"/>
 				<mx:Label x="51" y="111" text="Sheets / Carton:"/>
-				<mx:TextInput x="157" y="109" width="107" text="{stockDefinition.sheetspercarton}"/>
+				<mx:TextInput x="157" y="109" width="107" id="sheetsPerCarton" text="{stockDefinition.sheetspercarton}"/>
 				<mx:Label x="275" y="84" text="M Weight:"/>
-				<mx:TextInput x="345" y="82" width="89.5" text="{stockDefinition.mweight}"/>
+				<mx:TextInput x="345" y="82" width="89.5" id="mWeight" text="{stockDefinition.mweight}"/>
 				<mx:Label x="51" y="137" text="Min. Order:"/>
-				<mx:TextInput x="127" y="135" width="137" text="{stockDefinition.minorder}"/>
+				<mx:TextInput x="127" y="135" width="137" id="minOrder" text="{stockDefinition.minorder}"/>
 				<mx:Label x="272" y="111" text="Carton Weight:"/>
 				<mx:TextInput x="370" y="109" width="64.5" text=""/>
-				<mx:Text x="354.5" y="32" text="{stockDefinition.basicsize}" width="103" height="18"/>
-				<mx:CheckBox x="272" y="135" label="Charge Customer for Entire Order"/>
-				<mx:ComboBox x="413" y="55" width="80"></mx:ComboBox>
+				<mx:Text x="354.5" y="32" id="Basicsize" text="{stockDefinition.basicsize}" width="103" height="18"/>
+				<mx:CheckBox x="272" y="135" id="charge4entiteorder" label="Charge Customer for Entire Order"/>
+				<mx:ComboBox x="413" y="55" id="Uom" width="80"></mx:ComboBox>
 			</mx:Panel>
 			<mx:Panel x="10" y="233" width="630" height="200" layout="absolute" title="Qty. Adjustments">
 				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
@@ -154,80 +253,80 @@
 				<mx:Label x="49" y="70" text="CWT:"/>
 				<mx:Label x="34" y="91" text="Markup:"/>
 				<mx:Label x="34" y="112" text="List / M:"/>
-				<mx:TextInput x="88" y="28" width="66" text="{stockDefinition.qtybreak1}"/>
-				<mx:TextInput x="88" y="48" width="66" text="{stockDefinition.cost1}"/>
-				<mx:TextInput x="88" y="68" width="66" text="{stockDefinition.cwt1}"/>
-				<mx:TextInput x="88" y="89" width="66" text="{stockDefinition.markup1}"/>
-				<mx:TextInput x="88" y="110" width="66" text="{stockDefinition.listPerM1}"/>
-				<mx:TextInput x="151" y="28" width="66" text="{stockDefinition.qtybreak2}"/>
-				<mx:TextInput x="151" y="48" width="66" text="{stockDefinition.cost2}"/>
-				<mx:TextInput x="151" y="68" width="66" text="{stockDefinition.cwt2}"/>
-				<mx:TextInput x="151" y="89" width="66" text="{stockDefinition.markup2}"/>
-				<mx:TextInput x="151" y="110" width="66" text="{stockDefinition.listPerM2}"/>
-				<mx:TextInput x="214" y="28" width="66" text="{stockDefinition.qtybreak3}"/>
-				<mx:TextInput x="214" y="48" width="66" text="{stockDefinition.cost3}"/>
-				<mx:TextInput x="214" y="68" width="66" text="{stockDefinition.cwt3}"/>
-				<mx:TextInput x="214" y="89" width="66" text="{stockDefinition.markup3}"/>
-				<mx:TextInput x="214" y="110" width="66" text="{stockDefinition.listPerM3}"/>
-				<mx:TextInput x="275.5" y="28" width="66" text="{stockDefinition.qtybreak4}"/>
-				<mx:TextInput x="275.5" y="48" width="66" text="{stockDefinition.cost4}"/>
-				<mx:TextInput x="275.5" y="68" width="66" text="{stockDefinition.cwt4}"/>
-				<mx:TextInput x="275.5" y="89" width="66" text="{stockDefinition.markup4}"/>
-				<mx:TextInput x="275.5" y="110" width="66" text="{stockDefinition.listPerM4}"/>
-				<mx:TextInput x="339" y="28" width="66" text="{stockDefinition.qtybreak5}"/>
-				<mx:TextInput x="339" y="48" width="66" text="{stockDefinition.cost5}"/>
-				<mx:TextInput x="339" y="68" width="66" text="{stockDefinition.cwt5}"/>
-				<mx:TextInput x="339" y="89" width="66" text="{stockDefinition.markup5}"/>
-				<mx:TextInput x="339" y="110" width="66" text="{stockDefinition.listPerM5}"/>
-				<mx:TextInput x="403" y="28" width="66" text="{stockDefinition.qtybreak6}"/>
-				<mx:TextInput x="403" y="48" width="66" text="{stockDefinition.cost6}"/>
-				<mx:TextInput x="403" y="68" width="66" text="{stockDefinition.cwt6}"/>
-				<mx:TextInput x="403" y="89" width="66" text="{stockDefinition.markup6}"/>
-				<mx:TextInput x="403" y="110" width="66" text="{stockDefinition.listPerM6}"/>
+				<mx:TextInput x="88" y="28" width="66" id="Qtybreak1" text="{stockDefinition.qtybreak1}"/>
+				<mx:TextInput x="88" y="48" width="66" id="Cost1" text="{stockDefinition.cost1}"/>
+				<mx:TextInput x="88" y="68" width="66" id="Cwt1" text="{stockDefinition.cwt1}"/>
+				<mx:TextInput x="88" y="89" width="66" id="Markup1" text="{stockDefinition.markup1}"/>
+				<mx:TextInput x="88" y="110" width="66" id="ListPerM1" text="{stockDefinition.listPerM1}"/>
+				<mx:TextInput x="151" y="28" width="66" id="Qtybreak2" text="{stockDefinition.qtybreak2}"/>
+				<mx:TextInput x="151" y="48" width="66" id="Cost2" text="{stockDefinition.cost2}"/>
+				<mx:TextInput x="151" y="68" width="66" id="Cwt2" text="{stockDefinition.cwt2}"/>
+				<mx:TextInput x="151" y="89" width="66" id="Markup2" text="{stockDefinition.markup2}"/>
+				<mx:TextInput x="151" y="110" width="66" id="ListPerM2" text="{stockDefinition.listPerM2}"/>
+				<mx:TextInput x="214" y="28" width="66" id="Qtybreak3" text="{stockDefinition.qtybreak3}"/>
+				<mx:TextInput x="214" y="48" width="66" id="Cost3" text="{stockDefinition.cost3}"/>
+				<mx:TextInput x="214" y="68" width="66" id="Cwt3" text="{stockDefinition.cwt3}"/>
+				<mx:TextInput x="214" y="89" width="66" id="Markup3" text="{stockDefinition.markup3}"/>
+				<mx:TextInput x="214" y="110" width="66" id="ListPerM3" text="{stockDefinition.listPerM3}"/>
+				<mx:TextInput x="275.5" y="28" width="66" id="Qtybreak4" text="{stockDefinition.qtybreak4}"/>
+				<mx:TextInput x="275.5" y="48" width="66" id="Cost4" text="{stockDefinition.cost4}"/>
+				<mx:TextInput x="275.5" y="68" width="66" id="Cwt4" text="{stockDefinition.cwt4}"/>
+				<mx:TextInput x="275.5" y="89" width="66" id="Markup4" text="{stockDefinition.markup4}"/>
+				<mx:TextInput x="275.5" y="110" width="66" id="ListPerM4" text="{stockDefinition.listPerM4}"/>
+				<mx:TextInput x="339" y="28" width="66" id="Qtybreak5" text="{stockDefinition.qtybreak5}"/>
+				<mx:TextInput x="339" y="48" width="66" id="Cost5" text="{stockDefinition.cost5}"/>
+				<mx:TextInput x="339" y="68" width="66" id="Cwt5" text="{stockDefinition.cwt5}"/>
+				<mx:TextInput x="339" y="89" width="66" id="Markup5" text="{stockDefinition.markup5}"/>
+				<mx:TextInput x="339" y="110" width="66" id="ListPerM5" text="{stockDefinition.listPerM5}"/>
+				<mx:TextInput x="403" y="28" width="66" id="Qtybreak6" text="{stockDefinition.qtybreak6}"/>
+				<mx:TextInput x="403" y="48" width="66" id="Cost6" text="{stockDefinition.cost6}"/>
+				<mx:TextInput x="403" y="68" width="66" id="Cwt6" text="{stockDefinition.cwt6}"/>
+				<mx:TextInput x="403" y="89" width="66" id="Markup6" text="{stockDefinition.markup6}"/>
+				<mx:TextInput x="403" y="110" width="66" id="ListPerM6" text="{stockDefinition.listPerM6}"/>
 				<mx:Label x="69" y="2" text="Costing Units:"/>
 				<mx:Label x="257" y="2" text="# Sheets / Set:"/>
-				<mx:TextInput x="151" y="0" width="87" text="{stockDefinition.uom}"/>
-				<mx:TextInput x="352" y="0" width="81" text="{stockDefinition.sheetsPerSet}"/>
+				<mx:TextInput x="151" y="0" width="87" id="Costunits" text="{stockDefinition.costunits}"/>
+				<mx:TextInput x="352" y="0" width="81" id="SheetsPerSet" text="{stockDefinition.sheetsPerSet}"/>
 				<mx:CheckBox x="450" y="0" label="Cost is in Sets"/>
 				<mx:Label x="74" y="140" text="Price Expires:"/>
-				<mx:TextInput x="162" y="138" width="87" text="{stockDefinition.priceExpires}"/>
+				<mx:TextInput x="162" y="138" width="87" id="PriceExpires" text="{stockDefinition.priceExpires}"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="441" width="621" height="93" layout="absolute" title="Comments">
-				<mx:TextArea x="0" y="-6" width="570" height="49" text="{stockDefinition.comments}"/>
+				<mx:TextArea x="0" y="-6" width="570" height="49" id="Comments" text="{stockDefinition.comments}"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Pricing Options" width="100%" height="100%">
 			<mx:Panel x="10" y="51" width="270" height="78" layout="absolute" title="Select Press for Printing">
 				<mx:Label x="10" y="12" text="Press:"/>
-				<mx:TextInput x="58" y="10" width="182" text="{stockDefinition.defaultPress}"/>
+				<mx:TextInput x="58" y="10" width="182" id="DefaultPress" text="{stockDefinition.defaultPress}"/>
 			</mx:Panel>
 			<mx:Panel x="313" y="51" width="290" height="78" layout="absolute" title="Schedule for List Pricing">
 				<mx:Button x="10" y="6" label="Select Schedule"/>
 				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="115"/>
 			</mx:Panel>
-			<mx:TextInput x="111" y="21" width="85" text="{stockDefinition.normalRunSize}"/>
-			<mx:TextInput x="266" y="21" width="50" text="{stockDefinition.cutsPer100}"/>
-			<mx:TextInput x="407" y="21" width="50" text="{stockDefinition.minCutCharge}"/>
+			<mx:TextInput x="111" y="21" width="85" id="NormalRunSize" text="{stockDefinition.normalRunSize}"/>
+			<mx:TextInput x="266" y="21" width="50" id="CutsPer100" text="{stockDefinition.cutsPer100}"/>
+			<mx:TextInput x="407" y="21" width="50" id="MinCutCharge" text="{stockDefinition.minCutCharge}"/>
 			<mx:Label x="10" y="23" text="Normal Run Size:"/>
 			<mx:Label x="204" y="23" text="Cut / 100:"/>
 			<mx:Label x="324" y="23" text="Min. Cut Chg.:"/>
 			<mx:Button x="475" y="21" label="Import One Stock"/>
 			<mx:Panel x="10" y="137" width="593" height="108" layout="absolute" title="Pricing for Blank Sheets">
-				<mx:TextInput x="65" y="2" width="80" text="{stockDefinition.blankSheetqty1}"/>
-				<mx:TextInput x="143" y="2" width="80" text="{stockDefinition.blankSheetqty2}"/>
-				<mx:TextInput x="221" y="2" width="80" text="{stockDefinition.blankSheetqty3}"/>
-				<mx:TextInput x="299" y="2" width="80" text="{stockDefinition.blankSheetqty4}"/>
-				<mx:TextInput x="378" y="2" width="80" text="{stockDefinition.blankSheetqty5}"/>
-				<mx:TextInput x="456" y="2" width="80" text="{stockDefinition.blankSheetqty6}"/>
-				<mx:TextInput x="65" y="23" width="80" text="{stockDefinition.blankSheetPrice1}"/>
-				<mx:TextInput x="143" y="23" width="80" text="{stockDefinition.blankSheetPrice2}"/>
-				<mx:TextInput x="221" y="23" width="80" text="{stockDefinition.blankSheetPrice3}"/>
-				<mx:TextInput x="299" y="23" width="80" text="{stockDefinition.blankSheetPrice4}"/>
-				<mx:TextInput x="378" y="23" width="80" text="{stockDefinition.blankSheetPrice5}"/>
-				<mx:TextInput x="456" y="23" width="80" text="{stockDefinition.blankSheetPrice6}"/>
+				<mx:TextInput x="65" y="2" width="80" id="BlankSheetqty1" text="{stockDefinition.blankSheetqty1}"/>
+				<mx:TextInput x="143" y="2" width="80" id="BlankSheetqty2" text="{stockDefinition.blankSheetqty2}"/>
+				<mx:TextInput x="221" y="2" width="80" id="BlankSheetqty3" text="{stockDefinition.blankSheetqty3}"/>
+				<mx:TextInput x="299" y="2" width="80" id="BlankSheetqty4" text="{stockDefinition.blankSheetqty4}"/>
+				<mx:TextInput x="378" y="2" width="80" id="BlankSheetqty5" text="{stockDefinition.blankSheetqty5}"/>
+				<mx:TextInput x="456" y="2" width="80" id="BlankSheetqty6" text="{stockDefinition.blankSheetqty6}"/>
+				<mx:TextInput x="65" y="23" width="80" id="BlankSheetPrice1" text="{stockDefinition.blankSheetPrice1}"/>
+				<mx:TextInput x="143" y="23" width="80" id="BlankSheetPrice2" text="{stockDefinition.blankSheetPrice2}"/>
+				<mx:TextInput x="221" y="23" width="80" id="BlankSheetPrice3" text="{stockDefinition.blankSheetPrice3}"/>
+				<mx:TextInput x="299" y="23" width="80" id="BlankSheetPrice4" text="{stockDefinition.blankSheetPrice4}"/>
+				<mx:TextInput x="378" y="23" width="80" id="BlankSheetPrice5" text="{stockDefinition.blankSheetPrice5}"/>
+				<mx:TextInput x="456" y="23" width="80" id="BlankSheetPrice6" text="{stockDefinition.blankSheetPrice6}"/>
 				<mx:Label x="0" y="4" text="Quantity:"/>
 				<mx:Label x="21" y="25" text="Price:"/>
-				<mx:CheckBox x="65" y="47" label="Auto Calculate Blank Stock"/>
+				<mx:CheckBox x="65" y="47" id="Autocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="253" width="593" height="122" layout="absolute">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
@@ -243,9 +342,9 @@
 				<mx:Label x="82" y="1" text="B&amp;W:"/>
 				<mx:Label x="78" y="27" text="Color:"/>
 				<mx:Label x="33" y="51" text="Large Format:"/>
-				<mx:TextInput x="125" y="-1" width="90" text="{stockDefinition.defaultBW}"/>
-				<mx:TextInput x="125" y="25" width="90" text="{stockDefinition.defaultColor}"/>
-				<mx:TextInput x="125" y="51" width="90" text="{stockDefinition.defaultLargeFormat}"/>
+				<mx:TextInput x="125" y="-1" width="90" id="DefaultBW" text="{stockDefinition.defaultBW}"/>
+				<mx:TextInput x="125" y="25" width="90" id="DefaultColor" text="{stockDefinition.defaultColor}"/>
+				<mx:TextInput x="125" y="51" width="90" id="DefaultLargeFormat" text="{stockDefinition.defaultLargeFormat}"/>
 				<mx:TextInput x="223" y="-1" width="201"/>
 				<mx:TextInput x="223" y="25" width="201"/>
 				<mx:TextInput x="223" y="51" width="201"/>
@@ -256,7 +355,7 @@
 			</mx:Panel>
 			<mx:Panel x="10" y="383" width="593" height="154" layout="absolute" title="Preset Up to 10 Charges">
 				<mx:Button x="10" y="0" label="Add Charges..."/>
-				<mx:Text x="128" y="2" text="&lt;Nothing Selected&gt;"/>
+				<mx:Text x="128" y="2" id="Additional1" text="&lt;Nothing Selected&gt;"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Inventory" width="100%" height="100%">
@@ -264,23 +363,23 @@
 				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item"/>
 				<mx:Label x="30" y="30" text="Stock On Hand:"/>
 				<mx:Label x="51" y="58" text="Committed:"/>
-				<mx:TextInput x="131" y="28" width="84" text="{stockDefinition.onHand}"/>
-				<mx:TextInput x="131" y="56" width="84" text="{stockDefinition.committed}"/>
+				<mx:TextInput x="131" y="28" width="84" id="OnHand" text="{stockDefinition.onHand}"/>
+				<mx:TextInput x="131" y="56" width="84" id="Committed" text="{stockDefinition.committed}"/>
 				<mx:Label x="63" y="88" text="Available:"/>
 				<mx:Label x="30" y="154" text="Stock Expires:"/>
 				<mx:Label x="37" y="176" text="Bin Location:"/>
-				<mx:TextInput x="131" y="86" width="84" text="{stockDefinition.available}"/>
+				<mx:TextInput x="131" y="86" width="84" id="Available" text="{stockDefinition.available}"/>
 				<mx:Label x="268" y="30" text="On Order:"/>
-				<mx:TextInput x="337" y="28" width="84" text="{stockDefinition.onOrder}"/>
+				<mx:TextInput x="337" y="28" width="84" id="OnOrder" text="{stockDefinition.onOrder}"/>
 				<mx:Label x="250" y="58" text="Target Level:"/>
-				<mx:TextInput x="337" y="56" width="84" text="{stockDefinition.targetLevel}"/>
+				<mx:TextInput x="337" y="56" width="84" id="TargetLevel" text="{stockDefinition.targetLevel}"/>
 				<mx:Label x="243" y="88" text="Reorder Point:"/>
-				<mx:TextInput x="337" y="86" width="84" text="{stockDefinition.reOrderPoint}"/>
+				<mx:TextInput x="337" y="86" width="84" id="ReOrderPoint" text="{stockDefinition.reOrderPoint}"/>
 				<mx:Label x="234" y="118" text="Min. Order Qty.:"/>
-				<mx:TextInput x="337" y="116" width="84" text="{stockDefinition.minOrderQty}"/>
-				<mx:Text x="122" y="154" width="81" text="{stockDefinition.expires}" />
-				<mx:Text x="122" y="176" text="{stockDefinition.binLocation}"/>
-				<mx:CheckBox x="250" y="154" label="Shell Item"/>
+				<mx:TextInput x="337" y="116" width="84" id="MinOrderQty" text="{stockDefinition.minOrderQty}"/>
+				<mx:Text x="122" y="154" width="81" id="Expires" text="{stockDefinition.expires}" />
+				<mx:Text x="122" y="176" id="BinLocation" text="{stockDefinition.binLocation}"/>
+				<mx:CheckBox x="250" y="154" id="ShellItem" label="Shell Item"/>
 				<mx:Button x="341" y="154" label="Assign Customer Account..."/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="630" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
@@ -297,10 +396,10 @@
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="10" y="10" width="38" height="38">
+	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 		<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="10" width="38" height="38">
+	<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
 		<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
@@ -313,7 +412,7 @@
 		<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
-	<mx:Button x="263" y="10" width="38" height="38">
+	<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 		<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 	</mx:Button>
 	<mx:Button x="370" y="10" width="38" height="38">
