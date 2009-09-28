@@ -100,6 +100,7 @@ width="902" height="873" title="Copier Definitions"
 	 copyDefinition.copyMarkup = parseInt(copyMarkup.text);
 	 copyDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
 	 copyDefinition.copyMinutes = parseInt(copyMinutes.text);
+	 copyDefinition.defaultblackwhite 
 	 
 
 	}
@@ -131,6 +132,17 @@ width="902" height="873" title="Copier Definitions"
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadCopierDefinitions();
 	}
+	
+	
+	private function doCheckDefaultBW():void {
+    	
+	}
+	private function doCheckDefaultColor():void {
+    	
+	}
+	private function doCheckDefaultLargeFormat():void {
+    
+	}
 
 	private function handleLoadResult(ev:ResultEvent):void {
 	     copyDefinitionArray = ev.result as ArrayCollection;
@@ -156,15 +168,15 @@ width="902" height="873" title="Copier Definitions"
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
 	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
-		itemClick="doCopierGridClick()" >
+		  itemDoubleClick="doCopierGridClick()">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Default BW"/>
-			<mx:DataGridColumn headerText="Default Color" />
-			<mx:DataGridColumn headerText="Default LF" />
+			<mx:DataGridColumn  editable="true" headerText="Default BW" dataField="defaultblackwhite" width="80"/>
+			<mx:DataGridColumn headerText="Default Color" dataField="defaultcolor" width="90" />
+			<mx:DataGridColumn headerText="Default LF" dataField="defaultlargeformat" width="80" />
 			<mx:DataGridColumn headerText="Name" dataField="copyDefName"/>
-			<mx:DataGridColumn headerText="Default BW" dataField= "blackwhite"/>
-			<mx:DataGridColumn headerText="Default Color" dataField= "color"/>
-			<mx:DataGridColumn headerText="Default LF" dataField= "largeFormat"/>
+			<mx:DataGridColumn headerText="BW" dataField= "blackwhite"/>
+			<mx:DataGridColumn headerText="Color" dataField= "color"/>
+			<mx:DataGridColumn headerText="LF" dataField= "largeFormat"/>
 	</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>

@@ -189,13 +189,23 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPYMINUTES = "CopyMinutes";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTBLACKWHITE = "Defaultblackwhite";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTCOLOR = "Defaultcolor";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTLARGEFORMAT = "Defaultlargeformat";
 
 	/**
 	 * @generated
 	 */
 	public CopierDefinition() {
-		this.created = new Date();
-		this.modified = new Date();
 	}
 
  	
@@ -776,6 +786,57 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMinutes(Integer newVal) {
 		this.copyMinutes = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean defaultblackwhite;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultblackwhite(){
+		return defaultblackwhite; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultblackwhite(Boolean newVal) {
+		this.defaultblackwhite = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean defaultcolor;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultcolor(){
+		return defaultcolor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultcolor(Boolean newVal) {
+		this.defaultcolor = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean defaultlargeformat;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultlargeformat(){
+		return defaultlargeformat; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultlargeformat(Boolean newVal) {
+		this.defaultlargeformat = newVal;
+	}
 
 	/**
 	 * @generated
@@ -817,6 +878,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) return getCopyID();
 		if (MONTHLYBURDENRATE.equals(propertyName)) return getMonthlyBurdenRate();
 		if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
+		if (DEFAULTBLACKWHITE.equals(propertyName)) return getDefaultblackwhite();
+		if (DEFAULTCOLOR.equals(propertyName)) return getDefaultcolor();
+		if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultlargeformat();
 		return super.getProperty(propertyName);
 	}
 	
@@ -860,6 +924,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
 		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Integer)newValue); else
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Integer)newValue); else
+		if (DEFAULTBLACKWHITE.equals(propertyName)) setDefaultblackwhite((Boolean)newValue); else
+		if (DEFAULTCOLOR.equals(propertyName)) setDefaultcolor((Boolean)newValue); else
+		if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultlargeformat((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -937,6 +1004,12 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (COPYMINUTES.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
+		if (DEFAULTBLACKWHITE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DEFAULTCOLOR.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DEFAULTLARGEFORMAT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -981,6 +1054,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) return CopierDefinition.class;
 		if (MONTHLYBURDENRATE.equals(propertyName)) return CopierDefinition.class;
 		if (COPYMINUTES.equals(propertyName)) return CopierDefinition.class;
+		if (DEFAULTBLACKWHITE.equals(propertyName)) return CopierDefinition.class;
+		if (DEFAULTCOLOR.equals(propertyName)) return CopierDefinition.class;
+		if (DEFAULTLARGEFORMAT.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1059,6 +1135,12 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getMonthlyBurdenRate(), objT.getMonthlyBurdenRate()))
 			return false;
 		if (! SmartEquals(getCopyMinutes(), objT.getCopyMinutes()))
+			return false;
+		if (! SmartEquals(getDefaultblackwhite(), objT.getDefaultblackwhite()))
+			return false;
+		if (! SmartEquals(getDefaultcolor(), objT.getDefaultcolor()))
+			return false;
+		if (! SmartEquals(getDefaultlargeformat(), objT.getDefaultlargeformat()))
 			return false;
 		return true;
 	}			

@@ -177,13 +177,23 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String SETUPADDRUN = "SetupAddRun";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTSHEET = "DefaultSheet";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTROLL = "DefaultRoll";
+	/**
+	 * @generated
+	 */
+	public static final String PAPERSTYLE = "PaperStyle";
 
 	/**
 	 * @generated
 	 */
 	public PressDefinition() {
-		this.created = new Date();
-		this.modified = new Date();
 	}
 
  	
@@ -713,6 +723,57 @@ public class PressDefinition extends ModelBase {
 	public void setSetupAddRun(Long newVal) {
 		this.setupAddRun = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean defaultSheet;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultSheet(){
+		return defaultSheet; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultSheet(Boolean newVal) {
+		this.defaultSheet = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean defaultRoll;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultRoll(){
+		return defaultRoll; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultRoll(Boolean newVal) {
+		this.defaultRoll = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String paperStyle;
+	/**
+	 * @generated
+ 	 */
+	public String getPaperStyle(){
+		return paperStyle; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPaperStyle(String newVal) {
+		this.paperStyle = newVal;
+	}
 
 	/**
 	 * @generated
@@ -751,6 +812,9 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) return getAvgImpressPerHour();
 		if (NUMBERHEADS.equals(propertyName)) return getNumberHeads();
 		if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
+		if (DEFAULTSHEET.equals(propertyName)) return getDefaultSheet();
+		if (DEFAULTROLL.equals(propertyName)) return getDefaultRoll();
+		if (PAPERSTYLE.equals(propertyName)) return getPaperStyle();
 		return super.getProperty(propertyName);
 	}
 	
@@ -791,6 +855,9 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
 		if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
 		if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
+		if (DEFAULTSHEET.equals(propertyName)) setDefaultSheet((Boolean)newValue); else
+		if (DEFAULTROLL.equals(propertyName)) setDefaultRoll((Boolean)newValue); else
+		if (PAPERSTYLE.equals(propertyName)) setPaperStyle((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -862,6 +929,12 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (SETUPADDRUN.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (DEFAULTSHEET.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DEFAULTROLL.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (PAPERSTYLE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -903,6 +976,9 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) return PressDefinition.class;
 		if (NUMBERHEADS.equals(propertyName)) return PressDefinition.class;
 		if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
+		if (DEFAULTSHEET.equals(propertyName)) return PressDefinition.class;
+		if (DEFAULTROLL.equals(propertyName)) return PressDefinition.class;
+		if (PAPERSTYLE.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -975,6 +1051,12 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getNumberHeads(), objT.getNumberHeads()))
 			return false;
 		if (! SmartEquals(getSetupAddRun(), objT.getSetupAddRun()))
+			return false;
+		if (! SmartEquals(getDefaultSheet(), objT.getDefaultSheet()))
+			return false;
+		if (! SmartEquals(getDefaultRoll(), objT.getDefaultRoll()))
+			return false;
+		if (! SmartEquals(getPaperStyle(), objT.getPaperStyle()))
 			return false;
 		return true;
 	}			

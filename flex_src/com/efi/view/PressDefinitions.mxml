@@ -62,6 +62,17 @@ width="772" height="845" title="Press Definitions"
 	private function doDeletePress():void {              
 		deleteService.deletePressDefinitions(pressDefinition.id);             
 	}
+	private function doPaperStyle(): String {              
+		   if (pressDefinition.sheetFed ) {
+		   		pressDefinition.paperStyle= "Sheet";
+		   }
+		   else {
+		        pressDefinition.paperStyle = "Roll";
+		   }
+		        
+		return  pressDefinition.paperStyle;
+	}
+
 
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
@@ -98,6 +109,9 @@ width="772" height="845" title="Press Definitions"
 	 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
 	 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 	 pressDefinition.numberHeads= parseInt(NumberHeads.text);
+	 pressDefinition.defaultRoll= DefaultRoll.selected;
+	 pressDefinition.defaultSheet = DefaultSheet.selected;
+	 pressDefinition.paperStyle =  doPaperStyle();
 	}
 	private function doSave():void {
 	 
@@ -122,37 +136,7 @@ width="772" height="845" title="Press Definitions"
 	}       
 	private function doNew():void {
 	    pressDefinition = new PressDefinition();
-	 	/* Name.text = ' ';
-		MachineName.text = ' ';
-	 	OutPutDescription.text = ' ';
-		ProductionLocation.text = ' ';
-	  	CostCenter.text = ' ';
-	 	OEMDeviceID.text = ' ';
-		MachineId.text = ' ';
-	 	CostingPress.selected = false; 
-	 	SheetFed.selected = true;
-	 	RollFed.selected = false;
-	 	IntegratedDevice.selected = false;
-	 	MaxPaperSize.text= ' ';
-	 	MinPaperSize.text= ' ';
-	 	LaborRate.text= '0';
-	 	laborMarkup.text= '0';
-	 	FixedWaste.text='0';
-	 	MinLabor.text='0';
-	 	SetupMin.text= '0';
-	 	SetupAddSig.text= '0';
-	 	WorkTurn.text = '0';
-		setupAddHead.text = '0';
-	 	WashupFee.text ='0';
-		AddSigAddHead.text = '0';
-	 	WashupMin.text = '0 ';
-	 	WashupTimeFountain.text = '0';
-	 	GripEdge.text = '0';
-		Perfector.selected = false;
-	 	AvgImpressPerhour.text = '0';
-		SetupAddRun.text = '0';
-	 	NumberHeads.text = '0';   
-	 	dataGrid.          		 */
+	 	
 	}       
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadPressDefinitions();
@@ -184,10 +168,10 @@ width="772" height="845" title="Press Definitions"
 	<mx:DataGrid x="10" y="71" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" 
 		itemClick="doPressGridClick()" >
 		<mx:columns>
-			<mx:DataGridColumn headerText="Default Sheet-Fed" dataField="SheetFed"/>
-			<mx:DataGridColumn headerText="Default Roll-Fed" dataField="RollFed"/>
+			<mx:DataGridColumn headerText="Default Sheet-Fed" dataField="DefaultSheet"/>
+			<mx:DataGridColumn headerText="Default Roll-Fed" dataField="DefaultRoll"/>
 			<mx:DataGridColumn headerText="Name" dataField="pressDefName"/>
-			<mx:DataGridColumn headerText="Paper Style" dataField="if SheetFed then 'Sheet' else 'roll'"  />
+			<mx:DataGridColumn headerText="Paper Style" dataField="paperStyle"  />
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
@@ -252,8 +236,8 @@ width="772" height="845" title="Press Definitions"
 	<mx:Button x="10" y="700" label="Add Charges"/>
 	<mx:CheckBox x="340" y="670" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Panel x="570" y="195" width="127" height="127" layout="absolute" title="Paper Style">
-		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="SheetFed" selected="{pressDefinition.sheetFed}"/>
-		<mx:RadioButton x="10" y="41" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" selected="{pressDefinition.rolltoRoll}"/>
+		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="SheetFed" selected="{pressDefinition.sheetFed}" click="doPaperStyle();"/>
+		<mx:RadioButton x="10" y="41" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" selected="{pressDefinition.rolltoRoll}" click="doPaperStyle();"/>
 	</mx:Panel>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
@@ -285,4 +269,6 @@ width="772" height="845" title="Press Definitions"
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
 		<mx:Label x="20" y="616" text="Grip Edge:"/>
 		<mx:TextInput x="109" y="614" id="GripEdge" text="{pressDefinition.gripEdge}"/>
+		<mx:CheckBox x="20" y="94" label="DefaultRoll" id="DefaultRoll"/>
+		<mx:CheckBox x="188" y="94" label="Default Sheet" id="DefaultSheet"/>
 </mx:Panel>

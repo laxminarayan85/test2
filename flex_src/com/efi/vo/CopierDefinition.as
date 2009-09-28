@@ -55,6 +55,9 @@ public var salesCat:String = "";
 public var copyID:int = 0;
 public var monthlyBurdenRate:int = 0;
 public var copyMinutes:int = 0;
+public var defaultblackwhite:Boolean = true;
+public var defaultcolor:Boolean = true;
+public var defaultlargeformat:Boolean = true;
 
 }
 }

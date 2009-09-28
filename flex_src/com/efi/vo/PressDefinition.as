@@ -52,6 +52,9 @@ public var perfector:Boolean = true;
 public var avgImpressPerHour:Number = 0;
 public var numberHeads:Number = 0;
 public var setupAddRun:Number = 0;
+public var defaultSheet:Boolean = true;
+public var defaultRoll:Boolean = true;
+public var paperStyle:String = "";
 
 }
 }
