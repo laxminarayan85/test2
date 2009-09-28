@@ -54,7 +54,7 @@ public class StockDefinitionsService {
 		return new ArrayList<Account>();
 	}
 
-	public void addUpdateStockDefinitions(Stock stockDefinitions) throws Exception {
+	public void addUpdateStockDefinitions(StockDefinition stockDefinitions) throws Exception {
 
 		log.debug("** addUpdateStockDefinitions called...");
 
@@ -134,7 +134,7 @@ public class StockDefinitionsService {
 
 		q.setParameter("id", id);
 
-		Stock stockDefinitions = (Stock) q.getSingleResult();
+		StockDefinition stockDefinitions = (StockDefinition) q.getSingleResult();
 
 		if (stockDefinitions != null) {
 

@@ -186,7 +186,7 @@
 				<mx:TextInput x="403" y="110" width="66" text="{stockDefinition.listPerM6}"/>
 				<mx:Label x="69" y="2" text="Costing Units:"/>
 				<mx:Label x="257" y="2" text="# Sheets / Set:"/>
-				<mx:TextInput x="151" y="0" width="87" text="{stockDefinition.costUnits}"/>
+				<mx:TextInput x="151" y="0" width="87" text="{stockDefinition.uom}"/>
 				<mx:TextInput x="352" y="0" width="81" text="{stockDefinition.sheetsPerSet}"/>
 				<mx:CheckBox x="450" y="0" label="Cost is in Sets"/>
 				<mx:Label x="74" y="140" text="Price Expires:"/>
