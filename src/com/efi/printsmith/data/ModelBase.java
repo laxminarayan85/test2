@@ -32,11 +32,11 @@ abstract public class ModelBase {
 	Long id;
 	
 	@Basic
-	@Column(name = "created", nullable = false)
+	@Column(name = "created", nullable = true)
 	Date created;
 	
 	@Basic
-	@Column(name = "modified", nullable = false)
+	@Column(name = "modified", nullable = true)
 	Date modified;
 	
 	public Long getId() {

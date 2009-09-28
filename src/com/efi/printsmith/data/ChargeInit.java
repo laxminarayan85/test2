@@ -230,6 +230,8 @@ public class ChargeInit extends ModelBase {
 	 * @generated
 	 */
 	public ChargeInit() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

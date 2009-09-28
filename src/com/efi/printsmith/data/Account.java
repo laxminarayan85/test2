@@ -366,6 +366,8 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public Account() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

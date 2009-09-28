@@ -98,6 +98,8 @@ public class TaxTable extends ModelBase {
 	 * @generated
 	 */
 	public TaxTable() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

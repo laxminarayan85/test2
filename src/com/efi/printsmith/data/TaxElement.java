@@ -70,6 +70,8 @@ public class TaxElement extends ModelBase {
 	 * @generated
 	 */
 	public TaxElement() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

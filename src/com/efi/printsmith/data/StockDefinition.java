@@ -454,6 +454,8 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public StockDefinition() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

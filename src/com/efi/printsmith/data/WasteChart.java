@@ -58,6 +58,8 @@ public class WasteChart extends ModelBase {
 	 * @generated
 	 */
 	public WasteChart() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
 

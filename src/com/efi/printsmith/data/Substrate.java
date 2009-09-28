@@ -62,6 +62,8 @@ public class Substrate extends ModelBase {
 	 * @generated
 	 */
 	public Substrate() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

@@ -62,6 +62,8 @@ public class Vendor extends ModelBase {
 	 * @generated
 	 */
 	public Vendor() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

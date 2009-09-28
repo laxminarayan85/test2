@@ -62,6 +62,8 @@ public class ShippingMethod extends ModelBase {
 	 * @generated
 	 */
 	public ShippingMethod() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

@@ -258,6 +258,8 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public Charge() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

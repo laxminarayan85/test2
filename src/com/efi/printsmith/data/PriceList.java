@@ -62,6 +62,8 @@ public class PriceList extends ModelBase {
 	 * @generated
 	 */
 	public PriceList() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

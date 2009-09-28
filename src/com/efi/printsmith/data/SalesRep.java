@@ -62,6 +62,8 @@ public class SalesRep extends ModelBase {
 	 * @generated
 	 */
 	public SalesRep() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

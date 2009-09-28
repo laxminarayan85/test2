@@ -178,7 +178,8 @@ showBusyCursor="true"/>
 		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
 		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
 		
-		account.salesRep = sales_rep_combo.selectedItem as SalesRep;
+		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
+			account.salesRep = sales_rep_combo.selectedItem as SalesRep;
 		
 		
 		

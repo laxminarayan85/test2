@@ -182,6 +182,8 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public PressDefinition() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

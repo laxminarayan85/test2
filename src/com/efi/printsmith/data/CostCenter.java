@@ -62,6 +62,8 @@ public class CostCenter extends ModelBase {
 	 * @generated
 	 */
 	public CostCenter() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

@@ -86,6 +86,8 @@ public class StockChanges extends ModelBase {
 	 * @generated
 	 */
 	public StockChanges() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

@@ -62,6 +62,8 @@ public class FoldTemplate extends ModelBase {
 	 * @generated
 	 */
 	public FoldTemplate() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

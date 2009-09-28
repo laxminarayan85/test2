@@ -62,6 +62,8 @@ public class ComLinkType extends ModelBase {
 	 * @generated
 	 */
 	public ComLinkType() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

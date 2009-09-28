@@ -122,6 +122,8 @@ public class Address extends ModelBase {
 	 * @generated
 	 */
 	public Address() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

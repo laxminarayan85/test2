@@ -62,6 +62,8 @@ public class CustomerLog extends ModelBase {
 	 * @generated
 	 */
 	public CustomerLog() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

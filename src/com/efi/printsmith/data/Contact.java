@@ -106,6 +106,8 @@ public class Contact extends ModelBase {
 	 * @generated
 	 */
 	public Contact() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	

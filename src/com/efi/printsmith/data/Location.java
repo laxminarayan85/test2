@@ -62,6 +62,8 @@ public class Location extends ModelBase {
 	 * @generated
 	 */
 	public Location() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	
