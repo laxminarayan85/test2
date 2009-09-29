@@ -39,22 +39,22 @@ public class StockDefinitionsService {
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
-			Query findAllQuery = em.createNamedQuery("Stock.findall");
+			Query findAllQuery = em.createQuery("from StockDefinition");
 			
-			List<Account> stockDefinitions = findAllQuery.getResultList();
+			List<Account> stockDefinition = findAllQuery.getResultList();
 	
-			if (stockDefinitions != null)
+			if (stockDefinition != null)
 	
-				log.debug("** Found " + stockDefinitions.size() + "records:");
+				log.debug("** Found " + stockDefinition.size() + "records:");
 	
-			return stockDefinitions;
+			return stockDefinition;
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return new ArrayList<Account>();
 	}
 
-	public void addUpdateStockDefinitions(StockDefinition stockDefinitions) throws Exception {
+	public void addUpdateStockDefinitions(StockDefinition stockDefinition) throws Exception {
 
 		log.debug("** addUpdateStockDefinitions called...");
 
@@ -73,13 +73,13 @@ public class StockDefinitionsService {
 
 		// byte.
 
-		if (stockDefinitions.getId() == null || stockDefinitions.getId() == 0) {
+		if (stockDefinition.getId() == null || stockDefinition.getId() == 0) {
 
 			// New consultant is created
 
-			stockDefinitions.setId(null);
+			stockDefinition.setId(null);
 
-			stockDefinitions.setCreated(new Timestamp(new Date().getTime()));
+			stockDefinition.setCreated(new Timestamp(new Date().getTime()));
 
 		} else {
 
@@ -93,7 +93,7 @@ public class StockDefinitionsService {
 
 		try {
 
-			em.merge(stockDefinitions);
+			em.merge(stockDefinition);
 
 			tx.commit();
 			
@@ -134,9 +134,9 @@ public class StockDefinitionsService {
 
 		q.setParameter("id", id);
 
-		StockDefinition stockDefinitions = (StockDefinition) q.getSingleResult();
+		StockDefinition stockDefinition = (StockDefinition) q.getSingleResult();
 
-		if (stockDefinitions != null) {
+		if (stockDefinition != null) {
 
 			EntityTransaction tx = em.getTransaction();
 
@@ -145,11 +145,11 @@ public class StockDefinitionsService {
 
 			try {
 
-				em.remove(stockDefinitions);
+				em.remove(stockDefinition);
 
 				tx.commit();
 				
-				MessageServiceAdapter.sendNotification("StockDefinitions Deleted");
+				MessageServiceAdapter.sendNotification("StockDefinition Deleted");
 			} catch (Exception e) {
 
 				log.error("** Error: " + e.getMessage());

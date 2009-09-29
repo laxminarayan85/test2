@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
-    title="StockPicker" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+    title="Stock Picker" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
                      
-<mx:RemoteObject id="loaderService" destination="stockDefinitionService"
+<mx:RemoteObject id="loaderService" destination="StockDefinitionsService"
 result="handleLoadResult(event)"  fault="handleFault(event)"
 showBusyCursor="true" />
 
@@ -32,7 +32,7 @@ showBusyCursor="true" />
 	public var formIsEmpty:Boolean; 
 	                                  
 	[Bindable]                                
-	private var stockDefinition:ArrayCollection = new ArrayCollection();
+	private var stockDefinitions:ArrayCollection = new ArrayCollection();
                                                                          
 	[Bindable]                               
 	private var stockDefinitionRecords:int = 0;
@@ -42,7 +42,7 @@ showBusyCursor="true" />
            
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
-		stockDefinition = event.result as ArrayCollection;
+		stockDefinitions = event.result as ArrayCollection;
 	}
 	
 	private function handleFault(ev:FaultEvent):void {                               
@@ -54,7 +54,7 @@ showBusyCursor="true" />
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
-		loaderService.getStockDefinition();
+		loaderService.getStockDefinitions();
 	}
 	                                
 	private function resetFocus():void {                           
@@ -84,10 +84,10 @@ showBusyCursor="true" />
 
                              
 	<mx:Canvas width="583" height="541">
-		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{stockDefinition}"
+		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{stockDefinitions}"
 		doubleClickEnabled="true" doubleClick="selectStockDefinition()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="title" headerText="Name" />                         
+		     <mx:DataGridColumn dataField="name" headerText="Name" />
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="selectStockDefinition();"  width="108" x="465" y="10"/>
@@ -97,10 +97,9 @@ showBusyCursor="true" />
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>Name</mx:String>
-				<mx:String>Stock #</mx:String>
-				<mx:String>Class</mx:String>
+				<mx:String>Stock Number</mx:String>
 				<mx:String>Grade</mx:String>
-				<mx:String>Parent Size</mx:String>
+				<mx:String>Size</mx:String>
 			</mx:ArrayCollection>
 		</mx:ComboBox>
 		<mx:Label x="10" y="495" text="Filter:"/>
