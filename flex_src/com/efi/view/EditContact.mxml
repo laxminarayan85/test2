@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*"
+width="100%" height="100%" title="Contact Editor"
+creationComplete="init()" label="Contact Editor" name="Contact Editor">
+                             
+<mx:RemoteObject id="saveService" destination="contactService"
+result="handleSaveResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
+
+<mx:RemoteObject id="loaderService" destination="contactService"
+result="handleLoadResult(event)"  fault="handleFault(event)"
+showBusyCursor="true" />
+                             
+<mx:RemoteObject id="deleteService" destination="contactService"
+result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+
+<mx:RemoteObject id="loadSalesRepService" destination="salesRepService"
+result="handleLoadSalesReps(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+
+
+
+<mx:Producer id="producer" destination="contacts"/>
+<mx:Consumer id="consumer" destination="contacts" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.vo.Contact;
+	import com.efi.vo.Address;                        
+	import com.efi.vo.Account; 
+	import com.efi.vo.SalesRep;                                        
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    
+    private var enableSave:Boolean = true;
+    private var contacts:ArrayCollection = new ArrayCollection();
+                 
+	[Bindable]                                         
+	private var contact:Contact;
+                
+	[Bindable]
+	private var autoDiscountRadioValue:String = "discount_dollars";
+	
+	[Bindable]
+	private var acctStatusRadioValue:String = "acct_status_new_radio";
+	
+	[Bindable]
+	private var acctTypeRadioValue:String = "cash_only";
+	               
+	 [Bindable]
+    private var salesReps:ArrayCollection = new ArrayCollection();               
+    
+   
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+	    contact = new Contact();
+	    loadSalesRepService.getSalesReps();
+	    /* Note - the following constructors NEED to live in the .vo object constructor for the respective objects... */
+	    /* account.shipToAddress = new Address();
+	    account.billToAddress = new Address();
+	    account.billToContact = new Contact();
+	    account.contact = new Contact();
+	    account.contact.address = new Address();
+	    account.billToContact.address = new Address(); 
+	   
+	    loadShippingMethodService.getShippingMethods();*/
+	}      
+	                                                   	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.contacts = "*";
+		//producer.send(message);
+	}
+		
+	public function setContact(contact:Contact):void
+	{
+		this.contact = contact;
+		/* if (account.shipToAddress == null) account.shipToAddress = new Address();
+		if (account.billToAddress == null) account.billToAddress = new Address();
+		if (account.billToContact == null) account.billToContact = new Contact();
+		if (account.contact == null) account.contact = new Contact();
+		if (account.billToContact.address == null) account.billToContact.address = new Address();
+		if (account.contact.address == null) account.contact.address = new Address(); */
+		mapFromAccountData();
+	}			
+	
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+	private function deleteContact():void {              
+	                                         
+	}
+	
+	private function createContact():void {
+	}
+	                                                         
+		
+	private function mapToAccountData():void {
+		/* account.title = name_edit.text;
+		account.externalAcctId = external_ref_edit.text;
+		account.externalAcctId = external_acct_id_edit.text;
+		
+		account.shipToAddress.name = ship_company_edit.text;
+		account.shipToAddress.street1 = ship_street1_edit.text;
+		account.shipToAddress.street2 = ship_street2_edit.text;
+		account.shipToAddress.city = ship_city_edit.text;
+		account.shipToAddress.zip = ship_zip_edit.text;
+		account.shipToAddress.country = ship_country_edit.text;
+		account.shipToAddress.state = ship_state_edit.text;
+		
+		account.billToAddress.name = bill_company_edit.text;
+		account.billToAddress.street1 =	bill_street1_edit.text;		
+		account.billToAddress.street2 =	bill_street2_edit.text;		
+		account.billToAddress.city = bill_city_edit.text;
+		account.billToAddress.zip =	bill_zip_edit.text;		     
+		account.billToAddress.country =	bill_country_edit.text;
+		account.billToAddress.state	= bill_state_edit.text;
+
+		account.contact.address.firstName = ship_contact_first_name_edit.text;
+		account.contact.address.lastName = ship_contact_last_name_edit.text;		
+		account.contact.address.prefix = ship_contact_prefix_edit.text;			
+		account.contact.address.suffix = ship_contact_suffix_edit.text;			
+		account.contact.address.jobTitle = ship_contact_job_title_edit.text;		
+		account.contact.address.salutation = ship_contact_salutation_edit.text;
+
+		account.billToContact.address.firstName = bill_contact_first_name_edit.text;
+		account.billToContact.address.lastName = bill_contact_last_name_edit.text;
+		account.billToContact.address.prefix = bill_contact_prefix_edit.text;	
+		account.billToContact.address.suffix = bill_contact_suffix_edit.text;
+		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
+		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
+		 */	
+		
+	}
+	
+	private function mapFromAccountData():void{
+			
+		loaderService.getContacts();
+		
+	}
+	private function doNew():void {
+	    contact = new Contact();
+	 	
+	}    
+	
+	private function doSave():void {
+		mapToAccountData();
+		saveService.addUpdateContact(contact);                                        		
+	}                 
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+	}
+
+	
+	private function handleLoadResult(ev:ResultEvent):void {
+		contacts = ev.result as ArrayCollection;
+	}
+	 private function handleLoadSalesReps(ev:ResultEvent):void {
+		salesReps = ev.result as ArrayCollection;
+	}                                
+	private function handleDeleteResult(ev:ResultEvent):void {
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,null);                                 
+	}
+ 
+ 	
+ 	
+	
+ 	
+]]>
+                             
+</mx:Script>
+
+<mx:VBox width="100%" height="100%">
+	<mx:Canvas width="851" height="704">
+		<mx:TabNavigator x="0" y="70" width="681" height="635">
+			<mx:Canvas label="Address" width="100%" height="100%">
+				<mx:TextInput x="230" y="10" id="name_edit" width="387" />
+				<mx:Text x="26" y="40" text="Acct #:&#xd;" width="46"/>
+				<mx:Label x="180" y="12" text="Name:" textAlign="right"/>
+				<mx:Panel x="10" y="151" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
+					<mx:TextInput x="85" y="8" width="210" id="street" />
+					<mx:TextInput x="85" y="38" width="210" id="street2" />
+					<mx:Label x="10" y="10" text="Street:" width="67" textAlign="right"/>
+					<mx:TextInput x="85" y="62" width="123" id="city" />
+					<mx:TextInput x="263" y="62" width="32" id="state" />
+					<mx:TextInput x="85" y="92" width="75" id="zip" />
+					<mx:Label x="10" y="94" text="Zip:" width="67" textAlign="right"/>
+					<mx:TextInput x="233" y="92" width="62" id="country" />
+					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
+					<mx:Label x="222" y="64" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="10" y="64" text="City:" width="67" textAlign="right"/>
+				</mx:Panel>
+				<mx:Label x="37" y="12" text="ID "/>
+				<mx:Text x="80" y="40" text="Text" width="75" id="accountID"/>
+				<mx:Text x="80" y="12" text="Text" id="contactID"/>
+				<mx:Label x="339" y="58" text="Sales Rep:"/>
+				<mx:List x="423" y="58" height="25"></mx:List>
+				<mx:Label x="347" y="95" text="Created: "/>
+				<mx:Text x="423" y="95" text="Text" width="66" id="createdDate"/>
+				<mx:Panel x="344" y="151" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
+					<mx:TextInput x="85" y="8" width="210" id="ship_street" />
+					<mx:TextInput x="85" y="38" width="210" id="ship_street1" />
+					<mx:Label x="10" y="10" text="Street:" width="67" textAlign="right"/>
+					<mx:TextInput x="263" y="62" width="32" id="ship_state" />
+					<mx:TextInput x="85" y="62" width="129" id="ship_city"/>
+					<mx:TextInput x="85" y="92" width="75" id="ship_zip" />
+					<mx:Label x="10" y="94" text="Zip:" width="67" textAlign="right"/>
+					<mx:TextInput x="233" y="92" width="62" id="ship_country" />
+					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
+					<mx:Label x="222" y="64" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="10" y="64" text="City:" width="67" textAlign="right"/>
+					
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Marketing" width="100%" height="100%">
+				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
+				<mx:CheckBox x="123" y="10" label="Personal account"/>
+				<mx:CheckBox x="123" y="36" label="Do not mail"/>
+				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="Marketing Dates" dropShadowEnabled="false">
+					<mx:Label x="12" y="10" text="Follow Up:"/>
+					<mx:Label x="10" y="38" text="Birthdate:"/>
+					<mx:TextInput x="119" y="38" width="152"/>
+					<mx:TextInput x="119" y="64" width="152"/>
+					<mx:Label x="21" y="66" text="User 3:"/>
+					<mx:TextInput x="119" y="92" width="152"/>
+					<mx:Label x="21" y="94" text="User 4:"/>
+					<mx:TextInput x="119" y="120" width="152"/>
+					<mx:Label x="21" y="122" text="User 5:"/>
+					<mx:TextInput x="119" y="10" width="152"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="Marketing Tags" dropShadowEnabled="false">
+					<mx:Label x="28" y="10" text="Lead Source:"/>
+					<mx:Label x="-3" y="38" text="Common Interest:"/>
+					<mx:TextInput x="114" y="36" width="175"/>
+					<mx:TextInput x="114" y="64" width="175"/>
+					<mx:Label x="60" y="66" text="User 3:"/>
+					<mx:TextInput x="114" y="92" width="175"/>
+					<mx:Label x="60" y="94" text="User 4:"/>
+					<mx:TextInput x="114" y="118" width="175"/>
+					<mx:Label x="21" y="122" text="Type of Work:"/>
+					<mx:TextInput x="114" y="8" width="175"/>
+					<mx:TextInput x="454" y="38" width="175"/>
+					<mx:TextInput x="454" y="66" width="175"/>
+					<mx:TextInput x="454" y="94" width="175"/>
+					<mx:TextInput x="454" y="120" width="175"/>
+					<mx:TextInput x="454" y="10" width="175"/>
+					<mx:Label x="368" y="12" text="Lead Source:"/>
+					<mx:Label x="337" y="40" text="Sport Interest:"/>
+					<mx:Label x="400" y="68" text="User 8:"/>
+					<mx:Label x="400" y="96" text="User 9:"/>
+					<mx:Label x="361" y="124" text="Mailer Type:"/>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Credit Info" width="100%" height="100%">
+				<mx:Label x="159" y="32" text="Card Holder:"/>
+				<mx:Label x="152" y="58" text="Card Number:"/>
+				<mx:Label x="131" y="84" text="Credit Card Type:"/>
+				<mx:Label x="185" y="110" text="Expires:"/>
+				<mx:Label x="192" y="159" text="Street:"/>
+				<mx:Label x="208" y="185" text="Zip:"/>
+				<mx:TextInput x="243" y="30" id="cardholder"/>
+				<mx:TextInput x="243" y="56" id="cardnumber"/>
+				<mx:List x="243" y="81" height="21" id="cardtype"></mx:List>
+				<mx:DateField x="243" y="108" id="cardexpiresdate"/>
+				<mx:TextInput x="243" y="157" id="cardstreet"/>
+				<mx:TextInput x="243" y="183" width="80" id="cardzip"/>
+			</mx:Canvas>
+			<mx:Canvas label="Web" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:TabNavigator>
+		<mx:Button x="10" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="217" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38" click="doNew();">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+	</mx:Canvas>
+</mx:VBox>
+</mx:Panel>

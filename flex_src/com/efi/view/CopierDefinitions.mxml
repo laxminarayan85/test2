@@ -168,9 +168,9 @@ width="902" height="873" title="Copier Definitions"
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
 	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
-		  itemDoubleClick="doCopierGridClick()">
+		  itemDoubleClick="doCopierGridClick()" editable="true">
 		<mx:columns>
-			<mx:DataGridColumn  editable="true" headerText="Default BW" dataField="defaultblackwhite" width="80"/>
+			<mx:DataGridColumn headerText="Default BW" dataField="defaultblackwhite" width="80"/>
 			<mx:DataGridColumn headerText="Default Color" dataField="defaultcolor" width="90" />
 			<mx:DataGridColumn headerText="Default LF" dataField="defaultlargeformat" width="80" />
 			<mx:DataGridColumn headerText="Name" dataField="copyDefName"/>

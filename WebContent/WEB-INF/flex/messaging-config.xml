@@ -14,6 +14,7 @@
 
 	<destination id="users"/>
 	<destination id="accounts"/>
+	<destination id="contacts"/>
 	<destination id="pressdefinitions"/>
 	<destination id="salesreps"/>
 	<destination id="customerlogs"/>

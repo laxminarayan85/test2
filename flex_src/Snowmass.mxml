@@ -16,7 +16,7 @@
 				<mx:Button x="176" y="10" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
 				<mx:Button x="342" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
 				<mx:Button x="176" y="386" label="Users" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
-				<mx:Button x="342" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')"/>
+				<mx:Button x="342" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();"/>
 				<mx:Button x="342" y="198" label="Post Payments" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
 				<mx:Button x="342" y="292" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
 				<mx:Button x="342" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
@@ -55,6 +55,7 @@
 		import com.efi.view.PressDefinitions;
 		import com.efi.view.StockDefinitions;
 		import com.efi.view.CopierDefinitions;
+		import com.efi.view.EditContact;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -125,7 +126,10 @@
 			var child:ListUsers = new ListUsers();
 			addUniqueTab(child);
 		}
-		
+		private function doContacts():void {
+			var child:EditContact = new EditContact();
+			addUniqueTab(child);
+		}
 		private function doPressDefinitions():void {
 			var child:PressDefinitions = new PressDefinitions();
 			addUniqueTab(child);

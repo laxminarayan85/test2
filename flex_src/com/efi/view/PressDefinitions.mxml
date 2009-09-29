@@ -269,6 +269,6 @@ width="772" height="845" title="Press Definitions"
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
 		<mx:Label x="20" y="616" text="Grip Edge:"/>
 		<mx:TextInput x="109" y="614" id="GripEdge" text="{pressDefinition.gripEdge}"/>
-		<mx:CheckBox x="20" y="94" label="DefaultRoll" id="DefaultRoll"/>
-		<mx:CheckBox x="188" y="94" label="Default Sheet" id="DefaultSheet"/>
+		<mx:CheckBox x="417" y="226" label="DefaultRoll" id="DefaultRoll"/>
+		<mx:CheckBox x="417" y="247" label="Default Sheet" id="DefaultSheet"/>
 </mx:Panel>
