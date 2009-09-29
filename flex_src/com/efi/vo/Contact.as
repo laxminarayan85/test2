@@ -21,6 +21,7 @@ public var created:Date;
 
 public var modified:Date;
 
+public var shipToAddress:Address;
 public var title:String = "";
 public var address:Address;
 public var userAcctId:String = "";
@@ -33,6 +34,8 @@ public var useContactAddress:Boolean = true;
 public var isIndividual:Boolean = true;
 public var defaultSalesRep:SalesRep;
 public var mailerCampaigns:Boolean = true;
+public var creditCard:CreditCard;
+public var marketing:Marketing;
 
 }
 }

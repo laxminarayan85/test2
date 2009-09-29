@@ -196,7 +196,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ATTRIBUTE1 = "Attribute1";
+	public static final String MARKETING = "Marketing";
 	/**
 	 * @generated
 	 */
@@ -366,8 +366,6 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public Account() {
-		this.created = new Date();
-		this.modified = new Date();
 	}
 
  	
@@ -967,20 +965,20 @@ public class Account extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private Integer attribute1;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private Marketing marketing;
 	/**
 	 * @generated
  	 */
-	public Integer getAttribute1(){
-		return attribute1; 
+	public Marketing getMarketing(){
+		return marketing; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setAttribute1(Integer newVal) {
-		this.attribute1 = newVal;
+	public void setMarketing(Marketing newVal) {
+		this.marketing = newVal;
 	}
  	
 	
@@ -1721,7 +1719,7 @@ public class Account extends ModelBase {
 		if (FIRSTESTIMATEDATE.equals(propertyName)) return getFirstEstimateDate();
 		if (LASTAGEDDATE.equals(propertyName)) return getLastAgedDate();
 		if (LASTBILLEDDATE.equals(propertyName)) return getLastBilledDate();
-		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
+		if (MARKETING.equals(propertyName)) return getMarketing();
 		if (LASTPAYMENTDATE.equals(propertyName)) return getLastPaymentDate();
 		if (LASTPOSTINGDATE.equals(propertyName)) return getLastPostingDate();
 		if (LASTRANKINGDATE.equals(propertyName)) return getLastRankingDate();
@@ -1807,7 +1805,7 @@ public class Account extends ModelBase {
 		if (FIRSTESTIMATEDATE.equals(propertyName)) setFirstEstimateDate((Date)newValue); else
 		if (LASTAGEDDATE.equals(propertyName)) setLastAgedDate((Date)newValue); else
 		if (LASTBILLEDDATE.equals(propertyName)) setLastBilledDate((Date)newValue); else
-		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
+		if (MARKETING.equals(propertyName)) setMarketing((Marketing)newValue); else
 		if (LASTPAYMENTDATE.equals(propertyName)) setLastPaymentDate((Date)newValue); else
 		if (LASTPOSTINGDATE.equals(propertyName)) setLastPostingDate((Integer)newValue); else
 		if (LASTRANKINGDATE.equals(propertyName)) setLastRankingDate((Date)newValue); else
@@ -1928,8 +1926,8 @@ public class Account extends ModelBase {
 			return new Class<?>[] {Date.class};		
 		if (LASTBILLEDDATE.equals(propertyName)) 
 			return new Class<?>[] {Date.class};		
-		if (ATTRIBUTE1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+		if (MARKETING.equals(propertyName)) 
+			return new Class<?>[] {Marketing.class};		
 		if (LASTPAYMENTDATE.equals(propertyName)) 
 			return new Class<?>[] {Date.class};		
 		if (LASTPOSTINGDATE.equals(propertyName)) 
@@ -2057,7 +2055,7 @@ public class Account extends ModelBase {
 		if (FIRSTESTIMATEDATE.equals(propertyName)) return Account.class;
 		if (LASTAGEDDATE.equals(propertyName)) return Account.class;
 		if (LASTBILLEDDATE.equals(propertyName)) return Account.class;
-		if (ATTRIBUTE1.equals(propertyName)) return Account.class;
+		if (MARKETING.equals(propertyName)) return Account.class;
 		if (LASTPAYMENTDATE.equals(propertyName)) return Account.class;
 		if (LASTPOSTINGDATE.equals(propertyName)) return Account.class;
 		if (LASTRANKINGDATE.equals(propertyName)) return Account.class;
@@ -2180,7 +2178,7 @@ public class Account extends ModelBase {
 			return false;
 		if (! SmartEquals(getLastBilledDate(), objT.getLastBilledDate()))
 			return false;
-		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+		if (! SmartEquals(getMarketing(), objT.getMarketing()))
 			return false;
 		if (! SmartEquals(getLastPaymentDate(), objT.getLastPaymentDate()))
 			return false;

@@ -56,7 +56,7 @@ public var firstInvoiceDate:Date = new Date();
 public var firstEstimateDate:Date = new Date();
 public var lastAgedDate:Date = new Date();
 public var lastBilledDate:Date = new Date();
-public var attribute1:int = 0;
+public var marketing:Marketing;
 public var lastPaymentDate:Date = new Date();
 public var lastPostingDate:int = 0;
 public var lastRankingDate:Date = new Date();
