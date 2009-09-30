@@ -242,33 +242,42 @@
 	<mx:RadioButton x="564" y="94" label="Sheet Stock" groupName="stockunit"/>
 	<mx:RadioButton x="564" y="120" label="Roll Stock" groupName="stockunit"/>
 	<mx:RadioButton x="564" y="146" label="Large Format" groupName="stockunit"/>
-	<mx:TabNavigator x="48" y="166" width="652" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
+	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
-			<mx:Panel x="10" y="0" width="630" height="225" layout="absolute">
-				<mx:Label x="56.5" y="6" text="Vendor:"/>
-				<mx:TextInput x="113.5" y="4" id="Vendor" text="{stockDefinitions.vendor}"/>
-				<mx:Label x="34.5" y="35" text="Stock Type:"/>
-				<mx:TextInput x="113.5" y="30" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
-				<mx:Label x="281.5" y="6" text="Stock #:"/>
-				<mx:TextInput x="341.5" y="4" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
-				<mx:Label x="51" y="59" text="Parent Size:"/>
-				<mx:TextInput x="132" y="57" width="132" id="parentSize" text="{stockDefinitions.parentsize}"/>
-				<mx:Label x="275" y="57" text="Thickness:"/>
-				<mx:Label x="281.5" y="32" text="Basic Size:"/>
-				<mx:TextInput x="341.5" y="55" width="64" id="thickNess" text="{stockDefinitions.thickness}"/>
-				<mx:Label x="51" y="111" text="Sheets / Carton:"/>
-				<mx:TextInput x="157" y="109" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
-				<mx:Label x="275" y="84" text="M Weight:"/>
-				<mx:TextInput x="345" y="82" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
-				<mx:Label x="51" y="137" text="Min. Order:"/>
-				<mx:TextInput x="127" y="135" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
-				<mx:Label x="272" y="111" text="Carton Weight:"/>
-				<mx:TextInput x="370" y="109" width="64.5" text=""/>
-				<mx:Text x="354.5" y="32" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
-				<mx:CheckBox x="272" y="135" id="charge4entiteorder" label="Charge Customer for Entire Order"/>
-				<mx:ComboBox x="413" y="55" id="Uom" width="80"></mx:ComboBox>
+			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
+				<mx:Label x="32" y="12" text="Vendor:"/>
+				<mx:TextInput x="89" y="10" id="Vendor" text="{stockDefinitions.vendor}"/>
+				<mx:Label x="10" y="41" text="Stock Type:"/>
+				<mx:TextInput x="89" y="36" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
+				<mx:Label x="257" y="12" text="Stock #:"/>
+				<mx:TextInput x="317" y="10" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
+				<mx:Label x="26.5" y="65" text="Parent Size:"/>
+				<mx:TextInput x="107.5" y="63" width="132" id="parentSize" text="{stockDefinitions.parentsize}"/>
+				<mx:Label x="250.5" y="63" text="Thickness:"/>
+				<mx:Label x="257" y="38" text="Basic Size:"/>
+				<mx:TextInput x="317" y="61" width="64" id="thickNess" text="{stockDefinitions.thickness}"/>
+				<mx:Label x="26.5" y="117" text="Sheets / Carton:"/>
+				<mx:TextInput x="132.5" y="115" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
+				<mx:Label x="250.5" y="90" text="M Weight:"/>
+				<mx:TextInput x="320.5" y="88" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
+				<mx:Label x="26.5" y="143" text="Min. Order:"/>
+				<mx:TextInput x="102.5" y="141" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
+				<mx:Label x="247.5" y="117" text="Carton Weight:"/>
+				<mx:TextInput x="345.5" y="115" width="64.5" text=""/>
+				<mx:Text x="330" y="38" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
+				<mx:CheckBox x="247.5" y="141" id="charge4entiteorder" label="Charge Customer for Entire Order"/>
+				<mx:ComboBox x="388.5" y="61" id="Uom" width="80"></mx:ComboBox>
+				<mx:Panel x="476.5" y="-10" width="193.5" height="195" layout="absolute" title="Chain of Custody">
+					<mx:Label x="26.25" y="1" text="Forest Management:"/>
+					<mx:TextInput x="10" y="27" text="Text" width="153.5"/>
+					<mx:Label x="10" y="57" text="PCW Recycled %:"/>
+					<mx:TextInput x="115.75" y="55" width="47.75"/>
+					<mx:CheckBox x="10" y="83" label="FSC Certified"/>
+					<mx:CheckBox x="10" y="103" label="SFI Certified"/>
+					<mx:CheckBox x="10" y="123" label="GreenSeal Certified"/>
+				</mx:Panel>
 			</mx:Panel>
-			<mx:Panel x="10" y="233" width="630" height="200" layout="absolute" title="Qty. Adjustments">
+			<mx:Panel x="10" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments">
 				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
 				<mx:Label x="44" y="50" text="Costs:"/>
 				<mx:Label x="49" y="70" text="CWT:"/>
@@ -312,8 +321,8 @@
 				<mx:Label x="74" y="140" text="Price Expires:"/>
 				<mx:TextInput x="162" y="138" width="87" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
 			</mx:Panel>
-			<mx:Panel x="14.5" y="441" width="621" height="93" layout="absolute" title="Comments">
-				<mx:TextArea x="0" y="-6" width="570" height="49" id="Comments" text="{stockDefinitions.comments}"/>
+			<mx:Panel x="14.5" y="441" width="685.5" height="93" layout="absolute" title="Comments">
+				<mx:TextArea x="0" y="-6" width="655.5" height="49" id="Comments" text="{stockDefinitions.comments}"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Pricing Options" id="page_pricingoptions" width="100%" height="100%">
@@ -321,7 +330,7 @@
 				<mx:Label x="10" y="12" text="Press:"/>
 				<mx:TextInput x="58" y="10" width="182" id="DefaultPress" text="{stockDefinitions.defaultPress}"/>
 			</mx:Panel>
-			<mx:Panel x="313" y="51" width="290" height="78" layout="absolute" title="Schedule for List Pricing">
+			<mx:Panel x="313" y="51" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
 				<mx:Button x="10" y="6" label="Select Schedule"/>
 				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="115"/>
 			</mx:Panel>
@@ -332,7 +341,7 @@
 			<mx:Label x="204" y="23" text="Cut / 100:"/>
 			<mx:Label x="324" y="23" text="Min. Cut Chg.:"/>
 			<mx:Button x="475" y="21" label="Import One Stock"/>
-			<mx:Panel x="10" y="137" width="593" height="108" layout="absolute" title="Pricing for Blank Sheets">
+			<mx:Panel x="10" y="137" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets">
 				<mx:TextInput x="65" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
 				<mx:TextInput x="143" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
 				<mx:TextInput x="221" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
@@ -349,7 +358,7 @@
 				<mx:Label x="21" y="25" text="Price:"/>
 				<mx:CheckBox x="65" y="47" id="Autocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="253" width="593" height="122" layout="absolute">
+			<mx:Panel x="10" y="253" width="690" height="122" layout="absolute">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
 				<mx:Panel x="10" y="299" width="593" height="155" layout="absolute">
 					<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
@@ -374,13 +383,13 @@
 					</mx:Panel>
 				</mx:Panel>
 			</mx:Panel>
-			<mx:Panel x="10" y="383" width="593" height="154" layout="absolute" title="Preset Up to 10 Charges">
+			<mx:Panel x="10" y="383" width="690" height="154" layout="absolute" title="Preset Up to 10 Charges">
 				<mx:Button x="10" y="0" label="Add Charges..."/>
 				<mx:Text x="128" y="2" id="Additional1" text="&lt;Nothing Selected&gt;"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Inventory" id="page_inventory" width="100%" height="100%">
-			<mx:Panel x="10" y="10" width="630" height="244" layout="absolute" title="Inventory Settings">
+			<mx:Panel x="10" y="10" width="690" height="244" layout="absolute" title="Inventory Settings">
 				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item"/>
 				<mx:Label x="30" y="30" text="Stock On Hand:"/>
 				<mx:Label x="51" y="58" text="Committed:"/>
@@ -403,7 +412,7 @@
 				<mx:CheckBox x="250" y="154" id="ShellItem" label="Shell Item"/>
 				<mx:Button x="341" y="154" label="Assign Customer Account..."/>
 			</mx:Panel>
-			<mx:Panel x="10" y="274" width="630" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
+			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
 				<mx:Button x="10" y="204" label="Show Entire History"/>
 				<mx:DataGrid x="10" y="0" width="590" height="199">
 					<mx:columns>
@@ -417,10 +426,10 @@
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
+	<mx:Button x="10" y="10" width="38" height="38">
 		<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
+	<mx:Button x="56" y="10" width="38" height="38">
 		<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
