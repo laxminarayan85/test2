@@ -4,7 +4,7 @@ package com.efi.vo
 	import com.efi.vo.*;
 [Bindable]
 
-[RemoteClass(alias="com.efi.printsmith.StockGroup")]
+[RemoteClass(alias="com.efi.printsmith.data.StockGroup")]
 
 public class StockGroup
 
@@ -21,8 +21,8 @@ public var created:Date;
 
 public var modified:Date;
 
-public var name:String;
-
+public var name:String = "";
+public var key:String = "";
 
 }
 }

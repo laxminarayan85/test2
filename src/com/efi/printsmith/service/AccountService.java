@@ -130,6 +130,19 @@ public class AccountService {
 		}
 
 	}
+    public Account getAccountById(Long id) throws Exception {      
+    	try {            
+    		log.debug("** getAccountsById called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();       
+    		Query query = em.createNamedQuery("Account.byId");           
+    		query.setParameter("id", id);            
+    		Account account = (Account) query.getSingleResult();                
+    		return account;        
+    		} catch (Exception e) { 
+    			log.error(e);       
+    		}        
+    	return null;            
+    	} 
 
 	public void deleteAccount(Long id) {
 

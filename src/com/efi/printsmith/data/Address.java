@@ -7,34 +7,16 @@ import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.*;
 import com.efi.printsmith.exceptions.*;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
-
 
 /**
  * @generated
@@ -179,70 +161,70 @@ public class Address extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String city;
+	@ManyToOne
+	private City city;
 	/**
 	 * @generated
  	 */
-	public String getCity(){
+	public City getCity(){
 		return city; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCity(String newVal) {
+	public void setCity(City newVal) {
 		this.city = newVal;
 	}
  	
 	
- 	@Basic
-	private String state;
+	@ManyToOne
+	private State state;
 	/**
 	 * @generated
  	 */
-	public String getState(){
+	public State getState(){
 		return state; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setState(String newVal) {
+	public void setState(State newVal) {
 		this.state = newVal;
 	}
  	
 	
- 	@Basic
-	private String zip;
+	@ManyToOne
+	private Zip zip;
 	/**
 	 * @generated
  	 */
-	public String getZip(){
+	public Zip getZip(){
 		return zip; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setZip(String newVal) {
+	public void setZip(Zip newVal) {
 		this.zip = newVal;
 	}
  	
 	
- 	@Basic
-	private String country;
+	@ManyToOne
+	private Country country;
 	/**
 	 * @generated
  	 */
-	public String getCountry(){
+	public Country getCountry(){
 		return country; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCountry(String newVal) {
+	public void setCountry(Country newVal) {
 		this.country = newVal;
 	}
  	
@@ -333,6 +315,8 @@ public class Address extends ModelBase {
  	
 	
     @OneToMany
+	@Cascade(value = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.SAVE_UPDATE,
+			CascadeType.DELETE, CascadeType.REMOVE})
 	private java.util.List<ComLink> comLinks;
 	/**
 	 * @generated
@@ -433,10 +417,10 @@ public class Address extends ModelBase {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (STREET1.equals(propertyName)) setStreet1((String)newValue); else
 		if (STREET2.equals(propertyName)) setStreet2((String)newValue); else
-		if (CITY.equals(propertyName)) setCity((String)newValue); else
-		if (STATE.equals(propertyName)) setState((String)newValue); else
-		if (ZIP.equals(propertyName)) setZip((String)newValue); else
-		if (COUNTRY.equals(propertyName)) setCountry((String)newValue); else
+		if (CITY.equals(propertyName)) setCity((City)newValue); else
+		if (STATE.equals(propertyName)) setState((State)newValue); else
+		if (ZIP.equals(propertyName)) setZip((Zip)newValue); else
+		if (COUNTRY.equals(propertyName)) setCountry((Country)newValue); else
 		if (ZONE.equals(propertyName)) setZone((String)newValue); else
 		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
 		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
@@ -462,13 +446,13 @@ public class Address extends ModelBase {
 		if (STREET2.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (CITY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {City.class};		
 		if (STATE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {State.class};		
 		if (ZIP.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Zip.class};		
 		if (COUNTRY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Country.class};		
 		if (ZONE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (FIRSTNAME.equals(propertyName)) 

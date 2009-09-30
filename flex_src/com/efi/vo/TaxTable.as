@@ -22,7 +22,7 @@ public var created:Date;
 public var modified:Date;
 
 public var effectiveTaxRate:Number = 0;
-public var taxElements:TaxElement;
+public var taxElements:List;
 public var taxTableIsCurrent:Boolean = true;
 public var taxShipping:Boolean = true;
 public var taxOnTax:Boolean = true;

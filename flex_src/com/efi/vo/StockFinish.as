@@ -4,7 +4,7 @@ package com.efi.vo
 	import com.efi.vo.*;
 [Bindable]
 
-[RemoteClass(alias="com.efi.printsmith.StockFinish")]
+[RemoteClass(alias="com.efi.printsmith.data.StockFinish")]
 
 public class StockFinish
 
@@ -21,8 +21,8 @@ public var created:Date;
 
 public var modified:Date;
 
-public var name:Number;
-
+public var name:String = "";
+public var key:String = "";
 
 }
 }

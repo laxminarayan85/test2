@@ -7,34 +7,16 @@ import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.*;
 import com.efi.printsmith.exceptions.*;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
-
 
 /**
  * @generated
@@ -88,10 +70,6 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String DONOTMAIL = "DoNotMail";
-	/**
-	 * @generated
-	 */
 	public static final String USECONTACTADDRESS = "UseContactAddress";
 	/**
 	 * @generated
@@ -118,11 +96,13 @@ public class Contact extends ModelBase {
 	 * @generated
 	 */
 	public Contact() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
+	@ManyToOne
 	private Address shipToAddress;
 	/**
 	 * @generated
@@ -156,7 +136,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
+	@ManyToOne
 	private Address address;
 	/**
 	 * @generated
@@ -174,18 +154,18 @@ public class Contact extends ModelBase {
  	
 	
  	@Basic
-	private String userAcctId;
+	private Long userAcctId;
 	/**
 	 * @generated
  	 */
-	public String getUserAcctId(){
+	public Long getUserAcctId(){
 		return userAcctId; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setUserAcctId(String newVal) {
+	public void setUserAcctId(Long newVal) {
 		this.userAcctId = newVal;
 	}
  	
@@ -259,23 +239,6 @@ public class Contact extends ModelBase {
  	
 	
  	@Basic
-	private Boolean doNotMail;
-	/**
-	 * @generated
- 	 */
-	public Boolean getDoNotMail(){
-		return doNotMail; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setDoNotMail(Boolean newVal) {
-		this.doNotMail = newVal;
-	}
- 	
-	
- 	@Basic
 	private Boolean useContactAddress;
 	/**
 	 * @generated
@@ -309,7 +272,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
+	@ManyToOne
 	private SalesRep defaultSalesRep;
 	/**
 	 * @generated
@@ -343,7 +306,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
+	@ManyToOne
 	private CreditCard creditCard;
 	/**
 	 * @generated
@@ -360,7 +323,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-	@ManyToOne( cascade = CascadeType.ALL )	
+	@ManyToOne
 	private Marketing marketing;
 	/**
 	 * @generated
@@ -390,7 +353,6 @@ public class Contact extends ModelBase {
 		if (WEBCATALOGCHANGE.equals(propertyName)) return getWebCatalogChange();
 		if (WEBSTATECHANGE.equals(propertyName)) return getWebStateChange();
 		if (TRANSMITTED.equals(propertyName)) return getTransmitted();
-		if (DONOTMAIL.equals(propertyName)) return getDoNotMail();
 		if (USECONTACTADDRESS.equals(propertyName)) return getUseContactAddress();
 		if (ISINDIVIDUAL.equals(propertyName)) return getIsIndividual();
 		if (DEFAULTSALESREP.equals(propertyName)) return getDefaultSalesRep();
@@ -409,12 +371,11 @@ public class Contact extends ModelBase {
 		if (SHIPTOADDRESS.equals(propertyName)) setShipToAddress((Address)newValue); else
 		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
 		if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-		if (USERACCTID.equals(propertyName)) setUserAcctId((String)newValue); else
+		if (USERACCTID.equals(propertyName)) setUserAcctId((Long)newValue); else
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) setWebAcctNameIncomplete((Boolean)newValue); else
 		if (WEBCATALOGCHANGE.equals(propertyName)) setWebCatalogChange((Boolean)newValue); else
 		if (WEBSTATECHANGE.equals(propertyName)) setWebStateChange((Boolean)newValue); else
 		if (TRANSMITTED.equals(propertyName)) setTransmitted((Boolean)newValue); else
-		if (DONOTMAIL.equals(propertyName)) setDoNotMail((Boolean)newValue); else
 		if (USECONTACTADDRESS.equals(propertyName)) setUseContactAddress((Boolean)newValue); else
 		if (ISINDIVIDUAL.equals(propertyName)) setIsIndividual((Boolean)newValue); else
 		if (DEFAULTSALESREP.equals(propertyName)) setDefaultSalesRep((SalesRep)newValue); else
@@ -437,7 +398,7 @@ public class Contact extends ModelBase {
 		if (ADDRESS.equals(propertyName)) 
 			return new Class<?>[] {Address.class};		
 		if (USERACCTID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Long.class};		
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (WEBCATALOGCHANGE.equals(propertyName)) 
@@ -445,8 +406,6 @@ public class Contact extends ModelBase {
 		if (WEBSTATECHANGE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (TRANSMITTED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DONOTMAIL.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (USECONTACTADDRESS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -478,7 +437,6 @@ public class Contact extends ModelBase {
 		if (WEBCATALOGCHANGE.equals(propertyName)) return Contact.class;
 		if (WEBSTATECHANGE.equals(propertyName)) return Contact.class;
 		if (TRANSMITTED.equals(propertyName)) return Contact.class;
-		if (DONOTMAIL.equals(propertyName)) return Contact.class;
 		if (USECONTACTADDRESS.equals(propertyName)) return Contact.class;
 		if (ISINDIVIDUAL.equals(propertyName)) return Contact.class;
 		if (DEFAULTSALESREP.equals(propertyName)) return Contact.class;
@@ -511,8 +469,6 @@ public class Contact extends ModelBase {
 		if (! SmartEquals(getWebStateChange(), objT.getWebStateChange()))
 			return false;
 		if (! SmartEquals(getTransmitted(), objT.getTransmitted()))
-			return false;
-		if (! SmartEquals(getDoNotMail(), objT.getDoNotMail()))
 			return false;
 		if (! SmartEquals(getUseContactAddress(), objT.getUseContactAddress()))
 			return false;

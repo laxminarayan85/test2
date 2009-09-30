@@ -7,34 +7,16 @@ import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.*;
 import com.efi.printsmith.exceptions.*;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
-
 
 /**
  * @generated
@@ -57,29 +39,52 @@ public class BusinessType extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
+	/**
+	 * @generated
+	 */
+	public static final String KEY = "Key";
 
 	/**
 	 * @generated
 	 */
 	public BusinessType() {
+		this.created = new Date();
+		this.modified = new Date();
 	}
 
  	
 	
  	@Basic
-	private Integer name;
+	private String name;
 	/**
 	 * @generated
  	 */
-	public Integer getName(){
+	public String getName(){
 		return name; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setName(Integer newVal) {
+	public void setName(String newVal) {
 		this.name = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String key;
+	/**
+	 * @generated
+ 	 */
+	public String getKey(){
+		return key; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setKey(String newVal) {
+		this.key = newVal;
 	}
 
 	/**
@@ -89,6 +94,7 @@ public class BusinessType extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
+		if (KEY.equals(propertyName)) return getKey();
 		return super.getProperty(propertyName);
 	}
 	
@@ -98,7 +104,8 @@ public class BusinessType extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((Integer)newValue); else
+		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (KEY.equals(propertyName)) setKey((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -109,7 +116,9 @@ public class BusinessType extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {String.class};		
+		if (KEY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -121,6 +130,7 @@ public class BusinessType extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return BusinessType.class;
+		if (KEY.equals(propertyName)) return BusinessType.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -133,6 +143,8 @@ public class BusinessType extends ModelBase {
 			return false;
 		BusinessType objT = (BusinessType)obj;
 		if (! SmartEquals(getName(), objT.getName()))
+			return false;
+		if (! SmartEquals(getKey(), objT.getKey()))
 			return false;
 		return true;
 	}			
