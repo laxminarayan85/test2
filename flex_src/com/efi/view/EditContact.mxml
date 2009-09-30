@@ -17,6 +17,18 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 <mx:RemoteObject id="loadSalesRepService" destination="salesRepService"
 result="handleLoadSalesReps(event)" fault="handleFault(event)"
 showBusyCursor="true"/>
+<mx:RemoteObject id="loadCityService" destination="cityService"
+result="handleLoadCity(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+<mx:RemoteObject id="loadStateService" destination="stateService"
+result="handleLoadState(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+<mx:RemoteObject id="loadCountryService" destination="countryService"
+result="handleLoadCountry(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
+<mx:RemoteObject id="loadZipService" destination="zipService"
+result="handleLoadZip(event)" fault="handleFault(event)"
+showBusyCursor="true"/>
 
 <mx:RemoteObject id="loadAccountService" destination="accountService"
 result="handleLoadResult(event)"  fault="handleFault(event)"
@@ -27,7 +39,11 @@ showBusyCursor="true" />
 
 
 <mx:Producer id="producer" destination="contacts"/>
-<mx:Consumer id="consumer" destination="contacts" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="salesreps"  message="messageHandler(event.message)"/>
+<!--<mx:Consumer id="consumer" destination="citys" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="countrys" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="states" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="zips" message="messageHandler(event.message)"/>-->
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 
@@ -40,6 +56,10 @@ showBusyCursor="true" />
 	import com.efi.vo.Account; 
 	import com.efi.vo.CreditCard;
 	import com.efi.vo.Campaigns;
+	import com.efi.vo.City;
+	import com.efi.vo.Country;
+	import com.efi.vo.State;
+	import com.efi.vo.Zip;
 	import com.efi.vo.Grade;
 	import com.efi.vo.Marketing;
 	import com.efi.vo.SalesRep;                                        
@@ -67,7 +87,15 @@ showBusyCursor="true" />
 	
 	               
 	 [Bindable]
-    private var salesReps:ArrayCollection = new ArrayCollection();               
+    private var salesReps:ArrayCollection = new ArrayCollection(); 
+    [Bindable]
+    private var citys:ArrayCollection = new ArrayCollection();   
+    [Bindable]
+    private var states1:ArrayCollection = new ArrayCollection();   
+    [Bindable]
+    private var countrys:ArrayCollection = new ArrayCollection();  
+    [Bindable]
+    private var zips:ArrayCollection = new ArrayCollection();                  
     
    
 	public function init():void {
@@ -84,6 +112,11 @@ showBusyCursor="true" />
 	    account= new Account();
 	   
 	    loadSalesRepService.getSalesReps();
+	    loadCityService.getCitys();
+	    loadStateService.getStates();
+	    loadCountryService.getCountrys();
+	    loadZipService.getZips();
+	        
 	    
 	}      
 	                                                   	
@@ -127,7 +160,7 @@ showBusyCursor="true" />
 		contact.address.name = "Contact";
 		contact.address.street1 =	street.text;		
 		contact.address.street2 =	street2.text;		
-		contact.address.city.name = city.text;
+		contact.address.city.name = citycombo.text;
 		contact.address.zip.name =	zip.text;		     
 		contact.address.country.name = country.text;
 		contact.address.state.name	= state.text;
@@ -189,9 +222,21 @@ showBusyCursor="true" />
 	private function handleLoadResult(ev:ResultEvent):void {
 		contacts = ev.result as ArrayCollection;
 	}
-	 private function handleLoadSalesReps(ev:ResultEvent):void {
+	private function handleLoadSalesReps(ev:ResultEvent):void {
 		salesReps = ev.result as ArrayCollection;
-	}                                
+	}  
+	 private function handleLoadCity(ev:ResultEvent):void {
+		citys = ev.result as ArrayCollection;
+	}   
+	 private function handleLoadState(ev:ResultEvent):void {
+		states1 = ev.result as ArrayCollection;
+	}   
+	 private function handleLoadCountry(ev:ResultEvent):void {
+		countrys = ev.result as ArrayCollection;
+	}   
+	 private function handleLoadZip(ev:ResultEvent):void {
+		zips = ev.result as ArrayCollection;
+	}                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 	}
 	      
@@ -221,7 +266,6 @@ showBusyCursor="true" />
 					<mx:TextInput x="85" y="8" width="210" id="street" text= "{contact.address.street1}"/>
 					<mx:TextInput x="85" y="38" width="210" id="street2" text= "{contact.address.street2}"/>
 					<mx:Label x="10" y="10" text="Street:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="62" width="123" id="city" text="{contact.address.city}"/>
 					<mx:TextInput x="263" y="62" width="32" id="state" text="{contact.address.state}"/>
 					<mx:TextInput x="85" y="92" width="75" id="zip" text="{contact.address.zip}"/>
 					<mx:Label x="10" y="94" text="Zip:" width="67" textAlign="right"/>
@@ -229,6 +273,7 @@ showBusyCursor="true" />
 					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
 					<mx:Label x="222" y="64" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="64" text="City:" width="67" textAlign="right"/>
+					<mx:ComboBox x="85" y="62" width="129" id="citycombo" dataProvider="{citys}" labelField="name" editable="true"></mx:ComboBox>
 				</mx:Panel>
 				<mx:Label x="37" y="12" text="ID "/>
 				<mx:Text x="80" y="40" width="75" id="accountID" text="{contact.userAcctId}"/>

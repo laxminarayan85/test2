@@ -84,7 +84,34 @@
 			</source>
 		</properties>
 	</destination>
-
+	<destination id="cityService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.CityService
+			</source>
+		</properties>
+	</destination>
+		<destination id="stateService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.StateService
+			</source>
+		</properties>
+	</destination>
+		<destination id="countryService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.CountryService
+			</source>
+		</properties>
+	</destination>
+		<destination id="zipService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ZipService
+			</source>
+		</properties>
+	</destination>
 	<destination id="shippingMethodService">
 		<properties>
 			<source>

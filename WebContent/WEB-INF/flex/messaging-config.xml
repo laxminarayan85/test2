@@ -17,6 +17,10 @@
 	<destination id="contacts"/>
 	<destination id="pressdefinitions"/>
 	<destination id="salesreps"/>
+	<destination id="citys"/>
+	<destination id="states"/>
+	<destination id="countrys"/>
+	<destination id="zips"/>
 	<destination id="customerlogs"/>
 	<destination id="shippingmethods"/>
 	<destination id="stockdefinitions"/>
