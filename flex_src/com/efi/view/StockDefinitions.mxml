@@ -11,6 +11,9 @@
 	<mx:RemoteObject id="deleteService" destination="StockDefinitionsService"
 	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
 	
+	<mx:RemoteObject id="loadStockGroupService" destination="StockGroupService"
+	result="handleLoadStockGroup(event)" fault="handleFault(event)" showBusyCursor="true"/>
+
 	<mx:Producer id="producer" destination="stockdefinitions"/>
 	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -43,21 +46,21 @@
 	private var stockDefinitions:StockDefinition;
 	
 	[Bindable]
-	private var stockColor:StockColors;                            
+    private var stockColor:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
-	private var stockGroup:StockGroup;                          
+    private var stockGroup:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
-	private var stockGrade:StockGrade;
+    private var stockGrade:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
-	private var stockChanges:StockChanges;        
+    private var stockChanges:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
-	private var stockFinish:StockFinish;
+    private var stockFinish:ArrayCollection = new ArrayCollection();   
 	[Bindable] 
-	private var stockForest:StockForest;                                
+    private var stockForest:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
-	private var stockVendor:Vendor;                             
+    private var stockVendor:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
-	private var stockGenericColor:StockColors;                              
+	private var stockGenericColor:ArrayCollection = new ArrayCollection();   
 	
 	[Bindable]                                
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
@@ -69,14 +72,6 @@
 
 	    stockDefinitions = new StockDefinition();
 	    
-	    stockColor = new StockColors();
-	    stockGroup = new StockGroup();
-	    stockGrade = new StockGrade();
-	    stockChanges = new StockChanges();
-	    stockFinish = new StockFinish(); 
-	    stockVendor = new Vendor();
-	    stockForest = new StockForest();
-	    stockGenericColor = new StockColors();
     
 	}      
 
@@ -143,6 +138,10 @@
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     loadStockDefinitions();
 	}
+
+	 private function handleLoadStockGroup(ev:ResultEvent):void {
+		 stockGroup = ev.result as ArrayCollection;
+	}   
 	      
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
@@ -160,30 +159,30 @@
 	}
 
 	private function setGroup():void {
-		stockDefinitions.stkgroup = stockGroup;
+		stockDefinitions.stkgroup = new StockGroup();
 	}
 	
 	private function setChanges():void {
 		
 	}
 	private function setColor():void {
-		stockDefinitions.color = stockColor;
+		stockDefinitions.color = new StockColors();
 	}
 	private function setGenericColor():void {
-		stockDefinitions.genericcolor = stockGenericColor;
+		stockDefinitions.genericcolor = new StockColors();
 	}
 	private function setGrade():void {
-		stockDefinitions.grade = stockGrade
+		stockDefinitions.grade = new StockGrade();
 	}
 	private function setForest():void {
 		
 	}
 	private function setFinish():void {
-		stockDefinitions.finish = stockFinish;
+		stockDefinitions.finish = new StockFinish();
 	}
 
 	private function setVendor():void {
-		stockDefinitions.vendor = stockVendor;
+		stockDefinitions.vendor = new Vendor()
 	}
 	
 	private function mapAccountData():void {
