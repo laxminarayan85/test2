@@ -46,6 +46,28 @@ public class CityService {
 		return new ArrayList<City>();
 	}
 
+public Boolean getCityByName(String name) throws Exception {
+		try {
+			log.debug("** getCityByName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "select a from City a where a.name = :name";
+			Query query = em.createQuery(queryString);
+			query.setParameter("name", name); 
+			City city = (City) query.getSingleResult();   
+			
+	
+			if (city != null)
+	
+				log.debug("** Found " );
+	
+			return true;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return false;		
+	}
 	public void addUpdateCity(City city) throws Exception {
 		log.debug("** addUpdatecity called...");
 		try {

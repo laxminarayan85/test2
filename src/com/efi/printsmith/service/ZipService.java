@@ -45,7 +45,28 @@ public class ZipService {
 		}
 		return new ArrayList<Zip>();
 	}
-
+	public Boolean getZipByName(String name) throws Exception {
+		try {
+			log.debug("** getZipByName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "select a from Zip a where a.name = :name";
+			Query query = em.createQuery(queryString);
+			query.setParameter("name", name); 
+			Zip zip = (Zip) query.getSingleResult();   
+			
+	
+			if (zip != null)
+	
+				log.debug("** Found " );
+	
+			return true;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return false;		
+	}
 	public void addUpdateZip(Zip zips) throws Exception {
 		log.debug("** addUpdateZip called...");
 		try {

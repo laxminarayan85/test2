@@ -155,18 +155,22 @@ showBusyCursor="true"/>
 		account.shipToAddress.name = ship_company_edit.text;
 		account.shipToAddress.street1 = ship_street1_edit.text;
 		account.shipToAddress.street2 = ship_street2_edit.text;
-		account.shipToAddress.city.name = ship_city_edit.text;
+		/* account.shipToAddress.city.name = ship_city_edit.text;
 		account.shipToAddress.zip.name = ship_zip_edit.text;
 		account.shipToAddress.country.name = ship_country_edit.text;
-		account.shipToAddress.state.name = ship_state_edit.text;
+		account.shipToAddress.state.name = ship_state_edit.text; */
+		
+		
+
+		
 		
 		account.billToAddress.name = bill_company_edit.text;
 		account.billToAddress.street1 =	bill_street1_edit.text;		
 		account.billToAddress.street2 =	bill_street2_edit.text;		
-		account.billToAddress.city.name = bill_city_edit.text;
+		/* account.billToAddress.city.name = bill_city_edit.text;
 		account.billToAddress.zip.name =	bill_zip_edit.text;		     
 		account.billToAddress.country.name =	bill_country_edit.text;
-		account.billToAddress.state.name = bill_state_edit.text;
+		account.billToAddress.state.name = bill_state_edit.text; */
 
 		account.contact.address.firstName = ship_contact_first_name_edit.text;
 		account.contact.address.lastName = ship_contact_last_name_edit.text;		

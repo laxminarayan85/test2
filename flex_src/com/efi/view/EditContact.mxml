@@ -152,21 +152,35 @@ showBusyCursor="true" />
 		contact.shipToAddress.name = "Contact Ship";
 		contact.shipToAddress.street1 = ship_street.text;
 		contact.shipToAddress.street2 = ship_street1.text;
-		contact.shipToAddress.city.name = ship_city.text;
-		contact.shipToAddress.zip.name = ship_zip.text;
-		contact.shipToAddress.country.name = ship_country.text;
-		contact.shipToAddress.state.name = ship_state.text;
+		
+		if (shipcitycombo != null && shipcitycombo.selectedItem != null) 
+			contact.shipToAddress.city = shipcitycombo.selectedItem as City;
+		if (shipstatecombo != null && shipstatecombo.selectedItem != null) 
+			contact.shipToAddress.state = shipstatecombo.selectedItem as State;
+		if (shipzipcombo != null && shipzipcombo.selectedItem != null) 
+			contact.shipToAddress.zip = shipzipcombo.selectedItem as Zip;
+		if (shipcountrycombo != null && shipcountrycombo.selectedItem != null) 
+			contact.shipToAddress.country = countrycombo.selectedItem as Country;
+		
+		
+		
 		
 		contact.address.name = "Contact";
 		contact.address.street1 =	street.text;		
 		contact.address.street2 =	street2.text;		
-		contact.address.city.name = citycombo.text;
-		contact.address.zip.name =	zip.text;		     
-		contact.address.country.name = country.text;
-		contact.address.state.name	= state.text;
+		
 		
 		contact.userAcctId = parseInt(accountID.text);
-	
+	 
+		if (citycombo != null && citycombo.selectedItem != null) 
+			contact.address.city = citycombo.selectedItem as City;
+		if (statecombo != null && statecombo.selectedItem != null) 
+			contact.address.state = statecombo.selectedItem as State;
+		if (zipcombo != null && zipcombo.selectedItem != null) 
+			contact.address.zip = zipcombo .selectedItem as Zip;
+		if (countrycombo != null && countrycombo.selectedItem != null) 
+			contact.address.country = countrycombo.selectedItem as Country;
+			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
 		
@@ -200,6 +214,15 @@ showBusyCursor="true" />
 			
 		loaderService.getContacts();
 	    account = loadAccountService.getAccountById(contact.userAcctId);
+	    sales_rep_combo.text= contact.defaultSalesRep.name;
+	    zipcombo.text = contact.address.zip.name;
+	    citycombo.text = contact.address.city.name;
+	    statecombo.text = contact.address.state.name;
+	    countrycombo.text = contact.address.country.name;
+	    shipzipcombo.text = contact.shipToAddress.zip.name;
+	    shipcitycombo.text = contact.shipToAddress.city.name;
+	    shipstatecombo.text = contact.shipToAddress.state.name;
+	    shipcountrycombo.text = contact.shipToAddress.country.name;
 		
 	}
 	
@@ -213,7 +236,93 @@ showBusyCursor="true" />
 		mapToContactData();
 		saveService.addUpdateContact(contact);   
 		                                     		
-	}                 
+	}   
+	private function doCity(): void{                             
+		 var city:City;
+		 var result:Boolean;
+		 
+		if (citycombo.text != null && citycombo.selectedItem == null) {
+			result = loadCityService.getCityByName(citycombo.text);
+				if (!result) {
+					city= new City();
+					city.name= citycombo.text;
+		     	   loadCityService.addUpdateCity(city); 
+		     	   //loadCityService.getCitys();
+		     	 
+		  		}
+		  		
+		}
+	}
+	private function doCity1(): void{                             
+		 var city:City;
+		 var result:Boolean;
+		 
+		if (shipcitycombo.text != null && shipcitycombo.selectedItem == null) {
+			result = loadCityService.getCityByName(shipcitycombo.text);
+				if (!result) {
+					city= new City();
+					city.name= citycombo.text;
+		     	   loadCityService.addUpdateCity(city); 
+		     	   //loadCityService.getCitys();
+		     	 
+		  		}
+		  		
+		}
+	}
+	private function doState(): void{                             
+		 var state:State;
+		if (statecombo.text != "" && statecombo.selectedItem == null) {
+				state= new State();
+				state.name= statecombo.text;
+		        loadStateService.addUpdateState(state); 
+		        loadStateService.getStates();
+		}
+	}
+	private function doState1(): void{                             
+		 var state:State;
+		if (shipstatecombo.text != "" && shipstatecombo.selectedItem == null) {
+				state= new State();
+				state.name= shipstatecombo.text;
+		        loadStateService.addUpdateState(state); 
+		        loadStateService.getStates();
+		}
+	}
+	private function doZip(): void{                             
+		 var zip:Zip;
+		if (zipcombo.text != null && zipcombo.selectedItem == null) {
+				zip= new Zip();
+				zip.name= zipcombo.text;
+		        loadZipService.addUpdateZip(zip); 
+		        loadZipService.getZips();
+		}
+	}
+	private function doZip1(): void{                             
+		 var zip:Zip;
+		if (shipzipcombo.text != null && shipzipcombo.selectedItem == null) {
+				zip= new Zip();
+				zip.name= shipzipcombo.text;
+		        loadZipService.addUpdateZip(zip); 
+		        loadZipService.getZips();
+		}
+	}
+	private function doCountry(): void{                             
+		 var country:Country;
+		if (countrycombo.text != null && countrycombo.selectedItem == null) {
+				country= new Country();
+				country.name= countrycombo.text;
+		        loadCountryService.addUpdateCountry(country); 
+		        loadCountryService.getCountrys();
+		}
+	}
+	private function doCountry1(): void{                             
+		 var country:Country;
+		if (shipcountrycombo.text != null && shipcountrycombo.selectedItem == null) {
+				country= new Country();
+				country.name= shipcountrycombo.text;
+		        loadCountryService.addUpdateCountry(country); 
+		        loadCountryService.getCountrys();
+		}
+	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 	}
@@ -263,17 +372,17 @@ showBusyCursor="true" />
 				<mx:Text x="26" y="40" text="Acct #:&#xd;" width="46"/>
 				<mx:Label x="180" y="12" text="Name:" textAlign="right"/>
 				<mx:Panel x="10" y="151" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="8" width="210" id="street" text= "{contact.address.street1}"/>
-					<mx:TextInput x="85" y="38" width="210" id="street2" text= "{contact.address.street2}"/>
-					<mx:Label x="10" y="10" text="Street:" width="67" textAlign="right"/>
-					<mx:TextInput x="263" y="62" width="32" id="state" text="{contact.address.state}"/>
-					<mx:TextInput x="85" y="92" width="75" id="zip" text="{contact.address.zip}"/>
-					<mx:Label x="10" y="94" text="Zip:" width="67" textAlign="right"/>
-					<mx:TextInput x="233" y="92" width="62" id="country" text= "{contact.address.country}" />
-					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
-					<mx:Label x="222" y="64" text="State:" width="39" textAlign="right"/>
-					<mx:Label x="10" y="64" text="City:" width="67" textAlign="right"/>
-					<mx:ComboBox x="85" y="62" width="129" id="citycombo" dataProvider="{citys}" labelField="name" editable="true"></mx:ComboBox>
+					<mx:TextInput x="63" y="8" width="232" id="street" text= "{contact.address.street1}"/>
+					<mx:TextInput x="63" y="38" width="232" id="street2" text= "{contact.address.street2}"/>
+					<mx:Label x="10" y="10" text="Street:" width="45" textAlign="right"/>
+					<mx:Label x="10" y="94" text="Zip:" width="36" textAlign="right"/>
+					<mx:Label x="161" y="94" text="Country:" width="57" textAlign="right"/>
+					<mx:Label x="200" y="64" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="10" y="64" text="City:" width="36" textAlign="right"/>
+					<mx:ComboBox x="63" y="62" width="129" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
+					<mx:ComboBox x="233" y="62" width="62" id="statecombo" dataProvider="{states1}" labelField="name" editable="true" focusOut="doState();"></mx:ComboBox>
+					<mx:ComboBox x="63" y="92" width="90" id="zipcombo" dataProvider="{zips}" labelField="name"  editable="true" focusOut="doZip();"></mx:ComboBox>
+					<mx:ComboBox x="217" y="92" width="78" id="countrycombo" dataProvider="{countrys}" labelField="name"  editable="true" focusOut="doCountry();"></mx:ComboBox>
 				</mx:Panel>
 				<mx:Label x="37" y="12" text="ID "/>
 				<mx:Text x="80" y="40" width="75" id="accountID" text="{contact.userAcctId}"/>
@@ -282,21 +391,21 @@ showBusyCursor="true" />
 				<mx:Label x="347" y="125" text="Created: "/>
 				<mx:Text x="423" y="116" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
 				<mx:Panel x="344" y="151" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="8" width="210" id="ship_street" text="{contact.shipToAddress.street1}"/>
-					<mx:TextInput x="85" y="38" width="210" id="ship_street1" text="{contact.shipToAddress.street2}"/>
-					<mx:Label x="10" y="10" text="Street:" width="67" textAlign="right"/>
-					<mx:TextInput x="263" y="62" width="32" id="ship_state" text="{contact.shipToAddress.state}"/>
-					<mx:TextInput x="85" y="62" width="129" id="ship_city" text="{contact.shipToAddress.city}"/>
-					<mx:TextInput x="85" y="92" width="75" id="ship_zip" text="{contact.shipToAddress.zip}" />
-					<mx:Label x="10" y="94" text="Zip:" width="67" textAlign="right"/>
-					<mx:TextInput x="233" y="92" width="62" id="ship_country" text="{contact.shipToAddress.country}"/>
+					<mx:TextInput x="66" y="8" width="229" id="ship_street" text="{contact.shipToAddress.street1}"/>
+					<mx:TextInput x="66" y="38" width="229" id="ship_street1" text="{contact.shipToAddress.street2}"/>
+					<mx:Label x="10" y="10" text="Street:" width="48" textAlign="right"/>
+					<mx:Label x="16" y="94" text="Zip:" width="42" textAlign="right"/>
 					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
-					<mx:Label x="222" y="64" text="State:" width="39" textAlign="right"/>
-					<mx:Label x="10" y="64" text="City:" width="67" textAlign="right"/>
+					<mx:Label x="204" y="64" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="19" y="64" text="City:" width="39" textAlign="right"/>
+					<mx:ComboBox x="66" y="62" width="130" id="shipcitycombo" dataProvider="{citys}" editable="true" labelField="name" focusOut="doCity1()"></mx:ComboBox>
+					<mx:ComboBox x="242" y="62" width="53" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
+					<mx:ComboBox x="66" y="92" width="94" id="shipzipcombo" dataProvider="{zips}" editable="true" labelField="name" focusOut="doZip1();"></mx:ComboBox>
+					<mx:ComboBox x="222" y="92" width="73" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>
 					
 				</mx:Panel>
-				<mx:ComboBox x="423" y="86" id="sales_rep_combo"></mx:ComboBox>
-				<mx:Label x="163" y="40" text="Account: "/>
+				<mx:ComboBox x="423" y="86" id="sales_rep_combo" labelField="name" dataProvider="{salesReps}" width="172"></mx:ComboBox>
+				<mx:Label x="163" y="40" text="Account:" width="59"/>
 				<mx:Text x="230" y="40" width="142" id="accountName" text="{account.title}"/>
 				<mx:Button x="423" y="38" label="Accounts" id="AccountsPicker" click=" var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));"/>
 			</mx:Canvas>

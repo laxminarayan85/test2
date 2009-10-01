@@ -45,7 +45,28 @@ public class StateService {
 		}
 		return new ArrayList<State>();
 	}
-
+public Boolean getStateByName(String name) throws Exception {
+		try {
+			log.debug("** getstateByName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "select a from State a where a.name = :name";
+			Query query = em.createQuery(queryString);
+			query.setParameter("name", name); 
+			State state = (State) query.getSingleResult();   
+			
+	
+			if (state != null)
+	
+				log.debug("** Found " );
+	
+			return true;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return false;		
+	}
 	public void addUpdateState(State states) throws Exception {
 		log.debug("** addUpdateState called...");
 		try {

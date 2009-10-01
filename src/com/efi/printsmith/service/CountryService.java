@@ -45,7 +45,28 @@ public class CountryService {
 		}
 		return new ArrayList<Country>();
 	}
-
+	public Boolean getCountryByName(String name) throws Exception {
+		try {
+			log.debug("** getCountryByName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "select a from Country a where a.name = :name";
+			Query query = em.createQuery(queryString);
+			query.setParameter("name", name); 
+			Country country = (Country) query.getSingleResult();   
+			
+	
+			if (country != null)
+	
+				log.debug("** Found " );
+	
+			return true;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return false;		
+	}
 	public void addUpdateCountry(Country countrys) throws Exception {
 		log.debug("** addCountry called...");
 		try {
