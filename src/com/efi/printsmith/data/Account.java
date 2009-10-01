@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -456,7 +455,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
 	/**
 	 * @generated
@@ -473,7 +472,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address billToAddress;
 	/**
 	 * @generated
@@ -490,7 +489,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact contact;
 	/**
 	 * @generated
@@ -507,7 +506,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact billToContact;
 	/**
 	 * @generated
@@ -813,7 +812,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep salesRep;
 	/**
 	 * @generated
@@ -949,7 +948,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Marketing marketing;
 	/**
 	 * @generated

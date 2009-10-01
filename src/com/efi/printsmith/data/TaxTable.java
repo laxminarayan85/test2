@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -103,9 +102,7 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-    @OneToMany
-	@Cascade(value = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.SAVE_UPDATE,
-			CascadeType.DELETE, CascadeType.REMOVE})
+    @OneToMany( cascade = {CascadeType.ALL})
 	private java.util.List<TaxElement> taxElements;
 	/**
 	 * @generated

@@ -32,6 +32,14 @@
 		</properties>
 	</destination>
 	
+	<destination id="addressService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.AddressService
+			</source>
+		</properties>
+	</destination>
+
 	<destination id="accountService">
 		<properties>
 			<source>
