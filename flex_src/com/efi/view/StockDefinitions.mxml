@@ -17,7 +17,16 @@
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.vo.StockDefinition;
+	import com.efi.vo.StockChanges;
+
+	import com.efi.vo.StockGroup;
+	import com.efi.vo.StockGrade;
+	import com.efi.vo.StockColors;
+	import com.efi.vo.StockFinish;
+	import com.efi.vo.StockForest;
+	import com.efi.vo.Vendor;
 	
+		
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -33,6 +42,23 @@
 	[Bindable]                                         
 	private var stockDefinitions:StockDefinition;
 	
+	[Bindable]
+	private var stockColor:StockColors;                            
+	[Bindable]      
+	private var stockGroup:StockGroup;                          
+	[Bindable]      
+	private var stockGrade:StockGrade;
+	[Bindable]                                
+	private var stockChanges:StockChanges;        
+	[Bindable]                                
+	private var stockFinish:StockFinish;
+	[Bindable] 
+	private var stockForest:StockForest;                                
+	[Bindable]                                
+	private var stockVendor:Vendor;                             
+	[Bindable]                                
+	private var stockGenericColor:StockColors;                              
+	
 	[Bindable]                                
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
                                                                          
@@ -42,6 +68,15 @@
 		doGet(); 
 
 	    stockDefinitions = new StockDefinition();
+	    
+	    stockColor = new StockColors();
+	    stockGroup = new StockGroup();
+	    stockGrade = new StockGrade();
+	    stockChanges = new StockChanges();
+	    stockFinish = new StockFinish(); 
+	    stockVendor = new Vendor();
+	    stockForest = new StockForest();
+	    stockGenericColor = new StockColors();
     
 	}      
 
@@ -124,20 +159,48 @@
 		
 	}
 
+	private function setGroup():void {
+		stockDefinitions.stkgroup = stockGroup;
+	}
+	
+	private function setChanges():void {
+		
+	}
+	private function setColor():void {
+		stockDefinitions.color = stockColor;
+	}
+	private function setGenericColor():void {
+		stockDefinitions.genericcolor = stockGenericColor;
+	}
+	private function setGrade():void {
+		stockDefinitions.grade = stockGrade
+	}
+	private function setForest():void {
+		
+	}
+	private function setFinish():void {
+		stockDefinitions.finish = stockFinish;
+	}
+
+	private function setVendor():void {
+		stockDefinitions.vendor = stockVendor;
+	}
+	
 	private function mapAccountData():void {
 	 //stockDefinition.stockDefID = stockDefID;
 	 
-	  
+	 setGroup();
+	 setColor(); 
+	 setGenericColor() 
+	 setGrade()
+	 setFinish()
+	 setVendor()
+	 
 	 stockDefinitions.stkclass = stockClass.text;
-	 stockDefinitions.color = stkcolor.text;
 	 stockDefinitions.name = stockName.text;
-	 stockDefinitions.finish = parseInt(finish.text);
-	 stockDefinitions.genericcolor = genericColor.text;
-	 stockDefinitions.grade = stockGrade.text;
 	 stockDefinitions.weight = parseInt(weight.text);
 	 stockDefinitions.coated = coated.text;
 	 stockDefinitions.stocknumber = stockNumber.text;
-	 stockDefinitions.vendor = Vendor.text;
 	 stockDefinitions.basicsize = Basicsize.text;
 	 stockDefinitions.parentsize = parentSize.text;
 	 stockDefinitions.thickness = parseInt(thickNess.text);
@@ -215,10 +278,10 @@
 ]]>
                              
 </mx:Script>	
-<vo:Stock id="stock"  />                           
+<vo:StockDefinition id="stock"/>                           
 
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:ComboBox x="92" y="68" width="116" id="stockGroup" ></mx:ComboBox>
+	<mx:ComboBox x="92" y="68" width="116" id="cboStockGroup"  dataProvider="{StockGroup}" editable="true" labelField="name"></mx:ComboBox>
 	<mx:Label x="49" y="70" text="Group:"/>
 	<mx:Label x="216" y="70" text="Class:"/>
 	<mx:TextInput x="264" y="68" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
@@ -228,11 +291,11 @@
 	<mx:TextInput x="118" y="115" width="138" id="stkcolor" text="{stockDefinitions.color}"/>
 	<mx:Label x="264" y="91" text="Finish:"/>
 	<mx:TextInput x="96" y="91" width="160" id="stockName" text="{stockDefinitions.name}"/>
-	<mx:TextInput x="313.5" y="91" width="105" id ="finish" text="{stockDefinitions.finish}"/>
+	<mx:TextInput x="313.5" y="91" width="105" id ="cboFinish" text="{stockDefinitions.finish}"/>
 	<mx:Label x="71" y="142" text="Generic Color:"/>
-	<mx:TextInput x="163" y="140" width="93" id="genericColor" text="{stockDefinitions.genericcolor}"/>
+	<mx:TextInput x="163" y="140" width="93" id="cboGenericColor" text="{stockDefinitions.genericcolor}"/>
 	<mx:Label x="264" y="117" text="Grade:"/>
-	<mx:TextInput x="313.5" y="117" width="105" id="stockGrade" text="{stockDefinitions.grade}"/>
+	<mx:TextInput x="313.5" y="117" width="105" id="cboStockGrade" text="{stockDefinitions.grade}"/>
 	<mx:Label x="426.5" y="97" text="Weight:"/>
 	<mx:TextInput x="483.5" y="93" width="55" id="weight" text="{stockDefinitions.weight}"/>
 	<mx:Label x="426.5" y="121" text="Coated:"/>
@@ -246,7 +309,7 @@
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
 				<mx:Label x="32" y="12" text="Vendor:"/>
-				<mx:TextInput x="89" y="10" id="Vendor" text="{stockDefinitions.vendor}"/>
+				<mx:TextInput x="89" y="10" id="cboVendor" text="{stockDefinitions.vendor}"/>
 				<mx:Label x="10" y="41" text="Stock Type:"/>
 				<mx:TextInput x="89" y="36" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
 				<mx:Label x="257" y="12" text="Stock #:"/>
@@ -269,12 +332,12 @@
 				<mx:ComboBox x="388.5" y="61" id="Uom" width="80"></mx:ComboBox>
 				<mx:Panel x="476.5" y="-10" width="193.5" height="195" layout="absolute" title="Chain of Custody">
 					<mx:Label x="26.25" y="1" text="Forest Management:"/>
-					<mx:TextInput x="10" y="27" text="Text" width="153.5"/>
+					<mx:TextInput x="10" y="27" width="153.5" id="forestMgmt"/>
 					<mx:Label x="10" y="57" text="PCW Recycled %:"/>
-					<mx:TextInput x="115.75" y="55" width="47.75"/>
-					<mx:CheckBox x="10" y="83" label="FSC Certified"/>
-					<mx:CheckBox x="10" y="103" label="SFI Certified"/>
-					<mx:CheckBox x="10" y="123" label="GreenSeal Certified"/>
+					<mx:TextInput x="115.75" y="55" width="47.75" id="pcwRecycled"/>
+					<mx:CheckBox x="10" y="83" label="FSC Certified" id="fscCertified"/>
+					<mx:CheckBox x="10" y="103" label="SFI Certified" id="sfiCertified"/>
+					<mx:CheckBox x="10" y="123" label="GreenSeal Certified" id="greensealCertified"/>
 				</mx:Panel>
 			</mx:Panel>
 			<mx:Panel x="10" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments">

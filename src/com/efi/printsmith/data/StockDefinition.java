@@ -7,16 +7,34 @@ import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.*;
 import com.efi.printsmith.exceptions.*;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
+
 
 /**
  * @generated
@@ -493,19 +511,19 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String stkgroup;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private StockGroup stkgroup;
 	/**
 	 * @generated
  	 */
-	public String getStkgroup(){
+	public StockGroup getStkgroup(){
 		return stkgroup; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setStkgroup(String newVal) {
+	public void setStkgroup(StockGroup newVal) {
 		this.stkgroup = newVal;
 	}
  	
@@ -561,19 +579,19 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private Integer finish;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private StockFinish finish;
 	/**
 	 * @generated
  	 */
-	public Integer getFinish(){
+	public StockFinish getFinish(){
 		return finish; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setFinish(Integer newVal) {
+	public void setFinish(StockFinish newVal) {
 		this.finish = newVal;
 	}
  	
@@ -595,36 +613,36 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String color;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private StockColors color;
 	/**
 	 * @generated
  	 */
-	public String getColor(){
+	public StockColors getColor(){
 		return color; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setColor(String newVal) {
+	public void setColor(StockColors newVal) {
 		this.color = newVal;
 	}
  	
 	
- 	@Basic
-	private String grade;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private StockGrade grade;
 	/**
 	 * @generated
  	 */
-	public String getGrade(){
+	public StockGrade getGrade(){
 		return grade; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setGrade(String newVal) {
+	public void setGrade(StockGrade newVal) {
 		this.grade = newVal;
 	}
  	
@@ -646,19 +664,19 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String genericcolor;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private StockColors genericcolor;
 	/**
 	 * @generated
  	 */
-	public String getGenericcolor(){
+	public StockColors getGenericcolor(){
 		return genericcolor; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setGenericcolor(String newVal) {
+	public void setGenericcolor(StockColors newVal) {
 		this.genericcolor = newVal;
 	}
  	
@@ -680,19 +698,19 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String vendor;
+	@ManyToOne( cascade = CascadeType.ALL )	
+	private Vendor vendor;
 	/**
 	 * @generated
  	 */
-	public String getVendor(){
+	public Vendor getVendor(){
 		return vendor; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setVendor(String newVal) {
+	public void setVendor(Vendor newVal) {
 		this.vendor = newVal;
 	}
  	
@@ -2241,18 +2259,18 @@ public class StockDefinition extends ModelBase {
 		if (STOCKDEFID.equals(propertyName)) setStockDefID((Long)newValue); else
 		if (STOCKUNIT.equals(propertyName)) setStockunit((Integer)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STKGROUP.equals(propertyName)) setStkgroup((String)newValue); else
+		if (STKGROUP.equals(propertyName)) setStkgroup((StockGroup)newValue); else
 		if (STKCLASS.equals(propertyName)) setStkclass((String)newValue); else
 		if (STKTYPE.equals(propertyName)) setStktype((String)newValue); else
 		if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
-		if (FINISH.equals(propertyName)) setFinish((Integer)newValue); else
+		if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
 		if (WEIGHT.equals(propertyName)) setWeight((Integer)newValue); else
-		if (COLOR.equals(propertyName)) setColor((String)newValue); else
-		if (GRADE.equals(propertyName)) setGrade((String)newValue); else
+		if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
+		if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
 		if (COATED.equals(propertyName)) setCoated((String)newValue); else
-		if (GENERICCOLOR.equals(propertyName)) setGenericcolor((String)newValue); else
+		if (GENERICCOLOR.equals(propertyName)) setGenericcolor((StockColors)newValue); else
 		if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
-		if (VENDOR.equals(propertyName)) setVendor((String)newValue); else
+		if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
 		if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
 		if (PARENTSIZE.equals(propertyName)) setParentsize((String)newValue); else
 		if (THICKNESS.equals(propertyName)) setThickness((Integer)newValue); else
@@ -2353,7 +2371,7 @@ public class StockDefinition extends ModelBase {
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (STKGROUP.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {StockGroup.class};		
 		if (STKCLASS.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (STKTYPE.equals(propertyName)) 
@@ -2361,21 +2379,21 @@ public class StockDefinition extends ModelBase {
 		if (ISMETRIC.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (FINISH.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {StockFinish.class};		
 		if (WEIGHT.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (COLOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {StockColors.class};		
 		if (GRADE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {StockGrade.class};		
 		if (COATED.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (GENERICCOLOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {StockColors.class};		
 		if (STOCKNUMBER.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (VENDOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Vendor.class};		
 		if (BASICSIZE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (PARENTSIZE.equals(propertyName)) 
