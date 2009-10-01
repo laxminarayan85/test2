@@ -127,4 +127,43 @@
 			</source>
 		</properties>
 	</destination>
+
+	<destination id="chargeCommandService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ChargeCommandService
+			</source>
+		</properties>
+	</destination>
+
+	<destination id="salesCategoryService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.SalesCategoryService
+			</source>
+		</properties>
+	</destination>
+
+	<destination id="productCodeService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ProductCodeService
+			</source>
+		</properties>
+	</destination>
+	
+	<destination id="costCenterService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.CostCenterService
+			</source>
+		</properties>
+	</destination>
+	<destination id="locationService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.LocationService
+			</source>
+		</properties>
+	</destination>
 </service>

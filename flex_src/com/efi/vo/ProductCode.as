@@ -4,13 +4,13 @@ package com.efi.vo
 	import com.efi.vo.*;
 [Bindable]
 
-[RemoteClass(alias="com.efi.printsmith.data.ChargeInit")]
+[RemoteClass(alias="com.efi.printsmith.data.ProductCode")]
 
-public class ChargeInit
+public class ProductCode
 
 {
 
-public function ChargeInit()
+public function ProductCode()
 
 {
 
@@ -21,6 +21,7 @@ public var created:Date;
 
 public var modified:Date;
 
+public var name:String = "";
 
 }
 }

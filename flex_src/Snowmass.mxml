@@ -32,7 +32,7 @@
 				<mx:Button x="674" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="675" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
 				<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
-				<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')"/>
+				<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')" click="doChargeDefinitions()"/>
 				<mx:Button x="675" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')"/>
 				<mx:Button x="675" y="480" label="Document Preferences" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
 				<mx:Button x="508" y="104" label="Mailing Labels" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
@@ -51,6 +51,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.ChargeDefinitions;
 		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
 		import com.efi.view.StockDefinitions;
@@ -139,6 +140,11 @@
 			addUniqueTab(child);
 		}
 
+		private function doChargeDefinitions():void {
+			var child:ChargeDefinitions = new ChargeDefinitions()
+			addUniqueTab(child);
+		}
+		
 		private function doStockDefinitions():void {
 			var child:StockDefinitions = new StockDefinitions();
 			addUniqueTab(child);

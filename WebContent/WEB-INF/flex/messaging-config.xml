@@ -26,6 +26,8 @@
 	<destination id="stockdefinitions"/>
 	<destination id="copydefinitions"/>
 	<destination id="charges"/>
+	<destination id="salescategories"/>
+	<destination id="productcodes"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

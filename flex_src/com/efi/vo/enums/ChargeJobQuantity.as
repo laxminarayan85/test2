@@ -1,4 +1,4 @@
-package com.efi.vo
+package com.efi.vo.enums
 {
 	import flash.utils.describeType;
 [Bindable]

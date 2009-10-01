@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*"
-width="100%" height="100%" title="Customer Editor"
-creationComplete="init()" label="Customer Editor" name="Customer Editor">
+width="100%" height="100%" title="Charge Definitions"
+creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
                              
-<mx:RemoteObject id="saveService" destination="accountService"
+<mx:RemoteObject id="saveService" destination="chargeService"
 result="handleSaveResult(event)" fault="handleFault(event)"
 showBusyCursor="true" />
 
-<mx:RemoteObject id="loaderService" destination="accountService"
+<mx:RemoteObject id="loaderService" destination="chargeService"
 result="handleLoadResult(event)"  fault="handleFault(event)"
 showBusyCursor="true" />
                              
-<mx:RemoteObject id="deleteService" destination="accountService"
+<mx:RemoteObject id="deleteService" destination="chargeService"
 result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
 
-<mx:RemoteObject id="loadLogsService" destination="customerLogService"
-result="handleLoadCustomerLogs(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
-
-<mx:RemoteObject id="saveLogService" destination="customerLogService"
-result="handleSaveLogResult(event)" fault="handleFault(event)"
+<mx:RemoteObject id="salesCategoryLoaderService" destination="salesCategoryService"
+result="handleLoadSalesCategoryResult(event)" fault="handleFault(event)"
 showBusyCursor="true" />
 
-<mx:RemoteObject id="deleteLogService" destination="customerLogService"
-result="handleDeleteLogResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+<mx:RemoteObject id="productCodeLoaderService" destination="productCodeService"
+result="handleLoadProductCodesResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
 
-<mx:RemoteObject id="loadSalesRepService" destination="salesRepService"
-result="handleLoadSalesReps(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
+<mx:RemoteObject id="chargeCommandLoaderService" destination="chargeCommandService"
+result="handleLoadChargeCommandsResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
 
-<mx:RemoteObject id="loadShippingMethodService" destination="shippingMethodService"
-result="handleLoadShippingMethods(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
+<mx:RemoteObject id="locationLoaderService" destination="locationService"
+result="handleLoadLocationsResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
 
+<mx:RemoteObject id="costCenterLoaderService" destination="costCenterService"
+result="handleLoadCostCentersResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
+
+<mx:RemoteObject id="chargeCommandSampleService" destination="chargeCommandService"
+result="sampleResult(event)" fault="handleFault(event)"
+showBusyCursor="true" />
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
@@ -41,12 +45,19 @@ showBusyCursor="true"/>
 
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.vo.SalesRep;
-	import com.efi.vo.Contact;
-	import com.efi.vo.Address;
-    import com.efi.vo.CustomerLog;
-                             
-	import com.efi.vo.Account;                                         
+	import com.efi.vo.Location;
+	import com.efi.vo.ChargeCategory;
+    import com.efi.vo.Charge;
+    import com.efi.vo.CostCenter;
+    import com.efi.vo.enums.ChargeMethod;
+	import com.efi.vo.enums.ChargeQtyType;
+	import com.efi.vo.enums.ChargeInkCoverage;
+	import com.efi.vo.enums.ChargeMarkupType;
+	import com.efi.vo.enums.ChargePriceMethod;
+	import com.efi.vo.enums.JobQuantity;
+	import com.efi.vo.enums.ChargeInkCoverage;
+	import com.efi.vo.enums.ChargeJobQuantity;
+	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -59,55 +70,60 @@ showBusyCursor="true"/>
     import mx.printing.PrintAdvancedDataGrid;
     import mx.printing.PrintDataGrid;
     import mx.core.Application;
+    import mx.validators.*;
     
     private var enableSave:Boolean = true;
     private var accounts:ArrayCollection = new ArrayCollection();
                  
 	[Bindable]                                         
-	private var account:Account;
+	private var charge:Charge;
                 
 	[Bindable]
-	private var autoDiscountRadioValue:String = "discount_dollars";
+	private var charges:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var productCodes:ArrayCollection = new ArrayCollection();
 	
 	[Bindable]
-	private var acctStatusRadioValue:String = "acct_status_new_radio";
+	private var salesCategories:ArrayCollection = new ArrayCollection();
 	
 	[Bindable]
-	private var acctTypeRadioValue:String = "cash_only";
-	               
+	private var selected_charge_group_1:String;
+	
 	[Bindable]
-	private var balances:ArrayCollection = new ArrayCollection([
-            {Aged:"Current", Value:0},
-            {Aged:"30", Value:0},
-            {Aged:"60", Value:0},
-            {Aged:"90", Value:0}
-         ]);                   
-    
-    [Bindable]
-    private var customerLogs:ArrayCollection = new ArrayCollection();
-                     
-    [Bindable]
-    private var salesReps:ArrayCollection = new ArrayCollection();
-                           	
-    [Bindable]
-    private var shippingMethods:ArrayCollection = new ArrayCollection();
+	private var selected_charge_group_2:String;
+	
+	[Bindable]
+	private var selected_charge_group_3:String;
+	
+	[Bindable]
+	private var selected_charge_group_4:String;
+	
+	[Bindable]
+	private var selected_area_group:String;
+	
+	[Bindable]
+	private var selected_markup_type_group:String;
+	
+	[Bindable]
+	private var chargeCommands:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var costCenters:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var locations:ArrayCollection = new ArrayCollection();
 
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-	    account = new Account();
-	    /* Note - the following constructors NEED to live in the .vo object constructor for the respective objects... */
-	    account.shipToAddress = new Address();
-	    account.billToAddress = new Address();
-	    account.billToContact = new Contact();
-	    account.contact = new Contact();
-	    account.contact.address = new Address();
-	    account.billToContact.address = new Address();
-	    loadSalesRepService.getSalesReps();
-	    loadShippingMethodService.getShippingMethods();
+	    charge = new Charge();
+	    salesCategoryLoaderService.getSalesCategorys();
+	    productCodeLoaderService.getProductCodes();
+//	    chargeCommandLoaderService.getChargeCommands();
+		costCenterLoaderService.getCostCenters();
+		locationLoaderService.getLocations();
+		loaderService.getCharges();
 	}      
 	                                                   	
 	private function send():void
@@ -116,122 +132,105 @@ showBusyCursor="true"/>
 		message.body.accounts = "*";
 		//producer.send(message);
 	}
-		
-	public function setAccount(account:Account):void
-	{
-		this.account = account;
-		if (account.shipToAddress == null) account.shipToAddress = new Address();
-		if (account.billToAddress == null) account.billToAddress = new Address();
-		if (account.billToContact == null) account.billToContact = new Contact();
-		if (account.contact == null) account.contact = new Contact();
-		if (account.billToContact.address == null) account.billToContact.address = new Address();
-		if (account.contact.address == null) account.contact.address = new Address();
-		mapFromAccountData();
-	}			
-	
+			
 	private function messageHandler(message:IMessage):void
 	{
 	}
-                                  
-	private function deleteAccount():void {              
-	                                         
-	}
-	
-	private function createAccount():void {
-	}
-	                                                         
-	private function updateUser():void {
-	}
-	
-	private function mapToAccountData():void {
-		account.title = name_edit.text;
-		account.externalAcctId = external_ref_edit.text;
-		account.externalAcctId = external_acct_id_edit.text;
-		
-		account.shipToAddress.name = ship_company_edit.text;
-		account.shipToAddress.street1 = ship_street1_edit.text;
-		account.shipToAddress.street2 = ship_street2_edit.text;
-		account.shipToAddress.city = ship_city_edit.text;
-		account.shipToAddress.zip = ship_zip_edit.text;
-		account.shipToAddress.country = ship_country_edit.text;
-		account.shipToAddress.state = ship_state_edit.text;
-		
-		account.billToAddress.name = bill_company_edit.text;
-		account.billToAddress.street1 =	bill_street1_edit.text;		
-		account.billToAddress.street2 =	bill_street2_edit.text;		
-		account.billToAddress.city = bill_city_edit.text;
-		account.billToAddress.zip =	bill_zip_edit.text;		     
-		account.billToAddress.country =	bill_country_edit.text;
-		account.billToAddress.state	= bill_state_edit.text;
-
-		account.contact.address.firstName = ship_contact_first_name_edit.text;
-		account.contact.address.lastName = ship_contact_last_name_edit.text;		
-		account.contact.address.prefix = ship_contact_prefix_edit.text;			
-		account.contact.address.suffix = ship_contact_suffix_edit.text;			
-		account.contact.address.jobTitle = ship_contact_job_title_edit.text;		
-		account.contact.address.salutation = ship_contact_salutation_edit.text;
-
-		account.billToContact.address.firstName = bill_contact_first_name_edit.text;
-		account.billToContact.address.lastName = bill_contact_last_name_edit.text;
-		account.billToContact.address.prefix = bill_contact_prefix_edit.text;	
-		account.billToContact.address.suffix = bill_contact_suffix_edit.text;
-		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
-		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
-		
-		account.salesRep = sales_rep_combo.selectedItem as SalesRep;
-		
-		
-		
-	}
-	
-	private function mapFromAccountData():void{
-		balances = new ArrayCollection([
-			{Aged:"Current", Value:account.balanceCurrent},
-			{Aged:"30", Value:account.balance30Day},
-			{Aged:"60", Value:account.balance60Day},
-			{Aged:"90", Value:account.balance90Day}
-		]);
-		if (account.dollarDiscount) {
-			autoDiscountRadioValue = "discount_dollars";
-		} else {
-			autoDiscountRadioValue = "discount_percent";			
-		}
-		acctStatusRadioValue = account.status;
-		acctTypeRadioValue = account.type;
-		loaderService.getAccounts();
-		loadLogsService.getCustomerLogs();
-	}
-	
+                                  	
 	private function doSave():void {
-		mapToAccountData();
-		saveService.addUpdateAccount(account);                                        		
+		
+		
 	}                 
 	
-	private function handleSaveResult(ev:ResultEvent):void {
+	private function populateSampleData():void {
+		chargeCommandSampleService.populateSampleData();
+	}
+	
+	private function sampleResult(evt:Event):void {
+		
+	}
+    private function charge_group_1_change(evt:Event):void {
+		if (charge_group_1.selectedValue == "Ordered") {
+			charge.jobQty = ChargeJobQuantity.PRESS;
+		} else if (charge_group_1.selectedValue == "Press") {
+			charge.quantityType = ChargeJobQuantity.FINISH;
+		} else {
+			charge.quantityType = ChargeJobQuantity.NONE;
+		}
+    }
+
+    private function charge_group_2_change(evt:Event):void {
+		if (charge_group_2.selectedValue == "Colors") {
+			charge.useColors = true;
+			charge.useSides = false;			
+		} else if (charge_group_2.selectedValue == "Side") {
+			charge.useColors = false;
+			charge.useSides = true;
+		} else {
+			charge.useColors = false;
+			charge.useSides = false;
+		}
+    }
+
+    private function charge_group_3_change(evt:Event):void {
+		if (charge_group_3.selectedValue == "Sheets") {
+			charge.useOriginals = true;
+			charge.useSignatures = false;
+		} else if (charge_group_3.selectedValue == "Signatures") {
+			charge.useOriginals = false;
+			charge.useSignatures = true;			
+		} else {
+			charge.useOriginals = false;
+			charge.useSignatures = false;						
+		}
+    }
+
+    private function charge_group_4_change(evt:Event):void {
+		if (charge_group_4.selectedValue == "xUp") {
+			charge.useMultiplyUpCount = true;
+			charge.useDivideByUpCount = false;
+		} else if (charge_group_4.selectedValue == "/Up") {
+			charge.useMultiplyUpCount = false;
+			charge.useDivideByUpCount = true;			
+		} else {
+			charge.useMultiplyUpCount = false;
+			charge.useDivideByUpCount = false;			
+		}
+    }
+	
+	private function markup_type_group_change(evt:Event):void {
+		
+	}
+	
+	private function area_group_change(evt:Event):void {
+		
+	}
+	
+	private function handleLoadLocationsResult(ev:ResultEvent):void {
+		locations = ev.result as ArrayCollection;
 	}
 
-	private function handleLoadSalesReps(ev:ResultEvent):void {
-		salesReps = ev.result as ArrayCollection;
+	private function handleLoadCostCentersResult(ev:ResultEvent):void {
+		costCenters = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadShippingMethods(ev:ResultEvent):void {
-		shippingMethods = ev.result as ArrayCollection;
+	private function handleLoadChargeCommandsResult(ev:ResultEvent):void {
+		chargeCommands = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadCustomerLogs(ev:ResultEvent):void {
-		customerLogs = ev.result as ArrayCollection;
+	private function handleLoadProductCodesResult(ev:ResultEvent):void {
+		productCodes = ev.result as ArrayCollection;
 	}
 	
-	private function handleSaveLogResult(ev:ResultEvent):void {
-		loadLogsService.getCustomerLogs();
-	}
-	
-	private function handleDeleteLogResult(ev:ResultEvent):void {
-		loadLogsService.getCustomerLogs();
+	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
+		salesCategories = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadResult(ev:ResultEvent):void {
-		accounts = ev.result as ArrayCollection;
+		charges = ev.result as ArrayCollection;
+	}
+
+	private function handleSaveResult(ev:ResultEvent):void {
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
@@ -246,140 +245,227 @@ showBusyCursor="true"/>
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,null);                                 
 	}
- 
- 	private function deleteCustomerLog():void {
- 		deleteLogService.deleteCustomerLog(log_dataGrid.selectedItem as CustomerLog);
- 	}
- 	
- 	private function printCustomerLog():void {
-		var myPrintJob:FlexPrintJob = new FlexPrintJob();
 	
-		if (myPrintJob.start()) {
-			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	private function treeLabel(item:Object):String {
+		return item.name;
+	}
 	
-			//Set the print view properties.
-			myPrintDataGrid.width = myPrintJob.pageWidth;
-			myPrintDataGrid.height = myPrintJob.pageHeight;
+	private function doNewCategory():void {
+		var treeItem:Object = chargeTree.selectedItem;
+        var node:XML = XML(treeItem);
+        
+        if (node.localName() == "ChargeCategory") {
+        	
+        }
+	}
 	
-			// Set the data provider of the FormPrintView component's data grid
-			// to be the data provider of the displayed data grid.
-			myPrintDataGrid.dataProvider = log_dataGrid.dataProvider;
-			myPrintDataGrid.columns = log_dataGrid.columns;
-			myPrintDataGrid.visible = false;
-			myPrintDataGrid.includeInLayout = false;
-			
-			Application.application.addChild(myPrintDataGrid);
+	private function doNewCharge():void {
+		
+	}
 	
-			if(!myPrintDataGrid.validNextPage) {
-				myPrintJob.addObject(myPrintDataGrid);
-			} else {
-				myPrintJob.addObject(myPrintDataGrid);
+	private function selectCharge():void {
+		
+	}
 	
-				while(true) {
-					// Move the next page of data to the top of the print grid.
-					myPrintDataGrid.nextPage();
-	
-					if(!myPrintDataGrid.validNextPage) {
-						// This is the last page; queue it and exit the print loop.
-						myPrintJob.addObject(myPrintDataGrid);
-	
-						break;
-					} else {
-						myPrintJob.addObject(myPrintDataGrid);
-					}
-				}
-	
-			}
-	
-			Application.application.removeChild(myPrintDataGrid);
-			myPrintJob.send();
-	 	}
- 	}
- 	
- 	private function addCustomerLog():void {
- 		var customerLog:CustomerLog = new CustomerLog();
- 		customerLog.id = 0; // Always created new log entries - don't allow editing old ones.
- 		customerLog.logEntry = selected_comment_edit.text;
- 		saveLogService.addUpdateCustomerLog(customerLog);
- 	}
+	private function mapToCharge():void {
+		charge.title = charge_name_edit.text;
+		charge.name = charge_name_edit.text;
+		charge.location = location_combo.selectedItem as Location;
+		charge.costCenter = cost_center_combo.selectedItem as CostCenter;
+		charge.method = charge_method_combo.selectedItem as String;
+		charge.quantityType = charge_quantity_combo.selectedItem as String;
+		charge.salesCategory = charge_sales_category_combo.selectedItem as String;
+
+		charge.noOverrides = no_overrides_check.selected;
+		charge.adjustSets = adjustable_sets_check.selected;
+		charge.enterRate = adjustable_rate_check.selected;
+		charge.enterMaterial = adjustable_material_check.selected;
+		charge.adjustUps = adjustable_up_check.selected;
+		charge.noDiscount = do_not_discount_check.selected;
+		charge.hidePrice = hide_price_only_check.selected;
+		charge.hidden = hide_charge_in_printouts_check.selected;
+		charge.binderyCharge = bindery_operation_check.selected;
+		charge.excludeFromProductionList = excluded_from_production_check.selected;
+		charge.preproduction = tracker_pre_production_check.selected;
+		charge.ignorePriceAdjustment = ignore_global_price_changes_check.selected;
+		charge.integratedCTP = integrated_ctp_device_check.selected;
+		charge.fixedWaste = parseInt(fixed_spoilage_edit.text);
+		charge.baseLinearNumber = parseInt(base_linear_quantity_edit.text);
+		charge.useMinimumCharge = minimum_charge_check.selected;
+		charge.minimum = parseFloat(minimum_charge_edit.text);
+		charge.useMinimumTime = minimum_time_check.selected;
+		charge.minimum = parseFloat(minimum_time_edit.text);
+
+		// Note: Radio buttons are updated dynamically via change events (see charge_group_1_change, etc.)
+		charge.markup = parseFloat(markup_edit.text);
+		charge.useSetup = setup_check.selected;
+		charge.material = setup_edit.text as Number;
+		charge.useRate = rate_check.selected;
+		charge.rate = parseFloat(rate_edit.text);
+		charge.useMaterial = material_check.selected;
+		charge.material = material_edit.text as Number;
+
+		//TOOD: Area/In Sets, etc...
+		charge.useRateSets = in_sets_check.selected;
+		charge.rateSetCount = in_sets_edit.text as Number;
+	}
 ]]>
                              
 </mx:Script>
 
+<mx:CurrencyValidator id="currency_check"
+	source="{rate_edit}"
+	property="text" currencySymbol="$" trigger="{save_button}" triggerEvent="click"/>
+	
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="880" height="704">
-		<mx:Button x="10" y="10" width="38" height="38">
-			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
-		</mx:Button>
-		<mx:Button x="56" y="10" width="38" height="38">
-			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
-		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
-		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+		<mx:Button x="221" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}" id="save_button">
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
-		<mx:Button x="217" y="10" width="38" height="38">
-			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		<mx:Label x="221" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="300" y="10" width="38" height="38" click="populateSampleData();" id="duplicate_button">
+			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
-		<mx:Button x="263" y="10" width="38" height="38">
+		<mx:Label x="286" y="46" text="Duplicate" width="66" textAlign="center"/>
+		<mx:Button x="31.5" y="10" width="38" height="38" id="new_category_button" click="doNewCategory()" enabled="false">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38">
+		<mx:Button x="117.5" y="10" width="38" height="38" id="new_charge_button">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38" id="delete_button">
+			<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
-		<mx:Button x="493" y="10" width="38" height="38">
-			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		<mx:Button x="449" y="10" width="38" height="38" id="revert_button">
+			<mx:icon>@Embed(source='../../../assets/revert.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
-		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
-		<mx:Tree x="10" y="72" width="266" height="515"></mx:Tree>
-		<mx:TextInput x="409" y="73" width="371"/>
-		<mx:Label x="418" y="548" text="Name:" textAlign="right"/>
-		<mx:TextInput x="384" y="353" width="158"/>
-		<mx:Label x="284" y="355" text="Fixed Spoilage:" textAlign="right"/>
-		<mx:TextInput x="409" y="101" width="132"/>
-		<mx:TextInput x="633" y="101" width="147"/>
-		<mx:Label x="549" y="103" text="Cost Center:" textAlign="right"/>
-		<mx:Label x="284" y="103" text="Production Location:" textAlign="right"/>
-		<mx:Label x="284" y="217" text="Prod Code:" textAlign="right"/>
-		<mx:Label x="301" y="129" text="Method:" textAlign="right"/>
-		<mx:Label x="359" y="75" text="Name:" textAlign="right"/>
-		<mx:ComboBox x="360" y="129" width="132"></mx:ComboBox>
-		<mx:Label x="295" y="157" text="Quantity:" textAlign="right"/>
-		<mx:ComboBox x="360" y="157" width="132"></mx:ComboBox>
-		<mx:Label x="289" y="185" text="Sales Cat:" textAlign="right"/>
-		<mx:ComboBox x="360" y="185" width="132"></mx:ComboBox>
-		<mx:CheckBox x="518" y="129" label="No overrides"/>
-		<mx:CheckBox x="518" y="157" label="Adjustable sets"/>
-		<mx:CheckBox x="518" y="185" label="Adjustable rate"/>
-		<mx:CheckBox x="518" y="215" label="Adjustable material"/>
-		<mx:CheckBox x="518" y="245" label="Adjustable up"/>
-		<mx:CheckBox x="518" y="275" label="Do not discount"/>
-		<mx:CheckBox x="659" y="131" label="Hide price only"/>
-		<mx:CheckBox x="659" y="159" label="Hide charge in printouts"/>
-		<mx:CheckBox x="659" y="187" label="Bindery operation"/>
-		<mx:CheckBox x="659" y="217" label="Excluded from production"/>
-		<mx:CheckBox x="659" y="247" label="Tracker pre-production"/>
-		<mx:CheckBox x="659" y="277" label="Ignore global price changes"/>
-		<mx:CheckBox x="659" y="307" label="Integrated CTP device"/>
-		<mx:ComboBox x="360" y="215" width="132" editable="true"></mx:ComboBox>
-		<mx:HRule x="284" y="337" width="596" height="8"/>
-		<mx:HRule x="284" y="413" width="596" height="8"/>
-		<mx:CheckBox x="564" y="353" label="Minimum Charge:"/>
-		<mx:CheckBox x="564" y="383" label="Minimum Time:"/>
-		<mx:TextInput x="697" y="353"/>
-		<mx:TextInput x="697" y="383"/>
-		<mx:RadioButtonGroup id="Pricing Method"/>
-		<mx:RadioButton x="284" y="429" label="Cost Plus" groupName="Pricing Method"/>
-		<mx:RadioButton x="284" y="455" label="Piece Pricing" groupName="Pricing Method"/>
-		<mx:ViewStack x="458" y="483" id="viewstack1" width="294" height="200">
-			<mx:Canvas label="View 1" width="100%" height="100%">
-			</mx:Canvas>
-		</mx:ViewStack>
+		<mx:Label x="439" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Button x="549" y="11" width="38" height="38" id="find_button">
+			<mx:icon>@Embed(source='../../../assets/find.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="549" y="47" text="Find" width="38" textAlign="center"/>
+		<mx:Button x="730" y="11" width="38" height="38" id="preset_info_button">
+			<mx:icon>@Embed(source='../../../assets/presets.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="712" y="47" text="Preset Info" width="68" textAlign="center"/>
+		<mx:Button x="788" y="11" width="38" height="38" id="costing_button">
+			<mx:icon>@Embed(source='../../../assets/costing.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="776" y="47" text="Costing" width="63" textAlign="center"/>
+		<mx:Label x="10" y="46" text="New Category" width="81" textAlign="center"/>
+		<mx:Label x="96" y="46" text="New Charge" width="81" textAlign="center"/>
+		<mx:Tree x="10" y="72" width="266" height="622" id="chargeTree" dataProvider="{chargeCommands}" labelFunction="treeLabel" visible="false"></mx:Tree>
+		<mx:RadioButtonGroup id="area_group" selectedValue="{selected_area_group}" change="area_group_change(event)"/>
+		<mx:RadioButtonGroup id="pricing_method"/>
+		<mx:Canvas x="284" y="72" width="586" height="622">
+			<mx:TextInput x="125" y="0" width="430" id="charge_name_edit" text="{charge.title}"/>
+			<mx:ComboBox x="126" y="25" width="162" dataProvider="{locations}" id="location_combo"></mx:ComboBox>
+			<mx:ComboBox x="397" y="25" width="158" dataProvider="{costCenters}" id="cost_center_combo"></mx:ComboBox>
+			<mx:Label x="0" y="254" text="Base Linear Quantity:" textAlign="right"/>
+			<mx:Label x="0" y="229" text="Fixed Spoilage:" textAlign="right"/>
+			<mx:Label x="313" y="27" text="Cost Center:" textAlign="right"/>
+			<mx:Label x="0" y="27" text="Production Location:" textAlign="right"/>
+			<mx:Label x="0" y="135" text="Prod Code:" textAlign="right"/>
+			<mx:Label x="17" y="55" text="Method:" textAlign="right"/>
+			<mx:Label x="75" y="2" text="Name:" textAlign="right"/>
+			<mx:ComboBox x="76" y="53" width="132" id="charge_method_combo" dataProvider="{ChargeMethod.toArray()}"></mx:ComboBox>
+			<mx:Label x="11" y="81" text="Quantity:" textAlign="right"/>
+			<mx:ComboBox x="76" y="79" width="132" id="charge_quantity_combo" dataProvider="{ChargeQtyType.toArray()}"></mx:ComboBox>
+			<mx:Label x="5" y="107" text="Sales Cat:" textAlign="right"/>
+			<mx:ComboBox x="76" y="105" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name"></mx:ComboBox>
+			<mx:ComboBox x="76" y="133" width="132" editable="true" id="product_code_combo" dataProvider="{productCodes}"></mx:ComboBox>
+			<mx:CheckBox x="234" y="53" label="No overrides" id="no_overrides_check" selected="{charge.noOverrides}"/>
+			<mx:CheckBox x="234" y="73" label="Adjustable sets" id="adjustable_sets_check" selected="{charge.adjustSets}"/>
+			<mx:CheckBox x="234" y="93" label="Adjustable rate" id="adjustable_rate_check" selected="{charge.enterRate}"/>
+			<mx:CheckBox x="234" y="114" label="Adjustable material" id="adjustable_material_check" selected="{charge.enterMaterial}"/>
+			<mx:CheckBox x="234" y="134" label="Adjustable up" id="adjustable_up_check" selected="{charge.adjustUps}"/>
+			<mx:CheckBox x="234" y="155" label="Do not discount" id="do_not_discount_check" selected="{charge.noDiscount}"/>
+			<mx:CheckBox x="375" y="55" label="Hide price only" id="hide_price_only_check" selected="{charge.hidePrice}"/>
+			<mx:CheckBox x="375" y="73" label="Hide charge in printouts" id="hide_charge_in_printouts_check" selected="{charge.hidden}"/>
+			<mx:CheckBox x="375" y="93" label="Bindery operation" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
+			<mx:CheckBox x="375" y="114" label="Excluded from production" id="excluded_from_production_check" selected="{charge.excludeFromProductionList}"/>
+			<mx:CheckBox x="375" y="134" label="Tracker pre-production" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
+			<mx:CheckBox x="375" y="155" label="Ignore global price changes" id="ignore_global_price_changes_check" selected="{charge.ignorePriceAdjustment}"/>
+			<mx:CheckBox x="375" y="177" label="Integrated CTP device" id="integrated_ctp_device_check" selected="{charge.integratedCTP}"/>
+			<mx:TextInput x="100" y="227" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
+			<mx:TextInput x="134" y="252" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
+			<mx:HRule x="0" y="207" width="555" height="8"/>
+			<mx:HRule x="0" y="281" width="555" height="8"/>
+			<mx:HRule x="0" y="405" width="555" height="8"/>
+			<mx:CheckBox x="209" y="227" label="Minimum Charge:" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
+			<mx:TextInput x="342" y="227" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
+			<mx:CheckBox x="209" y="252" label="Minimum Time:" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
+			<mx:TextInput x="342" y="252" width="96" id="minimum_time_edit" text="{charge.minimum}"/>
+			<mx:RadioButton x="446" y="227" label="Run Area" groupName="area_group" id="run_area_radio"/>
+			<mx:RadioButton x="446" y="252" label="Finished Area" groupName="area_group" id="finished_area_radio"/>
+			<mx:RadioButton x="2" y="297" label="Cost Plus" groupName="pricing_method" id="cost_plus_radio"/>
+			<mx:RadioButton x="2" y="323" label="Piece Pricing" groupName="pricing_method" id="piece_pricing_radio"/>
+			<mx:TextInput x="182" y="297" width="124" id="markup_edit" text="{charge.markup}"/>
+			<mx:Text x="433" y="297" width="122" id="sale_price_per_unit_edit"/>
+			<mx:CheckBox x="105" y="325" label="Setup:" id="setup_check"/>
+			<mx:TextInput x="182" y="325" width="124" id="setup_edit" enabled="{setup_check.selected}"/>
+			<mx:CheckBox x="105" y="350" label="Rate:" id="rate_check"/>
+			<mx:TextInput x="182" y="350" width="124" id="rate_edit" enabled="{rate_check.selected}"/>
+			<mx:CheckBox x="105" y="375" label="Material:" id="material_check"/>
+			<mx:TextInput x="182" y="375" width="124" id="material_edit" enabled="{material_check.selected}"/>
+			<mx:CheckBox x="320" y="350" label="Area:" id="area_check"/>
+			<mx:TextInput x="397" y="350" width="124" id="area_edit" enabled="{area_check.selected}"/>
+			<mx:CheckBox x="320" y="375" label="In Sets:" id="in_sets_check"/>
+			<mx:TextInput x="397" y="375" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}"/>
+			<mx:Label x="314" y="297" text="Sale price per unit:"/>
+			<mx:Label x="123" y="299" text="Markup:"/>
+			<mx:ViewStack x="0" y="421" id="viewstack1" width="555" height="132" creationPolicy="all">
+				<mx:Canvas width="100%" height="100%" id="job_aware" label="job_aware">
+					<mx:Text x="10" y="10" text="Select values in job to be used in calculating price:&#xd;" width="291" height="17" fontWeight="bold"/>
+					<mx:RadioButtonGroup id="charge_group_1" selectedValue="{selected_charge_group_1}" change="charge_group_1_change(event)"/>
+					<mx:RadioButtonGroup id="charge_group_2" selectedValue="{selected_charge_group_2}" change="charge_group_2_change(event)"/>
+					<mx:RadioButtonGroup id="charge_group_3" selectedValue="{selected_charge_group_3}" change="charge_group_3_change(event)"/>
+					<mx:RadioButtonGroup id="charge_group_4" selectedValue="{selected_charge_group_4}" change="charge_group_4_change(event)"/>
+					<mx:Text x="123" y="70" text="X&#xd;"/>
+					<mx:Text x="389" y="70" text="X&#xd;"/>
+					<mx:Text x="256" y="70" text="X&#xd;"/>
+					<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+						<mx:RadioButton x="8" y="5" label="N/A" groupName="charge_group_1" id="na1_radio"/>
+						<mx:RadioButton x="8" y="31" label="Ordered" groupName="charge_group_1" id="ordered_radio"/>
+						<mx:RadioButton x="8" y="57" label="Press" groupName="charge_group_1" id="press_radio"/>
+					</mx:Canvas>
+					<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+						<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_2" id="na2_radio"/>
+						<mx:RadioButton x="10" y="31" label="Colors" groupName="charge_group_2" id="colors_radio"/>
+						<mx:RadioButton x="10" y="57" label="Sides" groupName="charge_group_2" id="sides_radio"/>
+					</mx:Canvas>
+					<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+						<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_3" id="na3_radio"/>
+						<mx:RadioButton x="10" y="31" label="Sheets" groupName="charge_group_3" id="sheets_radio"/>
+						<mx:RadioButton x="10" y="57" label="Signatures" groupName="charge_group_3" id="signatures_radio"/>
+					</mx:Canvas>
+					<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+						<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_4" id="na4_radio"/>
+						<mx:RadioButton x="10" y="31" label="xUp" groupName="charge_group_4" id="x_up_radio"/>
+						<mx:RadioButton x="10" y="57" label="/Up" groupName="charge_group_4" id="slash_up_radio"/>
+					</mx:Canvas>
+				</mx:Canvas>
+				<mx:Canvas label="markup_canvas" width="100%" height="100%" id="markup_canvas">
+					<mx:RadioButtonGroup id="markup_type_group" selectedValue="{selected_markup_type_group}" change="markup_type_group_change(event)"/>
+					<mx:RadioButton x="10" y="35" label="Job Price" groupName="markup_type_group"/>
+					<mx:RadioButton x="10" y="61" label="Charges" groupName="markup_type_group"/>
+					<mx:RadioButton x="107" y="35" label="Entire Job" groupName="markup_type_group"/>
+					<mx:RadioButton x="107" y="61" label="Invoice" groupName="markup_type_group"/>
+					<mx:Text x="10" y="10" text="Select the type of markup:&#xd;" width="291" height="17" fontWeight="bold"/>
+				</mx:Canvas>
+			</mx:ViewStack>
+			<mx:Button x="10" y="561" label="Price List..." width="109" id="price_list_button"/>
+			<mx:Button x="10" y="591" label="Waste Chart..." id="waste_chart_button"/>
+			<mx:LinkButton x="132" y="561" width="291" id="price_list_link"/>
+			<mx:LinkButton x="132" y="592" width="291" id="waste_chart_link"/>
+			<mx:HRule x="0" y="550" width="565" height="8"/>
+		</mx:Canvas>
+		<mx:DataGrid x="17" y="72" width="259" height="622" id="charge_datagrid" dataProvider="{charges}" click="{selectCharge()}">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Charges" dataField="col1"/>
+			</mx:columns>
+		</mx:DataGrid>
 	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>
