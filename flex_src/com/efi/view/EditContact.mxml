@@ -258,14 +258,14 @@ showBusyCursor="true" />
 		 var result:Boolean;
 		 
 		if (shipcitycombo.text != null && shipcitycombo.selectedItem == null) {
-			result = loadCityService.getCityByName(shipcitycombo.text);
-				if (!result) {
+			//result = loadCityService.getCityByName(shipcitycombo.text);
+			//	if (!result) {
 					city= new City();
 					city.name= citycombo.text;
 		     	   loadCityService.addUpdateCity(city); 
 		     	   //loadCityService.getCitys();
 		     	 
-		  		}
+		  		//}
 		  		
 		}
 	}
