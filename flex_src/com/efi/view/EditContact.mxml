@@ -127,11 +127,17 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if (contact.shipToAddress == null) contact.shipToAddress = new Address();
 		if (contact.marketing == null) contact.marketing = new Marketing();
 		if( contact.creditCard == null) contact.creditCard = new CreditCard();
+		mapFromContactData();
+		
+		
+	
 	}
 					
 	public function setAccount(account:Account):void
 	{
 		this.account = account;
+		
+		
 	}
 	
 	private function messageHandler(message:IMessage):void
@@ -157,7 +163,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if (shipzipcombo != null && shipzipcombo.selectedItem != null) 
 			contact.shipToAddress.zip = shipzipcombo.selectedItem as Zip;
 		if (shipcountrycombo != null && shipcountrycombo.selectedItem != null) 
-			contact.shipToAddress.country = countrycombo.selectedItem as Country;
+			contact.shipToAddress.country = shipcountrycombo.selectedItem as Country;
 		
 		
 		
@@ -208,18 +214,18 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	}
 	
 	private function mapFromContactData():void{
-		dataService.getAll("Contact");
-		accountDataService.getById("Account", contact.id);
-		
-	    sales_rep_combo.text= contact.defaultSalesRep.name;
-	    zipcombo.text = contact.address.zip.name;
+		//dataService.getAll("Contact");
+	    accountDataService.getById("Account", contact.userAcctId); 
 	    citycombo.text = contact.address.city.name;
 	    statecombo.text = contact.address.state.name;
+	    zipcombo.text = contact.address.zip.name;
 	    countrycombo.text = contact.address.country.name;
-	    shipzipcombo.text = contact.shipToAddress.zip.name;
 	    shipcitycombo.text = contact.shipToAddress.city.name;
 	    shipstatecombo.text = contact.shipToAddress.state.name;
+	    shipzipcombo.text = contact.shipToAddress.zip.name;
 	    shipcountrycombo.text = contact.shipToAddress.country.name;
+	    
+	   
 		
 	}
 	
@@ -378,7 +384,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 				</mx:Panel>
 				<mx:Label x="37" y="12" text="ID "/>
 				<mx:Text x="80" y="40" width="75" id="accountID" text="{contact.userAcctId}"/>
-				<mx:Text x="80" y="12" text="Text" id="contactID"/>
+				<mx:Text x="80" y="12" text="{contact.id}" id="contactID"/>
 				<mx:Label x="339" y="88" text="Sales Rep:"/>
 				<mx:Label x="347" y="125" text="Created: "/>
 				<mx:Text x="423" y="116" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
