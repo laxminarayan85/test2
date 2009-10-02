@@ -129,6 +129,10 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if( contact.creditCard == null) contact.creditCard = new CreditCard();
 	}
 					
+	public function setAccount(account:Account):void
+	{
+		this.account = account;
+	}
 	
 	private function messageHandler(message:IMessage):void
 	{

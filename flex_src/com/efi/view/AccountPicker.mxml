@@ -11,11 +11,15 @@
 
 <mx:Script>
                                    
-<![CDATA[           
-    import com.efi.vo.Account;                
+<![CDATA[
+	import com.efi.vo.Contact;           
+    import com.efi.vo.Account;    
+    import com.efi.view.EditContact;
+    import com.efi.view.EditCustomer;            
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
-	import mx.containers.Canvas;                                
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
 	import mx.rpc.events.ResultEvent;                                 
 	import mx.rpc.events.FaultEvent;                          
 	import mx.events.ValidationResultEvent;                          
@@ -66,8 +70,13 @@
 	}   
 	
 	private function selectAccount():void {	
-		var editCustomerPage:EditCustomer = Snowmass.getInstance().mainNavigator.selectedChild as EditCustomer;
-		editCustomerPage.setAccount(dataGrid.selectedItem as Account);
+		var editCustomerPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		// TODO: This needs to be implemented via events fired to the parent rather than a direct call.
+		if (editCustomerPage.className == "EditCustomer") {
+			(editCustomerPage as EditCustomer).setAccount(dataGrid.selectedItem as Account);
+		} else if (editCustomerPage.className == "EditContact") {
+			(editCustomerPage as EditContact).setAccount(dataGrid.selectedItem as Account);
+		}
 		PopUpManager.removePopUp(this);
 	}     
 	
