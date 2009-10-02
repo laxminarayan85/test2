@@ -2,13 +2,11 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" label="Users" name="Users"
 width="100%" height="100%" title="Found {userRecords} users."
 creationComplete="init()">
-                             
-<mx:RemoteObject id="loaderService" destination="userService"
-result="handleLoadResult(event)"  fault="handleFault(event)"
-showBusyCursor="true" />
-                             
-<mx:RemoteObject id="deleteService" destination="userService"
-result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
 <mx:Consumer id="consumer" destination="users" message="messageHandler(event.message)"/>
@@ -43,7 +41,8 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 	}      
 	                                                   	
 	public function loadUsers():void {   
-	    loaderService.getUsers(); 
+	//    loaderService.getUsers();
+		dataService.getAll("User");
 	}
 
 	private function send():void
@@ -62,7 +61,8 @@ result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="tr
 	private function deleteUser():void {              
 		if(dataGrid.selectedItem != null) {
 			var selectedItem:User = dataGrid.selectedItem as User;
-			deleteService.deleteUser(selectedItem.id);                                     
+			//deleteService.deleteUser(selectedItem.id);
+			dataService.deleteItem("User",selectedItem.id);                                     
      	}
                                          
 	}

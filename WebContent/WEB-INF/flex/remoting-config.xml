@@ -16,59 +16,6 @@
 
 	</default-channels>
 
-	<destination id="userService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.UserService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="StockDefinitionsService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.StockDefinitionsService
-			</source>
-		</properties>
-	</destination>
-	
-	<destination id="addressService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.AddressService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="accountService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.AccountService
-			</source>
-		</properties>
-	</destination>
-	<destination id="contactService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ContactService
-			</source>
-		</properties>
-	</destination>
-	<destination id="pressDefinitionsService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.PressDefinitionsService
-			</source>
-		</properties>
-	</destination>
-	<destination id="copyDefinitionsService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.CopyDefinitionsService
-			</source>
-		</properties>
-	</destination>
-	
 	<destination id="loginService">
 		<properties>
 			<source>
@@ -77,100 +24,10 @@
 		</properties>
 	</destination>
 	
-	<destination id="customerLogService">
+	<destination id="dataService">
 		<properties>
 			<source>
-				com.efi.printsmith.service.CustomerLogService
-			</source>
-		</properties>
-	</destination>
-	
-	<destination id="salesRepService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.SalesRepService
-			</source>
-		</properties>
-	</destination>
-	<destination id="cityService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.CityService
-			</source>
-		</properties>
-	</destination>
-		<destination id="stateService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.StateService
-			</source>
-		</properties>
-	</destination>
-		<destination id="countryService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.CountryService
-			</source>
-		</properties>
-	</destination>
-		<destination id="zipService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ZipService
-			</source>
-		</properties>
-	</destination>
-	<destination id="shippingMethodService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ShippingMethodService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="chargeService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ChargeService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="chargeCommandService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ChargeCommandService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="salesCategoryService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.SalesCategoryService
-			</source>
-		</properties>
-	</destination>
-
-	<destination id="productCodeService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.ProductCodeService
-			</source>
-		</properties>
-	</destination>
-	
-	<destination id="costCenterService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.CostCenterService
-			</source>
-		</properties>
-	</destination>
-	<destination id="locationService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.LocationService
+				com.efi.printsmith.service.DataService
 			</source>
 		</properties>
 	</destination>

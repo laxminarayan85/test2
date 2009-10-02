@@ -4,10 +4,10 @@ width="100%" height="100%" defaultButton="{submitButton}"
 showCloseButton="true" creationComplete="creationCompleteHandler();"
     close="PopUpManager.removePopUp(this);"
     title="User Form" xmlns:text="flash.text.*">
- 
-<mx:RemoteObject id="saveService" destination="userService"
-result="handleSaveResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+</mx:RemoteObject>
                     
 <vo:User id="user" name="{nameField.text}"                             
 password="{passwordField.text}"/>
@@ -54,7 +54,8 @@ password="{passwordField.text}"/>
 	}
 	                     
 	public function saveUser():void {                                    
-		saveService.addUpdateUser(user);                                        
+		//saveService.addUpdateUser(user);
+		dataService.addUpdate(user);                                        
 	}
                                   
     private function send():void

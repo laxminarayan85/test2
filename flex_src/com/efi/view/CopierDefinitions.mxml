@@ -2,17 +2,12 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
 width="902" height="873" title="Copier Definitions"
  label="Copier Definitions" name="Copier Definitions">
-
-	<mx:RemoteObject id="saveService" destination="copyDefinitionsService"
-	result="handleSaveResult(event)" fault="handleFault(event)"
-	showBusyCursor="true" />
-	
-	<mx:RemoteObject id="loaderService" destination="copyDefinitionsService"
-	result="handleLoadResult(event)"  fault="handleFault(event)"
-	showBusyCursor="true" />
-	                             
-	<mx:RemoteObject id="deleteService" destination="copyDefinitionsService"
-	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+ 
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
 	
 	<mx:Producer id="producer" destination="copydefinitions"/>
 	<mx:Consumer id="consumer" destination="copydefinitions" message="messageHandler(event.message)"/>
@@ -41,26 +36,21 @@ width="902" height="873" title="Copier Definitions"
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    loaderService.getCopyDefinitions();
+		dataService.getAll("CopierDefinition");
 	    copyDefinition = new CopierDefinition();
-	
 	}      
-	                                                   	
-	public function loadCopierDefinitions():void {   
-	    loaderService.getCopyDefinitions();
-	}
-					
+	                                                   						
 	private function messageHandler(message:IMessage):void
 	{
 	}
                                   
 		          
 	private function doAddCopier():void {
-		saveService.addUpdateCopyDefinitions(copyDefinition);                                        		
+		dataService.addUpdate(copyDefinition);
 	}     
 	             
-	private function doDeleteCopier():void {              
-		deleteService.deleteCopyDefinitions(copyDefinition.id);             
+	private function doDeleteCopier():void {         
+		dataService.deleteItem("CopierDefinition", copyDefinition.id);     
 	}
 
 	private function doCopierGridClick():void {
@@ -107,7 +97,7 @@ width="902" height="873" title="Copier Definitions"
 	private function doSave():void {
 	 
 		mapAccountData()
-		saveService.addUpdateCopyDefinitions(copyDefinition);                                          		
+		dataService.addUpdate(copyDefinition);
 	}       
 	private function doNext():void {
 	 
@@ -130,7 +120,7 @@ width="902" height="873" title="Copier Definitions"
 	 	
 	}       
 	private function handleSaveResult(ev:ResultEvent):void {
-    	loadCopierDefinitions();
+		dataService.getAll("CopierDefinition");
 	}
 	
 	
@@ -149,7 +139,7 @@ width="902" height="873" title="Copier Definitions"
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-	     loadCopierDefinitions();
+		dataService.getAll("CopierDefinition");
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  

@@ -3,47 +3,45 @@
 width="100%" height="100%" title="Customer Editor"
 creationComplete="init()" label="Customer Editor" name="Customer Editor">
                              
-<mx:RemoteObject id="saveService" destination="accountService"
-result="handleSaveResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="loaderService" destination="accountService"
-result="handleLoadResult(event)"  fault="handleFault(event)"
-showBusyCursor="true" />
-                             
-<mx:RemoteObject id="deleteService" destination="accountService"
-result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+<mx:RemoteObject id="logDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCustomerLogs(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveLogResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteLogResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="loadLogsService" destination="customerLogService"
-result="handleLoadCustomerLogs(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
+<mx:RemoteObject id="salesRepDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="saveLogService" destination="customerLogService"
-result="handleSaveLogResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="shippingMethodDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="deleteLogService" destination="customerLogService"
-result="handleDeleteLogResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+<mx:RemoteObject id="cityDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="loadSalesRepService" destination="salesRepService"
-result="handleLoadSalesReps(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
+<mx:RemoteObject id="stateDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="loadShippingMethodService" destination="shippingMethodService"
-result="handleLoadShippingMethods(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
-<mx:RemoteObject id="loadCityService" destination="cityService"
-result="handleLoadCity(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
-<mx:RemoteObject id="loadStateService" destination="stateService"
-result="handleLoadState(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
-<mx:RemoteObject id="loadCountryService" destination="countryService"
-result="handleLoadCountry(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
-<mx:RemoteObject id="loadZipService" destination="zipService"
-result="handleLoadZip(event)" fault="handleFault(event)"
-showBusyCursor="true"/>
+<mx:RemoteObject id="countryDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="zipDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
@@ -133,12 +131,12 @@ showBusyCursor="true"/>
 	    account.contact = new Contact();
 	    account.contact.address = new Address();
 	    account.billToContact.address = new Address();
-	    loadSalesRepService.getSalesReps();
-	    loadShippingMethodService.getShippingMethods();
-	    loadCityService.getCitys();
-	    loadStateService.getStates();
-	    loadCountryService.getCountrys();
-	    loadZipService.getZips();
+	    salesRepDataService.getAll("SalesRep");
+	    shippingMethodDataService.getAll("ShippingMethod");
+		cityDataService.getAll("City");
+		stateDataService.getAll("State");
+		countryDataService.getAll("Country");
+		zipDataService.getAll("Zip");
 	}      
 	                                                   	
 	private function send():void
@@ -273,100 +271,108 @@ showBusyCursor="true"/>
 		}
 		acctStatusRadioValue = account.status;
 		acctTypeRadioValue = account.type;
-		//loaderService.getAccounts();
-		//loadService.getAccountById(account.accountId);
-		loadLogsService.getCustomerLogs();
+		logDataService.getAll("CustomerLog");
 	}
 	
 	private function doSave():void {
 		mapToAccountData();
-		saveService.addUpdateAccount(account);                                        		
+		dataService.addUpdate(account);                                        		
 	} 
 	
-		private function doCity(): void{                             
+	private function doCity(): void{                             
 		 var city:City;
 		 var result:Boolean;
 		 
 		if (citycombo.text != null && citycombo.selectedItem == null) {
-			//result = loadCityService.getCityByName(citycombo.text);
-			//	if (!result) {
-					city= new City();
-					city.name= citycombo.text;
-		     	   loadCityService.addUpdateCity(city); 
-		     	   //loadCityService.getCitys();
-		     	 
-		  	//	}
-		  		
+			city= new City();
+			city.name= citycombo.text;
+			cityDataService.addUpdate(city);
 		}
 	}
+	
 	private function doCity1(): void{                             
-		 var city:City;
-		 var result:Boolean;
-		 
+		var city:City;
+		var result:Boolean;
 		if (shipcitycombo.text != null && shipcitycombo.selectedItem == null) {
-			result = loadCityService.getCityByName(shipcitycombo.text);
-				if (!result) {
-					city= new City();
-					city.name= citycombo.text;
-		     	   loadCityService.addUpdateCity(city); 
-		     	   loadCityService.getCitys();
-		     	 
-		  		}
-		  		
+			city = new City();
+			city.name = citycombo.text;
+			cityDataService.addUpdate(city);
 		}
+ 
+//		if (shipcitycombo.text != null && shipcitycombo.selectedItem == null) {
+//			result = loadCityService.getCityByName(shipcitycombo.text);
+//			if (!result) {
+//				city= new City();
+//				city.name= citycombo.text;
+//	     	   loadCityService.addUpdateCity(city); 
+//	     	   loadCityService.getCitys();
+//	  		}
+//		}
 	}
 	private function doState(): void{                             
 		 var state:State;
 		if (statecombo.text != "" && statecombo.selectedItem == null) {
 				state= new State();
 				state.name= statecombo.text;
-		        loadStateService.addUpdateState(state); 
-		        loadStateService.getStates();
+				stateDataService.addUpdate(state);
+				stateDataService.getAll("State");
+//		        loadStateService.addUpdateState(state); 
+//		        loadStateService.getStates();
 		}
 	}
 	private function doState1(): void{                             
 		 var state:State;
 		if (shipstatecombo.text != "" && shipstatecombo.selectedItem == null) {
-				state= new State();
-				state.name= shipstatecombo.text;
-		        loadStateService.addUpdateState(state); 
-		        loadStateService.getStates();
+			state= new State();
+			state.name= shipstatecombo.text;
+			stateDataService.addUpdate(state);
+			stateDataService.getAll("State");
+//		        loadStateService.addUpdateState(state); 
+//		        loadStateService.getStates();
 		}
 	}
 	private function doZip(): void{                             
 		 var zip:Zip;
 		if (zipcombo.text != null && zipcombo.selectedItem == null) {
-				zip= new Zip();
-				zip.name= zipcombo.text;
-		        loadZipService.addUpdateZip(zip); 
-		        loadZipService.getZips();
+			zip= new Zip();
+			zip.name= zipcombo.text;
+			zipDataService.addUpdate(zip);
+			zipDataService.getAll("Zip");
+//		        loadZipService.addUpdateZip(zip); 
+//		        loadZipService.getZips();
 		}
 	}
 	private function doZip1(): void{                             
 		 var zip:Zip;
 		if (shipzipcombo.text != null && shipzipcombo.selectedItem == null) {
-				zip= new Zip();
-				zip.name= shipzipcombo.text;
-		        loadZipService.addUpdateZip(zip); 
-		        loadZipService.getZips();
+			zip= new Zip();
+			zip.name= shipzipcombo.text;
+			zipDataService.addUpdate(zip);
+			zipDataService.getAll("Zip");
+//		        loadZipService.addUpdateZip(zip); 
+//		        loadZipService.getZips();
 		}
 	}
 	private function doCountry(): void{                             
 		 var country:Country;
 		if (countrycombo.text != null && countrycombo.selectedItem == null) {
-				country= new Country();
-				country.name= countrycombo.text;
-		        loadCountryService.addUpdateCountry(country); 
-		        loadCountryService.getCountrys();
+			country= new Country();
+			country.name= countrycombo.text;
+			countryDataService.addUpdate(country);
+			countryDataService.getAll("Country");
+//	        loadCountryService.addUpdateCountry(country); 
+//	        loadCountryService.getCountrys();
 		}
 	}
 	private function doCountry1(): void{                             
 		 var country:Country;
 		if (shipcountrycombo.text != null && shipcountrycombo.selectedItem == null) {
-				country= new Country();
-				country.name= shipcountrycombo.text;
-		        loadCountryService.addUpdateCountry(country); 
-		        loadCountryService.getCountrys();
+			country= new Country();
+			country.name= shipcountrycombo.text;
+			countryDataService.addUpdate(country);
+			countryDataService.getAll("Country");
+//	        loadCountryService.addUpdateCountry(country); 
+//	        loadCountryService.getCountrys();
 		}          
 	}      
 	
@@ -386,11 +392,11 @@ showBusyCursor="true"/>
 	}
 	
 	private function handleSaveLogResult(ev:ResultEvent):void {
-		loadLogsService.getCustomerLogs();
+		logDataService.getAll("CustomerLog");
 	}
 	
 	private function handleDeleteLogResult(ev:ResultEvent):void {
-		loadLogsService.getCustomerLogs();
+		logDataService.getAll("CustomerLog");
 	}
 	
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -400,6 +406,22 @@ showBusyCursor="true"/>
 	private function handleDeleteResult(ev:ResultEvent):void {
 	}
 	      
+	private function handleSaveCityResult(ev:ResultEvent):void {
+		
+	}      
+
+	private function handleSaveStateResult(ev:ResultEvent):void {
+		
+	}      
+
+	private function handleSaveCountryResult(ev:ResultEvent):void {
+		
+	}      
+
+	private function handleSaveZipResult(ev:ResultEvent):void {
+		
+	}      
+
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -423,7 +445,8 @@ showBusyCursor="true"/>
 	}                                 
  
  	private function deleteCustomerLog():void {
- 		deleteLogService.deleteCustomerLog(log_dataGrid.selectedItem as CustomerLog);
+ 		var log:CustomerLog = log_dataGrid.selectedItem as CustomerLog;
+ 		logDataService.deleteItem("CustomerLog", log.id);
  	}
  	
  	private function printCustomerLog():void {
@@ -475,7 +498,7 @@ showBusyCursor="true"/>
  		var customerLog:CustomerLog = new CustomerLog();
  		customerLog.id = 0; // Always created new log entries - don't allow editing old ones.
  		customerLog.logEntry = selected_comment_edit.text;
- 		saveLogService.addUpdateCustomerLog(customerLog);
+ 		logDataService.addUpdate(customerLog);
  	}
 ]]>
                              

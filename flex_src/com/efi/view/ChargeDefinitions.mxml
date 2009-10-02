@@ -2,37 +2,32 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*"
 width="100%" height="100%" title="Charge Definitions"
 creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
-                             
-<mx:RemoteObject id="saveService" destination="chargeService"
-result="handleSaveResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+          
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="loaderService" destination="chargeService"
-result="handleLoadResult(event)"  fault="handleFault(event)"
-showBusyCursor="true" />
-                             
-<mx:RemoteObject id="deleteService" destination="chargeService"
-result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
+<mx:RemoteObject id="salesCategoryDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesCategoryResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="salesCategoryLoaderService" destination="salesCategoryService"
-result="handleLoadSalesCategoryResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="productCodeDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductCodeResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="productCodeLoaderService" destination="productCodeService"
-result="handleLoadProductCodesResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="chargeCommandDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChargeCommandsResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="chargeCommandLoaderService" destination="chargeCommandService"
-result="handleLoadChargeCommandsResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="locationDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationsResult(event)"/>
+</mx:RemoteObject>
 
-<mx:RemoteObject id="locationLoaderService" destination="locationService"
-result="handleLoadLocationsResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
-
-<mx:RemoteObject id="costCenterLoaderService" destination="costCenterService"
-result="handleLoadCostCentersResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
+<mx:RemoteObject id="costCenterDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCentersResult(event)"/>
+</mx:RemoteObject>
 
 <mx:RemoteObject id="chargeCommandSampleService" destination="chargeCommandService"
 result="sampleResult(event)" fault="handleFault(event)"
@@ -118,12 +113,11 @@ showBusyCursor="true" />
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    charge = new Charge();
-	    salesCategoryLoaderService.getSalesCategorys();
-	    productCodeLoaderService.getProductCodes();
-//	    chargeCommandLoaderService.getChargeCommands();
-		costCenterLoaderService.getCostCenters();
-		locationLoaderService.getLocations();
-		loaderService.getCharges();
+	    salesCategoryDataService.getAll("SalesCategory");
+	    productCodeDataService.getAll("ProductCode");
+	    costCenterDataService.getAll("CostCenter");
+	    locationDataService.getAll("Location");
+		dataService.getAll("Charge");
 	}      
 	                                                   	
 	private function send():void
@@ -218,7 +212,7 @@ showBusyCursor="true" />
 		chargeCommands = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadProductCodesResult(ev:ResultEvent):void {
+	private function handleLoadProductCodeResult(ev:ResultEvent):void {
 		productCodes = ev.result as ArrayCollection;
 	}
 	

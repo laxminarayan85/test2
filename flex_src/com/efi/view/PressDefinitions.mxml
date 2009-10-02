@@ -2,18 +2,12 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
 width="772" height="845" title="Press Definitions"
  label="Press Definitions" name="Press Definitions">
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
 
-	<mx:RemoteObject id="saveService" destination="pressDefinitionsService"
-	result="handleSaveResult(event)" fault="handleFault(event)"
-	showBusyCursor="true" />
-	
-	<mx:RemoteObject id="loaderService" destination="pressDefinitionsService"
-	result="handleLoadResult(event)"  fault="handleFault(event)"
-	showBusyCursor="true" />
-	                             
-	<mx:RemoteObject id="deleteService" destination="pressDefinitionsService"
-	result="handleDeleteResult(event)" fault="handleFault(event)" showBusyCursor="true" />
-	
 	<mx:Producer id="producer" destination="pressdefinitions"/>
 	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -41,13 +35,13 @@ width="772" height="845" title="Press Definitions"
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    loaderService.getPressDefinitions();
+		dataService.getAll("PressDefinition");
 	    pressDefinition = new PressDefinition();
 	
 	}      
 	                                                   	
 	public function loadPressDefinitions():void {   
-	    loaderService.getPressDefinitions();
+		dataService.getAll("PressDefinition");
 	}
 					
 	private function messageHandler(message:IMessage):void
@@ -56,12 +50,13 @@ width="772" height="845" title="Press Definitions"
                                   
 		          
 	private function doAddPress():void {
-		saveService.addUpdatePressDefinitions(pressDefinition);                                        		
+		dataService.addUpdate(pressDefinition);
 	}     
 	             
-	private function doDeletePress():void {              
-		deleteService.deletePressDefinitions(pressDefinition.id);             
+	private function doDeletePress():void {     
+		dataService.deleteItem("PressDefinition", pressDefinition.id);         
 	}
+	
 	private function doPaperStyle(): String {              
 		   if (pressDefinition.sheetFed ) {
 		   		pressDefinition.paperStyle= "Sheet";
@@ -116,7 +111,7 @@ width="772" height="845" title="Press Definitions"
 	private function doSave():void {
 	 
 		mapAccountData()
-		saveService.addUpdatePressDefinitions(pressDefinition);                                          		
+		dataService.addUpdate(pressDefinition);
 	}       
 	private function doNext():void {
 	 

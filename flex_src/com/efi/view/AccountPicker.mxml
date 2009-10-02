@@ -2,10 +2,10 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Account Picker" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
-                     
-<mx:RemoteObject id="loaderService" destination="accountService"
-result="handleLoadResult(event)"  fault="handleFault(event)"
-showBusyCursor="true" />
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
 
@@ -54,7 +54,7 @@ showBusyCursor="true" />
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
-		loaderService.getAccounts();
+		dataService.getAll("Account");
 	}
 	                                
 	private function resetFocus():void {                           
@@ -76,7 +76,7 @@ showBusyCursor="true" />
 	}
 	
 	private function updateDataGrid():void {
-		loaderService.getAccountsByPartialName(filter_field.text);
+		dataService.getAccountsByPartialName(filter_field.text);
 	}
 ]]>        
 </mx:Script>

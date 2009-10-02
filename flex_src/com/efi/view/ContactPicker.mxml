@@ -2,11 +2,11 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Contact Picker" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+            
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
                      
-<mx:RemoteObject id="loaderService" destination="contactService"
-result="handleLoadResult(event)"  fault="handleFault(event)"
-showBusyCursor="true" />
-
 <mx:Producer id="producer" destination="users"/>
 
 <mx:Script>
@@ -54,8 +54,8 @@ showBusyCursor="true" />
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-	    resetFocus();                                     
-		loaderService.getContacts();
+	    resetFocus();              
+	    dataService.getAll("Contact");                       
 	}
 	                                
 	private function resetFocus():void {                           
@@ -77,7 +77,7 @@ showBusyCursor="true" />
 	}
 	
 	private function updateDataGrid():void {
-		loaderService.getCountByPartialName(filter_field.text);
+		dataService.getContactByPartialName(filter_field.text);
 	}
 ]]>        
 </mx:Script>
