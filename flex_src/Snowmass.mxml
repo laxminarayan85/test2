@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
 		width="100%" height="100%" 
- 		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.view.*" xmlns:flexlib="http://code.google.com/p/flexlib/">
+ 		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.view.*" xmlns:flexlib="http://code.google.com/p/flexlib/" xmlns:ns2="flexlib.controls.*">
+	    <mx:Move 
+	        id="moveLogo" target="{logo}" 
+	        easingFunction="mx.effects.easing.Quadratic.easeIn" effectEnd="endMoveLogo()" duration="2000" xTo="480"
+	    />
+	    <mx:Fade
+	    	id="efiLogoFade" target="{efi_logo}"
+	    	alphaFrom="0" alphaTo="1" duration="2000"
+	    />
+	    <mx:Fade
+	    	id="poweredByFade" target="{powered_by}"
+	    	alphaFrom="0" alphaTo="1" duration="2000"
+	    />
+
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
     <mx:HBox x="0" y="0" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
+
     <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
 		<mx:Canvas height="2" width="100%">
 		</mx:Canvas>	
 		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
-			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess">
+			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
+		    	<mx:Image x="-185" y="479" width="186" height="61" id="logo" source="assets/xpedxLogo.gif"/>
 				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
 				<mx:Button x="176" y="10" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
 				<mx:Button x="342" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
@@ -38,6 +53,8 @@
 				<mx:Button x="508" y="104" label="Mailing Labels" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
 				<mx:Button x="508" y="198" label="Report Manager" width="158" height="86" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')"/>
 				<mx:Button x="508" y="292" label="Report Writer" width="158" height="86" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')"/>
+				<mx:Image x="586" y="539" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="81" height="28"/>
+				<mx:Text x="508" y="545" text="Powered by:&#xd;" id="powered_by" alpha="0.0"/>
 			</mx:Canvas>
 		</flexlib:SuperTabNavigator>
 
@@ -51,6 +68,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import mx.effects.easing.Quadratic;
 		import com.efi.view.ChargeDefinitions;
 		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
@@ -179,6 +197,12 @@
 			} else {
 				loginService.validateLogin(userName, userPass);
 			}
+			moveLogo.play();
+		}
+		
+		private function endMoveLogo() : void {
+			efiLogoFade.play();
+			poweredByFade.play();			
 		}
 		
 		private function handleLoginResult(event:ResultEvent):void	{
