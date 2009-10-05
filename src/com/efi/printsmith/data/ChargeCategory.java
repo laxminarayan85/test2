@@ -10,6 +10,7 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -57,22 +58,22 @@ public class ChargeCategory extends ModelBase {
 
  	
 	
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
-    @JoinColumn(name="id")
-    @org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	private java.util.List<Charge> children;
+    @OneToMany
+	@Cascade(value = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.SAVE_UPDATE,
+			CascadeType.DELETE, CascadeType.REMOVE})
+	private java.util.List<Charge> childrens;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Charge> getChildren(){
-		return children; 
+	public java.util.List<Charge> getChildrens(){
+		return childrens; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setChildren(java.util.List<Charge> newVal) {
-		this.children = newVal;
+	public void setChildrens(java.util.List<Charge> newVal) {
+		this.childrens = newVal;
 	}
  	
 	
@@ -93,8 +94,7 @@ public class ChargeCategory extends ModelBase {
 	}
  	
 	
- 	@ManyToOne
- 	@JoinColumn (name="id", updatable = false, insertable = false)
+	@ManyToOne
 	private ChargeCommand parent;
 	/**
 	 * @generated
@@ -116,7 +116,7 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CHILDREN.equals(propertyName)) return getChildren();
+		if (CHILDREN.equals(propertyName)) return getChildrens();
 		if (NAME.equals(propertyName)) return getName();
 		if (PARENT.equals(propertyName)) return getParent();
 		return super.getProperty(propertyName);
@@ -128,7 +128,7 @@ public class ChargeCategory extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<Charge>)newValue); else
+		if (CHILDREN.equals(propertyName)) setChildrens((java.util.List<Charge>)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (PARENT.equals(propertyName)) setParent((ChargeCommand)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -170,7 +170,7 @@ public class ChargeCategory extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		ChargeCategory objT = (ChargeCategory)obj;
-		if (! SmartEquals(getChildren(), objT.getChildren()))
+		if (! SmartEquals(getChildrens(), objT.getChildrens()))
 			return false;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;

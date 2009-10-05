@@ -10,6 +10,7 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;

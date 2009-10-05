@@ -49,7 +49,7 @@ public var applyFinanceCharges:Boolean = true;
 public var generateStatements:Boolean = true;
 public var businessType:String = "";
 public var salesRep:SalesRep;
-public var shippingMode:String = "";
+public var shippingMode:ShippingMethod;
 public var lastInvoiceDate:Date = new Date();
 public var lastEstimateDate:Date = new Date();
 public var firstInvoiceDate:Date = new Date();
@@ -98,6 +98,8 @@ public var balance60Day:Number = 0;
 public var balance90Day:Number = 0;
 public var balanceCurrent:Number = 0;
 public var type:String = "";
+public var taxTable:TaxTable;
+public var taxCode:TaxCodes;
 
 }
 }

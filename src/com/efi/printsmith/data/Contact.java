@@ -10,6 +10,7 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -101,7 +102,7 @@ public class Contact extends ModelBase {
 
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Address shipToAddress;
 	/**
 	 * @generated
@@ -135,7 +136,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Address address;
 	/**
 	 * @generated
@@ -271,7 +272,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private SalesRep defaultSalesRep;
 	/**
 	 * @generated
@@ -305,7 +306,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private CreditCard creditCard;
 	/**
 	 * @generated
@@ -322,7 +323,7 @@ public class Contact extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Marketing marketing;
 	/**
 	 * @generated

@@ -18,8 +18,15 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 <mx:RemoteObject id="salesRepDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="businessTypeDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
+</mx:RemoteObject>
+
 
 <mx:RemoteObject id="shippingMethodDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="taxTableDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
 </mx:RemoteObject>
 
@@ -60,6 +67,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	import com.efi.vo.Country;
 	import com.efi.vo.State;
 	import com.efi.vo.Zip;
+	import com.efi.vo.ShippingMethod;
+	import com.efi.vo.TaxTable;
                              
 	import com.efi.vo.Account;                                         
 	import mx.controls.Alert;                                         
@@ -103,6 +112,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
                      
     [Bindable]
     private var salesReps:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var businessTypes:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var taxTables:ArrayCollection = new ArrayCollection();
                            	
     [Bindable]
     private var shippingMethods:ArrayCollection = new ArrayCollection();
@@ -132,7 +145,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	    account.contact.address = new Address();
 	    account.billToContact.address = new Address();
 	    salesRepDataService.getAll("SalesRep");
+	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
+	    taxTableDataService.getAll("TaxTable");
 		cityDataService.getAll("City");
 		stateDataService.getAll("State");
 		countryDataService.getAll("Country");
@@ -252,6 +267,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			account.salesRep = sales_rep_combo.selectedItem as SalesRep;
+			
+		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
+			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
+			
+		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
+			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
+		
 		
 		
 		
@@ -287,15 +309,69 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		}
 		return -1;
 	}
+	private function doSalesRep(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+		if (sales_rep_combo.typedText != null && sales_rep_combo.typedText != "" && sales_rep_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.typedText, salesReps);
+			if (item == -1) {
+				sales = new SalesRep();
+				sales.name = sales_rep_combo.text;
+				salesRepDataService.addUpdate(sales);
+			}
+			else {
+				sales_rep_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doShipVia(): void{                             
+		var shipv:ShippingMethod;
+		var result:Boolean;
+		
+		if (ship_via_combo.typedText != null && ship_via_combo.typedText != "" && ship_via_combo.selectedIndex == -1) {
+			var item:int = findItem(ship_via_combo.typedText, shippingMethods);
+			if (item == -1) {
+				shipv = new ShippingMethod();
+				shipv.name = ship_via_combo.text;
+				shippingMethodDataService.addUpdate(shipv);
+			}
+			else {
+				ship_via_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doBusinesType(): void{                             
+		var business:BusinessType;
+		var result:Boolean;
+		
+		if (business_type_combo.typedText != null && business_type_combo.typedText != "" && business_type_combo.selectedIndex == -1) {
+			var item:int = findItem(business_type_combo.typedText, businessTypes);
+			if (item == -1) {
+				business = new BusinessType();
+				business.name = business_type_combo.text;
+				businessTypeDataService.addUpdate(business);
+			}
+			else {
+				business_type_combo.selectedItem = item;
+			}
+		}
+	}
 	
 	private function doCity(): void{                             
-		 var city:City;
-		 var result:Boolean;
-		 
-		if (citycombo.text != null && citycombo.selectedItem == null) {
-			city= new City();
-			city.name= citycombo.text;
-			cityDataService.addUpdate(city);
+		var city:City;
+		var result:Boolean;
+		
+		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
+			var item:int = findItem(citycombo.typedText, citys);
+			if (item == -1) {
+				city = new City();
+				city.name = citycombo.text;
+				cityDataService.addUpdate(city);
+			}
+			else {
+				citycombo.selectedItem = item;
+			}
 		}
 	}
 	
@@ -318,62 +394,111 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	
 	private function doState(): void{                             
 		var state:State;
-		if (statecombo.text != "" && statecombo.selectedItem == null) {
-			state = new State();
-			state.name = statecombo.text;
-			stateDataService.addUpdate(state);
+		var result:Boolean;
+		
+		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
+			var item:int = findItem(statecombo.typedText, states1);
+			if (item == -1) {
+				state = new State();
+				state.name = statecombo.text;
+				stateDataService.addUpdate(state);
+			}
+			else {
+				statecombo.selectedItem = item;
+			}
 		}
 	}
 	
 	private function doState1(): void{                             
 		var state:State;
-		if (shipstatecombo.text != "" && shipstatecombo.selectedItem == null) {
-			state= new State();
-			state.name= shipstatecombo.text;
-			stateDataService.addUpdate(state);
+		var result:Boolean;
+		
+		if (shipstatecombo.typedText != null && shipstatecombo.typedText != "" && shipstatecombo.selectedIndex == -1) {
+			var item:int = findItem(shipstatecombo.typedText, states1);
+			if (item == -1) {
+				state = new State();
+				state.name = shipstatecombo.text;
+				stateDataService.addUpdate(state);
+			}
+			else {
+				shipstatecombo.selectedItem = item;
+			}
 		}
 	}
 	private function doZip(): void{                             
 		var zip:Zip;
-		if (zipcombo.text != null && zipcombo.selectedItem == null) {
-			zip= new Zip();
-			zip.name= zipcombo.text;
-			zipDataService.addUpdate(zip);
+		var result:Boolean;
+		
+		if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
+			var item:int = findItem(zipcombo.typedText, zips);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = zipcombo.text;
+				zipDataService.addUpdate(zip);
+			}
+			else {
+				zipcombo.selectedItem = item;
+			}
 		}
 	}
 	private function doZip1(): void{                             
 		var zip:Zip;
-		if (shipzipcombo.text != null && shipzipcombo.selectedItem == null) {
-			zip= new Zip();
-			zip.name= shipzipcombo.text;
-			zipDataService.addUpdate(zip);
+		var result:Boolean;
+		
+		if (shipzipcombo.typedText != null && shipzipcombo.typedText != "" && shipzipcombo.selectedIndex == -1) {
+			var item:int = findItem(shipzipcombo.typedText, zips);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = shipzipcombo.text;
+				zipDataService.addUpdate(zip);
+			}
+			else {
+				shipzipcombo.selectedItem = item;
+			}
 		}
 	}
 	
 	private function doCountry(): void{                             
 		var country:Country;
-		if (countrycombo.text != null && countrycombo.selectedItem == null) {
-			country= new Country();
-			country.name= countrycombo.text;
-			countryDataService.addUpdate(country);
+		var result:Boolean;
+		
+		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
+			var item:int = findItem(countrycombo.typedText, countrys);
+			if (item == -1) {
+				country = new Country();
+				country.name = countrycombo.text;
+				countryDataService.addUpdate(country);
+			}
+			else {
+				countrycombo.selectedItem = item;
+			}
 		}
 	}
 	
 	private function doCountry1(): void{                             
 		var country:Country;
-		if (shipcountrycombo.text != null && shipcountrycombo.selectedItem == null) {
-			country= new Country();
-			country.name= shipcountrycombo.text;
-			countryDataService.addUpdate(country);
-			countryDataService.getAll("Country");
-		}          
-	}      
-	
+		var result:Boolean;
+		
+		if (shipcountrycombo.typedText != null && shipcountrycombo.typedText != "" && shipcountrycombo.selectedIndex == -1) {
+			var item:int = findItem(shipcountrycombo.typedText, states1);
+			if (item == -1) {
+				country = new Country();
+				country.name = shipcountrycombo.text;
+				countryDataService.addUpdate(country);
+			}
+			else {
+				shipcountrycombo.selectedItem = item;
+			}
+		}
+	}
 	private function handleSaveResult(ev:ResultEvent):void {
 	}
 
 	private function handleLoadSalesReps(ev:ResultEvent):void {
 		salesReps = ev.result as ArrayCollection;
+	}
+	private function handleLoadBusinessType(ev:ResultEvent):void {
+		businessTypes = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadShippingMethods(ev:ResultEvent):void {
@@ -512,7 +637,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
-				<mx:Panel x="10" y="94" width="325" height="182" layout="absolute" title="Invoice Address" dropShadowEnabled="false">
+				<mx:Panel x="10" y="94" width="351" height="182" layout="absolute" title="Invoice Address" dropShadowEnabled="false">
 					<mx:TextInput x="85" y="10" width="210" id="ship_company_edit" text="{account.shipToAddress.name}"/>
 					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
 					<mx:TextInput x="85" y="36" width="210" id="ship_street1_edit" text="{account.shipToAddress.street1}"/>
@@ -523,13 +648,20 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:Label x="203" y="88" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
 					<!--<hc:AutoComplete x="85" y="86" id="shipcitycombo" dataProvider="{citys}" labelField="name" valueCommit="doCity1()"/>-->
-					<fc:AutoComplete id="shipcitycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true"/>
+					<fc:AutoComplete id="shipcitycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true" width="119"/>
+					<fc:AutoComplete id="shipstatecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
+					<fc:AutoComplete id="shipzipcombo" x="85" y="110" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true"/>
+					<fc:AutoComplete id="shipcountrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
+
+					
+					
 					
 					<!--<mx:ComboBox x="85" y="86" width="110" id="shipcitycombo" dataProvider="{citys}" editable="true" focusOut="doCity1();" labelField="name"></mx:ComboBox>-->
-					<mx:ComboBox x="250" y="86" width="45" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
+					<!--<mx:ComboBox x="250" y="86" width="45" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
 					<mx:ComboBox x="85" y="110" width="89" id="shipzipcombo" dataProvider="{zips}" editable="true" labelField="name" focusOut="doZip1();"></mx:ComboBox>
-					<mx:ComboBox x="233" y="110" width="62" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>
+					<mx:ComboBox x="233" y="110" width="62" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>-->				
 				</mx:Panel>
+					
 				<mx:Panel x="344" y="94" width="325" height="182" layout="absolute" title="Statement Address" dropShadowEnabled="false">
 					<mx:TextInput x="85" y="10" width="210" id="bill_company_edit" text="{account.billToAddress.name}"/>
 					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
@@ -538,12 +670,19 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
 					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
 					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
-					<mx:Label x="216" y="88" text="State:" width="39" textAlign="right"/>
+					<mx:Label x="212" y="88" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
-					<mx:ComboBox x="85" y="86" width="123" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
+					
+					<fc:AutoComplete id="citycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity()" lookAhead="true" width="119"/>
+					<fc:AutoComplete id="statecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState()" lookAhead="true" width="45"/>
+					<fc:AutoComplete id="zipcombo" x="85" y="110" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true"/>
+					<fc:AutoComplete id="countrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
+
+					
+				<!--	<mx:ComboBox x="85" y="86" width="123" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
 					<mx:ComboBox x="254" y="86" width="41" focusOut="doState();" id="statecombo" dataProvider="{states1}" editable="true" labelField="name"></mx:ComboBox>
 					<mx:ComboBox x="85" y="110" width="90" id="zipcombo" dataProvider="{zips}" editable="true" focusOut="doZip();" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="233" y="110" width="62" id="countrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry();"></mx:ComboBox>
+					<mx:ComboBox x="233" y="110" width="62" id="countrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry();"></mx:ComboBox>-->
 				</mx:Panel>
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
 					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.address.firstName}"/>
@@ -636,10 +775,15 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:Text x="111" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
 				<mx:Text x="111" y="10" width="464" id="master_acct_edit"/>
 				<mx:Button x="583" y="8" label="Select..."/>
-				<mx:ComboBox x="111" y="34" width="160" id="sales_rep_combo" dataProvider="{salesReps}" labelField="name"></mx:ComboBox>
-				<mx:ComboBox x="111" y="60" width="160" editable="true" id="business_type_combo"></mx:ComboBox>
+				<!--<mx:ComboBox x="111" y="34" width="160" id="sales_rep_combo" dataProvider="{salesReps}" labelField="name"></mx:ComboBox>-->
+				<fc:AutoComplete id="sales_rep_combo" x="111" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep()" lookAhead="true" />
+				<fc:AutoComplete id="business_type_combo" x="111" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType()" lookAhead="true" />
+					
+				<!--<mx:ComboBox x="111" y="60" width="160" editable="true" id="business_type_combo"></mx:ComboBox>-->
 				<mx:Label x="10" y="90" text="Ship Via:" textAlign="right" width="93"/>
-				<mx:ComboBox x="111" y="88" width="160" id="ship_via_combo" dataProvider="{shippingMethods}" labelField="name"></mx:ComboBox>
+			<!--	<mx:ComboBox x="111" y="88" width="160" id="ship_via_combo" dataProvider="{shippingMethods}" labelField="name"></mx:ComboBox>-->
+			<fc:AutoComplete id="ship_via_combo" x="111" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
+				
 				<mx:Label x="10" y="264" text="Default Invoice:" textAlign="right" width="102"/>
 				<mx:ComboBox x="120" y="262" width="160" id="default_invoice_combo"></mx:ComboBox>
 				<mx:Label x="10" y="292" text="Default Estimate:" textAlign="right" width="102"/>

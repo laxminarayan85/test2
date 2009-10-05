@@ -10,6 +10,7 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -342,6 +343,14 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public static final String TYPE = "Type";
+	/**
+	 * @generated
+	 */
+	public static final String TAXTABLE = "TaxTable";
+	/**
+	 * @generated
+	 */
+	public static final String TAXCODE = "TaxCode";
 
 	/**
 	 * @generated
@@ -455,7 +464,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Address shipToAddress;
 	/**
 	 * @generated
@@ -472,7 +481,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Address billToAddress;
 	/**
 	 * @generated
@@ -489,7 +498,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Contact contact;
 	/**
 	 * @generated
@@ -506,7 +515,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Contact billToContact;
 	/**
 	 * @generated
@@ -812,7 +821,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private SalesRep salesRep;
 	/**
 	 * @generated
@@ -829,19 +838,19 @@ public class Account extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String shippingMode;
+	@ManyToOne
+	private ShippingMethod shippingMode;
 	/**
 	 * @generated
  	 */
-	public String getShippingMode(){
+	public ShippingMethod getShippingMode(){
 		return shippingMode; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setShippingMode(String newVal) {
+	public void setShippingMode(ShippingMethod newVal) {
 		this.shippingMode = newVal;
 	}
  	
@@ -948,7 +957,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	@ManyToOne
 	private Marketing marketing;
 	/**
 	 * @generated
@@ -1660,6 +1669,40 @@ public class Account extends ModelBase {
 	public void setType(String newVal) {
 		this.type = newVal;
 	}
+ 	
+	
+	@ManyToOne
+	private TaxTable taxTable;
+	/**
+	 * @generated
+ 	 */
+	public TaxTable getTaxTable(){
+		return taxTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTaxTable(TaxTable newVal) {
+		this.taxTable = newVal;
+	}
+ 	
+	
+	@ManyToOne
+	private TaxCodes taxCode;
+	/**
+	 * @generated
+ 	 */
+	public TaxCodes getTaxCode(){
+		return taxCode; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTaxCode(TaxCodes newVal) {
+		this.taxCode = newVal;
+	}
 
 	/**
 	 * @generated
@@ -1744,6 +1787,8 @@ public class Account extends ModelBase {
 		if (BALANCE90DAY.equals(propertyName)) return getBalance90Day();
 		if (BALANCECURRENT.equals(propertyName)) return getBalanceCurrent();
 		if (TYPE.equals(propertyName)) return getType();
+		if (TAXTABLE.equals(propertyName)) return getTaxTable();
+		if (TAXCODE.equals(propertyName)) return getTaxCode();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1781,7 +1826,7 @@ public class Account extends ModelBase {
 		if (GENERATESTATEMENTS.equals(propertyName)) setGenerateStatements((Boolean)newValue); else
 		if (BUSINESSTYPE.equals(propertyName)) setBusinessType((String)newValue); else
 		if (SALESREP.equals(propertyName)) setSalesRep((SalesRep)newValue); else
-		if (SHIPPINGMODE.equals(propertyName)) setShippingMode((String)newValue); else
+		if (SHIPPINGMODE.equals(propertyName)) setShippingMode((ShippingMethod)newValue); else
 		if (LASTINVOICEDATE.equals(propertyName)) setLastInvoiceDate((Date)newValue); else
 		if (LASTESTIMATEDATE.equals(propertyName)) setLastEstimateDate((Date)newValue); else
 		if (FIRSTINVOICEDATE.equals(propertyName)) setFirstInvoiceDate((Date)newValue); else
@@ -1830,6 +1875,8 @@ public class Account extends ModelBase {
 		if (BALANCE90DAY.equals(propertyName)) setBalance90Day((Double)newValue); else
 		if (BALANCECURRENT.equals(propertyName)) setBalanceCurrent((Double)newValue); else
 		if (TYPE.equals(propertyName)) setType((String)newValue); else
+		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+		if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1896,7 +1943,7 @@ public class Account extends ModelBase {
 		if (SALESREP.equals(propertyName)) 
 			return new Class<?>[] {SalesRep.class};		
 		if (SHIPPINGMODE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {ShippingMethod.class};		
 		if (LASTINVOICEDATE.equals(propertyName)) 
 			return new Class<?>[] {Date.class};		
 		if (LASTESTIMATEDATE.equals(propertyName)) 
@@ -1993,6 +2040,10 @@ public class Account extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (TYPE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (TAXTABLE.equals(propertyName)) 
+			return new Class<?>[] {TaxTable.class};		
+		if (TAXCODE.equals(propertyName)) 
+			return new Class<?>[] {TaxCodes.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2080,6 +2131,8 @@ public class Account extends ModelBase {
 		if (BALANCE90DAY.equals(propertyName)) return Account.class;
 		if (BALANCECURRENT.equals(propertyName)) return Account.class;
 		if (TYPE.equals(propertyName)) return Account.class;
+		if (TAXTABLE.equals(propertyName)) return Account.class;
+		if (TAXCODE.equals(propertyName)) return Account.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2244,6 +2297,10 @@ public class Account extends ModelBase {
 		if (! SmartEquals(getBalanceCurrent(), objT.getBalanceCurrent()))
 			return false;
 		if (! SmartEquals(getType(), objT.getType()))
+			return false;
+		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+			return false;
+		if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
 			return false;
 		return true;
 	}			
