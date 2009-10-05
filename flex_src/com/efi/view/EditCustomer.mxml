@@ -426,9 +426,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		Alert.show(message, "Error", 0, null, null, null,null);                                 
 	}
 	 private function handleLoadCity(ev:ResultEvent):void {
-	 	var selectedItem = shipcitycombo.selectedIndex;
+	 	var selectedItem:Object = shipcitycombo.selectedItem;
 		citys = ev.result as ArrayCollection;
-		shipcitycombo.selectedIndex = selectedItem;
+		shipcitycombo.selectedItem = selectedItem;
 	}   
 	 private function handleLoadState(ev:ResultEvent):void {
 		states1 = ev.result as ArrayCollection;
