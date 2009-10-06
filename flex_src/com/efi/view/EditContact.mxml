@@ -137,6 +137,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	public function setAccount(account:Account):void
 	{
 		this.account = account;
+		contact.userAcctId = this.account.id;
+		accountName.text = account.title;
+		
 		
 		
 	}
@@ -172,8 +175,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		contact.address.street2 =	street2.text;		
 		
 		
-		contact.userAcctId = parseInt(accountID.text);
-	 
 		if (citycombo != null && citycombo.selectedItem != null) 
 			contact.address.city = citycombo.selectedItem as City;
 		if (statecombo != null && statecombo.selectedItem != null) 
@@ -203,8 +204,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		contact.creditCard.cardHolderName = cardholder.text;
 		contact.creditCard.cardNumber = cardnumber.text;
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
-		contact.address.street1 = cardstreet.text;
-		contact.address.zip.name = cardzip.text;
+		contact.creditCard.address.street1 = cardstreet.text;
+		contact.creditCard.address.zip.name = cardzip.text;
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
@@ -214,7 +215,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	
 	private function mapFromContactData():void{
 		//dataService.getAll("Contact");
+	    
 	    accountDataService.getById("Account", contact.userAcctId); 
+	 	
 	 	if (contact.address.city != null)
 			citycombo.selectedIndex = findItem(contact.address.city.name, citys);
 		if (contact.address.state != null)
@@ -243,6 +246,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			userDate4.selectedDate =contact.marketing.user4;
 		if (contact.marketing.user5!= null)
 			userDate5.selectedDate =contact.marketing.user5;
+		if (contact.defaultSalesRep != null)
+			sales_rep_combo.selectedIndex = findItem(contact.defaultSalesRep.name, salesReps);
 	    
 	   
 		
