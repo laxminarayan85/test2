@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc"
 width="100%" height="100%" title="Contact Editor"
 creationComplete="init()" label="Contact Editor" name="Contact Editor">
 
@@ -11,22 +11,27 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 
 <mx:RemoteObject id="salesRepDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
-</mx:RemoteObject>
+    <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
+</mx:RemoteObject>	
 
 <mx:RemoteObject id="cityDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="stateDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="countryDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="zipDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="accountDataService" destination="dataService">
@@ -100,10 +105,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		titleWindow.setStyle("borderAlpha", 0.9);
 		titleWindow.formIsEmpty = true;
 		contact = new Contact();
-		contact.marketing = new Marketing();
-		contact.creditCard = new CreditCard();
-		contact.address = new Address();
-		contact.shipToAddress = new Address();
 		account= new Account();
 		   
 		salesRepDataService.getAll("SalesRep");
@@ -166,8 +167,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			contact.shipToAddress.country = shipcountrycombo.selectedItem as Country;
 		
 		
-		
-		
 		contact.address.name = "Contact";
 		contact.address.street1 =	street.text;		
 		contact.address.street2 =	street2.text;		
@@ -216,19 +215,46 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	private function mapFromContactData():void{
 		//dataService.getAll("Contact");
 	    accountDataService.getById("Account", contact.userAcctId); 
-	    citycombo.text = contact.address.city.name;
-	    statecombo.text = contact.address.state.name;
-	    zipcombo.text = contact.address.zip.name;
-	    countrycombo.text = contact.address.country.name;
-	    shipcitycombo.text = contact.shipToAddress.city.name;
-	    shipstatecombo.text = contact.shipToAddress.state.name;
-	    shipzipcombo.text = contact.shipToAddress.zip.name;
-	    shipcountrycombo.text = contact.shipToAddress.country.name;
+	 	if (contact.address.city != null)
+			citycombo.selectedIndex = findItem(contact.address.city.name, citys);
+		if (contact.address.state != null)
+			statecombo.selectedIndex = findItem(contact.address.state.name, states1);
+		if (contact.address.country != null)
+			countrycombo.selectedIndex = findItem(contact.address.country.name, countrys);
+		if (contact.address.zip != null)
+			zipcombo.selectedIndex = findItem(contact.address.zip.name, zips);
+		
+		
+		if (contact.shipToAddress.city != null)
+			shipcitycombo.selectedIndex = findItem(contact.shipToAddress.city.name, citys);
+		if (contact.shipToAddress.state != null)
+			shipstatecombo.selectedIndex = findItem(contact.shipToAddress.state.name, states1);
+		if (contact.shipToAddress.country != null)
+			shipcountrycombo.selectedIndex = findItem(contact.shipToAddress.country.name, countrys);
+		if (contact.shipToAddress.zip != null)
+			shipzipcombo.selectedIndex = findItem(contact.shipToAddress.zip.name, zips);
+		if (contact.marketing.followup != null)
+			followUp.selectedDate =contact.marketing.followup;
+		if (contact.marketing.birthDate != null)
+			birthDate.selectedDate =contact.marketing.birthDate;
+		if (contact.marketing.user3!= null)
+			userDate3.selectedDate =contact.marketing.user3;
+		if (contact.marketing.user4!= null)
+			userDate4.selectedDate =contact.marketing.user4;
+		if (contact.marketing.user5!= null)
+			userDate5.selectedDate =contact.marketing.user5;
 	    
 	   
 		
 	}
-	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	
 	private function doNew():void {
 	    contact = new Contact();
@@ -241,79 +267,161 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		                                     		
 	}   
 	private function doCity(): void{                             
-		 var city:City;
-		 var result:Boolean;
-		 
-		if (citycombo.text != null && citycombo.selectedItem == null) {
-			city= new City();
-			city.name= citycombo.text;
-			cityDataService.addUpdate(city);
-			cityDataService.getAll("City");
+		var city:City;
+		var result:Boolean;
+		
+		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
+			var item:int = findItem(citycombo.typedText, citys);
+			if (item == -1) {
+				city = new City();
+				city.name = citycombo.text;
+				cityDataService.addUpdate(city);
+				contact.address.city = city;
+			}
+			else {
+				citycombo.selectedItem = item;
+			}
 		}
 	}
+	
 	private function doCity1(): void{                             
-		 var city:City;
-		 var result:Boolean;
-		 
-		if (shipcitycombo.text != null && shipcitycombo.selectedItem == null) {
-			city= new City();
-			city.name= citycombo.text;
-			cityDataService.addUpdate(city);
-			cityDataService.getAll("City");
+		var city:City;
+		var result:Boolean;
+		
+		if (shipcitycombo.typedText != null && shipcitycombo.typedText != "" && shipcitycombo.selectedIndex == -1) {
+			var item:int = findItem(shipcitycombo.typedText, citys);
+			if (item == -1) {
+				city = new City();
+				city.name = shipcitycombo.text;
+				cityDataService.addUpdate(city);
+				contact.shipToAddress.city = city;
+			}
+			else {
+				shipcitycombo.selectedItem = item;
+			}
 		}
 	}
+	
 	private function doState(): void{                             
-		 var state:State;
-		if (statecombo.text != "" && statecombo.selectedItem == null) {
-			state= new State();
-			state.name= statecombo.text;
-			stateDataService.addUpdate(state);
-			stateDataService.getAll("State");
+		var state:State;
+		var result:Boolean;
+		
+		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
+			var item:int = findItem(statecombo.typedText, states1);
+			if (item == -1) {
+				state = new State();
+				state.name = statecombo.text;
+				stateDataService.addUpdate(state);
+				contact.address.state = state;
+			}
+			else {
+				statecombo.selectedItem = item;
+			}
 		}
 	}
+	
 	private function doState1(): void{                             
-		 var state:State;
-		if (shipstatecombo.text != "" && shipstatecombo.selectedItem == null) {
-			state= new State();
-			state.name= shipstatecombo.text;
-			stateDataService.addUpdate(state);
-			stateDataService.getAll("State");
+		var state:State;
+		var result:Boolean;
+		
+		if (shipstatecombo.typedText != null && shipstatecombo.typedText != "" && shipstatecombo.selectedIndex == -1) {
+			var item:int = findItem(shipstatecombo.typedText, states1);
+			if (item == -1) {
+				state = new State();
+				state.name = shipstatecombo.text;
+				stateDataService.addUpdate(state);
+				contact.shipToAddress.state = state;
+			}
+			else {
+				shipstatecombo.selectedItem = item;
+			}
 		}
 	}
 	private function doZip(): void{                             
-		 var zip:Zip;
-		if (zipcombo.text != null && zipcombo.selectedItem == null) {
-			zip= new Zip();
-			zip.name= zipcombo.text;
-			zipDataService.addUpdate(zip);
-			zipDataService.getAll("Zip");
+		var zip:Zip;
+		var result:Boolean;
+		
+		if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
+			var item:int = findItem(zipcombo.typedText, zips);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = zipcombo.text;
+				zipDataService.addUpdate(zip);
+				contact.address.zip = zip;
+			}
+			else {
+				zipcombo.selectedItem = item;
+			}
 		}
 	}
 	private function doZip1(): void{                             
-		 var zip:Zip;
-		if (shipzipcombo.text != null && shipzipcombo.selectedItem == null) {
-			zip= new Zip();
-			zip.name= shipzipcombo.text;
-			zipDataService.addUpdate(zip);
-			zipDataService.getAll("Zip");
+		var zip:Zip;
+		var result:Boolean;
+		
+		if (shipzipcombo.typedText != null && shipzipcombo.typedText != "" && shipzipcombo.selectedIndex == -1) {
+			var item:int = findItem(shipzipcombo.typedText, zips);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = shipzipcombo.text;
+				zipDataService.addUpdate(zip);
+				contact.shipToAddress.zip = zip;
+			}
+			else {
+				shipzipcombo.selectedItem = item;
+			}
 		}
 	}
+	
 	private function doCountry(): void{                             
-		 var country:Country;
-		if (countrycombo.text != null && countrycombo.selectedItem == null) {
-			country= new Country();
-			country.name= countrycombo.text;
-			countryDataService.addUpdate(country);
-			countryDataService.getAll("Country");
+		var country:Country;
+		var result:Boolean;
+		
+		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
+			var item:int = findItem(countrycombo.typedText, countrys);
+			if (item == -1) {
+				country = new Country();
+				country.name = countrycombo.text;
+				countryDataService.addUpdate(country);
+				contact.address.country = country;
+			}
+			else {
+				countrycombo.selectedItem = item;
+			}
 		}
 	}
+	
 	private function doCountry1(): void{                             
-		 var country:Country;
-		if (shipcountrycombo.text != null && shipcountrycombo.selectedItem == null) {
-			country= new Country();
-			country.name= shipcountrycombo.text;
-			countryDataService.addUpdate(country);
-			countryDataService.getAll("Country");
+		var country:Country;
+		var result:Boolean;
+		
+		if (shipcountrycombo.typedText != null && shipcountrycombo.typedText != "" && shipcountrycombo.selectedIndex == -1) {
+			var item:int = findItem(shipcountrycombo.typedText, states1);
+			if (item == -1) {
+				country = new Country();
+				country.name = shipcountrycombo.text;
+				countryDataService.addUpdate(country);
+				contact.shipToAddress.country = country;
+			}
+			else {
+				shipcountrycombo.selectedItem = item;
+			}
+		}
+	}
+	private function doSaleRep(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+		if (sales_rep_combo.typedText != null && sales_rep_combo.typedText != "" && sales_rep_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.typedText, salesReps);
+			if (item == -1) {
+				sales = new SalesRep();
+				sales.name = sales_rep_combo.text;
+				salesRepDataService.addUpdate(sales);
+				contact.defaultSalesRep = sales
+			}
+			else {
+				sales_rep_combo.selectedItem = item;
+			}
 		}
 	}
 	
@@ -325,20 +433,43 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		contacts = ev.result as ArrayCollection;
 	}
 	private function handleLoadSalesReps(ev:ResultEvent):void {
+		var selectedItem:Object = sales_rep_combo.selectedItem;
 		salesReps = ev.result as ArrayCollection;
-	}  
-	 private function handleLoadCity(ev:ResultEvent):void {
-		citys = ev.result as ArrayCollection;
+		sales_rep_combo.selectedItem = selectedItem;
+	}
+	private function handleLoadCity(ev:ResultEvent):void {
+	 	var selectedItem:Object = shipcitycombo.selectedItem;
+	 	var selectedItem1:Object = citycombo.selectedItem;
+	 	citys = ev.result as ArrayCollection;
+		if (shipcitycombo.selectedItem != null){
+			shipcitycombo.selectedItem = selectedItem;
+		}
+		if (citycombo.selectedItem!= null){
+		citycombo.selectedItem = selectedItem1;
+		}
 	}   
 	 private function handleLoadState(ev:ResultEvent):void {
+		var selectedItem:Object = shipstatecombo.selectedItem;
+	 	var selectedItem1:Object = statecombo.selectedItem;
 		states1 = ev.result as ArrayCollection;
+		shipstatecombo.selectedItem = selectedItem;
+		statecombo.selectedItem = selectedItem1;
 	}   
 	 private function handleLoadCountry(ev:ResultEvent):void {
+		var selectedItem:Object = shipcountrycombo.selectedItem;
+	 	var selectedItem1:Object = countrycombo.selectedItem;
 		countrys = ev.result as ArrayCollection;
+		shipcountrycombo.selectedItem = selectedItem;
+		countrycombo.selectedItem = selectedItem1;
 	}   
 	 private function handleLoadZip(ev:ResultEvent):void {
+		var selectedItem:Object = shipzipcombo.selectedItem;
+	 	var selectedItem1:Object = zipcombo.selectedItem;
 		zips = ev.result as ArrayCollection;
-	}                              
+		shipzipcombo.selectedItem = selectedItem;
+		zipcombo.selectedItem = selectedItem1;
+	}                                 
+
 
 	 private function handleLoadAccountById(ev:ResultEvent):void {
 		account = ev.result as Account;
@@ -356,6 +487,27 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,null);                                 
 	}
+	private function handleSaveCityResult(ev:ResultEvent):void {
+		
+		cityDataService.getAll("City");
+		
+		
+	}      
+	private function handleSaveStateResult(ev:ResultEvent):void {
+		stateDataService.getAll("State");
+	}      
+
+	private function handleSaveCountryResult(ev:ResultEvent):void {
+		countryDataService.getAll("Country");
+	}      
+
+	private function handleSaveZipResult(ev:ResultEvent):void {
+		zipDataService.getAll("Zip");
+	}
+	private function handleSaveSalesRepResult(ev:ResultEvent):void {
+		salesRepDataService.getAll("SalesRep");
+	}   
+	   
  
 ]]>	
 
@@ -377,10 +529,18 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 					<mx:Label x="161" y="94" text="Country:" width="57" textAlign="right"/>
 					<mx:Label x="200" y="64" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="64" text="City:" width="36" textAlign="right"/>
-					<mx:ComboBox x="63" y="62" width="129" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
+					
+				<!--<mx:ComboBox x="63" y="62" width="129" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
 					<mx:ComboBox x="233" y="62" width="62" id="statecombo" dataProvider="{states1}" labelField="name" editable="true" focusOut="doState();"></mx:ComboBox>
 					<mx:ComboBox x="63" y="92" width="90" id="zipcombo" dataProvider="{zips}" labelField="name"  editable="true" focusOut="doZip();"></mx:ComboBox>
 					<mx:ComboBox x="217" y="92" width="78" id="countrycombo" dataProvider="{countrys}" labelField="name"  editable="true" focusOut="doCountry();"></mx:ComboBox>
+					-->
+					
+					<fc:AutoComplete id="citycombo" x="63" y="62" dataProvider="{citys}"  labelField="name" focusOut="doCity()" lookAhead="true" width="119"/>
+					<fc:AutoComplete id="statecombo" x="233" y="62" dataProvider="{states1}"  labelField="name" focusOut="doState()" lookAhead="true" width="45"/>
+					<fc:AutoComplete id="zipcombo" x="63" y="92" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true"/>
+					<fc:AutoComplete id="countrycombo" x="217" y="92" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
+
 				</mx:Panel>
 				<mx:Label x="37" y="12" text="ID "/>
 				<mx:Text x="80" y="40" width="75" id="accountID" text="{contact.userAcctId}"/>
@@ -396,13 +556,19 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
 					<mx:Label x="204" y="64" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="19" y="64" text="City:" width="39" textAlign="right"/>
-					<mx:ComboBox x="66" y="62" width="130" id="shipcitycombo" dataProvider="{citys}" editable="true" labelField="name" focusOut="doCity1()"></mx:ComboBox>
+					<!--<mx:ComboBox x="66" y="62" width="130" id="shipcitycombo" dataProvider="{citys}" editable="true" labelField="name" focusOut="doCity1()"></mx:ComboBox>
 					<mx:ComboBox x="242" y="62" width="53" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
 					<mx:ComboBox x="66" y="92" width="94" id="shipzipcombo" dataProvider="{zips}" editable="true" labelField="name" focusOut="doZip1();"></mx:ComboBox>
 					<mx:ComboBox x="222" y="92" width="73" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>
-					
+					-->
+					<fc:AutoComplete id="shipcitycombo" x="66" y="62" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true" width="119"/>
+					<fc:AutoComplete id="shipstatecombo" x="242" y="62" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
+					<fc:AutoComplete id="shipzipcombo" x="66" y="92" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true"/>
+					<fc:AutoComplete id="shipcountrycombo" x="222" y="92" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
+				
 				</mx:Panel>
-				<mx:ComboBox x="423" y="86" id="sales_rep_combo" labelField="name" dataProvider="{salesReps}" width="172"></mx:ComboBox>
+				<!--<mx:ComboBox x="423" y="86" id="sales_rep_combo" labelField="name" dataProvider="{salesReps}" width="172"></mx:ComboBox>-->
+				<fc:AutoComplete id="sales_rep_combo" x="423" y="86" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Label x="163" y="40" text="Account:" width="59"/>
 				<mx:Text x="230" y="40" width="142" id="accountName" text="{account.title}"/>
 				<mx:Button x="423" y="38" label="Accounts" id="AccountsPicker" click=" var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));"/>
