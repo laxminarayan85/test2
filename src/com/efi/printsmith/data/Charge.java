@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -880,7 +879,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceListElement priceList;
 	/**
 	 * @generated
@@ -897,7 +896,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
 	/**
 	 * @generated
@@ -965,7 +964,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
 	/**
 	 * @generated
@@ -982,7 +981,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CostCenter costCenter;
 	/**
 	 * @generated
@@ -999,7 +998,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Substrate substrate;
 	/**
 	 * @generated
@@ -1084,7 +1083,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private FoldTemplate foldTemplate;
 	/**
 	 * @generated
@@ -1356,7 +1355,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	/**
 	 * @generated
@@ -1764,7 +1763,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shipMode;
 	/**
 	 * @generated
@@ -2053,7 +2052,7 @@ public class Charge extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCategory parent;
 	/**
 	 * @generated

@@ -43,7 +43,7 @@ public var noMail:Boolean = true;
 public var personalAcct:Boolean = true;
 public var numberofEmployees:int = 0;
 public var annualRev:int = 0;
-public var businessType:BusinessType;
+public var businessType:BusinessType = new BusinessType();
 
 }
 }

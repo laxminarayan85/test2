@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -493,7 +492,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockGroup stkgroup;
 	/**
 	 * @generated
@@ -561,7 +560,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockFinish finish;
 	/**
 	 * @generated
@@ -595,7 +594,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockColors color;
 	/**
 	 * @generated
@@ -612,7 +611,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockGrade grade;
 	/**
 	 * @generated
@@ -646,7 +645,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockColors genericcolor;
 	/**
 	 * @generated
@@ -680,7 +679,7 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Vendor vendor;
 	/**
 	 * @generated

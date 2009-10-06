@@ -149,14 +149,19 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
 	    account = new Account();
-	    account.marketing = new Marketing();
-	    /* Note - the following constructors NEED to live in the .vo object constructor for the respective objects... */
+	   /*  account.marketing = new Marketing();
+	     Note - the following constructors NEED to live in the .vo object constructor for the respective objects... 
 	    account.shipToAddress = new Address();
 	    account.billToAddress = new Address();
 	    account.billToContact = new Contact();
 	    account.contact = new Contact();
 	    account.contact.address = new Address();
 	    account.billToContact.address = new Address();
+	    account.salesRep = new SalesRep();
+	    account.taxCode = new TaxCodes();
+	    account.shippingMode = new ShippingMethod();
+	    account.taxTable = new TaxTable();
+	    account.marketing = new Marketing(); */
 	    salesRepDataService.getAll("SalesRep");
 	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
@@ -175,16 +180,20 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		//producer.send(message);
 	}
 		
-	public function setAccount(account:Account):void
+	public function setAccount(account2:Account):void
 	{
-		this.account = account;
-		if (account.shipToAddress == null) account.shipToAddress = new Address();
+		this.account = account2;
+	/* 	if (account.shipToAddress == null) account.shipToAddress = new Address();
 		if (account.billToAddress == null) account.billToAddress = new Address();
 		if (account.billToContact == null) account.billToContact = new Contact();
 		if (account.contact == null) account.contact = new Contact();
 		if (account.billToContact.address == null) account.billToContact.address = new Address();
 		if (account.contact.address == null) account.contact.address = new Address();
 		if (account.marketing == null) account.marketing = new Marketing();
+		if (account.taxCode == null)	account.taxCode = new TaxCodes();
+		if (account.shippingMode == null) account.shippingMode = new ShippingMethod();
+	    if (account.taxTable == null) account.taxTable = new TaxTable();
+	    if (account.salesRep == null) account.salesRep = new SalesRep(); */
 		mapFromAccountData();
 	}			
 	
@@ -204,7 +213,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	
 	private function mapToAccountData():void {
 		account.title = name_edit.text;
-		account.externalAcctId = external_ref_edit.text;
+		account.externalRef = external_ref_edit.text;
 		account.externalAcctId = external_acct_id_edit.text;
 		
 		account.shipToAddress.name = ship_company_edit.text;
@@ -290,9 +299,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			
 		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
 			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
-			
-		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
-			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
 		
 		
 		
@@ -314,6 +320,35 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		acctStatusRadioValue = account.status;
 		acctTypeRadioValue = account.type;
 		logDataService.getAll("CustomerLog");
+		
+		if (account.marketing.businessType != null)
+			businessType_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
+		if (account.shippingMode != null)			
+			ship_via_combo.selectedIndex = findItem(account.shippingMode.name, shippingMethods);
+		if (account.taxCode != null)		
+			tax_code_combo.selectedIndex = findItem(account.taxCode.name, taxCodes);
+		if (account.salesRep != null)
+			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
+		if (account.taxCode!= null)
+			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
+		if (account.billToAddress.city != null)
+			citycombo.selectedIndex = findItem(account.billToAddress.city.name, citys);
+		if (account.billToAddress.state != null)
+			statecombo.selectedIndex = findItem(account.billToAddress.state.name, states1);
+		if (account.billToAddress.country != null)
+			countrycombo.selectedIndex = findItem(account.billToAddress.country.name, countrys);
+		if (account.billToAddress.zip != null)
+			zipcombo.selectedIndex = findItem(account.billToAddress.zip.name, zips);
+		if (account.shipToAddress.city != null)
+			shipcitycombo.selectedIndex = findItem(account.shipToAddress.city.name, citys);
+		if (account.shipToAddress.state != null)
+			shipstatecombo.selectedIndex = findItem(account.shipToAddress.state.name, states1);
+		if (account.shipToAddress.country != null)
+			shipcountrycombo.selectedIndex = findItem(account.shipToAddress.country.name, countrys);
+		if (account.shipToAddress.zip != null)
+			shipzipcombo.selectedIndex = findItem(account.shipToAddress.zip.name, zips);
+		
+		
 	}
 	
 	private function doSave():void {
@@ -339,6 +374,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				sales = new SalesRep();
 				sales.name = sales_rep_combo.text;
 				salesRepDataService.addUpdate(sales);
+				account.salesRep = sales
 			}
 			else {
 				sales_rep_combo.selectedItem = item;
@@ -355,6 +391,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				taxtable = new TaxTable();
 				taxtable.name = tax_table_combo.text;
 				taxTableDataService.addUpdate(taxtable);
+				account.taxTable = taxtable;
 			}
 			else {
 				tax_table_combo.selectedItem = item;
@@ -371,6 +408,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				taxcode = new TaxCodes();
 				taxcode.name = tax_code_combo.text;
 				taxCodeDataService.addUpdate(taxcode);
+				account.taxCode = taxcode;
 			}
 			else {
 				tax_table_combo.selectedItem = item;
@@ -387,6 +425,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				shipv = new ShippingMethod();
 				shipv.name = ship_via_combo.text;
 				shippingMethodDataService.addUpdate(shipv);
+				account.shippingMode = shipv;
 			}
 			else {
 				ship_via_combo.selectedItem = item;
@@ -403,6 +442,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				business = new BusinessType();
 				business.name = business_type_combo.text;
 				businessTypeDataService.addUpdate(business);
+				account.marketing.businessType= business;
 			}
 			else {
 				business_type_combo.selectedItem = item;
@@ -420,6 +460,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				city = new City();
 				city.name = citycombo.text;
 				cityDataService.addUpdate(city);
+				account.billToAddress.city = city;
 			}
 			else {
 				citycombo.selectedItem = item;
@@ -437,6 +478,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				city = new City();
 				city.name = shipcitycombo.text;
 				cityDataService.addUpdate(city);
+				account.shipToAddress.city = city;
 			}
 			else {
 				shipcitycombo.selectedItem = item;
@@ -454,6 +496,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				state = new State();
 				state.name = statecombo.text;
 				stateDataService.addUpdate(state);
+				account.billToAddress.state = state;
 			}
 			else {
 				statecombo.selectedItem = item;
@@ -471,6 +514,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				state = new State();
 				state.name = shipstatecombo.text;
 				stateDataService.addUpdate(state);
+				account.shipToAddress.state = state;
 			}
 			else {
 				shipstatecombo.selectedItem = item;
@@ -487,6 +531,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				zip = new Zip();
 				zip.name = zipcombo.text;
 				zipDataService.addUpdate(zip);
+				account.billToAddress.zip = zip;
 			}
 			else {
 				zipcombo.selectedItem = item;
@@ -503,6 +548,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				zip = new Zip();
 				zip.name = shipzipcombo.text;
 				zipDataService.addUpdate(zip);
+				account.shipToAddress.zip = zip;
 			}
 			else {
 				shipzipcombo.selectedItem = item;
@@ -520,6 +566,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				country = new Country();
 				country.name = countrycombo.text;
 				countryDataService.addUpdate(country);
+				account.billToAddress.country = country;
 			}
 			else {
 				countrycombo.selectedItem = item;
@@ -537,6 +584,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				country = new Country();
 				country.name = shipcountrycombo.text;
 				countryDataService.addUpdate(country);
+				account.shipToAddress.country = country;
 			}
 			else {
 				shipcountrycombo.selectedItem = item;
@@ -549,9 +597,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
  	private function handleLoadCity(ev:ResultEvent):void {
 	 	var selectedItem:Object = shipcitycombo.selectedItem;
 	 	var selectedItem1:Object = citycombo.selectedItem;
-		citys = ev.result as ArrayCollection;
-		shipcitycombo.selectedItem = selectedItem;
+	 	citys = ev.result as ArrayCollection;
+		if (shipcitycombo.selectedItem != null){
+			shipcitycombo.selectedItem = selectedItem;
+		}
+		if (citycombo.selectedItem!= null){
 		citycombo.selectedItem = selectedItem1;
+		}
 	}   
 	 private function handleLoadState(ev:ResultEvent):void {
 		var selectedItem:Object = shipstatecombo.selectedItem;
@@ -635,7 +687,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 //SAVE 
 	
 	private function handleSaveCityResult(ev:ResultEvent):void {
+		
 		cityDataService.getAll("City");
+		
 		
 	}      
 	private function handleSaveStateResult(ev:ResultEvent):void {
@@ -747,7 +801,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.id}"/>
 				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
-				<mx:TextInput x="282" y="38" id="external_ref_edit"  text="{account.externalAcctId}"/>
+				<mx:TextInput x="282" y="38" id="external_ref_edit"  text="{account.externalRef}"/>
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>

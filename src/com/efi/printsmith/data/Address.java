@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -161,7 +160,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private City city;
 	/**
 	 * @generated
@@ -178,7 +177,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private State state;
 	/**
 	 * @generated
@@ -195,7 +194,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Zip zip;
 	/**
 	 * @generated
@@ -212,7 +211,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Country country;
 	/**
 	 * @generated
@@ -314,9 +313,7 @@ public class Address extends ModelBase {
 	}
  	
 	
-    @OneToMany
-	@Cascade(value = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.SAVE_UPDATE,
-			CascadeType.DELETE, CascadeType.REMOVE})
+    @OneToMany( cascade = {CascadeType.ALL})
 	private java.util.List<ComLink> comLinks;
 	/**
 	 * @generated

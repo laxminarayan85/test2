@@ -22,7 +22,7 @@ public var created:Date;
 public var modified:Date;
 
 public var name:String = "";
-public var genericColor:GenericColors;
+public var genericColor:GenericColors = new GenericColors();
 
 }
 }

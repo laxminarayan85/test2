@@ -10,7 +10,6 @@ import com.efi.printsmith.exceptions.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
@@ -142,7 +141,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String BUSINESSTYPE = "BusinessType";
+	public static final String EXTERNALREF = "ExternalRef";
 	/**
 	 * @generated
 	 */
@@ -464,7 +463,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
 	/**
 	 * @generated
@@ -481,7 +480,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address billToAddress;
 	/**
 	 * @generated
@@ -498,7 +497,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact contact;
 	/**
 	 * @generated
@@ -515,7 +514,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact billToContact;
 	/**
 	 * @generated
@@ -805,23 +804,23 @@ public class Account extends ModelBase {
  	
 	
  	@Basic
-	private String businessType;
+	private String externalRef;
 	/**
 	 * @generated
  	 */
-	public String getBusinessType(){
-		return businessType; 
+	public String getExternalRef(){
+		return externalRef; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setBusinessType(String newVal) {
-		this.businessType = newVal;
+	public void setExternalRef(String newVal) {
+		this.externalRef = newVal;
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep salesRep;
 	/**
 	 * @generated
@@ -838,7 +837,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shippingMode;
 	/**
 	 * @generated
@@ -957,7 +956,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Marketing marketing;
 	/**
 	 * @generated
@@ -1671,7 +1670,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	/**
 	 * @generated
@@ -1688,7 +1687,7 @@ public class Account extends ModelBase {
 	}
  	
 	
-	@ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxCodes taxCode;
 	/**
 	 * @generated
@@ -1736,7 +1735,7 @@ public class Account extends ModelBase {
 		if (POREQUIRED.equals(propertyName)) return getPoRequired();
 		if (APPLYFINANCECHARGES.equals(propertyName)) return getApplyFinanceCharges();
 		if (GENERATESTATEMENTS.equals(propertyName)) return getGenerateStatements();
-		if (BUSINESSTYPE.equals(propertyName)) return getBusinessType();
+		if (EXTERNALREF.equals(propertyName)) return getExternalRef();
 		if (SALESREP.equals(propertyName)) return getSalesRep();
 		if (SHIPPINGMODE.equals(propertyName)) return getShippingMode();
 		if (LASTINVOICEDATE.equals(propertyName)) return getLastInvoiceDate();
@@ -1824,7 +1823,7 @@ public class Account extends ModelBase {
 		if (POREQUIRED.equals(propertyName)) setPoRequired((Boolean)newValue); else
 		if (APPLYFINANCECHARGES.equals(propertyName)) setApplyFinanceCharges((Boolean)newValue); else
 		if (GENERATESTATEMENTS.equals(propertyName)) setGenerateStatements((Boolean)newValue); else
-		if (BUSINESSTYPE.equals(propertyName)) setBusinessType((String)newValue); else
+		if (EXTERNALREF.equals(propertyName)) setExternalRef((String)newValue); else
 		if (SALESREP.equals(propertyName)) setSalesRep((SalesRep)newValue); else
 		if (SHIPPINGMODE.equals(propertyName)) setShippingMode((ShippingMethod)newValue); else
 		if (LASTINVOICEDATE.equals(propertyName)) setLastInvoiceDate((Date)newValue); else
@@ -1938,7 +1937,7 @@ public class Account extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (GENERATESTATEMENTS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (BUSINESSTYPE.equals(propertyName)) 
+		if (EXTERNALREF.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SALESREP.equals(propertyName)) 
 			return new Class<?>[] {SalesRep.class};		
@@ -2080,7 +2079,7 @@ public class Account extends ModelBase {
 		if (POREQUIRED.equals(propertyName)) return Account.class;
 		if (APPLYFINANCECHARGES.equals(propertyName)) return Account.class;
 		if (GENERATESTATEMENTS.equals(propertyName)) return Account.class;
-		if (BUSINESSTYPE.equals(propertyName)) return Account.class;
+		if (EXTERNALREF.equals(propertyName)) return Account.class;
 		if (SALESREP.equals(propertyName)) return Account.class;
 		if (SHIPPINGMODE.equals(propertyName)) return Account.class;
 		if (LASTINVOICEDATE.equals(propertyName)) return Account.class;
@@ -2196,7 +2195,7 @@ public class Account extends ModelBase {
 			return false;
 		if (! SmartEquals(getGenerateStatements(), objT.getGenerateStatements()))
 			return false;
-		if (! SmartEquals(getBusinessType(), objT.getBusinessType()))
+		if (! SmartEquals(getExternalRef(), objT.getExternalRef()))
 			return false;
 		if (! SmartEquals(getSalesRep(), objT.getSalesRep()))
 			return false;

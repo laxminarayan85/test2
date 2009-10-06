@@ -23,7 +23,7 @@ public var modified:Date;
 
 public var children:List;
 public var name:String = "";
-public var parent:ChargeCommand;
+public var parent:ChargeCommand = new ChargeCommand();
 
 }
 }

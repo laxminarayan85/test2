@@ -21,6 +21,7 @@ public var created:Date;
 
 public var modified:Date;
 
+public var name:int = 0;
 
 }
 }

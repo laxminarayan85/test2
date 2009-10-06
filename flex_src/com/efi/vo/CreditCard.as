@@ -24,7 +24,7 @@ public var modified:Date;
 public var cardHolderName:String = "";
 public var cardNumber:String = "";
 public var expiresDate:Date = new Date();
-public var address:Address;
+public var address:Address = new Address();
 public var creditCardID:int = 0;
 public var type:String = "";
 
