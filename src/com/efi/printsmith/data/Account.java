@@ -736,18 +736,18 @@ public class Account extends ModelBase {
  	
 	
  	@Basic
-	private String payCommissions;
+	private Boolean payCommissions;
 	/**
 	 * @generated
  	 */
-	public String getPayCommissions(){
+	public Boolean getPayCommissions(){
 		return payCommissions; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPayCommissions(String newVal) {
+	public void setPayCommissions(Boolean newVal) {
 		this.payCommissions = newVal;
 	}
  	
@@ -1819,7 +1819,7 @@ public class Account extends ModelBase {
 		if (OPTOUTMARKETING.equals(propertyName)) setOptOutMarketing((Boolean)newValue); else
 		if (ACCTISINDIVIDUAL.equals(propertyName)) setAcctIsIndividual((Boolean)newValue); else
 		if (TAXEXEMPT.equals(propertyName)) setTaxExempt((Boolean)newValue); else
-		if (PAYCOMMISSIONS.equals(propertyName)) setPayCommissions((String)newValue); else
+		if (PAYCOMMISSIONS.equals(propertyName)) setPayCommissions((Boolean)newValue); else
 		if (POREQUIRED.equals(propertyName)) setPoRequired((Boolean)newValue); else
 		if (APPLYFINANCECHARGES.equals(propertyName)) setApplyFinanceCharges((Boolean)newValue); else
 		if (GENERATESTATEMENTS.equals(propertyName)) setGenerateStatements((Boolean)newValue); else
@@ -1930,7 +1930,7 @@ public class Account extends ModelBase {
 		if (TAXEXEMPT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (PAYCOMMISSIONS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (POREQUIRED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (APPLYFINANCECHARGES.equals(propertyName)) 

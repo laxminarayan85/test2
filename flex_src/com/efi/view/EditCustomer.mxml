@@ -149,19 +149,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
 	    account = new Account();
-	   /*  account.marketing = new Marketing();
-	     Note - the following constructors NEED to live in the .vo object constructor for the respective objects... 
-	    account.shipToAddress = new Address();
-	    account.billToAddress = new Address();
-	    account.billToContact = new Contact();
-	    account.contact = new Contact();
-	    account.contact.address = new Address();
-	    account.billToContact.address = new Address();
-	    account.salesRep = new SalesRep();
-	    account.taxCode = new TaxCodes();
-	    account.shippingMode = new ShippingMethod();
-	    account.taxTable = new TaxTable();
-	    account.marketing = new Marketing(); */
 	    salesRepDataService.getAll("SalesRep");
 	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
@@ -183,17 +170,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	public function setAccount(account2:Account):void
 	{
 		this.account = account2;
-	/* 	if (account.shipToAddress == null) account.shipToAddress = new Address();
-		if (account.billToAddress == null) account.billToAddress = new Address();
-		if (account.billToContact == null) account.billToContact = new Contact();
-		if (account.contact == null) account.contact = new Contact();
-		if (account.billToContact.address == null) account.billToContact.address = new Address();
-		if (account.contact.address == null) account.contact.address = new Address();
-		if (account.marketing == null) account.marketing = new Marketing();
-		if (account.taxCode == null)	account.taxCode = new TaxCodes();
-		if (account.shippingMode == null) account.shippingMode = new ShippingMethod();
-	    if (account.taxTable == null) account.taxTable = new TaxTable();
-	    if (account.salesRep == null) account.salesRep = new SalesRep(); */
 		mapFromAccountData();
 	}			
 	
@@ -219,11 +195,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.shipToAddress.name = ship_company_edit.text;
 		account.shipToAddress.street1 = ship_street1_edit.text;
 		account.shipToAddress.street2 = ship_street2_edit.text;
-		/* account.shipToAddress.city.name = ship_city_edit.text;
-		account.shipToAddress.zip.name = ship_zip_edit.text;
-		account.shipToAddress.country.name = ship_country_edit.text;
-		account.shipToAddress.state.name = ship_state_edit.text; */
-		
+	
 		if (shipcitycombo != null && shipcitycombo.selectedItem != null) 
 			account.shipToAddress.city = shipcitycombo.selectedItem as City;
 		if (shipstatecombo != null && shipstatecombo.selectedItem != null) 
@@ -245,10 +217,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.billToAddress.name = bill_company_edit.text;
 		account.billToAddress.street1 =	bill_street1_edit.text;		
 		account.billToAddress.street2 =	bill_street2_edit.text;		
-		/* account.billToAddress.city.name = bill_city_edit.text;
-		account.billToAddress.zip.name =	bill_zip_edit.text;		     
-		account.billToAddress.country.name =	bill_country_edit.text;
-		account.billToAddress.state.name = bill_state_edit.text; */
+		
 
 		account.contact.address.firstName = ship_contact_first_name_edit.text;
 		account.contact.address.lastName = ship_contact_last_name_edit.text;		
@@ -267,6 +236,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.marketing.birthDate = birthDate.selectedDate;
 		account.marketing.followup=  followUp.selectedDate;
 		account.marketing.commonInterst = commonInterest.text;
+		account.marketing.sportsInterst = sportsInterest.text;
 		account.marketing.leadSource = leadSource.text;
 		account.marketing.leadSource2 = leadSource1.text;
 		account.marketing.mailerType = mailerType.text;
@@ -280,13 +250,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.marketing.user9 = user9Tag.text; 
 		account.marketing.annualRev = parseInt(annualRev.text);
 		account.marketing.customer = customer.selected;
-		account.marketing.prospect = prospect.selected;
+		account.marketing.prospect = prospect.selected
 		account.marketing.noMail = noMail.selected;
+		account.marketing.personalAcct = personalAccount.selected;
 		account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
 		
-		
-		if (businessType_combo != null && businessType_combo.selectedItem != null) 
-			account.marketing.businessType = businessType_combo.selectedItem as BusinessType;
+		if (business_type_combo != null && business_type_combo.selectedItem != null) 
+			account.marketing.businessType = business_type_combo.selectedItem as BusinessType;
 		
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			account.salesRep = sales_rep_combo.selectedItem as SalesRep;
@@ -299,9 +269,19 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			
 		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
 			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
+			
+		account.financeRate = parseInt(monthly_finance_charge_edit.text);
+		account.creditLimit = parseInt(credit_limit_edit.text);
+		account.termsNet = parseInt(due_days_edit.text);
+		account.applyFinanceCharges = never_calculate_finance_check.selected;
+		account.oneTimeDiscount = one_time_discount_check.selected;
 		
-		
-		
+		account.poRequired = po_required_check.selected;
+		account.generateStatements = do_not_generate_statements_check .selected;
+		account.payCommissions = account_is_commissioned.selected;
+		account.fileOriginals = always_file_originals.selected;
+		account.taxExempt = tax_exempt_check.selected;
+		account.resaleNumber = resale_number_edit.text;
 		
 	}
 	
@@ -322,7 +302,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		logDataService.getAll("CustomerLog");
 		
 		if (account.marketing.businessType != null)
-			businessType_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
+			business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
 		if (account.shippingMode != null)			
 			ship_via_combo.selectedIndex = findItem(account.shippingMode.name, shippingMethods);
 		if (account.taxCode != null)		
@@ -347,7 +327,17 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			shipcountrycombo.selectedIndex = findItem(account.shipToAddress.country.name, countrys);
 		if (account.shipToAddress.zip != null)
 			shipzipcombo.selectedIndex = findItem(account.shipToAddress.zip.name, zips);
-		
+		if (account.marketing.followup != null)
+			followUp.selectedDate =account.marketing.followup;
+		if (account.marketing.birthDate != null)
+			birthDate.selectedDate =account.marketing.birthDate;
+		if (account.marketing.user3!= null)
+			userDate3.selectedDate =account.marketing.user3;
+		if (account.marketing.user4!= null)
+			userDate4.selectedDate =account.marketing.user4;
+		if (account.marketing.user5!= null)
+			userDate5.selectedDate =account.marketing.user5;
+			
 		
 	}
 	
@@ -820,14 +810,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<fc:AutoComplete id="shipstatecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
 					<fc:AutoComplete id="shipzipcombo" x="85" y="110" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true"/>
 					<fc:AutoComplete id="shipcountrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
-
-					
-					
-					
-					<!--<mx:ComboBox x="85" y="86" width="110" id="shipcitycombo" dataProvider="{citys}" editable="true" focusOut="doCity1();" labelField="name"></mx:ComboBox>-->
-					<!--<mx:ComboBox x="250" y="86" width="45" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
-					<mx:ComboBox x="85" y="110" width="89" id="shipzipcombo" dataProvider="{zips}" editable="true" labelField="name" focusOut="doZip1();"></mx:ComboBox>
-					<mx:ComboBox x="233" y="110" width="62" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>-->				
+				
 				</mx:Panel>
 					
 				<mx:Panel x="344" y="94" width="325" height="182" layout="absolute" title="Statement Address" dropShadowEnabled="false">
@@ -847,10 +830,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<fc:AutoComplete id="countrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
 
 					
-				<!--	<mx:ComboBox x="85" y="86" width="123" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="254" y="86" width="41" focusOut="doState();" id="statecombo" dataProvider="{states1}" editable="true" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="85" y="110" width="90" id="zipcombo" dataProvider="{zips}" editable="true" focusOut="doZip();" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="233" y="110" width="62" id="countrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry();"></mx:ComboBox>-->
+			
 				</mx:Panel>
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
 					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.address.firstName}"/>
@@ -943,14 +923,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:Text x="111" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
 				<mx:Text x="111" y="10" width="464" id="master_acct_edit"/>
 				<mx:Button x="583" y="8" label="Select..."/>
-				<!--<mx:ComboBox x="111" y="34" width="160" id="sales_rep_combo" dataProvider="{salesReps}" labelField="name"></mx:ComboBox>-->
 				<fc:AutoComplete id="sales_rep_combo" x="111" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<fc:AutoComplete id="business_type_combo" x="111" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
 					
-				<!--<mx:ComboBox x="111" y="60" width="160" editable="true" id="business_type_combo"></mx:ComboBox>-->
 				<mx:Label x="10" y="90" text="Ship Via:" textAlign="right" width="93"/>
-			<!--	<mx:ComboBox x="111" y="88" width="160" id="ship_via_combo" dataProvider="{shippingMethods}" labelField="name"></mx:ComboBox>-->
-			<fc:AutoComplete id="ship_via_combo" x="111" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
+				<fc:AutoComplete id="ship_via_combo" x="111" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
 				
 				<mx:Label x="10" y="264" text="Default Invoice:" textAlign="right" width="102"/>
 				<mx:ComboBox x="120" y="262" width="160" id="default_invoice_combo"></mx:ComboBox>
@@ -962,13 +939,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:CheckBox x="10" y="232" label="Always file originals" width="236" id="always_file_originals" selected="{account.fileOriginals}"/>
 				<mx:Panel x="305" y="38" width="351" height="186" layout="absolute" title="Tax Setup" dropShadowEnabled="false">
 					<mx:Label x="0" y="12" text="Tax Table:" textAlign="right" width="93"/>
-					<!--<mx:ComboBox x="101" y="10" width="160" id="tax_table_combo"></mx:ComboBox>-->
 					
 					<fc:AutoComplete id="tax_table_combo" x="101" y="10" width="160" dataProvider="{taxTables}"  labelField="name" focusOut="doTaxTable()" lookAhead="true" />
 					<fc:AutoComplete id="tax_code_combo" x="101" y="38" width="160" dataProvider="{taxCodes}"  labelField="name" focusOut="doTaxCode()" lookAhead="true" />
 			
 					<mx:Label x="0" y="38" text="Tax Code:" textAlign="right" width="93"/>
-					<!--<mx:TextInput x="101" y="38" width="160" id="tax_code_edit"/>-->
 					<mx:Label x="10" y="64" text="Resale #:" textAlign="right" width="83"/>
 					<mx:TextInput x="101" y="64" width="160" id="resale_number_edit"  text="{account.resaleNumber}"/>
 					<mx:Label x="10" y="90" text="Cert Expires:" textAlign="right" width="83"/>
@@ -1092,9 +1067,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:Label x="12" y="10" text="Num Employees:"/>
 					<mx:Label x="10" y="38" text="Annual Revenue:"/>
 					<mx:TextInput x="119" y="38" width="152" id="annualRev" text="{account.marketing.annualRev}"/>
-					<mx:Label x="21" y="66" text="Business Type:"/>
 					<mx:TextInput x="119" y="10" width="152" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
-					<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
+					<!--<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
+					
+					<fc:AutoComplete id="business_type_combo" x="119" y="64" width="152" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
+				-->
 				</mx:Panel>
 				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="Marketing Dates" dropShadowEnabled="false">
 					<mx:Label x="12" y="10" text="Follow Up:"/>
@@ -1125,10 +1102,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:TextInput x="454" y="120" width="175" id="mailerType"  text="{account.marketing.mailerType}"/>
 					<mx:TextInput x="454" y="10" width="175" id="leadSource1"  text="{account.marketing.leadSource2}"/>
 					<mx:Label x="368" y="12" text="Lead Source:"/>
-					<mx:Label x="337" y="40" text="Sport Interest:"/>
+					<mx:Label x="359" y="40" text="Sport Interest:"/>
 					<mx:Label x="400" y="68" text="User 8:"/>
 					<mx:Label x="400" y="96" text="User 9:"/>
-					<mx:Label x="361" y="124" text="Mailer Type:"/>
+					<mx:Label x="372" y="127" text="Mailer Type:"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas label="Templates" width="100%" height="100%">
