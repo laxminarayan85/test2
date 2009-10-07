@@ -49,13 +49,41 @@ width="772" height="845" title="Press Definitions"
 	}
                                   
 		          
-	private function doAddPress():void {
-		dataService.addUpdate(pressDefinition);
-	}     
-	             
-	private function doDeletePress():void {     
-		dataService.deleteItem("PressDefinition", pressDefinition.id);         
+	private function doDelete():void {
+	    dataService.deleteItem("PressDefinition",pressDefinition.id);
+	 	
+	}  
+	private function doGet():void{
+	/* 	var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.formIsEmpty = true; */
+	   	    
+	}    
+	/* private function doNext():void {  
+		var itemp:int;
+		itemp = pressDefinitionArray.getItemIndex(pressDefinition); 
+		itemp++;
+		if (itemp == pressDefinitionArray.length){
+			itemp = pressDefinitionArray.length - 1;
+		}
+		pressDefinition = contacts.getItemAt(itemp,0) as PressDefinition;   
+	    setPressDef(pressDefinition);                         
 	}
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = pressDefinitionArray.getItemIndex(pressDefinition); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		pressDefinition = pressDefinitionArray.getItemAt(itemp,0) as PressDefinition;   
+	    setPressDef(pressDefinition);                                           
+	}     */
+	public function setPressDef(pressdef:PressDefinition):void
+	{
+		this.pressDefinition = pressdef;
+		
+	}		                                       
 	
 	private function doPaperStyle(): String {              
 		   if (pressDefinition.sheetFed ) {
@@ -142,7 +170,8 @@ width="772" height="845" title="Press Definitions"
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-	     loadPressDefinitions();
+		loadPressDefinitions();
+		doNew();
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  
