@@ -64,6 +64,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
+<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+<mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 
 <mx:Script>                                   
 <![CDATA[
@@ -94,8 +97,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
     import mx.printing.PrintAdvancedDataGrid;
     import mx.printing.PrintDataGrid;
     import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
     
-    private var enableSave:Boolean = true;
     private var accounts:ArrayCollection = new ArrayCollection();
                  
 	[Bindable]                                         
@@ -140,8 +144,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
     private var countrys:ArrayCollection = new ArrayCollection();  
     [Bindable]
     private var zips:ArrayCollection = new ArrayCollection();                  
+    [Bindable]
+    private var formIsValid:Boolean = false;
     
-
+    private var focussedFormControl:DisplayObject;
+    
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
@@ -817,6 +824,29 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
  		customerLog.logEntry = selected_comment_edit.text;
  		logDataService.addUpdate(customerLog);
  	}
+ 	
+    private function validateForm(event:Event):void 
+    {                    
+        focussedFormControl = event.target as DisplayObject;    
+
+        formIsValid = true;            
+
+        validate(shipZipValidator);                
+        validate(zipValidator);
+        validate(nameValidator);
+    }
+ 
+    private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+         
+		return currentControlIsValid;
+	}
+              
 ]]>
                              
 </mx:Script>
@@ -825,7 +855,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	<mx:Canvas width="851" height="704">
 		<mx:TabNavigator x="0" y="70" width="681" height="635" creationPolicy="all">
 			<mx:Canvas label="Address" width="100%" height="100%">
-				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}"/>
+				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" change="validateForm(event);"/>
 				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.id}"/>
 				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
@@ -846,7 +876,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<!--<hc:AutoComplete x="85" y="86" id="shipcitycombo" dataProvider="{citys}" labelField="name" valueCommit="doCity1()"/>-->
 					<fc:AutoComplete id="shipcitycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true" width="119"/>
 					<fc:AutoComplete id="shipstatecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
-					<fc:AutoComplete id="shipzipcombo" x="85" y="110" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true"/>
+					<fc:AutoComplete id="shipzipcombo" x="85" y="110" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true" change="validateForm(event);"/>
 					<fc:AutoComplete id="shipcountrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
 				
 				</mx:Panel>
@@ -864,7 +894,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					
 					<fc:AutoComplete id="citycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity()" lookAhead="true" width="119"/>
 					<fc:AutoComplete id="statecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState()" lookAhead="true" width="45"/>
-					<fc:AutoComplete id="zipcombo" x="85" y="110" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true"/>
+					<fc:AutoComplete id="zipcombo" x="85" y="110" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true" change="validateForm(event);"/>
 					<fc:AutoComplete id="countrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
 
 					
@@ -1159,7 +1189,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		</mx:Button>
 		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
 		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
-		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{formIsValid}">
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
