@@ -180,13 +180,16 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if (statecombo != null && statecombo.selectedItem != null) 
 			contact.address.state = statecombo.selectedItem as State;
 		if (zipcombo != null && zipcombo.selectedItem != null) 
-			contact.address.zip = zipcombo .selectedItem as Zip;
+			contact.address.zip = zipcombo.selectedItem as Zip;
 		if (countrycombo != null && countrycombo.selectedItem != null) 
 			contact.address.country = countrycombo.selectedItem as Country;
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
-		
+		if (cardzip != null && cardzip.selectedItem != null) 
+			contact.creditCard.address.zip = cardzip.selectedItem as Zip;
+			
+			
 		contact.marketing.birthDate = birthDate.selectedDate;
 		contact.marketing.followup= followUp.selectedDate;
 		contact.marketing.commonInterst = commonInterest.text;
@@ -236,6 +239,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			shipcountrycombo.selectedIndex = findItem(contact.shipToAddress.country.name, countrys);
 		if (contact.shipToAddress.zip != null)
 			shipzipcombo.selectedIndex = findItem(contact.shipToAddress.zip.name, zips);
+		if (contact.creditCard.address.zip != null)
+			cardzip.selectedIndex = findItem(contact.creditCard.address.zip.name, zips);
 		if (contact.marketing.followup != null)
 			followUp.selectedDate =contact.marketing.followup;
 		if (contact.marketing.birthDate != null)
@@ -376,7 +381,23 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			}
 		}
 	}
-	
+	private function doZipCredit(): void{                             
+		var zip:Zip;
+		var result:Boolean;
+		
+		if (cardzip.typedText != null && cardzip.typedText != "" && cardzip.selectedIndex == -1) {
+			var item:int = findItem(cardzip.typedText, zips);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = cardzip.text;
+				zipDataService.addUpdate(zip);
+				contact.creditCard.address.zip = zip;
+			}
+			else {
+				cardzip.selectedItem = item;
+			}
+		}
+	}
 	private function doCountry(): void{                             
 		var country:Country;
 		var result:Boolean;
@@ -470,9 +491,11 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	 private function handleLoadZip(ev:ResultEvent):void {
 		var selectedItem:Object = shipzipcombo.selectedItem;
 	 	var selectedItem1:Object = zipcombo.selectedItem;
+	 	var selectedItem2:Object = cardzip.selectedItem;
 		zips = ev.result as ArrayCollection;
 		shipzipcombo.selectedItem = selectedItem;
 		zipcombo.selectedItem = selectedItem1;
+		cardzip.selectedItem = selectedItem2;
 	}                                 
 
 
@@ -628,7 +651,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardNumber}"/>
 				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="false"/>
 				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address.street1}"/>
-				<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>
+				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
+				<fc:AutoComplete id="cardzip" x="243" y="183" width="80"  dataProvider="{zips}"  labelField="name" focusOut="doZipCredit()" lookAhead="true"/>
+					
 				<mx:ComboBox x="243" y="82" id="cardtype" text="{contact.creditCard.type}"></mx:ComboBox>
 			</mx:Canvas>
 			<mx:Canvas label="Web" width="100%" height="100%">
