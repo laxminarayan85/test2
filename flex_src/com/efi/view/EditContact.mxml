@@ -268,8 +268,39 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	
 	private function doNew():void {
 	    contact = new Contact();
+	    setContact(contact);
 	 	
+	}  
+	private function doDelete():void {
+	    dataService.deleteItem("Contact",contact.id);
+	 	
+	}  
+	private function doGet():void{
+		var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.formIsEmpty = true;
+	   	    
 	}    
+	private function doNext():void {  
+		var itemp:int;
+		itemp = contacts.getItemIndex(account); 
+		itemp++;
+		if (itemp == contacts.length){
+			itemp = contacts.length - 1;
+		}
+		contact = contacts.getItemAt(itemp,0) as Contact;   
+	    setContact(contact);                         
+	}
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = contacts.getItemIndex(contact); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		contact = contacts.getItemAt(itemp,0) as Contact;   
+	    setContact(contact);                                           
+	}                                           
 	
 	private function doSave():void {
 		mapToContactData();
@@ -452,6 +483,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		dataService.getAll("Contact");
 	}
 
 	
@@ -504,6 +536,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("Contact");
+		doNew();
 	}
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -671,17 +705,17 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
-		<mx:Button x="217" y="10" width="38" height="38">
+		<mx:Button x="217" y="10" width="38" height="38" click="doGet();">
 			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
-		<mx:Button x="263" y="10" width="38" height="38">
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38" click="doNew();">
-			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
+			<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+	    <mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
 		<mx:Button x="493" y="10" width="38" height="38">
 			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
