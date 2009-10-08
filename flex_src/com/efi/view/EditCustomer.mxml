@@ -67,6 +67,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 <mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
 <mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactBillFirstValidator" source="{account.billToContact.firstName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactShipFirstValidator" source="{account.contact.firstName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactBillLastValidator" source="{account.billToContact.lastName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactShipLastValidator" source="{account.contact.lastName}"	property="text"	minLength="2" required="true"/>
 
 <mx:Script>                                   
 <![CDATA[
@@ -260,19 +264,19 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.billToAddress.street2 =	bill_street2_edit.text;		
 		
 
-		account.contact.address.firstName = ship_contact_first_name_edit.text;
-		account.contact.address.lastName = ship_contact_last_name_edit.text;		
-		account.contact.address.prefix = ship_contact_prefix_edit.text;			
-		account.contact.address.suffix = ship_contact_suffix_edit.text;			
-		account.contact.address.jobTitle = ship_contact_job_title_edit.text;		
-		account.contact.address.salutation = ship_contact_salutation_edit.text;
+		account.contact.firstName = ship_contact_first_name_edit.text;
+		account.contact.lastName = ship_contact_last_name_edit.text;		
+		account.contact.prefix = ship_contact_prefix_edit.text;			
+		account.contact.suffix = ship_contact_suffix_edit.text;			
+		account.contact.jobTitle = ship_contact_job_title_edit.text;		
+		account.contact.salutation = ship_contact_salutation_edit.text;
 
-		account.billToContact.address.firstName = bill_contact_first_name_edit.text;
-		account.billToContact.address.lastName = bill_contact_last_name_edit.text;
-		account.billToContact.address.prefix = bill_contact_prefix_edit.text;	
-		account.billToContact.address.suffix = bill_contact_suffix_edit.text;
-		account.billToContact.address.jobTitle = bill_contact_job_title_edit.text;
-		account.billToContact.address.salutation = bill_contact_salutation_edit.text;
+		account.billToContact.firstName = bill_contact_first_name_edit.text;
+		account.billToContact.lastName = bill_contact_last_name_edit.text;
+		account.billToContact.prefix = bill_contact_prefix_edit.text;	
+		account.billToContact.suffix = bill_contact_suffix_edit.text;
+		account.billToContact.jobTitle = bill_contact_job_title_edit.text;
+		account.billToContact.salutation = bill_contact_salutation_edit.text;
 		
 		account.marketing.birthDate = birthDate.selectedDate;
 		account.marketing.followup=  followUp.selectedDate;
@@ -834,6 +838,12 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
         validate(shipZipValidator);                
         validate(zipValidator);
         validate(nameValidator);
+        validate(contactShipFirstValidator);
+        validate(contactBillFirstValidator);
+        validate(contactBillLastValidator);
+        validate(contactBillLastValidator);
+        
+        
     }
  
     private function validate(validator:Validator):Boolean
@@ -901,18 +911,18 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			
 				</mx:Panel>
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
-					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.address.firstName}"/>
+					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.firstName}" change="validateForm(event);"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
-					<mx:TextInput x="101" y="38" width="194" id="ship_contact_last_name_edit" text="{account.contact.address.lastName}"/>
-					<mx:TextInput x="101" y="66" width="46" id="ship_contact_prefix_edit" text="{account.contact.address.prefix}"/>
+					<mx:TextInput x="101" y="38" width="194" id="ship_contact_last_name_edit" text="{account.contact.lastName}" change="validateForm(event);"/>
+					<mx:TextInput x="101" y="66" width="46" id="ship_contact_prefix_edit" text="{account.contact.prefix}"/>
 					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
 					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
 					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
-					<mx:TextInput x="249" y="68" width="46" id="ship_contact_suffix_edit" text="{account.contact.address.suffix}"/>
+					<mx:TextInput x="249" y="68" width="46" id="ship_contact_suffix_edit" text="{account.contact.suffix}"/>
 					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
-					<mx:TextInput x="101" y="94" width="194" id="ship_contact_job_title_edit" text="{account.contact.address.jobTitle}"/>
+					<mx:TextInput x="101" y="94" width="194" id="ship_contact_job_title_edit" text="{account.contact.jobTitle}"/>
 					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
-					<mx:TextInput x="101" y="122" width="194" id="ship_contact_salutation_edit" text="{account.contact.address.salutation}"/>
+					<mx:TextInput x="101" y="122" width="194" id="ship_contact_salutation_edit" text="{account.contact.salutation}"/>
 					<mx:TextInput x="172" y="150" width="123" id="ship_contact_comlink1_edit"/>
 					<mx:TextInput x="172" y="180" width="123" id="ship_contact_comlink2_edit"/>
 					<mx:TextInput x="172" y="210" width="123" id="ship_contact_comlink3_edit"/>
@@ -921,18 +931,18 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:ComboBox x="10" y="210" width="137" id="ship_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
 				<mx:Panel x="344" y="284" width="325" height="282" layout="absolute" title="Statement Contact" dropShadowEnabled="false">
-					<mx:TextInput x="101" y="10" width="194" id="bill_contact_first_name_edit" text="{account.billToContact.address.firstName}"/>
+					<mx:TextInput x="101" y="10" width="194" id="bill_contact_first_name_edit" text="{account.billToContact.firstName}" change="validateForm(event);"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
-					<mx:TextInput x="101" y="38" width="194" id="bill_contact_last_name_edit" text="{account.billToContact.address.lastName}"/>
-					<mx:TextInput x="101" y="66" width="46" id="bill_contact_prefix_edit" text="{account.billToContact.address.prefix}"/>
+					<mx:TextInput x="101" y="38" width="194" id="bill_contact_last_name_edit" text="{account.billToContact.lastName}" change="validateForm(event);"/>
+					<mx:TextInput x="101" y="66" width="46" id="bill_contact_prefix_edit" text="{account.billToContact.prefix}"/>
 					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
 					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
 					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
-					<mx:TextInput x="249" y="68" width="46" id="bill_contact_suffix_edit" text="{account.billToContact.address.suffix}"/>
+					<mx:TextInput x="249" y="68" width="46" id="bill_contact_suffix_edit" text="{account.billToContact.suffix}"/>
 					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
-					<mx:TextInput x="101" y="94" width="194" id="bill_contact_job_title_edit" text="{account.billToContact.address.jobTitle}"/>
+					<mx:TextInput x="101" y="94" width="194" id="bill_contact_job_title_edit" text="{account.billToContact.jobTitle}"/>
 					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
-					<mx:TextInput x="101" y="122" width="194" id="bill_contact_salutation_edit" text="{account.billToContact.address.salutation}"/>
+					<mx:TextInput x="101" y="122" width="194" id="bill_contact_salutation_edit" text="{account.billToContact.salutation}"/>
 					<mx:TextInput x="172" y="150" width="123" id="bill_contact_comlink1_edit"/>
 					<mx:TextInput x="172" y="180" width="123" id="bill_contact_comlink2_edit"/>
 					<mx:TextInput x="172" y="210" width="123" id="bill_contact_comlink3_edit"/>

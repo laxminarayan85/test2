@@ -41,7 +41,7 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String TITLE = "Title";
+	public static final String FIRSTNAME = "FirstName";
 	/**
 	 * @generated
 	 */
@@ -49,7 +49,7 @@ public class Contact extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String USERACCTID = "UserAcctId";
+	public static final String PARENTACCOUNT = "ParentAccount";
 	/**
 	 * @generated
 	 */
@@ -90,6 +90,30 @@ public class Contact extends ModelBase {
 	 * @generated
 	 */
 	public static final String MARKETING = "Marketing";
+	/**
+	 * @generated
+	 */
+	public static final String LASTNAME = "LastName";
+	/**
+	 * @generated
+	 */
+	public static final String JOBTITLE = "JobTitle";
+	/**
+	 * @generated
+	 */
+	public static final String SUFFIX = "Suffix";
+	/**
+	 * @generated
+	 */
+	public static final String PREFIX = "Prefix";
+	/**
+	 * @generated
+	 */
+	public static final String SALUTATION = "Salutation";
+	/**
+	 * @generated
+	 */
+	public static final String COMLINKS = "ComLinks";
 
 	/**
 	 * @generated
@@ -119,19 +143,19 @@ public class Contact extends ModelBase {
  	
 	
  	@Basic
-	private String title;
+	private String firstName;
 	/**
 	 * @generated
  	 */
-	public String getTitle(){
-		return title; 
+	public String getFirstName(){
+		return firstName; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setTitle(String newVal) {
-		this.title = newVal;
+	public void setFirstName(String newVal) {
+		this.firstName = newVal;
 	}
  	
 	
@@ -152,20 +176,20 @@ public class Contact extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private Long userAcctId;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Account parentAccount;
 	/**
 	 * @generated
  	 */
-	public Long getUserAcctId(){
-		return userAcctId; 
+	public Account getParentAccount(){
+		return parentAccount; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setUserAcctId(Long newVal) {
-		this.userAcctId = newVal;
+	public void setParentAccount(Account newVal) {
+		this.parentAccount = newVal;
 	}
  	
 	
@@ -337,6 +361,108 @@ public class Contact extends ModelBase {
 	public void setMarketing(Marketing newVal) {
 		this.marketing = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String lastName;
+	/**
+	 * @generated
+ 	 */
+	public String getLastName(){
+		return lastName; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLastName(String newVal) {
+		this.lastName = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String jobTitle;
+	/**
+	 * @generated
+ 	 */
+	public String getJobTitle(){
+		return jobTitle; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setJobTitle(String newVal) {
+		this.jobTitle = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String suffix;
+	/**
+	 * @generated
+ 	 */
+	public String getSuffix(){
+		return suffix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSuffix(String newVal) {
+		this.suffix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String prefix;
+	/**
+	 * @generated
+ 	 */
+	public String getPrefix(){
+		return prefix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPrefix(String newVal) {
+		this.prefix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String salutation;
+	/**
+	 * @generated
+ 	 */
+	public String getSalutation(){
+		return salutation; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalutation(String newVal) {
+		this.salutation = newVal;
+	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<ComLink> comLinks;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<ComLink> getComLinks(){
+		return comLinks; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setComLinks(java.util.List<ComLink> newVal) {
+		this.comLinks = newVal;
+	}
 
 	/**
 	 * @generated
@@ -345,9 +471,9 @@ public class Contact extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (SHIPTOADDRESS.equals(propertyName)) return getShipToAddress();
-		if (TITLE.equals(propertyName)) return getTitle();
+		if (FIRSTNAME.equals(propertyName)) return getFirstName();
 		if (ADDRESS.equals(propertyName)) return getAddress();
-		if (USERACCTID.equals(propertyName)) return getUserAcctId();
+		if (PARENTACCOUNT.equals(propertyName)) return getParentAccount();
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) return getWebAcctNameIncomplete();
 		if (WEBCATALOGCHANGE.equals(propertyName)) return getWebCatalogChange();
 		if (WEBSTATECHANGE.equals(propertyName)) return getWebStateChange();
@@ -358,6 +484,12 @@ public class Contact extends ModelBase {
 		if (MAILERCAMPAIGNS.equals(propertyName)) return getMailerCampaigns();
 		if (CREDITCARD.equals(propertyName)) return getCreditCard();
 		if (MARKETING.equals(propertyName)) return getMarketing();
+		if (LASTNAME.equals(propertyName)) return getLastName();
+		if (JOBTITLE.equals(propertyName)) return getJobTitle();
+		if (SUFFIX.equals(propertyName)) return getSuffix();
+		if (PREFIX.equals(propertyName)) return getPrefix();
+		if (SALUTATION.equals(propertyName)) return getSalutation();
+		if (COMLINKS.equals(propertyName)) return getComLinks();
 		return super.getProperty(propertyName);
 	}
 	
@@ -368,9 +500,9 @@ public class Contact extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (SHIPTOADDRESS.equals(propertyName)) setShipToAddress((Address)newValue); else
-		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
+		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
 		if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-		if (USERACCTID.equals(propertyName)) setUserAcctId((Long)newValue); else
+		if (PARENTACCOUNT.equals(propertyName)) setParentAccount((Account)newValue); else
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) setWebAcctNameIncomplete((Boolean)newValue); else
 		if (WEBCATALOGCHANGE.equals(propertyName)) setWebCatalogChange((Boolean)newValue); else
 		if (WEBSTATECHANGE.equals(propertyName)) setWebStateChange((Boolean)newValue); else
@@ -381,6 +513,12 @@ public class Contact extends ModelBase {
 		if (MAILERCAMPAIGNS.equals(propertyName)) setMailerCampaigns((Boolean)newValue); else
 		if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
 		if (MARKETING.equals(propertyName)) setMarketing((Marketing)newValue); else
+		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
+		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
+		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
+		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
+		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
+		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -392,12 +530,12 @@ public class Contact extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (SHIPTOADDRESS.equals(propertyName)) 
 			return new Class<?>[] {Address.class};		
-		if (TITLE.equals(propertyName)) 
+		if (FIRSTNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (ADDRESS.equals(propertyName)) 
 			return new Class<?>[] {Address.class};		
-		if (USERACCTID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
+		if (PARENTACCOUNT.equals(propertyName)) 
+			return new Class<?>[] {Account.class};		
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (WEBCATALOGCHANGE.equals(propertyName)) 
@@ -418,6 +556,18 @@ public class Contact extends ModelBase {
 			return new Class<?>[] {CreditCard.class};		
 		if (MARKETING.equals(propertyName)) 
 			return new Class<?>[] {Marketing.class};		
+		if (LASTNAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (JOBTITLE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SUFFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PREFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SALUTATION.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMLINKS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ComLink.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -429,9 +579,9 @@ public class Contact extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (SHIPTOADDRESS.equals(propertyName)) return Contact.class;
-		if (TITLE.equals(propertyName)) return Contact.class;
+		if (FIRSTNAME.equals(propertyName)) return Contact.class;
 		if (ADDRESS.equals(propertyName)) return Contact.class;
-		if (USERACCTID.equals(propertyName)) return Contact.class;
+		if (PARENTACCOUNT.equals(propertyName)) return Contact.class;
 		if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) return Contact.class;
 		if (WEBCATALOGCHANGE.equals(propertyName)) return Contact.class;
 		if (WEBSTATECHANGE.equals(propertyName)) return Contact.class;
@@ -442,6 +592,12 @@ public class Contact extends ModelBase {
 		if (MAILERCAMPAIGNS.equals(propertyName)) return Contact.class;
 		if (CREDITCARD.equals(propertyName)) return Contact.class;
 		if (MARKETING.equals(propertyName)) return Contact.class;
+		if (LASTNAME.equals(propertyName)) return Contact.class;
+		if (JOBTITLE.equals(propertyName)) return Contact.class;
+		if (SUFFIX.equals(propertyName)) return Contact.class;
+		if (PREFIX.equals(propertyName)) return Contact.class;
+		if (SALUTATION.equals(propertyName)) return Contact.class;
+		if (COMLINKS.equals(propertyName)) return Contact.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -455,11 +611,11 @@ public class Contact extends ModelBase {
 		Contact objT = (Contact)obj;
 		if (! SmartEquals(getShipToAddress(), objT.getShipToAddress()))
 			return false;
-		if (! SmartEquals(getTitle(), objT.getTitle()))
+		if (! SmartEquals(getFirstName(), objT.getFirstName()))
 			return false;
 		if (! SmartEquals(getAddress(), objT.getAddress()))
 			return false;
-		if (! SmartEquals(getUserAcctId(), objT.getUserAcctId()))
+		if (! SmartEquals(getParentAccount(), objT.getParentAccount()))
 			return false;
 		if (! SmartEquals(getWebAcctNameIncomplete(), objT.getWebAcctNameIncomplete()))
 			return false;
@@ -480,6 +636,18 @@ public class Contact extends ModelBase {
 		if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
 			return false;
 		if (! SmartEquals(getMarketing(), objT.getMarketing()))
+			return false;
+		if (! SmartEquals(getLastName(), objT.getLastName()))
+			return false;
+		if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
+			return false;
+		if (! SmartEquals(getSuffix(), objT.getSuffix()))
+			return false;
+		if (! SmartEquals(getPrefix(), objT.getPrefix()))
+			return false;
+		if (! SmartEquals(getSalutation(), objT.getSalutation()))
+			return false;
+		if (! SmartEquals(getComLinks(), objT.getComLinks()))
 			return false;
 		return true;
 	}			

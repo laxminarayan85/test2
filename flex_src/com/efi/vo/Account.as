@@ -21,7 +21,6 @@ public var created:Date;
 
 public var modified:Date;
 
-public var accountId:Number = 0;
 public var status:String = "";
 public var masterAcct:Number = 0;
 public var resaleNumber:String = "";

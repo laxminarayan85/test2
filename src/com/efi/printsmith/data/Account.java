@@ -37,10 +37,6 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ACCOUNTID = "AccountId";
-	/**
-	 * @generated
-	 */
 	public static final String STATUS = "Status";
 	/**
 	 * @generated
@@ -359,23 +355,6 @@ public class Account extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
-	
- 	@Basic
-	private Long accountId;
-	/**
-	 * @generated
- 	 */
-	public Long getAccountId(){
-		return accountId; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAccountId(Long newVal) {
-		this.accountId = newVal;
-	}
  	
 	
  	@Basic
@@ -1709,7 +1688,6 @@ public class Account extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (ACCOUNTID.equals(propertyName)) return getAccountId();
 		if (STATUS.equals(propertyName)) return getStatus();
 		if (MASTERACCT.equals(propertyName)) return getMasterAcct();
 		if (RESALENUMBER.equals(propertyName)) return getResaleNumber();
@@ -1797,7 +1775,6 @@ public class Account extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (ACCOUNTID.equals(propertyName)) setAccountId((Long)newValue); else
 		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (MASTERACCT.equals(propertyName)) setMasterAcct((Long)newValue); else
 		if (RESALENUMBER.equals(propertyName)) setResaleNumber((String)newValue); else
@@ -1885,8 +1862,6 @@ public class Account extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (ACCOUNTID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
 		if (STATUS.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (MASTERACCT.equals(propertyName)) 
@@ -2053,7 +2028,6 @@ public class Account extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (ACCOUNTID.equals(propertyName)) return Account.class;
 		if (STATUS.equals(propertyName)) return Account.class;
 		if (MASTERACCT.equals(propertyName)) return Account.class;
 		if (RESALENUMBER.equals(propertyName)) return Account.class;
@@ -2143,8 +2117,6 @@ public class Account extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		Account objT = (Account)obj;
-		if (! SmartEquals(getAccountId(), objT.getAccountId()))
-			return false;
 		if (! SmartEquals(getStatus(), objT.getStatus()))
 			return false;
 		if (! SmartEquals(getMasterAcct(), objT.getMasterAcct()))
