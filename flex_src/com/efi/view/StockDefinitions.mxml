@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="752" height="800" creationComplete="init()" xmlns:vo="com.efi.vo.*" title="Stock Definition" label="Stock Definition" name="Stock Definition">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="752" height="800" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*" title="Stock Definition" label="Stock Definition" name="Stock Definition">
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -22,6 +22,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockColor(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockColorResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="stockGenericColorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGenericColor(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGenericColorResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="stockFinishDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockFinish(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockFinishResult(event)"/>
@@ -41,7 +45,6 @@
 	import com.efi.vo.StockFinish;
 	import com.efi.vo.StockForest;
 	import com.efi.vo.Vendor;
-	
 		
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -51,6 +54,12 @@
 	import mx.rpc.events.FaultEvent;                                         
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;
                    
 	[Bindable]                                         
     private var enableSave:Boolean = true;
@@ -88,6 +97,7 @@
 	    vendorDataService.getAll("Vendor");
 	    stockGradeDataService.getAll("StockGrade");
 	    stockColorDataService.getAll("StockColor");
+	    stockGenericColorDataService.getAll("StockColor");
 	    stockFinishDataService.getAll("StockFinish");
     
 	}      
@@ -115,6 +125,10 @@
 		dataService.getAll("StockColor");
 	}
 
+	public function loadStockGenericColor():void {   
+		dataService.getAll("StockColor");
+	}
+
 	public function loadStockVendor():void {   
 		dataService.getAll("Vendor");
 	}
@@ -127,6 +141,15 @@
 	{
 	}
 
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+
 	private function doGet():void {
 		var titleWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		titleWindow.setStyle("borderAlpha", 0.9);
@@ -135,7 +158,6 @@
 	
 	private function doNext():void {
 	 
-	  
 		doStockGridClick();
 		                                        		
 	}       
@@ -157,6 +179,98 @@
 		dataService.deleteItem("StockDefinition", stockDefinitions.id);          
 	}
 
+	private function doStockGroup() : void {
+		var group:StockGroup;
+		var result:Boolean;
+		
+		if (cboStockGroup.typedText != null && cboStockGroup.typedText != "" && cboStockGroup.selectedIndex == -1) {
+			var item:int = findItem(cboStockGroup.typedText, stockGroup);
+			if (item == -1) {
+				group = new StockGroup();
+				group.name = cboStockGroup.text;
+				stockGroupDataService.addUpdate(group);
+				stockDefinitions.stkgroup = group;
+			}
+			else {
+				cboStockGroup.selectedItem = item;
+			}
+		}
+	}
+
+
+	private function doStockGenericColor() : void {
+		var colors:StockColors;
+		var result:Boolean;
+		
+		if (cboGenericColor.typedText != null && cboGenericColor.typedText != "" && cboGenericColor.selectedIndex == -1) {
+			var item:int = findItem(cboGenericColor.typedText, stockGenericColor);
+			if (item == -1) {
+				colors = new StockColors();
+				colors.name = cboGenericColor.text;
+				stockColorDataService.addUpdate(colors);
+				stockDefinitions.genericcolor = colors;
+			}
+			else {
+				cboGenericColor.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockColor() : void {
+		var colors:StockColors;
+		var result:Boolean;
+		
+		if (cbostkcolor.typedText != null && cbostkcolor.typedText != "" && cbostkcolor.selectedIndex == -1) {
+			var item:int = findItem(cbostkcolor.typedText, stockColor);
+			if (item == -1) {
+				colors = new StockColors();
+				colors.name = cbostkcolor.text;
+				stockColorDataService.addUpdate(colors);
+				stockDefinitions.color = colors;
+			}
+			else {
+				cbostkcolor.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockGrade() : void {
+		var grades:StockGrade;
+		var result:Boolean;
+		
+		if (cboStockGrade.typedText != null && cboStockGrade.typedText != "" && cboStockGrade.selectedIndex == -1) {
+			var item:int = findItem(cboStockGrade.typedText, stockGrade);
+			if (item == -1) {
+				grades = new StockGrade();
+				grades.name = cboStockGrade.text;
+				stockGradeDataService.addUpdate(grades);
+				stockDefinitions.grade = grades;
+			}
+			else {
+				cboStockGrade.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockFinish() : void {
+		var finishing:StockFinish;
+		var result:Boolean;
+		
+		if (cboFinish.typedText != null && cboFinish.typedText != "" && cboFinish.selectedIndex == -1) {
+			var item:int = findItem(cboFinish.typedText, stockFinish);
+			if (item == -1) {
+				finishing = new StockFinish();
+				finishing.name = this.cboFinish.text;
+				
+				stockFinishDataService.addUpdate(finishing);
+				stockDefinitions.finish = finishing;
+			}
+			else {
+				cboFinish.selectedItem = item;
+			}
+		}
+	}
+	
 	private function doStockGridClick():void {
 		//pressDefinition = dataGrid.selectedItem as StockDefinition;
 	}
@@ -175,6 +289,10 @@
 	private function handleSaveStockColorResult(ev:ResultEvent):void {
     	loadStockColor();
 	}
+	private function handleSaveStockGenericColorResult(ev:ResultEvent):void {
+    	loadStockGenericColor();
+	}
+
 	private function handleSaveVendorResult(ev:ResultEvent):void {
     	loadStockVendor();
 	}
@@ -199,15 +317,19 @@
 	}
 
 	private function handleLoadStockGrade(ev:ResultEvent):void {
-		 stockVendor = ev.result as ArrayCollection;
+		 stockGrade = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
-		 stockVendor = ev.result as ArrayCollection;
+		 stockColor = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadStockGenericColor(ev:ResultEvent):void {
+		 stockGenericColor = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadStockFinish(ev:ResultEvent):void {
-		 stockVendor = ev.result as ArrayCollection;
+		 stockFinish = ev.result as ArrayCollection;
 	}
 	     
 	private function handleFault(ev:FaultEvent):void {  
@@ -221,26 +343,25 @@
 	}
 
 	private function mapFromStockDefinitionData():void {
-		dataService.getAll("StockDefinition");
 
-		if (this.cboStockGroup != null && this.cboStockGroup.selectedItem != null) 
-			stockDefinitions.stkgroup = this.cboStockGroup.selectedItem as StockGroup;
+		if (stockDefinitions.stkgroup != null)
+			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
 
-		if (this.cbostkcolor != null && this.cbostkcolor.selectedItem != null) 
-			stockDefinitions.color = this.cbostkcolor.selectedItem as StockColors;
-
-		if (this.cboGenericColor != null && this.cboGenericColor.selectedItem != null) 
-			stockDefinitions.genericcolor = this.cboGenericColor.selectedItem as StockColors;
+		if (stockDefinitions.color != null) 
+			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
 			
-		if (this.cboVendor != null && this.cboVendor.selectedItem != null) 
-			stockDefinitions.vendor = this.cboVendor.selectedItem as Vendor;
+		if (stockDefinitions.genericcolor != null)
+			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericcolor.name, stockGenericColor);
+		
+		if (stockDefinitions.vendor != null)
+			cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
+		
+		if (stockDefinitions.grade != null)
+			cboStockGrade.selectedIndex = findItem(stockDefinitions.grade.name, stockGrade);
 
-		if (this.cboStockGrade != null && this.cboStockGrade.selectedItem != null) 
-			stockDefinitions.grade = this.cboStockGrade.selectedItem as StockGrade;
+		if (stockDefinitions.finish != null)
+			cboFinish.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
 
-		if (this.cboFinish != null && this.cboFinish.selectedItem != null) 
-			stockDefinitions.finish = this.cboFinish.selectedItem as StockFinish;
-			
 	}
 
 	private function setGroup():void {
@@ -253,15 +374,19 @@
 	private function setColor():void {
 		stockDefinitions.color = new StockColors();
 	}
+
 	private function setGenericColor():void {
 		stockDefinitions.genericcolor = new StockColors();
 	}
+
 	private function setGrade():void {
 		stockDefinitions.grade = new StockGrade();
 	}
+
 	private function setForest():void {
 		
 	}
+
 	private function setFinish():void {
 		stockDefinitions.finish = new StockFinish();
 	}
@@ -273,12 +398,23 @@
 	private function mapAccountData():void {
 	 //stockDefinition.stockDefID = stockDefID;
 	 
-	 this.cboStockGrade.text =   stockDefinitions.grade as String;
-	 this.cbostkcolor.text = stockDefinitions.color as String;
-	 this.cboStockGroup.text = stockDefinitions.stkgroup as String;
-	 this.cboFinish.text = stockDefinitions.finish as String;
-	 this.cboVendor.text = stockDefinitions.vendor as String;
-	 this.cboGenericColor.text = stockDefinitions.genericcolor as String;
+	 if (cboStockGrade != null && cboStockGrade.selectedItem != null) 
+	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
+
+	 if (cbostkcolor != null && cbostkcolor.selectedItem != null) 
+	 	stockDefinitions.color = cbostkcolor.selectedItem as StockColors;
+
+	 if (cboStockGroup != null && cboStockGroup.selectedItem != null) 
+	 	stockDefinitions.stkgroup = cboStockGroup.selectedItem as StockGroup;
+
+	 if (cboFinish != null && cboFinish.selectedItem != null) 
+	 	stockDefinitions.finish = cboFinish.selectedItem as StockFinish;
+
+	 if (cboVendor != null && cboVendor.selectedItem != null) 
+	 	stockDefinitions.vendor = cboVendor.selectedItem as Vendor;
+
+	 if (cboGenericColor != null && cboGenericColor.selectedItem != null) 
+	 	stockDefinitions.genericcolor = cboGenericColor.selectedItem as StockColors;
 	 
 	 stockDefinitions.stkclass = stockClass.text;
 	 stockDefinitions.name = stockName.text;
@@ -365,21 +501,21 @@
 <vo:StockDefinition id="stock"/>                           
 
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:ComboBox x="92" y="68" width="116" id="cboStockGroup"  dataProvider="{StockGroup}" editable="true" labelField="name"></mx:ComboBox>
 	<mx:Label x="49" y="70" text="Group:"/>
 	<mx:Label x="216" y="70" text="Class:"/>
+	<fc:AutoComplete id="cboStockGroup" x="92" y="68" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" lookAhead="true" width="116"/>
 	<mx:TextInput x="264" y="68" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
 	<mx:CheckBox x="393" y="68" id="isMetric" label="Metric"/>
 	<mx:Label x="49" y="93" text="Name:"/>
 	<mx:Label x="71" y="117" text="Color:"/>
-	<mx:ComboBox x="118" y="115" width="138" id="cbostkcolor" dataProvider="{StockColors}" editable="true" labelField="name"></mx:ComboBox>
+	<fc:AutoComplete  x="118" y="115" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
 	<mx:Label x="264" y="91" text="Finish:"/>
 	<mx:TextInput x="96" y="91" width="160" id="stockName" text="{stockDefinitions.name}"/>
-	<mx:ComboBox x="313.5" y="91" width="105" id ="cboFinish" dataProvider="{StockFinish}" editable="true" labelField="name"></mx:ComboBox>
+	<fc:AutoComplete  x="313.5" y="91" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
 	<mx:Label x="71" y="142" text="Generic Color:"/>
-	<mx:ComboBox x="163" y="140" width="93" id="cboGenericColor" dataProvider="{StockColors}" editable="true" labelField="name"></mx:ComboBox>
+	<fc:AutoComplete  x="163" y="140" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" lookAhead="true" labelField="name" focusOut="doStockGenericColor()"/>
 	<mx:Label x="264" y="117" text="Grade:"/>
-	<mx:ComboBox x="313.5" y="117" width="105" id="cboStockGrade" dataProvider="{StockGrade}" editable="true" labelField="name"></mx:ComboBox>
+	<fc:AutoComplete  x="313.5" y="117" width="105" id="cboStockGrade" dataProvider="{stockGrade}" lookAhead="true" labelField="name" focusOut="doStockGrade()"/>
 	<mx:Label x="426.5" y="97" text="Weight:"/>
 	<mx:TextInput x="483.5" y="93" width="55" id="weight" text="{stockDefinitions.weight}"/>
 	<mx:Label x="426.5" y="121" text="Coated:"/>
@@ -393,7 +529,7 @@
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
 				<mx:Label x="32" y="12" text="Vendor:"/>
-				<mx:ComboBox x="89" y="10" width="150.5" id="cboVendor" dataProvider="{Vendor}" editable="true" labelField="name"></mx:ComboBox>
+				<fc:AutoComplete x="89" y="10" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name"/>
 				<mx:Label x="10" y="41" text="Stock Type:"/>
 				<mx:TextInput x="89" y="36" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
 				<mx:Label x="257" y="12" text="Stock #:"/>
