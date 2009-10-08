@@ -13,21 +13,19 @@ public class LoginService extends DataService {
 		super();
 	}
 
-	public Boolean validateLogin(String userName, String password) {
+	public User validateLogin(String userName, String password) {
 		try {		
 			log.info("Attempting login for " + userName);
 			EntityManager em = entityManagerFactory.createEntityManager();
 			Query q = em.createNamedQuery("User.byName");
 			q.setParameter("name", userName);
 			
-			List<User> users = q.getResultList();
-			if (users.size() != 1)
-				return false;
-			
-			if (users.get(0).getPassword().equals(password)) return true;
+			User user = (User) q.getSingleResult();
+					
+			if (user.getPassword().equals(password)) return user;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return false;		
+		return null;		
 	}
 }

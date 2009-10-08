@@ -16,6 +16,7 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Label;
+			import com.efi.vo.User;
 			import mx.resources.Locale;
 			import mx.resources.ResourceBundle;
 			import mx.utils.URLUtil;
@@ -34,11 +35,12 @@
 			} 
 				
 			private function handleLoginResult(event:ResultEvent):void	{
-				var res:Boolean = event.result as Boolean;
+				var res:User = event.result as User;
 				if (res) {
 					var application:Snowmass = Snowmass.getInstance();
 					PopUpManager.removePopUp(this);
 					application.mainContainer.visible = true;
+					application.currentUser = res;
 				} else {
 					Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				}
@@ -49,6 +51,7 @@
 
 			private function doLogin():void	{
 				loginService.validateLogin(username.text, password.text);
+				
 			}
 			
 			private function validateLogin(event:ResultEvent):void	{

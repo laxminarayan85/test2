@@ -83,6 +83,7 @@ creationComplete="init()">
 	private function handleLoadResult(ev:ResultEvent):void {
 	     users = ev.result as ArrayCollection;
 	     userRecords = users.length;
+	     loadUsers();
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {

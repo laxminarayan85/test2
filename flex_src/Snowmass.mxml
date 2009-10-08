@@ -37,7 +37,7 @@
 				<mx:Button x="342" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
 				<mx:Button x="176" y="104" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
 				<mx:Button x="176" y="198" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
-				<mx:Button x="176" y="292" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')"/>
+				<mx:Button x="176" y="292" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
 				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
 				<mx:Button x="10" y="198" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
 				<mx:Button x="10" y="292" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')"/>
@@ -55,6 +55,7 @@
 				<mx:Button x="508" y="292" label="Report Writer" width="158" height="86" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')"/>
 				<mx:Image x="586" y="539" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="81" height="28"/>
 				<mx:Text x="508" y="545" text="Powered by:&#xd;" id="powered_by" alpha="0.0"/>
+				<mx:Button x="176" y="480" label="Employee" width="158" height="86" icon="@Embed(source='assets/employeeManager.png')" click="doEmployee();"/>
 			</mx:Canvas>
 		</flexlib:SuperTabNavigator>
 
@@ -68,13 +69,16 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.vo.User;
 		import mx.effects.easing.Quadratic;
 		import com.efi.view.ChargeDefinitions;
 		import com.efi.view.EditCustomer;
 		import com.efi.view.PressDefinitions;
 		import com.efi.view.StockDefinitions;
 		import com.efi.view.CopierDefinitions;
+		import com.efi.view.ClockInOut;
 		import com.efi.view.EditContact;
+		import com.efi.view.EmployeeManager;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -106,6 +110,7 @@
 		
 		public var userName:String;
 		public var userPass:String;
+		public var currentUser:User;
 
 		public var localeString : String = "en_US";
         private static var thisInstance = null;  
@@ -165,6 +170,14 @@
 		
 		private function doStockDefinitions():void {
 			var child:StockDefinitions = new StockDefinitions();
+			addUniqueTab(child);
+		}
+		private function doEmployee():void {
+			var child:EmployeeManager = new EmployeeManager();
+			addUniqueTab(child);
+		}
+		private function doClockInOut():void {
+			var child:ClockInOut = new ClockInOut();
 			addUniqueTab(child);
 		}
 		

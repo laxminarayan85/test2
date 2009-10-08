@@ -1,2 +1,2 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexProperties flexServerType="8" flexWarLocation="/Users/bknabel/Documents/Src/blazeds-turnkey-3.2.0.3978 Folder/blazeds.war" serverContextRoot="/Snowmass" serverRoot="/Users/bknabel/Documents/Src/PrintSmith Server/Snowmass/WebContent" serverRootURL="http://localhost:8080/Snowmass" toolCompile="true" useServerFlexSDK="false" version="1"/>

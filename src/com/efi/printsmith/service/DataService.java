@@ -23,10 +23,16 @@ public class DataService {
 
 	protected static Logger log = Logger.getLogger(DataService.class);
 	
-	protected static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+	protected static EntityManagerFactory entityManagerFactory;
 	
 	public DataService() {
 		super();
+		try {
+			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	

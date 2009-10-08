@@ -32,7 +32,7 @@ public class User extends ModelBase{
 	@Basic
 	@Column(name = "password", nullable = false, unique = false)
 	private String password;
-
+	
 	public User() {
 
 		super();
@@ -62,4 +62,5 @@ public class User extends ModelBase{
 		this.password = password;
 
 	}
+	
 }
