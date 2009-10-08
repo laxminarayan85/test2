@@ -559,34 +559,36 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	private function doZip(): void{                             
 		var zip:Zip;
 		var result:Boolean;
-		
-		if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
-			var item:int = findItem(zipcombo.typedText, zips);
-			if (item == -1) {
-				zip = new Zip();
-				zip.name = zipcombo.text;
-				zipDataService.addUpdate(zip);
-				account.billToAddress.zip = zip;
-			}
-			else {
-				zipcombo.selectedItem = item;
+	 	if (validate(zipValidator)){
+			if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
+				var item:int = findItem(zipcombo.typedText, zips);
+				if (item == -1) {
+					zip = new Zip();
+					zip.name = zipcombo.text;
+					zipDataService.addUpdate(zip);
+					account.billToAddress.zip = zip;
+				}
+				else {
+					zipcombo.selectedItem = item;
+				}
 			}
 		}
 	}
 	private function doZip1(): void{                             
 		var zip:Zip;
 		var result:Boolean;
-		
-		if (shipzipcombo.typedText != null && shipzipcombo.typedText != "" && shipzipcombo.selectedIndex == -1) {
-			var item:int = findItem(shipzipcombo.typedText, zips);
-			if (item == -1) {
-				zip = new Zip();
-				zip.name = shipzipcombo.text;
-				zipDataService.addUpdate(zip);
-				account.shipToAddress.zip = zip;
-			}
-			else {
-				shipzipcombo.selectedItem = item;
+		if (validate(shipZipValidator)){
+			if (shipzipcombo.typedText != null && shipzipcombo.typedText != "" && shipzipcombo.selectedIndex == -1) {
+				var item:int = findItem(shipzipcombo.typedText, zips);
+				if (item == -1) {
+					zip = new Zip();
+					zip.name = shipzipcombo.text;
+					zipDataService.addUpdate(zip);
+					account.shipToAddress.zip = zip;
+				}
+				else {
+					shipzipcombo.selectedItem = item;
+				}
 			}
 		}
 	}
@@ -840,7 +842,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
         validate(nameValidator);
         validate(contactShipFirstValidator);
         validate(contactBillFirstValidator);
-        validate(contactBillLastValidator);
+        validate(contactShipLastValidator);
         validate(contactBillLastValidator);
         
         
@@ -1025,8 +1027,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:Label x="10" y="64" text="Resale #:" textAlign="right" width="83"/>
 					<mx:TextInput x="101" y="64" width="160" id="resale_number_edit"  text="{account.resaleNumber}"/>
 					<mx:Label x="10" y="90" text="Cert Expires:" textAlign="right" width="83"/>
-					<mx:TextInput x="101" y="90" width="160" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
 					<mx:CheckBox x="101" y="116" label="Tax Exempt" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
+					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="318" width="350" height="103" layout="absolute" title="Charges Setup" dropShadowEnabled="false">
 					<mx:Label x="10" y="10" text="Invoice &amp; Estimate Charges:"/>

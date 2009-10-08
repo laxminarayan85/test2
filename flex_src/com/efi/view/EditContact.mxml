@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" title="Contact Editor"
 creationComplete="init()" label="Contact Editor" name="Contact Editor">
 
@@ -46,6 +46,12 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 <mx:Consumer id="consumer" destination="zips" message="messageHandler(event.message)"/>-->
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
+<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+<mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactFirstValidator" source="{account.billToContact.firstName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactLastValidator" source="{account.billToContact.lastName}"	property="text"	minLength="2" required="true"/>
+
 
 <mx:Script> 
                                   
@@ -75,6 +81,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
     import mx.printing.PrintAdvancedDataGrid;
     import mx.printing.PrintDataGrid;
     import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
     
     private var enableSave:Boolean = true;
     private var contacts:ArrayCollection = new ArrayCollection();
@@ -96,6 +104,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
     private var countrys:ArrayCollection = new ArrayCollection();  
     [Bindable]
     private var zips:ArrayCollection = new ArrayCollection();                  
+    private var formIsValid:Boolean = false;
+    
+    private var focussedFormControl:DisplayObject;
     
    
 	public function init():void {
@@ -156,6 +167,11 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		
 	private function mapToContactData():void {
 		contact.firstName = name_edit.text;
+		contact.lastName =  last_name_edit.text;
+		contact.prefix = contact_prefix_edit.text;
+		contact.salutation= contact_salutation_edit.text;
+		contact.suffix = contact_suffix_edit.text;
+		contact.jobTitle= contact_job_title_edit.text;
 		contact.shipToAddress.name = "Contact Ship";
 		contact.shipToAddress.street1 = ship_street.text;
 		contact.shipToAddress.street2 = ship_street1.text;
@@ -569,7 +585,24 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	private function handleSaveSalesRepResult(ev:ResultEvent):void {
 		salesRepDataService.getAll("SalesRep");
 	}   
-	   
+	    
+	private function validateForm(event:Event):void{                    
+        focussedFormControl = event.target as DisplayObject;    
+        formIsValid = true;            
+        validate(shipZipValidator);                
+        validate(zipValidator);
+        validate(contactFirstValidator);
+        validate(contactLastValidator);        
+    }
+    private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+        return currentControlIsValid;
+	}
  
 ]]>	
 
@@ -580,10 +613,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	<mx:Canvas width="851" height="704">
 		<mx:TabNavigator x="0" y="70" width="681" height="635" creationPolicy="all">
 			<mx:Canvas label="Address" width="100%" height="100%">
-				<mx:TextInput x="230" y="10" id="name_edit" width="387" text="{contact.firstName}" />
-				<mx:Text x="26" y="40" text="Acct #:&#xd;" width="46"/>
-				<mx:Label x="180" y="12" text="Name:" textAlign="right"/>
-				<mx:Panel x="10" y="151" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
+				<mx:TextInput x="315" y="8" id="name_edit" width="193" text="{contact.firstName}" />
+				<mx:Text x="17" y="40" text="Acct #:&#xd;" width="46"/>
+				<mx:Panel x="10" y="215" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
 					<mx:TextInput x="63" y="8" width="232" id="street" text= "{contact.address.street1}"/>
 					<mx:TextInput x="63" y="38" width="232" id="street2" text= "{contact.address.street2}"/>
 					<mx:Label x="10" y="10" text="Street:" width="45" textAlign="right"/>
@@ -604,13 +636,13 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 					<fc:AutoComplete id="countrycombo" x="217" y="92" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
 
 				</mx:Panel>
-				<mx:Label x="37" y="12" text="ID "/>
-				<mx:Text x="80" y="40" width="75" id="accountID" text="{contact.parentAccount.id}"/>
+				<mx:Label x="40" y="12" text="ID:"/>
+				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.id}"/>
 				<mx:Text x="80" y="12" text="{contact.id}" id="contactID"/>
-				<mx:Label x="339" y="88" text="Sales Rep:"/>
-				<mx:Label x="347" y="125" text="Created: "/>
-				<mx:Text x="423" y="116" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
-				<mx:Panel x="344" y="151" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
+				<mx:Label x="241" y="170" text="Sales Rep:"/>
+				<mx:Label x="249" y="144" text="Created: "/>
+				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
+				<mx:Panel x="344" y="215" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
 					<mx:TextInput x="66" y="8" width="229" id="ship_street" text="{contact.shipToAddress.street1}"/>
 					<mx:TextInput x="66" y="38" width="229" id="ship_street1" text="{contact.shipToAddress.street2}"/>
 					<mx:Label x="10" y="10" text="Street:" width="48" textAlign="right"/>
@@ -630,10 +662,21 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 				
 				</mx:Panel>
 				<!--<mx:ComboBox x="423" y="86" id="sales_rep_combo" labelField="name" dataProvider="{salesReps}" width="172"></mx:ComboBox>-->
-				<fc:AutoComplete id="sales_rep_combo" x="423" y="86" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
-				<mx:Label x="163" y="40" text="Account:" width="59"/>
-				<mx:Text x="230" y="40" width="142" id="accountName" text="{account.title}"/>
-				<mx:Button x="423" y="38" label="Accounts" id="AccountsPicker" click=" var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));"/>
+				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
+				<mx:Label x="8" y="90" text="Account:" width="55"/>
+				<mx:Text x="80" y="90" width="142" id="accountName" text="{account.title}"/>
+				<mx:Button x="10" y="168" label="Accounts" id="AccountsPicker" click=" var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));"/>
+				<mx:Label x="224" y="10" text="First Name:" width="83" textAlign="right"/>
+				<mx:Label x="224" y="38" text="Last Name:" width="83" textAlign="right"/>
+				<mx:Label x="240" y="66" text="Prefix:" width="67" textAlign="right"/>
+				<mx:Label x="240" y="94" text="Job Title:" width="67" textAlign="right"/>
+				<mx:Label x="407" y="68" text="Suffix:" width="48" textAlign="right"/>
+				<mx:Label x="240" y="122" text="Salutation:" width="67" textAlign="right"/>
+				<mx:TextInput x="315" y="40" width="194" id="last_name_edit" text="{contact.lastName}" change="validateForm(event);"/>
+				<mx:TextInput x="316.5" y="64" width="46" id="contact_prefix_edit" text="{contact.prefix}"/>
+				<mx:TextInput x="463" y="66" width="46" id="contact_suffix_edit" text="{contact.suffix}"/>
+				<mx:TextInput x="315" y="92" width="194" id="contact_job_title_edit" text="{contact.jobTitle}"/>
+				<mx:TextInput x="315" y="120" id="contact_salutation_edit" text="{contact.salutation}"/>
 			</mx:Canvas>
 			<mx:Canvas label="Marketing" width="100%" height="100%">
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
