@@ -111,6 +111,12 @@ public class TaxTable extends ModelBase {
 		return taxElements; 
 	}
 
+	public void addTaxElements(TaxElement obj) {
+		if (taxElements == null) {
+			taxElements = new java.util.ArrayList<TaxElement>();
+		}
+		taxElements.add(obj);
+	}
 	/**
 	 * @generated
 	 */	

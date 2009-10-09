@@ -1,6 +1,6 @@
 package com.efi.vo
 {
-	import mx.controls.List;
+	import mx.collections.ArrayCollection; 
 	import com.efi.vo.*;
 [Bindable]
 
@@ -119,6 +119,7 @@ public var name:String = "";
 public var parent:ChargeCategory = new ChargeCategory();
 public var useArea:Boolean = true;
 public var useSetup:Boolean = true;
+public var chargeCost:ChargeCost = new ChargeCost();
 
 }
 }

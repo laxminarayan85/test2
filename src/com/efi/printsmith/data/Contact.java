@@ -457,6 +457,12 @@ public class Contact extends ModelBase {
 		return comLinks; 
 	}
 
+	public void addComLinks(ComLink obj) {
+		if (comLinks == null) {
+			comLinks = new java.util.ArrayList<ComLink>();
+		}
+		comLinks.add(obj);
+	}
 	/**
 	 * @generated
 	 */	

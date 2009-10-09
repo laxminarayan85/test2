@@ -1,16 +1,16 @@
 package com.efi.vo
 {
-	import mx.collections.ArrayCollection; 
+	import mx.controls.List;
 	import com.efi.vo.*;
 [Bindable]
 
-[RemoteClass(alias="com.efi.printsmith.data.Products")]
+[RemoteClass(alias="com.efi.printsmith.data.ShipVia")]
 
-public class Products
+public class ShipVia
 
 {
 
-public function Products()
+public function ShipVia()
 
 {
 

@@ -1,6 +1,6 @@
 package com.efi.vo
 {
-	import mx.controls.List;
+	import mx.collections.ArrayCollection; 
 	import com.efi.vo.*;
 [Bindable]
 

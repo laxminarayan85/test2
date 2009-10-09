@@ -26,18 +26,14 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ChargeCategory.findall", query = "from ChargeCategory"),
-	@NamedQuery(name = "ChargeCategory.byId", query = "select a from ChargeCategory a where a.id= :id")
+	@NamedQuery(name = "TaxTables.findall", query = "from TaxTables"),
+	@NamedQuery(name = "TaxTables.byId", query = "select a from TaxTables a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "chargecategory")
-public class ChargeCategory extends ModelBase {
-	/**
-	 * @generated
-	 */
-	public static final String CHILDREN = "Children";
+@Table(name = "taxtables")
+public class TaxTables extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -45,40 +41,16 @@ public class ChargeCategory extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PARENT = "Parent";
+	public static final String KEY = "Key";
 
 	/**
 	 * @generated
 	 */
-	public ChargeCategory() {
+	public TaxTables() {
 		this.created = new Date();
 		this.modified = new Date();
 	}
 
- 	
-	
-    @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<Charge> children;
-	/**
-	 * @generated
- 	 */
-	public java.util.List<Charge> getChildren(){
-		return children; 
-	}
-
-	public void addChildren(Charge obj) {
-		obj.setParent(this);
-		if (children == null) {
-			children = new java.util.ArrayList<Charge>();
-		}
-		children.add(obj);
-	}
-	/**
-	 * @generated
-	 */	
-	public void setChildren(java.util.List<Charge> newVal) {
-		this.children = newVal;
-	}
  	
 	
  	@Basic
@@ -98,20 +70,20 @@ public class ChargeCategory extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private ChargeCommand parent;
+ 	@Basic
+	private String key;
 	/**
 	 * @generated
  	 */
-	public ChargeCommand getParent(){
-		return parent; 
+	public String getKey(){
+		return key; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setParent(ChargeCommand newVal) {
-		this.parent = newVal;
+	public void setKey(String newVal) {
+		this.key = newVal;
 	}
 
 	/**
@@ -120,9 +92,8 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CHILDREN.equals(propertyName)) return getChildren();
 		if (NAME.equals(propertyName)) return getName();
-		if (PARENT.equals(propertyName)) return getParent();
+		if (KEY.equals(propertyName)) return getKey();
 		return super.getProperty(propertyName);
 	}
 	
@@ -132,9 +103,8 @@ public class ChargeCategory extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<Charge>)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (PARENT.equals(propertyName)) setParent((ChargeCommand)newValue); else
+		if (KEY.equals(propertyName)) setKey((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -144,12 +114,10 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (PARENT.equals(propertyName)) 
-			return new Class<?>[] {ChargeCommand.class};		
+		if (KEY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -160,9 +128,8 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CHILDREN.equals(propertyName)) return ChargeCategory.class;
-		if (NAME.equals(propertyName)) return ChargeCategory.class;
-		if (PARENT.equals(propertyName)) return ChargeCategory.class;
+		if (NAME.equals(propertyName)) return TaxTables.class;
+		if (KEY.equals(propertyName)) return TaxTables.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -173,12 +140,10 @@ public class ChargeCategory extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		ChargeCategory objT = (ChargeCategory)obj;
-		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
+		TaxTables objT = (TaxTables)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
-		if (! SmartEquals(getParent(), objT.getParent()))
+		if (! SmartEquals(getKey(), objT.getKey()))
 			return false;
 		return true;
 	}			

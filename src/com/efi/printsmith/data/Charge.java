@@ -426,6 +426,10 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String USESETUP = "UseSetup";
+	/**
+	 * @generated
+	 */
+	public static final String CHARGECOST = "ChargeCost";
 
 	/**
 	 * @generated
@@ -2101,6 +2105,23 @@ public class Charge extends ModelBase {
 	public void setUseSetup(Boolean newVal) {
 		this.useSetup = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private ChargeCost chargeCost;
+	/**
+	 * @generated
+ 	 */
+	public ChargeCost getChargeCost(){
+		return chargeCost; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setChargeCost(ChargeCost newVal) {
+		this.chargeCost = newVal;
+	}
 
 	/**
 	 * @generated
@@ -2206,6 +2227,7 @@ public class Charge extends ModelBase {
 		if (PARENT.equals(propertyName)) return getParent();
 		if (USEAREA.equals(propertyName)) return getUseArea();
 		if (USESETUP.equals(propertyName)) return getUseSetup();
+		if (CHARGECOST.equals(propertyName)) return getChargeCost();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2313,6 +2335,7 @@ public class Charge extends ModelBase {
 		if (PARENT.equals(propertyName)) setParent((ChargeCategory)newValue); else
 		if (USEAREA.equals(propertyName)) setUseArea((Boolean)newValue); else
 		if (USESETUP.equals(propertyName)) setUseSetup((Boolean)newValue); else
+		if (CHARGECOST.equals(propertyName)) setChargeCost((ChargeCost)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2518,6 +2541,8 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (USESETUP.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (CHARGECOST.equals(propertyName)) 
+			return new Class<?>[] {ChargeCost.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2626,6 +2651,7 @@ public class Charge extends ModelBase {
 		if (PARENT.equals(propertyName)) return Charge.class;
 		if (USEAREA.equals(propertyName)) return Charge.class;
 		if (USESETUP.equals(propertyName)) return Charge.class;
+		if (CHARGECOST.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2832,6 +2858,8 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getUseArea(), objT.getUseArea()))
 			return false;
 		if (! SmartEquals(getUseSetup(), objT.getUseSetup()))
+			return false;
+		if (! SmartEquals(getChargeCost(), objT.getChargeCost()))
 			return false;
 		return true;
 	}			

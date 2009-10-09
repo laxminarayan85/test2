@@ -1,6 +1,6 @@
 package com.efi.vo
 {
-	import mx.controls.List;
+	import mx.collections.ArrayCollection; 
 	import com.efi.vo.*;
 [Bindable]
 
@@ -40,7 +40,7 @@ public var jobTitle:String = "";
 public var suffix:String = "";
 public var prefix:String = "";
 public var salutation:String = "";
-public var comLinks:List;
+public var comLinks:ArrayCollection;
 
 }
 }

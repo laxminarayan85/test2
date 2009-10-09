@@ -54,19 +54,26 @@ public class ChargeCommand extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<ChargeCategory> childrens;
+	private java.util.List<ChargeCategory> children;
 	/**
 	 * @generated
  	 */
-	public java.util.List<ChargeCategory> getChildrens(){
-		return childrens; 
+	public java.util.List<ChargeCategory> getChildren(){
+		return children; 
 	}
 
+	public void addChildren(ChargeCategory obj) {
+		obj.setParent(this);
+		if (children == null) {
+			children = new java.util.ArrayList<ChargeCategory>();
+		}
+		children.add(obj);
+	}
 	/**
 	 * @generated
 	 */	
-	public void setChildrens(java.util.List<ChargeCategory> newVal) {
-		this.childrens = newVal;
+	public void setChildren(java.util.List<ChargeCategory> newVal) {
+		this.children = newVal;
 	}
  	
 	
@@ -92,7 +99,7 @@ public class ChargeCommand extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CHILDREN.equals(propertyName)) return getChildrens();
+		if (CHILDREN.equals(propertyName)) return getChildren();
 		if (NAME.equals(propertyName)) return getName();
 		return super.getProperty(propertyName);
 	}
@@ -103,7 +110,7 @@ public class ChargeCommand extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHILDREN.equals(propertyName)) setChildrens((java.util.List<ChargeCategory>)newValue); else
+		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<ChargeCategory>)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -141,7 +148,7 @@ public class ChargeCommand extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		ChargeCommand objT = (ChargeCommand)obj;
-		if (! SmartEquals(getChildrens(), objT.getChildrens()))
+		if (! SmartEquals(getChildren(), objT.getChildren()))
 			return false;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;

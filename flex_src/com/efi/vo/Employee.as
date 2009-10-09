@@ -1,6 +1,6 @@
 package com.efi.vo
 {
-	import mx.controls.List;
+	import mx.collections.ArrayCollection; 
 	import com.efi.vo.*;
 [Bindable]
 
@@ -24,7 +24,7 @@ public var modified:Date;
 public var firstName:String = "";
 public var lastName:String = "";
 public var address:Address = new Address();
-public var comLinks:List;
+public var comLinks:ArrayCollection;
 public var sSN:String = "";
 public var exportCode:int = 0;
 public var clockIn:Boolean = true;

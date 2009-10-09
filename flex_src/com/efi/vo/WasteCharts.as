@@ -1,16 +1,16 @@
 package com.efi.vo
 {
-	import mx.collections.ArrayCollection; 
+	import mx.controls.List;
 	import com.efi.vo.*;
 [Bindable]
 
-[RemoteClass(alias="com.efi.printsmith.data.Products")]
+[RemoteClass(alias="com.efi.printsmith.data.WasteCharts")]
 
-public class Products
+public class WasteCharts
 
 {
 
-public function Products()
+public function WasteCharts()
 
 {
 
@@ -22,7 +22,6 @@ public var created:Date;
 public var modified:Date;
 
 public var name:String = "";
-public var key:String = "";
 
 }
 }

@@ -1,6 +1,6 @@
 package com.efi.vo
 {
-	import mx.controls.List;
+	import mx.collections.ArrayCollection; 
 	import com.efi.vo.*;
 [Bindable]
 
@@ -22,7 +22,7 @@ public var created:Date;
 public var modified:Date;
 
 public var effectiveTaxRate:Number = 0;
-public var taxElements:List;
+public var taxElements:ArrayCollection;
 public var taxTableIsCurrent:Boolean = true;
 public var taxShipping:Boolean = true;
 public var taxOnTax:Boolean = true;

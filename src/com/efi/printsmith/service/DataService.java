@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -14,6 +15,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 
@@ -23,15 +29,16 @@ public class DataService {
 
 	protected static Logger log = Logger.getLogger(DataService.class);
 	
-	protected static EntityManagerFactory entityManagerFactory;
+	protected static EntityManagerFactory entityManagerFactory = null;
 	
 	public DataService() {
 		super();
 		try {
-			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (entityManagerFactory == null) {
+				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			}
+		} catch (RuntimeException e) {
+			log.error(e);
 		}
 	}
 
@@ -144,6 +151,76 @@ public class DataService {
 		catch (Exception e) {
 			log.error("Exception caught");
 		}
+	}
+
+	public void addChargeCategoryToCommand(ChargeCategory category, ChargeCommand command) throws Exception {
+		log.debug("** addChargeCategoryToCommand called...");
+		try {
+			EntityManager em;
+			em = entityManagerFactory.createEntityManager();
+			
+			if (command == null || category == null) {
+				String msg = "null value passed to addChargeCategoryToCommand";
+				log.error(msg);
+				throw new Exception (msg);
+			} else {
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				try {
+					command.addChildren(category);
+					em.merge(command);
+					tx.commit();
+					MessageServiceAdapter.sendNotification("Object Created");
+				} catch (Exception e) {
+					log.error("** Error: " + e.getMessage());
+					tx.rollback();
+					throw new Exception(e.getMessage());
+					
+				} finally {
+					log.info("** Closing Entity Manager.");
+					em.close();
+				}
+			}
+		}
+		catch (Exception e) {
+			log.error("Exception caught");
+		}
+	}
+	
+	public Charge addChargeToCategory(Charge charge, ChargeCategory category) throws Exception {
+		log.debug("** addChargeCategoryToCommand called...");
+		try {
+			EntityManager em;
+			em = entityManagerFactory.createEntityManager();
+			
+			if (charge == null || category == null) {
+				String msg = "null value passed to addChargeCategoryToCommand";
+				log.error(msg);
+				throw new Exception (msg);
+			} else {
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				try {
+					category.addChildren(charge);
+					em.merge(category);
+					tx.commit();
+					MessageServiceAdapter.sendNotification("Object Created");
+					return charge;
+				} catch (Exception e) {
+					log.error("** Error: " + e.getMessage());
+					tx.rollback();
+					throw new Exception(e.getMessage());
+					
+				} finally {
+					log.info("** Closing Entity Manager.");
+					em.close();
+				}
+			}
+		}
+		catch (Exception e) {
+			log.error("Exception caught");
+		}
+		return null;
 	}
 	
     public ModelBase getById(String className, Long id) throws Exception {      
