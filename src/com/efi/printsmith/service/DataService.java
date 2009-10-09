@@ -72,6 +72,26 @@ public class DataService {
 		}
 		return new ArrayList<Account>();		
 	}
+	public List<Employee> getByEmployeesPartialName(String name) throws Exception {
+		try {
+			log.debug("** getByEmployeesPartialName called...");
+	
+			EntityManager em = entityManagerFactory.createEntityManager();
+	
+			String queryString = "from Employee where title like '" + name+ "%'";
+			Query query = em.createQuery(queryString);
+			List<Employee> employees = query.getResultList();
+	
+			if (employees != null)
+	
+				log.debug("** Found " + employees.size() + "records:");
+	
+			return employees;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return new ArrayList<Employee>();		
+	}
 	
 	public List<Contact> getContactsByPartialName(String name) throws Exception {
 		try {

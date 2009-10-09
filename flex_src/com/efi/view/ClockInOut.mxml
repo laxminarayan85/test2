@@ -7,8 +7,8 @@
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 	
-	<mx:Producer id="producer" destination="copydefinitions"/>
-	<mx:Consumer id="consumer" destination="copydefinitions" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="employees"/>
+	<mx:Consumer id="consumer" destination="employees" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
 	
@@ -17,7 +17,6 @@
 	
 <mx:Script>  	
 <![CDATA[
-	import com.efi.vo.Employee
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -29,12 +28,17 @@
 	import mx.printing.PrintAdvancedDataGrid;
     import mx.printing.PrintDataGrid;
     import mx.core.Application;
-   
+	import com.efi.vo.Employee;
+    import com.efi.vo.City;
+	import com.efi.vo.Country;
+	import com.efi.vo.State;
+	import com.efi.vo.Zip;
 
-[Bindable]                                
+	[Bindable]                                
 	private var employeesArray:ArrayCollection = new ArrayCollection();
 	
-	private var   employee:Employee;
+	[Bindable] 
+	private var employee:Employee;
 
 	
 	
@@ -98,8 +102,11 @@
 		Alert.show(message, "Error", 0, null, null, null,null);                                 
 	}
 	
+              
 ]]>
-</mx:Script>	
+                             
+</mx:Script>
+
 	<mx:Button x="62" y="37" label="Clock In" width="132" height="107" icon="@Embed(source='../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
 	<mx:Button x="62" y="165" label="Clock Out" width="132" height="107" icon="@Embed(source='../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
 	<mx:Button x="62" y="310" label="On Break" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>

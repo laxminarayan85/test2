@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
+width="100%" height="100%" title="Employee Editor" 
+creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.adobe.flex.extras.controls.*">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="cityDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="stateDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="countryDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="zipDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
+</mx:RemoteObject>
+<mx:Producer id="producer" destination="employees"/>
+<mx:Consumer id="consumer" destination="employees"  message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+<mx:StringValidator id="employeeFirstValidator" source="{firstName_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="employeeLastValidator" source="{lastName_edit}"	property="text"	minLength="2" required="true"/>
+
+
+<mx:Script> 
+                                  
+<![CDATA[
+	
+	import com.efi.vo.Employee;
+	import com.efi.vo.Address;                        
+	import com.efi.vo.City;
+	import com.efi.vo.Country;
+	import com.efi.vo.State;
+	import com.efi.vo.Zip;   
+	import com.efi.vo.Employee;                          
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
+    
+    private var enableSave:Boolean = true;
+   	[Bindable]
+    	private var employees:ArrayCollection = new ArrayCollection();
+    
+    [Bindable]                                         
+		private var employee:Employee;
+	[Bindable] 
+		 private var citys:ArrayCollection = new ArrayCollection();   
+    [Bindable]
+    	private var states1:ArrayCollection = new ArrayCollection();   
+    [Bindable]
+    	private var countrys:ArrayCollection = new ArrayCollection();  
+    [Bindable]
+    	private var zips:ArrayCollection = new ArrayCollection();                  
+    [Bindable]
+    	private var formIsValid:Boolean = false;
+    
+    private var focussedFormControl:DisplayObject;
+    
+	public function init():void {
+		//consumer.subscribe();
+	//	notification_consumer.subscribe();  
+		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+		cityDataService.getAll("City");
+		stateDataService.getAll("State");
+		countryDataService.getAll("Country");
+		zipDataService.getAll("Zip");
+		dataService.getAll("Employee");   
+		employee = new Employee();
+	}
+	private function messageHandler(message:IMessage):void
+	{
+	}	
+	public function setEmployee(employee2:Employee):void
+	{
+		this.employee = employee2;
+		mapFromEmployeeData();
+	}	
+	private function mapFromEmployeeData():void{
+		
+		
+		if (employee.address.city != null)
+			citycombo.selectedIndex = findItem(employee.address.city.name, citys);
+		if (employee.address.state != null)
+			statecombo.selectedIndex = findItem(employee.address.state.name, states1);
+		if (employee.address.country != null)
+			countrycombo.selectedIndex = findItem(employee.address.country.name, countrys);
+		if (employee.address.zip != null)
+			zipcombo.selectedIndex = findItem(employee.address.zip.name, zips);
+	}	
+	
+	
+	private function mapToEmployeeData():void {
+	
+		
+		employee.firstName = firstName_edit.text;
+		employee.lastName = lastName_edit.text;
+		
+		employee.address.street1 = street_edit.text;
+		employee.address.street2 = street1_edit.text;
+	
+		
+		if (citycombo != null && citycombo.selectedItem != null) 
+			employee.address.city = citycombo.selectedItem as City;
+		if (statecombo != null && statecombo.selectedItem != null) 
+			employee.address.state = statecombo.selectedItem as State;
+		if (zipcombo != null && zipcombo.selectedItem != null) 
+			employee.address.zip = zipcombo .selectedItem as Zip;
+		if (countrycombo != null && countrycombo.selectedItem != null) 
+			employee.address.country = countrycombo.selectedItem as Country;
+	
+		
+	}
+	
+	private function doSave():void {
+		mapToEmployeeData();
+		dataService.addUpdate(employee);                                        		
+	} 
+	
+		
+    private function doNew():void {
+	    employee = new Employee();
+	    setEmployee(employee);
+	 	
+	}  
+	private function doDelete():void {
+	    dataService.deleteItem("Employee",employee.id);
+	 	
+	}  
+	private function doGet():void{
+		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true; 
+	   	    
+	}    
+	private function doNext():void {  
+		var itemp:int;
+		itemp = employees.getItemIndex(employee); 
+		itemp++;
+		if (itemp == employees.length){
+			itemp = employees.length - 1;
+		}
+		employee = employees.getItemAt(itemp,0) as Employee;   
+	    setEmployee(employee);                         
+	}
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = employees.getItemIndex(employee); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		employee = employees.getItemAt(itemp,0) as Employee;   
+	    setEmployee(employee);                                           
+	}                                                	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.accounts = "*";
+		//producer.send(message);
+	}      
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	
+	private function doCity(): void{                             
+		var city:City;
+		var result:Boolean;
+		
+		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
+			var item:int = findItem(citycombo.typedText, citys);
+			if (item == -1) {
+				city = new City();
+				city.name = citycombo.text;
+				cityDataService.addUpdate(city);
+				employee.address.city = city;
+			}
+			else {
+				citycombo.selectedItem = item;
+			}
+		}
+	}
+	
+	
+	private function doState(): void{                             
+		var state:State;
+		var result:Boolean;
+		
+		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
+			var item:int = findItem(statecombo.typedText, states1);
+			if (item == -1) {
+				state = new State();
+				state.name = statecombo.text;
+				stateDataService.addUpdate(state);
+				employee.address.state = state;
+			}
+			else {
+				statecombo.selectedItem = item;
+			}
+		}
+	}
+	
+	
+	private function doZip(): void{                             
+		var zip:Zip;
+		var result:Boolean;
+	 	if (validate(zipValidator)){
+			if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
+				var item:int = findItem(zipcombo.typedText, zips);
+				if (item == -1) {
+					zip = new Zip();
+					zip.name = zipcombo.text;
+					zipDataService.addUpdate(zip);
+					employee.address.zip = zip;
+				}
+				else {
+					zipcombo.selectedItem = item;
+				}
+			}
+		}
+	}
+		
+	private function doCountry(): void{                             
+		var country:Country;
+		var result:Boolean;
+		
+		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
+			var item:int = findItem(countrycombo.typedText, countrys);
+			if (item == -1) {
+				country = new Country();
+				country.name = countrycombo.text;
+				countryDataService.addUpdate(country);
+				employee.address.country = country;
+			}
+			else {
+				countrycombo.selectedItem = item;
+			}
+		}
+	}
+	
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		dataService.getAll("Employee")
+	}
+	
+	
+	
+	
+	     
+	private function handleLoadResult(ev:ResultEvent):void {
+		employees = ev.result as ArrayCollection;
+	}
+	
+	
+	
+	
+	private function handleLoadCity(ev:ResultEvent):void {
+	 	var selectedItem1:Object = citycombo.selectedItem;
+	 	citys = ev.result as ArrayCollection;
+		if (citycombo.selectedItem!= null){
+		citycombo.selectedItem = selectedItem1;
+		}
+	}   
+	 private function handleLoadState(ev:ResultEvent):void {
+		
+	 	var selectedItem1:Object = statecombo.selectedItem;
+		states1 = ev.result as ArrayCollection;
+		statecombo.selectedItem = selectedItem1;
+	}   
+	 private function handleLoadCountry(ev:ResultEvent):void {
+	
+	 	var selectedItem1:Object = countrycombo.selectedItem;
+		countrys = ev.result as ArrayCollection;
+		
+		countrycombo.selectedItem = selectedItem1;
+	}   
+	 private function handleLoadZip(ev:ResultEvent):void {
+		
+	 	var selectedItem1:Object = zipcombo.selectedItem;
+		zips = ev.result as ArrayCollection;
+		
+		zipcombo.selectedItem = selectedItem1;
+	}                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("Employee")
+		doNew();
+	}
+	private function handleSaveCityResult(ev:ResultEvent):void {
+		
+		cityDataService.getAll("City");
+		
+		
+	}      
+	private function handleSaveStateResult(ev:ResultEvent):void {
+		stateDataService.getAll("State");
+	}      
+
+	private function handleSaveCountryResult(ev:ResultEvent):void {
+		countryDataService.getAll("Country");
+	}      
+
+	private function handleSaveZipResult(ev:ResultEvent):void {
+		zipDataService.getAll("Zip");
+	}   
+	
+	
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,null);                                 
+	}
+	private function validateForm(event:Event):void 
+    {                    
+        focussedFormControl = event.target as DisplayObject;    
+
+        formIsValid = true;            
+
+        validate(zipValidator);
+        validate(employeeFirstValidator);
+        validate(employeeLastValidator);
+        
+        
+    }
+ 
+    private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+         
+		return currentControlIsValid;
+	}
+]]>
+                             
+</mx:Script>
+<mx:VBox width="100%" height="100%">
+	<mx:Canvas width="755" height="704">
+		<mx:Button width="38" height="38" click="doNext();" x="56" y="10">
+			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="38" height="38" click="doGet();" x="217" y="10">
+			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="38" height="38" click="doPrev();" x="10" y="10">
+			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();">
+			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
+			<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:TabNavigator x="0" y="82" width="681" height="603" creationPolicy="all">
+			<mx:Canvas label="Settings" width="100%" height="100%">	
+				<mx:Label x="51" y="19" text="ID Number:" width="71"/>
+				<mx:TextInput x="143" y="17" id="employeeID" text="{employee.id}" width="106" editable="false"/>
+				<mx:Label x="47" y="80" text="First Name:"/>
+				<mx:Label x="47" y="106" text="Last Name:"/>
+				<mx:Label x="73" y="132" text="Street:"/>
+				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
+				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
+				<mx:TextInput x="124" y="130" id="street_edit" text="{employee.address.street1}" width="205"/>
+				<mx:TextInput x="124" y="160" id="street1_edit" text="{employee.address.street2}" width="205"/>
+				<mx:Label x="81" y="193" text="City:"/>
+				<ns1:AutoComplete x="124" y="191" id="citycombo" dataProvider="{citys}" width="205" labelField="name" focusOut="doCity()" lookAhead="true" />
+				
+				<mx:Label x="77" y="219" text="State:"/>
+				<ns1:AutoComplete x="124" y="221" width="80" id="statecombo" dataProvider="{states1}" labelField="name" focusOut="doState()" lookAhead="true"/>
+				<mx:Label x="56" y="254" text="Zip Code:"/>
+				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true"/>
+				<mx:Label x="63" y="280" text="Country:"/>
+				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>
+				<mx:Label x="406" y="80" text="Phone:"/>
+				<mx:Label x="406" y="106" text="Mobile:"/>
+				<mx:Label x="412" y="132" text="Email:"/>
+				<mx:Label x="421" y="162" text="SSN:"/>
+				<mx:Label x="374" y="193" text="Export Code:"/>
+				<mx:TextInput x="459" y="78" id="phone_edit"/>
+				<mx:TextInput x="460" y="104" id="mobile_edit"/>
+				<mx:TextInput x="460" y="130" id="email_edit"/>
+				<mx:TextInput x="459" y="160" id="ssn_edit"/>
+				<mx:TextInput x="460" y="191" id="export_code_edit"/>
+			</mx:Canvas>
+			<mx:Canvas label="Personal" width="100%" height="100%">	
+			</mx:Canvas>
+			<mx:Canvas label="Production Filter" width="100%" height="100%">	
+			</mx:Canvas>	
+		</mx:TabNavigator>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+		<mx:Label x="484" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Button x="628" y="10" label="Button" height="38" width="40">
+			<mx:icon>@Embed(source='../../../assets/Original PS Icons/close.png')</mx:icon>
+		</mx:Button>
+	</mx:Canvas>
+</mx:VBox>
+</mx:Panel>
