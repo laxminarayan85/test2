@@ -252,6 +252,7 @@
 		}
 	}
 
+
 	private function doStockFinish() : void {
 		var finishing:StockFinish;
 		var result:Boolean;
@@ -267,6 +268,25 @@
 			}
 			else {
 				cboFinish.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockVendor() : void {
+		var stockvendor:Vendor;
+		var result:Boolean;
+		
+		if (cboVendor.typedText != null && cboVendor.typedText != "" && cboVendor.selectedIndex == -1) {
+			var item:int = findItem(cboVendor.typedText, stockFinish);
+			if (item == -1) {
+				stockvendor = new Vendor();
+				stockvendor.name = this.cboVendor.text;
+				
+				vendorDataService.addUpdate(stockvendor);
+				stockDefinitions.vendor = stockvendor;
+			}
+			else {
+				cboVendor.selectedItem = item;
 			}
 		}
 	}
@@ -529,7 +549,7 @@
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
 				<mx:Label x="32" y="12" text="Vendor:"/>
-				<fc:AutoComplete x="89" y="10" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name"/>
+				<fc:AutoComplete x="89" y="10" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name" focusOut="doStockVendor()"/>
 				<mx:Label x="10" y="41" text="Stock Type:"/>
 				<mx:TextInput x="89" y="36" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
 				<mx:Label x="257" y="12" text="Stock #:"/>
