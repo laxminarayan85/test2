@@ -48,9 +48,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 
 <mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
 <mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
-<mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactFirstValidator" source="{account.billToContact.firstName}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactLastValidator" source="{account.billToContact.lastName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactLastValidator" source="{last_name_edit}"	property="text"	minLength="2" required="true"/>
 
 
 <mx:Script> 

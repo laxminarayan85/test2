@@ -81,6 +81,12 @@
 	}     
 	
 	private function newAccount():void {
+		var editCustomerPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		if (editCustomerPage.className == "EditCustomer") {
+			(editCustomerPage as EditCustomer).setAccount(new Account());
+		} else if (editCustomerPage.className == "EditContact") {
+			(editCustomerPage as EditContact).setAccount(new Account());
+		}
 		PopUpManager.removePopUp(this);
 	}
 	

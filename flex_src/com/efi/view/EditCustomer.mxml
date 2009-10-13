@@ -67,10 +67,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 <mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
 <mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactBillFirstValidator" source="{account.billToContact.firstName}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactShipFirstValidator" source="{account.contact.firstName}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactBillLastValidator" source="{account.billToContact.lastName}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactShipLastValidator" source="{account.contact.lastName}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactBillFirstValidator" source="{bill_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactShipFirstValidator" source="{ship_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactBillLastValidator" source="{bill_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="contactShipLastValidator" source="{ship_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
 
 <mx:Script>                                   
 <![CDATA[
@@ -159,7 +159,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	    var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
-	    account = new Account();
+//	    account = new Account();
 	    salesRepDataService.getAll("SalesRep");
 	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
@@ -875,7 +875,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
-				<mx:Panel x="10" y="94" width="351" height="182" layout="absolute" title="Invoice Address" dropShadowEnabled="false">
+				<mx:Panel x="10" y="94" width="326" height="182" layout="absolute" title="Invoice Address" dropShadowEnabled="false">
 					<mx:TextInput x="85" y="10" width="210" id="ship_company_edit" text="{account.shipToAddress.name}"/>
 					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
 					<mx:TextInput x="85" y="36" width="210" id="ship_street1_edit" text="{account.shipToAddress.street1}"/>
