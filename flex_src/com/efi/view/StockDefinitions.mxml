@@ -61,7 +61,9 @@
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;
                    
+	[Bindable]                                         
     private var enableSave:Boolean = true;
+
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
                          
 	[Bindable]                                         
@@ -87,6 +89,9 @@
 	[Bindable]                                
 	private var stockUom:ArrayCollection = new ArrayCollection();   
 	
+	[Bindable]                                
+	private var stockUnits:ArrayCollection = new ArrayCollection();   
+	
                                                                          
 	public function init():void {
 		consumer.subscribe();
@@ -101,8 +106,28 @@
 	    stockGenericColorDataService.getAll("StockColor");
 	    stockFinishDataService.getAll("StockFinish");
 	    loadUomArray();
+	    loadUnitsArray();
     
 	}      
+
+	private function loadUnitsArray():void {
+		
+		var Envelope:Object = new Object;
+		Envelope.name = "Envelope"
+		stockUnits.addItem(Envelope);
+
+		var Sheet:Object = new Object;
+		Sheet.name = "Sheet Stock"
+		stockUnits.addItem(Sheet);
+
+		var Roll:Object = new Object;
+		Roll.name = "Roll Stock"
+		stockUnits.addItem(Roll);
+
+		var Large:Object = new Object;
+		Large.name = "Large Format"
+		stockUnits.addItem(Large);
+	}
 
 	private function loadUomArray():void {
 		
@@ -142,6 +167,7 @@
 		{
 			this.stockDefinitions = stockDefinition;
 			mapFromStockDefinitionData();
+			standardItemCheckEvent();
 		}
 	}			
 	                                                   	
@@ -186,6 +212,15 @@
 		return -1;
 	}
 
+	private function findItemById(name:int, array:ArrayCollection):String {
+		var retVal:String;
+		retVal = "";
+		if (name > 0) {
+			retVal = array.getItemAt(name,0).name;
+		}
+		return retVal;
+	}
+
 	private function doGet():void {
 		var titleWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		titleWindow.setStyle("borderAlpha", 0.9);
@@ -217,6 +252,7 @@
 	private function doSave():void {
 		mapStockDefinitionData();
 		dataService.addUpdate(stockDefinitions);
+		standardItemCheckEvent();
 	}
 
 	private function doNew():void {
@@ -437,6 +473,18 @@
 
 		if (stockDefinitions.uom != null)
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+			
+		if (stockDefinitions.stockunit != 0)
+			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
+			
+			//// check box values here
+			chkstandardItem.selected = stockDefinitions.standardItem;
+			chkIsMetric.selected = stockDefinitions.isMetric;
+			chkAutocalcblankstock.selected = stockDefinitions.autoCalculateBlank;
+			chkEvenIncrements.selected = stockDefinitions.evenIncrements;
+			chkcharge4entiteorder.selected = stockDefinitions.entireOrderCharge;
+			chkCostIsInSets.selected = stockDefinitions.isCostInSets;
+
 	}
 
 	private function setGroup():void {
@@ -470,9 +518,26 @@
 		stockDefinitions.vendor = new Vendor()
 	}
 	
+	private function standardItemCheckEvent():void {
+		var checked:Boolean;
+		checked = chkstandardItem.selected;
+		OnHand.enabled = checked;
+		Committed.enabled = checked;
+		OnOrder.enabled = checked;
+		TargetLevel.enabled = checked;
+		ReOrderPoint.enabled = checked;
+		MinOrderQty.enabled = checked;
+		Expires.enabled = checked;
+		BinLocation.enabled = checked;
+		ShellItem.enabled = checked;
+		btnAssignCustomerAccount.enabled = checked;
+		chkEvenIncrements.enabled = checked;
+	}
+
 	private function mapStockDefinitionData():void {
 	 //stockDefinition.stockDefID = stockDefID;
 	 
+	 //combobox and select box values
 	 if (cboStockGrade != null && cboStockGrade.selectedItem != null) 
 	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
 
@@ -492,8 +557,20 @@
 	 	stockDefinitions.genericcolor = cboGenericColor.selectedItem as StockColors;
 	 
 	 if (cboUom != null && cboUom.selectedItem != null)
-	 	stockDefinitions.uom = cboUom.selectedItem as String; 
+	 	stockDefinitions.uom = cboUom.selectedItem.name as String; 
 	 
+	 stockDefinitions.stockunit = findItem(stockUnit.selectedValue.toString(),stockUnits);
+	 
+	 //check boxes
+	 stockDefinitions.standardItem = chkstandardItem.selected;
+	 stockDefinitions.isMetric = chkIsMetric.selected;
+	 stockDefinitions.autoCalculateBlank = chkAutocalcblankstock.selected;
+	 stockDefinitions.evenIncrements = chkEvenIncrements.selected;
+	 stockDefinitions.entireOrderCharge = chkcharge4entiteorder.selected;
+	 stockDefinitions.isCostInSets = chkCostIsInSets.selected;
+	 
+	 
+	 //text and textboxes
 	 stockDefinitions.stkclass = stockClass.text;
 	 stockDefinitions.name = stockName.text;
 	 stockDefinitions.weight = parseInt(weight.text);
@@ -583,7 +660,7 @@
 	<mx:Label x="326" y="69" text="Class:"/>
 	<fc:AutoComplete id="cboStockGroup" x="159" y="67" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" lookAhead="true" width="116"/>
 	<mx:TextInput x="377" y="67" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
-	<mx:CheckBox x="544.5" y="67" id="isMetric" label="Metric"/>
+	<mx:CheckBox x="544.5" y="67" id="chkIsMetric" label="Metric"/>
 	<mx:Label x="112" y="92" text="Name:"/>
 	<mx:Label x="112" y="116" text="Color:"/>
 	<fc:AutoComplete  x="159" y="114" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
@@ -598,11 +675,12 @@
 	<mx:TextInput x="546.5" y="92" width="55" id="weight" text="{stockDefinitions.weight}"/>
 	<mx:Label x="489.5" y="120" text="Coated:"/>
 	<mx:TextInput x="546.5" y="116" width="55" id="coated" text="{stockDefinitions.coated}"/>
-	<mx:RadioButtonGroup id="stockunit"/>
-	<mx:RadioButton x="623" y="68" label="Envelope" groupName="stockunit"/>
-	<mx:RadioButton x="623" y="94" label="Sheet Stock" groupName="stockunit"/>
-	<mx:RadioButton x="623" y="120" label="Roll Stock" groupName="stockunit"/>
-	<mx:RadioButton x="623" y="146" label="Large Format" groupName="stockunit"/>
+	<mx:RadioButtonGroup id="stockUnit"/>
+	<mx:RadioButton x="614" y="68" label="Envelope" groupName="stockUnit"/>
+	<mx:RadioButton x="614" y="88" label="Sheet Stock" groupName="stockUnit"/>
+	<mx:RadioButton x="614" y="109" label="Roll Stock" groupName="stockUnit"/>
+	<mx:RadioButton x="614" y="130" label="Large Format" groupName="stockUnit"/>
+	<mx:RadioButton x="614" y="152" label="Rigid Substrate" groupName="stockUnit"/>
 	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
@@ -620,13 +698,13 @@
 				<mx:Label x="5.5" y="118" text="Sheets / Carton:"/>
 				<mx:TextInput x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
 				<mx:Label x="257.5" y="91" text="M Weight:"/>
-				<mx:TextInput x="323" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
+				<mx:TextInput x="323" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}" enabled="false"/>
 				<mx:Label x="35.5" y="146" text="Min. Order:"/>
 				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
 				<mx:Label x="229.5" y="118" text="Carton Weight:"/>
-				<mx:TextInput x="323" y="116" width="64.5" text=""/>
+				<mx:TextInput x="323" y="116" width="64.5" enabled="false"/>
 				<mx:Text x="323" y="33" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
-				<mx:CheckBox x="248.5" y="144" id="charge4entiteorder" label="Charge Customer for Entire Order"/>
+				<mx:CheckBox x="248.5" y="144" id="chkcharge4entiteorder" label="Charge Customer for Entire Order"/>
 				<mx:ComboBox x="389.5" y="60" id="cboUom"  dataProvider="{stockUom}" width="73" labelField="name"/>
 				<mx:Panel x="470.5" y="-10" width="193.5" height="185" layout="absolute" title="Chain of Custody">
 					<mx:Label x="26.25" y="1" text="Forest Management:"/>
@@ -678,7 +756,7 @@
 				<mx:Label x="257" y="2" text="# Sheets / Set:"/>
 				<mx:TextInput x="157" y="0" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>
 				<mx:TextInput x="352" y="0" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}"/>
-				<mx:CheckBox x="450" y="0" label="Cost is in Sets"/>
+				<mx:CheckBox x="450" y="0" label="Cost is in Sets" id="chkCostIsInSets"/>
 				<mx:Label x="73" y="140" text="Price Expires:"/>
 				<mx:TextInput x="157" y="138" width="87" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
 			</mx:Panel>
@@ -701,7 +779,6 @@
 			<mx:Label x="10" y="23" text="Normal Run Size:"/>
 			<mx:Label x="204" y="23" text="Cut / 100:"/>
 			<mx:Label x="329" y="23" text="Min. Cut Chg.:"/>
-			<mx:Button x="475" y="21" label="Import One Stock"/>
 			<mx:Panel x="10" y="137" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets">
 				<mx:TextInput x="65" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
 				<mx:TextInput x="143" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
@@ -717,7 +794,7 @@
 				<mx:TextInput x="456" y="23" width="80" id="BlankSheetPrice6" text="{stockDefinitions.blankSheetPrice6}"/>
 				<mx:Label x="0" y="4" text="Quantity:"/>
 				<mx:Label x="21" y="25" text="Price:"/>
-				<mx:CheckBox x="65" y="47" id="Autocalcblankstock" label="Auto Calculate Blank Stock"/>
+				<mx:CheckBox x="65" y="47" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="253" width="690" height="122" layout="absolute">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
@@ -747,27 +824,28 @@
 		</mx:Canvas>
 		<mx:Canvas label="Inventory" id="page_inventory" width="100%" height="100%">
 			<mx:Panel x="10" y="10" width="690" height="244" layout="absolute" title="Inventory Settings">
-				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item"/>
+				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item" change="standardItemCheckEvent();" id="chkstandardItem"/>
 				<mx:Label x="26" y="30" text="Stock On Hand:"/>
 				<mx:Label x="47" y="58" text="Committed:"/>
-				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}"/>
-				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}"/>
+				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false"/>
+				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false"/>
 				<mx:Label x="59" y="88" text="Available:"/>
 				<mx:Label x="35" y="150" text="Stock Expires:"/>
 				<mx:Label x="42" y="178" text="Bin Location:"/>
-				<mx:TextInput x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22"/>
+				<mx:TextInput x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22" enabled="false"/>
 				<mx:Label x="273" y="30" text="On Order:"/>
-				<mx:TextInput x="337" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}"/>
+				<mx:TextInput x="337" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false"/>
 				<mx:Label x="255" y="58" text="Target Level:"/>
-				<mx:TextInput x="337" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}"/>
+				<mx:TextInput x="337" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false"/>
 				<mx:Label x="248" y="88" text="Reorder Point:"/>
-				<mx:TextInput x="337" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}"/>
+				<mx:TextInput x="337" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false"/>
 				<mx:Label x="239" y="118" text="Min. Order Qty.:"/>
-				<mx:TextInput x="337" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}"/>
+				<mx:TextInput x="337" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
 				<mx:TextInput x="122" y="148" width="93" id="Expires" text="{stockDefinitions.expires}"  height="22" enabled="false"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
-				<mx:CheckBox x="251" y="148" id="ShellItem" label="Shell Item"/>
-				<mx:Button x="341" y="148" label="Assign Customer Account..."/>
+				<mx:CheckBox x="251" y="148" id="ShellItem" label="Shell Item" enabled="false"/>
+				<mx:Button x="341" y="148" label="Assign Customer Account..." enabled="false" id="btnAssignCustomerAccount"/>
+				<mx:CheckBox x="429" y="116" label="Even increments, like ream size" enabled="false" id="chkEvenIncrements"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
 				<mx:Button x="10" y="204" label="Show Entire History"/>
