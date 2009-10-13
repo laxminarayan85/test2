@@ -453,7 +453,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 					<mx:CheckBox x="10" y="130" label="Allow to modify production settings" id="modify_production_settings"/>
 					<mx:CheckBox x="10" y="160" label="Allow Tracker Next location to be modified" id="tracker_next_location"/>
 					<mx:CheckBox x="10" y="190" label="Auto  show Tracker Console at clock-in" id="show_tracker_console"/>
-					<mx:CheckBox x="10" y="218" label="Auto show My Work Centerat clock-in" id="show_work_center"/>
+					<mx:CheckBox x="10" y="218" label="Auto show My Work Center at clock-in" id="show_work_center"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="224" width="287" height="86" layout="absolute" title="Magnetic Card Reader Authentication">
 					<mx:CheckBox x="10" y="10" label="Allow authentication with magnetic card..." id="allow_mag_reader"/>
@@ -477,20 +477,24 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 					<mx:CheckBox x="10" y="154" label="Any Past Due" id="any_past_due"/>
 				</mx:Panel>
 				<mx:Panel x="454" y="30" width="279" height="255" layout="absolute" title="Production Parents">
-					<mx:List x="10" y="35" id="production_parents" width="210"></mx:List>
+					<mx:List x="10" y="35" id="production_parents" width="230"></mx:List>
 					<mx:CheckBox x="10" y="5" label="Only Show checked Production Parents" id="show_check_production"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="Pricing Methods">
 					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing"/>
+					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="Charge Type">
 					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types"/>
+					<mx:List x="10" y="40" width="318" height="110" id="charge_types"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="Presses">
 					<mx:CheckBox x="10" y="10" label="Use all Presses" id="all_presses"/>
+					<mx:List x="10" y="40" width="283" height="110" id="press_list"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="Copiers">
 					<mx:CheckBox x="10" y="10" label="Use all Copiers" id="all_copiers"/>
+					<mx:List x="10" y="40" width="318" height="110" id="copier_list"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	
 		</mx:TabNavigator>
