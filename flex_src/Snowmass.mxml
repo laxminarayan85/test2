@@ -219,8 +219,9 @@
 		}
 		
 		private function handleLoginResult(event:ResultEvent):void	{
-			var res:Boolean = event.result as Boolean;
-			if (res) {
+			var res:User = event.result as User;
+			if (res != null) {
+				currentUser = res;
 			} else {
 				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				showLogin();
