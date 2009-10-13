@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="Time Tracking" label="Time Tracking" 
-	creationComplete="init()">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="Time Tracking" label="Time Tracking" 
+	creationComplete="init()" showCloseButton="true" close="PopUpManager.removePopUp(this)">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -44,8 +44,8 @@
 	
 	public function init():void {
 		var application:Snowmass = Snowmass.getInstance();
-		consumer.subscribe();
-		notification_consumer.subscribe();     
+	/* 	consumer.subscribe();
+		notification_consumer.subscribe();      */
 		dataService.getAll("Employee");
 		//user = application.currentUser;
 		
@@ -118,6 +118,5 @@
 			<mx:DataGridColumn headerText="Break" dataField="clockBreak"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:Button x="534" y="448" label="Return" click="PopUpManager.removePopUp(this)"/>
 	
-</mx:Panel>
+</mx:TitleWindow>
