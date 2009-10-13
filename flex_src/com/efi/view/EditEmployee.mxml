@@ -483,9 +483,9 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="68" width="287" height="133" layout="absolute" title="PIN Settings">
-					<mx:CheckBox x="10" y="10" label="Require PIN" id="requirePin"/>
+					<mx:CheckBox x="10" y="10" label="Require PIN" id="requirePin" selected="{employee.pinRequired}"/>
 					<mx:Label x="10" y="40" text="PIN:"/>
-					<mx:TextInput x="47" y="38" id="pin_edit"/>
+					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>
 				</mx:Panel>
 				<mx:TextInput x="54" y="40" id="rate_edit" text="{employee.rate}"/>
 				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="Editable Production Options">
