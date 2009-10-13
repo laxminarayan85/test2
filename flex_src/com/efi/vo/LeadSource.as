@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.LeadSource")]
 
-public class LeadSource
+public class LeadSource extends ModelBase
 
 {
 
-public function LeadSource()
+	public function LeadSource() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

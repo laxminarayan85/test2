@@ -6,22 +6,13 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.PriceList")]
 
-public class PriceList
+public class PriceList extends PriceListBase
 
 {
 
-public function PriceList()
+	public function PriceList() {
+	
+	}
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ProductionLocations")]
 
-public class ProductionLocations
+public class ProductionLocations extends ModelBase
 
 {
 
-public function ProductionLocations()
+	public function ProductionLocations() {
+	
+	}
+	public var name:String = "";
+	public var key:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var key:String = "";
-
-}
+	}
 }

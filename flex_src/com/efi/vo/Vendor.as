@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.Vendor")]
 
-public class Vendor
+public class Vendor extends ModelBase
 
 {
 
-public function Vendor()
+	public function Vendor() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.InkColor")]
 
-public class InkColor
+public class InkColor extends ModelBase
 
 {
 
-public function InkColor()
+	public function InkColor() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ComLink")]
 
-public class ComLink
+public class ComLink extends ModelBase
 
 {
 
-public function ComLink()
+	public function ComLink() {
+	
+	}
+	public var type:String = "";
+	public var value:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var type:String = "";
-public var value:String = "";
-
-}
+	}
 }

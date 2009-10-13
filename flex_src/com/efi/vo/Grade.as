@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.Grade")]
 
-public class Grade
+public class Grade extends ModelBase
 
 {
 
-public function Grade()
+	public function Grade() {
+	
+	}
+	public var name:String = "";
+	public var gradeID:int = 0;
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var gradeID:int = 0;
-
-}
+	}
 }

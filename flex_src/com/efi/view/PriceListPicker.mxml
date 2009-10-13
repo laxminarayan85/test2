@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="392" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Producer id="producer" destination="users"/>
+
+<mx:Script>
+                                   
+<![CDATA[ 
+	import com.efi.vo.Contact;           
+    import com.efi.vo.Account;    
+    import com.efi.view.EditContact;
+    import com.efi.view.EditCustomer;            
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	    
+	[Bindable]                                
+	private var list:ArrayCollection = new ArrayCollection();
+                                                                        	         
+	public var itemType:String = "PriceList";
+	
+	// Holds a reference to the currently focussed control on the form.
+ 	private var focusedFormControl:DisplayObject;                           
+           
+	                    
+	private function handleLoadResult(event:ResultEvent):void {
+		list = event.result as ArrayCollection;
+	}
+	
+	private function handleFault(ev:FaultEvent):void {                               
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+	                                                       
+	private function init():void {   
+	    PopUpManager.centerPopUp(this);
+		dataService.getAll("Account");
+	}
+	                                
+	private function doSelect():void {	
+		PopUpManager.removePopUp(this);
+	}     
+	
+	private function doNew():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doClear():void {
+		PopUpManager.removePopUp(this);		
+	}
+	
+	private function doDelete():void {
+		
+	}
+]]>        
+</mx:Script>
+                             
+
+                             
+	<mx:Canvas width="361" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:DataGrid id="dataGrid" width="228" height="261" dataProvider="{list}"
+		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
+		<mx:columns>
+		     <mx:DataGridColumn dataField="title" headerText="Name" />                         
+		</mx:columns>
+		</mx:DataGrid>
+		<mx:Button label="Select" id="select_button" enabled="true" click="doSelect()"  width="108" x="236" y="10"/>
+		<mx:Button label="Clear" enabled="true" click="doClear();" id="clear_button" width="108" x="237.5" y="40"/>
+		<mx:Button label="New" click="doNew()" id="new_button" width="108" x="236" y="80"/>
+		<mx:Button label="Delete" click="doDelete()" id="delete_button" width="108" x="236" y="110"/>
+		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="236" y="150"/>
+		<mx:HRule x="236" y="70" width="109.5"/>
+		<mx:HRule x="234.5" y="140" width="109.5"/>
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

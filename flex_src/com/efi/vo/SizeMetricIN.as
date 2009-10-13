@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.SizeMetricIN")]
 
-public class SizeMetricIN
+public class SizeMetricIN extends ModelBase
 
 {
 
-public function SizeMetricIN()
+	public function SizeMetricIN() {
+	
+	}
+	public var name:String = "";
+	public var size:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var size:String = "";
-
-}
+	}
 }

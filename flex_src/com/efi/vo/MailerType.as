@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.MailerType")]
 
-public class MailerType
+public class MailerType extends ModelBase
 
 {
 
-public function MailerType()
+	public function MailerType() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

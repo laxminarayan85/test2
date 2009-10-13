@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.HoldState")]
 
-public class HoldState
+public class HoldState extends ModelBase
 
 {
 
-public function HoldState()
+	public function HoldState() {
+	
+	}
+	public var name:String = "";
+	public var key:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var key:String = "";
-
-}
+	}
 }

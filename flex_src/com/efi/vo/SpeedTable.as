@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.SpeedTable")]
 
-public class SpeedTable
+public class SpeedTable extends ModelBase
 
 {
 
-public function SpeedTable()
+	public function SpeedTable() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

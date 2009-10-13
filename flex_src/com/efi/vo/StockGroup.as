@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.StockGroup")]
 
-public class StockGroup
+public class StockGroup extends ModelBase
 
 {
 
-public function StockGroup()
+	public function StockGroup() {
+	
+	}
+	public var name:String = "";
+	public var key:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var key:String = "";
-
-}
+	}
 }

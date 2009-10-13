@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.MarketingDateLabels")]
 
-public class MarketingDateLabels
+public class MarketingDateLabels extends ModelBase
 
 {
 
-public function MarketingDateLabels()
+	public function MarketingDateLabels() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

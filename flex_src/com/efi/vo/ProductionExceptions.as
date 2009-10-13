@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ProductionExceptions")]
 
-public class ProductionExceptions
+public class ProductionExceptions extends ModelBase
 
 {
 
-public function ProductionExceptions()
+	public function ProductionExceptions() {
+	
+	}
+	public var name:String = "";
+	public var key:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var key:String = "";
-
-}
+	}
 }

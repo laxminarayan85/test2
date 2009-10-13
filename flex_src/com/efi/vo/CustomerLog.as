@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.CustomerLog")]
 
-public class CustomerLog
+public class CustomerLog extends ModelBase
 
 {
 
-public function CustomerLog()
+	public function CustomerLog() {
+	
+	}
+	public var logEntry:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var logEntry:String = "";
-
-}
+	}
 }

@@ -6,24 +6,16 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ChargeCategory")]
 
-public class ChargeCategory
+public class ChargeCategory extends ModelBase
 
 {
 
-public function ChargeCategory()
+	public function ChargeCategory() {
+	
+	}
+	public var children:ArrayCollection;
+	public var name:String = "";
+	public var parent:ChargeCommand = new ChargeCommand();
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var children:ArrayCollection;
-public var name:String = "";
-public var parent:ChargeCommand = new ChargeCommand();
-
-}
+	}
 }

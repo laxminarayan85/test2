@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.MarketingMailers")]
 
-public class MarketingMailers
+public class MarketingMailers extends ModelBase
 
 {
 
-public function MarketingMailers()
+	public function MarketingMailers() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

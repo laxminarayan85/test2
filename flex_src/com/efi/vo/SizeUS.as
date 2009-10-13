@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.SizeUS")]
 
-public class SizeUS
+public class SizeUS extends ModelBase
 
 {
 
-public function SizeUS()
+	public function SizeUS() {
+	
+	}
+	public var name:String = "";
+	public var size:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var size:String = "";
-
-}
+	}
 }

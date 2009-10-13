@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.CostCenter")]
 
-public class CostCenter
+public class CostCenter extends ModelBase
 
 {
 
-public function CostCenter()
+	public function CostCenter() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

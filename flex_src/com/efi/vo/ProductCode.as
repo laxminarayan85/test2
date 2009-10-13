@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ProductCode")]
 
-public class ProductCode
+public class ProductCode extends ModelBase
 
 {
 
-public function ProductCode()
+	public function ProductCode() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

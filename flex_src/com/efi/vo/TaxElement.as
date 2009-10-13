@@ -6,24 +6,16 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.TaxElement")]
 
-public class TaxElement
+public class TaxElement extends ModelBase
 
 {
 
-public function TaxElement()
+	public function TaxElement() {
+	
+	}
+	public var rate:Number = 0;
+	public var showTax:Boolean = true;
+	public var userForSeparateShippingTax:Boolean = true;
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var rate:Number = 0;
-public var showTax:Boolean = true;
-public var userForSeparateShippingTax:Boolean = true;
-
-}
+	}
 }

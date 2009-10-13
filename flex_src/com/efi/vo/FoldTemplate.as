@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.FoldTemplate")]
 
-public class FoldTemplate
+public class FoldTemplate extends ModelBase
 
 {
 
-public function FoldTemplate()
+	public function FoldTemplate() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

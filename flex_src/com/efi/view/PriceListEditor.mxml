@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="458" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Producer id="producer" destination="users"/>
+
+<mx:Script>
+                                   
+<![CDATA[ 
+	import com.efi.vo.Contact;           
+    import com.efi.vo.Account;    
+    import com.efi.view.EditContact;
+    import com.efi.view.EditCustomer;            
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	    
+	[Bindable]                                
+	public var priceList:PriceListBase;
+           
+    [Bindable]
+    private var quantity_header:String = "Quantity";
+    
+    [Bindable]
+    private var price_header:String = "Price";
+                                                                 	         
+	public var itemType:String = "PriceList";
+	
+	// Holds a reference to the currently focussed control on the form.
+ 	private var focusedFormControl:DisplayObject;                           
+   	
+	private function handleFault(ev:FaultEvent):void {                               
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+	                                                       
+	private function init():void {   
+	    PopUpManager.centerPopUp(this);
+	}
+	                                
+	private function doSelect():void {	
+		PopUpManager.removePopUp(this);
+	}     
+	
+	private function doNew():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doClear():void {
+		PopUpManager.removePopUp(this);		
+	}
+	
+	private function doDelete():void {
+		
+	}
+	
+	private function changeRadioButtons():void {
+		
+	}
+]]>        
+</mx:Script>            
+	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{list}"
+		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
+		<mx:columns>
+		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />                         
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" />                         
+		</mx:columns>
+		</mx:DataGrid>
+		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="108" x="0" y="374"/>
+		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="108" x="116" y="374"/>
+		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="186"/>
+		<mx:Label x="162" y="12" text="Title:"/>
+		<mx:RadioButtonGroup id="amount_radio_group" change="changeRadioButtons()/>
+		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group"/>
+		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group"/>
+		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments"}/>
+		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}"/>
+		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}"/>
+		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}"/>
+		<mx:Panel x="162" y="189" width="228" height="131" layout="absolute" dropShadowEnabled="false" title="Additional Quantities">
+			<mx:CheckBox x="10" y="10" label="Use additional quantities" selected="{priceList.lastItemIsPriceAdditionalQty}"/>
+			<mx:TextInput x="57" y="36" width="139" id="additional_quantity"/>
+			<mx:TextInput x="57" y="62" width="139" id="additional_price"/>
+			<mx:Label x="10" y="38" text="Qty:"/>
+			<mx:Label x="10" y="64" text="Amt:"/>
+		</mx:Panel>
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

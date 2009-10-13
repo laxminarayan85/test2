@@ -26,19 +26,19 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PriceList.findall", query = "from PriceList"),
-	@NamedQuery(name = "PriceList.byId", query = "select a from PriceList a where a.id= :id")
+	@NamedQuery(name = "QuantityDiscount.findall", query = "from QuantityDiscount"),
+	@NamedQuery(name = "QuantityDiscount.byId", query = "select a from QuantityDiscount a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "pricelist")
-public class PriceList extends PriceListBase {
+@Table(name = "quantitydiscount")
+public class QuantityDiscount extends PriceListBase {
 
 	/**
 	 * @generated
 	 */
-	public PriceList() {
+	public QuantityDiscount() {
 		this.created = new Date();
 		this.modified = new Date();
 	}

@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ShippingMethod")]
 
-public class ShippingMethod
+public class ShippingMethod extends ModelBase
 
 {
 
-public function ShippingMethod()
+	public function ShippingMethod() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

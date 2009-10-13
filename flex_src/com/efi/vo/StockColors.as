@@ -6,23 +6,15 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.StockColors")]
 
-public class StockColors
+public class StockColors extends ModelBase
 
 {
 
-public function StockColors()
+	public function StockColors() {
+	
+	}
+	public var name:String = "";
+	public var genericColor:GenericColors = new GenericColors();
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-public var genericColor:GenericColors = new GenericColors();
-
-}
+	}
 }

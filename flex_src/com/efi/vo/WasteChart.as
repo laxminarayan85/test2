@@ -6,22 +6,13 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.WasteChart")]
 
-public class WasteChart
+public class WasteChart extends PriceListBase
 
 {
 
-public function WasteChart()
+	public function WasteChart() {
+	
+	}
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:int = 0;
-
-}
+	}
 }

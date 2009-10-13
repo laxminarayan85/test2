@@ -6,55 +6,47 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.PressDefinition")]
 
-public class PressDefinition
+public class PressDefinition extends ModelBase
 
 {
 
-public function PressDefinition()
+	public function PressDefinition() {
+	
+	}
+	public var pressDefID:Number = 0;
+	public var pressDefName:String = "";
+	public var machineName:String = "";
+	public var outputDescrip:String = "";
+	public var productionLocation:String = "";
+	public var costCenter:String = "";
+	public var oEMDeviceID:String = "";
+	public var machineID:Number = 0;
+	public var costingPress:Boolean = true;
+	public var sheetFed:Boolean = true;
+	public var rolltoRoll:Boolean = true;
+	public var integratedDevice:Boolean = true;
+	public var maxPaperSize:String = "";
+	public var minPaperSize:String = "";
+	public var laborRate:Number = 0;
+	public var laborMarkup:Number = 0;
+	public var fixedWaste:Number = 0;
+	public var minLabor:Number = 0;
+	public var setupMin:Number = 0;
+	public var setupAddSig:Number = 0;
+	public var workTurnSetup:Number = 0;
+	public var setupAddHead:Number = 0;
+	public var washupFee:Number = 0;
+	public var addSigAddHead:Number = 0;
+	public var washupMin:Number = 0;
+	public var washupPerFountain:Number = 0;
+	public var gripEdge:Number = 0;
+	public var perfector:Boolean = true;
+	public var avgImpressPerHour:Number = 0;
+	public var numberHeads:Number = 0;
+	public var setupAddRun:Number = 0;
+	public var defaultSheet:Boolean = true;
+	public var defaultRoll:Boolean = true;
+	public var paperStyle:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var pressDefID:Number = 0;
-public var pressDefName:String = "";
-public var machineName:String = "";
-public var outputDescrip:String = "";
-public var productionLocation:String = "";
-public var costCenter:String = "";
-public var oEMDeviceID:String = "";
-public var machineID:Number = 0;
-public var costingPress:Boolean = true;
-public var sheetFed:Boolean = true;
-public var rolltoRoll:Boolean = true;
-public var integratedDevice:Boolean = true;
-public var maxPaperSize:String = "";
-public var minPaperSize:String = "";
-public var laborRate:Number = 0;
-public var laborMarkup:Number = 0;
-public var fixedWaste:Number = 0;
-public var minLabor:Number = 0;
-public var setupMin:Number = 0;
-public var setupAddSig:Number = 0;
-public var workTurnSetup:Number = 0;
-public var setupAddHead:Number = 0;
-public var washupFee:Number = 0;
-public var addSigAddHead:Number = 0;
-public var washupMin:Number = 0;
-public var washupPerFountain:Number = 0;
-public var gripEdge:Number = 0;
-public var perfector:Boolean = true;
-public var avgImpressPerHour:Number = 0;
-public var numberHeads:Number = 0;
-public var setupAddRun:Number = 0;
-public var defaultSheet:Boolean = true;
-public var defaultRoll:Boolean = true;
-public var paperStyle:String = "";
-
-}
+	}
 }

@@ -33,11 +33,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "wastechart")
-public class WasteChart extends ModelBase {
-	/**
-	 * @generated
-	 */
-	public static final String NAME = "Name";
+public class WasteChart extends PriceListBase {
 
 	/**
 	 * @generated
@@ -47,76 +43,5 @@ public class WasteChart extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
-	
- 	@Basic
-	private Integer name;
-	/**
-	 * @generated
- 	 */
-	public Integer getName(){
-		return name; 
-	}
 
-	/**
-	 * @generated
-	 */	
-	public void setName(Integer newVal) {
-		this.name = newVal;
-	}
-
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		return super.getProperty(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
-	
-
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return WasteChart.class;
-		return super.getPropertyOwner(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */			
-	@Override
-	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WasteChart objT = (WasteChart)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		return true;
-	}			
 }

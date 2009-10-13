@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.CommonInterest")]
 
-public class CommonInterest
+public class CommonInterest extends ModelBase
 
 {
 
-public function CommonInterest()
+	public function CommonInterest() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.SportsInterest")]
 
-public class SportsInterest
+public class SportsInterest extends ModelBase
 
 {
 
-public function SportsInterest()
+	public function SportsInterest() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }

@@ -6,21 +6,13 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.ChargeInit")]
 
-public class ChargeInit
+public class ChargeInit extends ModelBase
 
 {
 
-public function ChargeInit()
+	public function ChargeInit() {
+	
+	}
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-
-}
+	}
 }

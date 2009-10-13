@@ -6,22 +6,14 @@ package com.efi.vo
 
 [RemoteClass(alias="com.efi.printsmith.data.SalesRep")]
 
-public class SalesRep
+public class SalesRep extends ModelBase
 
 {
 
-public function SalesRep()
+	public function SalesRep() {
+	
+	}
+	public var name:String = "";
 
-{
-
-}
-public var id:Number;
-
-public var created:Date;
-
-public var modified:Date;
-
-public var name:String = "";
-
-}
+	}
 }
