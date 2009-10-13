@@ -72,6 +72,8 @@
 	}     
 	
 	private function newStockDefinition():void {
+		var editStockDefinition:StockDefinitions = Snowmass.getInstance().mainNavigator.selectedChild as StockDefinitions;
+		editStockDefinition.setStockDefinition(null);
 		PopUpManager.removePopUp(this);
 	}
 	
