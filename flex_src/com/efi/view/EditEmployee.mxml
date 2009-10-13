@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="942" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
+width="100%" height="100%" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
 creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.adobe.flex.extras.controls.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -63,9 +63,12 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
     
+    
+   
     private var enableSave:Boolean = true;
    	[Bindable]
     	private var employees:ArrayCollection = new ArrayCollection();
+
     
     [Bindable]                                         
 		private var employee:Employee;
@@ -83,7 +86,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	private var customerWantType:String = "Due_Today";
 	
     [Bindable]
-	private var customerStatus:String = "Active";
+	private var employeeStatus:String = "Active";
 	
     private var focussedFormControl:DisplayObject;
     
@@ -91,6 +94,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
 		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+		titleWindow.parentContainer = this;
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
 		cityDataService.getAll("City");
@@ -122,9 +126,9 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 			
 		customerWantType = employee.customerWant;
 		if (employee.active) 
-			customerStatus= "Active"
+			employeeStatus= "Active"
 		else
-			customerStatus= "InActive"
+			employeeStatus= "InActive"
 	}	
 	
 	
@@ -136,8 +140,8 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		
 		employee.address.street1 = street_edit.text;
 		employee.address.street2 = street1_edit.text;
-	
-		if (customerStatus == "Active")
+		employee.customerWant = customerWantType;
+		if (employeeStatus == "Active")
 			employee.active= true;
 		else
 			employee.active = false;
@@ -175,8 +179,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		employee.allCopiers	= all_copiers.selected;
 		employee.anyPastDue = any_past_due.selected;
 		
-		
-		
+			
 	}
 	
 	private function doSave():void {
@@ -475,7 +478,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 			<mx:Canvas label="Personal" width="100%" height="100%">	
 				<mx:Label x="10" y="42" text="Rate:"/>
 				<mx:Panel x="10" y="68" width="295" height="133" layout="absolute" title="Status">
-					<mx:RadioButtonGroup  id="employee_status" selectedValue="{customerStatus}"/>
+					<mx:RadioButtonGroup  id="employee_status" selectedValue="{employeeStatus}"/>
 					<mx:RadioButton x="10" y="19" label="Active" groupName="employee_status" width="78" value="Active"/>
 					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
@@ -540,7 +543,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		</mx:TabNavigator>
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
 		<mx:Label x="484" y="46" text="Revert" width="58" textAlign="center"/>
-		<mx:Button x="385" y="10" label="Print" height="38" width="38"  id="print_button"/>
+		<mx:Button x="385" y="10" label="Print" height="38" width="38"  id="print_button" icon="@Embed(source='../../../assets/print.png')"/>
 	</mx:Canvas>
 </mx:VBox>
 </mx:TitleWindow>

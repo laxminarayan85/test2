@@ -25,7 +25,8 @@
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.core.Application;
-	                             
+	
+	public var parentContainer:Container = null;                             
 	[Bindable]                             
 	private var message:String;                                   
 	[Bindable]                             
@@ -68,7 +69,8 @@
 	}   
 	
 	private function selectEmployee():void {	
-		var editEmployeePage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		//var editEmployeePage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		var editEmployeePage:Container = parentContainer;
 		// TODO: This needs to be implemented via events fired to the parent rather than a direct call.
 		if (editEmployeePage.className == "EditEmployee") {
 			(editEmployeePage as EditEmployee).setEmployee(dataGrid.selectedItem as Employee);
