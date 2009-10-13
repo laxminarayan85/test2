@@ -379,11 +379,18 @@
 			}
 		}
 	}
-	
-	private function doStockGridClick():void {
-		//pressDefinition = dataGrid.selectedItem as StockDefinition;
+		
+	private function doSelectSchedule():void {
+		
 	}
 
+	private function doAddCharges():void {
+		
+	}
+
+	private function doShowHistory():void {
+		
+	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadStockDefinitions();
@@ -661,26 +668,26 @@
 	<fc:AutoComplete id="cboStockGroup" x="159" y="67" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" lookAhead="true" width="116"/>
 	<mx:TextInput x="377" y="67" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
 	<mx:CheckBox x="544.5" y="67" id="chkIsMetric" label="Metric"/>
-	<mx:Label x="112" y="92" text="Name:"/>
-	<mx:Label x="112" y="116" text="Color:"/>
-	<fc:AutoComplete  x="159" y="114" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
-	<mx:Label x="326" y="90" text="Finish:"/>
-	<mx:TextInput x="159" y="90" width="160" id="stockName" text="{stockDefinitions.name}"/>
-	<fc:AutoComplete  x="377" y="90" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
+	<mx:Label x="112" y="93" text="Name:"/>
+	<mx:Label x="112" y="117" text="Color:"/>
+	<fc:AutoComplete  x="159" y="115" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
+	<mx:Label x="326" y="93" text="Finish:"/>
+	<mx:TextInput x="159" y="91" width="160" id="stockName" text="{stockDefinitions.name}"/>
+	<fc:AutoComplete  x="377" y="91" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
 	<mx:Label x="73" y="141" text="Generic Color:"/>
 	<fc:AutoComplete  x="159" y="139" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" lookAhead="true" labelField="name" focusOut="doStockGenericColor()"/>
-	<mx:Label x="326" y="116" text="Grade:"/>
-	<fc:AutoComplete  x="377" y="116" width="105" id="cboStockGrade" dataProvider="{stockGrade}" lookAhead="true" labelField="name" focusOut="doStockGrade()"/>
-	<mx:Label x="489.5" y="96" text="Weight:"/>
-	<mx:TextInput x="546.5" y="92" width="55" id="weight" text="{stockDefinitions.weight}"/>
-	<mx:Label x="489.5" y="120" text="Coated:"/>
-	<mx:TextInput x="546.5" y="116" width="55" id="coated" text="{stockDefinitions.coated}"/>
+	<mx:Label x="326" y="117" text="Grade:"/>
+	<fc:AutoComplete  x="377" y="115" width="105" id="cboStockGrade" dataProvider="{stockGrade}" lookAhead="true" labelField="name" focusOut="doStockGrade()"/>
+	<mx:Label x="489.5" y="93" text="Weight:"/>
+	<mx:TextInput x="546.5" y="91" width="55" id="weight" text="{stockDefinitions.weight}"/>
+	<mx:Label x="489.5" y="117" text="Coated:"/>
+	<mx:TextInput x="546.5" y="115" width="55" id="coated" text="{stockDefinitions.coated}"/>
 	<mx:RadioButtonGroup id="stockUnit"/>
 	<mx:RadioButton x="614" y="68" label="Envelope" groupName="stockUnit"/>
 	<mx:RadioButton x="614" y="88" label="Sheet Stock" groupName="stockUnit"/>
 	<mx:RadioButton x="614" y="109" label="Roll Stock" groupName="stockUnit"/>
 	<mx:RadioButton x="614" y="130" label="Large Format" groupName="stockUnit"/>
-	<mx:RadioButton x="614" y="152" label="Rigid Substrate" groupName="stockUnit"/>
+	<mx:RadioButton x="614" y="151" label="Rigid Substrate" groupName="stockUnit"/>
 	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="10" y="0" width="690" height="225" layout="absolute">
@@ -770,7 +777,7 @@
 				<mx:TextInput x="58" y="10" width="182" id="DefaultPress" text="{stockDefinitions.defaultPress}"/>
 			</mx:Panel>
 			<mx:Panel x="313" y="51" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
-				<mx:Button x="10" y="6" label="Select Schedule"/>
+				<mx:Button x="10" y="6" label="Select Schedule" click="doSelectSchedule();"/>
 				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="115"/>
 			</mx:Panel>
 			<mx:TextInput x="113" y="21" width="85" id="NormalRunSize" text="{stockDefinitions.normalRunSize}"/>
@@ -780,21 +787,21 @@
 			<mx:Label x="204" y="23" text="Cut / 100:"/>
 			<mx:Label x="329" y="23" text="Min. Cut Chg.:"/>
 			<mx:Panel x="10" y="137" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets">
-				<mx:TextInput x="65" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
-				<mx:TextInput x="143" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
-				<mx:TextInput x="221" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
-				<mx:TextInput x="299" y="2" width="80" id="BlankSheetqty4" text="{stockDefinitions.blankSheetqty4}"/>
-				<mx:TextInput x="378" y="2" width="80" id="BlankSheetqty5" text="{stockDefinitions.blankSheetqty5}"/>
-				<mx:TextInput x="456" y="2" width="80" id="BlankSheetqty6" text="{stockDefinitions.blankSheetqty6}"/>
-				<mx:TextInput x="65" y="23" width="80" id="BlankSheetPrice1" text="{stockDefinitions.blankSheetPrice1}"/>
-				<mx:TextInput x="143" y="23" width="80" id="BlankSheetPrice2" text="{stockDefinitions.blankSheetPrice2}"/>
-				<mx:TextInput x="221" y="23" width="80" id="BlankSheetPrice3" text="{stockDefinitions.blankSheetPrice3}"/>
-				<mx:TextInput x="299" y="23" width="80" id="BlankSheetPrice4" text="{stockDefinitions.blankSheetPrice4}"/>
-				<mx:TextInput x="378" y="23" width="80" id="BlankSheetPrice5" text="{stockDefinitions.blankSheetPrice5}"/>
-				<mx:TextInput x="456" y="23" width="80" id="BlankSheetPrice6" text="{stockDefinitions.blankSheetPrice6}"/>
-				<mx:Label x="0" y="4" text="Quantity:"/>
-				<mx:Label x="21" y="25" text="Price:"/>
-				<mx:CheckBox x="65" y="47" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
+				<mx:TextInput x="65" y="1" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
+				<mx:TextInput x="143" y="1" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
+				<mx:TextInput x="221" y="1" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
+				<mx:TextInput x="299" y="1" width="80" id="BlankSheetqty4" text="{stockDefinitions.blankSheetqty4}"/>
+				<mx:TextInput x="378" y="1" width="80" id="BlankSheetqty5" text="{stockDefinitions.blankSheetqty5}"/>
+				<mx:TextInput x="456" y="1" width="80" id="BlankSheetqty6" text="{stockDefinitions.blankSheetqty6}"/>
+				<mx:TextInput x="65" y="22" width="80" id="BlankSheetPrice1" text="{stockDefinitions.blankSheetPrice1}"/>
+				<mx:TextInput x="143" y="22" width="80" id="BlankSheetPrice2" text="{stockDefinitions.blankSheetPrice2}"/>
+				<mx:TextInput x="221" y="22" width="80" id="BlankSheetPrice3" text="{stockDefinitions.blankSheetPrice3}"/>
+				<mx:TextInput x="299" y="22" width="80" id="BlankSheetPrice4" text="{stockDefinitions.blankSheetPrice4}"/>
+				<mx:TextInput x="378" y="22" width="80" id="BlankSheetPrice5" text="{stockDefinitions.blankSheetPrice5}"/>
+				<mx:TextInput x="456" y="22" width="80" id="BlankSheetPrice6" text="{stockDefinitions.blankSheetPrice6}"/>
+				<mx:Label x="0" y="3" text="Quantity:"/>
+				<mx:Label x="21" y="24" text="Price:"/>
+				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="253" width="690" height="122" layout="absolute">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
@@ -807,18 +814,18 @@
 						<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
 					</mx:Panel>
 				</mx:Panel>
-				<mx:Label x="82" y="1" text="B&amp;W:"/>
-				<mx:Label x="78" y="27" text="Color:"/>
+				<mx:Label x="82" y="3" text="B&amp;W:"/>
+				<mx:Label x="78" y="28" text="Color:"/>
 				<mx:Label x="33" y="53" text="Large Format:"/>
-				<mx:TextInput x="125" y="-1" width="90" id="DefaultBW" text="{stockDefinitions.defaultBW}"/>
-				<mx:TextInput x="125" y="25" width="90" id="DefaultColor" text="{stockDefinitions.defaultColor}"/>
+				<mx:TextInput x="125" y="1" width="90" id="DefaultBW" text="{stockDefinitions.defaultBW}"/>
+				<mx:TextInput x="125" y="26" width="90" id="DefaultColor" text="{stockDefinitions.defaultColor}"/>
 				<mx:TextInput x="125" y="51" width="90" id="DefaultLargeFormat" text="{stockDefinitions.defaultLargeFormat}"/>
-				<mx:TextInput x="223" y="-1" width="201"/>
-				<mx:TextInput x="223" y="25" width="201"/>
+				<mx:TextInput x="223" y="1" width="201"/>
+				<mx:TextInput x="223" y="26" width="201"/>
 				<mx:TextInput x="223" y="51" width="201"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="383" width="690" height="154" layout="absolute" title="Preset Up to 10 Charges">
-				<mx:Button x="10" y="0" label="Add Charges..."/>
+				<mx:Button x="10" y="0" label="Add Charges..." click="doAddCharges();"/>
 				<mx:Text x="128" y="2" id="Additional1" text="&lt;Nothing Selected&gt;"/>
 			</mx:Panel>
 		</mx:Canvas>
@@ -848,7 +855,7 @@
 				<mx:CheckBox x="429" y="116" label="Even increments, like ream size" enabled="false" id="chkEvenIncrements"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
-				<mx:Button x="10" y="204" label="Show Entire History"/>
+				<mx:Button x="10" y="204" label="Show Entire History" click="doShowHistory();"/>
 				<mx:DataGrid x="10" y="0" width="590" height="199">
 					<mx:columns>
 						<mx:DataGridColumn headerText="User" dataField="col1"/>
