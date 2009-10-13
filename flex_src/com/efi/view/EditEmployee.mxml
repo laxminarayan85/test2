@@ -79,7 +79,12 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
     	private var zips:ArrayCollection = new ArrayCollection();                  
     [Bindable]
     	private var formIsValid:Boolean = false;
-    
+    [Bindable]
+	private var customerWantType:String = "Due_Today";
+	
+    [Bindable]
+	private var customerStatus:String = "Active";
+	
     private var focussedFormControl:DisplayObject;
     
 	public function init():void {
@@ -114,6 +119,12 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 			countrycombo.selectedIndex = findItem(employee.address.country.name, countrys);
 		if (employee.address.zip != null)
 			zipcombo.selectedIndex = findItem(employee.address.zip.name, zips);
+			
+		customerWantType = employee.customerWant;
+		if (employee.active) 
+			customerStatus= "Active"
+		else
+			customerStatus= "InActive"
 	}	
 	
 	
@@ -126,7 +137,11 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		employee.address.street1 = street_edit.text;
 		employee.address.street2 = street1_edit.text;
 	
-		
+		if (customerStatus == "Active")
+			employee.active= true;
+		else
+			employee.active = false;
+			
 		if (citycombo != null && citycombo.selectedItem != null) 
 			employee.address.city = citycombo.selectedItem as City;
 		if (statecombo != null && statecombo.selectedItem != null) 
@@ -135,7 +150,32 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 			employee.address.zip = zipcombo .selectedItem as Zip;
 		if (countrycombo != null && countrycombo.selectedItem != null) 
 			employee.address.country = countrycombo.selectedItem as Country;
-	
+		employee.rate= parseInt(rate_edit.text); 
+		employee.allowOverrideCost = override_cost_check.selected;
+		employee.costingAmounts = hide_cost_amount_check.selected;
+		employee.hideNonReleaseProduction = hide_non_production_items.selected;
+		employee.hideEstimateTimeTracker = hide_est_time_tracker.selected;
+		employee.productionSettings = modify_production_settings.selected;
+		employee.trackerNextLocation = tracker_next_location.selected;
+		employee.trackerClockIn = show_tracker_console.selected;
+		employee.showWorkCenter = show_work_center.selected;
+		employee.pinRequired = requirePin.selected;
+		employee.pin = pin_edit.text;
+		employee.magCardReader = allow_mag_reader.selected
+		employee.includeInvoice = invoice_check.selected;
+		employee.includeEstimate = estimate_check.selected;
+		employee.includeJobs = jobs_check.selected;
+		employee.includeJobCharges = job_charges.selected;
+		employee.includeInvoiceCharges = invoice_level_charges.selected;
+
+		employee.onlyShowProductionParents = show_check_production.selected;
+		employee.allPricingMethods = all_pricing.selected;
+		employee.allChargeTypes = all_charge_types.selected;
+		employee.allPresses	= all_presses.selected;
+		employee.allCopiers	= all_copiers.selected;
+		employee.anyPastDue = any_past_due.selected;
+		
+		
 		
 	}
 	
@@ -425,75 +465,75 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<mx:Label x="406" y="106" text="Mobile:"/>
 				<mx:Label x="412" y="132" text="Email:"/>
 				<mx:Label x="421" y="162" text="SSN:"/>
-				<mx:Label x="374" y="193" text="Export Code:"/>
+				<mx:Label x="374" y="193" text="Export Code:" />
 				<mx:TextInput x="459" y="78" id="phone_edit"/>
 				<mx:TextInput x="460" y="104" id="mobile_edit"/>
 				<mx:TextInput x="460" y="130" id="email_edit"/>
-				<mx:TextInput x="459" y="160" id="ssn_edit"/>
-				<mx:TextInput x="460" y="191" id="export_code_edit"/>
+				<mx:TextInput x="459" y="160" id="ssn_edit" text="{employee.sSN}"/>
+				<mx:TextInput x="460" y="191" id="export_code_edit" text="{employee.exportCode}" />
 			</mx:Canvas>
 			<mx:Canvas label="Personal" width="100%" height="100%">	
 				<mx:Label x="10" y="42" text="Rate:"/>
 				<mx:Panel x="10" y="68" width="295" height="133" layout="absolute" title="Status">
-					<mx:RadioButtonGroup  id="employee_status"/>
-					<mx:RadioButton x="10" y="19" label="Active" groupName="employee_status" width="78"/>
-					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status"/>
+					<mx:RadioButtonGroup  id="employee_status" selectedValue="{customerStatus}"/>
+					<mx:RadioButton x="10" y="19" label="Active" groupName="employee_status" width="78" value="Active"/>
+					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="68" width="287" height="133" layout="absolute" title="PIN Settings">
 					<mx:CheckBox x="10" y="10" label="Require PIN" id="requirePin"/>
 					<mx:Label x="10" y="40" text="PIN:"/>
 					<mx:TextInput x="47" y="38" id="pin_edit"/>
 				</mx:Panel>
-				<mx:TextInput x="54" y="40" id="rate_edit"/>
+				<mx:TextInput x="54" y="40" id="rate_edit" text="{employee.rate}"/>
 				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="Editable Production Options">
-					<mx:CheckBox x="10" y="10" label="Allowed to Overide Cost" id="override_cost_check"/>
-					<mx:CheckBox x="10" y="40" label="Hide Costing Amounts" id="hide_cost_amount_check"/>
-					<mx:CheckBox x="10" y="70" label="Hide Items not released to Production" id="hide_non_production_items"/>
-					<mx:CheckBox x="10" y="100" label="Hide Estimated time in Tracker Console" id="hide_est_time_tracker"/>
-					<mx:CheckBox x="10" y="130" label="Allow to modify production settings" id="modify_production_settings"/>
-					<mx:CheckBox x="10" y="160" label="Allow Tracker Next location to be modified" id="tracker_next_location"/>
-					<mx:CheckBox x="10" y="190" label="Auto  show Tracker Console at clock-in" id="show_tracker_console"/>
-					<mx:CheckBox x="10" y="218" label="Auto show My Work Center at clock-in" id="show_work_center"/>
+					<mx:CheckBox x="10" y="10" label="Allowed to Overide Cost" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
+					<mx:CheckBox x="10" y="40" label="Hide Costing Amounts" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
+					<mx:CheckBox x="10" y="70" label="Hide Items not released to Production" id="hide_non_production_items" selected="{employee.hideNonReleaseProduction}"/>
+					<mx:CheckBox x="10" y="100" label="Hide Estimated time in Tracker Console" id="hide_est_time_tracker" selected="{employee.hideEstimateTimeTracker}"/>
+					<mx:CheckBox x="10" y="130" label="Allow to modify production settings" id="modify_production_settings" selected="{employee.productionSettings}"/>
+					<mx:CheckBox x="10" y="160" label="Allow Tracker Next location to be modified" id="tracker_next_location" selected="{employee.trackerNextLocation}"/>
+					<mx:CheckBox x="10" y="190" label="Auto  show Tracker Console at clock-in" id="show_tracker_console" selected="{employee.trackerClockIn}"/>
+					<mx:CheckBox x="10" y="218" label="Auto show My Work Center at clock-in" id="show_work_center" selected="{employee.showWorkCenter}"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="224" width="287" height="86" layout="absolute" title="Magnetic Card Reader Authentication">
-					<mx:CheckBox x="10" y="10" label="Allow authentication with magnetic card..." id="allow_mag_reader"/>
+					<mx:CheckBox x="10" y="10" label="Allow authentication with magnetic card..." id="allow_mag_reader" selected="{employee.magCardReader}"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas label="Production Filter" width="100%" height="100%">	
 				<mx:Panel x="10" y="30" width="185" height="255" layout="absolute" title="Include">
-					<mx:CheckBox x="10" y="10" label="Invoice" id="invoice_check"/>
-					<mx:CheckBox x="10" y="40" label="Estimate" id="estimate_check"/>
-					<mx:CheckBox x="38" y="70" label="Jobs" id="jobs_check"/>
-					<mx:CheckBox x="66" y="100" label="Charges" id="job_charges"/>
-					<mx:CheckBox x="10" y="143" label="Invoice Level Charges" id="invoice_level_charges"/>
+					<mx:CheckBox x="10" y="10" label="Invoice" id="invoice_check" selected="{employee.includeInvoice}"/>
+					<mx:CheckBox x="10" y="40" label="Estimate" id="estimate_check" selected="{employee.includeEstimate}"/>
+					<mx:CheckBox x="38" y="70" label="Jobs" id="jobs_check" selected="{employee.includeJobs}"/>
+					<mx:CheckBox x="66" y="100" label="Charges" id="job_charges" selected="{employee.includeJobCharges}"/>
+					<mx:CheckBox x="10" y="143" label="Invoice Level Charges" id="invoice_level_charges" selected="{employee.includeInvoiceCharges}"/>
 				</mx:Panel>
 				<mx:Panel x="215" y="30" width="218" height="255" layout="absolute" title="Customer Wanted By">
-					<mx:RadioButtonGroup id="Due"/>
-					<mx:RadioButton x="10" y="20" label="Due Today" groupName="Due" id="dueToday"/>
-					<mx:RadioButton x="10" y="46" label="Due Tomorrow" groupName="Due" id="dueTomorrow"/>
-					<mx:RadioButton x="10" y="76" label="Due This Week" groupName="Due" height="18" id="duethisweek"/>
-					<mx:RadioButton x="10" y="98" label="Due Next (7) days" groupName="Due" id="duenextweek"/>
-					<mx:RadioButton x="10" y="124" label="Due Any Time" groupName="Due" id="dueanytime"/>
-					<mx:CheckBox x="10" y="154" label="Any Past Due" id="any_past_due"/>
+					<mx:RadioButtonGroup id="Due" selectedValue="{customerWantType}"/>
+					<mx:RadioButton x="10" y="20" label="Due Today" groupName="Due" id="dueToday" value="Due_Today"/>
+					<mx:RadioButton x="10" y="46" label="Due Tomorrow" groupName="Due" id="dueTomorrow" value="Due_Tomorrow"/>
+					<mx:RadioButton x="10" y="76" label="Due This Week" groupName="Due" height="18" id="duethisweek" value="Due_This_Week"/>
+					<mx:RadioButton x="10" y="98" label="Due Next (7) days" groupName="Due" id="duenextweek" value="Due_Next"/>
+					<mx:RadioButton x="10" y="124" label="Due Any Time" groupName="Due" id="dueanytime" value="Due_Any_Time"/>
+					<mx:CheckBox x="10" y="154" label="Any Past Due" id="any_past_due" selected="{employee.anyPastDue}"/>
 				</mx:Panel>
 				<mx:Panel x="454" y="30" width="279" height="255" layout="absolute" title="Production Parents">
 					<mx:List x="10" y="35" id="production_parents" width="230"></mx:List>
-					<mx:CheckBox x="10" y="5" label="Only Show checked Production Parents" id="show_check_production"/>
+					<mx:CheckBox x="10" y="5" label="Only Show checked Production Parents" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="Pricing Methods">
-					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing"/>
+					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing" selected="{employee.allPricingMethods}"/>
 					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="Charge Type">
-					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types"/>
+					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types" selected="{employee.allChargeTypes}"/>
 					<mx:List x="10" y="40" width="318" height="110" id="charge_types"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="Presses">
-					<mx:CheckBox x="10" y="10" label="Use all Presses" id="all_presses"/>
+					<mx:CheckBox x="10" y="10" label="Use all Presses" id="all_presses" selected="{employee.allPresses}"/>
 					<mx:List x="10" y="40" width="283" height="110" id="press_list"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="Copiers">
-					<mx:CheckBox x="10" y="10" label="Use all Copiers" id="all_copiers"/>
+					<mx:CheckBox x="10" y="10" label="Use all Copiers" id="all_copiers"  selected="{employee.allCopiers}"/>
 					<mx:List x="10" y="40" width="318" height="110" id="copier_list"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	

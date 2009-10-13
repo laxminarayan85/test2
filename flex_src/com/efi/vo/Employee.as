@@ -31,23 +31,26 @@ package com.efi.vo
 		public var hideEstimateTimeTracker:Boolean = true;
 		public var productionSettings:Boolean = true;
 		public var trackerNextLocation:Boolean = true;
-		public var trackerClockIn:int = 0;
+		public var trackerClockIn:Boolean = true;
 		public var showWorkCenter:Boolean = true;
 		public var magCardReader:Boolean = true;
 		public var includeInvoice:Boolean = true;
 		public var includeEstimate:Boolean = true;
 		public var includeJobs:Boolean = true;
 		public var includeJobCharges:Boolean = true;
-		public var includeInvoiceCharges:int = 0;
+		public var includeInvoiceCharges:Boolean = true;
 		public var allPricingMethods:Boolean = true;
 		public var allPresses:Boolean = true;
 		public var allCopiers:Boolean = true;
 		public var allChargeTypes:Boolean = true;
-		public var onlyShowProductionParents:ArrayCollection;
+		public var onlyShowProductionParents:Boolean = true;
 		public var employeePricing:ArrayCollection;
 		public var employeeCharges:ArrayCollection;
 		public var employeePresses:ArrayCollection;
 		public var employeeCopiers:ArrayCollection;
+		public var anyPastDue:Boolean = true;
+		public var customerWant:String = "";
+		public var productionParents:ArrayCollection;
 	
 	}
 }

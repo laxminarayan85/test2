@@ -178,6 +178,18 @@ public class Employee extends ModelBase {
 	 * @generated
 	 */
 	public static final String EMPLOYEECOPIERS = "EmployeeCopiers";
+	/**
+	 * @generated
+	 */
+	public static final String ANYPASTDUE = "AnyPastDue";
+	/**
+	 * @generated
+	 */
+	public static final String CUSTOMERWANT = "CustomerWant";
+	/**
+	 * @generated
+	 */
+	public static final String PRODUCTIONPARENTS = "ProductionParents";
 
 	/**
 	 * @generated
@@ -519,18 +531,18 @@ public class Employee extends ModelBase {
  	
 	
  	@Basic
-	private Integer trackerClockIn;
+	private Boolean trackerClockIn;
 	/**
 	 * @generated
  	 */
-	public Integer getTrackerClockIn(){
+	public Boolean getTrackerClockIn(){
 		return trackerClockIn; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setTrackerClockIn(Integer newVal) {
+	public void setTrackerClockIn(Boolean newVal) {
 		this.trackerClockIn = newVal;
 	}
  	
@@ -638,18 +650,18 @@ public class Employee extends ModelBase {
  	
 	
  	@Basic
-	private Integer includeInvoiceCharges;
+	private Boolean includeInvoiceCharges;
 	/**
 	 * @generated
  	 */
-	public Integer getIncludeInvoiceCharges(){
+	public Boolean getIncludeInvoiceCharges(){
 		return includeInvoiceCharges; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setIncludeInvoiceCharges(Integer newVal) {
+	public void setIncludeInvoiceCharges(Boolean newVal) {
 		this.includeInvoiceCharges = newVal;
 	}
  	
@@ -722,25 +734,19 @@ public class Employee extends ModelBase {
 	}
  	
 	
-    @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<ProductionLocations> onlyShowProductionParents;
+ 	@Basic
+	private Boolean onlyShowProductionParents;
 	/**
 	 * @generated
  	 */
-	public java.util.List<ProductionLocations> getOnlyShowProductionParents(){
+	public Boolean getOnlyShowProductionParents(){
 		return onlyShowProductionParents; 
 	}
 
-	public void addOnlyShowProductionParents(ProductionLocations obj) {
-		if (onlyShowProductionParents == null) {
-			onlyShowProductionParents = new java.util.ArrayList<ProductionLocations>();
-		}
-		onlyShowProductionParents.add(obj);
-	}
 	/**
 	 * @generated
 	 */	
-	public void setOnlyShowProductionParents(java.util.List<ProductionLocations> newVal) {
+	public void setOnlyShowProductionParents(Boolean newVal) {
 		this.onlyShowProductionParents = newVal;
 	}
  	
@@ -835,6 +841,63 @@ public class Employee extends ModelBase {
 	public void setEmployeeCopiers(java.util.List<CopierDefinition> newVal) {
 		this.employeeCopiers = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean anyPastDue;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAnyPastDue(){
+		return anyPastDue; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAnyPastDue(Boolean newVal) {
+		this.anyPastDue = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String customerWant;
+	/**
+	 * @generated
+ 	 */
+	public String getCustomerWant(){
+		return customerWant; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCustomerWant(String newVal) {
+		this.customerWant = newVal;
+	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<ProductionLocations> productionParents;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<ProductionLocations> getProductionParents(){
+		return productionParents; 
+	}
+
+	public void addProductionParents(ProductionLocations obj) {
+		if (productionParents == null) {
+			productionParents = new java.util.ArrayList<ProductionLocations>();
+		}
+		productionParents.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setProductionParents(java.util.List<ProductionLocations> newVal) {
+		this.productionParents = newVal;
+	}
 
 	/**
 	 * @generated
@@ -878,6 +941,9 @@ public class Employee extends ModelBase {
 		if (EMPLOYEECHARGES.equals(propertyName)) return getEmployeeCharges();
 		if (EMPLOYEEPRESSES.equals(propertyName)) return getEmployeePresses();
 		if (EMPLOYEECOPIERS.equals(propertyName)) return getEmployeeCopiers();
+		if (ANYPASTDUE.equals(propertyName)) return getAnyPastDue();
+		if (CUSTOMERWANT.equals(propertyName)) return getCustomerWant();
+		if (PRODUCTIONPARENTS.equals(propertyName)) return getProductionParents();
 		return super.getProperty(propertyName);
 	}
 	
@@ -906,23 +972,26 @@ public class Employee extends ModelBase {
 		if (HIDEESTIMATETIMETRACKER.equals(propertyName)) setHideEstimateTimeTracker((Boolean)newValue); else
 		if (PRODUCTIONSETTINGS.equals(propertyName)) setProductionSettings((Boolean)newValue); else
 		if (TRACKERNEXTLOCATION.equals(propertyName)) setTrackerNextLocation((Boolean)newValue); else
-		if (TRACKERCLOCKIN.equals(propertyName)) setTrackerClockIn((Integer)newValue); else
+		if (TRACKERCLOCKIN.equals(propertyName)) setTrackerClockIn((Boolean)newValue); else
 		if (SHOWWORKCENTER.equals(propertyName)) setShowWorkCenter((Boolean)newValue); else
 		if (MAGCARDREADER.equals(propertyName)) setMagCardReader((Boolean)newValue); else
 		if (INCLUDEINVOICE.equals(propertyName)) setIncludeInvoice((Boolean)newValue); else
 		if (INCLUDEESTIMATE.equals(propertyName)) setIncludeEstimate((Boolean)newValue); else
 		if (INCLUDEJOBS.equals(propertyName)) setIncludeJobs((Boolean)newValue); else
 		if (INCLUDEJOBCHARGES.equals(propertyName)) setIncludeJobCharges((Boolean)newValue); else
-		if (INCLUDEINVOICECHARGES.equals(propertyName)) setIncludeInvoiceCharges((Integer)newValue); else
+		if (INCLUDEINVOICECHARGES.equals(propertyName)) setIncludeInvoiceCharges((Boolean)newValue); else
 		if (ALLPRICINGMETHODS.equals(propertyName)) setAllPricingMethods((Boolean)newValue); else
 		if (ALLPRESSES.equals(propertyName)) setAllPresses((Boolean)newValue); else
 		if (ALLCOPIERS.equals(propertyName)) setAllCopiers((Boolean)newValue); else
 		if (ALLCHARGETYPES.equals(propertyName)) setAllChargeTypes((Boolean)newValue); else
-		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) setOnlyShowProductionParents((java.util.List<ProductionLocations>)newValue); else
+		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) setOnlyShowProductionParents((Boolean)newValue); else
 		if (EMPLOYEEPRICING.equals(propertyName)) setEmployeePricings((java.util.List<PricingMethod>)newValue); else
 		if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<Charge>)newValue); else
 		if (EMPLOYEEPRESSES.equals(propertyName)) setEmployeePresses((java.util.List<PressDefinition>)newValue); else
 		if (EMPLOYEECOPIERS.equals(propertyName)) setEmployeeCopiers((java.util.List<CopierDefinition>)newValue); else
+		if (ANYPASTDUE.equals(propertyName)) setAnyPastDue((Boolean)newValue); else
+		if (CUSTOMERWANT.equals(propertyName)) setCustomerWant((String)newValue); else
+		if (PRODUCTIONPARENTS.equals(propertyName)) setProductionParents((java.util.List<ProductionLocations>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -971,7 +1040,7 @@ public class Employee extends ModelBase {
 		if (TRACKERNEXTLOCATION.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (TRACKERCLOCKIN.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (SHOWWORKCENTER.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (MAGCARDREADER.equals(propertyName)) 
@@ -985,7 +1054,7 @@ public class Employee extends ModelBase {
 		if (INCLUDEJOBCHARGES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (INCLUDEINVOICECHARGES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (ALLPRICINGMETHODS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (ALLPRESSES.equals(propertyName)) 
@@ -995,7 +1064,7 @@ public class Employee extends ModelBase {
 		if (ALLCHARGETYPES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ProductionLocations.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (EMPLOYEEPRICING.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, PricingMethod.class};		
 		if (EMPLOYEECHARGES.equals(propertyName)) 
@@ -1004,6 +1073,12 @@ public class Employee extends ModelBase {
 			return new Class<?>[] {java.util.List.class, PressDefinition.class};		
 		if (EMPLOYEECOPIERS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, CopierDefinition.class};		
+		if (ANYPASTDUE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (CUSTOMERWANT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PRODUCTIONPARENTS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ProductionLocations.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1050,6 +1125,9 @@ public class Employee extends ModelBase {
 		if (EMPLOYEECHARGES.equals(propertyName)) return Employee.class;
 		if (EMPLOYEEPRESSES.equals(propertyName)) return Employee.class;
 		if (EMPLOYEECOPIERS.equals(propertyName)) return Employee.class;
+		if (ANYPASTDUE.equals(propertyName)) return Employee.class;
+		if (CUSTOMERWANT.equals(propertyName)) return Employee.class;
+		if (PRODUCTIONPARENTS.equals(propertyName)) return Employee.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1132,6 +1210,12 @@ public class Employee extends ModelBase {
 		if (! SmartEquals(getEmployeePresses(), objT.getEmployeePresses()))
 			return false;
 		if (! SmartEquals(getEmployeeCopiers(), objT.getEmployeeCopiers()))
+			return false;
+		if (! SmartEquals(getAnyPastDue(), objT.getAnyPastDue()))
+			return false;
+		if (! SmartEquals(getCustomerWant(), objT.getCustomerWant()))
+			return false;
+		if (! SmartEquals(getProductionParents(), objT.getProductionParents()))
 			return false;
 		return true;
 	}			
