@@ -6,6 +6,9 @@
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGroupResult(event)"/>
@@ -93,6 +96,9 @@
 	[Bindable]                                
 	private var stockUnits:ArrayCollection = new ArrayCollection();   
 	
+	[Bindable]
+	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
+	
                                                                          
 	public function init():void {
 		consumer.subscribe();
@@ -106,6 +112,7 @@
 	    stockColorDataService.getAll("StockColor");
 	    stockGenericColorDataService.getAll("GenericColors");
 	    stockFinishDataService.getAll("StockFinish");
+	    pressDefinitionDataService.getAll("PressDefinition");
 	    loadUomArray();
 	    loadUnitsArray();
     
@@ -265,6 +272,7 @@
 	}
 
 	private function doRevert():void {
+	    stockDefinitions = new StockDefinition();
 	    setStockDefinition(stockDefinitions);                                           
 	}
 
@@ -423,6 +431,11 @@
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     loadStockDefinitions();
+	     doNew();
+	}
+	
+	private function handleLoadPressDefinition(ev:ResultEvent):void {
+		 pressDefinitions = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadStockGroup(ev:ResultEvent):void {
@@ -877,10 +890,10 @@
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="10" y="5" width="38" height="38">
+	<mx:Button x="10" y="5" width="38" height="38" click="doPrev();">
 		<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="5" width="38" height="38">
+	<mx:Button x="56" y="5" width="38" height="38" click="doNext();">
 		<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="10" y="41" text="Prev" width="38" textAlign="center"/>
