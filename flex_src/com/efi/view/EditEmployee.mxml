@@ -590,6 +590,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
 		<mx:Label x="484" y="46" text="Revert" width="58" textAlign="center"/>
 		<mx:Button x="385" y="10" label="Print" height="38" width="38"  id="print_button" icon="@Embed(source='../../../assets/print.png')"/>
+		<mx:Label x="388" y="46" text="Print"/>
 	</mx:Canvas>
 </mx:VBox>
 </mx:TitleWindow>
