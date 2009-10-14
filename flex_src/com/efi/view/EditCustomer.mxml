@@ -328,6 +328,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.taxExempt = tax_exempt_check.selected;
 		account.resaleNumber = resale_number_edit.text;
 		account.resaleCertExpirationDate = certificate_expires_edit.selectedDate;
+		account.accountNote = acct_selection_note_edit.text;
+		account.statementNote = statement_note_edit.text;
+		account.jobNote = job_note_edit.text;
 		
 		
 		auto_discount_percent_radio
@@ -1147,10 +1150,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:Button x="337" y="355" label="Print Log" width="80" id="print_log_button" click="printCustomerLog()"/>
 			</mx:Canvas>
 			<mx:Canvas label="Notes" width="100%" height="100%">
-				<mx:TextArea x="10" y="36" editable="true" width="659" height="80" id="acct_selection_note_edit"/>
+				<mx:TextArea x="10" y="36" editable="true" width="659" height="80" id="acct_selection_note_edit" text= "{account.accountNote}"/>
 				<mx:Label x="10" y="10" text="Account Selection Note:"/>
-				<mx:TextArea x="10" y="150" editable="true" width="659" height="80" id="job_note_edit"/>
-				<mx:TextArea x="10" y="264" editable="true" width="659" height="80" id="statement_note_edit"/>
+				<mx:TextArea x="10" y="150" editable="true" width="659" height="80" id="job_note_edit" text="{account.jobNote}"/>
+				<mx:TextArea x="10" y="264" editable="true" width="659" height="80" id="statement_note_edit" text="{account.statementNote}"/>
 				<mx:Label x="10" y="238" text="Statement Note:"/>
 				<mx:Label x="10" y="124" text="Job Note:"/>
 			</mx:Canvas>
