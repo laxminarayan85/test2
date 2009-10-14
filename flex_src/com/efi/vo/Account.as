@@ -90,6 +90,9 @@ package com.efi.vo
 		public var type:String = "";
 		public var taxTable:TaxTable = new TaxTable();
 		public var taxCode:TaxCodes = new TaxCodes();
+		public var statementNote:String = "";
+		public var jobNote:String = "";
+		public var accountNote:String = "";
 	
 	}
 }

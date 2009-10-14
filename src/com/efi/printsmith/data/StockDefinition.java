@@ -430,6 +430,30 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String BINLOCATION = "BinLocation";
+	/**
+	 * @generated
+	 */
+	public static final String SHELLITEM = "ShellItem";
+	/**
+	 * @generated
+	 */
+	public static final String FORESTMANAGEMENT = "ForestManagement";
+	/**
+	 * @generated
+	 */
+	public static final String PCWRECYCLEDPERCENT = "PcwRecycledPercent";
+	/**
+	 * @generated
+	 */
+	public static final String FSCCERTIFIED = "FscCertified";
+	/**
+	 * @generated
+	 */
+	public static final String SFICERTIFIED = "SfiCertified";
+	/**
+	 * @generated
+	 */
+	public static final String GREENSEALCERTIFIED = "GreenSealCertified";
 
 	/**
 	 * @generated
@@ -646,18 +670,18 @@ public class StockDefinition extends ModelBase {
  	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private StockColors genericcolor;
+	private GenericColors genericcolor;
 	/**
 	 * @generated
  	 */
-	public StockColors getGenericcolor(){
+	public GenericColors getGenericcolor(){
 		return genericcolor; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setGenericcolor(StockColors newVal) {
+	public void setGenericcolor(GenericColors newVal) {
 		this.genericcolor = newVal;
 	}
  	
@@ -1478,19 +1502,19 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String defaultPress;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PressDefinition defaultPress;
 	/**
 	 * @generated
  	 */
-	public String getDefaultPress(){
+	public PressDefinition getDefaultPress(){
 		return defaultPress; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultPress(String newVal) {
+	public void setDefaultPress(PressDefinition newVal) {
 		this.defaultPress = newVal;
 	}
  	
@@ -2122,6 +2146,108 @@ public class StockDefinition extends ModelBase {
 	public void setBinLocation(String newVal) {
 		this.binLocation = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean shellItem;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getShellItem(){
+		return shellItem; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShellItem(Boolean newVal) {
+		this.shellItem = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String forestManagement;
+	/**
+	 * @generated
+ 	 */
+	public String getForestManagement(){
+		return forestManagement; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setForestManagement(String newVal) {
+		this.forestManagement = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double pcwRecycledPercent;
+	/**
+	 * @generated
+ 	 */
+	public Double getPcwRecycledPercent(){
+		return pcwRecycledPercent; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPcwRecycledPercent(Double newVal) {
+		this.pcwRecycledPercent = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean fscCertified;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getFscCertified(){
+		return fscCertified; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFscCertified(Boolean newVal) {
+		this.fscCertified = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean sfiCertified;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSfiCertified(){
+		return sfiCertified; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSfiCertified(Boolean newVal) {
+		this.sfiCertified = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean greenSealCertified;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getGreenSealCertified(){
+		return greenSealCertified; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setGreenSealCertified(Boolean newVal) {
+		this.greenSealCertified = newVal;
+	}
 
 	/**
 	 * @generated
@@ -2228,6 +2354,12 @@ public class StockDefinition extends ModelBase {
 		if (EVENINCREMENTS.equals(propertyName)) return getEvenIncrements();
 		if (EXPIRES.equals(propertyName)) return getExpires();
 		if (BINLOCATION.equals(propertyName)) return getBinLocation();
+		if (SHELLITEM.equals(propertyName)) return getShellItem();
+		if (FORESTMANAGEMENT.equals(propertyName)) return getForestManagement();
+		if (PCWRECYCLEDPERCENT.equals(propertyName)) return getPcwRecycledPercent();
+		if (FSCCERTIFIED.equals(propertyName)) return getFscCertified();
+		if (SFICERTIFIED.equals(propertyName)) return getSfiCertified();
+		if (GREENSEALCERTIFIED.equals(propertyName)) return getGreenSealCertified();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2249,7 +2381,7 @@ public class StockDefinition extends ModelBase {
 		if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
 		if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
 		if (COATED.equals(propertyName)) setCoated((String)newValue); else
-		if (GENERICCOLOR.equals(propertyName)) setGenericcolor((StockColors)newValue); else
+		if (GENERICCOLOR.equals(propertyName)) setGenericcolor((GenericColors)newValue); else
 		if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
 		if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
 		if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
@@ -2298,7 +2430,7 @@ public class StockDefinition extends ModelBase {
 		if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((Integer)newValue); else
 		if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
 		if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
-		if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((String)newValue); else
+		if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
 		if (AUTOCALCULATEBLANK.equals(propertyName)) setAutoCalculateBlank((Boolean)newValue); else
 		if (BLANKSHEETQTY1.equals(propertyName)) setBlankSheetqty1((Integer)newValue); else
 		if (BLANKSHEETQTY2.equals(propertyName)) setBlankSheetqty2((Integer)newValue); else
@@ -2336,6 +2468,12 @@ public class StockDefinition extends ModelBase {
 		if (EVENINCREMENTS.equals(propertyName)) setEvenIncrements((Boolean)newValue); else
 		if (EXPIRES.equals(propertyName)) setExpires((Date)newValue); else
 		if (BINLOCATION.equals(propertyName)) setBinLocation((String)newValue); else
+		if (SHELLITEM.equals(propertyName)) setShellItem((Boolean)newValue); else
+		if (FORESTMANAGEMENT.equals(propertyName)) setForestManagement((String)newValue); else
+		if (PCWRECYCLEDPERCENT.equals(propertyName)) setPcwRecycledPercent((Double)newValue); else
+		if (FSCCERTIFIED.equals(propertyName)) setFscCertified((Boolean)newValue); else
+		if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
+		if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2370,7 +2508,7 @@ public class StockDefinition extends ModelBase {
 		if (COATED.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (GENERICCOLOR.equals(propertyName)) 
-			return new Class<?>[] {StockColors.class};		
+			return new Class<?>[] {GenericColors.class};		
 		if (STOCKNUMBER.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (VENDOR.equals(propertyName)) 
@@ -2468,7 +2606,7 @@ public class StockDefinition extends ModelBase {
 		if (MINCUTCHARGE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (DEFAULTPRESS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {PressDefinition.class};		
 		if (AUTOCALCULATEBLANK.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (BLANKSHEETQTY1.equals(propertyName)) 
@@ -2543,6 +2681,18 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Date.class};		
 		if (BINLOCATION.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (SHELLITEM.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (FORESTMANAGEMENT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PCWRECYCLEDPERCENT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (FSCCERTIFIED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SFICERTIFIED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (GREENSEALCERTIFIED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2652,6 +2802,12 @@ public class StockDefinition extends ModelBase {
 		if (EVENINCREMENTS.equals(propertyName)) return StockDefinition.class;
 		if (EXPIRES.equals(propertyName)) return StockDefinition.class;
 		if (BINLOCATION.equals(propertyName)) return StockDefinition.class;
+		if (SHELLITEM.equals(propertyName)) return StockDefinition.class;
+		if (FORESTMANAGEMENT.equals(propertyName)) return StockDefinition.class;
+		if (PCWRECYCLEDPERCENT.equals(propertyName)) return StockDefinition.class;
+		if (FSCCERTIFIED.equals(propertyName)) return StockDefinition.class;
+		if (SFICERTIFIED.equals(propertyName)) return StockDefinition.class;
+		if (GREENSEALCERTIFIED.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2860,6 +3016,18 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getExpires(), objT.getExpires()))
 			return false;
 		if (! SmartEquals(getBinLocation(), objT.getBinLocation()))
+			return false;
+		if (! SmartEquals(getShellItem(), objT.getShellItem()))
+			return false;
+		if (! SmartEquals(getForestManagement(), objT.getForestManagement()))
+			return false;
+		if (! SmartEquals(getPcwRecycledPercent(), objT.getPcwRecycledPercent()))
+			return false;
+		if (! SmartEquals(getFscCertified(), objT.getFscCertified()))
+			return false;
+		if (! SmartEquals(getSfiCertified(), objT.getSfiCertified()))
+			return false;
+		if (! SmartEquals(getGreenSealCertified(), objT.getGreenSealCertified()))
 			return false;
 		return true;
 	}			

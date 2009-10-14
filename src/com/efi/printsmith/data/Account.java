@@ -346,6 +346,18 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public static final String TAXCODE = "TaxCode";
+	/**
+	 * @generated
+	 */
+	public static final String STATEMENTNOTE = "StatementNote";
+	/**
+	 * @generated
+	 */
+	public static final String JOBNOTE = "JobNote";
+	/**
+	 * @generated
+	 */
+	public static final String ACCOUNTNOTE = "AccountNote";
 
 	/**
 	 * @generated
@@ -1681,6 +1693,57 @@ public class Account extends ModelBase {
 	public void setTaxCode(TaxCodes newVal) {
 		this.taxCode = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String statementNote;
+	/**
+	 * @generated
+ 	 */
+	public String getStatementNote(){
+		return statementNote; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStatementNote(String newVal) {
+		this.statementNote = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String jobNote;
+	/**
+	 * @generated
+ 	 */
+	public String getJobNote(){
+		return jobNote; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setJobNote(String newVal) {
+		this.jobNote = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String accountNote;
+	/**
+	 * @generated
+ 	 */
+	public String getAccountNote(){
+		return accountNote; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAccountNote(String newVal) {
+		this.accountNote = newVal;
+	}
 
 	/**
 	 * @generated
@@ -1766,6 +1829,9 @@ public class Account extends ModelBase {
 		if (TYPE.equals(propertyName)) return getType();
 		if (TAXTABLE.equals(propertyName)) return getTaxTable();
 		if (TAXCODE.equals(propertyName)) return getTaxCode();
+		if (STATEMENTNOTE.equals(propertyName)) return getStatementNote();
+		if (JOBNOTE.equals(propertyName)) return getJobNote();
+		if (ACCOUNTNOTE.equals(propertyName)) return getAccountNote();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1853,6 +1919,9 @@ public class Account extends ModelBase {
 		if (TYPE.equals(propertyName)) setType((String)newValue); else
 		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
 		if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
+		if (STATEMENTNOTE.equals(propertyName)) setStatementNote((String)newValue); else
+		if (JOBNOTE.equals(propertyName)) setJobNote((String)newValue); else
+		if (ACCOUNTNOTE.equals(propertyName)) setAccountNote((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2018,6 +2087,12 @@ public class Account extends ModelBase {
 			return new Class<?>[] {TaxTable.class};		
 		if (TAXCODE.equals(propertyName)) 
 			return new Class<?>[] {TaxCodes.class};		
+		if (STATEMENTNOTE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (JOBNOTE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (ACCOUNTNOTE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2106,6 +2181,9 @@ public class Account extends ModelBase {
 		if (TYPE.equals(propertyName)) return Account.class;
 		if (TAXTABLE.equals(propertyName)) return Account.class;
 		if (TAXCODE.equals(propertyName)) return Account.class;
+		if (STATEMENTNOTE.equals(propertyName)) return Account.class;
+		if (JOBNOTE.equals(propertyName)) return Account.class;
+		if (ACCOUNTNOTE.equals(propertyName)) return Account.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2272,6 +2350,12 @@ public class Account extends ModelBase {
 		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
 			return false;
 		if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
+			return false;
+		if (! SmartEquals(getStatementNote(), objT.getStatementNote()))
+			return false;
+		if (! SmartEquals(getJobNote(), objT.getJobNote()))
+			return false;
+		if (! SmartEquals(getAccountNote(), objT.getAccountNote()))
 			return false;
 		return true;
 	}			

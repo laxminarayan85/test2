@@ -24,7 +24,7 @@ package com.efi.vo
 		public var color:StockColors = new StockColors();
 		public var grade:StockGrade = new StockGrade();
 		public var coated:String = "";
-		public var genericcolor:StockColors = new StockColors();
+		public var genericcolor:GenericColors = new GenericColors();
 		public var stocknumber:String = "";
 		public var vendor:Vendor = new Vendor();
 		public var basicsize:String = "";
@@ -73,7 +73,7 @@ package com.efi.vo
 		public var normalRunSize:int = 0;
 		public var cutsPer100:int = 0;
 		public var minCutCharge:Number = 0;
-		public var defaultPress:String = "";
+		public var defaultPress:PressDefinition = new PressDefinition();
 		public var autoCalculateBlank:Boolean = true;
 		public var blankSheetqty1:int = 0;
 		public var blankSheetqty2:int = 0;
@@ -111,6 +111,12 @@ package com.efi.vo
 		public var evenIncrements:Boolean = true;
 		public var expires:Date = new Date();
 		public var binLocation:String = "";
+		public var shellItem:Boolean = true;
+		public var forestManagement:String = "";
+		public var pcwRecycledPercent:Number = 0;
+		public var fscCertified:Boolean = true;
+		public var sfiCertified:Boolean = true;
+		public var greenSealCertified:Boolean = true;
 	
 	}
 }
