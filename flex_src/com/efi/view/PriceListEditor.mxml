@@ -90,10 +90,10 @@
 		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="108" x="116" y="374"/>
 		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="186"/>
 		<mx:Label x="162" y="12" text="Title:"/>
-		<mx:RadioButtonGroup id="amount_radio_group" change="changeRadioButtons()/>
+		<mx:RadioButtonGroup id="amount_radio_group" change="changeRadioButtons()"/>
 		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group"/>
 		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group"/>
-		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments"}/>
+		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}"/>
 		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}"/>
 		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}"/>
 		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}"/>
