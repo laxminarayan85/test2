@@ -327,7 +327,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.fileOriginals = always_file_originals.selected;
 		account.taxExempt = tax_exempt_check.selected;
 		account.resaleNumber = resale_number_edit.text;
-		
+		account.status = acctStatusRadioValue;
+		account.type = acctTypeRadioValue;
+		if (autoDiscountRadioValue == "discount_dollars") {
+			account.dollarDiscount = true;
+		} else {
+			account.dollarDiscount = false; 			
+		}
 	}
 	
 	private function mapFromAccountData():void{
