@@ -8,6 +8,7 @@
 	
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePressDefinitionResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
@@ -39,6 +40,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.PressDefinition;
 	import com.efi.vo.StockDefinition;
 	import com.efi.vo.StockChanges;
 
@@ -115,7 +117,6 @@
 	    pressDefinitionDataService.getAll("PressDefinition");
 	    loadUomArray();
 	    loadUnitsArray();
-    
 	}      
 
 	private function loadUnitsArray():void {
@@ -182,6 +183,10 @@
 	public function loadStockDefinitions():void {   
 		dataService.getAll("StockDefinition");
 	}
+	
+	public function loadPressDefinition():void {   
+		dataService.getAll("PressDefinition");
+	}
 
 	public function loadStockGrade():void {   
 		dataService.getAll("StockGrade");
@@ -219,6 +224,7 @@
 		}
 		return -1;
 	}
+
 
 	private function findItemById(name:int, array:ArrayCollection):String {
 		var retVal:String;
@@ -264,11 +270,15 @@
 	}
 
 	private function doNew():void {
+		doSave();
   	    stockDefinitions = new StockDefinition();
+  	    setStockDefinition(stockDefinitions);
+  	    standardItemCheckEvent();
 	}       
 
 	private function doDelete():void {
-		dataService.deleteItem("StockDefinition", stockDefinitions.id);          
+		dataService.deleteItem("StockDefinition", stockDefinitions.id);     
+		doPrev();
 	}
 
 	private function doRevert():void {
@@ -404,7 +414,10 @@
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadStockDefinitions();
 	}
-
+	
+	private function handleSavePressDefinitionResult(ev:ResultEvent):void {
+    	loadPressDefinition();
+	}
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
     	loadStockGrade();
 	}
@@ -471,37 +484,6 @@
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,4);                                 
 	}
-
-	private function setGroup():void {
-		stockDefinitions.stkgroup = new StockGroup();
-	}
-	
-	private function setChanges():void {
-		
-	}
-	private function setColor():void {
-		stockDefinitions.color = new StockColors();
-	}
-
-	private function setGenericColor():void {
-		//stockDefinitions.genericcolor = new StockColors();
-	}
-
-	private function setGrade():void {
-		stockDefinitions.grade = new StockGrade();
-	}
-
-	private function setForest():void {
-		
-	}
-
-	private function setFinish():void {
-		stockDefinitions.finish = new StockFinish();
-	}
-
-	private function setVendor():void {
-		stockDefinitions.vendor = new Vendor()
-	}
 	
 	private function standardItemCheckEvent():void {
 		var checked:Boolean;
@@ -520,6 +502,9 @@
 	}
 
 	private function mapFromStockDefinitionData():void {
+		
+		if (stockDefinitions.defaultPress != null)
+//	 		cboDefaultPress.selectedItem = findPressItem(stockDefinitions.defaultPress.pressDefName, pressDefinitions);
 
 		if (stockDefinitions.stkgroup != null)
 			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
@@ -582,8 +567,12 @@
 	 if (cboUom != null && cboUom.selectedItem != null)
 	 	stockDefinitions.uom = cboUom.selectedItem.name as String; 
 	 
-	 stockDefinitions.stockunit = findItem(stockUnit.selectedValue.toString(),stockUnits);
+	 if (stockUnit != null && stockUnit.selectedValue != null)
+	 	stockDefinitions.stockunit = findItem(stockUnit.selectedValue.toString(),stockUnits);
 	 
+	 if (cboDefaultPress != null && cboDefaultPress.selectedItem != null) 
+	 	stockDefinitions.defaultPress = cboDefaultPress.selectedItem as PressDefinition;
+	 	
 	 //check boxes
 	 stockDefinitions.standardItem = chkstandardItem.selected;
 	 stockDefinitions.isMetric = chkIsMetric.selected;
@@ -796,7 +785,7 @@
 		<mx:Canvas label="Pricing Options" id="page_pricingoptions" width="100%" height="100%">
 			<mx:Panel x="10" y="38" width="295" height="78" layout="absolute" title="Select Press for Printing">
 				<mx:Label x="8" y="12" text="Press:"/>
-				<mx:TextInput x="52" y="10" width="182" id="DefaultPress" text="{stockDefinitions.defaultPress}"/>
+				<mx:ComboBox x="52" y="10" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}"/>
 			</mx:Panel>
 			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
 				<mx:Button x="10" y="6" label="Select Schedule" click="doSelectSchedule();"/>
