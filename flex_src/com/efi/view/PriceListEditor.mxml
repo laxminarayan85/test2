@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="458" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);"
+    close="PopUpManager.removePopUp(this);" 
     title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
 
 <mx:Script>
                                    
-<![CDATA[ 
+<![CDATA[
+	import com.efi.vo.PriceListBase; 
 	import com.efi.vo.Contact;           
     import com.efi.vo.Account;    
     import com.efi.view.EditContact;
@@ -31,6 +34,9 @@
 	    
 	[Bindable]                                
 	public var priceList:PriceListBase;
+	
+	[Bindable] 
+		 private var pricelists:ArrayCollection = new ArrayCollection();   
            
     [Bindable]
     private var quantity_header:String = "Quantity";
@@ -55,14 +61,19 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
+	    dataService.getAll("PriceList");   
+		priceListBase = new PriceListBase();
 	}
 	                                
 	private function doSelect():void {	
+		maptoPricelist();
 		PopUpManager.removePopUp(this);
+		
 	}     
 	
 	private function doNew():void {
-		PopUpManager.removePopUp(this);
+		priceListBase = new PriceListBase();
+	
 	}
 	
 	private function doClear():void {
@@ -70,11 +81,23 @@
 	}
 	
 	private function doDelete():void {
-		
+		 dataService.deleteItem("PriceList",priceListBase.id);
 	}
 	
 	private function changeRadioButtons():void {
 		
+	}
+	private function handleSaveResult(ev:ResultEvent):void {
+		dataService.getAll("PriceList")
+		
+	}
+	private function handleLoadResult(ev:ResultEvent):void {
+		pricelists = ev.result as ArrayCollection;
+		
+	}
+	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("PriceList")
+		doNew();
 	}
 ]]>        
 </mx:Script>            

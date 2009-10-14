@@ -15,8 +15,12 @@
 	import com.efi.vo.Contact;           
     import com.efi.vo.Account;    
     import com.efi.view.EditContact;
-    import com.efi.view.EditCustomer;            
-	import mx.managers.PopUpManager;                                 
+    import com.efi.view.EditCustomer;    
+    import com.efi.view.PressDefinitions;
+    import com.efi.vo.Charge;        
+	import mx.managers.PopUpManager;       
+	import com.efi.vo.PriceList;
+	import com.efi.vo.WasteChart;                          
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
 	import mx.core.Container;                      
@@ -33,7 +37,7 @@
 	private var list:ArrayCollection = new ArrayCollection();
                                                                         	         
 	public var itemType:String = "PriceList";
-	
+	public var parentContainer:Container;
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
            
@@ -54,10 +58,20 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-		dataService.getAll("Account");
+		dataService.getAll("PriceList");
 	}
 	                                
 	private function doSelect():void {	
+		
+		var editPage:Container = parentContainer;
+		
+		if (editPage.className == "PressDefinitions") {
+			(editPage as PressDefinitions).setPriceList(dataGrid.selectedItem as PriceList);
+		} else if (editPage.className == "ChargeDefinitions") {
+			(editPage as ChargeDefinitions).setPriceList(dataGrid.selectedItem as WasteChart);
+		}
+		
+		
 		PopUpManager.removePopUp(this);
 	}     
 	

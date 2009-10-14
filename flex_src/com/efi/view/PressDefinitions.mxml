@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
-width="772" height="845" title="Press Definitions"
+width="772" height="883" title="Press Definitions"
  label="Press Definitions" name="Press Definitions">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -14,6 +14,9 @@ width="772" height="845" title="Press Definitions"
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.vo.PressDefinition;
+	import com.efi.vo.PriceListBase;
+	import com.efi.vo.PriceList;
+	import com.efi.vo.WasteChart;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -28,7 +31,12 @@ width="772" height="845" title="Press Definitions"
                          
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
-                                                                                  	
+    
+	[Bindable]                                         
+     private var priceList:PriceList;  
+     [Bindable]                                         
+     private var wasteChart:WasteChart;  
+                                                                               	
 	[Bindable]                                
 	private var pressDefinitionArray:ArrayCollection = new ArrayCollection();
                                                                          
@@ -54,31 +62,24 @@ width="772" height="845" title="Press Definitions"
 	 	
 	}  
 	private function doGet():void{
-	/* 	var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+	 	var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
 		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.formIsEmpty = true; */
+		titleWindow.formIsEmpty = true; 
 	   	    
 	}    
-	/* private function doNext():void {  
-		var itemp:int;
-		itemp = pressDefinitionArray.getItemIndex(pressDefinition); 
-		itemp++;
-		if (itemp == pressDefinitionArray.length){
-			itemp = pressDefinitionArray.length - 1;
-		}
-		pressDefinition = contacts.getItemAt(itemp,0) as PressDefinition;   
-	    setPressDef(pressDefinition);                         
+	private function doPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
 	}
-	private function doPrev():void {              
-	    var itemp:int;
-		itemp = pressDefinitionArray.getItemIndex(pressDefinition); 
-		itemp--;
-		if (itemp < 0){
-			itemp = 0; 
-		}
-		pressDefinition = pressDefinitionArray.getItemAt(itemp,0) as PressDefinition;   
-	    setPressDef(pressDefinition);                                           
-	}     */
+
+	private function doWasteChart():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "WasteChart";		
+	}
 	public function setPressDef(pressdef:PressDefinition):void
 	{
 		this.pressDefinition = pressdef;
@@ -173,7 +174,9 @@ width="772" height="845" title="Press Definitions"
 		loadPressDefinitions();
 		doNew();
 	}
-	      
+	public function setPriceList(price:PriceListBase): void {
+	 	this.priceList = price as PriceList;	
+	}     
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -251,14 +254,13 @@ width="772" height="845" title="Press Definitions"
 	<mx:Label x="424" y="569" text="Washup Minutes:"/>
 	<mx:Label x="439" y="590" text="Washup Time per fountain:" textAlign="right"/>
 	<mx:HRule x="0" y="642" width="722" height="6"/>
-	<mx:HRule x="20" y="730" width="702" height="6"/>
-	<mx:HRule x="10" y="730" width="702" height="6"/>
-	<mx:Button x="131" y="670" label="Speed Table "/>
-	<mx:Button x="10" y="740" label="Stock Price List"/>
-	<mx:Button x="131" y="740" label="Press Price List"/>
-	<mx:Button x="10" y="670" label="Waste Chart"/>
-	<mx:Button x="10" y="700" label="Add Charges"/>
-	<mx:CheckBox x="340" y="670" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
+	<mx:HRule x="10" y="758" width="702" height="2"/>
+	<mx:Button x="10" y="670" label="Speed Table " width="97"/>
+	<mx:Button x="10" y="768" label="Stock Price List" click="doPriceList();"/>
+	<mx:Button x="10" y="798" label="Press Price List" click="doPriceList();"/>
+	<mx:Button x="10" y="698" label="Waste Chart" click="doWasteChart();"/>
+	<mx:Button x="9" y="728" label="Add Charges"/>
+	<mx:CheckBox x="417" y="277" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Panel x="570" y="195" width="127" height="127" layout="absolute" title="Paper Style">
 		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="SheetFed" selected="{pressDefinition.sheetFed}" click="doPaperStyle();"/>
 		<mx:RadioButton x="10" y="41" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" selected="{pressDefinition.rolltoRoll}" click="doPaperStyle();"/>
@@ -295,4 +297,8 @@ width="772" height="845" title="Press Definitions"
 		<mx:TextInput x="109" y="614" id="GripEdge" text="{pressDefinition.gripEdge}"/>
 		<mx:CheckBox x="417" y="226" label="DefaultRoll" id="DefaultRoll"/>
 		<mx:CheckBox x="417" y="247" label="Default Sheet" id="DefaultSheet"/>
+		<mx:TextInput x="131" y="670"/>
+		<mx:TextInput x="131" y="698"/>
+		<mx:TextInput x="131" y="768"/>
+		<mx:TextInput x="131" y="798"/>
 </mx:Panel>

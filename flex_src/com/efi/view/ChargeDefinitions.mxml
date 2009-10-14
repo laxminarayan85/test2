@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:effect="com.adobe.ac.mxeffects.*" 
-width="100%" height="100%" title="Charge Definitions"
+width="100%" height="779" title="Charge Definitions"
 creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
           
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -60,6 +60,7 @@ showBusyCursor="true" />
     import com.efi.vo.FoldTemplate;
     import com.efi.vo.TaxTable;
     import com.efi.vo.Substrate;
+    import com.efi.vo.PriceListBase;
 
     import com.efi.vo.enums.ChargeMethod;
 	import com.efi.vo.enums.ChargeQtyType;
@@ -770,14 +771,19 @@ showBusyCursor="true" />
 	private function doPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
 	}
 
 	private function doWasteChart():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "WasteChart";		
 	}
+	public function setPriceList(price:PriceListBase): void {
+		
+	}     
 
 ]]>
                              
