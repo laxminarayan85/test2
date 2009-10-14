@@ -85,7 +85,7 @@
 	}
 	
 	private function updateDataGrid():void {
-		dataService.getEmployeeByPartialName(filter_field.text);
+		//dataService.getEmployeeByPartialName(filter_field.text);
 	}
 ]]>        
 </mx:Script>
@@ -107,8 +107,6 @@
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>Name</mx:String>
-				<mx:String>Employee #</mx:String>
-				<mx:String>Phone</mx:String>
 			</mx:ArrayCollection>
 		</mx:ComboBox>
 		<mx:Label x="10" y="495" text="Filter:"/>

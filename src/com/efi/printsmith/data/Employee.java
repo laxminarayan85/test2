@@ -190,6 +190,26 @@ public class Employee extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRODUCTIONPARENTS = "ProductionParents";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOHOUR = "AutoHour";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOMIN = "AutoMin";
+	/**
+	 * @generated
+	 */
+	public static final String MESSAGE = "Message";
+	/**
+	 * @generated
+	 */
+	public static final String SHOWMESSAGECLOCKOUT = "ShowMessageClockout";
+	/**
+	 * @generated
+	 */
+	public static final String SHOWMESSAGECLOCKIN = "ShowMessageClockin";
 
 	/**
 	 * @generated
@@ -898,6 +918,91 @@ public class Employee extends ModelBase {
 	public void setProductionParents(java.util.List<ProductionLocations> newVal) {
 		this.productionParents = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Integer autoHour;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAutoHour(){
+		return autoHour; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoHour(Integer newVal) {
+		this.autoHour = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer autoMin;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAutoMin(){
+		return autoMin; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoMin(Integer newVal) {
+		this.autoMin = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String message;
+	/**
+	 * @generated
+ 	 */
+	public String getMessage(){
+		return message; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMessage(String newVal) {
+		this.message = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean showMessageClockout;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getShowMessageClockout(){
+		return showMessageClockout; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShowMessageClockout(Boolean newVal) {
+		this.showMessageClockout = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean showMessageClockin;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getShowMessageClockin(){
+		return showMessageClockin; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShowMessageClockin(Boolean newVal) {
+		this.showMessageClockin = newVal;
+	}
 
 	/**
 	 * @generated
@@ -944,6 +1049,11 @@ public class Employee extends ModelBase {
 		if (ANYPASTDUE.equals(propertyName)) return getAnyPastDue();
 		if (CUSTOMERWANT.equals(propertyName)) return getCustomerWant();
 		if (PRODUCTIONPARENTS.equals(propertyName)) return getProductionParents();
+		if (AUTOHOUR.equals(propertyName)) return getAutoHour();
+		if (AUTOMIN.equals(propertyName)) return getAutoMin();
+		if (MESSAGE.equals(propertyName)) return getMessage();
+		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return getShowMessageClockout();
+		if (SHOWMESSAGECLOCKIN.equals(propertyName)) return getShowMessageClockin();
 		return super.getProperty(propertyName);
 	}
 	
@@ -992,6 +1102,11 @@ public class Employee extends ModelBase {
 		if (ANYPASTDUE.equals(propertyName)) setAnyPastDue((Boolean)newValue); else
 		if (CUSTOMERWANT.equals(propertyName)) setCustomerWant((String)newValue); else
 		if (PRODUCTIONPARENTS.equals(propertyName)) setProductionParents((java.util.List<ProductionLocations>)newValue); else
+		if (AUTOHOUR.equals(propertyName)) setAutoHour((Integer)newValue); else
+		if (AUTOMIN.equals(propertyName)) setAutoMin((Integer)newValue); else
+		if (MESSAGE.equals(propertyName)) setMessage((String)newValue); else
+		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) setShowMessageClockout((Boolean)newValue); else
+		if (SHOWMESSAGECLOCKIN.equals(propertyName)) setShowMessageClockin((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1079,6 +1194,16 @@ public class Employee extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (PRODUCTIONPARENTS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, ProductionLocations.class};		
+		if (AUTOHOUR.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (AUTOMIN.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (MESSAGE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SHOWMESSAGECLOCKIN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1128,6 +1253,11 @@ public class Employee extends ModelBase {
 		if (ANYPASTDUE.equals(propertyName)) return Employee.class;
 		if (CUSTOMERWANT.equals(propertyName)) return Employee.class;
 		if (PRODUCTIONPARENTS.equals(propertyName)) return Employee.class;
+		if (AUTOHOUR.equals(propertyName)) return Employee.class;
+		if (AUTOMIN.equals(propertyName)) return Employee.class;
+		if (MESSAGE.equals(propertyName)) return Employee.class;
+		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return Employee.class;
+		if (SHOWMESSAGECLOCKIN.equals(propertyName)) return Employee.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1216,6 +1346,16 @@ public class Employee extends ModelBase {
 		if (! SmartEquals(getCustomerWant(), objT.getCustomerWant()))
 			return false;
 		if (! SmartEquals(getProductionParents(), objT.getProductionParents()))
+			return false;
+		if (! SmartEquals(getAutoHour(), objT.getAutoHour()))
+			return false;
+		if (! SmartEquals(getAutoMin(), objT.getAutoMin()))
+			return false;
+		if (! SmartEquals(getMessage(), objT.getMessage()))
+			return false;
+		if (! SmartEquals(getShowMessageClockout(), objT.getShowMessageClockout()))
+			return false;
+		if (! SmartEquals(getShowMessageClockin(), objT.getShowMessageClockin()))
 			return false;
 		return true;
 	}			

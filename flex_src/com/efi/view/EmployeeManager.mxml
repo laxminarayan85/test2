@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="740"  title=" Employee Manager" label="Employee Manager">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="416"  title=" Employee Manager" label="Employee Manager">
 
 <mx:Script>  	
 <![CDATA[
@@ -24,9 +24,8 @@
 ]]>
 </mx:Script>
 	<mx:Button x="176" y="10" label="Employee" width="158" height="150" icon="@Embed(source='../../../assets/EmployeeEdit.png')" click="doEmployee();" />
-	<mx:Button x="10" y="347" label="Time Periods" height="159" width="158" icon="@Embed(source='../../../assets/timeperiods.png')" labelPlacement="bottom"/>
-	<mx:Button x="176" y="347" label="Edit Time Cards" height="159" width="158" icon="@Embed(source='../../../assets/edittimecard.png')" labelPlacement="bottom"/>
-	<mx:Button x="10" y="168" label="Clock Options" height="150" width="158"/>
+	<mx:Button x="10" y="183" label="Time Periods" height="159" width="158" icon="@Embed(source='../../../assets/timeperiods.png')" labelPlacement="bottom"/>
+	<mx:Button x="176" y="183" label="Edit Time Cards" height="159" width="158" icon="@Embed(source='../../../assets/edittimecard.png')" labelPlacement="bottom"/>
 	<mx:Button x="10" y="10" label="Clock In/Out" width="158" height="150" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='../../../assets/punchclock.png')" click="doClockInOut();"/>
 	
 	

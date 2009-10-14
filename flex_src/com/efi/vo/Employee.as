@@ -51,6 +51,11 @@ package com.efi.vo
 		public var anyPastDue:Boolean = true;
 		public var customerWant:String = "";
 		public var productionParents:ArrayCollection;
+		public var autoHour:int = 0;
+		public var autoMin:int = 0;
+		public var message:String = "";
+		public var showMessageClockout:Boolean = true;
+		public var showMessageClockin:Boolean = true;
 	
 	}
 }

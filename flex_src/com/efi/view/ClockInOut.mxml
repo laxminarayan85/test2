@@ -48,9 +48,8 @@
 		notification_consumer.subscribe();      */
 		dataService.getAll("Employee");
 		//user = application.currentUser;
-		
-	    
 	} 
+	
 	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:String = message.body as String;
@@ -71,24 +70,36 @@
 		dataService.addUpdate(employee);
 	}
 	private function doClockIn(): void{  
-		 employee.clockIn= true;
-		 employee.clockOut = false;
-		 employee.clockBreak= false;
-		 setEmployee();
+		 if (employee != null){
+			 employee.clockIn= true;
+			 employee.clockOut = false;
+			 employee.clockBreak= false;
+			 setEmployee();
+			 employee = null;
+		 }
 		
 	}  
 	private function doClockOut(): void{ 
-		employee.clockIn= false;
-		employee.clockOut = true;
-		employee.clockBreak= false; 
-		setEmployee();
+		if (employee != null){
+			employee.clockIn= false;
+			employee.clockOut = true;
+			employee.clockBreak= false; 
+			setEmployee();
+			employee = null;
+		}
+		
 		
 	}
 	private function doClockBreak(): void{ 
-		employee.clockIn= false;
-		employee.clockOut = false;
-		employee.clockBreak= true;
-		setEmployee();
+		if (employee != null){
+			employee.clockIn= false;
+			employee.clockOut = false;
+			employee.clockBreak= true;
+			setEmployee();
+			employee = null;
+		}
+		
+		
 		
 		
 	}  
@@ -101,6 +112,9 @@
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,null);                                 
 	}
+	private function doGrid(): void{ 
+		employee = employeeGrid.selectedItem as Employee;
+	}  
 	
               
 ]]>
@@ -110,10 +124,11 @@
 	<mx:Button x="62" y="37" label="Clock In" width="132" height="107" icon="@Embed(source='../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
 	<mx:Button x="62" y="165" label="Clock Out" width="132" height="107" icon="@Embed(source='../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
 	<mx:Button x="62" y="310" label="On Break" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
-	<mx:DataGrid x="212" y="37" height="380" width="387" dataProvider="{employeesArray}">
+	<mx:DataGrid x="212" y="37" height="380" width="387" dataProvider="{employeesArray}" click="doGrid();" id="employeeGrid">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Employee" dataField="name"/>
-			<mx:DataGridColumn headerText="Out"  dataField="clockOut"/>
+			<mx:DataGridColumn headerText="First Name" dataField="firstName"/>
+			<mx:DataGridColumn headerText="Last Name" dataField="lastName"/>
+			<mx:DataGridColumn headerText="Out"  dataField="clockOut" />
 			<mx:DataGridColumn headerText="In" dataField="clockIn"/>
 			<mx:DataGridColumn headerText="Break" dataField="clockBreak"/>
 		</mx:columns>

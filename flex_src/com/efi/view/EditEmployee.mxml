@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="100%" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
+width="100%" height="908" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
 creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.adobe.flex.extras.controls.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -35,11 +35,16 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 <mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
 <mx:StringValidator id="employeeFirstValidator" source="{firstName_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="employeeLastValidator" source="{lastName_edit}"	property="text"	minLength="2" required="true"/>
+<mx:NumberValidator id= "timeValidator" source="{hour_edit}" property= "text" maxValue="24" minValue="1"/>
+<mx:NumberValidator id= "timeValidator2" source="{minute_edit}" property= "text" maxValue="59" minValue="0" />
+
+
 
 
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.controls.DateField;
 	
 	import com.efi.vo.Employee;
 	import com.efi.vo.Address;                        
@@ -69,7 +74,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
    	[Bindable]
     	private var employees:ArrayCollection = new ArrayCollection();
 
-    
+  
     [Bindable]                                         
 		private var employee:Employee;
 	[Bindable] 
@@ -140,8 +145,9 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		
 		employee.address.street1 = street_edit.text;
 		employee.address.street2 = street1_edit.text;
-		employee.customerWant = customerWantType;
-		if (employeeStatus == "Active")
+		employee.customerWant = Due.selectedValue.toString();
+		
+		if (employee_status.selectedValue == "Active")
 			employee.active= true;
 		else
 			employee.active = false;
@@ -178,7 +184,12 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		employee.allPresses	= all_presses.selected;
 		employee.allCopiers	= all_copiers.selected;
 		employee.anyPastDue = any_past_due.selected;
-		
+		employee.showMessageClockin= show_message_clockIn.selected;
+		employee.showMessageClockout = show_message_clockOut.selected;
+		employee.autoHour = parseInt(hour_edit.text);
+		employee.autoMin = parseInt(minute_edit.text);
+		employee.message = message.text;
+	
 			
 	}
 	
@@ -399,6 +410,9 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
         validate(zipValidator);
         validate(employeeFirstValidator);
         validate(employeeLastValidator);
+        validate(timeValidator);
+        validate(timeValidator2)
+      
         
         
     }
@@ -413,11 +427,31 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
          
 		return currentControlIsValid;
 	}
+	private function doShowTime():void{
+		var temp1:String;
+		var temp2:String;
+		var ampm: String;
+		var hour:int;
+		var min:int;
+		if (formIsValid){
+			temp1 = hour_edit.text;
+			hour = parseInt(hour_edit.text);
+			temp2 = minute_edit.text;	
+			if ( hour > 12){
+				ampm = 'PM';
+				temp1= (hour - 12).toString();
+			}
+			else
+				ampm = 'AM';
+			
+			real_time.text = temp1+":"+temp2+ampm;
+			}
+	}
 ]]>
                              
 </mx:Script>
 <mx:VBox width="100%" height="894">
-	<mx:Canvas width="755" height="902">
+	<mx:Canvas width="100%" height="100%">
 		<mx:Button width="38" height="38" click="doNext();" x="56" y="10">
 			<mx:icon>@Embed(source='../../../assets/next_page.png')</mx:icon>
 		</mx:Button>
@@ -444,7 +478,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		<mx:Button x="493" y="10" width="38" height="38">
 			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
-		<mx:TabNavigator x="0" y="82" width="745" height="811" creationPolicy="all">
+		<mx:TabNavigator x="0" y="82" width="849" height="811" creationPolicy="all">
 			<mx:Canvas label="Settings" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="ID Number:" width="71"/>
 				<mx:TextInput x="143" y="17" id="employeeID" text="{employee.id}" width="106" editable="false"/>
@@ -461,7 +495,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<mx:Label x="77" y="219" text="State:"/>
 				<ns1:AutoComplete x="124" y="221" width="80" id="statecombo" dataProvider="{states1}" labelField="name" focusOut="doState()" lookAhead="true"/>
 				<mx:Label x="56" y="254" text="Zip Code:"/>
-				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true"/>
+				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true" change=""/>
 				<mx:Label x="63" y="280" text="Country:"/>
 				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>
 				<mx:Label x="406" y="80" text="Phone:"/>
@@ -482,7 +516,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 					<mx:RadioButton x="10" y="19" label="Active" groupName="employee_status" width="78" value="Active"/>
 					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
-				<mx:Panel x="368" y="68" width="287" height="133" layout="absolute" title="PIN Settings">
+				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="PIN Settings">
 					<mx:CheckBox x="10" y="10" label="Require PIN" id="requirePin" selected="{employee.pinRequired}"/>
 					<mx:Label x="10" y="40" text="PIN:"/>
 					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>
@@ -498,8 +532,20 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 					<mx:CheckBox x="10" y="190" label="Auto  show Tracker Console at clock-in" id="show_tracker_console" selected="{employee.trackerClockIn}"/>
 					<mx:CheckBox x="10" y="218" label="Auto show My Work Center at clock-in" id="show_work_center" selected="{employee.showWorkCenter}"/>
 				</mx:Panel>
-				<mx:Panel x="368" y="224" width="287" height="86" layout="absolute" title="Magnetic Card Reader Authentication">
+				<mx:Panel x="368" y="255" width="349" height="86" layout="absolute" title="Magnetic Card Reader Authentication">
 					<mx:CheckBox x="10" y="10" label="Allow authentication with magnetic card..." id="allow_mag_reader" selected="{employee.magCardReader}"/>
+				</mx:Panel>
+				<mx:Panel x="368" y="405" width="349" height="109" layout="absolute" title="Auto Out">
+					<mx:Label x="22" y="10" text="Hour:"/>
+					<mx:Label x="11" y="36" text="Minute:"/>
+					<mx:TextInput x="66" y="8" width="79" id="hour_edit" focusOut="doShowTime();" change="validateForm(event);" text="{employee.autoHour}"/>
+					<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
+					<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="532" width="796" height="185" layout="absolute" title="Message" >
+					<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
+					<mx:CheckBox x="10" y="97" label="Show Message on Clock In" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
+					<mx:CheckBox x="239" y="97" label="Show Message on Clock Out" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas label="Production Filter" width="100%" height="100%">	
