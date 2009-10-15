@@ -5,6 +5,11 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
+
+	<mx:RemoteObject id="stockChangesDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockChangesResult(event)"/>
+	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
@@ -74,6 +79,9 @@
 	[Bindable]                                         
 	private var stockDefinitions:StockDefinition;
 	
+	[Bindable]                                         
+	private var stockChange:StockChanges;
+	
 	[Bindable]
     private var stockColor:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
@@ -107,13 +115,16 @@
 		doGet(); 
 
 	    stockDefinitions = new StockDefinition();
-	    stockGroupDataService.getAll("StockGroup");
-	    vendorDataService.getAll("Vendor");
-	    stockGradeDataService.getAll("StockGrade");
-	    stockColorDataService.getAll("StockColor");
-	    stockGenericColorDataService.getAll("GenericColors");
-	    stockFinishDataService.getAll("StockFinish");
-	    pressDefinitionDataService.getAll("PressDefinition");
+	    
+	    loadStockChanges();
+	    loadStockGroup();
+	    loadStockVendor();
+	    loadStockGrade();
+	    loadStockColor();
+	    loadStockGenericColor();
+	    loadStockFinish();
+	    loadPressDefinition();
+	    
 	    loadUomArray();
 	    loadUnitsArray();
 	}      
@@ -175,6 +186,7 @@
 		{
 			this.stockDefinitions = stockDefinition;
 			mapFromStockDefinitionData();
+			loadStockChanges();
 			standardItemCheckEvent();
 		}
 	}			
@@ -183,32 +195,36 @@
 		dataService.getAll("StockDefinition");
 	}
 	
+	public function loadStockChanges():void {
+		stockChangesDataService.getAll("StockChanges");
+	}
+	
 	public function loadPressDefinition():void {   
-		dataService.getAll("PressDefinition");
+	    pressDefinitionDataService.getAll("PressDefinition");
 	}
 
 	public function loadStockGrade():void {   
-		dataService.getAll("StockGrade");
+	    stockGradeDataService.getAll("StockGrade");
 	}
 
 	public function loadStockGroup():void {   
-		dataService.getAll("StockGroup");
+	    stockGroupDataService.getAll("StockGroup");
 	}
 
 	public function loadStockColor():void {   
-		dataService.getAll("StockColor");
+	    stockColorDataService.getAll("StockColor");
 	}
 
 	public function loadStockGenericColor():void {   
-		dataService.getAll("GenericColors");
+	    stockGenericColorDataService.getAll("GenericColors");
 	}
 
 	public function loadStockVendor():void {   
-		dataService.getAll("Vendor");
+	    vendorDataService.getAll("Vendor");
 	}
 
 	public function loadStockFinish():void {   
-		dataService.getAll("StockFinish");
+	    stockFinishDataService.getAll("StockFinish");
 	}
 					
 	private function messageHandler(message:IMessage):void
@@ -265,6 +281,7 @@
 	private function doSave():void {
 		mapStockDefinitionData();
 		dataService.addUpdate(stockDefinitions);
+		this.stockChangesDataService.addUpdate(stockChanges);
 		standardItemCheckEvent();
 	}
 
@@ -430,6 +447,10 @@
     	loadStockDefinitions();
 	}
 	
+	private function handleSaveStockChangesResult(ev:ResultEvent):void {
+    	loadStockChanges();
+	}
+	
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
     	loadStockGrade();
 	}
@@ -457,6 +478,10 @@
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     loadStockDefinitions();
 	     doNew();
+	}
+	
+	private function handleLoadStockChangesResult(ev:ResultEvent):void {
+		 stockChanges = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadPressDefinition(ev:ResultEvent):void {
@@ -801,7 +826,7 @@
 			</mx:Panel>
 			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
 				<mx:Button x="10" y="6" label="Select Schedule" click="doSelectSchedule();"/>
-				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="224"/>
+				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="224" id="defaultPriceList"/>
 			</mx:Panel>
 			<mx:TextInput x="113" y="9" width="85" id="NormalRunSize" text="{stockDefinitions.normalRunSize}"/>
 			<mx:TextInput x="270" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
@@ -879,13 +904,13 @@
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
 				<mx:Button x="10" y="204" label="Show Entire History" click="doShowHistory();"/>
-				<mx:DataGrid x="10" y="0" width="590" height="199">
+				<mx:DataGrid x="10" y="0" width="590" height="199" dataProvider="{stockChanges}">
 					<mx:columns>
-						<mx:DataGridColumn headerText="User" dataField="col1"/>
-						<mx:DataGridColumn headerText="Date" dataField="col2"/>
-						<mx:DataGridColumn headerText="How Changed" dataField="col3"/>
-						<mx:DataGridColumn headerText="Quantity" dataField="col4"/>
-						<mx:DataGridColumn headerText="Reference" dataField="col5"/>
+						<mx:DataGridColumn headerText="User" dataField="User"/>
+						<mx:DataGridColumn headerText="Date" dataField="Date"/>
+						<mx:DataGridColumn headerText="How Changed" dataField="HowChanged"/>
+						<mx:DataGridColumn headerText="Quantity" dataField="Quantity"/>
+						<mx:DataGridColumn headerText="Reference" dataField="Reference"/>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:Panel>
