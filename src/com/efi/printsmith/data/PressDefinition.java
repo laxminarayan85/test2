@@ -37,11 +37,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PRESSDEFID = "PressDefID";
-	/**
-	 * @generated
-	 */
-	public static final String PRESSDEFNAME = "PressDefName";
+	public static final String NAME = "Name";
 	/**
 	 * @generated
 	 */
@@ -182,36 +178,19 @@ public class PressDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Long pressDefID;
+	private String name;
 	/**
 	 * @generated
  	 */
-	public Long getPressDefID(){
-		return pressDefID; 
+	public String getName(){
+		return name; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPressDefID(Long newVal) {
-		this.pressDefID = newVal;
-	}
- 	
-	
- 	@Basic
-	private String pressDefName;
-	/**
-	 * @generated
- 	 */
-	public String getPressDefName(){
-		return pressDefName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPressDefName(String newVal) {
-		this.pressDefName = newVal;
+	public void setName(String newVal) {
+		this.name = newVal;
 	}
  	
 	
@@ -764,8 +743,7 @@ public class PressDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (PRESSDEFID.equals(propertyName)) return getPressDefID();
-		if (PRESSDEFNAME.equals(propertyName)) return getPressDefName();
+		if (NAME.equals(propertyName)) return getName();
 		if (MACHINENAME.equals(propertyName)) return getMachineName();
 		if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
 		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
@@ -807,8 +785,7 @@ public class PressDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PRESSDEFID.equals(propertyName)) setPressDefID((Long)newValue); else
-		if (PRESSDEFNAME.equals(propertyName)) setPressDefName((String)newValue); else
+		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (MACHINENAME.equals(propertyName)) setMachineName((String)newValue); else
 		if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
 		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
@@ -850,9 +827,7 @@ public class PressDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (PRESSDEFID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PRESSDEFNAME.equals(propertyName)) 
+		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (MACHINENAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -928,8 +903,7 @@ public class PressDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PRESSDEFID.equals(propertyName)) return PressDefinition.class;
-		if (PRESSDEFNAME.equals(propertyName)) return PressDefinition.class;
+		if (NAME.equals(propertyName)) return PressDefinition.class;
 		if (MACHINENAME.equals(propertyName)) return PressDefinition.class;
 		if (OUTPUTDESCRIP.equals(propertyName)) return PressDefinition.class;
 		if (PRODUCTIONLOCATION.equals(propertyName)) return PressDefinition.class;
@@ -973,9 +947,7 @@ public class PressDefinition extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		PressDefinition objT = (PressDefinition)obj;
-		if (! SmartEquals(getPressDefID(), objT.getPressDefID()))
-			return false;
-		if (! SmartEquals(getPressDefName(), objT.getPressDefName()))
+		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		if (! SmartEquals(getMachineName(), objT.getMachineName()))
 			return false;

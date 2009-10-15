@@ -103,7 +103,7 @@ width="772" height="883" title="Press Definitions"
 	}
 	private function mapAccountData():void {
 	 //pressDefinition.pressDefID = PressDefID;
-	 pressDefinition.pressDefName = Name.text;
+	 pressDefinition.name = Name.text;
 	 pressDefinition.machineName = MachineName.text;
 	 pressDefinition.outputDescrip = OutPutDescription.text;
 	 pressDefinition.productionLocation = ProductionLocation.text;
@@ -205,7 +205,7 @@ width="772" height="883" title="Press Definitions"
 	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
 	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
 	<mx:Label x="32" y="332" text="OEM Device ID:" textAlign="right"/>	
-	<mx:TextInput x="131" y="195" width="263" id="Name" text="{pressDefinition.pressDefName}"/>
+	<mx:TextInput x="131" y="195" width="263" id="Name" text="{pressDefinition.name}"/>
 	<mx:TextInput x="131" y="221" width="263" id="MachineName" text="{pressDefinition.machineName}"/>
 	<mx:TextInput x="131" y="247" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}"/>
 	<mx:TextInput x="131" y="277" id="ProductionLocation" width="263" text="{pressDefinition.productionLocation}" />

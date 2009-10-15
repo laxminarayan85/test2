@@ -12,8 +12,7 @@ package com.efi.vo
 		public function PressDefinition() {
 		
 		}
-		public var pressDefID:Number = 0;
-		public var pressDefName:String = "";
+		public var name:String = "";
 		public var machineName:String = "";
 		public var outputDescrip:String = "";
 		public var productionLocation:String = "";

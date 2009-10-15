@@ -12,7 +12,6 @@ package com.efi.vo
 		public function StockDefinition() {
 		
 		}
-		public var stockDefID:Number = 0;
 		public var stockunit:int = 0;
 		public var name:String = "";
 		public var stkgroup:StockGroup = new StockGroup();
@@ -117,6 +116,7 @@ package com.efi.vo
 		public var fscCertified:Boolean = true;
 		public var sfiCertified:Boolean = true;
 		public var greenSealCertified:Boolean = true;
+		public var defaultPriceList:PriceList = new PriceList();
 	
 	}
 }

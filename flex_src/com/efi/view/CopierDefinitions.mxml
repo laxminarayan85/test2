@@ -58,7 +58,7 @@ width="902" height="873" title="Copier Definitions"
 	}
 	private function mapAccountData():void {
 	 //copyDefinition.copyDefID = CopierDefID;
-	 copyDefinition.copyDefName = Name.text;
+	 copyDefinition.name = Name.text;
 	 copyDefinition.machineName = MachineName.text;
 	 copyDefinition.outputDescrip = OutPutDescription.text;
 	 copyDefinition.productionLocation = ProductionLocation.text;
@@ -173,7 +173,7 @@ width="902" height="873" title="Copier Definitions"
 	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
 	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
 	<mx:Label x="32" y="332" text="OEM Device ID:" textAlign="right"/>	
-	<mx:TextInput x="131" y="195" width="263" id="Name" text="{copyDefinition.copyDefName}"/>
+	<mx:TextInput x="131" y="195" width="263" id="Name" text="{copyDefinition.name}"/>
 	<mx:TextInput x="131" y="221" width="263" id="MachineName" text="{copyDefinition.machineName}"/>
 	<mx:TextInput x="131" y="247" width="263" id="OutPutDescription" text="{copyDefinition.outputDescrip}"/>
 	<mx:TextInput x="131" y="277" id="ProductionLocation" width="263" text="{copyDefinition.productionLocation}" />

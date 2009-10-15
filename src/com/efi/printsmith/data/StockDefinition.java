@@ -37,10 +37,6 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String STOCKDEFID = "StockDefID";
-	/**
-	 * @generated
-	 */
 	public static final String STOCKUNIT = "Stockunit";
 	/**
 	 * @generated
@@ -454,6 +450,10 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String GREENSEALCERTIFIED = "GreenSealCertified";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTPRICELIST = "DefaultPriceList";
 
 	/**
 	 * @generated
@@ -463,23 +463,6 @@ public class StockDefinition extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
-	
- 	@Basic
-	private Long stockDefID;
-	/**
-	 * @generated
- 	 */
-	public Long getStockDefID(){
-		return stockDefID; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setStockDefID(Long newVal) {
-		this.stockDefID = newVal;
-	}
  	
 	
  	@Basic
@@ -2248,6 +2231,23 @@ public class StockDefinition extends ModelBase {
 	public void setGreenSealCertified(Boolean newVal) {
 		this.greenSealCertified = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PriceList defaultPriceList;
+	/**
+	 * @generated
+ 	 */
+	public PriceList getDefaultPriceList(){
+		return defaultPriceList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultPriceList(PriceList newVal) {
+		this.defaultPriceList = newVal;
+	}
 
 	/**
 	 * @generated
@@ -2255,7 +2255,6 @@ public class StockDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (STOCKDEFID.equals(propertyName)) return getStockDefID();
 		if (STOCKUNIT.equals(propertyName)) return getStockunit();
 		if (NAME.equals(propertyName)) return getName();
 		if (STKGROUP.equals(propertyName)) return getStkgroup();
@@ -2360,6 +2359,7 @@ public class StockDefinition extends ModelBase {
 		if (FSCCERTIFIED.equals(propertyName)) return getFscCertified();
 		if (SFICERTIFIED.equals(propertyName)) return getSfiCertified();
 		if (GREENSEALCERTIFIED.equals(propertyName)) return getGreenSealCertified();
+		if (DEFAULTPRICELIST.equals(propertyName)) return getDefaultPriceList();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2369,7 +2369,6 @@ public class StockDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (STOCKDEFID.equals(propertyName)) setStockDefID((Long)newValue); else
 		if (STOCKUNIT.equals(propertyName)) setStockunit((Integer)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (STKGROUP.equals(propertyName)) setStkgroup((StockGroup)newValue); else
@@ -2474,6 +2473,7 @@ public class StockDefinition extends ModelBase {
 		if (FSCCERTIFIED.equals(propertyName)) setFscCertified((Boolean)newValue); else
 		if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
 		if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
+		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PriceList)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2483,8 +2483,6 @@ public class StockDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (STOCKDEFID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
 		if (STOCKUNIT.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (NAME.equals(propertyName)) 
@@ -2693,6 +2691,8 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (GREENSEALCERTIFIED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (DEFAULTPRICELIST.equals(propertyName)) 
+			return new Class<?>[] {PriceList.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2703,7 +2703,6 @@ public class StockDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (STOCKDEFID.equals(propertyName)) return StockDefinition.class;
 		if (STOCKUNIT.equals(propertyName)) return StockDefinition.class;
 		if (NAME.equals(propertyName)) return StockDefinition.class;
 		if (STKGROUP.equals(propertyName)) return StockDefinition.class;
@@ -2808,6 +2807,7 @@ public class StockDefinition extends ModelBase {
 		if (FSCCERTIFIED.equals(propertyName)) return StockDefinition.class;
 		if (SFICERTIFIED.equals(propertyName)) return StockDefinition.class;
 		if (GREENSEALCERTIFIED.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTPRICELIST.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2819,8 +2819,6 @@ public class StockDefinition extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		StockDefinition objT = (StockDefinition)obj;
-		if (! SmartEquals(getStockDefID(), objT.getStockDefID()))
-			return false;
 		if (! SmartEquals(getStockunit(), objT.getStockunit()))
 			return false;
 		if (! SmartEquals(getName(), objT.getName()))
@@ -3028,6 +3026,8 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getSfiCertified(), objT.getSfiCertified()))
 			return false;
 		if (! SmartEquals(getGreenSealCertified(), objT.getGreenSealCertified()))
+			return false;
+		if (! SmartEquals(getDefaultPriceList(), objT.getDefaultPriceList()))
 			return false;
 		return true;
 	}			

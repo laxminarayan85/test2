@@ -12,8 +12,7 @@ package com.efi.vo
 		public function CopierDefinition() {
 		
 		}
-		public var copyDefID:Number = 0;
-		public var copyDefName:String = "";
+		public var name:String = "";
 		public var machineName:String = "";
 		public var outputDescrip:String = "";
 		public var productionLocation:String = "";

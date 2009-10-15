@@ -37,11 +37,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String COPYDEFID = "CopyDefID";
-	/**
-	 * @generated
-	 */
-	public static final String COPYDEFNAME = "CopyDefName";
+	public static final String NAME = "Name";
 	/**
 	 * @generated
 	 */
@@ -194,36 +190,19 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Long copyDefID;
+	private String name;
 	/**
 	 * @generated
  	 */
-	public Long getCopyDefID(){
-		return copyDefID; 
+	public String getName(){
+		return name; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCopyDefID(Long newVal) {
-		this.copyDefID = newVal;
-	}
- 	
-	
- 	@Basic
-	private String copyDefName;
-	/**
-	 * @generated
- 	 */
-	public String getCopyDefName(){
-		return copyDefName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCopyDefName(String newVal) {
-		this.copyDefName = newVal;
+	public void setName(String newVal) {
+		this.name = newVal;
 	}
  	
 	
@@ -827,8 +806,7 @@ public class CopierDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (COPYDEFID.equals(propertyName)) return getCopyDefID();
-		if (COPYDEFNAME.equals(propertyName)) return getCopyDefName();
+		if (NAME.equals(propertyName)) return getName();
 		if (MACHINENAME.equals(propertyName)) return getMachineName();
 		if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
 		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
@@ -873,8 +851,7 @@ public class CopierDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (COPYDEFID.equals(propertyName)) setCopyDefID((Long)newValue); else
-		if (COPYDEFNAME.equals(propertyName)) setCopyDefName((String)newValue); else
+		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (MACHINENAME.equals(propertyName)) setMachineName((String)newValue); else
 		if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
 		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
@@ -919,9 +896,7 @@ public class CopierDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (COPYDEFID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COPYDEFNAME.equals(propertyName)) 
+		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (MACHINENAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -1003,8 +978,7 @@ public class CopierDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (COPYDEFID.equals(propertyName)) return CopierDefinition.class;
-		if (COPYDEFNAME.equals(propertyName)) return CopierDefinition.class;
+		if (NAME.equals(propertyName)) return CopierDefinition.class;
 		if (MACHINENAME.equals(propertyName)) return CopierDefinition.class;
 		if (OUTPUTDESCRIP.equals(propertyName)) return CopierDefinition.class;
 		if (PRODUCTIONLOCATION.equals(propertyName)) return CopierDefinition.class;
@@ -1051,9 +1025,7 @@ public class CopierDefinition extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		CopierDefinition objT = (CopierDefinition)obj;
-		if (! SmartEquals(getCopyDefID(), objT.getCopyDefID()))
-			return false;
-		if (! SmartEquals(getCopyDefName(), objT.getCopyDefName()))
+		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		if (! SmartEquals(getMachineName(), objT.getMachineName()))
 			return false;
