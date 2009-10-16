@@ -51,6 +51,22 @@ package com.efi.vo
 		public var grandTotal:Number = 0;
 		public var amountDue:Number = 0;
 		public var totalCost:Number = 0;
+		public var addressOverriden:Boolean = true;
+		public var costed:Boolean = true;
+		public var openNotesOnOpen:int = 0;
+		public var completed:Boolean = true;
+		public var priceLocked:Boolean = true;
+		public var onPendingList:Boolean = true;
+		public var locked:Boolean = true;
+		public var taxShipping:Boolean = true;
+		public var poRequired:Boolean = true;
+		public var fileOriginals:Boolean = true;
+		public var notTaxable:Boolean = true;
+		public var firmWantedByDate:Boolean = true;
+		public var releasedToProduction:Boolean = true;
+		public var containsInventoriedStock:Boolean = true;
+		public var discountIsDollars:Boolean = true;
+		public var discountIsOneTime:Boolean = true;
 	
 	}
 }

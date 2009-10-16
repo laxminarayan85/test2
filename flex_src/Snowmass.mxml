@@ -69,7 +69,7 @@
 
 <mx:Script>
 	<![CDATA[
-		import com.efi.vo.User;
+		import com.efi.vo.Users;
 		import mx.effects.easing.Quadratic;
 		import com.efi.view.ChargeDefinitions;
 		import com.efi.view.EditCustomer;
@@ -110,7 +110,7 @@
 		
 		public var userName:String;
 		public var userPass:String;
-		public var currentUser:User;
+		public var currentUser:Users;
 
 		public var localeString : String = "en_US";
         private static var thisInstance = null;  
@@ -219,7 +219,7 @@
 		}
 		
 		private function handleLoginResult(event:ResultEvent):void	{
-			var res:User = event.result as User;
+			var res:Users = event.result as Users;
 			if (res != null) {
 				currentUser = res;
 			} else {

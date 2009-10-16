@@ -16,7 +16,7 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Label;
-			import com.efi.vo.User;
+			import com.efi.vo.Users;
 			import mx.resources.Locale;
 			import mx.resources.ResourceBundle;
 			import mx.utils.URLUtil;
@@ -35,7 +35,7 @@
 			} 
 				
 			private function handleLoginResult(event:ResultEvent):void	{
-				var res:User = event.result as User;
+				var res:Users = event.result as Users;
 				if (res) {
 					var application:Snowmass = Snowmass.getInstance();
 					PopUpManager.removePopUp(this);

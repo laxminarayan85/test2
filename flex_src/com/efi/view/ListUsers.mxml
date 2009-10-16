@@ -15,7 +15,7 @@ creationComplete="init()">
 <mx:Script>                                   
 <![CDATA[
                                          
-	import com.efi.vo.User;                                         
+	import com.efi.vo.Users;                                         
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -29,7 +29,7 @@ creationComplete="init()">
 	private var message:String;
                                                                                   
 	[Bindable]                                
-	private var users:ArrayCollection = new ArrayCollection();
+	private var userlist:ArrayCollection = new ArrayCollection();
                                                                          
 	[Bindable]                               
 	private var userRecords:int = 0;         
@@ -42,7 +42,7 @@ creationComplete="init()">
 	                                                   	
 	public function loadUsers():void {   
 	//    loaderService.getUsers();
-		dataService.getAll("User");
+		dataService.getAll("Users");
 	}
 
 	private function send():void
@@ -60,7 +60,7 @@ creationComplete="init()">
                                   
 	private function deleteUser():void {              
 		if(dataGrid.selectedItem != null) {
-			var selectedItem:User = dataGrid.selectedItem as User;
+			var selectedItem:Users = dataGrid.selectedItem as Users;
 			//deleteService.deleteUser(selectedItem.id);
 			dataService.deleteItem("User",selectedItem.id);                                     
      	}
@@ -76,13 +76,13 @@ creationComplete="init()">
 	private function updateUser():void {
 	     var titleWindow:EditUser = EditUser(PopUpManager.createPopUp(this, EditUser, true));
 	     titleWindow.setStyle("borderAlpha", 0.9);
-	     titleWindow.user = dataGrid.selectedItem as User;
+	     titleWindow.users = dataGrid.selectedItem as Users;
 	     titleWindow.formIsEmpty = false;
 	}
 	                                         
 	private function handleLoadResult(ev:ResultEvent):void {
-	     users = ev.result as ArrayCollection;
-	     userRecords = users.length;
+	     userlist = ev.result as ArrayCollection;
+	     userRecords = userlist.length;
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
@@ -103,7 +103,7 @@ creationComplete="init()">
 
 <mx:VBox width="100%" height="100%">
 <mx:Label text="{message}" fontWeight="bold" includeInLayout="false" />
-<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{users}"
+<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{userlist}"
 doubleClickEnabled="true" doubleClick="updateUser()" >               
 <mx:columns>
      <mx:DataGridColumn dataField="id" headerText="User ID" width="100"/>                                   

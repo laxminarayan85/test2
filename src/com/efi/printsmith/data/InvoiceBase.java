@@ -190,6 +190,70 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */
 	public static final String TOTALCOST = "TotalCost";
+	/**
+	 * @generated
+	 */
+	public static final String ADDRESSOVERRIDEN = "AddressOverriden";
+	/**
+	 * @generated
+	 */
+	public static final String COSTED = "Costed";
+	/**
+	 * @generated
+	 */
+	public static final String OPENNOTESONOPEN = "OpenNotesOnOpen";
+	/**
+	 * @generated
+	 */
+	public static final String COMPLETED = "Completed";
+	/**
+	 * @generated
+	 */
+	public static final String PRICELOCKED = "PriceLocked";
+	/**
+	 * @generated
+	 */
+	public static final String ONPENDINGLIST = "OnPendingList";
+	/**
+	 * @generated
+	 */
+	public static final String LOCKED = "Locked";
+	/**
+	 * @generated
+	 */
+	public static final String TAXSHIPPING = "TaxShipping";
+	/**
+	 * @generated
+	 */
+	public static final String POREQUIRED = "PoRequired";
+	/**
+	 * @generated
+	 */
+	public static final String FILEORIGINALS = "FileOriginals";
+	/**
+	 * @generated
+	 */
+	public static final String NOTTAXABLE = "NotTaxable";
+	/**
+	 * @generated
+	 */
+	public static final String FIRMWANTEDBYDATE = "FirmWantedByDate";
+	/**
+	 * @generated
+	 */
+	public static final String RELEASEDTOPRODUCTION = "ReleasedToProduction";
+	/**
+	 * @generated
+	 */
+	public static final String CONTAINSINVENTORIEDSTOCK = "ContainsInventoriedStock";
+	/**
+	 * @generated
+	 */
+	public static final String DISCOUNTISDOLLARS = "DiscountIsDollars";
+	/**
+	 * @generated
+	 */
+	public static final String DISCOUNTISONETIME = "DiscountIsOneTime";
 
 	/**
 	 * @generated
@@ -886,6 +950,278 @@ public class InvoiceBase extends ModelBase {
 	public void setTotalCost(Double newVal) {
 		this.totalCost = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean addressOverriden;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAddressOverriden(){
+		return addressOverriden; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAddressOverriden(Boolean newVal) {
+		this.addressOverriden = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean costed;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getCosted(){
+		return costed; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCosted(Boolean newVal) {
+		this.costed = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer openNotesOnOpen;
+	/**
+	 * @generated
+ 	 */
+	public Integer getOpenNotesOnOpen(){
+		return openNotesOnOpen; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOpenNotesOnOpen(Integer newVal) {
+		this.openNotesOnOpen = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean completed;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getCompleted(){
+		return completed; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompleted(Boolean newVal) {
+		this.completed = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean priceLocked;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getPriceLocked(){
+		return priceLocked; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceLocked(Boolean newVal) {
+		this.priceLocked = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean onPendingList;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOnPendingList(){
+		return onPendingList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOnPendingList(Boolean newVal) {
+		this.onPendingList = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean locked;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getLocked(){
+		return locked; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLocked(Boolean newVal) {
+		this.locked = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean taxShipping;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getTaxShipping(){
+		return taxShipping; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTaxShipping(Boolean newVal) {
+		this.taxShipping = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean poRequired;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getPoRequired(){
+		return poRequired; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPoRequired(Boolean newVal) {
+		this.poRequired = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean fileOriginals;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getFileOriginals(){
+		return fileOriginals; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFileOriginals(Boolean newVal) {
+		this.fileOriginals = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean notTaxable;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getNotTaxable(){
+		return notTaxable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNotTaxable(Boolean newVal) {
+		this.notTaxable = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean firmWantedByDate;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getFirmWantedByDate(){
+		return firmWantedByDate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFirmWantedByDate(Boolean newVal) {
+		this.firmWantedByDate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean releasedToProduction;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getReleasedToProduction(){
+		return releasedToProduction; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setReleasedToProduction(Boolean newVal) {
+		this.releasedToProduction = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean containsInventoriedStock;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getContainsInventoriedStock(){
+		return containsInventoriedStock; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setContainsInventoriedStock(Boolean newVal) {
+		this.containsInventoriedStock = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean discountIsDollars;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDiscountIsDollars(){
+		return discountIsDollars; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDiscountIsDollars(Boolean newVal) {
+		this.discountIsDollars = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean discountIsOneTime;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDiscountIsOneTime(){
+		return discountIsOneTime; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDiscountIsOneTime(Boolean newVal) {
+		this.discountIsOneTime = newVal;
+	}
 
 	/**
 	 * @generated
@@ -932,6 +1268,22 @@ public class InvoiceBase extends ModelBase {
 		if (GRANDTOTAL.equals(propertyName)) return getGrandTotal();
 		if (AMOUNTDUE.equals(propertyName)) return getAmountDue();
 		if (TOTALCOST.equals(propertyName)) return getTotalCost();
+		if (ADDRESSOVERRIDEN.equals(propertyName)) return getAddressOverriden();
+		if (COSTED.equals(propertyName)) return getCosted();
+		if (OPENNOTESONOPEN.equals(propertyName)) return getOpenNotesOnOpen();
+		if (COMPLETED.equals(propertyName)) return getCompleted();
+		if (PRICELOCKED.equals(propertyName)) return getPriceLocked();
+		if (ONPENDINGLIST.equals(propertyName)) return getOnPendingList();
+		if (LOCKED.equals(propertyName)) return getLocked();
+		if (TAXSHIPPING.equals(propertyName)) return getTaxShipping();
+		if (POREQUIRED.equals(propertyName)) return getPoRequired();
+		if (FILEORIGINALS.equals(propertyName)) return getFileOriginals();
+		if (NOTTAXABLE.equals(propertyName)) return getNotTaxable();
+		if (FIRMWANTEDBYDATE.equals(propertyName)) return getFirmWantedByDate();
+		if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
+		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return getContainsInventoriedStock();
+		if (DISCOUNTISDOLLARS.equals(propertyName)) return getDiscountIsDollars();
+		if (DISCOUNTISONETIME.equals(propertyName)) return getDiscountIsOneTime();
 		return super.getProperty(propertyName);
 	}
 	
@@ -980,6 +1332,22 @@ public class InvoiceBase extends ModelBase {
 		if (GRANDTOTAL.equals(propertyName)) setGrandTotal((Double)newValue); else
 		if (AMOUNTDUE.equals(propertyName)) setAmountDue((Double)newValue); else
 		if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+		if (ADDRESSOVERRIDEN.equals(propertyName)) setAddressOverriden((Boolean)newValue); else
+		if (COSTED.equals(propertyName)) setCosted((Boolean)newValue); else
+		if (OPENNOTESONOPEN.equals(propertyName)) setOpenNotesOnOpen((Integer)newValue); else
+		if (COMPLETED.equals(propertyName)) setCompleted((Boolean)newValue); else
+		if (PRICELOCKED.equals(propertyName)) setPriceLocked((Boolean)newValue); else
+		if (ONPENDINGLIST.equals(propertyName)) setOnPendingList((Boolean)newValue); else
+		if (LOCKED.equals(propertyName)) setLocked((Boolean)newValue); else
+		if (TAXSHIPPING.equals(propertyName)) setTaxShipping((Boolean)newValue); else
+		if (POREQUIRED.equals(propertyName)) setPoRequired((Boolean)newValue); else
+		if (FILEORIGINALS.equals(propertyName)) setFileOriginals((Boolean)newValue); else
+		if (NOTTAXABLE.equals(propertyName)) setNotTaxable((Boolean)newValue); else
+		if (FIRMWANTEDBYDATE.equals(propertyName)) setFirmWantedByDate((Boolean)newValue); else
+		if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
+		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) setContainsInventoriedStock((Boolean)newValue); else
+		if (DISCOUNTISDOLLARS.equals(propertyName)) setDiscountIsDollars((Boolean)newValue); else
+		if (DISCOUNTISONETIME.equals(propertyName)) setDiscountIsOneTime((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1067,6 +1435,38 @@ public class InvoiceBase extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (TOTALCOST.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (ADDRESSOVERRIDEN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (COSTED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (OPENNOTESONOPEN.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (COMPLETED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (PRICELOCKED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ONPENDINGLIST.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (LOCKED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (TAXSHIPPING.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (POREQUIRED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (FILEORIGINALS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (NOTTAXABLE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (FIRMWANTEDBYDATE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (RELEASEDTOPRODUCTION.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DISCOUNTISDOLLARS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DISCOUNTISONETIME.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1116,6 +1516,22 @@ public class InvoiceBase extends ModelBase {
 		if (GRANDTOTAL.equals(propertyName)) return InvoiceBase.class;
 		if (AMOUNTDUE.equals(propertyName)) return InvoiceBase.class;
 		if (TOTALCOST.equals(propertyName)) return InvoiceBase.class;
+		if (ADDRESSOVERRIDEN.equals(propertyName)) return InvoiceBase.class;
+		if (COSTED.equals(propertyName)) return InvoiceBase.class;
+		if (OPENNOTESONOPEN.equals(propertyName)) return InvoiceBase.class;
+		if (COMPLETED.equals(propertyName)) return InvoiceBase.class;
+		if (PRICELOCKED.equals(propertyName)) return InvoiceBase.class;
+		if (ONPENDINGLIST.equals(propertyName)) return InvoiceBase.class;
+		if (LOCKED.equals(propertyName)) return InvoiceBase.class;
+		if (TAXSHIPPING.equals(propertyName)) return InvoiceBase.class;
+		if (POREQUIRED.equals(propertyName)) return InvoiceBase.class;
+		if (FILEORIGINALS.equals(propertyName)) return InvoiceBase.class;
+		if (NOTTAXABLE.equals(propertyName)) return InvoiceBase.class;
+		if (FIRMWANTEDBYDATE.equals(propertyName)) return InvoiceBase.class;
+		if (RELEASEDTOPRODUCTION.equals(propertyName)) return InvoiceBase.class;
+		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return InvoiceBase.class;
+		if (DISCOUNTISDOLLARS.equals(propertyName)) return InvoiceBase.class;
+		if (DISCOUNTISONETIME.equals(propertyName)) return InvoiceBase.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1204,6 +1620,38 @@ public class InvoiceBase extends ModelBase {
 		if (! SmartEquals(getAmountDue(), objT.getAmountDue()))
 			return false;
 		if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
+			return false;
+		if (! SmartEquals(getAddressOverriden(), objT.getAddressOverriden()))
+			return false;
+		if (! SmartEquals(getCosted(), objT.getCosted()))
+			return false;
+		if (! SmartEquals(getOpenNotesOnOpen(), objT.getOpenNotesOnOpen()))
+			return false;
+		if (! SmartEquals(getCompleted(), objT.getCompleted()))
+			return false;
+		if (! SmartEquals(getPriceLocked(), objT.getPriceLocked()))
+			return false;
+		if (! SmartEquals(getOnPendingList(), objT.getOnPendingList()))
+			return false;
+		if (! SmartEquals(getLocked(), objT.getLocked()))
+			return false;
+		if (! SmartEquals(getTaxShipping(), objT.getTaxShipping()))
+			return false;
+		if (! SmartEquals(getPoRequired(), objT.getPoRequired()))
+			return false;
+		if (! SmartEquals(getFileOriginals(), objT.getFileOriginals()))
+			return false;
+		if (! SmartEquals(getNotTaxable(), objT.getNotTaxable()))
+			return false;
+		if (! SmartEquals(getFirmWantedByDate(), objT.getFirmWantedByDate()))
+			return false;
+		if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
+			return false;
+		if (! SmartEquals(getContainsInventoriedStock(), objT.getContainsInventoriedStock()))
+			return false;
+		if (! SmartEquals(getDiscountIsDollars(), objT.getDiscountIsDollars()))
+			return false;
+		if (! SmartEquals(getDiscountIsOneTime(), objT.getDiscountIsOneTime()))
 			return false;
 		return true;
 	}			

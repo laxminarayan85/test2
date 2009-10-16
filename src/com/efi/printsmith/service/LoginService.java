@@ -2,7 +2,7 @@ package com.efi.printsmith.service;
 
 import com.efi.printsmith.data.*;
 
-import java.util.List;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,16 +13,17 @@ public class LoginService extends DataService {
 		super();
 	}
 
-	public User validateLogin(String userName, String password) {
+	public Users validateLogin(String userName, String password) {
+		
 		try {		
 			log.info("Attempting login for " + userName);
 			EntityManager em = entityManagerFactory.createEntityManager();
-			Query q = em.createNamedQuery("User.byName");
+			Query q = em.createQuery("select u from users u where upper(u.name)= upper(:name)");
 			q.setParameter("name", userName);
 			
-			User user = (User) q.getSingleResult();
+			Users user1 = (Users) q.getSingleResult();
 					
-			if (user.getPassword().equals(password)) return user;
+			if (user1.getPassword().equals(password)) return user1;
 		} catch (Exception e) {
 			log.error(e);
 		}

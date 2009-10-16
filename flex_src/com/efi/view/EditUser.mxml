@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*"
-width="100%" height="100%" defaultButton="{submitButton}"
-showCloseButton="true" creationComplete="creationCompleteHandler();"
+width="100%" height="557" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="true" 
     close="PopUpManager.removePopUp(this);"
     title="User Form" xmlns:text="flash.text.*">
-
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="accessGroupService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAccessGroupResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="accessLevelService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAccessLevelResult(event)"/>
 </mx:RemoteObject>
                     
-<vo:User id="user" name="{nameField.text}"                             
+<vo:Users id="users" name="{nameField.text}"                             
 password="{passwordField.text}"/>
 <mx:Producer id="producer" destination="users"/>
+<mx:StringValidator id="nameValidator" source="{nameField}" property="text" minLength="2" required="true" />                       
+<mx:StringValidator id="passwordValidator" source="{passwordField}" property="text" minLength="2" required="true" />
 
 <mx:Script>
                                    
 <![CDATA[
-                                         
+    import com.efi.vo.Users;  
+    import com.efi.vo.AccessGroup;
+    import com.efi.vo.AccessLevel;                                   
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -26,24 +35,46 @@ password="{passwordField.text}"/>
 	import mx.validators.Validator;       
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+	import mx.collections.ArrayCollection;   
 	                             
 	[Bindable]                             
-	private var message:String;                                   
+	private var message:String;    
+	[Bindable]                             
+	private var user1:Users;                                        
 	[Bindable]                             
 	private var formIsValid:Boolean = false;                               
 	[Bindable]                                     
-	public var formIsEmpty:Boolean;                                   
+	public var formIsEmpty:Boolean;    
+	[Bindable]
+    	private var userslist:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    	private var accessGroups:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    	private var accessLevels:ArrayCollection = new ArrayCollection();
+                               
 	// Holds a reference to the currently focussed control on the form.
+ 	
  	private var focusedFormControl:DisplayObject;                           
            
-	                      
+	public function init():void {
+		//consumer.subscribe();
+	//	notification_consumer.subscribe();  
+		PopUpManager.centerPopUp(this);
+	    resetFocus();              
+		dataService.getAll("User"); 
+		accessGroupService.getAll("AccessGroup");
+		accessLevelService.getAll("AccessLevel");  
+		user1 = new Users();
+	}                      
 	private function handleSaveResult(ev:ResultEvent):void {                              
 	     clearFormHandler();
 	     validateForm(ev);
 	                                      
 		// Reload the list.                      
-		//parentApplication.listUsers.loaderService.getUsers();                             
+		//parentApplication.listUsers.loaderService.getUsers();    
+		                         
 		PopUpManager.removePopUp(this);
+		dataService.getAll("User")
 		send();                                  
 	}
                                      
@@ -55,7 +86,8 @@ password="{passwordField.text}"/>
 	                     
 	public function saveUser():void {                                    
 		//saveService.addUpdateUser(user);
-		dataService.addUpdate(user);                                        
+		mapToUserData();
+		dataService.addUpdate(user1);                                        
 	}
                                   
     private function send():void
@@ -65,11 +97,11 @@ password="{passwordField.text}"/>
 		//producer.send(message);
 	}
 
-	private function creationCompleteHandler():void {   
+/* 	private function creationCompleteHandler():void {   
 	     PopUpManager.centerPopUp(this);
 	     resetFocus();                                     
 	}
-	                                
+	            */                     
 	private function resetFocus():void {                           
 	     focusManager.setFocus(nameField);                                    
 	}
@@ -113,35 +145,89 @@ password="{passwordField.text}"/>
 		passwordField.errorString = "";                
 		formIsEmpty = true;                           
 		formIsValid = false;                                
-		resetFocus();                             
-	}                            
+		resetFocus();   
+		user1= new Users();                          
+	}        
+	private function handleLoadResult(ev:ResultEvent):void {
+		userslist = ev.result as ArrayCollection;
+	}
+	private function handleLoadAccessGroupResult(ev:ResultEvent):void {
+		accessGroups = ev.result as ArrayCollection;
+	}
+	private function handleLoadAccessLevelResult(ev:ResultEvent):void {
+		accessLevels = ev.result as ArrayCollection;
+	}
+	
+	private function mapToUserData():void{
+		user1.name= nameField.text;
+		user1.password = passwordField.text;
+		user1.accessGroup= accessGroupList.selectedItem as AccessGroup;
+		user1.accessLevel= accessLevelList.selectedItem as AccessLevel;
+		user1.forcePasswordChange = force_password.selected;
+		user1.lockSalesRep = lock_salesrep.selected;
+		user1.noCashReturn= return_cash.selected;
+		user1.noOverride = allow_override.selected;
+		user1.overrideCredit = override_credit_limit.selected;
+		user1.quickAccess= quick_access.selected;
+		user1.refundCreditCards =refund_credit_cards.selected;
+		user1.robustPassword = robust_password.selected;
+		user1.showUserNameLog= user_log_window.selected;
+		
+	}      
+	private function doNext():void {
+	 
+	  
+		saveUser();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex+1;
+		dataGrid.setFocus();
+	    doUserGridClick();
+		                                        		
+	}       
+	private function doPrev():void {
+	  
+	 	saveUser();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex-1;
+		dataGrid.setFocus();
+		doUserGridClick();                          		
+	}   
+	private function doUserGridClick():void {
+		user1 = dataGrid.selectedItem as Users;
+	}    
+	                    
 ]]>        
 </mx:Script>
-                             
-
-                             
-<mx:StringValidator id="nameValidator" source="{nameField}" property="text" minLength="2" required="true" />
-                             
-<mx:StringValidator id="passwordValidator" source="{passwordField}" property="text" minLength="2" required="true" />
-                             
-<mx:Form>
-                                   
-<mx:FormItem label="Name" required="true">
-     <mx:TextInput id="nameField" text="{user.name}" change="validateForm(event);" />            
-</mx:FormItem>
-                                   
-<mx:FormItem label="Password" required="false">                     
-     <mx:TextInput id="passwordField" text="{user.password}" change="validateForm(event);" />                                   
-</mx:FormItem>
-                                                               
-</mx:Form>
-
-<mx:ControlBar horizontalAlign="center">                                   
-     <mx:Button label="Save User" id="submitButton" enabled="{formIsValid}" click="saveUser();" />                                   
-     <mx:Button label="Clear form" enabled="{!formIsEmpty}" click="clearFormHandler();" />                                   
-     <mx:Button label="Cancel" click="PopUpManager.removePopUp(this);"/> 
-</mx:ControlBar>
-<mx:Spacer height="10" />        
-<mx:Text text="{message}" fontWeight="bold" width="300" />
-
+ <mx:Canvas width="100%" height="517">                            
+ 
+	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{users}" height="134" click="doUserGridClick();" >
+		<mx:columns>
+			<mx:DataGridColumn headerText="User Name" dataField="name"/>
+			<mx:DataGridColumn headerText="Access Group" dataField="accessGroup.name"/>
+			<mx:DataGridColumn headerText="Access Level" dataField="accessLevel.name"/>
+			
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<mx:Text text="{message}" fontWeight="bold" width="300"  x="22" y="476"/>
+	<mx:TextInput id="nameField" text="{user1.name}" change="validateForm(event);"  x="103" y="162"/>            
+    <mx:TextInput id="passwordField" text="{user1.password}" change="validateForm(event);"  x="103" y="188"/>                                   
+	<mx:CheckBox label="Force Password Change at Signon" x="50" y="225" id="force_password" selected="{user1.forcePasswordChange}"/>
+	<mx:Button label="Cancel" click="PopUpManager.removePopUp(this);" x="195" y="427"/>
+	<mx:Button label="Clear form" enabled="{!formIsEmpty}" click="clearFormHandler();"  x="101" y="427"/>
+	<mx:Button label="Save User" id="submitButton" enabled="{formIsValid}" click="saveUser();"  x="10" y="427"/>
+	<mx:Label x="10" y="164" text="User Name:"/>
+	<mx:Label x="20" y="190" text="Password:"/>
+	<mx:CheckBox x="50" y="255" label="Use Robust Password Rules" id="robust_password" selected="{user1.robustPassword}"/>
+	<mx:CheckBox x="10" y="294" label="Not allow to override" selected="{user1.noOverride}" id="allow_override"/>
+	<mx:CheckBox x="10" y="324" label="Can override credit limit" selected="{user1.overrideCredit}" id="override_credit_limit"/>
+	<mx:CheckBox x="10" y="354" label="Lock sales rep names" selected="{user1.lockSalesRep}" id="lock_salesrep"/>
+	<mx:CheckBox x="10" y="384" label="Can  refund credit cards" selected="{user1.refundCreditCards}" id="refund_credit_cards"/>
+	<mx:CheckBox x="237" y="294" label="Not allow to return cash" selected="{user1.noCashReturn}" id="return_cash"/>
+	<mx:CheckBox x="237" y="324" label="Show user name on log window" selected="{user1.showUserNameLog}" id="user_log_window"/>
+	<mx:CheckBox x="237" y="354" label="Can edit quick access panel" selected="{user1.quickAccess}" id="quick_access"/>
+	<mx:Label x="357" y="164" text="Access Group:"/>
+	
+	<mx:Label x="357" y="190" text="Access Level:"/>
+	<mx:List x="448" y="161" height="23" id="accessGroupList"></mx:List>
+	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
+</mx:Canvas>
 </mx:TitleWindow>
