@@ -74,6 +74,7 @@
 	[Bindable]                                         
     private var enableSave:Boolean = true;
 
+	[Bindable]                                         
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
                          
 	[Bindable]                                         
@@ -82,14 +83,15 @@
 	[Bindable]                                         
 	private var stockChange:StockChanges;
 	
+	[Bindable]                                
+    private var stockChanges:ArrayCollection = new ArrayCollection();   
+
 	[Bindable]
     private var stockColor:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
     private var stockGroup:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
     private var stockGrade:ArrayCollection = new ArrayCollection();   
-	[Bindable]                                
-    private var stockChanges:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
     private var stockFinish:ArrayCollection = new ArrayCollection();   
 	[Bindable] 
@@ -112,21 +114,13 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
-		doGet(); 
 
-	    stockDefinitions = new StockDefinition();
-	    
-	    loadStockChanges();
-	    loadStockGroup();
-	    loadStockVendor();
-	    loadStockGrade();
-	    loadStockColor();
-	    loadStockGenericColor();
-	    loadStockFinish();
-	    loadPressDefinition();
-	    
 	    loadUomArray();
 	    loadUnitsArray();
+		loadStockDefinitions();
+		
+		doGet(); 
+		
 	}      
 
 	private function loadUnitsArray():void {
@@ -146,6 +140,10 @@
 		var Large:Object = new Object;
 		Large.name = "Large Format"
 		stockUnits.addItem(Large);
+
+		var Rigid:Object = new Object;
+		Rigid.name = "Rigid Substrate"
+		stockUnits.addItem(Rigid);
 	}
 
 	private function loadUomArray():void {
@@ -186,9 +184,21 @@
 		{
 			this.stockDefinitions = stockDefinition;
 			mapFromStockDefinitionData();
-			loadStockChanges();
-			standardItemCheckEvent();
+		} else {
+	    	stockDefinitions = new StockDefinition();
 		}
+	    stockChange = new StockChanges();
+	    
+	    loadStockChanges();
+	    loadStockGroup();
+	    loadStockVendor();
+	    loadStockGrade();
+	    loadStockColor();
+	    loadStockGenericColor();
+	    loadStockFinish();
+	    loadPressDefinition();
+	    
+		standardItemCheckEvent();
 	}			
 	                                                   	
 	public function loadStockDefinitions():void {   
@@ -244,7 +254,7 @@
 	private function findItemById(name:int, array:ArrayCollection):String {
 		var retVal:String;
 		retVal = "";
-		if (name > 0) {
+		if (name > -1) {
 			retVal = array.getItemAt(name,0).name;
 		}
 		return retVal;
@@ -279,10 +289,17 @@
 	}                                           
 
 	private function doSave():void {
-		mapStockDefinitionData();
-		dataService.addUpdate(stockDefinitions);
-		this.stockChangesDataService.addUpdate(stockChanges);
-		standardItemCheckEvent();
+		var name:String;
+		name = stockName.text; 
+		if (name.replace(/^\s*/, "").replace(/\s*$/, "") != "")
+		{
+			mapStockDefinitionData();
+			dataService.addUpdate(stockDefinitions);
+			stockChangesDataService.addUpdate(stockChange);
+			standardItemCheckEvent();
+		}else {
+			showMessage("Cannot save Stock Definition with an empty name.","Cannot Save");
+		}
 	}
 
 	private function doNew():void {
@@ -521,6 +538,10 @@
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,4);                                 
 	}
+
+	private function showMessage(message:String,title:String):void {  
+		Alert.show(message, title, 0, null, null, null,4);                                 
+	}
 	
 	private function standardItemCheckEvent():void {
 		var checked:Boolean;
@@ -564,7 +585,7 @@
 		if (stockDefinitions.uom != null)
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
 			
-		if (stockDefinitions.stockunit != 0)
+		if (stockDefinitions.stockunit != -1)
 			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
 			
 			//// check box values here
