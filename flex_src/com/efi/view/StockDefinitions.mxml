@@ -118,7 +118,7 @@
 	    loadUomArray();
 	    loadUnitsArray();
 		loadStockDefinitions();
-		
+
 		doGet(); 
 		
 	}      
@@ -182,11 +182,12 @@
 	{
 		if (stockDefinition != null)
 		{
-			this.stockDefinitions = stockDefinition;
+			stockDefinitions = stockDefinition;
 			mapFromStockDefinitionData();
 		} else {
 	    	stockDefinitions = new StockDefinition();
 		}
+		
 	    stockChange = new StockChanges();
 	    
 	    loadStockChanges();
@@ -494,7 +495,6 @@
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     loadStockDefinitions();
-	     doNew();
 	}
 	
 	private function handleLoadStockChangesResult(ev:ResultEvent):void {
