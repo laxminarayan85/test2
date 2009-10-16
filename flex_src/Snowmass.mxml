@@ -69,6 +69,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.EditUser;
 		import com.efi.vo.Users;
 		import mx.effects.easing.Quadratic;
 		import com.efi.view.ChargeDefinitions;
@@ -147,7 +148,8 @@
 			addUniqueTab(child);
 		}
 		private function doUsers():void {
-			var child:ListUsers = new ListUsers();
+		//	var child:ListUsers = new ListUsers();
+			var child:EditUser = new EditUser();
 			addUniqueTab(child);
 		}
 		private function doContacts():void {

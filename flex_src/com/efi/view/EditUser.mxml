@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" label="User Editor" name="User Editor"
 width="100%" height="557" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="true" 
     close="PopUpManager.removePopUp(this);"
     title="User Form" xmlns:text="flash.text.*">
@@ -61,7 +61,7 @@ password="{passwordField.text}"/>
 	//	notification_consumer.subscribe();  
 		PopUpManager.centerPopUp(this);
 	    resetFocus();              
-		dataService.getAll("User"); 
+		dataService.getAll("Users"); 
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
 		user1 = new Users();
@@ -196,9 +196,9 @@ password="{passwordField.text}"/>
 	                    
 ]]>        
 </mx:Script>
- <mx:Canvas width="100%" height="517">                            
+ <mx:Canvas width="100%" height="100%">                            
  
-	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{users}" height="134" click="doUserGridClick();" >
+	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="User Name" dataField="name"/>
 			<mx:DataGridColumn headerText="Access Group" dataField="accessGroup.name"/>
