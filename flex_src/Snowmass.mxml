@@ -56,6 +56,7 @@
 				<mx:Image x="586" y="539" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="81" height="28"/>
 				<mx:Text x="508" y="545" text="Powered by:&#xd;" id="powered_by" alpha="0.0"/>
 				<mx:Button x="176" y="480" label="Employee" width="158" height="86" icon="@Embed(source='assets/employeeManager.png')" click="doEmployee();"/>
+				<mx:Button x="342" y="480" label="Security" width="158" height="86" id="admin_button" labelPlacement="bottom" click="doSecurity();"/>
 			</mx:Canvas>
 		</flexlib:SuperTabNavigator>
 
@@ -80,6 +81,7 @@
 		import com.efi.view.ClockInOut;
 		import com.efi.view.EditContact;
 		import com.efi.view.EmployeeManager;
+		import com.efi.view.SecurityManager;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -176,6 +178,10 @@
 		}
 		private function doEmployee():void {
 			var child:EmployeeManager = new EmployeeManager();
+			addUniqueTab(child);
+		}
+		private function doSecurity():void {
+			var child:SecurityManager = new SecurityManager();
 			addUniqueTab(child);
 		}
 		private function doClockInOut():void {
