@@ -18,7 +18,7 @@ public class LoginService extends DataService {
 		try {		
 			log.info("Attempting login for " + userName);
 			EntityManager em = entityManagerFactory.createEntityManager();
-			Query q = em.createQuery("select u from users u where upper(u.name)= upper(:name)");
+			Query q = em.createQuery("select u from Users u where upper(u.name)= upper(:name)");
 			q.setParameter("name", userName);
 			
 			Users user1 = (Users) q.getSingleResult();
