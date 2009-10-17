@@ -38,7 +38,7 @@
 				<mx:Button x="176" y="104" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
 				<mx:Button x="176" y="198" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
 				<mx:Button x="176" y="292" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
-				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
 				<mx:Button x="10" y="198" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
 				<mx:Button x="10" y="292" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')"/>
 				<mx:Button x="10" y="386" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')"/>
@@ -70,6 +70,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.EditInvoice;
 		import com.efi.view.EditUser;
 		import com.efi.vo.Users;
 		import mx.effects.easing.Quadratic;
@@ -188,7 +189,10 @@
 			var child:ClockInOut = new ClockInOut();
 			addUniqueTab(child);
 		}
-		
+		private function doCreateInvoice():void {
+			var child:EditInvoice = new EditInvoice();
+			addUniqueTab(child);
+		}
 		private function addUniqueTab(tab:DisplayObject):void {
 			var tabFound:Boolean = false;
 			

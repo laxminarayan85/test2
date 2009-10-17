@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+        height="214"
+        width="388"
+        showCloseButton="true"
+        verticalScrollPolicy="off"
+        horizontalScrollPolicy="off">
+    <mx:Canvas width="360" height="167">
+    
+    <mx:Label x="10" y="33" text="Street:" width="67" textAlign="right"/>
+    <mx:Label x="10" y="108" text="Zip:" width="67" textAlign="right"/>
+    <mx:Label x="168" y="108" text="Country:" width="57" textAlign="right"/>
+    <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
+    <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
+            
+    <mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
+    <mx:TextInput x="85" y="10" width="265" id="company_edit" text="{address.name}"/>
+    <mx:TextInput x="85" y="33" width="265" id="street1_edit" text="{address.street1}"/>
+    <mx:TextInput x="85" y="56" width="265" id="street2_edit" text="{address.street2}"/>
+    <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
+    <fc:AutoComplete id="statecombo" x="304" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
+    <fc:AutoComplete id="zipcombo" x="233" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="117"/>
+    <fc:AutoComplete id="countrycombo" x="85" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
+    	
+    <mx:Button x="275" y="134" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="192" y="135" label="Cancel" width="75" click="doCancel()"/>
+    </mx:Canvas>
+<mx:Script>
+	<![CDATA[
+	import com.efi.vo.Address;
+    import com.efi.vo.City;
+	import com.efi.vo.Country;
+	import com.efi.vo.State;
+	import com.efi.vo.Zip;
+
+	import mx.collections.ArrayCollection;
+	import mx.managers.PopUpManager;                                         
+	
+	[Bindable]                                         
+	private var address:Address;
+
+	[Bindable]
+	public var cityDataProvider:ArrayCollection = null;
+	
+	[Bindable]
+	public var zipDataProvider:ArrayCollection = null;
+	
+	[Bindable]
+	public var stateDataProvider:ArrayCollection = null;
+
+	[Bindable]
+	public var countryDataProvider:ArrayCollection = null;
+
+	private var originalAddress:Address = null;
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+
+	public function setAddress(addr:Address):void {
+		this.address = addr;
+		originalAddress = addr;
+	}
+	
+	public function getAddress():Address {
+		return this.address;
+	}
+	
+	private function focusOutCity(): void{                             
+		var city:City;
+		var result:Boolean;
+		
+		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
+			var item:int = findItem(citycombo.typedText, cityDataProvider);
+			if (item == -1) {
+				city = new City();
+				city.name = citycombo.text;
+//				cityDataProvider.addUpdate(city);
+				address.city = city;
+			}
+			else {
+				citycombo.selectedItem = item;
+				address.city = citycombo.selectedItem as City;
+			}
+		}
+	}
+
+	private function focusOutState(): void{                             
+		var state:com.efi.vo.State;
+		var result:Boolean;
+		
+		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
+			var item:int = findItem(statecombo.typedText, stateDataProvider);
+			if (item == -1) {
+				state = new com.efi.vo.State();
+				state.name = statecombo.text;
+//				stateDataProvider.addUpdate(state);
+				address.state = state;
+			}
+			else {
+				statecombo.selectedItem = item;
+				address.state = statecombo.selectedItem as com.efi.vo.State;
+			}
+		}
+	}
+
+	private function focusOutZip(): void{                             
+		var zip:Zip;
+		var result:Boolean;
+		
+		if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
+			var item:int = findItem(zipcombo.typedText, zipDataProvider);
+			if (item == -1) {
+				zip = new Zip();
+				zip.name = zipcombo.text;
+//				zipDataProvider.addUpdate(zip);
+				address.zip = zip;
+			}
+			else {
+				zipcombo.selectedItem = item;
+				address.zip = zipcombo.selectedItem as Zip;
+			}
+		}
+	}
+
+	private function focusOutCountry(): void{                             
+		var country:Country;
+		var result:Boolean;
+		
+		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
+			var item:int = findItem(countrycombo.typedText, countryDataProvider);
+			if (item == -1) {
+				country = new Country();
+				country.name = countrycombo.text;
+//				countryDataProvider.addUpdate(country);
+				address.country = country;
+			}
+			else {
+				countrycombo.selectedItem = item;
+				address.country = countrycombo.selectedItem as Country;
+			}
+		}
+	}
+		
+	private function doCancel():void {
+		address = originalAddress;
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doOK():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	]]>
+</mx:Script>
+    
+</mx:TitleWindow>
