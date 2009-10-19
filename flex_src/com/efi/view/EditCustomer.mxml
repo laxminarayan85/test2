@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" title="Customer Editor"
-creationComplete="init()" label="Customer Editor" name="Customer Editor">
+creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:ns1="com.efi.components.*">
                              
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -24,7 +24,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBusinessTypes(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBusinessTypeResult(event)"/>
 </mx:RemoteObject>
-
 
 <mx:RemoteObject id="shippingMethodDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
@@ -64,8 +63,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
-<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
-<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+<!--<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
+<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>-->
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactBillFirstValidator" source="{bill_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactShipFirstValidator" source="{ship_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
@@ -237,32 +236,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		account.externalRef = external_ref_edit.text;
 		account.externalAcctId = external_acct_id_edit.text;
 		
-		account.shipToAddress.name = ship_company_edit.text;
-		account.shipToAddress.street1 = ship_street1_edit.text;
-		account.shipToAddress.street2 = ship_street2_edit.text;
-	
-		if (shipcitycombo != null && shipcitycombo.selectedItem != null) 
-			account.shipToAddress.city = shipcitycombo.selectedItem as City;
-		if (shipstatecombo != null && shipstatecombo.selectedItem != null) 
-			account.shipToAddress.state = shipstatecombo.selectedItem as State;
-		if (shipzipcombo != null && shipzipcombo.selectedItem != null) 
-			account.shipToAddress.zip = shipzipcombo.selectedItem as Zip;
-		if (shipcountrycombo != null && shipcountrycombo.selectedItem != null) 
-			account.shipToAddress.country = countrycombo.selectedItem as Country;
-
-		if (citycombo != null && citycombo.selectedItem != null) 
-			account.billToAddress.city = citycombo.selectedItem as City;
-		if (statecombo != null && statecombo.selectedItem != null) 
-			account.billToAddress.state = statecombo.selectedItem as State;
-		if (zipcombo != null && zipcombo.selectedItem != null) 
-			account.billToAddress.zip = zipcombo .selectedItem as Zip;
-		if (countrycombo != null && countrycombo.selectedItem != null) 
-			account.billToAddress.country = countrycombo.selectedItem as Country;
-		
-		account.billToAddress.name = bill_company_edit.text;
-		account.billToAddress.street1 =	bill_street1_edit.text;		
-		account.billToAddress.street2 =	bill_street2_edit.text;		
-		
+		account.shipToAddress = ship_to_address_editor.getAddress();
+		account.billToAddress = bill_to_address_editor.getAddress();
 
 		account.contact.firstName = ship_contact_first_name_edit.text;
 		account.contact.lastName = ship_contact_last_name_edit.text;		
@@ -376,22 +351,19 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
 		if (account.taxCode!= null)
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
-		if (account.billToAddress.city != null)
-			citycombo.selectedIndex = findItem(account.billToAddress.city.name, citys);
-		if (account.billToAddress.state != null)
-			statecombo.selectedIndex = findItem(account.billToAddress.state.name, states1);
-		if (account.billToAddress.country != null)
-			countrycombo.selectedIndex = findItem(account.billToAddress.country.name, countrys);
-		if (account.billToAddress.zip != null)
-			zipcombo.selectedIndex = findItem(account.billToAddress.zip.name, zips);
-		if (account.shipToAddress.city != null)
-			shipcitycombo.selectedIndex = findItem(account.shipToAddress.city.name, citys);
-		if (account.shipToAddress.state != null)
-			shipstatecombo.selectedIndex = findItem(account.shipToAddress.state.name, states1);
-		if (account.shipToAddress.country != null)
-			shipcountrycombo.selectedIndex = findItem(account.shipToAddress.country.name, countrys);
-		if (account.shipToAddress.zip != null)
-			shipzipcombo.selectedIndex = findItem(account.shipToAddress.zip.name, zips);
+
+		ship_to_address_editor.setAddress(account.shipToAddress);
+		ship_to_address_editor.cityDataProvider = citys;
+		ship_to_address_editor.stateDataProvider = states1;
+		ship_to_address_editor.zipDataProvider = zips;
+		ship_to_address_editor.countryDataProvider = countrys;
+		
+		bill_to_address_editor.setAddress(account.billToAddress);
+		bill_to_address_editor.cityDataProvider = citys;
+		bill_to_address_editor.stateDataProvider = states1;
+		bill_to_address_editor.zipDataProvider = zips;
+		bill_to_address_editor.countryDataProvider = countrys;
+
 		if (account.marketing.followup != null)
 			followUp.selectedDate =account.marketing.followup;
 		if (account.marketing.birthDate != null)
@@ -402,8 +374,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 			userDate4.selectedDate =account.marketing.user4;
 		if (account.marketing.user5!= null)
 			userDate5.selectedDate =account.marketing.user5;
-			
-		
 	}
 	
 	private function doSave():void {
@@ -505,186 +475,25 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 		}
 	}
 	
-	private function doCity(): void{                             
-		var city:City;
-		var result:Boolean;
-		
-		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
-			var item:int = findItem(citycombo.typedText, citys);
-			if (item == -1) {
-				city = new City();
-				city.name = citycombo.text;
-				cityDataService.addUpdate(city);
-				account.billToAddress.city = city;
-			}
-			else {
-				citycombo.selectedItem = item;
-			}
-		}
-	}
-	
-	private function doCity1(): void{                             
-		var city:City;
-		var result:Boolean;
-		
-		if (shipcitycombo.typedText != null && shipcitycombo.typedText != "" && shipcitycombo.selectedIndex == -1) {
-			var item:int = findItem(shipcitycombo.typedText, citys);
-			if (item == -1) {
-				city = new City();
-				city.name = shipcitycombo.text;
-				cityDataService.addUpdate(city);
-				account.shipToAddress.city = city;
-			}
-			else {
-				shipcitycombo.selectedItem = item;
-			}
-		}
-	}
-	
-	private function doState(): void{                             
-		var state:State;
-		var result:Boolean;
-		
-		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
-			var item:int = findItem(statecombo.typedText, states1);
-			if (item == -1) {
-				state = new State();
-				state.name = statecombo.text;
-				stateDataService.addUpdate(state);
-				account.billToAddress.state = state;
-			}
-			else {
-				statecombo.selectedItem = item;
-			}
-		}
-	}
-	
-	private function doState1(): void{                             
-		var state:State;
-		var result:Boolean;
-		
-		if (shipstatecombo.typedText != null && shipstatecombo.typedText != "" && shipstatecombo.selectedIndex == -1) {
-			var item:int = findItem(shipstatecombo.typedText, states1);
-			if (item == -1) {
-				state = new State();
-				state.name = shipstatecombo.text;
-				stateDataService.addUpdate(state);
-				account.shipToAddress.state = state;
-			}
-			else {
-				shipstatecombo.selectedItem = item;
-			}
-		}
-	}
-	private function doZip(): void{                             
-		var zip:Zip;
-		var result:Boolean;
-	 	if (validate(zipValidator)){
-			if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
-				var item:int = findItem(zipcombo.typedText, zips);
-				if (item == -1) {
-					zip = new Zip();
-					zip.name = zipcombo.text;
-					zipDataService.addUpdate(zip);
-					account.billToAddress.zip = zip;
-				}
-				else {
-					zipcombo.selectedItem = item;
-				}
-			}
-		}
-	}
-	private function doZip1(): void{                             
-		var zip:Zip;
-		var result:Boolean;
-		if (validate(shipZipValidator)){
-			if (shipzipcombo.typedText != null && shipzipcombo.typedText != "" && shipzipcombo.selectedIndex == -1) {
-				var item:int = findItem(shipzipcombo.typedText, zips);
-				if (item == -1) {
-					zip = new Zip();
-					zip.name = shipzipcombo.text;
-					zipDataService.addUpdate(zip);
-					account.shipToAddress.zip = zip;
-				}
-				else {
-					shipzipcombo.selectedItem = item;
-				}
-			}
-		}
-	}
-	
-	private function doCountry(): void{                             
-		var country:Country;
-		var result:Boolean;
-		
-		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
-			var item:int = findItem(countrycombo.typedText, countrys);
-			if (item == -1) {
-				country = new Country();
-				country.name = countrycombo.text;
-				countryDataService.addUpdate(country);
-				account.billToAddress.country = country;
-			}
-			else {
-				countrycombo.selectedItem = item;
-			}
-		}
-	}
-	
-	private function doCountry1(): void{                             
-		var country:Country;
-		var result:Boolean;
-		
-		if (shipcountrycombo.typedText != null && shipcountrycombo.typedText != "" && shipcountrycombo.selectedIndex == -1) {
-			var item:int = findItem(shipcountrycombo.typedText, states1);
-			if (item == -1) {
-				country = new Country();
-				country.name = shipcountrycombo.text;
-				countryDataService.addUpdate(country);
-				account.shipToAddress.country = country;
-			}
-			else {
-				shipcountrycombo.selectedItem = item;
-			}
-		}
-	}
 	private function handleSaveResult(ev:ResultEvent):void {
 		dataService.getAll("Account")
 	}
-// load
+//// load
  	private function handleLoadCity(ev:ResultEvent):void {
-	 	var selectedItem:Object = shipcitycombo.selectedItem;
-	 	var selectedItem1:Object = citycombo.selectedItem;
 	 	citys = ev.result as ArrayCollection;
-		if (shipcitycombo.selectedItem != null){
-			shipcitycombo.selectedItem = selectedItem;
-		}
-		if (citycombo.selectedItem!= null){
-		citycombo.selectedItem = selectedItem1;
-		}
 	}   
-	 private function handleLoadState(ev:ResultEvent):void {
-		var selectedItem:Object = shipstatecombo.selectedItem;
-	 	var selectedItem1:Object = statecombo.selectedItem;
+	
+	private function handleLoadState(ev:ResultEvent):void {
 		states1 = ev.result as ArrayCollection;
-		shipstatecombo.selectedItem = selectedItem;
-		statecombo.selectedItem = selectedItem1;
-	}   
-	 private function handleLoadCountry(ev:ResultEvent):void {
-		var selectedItem:Object = shipcountrycombo.selectedItem;
-	 	var selectedItem1:Object = countrycombo.selectedItem;
+	}
+	
+	private function handleLoadCountry(ev:ResultEvent):void {
 		countrys = ev.result as ArrayCollection;
-		shipcountrycombo.selectedItem = selectedItem;
-		countrycombo.selectedItem = selectedItem1;
 	}   
-	 private function handleLoadZip(ev:ResultEvent):void {
-		var selectedItem:Object = shipzipcombo.selectedItem;
-	 	var selectedItem1:Object = zipcombo.selectedItem;
+	
+	private function handleLoadZip(ev:ResultEvent):void {
 		zips = ev.result as ArrayCollection;
-		shipzipcombo.selectedItem = selectedItem;
-		zipcombo.selectedItem = selectedItem1;
 	}                                 
-
 
 	private function handleLoadResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
@@ -835,7 +644,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					} else {
 						myPrintJob.addObject(myPrintDataGrid);
 					}
-				}
+				} 
 	
 			}
 	
@@ -857,8 +666,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 
         formIsValid = true;            
 
-        validate(shipZipValidator);                
-        validate(zipValidator);
+//        validate(shipZipValidator);                
+//        validate(zipValidator);
         validate(nameValidator);
         validate(contactShipFirstValidator);
         validate(contactBillFirstValidator);
@@ -895,43 +704,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
-				<mx:Panel x="10" y="94" width="326" height="182" layout="absolute" title="Invoice Address" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="10" width="210" id="ship_company_edit" text="{account.shipToAddress.name}"/>
-					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="36" width="210" id="ship_street1_edit" text="{account.shipToAddress.street1}"/>
-					<mx:TextInput x="85" y="62" width="210" id="ship_street2_edit" text="{account.shipToAddress.street2}"/>
-					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
-					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
-					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
-					<mx:Label x="203" y="88" text="State:" width="39" textAlign="right"/>
-					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
-					<!--<hc:AutoComplete x="85" y="86" id="shipcitycombo" dataProvider="{citys}" labelField="name" valueCommit="doCity1()"/>-->
-					<fc:AutoComplete id="shipcitycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true" width="119"/>
-					<fc:AutoComplete id="shipstatecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
-					<fc:AutoComplete id="shipzipcombo" x="85" y="110" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true" change="validateForm(event);"/>
-					<fc:AutoComplete id="shipcountrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
-				
-				</mx:Panel>
-					
-				<mx:Panel x="344" y="94" width="325" height="182" layout="absolute" title="Statement Address" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="10" width="210" id="bill_company_edit" text="{account.billToAddress.name}"/>
-					<mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
-					<mx:TextInput x="85" y="36" width="210" id="bill_street1_edit" text="{account.billToAddress.street1}"/>
-					<mx:TextInput x="85" y="62" width="210" id="bill_street2_edit" text="{account.billToAddress.street2}"/>
-					<mx:Label x="10" y="36" text="Street:" width="67" textAlign="right"/>
-					<mx:Label x="10" y="114" text="Zip:" width="67" textAlign="right"/>
-					<mx:Label x="168" y="114" text="Country:" width="57" textAlign="right"/>
-					<mx:Label x="212" y="88" text="State:" width="39" textAlign="right"/>
-					<mx:Label x="10" y="88" text="City:" width="67" textAlign="right"/>
-					
-					<fc:AutoComplete id="citycombo" x="85" y="86" dataProvider="{citys}"  labelField="name" focusOut="doCity()" lookAhead="true" width="119"/>
-					<fc:AutoComplete id="statecombo" x="250" y="86" dataProvider="{states1}"  labelField="name" focusOut="doState()" lookAhead="true" width="45"/>
-					<fc:AutoComplete id="zipcombo" x="85" y="110" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true" change="validateForm(event);"/>
-					<fc:AutoComplete id="countrycombo" x="233" y="110" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
-
-					
-			
-				</mx:Panel>
+				<ns1:AddressEditor x="344" y="94" id="bill_to_address_editor" height="157" width="325"/>
+					 
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
 					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.firstName}" change="validateForm(event);"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
@@ -972,6 +746,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor">
 					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
 					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
+				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" height="157" width="325"/>
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"/>
