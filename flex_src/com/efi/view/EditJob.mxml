@@ -138,13 +138,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 			<mx:icon>@Embed(source='../../../assets/print.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="299" y="46" text="Job Ticket" width="79" textAlign="center"/>
-		<mx:CheckBox x="10" y="72" label="Brokered"/>
-		<mx:CheckBox x="93" y="72" label="Taxable"/>
-		<mx:CheckBox x="171" y="72" label="Finished"/>
-		<mx:TextInput x="309" y="72" width="125.5"/>
-		<mx:TextInput x="88" y="102" width="784.5"/>
+		<mx:CheckBox x="10" y="72" label="Brokered" id="check_brokered"/>
+		<mx:CheckBox x="93" y="72" label="Taxable" id="check_taxtable"/>
+		<mx:CheckBox x="171" y="72" label="Finished" id="checked_finished"/>
+		<mx:TextInput x="309" y="72" width="125.5" id="product"/>
+		<mx:TextInput x="88" y="102" width="784.5" id="job_coment"/>
 		<mx:Label x="10" y="104" text="Comment:"/>
-		<mx:TextInput x="506.5" y="72" width="124"/>
+		<mx:TextInput x="506.5" y="72" width="124" id="job_location"/>
 		<mx:Label x="250" y="74" text="Product:"/>
 		<mx:Label x="442.5" y="74" text="Location:"/>
 		<mx:Label x="638.5" y="74" text="Job Type:"/>
@@ -152,34 +152,34 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 			<mx:Tree width="200" height="100%"></mx:Tree>
 			<mx:ViewStack id="viewstack3" width="100%" height="100%">
 				<mx:Canvas label="View 1" width="100%" height="100%">
-					<mx:TextArea x="89" y="10" width="277"/>
+					<mx:TextArea x="89" y="10" width="277" id="job_description"/>
 					<mx:Label x="10" y="11" text="Description:"/>
-					<mx:TextInput x="496" y="35"/>
-					<mx:TextInput x="496" y="60"/>
-					<mx:TextInput x="496" y="339"/>
-					<mx:TextInput x="496" y="364"/>
+					<mx:TextInput x="496" y="35" id="job_over_under"/>
+					<mx:TextInput x="496" y="60" id="sets_of"/>
+					<mx:TextInput x="496" y="339" id="overs_unit_price"/>
+					<mx:TextInput x="496" y="364" id="overs_total_price"/>
 					<mx:Label x="384" y="365" text="Overs Total Price:"/>
 					<mx:Label x="447" y="431" text="Other:"/>
 					<mx:Label x="453" y="389" text="Prep:"/>
-					<mx:Label x="496" y="389" width="160"/>
-					<mx:Label x="496" y="410" width="160"/>
-					<mx:Label x="496" y="431" width="160"/>
+					<mx:Label x="496" y="389" width="160" id="job_prep"/>
+					<mx:Label x="496" y="410" width="160" id="job_bind"/>
+					<mx:Label x="496" y="431" width="160" id="joib_other"/>
 					<mx:Label x="447" y="471" text="Total:"/>
-					<mx:Label x="496" y="471" width="160"/>
-					<mx:Label x="496" y="211" width="160"/>
-					<mx:Label x="496" y="232" width="160"/>
-					<mx:Label x="496" y="253" width="160"/>
-					<mx:Label x="496" y="274" width="160"/>
+					<mx:Label x="496" y="471" width="160" id="job_total"/>
+					<mx:Label x="496" y="211" width="160" id="num_of_sig"/>
+					<mx:Label x="496" y="232" width="160" id="job_imp"/>
+					<mx:Label x="496" y="253" width="160" id="total_imp"/>
+					<mx:Label x="496" y="274" width="160" id="job_weight"/>
 					<mx:Label x="454" y="410" text="Bind:"/>
-					<mx:TextInput x="496" y="314"/>
+					<mx:TextInput x="496" y="314" id="job_price"/>
 					<mx:Label x="452" y="315" text="Price:"/>
 					<mx:Label x="390" y="341" text="Overs Unit Price:"/>
-					<mx:TextInput x="496" y="85"/>
-					<mx:TextInput x="496" y="110" width="78"/>
-					<mx:TextInput x="578" y="110" width="78"/>
-					<mx:TextInput x="496" y="135"/>
-					<mx:TextInput x="496" y="160"/>
-					<mx:TextInput x="496" y="185"/>
+					<mx:TextInput x="496" y="85" id="job_sheets"/>
+					<mx:TextInput x="496" y="110" width="78" id="job_up"/>
+					<mx:TextInput x="578" y="110" width="78" id="job_on"/>
+					<mx:TextInput x="496" y="135" id="job_press"/>
+					<mx:TextInput x="496" y="160" id="bindery_waste"/>
+					<mx:TextInput x="496" y="185" id="est_waste"/>
 					<mx:Label x="443" y="274" text="Weight:"/>
 					<mx:Label x="437" y="253" text="Tot Imp:"/>
 					<mx:Label x="437" y="232" text="Imp/Run"/>
@@ -190,7 +190,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 					<mx:Label x="446" y="111" text="Up/On:"/>
 					<mx:Label x="444" y="86" text="Sheets:"/>
 					<mx:Label x="428" y="61" text="In sets of:"/>
-					<mx:TextInput x="496" y="10"/>
+					<mx:TextInput x="496" y="10" id="job_ordered"/>
 					<mx:Label x="437" y="11" text="Ordered:"/>
 					<mx:Label x="406" y="36" text="Overs/Unders:"/>
 					<mx:VRule x="374" y="10" height="100%"/>
@@ -201,23 +201,23 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 					<mx:HRule x="10" y="304" width="356" height="2"/>
 					<mx:ViewStack x="10" y="62" id="viewstack4" width="358" height="243">
 						<mx:Canvas label="View 1" width="100%" height="100%">
-							<mx:TextInput x="107" y="62" width="247" height="22"/>
-							<mx:TextInput x="107" y="87" width="100" height="22"/>
-							<mx:TextInput x="107" y="112" width="100" height="22"/>
-							<mx:TextInput x="107" y="137" width="100" height="22"/>
-							<mx:TextInput x="107" y="162" width="100" height="22"/>
-							<mx:TextInput x="107" y="188" width="100" height="22"/>
+							<mx:TextInput x="107" y="62" width="247" height="22" id="job_color"/>
+							<mx:TextInput x="107" y="87" width="100" height="22" id="job_parent"/>
+							<mx:TextInput x="107" y="112" width="100" height="22" id="job_size"/>
+							<mx:TextInput x="107" y="137" width="100" height="22" id="job_finish_size"/>
+							<mx:TextInput x="107" y="162" width="100" height="22" id="job_fold_size"/>
+							<mx:TextInput x="107" y="188" width="100" height="22" id="number_lines"/>
 							<mx:Label x="25" y="165" text="Folded Size:"/>
 							<mx:Label x="57" y="140" text="Finish:"/>
 							<mx:Label x="37" y="217" text="Unit Price:"/>
-							<mx:TextInput x="107" y="214" width="100" height="22"/>
+							<mx:TextInput x="107" y="214" width="100" height="22" id="job_unit_price"/>
 							<mx:Label x="40" y="115" text="Run Size:"/>
 							<mx:Label x="53" y="90" text="Parent:"/>
 							<mx:Label x="-2" y="191" text="Number of Lines:"/>
-							<mx:TextInput x="107" y="37" width="247" height="22"/>
+							<mx:TextInput x="107" y="37" width="247" height="22" id="job_stock"/>
 							<mx:Label x="59" y="40" text="Stock:"/>
 							<mx:Label x="60" y="65" text="Color:"/>
-							<mx:CheckBox x="45" y="7" label="Customer Supplied Stock"/>
+							<mx:CheckBox x="45" y="7" label="Customer Supplied Stock" id="customer_suppliled_stock"/>
 							<mx:CheckBox x="218" y="7"/>
 							<mx:Button x="240" y="5" label="Special Order..."/>
 							<mx:Image x="215" y="87" width="139" height="124"/>
@@ -232,9 +232,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 					</mx:ViewStack>
 					<mx:ViewStack x="10" y="314" id="viewstack5" width="361" height="305">
 						<mx:Canvas label="View 1" width="100%" height="100%">
-							<mx:TextInput x="107" y="0" width="249" height="22"/>
+							<mx:TextInput x="107" y="0" width="249" height="22" id="job_pricing_press"/>
 							<mx:Label x="19" y="2" text="Pricing Press:"/>
-							<mx:TextInput x="107" y="24" width="249" height="22"/>
+							<mx:TextInput x="107" y="24" width="249" height="22" id="job_costing_press"/>
 							<mx:Label x="13" y="26" text="Costing Press:"/>
 							<mx:Label x="2" y="93" text="Back:"/>
 							<mx:Label x="0" y="70" text="Front:"/>
@@ -261,7 +261,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 				</mx:Canvas>
 			</mx:ViewStack>
 		</mx:HDividedBox>
-		<mx:ComboBox x="705.5" y="72" width="167"></mx:ComboBox>
+		<mx:ComboBox x="705.5" y="72" width="167" id="job_type"></mx:ComboBox>
 	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>

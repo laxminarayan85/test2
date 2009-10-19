@@ -11,6 +11,15 @@
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="salesRepDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
+    <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="shippingMethodDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveShippingMethodResult(event)"/>
+</mx:RemoteObject>
 
 
 <mx:Script>                                   
@@ -51,7 +60,10 @@
                  
 	[Bindable]                                         
 	private var invoice:Invoice = new Invoice();
-                        
+    [Bindable]
+    private var salesReps:ArrayCollection = new ArrayCollection();    
+    [Bindable]
+    private var shippingMethods:ArrayCollection = new ArrayCollection();                
 	public function init():void {
 		vbox.getDividerAt(0).visible=false;
 		vbox.getDividerAt(1).visible=false;
@@ -132,6 +144,67 @@
 			job_costing_stack.selectedChild = invoice_job_canvas;
 		}		
 	}
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	private function doSaleRep(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+		if (inv_sales_rep.typedText != null && inv_sales_rep.typedText != "" && inv_sales_rep.selectedIndex == -1) {
+			var item:int = findItem(inv_sales_rep.typedText, salesReps);
+			if (item == -1) {
+				sales = new SalesRep();
+				sales.name = inv_sales_rep.text;
+				salesRepDataService.addUpdate(sales);
+				invoice.salesRep = sales
+			}
+			else {
+				inv_sales_rep.selectedItem = item;
+			}
+		}
+	}
+	private function doShipVia(): void{                             
+		var shipv:ShippingMethod;
+		var result:Boolean;
+		
+		if (ship_via_combo.typedText != null && ship_via_combo.typedText != "" && ship_via_combo.selectedIndex == -1) {
+			var item:int = findItem(ship_via_combo.typedText, shippingMethods);
+			if (item == -1) {
+				shipv = new ShippingMethod();
+				shipv.name = ship_via_combo.text;
+				shippingMethodDataService.addUpdate(shipv);
+				invoice.shippingMethod = shipv;
+			}
+			else {
+				ship_via_combo.selectedItem = item;
+			}
+		}
+	}
+	private function handleLoadSalesReps(ev:ResultEvent):void {
+		var selectedItem:Object = inv_sales_rep.selectedItem;
+		salesReps = ev.result as ArrayCollection;
+		inv_sales_rep.selectedItem = selectedItem;
+	}
+		
+	private function handleLoadShippingMethods(ev:ResultEvent):void {
+		var selectedItem:Object = ship_via_combo.selectedItem;
+		shippingMethods = ev.result as ArrayCollection;
+		ship_via_combo.selectedItem = selectedItem;
+	}
+	private function handleSaveShippingMethodResult(ev:ResultEvent):void {
+		shippingMethodDataService.getAll("ShippingMethod");
+	}      
+
+	private function handleSaveSalesRepResult(ev:ResultEvent):void {
+		salesRepDataService.getAll("SalesRep");
+	}   
+	   
           
 ]]>
                              
@@ -211,9 +284,9 @@
 					<mx:Canvas label="" width="100%" height="100%" id="account_info_canvas" hideEffect="effect" showEffect="effect">
 						<mx:TextInput x="96" y="10" width="204"/>
 						<mx:Label x="10" y="12" text="Invoice Title:"/>
-						<mx:TextInput x="413" y="10" width="195"/>
+						<mx:TextInput x="413" y="10" width="195" id="inv_number"/>
 						<mx:Label x="308" y="12" text="Invoice Number:"/>
-						<mx:Panel x="0" y="38" width="300" height="115" layout="absolute" dropShadowEnabled="false" title="Billing Address">
+						<mx:Panel x="0" y="38" width="300" height="115" layout="absolute" dropShadowEnabled="false" title="Billing Address" id="inv_title">
 							<mx:TextArea x="10" y="10" text="&#xd;" height="61" width="260"/>
 						</mx:Panel>
 						<mx:Panel x="308" y="38" width="300" height="115" layout="absolute" dropShadowEnabled="false" title="Contact">
@@ -234,17 +307,15 @@
 						<mx:Label x="328" y="283" text="Ship Via:"/>
 						<mx:Label x="315" y="306" text="Hold State:"/>
 						<mx:Label x="345" y="330" text="PO #:"/>
-						<mx:Label x="315" y="354" text="Hold State:"/>
-						<mx:Text x="391" y="189" width="217" textAlign="right" id="cust_discount_text4"/>
+						<mx:Text x="391" y="189" width="217" textAlign="right" id="cust_discount_text4" />
 						<mx:Text x="391" y="211" width="217" textAlign="right" id="cust_discount_text5"/>
 						<mx:Label x="308" y="163" text="Contact List:"/>
 						<mx:ComboBox x="391" y="161" width="217"></mx:ComboBox>
-						<mx:TextInput x="391" y="233"/>
-						<mx:TextInput x="391" y="257"/>
-						<mx:TextInput x="391" y="281"/>
-						<mx:TextInput x="391" y="304"/>
-						<mx:TextInput x="391" y="328"/>
-						<mx:TextInput x="391" y="352"/>
+						<mx:TextInput x="391" y="233" id="taken_by" />
+						<fc:AutoComplete id="inv_sales_rep" x="391" y="257" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
+						<fc:AutoComplete id="ship_via_combo" x="391" y="281" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
+						<mx:TextInput x="391" y="304" id="inv_hold_state" text="{invoice.holdState}"/>
+						<mx:TextInput x="391" y="328" id="inv_po_number" text= "{invoice.customerPO}"/>
 					</mx:Canvas>
 				</mx:ViewStack>					
 			</mx:VBox>
@@ -274,15 +345,15 @@
 					<mx:ViewStack x="611" y="10" id="viewstack3" width="223" height="144"  verticalScrollPolicy="off" horizontalScrollPolicy="off">
 						<mx:Canvas width="100%" height="100%" id="invoice_total_canvas"  verticalScrollPolicy="off" horizontalScrollPolicy="off">
 							<mx:Label x="3" y="10" text="Cust Discount:"/>
-							<mx:Text x="97" y="10" width="117" textAlign="right" id="cust_discount_text"/>
+							<mx:Text x="97" y="10" width="117" textAlign="right" id="cust_discount_text" text="{invoice.discount}"/>
 							<mx:Label x="11" y="32" text="Net Subtotal:"/>
 							<mx:Text x="97" y="32" width="117" textAlign="right" id="net_subtotal_text"/>
 							<mx:Label x="24" y="54" text="Sales Tax:"/>
 							<mx:Text x="97" y="54" width="117" textAlign="right" id="sales_tax_text"/>
 							<mx:Label x="31" y="76" text="Shipping:"/>
-							<mx:Text x="97" y="76" width="117" textAlign="right" id="shipping_text"/>
+							<mx:Text x="97" y="76" width="117" textAlign="right" id="shipping_text" text="{invoice.shipCharges}"/>
 							<mx:Label x="51" y="98" text="Total:"/>
-							<mx:Text x="97" y="98" width="117" textAlign="right" id="total_text"/>
+							<mx:Text x="97" y="98" width="117" textAlign="right" id="total_text" text="{invoice.grandTotal}"/>
 							<mx:Label x="10" y="120" text="Amount Due:"/>
 							<mx:Text x="97" y="120" width="117" textAlign="right" id="amt_due_text"/>
 						</mx:Canvas>
