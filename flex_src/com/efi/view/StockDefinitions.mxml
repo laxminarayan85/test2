@@ -872,17 +872,8 @@
 				<mx:Label x="24" y="25" text="Price:"/>
 				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="241" width="690" height="122" layout="absolute">
+			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
-				<mx:Panel x="10" y="299" width="593" height="155" layout="absolute">
-					<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
-				</mx:Panel>
-				<mx:Panel x="10" y="299" width="593" height="155" layout="absolute">
-					<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
-					<mx:Panel x="10" y="299" width="593" height="155" layout="absolute">
-						<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
-					</mx:Panel>
-				</mx:Panel>
 				<mx:Label x="82" y="5" text="B&amp;W:"/>
 				<mx:Label x="78" y="30" text="Color:"/>
 				<mx:Label x="33" y="55" text="Large Format:"/>
