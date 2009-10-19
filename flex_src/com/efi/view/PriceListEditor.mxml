@@ -16,6 +16,8 @@
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
+<mx:Consumer id="consumer" destination="pricelisteditor" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script>
                                    
@@ -80,9 +82,11 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-	    dataService.getAll("PriceList");   
+	    dataService.getAll("PriceListBase");  
+	    dataService.getAll("PriceListElement");
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		priceList = new PriceListBase();
+		priceListElement = new PriceListElement(); 
 
 	}
 	                                
@@ -110,6 +114,8 @@
 	
 	private function doNew():void {
 		priceList = new PriceListBase();
+		priceListElement = new PriceListElement(); 
+	
 	
 	}
 	
@@ -118,18 +124,51 @@
 	}
 	
 	private function doDelete():void {
-		 dataService.deleteItem("PriceList",priceList.id);
+		 dataService.deleteItem("PriceListBase",priceList.id);
 	}
 	
 	private function maptoPricelist():void {
 		
+		priceList.name = title_edit.text;
+		priceList.interpolate = chkInterpolate.selected;
+		priceList.isRate = chkUseAsRateList.selected;
+		priceList.isDiscount = chkProductionDiscount.selected;
+		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
+		priceList.lastItemIsPriceAdditionalQty = chkUseAdditionalQuantities.selected;
+		changeRadioButtons();
+		
+		dataService.addUpdate(priceList);
+		elementDataService.addUpdate(priceListElement);
+
 	}
 	
 	private function changeRadioButtons():void {
+		switch(amount_radio_group.selectedValue.toString()){
+			case "Amount is currency":
+				priceList.isPercentage = false;
+				priceList.isDollar = true ;
+				break;
+			case "Amount is percent":	
+				priceList.isPercentage = true;
+				priceList.isDollar = false ;
+				break;
+			case "":
+				if (priceList.isPercentage == true){
+					amount_radio_group.selectedValue == "Amount is percent"
+				} else {
+					amount_radio_group.selectedValue == "Amount is currency"
+				}
+				break;
+		}
 		
 	}
+	
+	private function messageHandler(message:IMessage):void
+	{
+	}
+
 	private function handleSaveResult(ev:ResultEvent):void {
-		dataService.getAll("PriceList")
+		dataService.getAll("PriceListBase")
 		
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -137,7 +176,7 @@
 		
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("PriceList")
+		dataService.getAll("PriceListBase")
 		doNew();
 	}
 	
@@ -152,7 +191,10 @@
 	private function handleDeleteElementResult(ev:ResultEvent):void {
 		dataService.getAll("PriceListElement")
 	}
-	
+
+	private function doQtyAmtValid():void {
+		
+	}	
 
 ]]>        
 </mx:Script>            
@@ -171,14 +213,14 @@
 		<mx:RadioButtonGroup id="amount_radio_group" change="changeRadioButtons()"/>
 		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group"/>
 		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group"/>
-		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}"/>
-		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}"/>
-		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}"/>
-		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}"/>
+		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
+		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
+		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
+		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}" id="chkUseAsRateList"/>
 		<mx:Panel x="162" y="189" width="228" height="131" layout="absolute" dropShadowEnabled="false" title="Additional Quantities">
-			<mx:CheckBox x="10" y="10" label="Use additional quantities" selected="{priceList.lastItemIsPriceAdditionalQty}"/>
-			<mx:TextInput x="57" y="36" width="139" id="additional_quantity"/>
-			<mx:TextInput x="57" y="62" width="139" id="additional_price"/>
+			<mx:CheckBox x="10" y="10" label="Use additional quantities" selected="{priceList.lastItemIsPriceAdditionalQty}" id="chkUseAdditionalQuantities"/>
+			<mx:TextInput x="57" y="36" width="139" id="additional_quantity" text="{priceListElement.quantity}" focusOut="doQtyAmtValid();"/>
+			<mx:TextInput x="57" y="62" width="139" id="additional_price" text="{priceListElement.amount}" focusOut="doQtyAmtValid();"/>
 			<mx:Label x="10" y="38" text="Qty:"/>
 			<mx:Label x="10" y="64" text="Amt:"/>
 		</mx:Panel>

@@ -20,6 +20,7 @@
     import com.efi.vo.Charge;        
 	import mx.managers.PopUpManager;       
 	import com.efi.vo.PriceList;
+	import com.efi.vo.PriceListBase; 
 	import com.efi.vo.WasteChart;                          
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
@@ -37,6 +38,10 @@
 	private var list:ArrayCollection = new ArrayCollection();
                                                                         	         
 	public var itemType:String = "PriceList";
+	
+	[Bindable]                                
+	public var priceList:PriceListBase;
+
 	public var parentContainer:Container;
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
@@ -58,7 +63,7 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-		dataService.getAll("PriceList");
+		dataService.getAll("PriceListBase");
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 
 	}
@@ -67,22 +72,38 @@
 		
 		var editPage:Container = parentContainer;
 
-		if (editPage.className == "PressDefinitions") {
-			(editPage as PressDefinitions).setPriceList(dataGrid.selectedItem as PriceList);
-		} else if (editPage.className == "ChargeDefinitions") {
-			(editPage as ChargeDefinitions).setPriceList(dataGrid.selectedItem as WasteChart);
+		switch(editPage.className) {
+			case "PressDefinitions":
+				(editPage as PressDefinitions).setPriceList(priceList);
+				break;
+			case "ChargeDefinitions": 
+				(editPage as ChargeDefinitions).setPriceList(priceList as WasteChart);
+				break;
+			case "StockDefinitions":
+				(editPage as StockDefinitions).setPriceList(priceList);
+				break;
+			case "CopierDefinitions" :
+				(editPage as CopierDefinitions).setPriceList(priceList);
+				break;
 		}
-		
+
 		PopUpManager.removePopUp(this);
 	}     
 	
 	private function doNew():void {
 		var editPage:Container = parentContainer;
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
-	     titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setStyle("borderAlpha", 0.9);
 		PopUpManager.removePopUp(this);
 	}
-	
+
+	private function doEdit():void {
+		var editPage:Container = parentContainer;
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+		PopUpManager.removePopUp(this);
+	}
+		
 	private function doClear():void {
 		PopUpManager.removePopUp(this);		
 	}
@@ -99,16 +120,17 @@
 		<mx:DataGrid id="dataGrid" width="228" height="261" dataProvider="{list}"
 		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="title" headerText="Name" />                         
+		     <mx:DataGridColumn dataField="name" headerText="Name" />                         
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="doSelect()"  width="108" x="236" y="10"/>
 		<mx:Button label="Clear" enabled="true" click="doClear();" id="clear_button" width="108" x="237.5" y="40"/>
 		<mx:Button label="New" click="doNew()" id="new_button" width="108" x="236" y="80"/>
-		<mx:Button label="Delete" click="doDelete()" id="delete_button" width="108" x="236" y="110"/>
-		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="236" y="150"/>
+		<mx:Button label="Edit" click="doEdit()" id="edit_button" width="108" x="236" y="106"/>
+		<mx:Button label="Delete" click="doDelete()" id="delete_button" width="108" x="236" y="132"/>
+		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="236" y="172"/>
 		<mx:HRule x="236" y="70" width="109.5"/>
-		<mx:HRule x="234.5" y="140" width="109.5"/>
+		<mx:HRule x="234.5" y="162" width="109.5"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
