@@ -119,7 +119,7 @@
                              
 	<mx:Canvas width="361" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 		<mx:DataGrid id="dataGrid" width="228" height="261" dataProvider="{list}"
-		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
+		doubleClickEnabled="true" doubleClick="doEdit()"  showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="name" headerText="Name" />                         
 		</mx:columns>

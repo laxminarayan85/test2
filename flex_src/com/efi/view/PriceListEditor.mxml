@@ -67,6 +67,9 @@
     private var price_header:String = "Price";
                                                                  	         
 	public var itemType:String = "PriceList";
+
+	[Bindable]
+	private var amountRadioValue:String = "amtiscurrency";
 	
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
@@ -85,8 +88,10 @@
 	    dataService.getAll("PriceListBase");  
 	    dataService.getAll("PriceListElement");
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
-		priceList = new PriceListBase();
-		priceListElement = new PriceListElement(); 
+		if (priceList == null){
+			priceList = new PriceListBase();
+			priceListElement = new PriceListElement(); 
+		} 
 
 	}
 	                                
@@ -127,17 +132,24 @@
 		 dataService.deleteItem("PriceListBase",priceList.id);
 	}
 	
-	public function mapfromPricelist(pricelist:PriceListBase):void {
-		if (pricelist != null){
-			priceList = pricelist; 
+	private function doSelectElement():void {
+		//priceListElementlists
+	}
+	
+	public function mapfromPricelist(pricelist1:PriceListBase):void {
+		if (pricelist1 != null){
+			if (priceList == null){
+				priceList = new PriceListBase;
+				priceListElement = new PriceListElement(); 
+			}
+			priceList = pricelist1; 
 
-			title_edit.text = priceList.name;
+			//title_edit.text = priceList.name;
 			chkInterpolate.selected = priceList.interpolate;
 			chkUseAsRateList.selected = priceList.isRate;
 			chkProductionDiscount.selected = priceList.isDiscount;
 			chkIgnoreGlobalPriceChange.selected = priceList.ignorePriceAdjustments;
 			chkUseAdditionalQuantities.selected = priceList.lastItemIsPriceAdditionalQty;
-			changeRadioButtons();
 		}
 		
 	}
@@ -150,43 +162,11 @@
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
 		priceList.lastItemIsPriceAdditionalQty = chkUseAdditionalQuantities.selected;
-		changeRadioButtons();
 		
 		dataService.addUpdate(priceList);
 		elementDataService.addUpdate(priceListElement);
-
 	}
 	
-	private function changeRadioButtons():void {
-		
-		if (amount_radio_group.selectedValue != null) {
-			
-			switch(amount_radio_group.selectedValue.toString()){
-				case "Amount is currency":
-					priceList.isPercentage = false;
-					priceList.isDollar = true ;
-					break;
-				case "Amount is percent":	
-					priceList.isPercentage = true;
-					priceList.isDollar = false ;
-					break;
-				case "":
-					if (priceList.isPercentage == true){
-						amount_radio_group.selectedValue == "Amount is percent"
-					} else {
-						amount_radio_group.selectedValue == "Amount is currency"
-					}
-					break;
-			}
-		} else {
-			if (priceList.isPercentage == true){
-				amount_radio_group.selectedValue == "Amount is percent"
-			} else {
-				amount_radio_group.selectedValue == "Amount is currency"
-			}
-		}
-		
-	}
 	
 	private function messageHandler(message:IMessage):void
 	{
@@ -224,8 +204,8 @@
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceListElement}"
-		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
+		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceListElementlists}"
+		doubleClickEnabled="true" doubleClick="doSelectElement();"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />                         
 		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" />                         
@@ -235,9 +215,9 @@
 		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="108" x="116" y="374"/>
 		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="186"/>
 		<mx:Label x="162" y="12" text="Title:"/>
-		<mx:RadioButtonGroup id="amount_radio_group" change="changeRadioButtons()"/>
-		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group"/>
-		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group"/>
+		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
+		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group" value="amtiscurrency"/>
+		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group" value="amtispercent"/>
 		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
 		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
 		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
