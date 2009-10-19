@@ -285,18 +285,18 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
-	private String jobTicketNotes;
+	private Boolean jobTicketNotes;
 	/**
 	 * @generated
  	 */
-	public String getJobTicketNotes(){
+	public Boolean getJobTicketNotes(){
 		return jobTicketNotes; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setJobTicketNotes(String newVal) {
+	public void setJobTicketNotes(Boolean newVal) {
 		this.jobTicketNotes = newVal;
 	}
  	
@@ -505,19 +505,19 @@ public class Job extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private Long press;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PressDefinition press;
 	/**
 	 * @generated
  	 */
-	public Long getPress(){
+	public PressDefinition getPress(){
 		return press; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPress(Long newVal) {
+	public void setPress(PressDefinition newVal) {
 		this.press = newVal;
 	}
  	
@@ -672,7 +672,7 @@ public class Job extends ModelBase {
 		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<Job>)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
 		if (JOBNOTES.equals(propertyName)) setJobNotes((String)newValue); else
-		if (JOBTICKETNOTES.equals(propertyName)) setJobTicketNotes((String)newValue); else
+		if (JOBTICKETNOTES.equals(propertyName)) setJobTicketNotes((Boolean)newValue); else
 		if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
 		if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
 		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
@@ -685,7 +685,7 @@ public class Job extends ModelBase {
 		if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
 		if (UP.equals(propertyName)) setUp((Long)newValue); else
 		if (ON.equals(propertyName)) setOn((Long)newValue); else
-		if (PRESS.equals(propertyName)) setPress((Long)newValue); else
+		if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
 		if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
 		if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
 		if (SIGNATURES.equals(propertyName)) setSignatures((Long)newValue); else
@@ -716,7 +716,7 @@ public class Job extends ModelBase {
 		if (JOBNOTES.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (JOBTICKETNOTES.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Boolean.class};		
 		if (BROKERED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (TAXABLE.equals(propertyName)) 
@@ -742,7 +742,7 @@ public class Job extends ModelBase {
 		if (ON.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (PRESS.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
+			return new Class<?>[] {PressDefinition.class};		
 		if (BINDERYWASTE.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (ESTWASTE.equals(propertyName)) 

@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="912" height="735" title="Job Editor"
-creationComplete="init()" label="Customer Editor" name="Customer Editor" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+creationComplete="init()" label="Customer Editor" name="Customer Editor" horizontalScrollPolicy="off" verticalScrollPolicy="off" xmlns:ns1="com.adobe.flex.extras.controls.*">
                              
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="pressdataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="locationdataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="productdataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.vo.Invoice;
 	import com.efi.vo.Job;
-                             
-	import com.efi.vo.Account;                                         
+    import com.efi.vo.PressDefinition;    
+    import com.efi.vo.Location;                    
+	import com.efi.vo.Account; 
+	import com.efi.vo.ProductCode;                                        
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -31,7 +42,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
     import mx.events.ValidationResultEvent;    
     
     private var accounts:ArrayCollection = new ArrayCollection();
-                 
+    private var presses:ArrayCollection = new ArrayCollection(); 
+    private var locations:ArrayCollection = new ArrayCollection();   
+    private var productCodes:ArrayCollection = new ArrayCollection();            
 	[Bindable]                                         
 	private var job:Job;
                 
@@ -42,24 +55,104 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
     
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
-	}      
+	    pressdataService.getAll("PressDefinitions");
+	    locationdataService.getAll("Location");
+	    productdataService.getAll("ProductCode");
+	    
+	}  
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}    
 	private function doNew():void {
-
+ 		job = new Job();
+	    setJob(job);
 	}  
 	private function doDelete():void {
-	 	
+	 	 dataService.deleteItem("Job",job.id);
 	}  
 	private function doGet():void{
 	   	    
-	}    
+	}   
+	public function setJob(job2:Job):void
+	{
+		this.job = job2;
+		mapFromJobData();
+	}			 
+	private function mapToJobData():void {
+		job.binderyWaste = parseInt(bindery_waste.text);
+		job.brokered = check_brokered.selected;
+		//job.charges =
+		job.comment = job_comment.text;
+		job.costingPress= job_costing_press.selectedItem as PressDefinition;
+		//job.press = job_press.selectedItem as PressDefinition;
+		job.pricingPress= job_pricing_press.selectedItem as PressDefinition;
+		job.productCode= product.selectedItem as ProductCode;
+		job.description=job_description.text;
+		job.estWaste= parseInt(est_waste.text);
+		job.finished= checked_finished.selected;
+		job.inSetsOf= parseInt(sets_of.text);
+		job.on = parseInt(job_on.text);
+		job.oversUnders= parseInt(job_over_under.text);
+		job.qtyOrdered = parseInt(job_ordered.text);
+		job.sheets= parseInt(job_sheets.text);
+		job.signatures= parseInt(num_of_sig.text);
+		job.taxable = check_taxtable.selected;
+		job.up= parseInt(job_up.text);
+		job.jobNotes = job_notes.text;
+	//	job.jobNumber =
+		job.jobTicketNotes = check_job_notes.selectedField;
+		job.location = job_location.selectedItem as Location;
+		if (run_method_radiogroup.selectedValue != null)
+			job.runMethod = run_method_radiogroup.selectedValue.toString();
+		
+		
+		
 	
+	//	job.salesCategory=
+		
+		
+		
+	}
+	
+	private function mapFromJobData():void{
+		
+		if (job.pricingPress != null)
+			job_pricing_press.selectedIndex = findItem(job.pricingPress.name, presses);
+		if (job.costingPress != null)
+			job_costing_press.selectedIndex = findItem(job.costingPress.name, presses);
+		if (job.press != null)
+			job_press.selectedIndex = findItem(job.press.name, presses);
+	
+		if (job.location != null)
+			job_location.selectedIndex = findItem(job.location.name, locations);
+		if (job.productCode != null)
+			product.selectedIndex = findItem(job.productCode.name, productCodes);
+		run_method_radiogroup.selectedValue = job.runMethod;
+		
+	}
 	private function doSave():void {
+		mapToJobData();
 		PopUpManager.removePopUp(this);
 	} 
 	
 	private function handleLoadResult(ev:ResultEvent):void {
+		//jobs = ev.result as ArrayCollection;
 	}	
-	                                 
+	private function handleLoadPressResult(ev:ResultEvent):void {
+		presses = ev.result as ArrayCollection;
+	}	
+	private function handleLoadLocationResult(ev:ResultEvent):void {
+		locations = ev.result as ArrayCollection;
+	}
+	private function handleLoadProductResult(ev:ResultEvent):void {
+		productCodes = ev.result as ArrayCollection;
+	}	
+		                                         
 	private function handleDeleteResult(ev:ResultEvent):void {
 	}
 		
@@ -141,10 +234,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 		<mx:CheckBox x="10" y="72" label="Brokered" id="check_brokered" selected="{job.brokered}"/>
 		<mx:CheckBox x="93" y="72" label="Taxable" id="check_taxtable"  selected="{job.taxable}"/>
 		<mx:CheckBox x="171" y="72" label="Finished" id="checked_finished" selected="{job.finished}"/>
-		<mx:TextInput x="309" y="72" width="125.5" id="product" text="{job.productCode.name}"/>
-		<mx:TextInput x="88" y="102" width="784.5" id="job_coment" text = "{job.comment}"/>
+		<mx:List x="309" y="72" width="125.5" id="product" dataProvider="{productCodes}" labelField="name" height= "22"/>
+		<mx:TextInput x="88" y="102" width="784.5" id="job_comment" text = "{job.comment}"/>
 		<mx:Label x="10" y="104" text="Comment:"/>
-		<mx:TextInput x="506.5" y="72" width="124" id="job_location" text="{job.location}"/>
+		<mx:List x="506.5" y="72" width="124" id="job_location" dataProvider="{locations}" labelField="name" height="22"/>
 		<mx:Label x="250" y="74" text="Product:"/>
 		<mx:Label x="442.5" y="74" text="Location:"/>
 		<mx:Label x="638.5" y="74" text="Job Type:"/>
@@ -177,7 +270,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 					<mx:TextInput x="496" y="85" id="job_sheets" text="{job.sheets}"/>
 					<mx:TextInput x="496" y="110" width="78" id="job_up" text="{job.up}"/>
 					<mx:TextInput x="578" y="110" width="78" id="job_on" text="{job.on}"/>
-					<mx:TextInput x="496" y="135" id="job_press" text="{job.press}"/>
+					<mx:List x="496" y="133" id="job_press" dataProvider="{presses}" height="22" width="160" labelField="name"/>
 					<mx:TextInput x="496" y="160" id="bindery_waste" text="{job.binderyWaste}"/>
 					<mx:TextInput x="496" y="185" id="est_waste" text="{job.estWaste}"/>
 					<mx:Label x="443" y="274" text="Weight:"/>
@@ -223,18 +316,18 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 							<mx:Image x="215" y="87" width="139" height="124"/>
 						</mx:Canvas>
 						<mx:Canvas label="merchandise_canvas" width="100%" height="100%">
-							<mx:TextArea x="79" y="10" width="277"/>
+							<mx:TextArea x="79" y="10" width="277" id="job_notes" text="{job.jobNotes}"/>
 							<mx:Label x="30" y="11" text="Notes:"/>
-							<mx:CheckBox x="79" y="62" label="Show notes"/>
-							<mx:TextInput x="79" y="92" width="277" height="22"/>
+							<mx:CheckBox x="79" y="62" label="Show notes" id="check_job_notes" selected="{job.jobTicketNotes}"/>
+							<mx:TextInput x="79" y="92" width="277" height="22" id="vendor_edit"/>
 							<mx:Label x="22" y="94" text="Vendor:"/>
 						</mx:Canvas>
 					</mx:ViewStack>
 					<mx:ViewStack x="10" y="314" id="viewstack5" width="361" height="305">
 						<mx:Canvas label="View 1" width="100%" height="100%">
-							<mx:TextInput x="107" y="0" width="249" height="22" id="job_pricing_press"/>
+							<mx:List x="107" y="0" width="249" height="22" id="job_pricing_press" dataProvider="{presses}" labelField="name"/>
 							<mx:Label x="19" y="2" text="Pricing Press:"/>
-							<mx:TextInput x="107" y="24" width="249" height="22" id="job_costing_press"/>
+							<mx:List x="107" y="24" width="249" height="22" id="job_costing_press" dataProvider="{presses}" labelField="name"/>
 							<mx:Label x="13" y="26" text="Costing Press:"/>
 							<mx:Label x="2" y="93" text="Back:"/>
 							<mx:Label x="0" y="70" text="Front:"/>
@@ -248,9 +341,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 							</mx:DataGrid>
 							<mx:Panel x="46" y="120" width="310" height="93" layout="absolute" title="Run Method" dropShadowEnabled="false">
 								<mx:RadioButtonGroup id="run_method_radiogroup"/>
-								<mx:RadioButton x="10" y="31" label="Work and Turn" groupName="run_method_radiogroup" height="18"/>
-								<mx:RadioButton x="10" y="10" label="Sheetwise" groupName="run_method_radiogroup" height="18"/>
-								<mx:RadioButton x="126" y="10" label="Work and Tumble" groupName="run_method_radiogroup" height="18"/>
+								<mx:RadioButton x="10" y="31" label="Work and Turn" groupName="run_method_radiogroup" height="18" value="Work_Turn"/>
+								<mx:RadioButton x="10" y="10" label="Sheetwise" groupName="run_method_radiogroup" height="18" value ="Sheetwise"/>
+								<mx:RadioButton x="126" y="10" label="Work and Tumble" groupName="run_method_radiogroup" height="18" value="Work_Tumble"/>
 							</mx:Panel>
 							<mx:Label x="46" y="51" text="Colors" width="48" textAlign="center"/>
 							<mx:Label x="93" y="51" text="Passes" width="53" textAlign="center"/>
@@ -262,6 +355,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 			</mx:ViewStack>
 		</mx:HDividedBox>
 		<mx:ComboBox x="705.5" y="72" width="167" id="job_type"></mx:ComboBox>
+		
 	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>

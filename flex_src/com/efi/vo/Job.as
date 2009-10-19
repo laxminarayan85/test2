@@ -19,7 +19,7 @@ package com.efi.vo
 		public var children:ArrayCollection;
 		public var charges:ArrayCollection;
 		public var jobNotes:String = "";
-		public var jobTicketNotes:String = "";
+		public var jobTicketNotes:Boolean = true;
 		public var brokered:Boolean = true;
 		public var taxable:Boolean = true;
 		public var finished:Boolean = true;
@@ -32,7 +32,7 @@ package com.efi.vo
 		public var sheets:Number = 0;
 		public var up:Number = 0;
 		public var on:Number = 0;
-		public var press:Number = 0;
+		public var press:PressDefinition = new PressDefinition();
 		public var binderyWaste:Number = 0;
 		public var estWaste:Number = 0;
 		public var signatures:Number = 0;
