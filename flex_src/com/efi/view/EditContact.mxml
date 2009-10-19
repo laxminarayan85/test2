@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" title="Contact Editor"
-creationComplete="init()" label="Contact Editor" name="Contact Editor">
+creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1="com.efi.components.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -46,8 +46,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 <mx:Consumer id="consumer" destination="zips" message="messageHandler(event.message)"/>-->
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
-<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
-<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+
 <mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactLastValidator" source="{last_name_edit}"	property="text"	minLength="2" required="true"/>
 
@@ -171,7 +170,12 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		contact.salutation= contact_salutation_edit.text;
 		contact.suffix = contact_suffix_edit.text;
 		contact.jobTitle= contact_job_title_edit.text;
-		contact.shipToAddress.name = "Contact Ship";
+		
+		contact.shipToAddress = ship_to_address_editor.getAddress();
+		contact.address = address_editor.getAddress();
+		
+		
+		/* contact.shipToAddress.name = "Contact Ship";
 		contact.shipToAddress.street1 = ship_street.text;
 		contact.shipToAddress.street2 = ship_street1.text;
 		
@@ -197,7 +201,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if (zipcombo != null && zipcombo.selectedItem != null) 
 			contact.address.zip = zipcombo.selectedItem as Zip;
 		if (countrycombo != null && countrycombo.selectedItem != null) 
-			contact.address.country = countrycombo.selectedItem as Country;
+			contact.address.country = countrycombo.selectedItem as Country; */
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
@@ -235,8 +239,23 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		//dataService.getAll("Contact");
 	    
 	    //accountDataService.getById("Account", contact.userAcctId); 
+	 	ship_to_address_editor.setAddress(contact.shipToAddress);
+		ship_to_address_editor.cityDataProvider = citys;
+		ship_to_address_editor.stateDataProvider = states1;
+		ship_to_address_editor.zipDataProvider = zips;
+		ship_to_address_editor.countryDataProvider = countrys;
+		
+		address_editor.setAddress(contact.address);
+		address_editor.cityDataProvider = citys;
+		address_editor.stateDataProvider = states1;
+		address_editor.zipDataProvider = zips;
+		address_editor.countryDataProvider = countrys;
 	 	
-	 	if (contact.address.city != null)
+	 	
+	 	
+	 	
+	 	
+	 	/* if (contact.address.city != null)
 			citycombo.selectedIndex = findItem(contact.address.city.name, citys);
 		if (contact.address.state != null)
 			statecombo.selectedIndex = findItem(contact.address.state.name, states1);
@@ -253,7 +272,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		if (contact.shipToAddress.country != null)
 			shipcountrycombo.selectedIndex = findItem(contact.shipToAddress.country.name, countrys);
 		if (contact.shipToAddress.zip != null)
-			shipzipcombo.selectedIndex = findItem(contact.shipToAddress.zip.name, zips);
+			shipzipcombo.selectedIndex = findItem(contact.shipToAddress.zip.name, zips); */
 		if (contact.creditCard.address.zip != null)
 			cardzip.selectedIndex = findItem(contact.creditCard.address.zip.name, zips);
 		if (contact.marketing.followup != null)
@@ -322,7 +341,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		dataService.addUpdate(contact);
 		                                     		
 	}   
-	private function doCity(): void{                             
+/* 	private function doCity(): void{                             
 		var city:City;
 		var result:Boolean;
 		
@@ -426,7 +445,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 				shipzipcombo.selectedItem = item;
 			}
 		}
-	}
+	} */
 	private function doZipCredit(): void{                             
 		var zip:Zip;
 		var result:Boolean;
@@ -444,7 +463,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			}
 		}
 	}
-	private function doCountry(): void{                             
+	/* private function doCountry(): void{                             
 		var country:Country;
 		var result:Boolean;
 		
@@ -478,7 +497,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 				shipcountrycombo.selectedItem = item;
 			}
 		}
-	}
+	} */
 	private function doSaleRep(): void{                             
 		var sales:SalesRep;
 		var result:Boolean;
@@ -511,37 +530,23 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 		sales_rep_combo.selectedItem = selectedItem;
 	}
 	private function handleLoadCity(ev:ResultEvent):void {
-	 	var selectedItem:Object = shipcitycombo.selectedItem;
-	 	var selectedItem1:Object = citycombo.selectedItem;
 	 	citys = ev.result as ArrayCollection;
-		if (shipcitycombo.selectedItem != null){
-			shipcitycombo.selectedItem = selectedItem;
-		}
-		if (citycombo.selectedItem!= null){
-		citycombo.selectedItem = selectedItem1;
-		}
+		
 	}   
 	 private function handleLoadState(ev:ResultEvent):void {
-		var selectedItem:Object = shipstatecombo.selectedItem;
-	 	var selectedItem1:Object = statecombo.selectedItem;
 		states1 = ev.result as ArrayCollection;
-		shipstatecombo.selectedItem = selectedItem;
-		statecombo.selectedItem = selectedItem1;
+		
 	}   
 	 private function handleLoadCountry(ev:ResultEvent):void {
-		var selectedItem:Object = shipcountrycombo.selectedItem;
-	 	var selectedItem1:Object = countrycombo.selectedItem;
+		
 		countrys = ev.result as ArrayCollection;
-		shipcountrycombo.selectedItem = selectedItem;
-		countrycombo.selectedItem = selectedItem1;
+		
 	}   
 	 private function handleLoadZip(ev:ResultEvent):void {
-		var selectedItem:Object = shipzipcombo.selectedItem;
-	 	var selectedItem1:Object = zipcombo.selectedItem;
+		
 	 	var selectedItem2:Object = cardzip.selectedItem;
 		zips = ev.result as ArrayCollection;
-		shipzipcombo.selectedItem = selectedItem;
-		zipcombo.selectedItem = selectedItem1;
+		
 		cardzip.selectedItem = selectedItem2;
 	}                                 
 
@@ -588,8 +593,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 	private function validateForm(event:Event):void{                    
         focussedFormControl = event.target as DisplayObject;    
         formIsValid = true;            
-        validate(shipZipValidator);                
-        validate(zipValidator);
         validate(contactFirstValidator);
         validate(contactLastValidator);        
     }
@@ -614,7 +617,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 			<mx:Canvas label="Address" width="100%" height="100%">
 				<mx:TextInput x="315" y="8" id="name_edit" width="193" text="{contact.firstName}" />
 				<mx:Text x="17" y="40" text="Acct #:&#xd;" width="46"/>
-				<mx:Panel x="10" y="215" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
+				<ns1:AddressEditor x="10" y="215" id="address_editor" height="157" width="325"/>
+				<!--<mx:Panel x="10" y="215" width="325" height="182" layout="absolute" title="Contact" dropShadowEnabled="false">
 					<mx:TextInput x="63" y="8" width="232" id="street" text= "{contact.address.street1}"/>
 					<mx:TextInput x="63" y="38" width="232" id="street2" text= "{contact.address.street2}"/>
 					<mx:Label x="10" y="10" text="Street:" width="45" textAlign="right"/>
@@ -623,25 +627,26 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 					<mx:Label x="200" y="64" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="10" y="64" text="City:" width="36" textAlign="right"/>
 					
-				<!--<mx:ComboBox x="63" y="62" width="129" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
+					<mx:ComboBox x="63" y="62" width="129" id="citycombo" dataProvider="{citys}" editable="true" focusOut="doCity();" labelField="name"></mx:ComboBox>
 					<mx:ComboBox x="233" y="62" width="62" id="statecombo" dataProvider="{states1}" labelField="name" editable="true" focusOut="doState();"></mx:ComboBox>
 					<mx:ComboBox x="63" y="92" width="90" id="zipcombo" dataProvider="{zips}" labelField="name"  editable="true" focusOut="doZip();"></mx:ComboBox>
 					<mx:ComboBox x="217" y="92" width="78" id="countrycombo" dataProvider="{countrys}" labelField="name"  editable="true" focusOut="doCountry();"></mx:ComboBox>
-					-->
+					
 					
 					<fc:AutoComplete id="citycombo" x="63" y="62" dataProvider="{citys}"  labelField="name" focusOut="doCity()" lookAhead="true" width="119"/>
 					<fc:AutoComplete id="statecombo" x="233" y="62" dataProvider="{states1}"  labelField="name" focusOut="doState()" lookAhead="true" width="45"/>
 					<fc:AutoComplete id="zipcombo" x="63" y="92" width="90"  dataProvider="{zips}"  labelField="name" focusOut="doZip()" lookAhead="true"/>
 					<fc:AutoComplete id="countrycombo" x="217" y="92" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry()" lookAhead="true"/>
 
-				</mx:Panel>
+				</mx:Panel>-->
 				<mx:Label x="40" y="12" text="ID:"/>
 				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.id}"/>
 				<mx:Text x="80" y="12" text="{contact.id}" id="contactID"/>
 				<mx:Label x="241" y="170" text="Sales Rep:"/>
 				<mx:Label x="249" y="144" text="Created: "/>
 				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
-				<mx:Panel x="344" y="215" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
+				<ns1:AddressEditor x="344" y="215" id="ship_to_address_editor" height="157" width="325"/>
+				<!--<mx:Panel x="344" y="215" width="325" height="182" layout="absolute" title="Shipping" dropShadowEnabled="false">
 					<mx:TextInput x="66" y="8" width="229" id="ship_street" text="{contact.shipToAddress.street1}"/>
 					<mx:TextInput x="66" y="38" width="229" id="ship_street1" text="{contact.shipToAddress.street2}"/>
 					<mx:Label x="10" y="10" text="Street:" width="48" textAlign="right"/>
@@ -649,17 +654,17 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor">
 					<mx:Label x="168" y="94" text="Country:" width="57" textAlign="right"/>
 					<mx:Label x="204" y="64" text="State:" width="39" textAlign="right"/>
 					<mx:Label x="19" y="64" text="City:" width="39" textAlign="right"/>
-					<!--<mx:ComboBox x="66" y="62" width="130" id="shipcitycombo" dataProvider="{citys}" editable="true" labelField="name" focusOut="doCity1()"></mx:ComboBox>
+					<mx:ComboBox x="66" y="62" width="130" id="shipcitycombo" dataProvider="{citys}" editable="true" labelField="name" focusOut="doCity1()"></mx:ComboBox>
 					<mx:ComboBox x="242" y="62" width="53" id="shipstatecombo" dataProvider="{states1}" editable="true" labelField="name" focusOut="doState1();"></mx:ComboBox>
 					<mx:ComboBox x="66" y="92" width="94" id="shipzipcombo" dataProvider="{zips}" editable="true" labelField="name" focusOut="doZip1();"></mx:ComboBox>
 					<mx:ComboBox x="222" y="92" width="73" id="shipcountrycombo" dataProvider="{countrys}" editable="true" labelField="name" focusOut="doCountry1();"></mx:ComboBox>
-					-->
+					
 					<fc:AutoComplete id="shipcitycombo" x="66" y="62" dataProvider="{citys}"  labelField="name" focusOut="doCity1()" lookAhead="true" width="119"/>
 					<fc:AutoComplete id="shipstatecombo" x="242" y="62" dataProvider="{states1}"  labelField="name" focusOut="doState1()" lookAhead="true" width="45"/>
 					<fc:AutoComplete id="shipzipcombo" x="66" y="92" width="89"  dataProvider="{zips}"  labelField="name" focusOut="doZip1()" lookAhead="true"/>
 					<fc:AutoComplete id="shipcountrycombo" x="222" y="92" width="62" dataProvider="{countrys}"  labelField="name" focusOut="doCountry1()" lookAhead="true"/>
 				
-				</mx:Panel>
+				</mx:Panel>-->
 				<!--<mx:ComboBox x="423" y="86" id="sales_rep_combo" labelField="name" dataProvider="{salesReps}" width="172"></mx:ComboBox>-->
 				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Label x="8" y="90" text="Account:" width="55"/>
