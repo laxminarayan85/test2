@@ -27,6 +27,7 @@ width="772" height="883" title="Press Definitions"
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
                    
+	[Bindable]
     private var enableSave:Boolean = true;
                          
 	[Bindable]                                         
@@ -184,7 +185,7 @@ width="772" height="883" title="Press Definitions"
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
                                    
 ]]>

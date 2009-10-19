@@ -59,23 +59,27 @@
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
 		dataService.getAll("PriceList");
+		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+
 	}
 	                                
 	private function doSelect():void {	
 		
 		var editPage:Container = parentContainer;
-		
+
 		if (editPage.className == "PressDefinitions") {
 			(editPage as PressDefinitions).setPriceList(dataGrid.selectedItem as PriceList);
 		} else if (editPage.className == "ChargeDefinitions") {
 			(editPage as ChargeDefinitions).setPriceList(dataGrid.selectedItem as WasteChart);
 		}
 		
-		
 		PopUpManager.removePopUp(this);
 	}     
 	
 	private function doNew():void {
+		var editPage:Container = parentContainer;
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+	     titleWindow.setStyle("borderAlpha", 0.9);
 		PopUpManager.removePopUp(this);
 	}
 	

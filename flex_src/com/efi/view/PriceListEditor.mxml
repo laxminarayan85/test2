@@ -9,11 +9,23 @@
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
+<mx:RemoteObject id="elementDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadElementResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveElementResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteElementResult(event)"/>
+</mx:RemoteObject>
+
 <mx:Producer id="producer" destination="users"/>
 
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.vo.PriceListElement;
+	import com.efi.view.CopierDefinitions;
+    import com.efi.view.PressDefinitions;
+    import com.efi.view.StockDefinitions;
+
+	import com.efi.vo.WasteChart;                          
 	import com.efi.vo.PriceListBase; 
 	import com.efi.vo.Contact;           
     import com.efi.vo.Account;    
@@ -36,8 +48,16 @@
 	public var priceList:PriceListBase;
 	
 	[Bindable] 
-		 private var pricelists:ArrayCollection = new ArrayCollection();   
+	public var priceListElement:PriceListElement;
+	
+	public var parentContainer:Container;
+
+	[Bindable] 
+	private var pricelists:ArrayCollection = new ArrayCollection();   
            
+	[Bindable] 
+    private var priceListElementlists:ArrayCollection = new ArrayCollection();
+
     [Bindable]
     private var quantity_header:String = "Quantity";
     
@@ -51,7 +71,6 @@
    	
 	private function handleFault(ev:FaultEvent):void {                               
 		var message:String;
-		              
 		message = "Error: "                          
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
@@ -62,17 +81,35 @@
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
 	    dataService.getAll("PriceList");   
-		priceListBase = new PriceListBase();
+		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+		priceList = new PriceListBase();
+
 	}
 	                                
 	private function doSelect():void {	
+		var editPage:Container = parentContainer;
+
 		maptoPricelist();
+		switch(editPage.className) {
+			case "PressDefinitions":
+				(editPage as PressDefinitions).setPriceList(priceList);
+				break;
+			case "ChargeDefinitions": 
+				(editPage as ChargeDefinitions).setPriceList(priceList as WasteChart);
+				break;
+			case "StockDefinitions":
+				(editPage as StockDefinitions).setPriceList(priceList);
+				break;
+			case "CopierDefinitions" :
+				(editPage as CopierDefinitions).setPriceList(priceList);
+				break;
+		}
 		PopUpManager.removePopUp(this);
 		
 	}     
 	
 	private function doNew():void {
-		priceListBase = new PriceListBase();
+		priceList = new PriceListBase();
 	
 	}
 	
@@ -81,7 +118,11 @@
 	}
 	
 	private function doDelete():void {
-		 dataService.deleteItem("PriceList",priceListBase.id);
+		 dataService.deleteItem("PriceList",priceList.id);
+	}
+	
+	private function maptoPricelist():void {
+		
 	}
 	
 	private function changeRadioButtons():void {
@@ -99,10 +140,24 @@
 		dataService.getAll("PriceList")
 		doNew();
 	}
+	
+	private function handleSaveElementResult(ev:ResultEvent):void {
+		dataService.getAll("PriceListElement")
+		
+	}
+	private function handleLoadElementResult(ev:ResultEvent):void {
+		priceListElementlists = ev.result as ArrayCollection;
+		
+	}
+	private function handleDeleteElementResult(ev:ResultEvent):void {
+		dataService.getAll("PriceListElement")
+	}
+	
+
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{list}"
+		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceList}"
 		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />                         

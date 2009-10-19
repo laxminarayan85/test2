@@ -56,6 +56,9 @@
 	import com.efi.vo.StockForest;
 	import com.efi.vo.Vendor;
 		
+	import com.efi.vo.PriceListBase;
+	import com.efi.vo.PriceList;
+
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -73,6 +76,9 @@
                    
 	[Bindable]                                         
     private var enableSave:Boolean = true;
+
+	[Bindable]                                         
+    private var priceList:PriceList;  
 
 	[Bindable]                                         
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
@@ -144,6 +150,17 @@
 		var Rigid:Object = new Object;
 		Rigid.name = "Rigid Substrate"
 		stockUnits.addItem(Rigid);
+	}
+
+	public function setPriceList(price:PriceListBase): void {
+	 	this.priceList = price as PriceList;	
+	}
+	
+	private function doPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
 	}
 
 	private function loadUomArray():void {
@@ -449,10 +466,6 @@
 		}
 	}
 		
-	private function doSelectSchedule():void {
-		
-	}
-
 	private function doAddCharges():void {
 		
 	}
@@ -846,7 +859,7 @@
 				<fc:AutoComplete  x="52" y="10" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}" lookAhead="true" labelField="name" focusOut="doPressDefinition()"/>
 			</mx:Panel>
 			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
-				<mx:Button x="10" y="6" label="Select Schedule" click="doSelectSchedule();"/>
+				<mx:Button x="10" y="6" label="Select Schedule" click="doPriceList();"/>
 				<mx:Text x="133" y="8" text="&lt;Nothing Selected&gt;" width="224" id="defaultPriceList"/>
 			</mx:Panel>
 			<mx:TextInput x="113" y="9" width="85" id="NormalRunSize" text="{stockDefinitions.normalRunSize}"/>
