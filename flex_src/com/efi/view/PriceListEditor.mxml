@@ -127,6 +127,21 @@
 		 dataService.deleteItem("PriceListBase",priceList.id);
 	}
 	
+	public function mapfromPricelist(pricelist:PriceListBase):void {
+		if (pricelist != null){
+			priceList = pricelist; 
+
+			title_edit.text = priceList.name;
+			chkInterpolate.selected = priceList.interpolate;
+			chkUseAsRateList.selected = priceList.isRate;
+			chkProductionDiscount.selected = priceList.isDiscount;
+			chkIgnoreGlobalPriceChange.selected = priceList.ignorePriceAdjustments;
+			chkUseAdditionalQuantities.selected = priceList.lastItemIsPriceAdditionalQty;
+			changeRadioButtons();
+		}
+		
+	}
+	
 	private function maptoPricelist():void {
 		
 		priceList.name = title_edit.text;
@@ -143,22 +158,32 @@
 	}
 	
 	private function changeRadioButtons():void {
-		switch(amount_radio_group.selectedValue.toString()){
-			case "Amount is currency":
-				priceList.isPercentage = false;
-				priceList.isDollar = true ;
-				break;
-			case "Amount is percent":	
-				priceList.isPercentage = true;
-				priceList.isDollar = false ;
-				break;
-			case "":
-				if (priceList.isPercentage == true){
-					amount_radio_group.selectedValue == "Amount is percent"
-				} else {
-					amount_radio_group.selectedValue == "Amount is currency"
-				}
-				break;
+		
+		if (amount_radio_group.selectedValue != null) {
+			
+			switch(amount_radio_group.selectedValue.toString()){
+				case "Amount is currency":
+					priceList.isPercentage = false;
+					priceList.isDollar = true ;
+					break;
+				case "Amount is percent":	
+					priceList.isPercentage = true;
+					priceList.isDollar = false ;
+					break;
+				case "":
+					if (priceList.isPercentage == true){
+						amount_radio_group.selectedValue == "Amount is percent"
+					} else {
+						amount_radio_group.selectedValue == "Amount is currency"
+					}
+					break;
+			}
+		} else {
+			if (priceList.isPercentage == true){
+				amount_radio_group.selectedValue == "Amount is percent"
+			} else {
+				amount_radio_group.selectedValue == "Amount is currency"
+			}
 		}
 		
 	}
@@ -199,7 +224,7 @@
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceList}"
+		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceListElement}"
 		doubleClickEnabled="true" doubleClick="doSelect()"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />                         

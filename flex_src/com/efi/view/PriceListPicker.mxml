@@ -101,6 +101,7 @@
 		var editPage:Container = parentContainer;
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.mapfromPricelist(dataGrid.selectedItem as PriceListBase);
 		PopUpManager.removePopUp(this);
 	}
 		
