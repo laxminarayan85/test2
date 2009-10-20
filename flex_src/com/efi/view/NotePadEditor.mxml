@@ -11,7 +11,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.Invoice;
 	import com.efi.vo.Job;
+	import com.efi.vo.NotePad;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -32,6 +34,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
                  
 	[Bindable]                                         
 	private var job:Job;
+	[Bindable]
+	private var invoice:Invoice;
+	[Bindable]
+	private var notePad:NotePad;
+	
                 
     
 	public function init():void {
@@ -94,7 +101,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 
 <mx:VBox width="301" height="372">
 	<mx:Canvas width="300" height="371">
-		<mx:TextInput x="83" y="10" width="204" id="who_edit"/>
+		<mx:TextInput x="83" y="10" width="204" id="who_edit"  />
 		<mx:TextInput x="83" y="38" width="204" id="phone_edit"/>
 		<mx:TextInput x="83" y="68" width="204" id="what_edit"/>
 		<mx:TextInput x="83" y="96" width="64" id="how_many_edit"/>
