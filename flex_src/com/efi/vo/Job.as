@@ -39,6 +39,7 @@ package com.efi.vo
 		public var pricingPress:PressDefinition = new PressDefinition();
 		public var costingPress:PressDefinition = new PressDefinition();
 		public var runMethod:String = "";
+		public var stock:StockDefinition = new StockDefinition();
 	
 	}
 }

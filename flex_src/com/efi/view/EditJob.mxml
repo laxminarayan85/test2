@@ -294,22 +294,22 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 					<mx:HRule x="10" y="304" width="356" height="2"/>
 					<mx:ViewStack x="10" y="62" id="viewstack4" width="358" height="243">
 						<mx:Canvas label="View 1" width="100%" height="100%">
-							<mx:TextInput x="107" y="62" width="247" height="22" id="job_color" />
+							<mx:TextInput x="107" y="62" width="247" height="22" id="job_color" text="{job.stock.color}" />
 							<mx:TextInput x="107" y="87" width="100" height="22" id="job_parent" />
 							<mx:TextInput x="107" y="112" width="100" height="22" id="job_size"/>
 							<mx:TextInput x="107" y="137" width="100" height="22" id="job_finish_size"/>
 							<mx:TextInput x="107" y="162" width="100" height="22" id="job_fold_size"/>
 							<mx:TextInput x="107" y="188" width="100" height="22" id="number_lines" />
 							<mx:Label x="25" y="165" text="Folded Size:"/>
-							<mx:Label x="57" y="140" text="Finish:"/>
-							<mx:Label x="37" y="217" text="Unit Price:"/>
+							<mx:Label x="57" y="140" text="Finish:" />
+							<mx:Label x="37" y="217" text="Unit Price:" />
 							<mx:TextInput x="107" y="214" width="100" height="22" id="job_unit_price"/>
 							<mx:Label x="40" y="115" text="Run Size:"/>
 							<mx:Label x="53" y="90" text="Parent:"/>
 							<mx:Label x="-2" y="191" text="Number of Lines:"/>
-							<mx:TextInput x="107" y="37" width="247" height="22" id="job_stock" />
+							<mx:TextInput x="107" y="37" width="247" height="22" id="job_stock" text="{job.stock.name}"/>
 							<mx:Label x="59" y="40" text="Stock:"/>
-							<mx:Label x="60" y="65" text="Color:"/>
+							<mx:Label x="60" y="65" text="Color:" />
 							<mx:CheckBox x="45" y="7" label="Customer Supplied Stock" id="customer_suppliled_stock"/>
 							<mx:CheckBox x="218" y="7"/>
 							<mx:Button x="240" y="5" label="Special Order..."/>

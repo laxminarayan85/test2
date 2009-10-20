@@ -142,6 +142,10 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String RUNMETHOD = "RunMethod";
+	/**
+	 * @generated
+	 */
+	public static final String STOCK = "Stock";
 
 	/**
 	 * @generated
@@ -622,6 +626,23 @@ public class Job extends ModelBase {
 	public void setRunMethod(String newVal) {
 		this.runMethod = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private StockDefinition stock;
+	/**
+	 * @generated
+ 	 */
+	public StockDefinition getStock(){
+		return stock; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStock(StockDefinition newVal) {
+		this.stock = newVal;
+	}
 
 	/**
 	 * @generated
@@ -656,6 +677,7 @@ public class Job extends ModelBase {
 		if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
 		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
 		if (RUNMETHOD.equals(propertyName)) return getRunMethod();
+		if (STOCK.equals(propertyName)) return getStock();
 		return super.getProperty(propertyName);
 	}
 	
@@ -692,6 +714,7 @@ public class Job extends ModelBase {
 		if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
 		if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
 		if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
+		if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -755,6 +778,8 @@ public class Job extends ModelBase {
 			return new Class<?>[] {PressDefinition.class};		
 		if (RUNMETHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (STOCK.equals(propertyName)) 
+			return new Class<?>[] {StockDefinition.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -792,6 +817,7 @@ public class Job extends ModelBase {
 		if (PRICINGPRESS.equals(propertyName)) return Job.class;
 		if (COSTINGPRESS.equals(propertyName)) return Job.class;
 		if (RUNMETHOD.equals(propertyName)) return Job.class;
+		if (STOCK.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -856,6 +882,8 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
 			return false;
 		if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
+			return false;
+		if (! SmartEquals(getStock(), objT.getStock()))
 			return false;
 		return true;
 	}			
