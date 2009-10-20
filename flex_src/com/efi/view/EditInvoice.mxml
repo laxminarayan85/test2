@@ -115,6 +115,7 @@
 	}
 	private function handleSaveResult(event:Event):void {
 		
+		
 	}
 	private function handleDeleteResult(event:Event):void {
 		
@@ -212,6 +213,14 @@
     }
 	private function doChangeAcct():void {
 		job_costing_stack.selectedChild = account_info_canvas;
+		 var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+		
+	}
+	public function setAccount(account2:Account):void{
+		invoice.account = account2;
+		contact_list.selectedItem = invoice.account.contact as Contact;
 	}
 	
 	private function doNotepad():void {
@@ -399,15 +408,15 @@
 							<mx:ComboBox x="31" y="51" width="239"></mx:ComboBox>
 							<mx:TextArea x="10" y="111" text="&#xd;" height="61" width="260"/>
 						</mx:Panel>
-						<mx:Label x="313" y="240" text="Acct Status:"/>
-						<mx:Label x="321" y="262" text="Acct Type:"/>
+						<mx:Label x="616" y="240" text="Acct Status:"/>
+						<mx:Label x="622" y="262" text="Acct Type:"/>
 						<mx:Label x="321" y="284" text="Taken By:"/>
 						<mx:Label x="317" y="310" text="Sales Rep:"/>
 						<mx:Label x="328" y="334" text="Ship Via:"/>
 						<mx:Label x="616" y="286" text="Hold State:"/>
 						<mx:Label x="646" y="310" text="PO #:"/>
-						<mx:Text x="391" y="240" width="146" textAlign="right" id="cust_discount_text4" text="{invoice.account.status}" />
-						<mx:Text x="391" y="262" width="133" textAlign="right" id="cust_discount_text5" text="{invoice.account.type}"/>
+						<mx:Text x="692" y="240" width="146" textAlign="right" id="cust_discount_text4" text="{invoice.account.status}" />
+						<mx:Text x="692" y="262" width="133" textAlign="right" id="cust_discount_text5" text="{invoice.account.type}"/>
 						<mx:Label x="308" y="214" text="Contact List:" />
 						<mx:ComboBox x="391" y="212" width="217" dataProvider="{invoice.account.contact}" id="contact_list">
 						</mx:ComboBox>
@@ -416,6 +425,8 @@
 						<fc:AutoComplete id="ship_via_combo" x="391" y="332" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
 						<mx:TextInput x="692" y="284" id="inv_hold_state" text="{invoice.holdState}"/>
 						<mx:TextInput x="692" y="308" id="inv_po_number" text= "{invoice.customerPO}"/>
+						<mx:Label x="331" y="240" text="Account:"/>
+						<mx:Text x="391" y="240" text="{invoice.account.title}" id="account_text" width="160"/>
 					</mx:Canvas>
 				</mx:ViewStack>					
 			</mx:VBox>
