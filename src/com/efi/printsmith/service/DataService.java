@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -233,6 +234,25 @@ public class DataService {
     		return object;        
     	} catch (Exception e) { 
     		log.error(e);       
+   		}        
+    	return null;            
+   	} 
+    public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      
+    	try {            
+    		log.debug("** getByAccess called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager(); 
+    		String queryString = "select a from SecuritySetup a where a.accessgroup = :id";
+			Query query = em.createQuery(queryString);
+    		query.setParameter("id", accessGroup);            
+    		List<SecuritySetup>  secuirtySetups = query.getResultList();                
+    		 
+    		if (secuirtySetups != null)
+    		 	log.debug("** Found " + secuirtySetups.size() + "records:");
+    		return secuirtySetups;	 
+    		 
+    		 
+    	} catch (Exception e) { 
+    		log.error(e);         
    		}        
     	return null;            
    	} 
