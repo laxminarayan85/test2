@@ -241,14 +241,14 @@ public class DataService {
     	try {            
     		log.debug("** getByAccess called...");                
     		EntityManager em = entityManagerFactory.createEntityManager(); 
-    		String queryString = "select a from SecuritySetup a where a.accessgroup = :id";
+    		String queryString = "from SecuritySetup a where a.accessGroup = :id";
 			Query query = em.createQuery(queryString);
     		query.setParameter("id", accessGroup);            
-    		List<SecuritySetup>  secuirtySetups = query.getResultList();                
+    		List<SecuritySetup>  securitySetups = query.getResultList();                
     		 
-    		if (secuirtySetups != null)
-    		 	log.debug("** Found " + secuirtySetups.size() + "records:");
-    		return secuirtySetups;	 
+    		if (securitySetups != null)
+    		 	log.debug("** Found " + securitySetups.size() + "records:");
+    		return securitySetups;	 
     		 
     		 
     	} catch (Exception e) { 

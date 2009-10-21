@@ -38,7 +38,7 @@
 	public function init():void {
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
-		PopUpManager.centerPopUp(this);
+	//	PopUpManager.centerPopUp(this);
 	              
 		dataService.getAll("AccessGroup"); 
 	
