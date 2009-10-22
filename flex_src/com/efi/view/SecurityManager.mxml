@@ -33,7 +33,9 @@
     	private var securitySetupLists:ArrayCollection = new ArrayCollection();
     	
 	[Bindable]                             
-		private var accessGroup:AccessGroup;    
+		private var accessGroup:AccessGroup;   
+	[Bindable]                             
+		private var security:SecuritySetup;     
 	
 	public function init():void {
 		//consumer.subscribe();
@@ -67,30 +69,44 @@
 	}	
 	
 	private function mapToSecurityData():void{
-		
+		var i:int;
+	for (i= 0 ; i < securitySetupLists.length ; i++)
+	{
+		 security = securitySetupLists.getItemAt(i,0) as SecuritySetup;
+		 //security = DataGrid.getChildAt(i) as SecuritySetup;
+		 
+		 
+		 security.accessGroup = accessGroup;
+//		 security = DataGrid.getChildAt(0);
+		 SecuritydataService.addUpdate(security);
+		 
+	}
 		
 	}   
+	private function mapToAccessGroup():void{
+		accessGroup.name = name_edit.text;
+		dataService.addUpdate(accessGroup);
+	}
 	public function doSave():void {                                    
-		//saveService.addUpdateUser(user);
+		
+		mapToAccessGroup();
 		mapToSecurityData();
 		dataService.addUpdate(accessGroup);   
-		//SecuritydataService.addUpdate(securitySetup);                                    
+		SecuritydataService.addUpdate(security);                                    
+	}   
+	public function doNew():void {                                    
+		accessGroup = new AccessGroup();                                  
 	}   
 	private function doNext():void {
 	 
 	  
-		doSave();  
-		DataGrid.selectedIndex = DataGrid.selectedIndex+1;
-		DataGrid.setFocus();
-	    doUserGridClick();
+		
 		                                        		
 	}       
 	private function doPrev():void {
 	  
-	 	doSave();  
-		DataGrid.selectedIndex = DataGrid.selectedIndex-1;
-		DataGrid.setFocus();
-		doUserGridClick();                          		
+	 	
+		                        		
 	}   
 	private function doUserGridClick():void {
 		accessGroup = DataGrid.selectedItem as AccessGroup;
@@ -106,7 +122,7 @@
 	<mx:Label x="26" y="89" text="Access Group:"/>
 	<mx:List x="121" y="86" height="21" dataProvider="{accessGroupLists}"  labelField="name" click="doAccessGroup();" id="accessGroupList"></mx:List>
 	<mx:Label x="61" y="136" text="Name:"/>
-	<mx:TextInput x="121" y="134" id="name_edit" text="{accessGroup.name}" width="162"/>
+	<mx:TextInput x="121" y="134" id="name_edit" text="{accessGroup.name}" width="162" focusOut="mapToAccessGroup();"/>
 	<mx:DataGrid x="26" y="181" width="698" height="325" id="DataGrid" dataProvider="{securitySetupLists}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Enable" dataField="enable" editable="true"/>
@@ -118,7 +134,7 @@
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="26" y="46" text="Save" width="38" textAlign="center"/>
-		<mx:Button x="75" y="10" width="38" height="38" >
+		<mx:Button x="75" y="10" width="38" height="38"  click="doNew()">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 		</mx:Button>
 		<mx:Button x="121" y="10" width="38" height="38">

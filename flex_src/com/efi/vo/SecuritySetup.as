@@ -15,7 +15,7 @@ package com.efi.vo
 		public var enable:Boolean = true;
 		public var menu:String = "";
 		public var commandName:String = "";
-		public var accessGroup:ArrayCollection;
+		public var accessGroup:AccessGroup;
 	
 	}
 }

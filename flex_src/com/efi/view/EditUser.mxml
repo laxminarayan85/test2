@@ -74,7 +74,7 @@ password="{passwordField.text}"/>
 		//parentApplication.listUsers.loaderService.getUsers();    
 		                         
 		PopUpManager.removePopUp(this);
-		dataService.getAll("User")
+		dataService.getAll("Users")
 		send();                                  
 	}
                                      
@@ -117,7 +117,14 @@ password="{passwordField.text}"/>
 	     validate(nameValidator);                 
 	     validate(passwordValidator);      
 	}
-	    
+	 private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}   
 	private function validate(validator:Validator):Boolean {		   
 		// See also here for validating data:
 		// /devnet/flex/quickstart/validating_data/
@@ -146,7 +153,11 @@ password="{passwordField.text}"/>
 		formIsEmpty = true;                           
 		formIsValid = false;                                
 		resetFocus();   
-		user1= new Users();                          
+		user1= new Users();          
+		dataService.getAll("Users"); 
+		accessGroupService.getAll("AccessGroup");
+		accessLevelService.getAll("AccessLevel");  
+		                    
 	}        
 	private function handleLoadResult(ev:ResultEvent):void {
 		userslist = ev.result as ArrayCollection;
@@ -174,6 +185,13 @@ password="{passwordField.text}"/>
 		user1.showUserNameLog= user_log_window.selected;
 		
 	}      
+	private function mapFromUserData():void{
+	if (user1.accessGroup != null)			
+			accessGroupList.selectedIndex = findItem(user1.accessGroup.name, accessGroups);
+	if (user1.accessLevel != null)			
+			accessLevelList.selectedIndex = findItem(user1.accessLevel.name, accessLevels);
+		
+	}
 	private function doNext():void {
 	 
 	  
@@ -192,6 +210,7 @@ password="{passwordField.text}"/>
 	}   
 	private function doUserGridClick():void {
 		user1 = dataGrid.selectedItem as Users;
+		mapFromUserData();
 	}    
 	                    
 ]]>        
@@ -201,8 +220,8 @@ password="{passwordField.text}"/>
 	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="User Name" dataField="name"/>
-			<mx:DataGridColumn headerText="Access Group" dataField="accessGroup.name"/>
-			<mx:DataGridColumn headerText="Access Level" dataField="accessLevel.name"/>
+			<mx:DataGridColumn headerText="Access Group" dataField="{user1.accessGroup.name}"/>
+					<mx:DataGridColumn headerText="Access Level" dataField="accessLevel.name"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
@@ -227,7 +246,7 @@ password="{passwordField.text}"/>
 	<mx:Label x="357" y="164" text="Access Group:"/>
 	
 	<mx:Label x="357" y="190" text="Access Level:"/>
-	<mx:List x="448" y="161" height="23" id="accessGroupList"></mx:List>
+	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList"> </mx:List>
 	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
 </mx:Canvas>
 </mx:TitleWindow>
