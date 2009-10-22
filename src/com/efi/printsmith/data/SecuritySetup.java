@@ -66,7 +66,7 @@ public class SecuritySetup extends ModelBase {
 	/**
 	 * @generated
  	 */
-	public Boolean getEnable(){
+	public Boolean getEnable() {
 		return enable; 
 	}
 
@@ -112,26 +112,18 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
-    @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<AccessGroup> accessGroups;
+    @OneToOne( cascade = {CascadeType.ALL})
+	private AccessGroup accessGroup;
 	/**
 	 * @generated
  	 */
-	public java.util.List<AccessGroup> getAccessGroups(){
-		return accessGroups; 
+	public AccessGroup getAccessGroup(){
+		return accessGroup; 
 	}
 
-	public void addAccessGroups(AccessGroup obj) {
-		if (accessGroups == null) {
-			accessGroups = new java.util.ArrayList<AccessGroup>();
-		}
-		accessGroups.add(obj);
-	}
-	/**
-	 * @generated
-	 */	
-	public void setAccessGroups(java.util.List<AccessGroup> newVal) {
-		this.accessGroups = newVal;
+	public void setAccessGroup(AccessGroup obj) {
+		this.accessGroup = obj;
+		
 	}
 
 	/**
@@ -143,7 +135,7 @@ public class SecuritySetup extends ModelBase {
 		if (ENABLE.equals(propertyName)) return getEnable();
 		if (MENU.equals(propertyName)) return getMenu();
 		if (COMMANDNAME.equals(propertyName)) return getCommandName();
-		if (ACCESSGROUP.equals(propertyName)) return getAccessGroups();
+		if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
 		return super.getProperty(propertyName);
 	}
 	
@@ -156,7 +148,7 @@ public class SecuritySetup extends ModelBase {
 		if (ENABLE.equals(propertyName)) setEnable((Boolean)newValue); else
 		if (MENU.equals(propertyName)) setMenu((String)newValue); else
 		if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
-		if (ACCESSGROUP.equals(propertyName)) setAccessGroups((java.util.List<AccessGroup>)newValue); else
+		if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -173,7 +165,7 @@ public class SecuritySetup extends ModelBase {
 		if (COMMANDNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (ACCESSGROUP.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, AccessGroup.class};		
+			return new Class<?>[] {AccessGroup.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -205,7 +197,7 @@ public class SecuritySetup extends ModelBase {
 			return false;
 		if (! SmartEquals(getCommandName(), objT.getCommandName()))
 			return false;
-		if (! SmartEquals(getAccessGroups(), objT.getAccessGroups()))
+		if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
 			return false;
 		return true;
 	}			
