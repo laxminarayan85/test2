@@ -1,0 +1,2166 @@
+package com.efi.printsmith.data;
+
+import java.util.Date;
+import java.util.List;
+
+import com.efi.printsmith.data.*;
+import com.efi.printsmith.data.enums.*;
+import com.efi.printsmith.exceptions.*;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
+
+/**
+ * @generated
+ */
+ 
+ 
+/**
+ * @!generated
+ */	
+@NamedQueries({
+	@NamedQuery(name = "PreferencesSystem.findall", query = "from PreferencesSystem"),
+	@NamedQuery(name = "PreferencesSystem.byId", query = "select a from PreferencesSystem a where a.id= :id")
+})
+
+
+@Entity
+@Table(name = "preferencessystem")
+public class PreferencesSystem extends ModelBase {
+	/**
+	 * @generated
+	 */
+	public static final String ELIMINATEWARNINGMESSAGES = "EliminateWarningMessages";
+	/**
+	 * @generated
+	 */
+	public static final String ONLYPOSTMARKEDREADYINVOICES = "OnlyPostMarkedReadyInvoices";
+	/**
+	 * @generated
+	 */
+	public static final String ENABLEPRICINGSYSTEM = "EnablePricingSystem";
+	/**
+	 * @generated
+	 */
+	public static final String ACTIVATEUSEREVENTLOGGING = "ActivateUserEventLogging";
+	/**
+	 * @generated
+	 */
+	public static final String ENABLEAUTOLOGOUT = "EnableAutoLogOut";
+	/**
+	 * @generated
+	 */
+	public static final String SECONDSOFINACTIVITY = "SecondsOfInactivity";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOLOGOUTSECONDS = "AutoLogOutSeconds";
+	/**
+	 * @generated
+	 */
+	public static final String TRIGGERAFTERPOSTING = "TriggerAfterPosting";
+	/**
+	 * @generated
+	 */
+	public static final String SHOWINVOICESWITHTODAY = "ShowInvoicesWithToday";
+	/**
+	 * @generated
+	 */
+	public static final String LINEITEMTAXES = "LineItemTaxes";
+	/**
+	 * @generated
+	 */
+	public static final String AUTOMATICQUIT = "AutomaticQuit";
+	/**
+	 * @generated
+	 */
+	public static final String QUITTIME = "QuitTime";
+	/**
+	 * @generated
+	 */
+	public static final String SHUTDOWNMESSAGE = "ShutdownMessage";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYTITLE = "CompanyTitle";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYADDRESS1 = "CompanyAddress1";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYADDRESS2 = "CompanyAddress2";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYCITY = "CompanyCity";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYSTATE = "CompanyState";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYZIP = "CompanyZip";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYPHONE = "CompanyPhone";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYFAX = "CompanyFax";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYEMAIL = "CompanyEmail";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYOTHER1 = "CompanyOther1";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYOTHER2 = "CompanyOther2";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYIDLABEL = "CompanyIdLabel";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYID = "CompanyId";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYSTORENUMBER = "CompanyStoreNumber";
+	/**
+	 * @generated
+	 */
+	public static final String COMPANYSTORELOCATIONREF = "CompanyStoreLocationRef";
+	/**
+	 * @generated
+	 */
+	public static final String FISCALYEARSTARTMONTH = "FiscalYearStartMonth";
+	/**
+	 * @generated
+	 */
+	public static final String WORKSUNDAY = "WorkSunday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKMONDAY = "WorkMonday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKTUESDAY = "WorkTuesday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKWEDNESDAY = "WorkWednesday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKTHURSDAY = "WorkThursday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKFRIDAY = "WorkFriday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKSATURDAY = "WorkSaturday";
+	/**
+	 * @generated
+	 */
+	public static final String WORKFIRSTDAYOFWEEK = "WorkFirstDayOfWeek";
+	/**
+	 * @generated
+	 */
+	public static final String FUTUREDATESEXCLUDECLOSED = "FutureDatesExcludeClosed";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSINTEGERS = "NumbersIntegers";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSPERCENTAGES = "NumbersPercentages";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSAMOUNT = "NumbersAmount";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSTAXRATE = "NumbersTaxRate";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSRATE = "NumbersRate";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSFACTOR = "NumbersFactor";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSINVOICE = "NumbersInvoice";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSSHORTPERCENT = "NumbersShortPercent";
+	/**
+	 * @generated
+	 */
+	public static final String NUMBERSROUNDTO = "NumbersRoundto";
+	/**
+	 * @generated
+	 */
+	public static final String ALWAYSROUNDDOWN = "AlwaysRoundDown";
+	/**
+	 * @generated
+	 */
+	public static final String ROUNDTAXUP = "RoundTaxUp";
+	/**
+	 * @generated
+	 */
+	public static final String USEALTERNATECURRENCY = "UseAlternateCurrency";
+	/**
+	 * @generated
+	 */
+	public static final String DISPLAYFORMAT = "DisplayFormat";
+	/**
+	 * @generated
+	 */
+	public static final String CONVERSIONFACTOR = "ConversionFactor";
+	/**
+	 * @generated
+	 */
+	public static final String ALTERNATEROUNDTO = "AlternateRoundto";
+	/**
+	 * @generated
+	 */
+	public static final String ALTERNATEALWAYSROUNDDOWN = "AlternateAlwaysRoundDown";
+	/**
+	 * @generated
+	 */
+	public static final String INTERNATIONALTEXTSORTING = "InternationalTextSorting";
+	/**
+	 * @generated
+	 */
+	public static final String CHILETAXIDVERIFICATION = "ChileTaxIdVerification";
+	/**
+	 * @generated
+	 */
+	public static final String DISABLETEXTSTYLES = "DisableTextStyles";
+	/**
+	 * @generated
+	 */
+	public static final String AUSTRAILIANINVOICEROUNDING = "AustrailianInvoiceRounding";
+	/**
+	 * @generated
+	 */
+	public static final String DISABLENONTAXABLEOPTIONS = "DisableNonTaxableOptions";
+	/**
+	 * @generated
+	 */
+	public static final String INKWEIGHTSINGULAR = "InkWeightSingular";
+	/**
+	 * @generated
+	 */
+	public static final String INKWEIGHTPLURAL = "InkWeightPlural";
+	/**
+	 * @generated
+	 */
+	public static final String AUTHORIZEDECRYPT = "AuthorizeDecrypt";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITCARDAPPROVAL = "CreditCardApproval";
+	/**
+	 * @generated
+	 */
+	public static final String TRACKERDATACOLLECTION = "TrackerDataCollection";
+	/**
+	 * @generated
+	 */
+	public static final String VALIDATIONCODE = "ValidationCode";
+	/**
+	 * @generated
+	 */
+	public static final String PNIADDRESS = "PNIAddress";
+	/**
+	 * @generated
+	 */
+	public static final String FIERYCONNECTORURL = "FieryConnectorUrl";
+	/**
+	 * @generated
+	 */
+	public static final String PNI45ORLATER = "PNI45orLater";
+	/**
+	 * @generated
+	 */
+	public static final String JDFCONNECTOR45ORLATER = "JDFConnector45orLater";
+	/**
+	 * @generated
+	 */
+	public static final String SUPPORTSNONASCIICHARACTERS = "SupportsNonAsciiCharacters";
+	/**
+	 * @generated
+	 */
+	public static final String USEPALMPILOTTRACKING = "UsePalmPilotTracking";
+	/**
+	 * @generated
+	 */
+	public static final String PALMUSERPATH = "PalmUserPath";
+	/**
+	 * @generated
+	 */
+	public static final String PALMPOLLINGINTERVAL = "PalmPollingInterval";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTCOUNTRY = "DefaultCountry";
+
+	/**
+	 * @generated
+	 */
+	public PreferencesSystem() {
+		this.created = new Date();
+		this.modified = new Date();
+	}
+
+ 	
+	
+ 	@Basic
+	private Boolean eliminateWarningMessages;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getEliminateWarningMessages(){
+		return eliminateWarningMessages; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEliminateWarningMessages(Boolean newVal) {
+		this.eliminateWarningMessages = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean onlyPostMarkedReadyInvoices;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOnlyPostMarkedReadyInvoices(){
+		return onlyPostMarkedReadyInvoices; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOnlyPostMarkedReadyInvoices(Boolean newVal) {
+		this.onlyPostMarkedReadyInvoices = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean enablePricingSystem;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getEnablePricingSystem(){
+		return enablePricingSystem; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEnablePricingSystem(Boolean newVal) {
+		this.enablePricingSystem = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean activateUserEventLogging;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getActivateUserEventLogging(){
+		return activateUserEventLogging; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setActivateUserEventLogging(Boolean newVal) {
+		this.activateUserEventLogging = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean enableAutoLogOut;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getEnableAutoLogOut(){
+		return enableAutoLogOut; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEnableAutoLogOut(Boolean newVal) {
+		this.enableAutoLogOut = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean secondsOfInactivity;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSecondsOfInactivity(){
+		return secondsOfInactivity; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSecondsOfInactivity(Boolean newVal) {
+		this.secondsOfInactivity = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer autoLogOutSeconds;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAutoLogOutSeconds(){
+		return autoLogOutSeconds; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutoLogOutSeconds(Integer newVal) {
+		this.autoLogOutSeconds = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean triggerAfterPosting;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getTriggerAfterPosting(){
+		return triggerAfterPosting; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTriggerAfterPosting(Boolean newVal) {
+		this.triggerAfterPosting = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean showInvoicesWithToday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getShowInvoicesWithToday(){
+		return showInvoicesWithToday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShowInvoicesWithToday(Boolean newVal) {
+		this.showInvoicesWithToday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean lineItemTaxes;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getLineItemTaxes(){
+		return lineItemTaxes; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLineItemTaxes(Boolean newVal) {
+		this.lineItemTaxes = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean automaticQuit;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAutomaticQuit(){
+		return automaticQuit; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAutomaticQuit(Boolean newVal) {
+		this.automaticQuit = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String quitTime;
+	/**
+	 * @generated
+ 	 */
+	public String getQuitTime(){
+		return quitTime; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setQuitTime(String newVal) {
+		this.quitTime = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String shutdownMessage;
+	/**
+	 * @generated
+ 	 */
+	public String getShutdownMessage(){
+		return shutdownMessage; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShutdownMessage(String newVal) {
+		this.shutdownMessage = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyTitle;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyTitle(){
+		return companyTitle; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyTitle(String newVal) {
+		this.companyTitle = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyAddress1;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyAddress1(){
+		return companyAddress1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyAddress1(String newVal) {
+		this.companyAddress1 = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyAddress2;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyAddress2(){
+		return companyAddress2; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyAddress2(String newVal) {
+		this.companyAddress2 = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private City companyCity;
+	/**
+	 * @generated
+ 	 */
+	public City getCompanyCity(){
+		return companyCity; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyCity(City newVal) {
+		this.companyCity = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private State companyState;
+	/**
+	 * @generated
+ 	 */
+	public State getCompanyState(){
+		return companyState; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyState(State newVal) {
+		this.companyState = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Zip companyZip;
+	/**
+	 * @generated
+ 	 */
+	public Zip getCompanyZip(){
+		return companyZip; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyZip(Zip newVal) {
+		this.companyZip = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyPhone;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyPhone(){
+		return companyPhone; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyPhone(String newVal) {
+		this.companyPhone = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyFax;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyFax(){
+		return companyFax; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyFax(String newVal) {
+		this.companyFax = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyEmail;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyEmail(){
+		return companyEmail; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyEmail(String newVal) {
+		this.companyEmail = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyOther1;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyOther1(){
+		return companyOther1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyOther1(String newVal) {
+		this.companyOther1 = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyOther2;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyOther2(){
+		return companyOther2; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyOther2(String newVal) {
+		this.companyOther2 = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyIdLabel;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyIdLabel(){
+		return companyIdLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyIdLabel(String newVal) {
+		this.companyIdLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyId;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyId(){
+		return companyId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyId(String newVal) {
+		this.companyId = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyStoreNumber;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyStoreNumber(){
+		return companyStoreNumber; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyStoreNumber(String newVal) {
+		this.companyStoreNumber = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String companyStoreLocationRef;
+	/**
+	 * @generated
+ 	 */
+	public String getCompanyStoreLocationRef(){
+		return companyStoreLocationRef; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCompanyStoreLocationRef(String newVal) {
+		this.companyStoreLocationRef = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String fiscalYearStartMonth;
+	/**
+	 * @generated
+ 	 */
+	public String getFiscalYearStartMonth(){
+		return fiscalYearStartMonth; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFiscalYearStartMonth(String newVal) {
+		this.fiscalYearStartMonth = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workSunday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkSunday(){
+		return workSunday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkSunday(Boolean newVal) {
+		this.workSunday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workMonday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkMonday(){
+		return workMonday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkMonday(Boolean newVal) {
+		this.workMonday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workTuesday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkTuesday(){
+		return workTuesday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkTuesday(Boolean newVal) {
+		this.workTuesday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workWednesday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkWednesday(){
+		return workWednesday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkWednesday(Boolean newVal) {
+		this.workWednesday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workThursday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkThursday(){
+		return workThursday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkThursday(Boolean newVal) {
+		this.workThursday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workFriday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkFriday(){
+		return workFriday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkFriday(Boolean newVal) {
+		this.workFriday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean workSaturday;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getWorkSaturday(){
+		return workSaturday; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkSaturday(Boolean newVal) {
+		this.workSaturday = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String workFirstDayOfWeek;
+	/**
+	 * @generated
+ 	 */
+	public String getWorkFirstDayOfWeek(){
+		return workFirstDayOfWeek; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWorkFirstDayOfWeek(String newVal) {
+		this.workFirstDayOfWeek = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean futureDatesExcludeClosed;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getFutureDatesExcludeClosed(){
+		return futureDatesExcludeClosed; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFutureDatesExcludeClosed(Boolean newVal) {
+		this.futureDatesExcludeClosed = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersIntegers;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersIntegers(){
+		return numbersIntegers; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersIntegers(String newVal) {
+		this.numbersIntegers = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersPercentages;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersPercentages(){
+		return numbersPercentages; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersPercentages(String newVal) {
+		this.numbersPercentages = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersAmount;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersAmount(){
+		return numbersAmount; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersAmount(String newVal) {
+		this.numbersAmount = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersTaxRate;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersTaxRate(){
+		return numbersTaxRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersTaxRate(String newVal) {
+		this.numbersTaxRate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersRate;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersRate(){
+		return numbersRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersRate(String newVal) {
+		this.numbersRate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersFactor;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersFactor(){
+		return numbersFactor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersFactor(String newVal) {
+		this.numbersFactor = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersInvoice;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersInvoice(){
+		return numbersInvoice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersInvoice(String newVal) {
+		this.numbersInvoice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String numbersShortPercent;
+	/**
+	 * @generated
+ 	 */
+	public String getNumbersShortPercent(){
+		return numbersShortPercent; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersShortPercent(String newVal) {
+		this.numbersShortPercent = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer numbersRoundto;
+	/**
+	 * @generated
+ 	 */
+	public Integer getNumbersRoundto(){
+		return numbersRoundto; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumbersRoundto(Integer newVal) {
+		this.numbersRoundto = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean alwaysRoundDown;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAlwaysRoundDown(){
+		return alwaysRoundDown; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAlwaysRoundDown(Boolean newVal) {
+		this.alwaysRoundDown = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean roundTaxUp;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getRoundTaxUp(){
+		return roundTaxUp; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRoundTaxUp(Boolean newVal) {
+		this.roundTaxUp = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean useAlternateCurrency;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseAlternateCurrency(){
+		return useAlternateCurrency; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseAlternateCurrency(Boolean newVal) {
+		this.useAlternateCurrency = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String displayFormat;
+	/**
+	 * @generated
+ 	 */
+	public String getDisplayFormat(){
+		return displayFormat; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDisplayFormat(String newVal) {
+		this.displayFormat = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double conversionFactor;
+	/**
+	 * @generated
+ 	 */
+	public Double getConversionFactor(){
+		return conversionFactor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setConversionFactor(Double newVal) {
+		this.conversionFactor = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer alternateRoundto;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAlternateRoundto(){
+		return alternateRoundto; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAlternateRoundto(Integer newVal) {
+		this.alternateRoundto = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean alternateAlwaysRoundDown;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAlternateAlwaysRoundDown(){
+		return alternateAlwaysRoundDown; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAlternateAlwaysRoundDown(Boolean newVal) {
+		this.alternateAlwaysRoundDown = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean internationalTextSorting;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getInternationalTextSorting(){
+		return internationalTextSorting; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInternationalTextSorting(Boolean newVal) {
+		this.internationalTextSorting = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean chileTaxIdVerification;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getChileTaxIdVerification(){
+		return chileTaxIdVerification; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setChileTaxIdVerification(Boolean newVal) {
+		this.chileTaxIdVerification = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean disableTextStyles;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDisableTextStyles(){
+		return disableTextStyles; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDisableTextStyles(Boolean newVal) {
+		this.disableTextStyles = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean austrailianInvoiceRounding;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getAustrailianInvoiceRounding(){
+		return austrailianInvoiceRounding; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAustrailianInvoiceRounding(Boolean newVal) {
+		this.austrailianInvoiceRounding = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean disableNonTaxableOptions;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDisableNonTaxableOptions(){
+		return disableNonTaxableOptions; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDisableNonTaxableOptions(Boolean newVal) {
+		this.disableNonTaxableOptions = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String inkWeightSingular;
+	/**
+	 * @generated
+ 	 */
+	public String getInkWeightSingular(){
+		return inkWeightSingular; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInkWeightSingular(String newVal) {
+		this.inkWeightSingular = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String inkWeightPlural;
+	/**
+	 * @generated
+ 	 */
+	public String getInkWeightPlural(){
+		return inkWeightPlural; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInkWeightPlural(String newVal) {
+		this.inkWeightPlural = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String authorizeDecrypt;
+	/**
+	 * @generated
+ 	 */
+	public String getAuthorizeDecrypt(){
+		return authorizeDecrypt; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAuthorizeDecrypt(String newVal) {
+		this.authorizeDecrypt = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String creditCardApproval;
+	/**
+	 * @generated
+ 	 */
+	public String getCreditCardApproval(){
+		return creditCardApproval; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditCardApproval(String newVal) {
+		this.creditCardApproval = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String trackerDataCollection;
+	/**
+	 * @generated
+ 	 */
+	public String getTrackerDataCollection(){
+		return trackerDataCollection; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTrackerDataCollection(String newVal) {
+		this.trackerDataCollection = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String validationCode;
+	/**
+	 * @generated
+ 	 */
+	public String getValidationCode(){
+		return validationCode; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setValidationCode(String newVal) {
+		this.validationCode = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String pNIAddress;
+	/**
+	 * @generated
+ 	 */
+	public String getPNIAddress(){
+		return pNIAddress; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPNIAddress(String newVal) {
+		this.pNIAddress = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String fieryConnectorUrl;
+	/**
+	 * @generated
+ 	 */
+	public String getFieryConnectorUrl(){
+		return fieryConnectorUrl; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFieryConnectorUrl(String newVal) {
+		this.fieryConnectorUrl = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean pNI45orLater;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getPNI45orLater(){
+		return pNI45orLater; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPNI45orLater(Boolean newVal) {
+		this.pNI45orLater = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean jdfConnector45orLater;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getJdfConnector45orLater(){
+		return jdfConnector45orLater; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setJdfConnector45orLater(Boolean newVal) {
+		this.jdfConnector45orLater = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean supportsNonAsciiCharacters;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSupportsNonAsciiCharacters(){
+		return supportsNonAsciiCharacters; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSupportsNonAsciiCharacters(Boolean newVal) {
+		this.supportsNonAsciiCharacters = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer usePalmPilotTracking;
+	/**
+	 * @generated
+ 	 */
+	public Integer getUsePalmPilotTracking(){
+		return usePalmPilotTracking; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUsePalmPilotTracking(Integer newVal) {
+		this.usePalmPilotTracking = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer palmUserPath;
+	/**
+	 * @generated
+ 	 */
+	public Integer getPalmUserPath(){
+		return palmUserPath; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPalmUserPath(Integer newVal) {
+		this.palmUserPath = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer palmPollingInterval;
+	/**
+	 * @generated
+ 	 */
+	public Integer getPalmPollingInterval(){
+		return palmPollingInterval; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPalmPollingInterval(Integer newVal) {
+		this.palmPollingInterval = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer defaultCountry;
+	/**
+	 * @generated
+ 	 */
+	public Integer getDefaultCountry(){
+		return defaultCountry; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultCountry(Integer newVal) {
+		this.defaultCountry = newVal;
+	}
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
+		if (ELIMINATEWARNINGMESSAGES.equals(propertyName)) return getEliminateWarningMessages();
+		if (ONLYPOSTMARKEDREADYINVOICES.equals(propertyName)) return getOnlyPostMarkedReadyInvoices();
+		if (ENABLEPRICINGSYSTEM.equals(propertyName)) return getEnablePricingSystem();
+		if (ACTIVATEUSEREVENTLOGGING.equals(propertyName)) return getActivateUserEventLogging();
+		if (ENABLEAUTOLOGOUT.equals(propertyName)) return getEnableAutoLogOut();
+		if (SECONDSOFINACTIVITY.equals(propertyName)) return getSecondsOfInactivity();
+		if (AUTOLOGOUTSECONDS.equals(propertyName)) return getAutoLogOutSeconds();
+		if (TRIGGERAFTERPOSTING.equals(propertyName)) return getTriggerAfterPosting();
+		if (SHOWINVOICESWITHTODAY.equals(propertyName)) return getShowInvoicesWithToday();
+		if (LINEITEMTAXES.equals(propertyName)) return getLineItemTaxes();
+		if (AUTOMATICQUIT.equals(propertyName)) return getAutomaticQuit();
+		if (QUITTIME.equals(propertyName)) return getQuitTime();
+		if (SHUTDOWNMESSAGE.equals(propertyName)) return getShutdownMessage();
+		if (COMPANYTITLE.equals(propertyName)) return getCompanyTitle();
+		if (COMPANYADDRESS1.equals(propertyName)) return getCompanyAddress1();
+		if (COMPANYADDRESS2.equals(propertyName)) return getCompanyAddress2();
+		if (COMPANYCITY.equals(propertyName)) return getCompanyCity();
+		if (COMPANYSTATE.equals(propertyName)) return getCompanyState();
+		if (COMPANYZIP.equals(propertyName)) return getCompanyZip();
+		if (COMPANYPHONE.equals(propertyName)) return getCompanyPhone();
+		if (COMPANYFAX.equals(propertyName)) return getCompanyFax();
+		if (COMPANYEMAIL.equals(propertyName)) return getCompanyEmail();
+		if (COMPANYOTHER1.equals(propertyName)) return getCompanyOther1();
+		if (COMPANYOTHER2.equals(propertyName)) return getCompanyOther2();
+		if (COMPANYIDLABEL.equals(propertyName)) return getCompanyIdLabel();
+		if (COMPANYID.equals(propertyName)) return getCompanyId();
+		if (COMPANYSTORENUMBER.equals(propertyName)) return getCompanyStoreNumber();
+		if (COMPANYSTORELOCATIONREF.equals(propertyName)) return getCompanyStoreLocationRef();
+		if (FISCALYEARSTARTMONTH.equals(propertyName)) return getFiscalYearStartMonth();
+		if (WORKSUNDAY.equals(propertyName)) return getWorkSunday();
+		if (WORKMONDAY.equals(propertyName)) return getWorkMonday();
+		if (WORKTUESDAY.equals(propertyName)) return getWorkTuesday();
+		if (WORKWEDNESDAY.equals(propertyName)) return getWorkWednesday();
+		if (WORKTHURSDAY.equals(propertyName)) return getWorkThursday();
+		if (WORKFRIDAY.equals(propertyName)) return getWorkFriday();
+		if (WORKSATURDAY.equals(propertyName)) return getWorkSaturday();
+		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) return getWorkFirstDayOfWeek();
+		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) return getFutureDatesExcludeClosed();
+		if (NUMBERSINTEGERS.equals(propertyName)) return getNumbersIntegers();
+		if (NUMBERSPERCENTAGES.equals(propertyName)) return getNumbersPercentages();
+		if (NUMBERSAMOUNT.equals(propertyName)) return getNumbersAmount();
+		if (NUMBERSTAXRATE.equals(propertyName)) return getNumbersTaxRate();
+		if (NUMBERSRATE.equals(propertyName)) return getNumbersRate();
+		if (NUMBERSFACTOR.equals(propertyName)) return getNumbersFactor();
+		if (NUMBERSINVOICE.equals(propertyName)) return getNumbersInvoice();
+		if (NUMBERSSHORTPERCENT.equals(propertyName)) return getNumbersShortPercent();
+		if (NUMBERSROUNDTO.equals(propertyName)) return getNumbersRoundto();
+		if (ALWAYSROUNDDOWN.equals(propertyName)) return getAlwaysRoundDown();
+		if (ROUNDTAXUP.equals(propertyName)) return getRoundTaxUp();
+		if (USEALTERNATECURRENCY.equals(propertyName)) return getUseAlternateCurrency();
+		if (DISPLAYFORMAT.equals(propertyName)) return getDisplayFormat();
+		if (CONVERSIONFACTOR.equals(propertyName)) return getConversionFactor();
+		if (ALTERNATEROUNDTO.equals(propertyName)) return getAlternateRoundto();
+		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) return getAlternateAlwaysRoundDown();
+		if (INTERNATIONALTEXTSORTING.equals(propertyName)) return getInternationalTextSorting();
+		if (CHILETAXIDVERIFICATION.equals(propertyName)) return getChileTaxIdVerification();
+		if (DISABLETEXTSTYLES.equals(propertyName)) return getDisableTextStyles();
+		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) return getAustrailianInvoiceRounding();
+		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) return getDisableNonTaxableOptions();
+		if (INKWEIGHTSINGULAR.equals(propertyName)) return getInkWeightSingular();
+		if (INKWEIGHTPLURAL.equals(propertyName)) return getInkWeightPlural();
+		if (AUTHORIZEDECRYPT.equals(propertyName)) return getAuthorizeDecrypt();
+		if (CREDITCARDAPPROVAL.equals(propertyName)) return getCreditCardApproval();
+		if (TRACKERDATACOLLECTION.equals(propertyName)) return getTrackerDataCollection();
+		if (VALIDATIONCODE.equals(propertyName)) return getValidationCode();
+		if (PNIADDRESS.equals(propertyName)) return getPNIAddress();
+		if (FIERYCONNECTORURL.equals(propertyName)) return getFieryConnectorUrl();
+		if (PNI45ORLATER.equals(propertyName)) return getPNI45orLater();
+		if (JDFCONNECTOR45ORLATER.equals(propertyName)) return getJdfConnector45orLater();
+		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) return getSupportsNonAsciiCharacters();
+		if (USEPALMPILOTTRACKING.equals(propertyName)) return getUsePalmPilotTracking();
+		if (PALMUSERPATH.equals(propertyName)) return getPalmUserPath();
+		if (PALMPOLLINGINTERVAL.equals(propertyName)) return getPalmPollingInterval();
+		if (DEFAULTCOUNTRY.equals(propertyName)) return getDefaultCountry();
+		return super.getProperty(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+		if (ELIMINATEWARNINGMESSAGES.equals(propertyName)) setEliminateWarningMessages((Boolean)newValue); else
+		if (ONLYPOSTMARKEDREADYINVOICES.equals(propertyName)) setOnlyPostMarkedReadyInvoices((Boolean)newValue); else
+		if (ENABLEPRICINGSYSTEM.equals(propertyName)) setEnablePricingSystem((Boolean)newValue); else
+		if (ACTIVATEUSEREVENTLOGGING.equals(propertyName)) setActivateUserEventLogging((Boolean)newValue); else
+		if (ENABLEAUTOLOGOUT.equals(propertyName)) setEnableAutoLogOut((Boolean)newValue); else
+		if (SECONDSOFINACTIVITY.equals(propertyName)) setSecondsOfInactivity((Boolean)newValue); else
+		if (AUTOLOGOUTSECONDS.equals(propertyName)) setAutoLogOutSeconds((Integer)newValue); else
+		if (TRIGGERAFTERPOSTING.equals(propertyName)) setTriggerAfterPosting((Boolean)newValue); else
+		if (SHOWINVOICESWITHTODAY.equals(propertyName)) setShowInvoicesWithToday((Boolean)newValue); else
+		if (LINEITEMTAXES.equals(propertyName)) setLineItemTaxes((Boolean)newValue); else
+		if (AUTOMATICQUIT.equals(propertyName)) setAutomaticQuit((Boolean)newValue); else
+		if (QUITTIME.equals(propertyName)) setQuitTime((String)newValue); else
+		if (SHUTDOWNMESSAGE.equals(propertyName)) setShutdownMessage((String)newValue); else
+		if (COMPANYTITLE.equals(propertyName)) setCompanyTitle((String)newValue); else
+		if (COMPANYADDRESS1.equals(propertyName)) setCompanyAddress1((String)newValue); else
+		if (COMPANYADDRESS2.equals(propertyName)) setCompanyAddress2((String)newValue); else
+		if (COMPANYCITY.equals(propertyName)) setCompanyCity((City)newValue); else
+		if (COMPANYSTATE.equals(propertyName)) setCompanyState((State)newValue); else
+		if (COMPANYZIP.equals(propertyName)) setCompanyZip((Zip)newValue); else
+		if (COMPANYPHONE.equals(propertyName)) setCompanyPhone((String)newValue); else
+		if (COMPANYFAX.equals(propertyName)) setCompanyFax((String)newValue); else
+		if (COMPANYEMAIL.equals(propertyName)) setCompanyEmail((String)newValue); else
+		if (COMPANYOTHER1.equals(propertyName)) setCompanyOther1((String)newValue); else
+		if (COMPANYOTHER2.equals(propertyName)) setCompanyOther2((String)newValue); else
+		if (COMPANYIDLABEL.equals(propertyName)) setCompanyIdLabel((String)newValue); else
+		if (COMPANYID.equals(propertyName)) setCompanyId((String)newValue); else
+		if (COMPANYSTORENUMBER.equals(propertyName)) setCompanyStoreNumber((String)newValue); else
+		if (COMPANYSTORELOCATIONREF.equals(propertyName)) setCompanyStoreLocationRef((String)newValue); else
+		if (FISCALYEARSTARTMONTH.equals(propertyName)) setFiscalYearStartMonth((String)newValue); else
+		if (WORKSUNDAY.equals(propertyName)) setWorkSunday((Boolean)newValue); else
+		if (WORKMONDAY.equals(propertyName)) setWorkMonday((Boolean)newValue); else
+		if (WORKTUESDAY.equals(propertyName)) setWorkTuesday((Boolean)newValue); else
+		if (WORKWEDNESDAY.equals(propertyName)) setWorkWednesday((Boolean)newValue); else
+		if (WORKTHURSDAY.equals(propertyName)) setWorkThursday((Boolean)newValue); else
+		if (WORKFRIDAY.equals(propertyName)) setWorkFriday((Boolean)newValue); else
+		if (WORKSATURDAY.equals(propertyName)) setWorkSaturday((Boolean)newValue); else
+		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) setWorkFirstDayOfWeek((String)newValue); else
+		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) setFutureDatesExcludeClosed((Boolean)newValue); else
+		if (NUMBERSINTEGERS.equals(propertyName)) setNumbersIntegers((String)newValue); else
+		if (NUMBERSPERCENTAGES.equals(propertyName)) setNumbersPercentages((String)newValue); else
+		if (NUMBERSAMOUNT.equals(propertyName)) setNumbersAmount((String)newValue); else
+		if (NUMBERSTAXRATE.equals(propertyName)) setNumbersTaxRate((String)newValue); else
+		if (NUMBERSRATE.equals(propertyName)) setNumbersRate((String)newValue); else
+		if (NUMBERSFACTOR.equals(propertyName)) setNumbersFactor((String)newValue); else
+		if (NUMBERSINVOICE.equals(propertyName)) setNumbersInvoice((String)newValue); else
+		if (NUMBERSSHORTPERCENT.equals(propertyName)) setNumbersShortPercent((String)newValue); else
+		if (NUMBERSROUNDTO.equals(propertyName)) setNumbersRoundto((Integer)newValue); else
+		if (ALWAYSROUNDDOWN.equals(propertyName)) setAlwaysRoundDown((Boolean)newValue); else
+		if (ROUNDTAXUP.equals(propertyName)) setRoundTaxUp((Boolean)newValue); else
+		if (USEALTERNATECURRENCY.equals(propertyName)) setUseAlternateCurrency((Boolean)newValue); else
+		if (DISPLAYFORMAT.equals(propertyName)) setDisplayFormat((String)newValue); else
+		if (CONVERSIONFACTOR.equals(propertyName)) setConversionFactor((Double)newValue); else
+		if (ALTERNATEROUNDTO.equals(propertyName)) setAlternateRoundto((Integer)newValue); else
+		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) setAlternateAlwaysRoundDown((Boolean)newValue); else
+		if (INTERNATIONALTEXTSORTING.equals(propertyName)) setInternationalTextSorting((Boolean)newValue); else
+		if (CHILETAXIDVERIFICATION.equals(propertyName)) setChileTaxIdVerification((Boolean)newValue); else
+		if (DISABLETEXTSTYLES.equals(propertyName)) setDisableTextStyles((Boolean)newValue); else
+		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) setAustrailianInvoiceRounding((Boolean)newValue); else
+		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) setDisableNonTaxableOptions((Boolean)newValue); else
+		if (INKWEIGHTSINGULAR.equals(propertyName)) setInkWeightSingular((String)newValue); else
+		if (INKWEIGHTPLURAL.equals(propertyName)) setInkWeightPlural((String)newValue); else
+		if (AUTHORIZEDECRYPT.equals(propertyName)) setAuthorizeDecrypt((String)newValue); else
+		if (CREDITCARDAPPROVAL.equals(propertyName)) setCreditCardApproval((String)newValue); else
+		if (TRACKERDATACOLLECTION.equals(propertyName)) setTrackerDataCollection((String)newValue); else
+		if (VALIDATIONCODE.equals(propertyName)) setValidationCode((String)newValue); else
+		if (PNIADDRESS.equals(propertyName)) setPNIAddress((String)newValue); else
+		if (FIERYCONNECTORURL.equals(propertyName)) setFieryConnectorUrl((String)newValue); else
+		if (PNI45ORLATER.equals(propertyName)) setPNI45orLater((Boolean)newValue); else
+		if (JDFCONNECTOR45ORLATER.equals(propertyName)) setJdfConnector45orLater((Boolean)newValue); else
+		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) setSupportsNonAsciiCharacters((Boolean)newValue); else
+		if (USEPALMPILOTTRACKING.equals(propertyName)) setUsePalmPilotTracking((Integer)newValue); else
+		if (PALMUSERPATH.equals(propertyName)) setPalmUserPath((Integer)newValue); else
+		if (PALMPOLLINGINTERVAL.equals(propertyName)) setPalmPollingInterval((Integer)newValue); else
+		if (DEFAULTCOUNTRY.equals(propertyName)) setDefaultCountry((Integer)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+		if (ELIMINATEWARNINGMESSAGES.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ONLYPOSTMARKEDREADYINVOICES.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ENABLEPRICINGSYSTEM.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ACTIVATEUSEREVENTLOGGING.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ENABLEAUTOLOGOUT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SECONDSOFINACTIVITY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (AUTOLOGOUTSECONDS.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (TRIGGERAFTERPOSTING.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SHOWINVOICESWITHTODAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (LINEITEMTAXES.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (AUTOMATICQUIT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (QUITTIME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SHUTDOWNMESSAGE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYTITLE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYADDRESS1.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYADDRESS2.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYCITY.equals(propertyName)) 
+			return new Class<?>[] {City.class};		
+		if (COMPANYSTATE.equals(propertyName)) 
+			return new Class<?>[] {State.class};		
+		if (COMPANYZIP.equals(propertyName)) 
+			return new Class<?>[] {Zip.class};		
+		if (COMPANYPHONE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYFAX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYEMAIL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYOTHER1.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYOTHER2.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYIDLABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYSTORENUMBER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMPANYSTORELOCATIONREF.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FISCALYEARSTARTMONTH.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (WORKSUNDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKMONDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKTUESDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKWEDNESDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKTHURSDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKFRIDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKSATURDAY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (NUMBERSINTEGERS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSPERCENTAGES.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSAMOUNT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSTAXRATE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSRATE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSFACTOR.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSINVOICE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSSHORTPERCENT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NUMBERSROUNDTO.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (ALWAYSROUNDDOWN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ROUNDTAXUP.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (USEALTERNATECURRENCY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DISPLAYFORMAT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (CONVERSIONFACTOR.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (ALTERNATEROUNDTO.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (INTERNATIONALTEXTSORTING.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (CHILETAXIDVERIFICATION.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DISABLETEXTSTYLES.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (INKWEIGHTSINGULAR.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (INKWEIGHTPLURAL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (AUTHORIZEDECRYPT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (CREDITCARDAPPROVAL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (TRACKERDATACOLLECTION.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (VALIDATIONCODE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PNIADDRESS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FIERYCONNECTORURL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PNI45ORLATER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (JDFCONNECTOR45ORLATER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (USEPALMPILOTTRACKING.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (PALMUSERPATH.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (PALMPOLLINGINTERVAL.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (DEFAULTCOUNTRY.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		return super.getPropertyClass(propertyName);
+	}
+	
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+		if (ELIMINATEWARNINGMESSAGES.equals(propertyName)) return PreferencesSystem.class;
+		if (ONLYPOSTMARKEDREADYINVOICES.equals(propertyName)) return PreferencesSystem.class;
+		if (ENABLEPRICINGSYSTEM.equals(propertyName)) return PreferencesSystem.class;
+		if (ACTIVATEUSEREVENTLOGGING.equals(propertyName)) return PreferencesSystem.class;
+		if (ENABLEAUTOLOGOUT.equals(propertyName)) return PreferencesSystem.class;
+		if (SECONDSOFINACTIVITY.equals(propertyName)) return PreferencesSystem.class;
+		if (AUTOLOGOUTSECONDS.equals(propertyName)) return PreferencesSystem.class;
+		if (TRIGGERAFTERPOSTING.equals(propertyName)) return PreferencesSystem.class;
+		if (SHOWINVOICESWITHTODAY.equals(propertyName)) return PreferencesSystem.class;
+		if (LINEITEMTAXES.equals(propertyName)) return PreferencesSystem.class;
+		if (AUTOMATICQUIT.equals(propertyName)) return PreferencesSystem.class;
+		if (QUITTIME.equals(propertyName)) return PreferencesSystem.class;
+		if (SHUTDOWNMESSAGE.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYTITLE.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYADDRESS1.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYADDRESS2.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYCITY.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYSTATE.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYZIP.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYPHONE.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYFAX.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYEMAIL.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYOTHER1.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYOTHER2.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYIDLABEL.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYID.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYSTORENUMBER.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYSTORELOCATIONREF.equals(propertyName)) return PreferencesSystem.class;
+		if (FISCALYEARSTARTMONTH.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKSUNDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKMONDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKTUESDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKWEDNESDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKTHURSDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKFRIDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKSATURDAY.equals(propertyName)) return PreferencesSystem.class;
+		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) return PreferencesSystem.class;
+		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSINTEGERS.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSPERCENTAGES.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSAMOUNT.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSTAXRATE.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSRATE.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSFACTOR.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSINVOICE.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSSHORTPERCENT.equals(propertyName)) return PreferencesSystem.class;
+		if (NUMBERSROUNDTO.equals(propertyName)) return PreferencesSystem.class;
+		if (ALWAYSROUNDDOWN.equals(propertyName)) return PreferencesSystem.class;
+		if (ROUNDTAXUP.equals(propertyName)) return PreferencesSystem.class;
+		if (USEALTERNATECURRENCY.equals(propertyName)) return PreferencesSystem.class;
+		if (DISPLAYFORMAT.equals(propertyName)) return PreferencesSystem.class;
+		if (CONVERSIONFACTOR.equals(propertyName)) return PreferencesSystem.class;
+		if (ALTERNATEROUNDTO.equals(propertyName)) return PreferencesSystem.class;
+		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) return PreferencesSystem.class;
+		if (INTERNATIONALTEXTSORTING.equals(propertyName)) return PreferencesSystem.class;
+		if (CHILETAXIDVERIFICATION.equals(propertyName)) return PreferencesSystem.class;
+		if (DISABLETEXTSTYLES.equals(propertyName)) return PreferencesSystem.class;
+		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) return PreferencesSystem.class;
+		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) return PreferencesSystem.class;
+		if (INKWEIGHTSINGULAR.equals(propertyName)) return PreferencesSystem.class;
+		if (INKWEIGHTPLURAL.equals(propertyName)) return PreferencesSystem.class;
+		if (AUTHORIZEDECRYPT.equals(propertyName)) return PreferencesSystem.class;
+		if (CREDITCARDAPPROVAL.equals(propertyName)) return PreferencesSystem.class;
+		if (TRACKERDATACOLLECTION.equals(propertyName)) return PreferencesSystem.class;
+		if (VALIDATIONCODE.equals(propertyName)) return PreferencesSystem.class;
+		if (PNIADDRESS.equals(propertyName)) return PreferencesSystem.class;
+		if (FIERYCONNECTORURL.equals(propertyName)) return PreferencesSystem.class;
+		if (PNI45ORLATER.equals(propertyName)) return PreferencesSystem.class;
+		if (JDFCONNECTOR45ORLATER.equals(propertyName)) return PreferencesSystem.class;
+		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) return PreferencesSystem.class;
+		if (USEPALMPILOTTRACKING.equals(propertyName)) return PreferencesSystem.class;
+		if (PALMUSERPATH.equals(propertyName)) return PreferencesSystem.class;
+		if (PALMPOLLINGINTERVAL.equals(propertyName)) return PreferencesSystem.class;
+		if (DEFAULTCOUNTRY.equals(propertyName)) return PreferencesSystem.class;
+		return super.getPropertyOwner(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */			
+	@Override
+	public boolean deepEquals(Object obj) {
+		if (! super.deepEquals(obj))
+			return false;
+		PreferencesSystem objT = (PreferencesSystem)obj;
+		if (! SmartEquals(getEliminateWarningMessages(), objT.getEliminateWarningMessages()))
+			return false;
+		if (! SmartEquals(getOnlyPostMarkedReadyInvoices(), objT.getOnlyPostMarkedReadyInvoices()))
+			return false;
+		if (! SmartEquals(getEnablePricingSystem(), objT.getEnablePricingSystem()))
+			return false;
+		if (! SmartEquals(getActivateUserEventLogging(), objT.getActivateUserEventLogging()))
+			return false;
+		if (! SmartEquals(getEnableAutoLogOut(), objT.getEnableAutoLogOut()))
+			return false;
+		if (! SmartEquals(getSecondsOfInactivity(), objT.getSecondsOfInactivity()))
+			return false;
+		if (! SmartEquals(getAutoLogOutSeconds(), objT.getAutoLogOutSeconds()))
+			return false;
+		if (! SmartEquals(getTriggerAfterPosting(), objT.getTriggerAfterPosting()))
+			return false;
+		if (! SmartEquals(getShowInvoicesWithToday(), objT.getShowInvoicesWithToday()))
+			return false;
+		if (! SmartEquals(getLineItemTaxes(), objT.getLineItemTaxes()))
+			return false;
+		if (! SmartEquals(getAutomaticQuit(), objT.getAutomaticQuit()))
+			return false;
+		if (! SmartEquals(getQuitTime(), objT.getQuitTime()))
+			return false;
+		if (! SmartEquals(getShutdownMessage(), objT.getShutdownMessage()))
+			return false;
+		if (! SmartEquals(getCompanyTitle(), objT.getCompanyTitle()))
+			return false;
+		if (! SmartEquals(getCompanyAddress1(), objT.getCompanyAddress1()))
+			return false;
+		if (! SmartEquals(getCompanyAddress2(), objT.getCompanyAddress2()))
+			return false;
+		if (! SmartEquals(getCompanyCity(), objT.getCompanyCity()))
+			return false;
+		if (! SmartEquals(getCompanyState(), objT.getCompanyState()))
+			return false;
+		if (! SmartEquals(getCompanyZip(), objT.getCompanyZip()))
+			return false;
+		if (! SmartEquals(getCompanyPhone(), objT.getCompanyPhone()))
+			return false;
+		if (! SmartEquals(getCompanyFax(), objT.getCompanyFax()))
+			return false;
+		if (! SmartEquals(getCompanyEmail(), objT.getCompanyEmail()))
+			return false;
+		if (! SmartEquals(getCompanyOther1(), objT.getCompanyOther1()))
+			return false;
+		if (! SmartEquals(getCompanyOther2(), objT.getCompanyOther2()))
+			return false;
+		if (! SmartEquals(getCompanyIdLabel(), objT.getCompanyIdLabel()))
+			return false;
+		if (! SmartEquals(getCompanyId(), objT.getCompanyId()))
+			return false;
+		if (! SmartEquals(getCompanyStoreNumber(), objT.getCompanyStoreNumber()))
+			return false;
+		if (! SmartEquals(getCompanyStoreLocationRef(), objT.getCompanyStoreLocationRef()))
+			return false;
+		if (! SmartEquals(getFiscalYearStartMonth(), objT.getFiscalYearStartMonth()))
+			return false;
+		if (! SmartEquals(getWorkSunday(), objT.getWorkSunday()))
+			return false;
+		if (! SmartEquals(getWorkMonday(), objT.getWorkMonday()))
+			return false;
+		if (! SmartEquals(getWorkTuesday(), objT.getWorkTuesday()))
+			return false;
+		if (! SmartEquals(getWorkWednesday(), objT.getWorkWednesday()))
+			return false;
+		if (! SmartEquals(getWorkThursday(), objT.getWorkThursday()))
+			return false;
+		if (! SmartEquals(getWorkFriday(), objT.getWorkFriday()))
+			return false;
+		if (! SmartEquals(getWorkSaturday(), objT.getWorkSaturday()))
+			return false;
+		if (! SmartEquals(getWorkFirstDayOfWeek(), objT.getWorkFirstDayOfWeek()))
+			return false;
+		if (! SmartEquals(getFutureDatesExcludeClosed(), objT.getFutureDatesExcludeClosed()))
+			return false;
+		if (! SmartEquals(getNumbersIntegers(), objT.getNumbersIntegers()))
+			return false;
+		if (! SmartEquals(getNumbersPercentages(), objT.getNumbersPercentages()))
+			return false;
+		if (! SmartEquals(getNumbersAmount(), objT.getNumbersAmount()))
+			return false;
+		if (! SmartEquals(getNumbersTaxRate(), objT.getNumbersTaxRate()))
+			return false;
+		if (! SmartEquals(getNumbersRate(), objT.getNumbersRate()))
+			return false;
+		if (! SmartEquals(getNumbersFactor(), objT.getNumbersFactor()))
+			return false;
+		if (! SmartEquals(getNumbersInvoice(), objT.getNumbersInvoice()))
+			return false;
+		if (! SmartEquals(getNumbersShortPercent(), objT.getNumbersShortPercent()))
+			return false;
+		if (! SmartEquals(getNumbersRoundto(), objT.getNumbersRoundto()))
+			return false;
+		if (! SmartEquals(getAlwaysRoundDown(), objT.getAlwaysRoundDown()))
+			return false;
+		if (! SmartEquals(getRoundTaxUp(), objT.getRoundTaxUp()))
+			return false;
+		if (! SmartEquals(getUseAlternateCurrency(), objT.getUseAlternateCurrency()))
+			return false;
+		if (! SmartEquals(getDisplayFormat(), objT.getDisplayFormat()))
+			return false;
+		if (! SmartEquals(getConversionFactor(), objT.getConversionFactor()))
+			return false;
+		if (! SmartEquals(getAlternateRoundto(), objT.getAlternateRoundto()))
+			return false;
+		if (! SmartEquals(getAlternateAlwaysRoundDown(), objT.getAlternateAlwaysRoundDown()))
+			return false;
+		if (! SmartEquals(getInternationalTextSorting(), objT.getInternationalTextSorting()))
+			return false;
+		if (! SmartEquals(getChileTaxIdVerification(), objT.getChileTaxIdVerification()))
+			return false;
+		if (! SmartEquals(getDisableTextStyles(), objT.getDisableTextStyles()))
+			return false;
+		if (! SmartEquals(getAustrailianInvoiceRounding(), objT.getAustrailianInvoiceRounding()))
+			return false;
+		if (! SmartEquals(getDisableNonTaxableOptions(), objT.getDisableNonTaxableOptions()))
+			return false;
+		if (! SmartEquals(getInkWeightSingular(), objT.getInkWeightSingular()))
+			return false;
+		if (! SmartEquals(getInkWeightPlural(), objT.getInkWeightPlural()))
+			return false;
+		if (! SmartEquals(getAuthorizeDecrypt(), objT.getAuthorizeDecrypt()))
+			return false;
+		if (! SmartEquals(getCreditCardApproval(), objT.getCreditCardApproval()))
+			return false;
+		if (! SmartEquals(getTrackerDataCollection(), objT.getTrackerDataCollection()))
+			return false;
+		if (! SmartEquals(getValidationCode(), objT.getValidationCode()))
+			return false;
+		if (! SmartEquals(getPNIAddress(), objT.getPNIAddress()))
+			return false;
+		if (! SmartEquals(getFieryConnectorUrl(), objT.getFieryConnectorUrl()))
+			return false;
+		if (! SmartEquals(getPNI45orLater(), objT.getPNI45orLater()))
+			return false;
+		if (! SmartEquals(getJdfConnector45orLater(), objT.getJdfConnector45orLater()))
+			return false;
+		if (! SmartEquals(getSupportsNonAsciiCharacters(), objT.getSupportsNonAsciiCharacters()))
+			return false;
+		if (! SmartEquals(getUsePalmPilotTracking(), objT.getUsePalmPilotTracking()))
+			return false;
+		if (! SmartEquals(getPalmUserPath(), objT.getPalmUserPath()))
+			return false;
+		if (! SmartEquals(getPalmPollingInterval(), objT.getPalmPollingInterval()))
+			return false;
+		if (! SmartEquals(getDefaultCountry(), objT.getDefaultCountry()))
+			return false;
+		return true;
+	}			
+}
