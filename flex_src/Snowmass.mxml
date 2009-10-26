@@ -48,7 +48,7 @@
 				<mx:Button x="675" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
 				<mx:Button x="675" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
 				<mx:Button x="675" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')" click="doChargeDefinitions()"/>
-				<mx:Button x="675" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')"/>
+				<mx:Button x="675" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')" click="doSystemPreferences()"/>
 				<mx:Button x="675" y="480" label="Document Preferences" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
 				<mx:Button x="508" y="104" label="Mailing Labels" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
 				<mx:Button x="508" y="198" label="Report Manager" width="158" height="86" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')"/>
@@ -70,6 +70,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.SystemPreferences;
 		import com.efi.view.EditInvoice;
 		import com.efi.view.EditUser;
 		import com.efi.vo.Users;
@@ -175,6 +176,10 @@
 		
 		private function doStockDefinitions():void {
 			var child:StockDefinitions = new StockDefinitions();
+			addUniqueTab(child);
+		}
+		private function doSystemPreferences():void {
+			var child:SystemPreferences = new SystemPreferences();
 			addUniqueTab(child);
 		}
 		private function doEmployee():void {
