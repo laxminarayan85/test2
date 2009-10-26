@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
+width="902" height="873" title="Preferences"
+ label="Preferences" name="SystemPreferences">
+ 
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Producer id="producer" destination="preferences"/>
+	<mx:Consumer id="consumer" destination="preferences" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.vo.PreferencesAccounting;
+	import com.efi.vo.PreferencesEstimating;
+	import com.efi.vo.PreferencesPOS;
+	import com.efi.vo.PreferencesSystem;
+
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+
+	[Bindable]                   
+    private var enableSave:Boolean = true;
+
+                         
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+		dataService.getAll("PreferencesAccounting");
+	}      
+	                                                   						
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+
+	private function doSave():void {
+	 
+	}       
+
+	private function handleSaveResult(ev:ResultEvent):void {
+	}
+	
+	
+	private function handleLoadResult(ev:ResultEvent):void {
+	     
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+		
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+       
+]]>
+                             
+</mx:Script>	
+		
+</mx:Panel>
