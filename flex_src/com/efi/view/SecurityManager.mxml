@@ -112,9 +112,11 @@
 		accessGroup = DataGrid.selectedItem as AccessGroup;
 	}
 	private function doAccessGroup():void{
-		accessGroup = accessGroupList.selectedItem as AccessGroup
-		SecuritydataService.getByAccessGroup("SecuritySetup",accessGroup); 
-		name_edit.text = accessGroup.name;
+		if (accessGroupLists.length > 0) {
+			accessGroup = accessGroupList.selectedItem as AccessGroup
+			SecuritydataService.getByAccessGroup("SecuritySetup",accessGroup); 
+			name_edit.text = accessGroup.name;
+		}
 	}
 
 ]]>
