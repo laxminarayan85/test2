@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
 width="902" height="873" title="Preferences"
- label="Preferences" name="SystemPreferences">
+ label="Preferences" name="systempreferences">
  
-	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+ 	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSystemResult(event)"/>
 	</mx:RemoteObject>
-	
-	<mx:Producer id="producer" destination="preferences"/>
-	<mx:Consumer id="consumer" destination="preferences" message="messageHandler(event.message)"/>
+ 	<mx:RemoteObject id="dataServicePOS" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPOSResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePOSResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceEstimator" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadEstimatorResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveEstimatorResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceAccounting" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAccountingResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveAccountingResult(event)"/>
+	</mx:RemoteObject>
+
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	
 	import com.efi.vo.PreferencesAccounting;
 	import com.efi.vo.PreferencesEstimating;
 	import com.efi.vo.PreferencesPOS;
 	import com.efi.vo.PreferencesSystem;
-
+	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -27,38 +37,67 @@ width="902" height="873" title="Preferences"
 	import mx.rpc.events.FaultEvent;                                         
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+	import mx.collections.XMLListCollection;
 
-	[Bindable]                   
-    private var enableSave:Boolean = true;
-
-                         
+	[Bindable]
+	private var PreferencesSystemArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesPOSArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesEstimatorArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesAccountingArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var treeData:XML =
+    	<root>
+			<node label="System">
+				<node label="Behavior" isBranch="false" tag="1"/>
+				<node label="Company" isBranch="false" tag="2"/>
+				<node label="Business Calendar" isBranch="false" tag="3"/>
+				<node label="Numbers" isBranch="false" tag="4"/>
+				<node label="Alternate Currency" isBranch="false" tag="5"/>
+				<node label="International" isBranch="false" tag="6"/>
+				<node label="Product Activation" isBranch="false" tag="7"/>
+				<node label="Integration" isBranch="false" tag="8"/>
+				<node label="Palm Tracker" isBranch="false" tag="9"/>
+				<node label="Address Formatting" isBranch="false" tag="10"/>
+			</node>
+			<node label="POS">
+				<node label="Receipt" isBranch="false" tag="11"/>
+				<node label="Cash Drawer" isBranch="false" tag="12"/>
+				<node label="Cash Register" isBranch="false" tag="13"/>
+				<node label="Pending List" isBranch="false" tag="14"/>
+			</node>
+			<node label="Estimator">
+				<node label="Estimator Behavior" isBranch="false" tag="15"/>
+				<node label="Estimator Printing" isBranch="false" tag="16"/>
+				<node label="Paper Calculator" isBranch="false" tag="17"/>
+				<node label="Job Ticket" isBranch="false" tag="18"/>
+				<node label="Quantity Breaks" isBranch="false" tag="19"/>
+				<node label="Markups" isBranch="false" tag="20"/>
+				<node label="Stocks and Sizes" isBranch="false" tag="21"/>
+				<node label="Stock Definitions" isBranch="false" tag="22"/>
+				<node label="Pricing Method" isBranch="false" tag="23"/>
+			</node>			
+			<node label="Accounting">
+				<node label="Credit/Defaults" isBranch="false" tag="24"/>
+				<node label="Aging Periods" isBranch="false" tag="25"/>
+				<node label="Sales Categories" isBranch="false" tag="26"/>
+				<node label="GL Profiles" isBranch="false" tag="27"/>
+				<node label="Credit Card Info" isBranch="false" tag="28"/>
+				<node label="Journal Entries" isBranch="false" tag="29"/>
+			</node>
+		</root>;
+	
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();     
-		dataService.getAll("PreferencesAccounting");
-	}      
-	                                                   						
+		openTree();  
+	}
+
 	private function messageHandler(message:IMessage):void
 	{
 	}
-                                  
-
-	private function doSave():void {
-	 
-	}       
-
-	private function handleSaveResult(ev:ResultEvent):void {
-	}
-	
-	
-	private function handleLoadResult(ev:ResultEvent):void {
-	     
-	}
-	                                 
-	private function handleDeleteResult(ev:ResultEvent):void {
-		
-	}
-	      
+     
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -68,9 +107,72 @@ width="902" height="873" title="Preferences"
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
+	
+	private function handleLoadSystemResult(ev:ResultEvent):void {
+	     PreferencesSystemArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadPOSResult(ev:ResultEvent):void {
+	     PreferencesPOSArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadEstimatorResult(ev:ResultEvent):void {
+	     PreferencesEstimatorArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadAccountingResult(ev:ResultEvent):void {
+	     PreferencesAccountingArray = ev.result as ArrayCollection;
+	}
+
+	private function handleSaveSystemResult(ev:ResultEvent):void {
+    	dataServiceSystem.getAll("PreferencesSystem");
+	}
+	private function handleSavePOSResult(ev:ResultEvent):void {
+    	dataServicePOS.getAll("PreferencesPOS");
+	}
+	private function handleSaveEstimatorResult(ev:ResultEvent):void {
+    	dataServiceEstimator.getAll("PreferencesEstimator");
+	}
+	private function handleSaveAccountingResult(ev:ResultEvent):void {
+    	dataServiceAccounting.getAll("PreferencesAccounting");
+	}
+
+	private var openSequence:Array = [];
+
+	private function openTree():void {
+		var nodeList:XMLListCollection = 
+			tvPreference.dataProvider as XMLListCollection;
+		var node:XMLList = nodeList.source;
+		for(var i:int=0; i < 4; i++) {
+			var n:XML = node[i];
+			if( n.children() != null ) {
+				tvPreference.expandItem(n,true,false);
+			}
+		}
+		tvPreference.selectedIndex = 1;
+	}
+
+	private function treeSelect(event:Event):void {
+		
+		var node:XML = XML(event.currentTarget.selectedItem);
+		if( node == null ) return;
+		
+		if( node.@label == "System" ) return;
+		if( node.@label == "POS" ) return;
+		if( node.@label == "Estimator" ) return;
+		if( node.@label == "Accounting" ) return;
+
+		var message:String;
+		message = node.@label; 
+		Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
+		                
+		
+	}
        
 ]]>
                              
 </mx:Script>	
+	<mx:Tree x="0" y="0" width="200" fontSize="8" 
+		id="tvPreference" 
+		dataProvider="{treeData.node}"
+		labelField="@label"
+		height="100%" change="treeSelect(event);"></mx:Tree>
 		
 </mx:Panel>
