@@ -28,6 +28,7 @@
 	<destination id="charges"/>
 	<destination id="salescategories"/>
 	<destination id="productcodes"/>
+	<destination id="systempreferences"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>
