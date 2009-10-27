@@ -165,7 +165,11 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PAPERSTYLE = "PaperStyle";
+	public static final String SHEETFEDPAPER = "SheetFedPaper";
+	/**
+	 * @generated
+	 */
+	public static final String ROLLFEDPAPER = "RollFedPaper";
 
 	/**
 	 * @generated
@@ -722,19 +726,36 @@ public class PressDefinition extends ModelBase {
  	
 	
  	@Basic
-	private String paperStyle;
+	private Boolean sheetFedPaper;
 	/**
 	 * @generated
  	 */
-	public String getPaperStyle(){
-		return paperStyle; 
+	public Boolean getSheetFedPaper(){
+		return sheetFedPaper; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPaperStyle(String newVal) {
-		this.paperStyle = newVal;
+	public void setSheetFedPaper(Boolean newVal) {
+		this.sheetFedPaper = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean rollFedPaper;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getRollFedPaper(){
+		return rollFedPaper; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRollFedPaper(Boolean newVal) {
+		this.rollFedPaper = newVal;
 	}
 
 	/**
@@ -775,7 +796,8 @@ public class PressDefinition extends ModelBase {
 		if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
 		if (DEFAULTSHEET.equals(propertyName)) return getDefaultSheet();
 		if (DEFAULTROLL.equals(propertyName)) return getDefaultRoll();
-		if (PAPERSTYLE.equals(propertyName)) return getPaperStyle();
+		if (SHEETFEDPAPER.equals(propertyName)) return getSheetFedPaper();
+		if (ROLLFEDPAPER.equals(propertyName)) return getRollFedPaper();
 		return super.getProperty(propertyName);
 	}
 	
@@ -817,7 +839,8 @@ public class PressDefinition extends ModelBase {
 		if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
 		if (DEFAULTSHEET.equals(propertyName)) setDefaultSheet((Boolean)newValue); else
 		if (DEFAULTROLL.equals(propertyName)) setDefaultRoll((Boolean)newValue); else
-		if (PAPERSTYLE.equals(propertyName)) setPaperStyle((String)newValue); else
+		if (SHEETFEDPAPER.equals(propertyName)) setSheetFedPaper((Boolean)newValue); else
+		if (ROLLFEDPAPER.equals(propertyName)) setRollFedPaper((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -891,8 +914,10 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (DEFAULTROLL.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (PAPERSTYLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+		if (SHEETFEDPAPER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ROLLFEDPAPER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -935,7 +960,8 @@ public class PressDefinition extends ModelBase {
 		if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
 		if (DEFAULTSHEET.equals(propertyName)) return PressDefinition.class;
 		if (DEFAULTROLL.equals(propertyName)) return PressDefinition.class;
-		if (PAPERSTYLE.equals(propertyName)) return PressDefinition.class;
+		if (SHEETFEDPAPER.equals(propertyName)) return PressDefinition.class;
+		if (ROLLFEDPAPER.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1011,7 +1037,9 @@ public class PressDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getDefaultRoll(), objT.getDefaultRoll()))
 			return false;
-		if (! SmartEquals(getPaperStyle(), objT.getPaperStyle()))
+		if (! SmartEquals(getSheetFedPaper(), objT.getSheetFedPaper()))
+			return false;
+		if (! SmartEquals(getRollFedPaper(), objT.getRollFedPaper()))
 			return false;
 		return true;
 	}			

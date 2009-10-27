@@ -44,7 +44,8 @@ package com.efi.vo
 		public var setupAddRun:Number = 0;
 		public var defaultSheet:Boolean = true;
 		public var defaultRoll:Boolean = true;
-		public var paperStyle:String = "";
+		public var sheetFedPaper:Boolean = true;
+		public var rollFedPaper:Boolean = true;
 	
 	}
 }
