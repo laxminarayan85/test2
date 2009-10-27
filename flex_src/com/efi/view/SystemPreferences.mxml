@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
-width="902" height="873" title="Preferences"
- label="Preferences" name="systempreferences">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*"
+width="100%" height="100%" title="Preferences"
+ label="Preferences" name="systempreferences" xmlns:ns1="com.efi.components.*">
  
  	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
@@ -20,6 +20,8 @@ width="902" height="873" title="Preferences"
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveAccountingResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:Producer id="producer" destination="systempreferences"/>
+	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
@@ -47,50 +49,143 @@ width="902" height="873" title="Preferences"
 	private var PreferencesEstimatorArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesAccountingArray:ArrayCollection = new ArrayCollection();
-	
+
+	[Bindable]
+	private var DaysArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var MonthsArray:ArrayCollection = new ArrayCollection();
+		
 	[Bindable]
 	private var treeData:XML =
     	<root>
 			<node label="System">
-				<node label="Behavior" isBranch="false" tag="1"/>
-				<node label="Company" isBranch="false" tag="2"/>
-				<node label="Business Calendar" isBranch="false" tag="3"/>
-				<node label="Numbers" isBranch="false" tag="4"/>
-				<node label="Alternate Currency" isBranch="false" tag="5"/>
-				<node label="International" isBranch="false" tag="6"/>
-				<node label="Product Activation" isBranch="false" tag="7"/>
-				<node label="Integration" isBranch="false" tag="8"/>
-				<node label="Palm Tracker" isBranch="false" tag="9"/>
-				<node label="Address Formatting" isBranch="false" tag="10"/>
+				<node label="Behavior" isBranch="false" tag="0"/>
+				<node label="Company" isBranch="false" tag="1"/>
+				<node label="Business Calendar" isBranch="false" tag="2"/>
+				<node label="Numbers" isBranch="false" tag="3"/>
+				<node label="Alternate Currency" isBranch="false" tag="4"/>
+				<node label="International" isBranch="false" tag="5"/>
+				<node label="Product Activation" isBranch="false" tag="6"/>
+				<node label="Integration" isBranch="false" tag="7"/>
+				<node label="Palm Tracker" isBranch="false" tag="8"/>
+				<node label="Address Formatting" isBranch="false" tag="9"/>
 			</node>
 			<node label="POS">
-				<node label="Receipt" isBranch="false" tag="11"/>
-				<node label="Cash Drawer" isBranch="false" tag="12"/>
-				<node label="Cash Register" isBranch="false" tag="13"/>
-				<node label="Pending List" isBranch="false" tag="14"/>
+				<node label="Receipt" isBranch="false" tag="10"/>
+				<node label="Cash Drawer" isBranch="false" tag="11"/>
+				<node label="Cash Register" isBranch="false" tag="12"/>
+				<node label="Pending List" isBranch="false" tag="13"/>
 			</node>
 			<node label="Estimator">
-				<node label="Estimator Behavior" isBranch="false" tag="15"/>
-				<node label="Estimator Printing" isBranch="false" tag="16"/>
-				<node label="Paper Calculator" isBranch="false" tag="17"/>
-				<node label="Job Ticket" isBranch="false" tag="18"/>
-				<node label="Quantity Breaks" isBranch="false" tag="19"/>
-				<node label="Markups" isBranch="false" tag="20"/>
-				<node label="Stocks and Sizes" isBranch="false" tag="21"/>
-				<node label="Stock Definitions" isBranch="false" tag="22"/>
-				<node label="Pricing Method" isBranch="false" tag="23"/>
+				<node label="Estimator Behavior" isBranch="false" tag="14"/>
+				<node label="Estimator Printing" isBranch="false" tag="15"/>
+				<node label="Paper Calculator" isBranch="false" tag="16"/>
+				<node label="Job Ticket" isBranch="false" tag="17"/>
+				<node label="Quantity Breaks" isBranch="false" tag="18"/>
+				<node label="Markups" isBranch="false" tag="19"/>
+				<node label="Stocks and Sizes" isBranch="false" tag="20"/>
+				<node label="Stock Definitions" isBranch="false" tag="21"/>
+				<node label="Pricing Method" isBranch="false" tag="22"/>
 			</node>			
 			<node label="Accounting">
-				<node label="Credit/Defaults" isBranch="false" tag="24"/>
-				<node label="Aging Periods" isBranch="false" tag="25"/>
-				<node label="Sales Categories" isBranch="false" tag="26"/>
-				<node label="GL Profiles" isBranch="false" tag="27"/>
-				<node label="Credit Card Info" isBranch="false" tag="28"/>
+				<node label="Credit/Defaults" isBranch="false" tag="23"/>
+				<node label="Aging Periods" isBranch="false" tag="24"/>
+				<node label="Sales Categories" isBranch="false" tag="25"/>
+				<node label="GL Profiles" isBranch="false" tag="26"/>
+				<node label="Credit Card Info" isBranch="false" tag="27"/>
+				<node label="Order Number Format" isBranch="false" tag="28"/>
 				<node label="Journal Entries" isBranch="false" tag="29"/>
 			</node>
 		</root>;
 	
+	private function fillDaysArray():void {
+		var day:Object=new Object();
+		day.name="Sunday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Monday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Tuesday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Wednesday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Thursday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Friday";
+		DaysArray.addItem(day);
+
+		day=new Object();
+		day.name="Saturday";
+		DaysArray.addItem(day);
+		
+	}
+
+	private function fillMonthsArray():void{
+		var month:Object=new Object();
+		month.name="January";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="February";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="March";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="April";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="May";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="June";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="July";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="August";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="September";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="October";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="November";
+		MonthsArray.addItem(month);
+
+		month=new Object();
+		month.name="December";
+		MonthsArray.addItem(month);
+	}
+	
 	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();
+		
+		fillDaysArray();
+		fillMonthsArray();
 		openTree();  
 	}
 
@@ -147,6 +242,7 @@ width="902" height="873" title="Preferences"
 			}
 		}
 		tvPreference.selectedIndex = 1;
+		preferences_stack.selectedIndex = 0; 
 	}
 
 	private function treeSelect(event:Event):void {
@@ -159,12 +255,23 @@ width="902" height="873" title="Preferences"
 		if( node.@label == "Estimator" ) return;
 		if( node.@label == "Accounting" ) return;
 
-		var message:String;
-		message = node.@label; 
-		Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
-		                
+		//var message:String;
+		//message = node.@label; 
+		//Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
+		preferences_stack.selectedIndex = node.@tag; 
+	}
+	
+	private function doCity():void {
 		
 	}
+
+	private function doState():void {
+		
+	}
+	private function doZip():void {
+		
+	}
+	
        
 ]]>
                              
@@ -174,5 +281,198 @@ width="902" height="873" title="Preferences"
 		dataProvider="{treeData.node}"
 		labelField="@label"
 		height="100%" change="treeSelect(event);"></mx:Tree>
+
+	<mx:VBox id="vbox2" left="200" height="100%" width="100%" creationPolicy="all">
+		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
+			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" text="Behavior" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="Eliminate some warning messages"/>
+				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="Only post invoices marked ready"/>
+				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="Enable Pricing system Import / Eport features"/>
+				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="Activate user event logging, all workstatioins."/>
+				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="Enable automatic log out"/>
+				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="Seconds of inactivity to trigger:"/>
+				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="Trigger after posting"/>
+				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="Show invoices with firm due date of &quot;today&quot; at login"/>
+				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
+				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
+				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds"/>
+				<mx:Label x="50" y="330" text="Time of day to quit:"/>
+				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit"/>
+				<mx:Label x="80" y="367" text="Shut down notification message:"/>
+				<mx:TextArea x="80" y="393" width="449" height="72" id="txtShutdownNotificationMessage"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Company" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="88" y="27" text="Title:"/>
+				<mx:TextInput x="125" y="25" width="400" id="txtTitle"/>
+				<ns1:AddressEditor x="125" y="50" id="address_editor" height="161" width="400"/>
+
+				<mx:Label x="79" y="217" text="Phone:"/>
+				<mx:TextInput x="127" y="215" width="148" id="txtPhone"/>
+				<mx:Label x="344" y="217" text="Fax:"/>
+				<mx:TextInput x="377" y="215" width="148" id="txtFax"/>
+				<mx:Label x="79" y="242" text="E-Mail:"/>
+				<mx:TextInput x="125" y="240" width="400" id="txtEmail"/>
+				<mx:Label x="81" y="267" text="Other:"/>
+				<mx:TextInput x="125" y="265" width="400" id="txtOther1"/>
+				<mx:Label x="81" y="292" text="Other:"/>
+				<mx:TextInput x="125" y="290" width="400" id="txtOther2"/>
+				<mx:Label x="8" y="317" text="Company ID Label:"/>
+				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel"/>
+				<mx:Label x="242" y="317" text="Company ID:"/>
+				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId"/>
+				
+				<mx:Label x="187" y="367" text="Store Number:"/>
+				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber"/>
+				<mx:Label x="52" y="392" text="Workstation/Store Location Reference:"/>
+				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference"/>
+				<mx:TextArea x="125" y="420" width="400" height="63">
+					<mx:text>The company ID is printed on Invoices and Estimates, the workstation specific Store location information prints on receipts and appears in the Account history transactions, if empy the global Store Number is used for these purposes.</mx:text>
+				</mx:TextArea>
+				
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="calendar_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Business Calendar" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="50" y="92" text="Fiscal year starts first day of:"/>
+				<mx:ComboBox x="220" y="90" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
+				<mx:Label x="176" y="146" text="Current Range:"/>
+				<mx:TextArea x="270" y="145" height="19" width="210"/>
+				
+				<mx:Label x="50" y="185" text="Work Days:"/>
+				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="53" y="250" id="opgSunday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="93" y="250" id="opgMonday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="133" y="250" id="opgTuesday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="173" y="250" id="opgWednesday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="213" y="250" id="opgThursday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="253" y="250" id="opgFriday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="293" y="250" id="opgSaturday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:Button x="40" y="211" label="S" width="40"/>
+				<mx:Button x="80" y="211" label="M" width="40"/>
+				<mx:Button x="120" y="211" label="T" width="40"/>
+				<mx:Button x="160" y="211" label="W" width="40"/>
+				<mx:Button x="200" y="211" label="T" width="40"/>
+				<mx:Button x="240" y="211" label="F" width="40"/>
+				<mx:Button x="280" y="211" label="S" width="40"/>
+				<mx:Label x="325" y="250" text="First Day of Work Week"/>
+				<mx:CheckBox x="40" y="327" label="Future dates exclude days that company is Closed"/>
+				
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="numbers_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Numbers" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="alternatecurrency_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Alternate Currency" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="International" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="activation_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Product Activation" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="integration_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Integration" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="palmtracking_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Palm Tracking" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="addressformatting_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Address Formatting" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="receipt_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Receipt" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="cashdrawer_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Drawer" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Behavior" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="estimatorprinting_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Printing" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="papercalculator_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Paper Calculator" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Job Ticket" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Quantity Breaks" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Markups" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="stocksizes_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Stocks And Sizes" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="pricingmethod_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="creditdefaults_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Credit/Defaults" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="agingperiods_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Aging Periods" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="glprofiles_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Order Number Format" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="journalentries_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" height="20" text="Journal Entries" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
+		</mx:ViewStack>					
+	</mx:VBox>
 		
 </mx:Panel>
