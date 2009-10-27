@@ -25,6 +25,7 @@ width="100%" height="100%" title="Preferences"
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import mx.controls.Text;
 	
 	import com.efi.vo.PreferencesAccounting;
 	import com.efi.vo.PreferencesEstimating;
@@ -186,6 +187,9 @@ width="100%" height="100%" title="Preferences"
 		
 		fillDaysArray();
 		fillMonthsArray();
+		
+		checkAlternateCurrency();
+		
 		openTree();  
 	}
 
@@ -260,19 +264,22 @@ width="100%" height="100%" title="Preferences"
 		//Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
 		preferences_stack.selectedIndex = node.@tag; 
 	}
-	
-	private function doCity():void {
-		
+	private function setDisplayText(text:TextInput):void{
+		txtDisplayArea.text = "";
+		txtDisplayDemo.text = text.name;
 	}
 
-	private function doState():void {
-		
-	}
-	private function doZip():void {
-		
+	private function checkEnableAutoLogOut():void{
+		chkSecondsOfInactivity.enabled = chkEnableAutomaticLogOut.selected;
+		chkTriggerAfterPosting.enabled = chkEnableAutomaticLogOut.selected;
 	}
 	
-       
+	private function checkAlternateCurrency():void{
+		txtFormat.enabled = chkUseAlternateCurrency.selected;
+		txtConversionFactor.enabled = chkUseAlternateCurrency.selected;
+		txtRoundToAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
+		chkAlwaysRoundDownAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
+	}       
 ]]>
                              
 </mx:Script>	
@@ -291,9 +298,9 @@ width="100%" height="100%" title="Preferences"
 				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="Only post invoices marked ready"/>
 				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="Enable Pricing system Import / Eport features"/>
 				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="Activate user event logging, all workstatioins."/>
-				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="Enable automatic log out"/>
-				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="Seconds of inactivity to trigger:"/>
-				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="Trigger after posting"/>
+				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="Enable automatic log out" change="checkEnableAutoLogOut();"/>
+				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="Seconds of inactivity to trigger:" enabled="false"/>
+				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="Trigger after posting" enabled="false"/>
 				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="Show invoices with firm due date of &quot;today&quot; at login"/>
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
 				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
@@ -306,21 +313,18 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Company" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
 
-				<mx:Label x="88" y="27" text="Title:"/>
-				<mx:TextInput x="125" y="25" width="400" id="txtTitle"/>
-				<ns1:AddressEditor x="125" y="50" id="address_editor" height="161" width="400"/>
-
-				<mx:Label x="79" y="217" text="Phone:"/>
-				<mx:TextInput x="127" y="215" width="148" id="txtPhone"/>
-				<mx:Label x="344" y="217" text="Fax:"/>
-				<mx:TextInput x="377" y="215" width="148" id="txtFax"/>
-				<mx:Label x="79" y="242" text="E-Mail:"/>
-				<mx:TextInput x="125" y="240" width="400" id="txtEmail"/>
-				<mx:Label x="81" y="267" text="Other:"/>
-				<mx:TextInput x="125" y="265" width="400" id="txtOther1"/>
-				<mx:Label x="81" y="292" text="Other:"/>
-				<mx:TextInput x="125" y="290" width="400" id="txtOther2"/>
+				<mx:Label x="79" y="197" text="Phone:"/>
+				<mx:TextInput x="127" y="195" width="148" id="txtPhone"/>
+				<mx:Label x="344" y="197" text="Fax:"/>
+				<mx:TextInput x="377" y="195" width="148" id="txtFax"/>
+				<mx:Label x="79" y="227" text="E-Mail:"/>
+				<mx:TextInput x="125" y="225" width="400" id="txtEmail"/>
+				<mx:Label x="81" y="257" text="Other:"/>
+				<mx:TextInput x="125" y="255" width="400" id="txtOther1"/>
+				<mx:Label x="81" y="287" text="Other:"/>
+				<mx:TextInput x="125" y="285" width="400" id="txtOther2"/>
 				<mx:Label x="8" y="317" text="Company ID Label:"/>
 				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel"/>
 				<mx:Label x="242" y="317" text="Company ID:"/>
@@ -367,14 +371,74 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="numbers_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Numbers" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="67" y="32" text="Integers:"/>
+				<mx:Label x="46" y="62" text="Percentages:"/>
+				<mx:Label x="71" y="92" text="Amount:"/>
+				<mx:Label x="88" y="122" text="Rate:"/>
+				<mx:Label x="81" y="152" text="Factor:"/>
+				<mx:Label x="74" y="182" text="Invoice:"/>
+				<mx:Label x="40" y="212" text="Short Percent:"/>
+				<mx:Label x="63" y="242" text="Round to:"/>
+
+				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);"/>
+				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);"/>
+				<mx:TextInput x="127" y="90" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);"/>
+				<mx:TextInput x="127" y="120" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);"/>
+				<mx:TextInput x="127" y="150" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);"/>
+				<mx:TextInput x="127" y="180" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);"/>
+				<mx:TextInput x="127" y="210" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);"/>
+				<mx:TextInput x="127" y="240" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);"/>
+
+				<mx:CheckBox x="216" y="240"  id="chkAlwaysRoundDown" label="Always Round Down"/>
+				<mx:CheckBox x="216" y="270"  id="chkTaxRoundUp" label="Tax Round Up"/>
+
+				<mx:Button x="50" y="320" label="Dollar"  width="75"/>
+				<mx:Button x="130" y="320" label="Pound"  width="75"/>
+				<mx:Button x="210" y="320" label="Yen"  width="75"/>
+				<mx:Button x="290" y="320" label="Euro"  width="75"/>
+				<mx:Button x="370" y="320" label="Space"  width="75"/>
+				<mx:TextArea x="23" y="391" height="181" width="451" id="txtDisplayArea" enabled="false"/>
+				<mx:Text x="50" y="374" text="xx" id="txtDisplayDemo"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="alternatecurrency_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Alternate Currency" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="Use Alternate Currency System." change="checkAlternateCurrency();"/>
+
+				<mx:Label x="84" y="62" text="Format:"/>
+				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false"/>
+				<mx:Label x="24" y="92" text="Conversion Factor:"/>
+				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false"/>
+				<mx:Label x="72" y="122" text="Round to:"/>
+				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false"/>
+
+				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="Always Round Down" enabled="false"/>
+				
+				
+				<mx:TextArea x="23" y="203" height="369" width="451" id="txtSampleArea" enabled="false"/>
+				<mx:Text x="50" y="186" text="Sample Currency" id="txtSampleDemo"/>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="International" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30"  id="chkUseInternationalTextSorting" label="Use international (slower) text sorting"/>
+				<mx:CheckBox x="50" y="60"  id="chkUseChileTaxIdVerification" label="Use Chile Tax ID verification"/>
+				<mx:CheckBox x="50" y="90"  id="chkDisableTextStyles" label="Disable text styles"/>
+				<mx:CheckBox x="50" y="120"  id="chkUseAustralianInvoiceRounding" label="Use Australian invoice rounding"/>
+				<mx:CheckBox x="50" y="150"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
+
+				<mx:Label x="26" y="182" text="Ink Weight(singular):"/>
+				<mx:TextInput x="154" y="180" id="txtInkWeightSingular"/>
+				<mx:Label x="39" y="212" text="Ink Weight(plural):"/>
+				<mx:TextInput x="154" y="210" id="txtInkWeightPlural"/>
+
+				<mx:Label x="27" y="272" text="Authorize the decrypt of CC to ADMIN users:"/>
+				<mx:TextInput x="280" y="270" width="187" id="txtAuthorizeDecrypt"/>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="activation_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Product Activation" textAlign="center"/>
