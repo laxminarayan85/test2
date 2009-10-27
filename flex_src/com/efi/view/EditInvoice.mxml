@@ -363,8 +363,8 @@
 					<mx:Label x="325" y="46" text="Change Acct" width="79" textAlign="center"/>
 				</mx:Canvas>	
 			</mx:VBox>
-			<mx:VBox id="vbox2" height="388" width="100%">
-				<mx:ViewStack id="job_costing_stack" width="100%" height="364">
+			<mx:VBox id="vbox2" height="388" width="100%" creationPolicy="all">
+				<mx:ViewStack id="job_costing_stack" width="100%" height="364" >
 					<mx:Canvas width="100%" height="100%" id="invoice_job_canvas" hideEffect="effect" showEffect="effect">
 						<mx:DataGrid x="0" y="0" width="100%" height="322" id="invoice_job_grid" dataProvider="{invoice.jobs}">
 							<mx:columns>
