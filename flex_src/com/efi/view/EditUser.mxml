@@ -6,6 +6,7 @@ width="100%" height="557" defaultButton="{submitButton}" creationComplete="init(
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="accessGroupService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAccessGroupResult(event)"/>
@@ -89,6 +90,14 @@ password="{passwordField.text}"/>
 		mapToUserData();
 		dataService.addUpdate(user1);                                        
 	}
+	private function deleteUser():void {              
+		if(dataGrid.selectedItem != null) {
+			var selectedItem:Users = dataGrid.selectedItem as Users;
+			//deleteService.deleteUser(selectedItem.id);
+			dataService.deleteItem("Users",selectedItem.id);                                     
+     	}
+                                         
+	}
                                   
     private function send():void
 	{
@@ -168,7 +177,9 @@ password="{passwordField.text}"/>
 	private function handleLoadAccessLevelResult(ev:ResultEvent):void {
 		accessLevels = ev.result as ArrayCollection;
 	}
-	
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     dataService.getAll("Users");
+	}
 	private function mapToUserData():void{
 		user1.name= nameField.text;
 		user1.password = passwordField.text;
@@ -248,5 +259,6 @@ password="{passwordField.text}"/>
 	<mx:Label x="357" y="190" text="Access Level:"/>
 	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList"> </mx:List>
 	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
+	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>
 </mx:Canvas>
 </mx:TitleWindow>

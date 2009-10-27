@@ -40,8 +40,8 @@
 				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
 				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
 				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
-				<mx:Button x="10" y="198" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')"/>
-				<mx:Button x="10" y="292" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')"/>
+				<mx:Button x="10" y="198" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
+				<mx:Button x="10" y="292" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
 				<mx:Button x="674" y="198" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')"/>
 				<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
 				<mx:Button x="342" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
@@ -84,6 +84,8 @@
 		import com.efi.view.EditContact;
 		import com.efi.view.EmployeeManager;
 		import com.efi.view.SecurityManager;
+		import com.efi.view.AccountHistory;
+		import com.efi.view.EstimateHistory;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -173,6 +175,15 @@
 			var child:ChargeDefinitions = new ChargeDefinitions()
 			addUniqueTab(child);
 		}
+		private function doAccountHistory():void {
+			var child:AccountHistory = new AccountHistory()
+			addUniqueTab(child);
+		}
+		private function doEstimateHistory():void {
+			var child:EstimateHistory = new EstimateHistory()
+			addUniqueTab(child);
+		}
+		
 		
 		private function doStockDefinitions():void {
 			var child:StockDefinitions = new StockDefinitions();

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" label="Account History" name="Account History"
+width="786" height="587"  creationComplete="init()"  
+     title="Account History" xmlns:text="flash.text.*">
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Script>                                   
+<![CDATA[
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
+	import com.efi.vo.Account; 
+	import com.efi.vo.Invoice;         
+	
+	[Bindable]                                         
+	private var account:Account;
+	
+	
+	
+	public function init():void {
+		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+		
+	}  
+	private function doGet():void {
+		
+	}  
+	
+	public function setAccount(account2:Account):void
+	{
+		this.account = account2;
+	
+	}			
+	private function handleLoadResult(event:Event):void {
+		
+	}
+	private function handleSaveResult(event:Event):void {
+		
+		
+	}
+	private function handleDeleteResult(event:Event):void {
+		
+	}
+	private function handleFault(event:Event):void {
+		
+	} 		
+]]>
+                             
+</mx:Script>
+<mx:Canvas width="100%" height="100%">
+	<mx:Button x="30" y="10" width="38" height="38" click="doGet();">
+			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="30" y="56" text="Get" width="38" textAlign="center"/>
+		<mx:Label text="Current Balance:" width="102" fontWeight="bold" y="123" x="10"/>
+		<mx:Text x="134" y="123"  text="Text" width="81"/>
+	<mx:DataGrid x="10" y="161"  height="292">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Posted" dataField="col1"/>
+			<mx:DataGridColumn headerText="Invoice #" dataField="col2"/>
+			<mx:DataGridColumn headerText="Description" dataField="col3"/>
+			<mx:DataGridColumn headerText="Total" dataField="col1"/>
+			<mx:DataGridColumn headerText="Paid on" dataField="col2"/>
+			<mx:DataGridColumn headerText="Ref #" dataField="col3"/>
+			<mx:DataGridColumn headerText="PO #" dataField="col1"/>
+			
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Label x="429" y="123" text="Show History Type:"/>
+	<mx:List x="548" y="120" height="21" id="history_Type"></mx:List>
+
+</mx:Canvas>
+
+</mx:Panel>

@@ -62,7 +62,7 @@ creationComplete="init()">
 		if(dataGrid.selectedItem != null) {
 			var selectedItem:Users = dataGrid.selectedItem as Users;
 			//deleteService.deleteUser(selectedItem.id);
-			dataService.deleteItem("User",selectedItem.id);                                     
+			dataService.deleteItem("Users",selectedItem.id);                                     
      	}
                                          
 	}
