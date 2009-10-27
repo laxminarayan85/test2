@@ -58,6 +58,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 	    pressdataService.getAll("PressDefinitions");
 	    locationdataService.getAll("Location");
 	    productdataService.getAll("ProductCode");
+	    job= new Job();
 	    
 	}  
 	private function findItem(name:String, array:ArrayCollection):int {
