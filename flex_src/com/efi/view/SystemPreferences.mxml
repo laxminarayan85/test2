@@ -19,6 +19,9 @@ width="100%" height="100%" title="Preferences"
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAccountingResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveAccountingResult(event)"/>
 	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceCountry" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountryResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
@@ -31,6 +34,8 @@ width="100%" height="100%" title="Preferences"
 	import com.efi.vo.PreferencesEstimating;
 	import com.efi.vo.PreferencesPOS;
 	import com.efi.vo.PreferencesSystem;
+	
+	import com.efi.vo.Country;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -56,7 +61,10 @@ width="100%" height="100%" title="Preferences"
 
 	[Bindable]
 	private var MonthsArray:ArrayCollection = new ArrayCollection();
-		
+
+	[Bindable]
+	private var CountryArray:ArrayCollection = new ArrayCollection();
+
 	[Bindable]
 	private var treeData:XML =
     	<root>
@@ -189,7 +197,7 @@ width="100%" height="100%" title="Preferences"
 		fillMonthsArray();
 		
 		checkAlternateCurrency();
-		
+		dataServiceCountry.getAll("Country");
 		openTree();  
 	}
 
@@ -218,6 +226,9 @@ width="100%" height="100%" title="Preferences"
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
 	     PreferencesAccountingArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCountryResult(ev:ResultEvent):void {
+	     CountryArray = ev.result as ArrayCollection;
 	}
 
 	private function handleSaveSystemResult(ev:ResultEvent):void {
@@ -279,7 +290,23 @@ width="100%" height="100%" title="Preferences"
 		txtConversionFactor.enabled = chkUseAlternateCurrency.selected;
 		txtRoundToAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
 		chkAlwaysRoundDownAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
-	}       
+	}
+	
+	private function doCheckPNIConnection():void{
+		
+	}
+	private function doBrowsePath():void{
+		
+	}
+	
+	private function doCreateLocationFile():void{
+		
+	}
+	
+	private function doCheckForPalmData():void{
+		
+	}
+	
 ]]>
                              
 </mx:Script>	
@@ -443,18 +470,64 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="activation_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Product Activation" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="208" y="32" text="Credit Card Approval:"/>
+				<mx:Label x="194" y="62" text="Tracker Data Collection:"/>
+				<mx:Label x="235" y="92" text="Validation Code:"/>
+
+				<mx:TextInput x="335" y="30" id="txtCreditCardApproval"/>
+				<mx:TextInput x="335" y="60" id="txtTrackerDataCollection"/>
+				<mx:TextInput x="335" y="90" id="txtValidationCode" enabled="false"/>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="integration_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Integration" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:Panel x="10" y="27" width="520" height="174" layout="absolute" title="PNI">
+					<mx:Label x="20" y="12" text="PrintNet Integrator IP Address:"/>
+					<mx:Button x="20" y="35" label="Check Connection" click="doCheckPNIConnection();"/>
+					<mx:Label x="20" y="72" text="PNI Status:"/>
+
+					<mx:TextInput x="199" y="10" id="txtPNIAddress" width="291"/>
+					<mx:TextInput x="165" y="37" id="txtPNIConnection" width="325"/>
+					<mx:TextInput x="87" y="70" id="txtPNIStatus" width="403"/>
+
+					<mx:CheckBox x="20" y="100"  id="chkPNIIsVersion45orLater" label="The PrintNet Integrator is version 4.5 or later"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="218" width="520" height="160" layout="absolute" title="JDF Connector">
+					<mx:Label x="20" y="12" text="Fiery Connector URL:"/>
+					<mx:TextInput x="141" y="10" id="txtFieryUrl" width="349"/>
+					<mx:CheckBox x="20" y="50"  id="chkJDFConnectorIsVersion45orLater" label="The JDF Connector URL from the PNI (PNI 4.5 and later"/>
+					<mx:CheckBox x="20" y="80"  id="chkJDFConnectorSupportsNonAsciiCharacters" label="JDF Connector supports non-ASCII characters"/>
+
+				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="palmtracking_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Palm Tracking" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30"  id="chkUsePalmPilotTracking" label="Use PalmPilot tracking"/>
+				<mx:Label x="50" y="60" text="Palm user path:"/>
+				<mx:TextInput x="50" y="78" id="txtPalmPath" width="349"/>
+				<mx:Button x="50" y="110" label="Browse..." click="doBrowsePath();"/>
+				<mx:Label x="138" y="112" text="for HotSync application."/>
+				
+				<mx:Label x="50" y="142" text="Polling Interval:"/>
+				<mx:TextInput x="145" y="140" id="txtPollingInterval" width="57"/>
+				<mx:Label x="205" y="142" text="seconds."/>
+
+				<mx:Button x="50" y="180" label="Create Location file" click="doCreateLocationFile();" width="141"/>
+				<mx:Button x="50" y="210" label="Check for Palm data" click="doCheckForPalmData();" width="141"/>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="addressformatting_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Address Formatting" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:Label x="50" y="32" text="Default Country:"/>
+				<mx:ComboBox x="148" y="30" id="cboDefaultCountry"  dataProvider="{CountryArray}" labelField="name" width="181"/>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="receipt_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Receipt" textAlign="center"/>
