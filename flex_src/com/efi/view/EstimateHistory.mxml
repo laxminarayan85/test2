@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" label="Estmate History" name="Estmate History"
-width="786" height="587"  creationComplete="init()"  
+width="638" height="479"  creationComplete="init()"  
      title="Estimate History" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -15,7 +15,7 @@ width="786" height="587"  creationComplete="init()"
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection;                                         
 	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                           
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
     import mx.printing.FlexPrintJob;
@@ -30,12 +30,14 @@ width="786" height="587"  creationComplete="init()"
 	[Bindable]                                         
 	private var account:Account;
 	
-	
+	[Bindable]
+    private var estimates:ArrayCollection = new ArrayCollection(); 
 	
 	public function init():void {
 		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
+	    dataService.getAll("Estimate");
 		
 	}  
 	private function doGet():void {
@@ -47,18 +49,28 @@ width="786" height="587"  creationComplete="init()"
 		this.account = account2;
 	
 	}			
-	private function handleLoadResult(event:Event):void {
-		
+	private function handleLoadResult(ev:ResultEvent):void {
+		estimates = ev.result as ArrayCollection;
+	
 	}
 	private function handleSaveResult(event:Event):void {
 		
+		 dataService.getAll("Estimate");
 		
 	}
 	private function handleDeleteResult(event:Event):void {
+		 dataService.getAll("Estimate");
+		
 		
 	}
-	private function handleFault(event:Event):void {
-		
+	private function handleFault(event:FaultEvent):void {
+		var message:String;
+		              
+		message = "Error: "                          
+		+ event.fault.faultCode + " - "                                  
+		+ event.fault.faultDetail + " - "                                  
+		+ event.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);        	
 	} 		
 ]]>
                              
@@ -68,7 +80,7 @@ width="786" height="587"  creationComplete="init()"
 			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="30" y="56" text="Get" width="38" textAlign="center"/>
-	<mx:DataGrid x="10" y="82"  height="292">
+	<mx:DataGrid x="10" y="82"  height="292" id="estimate_grid" dataProvider="{estimates}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Created" dataField="col1"/>
 			<mx:DataGridColumn headerText="Estimate #" dataField="col2"/>

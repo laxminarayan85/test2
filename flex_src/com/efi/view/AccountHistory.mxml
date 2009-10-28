@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" label="Account History" name="Account History"
-width="786" height="587"  creationComplete="init()"  
+width="786" height="479"  creationComplete="init()"  
      title="Account History" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -30,12 +30,14 @@ width="786" height="587"  creationComplete="init()"
 	[Bindable]                                         
 	private var account:Account;
 	
-	
+	[Bindable]
+    private var invoices:ArrayCollection = new ArrayCollection(); 
 	
 	public function init():void {
 		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
+	    dataService.getAll("Invoice");
 		
 	}  
 	private function doGet():void {
@@ -47,18 +49,25 @@ width="786" height="587"  creationComplete="init()"
 		this.account = account2;
 	
 	}			
-	private function handleLoadResult(event:Event):void {
-		
+	private function handleLoadResult(event:ResultEvent):void {
+		invoices = event.result as ArrayCollection;
 	}
 	private function handleSaveResult(event:Event):void {
-		
+		dataService.getAll("Invoice");
 		
 	}
 	private function handleDeleteResult(event:Event):void {
+		dataService.getAll("Invoice");
 		
 	}
-	private function handleFault(event:Event):void {
-		
+	private function handleFault(event:FaultEvent):void {
+		var message:String;
+		              
+		message = "Error: "                          
+		+ event.fault.faultCode + " - "                                  
+		+ event.fault.faultDetail + " - "                                  
+		+ event.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);        	
 	} 		
 ]]>
                              
@@ -68,9 +77,9 @@ width="786" height="587"  creationComplete="init()"
 			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="30" y="56" text="Get" width="38" textAlign="center"/>
-		<mx:Label text="Current Balance:" width="102" fontWeight="bold" y="123" x="10"/>
-		<mx:Text x="134" y="123"  text="Text" width="81"/>
-	<mx:DataGrid x="10" y="161"  height="292">
+		<mx:Label text="Current Balance:" width="102" fontWeight="bold" y="82" x="10"/>
+		<mx:Text x="131" y="82"  text="Text" width="81"/>
+	<mx:DataGrid x="10" y="119"  height="292" id="invoice_list" dataProvider="{invoices}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Posted" dataField="col1"/>
 			<mx:DataGridColumn headerText="Invoice #" dataField="col2"/>
@@ -82,8 +91,8 @@ width="786" height="587"  creationComplete="init()"
 			
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:Label x="429" y="123" text="Show History Type:"/>
-	<mx:List x="548" y="120" height="21" id="history_Type"></mx:List>
+	<mx:Label x="420" y="82" text="Show History Type:"/>
+	<mx:List x="539" y="79" height="21" id="history_Type"></mx:List>
 
 </mx:Canvas>
 
