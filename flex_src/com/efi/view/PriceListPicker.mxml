@@ -112,6 +112,16 @@
 	private function doDelete():void {
 		
 	}
+	
+	private function doCancel():void {
+		var maincontainer:Container = Snowmass.getInstance().mainNavigator;
+		if (maincontainer!= null)
+		{
+			maincontainer.removeChild(this)
+		} else {
+			PopUpManager.removePopUp(this)
+		}
+	}
 ]]>        
 </mx:Script>
                              
@@ -124,12 +134,12 @@
 		     <mx:DataGridColumn dataField="name" headerText="Name" />                         
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="Select" id="select_button" enabled="true" click="doSelect()"  width="108" x="236" y="10"/>
+		<mx:Button label="Select" id="select_button" enabled="true" click="doSelect();"  width="108" x="236" y="10"/>
 		<mx:Button label="Clear" enabled="true" click="doClear();" id="clear_button" width="108" x="237.5" y="40"/>
-		<mx:Button label="New" click="doNew()" id="new_button" width="108" x="236" y="80"/>
-		<mx:Button label="Edit" click="doEdit()" id="edit_button" width="108" x="236" y="106"/>
-		<mx:Button label="Delete" click="doDelete()" id="delete_button" width="108" x="236" y="132"/>
-		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="236" y="172"/>
+		<mx:Button label="New" click="doNew();" id="new_button" width="108" x="236" y="80"/>
+		<mx:Button label="Edit" click="doEdit();" id="edit_button" width="108" x="236" y="106"/>
+		<mx:Button label="Delete" click="doDelete();" id="delete_button" width="108" x="236" y="132"/>
+		<mx:Button label="Cancel" click="doCancel();" id="cancel_button" width="108" x="236" y="172"/>
 		<mx:HRule x="236" y="70" width="109.5"/>
 		<mx:HRule x="234.5" y="162" width="109.5"/>
 	</mx:Canvas>

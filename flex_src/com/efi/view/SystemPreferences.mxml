@@ -80,6 +80,12 @@ width="100%" height="100%" title="Preferences"
 	private var DefaultEstimateArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var RunToFinishGrainArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var JobTicketStylesArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var AccountingPackagesArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var JournalDocumentPreferenceArray:ArrayCollection = new ArrayCollection();
 
 //Data view variables
 	[Bindable]
@@ -242,7 +248,7 @@ width="100%" height="100%" title="Preferences"
 
 	}
 	
-	private function fillDefaultInvoiceEstimateArray(fillArray:ArrayCollection):void{
+	private function fillDefaultDocumentsArray(fillArray:ArrayCollection):void{
 		var setting:Object = new Object();
 		setting.name="No default specified";
 		fillArray.addItem(setting);
@@ -311,6 +317,42 @@ width="100%" height="100%" title="Preferences"
 		fillArray.addItem(setting);
 	}
 	
+	private function fillJobTicketStylesArray(fillArray:ArrayCollection):void{
+		
+	}
+	private function fillAccountingPackagesArray(fillArray:ArrayCollection):void{
+		var setting:Object = new Object();
+		setting.name="MYOB";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Peachtree Accounting";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Quickbooks";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="MultiLedger";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="SAGE Accounting";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Simply Accounting";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="BusinessWorks";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Great Plains Import Manager";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="SAGE Line 50";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Peachtree CSV";
+		fillArray.addItem(setting);
+	}
+		
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
@@ -330,9 +372,12 @@ width="100%" height="100%" title="Preferences"
 		fillReceiptPrinterArray(ReceiptPrinterArray);	
 		dataServiceCountry.getAll("Country");
 		fillModemArray();
-		fillDefaultInvoiceEstimateArray(DefaultInvoiceArray);
-		fillDefaultInvoiceEstimateArray(DefaultEstimateArray);
+		fillDefaultDocumentsArray(DefaultInvoiceArray);
+		fillDefaultDocumentsArray(DefaultEstimateArray);
+		fillDefaultDocumentsArray(JournalDocumentPreferenceArray)
 		fillRunToFinishGrainArray(RunToFinishGrainArray);
+		fillJobTicketStylesArray(JobTicketStylesArray);
+		fillAccountingPackagesArray(AccountingPackagesArray);
 	}
 	
 	private function getPreferencesData():void{
@@ -451,6 +496,15 @@ width="100%" height="100%" title="Preferences"
 		
 	}
 	private function doSelectFont(text:TextInput):void{
+		if (text != null)
+		{
+			//do something
+		}else{
+			//do something else
+		}
+		
+	}
+	private function doPrintBarCodes():void{
 		
 	}
 	
@@ -887,6 +941,30 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Job Ticket" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="30" y="30" text="Ticket Format:"/>
+				<mx:RadioButtonGroup id="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="Old Style (pre 5.0)" groupName="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="Standard Style" groupName="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="Custom Style:" groupName="opgTicketFormat"/>
+				<mx:ComboBox x="155" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="375"/>
+
+
+				<mx:Label x="30" y="120" text="Options:"/>
+				<mx:CheckBox x="50" y="140" id="chkShowAmountsOnTicket" label="Show Amount on Ticket"/>
+				<mx:CheckBox x="50" y="160" id="chkAddTrackingBarCodes" label="Add Tracking Bar Codes"/>
+				<mx:CheckBox x="50" y="180" id="chkShowReferenceNumber" label="Show Customer ext. Reference Number"/>
+				
+				<mx:Panel x="50" y="220" width="340" height="110" layout="absolute" title="Charge Description">
+					<mx:RadioButtonGroup id="opgChargeDescription"/>
+					<mx:RadioButton x="10" y="5" id="opgShowName" label="Show Name" groupName="opgChargeDescription"/>
+					<mx:RadioButton x="10" y="25" id="opgShowDescription" label="Show Description" groupName="opgChargeDescription"/>
+					<mx:RadioButton x="10" y="45" id="opgShowBothIfDifferent" label="Show Both if Different" groupName="opgChargeDescription"/>
+				</mx:Panel>
+
+				<mx:Button x="50" y="345" label="Set Bar Code Font..." click="doSelectFont(null);" width="167"/>
+				<mx:Button x="50" y="375" label="Print Bar Codes..." click="doPrintBarCodes();" width="167"/>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Quantity Breaks" textAlign="center"/>
@@ -911,10 +989,37 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="creditdefaults_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit/Defaults" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:Label x="72" y="32" text="Credit Limit:"/>
+				<mx:Label x="50" y="62" text="Finance Charge:"/>
+				<mx:Label x="53" y="92" text="Inactive Period:"/>
+				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="Remove Drafts from Deposit Ticket"/>
+				<mx:Label x="50" y="152" text="Default Sales Rep for New Accounts:"/>
+				<mx:Label x="58" y="182" text="Default Shipping for New Accounts:"/>
+
+				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379"/>
+				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379"/>
+				<mx:TextInput x="151" y="90" id="txtInactivePeriod" width="379"/>
+				<mx:TextInput x="255" y="150" id="txtDefaultSalesRep" width="275"/>
+				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="275"/>
+				
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="agingperiods_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Aging Periods" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="28" y="32" text="Past Due:"/>
+				<mx:Label x="18" y="132" text="Delinquent:"/>
+				<mx:Label x="41" y="232" text="Frozen:"/>
+				<mx:TextInput x="90" y="30" id="txtPastDue" width="60"/>
+				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60"/>
+				<mx:TextInput x="90" y="230" id="txtFrozen" width="60"/>
+
+				<mx:TextArea x="90" y="60" id="txtPastDueArea" width="390" height="60"/>
+				<mx:TextArea x="90" y="160" id="txtDelinquentArea" width="390" height="60"/>
+				<mx:TextArea x="90" y="260" id="txtFrozenArea" width="390" height="60"/>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
@@ -923,6 +1028,11 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="glprofiles_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="50" y="32" text="Link to:"/>
+				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
+				
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
@@ -935,6 +1045,12 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="journalentries_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Journal Entries" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="Print Document"/>
+				
+				<mx:Label x="50" y="92" text="Journal Document Preference:"/>
+				<mx:ComboBox x="224" y="90" id="cboJournalDocumentPreference"  dataProvider="{JournalDocumentPreferenceArray}" labelField="name" width="250"/>
+
 			</mx:Canvas>
 		</mx:ViewStack>					
 	</mx:VBox>
