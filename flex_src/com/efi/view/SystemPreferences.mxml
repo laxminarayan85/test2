@@ -47,6 +47,7 @@ width="100%" height="100%" title="Preferences"
 	import mx.messaging.messages.IMessage;
 	import mx.collections.XMLListCollection;
 
+//Data field arrays
 	[Bindable]
 	private var PreferencesSystemArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -56,15 +57,31 @@ width="100%" height="100%" title="Preferences"
 	[Bindable]
 	private var PreferencesAccountingArray:ArrayCollection = new ArrayCollection();
 
+//Combo box arrays
 	[Bindable]
 	private var DaysArray:ArrayCollection = new ArrayCollection();
-
 	[Bindable]
 	private var MonthsArray:ArrayCollection = new ArrayCollection();
-
 	[Bindable]
 	private var CountryArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var ReceiptPrinterArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var BaudRateArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var StopBitsArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var ParityArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var DataSizeArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var DefaultInvoiceArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var DefaultEstimateArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var RunToFinishGrainArray:ArrayCollection = new ArrayCollection();
 
+//Data view variables
 	[Bindable]
 	private var preferencesSystem:PreferencesSystem;
 
@@ -77,6 +94,7 @@ width="100%" height="100%" title="Preferences"
 	[Bindable]                                         
 	private var preferencesAccounting:PreferencesAccounting;
 
+//Tree view XML table
 	[Bindable]
 	private var treeData:XML =
     	<root>
@@ -120,107 +138,207 @@ width="100%" height="100%" title="Preferences"
 			</node>
 		</root>;
 	
-	private function fillDaysArray():void {
+	private function fillDaysArray(fillArray:ArrayCollection):void {
 		var day:Object=new Object();
 		day.name="Sunday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Monday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Tuesday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Wednesday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Thursday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Friday";
-		DaysArray.addItem(day);
-
+		fillArray.addItem(day);
 		day=new Object();
 		day.name="Saturday";
-		DaysArray.addItem(day);
+		fillArray.addItem(day);
 		
 	}
 
-	private function fillMonthsArray():void{
+	private function fillMonthsArray(fillArray:ArrayCollection):void{
 		var month:Object=new Object();
 		month.name="January";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="February";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="March";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="April";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="May";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="June";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="July";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="August";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="September";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="October";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="November";
-		MonthsArray.addItem(month);
-
+		fillArray.addItem(month);
 		month=new Object();
 		month.name="December";
-		MonthsArray.addItem(month);
+		fillArray.addItem(month);
+	}
+	
+	private function fillReceiptPrinterArray(fillArray:ArrayCollection):void{
+		var printer:Object=new Object();
+		printer.name="Off";
+		fillArray.addItem(printer);
+		printer=new Object();
+		printer.name="Modem Port";
+		fillArray.addItem(printer);
+		printer=new Object();
+		printer.name="Printer Port";
+		fillArray.addItem(printer);
+		printer=new Object();
+		printer.name="USB Serial Port";
+		fillArray.addItem(printer);
+		printer=new Object();
+		printer.name="Named Graphics Printer";
+		fillArray.addItem(printer);
+		printer=new Object();
+		printer.name="Names Serial Port";
+		fillArray.addItem(printer);
+
+	}
+	private function fillModemArray():void{
+		var setting:Object = new Object();
+		setting.name="300";
+		BaudRateArray.addItem(setting);
+
+		setting=new Object();
+		setting.name="1 bit";
+		StopBitsArray.addItem(setting);
+
+		setting=new Object();
+		setting.name="None";
+		ParityArray.addItem(setting);
+
+		setting=new Object();
+		setting.name="5 Bits";
+		DataSizeArray.addItem(setting);
+
+	}
+	
+	private function fillDefaultInvoiceEstimateArray(fillArray:ArrayCollection):void{
+		var setting:Object = new Object();
+		setting.name="No default specified";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Alternate Currency";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Credit Memo";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Estimate - Long Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Estimate - Short Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Fax Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Invoice - Long Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Invoice - Short Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Quote Form";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Quote Letter";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Standard";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Thank You Letter";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Unit Price / each";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Unit Price / thousand";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="[en]!TaxName !Remarks";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="[en]!TaxName +Remarks";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="[en]+TaxName !Remarks";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="[en]+TaxName +Remarks";
+		fillArray.addItem(setting);
+	}
+
+	private function fillRunToFinishGrainArray(fillArray:ArrayCollection):void{
+		var setting:Object = new Object();
+		setting.name="Neither";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Match Grain";
+		fillArray.addItem(setting);
+		setting = new Object();
+		setting.name="Swing / Combination";
+		fillArray.addItem(setting);
 	}
 	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		
-		fillDaysArray();
-		fillMonthsArray();
+		fillStaticData();
 		
 		checkAlternateCurrency();
 		
 		getPreferencesData();
 		
-		dataServiceCountry.getAll("Country");
-		
 		openTree();  
 	}
 
+	private function fillStaticData():void{
+		fillDaysArray(DaysArray);
+		fillMonthsArray(MonthsArray);
+		fillReceiptPrinterArray(ReceiptPrinterArray);	
+		dataServiceCountry.getAll("Country");
+		fillModemArray();
+		fillDefaultInvoiceEstimateArray(DefaultInvoiceArray);
+		fillDefaultInvoiceEstimateArray(DefaultEstimateArray);
+		fillRunToFinishGrainArray(RunToFinishGrainArray);
+	}
+	
 	private function getPreferencesData():void{
 		dataServiceSystem.getAll("PreferencesSystem");
 		dataServicePOS.getAll("PreferencesPOS");
-		dataServiceEstimator.getAll("PreferencesEstimator");
+		dataServiceEstimator.getAll("PreferencesEstimating");
 		dataServiceAccounting.getAll("PreferencesAccounting");
 		
 	}
@@ -327,6 +445,12 @@ width="100%" height="100%" title="Preferences"
 	}
 	
 	private function doCheckForPalmData():void{
+		
+	}
+	private function doSelectColor(text:TextInput):void{
+		
+	}
+	private function doSelectFont(text:TextInput):void{
 		
 	}
 	
@@ -557,11 +681,59 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="receipt_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Receipt" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="54" y="32" text="Header:"/>
+				<mx:Label x="59" y="182" text="Footer:"/>
+				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130"/>
+				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100"/>
+
+				<mx:TextInput x="272" y="300" id="txtSerialNumber" width="70"/>
+				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="Serial numbers on receipts start at:"/>
+				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="Hide tax in line items"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashdrawer_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Drawer" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Label x="50" y="32" text="Receipt Printer:"/>
+				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
+				<mx:Label x="95" y="62" text="Printer:"/>
+				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200"/>
+
+				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="Enable Cash Drawer"/>
+				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="Print Receipts"/>
+				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="Print (2) for Credit Cards"/>
+				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="Print (2) for Cash"/>
+				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="Print Invoices"/>
+				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="Lock Settings"/>
+
+				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="Use Master's Drawer"/>
+				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="Keep settings local"/>
+
+				<mx:Label x="50" y="273" text="ASCII Code to Open Drawer:"/>
+				<mx:Label x="56" y="298" text="Blank Lines Before Receipt:"/>
+				<mx:Label x="66" y="323" text="Blank Lines After Receipt:"/>
+				<mx:Label x="101" y="348" text="Receipt Start Code:"/>
+				<mx:Label x="107" y="373" text="Receipt End Code:"/>
+
+				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47"/>
+				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47"/>
+				<mx:TextInput x="216" y="321" id="txtBlankAfterReceipt" width="47"/>
+				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77"/>
+				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77"/>
+
+				<mx:Label x="50" y="420" text="Baud Rate:"/>
+				<mx:Label x="220" y="420" text="Stop Bits:"/>
+				<mx:Label x="77" y="445" text="Parity:"/>
+				<mx:Label x="216" y="445" text="Data Size:"/>
+
+				<mx:ComboBox x="119" y="418" id="cboBaudRate"  dataProvider="{BaudRateArray}" labelField="name" width="90" enabled="false"/>
+				<mx:ComboBox x="281" y="418" id="cboStopBits"  dataProvider="{StopBitsArray}" labelField="name" width="90" enabled="false"/>
+				<mx:ComboBox x="119" y="443" id="cboParity"  dataProvider="{ParityArray}" labelField="name" width="90" enabled="false"/>
+				<mx:ComboBox x="281" y="443" id="cboDataSize"  dataProvider="{DataSizeArray}" labelField="name" width="90" enabled="false"/>
+
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
@@ -570,18 +742,147 @@ width="100%" height="100%" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="120" id="chkShowDocumentType" label="Show Document Type in Number"/>
+				<mx:CheckBox x="50" y="145" id="chkAlwaysIncludePastDue" label="Always Include Past Due Documents in Filter"/>
+				<mx:CheckBox x="50" y="170" id="chkColorPastDueEntries" label="Color Past Due Entries"/>
+
+				<mx:Button x="50" y="200" label="Past Due Color..." click="doSelectColor(txtPastDueColor);" width="167"/>
+				<mx:Button x="50" y="230" label="Ready for Pickup Color..." click="doSelectColor(txtReadyforPickupColor);" width="167"/>
+				<mx:Button x="50" y="260" label="Invoice Color..." click="doSelectColor(txtInvoiceColor);" width="167"/>
+				<mx:Button x="50" y="290" label="Estimate Color..." click="doSelectColor(txtEstimateColor);" width="167"/>
+
+				<mx:Button x="50" y="320" label="List Font..." click="doSelectFont(txtListFont);" width="167"/>
+				<mx:Button x="50" y="350" label="Header Font..." click="doSelectFont(txtHeaderFont);" width="167"/>
+
+				<mx:TextInput x="225" y="200" id="txtPastDueColor" width="80"/>
+				<mx:TextInput x="225" y="230" id="txtReadyforPickupColor" width="80"/>
+				<mx:TextInput x="225" y="260" id="txtInvoiceColor" width="80"/>
+				<mx:TextInput x="225" y="290" id="txtEstimateColor" width="80"/>
+				<mx:TextInput x="225" y="320" id="txtListFont" width="150"/>
+				<mx:TextInput x="225" y="350" id="txtHeaderFont" width="150"/>
+				<mx:DataGrid x="50" y="27" width="442" height="85">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Visible" dataField="col1" width="80"/>
+						<mx:DataGridColumn headerText="Column Title" dataField="col2"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Behavior" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="Close cource document after copying"/>
+				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="Enter Stock Cost in Estimator"/>
+				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="Can Change Address on ALL Documnets"/>
+				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="Auto Show Paper Calculator on New Jobs"/>
+				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="AlwaysUseStockParentSize"/>
+				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="Calculate Re-Order Date on Invoice Copy"/>
+				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="Validate Sales Rep"/>
+				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="Leave Folded Size empty on new Jobs"/>
+				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="Do not perform Costing during invoice POST"/>
+				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="Auto Show Charges on new Jobs"/>
+				<mx:CheckBox x="50" y="280" id="chkShowSinglePassWorkAndTurnOptions" label="Show Single Pass Work and Turn Options"/>
+				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="Never Use Preset Press on Stock Changes"/>
+				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="Add Fixed Waste for Each Pass (Affects historic Documents)"/>
+				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="Add Fixed Waste for Each Color (Affects historic Documents)"/>
+				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="Calculate INK by Impressions, Includes Waste (Affects history)"/>
+				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="Use the History Title for New Document Title"/>
+
+				<mx:Label x="50" y="442" text="Normal Due Date (days):"/>
+				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70"/>
+				
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="estimatorprinting_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Printing" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="Close Invoice after Printing Job Tickets"/>
+				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="Close Invoices and Estimates after Printing"/>
+
+				<mx:Label x="58" y="92" text="Default Invoice:"/>
+				<mx:Label x="50" y="117" text="Default Estimate:"/>
+
+				<mx:ComboBox x="160" y="90" id="cboDefaultInvoice"  dataProvider="{DefaultInvoiceArray}" labelField="name" width="250"/>
+				<mx:ComboBox x="160" y="115" id="cboDefaultEstimate"  dataProvider="{DefaultEstimateArray}" labelField="name" width="250"/>
+
+
+				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="Payment Due Date">
+					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
+					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50"/>
+
+					<mx:RadioButtonGroup id="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="From Completed Date" groupName="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="From Pickup Date" groupName="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="From Ordered Date" groupName="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="From Printed Date" groupName="optPaymentDueDays"/>
+				</mx:Panel>
+
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="papercalculator_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Paper Calculator" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="30" y="52" id="chkGripEdge"/>
+				<mx:CheckBox x="30" y="102" id="chkFolioEdge"/>
+				<mx:CheckBox x="30" y="152" id="chkColorBar"/>
+				<mx:CheckBox x="30" y="202" id="chkWhiteSpace"/>
+				<mx:CheckBox x="30" y="302" id="chkGutter"/>
+				<mx:CheckBox x="30" y="352" id="chkBleed"/>
+				
+				<mx:Label x="50" y="30" text="Grip Edge / Gap"/>
+				<mx:Label x="50" y="80" text="Folio Edge"/>
+				<mx:Label x="50" y="130" text="Color Bar"/>
+				<mx:Label x="50" y="180" text="White Space"/>
+				<mx:Label x="50" y="230" text="Right"/>
+				<mx:Label x="50" y="280" text="Gutter"/>
+				<mx:Label x="50" y="330" text="Bleed"/>
+				<mx:Label x="50" y="380" text="Right"/>
+
+				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93"/>
+				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93"/>
+				<mx:TextInput x="50" y="150" id="txtColorBar" width="93"/>
+				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93"/>
+				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93"/>
+				<mx:TextInput x="50" y="300" id="txtGutter" width="93"/>
+				<mx:TextInput x="50" y="350" id="txtBleed" width="93"/>
+				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93"/>
+
+				<mx:Label x="151" y="180" text="Top"/>
+				<mx:Label x="151" y="230" text="Bottom"/>
+				<mx:Label x="151" y="280" text="Horizontal"/>
+				<mx:Label x="151" y="330" text="Top"/>
+				<mx:Label x="151" y="380" text="Bottom"/>
+
+				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93"/>
+				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93"/>
+				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93"/>
+				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93"/>
+				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93"/>
+
+
+				<mx:Label x="27" y="462" text="Default Press Cutoff:"/>
+				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93"/>
+
+
+				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="Back Trim, Parent"/>
+				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="Trim Four Sides"/>
+				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="Work And Tumble"/>
+
+				<mx:Label x="260" y="152" text="Run to Finish Grain:"/>
+				<mx:ComboBox x="377" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="80"/>
+
+				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="Print Options">
+					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="Print Parent to Finish Section"/>
+					<mx:CheckBox x="10" y="25" id="chkPrintParentToRun" label="Print Parent to Run Section"/>
+					<mx:CheckBox x="10" y="45" id="chkPrintRunToFinish" label="Print Run to Finish Section"/>
+					<mx:CheckBox x="10" y="65" id="chkAttachToJobTicket" label="Attach To Job Ticket"/>
+				</mx:Panel>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Job Ticket" textAlign="center"/>
