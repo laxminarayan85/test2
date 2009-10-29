@@ -137,7 +137,7 @@ public class DataService {
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			try {
-				em.merge(object);
+				object = em.merge(object);
 				tx.commit();
 				MessageServiceAdapter.sendNotification("Object Created");
 			} catch (Exception e) {
