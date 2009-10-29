@@ -36,7 +36,7 @@
 				<mx:Button x="675" y="480" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
 				<mx:Button x="674" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
 				<mx:Button x="508" y="386" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
-				<mx:Button x="675" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
+				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
 				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
 				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
 				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
