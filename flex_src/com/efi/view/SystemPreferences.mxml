@@ -21,6 +21,7 @@ width="100%" height="100%" title="Preferences"
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceCountry" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountryResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="systempreferences"/>
@@ -99,6 +100,9 @@ width="100%" height="100%" title="Preferences"
 
 	[Bindable]                                         
 	private var preferencesAccounting:PreferencesAccounting;
+
+	[Bindable]
+	private var country:Country;
 
 //Tree view XML table
 	[Bindable]
@@ -400,7 +404,34 @@ width="100%" height="100%" title="Preferences"
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
-	
+
+	private function doCountryFind(completeTextObject:AutoComplete,lookupArray:ArrayCollection) : void {
+		var countries:Country;
+		var result:Boolean;
+		
+		if (completeTextObject.typedText != null && completeTextObject.typedText != "" && completeTextObject.selectedIndex == -1) {
+			var item:int = findItem(completeTextObject.typedText, lookupArray);
+			if (item == -1) {
+				countries = new Country();
+				countries.name = completeTextObject.text;
+				dataServiceCountry.addUpdate(countries);
+				completeTextObject.selectedItem = findItem(countries.name, lookupArray);
+			}
+			else {
+				completeTextObject.selectedItem = item;
+			}
+		}
+	}
+
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+
 	private function handleLoadSystemResult(ev:ResultEvent):void {
 	     PreferencesSystemArray = ev.result as ArrayCollection;
 	}
@@ -429,6 +460,12 @@ width="100%" height="100%" title="Preferences"
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
     	dataServiceAccounting.getAll("PreferencesAccounting");
 	}
+
+	private function handleSaveCountryResult(ev:ResultEvent):void {
+    	dataServiceCountry.getAll("Country");
+		country = ev.result as Country;
+	}
+
 
 	private var openSequence:Array = [];
 
@@ -727,7 +764,7 @@ width="100%" height="100%" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 				
 				<mx:Label x="50" y="32" text="Default Country:"/>
-				<mx:ComboBox x="148" y="30" id="cboDefaultCountry"  dataProvider="{CountryArray}" labelField="name" width="181"/>
+				<fc:AutoComplete  x="148" y="30" width="181" id="cboDefaultCountry" dataProvider="{CountryArray}" lookAhead="true" labelField="name" focusOut="doCountryFind(cboDefaultCountry,CountryArray)"/>
 				<mx:TextArea x="23" y="203" height="25%" width="451" id="txtSampleAddressArea" enabled="false"/>
 				<mx:Text x="50" y="186" text="Sample Address" id="txtSampleAddress"/>
 				
