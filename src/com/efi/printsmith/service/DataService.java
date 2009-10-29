@@ -122,7 +122,7 @@ public class DataService {
 		return new ArrayList<Contact>();		
 	}
 	
-	public void addUpdate(ModelBase object) throws Exception {
+	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called...");
 		try {
 			EntityManager em;
@@ -152,6 +152,7 @@ public class DataService {
 		catch (Exception e) {
 			log.error("Exception caught");
 		}
+		return object;
 	}
 
 	public void addChargeCategoryToCommand(ChargeCategory category, ChargeCommand command) throws Exception {
