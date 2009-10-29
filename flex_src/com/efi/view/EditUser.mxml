@@ -17,9 +17,13 @@ width="100%" height="557" defaultButton="{submitButton}" creationComplete="init(
                     
 <vo:Users id="users" name="{nameField.text}"                             
 password="{passwordField.text}"/>
-<mx:Producer id="producer" destination="users"/>
+
 <mx:StringValidator id="nameValidator" source="{nameField}" property="text" minLength="2" required="true" />                       
 <mx:StringValidator id="passwordValidator" source="{passwordField}" property="text" minLength="2" required="true" />
+
+<mx:Producer id="producer" destination="users"/>
+<mx:Consumer id="consumer" destination="users" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script>
                                    
@@ -58,8 +62,8 @@ password="{passwordField.text}"/>
  	private var focusedFormControl:DisplayObject;                           
            
 	public function init():void {
-		//consumer.subscribe();
-	//	notification_consumer.subscribe();  
+		consumer.subscribe();
+		notification_consumer.subscribe();     
 		PopUpManager.centerPopUp(this);
 	    resetFocus();              
 		dataService.getAll("Users"); 
@@ -86,14 +90,13 @@ password="{passwordField.text}"/>
 	}
 	                     
 	public function saveUser():void {                                    
-		//saveService.addUpdateUser(user);
+		
 		mapToUserData();
 		dataService.addUpdate(user1);                                        
 	}
 	private function deleteUser():void {              
 		if(dataGrid.selectedItem != null) {
 			var selectedItem:Users = dataGrid.selectedItem as Users;
-			//deleteService.deleteUser(selectedItem.id);
 			dataService.deleteItem("Users",selectedItem.id);                                     
      	}
                                          
@@ -106,6 +109,14 @@ password="{passwordField.text}"/>
 		//producer.send(message);
 	}
 
+
+	
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:String = message.body as String;
+  		dataService.getAll("Users");
+	}
+         
 /* 	private function creationCompleteHandler():void {   
 	     PopUpManager.centerPopUp(this);
 	     resetFocus();                                     
@@ -179,6 +190,7 @@ password="{passwordField.text}"/>
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     dataService.getAll("Users");
+	     send();
 	}
 	private function mapToUserData():void{
 		user1.name= nameField.text;
