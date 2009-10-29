@@ -38,10 +38,6 @@ public class GenericColors extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
-	/**
-	 * @generated
-	 */
-	public static final String KEY = "Key";
 
 	/**
 	 * @generated
@@ -68,23 +64,6 @@ public class GenericColors extends ModelBase {
 	public void setName(String newVal) {
 		this.name = newVal;
 	}
- 	
-	
- 	@Basic
-	private String key;
-	/**
-	 * @generated
- 	 */
-	public String getKey(){
-		return key; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setKey(String newVal) {
-		this.key = newVal;
-	}
 
 	/**
 	 * @generated
@@ -93,7 +72,6 @@ public class GenericColors extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
-		if (KEY.equals(propertyName)) return getKey();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,7 +82,6 @@ public class GenericColors extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (KEY.equals(propertyName)) setKey((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -115,8 +92,6 @@ public class GenericColors extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (KEY.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
@@ -129,7 +104,6 @@ public class GenericColors extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return GenericColors.class;
-		if (KEY.equals(propertyName)) return GenericColors.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -142,8 +116,6 @@ public class GenericColors extends ModelBase {
 			return false;
 		GenericColors objT = (GenericColors)obj;
 		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getKey(), objT.getKey()))
 			return false;
 		return true;
 	}			

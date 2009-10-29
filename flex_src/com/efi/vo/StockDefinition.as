@@ -23,7 +23,6 @@ package com.efi.vo
 		public var color:StockColors = new StockColors();
 		public var grade:StockGrade = new StockGrade();
 		public var coated:String = "";
-		public var genericcolor:GenericColors = new GenericColors();
 		public var stocknumber:String = "";
 		public var vendor:Vendor = new Vendor();
 		public var basicsize:String = "";
@@ -117,6 +116,7 @@ package com.efi.vo
 		public var sfiCertified:Boolean = true;
 		public var greenSealCertified:Boolean = true;
 		public var defaultPriceList:PriceList = new PriceList();
+		public var genericColor:GenericColors = new GenericColors();
 	
 	}
 }

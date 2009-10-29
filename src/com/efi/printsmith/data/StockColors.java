@@ -38,10 +38,6 @@ public class StockColors extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
-	/**
-	 * @generated
-	 */
-	public static final String GENERICCOLOR = "GenericColor";
 
 	/**
 	 * @generated
@@ -68,23 +64,6 @@ public class StockColors extends ModelBase {
 	public void setName(String newVal) {
 		this.name = newVal;
 	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private GenericColors genericColor;
-	/**
-	 * @generated
- 	 */
-	public GenericColors getGenericColor(){
-		return genericColor; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setGenericColor(GenericColors newVal) {
-		this.genericColor = newVal;
-	}
 
 	/**
 	 * @generated
@@ -93,7 +72,6 @@ public class StockColors extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
-		if (GENERICCOLOR.equals(propertyName)) return getGenericColor();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,7 +82,6 @@ public class StockColors extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -116,8 +93,6 @@ public class StockColors extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (GENERICCOLOR.equals(propertyName)) 
-			return new Class<?>[] {GenericColors.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -129,7 +104,6 @@ public class StockColors extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return StockColors.class;
-		if (GENERICCOLOR.equals(propertyName)) return StockColors.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -142,8 +116,6 @@ public class StockColors extends ModelBase {
 			return false;
 		StockColors objT = (StockColors)obj;
 		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getGenericColor(), objT.getGenericColor()))
 			return false;
 		return true;
 	}			

@@ -13,7 +13,6 @@ package com.efi.vo
 		
 		}
 		public var name:String = "";
-		public var key:String = "";
 	
 	}
 }

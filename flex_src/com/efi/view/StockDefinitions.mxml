@@ -124,6 +124,14 @@
 	    loadUomArray();
 	    loadUnitsArray();
 		loadStockDefinitions();
+		loadStockChanges();
+	    loadStockGroup();
+	    loadStockVendor();
+	    loadStockGrade();
+	    loadStockColor();
+	    loadStockGenericColor();
+	    loadStockFinish();
+	    loadPressDefinition();
 
 		doGet(); 
 		
@@ -207,14 +215,14 @@
 		
 	    stockChange = new StockChanges();
 	    
-	    loadStockChanges();
-	    loadStockGroup();
+	     loadStockChanges();
+	  /*  loadStockGroup();
 	    loadStockVendor();
 	    loadStockGrade();
 	    loadStockColor();
 	    loadStockGenericColor();
 	    loadStockFinish();
-	    loadPressDefinition();
+	    loadPressDefinition(); */
 	    
 		standardItemCheckEvent();
 	}			
@@ -240,7 +248,7 @@
 	}
 
 	public function loadStockColor():void {   
-	    stockColorDataService.getAll("StockColor");
+	    stockColorDataService.getAll("StockColors");
 	}
 
 	public function loadStockGenericColor():void {   
@@ -366,11 +374,12 @@
 			if (item == -1) {
 				colors = new GenericColors();
 				colors.name = cboGenericColor.text;
-				stockColorDataService.addUpdate(colors);
-				stockDefinitions.genericcolor = colors;
+				stockGenericColorDataService.addUpdate(colors);
+				stockDefinitions.genericColor = colors;
 			}
 			else {
 				cboGenericColor.selectedItem = item;
+				
 			}
 		}
 	}
@@ -582,9 +591,9 @@
 
 		if (stockDefinitions.color != null) 
 			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
-			
-		if (stockDefinitions.genericcolor != null)
-			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericcolor.name, stockGenericColor);
+		if (stockDefinitions.genericColor != null)
+				cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		
 		
 		if (stockDefinitions.vendor != null)
 			cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
@@ -633,7 +642,7 @@
 	 	stockDefinitions.vendor = cboVendor.selectedItem as Vendor;
 
 	 if (cboGenericColor != null && cboGenericColor.selectedItem != null) 
-	 	stockDefinitions.genericcolor = cboGenericColor.selectedItem as GenericColors;
+	 	stockDefinitions.genericColor = cboGenericColor.selectedItem as GenericColors;
 	 
 	 if (cboUom != null && cboUom.selectedItem != null)
 	 	stockDefinitions.uom = cboUom.selectedItem.name as String; 

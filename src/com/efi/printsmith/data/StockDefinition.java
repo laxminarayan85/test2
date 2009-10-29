@@ -81,10 +81,6 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String GENERICCOLOR = "Genericcolor";
-	/**
-	 * @generated
-	 */
 	public static final String STOCKNUMBER = "Stocknumber";
 	/**
 	 * @generated
@@ -454,6 +450,10 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String DEFAULTPRICELIST = "DefaultPriceList";
+	/**
+	 * @generated
+	 */
+	public static final String GENERICCOLOR = "GenericColor";
 
 	/**
 	 * @generated
@@ -649,23 +649,6 @@ public class StockDefinition extends ModelBase {
 	 */	
 	public void setCoated(String newVal) {
 		this.coated = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private GenericColors genericcolor;
-	/**
-	 * @generated
- 	 */
-	public GenericColors getGenericcolor(){
-		return genericcolor; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setGenericcolor(GenericColors newVal) {
-		this.genericcolor = newVal;
 	}
  	
 	
@@ -2248,6 +2231,23 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultPriceList(PriceList newVal) {
 		this.defaultPriceList = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private GenericColors genericColor;
+	/**
+	 * @generated
+ 	 */
+	public GenericColors getGenericColor(){
+		return genericColor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setGenericColor(GenericColors newVal) {
+		this.genericColor = newVal;
+	}
 
 	/**
 	 * @generated
@@ -2266,7 +2266,6 @@ public class StockDefinition extends ModelBase {
 		if (COLOR.equals(propertyName)) return getColor();
 		if (GRADE.equals(propertyName)) return getGrade();
 		if (COATED.equals(propertyName)) return getCoated();
-		if (GENERICCOLOR.equals(propertyName)) return getGenericcolor();
 		if (STOCKNUMBER.equals(propertyName)) return getStocknumber();
 		if (VENDOR.equals(propertyName)) return getVendor();
 		if (BASICSIZE.equals(propertyName)) return getBasicsize();
@@ -2360,6 +2359,7 @@ public class StockDefinition extends ModelBase {
 		if (SFICERTIFIED.equals(propertyName)) return getSfiCertified();
 		if (GREENSEALCERTIFIED.equals(propertyName)) return getGreenSealCertified();
 		if (DEFAULTPRICELIST.equals(propertyName)) return getDefaultPriceList();
+		if (GENERICCOLOR.equals(propertyName)) return getGenericColor();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2380,7 +2380,6 @@ public class StockDefinition extends ModelBase {
 		if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
 		if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
 		if (COATED.equals(propertyName)) setCoated((String)newValue); else
-		if (GENERICCOLOR.equals(propertyName)) setGenericcolor((GenericColors)newValue); else
 		if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
 		if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
 		if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
@@ -2474,6 +2473,7 @@ public class StockDefinition extends ModelBase {
 		if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
 		if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
 		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PriceList)newValue); else
+		if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2505,8 +2505,6 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {StockGrade.class};		
 		if (COATED.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (GENERICCOLOR.equals(propertyName)) 
-			return new Class<?>[] {GenericColors.class};		
 		if (STOCKNUMBER.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (VENDOR.equals(propertyName)) 
@@ -2693,6 +2691,8 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (DEFAULTPRICELIST.equals(propertyName)) 
 			return new Class<?>[] {PriceList.class};		
+		if (GENERICCOLOR.equals(propertyName)) 
+			return new Class<?>[] {GenericColors.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2714,7 +2714,6 @@ public class StockDefinition extends ModelBase {
 		if (COLOR.equals(propertyName)) return StockDefinition.class;
 		if (GRADE.equals(propertyName)) return StockDefinition.class;
 		if (COATED.equals(propertyName)) return StockDefinition.class;
-		if (GENERICCOLOR.equals(propertyName)) return StockDefinition.class;
 		if (STOCKNUMBER.equals(propertyName)) return StockDefinition.class;
 		if (VENDOR.equals(propertyName)) return StockDefinition.class;
 		if (BASICSIZE.equals(propertyName)) return StockDefinition.class;
@@ -2808,6 +2807,7 @@ public class StockDefinition extends ModelBase {
 		if (SFICERTIFIED.equals(propertyName)) return StockDefinition.class;
 		if (GREENSEALCERTIFIED.equals(propertyName)) return StockDefinition.class;
 		if (DEFAULTPRICELIST.equals(propertyName)) return StockDefinition.class;
+		if (GENERICCOLOR.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2840,8 +2840,6 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getGrade(), objT.getGrade()))
 			return false;
 		if (! SmartEquals(getCoated(), objT.getCoated()))
-			return false;
-		if (! SmartEquals(getGenericcolor(), objT.getGenericcolor()))
 			return false;
 		if (! SmartEquals(getStocknumber(), objT.getStocknumber()))
 			return false;
@@ -3028,6 +3026,8 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getGreenSealCertified(), objT.getGreenSealCertified()))
 			return false;
 		if (! SmartEquals(getDefaultPriceList(), objT.getDefaultPriceList()))
+			return false;
+		if (! SmartEquals(getGenericColor(), objT.getGenericColor()))
 			return false;
 		return true;
 	}			
