@@ -117,6 +117,7 @@ package com.efi.vo
 		public var greenSealCertified:Boolean = true;
 		public var defaultPriceList:PriceList = new PriceList();
 		public var genericColor:GenericColors = new GenericColors();
+		public var account:Account = new Account();
 	
 	}
 }
