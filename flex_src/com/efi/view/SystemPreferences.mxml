@@ -750,6 +750,9 @@ width="800" height="678" title="Preferences"
 	private function doPrintBarCodes():void{
 		
 	}
+	private function doSelectFolder():void{
+		
+	}
 	
 ]]>
                              
@@ -965,7 +968,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="138" y="112" text="for HotSync application."/>
 				
 				<mx:Label x="50" y="142" text="Polling Interval:"/>
-				<mx:TextInput x="145" y="140" id="txtPollingInterval" width="57"/>
+				<mx:TextInput x="145" y="140" id="txtPalmPilotPollingInterval" width="57"/>
 				<mx:Label x="205" y="142" text="seconds."/>
 
 				<mx:Button x="50" y="180" label="Create Location file" click="doCreateLocationFile();" width="141"/>
@@ -1231,6 +1234,12 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				<mx:DataGrid x="50" y="27" width="442" height="300">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Visible" dataField="col1" width="80"/>
+						<mx:DataGridColumn headerText="Column Title" dataField="col2"/>
+					</mx:columns>
+				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pricingmethod_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
@@ -1287,6 +1296,17 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
+				<mx:Label x="50" y="62" text="Credit Card processing drop folder"/>
+				<mx:TextInput x="50" y="80" id="txtCreditCardDropFolder" width="300"/>
+				<mx:Button x="358" y="80" label="Browse..." click="doSelectFolder();"/>
+				<mx:Label x="50" y="112" text="Polling Interval:"/>
+				<mx:TextInput x="144" y="110" id="txtCreditCardPollingInterval" width="62"/>
+				<mx:CheckBox x="215" y="110" id="chkUseAddressValidation" label="Use Address Validation"/>
+				<mx:CheckBox x="215" y="140" id="chkPromptUserForValidationInformation" label="Prompt User for Validation Information"/>
+				
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Order Number Format" textAlign="center"/>
