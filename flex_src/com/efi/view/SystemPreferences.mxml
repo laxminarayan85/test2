@@ -23,6 +23,56 @@ width="800" height="678" title="Preferences"
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountryResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 	</mx:RemoteObject>
+	
+ 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegisterResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashRegisterResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceCreditCard" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCreditCardResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceMarkups" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServicePricingMethod" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPricingMethodResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePricingMethodResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceQuantityBreaks" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuantityBreaksResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveQuantityBreaksResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceSalesCategory" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesCategoryResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesCategoryResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceStocks" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStocksResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStocksResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceColumnNames" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadColumnNamesResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveColumnNamesResult(event)"/>
+	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceSizeTable" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSizeTableResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSizeTableResult(event)"/>
+	</mx:RemoteObject>
+
+ 	<mx:RemoteObject id="dataServiceCategory" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCategoryResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCategoryResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
@@ -35,8 +85,22 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.PreferencesEstimating;
 	import com.efi.vo.PreferencesPOS;
 	import com.efi.vo.PreferencesSystem;
+	import com.efi.vo.PreferencesCashRegister;
+	
+	import com.efi.vo.PreferencesCreditCard;
+	import com.efi.vo.PreferencesMarkups;
+	import com.efi.vo.PreferencesPendingList;
+	import com.efi.vo.PreferencesPricingMethod;
+	import com.efi.vo.PreferencesQuantityBreaks;
+	import com.efi.vo.PreferencesSalesCategory;
+	import com.efi.vo.PreferencesStockDefinition;
+	import com.efi.vo.PreferencesStocks;
+	
 	
 	import com.efi.vo.Country;
+	import com.efi.vo.ColumnNames;
+	import com.efi.vo.SizeTable;
+	import com.efi.vo.SalesCategory;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -60,14 +124,40 @@ width="800" height="678" title="Preferences"
 	private var PreferencesEstimatorArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesAccountingArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesCashRegisterArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesCreditCardArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesMarkupsArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesPendingListArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesPricingMethodArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesQuantityBreaksArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesSalesCategoryArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesStocksArray:ArrayCollection = new ArrayCollection();
+
+//AutoComplete arrays
+	[Bindable]
+	private var CountryArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var ColumnNamesArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var SizeTableArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var CategoryArray:ArrayCollection = new ArrayCollection();
 
 //Combo box arrays
 	[Bindable]
 	private var DaysArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var MonthsArray:ArrayCollection = new ArrayCollection();
-	[Bindable]
-	private var CountryArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var ReceiptPrinterArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -443,6 +533,7 @@ width="800" height="678" title="Preferences"
 		return -1;
 	}
 
+// Data Load Handlers
 	private function handleLoadSystemResult(ev:ResultEvent):void {
 	     PreferencesSystemArray = ev.result as ArrayCollection;
 	}
@@ -458,7 +549,44 @@ width="800" height="678" title="Preferences"
 	private function handleLoadCountryResult(ev:ResultEvent):void {
 	     CountryArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
+	     PreferencesCashRegisterArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCreditCardResult(ev:ResultEvent):void {
+	     PreferencesCreditCardArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadMarkupsResult(ev:ResultEvent):void {
+	     PreferencesMarkupsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadPendingListResult(ev:ResultEvent):void {
+	     PreferencesPendingListArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadPricingMethodResult(ev:ResultEvent):void {
+	     PreferencesPricingMethodArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadQuantityBreaksResult(ev:ResultEvent):void {
+	     PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
+	     PreferencesSalesCategoryArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
+	     PreferencesStockDefinitionArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadStocksResult(ev:ResultEvent):void {
+	     PreferencesStocksArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadColumnNamesResult(ev:ResultEvent):void {
+	     ColumnNamesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadSizeTableResult(ev:ResultEvent):void {
+	     SizeTableArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCategoryResult(ev:ResultEvent):void {
+	     CategoryArray = ev.result as ArrayCollection;
+	}
 
+// Data Save Handlers
 	private function handleSaveSystemResult(ev:ResultEvent):void {
     	dataServiceSystem.getAll("PreferencesSystem");
 	}
@@ -471,10 +599,45 @@ width="800" height="678" title="Preferences"
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
     	dataServiceAccounting.getAll("PreferencesAccounting");
 	}
-
 	private function handleSaveCountryResult(ev:ResultEvent):void {
     	dataServiceCountry.getAll("Country");
 		country = ev.result as Country;
+	}
+	private function handleSaveCashRegisterResult(ev:ResultEvent):void {
+    	dataServiceCashRegister.getAll("PreferencesCashRegister");
+	}
+	private function handleSaveCreditCardResult(ev:ResultEvent):void {
+    	dataServiceCreditCard.getAll("PreferencesCreditCard");
+	}
+	private function handleSaveMarkupsResult(ev:ResultEvent):void {
+    	dataServiceMarkups.getAll("PreferencesMarkups");
+	}
+	private function handleSavePendingListResult(ev:ResultEvent):void {
+    	dataServicePendingList.getAll("PreferencesPendingList");
+	}
+	private function handleSavePricingMethodResult(ev:ResultEvent):void {
+    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+	}
+	private function handleSaveQuantityBreaksResult(ev:ResultEvent):void {
+    	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+	}
+	private function handleSaveSalesCategoryResult(ev:ResultEvent):void {
+    	dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+	}
+	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
+    	dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+	}
+	private function handleSaveStocksResult(ev:ResultEvent):void {
+    	dataServiceStocks.getAll("PreferencesStocks");
+	}
+	private function handleSaveColumnNamesResult(ev:ResultEvent):void {
+    	dataServiceColumnNames.getAll("ColumnNames");
+	}
+	private function handleSaveSizeTableResult(ev:ResultEvent):void {
+    	dataServiceSizeTable.getAll("SizeTable");
+	}
+	private function handleSaveCategoryResult(ev:ResultEvent):void {
+    	dataServiceCategory.getAll("SalesCategory");
 	}
 
 
