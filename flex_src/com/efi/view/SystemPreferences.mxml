@@ -23,8 +23,7 @@ width="800" height="678" title="Preferences"
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountryResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 	</mx:RemoteObject>
-	
- 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
+	 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegisterResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashRegisterResult(event)"/>
 	</mx:RemoteObject>
@@ -68,7 +67,6 @@ width="800" height="678" title="Preferences"
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSizeTableResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSizeTableResult(event)"/>
 	</mx:RemoteObject>
-
  	<mx:RemoteObject id="dataServiceCategory" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCategoryResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCategoryResult(event)"/>
@@ -468,7 +466,12 @@ width="800" height="678" title="Preferences"
 		fillDaysArray(DaysArray);
 		fillMonthsArray(MonthsArray);
 		fillReceiptPrinterArray(ReceiptPrinterArray);	
+
 		dataServiceCountry.getAll("Country");
+		dataServiceColumnNames.getAll("ColumnNames");
+		dataServiceSizeTable.getAll("SizeTable");
+		dataServiceCategory.getAll("SalesCategory");
+
 		fillModemArray();
 		fillDefaultDocumentsArray(DefaultInvoiceArray);
 		fillDefaultDocumentsArray(DefaultEstimateArray);
@@ -483,6 +486,17 @@ width="800" height="678" title="Preferences"
 		dataServicePOS.getAll("PreferencesPOS");
 		dataServiceEstimator.getAll("PreferencesEstimating");
 		dataServiceAccounting.getAll("PreferencesAccounting");
+		dataServiceCashRegister.getAll("PreferencesCashRegister");
+		dataServiceCashRegister.getAll("PreferencesCashRegister");
+		dataServiceCreditCard.getAll("PreferencesCreditCard");
+		dataServiceMarkups.getAll("PreferencesMarkups");
+		dataServicePendingList.getAll("PreferencesPendingList");
+		dataServicePricingMethod.getAll("PreferencesPricingMethod");
+		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+		dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+		dataServiceStocks.getAll("PreferencesStocks");
+
 	}
 
 	private function updatePreferencesData():void{
@@ -490,6 +504,16 @@ width="800" height="678" title="Preferences"
 		dataServicePOS.addUpdate("PreferencesPOS");
 		dataServiceEstimator.addUpdate("PreferencesEstimating");
 		dataServiceAccounting.addUpdate("PreferencesAccounting");
+		dataServiceCashRegister.addUpdate("PreferencesCashRegister");
+		dataServiceCashRegister.addUpdate("PreferencesCashRegister");
+		dataServiceCreditCard.addUpdate("PreferencesCreditCard");
+		dataServiceMarkups.addUpdate("PreferencesMarkups");
+		dataServicePendingList.addUpdate("PreferencesPendingList");
+		dataServicePricingMethod.addUpdate("PreferencesPricingMethod");
+		dataServiceQuantityBreaks.addUpdate("PreferencesQuantityBreaks");
+		dataServiceSalesCategory.addUpdate("PreferencesSalesCategory");
+		dataServiceStockDefinition.addUpdate("PreferencesStockDefinition");
+		dataServiceStocks.addUpdate("PreferencesStocks");
 	}
 
 	private function messageHandler(message:IMessage):void
