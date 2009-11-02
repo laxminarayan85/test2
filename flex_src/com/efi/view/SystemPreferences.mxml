@@ -193,6 +193,9 @@ width="800" height="678" title="Preferences"
 	private var preferencesAccounting:PreferencesAccounting;
 
 	[Bindable]
+	private var preferencesStocks:PreferencesStocks;
+	
+	[Bindable]
 	private var country:Country;
 
 //Tree view XML table
@@ -516,8 +519,177 @@ width="800" height="678" title="Preferences"
 		dataServiceStocks.addUpdate("PreferencesStocks");
 	}
 
-	private function messageHandler(message:IMessage):void
-	{
+	private function mapFromPreferencesData():void {
+		
+		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
+		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging
+		this.chkAddFixedWasteForEachColor.selected = preferencesEstimator.addFixedWasteForEachColor
+		this.chkAddFixedWasteForEachPass.selected = preferencesEstimator.addFixedWasteForEachPass
+		this.chkAddTrackingBarCodes.selected = preferencesEstimator.addTrackingBarCode
+		this.chkAllowEstimatePrefixModification.selected = preferencesAccounting.estimateAllowPrefixMod
+		this.chkAllowEstimateSuffixModification.selected = preferencesAccounting.estimateAllowSuffixMod
+		this.chkAllowInvoicePrefixModification.selected = preferencesAccounting.invoiceAllowPrefixMod
+		this.chkAllowInvoiceSuffixModification.selected = preferencesAccounting.invoiceAllowSuffixMod
+//		this.chkAlwaysIncludePastDue.selected 
+		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown
+		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown
+		this.chkAlwaysUseStockParentSize.selected = preferencesEstimator.useStockParentSize
+		this.chkAttachToJobTicket.selected = preferencesEstimator.attachToJobTicket
+		this.chkAutoShowCharges.selected = preferencesEstimator.autoShowCharges
+		this.chkAutoShowPaperCalculator.selected = preferencesEstimator.showPaperCalculator
+		this.chkBackTrimParent.selected = preferencesEstimator.backTrimParent
+		this.chkBleed.selected = preferencesEstimator.bleed
+		this.chkCalculateInkByImpressions.selected = preferencesEstimator.calculateInkbyImpressions
+		this.chkCalculateReOrderDate.selected = preferencesEstimator.calculateReOrderDate
+		this.chkCanChangeAddress.selected = preferencesEstimator.canChangeAddress
+		this.chkCloseInvoiceAfterPrinting.selected = preferencesEstimator.closeInvoiceAfterPrintingTicket
+		this.chkCloseInvoiceAndEstimatesAfterPrinting.selected = preferencesEstimator.closeInvoicesAndEstimateAfterPrinting
+		this.chkCloseSourceAfterCopying.selected = preferencesEstimator.closeAfterCopy
+		this.chkColorBar.selected = preferencesEstimator.colorBar
+//		this.chkColorPastDueEntries.selected 
+		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions
+		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles
+		this.chkDoNotCostDuringPost.selected = preferencesEstimator.doNotCostDuringPost
+		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages
+		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut
+		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit
+		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
+		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes
+		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem
+		this.chkEnterStockCost.selected = preferencesEstimator.stockCostInEstimator
+		this.chkFolioEdge.selected = preferencesEstimator.folioEdge
+		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed
+		this.chkGripEdge.selected = preferencesEstimator.gripEdgeGap
+		this.chkGutter.selected = preferencesEstimator.gutter
+		this.chkHideTaxLineItems.selected = preferencesPOS.hideTaxLines
+		this.chkJDFConnectorIsVersion45orLater.selected = preferencesSystem.jDFConnector45orLater
+		this.chkJDFConnectorSupportsNonAsciiCharacters.selected = preferencesSystem.supportsNonAsciiCharacters
+		this.chkKeepSettingsLocal.selected = preferencesPOS.keepLocalSettings
+		this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimator.leaveFoldedSizeEmpty
+		this.chkLockSettings.selected = preferencesPOS.lockSettings
+		this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
+		this.chkNeverUsePresetPress.selected = preferencesEstimator.neverUsePresetPressOnStockChanges
+		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices
+		this.chkPNIIsVersion45orLater.selected = preferencesSystem.pNI45orLater
+		this.chkPrint2forCash.selected = preferencesPOS.print2forCash
+		this.chkPrint2forCredit.selected = preferencesPOS.print2forCreditCards
+		this.chkPrintDocument.selected = preferencesAccounting.printDocument
+		this.chkPrintInvoices.selected = preferencesPOS.printInvoices
+		this.chkPrintParentToFinish.selected = preferencesEstimator.printParentToFinishSection
+		this.chkPrintParentToRun.selected = preferencesEstimator.printParentToRunSection
+		this.chkPrintReceipts.selected = preferencesPOS.printReceipts
+		this.chkPrintRunToFinish.selected = preferencesEstimator.printRunToFinishSection
+		this.chkPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidation
+		this.chkRemoveDraftFromDeposit.selected = preferencesAccounting.removeDraftsFromDeposit
+		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity
+		this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
+		this.chkShowAmountsOnTicket.selected = preferencesEstimator.showAmountOnTicket
+//		this.chkShowDocumentType.selected
+		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday
+		this.chkShowReferenceNumber.selected = preferencesEstimator.showCustomerReferenceNumber
+		this.chkShowSinglePassWorkAndTurnOptions.selected = preferencesEstimator.showSinglePassWorkTurnOptions
+		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp
+		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting
+		this.chkTrimFourSides.selected = preferencesEstimator.trimFourSides
+		this.chkUseAddressValidation.selected = preferencesAccounting.useAddressValidation
+		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency
+		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
+		this.chkUseChileTaxIdVerification.selected = preferencesSystem.chileTaxIdVerification
+		this.chkUseHistoryTitle.selected = preferencesEstimator.useHistoryTitleforNewTitle
+		this.chkUseInternationalTextSorting.selected = preferencesSystem.internationalTextSorting
+		this.chkUseMasterDrawer.selected = preferencesPOS.useMasterDrawer
+		this.chkUsePalmPilotTracking.selected = preferencesSystem.usePalmPilotTracking
+		this.chkValidateSalesRep.selected = preferencesEstimator.validateSalesRep
+		this.chkWhiteSpace.selected = preferencesEstimator.useWhiteSpace
+		this.chkWorkAndTumble.selected = preferencesEstimator.workandTumble
+	}
+
+	private function mapToPreferencesData():void {
+		preferencesAccounting.activateCreditCardApproval = this.chkActivateCCAprovalProcess.selected 
+		preferencesSystem.activateUserEventLogging = this.chkActivateUserEventLogging.selected
+		preferencesEstimator.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
+		preferencesEstimator.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
+		preferencesEstimator.addTrackingBarCode = this.chkAddTrackingBarCodes.selected
+		preferencesAccounting.estimateAllowPrefixMod = this.chkAllowEstimatePrefixModification.selected
+		preferencesAccounting.estimateAllowSuffixMod = this.chkAllowEstimateSuffixModification.selected
+		preferencesAccounting.invoiceAllowPrefixMod = this.chkAllowInvoicePrefixModification.selected
+		preferencesAccounting.invoiceAllowSuffixMod = this.chkAllowInvoiceSuffixModification.selected
+//		this.chkAlwaysIncludePastDue.selected 
+		preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
+		preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
+		preferencesEstimator.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
+		preferencesEstimator.attachToJobTicket = this.chkAttachToJobTicket.selected
+		preferencesEstimator.autoShowCharges = this.chkAutoShowCharges.selected
+		preferencesEstimator.showPaperCalculator = this.chkAutoShowPaperCalculator.selected
+		preferencesEstimator.backTrimParent = this.chkBackTrimParent.selected
+		preferencesEstimator.useBleed = this.chkBleed.selected
+		preferencesEstimator.calculateInkbyImpressions = this.chkCalculateInkByImpressions.selected
+		preferencesEstimator.calculateReOrderDate = this.chkCalculateReOrderDate.selected
+		preferencesEstimator.canChangeAddress = this.chkCanChangeAddress.selected
+		preferencesEstimator.closeInvoiceAfterPrintingTicket = this.chkCloseInvoiceAfterPrinting.selected
+		preferencesEstimator.closeInvoicesAndEstimateAfterPrinting = this.chkCloseInvoiceAndEstimatesAfterPrinting.selected
+		preferencesEstimator.closeAfterCopy = this.chkCloseSourceAfterCopying.selected
+		preferencesEstimator.useColorBar = this.chkColorBar.selected
+//		this.chkColorPastDueEntries.selected 
+		preferencesSystem.disableNonTaxableOptions = this.chkDisableNonTaxableOptions.selected
+		preferencesSystem.disableTextStyles = this.chkDisableTextStyles.selected
+		preferencesEstimator.doNotCostDuringPost = this.chkDoNotCostDuringPost.selected
+		preferencesSystem.eliminateWarningMessages = this.chkEliminateSomeWarningMessages.selected
+		preferencesSystem.enableAutoLogOut = this.chkEnableAutomaticLogOut.selected
+		preferencesSystem.automaticQuit = this.chkEnableAutomaticQuit.selected
+		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
+		preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
+		preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
+		preferencesEstimator.stockCostInEstimator = this.chkEnterStockCost.selected 
+		preferencesEstimator.useFolioEdge = this.chkFolioEdge.selected
+		preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
+		preferencesEstimator.useGripEdgeGap = this.chkGripEdge.selected
+		preferencesEstimator.useGutter = this.chkGutter.selected
+		preferencesPOS.hideTaxLines = this.chkHideTaxLineItems.selected
+		preferencesSystem.jDFConnector45orLater = this.chkJDFConnectorIsVersion45orLater.selected
+		preferencesSystem.supportsNonAsciiCharacters = this.chkJDFConnectorSupportsNonAsciiCharacters.selected
+		preferencesPOS.keepLocalSettings = this.chkKeepSettingsLocal.selected
+		preferencesEstimator.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
+		preferencesPOS.lockSettings = this.chkLockSettings.selected
+		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
+		preferencesEstimator.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected
+		preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
+		preferencesSystem.pNI45orLater = this.chkPNIIsVersion45orLater.selected
+		preferencesPOS.print2forCash = this.chkPrint2forCash.selected
+		preferencesPOS.print2forCreditCards = this.chkPrint2forCredit.selected
+		preferencesAccounting.printDocument = this.chkPrintDocument.selected
+		preferencesPOS.printInvoices = this.chkPrintInvoices.selected
+		preferencesEstimator.printParentToFinishSection = this.chkPrintParentToFinish.selected
+		preferencesEstimator.printParentToRunSection = this.chkPrintParentToRun.selected
+		preferencesPOS.printReceipts = this.chkPrintReceipts.selected
+		preferencesEstimator.printRunToFinishSection = this.chkPrintRunToFinish.selected
+		preferencesAccounting.promptUserForValidation = this.chkPromptUserForValidationInformation.selected
+		preferencesAccounting.removeDraftsFromDeposit = this.chkRemoveDraftFromDeposit.selected
+		preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
+		preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
+		preferencesEstimator.showAmountOnTicket = this.chkShowAmountsOnTicket.selected
+//		this.chkShowDocumentType.selected
+		preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
+		preferencesEstimator.showCustomerReferenceNumber = this.chkShowReferenceNumber.selected
+		preferencesEstimator.showSinglePassWorkTurnOptions = this.chkShowSinglePassWorkAndTurnOptions.selected
+		preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
+		preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
+		preferencesEstimator.trimFourSides = this.chkTrimFourSides.selected
+		preferencesAccounting.useAddressValidation = this.chkUseAddressValidation.selected
+		preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
+		preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
+		preferencesSystem.chileTaxIdVerification = this.chkUseChileTaxIdVerification.selected
+		preferencesEstimator.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
+		preferencesSystem.internationalTextSorting = this.chkUseInternationalTextSorting.selected
+		preferencesPOS.useMasterDrawer = this.chkUseMasterDrawer.selected
+		//fix data incorrectly defined as int not bool
+		//preferencesSystem.usePalmPilotTracking = parseInt(this.chkUsePalmPilotTracking.selected) 
+		preferencesEstimator.validateSalesRep = this.chkValidateSalesRep.selected
+		preferencesEstimator.useWhiteSpace = this.chkWhiteSpace.selected
+		preferencesEstimator.workandTumble = this.chkWorkAndTumble.selected
+	}
+	
+	private function messageHandler(message:IMessage):void{
 	}
      
 	private function handleFault(ev:FaultEvent):void {  
@@ -785,11 +957,11 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="Show invoices with firm due date of &quot;today&quot; at login"/>
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
 				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
-				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds"/>
+				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.secondsOfInactivity}"/>
 				<mx:Label x="50" y="330" text="Time of day to quit:"/>
-				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit"/>
+				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>
 				<mx:Label x="80" y="367" text="Shut down notification message:"/>
-				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage"/>
+				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" text="{preferencesSystem.shutdownMessage}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Company" textAlign="center"/>
@@ -797,24 +969,24 @@ width="800" height="678" title="Preferences"
 				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
 
 				<mx:Label x="79" y="197" text="Phone:"/>
-				<mx:TextInput x="127" y="195" width="148" id="txtPhone"/>
+				<mx:TextInput x="127" y="195" width="148" id="txtPhone" text="{preferencesSystem.companyPhone}"/>
 				<mx:Label x="344" y="197" text="Fax:"/>
-				<mx:TextInput x="377" y="195" width="148" id="txtFax"/>
+				<mx:TextInput x="377" y="195" width="148" id="txtFax" text="{preferencesSystem.companyFax}"/>
 				<mx:Label x="79" y="227" text="E-Mail:"/>
-				<mx:TextInput x="125" y="225" width="400" id="txtEmail"/>
+				<mx:TextInput x="125" y="225" width="400" id="txtEmail" text="{preferencesSystem.companyEmail}"/>
 				<mx:Label x="81" y="257" text="Other:"/>
-				<mx:TextInput x="125" y="255" width="400" id="txtOther1"/>
+				<mx:TextInput x="125" y="255" width="400" id="txtOther1" text="{preferencesSystem.companyOther1}"/>
 				<mx:Label x="81" y="287" text="Other:"/>
-				<mx:TextInput x="125" y="285" width="400" id="txtOther2"/>
+				<mx:TextInput x="125" y="285" width="400" id="txtOther2" text="{preferencesSystem.companyOther2}"/>
 				<mx:Label x="8" y="317" text="Company ID Label:"/>
-				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel"/>
+				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel" text="{preferencesSystem.companyIdLabel}"/>
 				<mx:Label x="242" y="317" text="Company ID:"/>
-				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId"/>
+				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId" text="{preferencesSystem.companyId}"/>
 				
 				<mx:Label x="187" y="367" text="Store Number:"/>
-				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber"/>
+				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber" text="{preferencesSystem.companyStoreNumber}"/>
 				<mx:Label x="52" y="392" text="Workstation/Store Location Reference:"/>
-				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference"/>
+				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference" text="{preferencesSystem.companyStoreLocationRef}"/>
 				<mx:TextArea x="125" y="420" width="400" height="63">
 					<mx:text>The company ID is printed on Invoices and Estimates, the workstation specific Store location information prints on receipts and appears in the Account history transactions, if empy the global Store Number is used for these purposes.</mx:text>
 				</mx:TextArea>
@@ -846,7 +1018,7 @@ width="800" height="678" title="Preferences"
 				<mx:Button x="240" y="211" label="F" width="40"/>
 				<mx:Button x="280" y="211" label="S" width="40"/>
 				<mx:Label x="325" y="250" text="First Day of Work Week"/>
-				<mx:CheckBox x="40" y="327" label="Future dates exclude days that company is Closed"/>
+				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="Future dates exclude days that company is Closed"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="numbers_canvas" hideEffect="effect" showEffect="effect">
@@ -862,14 +1034,14 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="40" y="212" text="Short Percent:"/>
 				<mx:Label x="63" y="242" text="Round to:"/>
 
-				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);"/>
-				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);"/>
-				<mx:TextInput x="127" y="90" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);"/>
-				<mx:TextInput x="127" y="120" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);"/>
-				<mx:TextInput x="127" y="150" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);"/>
-				<mx:TextInput x="127" y="180" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);"/>
-				<mx:TextInput x="127" y="210" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);"/>
-				<mx:TextInput x="127" y="240" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);"/>
+				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
+				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
+				<mx:TextInput x="127" y="90" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);" text="{preferencesSystem.numbersAmount}"/>
+				<mx:TextInput x="127" y="120" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);" text="{preferencesSystem.numbersRate}"/>
+				<mx:TextInput x="127" y="150" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);" text="{preferencesSystem.numbersFactor}"/>
+				<mx:TextInput x="127" y="180" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);" text="{preferencesSystem.numbersInvoice}"/>
+				<mx:TextInput x="127" y="210" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);" text="{preferencesSystem.numbersShortPercent}"/>
+				<mx:TextInput x="127" y="240" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);" text="{preferencesSystem.numbersRoundto}"/>
 
 				<mx:CheckBox x="216" y="240"  id="chkAlwaysRoundDown" label="Always Round Down"/>
 				<mx:CheckBox x="216" y="270"  id="chkTaxRoundUp" label="Tax Round Up"/>
@@ -889,11 +1061,11 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="Use Alternate Currency System." change="checkAlternateCurrency();"/>
 
 				<mx:Label x="84" y="62" text="Format:"/>
-				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false"/>
+				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false" text="{preferencesSystem.displayFormat}"/>
 				<mx:Label x="24" y="92" text="Conversion Factor:"/>
-				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false"/>
+				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false" text="{preferencesSystem.conversionFactor}"/>
 				<mx:Label x="72" y="122" text="Round to:"/>
-				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false"/>
+				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false" text="{preferencesSystem.alternateRoundto}"/>
 
 				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="Always Round Down" enabled="false"/>
 				
@@ -913,12 +1085,12 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="150"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
 
 				<mx:Label x="26" y="182" text="Ink Weight(singular):"/>
-				<mx:TextInput x="154" y="180" id="txtInkWeightSingular"/>
+				<mx:TextInput x="154" y="180" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
 				<mx:Label x="39" y="212" text="Ink Weight(plural):"/>
-				<mx:TextInput x="154" y="210" id="txtInkWeightPlural"/>
+				<mx:TextInput x="154" y="210" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
 
 				<mx:Label x="27" y="272" text="Authorize the decrypt of CC to ADMIN users:"/>
-				<mx:TextInput x="280" y="270" width="187" id="txtAuthorizeDecrypt"/>
+				<mx:TextInput x="280" y="270" width="187" id="txtAuthorizeDecrypt" text="{preferencesSystem.authorizeDecrypt}"/>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="activation_canvas" hideEffect="effect" showEffect="effect">
@@ -929,9 +1101,9 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="194" y="62" text="Tracker Data Collection:"/>
 				<mx:Label x="235" y="92" text="Validation Code:"/>
 
-				<mx:TextInput x="335" y="30" id="txtCreditCardApproval"/>
-				<mx:TextInput x="335" y="60" id="txtTrackerDataCollection"/>
-				<mx:TextInput x="335" y="90" id="txtValidationCode" enabled="false"/>
+				<mx:TextInput x="335" y="30" id="txtCreditCardApproval" text="{preferencesSystem.creditCardApproval}"/>
+				<mx:TextInput x="335" y="60" id="txtTrackerDataCollection" text="{preferencesSystem.trackerDataCollection}"/>
+				<mx:TextInput x="335" y="90" id="txtValidationCode" enabled="false" text="{preferencesSystem.validationCode}"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="integration_canvas" hideEffect="effect" showEffect="effect">
@@ -943,18 +1115,18 @@ width="800" height="678" title="Preferences"
 					<mx:Button x="20" y="35" label="Check Connection" click="doCheckPNIConnection();"/>
 					<mx:Label x="20" y="72" text="PNI Status:"/>
 
-					<mx:TextInput x="199" y="10" id="txtPNIAddress" width="291"/>
-					<mx:TextInput x="165" y="37" id="txtPNIConnection" width="325"/>
+					<mx:TextInput x="199" y="10" id="txtPNIAddress" width="291" text="{preferencesSystem.pNIAddress}"/>
+					<mx:TextInput x="165" y="37" id="txtPNIConnection" width="325" />
 					<mx:TextInput x="87" y="70" id="txtPNIStatus" width="403"/>
 
 					<mx:CheckBox x="20" y="100"  id="chkPNIIsVersion45orLater" label="The PrintNet Integrator is version 4.5 or later"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="218" width="520" height="160" layout="absolute" title="JDF Connector">
 					<mx:Label x="20" y="12" text="Fiery Connector URL:"/>
-					<mx:TextInput x="141" y="10" id="txtFieryUrl" width="349"/>
+					<mx:TextInput x="141" y="10" id="txtFieryUrl" width="349" text="{preferencesSystem.fieryConnectorUrl}"/>
+
 					<mx:CheckBox x="20" y="50"  id="chkJDFConnectorIsVersion45orLater" label="The JDF Connector URL from the PNI (PNI 4.5 and later"/>
 					<mx:CheckBox x="20" y="80"  id="chkJDFConnectorSupportsNonAsciiCharacters" label="JDF Connector supports non-ASCII characters"/>
-
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="palmtracking_canvas" hideEffect="effect" showEffect="effect">
@@ -963,12 +1135,12 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30"  id="chkUsePalmPilotTracking" label="Use PalmPilot tracking"/>
 				<mx:Label x="50" y="60" text="Palm user path:"/>
-				<mx:TextInput x="50" y="78" id="txtPalmPath" width="349"/>
+				<mx:TextInput x="50" y="78" id="txtPalmPath" width="349" text="{preferencesSystem.palmUserPath}"/>
 				<mx:Button x="50" y="110" label="Browse..." click="doBrowsePath();"/>
 				<mx:Label x="138" y="112" text="for HotSync application."/>
 				
 				<mx:Label x="50" y="142" text="Polling Interval:"/>
-				<mx:TextInput x="145" y="140" id="txtPalmPilotPollingInterval" width="57"/>
+				<mx:TextInput x="145" y="140" id="txtPalmPilotPollingInterval" width="57" text="{preferencesSystem.palmPollingInterval}"/>
 				<mx:Label x="205" y="142" text="seconds."/>
 
 				<mx:Button x="50" y="180" label="Create Location file" click="doCreateLocationFile();" width="141"/>
@@ -991,10 +1163,10 @@ width="800" height="678" title="Preferences"
 
 				<mx:Label x="54" y="32" text="Header:"/>
 				<mx:Label x="59" y="182" text="Footer:"/>
-				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130"/>
-				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100"/>
+				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130" text="{preferencesPOS.receiptHeader}"/>
+				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100" text="{preferencesPOS.receiptFooter}"/>
 
-				<mx:TextInput x="272" y="300" id="txtSerialNumber" width="70"/>
+				<mx:TextInput x="272" y="300" id="txtSerialNumber" width="70" text="{preferencesPOS.startingNumber}"/>
 				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="Serial numbers on receipts start at:"/>
 				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="Hide tax in line items"/>
 				
@@ -1006,7 +1178,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="50" y="32" text="Receipt Printer:"/>
 				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
 				<mx:Label x="95" y="62" text="Printer:"/>
-				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200"/>
+				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200" text="{preferencesPOS.defaultPrinter}"/>
 
 				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="Enable Cash Drawer"/>
 				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="Print Receipts"/>
@@ -1024,11 +1196,11 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="101" y="348" text="Receipt Start Code:"/>
 				<mx:Label x="107" y="373" text="Receipt End Code:"/>
 
-				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47"/>
-				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47"/>
-				<mx:TextInput x="216" y="321" id="txtBlankAfterReceipt" width="47"/>
-				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77"/>
-				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77"/>
+				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47" text="{preferencesPOS.asciiCodeOpenDrawer}"/>
+				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47" text="{preferencesPOS.blankLinesBeforeReceipt}"/>
+				<mx:TextInput x="216" y="321" id="txtBlankAfterReceipt" width="47" text="{preferencesPOS.blankLinesAfterReceipt}"/>
+				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77" text="{preferencesPOS.receiptStartCode}"/>
+				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77" text="{preferencesPOS.receiptEndCode}"/>
 
 				<mx:Label x="50" y="420" text="Baud Rate:"/>
 				<mx:Label x="220" y="420" text="Stop Bits:"/>
@@ -1045,6 +1217,16 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				<mx:DataGrid x="50" y="30" width="508" dataProvider="{PreferencesCashRegisterArray}" height="377">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Tax" dataField="Tax" width="35"/>
+						<mx:DataGridColumn headerText="Title" dataField="Title"/>
+						<mx:DataGridColumn headerText="Sales Catagory" dataField="Category" width="100"/>
+						<mx:DataGridColumn headerText="Rate" dataField="Rate" width="50"/>
+						<mx:DataGridColumn headerText="Tax Table" dataField=""/>
+						<mx:DataGridColumn headerText="Tax Code" dataField=""/>
+					</mx:columns>
+				</mx:DataGrid>				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
@@ -1098,7 +1280,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="Use the History Title for New Document Title"/>
 
 				<mx:Label x="50" y="442" text="Normal Due Date (days):"/>
-				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70"/>
+				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimator.normalDueDateDays}"/>
 				
 				
 			</mx:Canvas>
@@ -1118,7 +1300,7 @@ width="800" height="678" title="Preferences"
 
 				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="Payment Due Date">
 					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
-					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50"/>
+					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimator.numberOfDaysBeforeDue}"/>
 
 					<mx:RadioButtonGroup id="optPaymentDueDays"/>
 					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays"/>
@@ -1150,14 +1332,14 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="50" y="330" text="Bleed"/>
 				<mx:Label x="50" y="380" text="Right"/>
 
-				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93"/>
-				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93"/>
-				<mx:TextInput x="50" y="150" id="txtColorBar" width="93"/>
-				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93"/>
-				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93"/>
-				<mx:TextInput x="50" y="300" id="txtGutter" width="93"/>
-				<mx:TextInput x="50" y="350" id="txtBleed" width="93"/>
-				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93"/>
+				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimator.gripEdgeGap}"/>
+				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimator.folioEdge}"/>
+				<mx:TextInput x="50" y="150" id="txtColorBar" width="93" text="{preferencesEstimator.colorBar}"/>
+				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93" text="{preferencesEstimator.whiteSpace}"/>
+				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93" text="{preferencesEstimator.whiteSpaceRight}"/>
+				<mx:TextInput x="50" y="300" id="txtGutter" width="93" text="{preferencesEstimator.gutter}"/>
+				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimator.bleed}"/>
+				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimator.bleedRight}"/>
 
 				<mx:Label x="151" y="180" text="Top"/>
 				<mx:Label x="151" y="230" text="Bottom"/>
@@ -1165,15 +1347,15 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="151" y="330" text="Top"/>
 				<mx:Label x="151" y="380" text="Bottom"/>
 
-				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93"/>
-				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93"/>
-				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93"/>
-				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93"/>
-				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93"/>
+				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimator.whiteSpaceTop}"/>
+				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimator.whiteSpaceBottom}"/>
+				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93" text="{preferencesEstimator.gutterHorizontal}"/>
+				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimator.bleedTop}"/>
+				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimator.bleedBottom}"/>
 
 
 				<mx:Label x="27" y="462" text="Default Press Cutoff:"/>
-				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93"/>
+				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimator.defaultPressCuttOff}"/>
 
 
 				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="Back Trim, Parent"/>
@@ -1226,10 +1408,95 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Markups" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:Text x="50" y="30" text="Markup is stepped and based on COST of job before markup, the first amount covers from zero cost to the specified cost, the last amount includes all above as well." height="38" width="488"/>
+
+				<mx:Label x="50" y="80" text="Outside Services"/>
+				<mx:DataGrid x="50" y="100" height="200">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Total Cost" dataField="col1"/>
+						<mx:DataGridColumn headerText="Markup" dataField="col2"/>
+					</mx:columns>
+				</mx:DataGrid>
+
+				<mx:Label x="300" y="80" text="Merchandise"/>
+				<mx:DataGrid x="300" y="100" height="200">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Total Cost" dataField="col1"/>
+						<mx:DataGridColumn headerText="Markup" dataField="col2"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="stocksizes_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Stocks And Sizes" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:Panel x="50" y="27" layout="absolute" title="Standard Stock and Special Order Markup" width="500" height="295">
+					<mx:Label x="9" y="5" text="Quantity:"/>
+					<mx:Label x="15" y="27" text="Markup:"/>
+
+					<mx:TextInput x="66" y="3" id="txtstdqty1" width="50" text="{preferencesStocks.stdQty1}"/>
+					<mx:TextInput x="116" y="3" id="txtstdqty2" width="50" text="{preferencesStocks.stdQty2}"/>
+					<mx:TextInput x="166" y="3" id="txtstdqty3" width="50" text="{preferencesStocks.stdQty3}"/>
+					<mx:TextInput x="216" y="3" id="txtstdqty4" width="50" text="{preferencesStocks.stdQty4}"/>
+					<mx:TextInput x="266" y="3" id="txtstdqty5" width="50" text="{preferencesStocks.stdQty5}"/>
+					<mx:TextInput x="316" y="3" id="txtstdqty6" width="50" text="{preferencesStocks.stdQty6}"/>
+	
+					<mx:TextInput x="66" y="26" id="txtstdmarkup1" width="50" text="{preferencesStocks.stdMarkup1}"/>
+					<mx:TextInput x="116" y="26" id="txtstdmarkup2" width="50" text="{preferencesStocks.stdMarkup2}"/>
+					<mx:TextInput x="166" y="26" id="txtstdmarkup3" width="50" text="{preferencesStocks.stdMarkup3}"/>
+					<mx:TextInput x="216" y="26" id="txtstdmarkup4" width="50" text="{preferencesStocks.stdMarkup4}"/>
+					<mx:TextInput x="266" y="26" id="txtstdmarkup5" width="50" text="{preferencesStocks.stdMarkup5}"/>
+					<mx:TextInput x="316" y="26" id="txtstdmarkup6" width="50" text="{preferencesStocks.stdMarkup6}"/>
+
+					<mx:Label x="15" y="55" text="Stock weight, name and finish"/>
+					<mx:Label x="15" y="95" text="Stock points, name and finish"/>
+					<mx:Label x="15" y="135" text="Stock microns, name and finish"/>
+					<mx:Label x="15" y="175" text="Stock plies, name and finish"/>
+					<mx:Label x="15" y="215" text="Stock millimeters, name and finish"/>
+
+					<mx:TextInput x="15" y="70" id="txtStockWeight" text="{preferencesStocks.weight}" width="172"/>
+					<mx:TextInput x="15" y="110" id="txtstockPoints" text="{preferencesStocks.points}" width="172"/>
+					<mx:TextInput x="15" y="150" id="txtStockMicrons" text="{preferencesStocks.microns}" width="172"/>
+					<mx:TextInput x="15" y="190" id="txtStockPlies" text="{preferencesStocks.plies}" width="172"/>
+					<mx:TextInput x="15" y="230" id="txtStockMillimeters" text="" width="172"/>
+				</mx:Panel>
+				<mx:Panel x="50" y="326" layout="absolute" title="Blank Stock Pricing" width="500" height="92">				
+					<mx:Label x="9" y="5" text="Quantity:"/>
+					<mx:Label x="15" y="27" text="Markup:"/>
+
+					<mx:TextInput x="66" y="3" id="txtblankqty1" width="50" text="{preferencesStocks.blankQty1}"/>
+					<mx:TextInput x="116" y="3" id="txtblankqty2" width="50" text="{preferencesStocks.blankQty2}"/>
+					<mx:TextInput x="166" y="3" id="txtblankqty3" width="50" text="{preferencesStocks.blankQty3}"/>
+					<mx:TextInput x="216" y="3" id="txtblankqty4" width="50" text="{preferencesStocks.blankQty4}"/>
+					<mx:TextInput x="266" y="3" id="txtblankqty5" width="50" text="{preferencesStocks.blankQty5}"/>
+					<mx:TextInput x="316" y="3" id="txtblankqty6" width="50" text="{preferencesStocks.blankQty6}"/>
+	
+					<mx:TextInput x="66" y="26" id="txtblankmarkup1" width="50" text="{preferencesStocks.blankMarkup1}"/>
+					<mx:TextInput x="116" y="26" id="txtblankmarkup2" width="50" text="{preferencesStocks.blankMarkup2}"/>
+					<mx:TextInput x="166" y="26" id="txtblankmarkup3" width="50" text="{preferencesStocks.blankMarkup3}"/>
+					<mx:TextInput x="216" y="26" id="txtblankmarkup4" width="50" text="{preferencesStocks.blankMarkup4}"/>
+					<mx:TextInput x="266" y="26" id="txtblankmarkup5" width="50" text="{preferencesStocks.blankMarkup5}"/>
+					<mx:TextInput x="316" y="26" id="txtblankmarkup6" width="50" text="{preferencesStocks.blankMarkup6}"/>
+
+				</mx:Panel>
+				<mx:Panel x="50" y="422" layout="absolute" title="Customer Stock" width="500" height="134">
+					<mx:Label x="37" y="5" text="Stock Cost:"/>
+					<mx:Label x="49" y="27" text="Quantity:"/>
+					<mx:Label x="55" y="49" text="Markup:"/>
+
+					<mx:TextInput x="109" y="3" id="txtcustomercost" width="50" text="{preferencesStocks.customerCost}"/>
+					<mx:TextInput x="109" y="26" id="txtcustomerquantity" width="50" text="{preferencesStocks.customerQuantity}"/>
+					<mx:TextInput x="109" y="49" id="txtcustomermarkup" width="50" text="{preferencesStocks.customerMarkup}"/>
+
+					<mx:CheckBox x="10" y="71" id="chkMarkupOnly" label="Markup Only (no stock cost)"/>
+								
+				</mx:Panel>
+
+				<mx:Label x="50" y="564" text="Size Table to Use:"/>
+				<mx:ComboBox x="160" y="562" id="cboSizeTableToUse"/>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
@@ -1244,6 +1511,21 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="pricingmethod_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:DataGrid x="50" y="27" width="500" height="475">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Use" dataField="col1" width="50"/>
+						<mx:DataGridColumn headerText="Title" dataField="col2" width="130"/>
+						<mx:DataGridColumn headerText="Abbreviation" dataField="col3" width="130"/>
+						<mx:DataGridColumn headerText="B" dataField="col4" width="30"/>
+						<mx:DataGridColumn headerText="T" dataField="col5" width="30"/>
+						<mx:DataGridColumn headerText="F" dataField="col6" width="30"/>
+						<mx:DataGridColumn headerText="N" dataField="col7" width="30"/>
+						<mx:DataGridColumn headerText="Sales Category" dataField="col8" width="130"/>
+						<mx:DataGridColumn headerText="Estimator" dataField="col9" width="130"/>
+					</mx:columns>
+				</mx:DataGrid>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditdefaults_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit/Defaults" textAlign="center"/>
@@ -1256,13 +1538,11 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="50" y="152" text="Default Sales Rep for New Accounts:"/>
 				<mx:Label x="58" y="182" text="Default Shipping for New Accounts:"/>
 
-				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379"/>
-				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379"/>
-				<mx:TextInput x="151" y="90" id="txtInactivePeriod" width="379"/>
-				<mx:TextInput x="255" y="150" id="txtDefaultSalesRep" width="275"/>
-				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="275"/>
-				
-				
+				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379" text="{preferencesAccounting.creditLimit}"/>
+				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379" text="{preferencesAccounting.financeChange}"/>
+				<mx:TextInput x="151" y="90" id="txtInactivePeriod" width="379" text="{preferencesAccounting.inactivePeriod}"/>
+				<mx:TextInput x="255" y="150" id="txtDefaultSalesRep" width="275" text="{preferencesAccounting.defaultSalesRep}"/>
+				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="275" text="{preferencesAccounting.defaultShipping}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="agingperiods_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Aging Periods" textAlign="center"/>
@@ -1271,18 +1551,24 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="28" y="32" text="Past Due:"/>
 				<mx:Label x="18" y="132" text="Delinquent:"/>
 				<mx:Label x="41" y="232" text="Frozen:"/>
-				<mx:TextInput x="90" y="30" id="txtPastDue" width="60"/>
-				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60"/>
-				<mx:TextInput x="90" y="230" id="txtFrozen" width="60"/>
+				<mx:TextInput x="90" y="30" id="txtPastDue" width="60" text="{preferencesAccounting.pastDue}"/>
+				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60" text="{preferencesAccounting.delinquent}"/>
+				<mx:TextInput x="90" y="230" id="txtFrozen" width="60" text="{preferencesAccounting.frozen}"/>
 
-				<mx:TextArea x="90" y="60" id="txtPastDueArea" width="390" height="60"/>
-				<mx:TextArea x="90" y="160" id="txtDelinquentArea" width="390" height="60"/>
-				<mx:TextArea x="90" y="260" id="txtFrozenArea" width="390" height="60"/>
+				<mx:TextArea x="90" y="60" id="txtPastDueArea" width="390" height="60" text="{preferencesAccounting.pastDueNote}"/>
+				<mx:TextArea x="90" y="160" id="txtDelinquentArea" width="390" height="60" text="{preferencesAccounting.delinquentNote}"/>
+				<mx:TextArea x="90" y="260" id="txtFrozenArea" width="390" height="60" text="{preferencesAccounting.frozenNote}"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				<mx:DataGrid x="50" y="27" width="200" height="475">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Name" dataField="col1" width="100"/>
+						<mx:DataGridColumn headerText="GL Account" dataField="col2" width="100"/>
+					</mx:columns>
+				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="glprofiles_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
@@ -1290,8 +1576,6 @@ width="800" height="678" title="Preferences"
 
 				<mx:Label x="50" y="32" text="Link to:"/>
 				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
-				
-				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
@@ -1299,18 +1583,49 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
 				<mx:Label x="50" y="62" text="Credit Card processing drop folder"/>
-				<mx:TextInput x="50" y="80" id="txtCreditCardDropFolder" width="300"/>
+				<mx:TextInput x="50" y="80" id="txtCreditCardDropFolder" width="300" text="{preferencesAccounting.creditCardDropFolder}"/>
 				<mx:Button x="358" y="80" label="Browse..." click="doSelectFolder();"/>
 				<mx:Label x="50" y="112" text="Polling Interval:"/>
-				<mx:TextInput x="144" y="110" id="txtCreditCardPollingInterval" width="62"/>
+				<mx:TextInput x="144" y="110" id="txtCreditCardPollingInterval" width="62" text="{preferencesAccounting.pollingInterval}"/>
 				<mx:CheckBox x="215" y="110" id="chkUseAddressValidation" label="Use Address Validation"/>
 				<mx:CheckBox x="215" y="140" id="chkPromptUserForValidationInformation" label="Prompt User for Validation Information"/>
 				
+				<mx:DataGrid x="50" y="179" width="300" height="323">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Use" dataField="col1" width="50"/>
+						<mx:DataGridColumn headerText="Card Title" dataField="col2"/>
+						<mx:DataGridColumn headerText="Abbrev." dataField="col2" width="60"/>
+						<mx:DataGridColumn headerText="Code" dataField="col2" width="50"/>
+						<mx:DataGridColumn headerText="ID" dataField="col2" width="40"/>
+					</mx:columns>
+				</mx:DataGrid>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Order Number Format" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+
+				<mx:Panel x="50" y="27" layout="absolute" title="Invoice" width="500" height="226">
+					<mx:Label x="10" y="13" text="Prefix"/>
+					<mx:Label x="130" y="13" text="Document #"/>
+					<mx:Label x="250" y="13" text="Suffix"/>
+					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}"/>
+					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}"/>
+					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="Allow Prefix Modification"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="Allow Suffix Modification"/>
+				</mx:Panel>
+
+				<mx:Panel x="50" y="261" layout="absolute" title="Estimate" width="500" height="226">
+					<mx:Label x="10" y="13" text="Prefix"/>
+					<mx:Label x="130" y="13" text="Document #"/>
+					<mx:Label x="250" y="13" text="Suffix"/>
+					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}"/>
+					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}"/>
+					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="Allow Prefix Modification"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="Allow Suffix Modification"/>
+				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="journalentries_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Journal Entries" textAlign="center"/>
