@@ -71,8 +71,13 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 <mx:StringValidator id="contactBillLastValidator" source="{bill_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactShipLastValidator" source="{ship_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
 
+<mx:Metadata>
+    [Event(name="UpdateDataProviderEvent", type="UpdateDataProviderEvent")]
+</mx:Metadata>
+
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.ModelBase;
 	import com.efi.vo.Marketing;
 	import com.efi.vo.BusinessType;
 	import com.efi.vo.SalesRep;
@@ -85,9 +90,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	import com.efi.vo.Zip;
 	import com.efi.vo.ShippingMethod;
 	import com.efi.vo.TaxTable;
-	import com.efi.vo.TaxCodes;
-                             
-	import com.efi.vo.Account;                                         
+	import com.efi.vo.TaxCodes;           
+	import com.efi.vo.Account; 
+	import com.efi.events.UpdateDataProviderEvent;
+	                                        
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -169,7 +175,40 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		countryDataService.getAll("Country");
 		zipDataService.getAll("Zip");
 		dataService.getAll("Account");
+		addEventListener("UpdateDataProviderEvent", updateDataProvider);
 	}      
+	
+	private function updateDataProvider(evt:UpdateDataProviderEvent):void {
+		if (evt.provider == "city") {
+			if (!itemExists(citys, evt.value)) {
+				cityDataService.addUpdate(evt.value);
+			}
+		} else if (evt.provider == "state") {
+			if (!itemExists(states1, evt.value)) {
+				stateDataService.addUpdate(evt.value);
+			}
+		} else if (evt.provider == "zip") {
+			if (!itemExists(zips, evt.value)) {
+				zipDataService.addUpdate(evt.value);
+			}			
+		} else if (evt.provider == "country") {
+			if (!itemExists(countrys, evt.value)) {
+				countryDataService.addUpdate(evt.value);
+			}			
+		}
+	}
+	
+	private function itemExists(list:ArrayCollection, item:Object):Boolean {
+		var i:int;
+		
+		for (i=0; i<list.length; i++) {
+			if (list.getItemAt(i).name == item.name) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private function doNew():void {
 	    account = new Account();
 	    setAccount(account);

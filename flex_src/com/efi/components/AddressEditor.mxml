@@ -18,6 +18,8 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.events.CloseEvent;
+			import com.efi.events.SaveAddressEvent;
+			
 			import com.efi.vo.Address;
 			import com.efi.vo.City;
 			import com.efi.vo.Country;
@@ -54,8 +56,13 @@
 
 			public function init():void
 			{
+				addEventListener("SaveAddressEvent", saveAddressHandler);
 			}
 
+			public function saveAddressHandler(evt:SaveAddressEvent):void {
+				this.address = evt.address;
+			}
+			
 			public function getAddress():Address
 			{
 				return address;

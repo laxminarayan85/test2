@@ -76,6 +76,12 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 	private function doDelete():void {
 	 	 dataService.deleteItem("Job",job.id);
 	}  
+	public function getInvoice():Invoice {
+		return this.invoice;
+	}
+	public function setInvoice(invoice:Invoice):void {
+		this.invoice = invoice;
+	}
 	private function doGet():void{
 	   	    
 	}   

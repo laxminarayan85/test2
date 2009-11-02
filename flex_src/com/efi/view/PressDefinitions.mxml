@@ -35,8 +35,8 @@ width="772" height="827" title="Press Definitions"
     
 	[Bindable]                                         
      private var priceList:PriceList;  
-     [Bindable]                                         
-     private var wasteChart:WasteChart;  
+    [Bindable]                                         
+    private var wasteChart:WasteChart;  
                                                                                	
 	[Bindable]                                
 	private var pressDefinitionArray:ArrayCollection = new ArrayCollection();
@@ -193,20 +193,21 @@ width="772" height="827" title="Press Definitions"
 </mx:Script>	
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
-	<mx:AdvancedDataGrid x="10" y="71" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" 
+	<mx:AdvancedDataGrid x="10" y="71" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" sortExpertMode="true"
 		itemClick="doPressGridClick()">
-		<mx:columns>
+		<mx:groupedColumns>
 			<mx:AdvancedDataGridColumnGroup id="default_column" headerText="Default" sortable="false">
-				<mx:AdvancedDataGridColumn width="30" headerText="Sheet" dataField="defaultSheet" itemRenderer="com.efi.components.CheckBoxRenderer"/>
-				<mx:AdvancedDataGridColumn width="30" headerText="Roll" dataField="defaultRoll" itemRenderer="com.efi.components.CheckBoxRenderer"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Sheet" sortable="false" textAlign="center" dataField="defaultSheet" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Roll" sortable="false" textAlign="center" dataField="defaultRoll" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
 			</mx:AdvancedDataGridColumnGroup>
 			<mx:AdvancedDataGridColumn headerText="Name" dataField="name"/>
 			<mx:AdvancedDataGridColumnGroup id="paper_style_column" headerText="Paper Style" sortable="false">
-				<mx:AdvancedDataGridColumn width="30" headerText="Sheet" dataField="sheedFedPaper" itemRenderer="com.efi.components.CheckBoxRenderer"/>
-				<mx:AdvancedDataGridColumn width="30" headerText="Roll" dataField="rollFedPaper" itemRenderer="com.efi.components.CheckBoxRenderer"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Sheet" sortable="false" textAlign="center" dataField="sheetFedPaper" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Roll" sortable="false" textAlign="center"  dataField="rollFedPaper" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
 			</mx:AdvancedDataGridColumnGroup>
-		</mx:columns>
+		</mx:groupedColumns>
 	</mx:AdvancedDataGrid>
+
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
 	<mx:Label x="5" y="275" text="Production Location:" textAlign="right"/>
 	<mx:Label x="47" y="301" text="Cost Center:" textAlign="right"/>

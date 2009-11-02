@@ -8,10 +8,10 @@
     <mx:Canvas width="360" height="167">
     
     <mx:Label x="10" y="33" text="Street:" width="67" textAlign="right"/>
+    <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
+    <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
     <mx:Label x="10" y="108" text="Zip:" width="67" textAlign="right"/>
     <mx:Label x="168" y="108" text="Country:" width="57" textAlign="right"/>
-    <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
-    <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
             
     <mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
     <mx:TextInput x="85" y="10" width="265" id="company_edit" text="{address.name}"/>
@@ -27,12 +27,15 @@
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
+		import com.efi.events.SaveAddressEvent;
+		import com.efi.events.UpdateDataProviderEvent;
 	import com.efi.vo.Address;
     import com.efi.vo.City;
 	import com.efi.vo.Country;
 	import com.efi.vo.State;
 	import com.efi.vo.Zip;
-
+	import com.efi.vo.ModelBase;
+	
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;                                         
 	
@@ -80,8 +83,8 @@
 			if (item == -1) {
 				city = new City();
 				city.name = citycombo.text;
-//				cityDataProvider.addUpdate(city);
 				address.city = city;
+				updateDataProvider("city", city);
 			}
 			else {
 				citycombo.selectedItem = item;
@@ -99,8 +102,8 @@
 			if (item == -1) {
 				state = new com.efi.vo.State();
 				state.name = statecombo.text;
-//				stateDataProvider.addUpdate(state);
 				address.state = state;
+				updateDataProvider("state", state);
 			}
 			else {
 				statecombo.selectedItem = item;
@@ -118,8 +121,8 @@
 			if (item == -1) {
 				zip = new Zip();
 				zip.name = zipcombo.text;
-//				zipDataProvider.addUpdate(zip);
 				address.zip = zip;
+				updateDataProvider("zip", zip);
 			}
 			else {
 				zipcombo.selectedItem = item;
@@ -137,8 +140,8 @@
 			if (item == -1) {
 				country = new Country();
 				country.name = countrycombo.text;
-//				countryDataProvider.addUpdate(country);
 				address.country = country;
+				updateDataProvider("country", country);
 			}
 			else {
 				countrycombo.selectedItem = item;
@@ -146,13 +149,19 @@
 			}
 		}
 	}
-		
+	
+	private function updateDataProvider(type:String, value:ModelBase):void {
+		var eventObj:UpdateDataProviderEvent = new UpdateDataProviderEvent(type, value);
+		dispatchEvent(eventObj);
+	}
+	
 	private function doCancel():void {
 		address = originalAddress;
 		PopUpManager.removePopUp(this);
 	}
 	
 	private function doOK():void {
+		var eventObj:SaveAddressEvent = new SaveAddressEvent(address);
 		PopUpManager.removePopUp(this);
 	}
 	
