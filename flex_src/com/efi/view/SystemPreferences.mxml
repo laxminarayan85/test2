@@ -111,7 +111,7 @@ width="800" height="678" title="Preferences"
 	import mx.collections.XMLListCollection;
 
 	[Bindable]
-	private var enableSave:Boolean = false;
+	private var enableSave:Boolean = true;
 
 //Data field arrays
 	[Bindable]
@@ -119,7 +119,7 @@ width="800" height="678" title="Preferences"
 	[Bindable]
 	private var PreferencesPOSArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
-	private var PreferencesEstimatorArray:ArrayCollection = new ArrayCollection();
+	private var PreferencesEstimatingArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesAccountingArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -187,7 +187,7 @@ width="800" height="678" title="Preferences"
 	private var preferencesPOS:PreferencesPOS;
 
 	[Bindable]                                         
-	private var preferencesEstimator:PreferencesEstimating;
+	private var preferencesEstimating:PreferencesEstimating;
 
 	[Bindable]                                         
 	private var preferencesAccounting:PreferencesAccounting;
@@ -460,11 +460,11 @@ width="800" height="678" title="Preferences"
 		checkAlternateCurrency();
 		
 		getPreferencesData();
-		
+
 		openTree();
 		
 	}
-
+	
 	private function fillStaticData():void{
 		fillDaysArray(DaysArray);
 		fillMonthsArray(MonthsArray);
@@ -503,190 +503,212 @@ width="800" height="678" title="Preferences"
 	}
 
 	private function updatePreferencesData():void{
-		dataServiceSystem.addUpdate("PreferencesSystem");
-		dataServicePOS.addUpdate("PreferencesPOS");
-		dataServiceEstimator.addUpdate("PreferencesEstimating");
-		dataServiceAccounting.addUpdate("PreferencesAccounting");
-		dataServiceCashRegister.addUpdate("PreferencesCashRegister");
-		dataServiceCashRegister.addUpdate("PreferencesCashRegister");
-		dataServiceCreditCard.addUpdate("PreferencesCreditCard");
-		dataServiceMarkups.addUpdate("PreferencesMarkups");
-		dataServicePendingList.addUpdate("PreferencesPendingList");
-		dataServicePricingMethod.addUpdate("PreferencesPricingMethod");
-		dataServiceQuantityBreaks.addUpdate("PreferencesQuantityBreaks");
-		dataServiceSalesCategory.addUpdate("PreferencesSalesCategory");
-		dataServiceStockDefinition.addUpdate("PreferencesStockDefinition");
-		dataServiceStocks.addUpdate("PreferencesStocks");
+		dataServiceSystem.addUpdate(preferencesSystem);
+		dataServicePOS.addUpdate(preferencesPOS);
+		dataServiceEstimator.addUpdate(preferencesEstimating);
+		dataServiceAccounting.addUpdate(preferencesAccounting);
 	}
 
-	private function mapFromPreferencesData():void {
-		
-		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
+	private function mapFromPreferencesSystemData():void {
 		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging
-		this.chkAddFixedWasteForEachColor.selected = preferencesEstimator.addFixedWasteForEachColor
-		this.chkAddFixedWasteForEachPass.selected = preferencesEstimator.addFixedWasteForEachPass
-		this.chkAddTrackingBarCodes.selected = preferencesEstimator.addTrackingBarCode
+		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown
+		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown
+		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions
+		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles
+		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages
+		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut
+		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit
+		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes
+		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem
+		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed
+		this.chkJDFConnectorIsVersion45orLater.selected = preferencesSystem.jDFConnector45orLater
+		this.chkJDFConnectorSupportsNonAsciiCharacters.selected = preferencesSystem.supportsNonAsciiCharacters
+		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices
+		this.chkPNIIsVersion45orLater.selected = preferencesSystem.pNI45orLater
+		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity
+		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday
+		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp
+		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting
+		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency
+		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
+		this.chkUseChileTaxIdVerification.selected = preferencesSystem.chileTaxIdVerification
+		this.chkUseInternationalTextSorting.selected = preferencesSystem.internationalTextSorting
+	}
+	private function mapFromPreferencesAccountingData():void {
+		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
 		this.chkAllowEstimatePrefixModification.selected = preferencesAccounting.estimateAllowPrefixMod
 		this.chkAllowEstimateSuffixModification.selected = preferencesAccounting.estimateAllowSuffixMod
 		this.chkAllowInvoicePrefixModification.selected = preferencesAccounting.invoiceAllowPrefixMod
 		this.chkAllowInvoiceSuffixModification.selected = preferencesAccounting.invoiceAllowSuffixMod
-//		this.chkAlwaysIncludePastDue.selected 
-		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown
-		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown
-		this.chkAlwaysUseStockParentSize.selected = preferencesEstimator.useStockParentSize
-		this.chkAttachToJobTicket.selected = preferencesEstimator.attachToJobTicket
-		this.chkAutoShowCharges.selected = preferencesEstimator.autoShowCharges
-		this.chkAutoShowPaperCalculator.selected = preferencesEstimator.showPaperCalculator
-		this.chkBackTrimParent.selected = preferencesEstimator.backTrimParent
-		this.chkBleed.selected = preferencesEstimator.bleed
-		this.chkCalculateInkByImpressions.selected = preferencesEstimator.calculateInkbyImpressions
-		this.chkCalculateReOrderDate.selected = preferencesEstimator.calculateReOrderDate
-		this.chkCanChangeAddress.selected = preferencesEstimator.canChangeAddress
-		this.chkCloseInvoiceAfterPrinting.selected = preferencesEstimator.closeInvoiceAfterPrintingTicket
-		this.chkCloseInvoiceAndEstimatesAfterPrinting.selected = preferencesEstimator.closeInvoicesAndEstimateAfterPrinting
-		this.chkCloseSourceAfterCopying.selected = preferencesEstimator.closeAfterCopy
-		this.chkColorBar.selected = preferencesEstimator.colorBar
-//		this.chkColorPastDueEntries.selected 
-		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions
-		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles
-		this.chkDoNotCostDuringPost.selected = preferencesEstimator.doNotCostDuringPost
-		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages
-		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut
-		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit
-		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
-		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes
-		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem
-		this.chkEnterStockCost.selected = preferencesEstimator.stockCostInEstimator
-		this.chkFolioEdge.selected = preferencesEstimator.folioEdge
-		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed
-		this.chkGripEdge.selected = preferencesEstimator.gripEdgeGap
-		this.chkGutter.selected = preferencesEstimator.gutter
-		this.chkHideTaxLineItems.selected = preferencesPOS.hideTaxLines
-		this.chkJDFConnectorIsVersion45orLater.selected = preferencesSystem.jDFConnector45orLater
-		this.chkJDFConnectorSupportsNonAsciiCharacters.selected = preferencesSystem.supportsNonAsciiCharacters
-		this.chkKeepSettingsLocal.selected = preferencesPOS.keepLocalSettings
-		this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimator.leaveFoldedSizeEmpty
-		this.chkLockSettings.selected = preferencesPOS.lockSettings
-		this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
-		this.chkNeverUsePresetPress.selected = preferencesEstimator.neverUsePresetPressOnStockChanges
-		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices
-		this.chkPNIIsVersion45orLater.selected = preferencesSystem.pNI45orLater
-		this.chkPrint2forCash.selected = preferencesPOS.print2forCash
-		this.chkPrint2forCredit.selected = preferencesPOS.print2forCreditCards
 		this.chkPrintDocument.selected = preferencesAccounting.printDocument
-		this.chkPrintInvoices.selected = preferencesPOS.printInvoices
-		this.chkPrintParentToFinish.selected = preferencesEstimator.printParentToFinishSection
-		this.chkPrintParentToRun.selected = preferencesEstimator.printParentToRunSection
-		this.chkPrintReceipts.selected = preferencesPOS.printReceipts
-		this.chkPrintRunToFinish.selected = preferencesEstimator.printRunToFinishSection
 		this.chkPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidation
 		this.chkRemoveDraftFromDeposit.selected = preferencesAccounting.removeDraftsFromDeposit
-		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity
-		this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
-		this.chkShowAmountsOnTicket.selected = preferencesEstimator.showAmountOnTicket
-//		this.chkShowDocumentType.selected
-		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday
-		this.chkShowReferenceNumber.selected = preferencesEstimator.showCustomerReferenceNumber
-		this.chkShowSinglePassWorkAndTurnOptions.selected = preferencesEstimator.showSinglePassWorkTurnOptions
-		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp
-		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting
-		this.chkTrimFourSides.selected = preferencesEstimator.trimFourSides
 		this.chkUseAddressValidation.selected = preferencesAccounting.useAddressValidation
-		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency
-		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
-		this.chkUseChileTaxIdVerification.selected = preferencesSystem.chileTaxIdVerification
-		this.chkUseHistoryTitle.selected = preferencesEstimator.useHistoryTitleforNewTitle
-		this.chkUseInternationalTextSorting.selected = preferencesSystem.internationalTextSorting
+	}
+	private function mapFromPreferencesEstimatingData():void {
+		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
+		this.chkAddFixedWasteForEachPass.selected = preferencesEstimating.addFixedWasteForEachPass
+		this.chkAddTrackingBarCodes.selected = preferencesEstimating.addTrackingBarCode
+		this.chkAlwaysUseStockParentSize.selected = preferencesEstimating.useStockParentSize
+		this.chkAttachToJobTicket.selected = preferencesEstimating.attachToJobTicket
+		this.chkAutoShowCharges.selected = preferencesEstimating.autoShowCharges
+		this.chkAutoShowPaperCalculator.selected = preferencesEstimating.showPaperCalculator
+		this.chkBackTrimParent.selected = preferencesEstimating.backTrimParent
+		this.chkBleed.selected = preferencesEstimating.useBleed
+		this.chkCalculateInkByImpressions.selected = preferencesEstimating.calculateInkbyImpressions
+		this.chkCalculateReOrderDate.selected = preferencesEstimating.calculateReOrderDate
+		this.chkCanChangeAddress.selected = preferencesEstimating.canChangeAddress
+		this.chkCloseInvoiceAfterPrinting.selected = preferencesEstimating.closeInvoiceAfterPrintingTicket
+		this.chkCloseInvoiceAndEstimatesAfterPrinting.selected = preferencesEstimating.closeInvoicesAndEstimateAfterPrinting
+		this.chkCloseSourceAfterCopying.selected = preferencesEstimating.closeAfterCopy
+		this.chkColorBar.selected = preferencesEstimating.useColorBar
+		this.chkDoNotCostDuringPost.selected = preferencesEstimating.doNotCostDuringPost
+		this.chkEnterStockCost.selected = preferencesEstimating.stockCostInEstimator
+		this.chkFolioEdge.selected = preferencesEstimating.useFolioEdge
+		this.chkGripEdge.selected = preferencesEstimating.useGripEdgeGap
+		this.chkGutter.selected = preferencesEstimating.useGutter
+		this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimating.leaveFoldedSizeEmpty
+		this.chkNeverUsePresetPress.selected = preferencesEstimating.neverUsePresetPressOnStockChanges
+		this.chkPrintParentToFinish.selected = preferencesEstimating.printParentToFinishSection
+		this.chkPrintParentToRun.selected = preferencesEstimating.printParentToRunSection
+		this.chkPrintRunToFinish.selected = preferencesEstimating.printRunToFinishSection
+		this.chkShowAmountsOnTicket.selected = preferencesEstimating.showAmountOnTicket
+		this.chkShowReferenceNumber.selected = preferencesEstimating.showCustomerReferenceNumber
+		this.chkShowSinglePassWorkAndTurnOptions.selected = preferencesEstimating.showSinglePassWorkTurnOptions
+		this.chkTrimFourSides.selected = preferencesEstimating.trimFourSides
+		this.chkUseHistoryTitle.selected = preferencesEstimating.useHistoryTitleforNewTitle
+		this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
+		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
+		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
+	}
+	private function mapFromPreferencesPOSData():void {
+		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
+		this.chkHideTaxLineItems.selected = preferencesPOS.hideTaxLines
+		this.chkKeepSettingsLocal.selected = preferencesPOS.keepLocalSettings
+		this.chkLockSettings.selected = preferencesPOS.lockSettings
+		this.chkPrint2forCash.selected = preferencesPOS.print2forCash
+		this.chkPrint2forCredit.selected = preferencesPOS.print2forCreditCards
+		this.chkPrintInvoices.selected = preferencesPOS.printInvoices
+		this.chkPrintReceipts.selected = preferencesPOS.printReceipts
+		this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
 		this.chkUseMasterDrawer.selected = preferencesPOS.useMasterDrawer
-		this.chkUsePalmPilotTracking.selected = preferencesSystem.usePalmPilotTracking
-		this.chkValidateSalesRep.selected = preferencesEstimator.validateSalesRep
-		this.chkWhiteSpace.selected = preferencesEstimator.useWhiteSpace
-		this.chkWorkAndTumble.selected = preferencesEstimator.workandTumble
 	}
 
-	private function mapToPreferencesData():void {
-		preferencesAccounting.activateCreditCardApproval = this.chkActivateCCAprovalProcess.selected 
+	private function mapFromPreferencesStocksData():void {
+		this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
+	}
+
+	private function mapFromPreferencesAllData():void {
+		mapFromPreferencesAccountingData();
+		mapFromPreferencesEstimatingData();
+		mapFromPreferencesPOSData();
+		mapFromPreferencesSystemData();
+//		this.chkAlwaysIncludePastDue.selected 
+//		this.chkColorPastDueEntries.selected 
+//		this.chkShowDocumentType.selected
+//		this.chkUsePalmPilotTracking.selected = preferencesSystem.usePalmPilotTracking
+	}
+
+	private function mapToPreferencesAllData():void {
+		mapToPreferencesAccountingData();
+		mapToPreferencesEstimatingData();
+		mapToPreferencesPOSData();
+		mapToPreferencesSystem();
+//		this.chkAlwaysIncludePastDue.selected 
+//		this.chkColorPastDueEntries.selected 
+//		this.chkShowDocumentType.selected
+		//fix data incorrectly defined as int not bool
+		//preferencesSystem.usePalmPilotTracking = parseInt(this.chkUsePalmPilotTracking.selected) 
+		
+	}
+
+	private function mapToPreferencesSystem():void {
 		preferencesSystem.activateUserEventLogging = this.chkActivateUserEventLogging.selected
-		preferencesEstimator.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
-		preferencesEstimator.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
-		preferencesEstimator.addTrackingBarCode = this.chkAddTrackingBarCodes.selected
+		preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
+		preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
+		preferencesSystem.disableNonTaxableOptions = this.chkDisableNonTaxableOptions.selected
+		preferencesSystem.disableTextStyles = this.chkDisableTextStyles.selected
+		preferencesSystem.eliminateWarningMessages = this.chkEliminateSomeWarningMessages.selected
+		preferencesSystem.enableAutoLogOut = this.chkEnableAutomaticLogOut.selected
+		preferencesSystem.automaticQuit = this.chkEnableAutomaticQuit.selected
+		preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
+		preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
+		preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
+		preferencesSystem.jDFConnector45orLater = this.chkJDFConnectorIsVersion45orLater.selected
+		preferencesSystem.supportsNonAsciiCharacters = this.chkJDFConnectorSupportsNonAsciiCharacters.selected
+		preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
+		preferencesSystem.pNI45orLater = this.chkPNIIsVersion45orLater.selected
+		preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
+		preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
+		preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
+		preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
+		preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
+		preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
+		preferencesSystem.chileTaxIdVerification = this.chkUseChileTaxIdVerification.selected
+		preferencesSystem.internationalTextSorting = this.chkUseInternationalTextSorting.selected
+
+	}
+	private function mapToPreferencesAccountingData():void {
+		preferencesAccounting.activateCreditCardApproval = this.chkActivateCCAprovalProcess.selected 
 		preferencesAccounting.estimateAllowPrefixMod = this.chkAllowEstimatePrefixModification.selected
 		preferencesAccounting.estimateAllowSuffixMod = this.chkAllowEstimateSuffixModification.selected
 		preferencesAccounting.invoiceAllowPrefixMod = this.chkAllowInvoicePrefixModification.selected
 		preferencesAccounting.invoiceAllowSuffixMod = this.chkAllowInvoiceSuffixModification.selected
-//		this.chkAlwaysIncludePastDue.selected 
-		preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
-		preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
-		preferencesEstimator.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
-		preferencesEstimator.attachToJobTicket = this.chkAttachToJobTicket.selected
-		preferencesEstimator.autoShowCharges = this.chkAutoShowCharges.selected
-		preferencesEstimator.showPaperCalculator = this.chkAutoShowPaperCalculator.selected
-		preferencesEstimator.backTrimParent = this.chkBackTrimParent.selected
-		preferencesEstimator.useBleed = this.chkBleed.selected
-		preferencesEstimator.calculateInkbyImpressions = this.chkCalculateInkByImpressions.selected
-		preferencesEstimator.calculateReOrderDate = this.chkCalculateReOrderDate.selected
-		preferencesEstimator.canChangeAddress = this.chkCanChangeAddress.selected
-		preferencesEstimator.closeInvoiceAfterPrintingTicket = this.chkCloseInvoiceAfterPrinting.selected
-		preferencesEstimator.closeInvoicesAndEstimateAfterPrinting = this.chkCloseInvoiceAndEstimatesAfterPrinting.selected
-		preferencesEstimator.closeAfterCopy = this.chkCloseSourceAfterCopying.selected
-		preferencesEstimator.useColorBar = this.chkColorBar.selected
-//		this.chkColorPastDueEntries.selected 
-		preferencesSystem.disableNonTaxableOptions = this.chkDisableNonTaxableOptions.selected
-		preferencesSystem.disableTextStyles = this.chkDisableTextStyles.selected
-		preferencesEstimator.doNotCostDuringPost = this.chkDoNotCostDuringPost.selected
-		preferencesSystem.eliminateWarningMessages = this.chkEliminateSomeWarningMessages.selected
-		preferencesSystem.enableAutoLogOut = this.chkEnableAutomaticLogOut.selected
-		preferencesSystem.automaticQuit = this.chkEnableAutomaticQuit.selected
-		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
-		preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
-		preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
-		preferencesEstimator.stockCostInEstimator = this.chkEnterStockCost.selected 
-		preferencesEstimator.useFolioEdge = this.chkFolioEdge.selected
-		preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
-		preferencesEstimator.useGripEdgeGap = this.chkGripEdge.selected
-		preferencesEstimator.useGutter = this.chkGutter.selected
-		preferencesPOS.hideTaxLines = this.chkHideTaxLineItems.selected
-		preferencesSystem.jDFConnector45orLater = this.chkJDFConnectorIsVersion45orLater.selected
-		preferencesSystem.supportsNonAsciiCharacters = this.chkJDFConnectorSupportsNonAsciiCharacters.selected
-		preferencesPOS.keepLocalSettings = this.chkKeepSettingsLocal.selected
-		preferencesEstimator.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
-		preferencesPOS.lockSettings = this.chkLockSettings.selected
-		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
-		preferencesEstimator.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected
-		preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
-		preferencesSystem.pNI45orLater = this.chkPNIIsVersion45orLater.selected
-		preferencesPOS.print2forCash = this.chkPrint2forCash.selected
-		preferencesPOS.print2forCreditCards = this.chkPrint2forCredit.selected
 		preferencesAccounting.printDocument = this.chkPrintDocument.selected
-		preferencesPOS.printInvoices = this.chkPrintInvoices.selected
-		preferencesEstimator.printParentToFinishSection = this.chkPrintParentToFinish.selected
-		preferencesEstimator.printParentToRunSection = this.chkPrintParentToRun.selected
-		preferencesPOS.printReceipts = this.chkPrintReceipts.selected
-		preferencesEstimator.printRunToFinishSection = this.chkPrintRunToFinish.selected
 		preferencesAccounting.promptUserForValidation = this.chkPromptUserForValidationInformation.selected
 		preferencesAccounting.removeDraftsFromDeposit = this.chkRemoveDraftFromDeposit.selected
-		preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
-		preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
-		preferencesEstimator.showAmountOnTicket = this.chkShowAmountsOnTicket.selected
-//		this.chkShowDocumentType.selected
-		preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
-		preferencesEstimator.showCustomerReferenceNumber = this.chkShowReferenceNumber.selected
-		preferencesEstimator.showSinglePassWorkTurnOptions = this.chkShowSinglePassWorkAndTurnOptions.selected
-		preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
-		preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
-		preferencesEstimator.trimFourSides = this.chkTrimFourSides.selected
 		preferencesAccounting.useAddressValidation = this.chkUseAddressValidation.selected
-		preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
-		preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
-		preferencesSystem.chileTaxIdVerification = this.chkUseChileTaxIdVerification.selected
-		preferencesEstimator.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
-		preferencesSystem.internationalTextSorting = this.chkUseInternationalTextSorting.selected
+	}
+	private function mapToPreferencesEstimatingData():void {
+		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
+		preferencesEstimating.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
+		preferencesEstimating.addTrackingBarCode = this.chkAddTrackingBarCodes.selected
+		preferencesEstimating.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
+		preferencesEstimating.attachToJobTicket = this.chkAttachToJobTicket.selected
+		preferencesEstimating.autoShowCharges = this.chkAutoShowCharges.selected
+		preferencesEstimating.showPaperCalculator = this.chkAutoShowPaperCalculator.selected
+		preferencesEstimating.backTrimParent = this.chkBackTrimParent.selected
+		preferencesEstimating.useBleed = this.chkBleed.selected
+		preferencesEstimating.calculateInkbyImpressions = this.chkCalculateInkByImpressions.selected
+		preferencesEstimating.calculateReOrderDate = this.chkCalculateReOrderDate.selected
+		preferencesEstimating.canChangeAddress = this.chkCanChangeAddress.selected
+		preferencesEstimating.closeInvoiceAfterPrintingTicket = this.chkCloseInvoiceAfterPrinting.selected
+		preferencesEstimating.closeInvoicesAndEstimateAfterPrinting = this.chkCloseInvoiceAndEstimatesAfterPrinting.selected
+		preferencesEstimating.closeAfterCopy = this.chkCloseSourceAfterCopying.selected
+		preferencesEstimating.useColorBar = this.chkColorBar.selected
+		preferencesEstimating.doNotCostDuringPost = this.chkDoNotCostDuringPost.selected
+		preferencesEstimating.stockCostInEstimator = this.chkEnterStockCost.selected 
+		preferencesEstimating.useFolioEdge = this.chkFolioEdge.selected
+		preferencesEstimating.useGripEdgeGap = this.chkGripEdge.selected
+		preferencesEstimating.useGutter = this.chkGutter.selected
+		preferencesEstimating.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
+		preferencesEstimating.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected
+		preferencesEstimating.printParentToFinishSection = this.chkPrintParentToFinish.selected
+		preferencesEstimating.printParentToRunSection = this.chkPrintParentToRun.selected
+		preferencesEstimating.printRunToFinishSection = this.chkPrintRunToFinish.selected
+		preferencesEstimating.showAmountOnTicket = this.chkShowAmountsOnTicket.selected
+		preferencesEstimating.showCustomerReferenceNumber = this.chkShowReferenceNumber.selected
+		preferencesEstimating.showSinglePassWorkTurnOptions = this.chkShowSinglePassWorkAndTurnOptions.selected
+		preferencesEstimating.trimFourSides = this.chkTrimFourSides.selected
+		preferencesEstimating.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
+		preferencesEstimating.validateSalesRep = this.chkValidateSalesRep.selected
+		preferencesEstimating.useWhiteSpace = this.chkWhiteSpace.selected
+		preferencesEstimating.workandTumble = this.chkWorkAndTumble.selected
+	}
+	private function mapToPreferencesPOSData():void {
+		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
+		preferencesPOS.hideTaxLines = this.chkHideTaxLineItems.selected
+		preferencesPOS.keepLocalSettings = this.chkKeepSettingsLocal.selected
+		preferencesPOS.lockSettings = this.chkLockSettings.selected
+		preferencesPOS.print2forCash = this.chkPrint2forCash.selected
+		preferencesPOS.print2forCreditCards = this.chkPrint2forCredit.selected
+		preferencesPOS.printInvoices = this.chkPrintInvoices.selected
+		preferencesPOS.printReceipts = this.chkPrintReceipts.selected
+		preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
 		preferencesPOS.useMasterDrawer = this.chkUseMasterDrawer.selected
-		//fix data incorrectly defined as int not bool
-		//preferencesSystem.usePalmPilotTracking = parseInt(this.chkUsePalmPilotTracking.selected) 
-		preferencesEstimator.validateSalesRep = this.chkValidateSalesRep.selected
-		preferencesEstimator.useWhiteSpace = this.chkWhiteSpace.selected
-		preferencesEstimator.workandTumble = this.chkWorkAndTumble.selected
+	}
+	private function mapToPreferencesStocksData():void {
+		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
 	}
 	
 	private function messageHandler(message:IMessage):void{
@@ -731,46 +753,76 @@ width="800" height="678" title="Preferences"
 
 // Data Load Handlers
 	private function handleLoadSystemResult(ev:ResultEvent):void {
-	     PreferencesSystemArray = ev.result as ArrayCollection;
+		PreferencesSystemArray = ev.result as ArrayCollection;
+   		preferencesSystem = PreferencesSystemArray.getItemAt(0,0) as PreferencesSystem ;
+		if (preferencesSystem == null)
+		{
+			preferencesSystem = new PreferencesSystem();
+		}
+		mapFromPreferencesSystemData();
 	}
 	private function handleLoadPOSResult(ev:ResultEvent):void {
-	     PreferencesPOSArray = ev.result as ArrayCollection;
+		PreferencesPOSArray = ev.result as ArrayCollection;
+		preferencesPOS = PreferencesPOSArray.getItemAt(0,0) as PreferencesPOS;
+		if (preferencesPOS == null)
+		{
+			preferencesPOS = new PreferencesPOS();
+		}
+		mapFromPreferencesPOSData();
 	}
 	private function handleLoadEstimatorResult(ev:ResultEvent):void {
-	     PreferencesEstimatorArray = ev.result as ArrayCollection;
+		PreferencesEstimatingArray = ev.result as ArrayCollection;
+		preferencesEstimating = PreferencesEstimatingArray.getItemAt(0,0) as PreferencesEstimating;
+		if (preferencesEstimating == null)
+		{
+			preferencesEstimating = new PreferencesEstimating();
+		}
+		mapFromPreferencesEstimatingData();
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
-	     PreferencesAccountingArray = ev.result as ArrayCollection;
+		PreferencesAccountingArray = ev.result as ArrayCollection;
+		preferencesAccounting = PreferencesAccountingArray.getItemAt(0,0) as PreferencesAccounting;
+		if (preferencesAccounting == null)
+		{
+			preferencesAccounting = new PreferencesAccounting();
+		} 
+		mapFromPreferencesAccountingData();
 	}
+	
 	private function handleLoadCountryResult(ev:ResultEvent):void {
-	     CountryArray = ev.result as ArrayCollection;
+		CountryArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
-	     PreferencesCashRegisterArray = ev.result as ArrayCollection;
+		PreferencesCashRegisterArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
-	     PreferencesCreditCardArray = ev.result as ArrayCollection;
+		PreferencesCreditCardArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
-	     PreferencesMarkupsArray = ev.result as ArrayCollection;
+		PreferencesMarkupsArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
-	     PreferencesPendingListArray = ev.result as ArrayCollection;
+		PreferencesPendingListArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadPricingMethodResult(ev:ResultEvent):void {
-	     PreferencesPricingMethodArray = ev.result as ArrayCollection;
+		PreferencesPricingMethodArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadQuantityBreaksResult(ev:ResultEvent):void {
-	     PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
+		PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
-	     PreferencesSalesCategoryArray = ev.result as ArrayCollection;
+		PreferencesSalesCategoryArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
-	     PreferencesStockDefinitionArray = ev.result as ArrayCollection;
+		PreferencesStockDefinitionArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadStocksResult(ev:ResultEvent):void {
-	     PreferencesStocksArray = ev.result as ArrayCollection;
+		PreferencesStocksArray = ev.result as ArrayCollection;
+		preferencesStocks = PreferencesStocksArray.getItemAt(0,0) as PreferencesStocks;
+		if (preferencesStocks == null)
+		{
+			preferencesStocks = new PreferencesStocks();
+		}
 	}
 	private function handleLoadColumnNamesResult(ev:ResultEvent):void {
 	     ColumnNamesArray = ev.result as ArrayCollection;
@@ -790,7 +842,7 @@ width="800" height="678" title="Preferences"
     	dataServicePOS.getAll("PreferencesPOS");
 	}
 	private function handleSaveEstimatorResult(ev:ResultEvent):void {
-    	dataServiceEstimator.getAll("PreferencesEstimator");
+    	dataServiceEstimator.getAll("preferencesEstimating");
 	}
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
     	dataServiceAccounting.getAll("PreferencesAccounting");
@@ -886,11 +938,13 @@ width="800" height="678" title="Preferences"
 	}
 	
 	private function doSave():void{
+		mapToPreferencesAllData();
 		updatePreferencesData();		
 	}
 	
 	private function doRevert():void{
 		getPreferencesData();
+		mapFromPreferencesAllData();
 	}
 	
 	private function doCheckPNIConnection():void{
@@ -957,7 +1011,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="Show invoices with firm due date of &quot;today&quot; at login"/>
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
 				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
-				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.secondsOfInactivity}"/>
+				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.autoLogOutSeconds}"/>
 				<mx:Label x="50" y="330" text="Time of day to quit:"/>
 				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>
 				<mx:Label x="80" y="367" text="Shut down notification message:"/>
@@ -1280,7 +1334,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="Use the History Title for New Document Title"/>
 
 				<mx:Label x="50" y="442" text="Normal Due Date (days):"/>
-				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimator.normalDueDateDays}"/>
+				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
 				
 				
 			</mx:Canvas>
@@ -1300,7 +1354,7 @@ width="800" height="678" title="Preferences"
 
 				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="Payment Due Date">
 					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
-					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimator.numberOfDaysBeforeDue}"/>
+					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
 					<mx:RadioButtonGroup id="optPaymentDueDays"/>
 					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays"/>
@@ -1332,14 +1386,14 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="50" y="330" text="Bleed"/>
 				<mx:Label x="50" y="380" text="Right"/>
 
-				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimator.gripEdgeGap}"/>
-				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimator.folioEdge}"/>
-				<mx:TextInput x="50" y="150" id="txtColorBar" width="93" text="{preferencesEstimator.colorBar}"/>
-				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93" text="{preferencesEstimator.whiteSpace}"/>
-				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93" text="{preferencesEstimator.whiteSpaceRight}"/>
-				<mx:TextInput x="50" y="300" id="txtGutter" width="93" text="{preferencesEstimator.gutter}"/>
-				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimator.bleed}"/>
-				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimator.bleedRight}"/>
+				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimating.gripEdgeGap}"/>
+				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimating.folioEdge}"/>
+				<mx:TextInput x="50" y="150" id="txtColorBar" width="93" text="{preferencesEstimating.colorBar}"/>
+				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93" text="{preferencesEstimating.whiteSpace}"/>
+				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93" text="{preferencesEstimating.whiteSpaceRight}"/>
+				<mx:TextInput x="50" y="300" id="txtGutter" width="93" text="{preferencesEstimating.gutter}"/>
+				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimating.bleed}"/>
+				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimating.bleedRight}"/>
 
 				<mx:Label x="151" y="180" text="Top"/>
 				<mx:Label x="151" y="230" text="Bottom"/>
@@ -1347,15 +1401,15 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="151" y="330" text="Top"/>
 				<mx:Label x="151" y="380" text="Bottom"/>
 
-				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimator.whiteSpaceTop}"/>
-				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimator.whiteSpaceBottom}"/>
-				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93" text="{preferencesEstimator.gutterHorizontal}"/>
-				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimator.bleedTop}"/>
-				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimator.bleedBottom}"/>
+				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
+				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
+				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93" text="{preferencesEstimating.gutterHorizontal}"/>
+				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimating.bleedTop}"/>
+				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimating.bleedBottom}"/>
 
 
 				<mx:Label x="27" y="462" text="Default Press Cutoff:"/>
-				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimator.defaultPressCuttOff}"/>
+				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
 
 
 				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="Back Trim, Parent"/>
