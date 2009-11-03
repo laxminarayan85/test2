@@ -2,7 +2,8 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
 		   width="100%"
 		   height="100%"
-		   xmlns:fc="http://www.adobe.com/2006/fc">
+		   xmlns:fc="http://www.adobe.com/2006/fc"
+		   creationComplete="init()">
 	<mx:Style>
         TitleWindow {
             roundedBottomCorners: false;
@@ -28,6 +29,7 @@
 
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
+			import mx.controls.Alert;                                         
 
 			[Bindable]
 			private var address:Address;
@@ -56,11 +58,11 @@
 
 			public function init():void
 			{
-				addEventListener("SaveAddressEvent", saveAddressHandler);
 			}
 
 			public function saveAddressHandler(evt:SaveAddressEvent):void {
 				this.address = evt.address;
+				updateDisplayAddress();
 			}
 			
 			public function getAddress():Address
@@ -136,6 +138,8 @@
 				titleWindow.setStyle("borderAlpha", 0.9);
 				titleWindow.x=edit_address_button.x - titleWindow.width;
 				titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
+				titleWindow.addEventListener("SaveAddressEvent", saveAddressHandler, false, 1);
+				
 				var pos:Point=new Point(address_panel.x, address_panel.y);
 				pos=address_panel.localToGlobal(pos);
 				titleWindow.x=pos.x;

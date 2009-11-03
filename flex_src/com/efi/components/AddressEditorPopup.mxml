@@ -4,9 +4,36 @@
         width="388"
         showCloseButton="true"
         verticalScrollPolicy="off"
-        horizontalScrollPolicy="off">
+        horizontalScrollPolicy="off"
+        creationComplete="init()"
+        close="doCancel()"
+        defaultButton="{ok_button}">
+        
+	<mx:Metadata>
+		[Event(name="SaveAddressEvent", type="com.efi.events.SaveAddressEvent")]
+ 	</mx:Metadata>
+	
+	<mx:RemoteObject id="cityDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="stateDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="countryDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="zipDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
+	</mx:RemoteObject>
+		
     <mx:Canvas width="360" height="167">
-    
     <mx:Label x="10" y="33" text="Street:" width="67" textAlign="right"/>
     <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
     <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
@@ -19,16 +46,16 @@
     <mx:TextInput x="85" y="56" width="265" id="street2_edit" text="{address.street2}"/>
     <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
     <fc:AutoComplete id="statecombo" x="304" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
-    <fc:AutoComplete id="zipcombo" x="233" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="117"/>
-    <fc:AutoComplete id="countrycombo" x="85" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
+    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="117"/>
+    <fc:AutoComplete id="countrycombo" x="233" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
     	
-    <mx:Button x="275" y="134" label="OK" width="75" click="doOK()"/>
-    <mx:Button x="192" y="135" label="Cancel" width="75" click="doCancel()"/>
+    <mx:Button x="275" y="134" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="192" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
-		import com.efi.events.SaveAddressEvent;
-		import com.efi.events.UpdateDataProviderEvent;
+	import com.efi.events.SaveAddressEvent;
+	import com.efi.events.UpdateDataProviderEvent;
 	import com.efi.vo.Address;
     import com.efi.vo.City;
 	import com.efi.vo.Country;
@@ -38,7 +65,10 @@
 	
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;                                         
-	
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.controls.Alert;                                         
+
 	[Bindable]                                         
 	private var address:Address;
 
@@ -53,10 +83,78 @@
 
 	[Bindable]
 	public var countryDataProvider:ArrayCollection = null;
-
-	private var originalAddress:Address = null;
+    
+    private var originalAddress:Address = null;
 	
-	private function findItem(name:String, array:ArrayCollection):int {
+	private function init():void {
+		cityDataService.getAll("City");
+		stateDataService.getAll("State");
+		countryDataService.getAll("Country");
+		zipDataService.getAll("Zip");
+	}      
+		
+ 	private function itemExists(list:ArrayCollection, item:Object):Boolean {
+		var i:int;
+		
+		for (i=0; i<list.length; i++) {
+			if (list.getItemAt(i).name == item.name) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function handleLoadCity(ev:ResultEvent):void {
+		var selectedItem = citycombo.selectedItem;
+	 	cityDataProvider = ev.result as ArrayCollection;
+	 	citycombo.selectedItem = selectedItem;
+	}   
+	
+	private function handleLoadState(ev:ResultEvent):void {
+		var selectedItem = statecombo.selectedItem;
+		stateDataProvider = ev.result as ArrayCollection;
+	 	statecombo.selectedItem = selectedItem;
+	}
+	
+	private function handleLoadCountry(ev:ResultEvent):void {
+		var selectedItem = countrycombo.selectedItem;
+		countryDataProvider = ev.result as ArrayCollection;
+	 	countrycombo.selectedItem = selectedItem;
+	}   
+	
+	private function handleLoadZip(ev:ResultEvent):void {
+		var selectedItem = zipcombo.selectedItem;
+		zipDataProvider = ev.result as ArrayCollection;
+	 	zipcombo.selectedItem = selectedItem;
+	}                                 
+
+	private function handleSaveCityResult(ev:ResultEvent):void {
+		cityDataService.getAll("City");
+	}      
+	
+	private function handleSaveStateResult(ev:ResultEvent):void {
+		stateDataService.getAll("State");
+	}      
+
+	private function handleSaveCountryResult(ev:ResultEvent):void {
+		countryDataService.getAll("Country");
+	}      
+
+	private function handleSaveZipResult(ev:ResultEvent):void {
+		zipDataService.getAll("Zip");
+	}   
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+ 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
 				return array.getItemIndex(element);
@@ -78,13 +176,13 @@
 		var city:City;
 		var result:Boolean;
 		
-		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
+			if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
 			var item:int = findItem(citycombo.typedText, cityDataProvider);
 			if (item == -1) {
 				city = new City();
 				city.name = citycombo.text;
 				address.city = city;
-				updateDataProvider("city", city);
+				cityDataService.addUpdate(city);
 			}
 			else {
 				citycombo.selectedItem = item;
@@ -103,7 +201,7 @@
 				state = new com.efi.vo.State();
 				state.name = statecombo.text;
 				address.state = state;
-				updateDataProvider("state", state);
+				stateDataService.addUpdate(state);
 			}
 			else {
 				statecombo.selectedItem = item;
@@ -122,7 +220,7 @@
 				zip = new Zip();
 				zip.name = zipcombo.text;
 				address.zip = zip;
-				updateDataProvider("zip", zip);
+				zipDataService.addUpdate(zip);
 			}
 			else {
 				zipcombo.selectedItem = item;
@@ -141,7 +239,7 @@
 				country = new Country();
 				country.name = countrycombo.text;
 				address.country = country;
-				updateDataProvider("country", country);
+				countryDataService.addUpdate(country);
 			}
 			else {
 				countrycombo.selectedItem = item;
@@ -149,22 +247,25 @@
 			}
 		}
 	}
-	
-	private function updateDataProvider(type:String, value:ModelBase):void {
-		var eventObj:UpdateDataProviderEvent = new UpdateDataProviderEvent(type, value);
-		dispatchEvent(eventObj);
-	}
-	
+
 	private function doCancel():void {
-		address = originalAddress;
 		PopUpManager.removePopUp(this);
 	}
 	
 	private function doOK():void {
-		var eventObj:SaveAddressEvent = new SaveAddressEvent(address);
+		address.name = company_edit.text;
+		address.street1 = street1_edit.text;
+		address.street2 = street2_edit.text;
+		address.city = citycombo.selectedItem as City;
+		address.state = statecombo.selectedItem as State;
+		address.zip = zipcombo.selectedItem as Zip;
+		address.country = countrycombo.selectedItem as Country;
+		
+		var eventObj:SaveAddressEvent = new SaveAddressEvent("SaveAddressEvent", address);
+		dispatchEvent(eventObj);
 		PopUpManager.removePopUp(this);
 	}
-	
+
 	]]>
 </mx:Script>
     

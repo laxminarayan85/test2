@@ -10,7 +10,7 @@ package com.efi.events
 		
 		public function UpdateDataProviderEvent(provider:String, value:ModelBase)
 		{
-			super("UpdateDataProviderEvent");
+			super("UpdateDataProviderEvent", true, false);
 			this.provider = provider;
 			this.value = value;
 		}

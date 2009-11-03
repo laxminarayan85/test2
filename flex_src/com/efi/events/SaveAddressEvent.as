@@ -1,20 +1,21 @@
 package com.efi.events
 {
-	import flash.events.Event;
 	import com.efi.vo.Address;
+	
+	import flash.events.Event;
 	
 	public class SaveAddressEvent extends Event
 	{
 		public var address:Address;
 		
-		public function SaveAddressEvent(address:Address)
+		public function SaveAddressEvent(type:String, address:Address)
 		{
-			super("SaveAddressEvent");
+			super(type, true);
 			this.address = address;
 		}
 
 		override public function clone():Event {
-			return new SaveAddressEvent(address);
+			return new SaveAddressEvent(type, address);
 		}
 	}
 }

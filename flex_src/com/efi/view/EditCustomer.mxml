@@ -2,7 +2,9 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" title="Customer Editor"
 creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:ns1="com.efi.components.*">
-                             
+<mx:Metadata>
+    [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
+</mx:Metadata>                            
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -29,54 +31,30 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveShippingMethodResult(event)"/>
 </mx:RemoteObject>
+
 <mx:RemoteObject id="taxTableDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxTableResult(event)"/>
 </mx:RemoteObject>
+
 <mx:RemoteObject id="taxCodeDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodes(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxCodeResult(event)"/>
-</mx:RemoteObject>
-
-
-<mx:RemoteObject id="cityDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="stateDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="countryDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="zipDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
-<!--<mx:ZipCodeValidator id="shipZipValidator" source="{shipzipcombo}" property="text" required="false"/>
-<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>-->
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactBillFirstValidator" source="{bill_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactShipFirstValidator" source="{ship_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactBillLastValidator" source="{bill_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactShipLastValidator" source="{ship_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
 
-<mx:Metadata>
-    [Event(name="UpdateDataProviderEvent", type="UpdateDataProviderEvent")]
-</mx:Metadata>
-
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.events.SaveAddressEvent;
 	import com.efi.vo.ModelBase;
 	import com.efi.vo.Marketing;
 	import com.efi.vo.BusinessType;
@@ -144,15 +122,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
     private var taxCodes:ArrayCollection = new ArrayCollection();
                            	
     [Bindable]
-    private var shippingMethods:ArrayCollection = new ArrayCollection();
-    [Bindable]
-    private var citys:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    private var states1:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    private var countrys:ArrayCollection = new ArrayCollection();  
-    [Bindable]
-    private var zips:ArrayCollection = new ArrayCollection();                  
+    private var shippingMethods:ArrayCollection = new ArrayCollection();                
     [Bindable]
     private var formIsValid:Boolean = false;
     
@@ -170,45 +140,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	    shippingMethodDataService.getAll("ShippingMethod");
 	    taxTableDataService.getAll("TaxTable");
 	    taxCodeDataService.getAll("TaxCodes");
-		cityDataService.getAll("City");
-		stateDataService.getAll("State");
-		countryDataService.getAll("Country");
-		zipDataService.getAll("Zip");
 		dataService.getAll("Account");
-		addEventListener("UpdateDataProviderEvent", updateDataProvider);
 	}      
-	
-	private function updateDataProvider(evt:UpdateDataProviderEvent):void {
-		if (evt.provider == "city") {
-			if (!itemExists(citys, evt.value)) {
-				cityDataService.addUpdate(evt.value);
-			}
-		} else if (evt.provider == "state") {
-			if (!itemExists(states1, evt.value)) {
-				stateDataService.addUpdate(evt.value);
-			}
-		} else if (evt.provider == "zip") {
-			if (!itemExists(zips, evt.value)) {
-				zipDataService.addUpdate(evt.value);
-			}			
-		} else if (evt.provider == "country") {
-			if (!itemExists(countrys, evt.value)) {
-				countryDataService.addUpdate(evt.value);
-			}			
-		}
-	}
-	
-	private function itemExists(list:ArrayCollection, item:Object):Boolean {
-		var i:int;
-		
-		for (i=0; i<list.length; i++) {
-			if (list.getItemAt(i).name == item.name) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
 	private function doNew():void {
 	    account = new Account();
 	    setAccount(account);
@@ -392,17 +326,17 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
 
 		ship_to_address_editor.setAddress(account.shipToAddress);
-		ship_to_address_editor.cityDataProvider = citys;
+/* 		ship_to_address_editor.cityDataProvider = citys;
 		ship_to_address_editor.stateDataProvider = states1;
 		ship_to_address_editor.zipDataProvider = zips;
 		ship_to_address_editor.countryDataProvider = countrys;
-		
+ */		
 		bill_to_address_editor.setAddress(account.billToAddress);
-		bill_to_address_editor.cityDataProvider = citys;
+/* 		bill_to_address_editor.cityDataProvider = citys;
 		bill_to_address_editor.stateDataProvider = states1;
 		bill_to_address_editor.zipDataProvider = zips;
 		bill_to_address_editor.countryDataProvider = countrys;
-
+ */
 		if (account.marketing.followup != null)
 			followUp.selectedDate =account.marketing.followup;
 		if (account.marketing.birthDate != null)
@@ -518,22 +452,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		dataService.getAll("Account")
 	}
 //// load
- 	private function handleLoadCity(ev:ResultEvent):void {
-	 	citys = ev.result as ArrayCollection;
-	}   
-	
-	private function handleLoadState(ev:ResultEvent):void {
-		states1 = ev.result as ArrayCollection;
-	}
-	
-	private function handleLoadCountry(ev:ResultEvent):void {
-		countrys = ev.result as ArrayCollection;
-	}   
-	
-	private function handleLoadZip(ev:ResultEvent):void {
-		zips = ev.result as ArrayCollection;
-	}                                 
-
 	private function handleLoadResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
 	}
@@ -593,26 +511,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	}
 		
 	      
-//SAVE 
-	
-	private function handleSaveCityResult(ev:ResultEvent):void {
-		
-		cityDataService.getAll("City");
-		
-		
-	}      
-	private function handleSaveStateResult(ev:ResultEvent):void {
-		stateDataService.getAll("State");
-	}      
-
-	private function handleSaveCountryResult(ev:ResultEvent):void {
-		countryDataService.getAll("Country");
-	}      
-
-	private function handleSaveZipResult(ev:ResultEvent):void {
-		zipDataService.getAll("Zip");
-	}   
-	
+//SAVE 	
 	private function handleSaveBusinessTypeResult(ev:ResultEvent):void {
 		businessTypeDataService.getAll("BusinessType");
 	}      
@@ -638,7 +537,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error", 0);                                 
 	}
 	
  
@@ -705,8 +604,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 
         formIsValid = true;            
 
-//        validate(shipZipValidator);                
-//        validate(zipValidator);
         validate(nameValidator);
         validate(contactShipFirstValidator);
         validate(contactBillFirstValidator);
@@ -732,7 +629,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 </mx:Script>
 
 <mx:VBox width="100%" height="100%">
-	<mx:Canvas width="851" height="704">
+	<mx:Canvas width="851" height="704" verticalScrollPolicy="off">
 		<mx:TabNavigator x="0" y="70" width="681" height="635" creationPolicy="all">
 			<mx:Canvas label="Address" width="100%" height="100%">
 				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" change="validateForm(event);"/>
@@ -743,6 +640,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
+				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" height="157" width="325"/>
 				<ns1:AddressEditor x="344" y="94" id="bill_to_address_editor" height="157" width="325"/>
 					 
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
@@ -785,7 +683,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
 					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
-				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" height="157" width="325"/>
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"/>
