@@ -27,7 +27,7 @@
 		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
 			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
 		    	<mx:Image x="-185" y="479" width="186" height="61" id="logo" source="assets/xpedxLogo.gif"/>
-				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();"/>
 				<mx:Button x="674" y="104" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
 				<mx:Button x="176" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
 				<mx:Button x="176" y="198" label="Users" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
@@ -75,6 +75,7 @@
 		import com.efi.view.PriceListEditor;
 		import com.efi.view.SystemPreferences;
 		import com.efi.view.EditInvoice;
+		import com.efi.view.EditEstimate;
 		import com.efi.view.EditUser;
 		import com.efi.vo.Users;
 		import mx.effects.easing.Quadratic;
@@ -210,6 +211,10 @@
 		}
 		private function doCreateInvoice():void {
 			var child:EditInvoice = new EditInvoice();
+			addUniqueTab(child);
+		}
+		private function doCreateEstimate():void {
+			var child:EditEstimate = new EditEstimate();
 			addUniqueTab(child);
 		}
 		
