@@ -179,6 +179,13 @@ width="800" height="678" title="Preferences"
 	[Bindable]
 	private var JournalDocumentPreferenceArray:ArrayCollection = new ArrayCollection();
 
+//Radio Buttons
+	[Bindable]
+	private var opgFirstDayOfWorkWeekValue:String = "opgSunday";
+	[Bindable]
+	private var optPaymentDueDaysValue:String = "opbFromNotifiedDate";
+	[Bindable]
+	private var opgChargeDescriptionValue:String = "opgShowName";
 //Data view variables
 	[Bindable]
 	private var preferencesSystem:PreferencesSystem;
@@ -457,9 +464,9 @@ width="800" height="678" title="Preferences"
 		
 		fillStaticData();
 		
-		checkAlternateCurrency();
-		
 		getPreferencesData();
+
+		checkAlternateCurrency();
 
 		openTree();
 		
@@ -533,6 +540,14 @@ width="800" height="678" title="Preferences"
 		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
 		this.chkUseChileTaxIdVerification.selected = preferencesSystem.chileTaxIdVerification
 		this.chkUseInternationalTextSorting.selected = preferencesSystem.internationalTextSorting
+		
+		//comboboxs
+		if (preferencesSystem.fiscalYearStartMonth != "")
+			cboFiscalYearStartMonth.selectedIndex = findItem(preferencesSystem.fiscalYearStartMonth, MonthsArray);
+
+		//radio buttons
+		opgFirstDayOfWorkWeekValue = preferencesSystem.workFirstDayOfWeek
+		
 	}
 	private function mapFromPreferencesAccountingData():void {
 		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
@@ -544,6 +559,10 @@ width="800" height="678" title="Preferences"
 		this.chkPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidation
 		this.chkRemoveDraftFromDeposit.selected = preferencesAccounting.removeDraftsFromDeposit
 		this.chkUseAddressValidation.selected = preferencesAccounting.useAddressValidation
+
+		if (preferencesAccounting.journalDocumentPreference != "")
+			cboJournalDocumentPreference.selectedIndex = findItem(preferencesAccounting.journalDocumentPreference, JournalDocumentPreferenceArray);
+		
 	}
 	private function mapFromPreferencesEstimatingData():void {
 		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
@@ -580,6 +599,23 @@ width="800" height="678" title="Preferences"
 		this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
 		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
 		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
+		
+//		if (preferencesEstimating.defaultEstimate != "")
+//			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
+
+//		if (preferencesEstimating.defaultInvoice != "")
+//			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
+
+//		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
+
+		if (preferencesEstimating.runToFinishGrain != "")
+			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
+
+		if (preferencesEstimating.customJobTicket != "")
+			cboCustomStyle.selectedIndex = findItem(preferencesEstimating.customJobTicket, JobTicketStylesArray);
+			
+		opgChargeDescriptionValue = preferencesEstimating.chargeDescription;
+
 	}
 	private function mapFromPreferencesPOSData():void {
 		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
@@ -592,6 +628,18 @@ width="800" height="678" title="Preferences"
 		this.chkPrintReceipts.selected = preferencesPOS.printReceipts
 		this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
 		this.chkUseMasterDrawer.selected = preferencesPOS.useMasterDrawer
+
+		if (preferencesPOS.receiptPrinterStatus != "")
+			cboReceiptPrinter.selectedIndex = findItem(preferencesPOS.receiptPrinterStatus, ReceiptPrinterArray);
+
+		if (preferencesPOS.baudRate != "")
+			cboBaudRate.selectedIndex = findItem(preferencesPOS.baudRate, BaudRateArray);
+		if (preferencesPOS.stopBits != "")
+			cboStopBits.selectedIndex = findItem(preferencesPOS.stopBits, StopBitsArray);
+		if (preferencesPOS.parity != "")
+			cboParity.selectedIndex = findItem(preferencesPOS.parity, ParityArray);
+		if (preferencesPOS.dataSize != "")
+			cboDataSize.selectedIndex = findItem(preferencesPOS.dataSize, DataSizeArray);
 	}
 
 	private function mapFromPreferencesStocksData():void {
@@ -647,6 +695,13 @@ width="800" height="678" title="Preferences"
 		preferencesSystem.chileTaxIdVerification = this.chkUseChileTaxIdVerification.selected
 		preferencesSystem.internationalTextSorting = this.chkUseInternationalTextSorting.selected
 
+//comboboxes
+		if (cboFiscalYearStartMonth != null && cboFiscalYearStartMonth.selectedItem != null)
+	 		preferencesSystem.fiscalYearStartMonth = cboFiscalYearStartMonth.selectedItem.name;
+
+//Radio buttons
+		preferencesSystem.workFirstDayOfWeek = opgFirstDayOfWorkWeekValue;
+		
 	}
 	private function mapToPreferencesAccountingData():void {
 		preferencesAccounting.activateCreditCardApproval = this.chkActivateCCAprovalProcess.selected 
@@ -658,6 +713,12 @@ width="800" height="678" title="Preferences"
 		preferencesAccounting.promptUserForValidation = this.chkPromptUserForValidationInformation.selected
 		preferencesAccounting.removeDraftsFromDeposit = this.chkRemoveDraftFromDeposit.selected
 		preferencesAccounting.useAddressValidation = this.chkUseAddressValidation.selected
+		
+//		if (cboAccountingPackages != null && cboAccountingPackages.selectedItem != null)
+//	 		preferencesAccounting. = cboAccountingPackages.selectedItem.name;
+		
+		if (cboJournalDocumentPreference != null && cboJournalDocumentPreference.selectedItem != null)
+			preferencesAccounting.journalDocumentPreference = cboJournalDocumentPreference.selectedItem.name;
 	}
 	private function mapToPreferencesEstimatingData():void {
 		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
@@ -694,6 +755,22 @@ width="800" height="678" title="Preferences"
 		preferencesEstimating.validateSalesRep = this.chkValidateSalesRep.selected
 		preferencesEstimating.useWhiteSpace = this.chkWhiteSpace.selected
 		preferencesEstimating.workandTumble = this.chkWorkAndTumble.selected
+
+		if (cboDefaultEstimate != null && cboDefaultEstimate.selectedItem != null)
+	 		preferencesEstimating.defaultEstimate = cboDefaultEstimate.selectedItem.name;
+		if (cboDefaultInvoice != null && cboDefaultInvoice.selectedItem != null)
+	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
+
+//		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
+
+		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
+	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
+		
+		if (cboCustomStyle != null && cboCustomStyle.selectedItem != null)
+			preferencesEstimating.customJobTicket = cboCustomStyle.selectedItem.name; 
+
+		preferencesEstimating.chargeDescription = opgChargeDescriptionValue;
+		
 	}
 	private function mapToPreferencesPOSData():void {
 		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
@@ -706,6 +783,20 @@ width="800" height="678" title="Preferences"
 		preferencesPOS.printReceipts = this.chkPrintReceipts.selected
 		preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
 		preferencesPOS.useMasterDrawer = this.chkUseMasterDrawer.selected
+
+		if (cboReceiptPrinter != null && cboReceiptPrinter.selectedItem != null)
+	 		preferencesPOS.receiptPrinterStatus = cboReceiptPrinter.selectedItem.name;
+
+		if (cboBaudRate != null && cboBaudRate.selectedItem != null)
+			preferencesPOS.baudRate = cboBaudRate.selectedItem.name;
+		if (cboStopBits != null && cboStopBits.selectedItem != null)
+			preferencesPOS.stopBits = cboStopBits.selectedItem.name;
+		if (cboParity != null && cboParity.selectedItem != null)
+			preferencesPOS.parity = cboParity.selectedItem.name;
+		if (cboDataSize != null && cboDataSize.selectedItem != null)
+			preferencesPOS.dataSize = cboDataSize.selectedItem.name;
+		
+		
 	}
 	private function mapToPreferencesStocksData():void {
 		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
@@ -1056,12 +1147,12 @@ width="800" height="678" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:Label x="50" y="92" text="Fiscal year starts first day of:"/>
-				<mx:ComboBox x="220" y="90" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
+				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
 				<mx:Label x="176" y="146" text="Current Range:"/>
 				<mx:TextArea x="270" y="145" height="19" width="210"/>
 				
 				<mx:Label x="50" y="185" text="Work Days:"/>
-				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek" selectedValue="{opgFirstDayOfWorkWeekValue}"/>
 				<mx:RadioButton x="53" y="250" id="opgSunday" groupName="opgFirstDayOfWorkWeek"/>
 				<mx:RadioButton x="93" y="250" id="opgMonday" groupName="opgFirstDayOfWorkWeek"/>
 				<mx:RadioButton x="133" y="250" id="opgTuesday" groupName="opgFirstDayOfWorkWeek"/>
@@ -1361,7 +1452,7 @@ width="800" height="678" title="Preferences"
 					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
 					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
-					<mx:RadioButtonGroup id="optPaymentDueDays"/>
+					<mx:RadioButtonGroup id="optPaymentDueDays" selectedValue="{optPaymentDueDaysValue}"/>
 					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays"/>
 					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="From Completed Date" groupName="optPaymentDueDays"/>
 					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="From Pickup Date" groupName="optPaymentDueDays"/>
@@ -1450,7 +1541,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="180" id="chkShowReferenceNumber" label="Show Customer ext. Reference Number"/>
 				
 				<mx:Panel x="50" y="220" width="340" height="110" layout="absolute" title="Charge Description">
-					<mx:RadioButtonGroup id="opgChargeDescription"/>
+					<mx:RadioButtonGroup id="opgChargeDescription" selectedValue="{opgChargeDescriptionValue}"/>
 					<mx:RadioButton x="10" y="5" id="opgShowName" label="Show Name" groupName="opgChargeDescription"/>
 					<mx:RadioButton x="10" y="25" id="opgShowDescription" label="Show Description" groupName="opgChargeDescription"/>
 					<mx:RadioButton x="10" y="45" id="opgShowBothIfDifferent" label="Show Both if Different" groupName="opgChargeDescription"/>
