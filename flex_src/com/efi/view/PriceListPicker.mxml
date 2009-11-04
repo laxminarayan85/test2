@@ -65,7 +65,7 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-		dataService.getAll("PriceListBase");
+		dataService.getAll(itemType);
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 
 	}

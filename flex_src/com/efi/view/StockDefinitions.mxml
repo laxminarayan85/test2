@@ -57,8 +57,8 @@
 	import com.efi.vo.StockForest;
 	import com.efi.vo.Vendor;
 		
-	import com.efi.vo.PriceListBase;
 	import com.efi.vo.PriceList;
+	import com.efi.vo.PriceListBase;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -164,7 +164,7 @@
 	}
 
 	public function setPriceList(price:PriceListBase): void {
-	 	this.priceList = price as PriceList;	
+	 	this.priceList = price as PriceList;
 	}
 	
 	private function doPriceList():void {

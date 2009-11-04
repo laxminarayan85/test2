@@ -47,6 +47,7 @@ showBusyCursor="true" />
 <![CDATA[
 	import com.efi.pages.ChargeCosting;
 	import com.efi.vo.ShippingMethod;
+    import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListElement;
 	import com.efi.vo.WasteChart;	
 	import com.efi.vo.ChargeCost;
@@ -55,8 +56,6 @@ showBusyCursor="true" />
 	import com.efi.vo.ChargeCategory;
     import com.efi.vo.Charge;
     import com.efi.vo.CostCenter;
-    import com.efi.vo.WasteChart;
-    import com.efi.vo.PriceListElement;
     import com.efi.vo.FoldTemplate;
     import com.efi.vo.TaxTable;
     import com.efi.vo.Substrate;
@@ -95,6 +94,11 @@ showBusyCursor="true" />
 
 	[Bindable]		
     private var enableSave:Boolean = true;
+
+    [Bindable]
+    private var press:Boolean = false;
+    [Bindable]
+	private var waste:Boolean = false;
 
 	[Bindable]                                         
 	private var charge:Charge;
@@ -773,16 +777,26 @@ showBusyCursor="true" />
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
+	    press = true;
 	}
 
 	private function doWasteChart():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "WasteChart";		
+	    titleWindow.itemType = "WasteChart";
+	    waste = true;
 	}
 	public function setPriceList(price:PriceListBase): void {
-		
+	 	if (press){
+	 		//priceList seems to be defined as a PriceListElement... not sure if that is what is really wanted
+	 		//charge.priceList = price as PriceList;
+	 		press = false;
+	 	}
+	 	if (waste){
+	 		charge.wasteChart = price as WasteChart;
+	 		waste= false;
+	 	}
 	}     
 
 ]]>

@@ -31,6 +31,9 @@ width="902" height="873" title="Copier Definitions"
 	[Bindable]                   
     private var enableSave:Boolean = true;
 
+    [Bindable]
+	private var waste:Boolean = false;
+
 	[Bindable]                                         
      private var priceList:PriceList;  
                          
@@ -52,7 +55,7 @@ width="902" height="873" title="Copier Definitions"
 	}
                                   
 	public function setPriceList(price:PriceListBase): void {
-	 	this.priceList = price as PriceList;	
+
 	}
 	
 	private function doAddCopier():void {
@@ -168,7 +171,15 @@ width="902" height="873" title="Copier Definitions"
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
 	}
-                            
+
+	private function doWasteChart():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "WasteChart";
+	    waste = true;
+	}
+
 ]]>
                              
 </mx:Script>	
@@ -210,7 +221,7 @@ width="902" height="873" title="Copier Definitions"
 	<mx:HRule x="10" y="781" width="872" height="12"/>
 	<mx:Button x="10" y="801" label="Stock Price List" click="doPriceList();"/>
 	<mx:Button x="131" y="801" label="Copier Price List" click="doPriceList();"/>
-	<mx:Button x="590" y="247" label="Waste Chart"/>
+	<mx:Button x="590" y="247" label="Waste Chart" click="doWasteChart();"/>
 	<mx:Button x="590" y="198" label="Add Charges"/>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>

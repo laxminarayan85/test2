@@ -24,6 +24,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListElement;
 	import com.efi.view.CopierDefinitions;
     import com.efi.view.PressDefinitions;
@@ -87,13 +88,24 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-	    dataService.getAll("PriceListBase");  
+	    dataService.getAll(itemType);
 	    dataService.getAll("PriceListElement");
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
-		if (priceList == null){
-			priceList = new PriceListBase();
-			priceListElement = new PriceListElement(); 
-		} 
+		if (itemType == "PriceList")
+		{
+			if (priceList == null)
+			{
+				priceList = new PriceList();
+				priceListElement = new PriceListElement(); 
+			} 
+		}else
+		{
+			if (priceList == null)
+			{
+				priceList = new WasteChart();
+				priceListElement = new PriceListElement(); 
+			} 
+		}
 
 	}
 	                                
@@ -175,7 +187,7 @@
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
-		dataService.getAll("PriceListBase")
+		dataService.getAll(itemType)
 		
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -183,7 +195,7 @@
 		
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("PriceListBase")
+		dataService.getAll(itemType)
 		doNew();
 	}
 	
