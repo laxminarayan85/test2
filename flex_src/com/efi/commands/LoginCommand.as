@@ -9,10 +9,7 @@ package com.efi.commands
 	import mx.rpc.IResponder;
 	
 	public class LoginCommand implements ICommand {
-		public var modelLocator:ModelLocator 
-		
-		
-		= ModelLocator.getInstance();
+		public var modelLocator:ModelLocator = ModelLocator.getInstance();
 
 		public function LoginCommand() {
 		}
