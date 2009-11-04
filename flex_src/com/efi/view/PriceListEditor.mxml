@@ -69,7 +69,7 @@
     [Bindable]
     private var price_header:String = "Price";
                                                                  	         
-	public var itemType:String = "PriceList";
+	public var itemType:String;
 
 	[Bindable]
 	private var amountRadioValue:String = "amtiscurrency";
@@ -93,13 +93,17 @@
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (itemType == "PriceList")
 		{
+			this.title = "Price List"
+			this.label = "Price List"
 			if (priceList == null)
 			{
 				priceList = new PriceList();
 				priceListElement = new PriceListElement(); 
 			} 
 		}else
-		{
+		{	
+			this.title = "Waste Chart"
+			this.label = "Waste Chart"
 			if (priceList == null)
 			{
 				priceList = new WasteChart();

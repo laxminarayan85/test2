@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="Time Tracking" label="Time Tracking" 
-	creationComplete="init()" showCloseButton="true" close="PopUpManager.removePopUp(this)">
+	creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -71,6 +71,7 @@
 	}
 	private function doClockIn(): void{  
 		 if (employee != null){
+		 	 
 			 employee.clockIn= true;
 			 employee.clockOut = false;
 			 employee.clockBreak= false;
@@ -81,6 +82,7 @@
 	}  
 	private function doClockOut(): void{ 
 		if (employee != null){
+			
 			employee.clockIn= false;
 			employee.clockOut = true;
 			employee.clockBreak= false; 
@@ -121,17 +123,20 @@
                              
 </mx:Script>
 
-	<mx:Button x="62" y="37" label="Clock In" width="132" height="107" icon="@Embed(source='../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
-	<mx:Button x="62" y="165" label="Clock Out" width="132" height="107" icon="@Embed(source='../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
-	<mx:Button x="62" y="310" label="On Break" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
-	<mx:DataGrid x="212" y="37" height="380" width="387" dataProvider="{employeesArray}" click="doGrid();" id="employeeGrid">
-		<mx:columns>
-			<mx:DataGridColumn headerText="First Name" dataField="firstName"/>
-			<mx:DataGridColumn headerText="Last Name" dataField="lastName"/>
-			<mx:DataGridColumn headerText="Out"  dataField="clockOut" />
-			<mx:DataGridColumn headerText="In" dataField="clockIn"/>
-			<mx:DataGridColumn headerText="Break" dataField="clockBreak"/>
-		</mx:columns>
-	</mx:DataGrid>
+	<mx:Button x="20" y="37" label="Clock In" width="132" height="107" icon="@Embed(source='../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
+	<mx:Button x="20" y="165" label="Clock Out" width="132" height="107" icon="@Embed(source='../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
+	<mx:Button x="20" y="310" label="On Break" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
+	<mx:AdvancedDataGrid x="167" y="37" width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="380" sortExpertMode="true"
+		itemClick="doGrid()">
+		<mx:groupedColumns>
+			<mx:AdvancedDataGridColumn width="50" headerText="First Name" sortable="false" textAlign="center" dataField="firstName" />
+			<mx:AdvancedDataGridColumn width="50" headerText="Last Name" sortable="false" textAlign="center" dataField="lastName"/>
+				<mx:AdvancedDataGridColumnGroup id="Inout" headerText="Status" sortable="false" editable="false">
+				<mx:AdvancedDataGridColumn width="20" headerText="Out" sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="In" sortable="false" textAlign="center" editable="false" dataField="clockIn" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="Break" sortable="false" textAlign="center" editable="false" dataField="clockBreak" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+			</mx:AdvancedDataGridColumnGroup>
+		</mx:groupedColumns>
+	</mx:AdvancedDataGrid>
 	
 </mx:TitleWindow>

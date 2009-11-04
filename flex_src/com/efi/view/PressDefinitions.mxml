@@ -80,8 +80,7 @@ width="772" height="827" title="Press Definitions"
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
 	    press =  true;
-	    pressDefinition.pressPriceList = this.priceList;
-	}
+	   	}
 	private function doStockPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
@@ -288,10 +287,9 @@ width="772" height="827" title="Press Definitions"
 	<mx:Label x="424" y="536" text="Washup Minutes:"/>
 	<mx:Label x="439" y="561" text="Washup Time per fountain:" textAlign="right"/>
 	<mx:HRule x="10" y="613" width="732" height="6"/>
-	<mx:HRule x="10" y="715" width="732" height="2"/>
 	<mx:Button x="11" y="627" label="Speed Table " width="97"/>
-	<mx:Button x="10" y="725" label="Stock Price List" click="doStockPriceList();"/>
-	<mx:Button x="10" y="755" label="Press Price List" click="doPressPriceList();"/>
+	<mx:Button x="380" y="627" label="Stock Price List" click="doStockPriceList();"/>
+	<mx:Button x="380" y="655" label="Press Price List" click="doPressPriceList();"/>
 	<mx:Button x="11" y="655" label="Waste Chart" click="doWasteChart();"/>
 	<mx:Button x="10" y="685" label="Add Charges"/>
 	<mx:CheckBox x="445" y="273" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
@@ -323,6 +321,6 @@ width="772" height="827" title="Press Definitions"
 		<mx:TextInput x="201" y="584" id="GripEdge" text="{pressDefinition.gripEdge}"/>
 		<mx:TextInput x="132" y="627"/>
 		<mx:Text x="132" y="657" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}"/>
-		<mx:Text x="132" y="729" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}"/>
-		<mx:Text x="132" y="759" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}"/>
+		<mx:Text x="501" y="629" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}"/>
+		<mx:Text x="502" y="657" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}"/>
 </mx:Panel>
