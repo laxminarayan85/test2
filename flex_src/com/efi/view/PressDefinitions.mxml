@@ -112,8 +112,8 @@ width="772" height="827" title="Press Definitions"
 	 pressDefinition.oEMDeviceID = OEMDeviceID.text;
 	 pressDefinition.machineID = parseInt(MachineId.text) 
 	 pressDefinition.costingPress = CostingPress.selected;
-	 pressDefinition.sheetFed = SheetFed.selected;
-	 pressDefinition.rolltoRoll = RollFed.selected;
+	// pressDefinition.sheetFed = SheetFed.selected;
+	// pressDefinition.rolltoRoll = RollFed.selected;
 	 pressDefinition.integratedDevice = IntegratedDevice.selected;
 	 pressDefinition.maxPaperSize = MaxPaperSize.text;
 	 pressDefinition.minPaperSize = MinPaperSize.text;
@@ -134,8 +134,8 @@ width="772" height="827" title="Press Definitions"
 	 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
 	 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 	 pressDefinition.numberHeads= parseInt(NumberHeads.text);
-	 pressDefinition.defaultRoll= DefaultRoll.selected;
-	 pressDefinition.defaultSheet = DefaultSheet.selected;
+	// pressDefinition.defaultRoll= DefaultRoll.selected;
+	// pressDefinition.defaultSheet = DefaultSheet.selected;
 //	 pressDefinition.paperStyle =  doPaperStyle();
 	}
 	private function doSave():void {
@@ -268,10 +268,6 @@ width="772" height="827" title="Press Definitions"
 	<mx:Button x="11" y="655" label="Waste Chart" click="doWasteChart();"/>
 	<mx:Button x="10" y="685" label="Add Charges"/>
 	<mx:CheckBox x="445" y="273" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
-	<mx:Panel x="589" y="195" width="133" height="104" layout="absolute" title="Paper Style" dropShadowEnabled="false">
-		<mx:RadioButton x="10" y="10" label="Sheet-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="SheetFed" selected="{pressDefinition.sheetFed}" click="doPaperStyle();"/>
-		<mx:RadioButton x="10" y="35" label="Roll-Fed" groupName="PaperStyle" themeColor="#040404" fontFamily="Arial" enabled="true" id="RollFed" selected="{pressDefinition.rolltoRoll}" click="doPaperStyle();"/>
-	</mx:Panel>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
@@ -302,8 +298,6 @@ width="772" height="827" title="Press Definitions"
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
 		<mx:Label x="130" y="587" text="Grip Edge:"/>
 		<mx:TextInput x="201" y="584" id="GripEdge" text="{pressDefinition.gripEdge}"/>
-		<mx:CheckBox x="445" y="221" label="DefaultRoll" id="DefaultRoll"/>
-		<mx:CheckBox x="445" y="247" label="Default Sheet" id="DefaultSheet"/>
 		<mx:TextInput x="132" y="627"/>
 		<mx:TextInput x="132" y="655"/>
 		<mx:TextInput x="131" y="725"/>
