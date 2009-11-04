@@ -29,7 +29,11 @@ width="772" height="827" title="Press Definitions"
                    
 	[Bindable]
     private var enableSave:Boolean = true;
-                         
+    [Bindable]
+    private var press:Boolean = false;
+     [Bindable]
+    private var stock:Boolean = false; 
+                        
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
     
@@ -68,11 +72,22 @@ width="772" height="827" title="Press Definitions"
 		titleWindow.formIsEmpty = true; 
 	   	    
 	}    
-	private function doPriceList():void {
+	private function doPressPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
+	    press =  true;
+	    pressDefinition.pressPriceList = this.priceList;
+	    
+	}
+	private function doStockPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
+	    stock = true;
+	    
 	}
 
 	private function doWasteChart():void {
@@ -177,6 +192,14 @@ width="772" height="827" title="Press Definitions"
 	}
 	public function setPriceList(price:PriceListBase): void {
 	 	this.priceList = price as PriceList;	
+	 	if (press){
+	 		pressDefinition.pressPriceList = price as PriceList;
+	 		press = false;
+	 	}
+	 	if (stock){
+	 		pressDefinition.stockPriceList = price as PriceList;
+	 		stock= false;
+	 	}
 	}     
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
@@ -263,8 +286,8 @@ width="772" height="827" title="Press Definitions"
 	<mx:HRule x="10" y="613" width="732" height="6"/>
 	<mx:HRule x="10" y="715" width="732" height="2"/>
 	<mx:Button x="11" y="627" label="Speed Table " width="97"/>
-	<mx:Button x="10" y="725" label="Stock Price List" click="doPriceList();"/>
-	<mx:Button x="10" y="755" label="Press Price List" click="doPriceList();"/>
+	<mx:Button x="10" y="725" label="Stock Price List" click="doStockPriceList();"/>
+	<mx:Button x="10" y="755" label="Press Price List" click="doPressPriceList();"/>
 	<mx:Button x="11" y="655" label="Waste Chart" click="doWasteChart();"/>
 	<mx:Button x="10" y="685" label="Add Charges"/>
 	<mx:CheckBox x="445" y="273" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
@@ -280,14 +303,10 @@ width="772" height="827" title="Press Definitions"
 			<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
-		<mx:Button x="217" y="10" width="38" height="38">
-			<mx:icon>@Embed(source='../../../assets/get.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
 		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38">
+		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
 			<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
@@ -296,10 +315,10 @@ width="772" height="827" title="Press Definitions"
 		</mx:Button>
 		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
-		<mx:Label x="130" y="587" text="Grip Edge:"/>
+		<mx:Label x="103" y="586" text="Grip Edge/Gap:"/>
 		<mx:TextInput x="201" y="584" id="GripEdge" text="{pressDefinition.gripEdge}"/>
 		<mx:TextInput x="132" y="627"/>
-		<mx:TextInput x="132" y="655"/>
-		<mx:TextInput x="131" y="725"/>
-		<mx:TextInput x="131" y="755"/>
+		<mx:Text x="132" y="657" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}"/>
+		<mx:Text x="132" y="729" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}"/>
+		<mx:Text x="132" y="759" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}"/>
 </mx:Panel>

@@ -46,6 +46,9 @@ package com.efi.vo
 		public var defaultRoll:Boolean = true;
 		public var sheetFedPaper:Boolean = true;
 		public var rollFedPaper:Boolean = true;
+		public var wasteChart:WasteChart = new WasteChart();
+		public var pressPriceList:PriceList = new PriceList();
+		public var stockPriceList:PriceList = new PriceList();
 	
 	}
 }

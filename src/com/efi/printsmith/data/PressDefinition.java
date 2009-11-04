@@ -170,6 +170,18 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String ROLLFEDPAPER = "RollFedPaper";
+	/**
+	 * @generated
+	 */
+	public static final String WASTECHART = "WasteChart";
+	/**
+	 * @generated
+	 */
+	public static final String PRESSPRICELIST = "PressPriceList";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKPRICELIST = "StockPriceList";
 
 	/**
 	 * @generated
@@ -757,6 +769,57 @@ public class PressDefinition extends ModelBase {
 	public void setRollFedPaper(Boolean newVal) {
 		this.rollFedPaper = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private WasteChart wasteChart;
+	/**
+	 * @generated
+ 	 */
+	public WasteChart getWasteChart(){
+		return wasteChart; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWasteChart(WasteChart newVal) {
+		this.wasteChart = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PriceList pressPriceList;
+	/**
+	 * @generated
+ 	 */
+	public PriceList getPressPriceList(){
+		return pressPriceList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPressPriceList(PriceList newVal) {
+		this.pressPriceList = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PriceList stockPriceList;
+	/**
+	 * @generated
+ 	 */
+	public PriceList getStockPriceList(){
+		return stockPriceList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockPriceList(PriceList newVal) {
+		this.stockPriceList = newVal;
+	}
 
 	/**
 	 * @generated
@@ -798,6 +861,9 @@ public class PressDefinition extends ModelBase {
 		if (DEFAULTROLL.equals(propertyName)) return getDefaultRoll();
 		if (SHEETFEDPAPER.equals(propertyName)) return getSheetFedPaper();
 		if (ROLLFEDPAPER.equals(propertyName)) return getRollFedPaper();
+		if (WASTECHART.equals(propertyName)) return getWasteChart();
+		if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
+		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
 		return super.getProperty(propertyName);
 	}
 	
@@ -841,6 +907,9 @@ public class PressDefinition extends ModelBase {
 		if (DEFAULTROLL.equals(propertyName)) setDefaultRoll((Boolean)newValue); else
 		if (SHEETFEDPAPER.equals(propertyName)) setSheetFedPaper((Boolean)newValue); else
 		if (ROLLFEDPAPER.equals(propertyName)) setRollFedPaper((Boolean)newValue); else
+		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
+		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
+		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -918,6 +987,12 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (ROLLFEDPAPER.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (WASTECHART.equals(propertyName)) 
+			return new Class<?>[] {WasteChart.class};		
+		if (PRESSPRICELIST.equals(propertyName)) 
+			return new Class<?>[] {PriceList.class};		
+		if (STOCKPRICELIST.equals(propertyName)) 
+			return new Class<?>[] {PriceList.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -962,6 +1037,9 @@ public class PressDefinition extends ModelBase {
 		if (DEFAULTROLL.equals(propertyName)) return PressDefinition.class;
 		if (SHEETFEDPAPER.equals(propertyName)) return PressDefinition.class;
 		if (ROLLFEDPAPER.equals(propertyName)) return PressDefinition.class;
+		if (WASTECHART.equals(propertyName)) return PressDefinition.class;
+		if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
+		if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1040,6 +1118,12 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getSheetFedPaper(), objT.getSheetFedPaper()))
 			return false;
 		if (! SmartEquals(getRollFedPaper(), objT.getRollFedPaper()))
+			return false;
+		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
+			return false;
+		if (! SmartEquals(getPressPriceList(), objT.getPressPriceList()))
+			return false;
+		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
 			return false;
 		return true;
 	}			
