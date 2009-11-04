@@ -190,7 +190,7 @@ width="772" height="827" title="Press Definitions"
 		loadPressDefinitions();
 		doNew();
 	}
-	public function setPriceList(price:PriceListBase): void {
+	public function setPriceList(price:PriceList): void {
 	 	this.priceList = price as PriceList;	
 	 	if (press){
 	 		pressDefinition.pressPriceList = price as PriceList;
