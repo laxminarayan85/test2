@@ -38,7 +38,7 @@
     <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
     <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
     <mx:Label x="10" y="108" text="Zip:" width="67" textAlign="right"/>
-    <mx:Label x="168" y="108" text="Country:" width="57" textAlign="right"/>
+    <mx:Label x="210" y="108" text="Country:" width="57" textAlign="right"/>
             
     <mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
     <mx:TextInput x="85" y="10" width="265" id="company_edit" text="{address.name}"/>
@@ -46,11 +46,11 @@
     <mx:TextInput x="85" y="56" width="265" id="street2_edit" text="{address.street2}"/>
     <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
     <fc:AutoComplete id="statecombo" x="304" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
-    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="117"/>
-    <fc:AutoComplete id="countrycombo" x="233" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
+    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="126"/>
+    <fc:AutoComplete id="countrycombo" x="275" y="106" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
     	
-    <mx:Button x="275" y="134" id="ok_button" label="OK" width="75" click="doOK()"/>
-    <mx:Button x="192" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    <mx:Button x="192" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="275" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
@@ -70,7 +70,7 @@
 	import mx.controls.Alert;                                         
 
 	[Bindable]                                         
-	private var address:Address;
+	private var address:Address ;
 
 	[Bindable]
 	public var cityDataProvider:ArrayCollection = null;
@@ -91,6 +91,8 @@
 		stateDataService.getAll("State");
 		countryDataService.getAll("Country");
 		zipDataService.getAll("Zip");
+		
+	
 	}      
 		
  	private function itemExists(list:ArrayCollection, item:Object):Boolean {
@@ -107,25 +109,41 @@
 	private function handleLoadCity(ev:ResultEvent):void {
 		var selectedItem = citycombo.selectedItem;
 	 	cityDataProvider = ev.result as ArrayCollection;
-	 	citycombo.selectedItem = selectedItem;
+	 	if (selectedItem != null){
+	 		citycombo.selectedItem = selectedItem;
+	 	}
+	 	else
+	 		citycombo.selectedIndex = findItem(this.address.city.name, cityDataProvider);
 	}   
 	
 	private function handleLoadState(ev:ResultEvent):void {
 		var selectedItem = statecombo.selectedItem;
 		stateDataProvider = ev.result as ArrayCollection;
-	 	statecombo.selectedItem = selectedItem;
+	 	if (selectedItem != null){
+	 		statecombo.selectedItem = selectedItem;
+	 	}
+	 	else
+	 		statecombo.selectedIndex = findItem(this.address.state.name, stateDataProvider);
 	}
 	
 	private function handleLoadCountry(ev:ResultEvent):void {
 		var selectedItem = countrycombo.selectedItem;
 		countryDataProvider = ev.result as ArrayCollection;
-	 	countrycombo.selectedItem = selectedItem;
+	 	if (selectedItem != null){
+	 		countrycombo.selectedItem = selectedItem;
+	 	}
+	 	else
+	 		countrycombo.selectedIndex = findItem(this.address.country.name, countryDataProvider);
 	}   
 	
 	private function handleLoadZip(ev:ResultEvent):void {
 		var selectedItem = zipcombo.selectedItem;
 		zipDataProvider = ev.result as ArrayCollection;
-	 	zipcombo.selectedItem = selectedItem;
+	 	if (selectedItem != null){
+	 		zipcombo.selectedItem = selectedItem;
+	 	}
+	 	else
+	 		zipcombo.selectedIndex = findItem(this.address.zip.name, zipDataProvider);
 	}                                 
 
 	private function handleSaveCityResult(ev:ResultEvent):void {
@@ -162,10 +180,11 @@
 		}
 		return -1;
 	}
-
+   
 	public function setAddress(addr:Address):void {
 		this.address = addr;
 		originalAddress = addr;
+		
 	}
 	
 	public function getAddress():Address {

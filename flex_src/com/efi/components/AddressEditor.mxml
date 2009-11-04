@@ -57,7 +57,8 @@
 			private var titleWindow:AddressEditorPopup=null;
 
 			public function init():void
-			{
+			{ 
+				address = new Address();
 			}
 
 			public function saveAddressHandler(evt:SaveAddressEvent):void {

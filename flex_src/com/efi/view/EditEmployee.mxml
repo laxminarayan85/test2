@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="908" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
-creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.adobe.flex.extras.controls.*">
+creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.efi.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -32,7 +32,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 <mx:Consumer id="consumer" destination="employees"  message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
-<mx:ZipCodeValidator id="zipValidator" source="{zipcombo}" property="text" required="false"/>
+
 <mx:StringValidator id="employeeFirstValidator" source="{firstName_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="employeeLastValidator" source="{lastName_edit}"	property="text"	minLength="2" required="true"/>
 <mx:NumberValidator id= "timeValidator" source="{hour_edit}" property= "text" maxValue="24" minValue="1"/>
@@ -119,16 +119,8 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	}	
 	private function mapFromEmployeeData():void{
 		
+		address_editor.setAddress(employee.address);
 		
-		if (employee.address.city != null)
-			citycombo.selectedIndex = findItem(employee.address.city.name, citys);
-		if (employee.address.state != null)
-			statecombo.selectedIndex = findItem(employee.address.state.name, states1);
-		if (employee.address.country != null)
-			countrycombo.selectedIndex = findItem(employee.address.country.name, countrys);
-		if (employee.address.zip != null)
-			zipcombo.selectedIndex = findItem(employee.address.zip.name, zips);
-			
 		customerWantType = employee.customerWant;
 		if (employee.active) 
 			employeeStatus= "Active"
@@ -143,8 +135,8 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		employee.firstName = firstName_edit.text;
 		employee.lastName = lastName_edit.text;
 		
-		employee.address.street1 = street_edit.text;
-		employee.address.street2 = street1_edit.text;
+		employee.address = address_editor.getAddress();
+		
 		employee.customerWant = Due.selectedValue.toString();
 		
 		if (employee_status.selectedValue == "Active")
@@ -152,14 +144,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		else
 			employee.active = false;
 			
-		if (citycombo != null && citycombo.selectedItem != null) 
-			employee.address.city = citycombo.selectedItem as City;
-		if (statecombo != null && statecombo.selectedItem != null) 
-			employee.address.state = statecombo.selectedItem as State;
-		if (zipcombo != null && zipcombo.selectedItem != null) 
-			employee.address.zip = zipcombo .selectedItem as Zip;
-		if (countrycombo != null && countrycombo.selectedItem != null) 
-			employee.address.country = countrycombo.selectedItem as Country;
+		
 		employee.rate= parseInt(rate_edit.text); 
 		employee.allowOverrideCost = override_cost_check.selected;
 		employee.costingAmounts = hide_cost_amount_check.selected;
@@ -251,80 +236,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		return -1;
 	}
 	
-	private function doCity(): void{                             
-		var city:City;
-		var result:Boolean;
-		
-		if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
-			var item:int = findItem(citycombo.typedText, citys);
-			if (item == -1) {
-				city = new City();
-				city.name = citycombo.text;
-				cityDataService.addUpdate(city);
-				employee.address.city = city;
-			}
-			else {
-				citycombo.selectedItem = item;
-			}
-		}
-	}
 	
-	
-	private function doState(): void{                             
-		var state:State;
-		var result:Boolean;
-		
-		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
-			var item:int = findItem(statecombo.typedText, states1);
-			if (item == -1) {
-				state = new State();
-				state.name = statecombo.text;
-				stateDataService.addUpdate(state);
-				employee.address.state = state;
-			}
-			else {
-				statecombo.selectedItem = item;
-			}
-		}
-	}
-	
-	
-	private function doZip(): void{                             
-		var zip:Zip;
-		var result:Boolean;
-	 	if (validate(zipValidator)){
-			if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
-				var item:int = findItem(zipcombo.typedText, zips);
-				if (item == -1) {
-					zip = new Zip();
-					zip.name = zipcombo.text;
-					zipDataService.addUpdate(zip);
-					employee.address.zip = zip;
-				}
-				else {
-					zipcombo.selectedItem = item;
-				}
-			}
-		}
-	}
-		
-	private function doCountry(): void{                             
-		var country:Country;
-		var result:Boolean;
-		
-		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
-			var item:int = findItem(countrycombo.typedText, countrys);
-			if (item == -1) {
-				country = new Country();
-				country.name = countrycombo.text;
-				countryDataService.addUpdate(country);
-				employee.address.country = country;
-			}
-			else {
-				countrycombo.selectedItem = item;
-			}
-		}
-	}
 	
 	
 	private function handleSaveResult(ev:ResultEvent):void {
@@ -346,31 +258,29 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	
 	
 	private function handleLoadCity(ev:ResultEvent):void {
-	 	var selectedItem1:Object = citycombo.selectedItem;
+	 	
 	 	citys = ev.result as ArrayCollection;
-		if (citycombo.selectedItem!= null){
-		citycombo.selectedItem = selectedItem1;
-		}
+		
 	}   
 	 private function handleLoadState(ev:ResultEvent):void {
 		
-	 	var selectedItem1:Object = statecombo.selectedItem;
+	 	
 		states1 = ev.result as ArrayCollection;
-		statecombo.selectedItem = selectedItem1;
+		
 	}   
 	 private function handleLoadCountry(ev:ResultEvent):void {
 	
-	 	var selectedItem1:Object = countrycombo.selectedItem;
+	 	
 		countrys = ev.result as ArrayCollection;
 		
-		countrycombo.selectedItem = selectedItem1;
+		
 	}   
 	 private function handleLoadZip(ev:ResultEvent):void {
 		
-	 	var selectedItem1:Object = zipcombo.selectedItem;
+	 	
 		zips = ev.result as ArrayCollection;
 		
-		zipcombo.selectedItem = selectedItem1;
+		
 	}                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getAll("Employee")
@@ -411,7 +321,6 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 
         formIsValid = true;            
 
-        validate(zipValidator);
         validate(employeeFirstValidator);
         validate(employeeLastValidator);
         validate(timeValidator);
@@ -487,10 +396,11 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<mx:Text x="143" y="17" id="employeeID" text="{employee.id}" width="106" />
 				<mx:Label x="47" y="80" text="First Name:"/>
 				<mx:Label x="47" y="106" text="Last Name:"/>
-				<mx:Label x="73" y="132" text="Street:"/>
+				<!--<mx:Label x="73" y="132" text="Street:"/>-->
 				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
 				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
-				<mx:TextInput x="124" y="130" id="street_edit" text="{employee.address.street1}" width="205"/>
+				<ns1:AddressEditor x="47" y="132" id="address_editor" height="157" width="325"/>
+				<!--<mx:TextInput x="124" y="130" id="street_edit" text="{employee.address.street1}" width="205"/>
 				<mx:TextInput x="124" y="160" id="street1_edit" text="{employee.address.street2}" width="205"/>
 				<mx:Label x="81" y="193" text="City:"/>
 				<ns1:AutoComplete x="124" y="191" id="citycombo" dataProvider="{citys}" width="205" labelField="name" focusOut="doCity()" lookAhead="true" />
@@ -500,7 +410,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<mx:Label x="56" y="254" text="Zip Code:"/>
 				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true" change=""/>
 				<mx:Label x="63" y="280" text="Country:"/>
-				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>
+				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>-->
 				<mx:Label x="406" y="80" text="Phone:"/>
 				<mx:Label x="406" y="106" text="Mobile:"/>
 				<mx:Label x="412" y="132" text="Email:"/>
