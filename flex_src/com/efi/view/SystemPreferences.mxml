@@ -754,7 +754,8 @@ width="800" height="678" title="Preferences"
 // Data Load Handlers
 	private function handleLoadSystemResult(ev:ResultEvent):void {
 		PreferencesSystemArray = ev.result as ArrayCollection;
-   		preferencesSystem = PreferencesSystemArray.getItemAt(0,0) as PreferencesSystem ;
+		if (PreferencesSystemArray.length > 0)
+   			preferencesSystem = PreferencesSystemArray.getItemAt(0,0) as PreferencesSystem ;
 		if (preferencesSystem == null)
 		{
 			preferencesSystem = new PreferencesSystem();
@@ -763,7 +764,8 @@ width="800" height="678" title="Preferences"
 	}
 	private function handleLoadPOSResult(ev:ResultEvent):void {
 		PreferencesPOSArray = ev.result as ArrayCollection;
-		preferencesPOS = PreferencesPOSArray.getItemAt(0,0) as PreferencesPOS;
+		if ( PreferencesPOSArray.length >0 )
+			preferencesPOS = PreferencesPOSArray.getItemAt(0,0) as PreferencesPOS;
 		if (preferencesPOS == null)
 		{
 			preferencesPOS = new PreferencesPOS();
@@ -772,7 +774,8 @@ width="800" height="678" title="Preferences"
 	}
 	private function handleLoadEstimatorResult(ev:ResultEvent):void {
 		PreferencesEstimatingArray = ev.result as ArrayCollection;
-		preferencesEstimating = PreferencesEstimatingArray.getItemAt(0,0) as PreferencesEstimating;
+		if( PreferencesEstimatingArray.length >0)
+			preferencesEstimating = PreferencesEstimatingArray.getItemAt(0,0) as PreferencesEstimating;
 		if (preferencesEstimating == null)
 		{
 			preferencesEstimating = new PreferencesEstimating();
@@ -781,7 +784,8 @@ width="800" height="678" title="Preferences"
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
 		PreferencesAccountingArray = ev.result as ArrayCollection;
-		preferencesAccounting = PreferencesAccountingArray.getItemAt(0,0) as PreferencesAccounting;
+		if ( PreferencesAccountingArray.length >0)
+			preferencesAccounting = PreferencesAccountingArray.getItemAt(0,0) as PreferencesAccounting;
 		if (preferencesAccounting == null)
 		{
 			preferencesAccounting = new PreferencesAccounting();
@@ -818,7 +822,8 @@ width="800" height="678" title="Preferences"
 	}
 	private function handleLoadStocksResult(ev:ResultEvent):void {
 		PreferencesStocksArray = ev.result as ArrayCollection;
-		preferencesStocks = PreferencesStocksArray.getItemAt(0,0) as PreferencesStocks;
+		if ( PreferencesStocksArray.length >0)
+			preferencesStocks = PreferencesStocksArray.getItemAt(0,0) as PreferencesStocks;
 		if (preferencesStocks == null)
 		{
 			preferencesStocks = new PreferencesStocks();
@@ -983,7 +988,7 @@ width="800" height="678" title="Preferences"
 ]]>
                              
 </mx:Script>	
-	<mx:Tree x="0" y="0" width="200" fontSize="8" 
+	<mx:Tree x="0" y="0" width="200"  
 		id="tvPreference" 
 		dataProvider="{treeData.node}"
 		labelField="@label"
