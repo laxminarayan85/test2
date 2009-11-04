@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="522" height="427" borderColor="#FFFFFF" themeColor="#FFFFFF" alpha="1.0">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:event="com.efi.event.*" layout="absolute" width="522" height="427" borderColor="#FFFFFF" themeColor="#FFFFFF" alpha="1.0">
 	<mx:Canvas x="0" y="0" width="522" height="426" backgroundAlpha="1.0" cornerRadius="0" backgroundColor="#FFFFFF" defaultButton="{login_btn}">
 	<mx:Image x="0" y="0" width="521" height="400" id="Splash" source="assets/splash.png" scaleContent="false" autoLoad="true"/>
 	<mx:TextInput x="352" y="332" id="username"/>
@@ -9,12 +9,12 @@
 	<mx:Button id="login_btn" click="doLogin()" x="437" y="392" label="Login" width="75"/>
 	<mx:Label x="99" y="374" width="124" id="version"/>
 	</mx:Canvas>
-	<mx:RemoteObject id="loginService" destination="loginService"
-		result="handleLoginResult(event)"  fault="handleFault(event)"
-		showBusyCursor="true" />
 
 	<mx:Script>
 		<![CDATA[
+			import mx.rpc.IResponder;
+			import mx.rpc.Responder;
+			import com.efi.events.LoginEvent;
 			import mx.controls.Label;
 			import com.efi.vo.Users;
 			import mx.resources.Locale;
@@ -33,7 +33,8 @@
 			
 			private function init():void	{
 			} 
-				
+			
+			
 			private function handleLoginResult(event:ResultEvent):void	{
 				var res:Users = event.result as Users;
 				if (res) {
@@ -50,33 +51,10 @@
 			}
 
 			private function doLogin():void	{
-				loginService.validateLogin(username.text, password.text);
+				var callbacks:IResponder = new mx.rpc.Responder(handleLoginResult, handleFault);
 				
-			}
-			
-			private function validateLogin(event:ResultEvent):void	{
-//				btnLogin.enabled = true;
-//				var user:PFUser = event.result as PFUser;
-//				if (user == null)	{ // this should never happen!
-//					Alert.show(resourceManager.getString(PFConstants.RES_ERRORS, 'GENERIC_ERROR'));
-//				} 
-//				else	{
-//					var efiPrintFlow:EFIPrintFlow = EFIPrintFlow.getInstance(); 
-//					efiPrintFlow.view = new ViewComponent(user);					
-//					efiPrintFlow.view.percentHeight = 100;
-//					efiPrintFlow.view.percentWidth = 100;
-//					efiPrintFlow.view.createControls();
-//					efiPrintFlow.mainWindow.addChild(efiPrintFlow.view);
-//					
-//					// make header visible
-//					efiPrintFlow.mainContainer.visible = true;
-//					efiPrintFlow.addEventListener("addPreferencesTab",efiPrintFlow.view.addPreferencesTab);
-//					efiPrintFlow.addEventListener("addPertTab",efiPrintFlow.view.addPertTab);
-//					if(!efiPrintFlow.view.isAllowedPage(efiPrintFlow.view.filterId))
-//						efiPrintFlow.preferencesText.visible = false;
-//					PopUpManager.removePopUp(this);
-// 				}	
-				
+				var loginEvent:LoginEvent = new LoginEvent(username.text, password.text, callbacks);
+				loginEvent.dispatch();
 			}
 		]]>
 	</mx:Script>

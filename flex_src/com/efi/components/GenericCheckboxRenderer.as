@@ -19,10 +19,12 @@ package com.efi.components
                     event.stopImmediatePropagation();
                     return;
             }
+            
         
             if (toggle) {
                 selected = !selected;
             }
         }
+        
     }
 }
