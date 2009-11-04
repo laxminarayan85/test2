@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:vo="com.efi.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*"
 width="902" height="873" title="Copier Definitions"
  label="Copier Definitions" name="Copier Definitions">
  
@@ -18,6 +18,8 @@ width="902" height="873" title="Copier Definitions"
 	
 	import com.efi.vo.PriceListBase;
 	import com.efi.vo.PriceList;
+	import com.efi.vo.WasteChart;
+	
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -30,11 +32,14 @@ width="902" height="873" title="Copier Definitions"
 
 	[Bindable]                   
     private var enableSave:Boolean = true;
-
+    [Bindable]
+    private var copy:Boolean = false;
+    [Bindable]
+    private var stock:Boolean = false; 
     [Bindable]
 	private var waste:Boolean = false;
-
-	[Bindable]                                         
+	
+   [Bindable]                                         
      private var priceList:PriceList;  
                          
 	[Bindable]                                         
@@ -55,8 +60,19 @@ width="902" height="873" title="Copier Definitions"
 	}
                                   
 	public function setPriceList(price:PriceListBase): void {
-
-	}
+	 	if (copy){
+	 		copyDefinition.copierPriceList = price as PriceList;
+	 		copy = false;
+	 	}
+	 	if (stock){
+	 		copyDefinition.stockPriceList = price as PriceList;
+	 		stock= false;
+	 	}
+	 	if (waste){
+	 		copyDefinition.wasteChart = price as WasteChart;
+	 		waste= false;
+	 	}
+	}   
 	
 	private function doAddCopier():void {
 		dataService.addUpdate(copyDefinition);
@@ -165,11 +181,19 @@ width="902" height="873" title="Copier Definitions"
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
        
-	private function doPriceList():void {
+	private function doCopyPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
+	    copy =  true;
+	   	}
+	private function doStockPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
+	    stock = true;
 	}
 
 	private function doWasteChart():void {
@@ -185,7 +209,7 @@ width="902" height="873" title="Copier Definitions"
 </mx:Script>	
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
-	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
+<!--	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
 		  itemClick="doCopierGridClick()" editable="true">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Default BW" dataField="defaultblackwhite" width="80"/>
@@ -196,7 +220,34 @@ width="902" height="873" title="Copier Definitions"
 			<mx:DataGridColumn headerText="Color" dataField= "color"/>
 			<mx:DataGridColumn headerText="LF" dataField= "largeFormat"/>
 	</mx:columns>
-	</mx:DataGrid>
+	</mx:DataGrid>-->
+		
+	<mx:AdvancedDataGrid x="10" y="71" width="100%" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" sortExpertMode="true"
+		itemClick="doCopierGridClick()">
+		<mx:groupedColumns>
+			<mx:AdvancedDataGridColumnGroup id="default_column" headerText="Default" sortable="false">
+				<mx:AdvancedDataGridColumn width="50" headerText="BW" sortable="false" textAlign="center" dataField="defaultblackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Color" sortable="false" textAlign="center" dataField="defaultcolor" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText=" LF" sortable="false" textAlign="center" dataField="defaultlargeformat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+			</mx:AdvancedDataGridColumnGroup>
+			<mx:AdvancedDataGridColumn headerText="Name" dataField="name"/>
+			<mx:AdvancedDataGridColumnGroup id="color_column" headerText="Type" sortable="false">
+				<mx:AdvancedDataGridColumn width="50" headerText="BW" sortable="false" textAlign="center" dataField="blackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="Color" sortable="false" textAlign="center"  dataField="color" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="50" headerText="LF" sortable="false" textAlign="center"  dataField="largeFormat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+
+			</mx:AdvancedDataGridColumnGroup>
+		</mx:groupedColumns>
+	</mx:AdvancedDataGrid>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
 	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
 	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
@@ -219,8 +270,8 @@ width="902" height="873" title="Copier Definitions"
 	<mx:TextInput x="139" y="508" id="minSize" text="{copyDefinition.minSize}"/>
 	<mx:HRule x="0" y="601" width="892" height="6"/>
 	<mx:HRule x="10" y="781" width="872" height="12"/>
-	<mx:Button x="10" y="801" label="Stock Price List" click="doPriceList();"/>
-	<mx:Button x="131" y="801" label="Copier Price List" click="doPriceList();"/>
+	<mx:Button x="10" y="801" label="Stock Price List" click="doStockPriceList();"/>
+	<mx:Button x="334" y="801" label="Copier Price List" click="doCopyPriceList();"/>
 	<mx:Button x="590" y="247" label="Waste Chart" click="doWasteChart();"/>
 	<mx:Button x="590" y="198" label="Add Charges"/>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
@@ -293,7 +344,7 @@ width="902" height="873" title="Copier Definitions"
 		<mx:TextInput x="471" y="516" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}"/>
 		<mx:TextInput x="471" y="543" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}"/>
 		<mx:TextInput x="471" y="573" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}"/>
-		<mx:Text x="695" y="249" text="Text" width="137" id="WasteChart"/>
+		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copyDefinition.wasteChart.name}"/>
 		<mx:Label x="10" y="704" text="Copy Markup:"/>
 		<mx:TextInput x="101" y="702" width="71" id="copyMarkup2"/>
 		<mx:Label x="10" y="730" text="Stock Markup:"/>
@@ -313,5 +364,7 @@ width="902" height="873" title="Copier Definitions"
 		<mx:CheckBox x="349" y="636" label="Square Are for Finish Size" id="squarefinishsize"/>
 		<mx:CheckBox x="349" y="659" label="Interpolate Matrix Values" id="interpolatematrix"/>
 		<mx:HRule x="0" y="689" width="882" height="7"/>
+		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copyDefinition.stockPriceList.name}"/>
+		<mx:Text x="459" y="805" id="copierPriceList" text="{copyDefinition.copierPriceList.name}"/>
 		
 </mx:Panel>

@@ -31,10 +31,10 @@ package com.efi.vo
 		public var normalDueDateDays:int = 0;
 		public var closeInvoiceAfterPrintingTicket:Boolean = true;
 		public var closeInvoicesAndEstimateAfterPrinting:Boolean = true;
-		public var defaultInvoice:int = 0;
-		public var defaultEstimate:int = 0;
+		public var defaultInvoice:String = "";
+		public var defaultEstimate:String = "";
 		public var numberOfDaysBeforeDue:int = 0;
-		public var dueFrom:int = 0;
+		public var dueFrom:String = "";
 		public var useGripEdgeGap:Boolean = true;
 		public var gripEdgeGap:Number = 0;
 		public var useFolioEdge:Boolean = true;

@@ -82,7 +82,7 @@ package com.efi.vo
 		public var pNI45orLater:Boolean = true;
 		public var jDFConnector45orLater:Boolean = true;
 		public var supportsNonAsciiCharacters:Boolean = true;
-		public var usePalmPilotTracking:int = 0;
+		public var usePalmPilotTracking:Boolean = true;
 		public var palmUserPath:int = 0;
 		public var palmPollingInterval:int = 0;
 		public var defaultCountry:int = 0;

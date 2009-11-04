@@ -67,7 +67,7 @@
 	    PopUpManager.centerPopUp(this);
 		dataService.getAll(this.itemType);
 		
-		if (this.itemType = "WasteChart"){
+		if (this.itemType == "WasteChart"){
 			this.title = "Waste Chart"
 			this.label = "Waste Chart"
 		}

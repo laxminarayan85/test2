@@ -132,7 +132,7 @@
 			<mx:AdvancedDataGridColumn width="50" headerText="First Name" sortable="false" textAlign="center" dataField="firstName" />
 			<mx:AdvancedDataGridColumn width="50" headerText="Last Name" sortable="false" textAlign="center" dataField="lastName"/>
 				<mx:AdvancedDataGridColumnGroup id="Inout" headerText="Status" sortable="false" editable="false">
-				<mx:AdvancedDataGridColumn width="20" headerText="Out" sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="Out" sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.components.GenericCheckboxRenderer"  rendererIsEditor="false" editorDataField="selected"/>
 				<mx:AdvancedDataGridColumn width="20" headerText="In" sortable="false" textAlign="center" editable="false" dataField="clockIn" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
 				<mx:AdvancedDataGridColumn width="20" headerText="Break" sortable="false" textAlign="center" editable="false" dataField="clockBreak" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
 			</mx:AdvancedDataGridColumnGroup>
