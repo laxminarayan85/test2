@@ -78,7 +78,8 @@ width="800" height="678" title="Preferences"
 <mx:Script>                                   
 <![CDATA[
 	import mx.controls.Text;
-	
+	import com.efi.itemRenderers.SalesCategoryEditor;
+		
 	import com.efi.vo.PreferencesAccounting;
 	import com.efi.vo.PreferencesEstimating;
 	import com.efi.vo.PreferencesPOS;
@@ -100,6 +101,11 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.SizeTable;
 	import com.efi.vo.SalesCategory;
 	
+	import mx.events.AdvancedDataGridEvent
+	import mx.events.AdvancedDataGridEventReason
+	
+    import mx.events.DataGridEvent;
+    import mx.events.DataGridEventReason;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -202,6 +208,9 @@ width="800" height="678" title="Preferences"
 	[Bindable]
 	private var preferencesStocks:PreferencesStocks;
 	
+	[Bindable]
+	private var preferencesCashRegister:PreferencesCashRegister;
+		
 	[Bindable]
 	private var country:Country;
 
@@ -469,7 +478,15 @@ width="800" height="678" title="Preferences"
 		checkAlternateCurrency();
 
 		openTree();
+		setup();
 		
+	}
+	
+	private function setup():void{
+		
+		for each(var element:Object in CategoryArray) {
+//			CashRegisterGridSalesCategoryArray.addItem(element)
+		}
 	}
 	
 	private function fillStaticData():void{
@@ -1075,7 +1092,41 @@ width="800" height="678" title="Preferences"
 	private function doSelectFolder():void{
 		
 	}
+	private function doCashRegisterGrid():void{
+		preferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
+
+	}
+	private function doNewCashRegister():void{
+		var newItem:PreferencesCashRegister = new PreferencesCashRegister()
+		PreferencesCashRegisterArray.addItem(newItem)
+	}
+	private function doRemoveCashRegister():void{
+		PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
+	}
 	
+	private function processCashRegisterGridData(event:DataGridEvent):void {
+                // Check the reason for the event.
+                if (event.reason == DataGridEventReason.CANCELLED){
+                    // Do not update cell.
+                    return;
+                }           
+
+                if(event.dataField == "category")
+                {
+                    // Disable copying data back to the control.
+                    event.preventDefault();
+
+                    // Get new category from editor.
+                    CashRegisterGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
+
+                    // Close the cell editor.
+                    CashRegisterGrid.destroyItemEditor();
+
+                    // Notify the list control to update its display.
+                    CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+                }
+            }           
+
 ]]>
                              
 </mx:Script>	
@@ -1367,16 +1418,35 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:DataGrid x="50" y="30" width="508" dataProvider="{PreferencesCashRegisterArray}" height="377">
+
+				<mx:DataGrid x="50" y="30" width="508" height="380" id="CashRegisterGrid" 
+					dataProvider="{PreferencesCashRegisterArray}" 
+					editable="true" 
+					itemEditEnd="processCashRegisterGridData(event);">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Tax" dataField="Tax" width="35"/>
-						<mx:DataGridColumn headerText="Title" dataField="Title"/>
-						<mx:DataGridColumn headerText="Sales Catagory" dataField="Category" width="100"/>
-						<mx:DataGridColumn headerText="Rate" dataField="Rate" width="50"/>
-						<mx:DataGridColumn headerText="Tax Table" dataField=""/>
-						<mx:DataGridColumn headerText="Tax Code" dataField=""/>
+						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+						<mx:DataGridColumn width="40" headerText="Title" dataField="title"/>
+						<mx:DataGridColumn headerText="Sales Category" dataField="category" width="150"
+							itemEditor="com.efi.itemRenderers.SalesCategoryEditor">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" width="100%" text="{data.category.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="50" headerText="Rate" sortable="false" textAlign="center" dataField="rate" editable="true"/>
+						<mx:DataGridColumn width="40" headerText="Tax Table" sortable="false" textAlign="center" dataField=""/>
+						<mx:DataGridColumn width="40" headerText="Tax Code" sortable="false" textAlign="center" dataField=""/>
 					</mx:columns>
-				</mx:DataGrid>				
+				</mx:DataGrid>
+
+				<mx:Button x="50" y="418" width="38" height="38" click="doNewCashRegister();">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="418" width="38" height="38" click="doRemoveCashRegister();">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
