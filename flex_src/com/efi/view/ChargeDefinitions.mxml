@@ -4,39 +4,8 @@ width="100%" height="779" title="Charge Definitions"
 creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
           
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
 </mx:RemoteObject>
-
-<mx:RemoteObject id="chargeCategoryDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChargeCategoryResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="salesCategoryDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesCategoryResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="productCodeDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductCodeResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="chargeCommandDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChargeCommandsResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="locationDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationsResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="costCenterDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCentersResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="chargeCommandSampleService" destination="chargeCommandService"
-result="sampleResult(event)" fault="handleFault(event)"
-showBusyCursor="true" />
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
@@ -60,7 +29,8 @@ showBusyCursor="true" />
     import com.efi.vo.TaxTable;
     import com.efi.vo.Substrate;
     import com.efi.vo.PriceListBase;
-
+	import com.efi.vo.ModelBase;
+	
     import com.efi.vo.enums.ChargeMethod;
 	import com.efi.vo.enums.ChargeQtyType;
 	import com.efi.vo.enums.ChargeInkCoverage;
@@ -69,6 +39,10 @@ showBusyCursor="true" />
 	import com.efi.vo.enums.JobQuantity;
 	import com.efi.vo.enums.ChargeInkCoverage;
 	import com.efi.vo.enums.ChargeJobQuantity;
+	
+	import com.efi.events.ModelAddUpdateEvent;
+	import com.efi.events.ModelGetAllEvent;
+	import com.efi.events.ModelDeleteItemEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -88,6 +62,8 @@ showBusyCursor="true" />
     import mx.utils.ObjectUtil;
   	import com.adobe.ac.mxeffects.Flip;
 	import com.adobe.ac.mxeffects.DistortionConstants;
+	import mx.rpc.IResponder;
+
     private var formDirty:Boolean = false;
     
     private var accounts:ArrayCollection = new ArrayCollection();
@@ -158,16 +134,22 @@ showBusyCursor="true" />
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    charge = new Charge();
-	    salesCategoryDataService.getAll("SalesCategory");
-	    productCodeDataService.getAll("ProductCode");
-	    costCenterDataService.getAll("CostCenter");
-	    locationDataService.getAll("Location");
-		dataService.getAll("Charge");
-		chargeCategoryDataService.getAll("ChargeCategory");
-		chargeCommandDataService.getAll("ChargeCommand");
+	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
+	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
+	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
+	    fireGetAllEvent("Location", new mx.rpc.Responder(handleLoadLocationResult, handleFault));
+	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
+	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
+	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+	    
 		updateControlState();
 	}      
-	                                                   	
+	     
+	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
+		var getAllEvent:ModelGetAllEvent = new ModelGetAllEvent(modelType, callbacks);
+		getAllEvent.dispatch();			
+	}
+                                              	
 	private function send():void
 	{
 		var message:IMessage = new AsyncMessage();
@@ -182,15 +164,21 @@ showBusyCursor="true" />
 	private function doSave():void {
 		if (charge_stack.selectedChild == charge_canvas && charge != null) {
 			mapToCharge();		
-			dataService.addUpdate(charge);
+			fireSaveEvent(charge);
 		} else if (charge_stack.selectedChild == charge_category_canvas && chargeCategory != null) {
 			chargeCategory.name = charge_category_name_edit.text;
-			dataService.addUpdate(chargeCategory);
+			fireSaveEvent(chargeCategory);
 		} else if (charge_stack.selectedChild == charge_command_canvas && chargeCommand != null) {
 			chargeCommand.name = charge_command_name_edit.text;
-			dataService.addUpdate(chargeCommand);
+			fireSaveEvent(chargeCommand);
 		}
 	}                 
+	
+	private function fireSaveEvent(item:ModelBase):void {
+		var callbacks:IResponder = new mx.rpc.Responder(handleSaveResult, handleFault);	
+		var addUpdateEvent:ModelAddUpdateEvent = new ModelAddUpdateEvent(item, callbacks);
+		addUpdateEvent.dispatch();			
+	}
 	
 	private function doCosting():void {
 	    var titleWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
@@ -262,11 +250,11 @@ showBusyCursor="true" />
 		
 	}
 	
-	private function handleLoadLocationsResult(ev:ResultEvent):void {
+	private function handleLoadLocationResult(ev:ResultEvent):void {
 		locations = ev.result as ArrayCollection;
 	}
 
-	private function handleLoadCostCentersResult(ev:ResultEvent):void {
+	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 		costCenters = ev.result as ArrayCollection;
 	}
 	
@@ -274,7 +262,7 @@ showBusyCursor="true" />
 		chargeCategories = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadChargeCommandsResult(ev:ResultEvent):void {
+	private function handleLoadChargeCommandResult(ev:ResultEvent):void {
 		chargeCommands = ev.result as ArrayCollection;
 	}
 	
@@ -286,7 +274,7 @@ showBusyCursor="true" />
 		salesCategories = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadResult(ev:ResultEvent):void {
+	private function handleLoadChargeResult(ev:ResultEvent):void {
 		charges = ev.result as ArrayCollection;
 	}
 
@@ -295,14 +283,10 @@ showBusyCursor="true" />
 			Alert.show("Unable to add new charge.", "Error", 0, this, null);                                 
 		} else {
 			var localCharge:Charge = ev.result as Charge;
-//			var oneCompare:ChargeCategory = getSelectedTreeCategory(true);
-//			var twoCompare:ChargeCategory = localCharge.parent;
-			
-//			// ToDo: Got to be a better way...
-//			getSelectedTreeCategory(true).children = localCharge.parent.children;
+
 			charge = localCharge;
 			chargeTree.selectedItem = charge;
-			chargeCommandDataService.getAll("ChargeCommand");
+			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
 	}
 	
@@ -448,9 +432,15 @@ showBusyCursor="true" />
 	}
 	
 	private function doDelete():void {
-		dataService.deleteItem("Charge", charge.id);
+		fireDeleteEvent(charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+//		dataService.deleteItem("Charge", charge.id);
 	}
-	
+
+	private function fireDeleteEvent(item:ModelBase, callbacks:IResponder):void {
+		var deleteEvent:ModelDeleteItemEvent = new ModelDeleteItemEvent(item, callbacks);
+		deleteEvent.dispatch();			
+	}
+
 	private function selectCharge():void {
 		
 	}

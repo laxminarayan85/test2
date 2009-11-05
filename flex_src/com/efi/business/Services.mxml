@@ -5,7 +5,13 @@
 	
 	<mx:RemoteObject id="loginService" destination="loginService"
 		showBusyCursor="true" >
-		
 		<mx:method name="validateLogin" />
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="dataService" destination="dataService"
+		showBusyCursor="true" >
+		<mx:method name="addUpdate"/>
+		<mx:method name="getAll"/>
+		<mx:method name="deleteItem"/>
 	</mx:RemoteObject>
 </cairngorm:ServiceLocator>
