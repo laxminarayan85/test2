@@ -122,13 +122,8 @@
 	}
 	
 	private function doCancel():void {
-		var maincontainer:Container = Snowmass.getInstance().mainNavigator;
-		if (maincontainer!= null)
-		{
-			maincontainer.removeChild(this)
-		} else {
-			PopUpManager.removePopUp(this)
-		}
+		
+		PopUpManager.removePopUp(this);
 	}
 ]]>        
 </mx:Script>
