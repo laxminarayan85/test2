@@ -535,7 +535,10 @@ width="800" height="678" title="Preferences"
 		dataServicePOS.addUpdate(preferencesPOS);
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
-		dataServiceCashRegister.addUpdate(preferencesCashRegister);
+
+		for each(var element:PreferencesCashRegister in PreferencesCashRegisterArray) {
+			dataServiceCashRegister.addUpdate(element);
+		}
 	}
 
 	private function mapFromPreferencesSystemData():void {
