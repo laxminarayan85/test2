@@ -12,7 +12,7 @@ package com.efi.vo
 		public function PreferencesCreditCard() {
 		
 		}
-		public var use:Boolean = true;
+		public var used:Boolean = true;
 		public var cardType:String = "";
 		public var abbreviation:String = "";
 		public var code:String = "";

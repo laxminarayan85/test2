@@ -37,7 +37,7 @@ public class PreferencesCreditCard extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String USE = "Use";
+	public static final String USED = "Used";
 	/**
 	 * @generated
 	 */
@@ -62,19 +62,19 @@ public class PreferencesCreditCard extends ModelBase {
  	
 	
  	@Basic
-	private Boolean use;
+	private Boolean used;
 	/**
 	 * @generated
  	 */
-	public Boolean getUse(){
-		return use; 
+	public Boolean getUsed(){
+		return used; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setUse(Boolean newVal) {
-		this.use = newVal;
+	public void setUsed(Boolean newVal) {
+		this.used = newVal;
 	}
  	
 	
@@ -134,7 +134,7 @@ public class PreferencesCreditCard extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (USE.equals(propertyName)) return getUse();
+		if (USED.equals(propertyName)) return getUsed();
 		if (CARDTYPE.equals(propertyName)) return getCardType();
 		if (ABBREVIATION.equals(propertyName)) return getAbbreviation();
 		if (CODE.equals(propertyName)) return getCode();
@@ -147,7 +147,7 @@ public class PreferencesCreditCard extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (USE.equals(propertyName)) setUse((Boolean)newValue); else
+		if (USED.equals(propertyName)) setUsed((Boolean)newValue); else
 		if (CARDTYPE.equals(propertyName)) setCardType((String)newValue); else
 		if (ABBREVIATION.equals(propertyName)) setAbbreviation((String)newValue); else
 		if (CODE.equals(propertyName)) setCode((String)newValue); else
@@ -160,7 +160,7 @@ public class PreferencesCreditCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (USE.equals(propertyName)) 
+		if (USED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (CARDTYPE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -178,7 +178,7 @@ public class PreferencesCreditCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (USE.equals(propertyName)) return PreferencesCreditCard.class;
+		if (USED.equals(propertyName)) return PreferencesCreditCard.class;
 		if (CARDTYPE.equals(propertyName)) return PreferencesCreditCard.class;
 		if (ABBREVIATION.equals(propertyName)) return PreferencesCreditCard.class;
 		if (CODE.equals(propertyName)) return PreferencesCreditCard.class;
@@ -193,7 +193,7 @@ public class PreferencesCreditCard extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		PreferencesCreditCard objT = (PreferencesCreditCard)obj;
-		if (! SmartEquals(getUse(), objT.getUse()))
+		if (! SmartEquals(getUsed(), objT.getUsed()))
 			return false;
 		if (! SmartEquals(getCardType(), objT.getCardType()))
 			return false;

@@ -35,6 +35,10 @@ width="800" height="678" title="Preferences"
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsResult(event)"/>
 	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServiceMarkupsMerchandise" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsMerchandiseResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsMerchandiseResult(event)"/>
+	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
@@ -77,6 +81,8 @@ width="800" height="678" title="Preferences"
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.Merchandise;
+	import com.efi.vo.OutsideService;
 	import com.efi.vo.TaxTable;
 	import com.efi.vo.TaxCodes;
 	import mx.controls.Text;
@@ -138,6 +144,8 @@ width="800" height="678" title="Preferences"
 	private var PreferencesCreditCardArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesMarkupsArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesMarkupsMerchandiseArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesPendingListArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -520,7 +528,8 @@ width="800" height="678" title="Preferences"
 		dataServiceCashRegister.getAll("PreferencesCashRegister");
 		dataServiceCashRegister.getAll("PreferencesCashRegister");
 		dataServiceCreditCard.getAll("PreferencesCreditCard");
-		dataServiceMarkups.getAll("PreferencesMarkups");
+		dataServiceMarkups.getAll("OutsideServices");
+		dataServiceMarkupsMerchandise.getAll("Merchandise")
 		dataServicePendingList.getAll("PreferencesPendingList");
 		dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
@@ -536,9 +545,30 @@ width="800" height="678" title="Preferences"
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
 
-		for each(var element:PreferencesCashRegister in PreferencesCashRegisterArray) {
-			dataServiceCashRegister.addUpdate(element);
+		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {
+			dataServiceCashRegister.addUpdate(item1);
 		}
+
+		for each(var item2:PreferencesPendingList in PreferencesPendingListArray) {
+			dataServicePendingList.addUpdate(item2);
+		}
+		
+		for each(var item3:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
+			dataServiceSalesCategory.addUpdate(item3);
+		}
+		
+		for each(var item4:PreferencesCreditCard in PreferencesCreditCardArray) {
+			dataServiceCreditCard.addUpdate(item4);
+		}
+
+		for each(var item5:OutsideService in PreferencesMarkupsArray) {
+			dataServiceMarkups.addUpdate(item4);
+		}
+		for each(var item6:Merchandise in PreferencesMarkupsMerchandiseArray) {
+			dataServiceMarkupsMerchandise.addUpdate(item4);
+		}
+		
+		
 	}
 
 	private function mapFromPreferencesSystemData():void {
@@ -682,7 +712,6 @@ width="800" height="678" title="Preferences"
 //		this.chkAlwaysIncludePastDue.selected 
 //		this.chkColorPastDueEntries.selected 
 //		this.chkShowDocumentType.selected
-//		this.chkUsePalmPilotTracking.selected = preferencesSystem.usePalmPilotTracking
 	}
 
 	private function mapToPreferencesAllData():void {
@@ -694,7 +723,6 @@ width="800" height="678" title="Preferences"
 //		this.chkColorPastDueEntries.selected 
 //		this.chkShowDocumentType.selected
 		//fix data incorrectly defined as int not bool
-		//preferencesSystem.usePalmPilotTracking = parseInt(this.chkUsePalmPilotTracking.selected) 
 		
 	}
 
@@ -923,13 +951,15 @@ width="800" height="678" title="Preferences"
 		{
 			preferencesCashRegister = new PreferencesCashRegister();
 		} 
-
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
+		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
 		PreferencesPendingListArray = ev.result as ArrayCollection;
@@ -989,7 +1019,10 @@ width="800" height="678" title="Preferences"
     	dataServiceCreditCard.getAll("PreferencesCreditCard");
 	}
 	private function handleSaveMarkupsResult(ev:ResultEvent):void {
-    	dataServiceMarkups.getAll("PreferencesMarkups");
+    	dataServiceMarkups.getAll("OutsideServices");
+	}
+	private function handleSaveMarkupsMerchandiseResult(ev:ResultEvent):void {
+    	dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	private function handleSavePendingListResult(ev:ResultEvent):void {
     	dataServicePendingList.getAll("PreferencesPendingList");
@@ -1121,6 +1154,72 @@ width="800" height="678" title="Preferences"
 	private function doRemoveCashRegister():void{
 		PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
 	}
+
+	private function doNewPriceMethod():void{
+		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod()
+		PreferencesPricingMethodArray.addItem(newItem)
+	}
+	private function doRemovePriceMethod():void{
+		PreferencesPricingMethodArray.removeItemAt(PricingMethodGrid.selectedIndex);
+	}
+
+	private function doNewMarkup(item:String):void{
+		if (item=="outside")
+		{
+			var newItem1:OutsideService = new OutsideService()
+			PreferencesMarkupsArray.addItem(newItem1)
+		}else {
+			var newItem2:Merchandise = new Merchandise()
+			PreferencesMarkupsMerchandiseArray.addItem(newItem2)
+		}
+	}
+	private function doRemoveMarkup(item:String, dg:DataGrid):void{
+		if (item=="outside")
+		{
+			PreferencesMarkupsArray.removeItemAt(dg.selectedIndex);
+		}else {
+			PreferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
+		}
+	}
+
+	private function doNewSalesCategory():void{
+		var newItem:PreferencesSalesCategory = new PreferencesSalesCategory()
+		PreferencesSalesCategoryArray.addItem(newItem)
+	}
+	private function doRemoveSalesCategory():void{
+		PreferencesSalesCategoryArray.removeItemAt(PricingMethodGrid.selectedIndex);
+	}
+
+	private function doNewCreditCard():void{
+		var newItem:PreferencesCreditCard = new PreferencesCreditCard()
+		PreferencesCreditCardArray.addItem(newItem)
+	}
+	private function doRemoveCreditCard():void{
+		PreferencesCreditCardArray.removeItemAt(PricingMethodGrid.selectedIndex);
+	}
+
+
+	private function processPricingMethodGridData(event:DataGridEvent):void {
+        if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+
+		if(event.dataField == "category")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			PricingMethodGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
+
+			// Close the cell editor.
+			PricingMethodGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			PricingMethodGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}	
+	}	
 	
 	private function processCashRegisterGridData(event:DataGridEvent):void {
         // Check the reason for the event.
@@ -1534,13 +1633,19 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="225" y="290" id="txtEstimateColor" width="80"/>
 				<mx:TextInput x="225" y="320" id="txtListFont" width="150"/>
 				<mx:TextInput x="225" y="350" id="txtHeaderFont" width="150"/>
-				<mx:DataGrid x="50" y="27" width="442" height="85">
+
+				<mx:DataGrid x="50" y="27" width="442" height="85" id="PendingListGrid" 
+					dataProvider="{PreferencesPendingListArray}" 
+					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Visible" dataField="col1" width="80"/>
-						<mx:DataGridColumn headerText="Column Title" dataField="col2"/>
+						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="200" headerText="Column Title" dataField="columns.name"/>
 					</mx:columns>
 				</mx:DataGrid>
-				
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Behavior" textAlign="center"/>
@@ -1696,20 +1801,37 @@ width="800" height="678" title="Preferences"
 				<mx:Text x="50" y="30" text="Markup is stepped and based on COST of job before markup, the first amount covers from zero cost to the specified cost, the last amount includes all above as well." height="38" width="488"/>
 
 				<mx:Label x="50" y="80" text="Outside Services"/>
-				<mx:DataGrid x="50" y="100" height="200">
+				<mx:DataGrid x="50" y="100" height="200" id="OutsideServicesGrid" 
+					dataProvider="{PreferencesMarkupsArray}" 
+					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Total Cost" dataField="col1"/>
-						<mx:DataGridColumn headerText="Markup" dataField="col2"/>
+						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
+						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
 
+				<mx:Button x="50" y="318" width="38" height="38" click="doNewMarkup(&quot;outside&quot;);">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="318" width="38" height="38" click="doRemoveMarkup(&quot;outside&quot;,OutsideServicesGrid);">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+
 				<mx:Label x="300" y="80" text="Merchandise"/>
-				<mx:DataGrid x="300" y="100" height="200">
+				<mx:DataGrid x="300" y="100" height="200" id="MerchandiseGrid" 
+					dataProvider="{PreferencesMarkupsMerchandiseArray}" 
+					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Total Cost" dataField="col1"/>
-						<mx:DataGridColumn headerText="Markup" dataField="col2"/>
+						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
+						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
+				<mx:Button x="300" y="318" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="350" y="318" width="38" height="38" click="doRemoveMarkup(&quot;merchandise&quot;,MerchandiseGrid);">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="stocksizes_canvas" hideEffect="effect" showEffect="effect">
@@ -1785,30 +1907,68 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:DataGrid x="50" y="27" width="442" height="300">
+
+				<mx:DataGrid x="50" y="27" width="442" height="300" id="StockDefinitionGrid"
+					dataProvider="{PreferencesStockDefinitionArray}" 
+					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Visible" dataField="col1" width="80"/>
-						<mx:DataGridColumn headerText="Column Title" dataField="col2"/>
+						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="200" headerText="Column Title" dataField="columns.name"/>
 					</mx:columns>
 				</mx:DataGrid>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pricingmethod_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" y="27" width="500" height="475">
+				<mx:DataGrid x="50" y="27" width="500" height="475" id="PricingMethodGrid" 
+					dataProvider="{PreferencesPricingMethodArray}" 
+					editable="true" 
+					itemEditEnd="processPricingMethodGridData(event);">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Use" dataField="col1" width="50"/>
-						<mx:DataGridColumn headerText="Title" dataField="col2" width="130"/>
-						<mx:DataGridColumn headerText="Abbreviation" dataField="col3" width="130"/>
-						<mx:DataGridColumn headerText="B" dataField="col4" width="30"/>
-						<mx:DataGridColumn headerText="T" dataField="col5" width="30"/>
-						<mx:DataGridColumn headerText="F" dataField="col6" width="30"/>
-						<mx:DataGridColumn headerText="N" dataField="col7" width="30"/>
-						<mx:DataGridColumn headerText="Sales Category" dataField="col8" width="130"/>
-						<mx:DataGridColumn headerText="Estimator" dataField="col9" width="130"/>
+						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
+						<mx:DataGridColumn width="100" headerText="Abbreviation" dataField="abbreviation"/>
+						<mx:DataGridColumn width="40" headerText="B" dataField="brokered" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="40" headerText="T" dataField="taxable" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="40" headerText="F" dataField="finished" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="40" headerText="N" dataField="showNotes" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
+							itemEditor="com.efi.itemRenderers.SalesCategoryEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.category.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="100" headerText="Estimator" dataField="estimator" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
+				<mx:Button x="50" y="510" width="38" height="38" click="doNewPriceMethod();">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="510" width="38" height="38" click="doRemovePriceMethod();">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditdefaults_canvas" hideEffect="effect" showEffect="effect">
@@ -1853,6 +2013,14 @@ width="800" height="678" title="Preferences"
 						<mx:DataGridColumn headerText="GL Account" dataField="col2" width="100"/>
 					</mx:columns>
 				</mx:DataGrid>
+				
+				<mx:Button x="50" y="510" width="38" height="38" click="doNewSalesCategory();">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveSalesCategory();">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="glprofiles_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
@@ -1899,7 +2067,6 @@ width="800" height="678" title="Preferences"
 
 				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information."/>
 				
-				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
@@ -1916,14 +2083,20 @@ width="800" height="678" title="Preferences"
 				
 				<mx:DataGrid x="50" y="179" width="300" height="323">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Use" dataField="col1" width="50"/>
-						<mx:DataGridColumn headerText="Card Title" dataField="col2"/>
-						<mx:DataGridColumn headerText="Abbrev." dataField="col2" width="60"/>
-						<mx:DataGridColumn headerText="Code" dataField="col2" width="50"/>
-						<mx:DataGridColumn headerText="ID" dataField="col2" width="40"/>
+						<mx:DataGridColumn headerText="Use" dataField="used" width="50"/>
+						<mx:DataGridColumn headerText="Card Title" dataField="cardType"/>
+						<mx:DataGridColumn headerText="Abbrev." dataField="abbreviation" width="60"/>
+						<mx:DataGridColumn headerText="Code" dataField="code" width="50"/>
 					</mx:columns>
 				</mx:DataGrid>
 				
+				<mx:Button x="50" y="510" width="38" height="38" click="doNewCreditCard();">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveCreditCard();">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Order Number Format" textAlign="center"/>

@@ -12,7 +12,7 @@ package com.efi.vo
 		public function PreferencesPricingMethod() {
 		
 		}
-		public var use:Boolean = true;
+		public var used:Boolean = true;
 		public var title:String = "";
 		public var abbreviation:String = "";
 		public var brokered:Boolean = true;

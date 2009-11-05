@@ -12,8 +12,6 @@ package com.efi.vo
 		public function PreferencesMarkups() {
 		
 		}
-		public var outsideService:Boolean = true;
-		public var merchandise:int = 0;
 		public var totalCost:Number = 0;
 		public var markup:Number = 0;
 		public var above:Boolean = true;
