@@ -390,7 +390,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		<mx:Button x="493" y="10" width="38" height="38">
 			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
-		<mx:TabNavigator x="0" y="82" width="849" height="811" creationPolicy="all">
+		<mx:TabNavigator x="0" y="82" width="849" height="478" creationPolicy="all">
 			<mx:Canvas label="Settings" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="ID Number:" width="71"/>
 				<mx:Text x="143" y="17" id="employeeID" text="{employee.id}" width="106" />
@@ -399,7 +399,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<!--<mx:Label x="73" y="132" text="Street:"/>-->
 				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
 				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
-				<ns1:AddressEditor x="47" y="132" id="address_editor" height="157" width="325"/>
+				<ns1:AddressEditor x="381" y="78" id="address_editor" height="157" width="325"/>
 				<!--<mx:TextInput x="124" y="130" id="street_edit" text="{employee.address.street1}" width="205"/>
 				<mx:TextInput x="124" y="160" id="street1_edit" text="{employee.address.street2}" width="205"/>
 				<mx:Label x="81" y="193" text="City:"/>
@@ -411,16 +411,16 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true" change=""/>
 				<mx:Label x="63" y="280" text="Country:"/>
 				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>-->
-				<mx:Label x="406" y="80" text="Phone:"/>
-				<mx:Label x="406" y="106" text="Mobile:"/>
-				<mx:Label x="412" y="132" text="Email:"/>
-				<mx:Label x="421" y="162" text="SSN:"/>
-				<mx:Label x="374" y="193" text="Export Code:" />
-				<mx:TextInput x="459" y="78" id="phone_edit"/>
-				<mx:TextInput x="460" y="104" id="mobile_edit"/>
-				<mx:TextInput x="460" y="130" id="email_edit"/>
-				<mx:TextInput x="459" y="160" id="ssn_edit" text="{employee.sSN}"/>
-				<mx:TextInput x="460" y="191" id="export_code_edit" text="{employee.exportCode}" />
+				<mx:Label x="73" y="136" text="Phone:"/>
+				<mx:Label x="73" y="164" text="Mobile:"/>
+				<mx:Label x="79" y="190" text="Email:"/>
+				<mx:Label x="88" y="216" text="SSN:"/>
+				<mx:Label x="41" y="246" text="Export Code:" />
+				<mx:TextInput x="127" y="134" id="phone_edit"/>
+				<mx:TextInput x="127" y="162" id="mobile_edit"/>
+				<mx:TextInput x="127" y="188" id="email_edit"/>
+				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.sSN}"/>
+				<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
 			</mx:Canvas>
 			<mx:Canvas label="Personal" width="100%" height="100%">	
 				<mx:Label x="10" y="42" text="Rate:"/>

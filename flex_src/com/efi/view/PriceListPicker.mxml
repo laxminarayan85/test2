@@ -87,10 +87,10 @@
 				(editPage as ChargeDefinitions).setPriceList(priceList as WasteChart);
 				break;
 			case "StockDefinitions":
-				(editPage as StockDefinitions).setPriceList(priceList);
+				(editPage as StockDefinitions).setPriceList(dataGrid.selectedItem as PriceListBase);
 				break;
 			case "CopierDefinitions" :
-				(editPage as CopierDefinitions).setPriceList(priceList);
+				(editPage as CopierDefinitions).setPriceList(dataGrid.selectedItem as PriceListBase);
 				break;
 		}
 
@@ -103,6 +103,8 @@
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.itemType= this.itemType;
 		PopUpManager.removePopUp(this);
+		dataService.getAll(this.itemType);
+		
 	}
 
 	private function doEdit():void {

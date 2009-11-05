@@ -60,6 +60,10 @@
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
 		dataService.getAll("Account");
+		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		if (editPage.className != "EditCustomer") {
+			new_button.visible = false;
+		}
 	}
 	                                
 	private function resetFocus():void {                           
@@ -73,14 +77,16 @@
 	private function selectAccount():void {	
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		// TODO: This needs to be implemented via events fired to the parent rather than a direct call.
-		if (editPage.className == "EditCustomer") {
-			(editPage as EditCustomer).setAccount(dataGrid.selectedItem as Account);
-		} else if (editPage.className == "EditContact") {
-			(editPage as EditContact).setAccount(dataGrid.selectedItem as Account);
-		}
-		else if (editPage.className == "StockDefinitions") {
-				(editPage as StockDefinitions).setAccount(dataGrid.selectedItem as Account);
+		if (dataGrid.selectedItem != null){
+			if (editPage.className == "EditCustomer") {
+				(editPage as EditCustomer).setAccount(dataGrid.selectedItem as Account);
+			} else if (editPage.className == "EditContact") {
+				(editPage as EditContact).setAccount(dataGrid.selectedItem as Account);
 			}
+			else if (editPage.className == "StockDefinitions") {
+					(editPage as StockDefinitions).setAccount(dataGrid.selectedItem as Account);
+				}
+		}
 		PopUpManager.removePopUp(this);
 	}     
 	

@@ -272,5 +272,6 @@ password="{passwordField.text}"/>
 	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList"> </mx:List>
 	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
 	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>
+	
 </mx:Canvas>
 </mx:TitleWindow>
