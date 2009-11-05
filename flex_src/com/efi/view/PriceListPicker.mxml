@@ -78,8 +78,8 @@
 	private function doSelect():void {	
 		
 		var editPage:Container = parentContainer;
-
-		switch(editPage.className) {
+		if (dataGrid.selectedItem != null){
+			switch(editPage.className) {
 			case "PressDefinitions":
 				(editPage as PressDefinitions).setPriceList(dataGrid.selectedItem as PriceListBase);
 				break;
@@ -92,9 +92,11 @@
 			case "CopierDefinitions" :
 				(editPage as CopierDefinitions).setPriceList(dataGrid.selectedItem as PriceListBase);
 				break;
-		}
+			}
 
-		PopUpManager.removePopUp(this);
+			PopUpManager.removePopUp(this);
+		}
+		
 	}     
 	
 	private function doNew():void {

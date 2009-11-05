@@ -67,8 +67,11 @@
 	
 	private function selectStockDefinition():void {	
 		var editStockDefinition:StockDefinitions = Snowmass.getInstance().mainNavigator.selectedChild as StockDefinitions;
-		editStockDefinition.setStockDefinition(dataGrid.selectedItem as StockDefinition);
-		PopUpManager.removePopUp(this);
+		if (dataGrid.selectedItem != null){
+			editStockDefinition.setStockDefinition(dataGrid.selectedItem as StockDefinition);
+			PopUpManager.removePopUp(this);
+		}
+		
 	}     
 	
 	private function newStockDefinition():void {

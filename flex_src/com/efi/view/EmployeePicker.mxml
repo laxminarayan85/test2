@@ -72,12 +72,16 @@
 		//var editEmployeePage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		var editEmployeePage:Container = parentContainer;
 		// TODO: This needs to be implemented via events fired to the parent rather than a direct call.
-		if (editEmployeePage.className == "EditEmployee") {
+		
+		if(dataGrid.selectedItem != null){
+			if (editEmployeePage.className == "EditEmployee") {
 			(editEmployeePage as EditEmployee).setEmployee(dataGrid.selectedItem as Employee);
-		} else if (editEmployeePage.className == "EditEmployee") {
-			(editEmployeePage as EditEmployee).setEmployee(dataGrid.selectedItem as Employee);
+				} else if (editEmployeePage.className == "EditEmployee") {
+					(editEmployeePage as EditEmployee).setEmployee(dataGrid.selectedItem as Employee);
+				}
+			PopUpManager.removePopUp(this);
 		}
-		PopUpManager.removePopUp(this);
+		
 	}     
 	
 	private function newEmployee():void {
