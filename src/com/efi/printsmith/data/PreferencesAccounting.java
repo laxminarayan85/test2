@@ -150,6 +150,54 @@ public class PreferencesAccounting extends ModelBase {
 	 * @generated
 	 */
 	public static final String JOURNALDOCUMENTPREFERENCE = "JournalDocumentPreference";
+	/**
+	 * @generated
+	 */
+	public static final String ACCOUNTINGLINKTO = "AccountingLinkTo";
+	/**
+	 * @generated
+	 */
+	public static final String SHIPPINGCOLLECTED = "ShippingCollected";
+	/**
+	 * @generated
+	 */
+	public static final String ACTUALBANKDEPOSIT = "ActualBankDeposit";
+	/**
+	 * @generated
+	 */
+	public static final String UNDEPOSITEDRECEIPTS = "UndepositedReceipts";
+	/**
+	 * @generated
+	 */
+	public static final String DISCOUNTS = "Discounts";
+	/**
+	 * @generated
+	 */
+	public static final String SALESTAX = "SalesTax";
+	/**
+	 * @generated
+	 */
+	public static final String TOTALARRECEIPTS = "TotalARReceipts";
+	/**
+	 * @generated
+	 */
+	public static final String DEPOSITSONINVOICES = "DepositsOnInvoices";
+	/**
+	 * @generated
+	 */
+	public static final String NEWCHARGESTOAR = "NewChargesToAR";
+	/**
+	 * @generated
+	 */
+	public static final String CASHOVERSHORT = "CashOverShort";
+	/**
+	 * @generated
+	 */
+	public static final String PAIDOUT = "PaidOut";
+	/**
+	 * @generated
+	 */
+	public static final String REFUNDCHECKS = "RefundChecks";
 
 	/**
 	 * @generated
@@ -652,6 +700,210 @@ public class PreferencesAccounting extends ModelBase {
 	public void setJournalDocumentPreference(String newVal) {
 		this.journalDocumentPreference = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String accountingLinkTo;
+	/**
+	 * @generated
+ 	 */
+	public String getAccountingLinkTo(){
+		return accountingLinkTo; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAccountingLinkTo(String newVal) {
+		this.accountingLinkTo = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String shippingCollected;
+	/**
+	 * @generated
+ 	 */
+	public String getShippingCollected(){
+		return shippingCollected; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShippingCollected(String newVal) {
+		this.shippingCollected = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String actualBankDeposit;
+	/**
+	 * @generated
+ 	 */
+	public String getActualBankDeposit(){
+		return actualBankDeposit; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setActualBankDeposit(String newVal) {
+		this.actualBankDeposit = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String undepositedReceipts;
+	/**
+	 * @generated
+ 	 */
+	public String getUndepositedReceipts(){
+		return undepositedReceipts; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUndepositedReceipts(String newVal) {
+		this.undepositedReceipts = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String discounts;
+	/**
+	 * @generated
+ 	 */
+	public String getDiscounts(){
+		return discounts; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDiscounts(String newVal) {
+		this.discounts = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String salesTax;
+	/**
+	 * @generated
+ 	 */
+	public String getSalesTax(){
+		return salesTax; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalesTax(String newVal) {
+		this.salesTax = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String totalARReceipts;
+	/**
+	 * @generated
+ 	 */
+	public String getTotalARReceipts(){
+		return totalARReceipts; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTotalARReceipts(String newVal) {
+		this.totalARReceipts = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String depositsOnInvoices;
+	/**
+	 * @generated
+ 	 */
+	public String getDepositsOnInvoices(){
+		return depositsOnInvoices; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDepositsOnInvoices(String newVal) {
+		this.depositsOnInvoices = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String newChargesToAR;
+	/**
+	 * @generated
+ 	 */
+	public String getNewChargesToAR(){
+		return newChargesToAR; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNewChargesToAR(String newVal) {
+		this.newChargesToAR = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String cashOverShort;
+	/**
+	 * @generated
+ 	 */
+	public String getCashOverShort(){
+		return cashOverShort; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCashOverShort(String newVal) {
+		this.cashOverShort = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String paidOut;
+	/**
+	 * @generated
+ 	 */
+	public String getPaidOut(){
+		return paidOut; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPaidOut(String newVal) {
+		this.paidOut = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String refundChecks;
+	/**
+	 * @generated
+ 	 */
+	public String getRefundChecks(){
+		return refundChecks; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRefundChecks(String newVal) {
+		this.refundChecks = newVal;
+	}
 
 	/**
 	 * @generated
@@ -688,6 +940,18 @@ public class PreferencesAccounting extends ModelBase {
 		if (ESTIMATEALLOWSUFFIXMOD.equals(propertyName)) return getEstimateAllowSuffixMod();
 		if (PRINTDOCUMENT.equals(propertyName)) return getPrintDocument();
 		if (JOURNALDOCUMENTPREFERENCE.equals(propertyName)) return getJournalDocumentPreference();
+		if (ACCOUNTINGLINKTO.equals(propertyName)) return getAccountingLinkTo();
+		if (SHIPPINGCOLLECTED.equals(propertyName)) return getShippingCollected();
+		if (ACTUALBANKDEPOSIT.equals(propertyName)) return getActualBankDeposit();
+		if (UNDEPOSITEDRECEIPTS.equals(propertyName)) return getUndepositedReceipts();
+		if (DISCOUNTS.equals(propertyName)) return getDiscounts();
+		if (SALESTAX.equals(propertyName)) return getSalesTax();
+		if (TOTALARRECEIPTS.equals(propertyName)) return getTotalARReceipts();
+		if (DEPOSITSONINVOICES.equals(propertyName)) return getDepositsOnInvoices();
+		if (NEWCHARGESTOAR.equals(propertyName)) return getNewChargesToAR();
+		if (CASHOVERSHORT.equals(propertyName)) return getCashOverShort();
+		if (PAIDOUT.equals(propertyName)) return getPaidOut();
+		if (REFUNDCHECKS.equals(propertyName)) return getRefundChecks();
 		return super.getProperty(propertyName);
 	}
 	
@@ -726,6 +990,18 @@ public class PreferencesAccounting extends ModelBase {
 		if (ESTIMATEALLOWSUFFIXMOD.equals(propertyName)) setEstimateAllowSuffixMod((Boolean)newValue); else
 		if (PRINTDOCUMENT.equals(propertyName)) setPrintDocument((Boolean)newValue); else
 		if (JOURNALDOCUMENTPREFERENCE.equals(propertyName)) setJournalDocumentPreference((String)newValue); else
+		if (ACCOUNTINGLINKTO.equals(propertyName)) setAccountingLinkTo((String)newValue); else
+		if (SHIPPINGCOLLECTED.equals(propertyName)) setShippingCollected((String)newValue); else
+		if (ACTUALBANKDEPOSIT.equals(propertyName)) setActualBankDeposit((String)newValue); else
+		if (UNDEPOSITEDRECEIPTS.equals(propertyName)) setUndepositedReceipts((String)newValue); else
+		if (DISCOUNTS.equals(propertyName)) setDiscounts((String)newValue); else
+		if (SALESTAX.equals(propertyName)) setSalesTax((String)newValue); else
+		if (TOTALARRECEIPTS.equals(propertyName)) setTotalARReceipts((String)newValue); else
+		if (DEPOSITSONINVOICES.equals(propertyName)) setDepositsOnInvoices((String)newValue); else
+		if (NEWCHARGESTOAR.equals(propertyName)) setNewChargesToAR((String)newValue); else
+		if (CASHOVERSHORT.equals(propertyName)) setCashOverShort((String)newValue); else
+		if (PAIDOUT.equals(propertyName)) setPaidOut((String)newValue); else
+		if (REFUNDCHECKS.equals(propertyName)) setRefundChecks((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -793,6 +1069,30 @@ public class PreferencesAccounting extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (JOURNALDOCUMENTPREFERENCE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (ACCOUNTINGLINKTO.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SHIPPINGCOLLECTED.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (ACTUALBANKDEPOSIT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (UNDEPOSITEDRECEIPTS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (DISCOUNTS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SALESTAX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (TOTALARRECEIPTS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (DEPOSITSONINVOICES.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NEWCHARGESTOAR.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (CASHOVERSHORT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PAIDOUT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (REFUNDCHECKS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -832,6 +1132,18 @@ public class PreferencesAccounting extends ModelBase {
 		if (ESTIMATEALLOWSUFFIXMOD.equals(propertyName)) return PreferencesAccounting.class;
 		if (PRINTDOCUMENT.equals(propertyName)) return PreferencesAccounting.class;
 		if (JOURNALDOCUMENTPREFERENCE.equals(propertyName)) return PreferencesAccounting.class;
+		if (ACCOUNTINGLINKTO.equals(propertyName)) return PreferencesAccounting.class;
+		if (SHIPPINGCOLLECTED.equals(propertyName)) return PreferencesAccounting.class;
+		if (ACTUALBANKDEPOSIT.equals(propertyName)) return PreferencesAccounting.class;
+		if (UNDEPOSITEDRECEIPTS.equals(propertyName)) return PreferencesAccounting.class;
+		if (DISCOUNTS.equals(propertyName)) return PreferencesAccounting.class;
+		if (SALESTAX.equals(propertyName)) return PreferencesAccounting.class;
+		if (TOTALARRECEIPTS.equals(propertyName)) return PreferencesAccounting.class;
+		if (DEPOSITSONINVOICES.equals(propertyName)) return PreferencesAccounting.class;
+		if (NEWCHARGESTOAR.equals(propertyName)) return PreferencesAccounting.class;
+		if (CASHOVERSHORT.equals(propertyName)) return PreferencesAccounting.class;
+		if (PAIDOUT.equals(propertyName)) return PreferencesAccounting.class;
+		if (REFUNDCHECKS.equals(propertyName)) return PreferencesAccounting.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -900,6 +1212,30 @@ public class PreferencesAccounting extends ModelBase {
 		if (! SmartEquals(getPrintDocument(), objT.getPrintDocument()))
 			return false;
 		if (! SmartEquals(getJournalDocumentPreference(), objT.getJournalDocumentPreference()))
+			return false;
+		if (! SmartEquals(getAccountingLinkTo(), objT.getAccountingLinkTo()))
+			return false;
+		if (! SmartEquals(getShippingCollected(), objT.getShippingCollected()))
+			return false;
+		if (! SmartEquals(getActualBankDeposit(), objT.getActualBankDeposit()))
+			return false;
+		if (! SmartEquals(getUndepositedReceipts(), objT.getUndepositedReceipts()))
+			return false;
+		if (! SmartEquals(getDiscounts(), objT.getDiscounts()))
+			return false;
+		if (! SmartEquals(getSalesTax(), objT.getSalesTax()))
+			return false;
+		if (! SmartEquals(getTotalARReceipts(), objT.getTotalARReceipts()))
+			return false;
+		if (! SmartEquals(getDepositsOnInvoices(), objT.getDepositsOnInvoices()))
+			return false;
+		if (! SmartEquals(getNewChargesToAR(), objT.getNewChargesToAR()))
+			return false;
+		if (! SmartEquals(getCashOverShort(), objT.getCashOverShort()))
+			return false;
+		if (! SmartEquals(getPaidOut(), objT.getPaidOut()))
+			return false;
+		if (! SmartEquals(getRefundChecks(), objT.getRefundChecks()))
 			return false;
 		return true;
 	}			

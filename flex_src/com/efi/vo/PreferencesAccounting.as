@@ -41,6 +41,18 @@ package com.efi.vo
 		public var estimateAllowSuffixMod:Boolean = true;
 		public var printDocument:Boolean = true;
 		public var journalDocumentPreference:String = "";
+		public var accountingLinkTo:String = "";
+		public var shippingCollected:String = "";
+		public var actualBankDeposit:String = "";
+		public var undepositedReceipts:String = "";
+		public var discounts:String = "";
+		public var salesTax:String = "";
+		public var totalARReceipts:String = "";
+		public var depositsOnInvoices:String = "";
+		public var newChargesToAR:String = "";
+		public var cashOverShort:String = "";
+		public var paidOut:String = "";
+		public var refundChecks:String = "";
 	
 	}
 }

@@ -50,6 +50,14 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
 	 */
 	public static final String RATE = "Rate";
+	/**
+	 * @generated
+	 */
+	public static final String TAXTABLE = "TaxTable";
+	/**
+	 * @generated
+	 */
+	public static final String TAXCODES = "TaxCodes";
 
 	/**
 	 * @generated
@@ -127,6 +135,40 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setRate(Double newVal) {
 		this.rate = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private TaxTable taxTable;
+	/**
+	 * @generated
+ 	 */
+	public TaxTable getTaxTable(){
+		return taxTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTaxTable(TaxTable newVal) {
+		this.taxTable = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private TaxCodes taxCodes;
+	/**
+	 * @generated
+ 	 */
+	public TaxCodes getTaxCodes(){
+		return taxCodes; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTaxCodes(TaxCodes newVal) {
+		this.taxCodes = newVal;
+	}
 
 	/**
 	 * @generated
@@ -138,6 +180,8 @@ public class PreferencesCashRegister extends ModelBase {
 		if (TITLE.equals(propertyName)) return getTitle();
 		if (CATEGORY.equals(propertyName)) return getCategory();
 		if (RATE.equals(propertyName)) return getRate();
+		if (TAXTABLE.equals(propertyName)) return getTaxTable();
+		if (TAXCODES.equals(propertyName)) return getTaxCodes();
 		return super.getProperty(propertyName);
 	}
 	
@@ -151,6 +195,8 @@ public class PreferencesCashRegister extends ModelBase {
 		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
 		if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
 		if (RATE.equals(propertyName)) setRate((Double)newValue); else
+		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+		if (TAXCODES.equals(propertyName)) setTaxCodes((TaxCodes)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -168,6 +214,10 @@ public class PreferencesCashRegister extends ModelBase {
 			return new Class<?>[] {SalesCategory.class};		
 		if (RATE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (TAXTABLE.equals(propertyName)) 
+			return new Class<?>[] {TaxTable.class};		
+		if (TAXCODES.equals(propertyName)) 
+			return new Class<?>[] {TaxCodes.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -182,6 +232,8 @@ public class PreferencesCashRegister extends ModelBase {
 		if (TITLE.equals(propertyName)) return PreferencesCashRegister.class;
 		if (CATEGORY.equals(propertyName)) return PreferencesCashRegister.class;
 		if (RATE.equals(propertyName)) return PreferencesCashRegister.class;
+		if (TAXTABLE.equals(propertyName)) return PreferencesCashRegister.class;
+		if (TAXCODES.equals(propertyName)) return PreferencesCashRegister.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -200,6 +252,10 @@ public class PreferencesCashRegister extends ModelBase {
 		if (! SmartEquals(getCategory(), objT.getCategory()))
 			return false;
 		if (! SmartEquals(getRate(), objT.getRate()))
+			return false;
+		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+			return false;
+		if (! SmartEquals(getTaxCodes(), objT.getTaxCodes()))
 			return false;
 		return true;
 	}			
