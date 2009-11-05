@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+ 	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	<mx:Script>
+	<![CDATA[
+
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]
+	private var TaxTableArray:ArrayCollection = new ArrayCollection();
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     TaxTableArray = ev.result as ArrayCollection;
+	}
+
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+	
+	public function init():void {
+		dataService.getAll("TaxTable")	
+	}
+
+	]]>
+	</mx:Script>
+    <mx:ComboBox id="pickTaxTable" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}">
+    </mx:ComboBox>
+</mx:VBox>
