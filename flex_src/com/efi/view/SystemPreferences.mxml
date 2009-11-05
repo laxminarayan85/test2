@@ -77,9 +77,13 @@ width="800" height="678" title="Preferences"
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.TaxTable;
+	import com.efi.vo.TaxCodes;
 	import mx.controls.Text;
 	import com.efi.itemRenderers.SalesCategoryEditor;
-		
+	import com.efi.itemRenderers.TaxCodeEditor;
+	import com.efi.itemRenderers.TaxTableEditor;
+			
 	import com.efi.vo.PreferencesAccounting;
 	import com.efi.vo.PreferencesEstimating;
 	import com.efi.vo.PreferencesPOS;
@@ -531,6 +535,7 @@ width="800" height="678" title="Preferences"
 		dataServicePOS.addUpdate(preferencesPOS);
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
+		dataServiceCashRegister.addUpdate(preferencesCashRegister);
 	}
 
 	private function mapFromPreferencesSystemData():void {
@@ -580,6 +585,9 @@ width="800" height="678" title="Preferences"
 		if (preferencesAccounting.journalDocumentPreference != "")
 			cboJournalDocumentPreference.selectedIndex = findItem(preferencesAccounting.journalDocumentPreference, JournalDocumentPreferenceArray);
 		
+		if (preferencesAccounting.accountingLinkTo != "")
+			cboAccountingPackages.selectedIndex = findItem(preferencesAccounting.accountingLinkTo, AccountingPackagesArray);
+		
 	}
 	private function mapFromPreferencesEstimatingData():void {
 		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
@@ -617,13 +625,13 @@ width="800" height="678" title="Preferences"
 		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
 		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
 		
-//		if (preferencesEstimating.defaultEstimate != "")
-//			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
+		if (preferencesEstimating.defaultEstimate != "")
+			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
 
-//		if (preferencesEstimating.defaultInvoice != "")
-//			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
+		if (preferencesEstimating.defaultInvoice != "")
+			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
 
-//		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
+		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
 
 		if (preferencesEstimating.runToFinishGrain != "")
 			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
@@ -731,8 +739,8 @@ width="800" height="678" title="Preferences"
 		preferencesAccounting.removeDraftsFromDeposit = this.chkRemoveDraftFromDeposit.selected
 		preferencesAccounting.useAddressValidation = this.chkUseAddressValidation.selected
 		
-//		if (cboAccountingPackages != null && cboAccountingPackages.selectedItem != null)
-//	 		preferencesAccounting. = cboAccountingPackages.selectedItem.name;
+		if (cboAccountingPackages != null && cboAccountingPackages.selectedItem != null)
+	 		preferencesAccounting.accountingLinkTo = cboAccountingPackages.selectedItem.name;
 		
 		if (cboJournalDocumentPreference != null && cboJournalDocumentPreference.selectedItem != null)
 			preferencesAccounting.journalDocumentPreference = cboJournalDocumentPreference.selectedItem.name;
@@ -778,7 +786,7 @@ width="800" height="678" title="Preferences"
 		if (cboDefaultInvoice != null && cboDefaultInvoice.selectedItem != null)
 	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
 
-//		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
+		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
 
 		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
@@ -906,6 +914,13 @@ width="800" height="678" title="Preferences"
 	}
 	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
 		PreferencesCashRegisterArray = ev.result as ArrayCollection;
+		if ( PreferencesCashRegisterArray.length >0)
+			preferencesCashRegister = PreferencesCashRegisterArray.getItemAt(0,0) as PreferencesCashRegister;
+		if (preferencesCashRegister == null)
+		{
+			preferencesCashRegister = new PreferencesCashRegister();
+		} 
+
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
@@ -1105,27 +1120,56 @@ width="800" height="678" title="Preferences"
 	}
 	
 	private function processCashRegisterGridData(event:DataGridEvent):void {
-                // Check the reason for the event.
-                if (event.reason == DataGridEventReason.CANCELLED){
-                    // Do not update cell.
-                    return;
-                }           
+        // Check the reason for the event.
+        if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
 
-                if(event.dataField == "category")
-                {
-                    // Disable copying data back to the control.
-                    event.preventDefault();
+		if(event.dataField == "category")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
 
-                    // Get new category from editor.
-                    CashRegisterGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
+			// Get new category from editor.
+			CashRegisterGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
 
-                    // Close the cell editor.
-                    CashRegisterGrid.destroyItemEditor();
+			// Close the cell editor.
+			CashRegisterGrid.destroyItemEditor();
 
-                    // Notify the list control to update its display.
-                    CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-                }
-            }           
+			// Notify the list control to update its display.
+			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}
+		if(event.dataField == "taxCodes")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			CashRegisterGrid.editedItemRenderer.data.taxCodes = TaxCodeEditor(DataGrid(event.target).itemEditorInstance).pickTaxCodes.selectedItem;
+
+			// Close the cell editor.
+			CashRegisterGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}
+		if(event.dataField == "taxTable")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			CashRegisterGrid.editedItemRenderer.data.taxTable = TaxTableEditor(DataGrid(event.target).itemEditorInstance).pickTaxTable.selectedItem;
+
+			// Close the cell editor.
+			CashRegisterGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}
+
+	}           
 
 ]]>
                              
@@ -1424,19 +1468,36 @@ width="800" height="678" title="Preferences"
 					editable="true" 
 					itemEditEnd="processCashRegisterGridData(event);">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
-						<mx:DataGridColumn width="40" headerText="Title" dataField="title"/>
-						<mx:DataGridColumn headerText="Sales Category" dataField="category" width="150"
-							itemEditor="com.efi.itemRenderers.SalesCategoryEditor">
+						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
+						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
+							itemEditor="com.efi.itemRenderers.SalesCategoryEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
-	                        		<mx:Text selectable="false" width="100%" text="{data.category.name}"/>
+	                        		<mx:Text selectable="false" text="{data.category.name}"/>
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="50" headerText="Rate" sortable="false" textAlign="center" dataField="rate" editable="true"/>
-						<mx:DataGridColumn width="40" headerText="Tax Table" sortable="false" textAlign="center" dataField=""/>
-						<mx:DataGridColumn width="40" headerText="Tax Code" sortable="false" textAlign="center" dataField=""/>
+						<mx:DataGridColumn width="50" headerText="Rate" dataField="rate" editable="true"/>
+						<mx:DataGridColumn width="140" headerText="Tax Table" dataField="taxTable"
+							itemEditor="com.efi.itemRenderers.TaxTableEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.taxTable.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="140" headerText="Tax Code" dataField="taxCodes"
+							itemEditor="com.efi.itemRenderers.TaxCodeEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.taxCodes.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 
@@ -1796,6 +1857,46 @@ width="800" height="678" title="Preferences"
 
 				<mx:Label x="50" y="32" text="Link to:"/>
 				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
+
+				<mx:Label x="50" y="62" text="Shipping Collected:"/>
+				<mx:Label x="42" y="92" text="Actual Bank Deposit:"/>
+				<mx:Label x="32" y="122" text="Undeposited Receipts:"/>
+				<mx:Label x="100" y="152" text="Discounts:"/>
+				<mx:Label x="98" y="182" text="Sales Tax:"/>
+				<mx:Label x="55" y="212" text="Total AR Receipts:"/>
+				<mx:Label x="37" y="242" text="Deposits on Invoices:"/>
+				<mx:Label x="48" y="272" text="New Charges to AR:"/>
+				<mx:Label x="61" y="302" text="Cash Over/Short:"/>
+				<mx:Label x="105" y="332" text="Paid Out:"/>
+				<mx:Label x="69" y="362" text="Refund Checks:"/>
+
+				<mx:TextInput x="166" y="60"  id="txtShippingCollected" width="80" text="{preferencesAccounting.shippingCollected}"/>
+				<mx:TextInput x="166" y="90"  id="txtActualBankDeposit" width="80" text="{preferencesAccounting.actualBankDeposit}"/>
+				<mx:TextInput x="166" y="120" id="txtUndepositedReceipts" width="80" text="{preferencesAccounting.undepositedReceipts}"/>
+				<mx:TextInput x="166" y="150" id="txtDiscounts" width="80" text="{preferencesAccounting.discounts}"/>
+				<mx:TextInput x="166" y="180" id="txtSalesTax" width="80" text="{preferencesAccounting.salesTax}"/>
+				<mx:TextInput x="166" y="210" id="txtTotalARReceipts" width="80" text="{preferencesAccounting.totalARReceipts}"/>
+				<mx:TextInput x="166" y="240" id="txtDepositsOnInvoices" width="80" text="{preferencesAccounting.depositsOnInvoices}"/>
+				<mx:TextInput x="166" y="270" id="txtNewChargesToAR" width="80" text="{preferencesAccounting.newChargesToAR}"/>
+				<mx:TextInput x="166" y="300" id="txtCashOverShort" width="80" text="{preferencesAccounting.cashOverShort}"/>
+				<mx:TextInput x="166" y="330" id="txtPaidOut" width="80" text="{preferencesAccounting.paidOut}"/>
+				<mx:TextInput x="166" y="360" id="txtRefundChecks" width="80" text="{preferencesAccounting.refundChecks}"/>
+
+				<mx:Label x="250" y="62" text="(income)"/>
+				<mx:Label x="250" y="92" text="(asset)"/>
+				<mx:Label x="250" y="122" text="(asset)"/>
+				<mx:Label x="250" y="152" text="(expense)"/>
+				<mx:Label x="250" y="182" text="(liability)"/>
+				<mx:Label x="250" y="212" text="(asset)"/>
+				<mx:Label x="250" y="242" text="(liability)"/>
+				<mx:Label x="250" y="272" text="(asset)"/>
+				<mx:Label x="250" y="302" text="(expense)"/>
+				<mx:Label x="250" y="332" text="(expense)"/>
+				<mx:Label x="250" y="362" text="(asset)"/>
+
+				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information."/>
+				
+				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>

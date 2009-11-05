@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
  	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCategoryResult(event)"/>
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	</mx:RemoteObject>
 	<mx:Script>
 	<![CDATA[
@@ -14,7 +14,7 @@
 	[Bindable]
 	private var CategoryArray:ArrayCollection = new ArrayCollection();
 
-	private function handleLoadCategoryResult(ev:ResultEvent):void {
+	private function handleLoadResult(ev:ResultEvent):void {
 	     CategoryArray = ev.result as ArrayCollection;
 	}
 
@@ -34,6 +34,6 @@
 
 	]]>
 	</mx:Script>
-    <mx:ComboBox id="pickCategory" dataProvider="{CategoryArray}" selectedItem="{data.name}">
+    <mx:ComboBox id="pickCategory" width="100" dataProvider="{CategoryArray}" labelField="name" selectedItem="{data.name}">
     </mx:ComboBox>
 </mx:VBox>
