@@ -68,8 +68,11 @@
 	
 	private function selectContact():void {	
 		var editContactPage:EditContact = Snowmass.getInstance().mainNavigator.selectedChild as EditContact;
-		editContactPage.setContact(dataGrid.selectedItem as Contact);
-		PopUpManager.removePopUp(this);
+		if (dataGrid.selectedItem != null){
+			editContactPage.setContact(dataGrid.selectedItem as Contact);
+			PopUpManager.removePopUp(this);
+		}
+		
 	}     
 	
 	private function newContact():void {

@@ -78,20 +78,23 @@
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		// TODO: This needs to be implemented via events fired to the parent rather than a direct call.
 		if (dataGrid.selectedItem != null){
-			if (editPage.className == "EditCustomer") {
-				(editPage as EditCustomer).setAccount(dataGrid.selectedItem as Account);
-			} else if (editPage.className == "EditContact") {
-				(editPage as EditContact).setAccount(dataGrid.selectedItem as Account);
-			}
-			else if (editPage.className == "StockDefinitions") {
-					(editPage as StockDefinitions).setAccount(dataGrid.selectedItem as Account);
-				}
-				else if (editPage.className == "AccountHistory") {
-					(editPage as AccountHistory).setAccount(dataGrid.selectedItem as Account);
-				}
 			
+			if (dataGrid.selectedItem != null){
+				if (editPage.className == "EditCustomer") {
+					(editPage as EditCustomer).setAccount(dataGrid.selectedItem as Account);
+				} else if (editPage.className == "EditContact") {
+					(editPage as EditContact).setAccount(dataGrid.selectedItem as Account);
+				}
+				else if (editPage.className == "StockDefinitions") {
+						(editPage as StockDefinitions).setAccount(dataGrid.selectedItem as Account);
+					}
+					else if (editPage.className == "AccountHistory") {
+						(editPage as AccountHistory).setAccount(dataGrid.selectedItem as Account);
+					}
+				
+			}
+			PopUpManager.removePopUp(this);
 		}
-		PopUpManager.removePopUp(this);
 	}     
 	
 	private function newAccount():void {

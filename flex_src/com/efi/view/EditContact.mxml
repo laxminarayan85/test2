@@ -132,12 +132,14 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		
 	public function setContact(contact:Contact):void
 	{
-		this.contact = contact;
-		if (contact.address == null) contact.address = new Address(); 
-		if (contact.shipToAddress == null) contact.shipToAddress = new Address();
-		if (contact.marketing == null) contact.marketing = new Marketing();
-		if( contact.creditCard == null) contact.creditCard = new CreditCard();
-		mapFromContactData();
+		if (contact != null){
+			this.contact = contact;
+			if (contact.address == null) contact.address = new Address(); 
+			if (contact.shipToAddress == null) contact.shipToAddress = new Address();
+			if (contact.marketing == null) contact.marketing = new Marketing();
+			if( contact.creditCard == null) contact.creditCard = new CreditCard();
+			mapFromContactData();
+		}
 		
 		
 	
@@ -145,9 +147,11 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 					
 	public function setAccount(account:Account):void
 	{
-		this.account = account;
-		contact.parentAccount= this.account
-		accountName.text = account.title;
+		if (account != null){
+			this.account = account;
+			contact.parentAccount= this.account
+			accountName.text = account.title;
+		}
 		
 		
 		
