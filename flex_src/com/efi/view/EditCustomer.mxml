@@ -640,8 +640,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
 				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
-				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" height="157" width="325"/>
-				<ns1:AddressEditor x="344" y="94" id="bill_to_address_editor" height="157" width="325"/>
+				<ns1:AddressEditor x="10" y="119" id="ship_to_address_editor" height="157" width="325"/>
+				<ns1:AddressEditor x="343" y="119" id="bill_to_address_editor" height="157" width="325"/>
 					 
 				<mx:Panel x="10" y="284" width="325" height="282" layout="absolute" title="Invoice Contact" dropShadowEnabled="false">
 					<mx:TextInput x="101" y="10" width="194" id="ship_contact_first_name_edit" text="{account.contact.firstName}" change="validateForm(event);"/>
@@ -683,6 +683,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
 					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
 				</mx:Panel>
+				<mx:Label x="10" y="94" text="Shipping" fontWeight="bold"/>
+				<mx:Label x="343" y="94" text="Billing" fontWeight="bold"/>
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"/>

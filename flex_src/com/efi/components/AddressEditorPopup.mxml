@@ -107,12 +107,12 @@
 	}
 
 	private function handleLoadCity(ev:ResultEvent):void {
-		var selectedItem = citycombo.selectedItem;
+		var	selectedItem = citycombo.selectedItem;
 	 	cityDataProvider = ev.result as ArrayCollection;
-	 	if (selectedItem != null){
-	 		citycombo.selectedItem = selectedItem;
+		if (selectedItem != null){
+	 		citycombo.selectedIndex = findItem (selectedItem,cityDataProvider);
 	 	}
-	 	else
+	 	else 
 	 		citycombo.selectedIndex = findItem(this.address.city.name, cityDataProvider);
 	}   
 	
@@ -120,7 +120,7 @@
 		var selectedItem = statecombo.selectedItem;
 		stateDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
-	 		statecombo.selectedItem = selectedItem;
+	 		statecombo.selectedIndex = findItem (selectedItem,stateDataProvider);
 	 	}
 	 	else
 	 		statecombo.selectedIndex = findItem(this.address.state.name, stateDataProvider);
@@ -130,7 +130,7 @@
 		var selectedItem = countrycombo.selectedItem;
 		countryDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
-	 		countrycombo.selectedItem = selectedItem;
+	 		countrycombo.selectedIndex = findItem (selectedItem,countryDataProvider);
 	 	}
 	 	else
 	 		countrycombo.selectedIndex = findItem(this.address.country.name, countryDataProvider);
@@ -140,7 +140,7 @@
 		var selectedItem = zipcombo.selectedItem;
 		zipDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
-	 		zipcombo.selectedItem = selectedItem;
+	 		zipcombo.selectedIndex = findItem (selectedItem,zipDataProvider);
 	 	}
 	 	else
 	 		zipcombo.selectedIndex = findItem(this.address.zip.name, zipDataProvider);
@@ -196,18 +196,20 @@
 		var result:Boolean;
 		
 			if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
-			var item:int = findItem(citycombo.typedText, cityDataProvider);
-			if (item == -1) {
-				city = new City();
-				city.name = citycombo.text;
-				address.city = city;
-				cityDataService.addUpdate(city);
+				var item:int = findItem(citycombo.typedText, cityDataProvider);
+				if (item == -1) {
+					city = new City();
+					city.name = citycombo.text;
+					address.city = city;
+					cityDataService.addUpdate(city);
+					}
+				else {
+					citycombo.selectedItem = item;
+					
+				}
+			
 			}
-			else {
-				citycombo.selectedItem = item;
-				address.city = citycombo.selectedItem as City;
-			}
-		}
+			address.city = citycombo.selectedItem as City;
 	}
 
 	private function focusOutState(): void{                             
@@ -224,9 +226,11 @@
 			}
 			else {
 				statecombo.selectedItem = item;
-				address.state = statecombo.selectedItem as com.efi.vo.State;
+				
 			}
+			
 		}
+		address.state = statecombo.selectedItem as com.efi.vo.State;
 	}
 
 	private function focusOutZip(): void{                             
@@ -243,9 +247,11 @@
 			}
 			else {
 				zipcombo.selectedItem = item;
-				address.zip = zipcombo.selectedItem as Zip;
+				
 			}
 		}
+		address.zip = zipcombo.selectedItem as Zip;
+		
 	}
 
 	private function focusOutCountry(): void{                             
@@ -262,9 +268,10 @@
 			}
 			else {
 				countrycombo.selectedItem = item;
-				address.country = countrycombo.selectedItem as Country;
+				
 			}
 		}
+		address.country = countrycombo.selectedItem as Country;
 	}
 
 	private function doCancel():void {
