@@ -449,6 +449,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		this.account = ev.result as Account;
 		dataService.getAll("Account")
 	}
 //// load

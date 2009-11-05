@@ -78,6 +78,7 @@
 	
 	private function updateDataGrid():void {
 		dataService.getContactByPartialName(filter_field.text);
+		
 	}
 ]]>        
 </mx:Script>
@@ -88,7 +89,8 @@
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
 		doubleClickEnabled="true" doubleClick="selectContact()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="title" headerText="Name" />                         
+		     <mx:DataGridColumn dataField="firstName" headerText="First Name" />  
+		     <mx:DataGridColumn dataField="lastName" headerText="Last Name" />                         
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="selectContact();"  width="108" x="465" y="10"/>

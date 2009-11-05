@@ -5,6 +5,7 @@ width="786" height="479"  creationComplete="init()"
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
@@ -25,7 +26,8 @@ width="786" height="479"  creationComplete="init()"
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
 	import com.efi.vo.Account; 
-	import com.efi.vo.Invoice;         
+	import com.efi.vo.Invoice;  
+	       
 	
 	[Bindable]                                         
 	private var account:Account;
@@ -37,7 +39,7 @@ width="786" height="479"  creationComplete="init()"
 		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
-	    dataService.getAll("Invoice");
+	   
 		
 	}  
 	private function doGet():void {
@@ -47,17 +49,18 @@ width="786" height="479"  creationComplete="init()"
 	public function setAccount(account2:Account):void
 	{
 		this.account = account2;
+		 dataService.getByAccountId("Invoice", this.account.id);
 	
 	}			
 	private function handleLoadResult(event:ResultEvent):void {
 		invoices = event.result as ArrayCollection;
 	}
 	private function handleSaveResult(event:Event):void {
-		dataService.getAll("Invoice");
+		dataService.getByAccountId("Invoice", this.account.id);
 		
 	}
 	private function handleDeleteResult(event:Event):void {
-		dataService.getAll("Invoice");
+		dataService.getByAccountId("Invoice", this.account.id);
 		
 	}
 	private function handleFault(event:FaultEvent):void {

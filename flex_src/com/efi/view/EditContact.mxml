@@ -158,7 +158,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	}
                                   
 	private function deleteContact():void {              
-	                                         
+	     dataService.deleteItem("Contact",contact.id);                                     
 	}
 	
 	                                                       
@@ -204,7 +204,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
 		contact.creditCard.type = cardtype.text;
-		contact.parentAccount.id = parseInt(accountID.text);
+		if (contact.parentAccount != null)
+			contact.parentAccount.id = parseInt(accountID.text);
 	}
 	
 	private function mapFromContactData():void{
@@ -220,6 +221,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		address_editor.stateDataProvider = states1;
 		address_editor.zipDataProvider = zips;
 		address_editor.countryDataProvider = countrys;
+		accountName.text = contact.parentAccount.title;
 	 	if (contact.creditCard.address.zip != null)
 			cardzip.selectedIndex = findItem(contact.creditCard.address.zip.name, zips);
 		if (contact.marketing.followup != null)
@@ -286,7 +288,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	private function doSave():void {
 		mapToContactData();
 		dataService.addUpdate(contact);
-		                                     		
+		                                    		
 	}   
 
 	private function doZipCredit(): void{                             
@@ -326,6 +328,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		this.contact = ev.result as Contact;
 		dataService.getAll("Contact");
 	}
 

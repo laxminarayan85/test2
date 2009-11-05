@@ -86,6 +86,10 @@
 			else if (editPage.className == "StockDefinitions") {
 					(editPage as StockDefinitions).setAccount(dataGrid.selectedItem as Account);
 				}
+				else if (editPage.className == "AccountHistory") {
+					(editPage as AccountHistory).setAccount(dataGrid.selectedItem as Account);
+				}
+			
 		}
 		PopUpManager.removePopUp(this);
 	}     

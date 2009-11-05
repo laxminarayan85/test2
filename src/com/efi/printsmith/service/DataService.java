@@ -238,6 +238,27 @@ public class DataService {
    		}        
     	return null;            
    	} 
+    public List<Invoice> getByAccountId(String className, Long id) throws Exception {      
+    	try {            
+    		log.debug("** getByaccountid Id called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();  
+    		
+    		String queryString = "select a from "+className+" a where a.account.id = :id";
+    		
+    		Query query = em.createQuery(queryString);           
+    		query.setParameter("id", id);            
+    		List<Invoice>  invoicelist = query.getResultList();   
+    		if (invoicelist != null)
+    		 	log.debug("** Found " + invoicelist.size() + "records:");
+    		return invoicelist;        
+    	} catch (Exception e) { 
+    		log.error(e);       
+   		}        
+    	return null;            
+   	} 
+   
+    
+    
     public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      
     	try {            
     		log.debug("** getByAccess called...");                
