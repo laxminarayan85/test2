@@ -71,7 +71,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	import com.efi.vo.TaxCodes;           
 	import com.efi.vo.Account; 
 	import com.efi.events.UpdateDataProviderEvent;
-	                                        
+	import com.efi.events.AccountPickerSelectEvent;
+	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -131,10 +132,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-//	    account = new Account();
+		this.doGet();
+		
 	    salesRepDataService.getAll("SalesRep");
 	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
@@ -143,21 +142,42 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		dataService.getAll("Account");
 	}      
 
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+	}
+	
 	private function doNew():void {
 	    account = new Account();
 	    setAccount(account);
 	 	
 	}  
+	
 	private function doDelete():void {
 	    dataService.deleteItem("Account",account.id);
-	 	
 	}  
+	
 	private function doGet():void{
-		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-	   	    
+	    var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	   	    
 	}    
+	
 	private function doNext():void {  
 		var itemp:int;
 		itemp = accounts.getItemIndex(account); 

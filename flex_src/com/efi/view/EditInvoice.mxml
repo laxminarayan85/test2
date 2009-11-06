@@ -230,8 +230,8 @@
 		 var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
-		
 	}
+	
 	public function setAccount(account2:Account):void{
 		invoice.account = account2;
 		contact_list.selectedItem = invoice.account.contact as Contact;
@@ -414,7 +414,7 @@
 						<ns1:AddressEditor x="0" y="38" id="bill_to_address_editor" height="157" width="325"/>
 						<ns1:AddressEditor x="345" y="38" id="address_editor" height="157" width="325"/>
 						
-						<mx:Panel x="0" y="211" width="300" height="118" layout="absolute" dropShadowEnabled="false" title="Delivery Intent">
+						<mx:Panel x="0" y="211" width="300" height="184" layout="absolute" dropShadowEnabled="false" title="Delivery Intent">
 							<mx:RadioButtonGroup id="delivery_intent_radio_group"/>
 							<mx:RadioButton x="10" y="10" label="Invoice Address" groupName="delivery_intent_radio_group"/>
 							<mx:RadioButton x="10" y="31" label="Contact Ship Address:" groupName="delivery_intent_radio_group"/>
@@ -476,9 +476,9 @@
 							<mx:Label x="24" y="54" text="Sales Tax:"/>
 							<mx:Text x="97" y="54" width="117" textAlign="right" id="sales_tax_text"/>
 							<mx:Label x="31" y="76" text="Shipping:"/>
-							<mx:Text x="97" y="76" width="117" textAlign="right" id="shipping_text" text="{invoice.shipCharges}"/>
+							<mx:Text x="97" y="76" width="117" textAlign="right" id="shipping_text" text="{invoice.shipCharges}" height="18"/>
 							<mx:Label x="51" y="98" text="Total:"/>
-							<mx:Text x="97" y="98" width="117" textAlign="right" id="total_text" text="{invoice.grandTotal}"/>
+							<mx:Text x="97" y="98" width="117" textAlign="right" id="total_text" text="{invoice.grandTotal}" height="18"/>
 							<mx:Label x="10" y="120" text="Amount Due:"/>
 							<mx:Text x="97" y="120" width="117" textAlign="right" id="amt_due_text"/>
 						</mx:Canvas>

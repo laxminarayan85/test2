@@ -54,7 +54,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 <mx:Script> 
                                   
 <![CDATA[
-
 	import com.efi.vo.Contact;
 	import com.efi.vo.Address;                        
 	import com.efi.vo.Account; 
@@ -66,7 +65,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	import com.efi.vo.Zip;
 	import com.efi.vo.Grade;
 	import com.efi.vo.Marketing;
-	import com.efi.vo.SalesRep;                                        
+	import com.efi.vo.SalesRep;  
+	import com.efi.events.AccountPickerSelectEvent;
+	                                      
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -122,7 +123,33 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		countryDataService.getAll("Country");
 		zipDataService.getAll("Zip");   		    
 	}      
-	                                                   	
+	      
+	private function doAccountPicker():void {
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+	}           
+	                                  	
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+	}
+
 	private function send():void
 	{
 		var message:IMessage = new AsyncMessage();
@@ -140,12 +167,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 			if( contact.creditCard == null) contact.creditCard = new CreditCard();
 			mapFromContactData();
 		}
-		
-		
-	
 	}
 					
-	public function setAccount(account:Account):void
+	private function setAccount(account:Account):void
 	{
 		if (account != null){
 			this.account = account;
@@ -444,7 +468,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Label x="8" y="90" text="Account:" width="55"/>
 				<mx:Text x="80" y="90" width="142" id="accountName" text="{account.title}"/>
-				<mx:Button x="10" y="168" label="Accounts" id="AccountsPicker" click=" var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));"/>
+				<mx:Button x="10" y="168" label="Accounts" id="AccountsPicker" click="doAccountPicker"/>
 				<mx:Label x="224" y="10" text="First Name:" width="83" textAlign="right"/>
 				<mx:Label x="224" y="38" text="Last Name:" width="83" textAlign="right"/>
 				<mx:Label x="240" y="66" text="Prefix:" width="67" textAlign="right"/>

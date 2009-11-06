@@ -27,7 +27,7 @@ width="786" height="479"  creationComplete="init()"
     import mx.events.ValidationResultEvent;    
 	import com.efi.vo.Account; 
 	import com.efi.vo.Invoice;  
-	       
+	import com.efi.events.AccountPickerSelectEvent;	       
 	
 	[Bindable]                                         
 	private var account:Account;
@@ -36,25 +36,50 @@ width="786" height="479"  creationComplete="init()"
     private var invoices:ArrayCollection = new ArrayCollection(); 
 	
 	public function init():void {
-		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-	   
-		
+		doAccount();
 	}  
+	
+	private function doAccount():void {
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+	}
+
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+	}
+
+
 	private function doGet():void {
 		
 	}  
 	
-	public function setAccount(account2:Account):void
+	private function setAccount(account2:Account):void
 	{
 		this.account = account2;
-		 dataService.getByAccountId("Invoice", this.account.id);
-	
+		dataService.getByAccountId("Invoice", this.account.id);
 	}			
+	
 	private function handleLoadResult(event:ResultEvent):void {
 		invoices = event.result as ArrayCollection;
 	}
+	
 	private function handleSaveResult(event:Event):void {
 		dataService.getByAccountId("Invoice", this.account.id);
 		
@@ -63,6 +88,7 @@ width="786" height="479"  creationComplete="init()"
 		dataService.getByAccountId("Invoice", this.account.id);
 		
 	}
+	
 	private function handleFault(event:FaultEvent):void {
 		var message:String;
 		              

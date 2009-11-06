@@ -60,6 +60,8 @@
 	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListBase;
 
+	import com.efi.events.AccountPickerSelectEvent;
+	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -586,20 +588,40 @@
 		btnAssignCustomerAccount.enabled = checked;
 		chkEvenIncrements.enabled = checked;
 	}
+	
 	private function doAccount():void {
-		var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-	    
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
 	}
-	public function setAccount(account2:Account):void
+
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+	}
+
+	private function setAccount(account2:Account):void
 	{
 		this.account = account2;
 		stockDefinitions.account = this.account;
 		account_name.text  = stockDefinitions.account.title;
-		
-	
 	}			
+	
 	private function mapFromStockDefinitionData():void {
 		
 		if (stockDefinitions.defaultPress != null)
