@@ -58,6 +58,10 @@ public class TimeCard extends ModelBase {
 	 * @generated
 	 */
 	public static final String BREAKTIME = "BreakTime";
+	/**
+	 * @generated
+	 */
+	public static final String EMPLOYEE = "Employee";
 
 	/**
 	 * @generated
@@ -169,6 +173,23 @@ public class TimeCard extends ModelBase {
 	public void setBreakTime(Date newVal) {
 		this.breakTime = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Employee employee;
+	/**
+	 * @generated
+ 	 */
+	public Employee getEmployee(){
+		return employee; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEmployee(Employee newVal) {
+		this.employee = newVal;
+	}
 
 	/**
 	 * @generated
@@ -182,6 +203,7 @@ public class TimeCard extends ModelBase {
 		if (BILLABLE.equals(propertyName)) return getBillable();
 		if (ONCLOCK.equals(propertyName)) return getOnClock();
 		if (BREAKTIME.equals(propertyName)) return getBreakTime();
+		if (EMPLOYEE.equals(propertyName)) return getEmployee();
 		return super.getProperty(propertyName);
 	}
 	
@@ -197,6 +219,7 @@ public class TimeCard extends ModelBase {
 		if (BILLABLE.equals(propertyName)) setBillable((String)newValue); else
 		if (ONCLOCK.equals(propertyName)) setOnClock((Integer)newValue); else
 		if (BREAKTIME.equals(propertyName)) setBreakTime((Date)newValue); else
+		if (EMPLOYEE.equals(propertyName)) setEmployee((Employee)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -218,6 +241,8 @@ public class TimeCard extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (BREAKTIME.equals(propertyName)) 
 			return new Class<?>[] {Date.class};		
+		if (EMPLOYEE.equals(propertyName)) 
+			return new Class<?>[] {Employee.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -234,6 +259,7 @@ public class TimeCard extends ModelBase {
 		if (BILLABLE.equals(propertyName)) return TimeCard.class;
 		if (ONCLOCK.equals(propertyName)) return TimeCard.class;
 		if (BREAKTIME.equals(propertyName)) return TimeCard.class;
+		if (EMPLOYEE.equals(propertyName)) return TimeCard.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -256,6 +282,8 @@ public class TimeCard extends ModelBase {
 		if (! SmartEquals(getOnClock(), objT.getOnClock()))
 			return false;
 		if (! SmartEquals(getBreakTime(), objT.getBreakTime()))
+			return false;
+		if (! SmartEquals(getEmployee(), objT.getEmployee()))
 			return false;
 		return true;
 	}			

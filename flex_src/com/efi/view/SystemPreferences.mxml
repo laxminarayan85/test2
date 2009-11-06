@@ -568,21 +568,27 @@ width="800" height="678" title="Preferences"
 		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
 			dataServiceCashRegister.deleteItem(deleteitem1, deleteitem1.id);
 		}
+		PreferencesCashRegisterDeleteArray.removeAll();
 		for each(var deleteitem2:OutsideService in PreferencesMarkupsDeleteArray) {
 			dataServiceMarkups.deleteItem(deleteitem2, deleteitem2.id);
 		}
-		for each(var deleteitem3:Merchandise in this.PreferencesMarkupsMerchandiseDeleteArray) {
+		PreferencesMarkupsDeleteArray.removeAll()
+		for each(var deleteitem3:Merchandise in PreferencesMarkupsMerchandiseDeleteArray) {
 			dataServiceMarkupsMerchandise.deleteItem(deleteitem3, deleteitem3.id);
 		}
-		for each(var deleteitem4:PreferencesPricingMethod in this.PreferencesPricingMethodDeleteArray) {
+		PreferencesMarkupsMerchandiseDeleteArray.removeAll()
+		for each(var deleteitem4:PreferencesPricingMethod in PreferencesPricingMethodDeleteArray) {
 			dataServicePricingMethod.deleteItem(deleteitem4, deleteitem4.id);
 		}
+		PreferencesPricingMethodDeleteArray.removeAll()
 		for each(var deleteitem5:PreferencesSalesCategory in PreferencesSalesCategoryDeleteArray) {
 			dataServiceSalesCategory.deleteItem(deleteitem5, deleteitem5.id);
 		}
+		PreferencesSalesCategoryDeleteArray.removeAll()
 		for each(var deleteitem6:PreferencesCreditCard in PreferencesCreditCardDeleteArray) {
 			dataServiceCreditCard.deleteItem(deleteitem6, deleteitem6.id);
 		}
+		PreferencesCreditCardDeleteArray.removeAll();
 
 		// commit changes add or updates to table
 		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {

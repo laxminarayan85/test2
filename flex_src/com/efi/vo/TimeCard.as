@@ -18,6 +18,7 @@ package com.efi.vo
 		public var billable:String = "";
 		public var onClock:int = 0;
 		public var breakTime:Date = new Date();
+		public var employee:Employee = new Employee();
 	
 	}
 }

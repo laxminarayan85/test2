@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="Time Tracking" label="Time Tracking" 
 	creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
-<mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-</mx:RemoteObject>
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteTimeCardResult(event)"/>
+	</mx:RemoteObject>
 	
 	<mx:Producer id="producer" destination="employees"/>
 	<mx:Consumer id="consumer" destination="employees" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
-	
-	
-	
-	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.vo.TimeCard;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -34,13 +37,17 @@
 	import com.efi.vo.State;
 	import com.efi.vo.Zip;
 
-	[Bindable]                                
+	[Bindable]
 	private var employeesArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var timecardArray:ArrayCollection = new ArrayCollection();
 	
 	[Bindable] 
 	private var employee:Employee;
 
-	
+	[Bindable] 
+	private var timecard:TimeCard;
 	
 	public function init():void {
 		var application:Snowmass = Snowmass.getInstance();
@@ -63,23 +70,34 @@
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getAll("Employee")
-		
 	}  
+	
+	private function handleLoadTimeCardResult(ev:ResultEvent):void {
+		timecardArray = ev.result as ArrayCollection;
+	}
+	private function handleSaveTimeCardResult(ev:ResultEvent):void {
+		dataService.getAll("TimeCard")
+	}
+	private function handleDeleteTimeCardResult(ev:ResultEvent):void {
+		dataService.getAll("TimeCard")
+	}  
+	
 	private function setEmployee():void
 	{	
 		dataService.addUpdate(employee);
 	}
+	
 	private function doClockIn(): void{  
-		 if (employee != null){
+		if (employee != null){
 		 	 
-			 employee.clockIn= true;
-			 employee.clockOut = false;
-			 employee.clockBreak= false;
-			 setEmployee();
-			 employee = null;
-		 }
-		
-	}  
+			employee.clockIn= true;
+			employee.clockOut = false;
+			employee.clockBreak= false;
+			setEmployee();
+			employee = null;
+		}
+	}
+	  
 	private function doClockOut(): void{ 
 		if (employee != null){
 			
@@ -89,9 +107,8 @@
 			setEmployee();
 			employee = null;
 		}
-		
-		
 	}
+	
 	private function doClockBreak(): void{ 
 		if (employee != null){
 			employee.clockIn= false;
@@ -100,11 +117,8 @@
 			setEmployee();
 			employee = null;
 		}
-		
-		
-		
-		
-	}  
+	}
+	
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -112,12 +126,13 @@
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
+
 	private function doGrid(): void{ 
 		employee = employeeGrid.selectedItem as Employee;
+		dataServiceTimeCard.getAll("TimeCard");
 	}  
-	
               
 ]]>
                              
