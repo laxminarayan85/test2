@@ -26,18 +26,22 @@ width="800" height="678" title="Preferences"
 	 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegisterResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashRegisterResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteCashRegisterResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceCreditCard" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCreditCardResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteCreditCardResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceMarkups" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteMarkupsResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceMarkupsMerchandise" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsMerchandiseResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsMerchandiseResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteMarkupsMerchandiseResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
@@ -46,6 +50,7 @@ width="800" height="678" title="Preferences"
  	<mx:RemoteObject id="dataServicePricingMethod" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPricingMethodResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePricingMethodResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeletePricingMethodResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceQuantityBreaks" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuantityBreaksResult(event)"/>
@@ -54,6 +59,7 @@ width="800" height="678" title="Preferences"
  	<mx:RemoteObject id="dataServiceSalesCategory" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesCategoryResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesCategoryResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteSalesCategoryResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStockDefinition" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
@@ -158,6 +164,19 @@ width="800" height="678" title="Preferences"
 	private var PreferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesStocksArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var PreferencesCashRegisterDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesMarkupsDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesMarkupsMerchandiseDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesPricingMethodDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesSalesCategoryDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesCreditCardDeleteArray:ArrayCollection = new ArrayCollection();
 
 //AutoComplete arrays
 	[Bindable]
@@ -545,30 +564,52 @@ width="800" height="678" title="Preferences"
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
 
+		//remove and or delete items from table
+		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
+			dataServiceCashRegister.deleteItem(deleteitem1, deleteitem1.id);
+		}
+		for each(var deleteitem2:OutsideService in PreferencesMarkupsDeleteArray) {
+			dataServiceMarkups.deleteItem(deleteitem2, deleteitem2.id);
+		}
+		for each(var deleteitem3:Merchandise in this.PreferencesMarkupsMerchandiseDeleteArray) {
+			dataServiceMarkupsMerchandise.deleteItem(deleteitem3, deleteitem3.id);
+		}
+		for each(var deleteitem4:PreferencesPricingMethod in this.PreferencesPricingMethodDeleteArray) {
+			dataServicePricingMethod.deleteItem(deleteitem4, deleteitem4.id);
+		}
+		for each(var deleteitem5:PreferencesSalesCategory in PreferencesSalesCategoryDeleteArray) {
+			dataServiceSalesCategory.deleteItem(deleteitem5, deleteitem5.id);
+		}
+		for each(var deleteitem6:PreferencesCreditCard in PreferencesCreditCardDeleteArray) {
+			dataServiceCreditCard.deleteItem(deleteitem6, deleteitem6.id);
+		}
+
+		// commit changes add or updates to table
 		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {
 			dataServiceCashRegister.addUpdate(item1);
 		}
-
 		for each(var item2:PreferencesPendingList in PreferencesPendingListArray) {
 			dataServicePendingList.addUpdate(item2);
 		}
-		
-		for each(var item3:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
-			dataServiceSalesCategory.addUpdate(item3);
+		for each(var item3:OutsideService in PreferencesMarkupsArray) {
+			dataServiceMarkups.addUpdate(item3);
 		}
-		
-		for each(var item4:PreferencesCreditCard in PreferencesCreditCardArray) {
-			dataServiceCreditCard.addUpdate(item4);
-		}
-
-		for each(var item5:OutsideService in PreferencesMarkupsArray) {
-			dataServiceMarkups.addUpdate(item4);
-		}
-		for each(var item6:Merchandise in PreferencesMarkupsMerchandiseArray) {
+		for each(var item4:Merchandise in PreferencesMarkupsMerchandiseArray) {
 			dataServiceMarkupsMerchandise.addUpdate(item4);
 		}
-		
-		
+		for each(var item5:PreferencesStockDefinition in PreferencesStockDefinitionArray) {
+			dataServiceStockDefinition.addUpdate(item5);
+		}
+		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
+			dataServicePricingMethod.addUpdate(item6);
+		}
+		for each(var item7:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
+			dataServiceSalesCategory.addUpdate(item7);
+		}
+		for each(var item8:PreferencesCreditCard in PreferencesCreditCardArray) {
+			dataServiceCreditCard.addUpdate(item8);
+		}
+
 	}
 
 	private function mapFromPreferencesSystemData():void {
@@ -1052,7 +1093,29 @@ width="800" height="678" title="Preferences"
     	dataServiceCategory.getAll("SalesCategory");
 	}
 
-
+	private function handleDeleteCashRegisterResult(ev:ResultEvent):void {
+    	dataServiceCashRegister.getAll("PreferencesCashRegister");
+	}
+	private function handleDeleteCreditCardResult(ev:ResultEvent):void {
+    	dataServiceCreditCard.getAll("PreferencesCreditCard");
+	}
+	
+	private function handleDeleteMarkupsResult(ev:ResultEvent):void {
+    	dataServiceMarkups.getAll("OutsideServices");
+	}
+	
+	private function handleDeleteMarkupsMerchandiseResult(ev:ResultEvent):void {
+    	dataServiceMarkupsMerchandise.getAll("Merchandise");
+	}
+	
+	private function handleDeletePricingMethodResult(ev:ResultEvent):void {
+    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+	}
+	
+	private function handleDeleteSalesCategoryResult(ev:ResultEvent):void {
+    	dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+	}
+	
 	private var openSequence:Array = [];
 
 	private function openTree():void {
@@ -1143,61 +1206,91 @@ width="800" height="678" title="Preferences"
 	private function doSelectFolder():void{
 		
 	}
-	private function doCashRegisterGrid():void{
-		preferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
 
-	}
 	private function doNewCashRegister():void{
-		var newItem:PreferencesCashRegister = new PreferencesCashRegister()
-		PreferencesCashRegisterArray.addItem(newItem)
+		var newItem:PreferencesCashRegister = new PreferencesCashRegister();
+		PreferencesCashRegisterArray.addItem(newItem);
 	}
 	private function doRemoveCashRegister():void{
+		var newItem:PreferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
+		PreferencesCashRegisterDeleteArray.addItem(newItem);
 		PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
 	}
 
 	private function doNewPriceMethod():void{
-		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod()
-		PreferencesPricingMethodArray.addItem(newItem)
+		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod();
+		PreferencesPricingMethodArray.addItem(newItem);
 	}
 	private function doRemovePriceMethod():void{
+		var newItem:PreferencesPricingMethod = PricingMethodGrid.selectedItem as PreferencesPricingMethod;
+		PreferencesPricingMethodDeleteArray.addItem(newItem);
 		PreferencesPricingMethodArray.removeItemAt(PricingMethodGrid.selectedIndex);
 	}
 
 	private function doNewMarkup(item:String):void{
 		if (item=="outside")
 		{
-			var newItem1:OutsideService = new OutsideService()
-			PreferencesMarkupsArray.addItem(newItem1)
+			var newItem1:OutsideService = new OutsideService();
+			PreferencesMarkupsArray.addItem(newItem1);
 		}else {
-			var newItem2:Merchandise = new Merchandise()
-			PreferencesMarkupsMerchandiseArray.addItem(newItem2)
+			var newItem2:Merchandise = new Merchandise();
+			PreferencesMarkupsMerchandiseArray.addItem(newItem2);
 		}
 	}
 	private function doRemoveMarkup(item:String, dg:DataGrid):void{
 		if (item=="outside")
 		{
+			var newItem1:OutsideService = dg.selectedItem as OutsideService;
+			PreferencesMarkupsDeleteArray.addItem(newItem1);
 			PreferencesMarkupsArray.removeItemAt(dg.selectedIndex);
 		}else {
+			var newItem2:Merchandise = dg.selectedItem as Merchandise;
+			PreferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
 			PreferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
 		}
 	}
 
 	private function doNewSalesCategory():void{
-		var newItem:PreferencesSalesCategory = new PreferencesSalesCategory()
-		PreferencesSalesCategoryArray.addItem(newItem)
+		var newItem:PreferencesSalesCategory = new PreferencesSalesCategory();
+		PreferencesSalesCategoryArray.addItem(newItem);
 	}
 	private function doRemoveSalesCategory():void{
-		PreferencesSalesCategoryArray.removeItemAt(PricingMethodGrid.selectedIndex);
+		var newItem:PreferencesSalesCategory = SalesCategoryGrid.selectedItem as PreferencesSalesCategory;
+		PreferencesSalesCategoryDeleteArray.addItem(newItem);
+		PreferencesSalesCategoryArray.removeItemAt(SalesCategoryGrid.selectedIndex);
 	}
 
 	private function doNewCreditCard():void{
-		var newItem:PreferencesCreditCard = new PreferencesCreditCard()
-		PreferencesCreditCardArray.addItem(newItem)
+		var newItem:PreferencesCreditCard = new PreferencesCreditCard();
+		PreferencesCreditCardArray.addItem(newItem);
 	}
 	private function doRemoveCreditCard():void{
-		PreferencesCreditCardArray.removeItemAt(PricingMethodGrid.selectedIndex);
+		var newItem:PreferencesCreditCard = CreditCardGrid.selectedItem as PreferencesCreditCard;
+		PreferencesCreditCardDeleteArray.addItem(newItem);
+		PreferencesCreditCardArray.removeItemAt(CreditCardGrid.selectedIndex);
 	}
 
+	private function processSalesCategoryGridData(event:DataGridEvent):void {
+        if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+
+		if(event.dataField == "category")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			SalesCategoryGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
+
+			// Close the cell editor.
+			SalesCategoryGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			SalesCategoryGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}	
+	}	
 
 	private function processPricingMethodGridData(event:DataGridEvent):void {
         if (event.reason == DataGridEventReason.CANCELLED){
@@ -2007,10 +2100,20 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:DataGrid x="50" y="27" width="200" height="475">
+				<mx:DataGrid x="50" y="27" width="200" height="475" id="SalesCategoryGrid"
+					dataProvider="{PreferencesSalesCategoryArray}"
+					editable="true"
+					itemEditEnd="processSalesCategoryGridData(event);">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Name" dataField="col1" width="100"/>
-						<mx:DataGridColumn headerText="GL Account" dataField="col2" width="100"/>
+						<mx:DataGridColumn width="140" headerText="Name" dataField="category"
+							itemEditor="com.efi.itemRenderers.SalesCategoryEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.category.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="GL Account" dataField="accountNumber" width="100"/>
 					</mx:columns>
 				</mx:DataGrid>
 				
@@ -2081,9 +2184,14 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="215" y="110" id="chkUseAddressValidation" label="Use Address Validation"/>
 				<mx:CheckBox x="215" y="140" id="chkPromptUserForValidationInformation" label="Prompt User for Validation Information"/>
 				
-				<mx:DataGrid x="50" y="179" width="300" height="323">
+				<mx:DataGrid x="50" y="179" width="300" height="323" id="CreditCardGrid"
+					dataProvider="{PreferencesCreditCardArray}"
+					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Use" dataField="used" width="50"/>
+						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="Card Title" dataField="cardType"/>
 						<mx:DataGridColumn headerText="Abbrev." dataField="abbreviation" width="60"/>
 						<mx:DataGridColumn headerText="Code" dataField="code" width="50"/>
