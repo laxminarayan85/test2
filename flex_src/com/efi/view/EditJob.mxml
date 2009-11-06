@@ -20,12 +20,16 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.events.JobEditCompleteEvent;
 	import com.efi.vo.Invoice;
 	import com.efi.vo.Job;
     import com.efi.vo.PressDefinition;    
     import com.efi.vo.Location;                    
 	import com.efi.vo.Account; 
-	import com.efi.vo.ProductCode;                                        
+	import com.efi.vo.ProductCode;      
+	
+	import com.efi.events.JobEditCompleteEvent;
+	                                  
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -46,7 +50,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
     private var locations:ArrayCollection = new ArrayCollection();   
     private var productCodes:ArrayCollection = new ArrayCollection();            
 	[Bindable]                                         
-	private var job:Job;
+	public var job:Job;
                 
     [Bindable]
     private var invoice:Invoice;
@@ -144,6 +148,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" horizon
 	}
 	private function doSave():void {
 		mapToJobData();
+		var jobEditCompleteEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+		dispatchEvent(jobEditCompleteEvent);
+		
 		PopUpManager.removePopUp(this);
 	} 
 	

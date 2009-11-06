@@ -50,7 +50,7 @@
 			private var displayAddress:String="";
 
 			[Bindable]
-			private var addressLabel:String="Address";
+			public var addressLabel:String="Address";
 
 			private var focussedFormControl:DisplayObject;
 			private var originalAddress:Address;
