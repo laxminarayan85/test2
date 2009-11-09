@@ -29,6 +29,7 @@
 	<destination id="salescategories"/>
 	<destination id="productcodes"/>
 	<destination id="systempreferences"/>
+	<destination id="cashregister"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

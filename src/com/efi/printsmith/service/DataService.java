@@ -3,9 +3,11 @@ package com.efi.printsmith.service;
 import com.efi.printsmith.data.*;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -256,7 +258,29 @@ public class DataService {
    		}        
     	return null;            
    	} 
-   
+
+    
+	public List<TimeCard> getByClockInOut(String className, Employee employee) throws Exception {      
+    	try {            
+    		log.debug("** getByEmployee Id called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();  
+    		
+    		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+    		java.util.Date date = new java.util.Date();
+    		
+    		String queryString = "from "+className+" where to_char(startdatetime,'YYYY-MM-DD') = "+dateFormat.format(date).toString() + " and employee = :employee and (clockIn = 1 OR clockOut = 1)";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employee", employee);
+    		List<TimeCard>  timecardlist = query.getResultList();   
+    		if (timecardlist != null)
+    		 	log.debug("** Found " + timecardlist.size() + "records:");
+    		return timecardlist;
+    	} catch (Exception e) { 
+    		log.error(e);       
+   		}        
+    	return null;            
+   	} 
+
     
     
     public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      

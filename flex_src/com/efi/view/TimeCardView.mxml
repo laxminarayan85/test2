@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*"
+width="800" height="678" title="Time Card"
+ label="Time Card" name="timecardview" xmlns:ns1="com.efi.components.*">
+ 
+ 	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:Producer id="producer" destination="cashregister"/>
+	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>
+<![CDATA[
+	import mx.controls.Text;
+
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.collections.XMLListCollection;
+
+	[Bindable]
+	private var enableSave:Boolean = true;
+
+//Data field arrays
+//	[Bindable]
+	private var TimeCardArray:ArrayCollection = new ArrayCollection();
+
+//Data view variables
+//	[Bindable]
+//	private var preferencesSystem:PreferencesSystem;
+
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();
+
+		setup();
+		
+	}
+	
+	private function setup():void{
+		
+	}
+	
+	private function messageHandler(message:IMessage):void{
+	}
+     
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+
+
+// Data Load Handlers
+	private function handleLoadResult(ev:ResultEvent):void {
+		TimeCardArray = ev.result as ArrayCollection;
+	}
+
+// Data Save Handlers
+	private function handleSaveResult(ev:ResultEvent):void {
+    	//dataService.getAll("PreferencesSystem");
+	}
+
+	private function doSave():void{
+	}
+	
+	private function doRevert():void{
+	}
+
+]]>
+                             
+</mx:Script>	
+
+	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
+		<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="274" y="6" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+		<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+	</mx:Button>
+
+	<mx:VBox id="vbox2" left="0" top="50" height="100%" width="100%" creationPolicy="all">
+		<mx:Canvas width="100%" height="100%" id="timecard_canvas" hideEffect="effect" showEffect="effect">
+
+		</mx:Canvas>
+	</mx:VBox>
+</mx:Panel>

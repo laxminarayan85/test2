@@ -48,7 +48,7 @@
 				<mx:Button x="10" y="480" label="Pricing" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
 				<mx:Button x="10" y="198" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
 				<mx:Button x="10" y="292" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
-				<mx:Button x="674" y="198" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')"/>
+				<mx:Button x="674" y="198" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
 				<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
 				<mx:Button x="342" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="342" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
@@ -79,6 +79,7 @@
 		import com.efi.view.PriceListPicker;
 		import com.efi.view.PriceListEditor;
 		import com.efi.view.SystemPreferences;
+		import com.efi.view.CashRegister;
 		import com.efi.view.EditInvoice;
 		import com.efi.view.EditEstimate;
 		import com.efi.view.EditUser;
@@ -200,6 +201,10 @@
 		}
 		private function doSystemPreferences():void {
 			var child:SystemPreferences = new SystemPreferences();
+			addUniqueTab(child);
+		}
+		private function doCashRegister():void {
+			var child:CashRegister = new CashRegister();
 			addUniqueTab(child);
 		}
 		private function doEmployee():void {
