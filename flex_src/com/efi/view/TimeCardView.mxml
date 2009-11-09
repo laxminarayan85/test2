@@ -121,9 +121,16 @@
 		
 	}
 
+	public function getDateLabel(item:Object,column:DataGridColumn):String
+	{
+		return dateFormatter.format(item[column.dataField]);
+	}
+
+
 ]]>
                              
 </mx:Script>	
+	<mx:DateFormatter id="dateFormatter" formatString="HH:NN:SS A"/>
 
 	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
@@ -144,12 +151,12 @@
 		<mx:DataGrid x="194" y="49" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
 			itemClick="doTimeCardGrid()">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Period" dataField="period" />
-				<mx:DataGridColumn headerText="In" dataField="startDateTime" />
-				<mx:DataGridColumn headerText="Out" dataField="endDateTime"/>
-				<mx:DataGridColumn headerText="Break" dataField="breakTime" />
-				<mx:DataGridColumn headerText="On Clock" dataField="onClock" />
-				<mx:DataGridColumn headerText="Billable" dataField="billable"/>
+				<mx:DataGridColumn width="60" headerText="Period" dataField="period" />
+				<mx:DataGridColumn width="100" headerText="In" dataField="startDateTime" labelFunction="getDateLabel" />
+				<mx:DataGridColumn width="100" headerText="Out" dataField="endDateTime" labelFunction="getDateLabel"/>
+				<mx:DataGridColumn width="100" headerText="Break" dataField="breakTime" labelFunction="getDateLabel"/>
+				<mx:DataGridColumn width="70" headerText="On Clock" dataField="onClock" />
+				<mx:DataGridColumn width="70" headerText="Billable" dataField="billable"/>
 			</mx:columns>
 		</mx:DataGrid>
 </mx:TitleWindow>
