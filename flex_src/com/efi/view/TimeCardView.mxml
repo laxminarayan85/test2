@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*"
-width="800" height="678" title="Time Card"
- label="Time Card" name="timecardview" xmlns:ns1="com.efi.components.*">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="Time Card" label="Time Card" 
+	creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
  
  	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
+		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
+		<mx:method name="getByClockInOutBreak" fault="handleFault(event)" result="handleLoadTimeCardBreakResult(event)"/>
+		<mx:method name="getByTimeCardByEmployee" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="cashregister"/>
@@ -24,13 +29,28 @@ width="800" height="678" title="Time Card"
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.collections.XMLListCollection;
+	import com.efi.vo.TimeCard;
+	import com.efi.vo.Employee;
 
 	[Bindable]
 	private var enableSave:Boolean = true;
 
 //Data field arrays
-//	[Bindable]
-	private var TimeCardArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var employeesArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var timecardArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var timecardBreakArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var timecardEmployeeArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable] 
+	private var employee:Employee;
+
+	[Bindable] 
+	private var timecard:TimeCard;
 
 //Data view variables
 //	[Bindable]
@@ -45,7 +65,7 @@ width="800" height="678" title="Time Card"
 	}
 	
 	private function setup():void{
-		
+		dataService.getAll("Employee");
 	}
 	
 	private function messageHandler(message:IMessage):void{
@@ -64,18 +84,41 @@ width="800" height="678" title="Time Card"
 
 // Data Load Handlers
 	private function handleLoadResult(ev:ResultEvent):void {
-		TimeCardArray = ev.result as ArrayCollection;
+		employeesArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadTimeCardResult(ev:ResultEvent):void {
+		timecardArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadTimeCardBreakResult(ev:ResultEvent):void {
+		timecardBreakArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadTimeCardEmployeeResult(ev:ResultEvent):void {
+		timecardEmployeeArray = ev.result as ArrayCollection;
+	}
+
 
 // Data Save Handlers
 	private function handleSaveResult(ev:ResultEvent):void {
     	//dataService.getAll("PreferencesSystem");
 	}
+	private function handleSaveTimeCardResult(ev:ResultEvent):void {
+	}
+
 
 	private function doSave():void{
 	}
 	
 	private function doRevert():void{
+	}
+
+	private function doGrid(): void{ 
+		employee = employeeGrid.selectedItem as Employee;
+		dataServiceTimeCard.getByTimeCardByEmployee("TimeCard",employee);
+		
+	}  
+	private function doTimeCardGrid(): void{
+		timecard = timecardGrid.selectedItem as TimeCard;
+		
 	}
 
 ]]>
@@ -89,9 +132,25 @@ width="800" height="678" title="Time Card"
 		<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 
-	<mx:VBox id="vbox2" left="0" top="50" height="100%" width="100%" creationPolicy="all">
-		<mx:Canvas width="100%" height="100%" id="timecard_canvas" hideEffect="effect" showEffect="effect">
+		<mx:DataGrid x="10" y="10" width="178" id="employeeGrid" dataProvider="{employeesArray}" height="478"
+			itemClick="doGrid()">
+			<mx:columns>
+				<mx:DataGridColumn width="50" headerText="ID" dataField="id" />
+				<mx:DataGridColumn width="100" headerText="First Name" dataField="firstName" />
+				<mx:DataGridColumn width="100" headerText="Last Name" dataField="lastName"/>
+			</mx:columns>
+		</mx:DataGrid>
+	
+		<mx:DataGrid x="194" y="49" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
+			itemClick="doTimeCardGrid()">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Period" dataField="period" />
+				<mx:DataGridColumn headerText="In" dataField="startDateTime" />
+				<mx:DataGridColumn headerText="Out" dataField="endDateTime"/>
+				<mx:DataGridColumn headerText="Break" dataField="breakTime" />
+				<mx:DataGridColumn headerText="On Clock" dataField="onClock" />
+				<mx:DataGridColumn headerText="Billable" dataField="billable"/>
+			</mx:columns>
+		</mx:DataGrid>
+</mx:TitleWindow>
 
-		</mx:Canvas>
-	</mx:VBox>
-</mx:Panel>

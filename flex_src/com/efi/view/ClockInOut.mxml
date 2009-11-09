@@ -96,17 +96,10 @@
 
 		var newCard:TimeCard;
 		var item:TimeCard;
-		var currentArray:ArrayCollection = new ArrayCollection();
 		
 		if ((reason == "in") ||(reason == "out"))
 		{
 
-			for each(item in timecardArray) {
-				if (item.employee == employee && item.created == new Date())
-				{
-					currentArray.addItem(item);
-				}
-			}
 			if (timecardArray == null || timecardArray.length == 0)
 			{
 				newCard = new TimeCard();
@@ -129,24 +122,24 @@
 		} else {
 	
 			for each(item in timecardBreakArray) {
-				if (item.employee == employee && item.created == new Date())
+				if (item.employee.id == employee.id && item.endDateTime == null)
 				{
-					currentArray.addItem(item);
+					newCard = item;
+					break;
 				}
 			}
-			if (timecardBreakArray == null || timecardBreakArray.length == 0)
+			if (newCard == null)
 			{
 				newCard = new TimeCard();
-			}else {
-				newCard = timecardBreakArray.getItemAt(0,0) as TimeCard;
 			}
 
 			if (reason == "breakstart")
 			{
-				newCard.startDateTime = new Date();
+				var breakstart:Date=new Date()
+				newCard.startDateTime = breakstart;
 				newCard.endDateTime = null;
 				newCard.employee = employee;
-				newCard.breakTime = new Date();
+				newCard.breakTime = breakstart;
 				newCard.onClock = 0;
 			}
 			if (reason == "breakstop")
@@ -182,8 +175,8 @@
 			employee.clockIn= false;
 			employee.clockOut = true;
 			employee.clockBreak= false; 
-			setEmployee();
 			setTimeCard("out");
+			setEmployee();
 			employee = null;
 		}
 	}
@@ -193,7 +186,7 @@
 			if (employee.clockBreak == true)
 			{
 				setTimeCard("breakstop");
-				employee.clockIn= false;
+				employee.clockIn= true;
 				employee.clockOut = false;
 				employee.clockBreak= false;
 			}
