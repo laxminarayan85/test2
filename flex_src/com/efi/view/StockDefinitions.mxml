@@ -650,6 +650,11 @@
 			
 		if (stockDefinitions.stockunit != -1)
 			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
+		
+		if (stockDefinitions.priceExpires != null)
+			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
+		if (stockDefinitions.expires != null)
+			Expires.selectedDate = stockDefinitions.expires;	
 			
 			//// check box values here
 			chkstandardItem.selected = stockDefinitions.standardItem;
@@ -722,7 +727,7 @@
 
 	 stockDefinitions.costunits = parseInt(Costunits.text);
 	 stockDefinitions.sheetsPerSet = parseInt(SheetsPerSet.text);
-	 stockDefinitions.priceExpires = PriceExpires.text as Date;
+	 stockDefinitions.priceExpires = PriceExpires.selectedDate;
 	 stockDefinitions.qtybreak1 = parseInt(Qtybreak1.text);
 	 stockDefinitions.qtybreak2 = parseInt(Qtybreak2.text);
 	 stockDefinitions.qtybreak3 = parseInt(Qtybreak3.text);
@@ -784,7 +789,7 @@
 	 stockDefinitions.targetLevel = parseInt(TargetLevel.text);
 	 stockDefinitions.reOrderPoint = parseInt(ReOrderPoint.text);
 	 stockDefinitions.minOrderQty = parseInt(MinOrderQty.text);
-	 stockDefinitions.expires = Expires.text as Date;
+	 stockDefinitions.expires = Expires.selectedDate;
 	 stockDefinitions.binLocation = BinLocation.text;
 	 stockDefinitions.account.title = account_name.text;
 
@@ -905,7 +910,7 @@
 				<mx:TextInput x="352" y="2" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}"/>
 				<mx:CheckBox x="450" y="2" label="Cost is in Sets" id="chkCostIsInSets"/>
 				<mx:Label x="73" y="137" text="Price Expires:"/>
-				<mx:TextInput x="157" y="135" width="87" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
+				<mx:DateField x="154" y="135" id="PriceExpires"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="441" width="685.5" height="93" layout="absolute" title="Comments">
 				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
@@ -979,12 +984,12 @@
 				<mx:TextInput x="337" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false"/>
 				<mx:Label x="239" y="118" text="Min. Order Qty.:"/>
 				<mx:TextInput x="337" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
-				<mx:TextInput x="122" y="148" width="93" id="Expires" text="{stockDefinitions.expires}"  height="22" enabled="false"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
 				<mx:CheckBox x="251" y="148" id="ShellItem" label="Shell Item" enabled="false"  change="doShell();"/>
 				<mx:Button x="341" y="148" label="Assign Customer Account..." enabled="false" id="btnAssignCustomerAccount" click="doAccount();"/>
 				<mx:CheckBox x="429" y="116" label="Even increments, like ream size" enabled="false" id="chkEvenIncrements"/>
 				<mx:Text x="341" y="176" width="184" id="account_name" text="{stockDefinitions.account.title}" />
+				<mx:DateField x="127" y="148" id="Expires"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
 				<mx:Button x="10" y="204" label="Show Entire History" click="doShowHistory();"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*"
-width="902" height="873" title="Copier Definitions"
+width="1080" height="873" title="Copier Definitions"
  label="Copier Definitions" name="Copier Definitions">
  
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -209,45 +209,23 @@ width="902" height="873" title="Copier Definitions"
 </mx:Script>	
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
-<!--	<mx:DataGrid x="10" y="71" width="852" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" 
-		  itemClick="doCopierGridClick()" editable="true">
-		<mx:columns>
-			<mx:DataGridColumn headerText="Default BW" dataField="defaultblackwhite" width="80"/>
-			<mx:DataGridColumn headerText="Default Color" dataField="defaultcolor" width="90" />
-			<mx:DataGridColumn headerText="Default LF" dataField="defaultlargeformat" width="80" />
-			<mx:DataGridColumn headerText="Name" dataField="copyDefName"/>
-			<mx:DataGridColumn headerText="BW" dataField= "blackwhite"/>
-			<mx:DataGridColumn headerText="Color" dataField= "color"/>
-			<mx:DataGridColumn headerText="LF" dataField= "largeFormat"/>
-	</mx:columns>
-	</mx:DataGrid>-->
-		
-	<mx:AdvancedDataGrid x="10" y="71" width="100%" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" sortExpertMode="true"
+	<mx:AdvancedDataGrid x="10" y="71" width="825" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" sortExpertMode="true"
 		itemClick="doCopierGridClick()">
 		<mx:groupedColumns>
 			<mx:AdvancedDataGridColumnGroup id="default_column" headerText="Default" sortable="false">
-				<mx:AdvancedDataGridColumn width="50" headerText="BW" sortable="false" textAlign="center" dataField="defaultblackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="50" headerText="Color" sortable="false" textAlign="center" dataField="defaultcolor" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="50" headerText=" LF" sortable="false" textAlign="center" dataField="defaultlargeformat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText="BW" sortable="false" textAlign="center" dataField="defaultblackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText="Color" sortable="false" textAlign="center" dataField="defaultcolor" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText=" LF" sortable="false" textAlign="center" dataField="defaultlargeformat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
 			</mx:AdvancedDataGridColumnGroup>
 			<mx:AdvancedDataGridColumn headerText="Name" dataField="name"/>
 			<mx:AdvancedDataGridColumnGroup id="color_column" headerText="Type" sortable="false">
-				<mx:AdvancedDataGridColumn width="50" headerText="BW" sortable="false" textAlign="center" dataField="blackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="50" headerText="Color" sortable="false" textAlign="center"  dataField="color" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="50" headerText="LF" sortable="false" textAlign="center"  dataField="largeFormat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText="BW" sortable="false" textAlign="center" dataField="blackwhite" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText="Color" sortable="false" textAlign="center"  dataField="color" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="40" headerText="LF" sortable="false" textAlign="center"  dataField="largeFormat" itemRenderer="com.efi.components.GenericCheckboxRenderer" rendererIsEditor="true" editorDataField="selected"/>
 
 			</mx:AdvancedDataGridColumnGroup>
 		</mx:groupedColumns>
 	</mx:AdvancedDataGrid>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
 	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
 	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
@@ -306,10 +284,10 @@ width="902" height="873" title="Copier Definitions"
 		<mx:CheckBox x="102" y="356" label="BW" id="blackwhitecheck" selected="{copyDefinition.blackwhite}"/>
 		<mx:CheckBox x="153" y="356" label="Color" id="colorcheck" selected="{copyDefinition.color}"/>
 		<mx:CheckBox x="215" y="356" label="LargeFormat" id="largeformatCheck" selected="{copyDefinition.largeFormat}"/>
-		<mx:Label x="637" y="309" text="Method:"/>
-		<mx:Label x="628" y="339" text="Sales cat:"/>
-		<mx:List x="700" y="306" height="21" id="method"></mx:List>
-		<mx:List x="700" y="336" height="21" id="salescat"></mx:List>
+		<mx:Label x="615" y="309" text="Method:"/>
+		<mx:Label x="606" y="339" text="Sales cat:"/>
+		<mx:List x="674" y="306" height="21" id="method"></mx:List>
+		<mx:List x="674" y="336" height="21" id="salescat"></mx:List>
 		<mx:Label x="62" y="535" text="Max Width:"/>
 		<mx:Label x="66" y="562" text="Min Width:"/>
 		<mx:TextInput x="139" y="533" id="maxWidthsize" text="{copyDefinition.maxWidth}"/>
@@ -322,12 +300,12 @@ width="902" height="873" title="Copier Definitions"
 		<mx:TextInput x="139" y="402" id="monthlyBurdenRate" text="{copyDefinition.monthlyBurdenRate}"/>
 		<mx:TextInput x="139" y="428" id="monthlyLabor" text="{copyDefinition.monthlyLabor}"/>
 		<mx:TextInput x="139" y="458" id="clickCost" text="{copyDefinition.clickCost}"/>
-		<mx:Label x="582" y="384" text="Open Hours /Day:"/>
-		<mx:TextInput x="696" y="382" id="openhours" text="{copyDefinition.hoursOpen}"/>
-		<mx:Label x="561" y="410" text="Monthly Maintenance:"/>
-    	<mx:TextInput x="696" y="408" id="monthlyMaintenance" text="{copyDefinition.monthlyMaintenance}"/>
-		<mx:Label x="550" y="436" text="Machine Cost Per Copy:"/>
-		<mx:TextInput x="696" y="434" id="machineCostperCopy" text = "{copyDefinition.machineCostPerCopy}"/>
+		<mx:Label x="572" y="384" text="Open Hours /Day:"/>
+		<mx:TextInput x="678" y="382" id="openhours" text="{copyDefinition.hoursOpen}" width="157"/>
+		<mx:Label x="551" y="410" text="Monthly Maintenance:"/>
+    	<mx:TextInput x="678" y="408" id="monthlyMaintenance" text="{copyDefinition.monthlyMaintenance}" width="157"/>
+		<mx:Label x="540" y="430" text="Machine Cost Per Copy:"/>
+		<mx:TextInput x="678" y="436" id="machineCostperCopy" text = "{copyDefinition.machineCostPerCopy}" width="157"/>
 		<mx:Label x="364" y="384" text="Open Days/ Year:"/>
 		<mx:TextInput x="471" y="382" width="71" id="openDays" text= "{copyDefinition.daysOpen}"/>
 		<mx:Label x="363" y="404" text="Monthly Payment:"/>
