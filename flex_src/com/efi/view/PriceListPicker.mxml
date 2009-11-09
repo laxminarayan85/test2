@@ -65,6 +65,8 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
+	    if (this.itemType == null)
+	    	this.itemType = "PriceListBase";
 		dataService.getAll(this.itemType);
 		
 		if (this.itemType == "WasteChart"){
