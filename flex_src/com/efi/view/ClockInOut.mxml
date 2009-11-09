@@ -10,7 +10,9 @@
 	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
 		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
+		<mx:method name="getByClockInOutBreak" fault="handleFault(event)" result="handleLoadTimeCardBreakResult(event)"/>
 	</mx:RemoteObject>
+
 	
 	<mx:Producer id="producer" destination="employees"/>
 	<mx:Consumer id="consumer" destination="employees" message="messageHandler(event.message)"/>
@@ -41,13 +43,18 @@
 
 	[Bindable]
 	private var timecardArray:ArrayCollection = new ArrayCollection();
-	
+	[Bindable]
+	private var timecardBreakArray:ArrayCollection = new ArrayCollection();
+
 	[Bindable] 
 	private var employee:Employee;
 
 	[Bindable] 
 	private var timecard:TimeCard;
-	
+
+	[Bindable]
+	private var OnOffBreak:String="On Break";
+		
 	public function init():void {
 		var application:Snowmass = Snowmass.getInstance();
 	/* 	consumer.subscribe();
@@ -76,6 +83,9 @@
 	private function handleLoadTimeCardResult(ev:ResultEvent):void {
 		timecardArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadTimeCardBreakResult(ev:ResultEvent):void {
+		timecardBreakArray = ev.result as ArrayCollection;
+	}
 	
 	private function setEmployee():void
 	{	
@@ -83,45 +93,68 @@
 	}
 	
 	private function setTimeCard(reason:String):void {
-		dataServiceTimeCard.getByClockInOut("TimeCard",employee);
-		var currentArray:ArrayCollection = new ArrayCollection();
 
-		for each(var item:TimeCard in timecardArray) {
-			if (item.employee == employee && item.created == new Date())
+		var newCard:TimeCard;
+		var item:TimeCard;
+		var currentArray:ArrayCollection = new ArrayCollection();
+		
+		if ((reason == "in") ||(reason == "out"))
+		{
+
+			for each(item in timecardArray) {
+				if (item.employee == employee && item.created == new Date())
+				{
+					currentArray.addItem(item);
+				}
+			}
+			if (timecardArray == null || timecardArray.length == 0)
 			{
-				currentArray.addItem(item);
+				newCard = new TimeCard();
+			}else {
+				newCard = timecardArray.getItemAt(0,0) as TimeCard;
+			}
+			if (reason == "in")
+			{
+				newCard.startDateTime = new Date(); 
+				newCard.endDateTime = null;
+				newCard.breakTime = null
+				newCard.employee = employee;
+				newCard.onClock = 1;
+			}
+			if (reason == "out")
+			{
+				newCard.endDateTime = new Date();
+				newCard.onClock = 0;
+			}
+		} else {
+	
+			for each(item in timecardBreakArray) {
+				if (item.employee == employee && item.created == new Date())
+				{
+					currentArray.addItem(item);
+				}
+			}
+			if (timecardBreakArray == null || timecardBreakArray.length == 0)
+			{
+				newCard = new TimeCard();
+			}else {
+				newCard = timecardBreakArray.getItemAt(0,0) as TimeCard;
+			}
+
+			if (reason == "breakstart")
+			{
+				newCard.startDateTime = new Date();
+				newCard.endDateTime = null;
+				newCard.employee = employee;
+				newCard.breakTime = new Date();
+				newCard.onClock = 0;
+			}
+			if (reason == "breakstop")
+			{
+				newCard.endDateTime = new Date();
 			}
 		}
-		var newCard:TimeCard;
-		if (timecardArray == null || timecardArray.length == 0)
-		{
-			newCard = new TimeCard();
-		}else {
-			newCard = timecardArray.getItemAt(0,0) as TimeCard;
-		}			
-		if (reason == "in")
-		{
-			newCard.startDateTime = new Date(); 
-			newCard.employee = employee;
-			newCard.onClock = 1;
-		}
-		if (reason == "out")
-		{
-			newCard.endDateTime = new Date();
-			newCard.employee = employee;
-		}
-		if (reason == "breakstart")
-		{
-			newCard.startDateTime = new Date();
-			newCard.employee = employee;
-			newCard.breakTime = new Date();
-		}
-		if (reason == "breakstop")
-		{
-			newCard.endDateTime = new Date();
-			newCard.employee = employee;
-		}
-	
+			
 		dataServiceTimeCard.addUpdate(newCard);
 	}
 
@@ -169,7 +202,7 @@
 				employee.clockIn= false;
 				employee.clockOut = false;
 				employee.clockBreak= true;
-				setTimeCard("break");
+				setTimeCard("breakstart");
 			}
 			setEmployee();
 			employee = null;
@@ -188,6 +221,14 @@
 
 	private function doGrid(): void{ 
 		employee = employeeGrid.selectedItem as Employee;
+		dataServiceTimeCard.getByClockInOut("TimeCard",employee);
+		dataServiceTimeCard.getByClockInOutBreak("TimeCard",employee);
+		if (employee.clockBreak == true){
+			OnOffBreak = "Off Break"
+		}else {
+			OnOffBreak = "On Break"
+		}
+		
 	}  
               
 ]]>
@@ -196,7 +237,7 @@
 
 	<mx:Button x="20" y="37" label="Clock In" width="132" height="107" icon="@Embed(source='../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
 	<mx:Button x="20" y="165" label="Clock Out" width="132" height="107" icon="@Embed(source='../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
-	<mx:Button x="20" y="310" label="On Break" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
+	<mx:Button x="20" y="310" label="{OnOffBreak}" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
 	<mx:AdvancedDataGrid x="167" y="37" width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="380" sortExpertMode="true"
 		itemClick="doGrid()">
 		<mx:groupedColumns>
