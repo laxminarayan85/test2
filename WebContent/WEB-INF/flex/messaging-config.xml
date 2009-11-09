@@ -30,6 +30,8 @@
 	<destination id="productcodes"/>
 	<destination id="systempreferences"/>
 	<destination id="cashregister"/>
+	<destination id="timeperiod"/>
+	<destination id="timecards"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

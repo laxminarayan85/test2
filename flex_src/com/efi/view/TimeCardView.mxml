@@ -13,8 +13,8 @@
 		<mx:method name="getByTimeCardByEmployee" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:Producer id="producer" destination="cashregister"/>
-	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="timecards"/>
+	<mx:Consumer id="consumer" destination="timecards" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
@@ -28,7 +28,6 @@
 	import mx.rpc.events.FaultEvent;                                         
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
-	import mx.collections.XMLListCollection;
 	import com.efi.vo.TimeCard;
 	import com.efi.vo.Employee;
 
