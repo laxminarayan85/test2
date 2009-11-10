@@ -217,6 +217,7 @@
 		}
 		private function doClockInOut():void {
 			var child:ClockInOut = new ClockInOut();
+			child.showCloseButton=false
 			addUniqueTab(child);
 		}
 		private function doCreateInvoice():void {
