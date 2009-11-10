@@ -69,12 +69,16 @@
 // Data Load Handlers
 	private function handleLoadResult(ev:ResultEvent):void {
 		timeperiodArray = ev.result as ArrayCollection;
-		if (timeperiodArray.length > 0)
+		if (timeperiodArray != null && timeperiodArray.length > 0)
 		{
 			period = timeperiodArray.getItemAt(0,0) as Period;
 		} else
 		{
 			period = new Period();
+			if (timeperiodArray == null)
+			{
+				timeperiodArray = new ArrayCollection()
+			}
 			timeperiodArray.addItem(period);
 		}
 	}
@@ -147,7 +151,7 @@
 
 	<mx:Panel x="10" y="10" width="199" height="196" layout="absolute" title="Current Period">
 		<mx:Label x="17" y="11" text="Period #:"/>
-		<mx:TextArea x="76" y="10" id="txtPeriodNumber" height="19" width="63" enabled="false" text="{period.periodNumber}"/>
+		<mx:TextArea x="76" y="10" id="txtPeriodNumber" height="19" width="63" text="{period.periodNumber}"/>
 		<mx:Label x="36" y="57" text="From:"/>
 		<mx:Label x="50" y="81" text="To:"/>
 		<mx:DateField x="76" y="55" id="txtCurrentFrom" text="{period.fromDate}"/>
