@@ -58,6 +58,14 @@ public class Period extends ModelBase {
 	 * @generated
 	 */
 	public static final String TYPE = "Type";
+	/**
+	 * @generated
+	 */
+	public static final String PERIODNUMBER = "PeriodNumber";
+	/**
+	 * @generated
+	 */
+	public static final String PERIODCLOSED = "PeriodClosed";
 
 	/**
 	 * @generated
@@ -169,6 +177,40 @@ public class Period extends ModelBase {
 	public void setType(String newVal) {
 		this.type = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Integer periodNumber;
+	/**
+	 * @generated
+ 	 */
+	public Integer getPeriodNumber(){
+		return periodNumber; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPeriodNumber(Integer newVal) {
+		this.periodNumber = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean periodClosed;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getPeriodClosed(){
+		return periodClosed; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPeriodClosed(Boolean newVal) {
+		this.periodClosed = newVal;
+	}
 
 	/**
 	 * @generated
@@ -182,6 +224,8 @@ public class Period extends ModelBase {
 		if (TODATE.equals(propertyName)) return getToDate();
 		if (DAY.equals(propertyName)) return getDay();
 		if (TYPE.equals(propertyName)) return getType();
+		if (PERIODNUMBER.equals(propertyName)) return getPeriodNumber();
+		if (PERIODCLOSED.equals(propertyName)) return getPeriodClosed();
 		return super.getProperty(propertyName);
 	}
 	
@@ -197,6 +241,8 @@ public class Period extends ModelBase {
 		if (TODATE.equals(propertyName)) setToDate((Date)newValue); else
 		if (DAY.equals(propertyName)) setDay((String)newValue); else
 		if (TYPE.equals(propertyName)) setType((String)newValue); else
+		if (PERIODNUMBER.equals(propertyName)) setPeriodNumber((Integer)newValue); else
+		if (PERIODCLOSED.equals(propertyName)) setPeriodClosed((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -218,6 +264,10 @@ public class Period extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (TYPE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (PERIODNUMBER.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (PERIODCLOSED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -234,6 +284,8 @@ public class Period extends ModelBase {
 		if (TODATE.equals(propertyName)) return Period.class;
 		if (DAY.equals(propertyName)) return Period.class;
 		if (TYPE.equals(propertyName)) return Period.class;
+		if (PERIODNUMBER.equals(propertyName)) return Period.class;
+		if (PERIODCLOSED.equals(propertyName)) return Period.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -256,6 +308,10 @@ public class Period extends ModelBase {
 		if (! SmartEquals(getDay(), objT.getDay()))
 			return false;
 		if (! SmartEquals(getType(), objT.getType()))
+			return false;
+		if (! SmartEquals(getPeriodNumber(), objT.getPeriodNumber()))
+			return false;
+		if (! SmartEquals(getPeriodClosed(), objT.getPeriodClosed()))
 			return false;
 		return true;
 	}			

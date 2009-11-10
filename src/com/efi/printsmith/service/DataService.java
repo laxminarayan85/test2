@@ -323,6 +323,23 @@ public class DataService {
     	return null;            
    	} 
 
+	public List<Period> getByPeriodOpen(String className) throws Exception {      
+    	try {            
+    		log.debug("** getByEmployee Id called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();  
+    		
+    		String queryString = "from "+className+" where periodClosed = 0";
+			Query query = em.createQuery(queryString);
+    		List<Period>  periodlist = query.getResultList();   
+    		if (periodlist != null)
+    		 	log.debug("** Found " + periodlist.size() + "records:");
+    		return periodlist;
+    	} catch (Exception e) { 
+    		log.error(e);       
+   		}        
+    	return null;            
+   	} 
+
     
     public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      
     	try {            
