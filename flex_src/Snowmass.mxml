@@ -194,7 +194,6 @@
 			addUniqueTab(child);
 		}
 		
-		
 		private function doStockDefinitions():void {
 			var child:StockDefinitions = new StockDefinitions();
 			addUniqueTab(child);
@@ -204,8 +203,9 @@
 			addUniqueTab(child);
 		}
 		private function doCashRegister():void {
-			var child:CashRegister = new CashRegister();
-			addUniqueTab(child);
+			var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, true));
+			cashRegisterPopup.setStyle("borderAlpha", 0.9);
+			PopUpManager.centerPopUp(cashRegisterPopup);
 		}
 		private function doEmployee():void {
 			var child:EmployeeManager = new EmployeeManager();
