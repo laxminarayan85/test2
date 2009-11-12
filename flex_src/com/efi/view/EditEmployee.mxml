@@ -9,25 +9,20 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
-<mx:RemoteObject id="cityDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
+<mx:RemoteObject id="pressService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPress(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="copierService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopier(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="priceListService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPriceList(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="chargeService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCharge(event)"/>
 </mx:RemoteObject>
 
-<mx:RemoteObject id="stateDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
-</mx:RemoteObject>
 
-<mx:RemoteObject id="countryDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="zipDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
-</mx:RemoteObject>
 <mx:Producer id="producer" destination="employees"/>
 <mx:Consumer id="consumer" destination="employees"  message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -48,10 +43,6 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	
 	import com.efi.vo.Employee;
 	import com.efi.vo.Address;                        
-	import com.efi.vo.City;
-	import com.efi.vo.Country;
-	import com.efi.vo.State;
-	import com.efi.vo.Zip;   
 	import com.efi.vo.Employee;                          
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -77,14 +68,17 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
   
     [Bindable]                                         
 		private var employee:Employee;
+	
 	[Bindable] 
-		 private var citys:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    	private var states1:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    	private var countrys:ArrayCollection = new ArrayCollection();  
-    [Bindable]
-    	private var zips:ArrayCollection = new ArrayCollection();                  
+		 private var presses:ArrayCollection = new ArrayCollection(); 
+	[Bindable] 
+		 private var copiers:ArrayCollection = new ArrayCollection(); 
+	
+	[Bindable] 
+		 private var pricelists:ArrayCollection = new ArrayCollection();
+	 [Bindable] 
+		 private var charges:ArrayCollection = new ArrayCollection();   
+                    
     [Bindable]
     	private var formIsValid:Boolean = false;
     [Bindable]
@@ -102,12 +96,12 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		titleWindow.parentContainer = this;
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.formIsEmpty = true;
-		cityDataService.getAll("City");
-		stateDataService.getAll("State");
-		countryDataService.getAll("Country");
-		zipDataService.getAll("Zip");
 		dataService.getAll("Employee");   
 		employee = new Employee();
+		pressService.getAll("PressDefinition");
+		copierService.getAll("CopierDefinition");
+		priceListService.getAll("PriceList");
+		chargeService.getAll("Charge");
 	}
 	private function messageHandler(message:IMessage):void
 	{
@@ -246,64 +240,36 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		
 	}
 	
-	
-	
-	
-	     
+     
 	private function handleLoadResult(ev:ResultEvent):void {
 		employees = ev.result as ArrayCollection;
 	}
 	
-	
-	
-	
-	private function handleLoadCity(ev:ResultEvent):void {
+	private function handleLoadPress(ev:ResultEvent):void {
 	 	
-	 	citys = ev.result as ArrayCollection;
+	 	presses = ev.result as ArrayCollection;
 		
 	}   
-	 private function handleLoadState(ev:ResultEvent):void {
-		
+	private function handleLoadCopier(ev:ResultEvent):void {
 	 	
-		states1 = ev.result as ArrayCollection;
+	 	copiers = ev.result as ArrayCollection;
+		
+	} 
+	private function handleLoadCharge(ev:ResultEvent):void {
+	 	
+	 	charges = ev.result as ArrayCollection;
+		
+	}     
+	private function handleLoadPriceList(ev:ResultEvent):void {
+	 	
+	 	pricelists = ev.result as ArrayCollection;
 		
 	}   
-	 private function handleLoadCountry(ev:ResultEvent):void {
 	
-	 	
-		countrys = ev.result as ArrayCollection;
-		
-		
-	}   
-	 private function handleLoadZip(ev:ResultEvent):void {
-		
-	 	
-		zips = ev.result as ArrayCollection;
-		
-		
-	}                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getAll("Employee")
 		doNew();
 	}
-	private function handleSaveCityResult(ev:ResultEvent):void {
-		
-		cityDataService.getAll("City");
-		
-		
-	}      
-	private function handleSaveStateResult(ev:ResultEvent):void {
-		stateDataService.getAll("State");
-	}      
-
-	private function handleSaveCountryResult(ev:ResultEvent):void {
-		countryDataService.getAll("Country");
-	}      
-
-	private function handleSaveZipResult(ev:ResultEvent):void {
-		zipDataService.getAll("Zip");
-	}   
-	
 	
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -390,7 +356,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		<mx:Button x="493" y="10" width="38" height="38">
 			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
-		<mx:TabNavigator x="0" y="82" width="849" height="478" creationPolicy="all">
+		<mx:TabNavigator x="0" y="80" width="849" height="796" creationPolicy="all">
 			<mx:Canvas label="Settings" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="ID Number:" width="71"/>
 				<mx:Text x="143" y="17" id="employeeID" text="{employee.id}" width="106" />
@@ -484,19 +450,19 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="Pricing Methods">
 					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing" selected="{employee.allPricingMethods}"/>
-					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods"></mx:List>
+					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods" dataProvider="{pricelists}" labelField="name"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="Charge Type">
 					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types" selected="{employee.allChargeTypes}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="charge_types"></mx:List>
+					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="Presses">
 					<mx:CheckBox x="10" y="10" label="Use all Presses" id="all_presses" selected="{employee.allPresses}"/>
-					<mx:List x="10" y="40" width="283" height="110" id="press_list"></mx:List>
+					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="Copiers">
 					<mx:CheckBox x="10" y="10" label="Use all Copiers" id="all_copiers"  selected="{employee.allCopiers}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="copier_list"></mx:List>
+					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	
 		</mx:TabNavigator>
