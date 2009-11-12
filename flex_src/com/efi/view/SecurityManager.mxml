@@ -122,7 +122,7 @@
 ]]>
 </mx:Script>
 	<mx:Label x="26" y="89" text="Access Group:"/>
-	<mx:List x="121" y="86" height="21" dataProvider="{accessGroupLists}"  labelField="name" click="doAccessGroup();" id="accessGroupList"></mx:List>
+	<mx:List x="121" y="89" height="37" dataProvider="{accessGroupLists}"  labelField="name" click="doAccessGroup();" id="accessGroupList"></mx:List>
 	<mx:Label x="61" y="136" text="Name:"/>
 	<mx:TextInput x="121" y="134" id="name_edit" text="{accessGroup.name}" width="162" focusOut="mapToAccessGroup();"/>
 	<mx:DataGrid x="26" y="181" width="698" height="325" id="DataGrid" dataProvider="{securitySetupLists}">
