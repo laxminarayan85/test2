@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="458" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="458" 
+	defaultButton="{select_button}" 
+	showCloseButton="false" 
+	creationComplete="init()"
     close="PopUpManager.removePopUp(this);" 
-    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
+    horizontalScrollPolicy="off" 
     label="Price List" name="Price List"
     verticalScrollPolicy="off">
 
@@ -9,12 +13,6 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="elementDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadElementResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveElementResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteElementResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
@@ -61,8 +59,9 @@
 	private var pricelists:ArrayCollection = new ArrayCollection();   
            
 	[Bindable] 
-    private var priceListElementlists:ArrayCollection = new ArrayCollection();
-
+    private var PriceListElementArray:ArrayCollection = new ArrayCollection();
+	[Bindable] 
+	private var PriceListElementDeleteArray:ArrayCollection = new ArrayCollection();
     [Bindable]
     private var quantity_header:String = "Quantity";
     
@@ -86,10 +85,9 @@
 		Alert.show(message, "Error", 0, this, null);                                 
 	}
 	                                                       
-	private function init():void {   
+	private function init():void {
 	    PopUpManager.centerPopUp(this);
 	    dataService.getAll(itemType);
-	    dataService.getAll("PriceListElement");
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (itemType == "PriceList")
 		{
@@ -98,7 +96,6 @@
 			if (priceList == null)
 			{
 				priceList = new PriceList();
-				priceListElement = new PriceListElement(); 
 			} 
 		}else
 		{	
@@ -107,16 +104,21 @@
 			if (priceList == null)
 			{
 				priceList = new WasteChart();
-				priceListElement = new PriceListElement(); 
 			} 
 		}
-
+		if (priceList.priceListElement != null)
+		{
+			PriceListElementArray = priceList.priceListElement as ArrayCollection;
+		}
 	}
 	                                
 	private function doSelect():void {	
 		var editPage:Container = parentContainer;
 
 		maptoPricelist();
+		UpdateElementData();
+		dataService.addUpdate(priceList);
+
 		switch(editPage.className) {
 			case "PressDefinitions":
 				(editPage as PressDefinitions).setPriceList(priceList);
@@ -136,10 +138,7 @@
 	}     
 	
 	private function doNew():void {
-		priceList = new PriceListBase();
-		priceListElement = new PriceListElement(); 
-	
-	
+		mapfromPricelist(null);
 	}
 	
 	private function doClear():void {
@@ -147,13 +146,22 @@
 	}
 	
 	private function doDelete():void {
-		 dataService.deleteItem("PriceListBase",priceList.id);
+		 dataService.deleteItem(itemType,priceList.id);
 	}
 	
-	private function doSelectElement():void {
-		//priceListElementlists
+	private function UpdateElementData():void{
+		if (priceList.priceListElement == null)
+		{
+			priceList.priceListElement = new ArrayCollection()
+		}
+			 
+		for each (var item:PriceListElement in PriceListElementArray)
+		{
+			priceList.priceListElement.addItem(item);
+		}
+		
+
 	}
-	
 	public function mapfromPricelist(pricelist1:PriceListBase):void {
 		if (pricelist1 != null){
 			if (priceList == null){
@@ -163,13 +171,21 @@
 			priceList = pricelist1; 
 
 			//title_edit.text = priceList.name;
-			chkInterpolate.selected = priceList.interpolate;
-			chkUseAsRateList.selected = priceList.isRate;
-			chkProductionDiscount.selected = priceList.isDiscount;
-			chkIgnoreGlobalPriceChange.selected = priceList.ignorePriceAdjustments;
-			chkUseAdditionalQuantities.selected = priceList.lastItemIsPriceAdditionalQty;
+		}else
+		{
+			if (priceList == null){
+				priceList = new PriceListBase;
+				priceListElement = new PriceListElement(); 
+			}
 		}
-		
+		chkInterpolate.selected = priceList.interpolate;
+		chkUseAsRateList.selected = priceList.isRate;
+		chkProductionDiscount.selected = priceList.isDiscount;
+		chkIgnoreGlobalPriceChange.selected = priceList.ignorePriceAdjustments;
+		if (priceList.priceListElement != null)
+		{
+			PriceListElementArray = priceList.priceListElement as ArrayCollection;
+		}
 	}
 	
 	private function maptoPricelist():void {
@@ -179,10 +195,7 @@
 		priceList.isRate = chkUseAsRateList.selected;
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
-		priceList.lastItemIsPriceAdditionalQty = chkUseAdditionalQuantities.selected;
-		
-		dataService.addUpdate(priceList);
-		elementDataService.addUpdate(priceListElement);
+	
 	}
 	
 	
@@ -192,41 +205,34 @@
 
 	private function handleSaveResult(ev:ResultEvent):void {
 		dataService.getAll(itemType)
-		
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		pricelists = ev.result as ArrayCollection;
-		
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getAll(itemType)
 		doNew();
 	}
 	
-	private function handleSaveElementResult(ev:ResultEvent):void {
-		dataService.getAll("PriceListElement")
-		
-	}
-	private function handleLoadElementResult(ev:ResultEvent):void {
-		priceListElementlists = ev.result as ArrayCollection;
-		
-	}
-	private function handleDeleteElementResult(ev:ResultEvent):void {
-		dataService.getAll("PriceListElement")
-	}
+	private function doNewPriceListElement():void {
+		var newItem:PriceListElement = new PriceListElement();
+		PriceListElementArray.addItem(newItem);
 
-	private function doQtyAmtValid():void {
-		
-	}	
+	}
+	private function doRemovePriceListElement():void {
+		var newItem:PriceListElement = dataGrid.selectedItem as PriceListElement;
+		PriceListElementDeleteArray.addItem(newItem);
+		PriceListElementArray.removeItemAt(dataGrid.selectedIndex);
+	}
 
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:DataGrid id="dataGrid" width="154" height="366" dataProvider="{priceListElementlists}"
-		doubleClickEnabled="true" doubleClick="doSelectElement();"  showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="false" enabled="true">               
+		<mx:DataGrid id="dataGrid" width="154" height="309" dataProvider="{PriceListElementArray}"
+		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="true" enabled="true">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />                         
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" />                         
+		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" />
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="108" x="0" y="374"/>
@@ -240,13 +246,12 @@
 		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
 		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
 		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}" id="chkUseAsRateList"/>
-		<mx:Panel x="162" y="189" width="228" height="131" layout="absolute" dropShadowEnabled="false" title="Additional Quantities">
-			<mx:CheckBox x="10" y="10" label="Use additional quantities" selected="{priceList.lastItemIsPriceAdditionalQty}" id="chkUseAdditionalQuantities"/>
-			<mx:TextInput x="57" y="36" width="139" id="additional_quantity" text="{priceListElement.quantity}" focusOut="doQtyAmtValid();"/>
-			<mx:TextInput x="57" y="62" width="139" id="additional_price" text="{priceListElement.amount}" focusOut="doQtyAmtValid();"/>
-			<mx:Label x="10" y="38" text="Qty:"/>
-			<mx:Label x="10" y="64" text="Amt:"/>
-		</mx:Panel>
+		<mx:Button x="34" y="317" width="38" height="38" click="doNewPriceListElement();">
+			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="84" y="317" width="38" height="38" click="doRemovePriceListElement();">
+			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
