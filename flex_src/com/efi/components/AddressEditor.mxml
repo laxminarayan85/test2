@@ -32,7 +32,7 @@
 			import mx.controls.Alert;                                         
 
 			[Bindable]
-			private var address:Address;
+			public var address:Address;
 
 			[Bindable]
 			public var cityDataProvider:ArrayCollection=null;

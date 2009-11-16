@@ -92,6 +92,7 @@
 		dispatchEvent(cancelEvent);
 		PopUpManager.removePopUp(this);
 	}
+	
 	private function updateDataGrid():void {
 		dataService.getAccountsByPartialName(filter_field.text);
 	}

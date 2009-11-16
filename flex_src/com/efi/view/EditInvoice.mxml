@@ -13,37 +13,17 @@
 </mx:RemoteObject>
 <mx:RemoteObject id="salesRepDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
-    <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="shippingMethodDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveShippingMethodResult(event)"/>
-</mx:RemoteObject>
-<mx:RemoteObject id="cityDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="stateDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadState(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStateResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="countryDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
-</mx:RemoteObject>
-
-<mx:RemoteObject id="zipDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Script>                                   
 <![CDATA[
 	import mx.events.CloseEvent;
 	import com.efi.events.JobEditCompleteEvent;
+	import com.efi.events.AccountPickerSelectEvent;
 	
 	import com.efi.vo.HoldState;
 	import com.efi.vo.Invoice;
@@ -88,17 +68,6 @@
     [Bindable]
     private var shippingMethods:ArrayCollection = new ArrayCollection();    
     
-    [Bindable]
-    private var citys:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    private var states1:ArrayCollection = new ArrayCollection();   
-    [Bindable]
-    private var countrys:ArrayCollection = new ArrayCollection();  
-    [Bindable]
-    private var zips:ArrayCollection = new ArrayCollection();                  
-    
-    
-                
 	public function init():void {
 		vbox.getDividerAt(0).visible=false;
 		vbox.getDividerAt(1).visible=false;
@@ -128,21 +97,6 @@
 	private function handleFault(event:Event):void {
 		
 	}
-	private function handleLoadCity(ev:ResultEvent):void {
-	 	citys = ev.result as ArrayCollection;
-	}   
-	
-	private function handleLoadState(ev:ResultEvent):void {
-		states1 = ev.result as ArrayCollection;
-	}
-	
-	private function handleLoadCountry(ev:ResultEvent):void {
-		countrys = ev.result as ArrayCollection;
-	}   
-	
-	private function handleLoadZip(ev:ResultEvent):void {
-		zips = ev.result as ArrayCollection;
-	}                                 
 
     private function validateForm(event:Event):void 
     {                    
@@ -176,8 +130,9 @@
 			invoice.shippingMethod = ship_via_combo.selectedItem as ShippingMethod;
 		invoice.specialInstructions = special_instructions_edit.text as SpecialInstructions
 		invoice.billToAddress = bill_to_address_editor.getAddress();
-		invoice.contact.address = address_editor.getAddress();
+		//invoice.contact.address = address_editor.getAddress();
 	}
+	
 	public function mapfromInvoiceData():void{
 		
 		if (invoice.shippingMethod != null)			
@@ -186,20 +141,10 @@
 		if (invoice.salesRep != null)
 			inv_sales_rep.selectedIndex = findItem(invoice.salesRep.name, salesReps);
 		contact_list.selectedItem = invoice.account.contact as Contact;
-		address_editor.setAddress(invoice.contact.address);
-		address_editor.cityDataProvider = citys;
-		address_editor.stateDataProvider = states1;
-		address_editor.zipDataProvider = zips;
-		address_editor.countryDataProvider = countrys;
-		
-		bill_to_address_editor.setAddress(invoice.billToAddress);
-		bill_to_address_editor.cityDataProvider = citys;
-		bill_to_address_editor.stateDataProvider = states1;
-		bill_to_address_editor.zipDataProvider = zips;
-		bill_to_address_editor.countryDataProvider = countrys;
 	}
+	
 	public function doSave():void {
-		maptoInvoiceData;
+		maptoInvoiceData();
 		dataService.addUpdate(invoice); 
 	}
 	public function doGet():void {
@@ -227,14 +172,14 @@
     
 	private function doChangeAcct():void {
 		job_costing_stack.selectedChild = account_info_canvas;
-		 var titleWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
 	}
 	
-	public function setAccount(account2:Account):void{
-		invoice.account = account2;
+	public function setAccount(accountItem:Account):void{
+		invoice.account = accountItem;
+		invoice.shipToAddress = accountItem.shipToAddress;
+		invoice.billToAddress = accountItem.billToAddress;
 		contact_list.selectedItem = invoice.account.contact as Contact;
+		bill_to_address_editor.setAddress(invoice.billToAddress);	
 	}
 	
 	private function doNotepad():void {
@@ -305,32 +250,33 @@
 		shippingMethods = ev.result as ArrayCollection;
 		ship_via_combo.selectedItem = selectedItem;
 	}
-	private function handleSaveShippingMethodResult(ev:ResultEvent):void {
-		shippingMethodDataService.getAll("ShippingMethod");
+
+	private function doAccountPicker():void {
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+	}
+
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+	}      
 	}      
 
-	private function handleSaveSalesRepResult(ev:ResultEvent):void {
-		salesRepDataService.getAll("SalesRep");
-	} 
-	private function handleSaveCityResult(ev:ResultEvent):void {
-		
-		cityDataService.getAll("City");
-		
-		
-	}      
-	private function handleSaveStateResult(ev:ResultEvent):void {
-		stateDataService.getAll("State");
-	}      
-
-	private function handleSaveCountryResult(ev:ResultEvent):void {
-		countryDataService.getAll("Country");
-	}      
-
-	private function handleSaveZipResult(ev:ResultEvent):void {
-		zipDataService.getAll("Zip");
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account()); 
 	}     
 	   
-          
 ]]>
                              
 </mx:Script>
@@ -374,7 +320,7 @@
 					<mx:LinkButton x="345.5" y="10" width="38" height="38" click="doChangeAcct();" id="change_account_button">
 						<mx:icon>@Embed(source='../../../assets/change_account.png')</mx:icon>
 					</mx:LinkButton>
-					<mx:Label x="325" y="46" text="Change Acct" width="79" textAlign="center"/>
+					<mx:Label x="325" y="46" text="Account Info" width="79" textAlign="center"/>
 				</mx:Canvas>	
 			</mx:VBox>
 			<mx:VBox id="vbox2" height="388" width="100%" creationPolicy="all">
@@ -407,14 +353,13 @@
 						</mx:DataGrid>
 					</mx:Canvas>
 					<mx:Canvas label="" width="100%" height="100%" id="account_info_canvas" hideEffect="effect" showEffect="effect">
-						<mx:TextInput x="96" y="10" width="204" text="{invoice.name}" id="name_edit"/>
+						<mx:TextInput x="96" y="10" width="245" text="{invoice.name}" id="name_edit"/>
 						<mx:Label x="10" y="12" text="Invoice Title:"/>
-						<mx:TextInput x="413" y="10" width="195" id="inv_number" text="{invoice.invoiceNumber}"/>
-						<mx:Label x="308" y="12" text="Invoice Number:"/>
-						<ns1:AddressEditor x="0" y="38" id="bill_to_address_editor" height="157" width="325"/>
-						<ns1:AddressEditor x="345" y="38" id="address_editor" height="157" width="325"/>
+						<mx:TextInput x="454" y="10" width="195" id="inv_number" text="{invoice.invoiceNumber}"/>
+						<mx:Label x="349" y="12" text="Invoice Number:"/>
+						<ns1:AddressEditor x="16" y="62" id="bill_to_address_editor" address="{invoice.billToAddress}" height="157" width="325"/>
 						
-						<mx:Panel x="0" y="211" width="300" height="184" layout="absolute" dropShadowEnabled="false" title="Delivery Intent">
+						<mx:Panel x="349" y="38" width="300" height="211" layout="absolute" dropShadowEnabled="false" title="Delivery Intent" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 							<mx:RadioButtonGroup id="delivery_intent_radio_group"/>
 							<mx:RadioButton x="10" y="10" label="Invoice Address" groupName="delivery_intent_radio_group"/>
 							<mx:RadioButton x="10" y="31" label="Contact Ship Address:" groupName="delivery_intent_radio_group"/>
@@ -422,25 +367,26 @@
 							<mx:ComboBox x="31" y="51" width="239"></mx:ComboBox>
 							<mx:TextArea x="10" y="111" text="&#xd;" height="61" width="260"/>
 						</mx:Panel>
-						<mx:Label x="616" y="240" text="Acct Status:"/>
-						<mx:Label x="622" y="262" text="Acct Type:"/>
-						<mx:Label x="321" y="284" text="Taken By:"/>
-						<mx:Label x="317" y="310" text="Sales Rep:"/>
-						<mx:Label x="328" y="334" text="Ship Via:"/>
-						<mx:Label x="616" y="286" text="Hold State:"/>
-						<mx:Label x="646" y="310" text="PO #:"/>
-						<mx:Text x="692" y="240" width="146" textAlign="right" id="cust_discount_text4" text="{invoice.account.status}" />
-						<mx:Text x="692" y="262" width="133" textAlign="right" id="cust_discount_text5" text="{invoice.account.type}"/>
-						<mx:Label x="308" y="214" text="Contact List:" />
-						<mx:ComboBox x="391" y="212" width="217" dataProvider="{invoice.account.contact}" id="contact_list">
+						<mx:Label x="349" y="257" text="Acct Status:"/>
+						<mx:Label x="355" y="279" text="Acct Type:"/>
+						<mx:Label x="23" y="257" text="Taken By:"/>
+						<mx:Label x="19" y="283" text="Sales Rep:"/>
+						<mx:Label x="30" y="307" text="Ship Via:"/>
+						<mx:Label x="349" y="303" text="Hold State:"/>
+						<mx:Label x="379" y="327" text="PO #:"/>
+						<mx:Text x="425" y="257" width="146" textAlign="right" id="cust_discount_text4" text="{invoice.account.status}" />
+						<mx:Text x="425" y="279" width="133" textAlign="right" id="cust_discount_text5" text="{invoice.account.type}"/>
+						<mx:Label x="10" y="229" text="Contact List:" />
+						<mx:ComboBox x="93" y="227" width="217" dataProvider="{invoice.account.contact}"  id="contact_list">
 						</mx:ComboBox>
-						<mx:TextInput x="391" y="284" id="taken_by" />
-						<fc:AutoComplete id="inv_sales_rep" x="391" y="308" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
-						<fc:AutoComplete id="ship_via_combo" x="391" y="332" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
-						<mx:TextInput x="692" y="284" id="inv_hold_state" text="{invoice.holdState}"/>
-						<mx:TextInput x="692" y="308" id="inv_po_number" text= "{invoice.customerPO}"/>
-						<mx:Label x="331" y="240" text="Account:"/>
-						<mx:Text x="391" y="240" text="{invoice.account.title}" id="account_text" width="160"/>
+						<mx:TextInput x="93" y="257" id="taken_by" />
+						<fc:AutoComplete id="inv_sales_rep" x="93" y="281" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
+						<fc:AutoComplete id="ship_via_combo" x="93" y="305" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
+						<mx:TextInput x="425" y="301" id="inv_hold_state" text="{invoice.holdState}"/>
+						<mx:TextInput x="425" y="325" id="inv_po_number" text= "{invoice.customerPO}"/>
+						<mx:Label x="16" y="38" text="Account:"/>
+						<mx:Text x="76" y="38" text="{invoice.account.title}" id="account_text" width="160"/>
+						<mx:Button x="245" y="36" label="Assign..." click="doAccountPicker()" width="96"/>
 					</mx:Canvas>
 				</mx:ViewStack>					
 			</mx:VBox>

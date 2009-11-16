@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+		  xmlns:view="com.efi.view.*"
+		  xmlns:vo="com.efi.vo.*"
+		  xmlns:fc="http://www.adobe.com/2006/fc"
+		  xmlns:hc="com.hillelcoren.components.*"
+		  width="912"
+		  height="575"
+		  title="Job Charges"
+		  creationComplete="init()"
+		  label="Customer Editor"
+		  name="Customer Editor"
+		  horizontalScrollPolicy="off"
+		  verticalScrollPolicy="off"
+		  xmlns:ns1="com.adobe.flex.extras.controls.*">
+
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="pressDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadPressResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="locationDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadLocationResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="productDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadProductResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="chargeDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="chargeCommandDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+					fault="handleFault(event)"
+					result="handleLoadChargeCommandResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.events.JobEditCompleteEvent;
+			import com.efi.vo.Invoice;
+			import com.efi.vo.Job;
+			import com.efi.vo.PressDefinition;
+			import com.efi.vo.Location;
+			import com.efi.vo.Account;
+			import com.efi.vo.ProductCode;
+			import com.efi.vo.Charge;
+			import com.efi.vo.ChargeCategory;
+			import com.efi.vo.ChargeCommand;
+			
+			import com.efi.events.JobEditCompleteEvent;
+
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.printing.FlexPrintJob;
+			import mx.printing.PrintAdvancedDataGrid;
+			import mx.printing.PrintDataGrid;
+			import mx.core.Application;
+			import mx.validators.Validator;
+			import mx.events.ValidationResultEvent;
+   			import mx.collections.ICollectionView;
+
+			private var accounts:ArrayCollection=new ArrayCollection();
+			private var presses:ArrayCollection=new ArrayCollection();
+			private var locations:ArrayCollection=new ArrayCollection();
+			private var productCodes:ArrayCollection=new ArrayCollection();
+			[Bindable]
+			public var job:Job;
+
+			[Bindable]
+			private var invoice:Invoice;
+
+			[Bindable]
+			private var chargeCommands:ArrayCollection = new ArrayCollection();
+
+			[Bindable]
+			public var tempOpen:Object = new Object();
+			
+			[Bindable]
+			public var refreshSO:Boolean = false;
+			
+			[Bindable]
+			private var charges:ArrayCollection = new ArrayCollection();
+
+			private var focussedFormControl:DisplayObject;
+
+			public function init():void
+			{
+				PopUpManager.centerPopUp(this);
+				pressDataService.getAll("PressDefinition");
+				locationDataService.getAll("Location");
+				productDataService.getAll("ProductCode");
+				chargeDataService.getAll("Charge");
+				chargeCommandDataService.getAll("ChargeCommand");
+				job=new Job();
+
+			}
+
+			private function findItem(name:String, array:ArrayCollection):int
+			{
+				for each (var element:Object in array)
+				{
+					if (name == element.name)
+					{
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
+
+			private function doNew():void
+			{
+				job=new Job();
+				setJob(job);
+			}
+
+			private function doDelete():void
+			{
+				dataService.deleteItem("Job", job.id);
+			}
+
+			public function getInvoice():Invoice
+			{
+				return this.invoice;
+			}
+
+			public function setInvoice(invoice:Invoice):void
+			{
+				this.invoice=invoice;
+			}
+
+			private function doGet():void
+			{
+
+			}
+
+			public function setJob(job2:Job):void
+			{
+				this.job=job2;
+				mapFromJobData();
+			}
+
+			private function mapToJobData():void
+			{
+				job.binderyWaste=parseInt(bindery_waste.text);
+				job.brokered=check_brokered.selected;
+				//job.charges =
+				job.comment=job_comment.text;
+				job.costingPress=job_costing_press.selectedItem as PressDefinition;
+				//job.press = job_press.selectedItem as PressDefinition;
+				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
+				job.productCode=product.selectedItem as ProductCode;
+				job.description=job_description.text;
+				job.estWaste=parseInt(est_waste.text);
+				job.finished=checked_finished.selected;
+				job.inSetsOf=parseInt(sets_of.text);
+				job.on=parseInt(job_on.text);
+				job.oversUnders=parseInt(job_over_under.text);
+				job.qtyOrdered=parseInt(job_ordered.text);
+				job.sheets=parseInt(job_sheets.text);
+				job.signatures=parseInt(num_of_sig.text);
+				job.taxable=check_taxtable.selected;
+				job.up=parseInt(job_up.text);
+				job.jobNotes=job_notes.text;
+				//	job.jobNumber =
+				job.jobTicketNotes=check_job_notes.selectedField;
+				job.location=job_location.selectedItem as Location;
+				if (run_method_radiogroup.selectedValue != null)
+					job.runMethod=run_method_radiogroup.selectedValue.toString();
+
+
+
+
+				//	job.salesCategory=
+
+
+
+			}
+
+			private function mapFromJobData():void
+			{
+
+				if (job.pricingPress != null)
+					job_pricing_press.selectedIndex=findItem(job.pricingPress.name, presses);
+				if (job.costingPress != null)
+					job_costing_press.selectedIndex=findItem(job.costingPress.name, presses);
+				if (job.press != null)
+					job_press.selectedIndex=findItem(job.press.name, presses);
+
+				if (job.location != null)
+					job_location.selectedIndex=findItem(job.location.name, locations);
+				if (job.productCode != null)
+					product.selectedIndex=findItem(job.productCode.name, productCodes);
+				run_method_radiogroup.selectedValue=job.runMethod;
+
+			}
+
+			private function doSave():void
+			{
+				mapToJobData();
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+				dispatchEvent(jobEditCompleteEvent);
+
+				PopUpManager.removePopUp(this);
+			}
+
+			private function handleLoadResult(ev:ResultEvent):void
+			{
+				//jobs = ev.result as ArrayCollection;
+			}
+
+			private function handleLoadPressResult(ev:ResultEvent):void
+			{
+				presses=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadLocationResult(ev:ResultEvent):void
+			{
+				locations=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadProductResult(ev:ResultEvent):void
+			{
+				productCodes=ev.result as ArrayCollection;
+			}
+
+			private function handleDeleteResult(ev:ResultEvent):void
+			{
+			}
+
+			private function handleLoadChargeResult(ev:ResultEvent):void
+			{
+				charges=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadChargeCommandResult(ev:ResultEvent):void
+			{
+				chargeCommands=ev.result as ArrayCollection;
+			}
+			
+			private function handleSaveResult(ev:ResultEvent):void
+			{
+				
+			}
+
+
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, null);
+			}
+
+
+
+			private function validateForm(event:Event):void
+			{
+				focussedFormControl=event.target as DisplayObject;
+
+				//formIsValid = true;                    
+
+			}
+
+			private function validate(validator:Validator):Boolean
+			{
+//        var validatorSource:DisplayObject = validator.source as DisplayObject;
+//     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+//        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+//        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+//		formIsValid = formIsValid && currentControlIsValid;
+//         
+//		return currentControlIsValid;
+				return true;
+			}
+	private function refreshData():void{
+		//reset the root node to its original unfiltered data
+		var i:int;
+		for (i=0; i< chargeCommands.length; i++) {
+			chargeCommands[i].children = new ArrayCollection(chargeCommands[i].children.source);
+			refreshRecursiveChildren(chargeCommands.source[i]);
+		}
+		//update the Tree after the data has been filtered
+		chargeTree.invalidateList();
+	}
+	
+	private function refreshRecursiveChildren(item:Object):void{
+        var classInfo:XML = describeType(item);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
+			//loop through each child and filter its children
+			for each(var chargeCategoryItem:ChargeCategory in item.children.source){
+				refreshRecursiveChildren(chargeCategoryItem);
+			}
+			item.children = new ArrayCollection(item.children.source);
+			item.children.filterFunction = filterData;
+			item.children.refresh();
+		} else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
+			//loop through each child and filter its children
+			for each(var chargeItem:Charge in item.children.source){
+				refreshRecursiveChildren(chargeItem);
+			}
+			item.children = new ArrayCollection(item.children.source);
+			item.children.filterFunction = filterData;
+			item.children.refresh();
+		}
+	}
+	
+	public function filterData(item:Object):Boolean{
+		//get the string to filter the nodes by
+		var searchString:String = tree_filter.text;
+		//if string is found in node return true.
+		//since the recursive filtering takes place from bottom up, if
+		//a collection still has children after filtering, also return true
+		if(searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+			return true;
+        var classInfo:XML = describeType(item);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
+			return true;
+		}
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private function tree_itemClick(evt:Event):void {  
+
+	}
+	
+	private function updateDataProvider():void {
+		tempOpen = chargeTree.openItems;
+		refreshSO = true;	
+	}
+	
+	private function renderFunction():void {
+		if (refreshSO) {
+			refreshSO = false;
+           	chargeTree.invalidateList();
+			chargeTree.openItems = tempOpen;
+			chargeTree.validateNow();
+		}
+	}
+	private function treeLabel(item:Object):String {
+		var children:ICollectionView;
+		
+		var suffix:String = "";
+		if (chargeTree.dataDescriptor.isBranch(item)) {
+		    children = chargeTree.dataDescriptor.getChildren(item);
+		    suffix = " (" + children.length + ")";
+		}
+		return item.name + suffix;
+	}
+	private function treeSelectionChanged(event:Event):void {
+		var charge:Charge = getSelectedTreeCharge();
+		
+//		if (charge == null) {
+//			chargeCategory = getSelectedTreeCategory(false);
+//			if (chargeCategory == null) {
+//				chargeCommand = getSelectedTreeCommand(false);
+//				if (chargeCommand == null) {
+//					charge_stack.selectedChild = charge_blank_canvas;
+//				} else {
+//					charge_stack.selectedChild = charge_command_canvas;
+//				}
+//			} else {
+//				charge_stack.selectedChild = charge_category_canvas;			
+//				chargeCommand = getSelectedTreeCommand(true);
+//			}
+//		} else {
+//			charge_stack.selectedChild = charge_canvas;
+//			chargeCategory = getSelectedTreeCategory(true);
+//			chargeCommand = getSelectedTreeCommand(true);
+//		}
+	}
+	
+	private function getSelectedTreeCharge():Charge {
+		var treeItem:Object = chargeTree.selectedItem;
+        var classInfo:XML = describeType(treeItem);
+
+		if (classInfo.@name.toString() == "com.efi.vo::Charge") {
+			return treeItem as Charge;
+		}
+		return null;
+	}
+	]]>
+
+	</mx:Script>
+
+	<mx:VBox width="100%"
+			 height="100%"
+			 creationPolicy="all">
+		<mx:Canvas width="100%"
+				   height="516">
+			<mx:HDividedBox x="10"
+							y="10"
+							width="100%"
+							height="100%">
+				<mx:Form height="507">
+					<mx:Tree width="200" height="90%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
+							labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);"></mx:Tree>
+					<mx:FormItem width="100%" label="Filter:" height="28">
+						<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
+					</mx:FormItem>
+				</mx:Form>
+				<mx:Canvas width="100%" height="100%">
+					<mx:VDividedBox x="10" y="10" width="100%" height="100%">
+						<mx:DataGrid height="100%" width="618">
+							<mx:columns>
+								<mx:DataGridColumn headerText="Document Charges" dataField="col1"/>
+								<mx:DataGridColumn headerText="Price" width="90" dataField="col2"/>
+							</mx:columns>
+						</mx:DataGrid>
+						<mx:Canvas width="100%" height="100%">
+							<mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%">
+								<mx:Canvas label="View 1" width="100%" height="100%">
+									<mx:CheckBox x="10" y="10" label="Finished" fontSize="9"/>
+									<mx:CheckBox x="93" y="10" label="Taxable" fontSize="9"/>
+									<mx:CheckBox x="166" y="10" label="Brokered" fontSize="9"/>
+									<mx:CheckBox x="244" y="10" label="Display Quantity" fontSize="9"/>
+									<mx:CheckBox x="362" y="10" label="Hidden" fontSize="9"/>
+									<mx:CheckBox x="430" y="10" label="Hide Price" fontSize="9"/>
+									<mx:Text x="164.5" y="49" text="Text" fontSize="9" fontWeight="bold"/>
+									<mx:Text x="123" y="49" text="Name:&#xd;" fontSize="9" fontWeight="bold"/>
+									<mx:Text x="89" y="68" text="Description:" fontSize="9"/>
+									<mx:Text x="117" y="108" text="Notes:" fontSize="9"/>
+									<mx:TextInput x="164" y="66" width="435" height="38" fontSize="9"/>
+									<mx:TextInput x="164" y="106" width="435" height="38" fontSize="9"/>
+									<mx:TextInput x="164" y="146" width="435" height="19.7" fontSize="9"/>
+									<mx:HRule x="0" y="39" width="609" height="2"/>
+									<mx:Text x="47" y="148" text="Production Location:" fontSize="9"/>
+									<mx:CheckBox x="164" y="173" label="Show Notes"/>
+								</mx:Canvas>
+							</mx:ViewStack>
+						</mx:Canvas>
+					</mx:VDividedBox>
+				</mx:Canvas>
+			</mx:HDividedBox>
+
+		</mx:Canvas>
+	</mx:VBox>
+</mx:Panel>

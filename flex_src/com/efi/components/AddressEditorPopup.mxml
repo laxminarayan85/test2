@@ -7,7 +7,7 @@
         horizontalScrollPolicy="off"
         creationComplete="init()"
         close="doCancel()"
-        defaultButton="{ok_button}">
+        defaultButton="{ok_button}" title="Edit Address">
         
 	<mx:Metadata>
 		[Event(name="SaveAddressEvent", type="com.efi.events.SaveAddressEvent")]
