@@ -47,12 +47,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
-<!--
-<mx:StringValidator id="contactBillFirstValidator" source="{bill_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactShipFirstValidator" source="{ship_contact_first_name_edit}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactBillLastValidator" source="{bill_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
-<mx:StringValidator id="contactShipLastValidator" source="{ship_contact_last_name_edit}"	property="text"	minLength="2" required="true"/>
--->
+
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.events.SaveAddressEvent;
@@ -233,20 +228,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		account.shipToAddress = ship_to_address_editor.getAddress();
 		account.billToAddress = bill_to_address_editor.getAddress();
 
-//		account.contact.firstName = ship_contact_first_name_edit.text;
-//		account.contact.lastName = ship_contact_last_name_edit.text;		
-//		account.contact.prefix = ship_contact_prefix_edit.text;			
-//		account.contact.suffix = ship_contact_suffix_edit.text;			
-//		account.contact.jobTitle = ship_contact_job_title_edit.text;		
-//		account.contact.salutation = ship_contact_salutation_edit.text;
-		account.contact = ship_to_contact_editor.getContact();
 
-		account.billToContact.firstName = bill_contact_first_name_edit.text;
-		account.billToContact.lastName = bill_contact_last_name_edit.text;
-		account.billToContact.prefix = bill_contact_prefix_edit.text;	
-		account.billToContact.suffix = bill_contact_suffix_edit.text;
-		account.billToContact.jobTitle = bill_contact_job_title_edit.text;
-		account.billToContact.salutation = bill_contact_salutation_edit.text;
+		account.contact = ship_to_contact_editor.getContact();
+		account.billToContact = bill_to_contact_editor.getContact();
 		
 		account.marketing.birthDate = birthDate.selectedDate;
 		account.marketing.followup=  followUp.selectedDate;
@@ -348,17 +332,10 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
 
 		ship_to_address_editor.setAddress(account.shipToAddress);
-/* 		ship_to_address_editor.cityDataProvider = citys;
-		ship_to_address_editor.stateDataProvider = states1;
-		ship_to_address_editor.zipDataProvider = zips;
-		ship_to_address_editor.countryDataProvider = countrys;
- */		
+        ship_to_contact_editor.setContact(account.contact);
 		bill_to_address_editor.setAddress(account.billToAddress);
-/* 		bill_to_address_editor.cityDataProvider = citys;
-		bill_to_address_editor.stateDataProvider = states1;
-		bill_to_address_editor.zipDataProvider = zips;
-		bill_to_address_editor.countryDataProvider = countrys;
- */
+		bill_to_contact_editor.setContact(account.billToContact);
+		
 		if (account.marketing.followup != null)
 			followUp.selectedDate =account.marketing.followup;
 		if (account.marketing.birthDate != null)
@@ -659,8 +636,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
 				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 					 
-				<mx:Panel x="344" y="259" width="325" height="282" layout="absolute" title="Statement Contact" dropShadowEnabled="false">
+				<!--<mx:Panel x="344" y="259" width="325" height="282" layout="absolute" title="Statement Contact" dropShadowEnabled="false">
 					<mx:TextInput x="101" y="10" width="194" id="bill_contact_first_name_edit" text="{account.billToContact.firstName}" change="validateForm(event);"/>
 					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
 					<mx:TextInput x="101" y="38" width="194" id="bill_contact_last_name_edit" text="{account.billToContact.lastName}" change="validateForm(event);"/>
@@ -679,7 +657,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:ComboBox x="10" y="180" width="137" id="bill_contact_comlink2_combo"></mx:ComboBox>
 					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
 					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
-				</mx:Panel>
+				</mx:Panel>-->
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"/>

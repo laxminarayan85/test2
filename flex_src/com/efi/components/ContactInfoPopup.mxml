@@ -66,6 +66,9 @@
 	
 	private function init():void {
 		comLinkDataService.getAll("ComLinkType");
+		if (contact.comLinks == null)
+			contact.comLinks = new ArrayCollection();
+		
 	}      
 		
  	private function itemExists(list:ArrayCollection, item:Object):Boolean {
@@ -115,6 +118,10 @@
 	public function setContact(addr:Contact):void {
 		this.contact = addr;
 		originalContact = addr;
+		if (this.contact.comLinks != null){
+			var comLink:ComLink = this.contact.comLinks.getItemAt(0) as ComLink
+			comlink_edit.text = comLink.value;
+		}
 		
 	}
 	
@@ -141,14 +148,28 @@
 		var comLinks:ArrayCollection = contact.comLinks;
 		if (comLinks == null) {
 			comLinks = new ArrayCollection();
+			if (comLink == null) {
+				comLink = new ComLink();
+			}
 		}
-		var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
 		if (comLink == null) {
-			comLink = new ComLink();
+				comLink = new ComLink();
+			}
+		if (comLinks.length > 0){
+			var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
+			if (comLink == null) {
+				comLink = new ComLink();
+			}
+			if (comlink_combo.selectedItem != null){
+			comLinkType = comlink_combo.selectedItem as ComLinkType;
+			if (comLinkType.type != null)
+				comLink.type = comLinkType.type;
+			contact.comLinks.setItemAt(comLink, 0);
+			}
+		
 		}
-		comLinkType = comlink_combo.selectedItem as ComLinkType;
-		comLink.type = comLinkType.type;
-		contact.comLinks.setItemAt(comLink, 0);
+		
+		
 	}
 	
 	private function doCancel():void {
@@ -165,15 +186,32 @@
 		var comLinks:ArrayCollection = contact.comLinks;
 		if (comLinks == null) {
 			comLinks = new ArrayCollection();
+			
 		}
-		var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
 		if (comLink == null) {
-			comLink = new ComLink();
+				comLink = new ComLink();
+			}
+		else{
+			if (comLinks.length >=0){
+				var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
+				if (comLink == null) {
+					comLink = new ComLink();
+				}
+			}
 		}
-		var comLinkType:ComLinkType = comlink_combo.selectedItem as ComLinkType;
-		comLink.type = comLinkType.type;
-		comLink.value = comlink_edit.text;
-		contact.comLinks.setItemAt(comLink, 0);
+		if (comlink_combo.selectedItem != null){
+			var comLinkType:ComLinkType = comlink_combo.selectedItem as ComLinkType;
+			if (comLinkType.type != null)
+				comLink.type = comLinkType.type;
+			
+			comLink.value = comlink_edit.text;
+			if (contact.comLinks.length == 0)
+				contact.comLinks.addItem(comLink)
+			else
+				contact.comLinks.setItemAt(comLink, 0);
+		
+		}
+		
 		var eventObj:SaveContactEvent = new SaveContactEvent("SaveContactEvent", contact);
 		dispatchEvent(eventObj);
 		PopUpManager.removePopUp(this);
