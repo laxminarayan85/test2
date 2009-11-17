@@ -33,7 +33,7 @@
 		  		<mx:Image x="-185" y="579" width="186" height="61" id="logo" source="assets/printsmith_logo.png"/>
 				
 				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();"/>
-				<mx:Button x="674" y="104" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')"/>
+				<mx:Button x="674" y="104" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')" click="doTracker();"/>
 				<mx:Button x="176" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
 				<mx:Button x="176" y="198" label="Users" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
 				<mx:Button x="176" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();"/>
@@ -41,7 +41,7 @@
 				<mx:Button x="675" y="480" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
 				<mx:Button x="674" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
 				<mx:Button x="508" y="386" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
-				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')"/>
+				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
 				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
 				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
 				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
@@ -93,9 +93,11 @@
 		import com.efi.view.ClockInOut;
 		import com.efi.view.EditContact;
 		import com.efi.view.EmployeeManager;
+		import com.efi.view.ScheduleManager;
 		import com.efi.view.SecurityManager;
 		import com.efi.view.AccountHistory;
 		import com.efi.view.EstimateHistory;
+		import com.efi.view.Tracker;
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -211,6 +213,10 @@
 			var child:EmployeeManager = new EmployeeManager();
 			addUniqueTab(child);
 		}
+		private function doSchedule():void {
+			var child:ScheduleManager = new ScheduleManager();
+			addUniqueTab(child);
+		}
 		private function doSecurity():void {
 			var child:SecurityManager = new SecurityManager();
 			addUniqueTab(child);
@@ -228,7 +234,10 @@
 			var child:EditEstimate = new EditEstimate();
 			addUniqueTab(child);
 		}
-		
+		private function doTracker():void {
+			var child:Tracker = new Tracker();
+			addUniqueTab(child);
+		}
 		private function doPricing():void {
 			var child:PriceListPicker = new PriceListPicker();
 			addUniqueTab(child);
