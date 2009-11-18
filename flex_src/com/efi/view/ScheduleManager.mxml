@@ -53,7 +53,7 @@
 	<mx:Button x="44.5" y="341" label="Edit Departments" width="255" height="40">
 		<mx:icon>@Embed(source='../../../assets/editDepartments.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="44" y="531" label="Reports" width="255.5" height="41">
+	<mx:Button x="44" y="531" label="Reports" width="255.5" height="40">
 		<mx:icon>@Embed(source='../../../assets/reportWritersmall.png')</mx:icon>
 	</mx:Button>
 	<mx:HRule x="44" y="320" width="255.5"/>
