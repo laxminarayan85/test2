@@ -1,6 +1,7 @@
 package com.efi.printsmith.service;
 
 import com.efi.printsmith.data.*;
+import com.efi.printsmith.defaultdata.*;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -8,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -18,7 +23,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
+import org.hibernate.*;
+import org.hibernate.criterion.*;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -39,13 +45,62 @@ public class DataService {
 		try {
 			if (entityManagerFactory == null) {
 				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+
+				boolean needToLoadStaticData = checkStaticData();
+
+				if (needToLoadStaticData==true)
+				{
+					try {
+						//LoadStaticData(new String[]{new DefaultDataFactory().getClass().getResource("DefaultDataFactory.class").getPath()});
+						DefaultDataFactory df = new DefaultDataFactory();
+						df.LoadDefaultData(this);
+					} catch (Exception e) {
+						log.debug("** Exception: " + e.getMessage());
+					}
+				}
 			}
 		} catch (RuntimeException e) {
 			log.error(e);
 		}
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	private boolean checkStaticData()
+	{
+		log.debug("** checkStaticData called...");
+		boolean retVal = false;
+		List<DataManager> dataManagerList = (List<DataManager>)this.getAll("DataManager");
+
+		log.debug("** Found " + dataManagerList.size() + "records:");
+
+		if (dataManagerList.size() > 0)
+		{
+			DataManager dataManager = dataManagerList.get(0);
+			if (dataManager.getDataloaded() == false)
+			{
+				dataManager.setDataloaded(true);
+				try {
+					this.addUpdate(dataManager);
+				} catch (Exception e) {
+					log.debug("** Exception: " + e.getMessage());
+				}
+				retVal = true;
+			}
+		}
+		else
+		{
+			DataManager dataManager = new DataManager();
+			dataManager.setDataloaded(true);
+			try {
+				this.addUpdate(dataManager);
+			} catch (Exception e) {
+				log.debug("** Exception: " + e.getMessage());
+			}
+			retVal = true;
+		}
+		return retVal;
+	}
+
 	public List<?> getAll(String className) {
 		try {
 			log.debug("** getAll called...");
