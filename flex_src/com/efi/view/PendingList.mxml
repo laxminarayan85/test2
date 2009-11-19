@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*" title="Pending List" label="Pending List" name="Pending List">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*" title="Pending List" label="Pending List" name="Pending List" xmlns:text="flash.text.*">
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="pendinglist"/>
 	<mx:Consumer id="consumer" destination="pendinglist" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-<mx:Script>                                   
+	
+<mx:Script> 
 <![CDATA[
-	import mx.controls.Alert;                                         
-	import mx.managers.PopUpManager;                                         
-	import mx.containers.TitleWindow;                                         
-	import mx.collections.ArrayCollection;                                         
-	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                         
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;                                
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
-    import mx.printing.FlexPrintJob;
-    import mx.printing.PrintAdvancedDataGrid;
-    import mx.printing.PrintDataGrid;
-    import mx.core.Application;
-    import mx.validators.Validator;
-    import mx.events.ValidationResultEvent;
+	import mx.collections.ArrayCollection;   
                    
 	[Bindable]                                         
     private var enableSave:Boolean = true;
+    
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
@@ -37,12 +39,26 @@
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,4);                                 
 	}
+	
+	private function messageHandler(message:IMessage):void
+	{
+//  		dataService.getAll("Users");
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	}
+
+   	private function handleSaveResult(ev:ResultEvent):void {
+	}
+
+	private function handleDeleteResult(ev:ResultEvent):void {
+	}
 
 	private function showMessage(message:String,title:String):void {  
 		Alert.show(message, title, 0, null, null, null,4);                                 
 	}
-]]>
-                             
-</mx:Script>	
+
+]]>        
+</mx:Script>
 
 </mx:Panel>

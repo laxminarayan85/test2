@@ -44,7 +44,7 @@
 				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
 				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
 				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
-				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')"/>
+				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')" click="doPendingList();"/>
 				<mx:Button x="10" y="480" label="Pricing" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
 				<mx:Button x="10" y="198" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
 				<mx:Button x="10" y="292" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
@@ -76,6 +76,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.view.PendingList;
 		import com.efi.view.PriceListPicker;
 		import com.efi.view.PriceListEditor;
 		import com.efi.view.SystemPreferences;
@@ -241,8 +242,12 @@
 		private function doPricing():void {
 			var child:PriceListPicker = new PriceListPicker();
 			addUniqueTab(child);
-			
 		}
+		private function doPendingList():void {
+			var child:PendingList = new PendingList();
+			addUniqueTab(child);
+		}
+		
 		private function addUniqueTab(tab:DisplayObject):void {
 			var tabFound:Boolean = false;
 			
