@@ -105,7 +105,7 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.PreferencesCreditCard;
 	import com.efi.vo.PreferencesMarkups;
 	import com.efi.vo.PreferencesPendingList;
-	import com.efi.vo.PreferencesPricingMethod;
+	import com.efi.vo.PricingMethod;
 	import com.efi.vo.PreferencesQuantityBreaks;
 	import com.efi.vo.PreferencesSalesCategory;
 	import com.efi.vo.PreferencesStockDefinition;
@@ -550,7 +550,7 @@ width="800" height="678" title="Preferences"
 		dataServiceMarkups.getAll("OutsideServices");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
 		dataServicePendingList.getAll("PreferencesPendingList");
-		dataServicePricingMethod.getAll("PreferencesPricingMethod");
+		dataServicePricingMethod.getAll("PricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
 		dataServiceStockDefinition.getAll("PreferencesStockDefinition");
@@ -577,7 +577,7 @@ width="800" height="678" title="Preferences"
 			dataServiceMarkupsMerchandise.deleteItem(deleteitem3, deleteitem3.id);
 		}
 		PreferencesMarkupsMerchandiseDeleteArray.removeAll()
-		for each(var deleteitem4:PreferencesPricingMethod in PreferencesPricingMethodDeleteArray) {
+		for each(var deleteitem4:PricingMethod in PreferencesPricingMethodDeleteArray) {
 			dataServicePricingMethod.deleteItem(deleteitem4, deleteitem4.id);
 		}
 		PreferencesPricingMethodDeleteArray.removeAll()
@@ -606,7 +606,7 @@ width="800" height="678" title="Preferences"
 		for each(var item5:PreferencesStockDefinition in PreferencesStockDefinitionArray) {
 			dataServiceStockDefinition.addUpdate(item5);
 		}
-		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
+		for each(var item6:PricingMethod in PreferencesPricingMethodArray) {
 			dataServicePricingMethod.addUpdate(item6);
 		}
 		for each(var item7:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
@@ -705,10 +705,10 @@ width="800" height="678" title="Preferences"
 		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
 		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
 		
-		if (preferencesEstimating.defaultEstimate != "")
+		if (preferencesEstimating.defaultEstimate != null)
 			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
 
-		if (preferencesEstimating.defaultInvoice != "")
+		if (preferencesEstimating.defaultInvoice != null)
 			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
 
 		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
@@ -1075,7 +1075,7 @@ width="800" height="678" title="Preferences"
     	dataServicePendingList.getAll("PreferencesPendingList");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+    	dataServicePricingMethod.getAll("PricingMethod");
 	}
 	private function handleSaveQuantityBreaksResult(ev:ResultEvent):void {
     	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
@@ -1115,7 +1115,7 @@ width="800" height="678" title="Preferences"
 	}
 	
 	private function handleDeletePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+    	dataServicePricingMethod.getAll("PricingMethod");
 	}
 	
 	private function handleDeleteSalesCategoryResult(ev:ResultEvent):void {
@@ -1224,11 +1224,11 @@ width="800" height="678" title="Preferences"
 	}
 
 	private function doNewPriceMethod():void{
-		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod();
+		var newItem:PricingMethod = new PricingMethod();
 		PreferencesPricingMethodArray.addItem(newItem);
 	}
 	private function doRemovePriceMethod():void{
-		var newItem:PreferencesPricingMethod = PricingMethodGrid.selectedItem as PreferencesPricingMethod;
+		var newItem:PricingMethod = PricingMethodGrid.selectedItem as PricingMethod;
 		PreferencesPricingMethodDeleteArray.addItem(newItem);
 		PreferencesPricingMethodArray.removeItemAt(PricingMethodGrid.selectedIndex);
 	}

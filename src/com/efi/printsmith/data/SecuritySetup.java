@@ -66,7 +66,7 @@ public class SecuritySetup extends ModelBase {
 	/**
 	 * @generated
  	 */
-	public Boolean getEnable() {
+	public Boolean getEnable(){
 		return enable; 
 	}
 
@@ -112,7 +112,7 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
-    @OneToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessGroup accessGroup;
 	/**
 	 * @generated
@@ -121,9 +121,11 @@ public class SecuritySetup extends ModelBase {
 		return accessGroup; 
 	}
 
-	public void setAccessGroup(AccessGroup obj) {
-		this.accessGroup = obj;
-		
+	/**
+	 * @generated
+	 */	
+	public void setAccessGroup(AccessGroup newVal) {
+		this.accessGroup = newVal;
 	}
 
 	/**

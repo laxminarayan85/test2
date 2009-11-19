@@ -15,7 +15,7 @@ package com.efi.vo
 		public var shipToAddress:Address = new Address();
 		public var firstName:String = "";
 		public var address:Address = new Address();
-		public var parentAccount:Account = null;
+		public var parentAccount:Account = new Account();
 		public var webAcctNameIncomplete:Boolean = true;
 		public var webCatalogChange:Boolean = true;
 		public var webStateChange:Boolean = true;

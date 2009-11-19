@@ -21,7 +21,7 @@
 
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
-    <mx:HBox x="0" y="0" width="100%" height="100%">
+    <mx:HBox x="0" y="32" width="100%" height="644">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
@@ -130,6 +130,7 @@
 		
 		public var userName:String;
 		public var userPass:String;
+		[Bindable]
 		public var currentUser:Users;
 
 		public var localeString : String = "en_US";
@@ -247,7 +248,10 @@
 			var child:PendingList = new PendingList();
 			addUniqueTab(child);
 		}
-		
+		private function doLogout():void {
+			this.currentUser = null;
+			this.showLogin();
+		}
 		private function addUniqueTab(tab:DisplayObject):void {
 			var tabFound:Boolean = false;
 			
@@ -298,8 +302,33 @@
 		private function handleFault(ev:FaultEvent):void {                
 			Alert.show(ev.fault.faultCode,ev.fault.faultDetail, Alert.OK, null, null, null, Alert.OK);
 		}
+		
+		private function enableLogout():Boolean {
+			return (currentUser==null)?false:true;
+		}
+		
+		CONFIG::debugging
+		private function showDebugButton():Boolean {
+			return true;
+		}
+		
+		CONFIG::release
+		private function showDebugButton():Boolean {
+			return false;
+		}
+		
+		CONFIG::debugging
+		private function doDebug():void {
+		}
+		
+		CONFIG::release
+		private function doDebug():void {
+		}
+		
 ]]>		
 </mx:Script>
 	<business:Services id="services" />
 	<control:MainController id="controller" />
+	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
+	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="100" top="5"/>
 </mx:Application>

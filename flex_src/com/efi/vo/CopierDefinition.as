@@ -48,9 +48,9 @@ package com.efi.vo
 		public var defaultblackwhite:Boolean = true;
 		public var defaultcolor:Boolean = true;
 		public var defaultlargeformat:Boolean = true;
-		public var wasteChart:WasteChart = new WasteChart();
 		public var copierPriceList:PriceList = new PriceList();
 		public var stockPriceList:PriceList = new PriceList();
+		public var wasteChart:WasteChart = new WasteChart();
 	
 	}
 }
