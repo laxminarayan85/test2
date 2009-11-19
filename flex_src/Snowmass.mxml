@@ -21,7 +21,7 @@
 
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
-    <mx:HBox x="0" y="32" width="100%" height="644">
+    <mx:HBox width="100%" top="32" right="0" bottom="0">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
