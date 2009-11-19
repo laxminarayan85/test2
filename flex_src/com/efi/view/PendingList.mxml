@@ -24,12 +24,127 @@
                    
 	[Bindable]                                         
     private var enableSave:Boolean = true;
+
+	[Bindable]
+	private var DocumentArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var FilterArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var FindArray:ArrayCollection = new ArrayCollection();
     
+    [Embed("../../../assets/file.png")]
+    private var FileIcon:Class;
+
+    [Embed("../../../assets/view.png")]
+    private var ViewIcon:Class;
+
+    [Embed("../../../assets/reportWritersmall.png")]
+    private var ReportIcon:Class;
+
+
+    [Bindable]
+	private var treeData:XML =
+    	<root>
+			<node label="Pickup" isBranch="false" tag="0"/>
+			<node label="Status" isBranch="false" tag="1"/>
+			<node label="Location" isBranch="false" tag="2"/>
+			<node label="Open" isBranch="false" tag="3"/>
+			<node label="Notify" isBranch="false" tag="4"/>
+			<node label="Due Date" isBranch="false" tag="5"/>
+			<node label="Deliver" isBranch="false" tag="6"/>
+			<node label="Schedule" isBranch="false" tag="7"/>
+			<node label="Tracker" isBranch="false" tag="8"/>
+			<node label="View" isBranch="false" tag="9"/>
+			<node label="Print" isBranch="false" tag="10"/>
+		</root>;
+
+	private function fillDocumentArray(fillArray:ArrayCollection):void {
+		var array:Object=new Object();
+		array.name="All";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Invoices";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Estimates";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Web Orders";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Web RFQ's";
+		fillArray.addItem(array);
+	}
+	private function fillFilterArray(fillArray:ArrayCollection):void {
+		var array:Object=new Object();
+		array.name="All";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Ready";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Late";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Due Between";
+		fillArray.addItem(array);
+		array=new Object();
+	}
+	private function fillFindArray(fillArray:ArrayCollection):void {
+		var array:Object=new Object();
+		array.name="Name";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Doc Number";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Location";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Phone";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="PO";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Customer #";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Doc Title";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Job Comment";
+		fillArray.addItem(array);
+		array=new Object();
+		array.name="Web Reference";
+		fillArray.addItem(array);
+	}
+
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
+		
+		fillDocumentArray(DocumentArray)
+		fillFilterArray(FilterArray)
+		fillFindArray(FindArray)
 	}
-	
+
+    private function setIcons(item:Object):Class {
+        var iconClass:Class;
+        var classType:String = XML(item).attribute("tag");
+        switch (classType){
+                case "9":
+                       iconClass = ViewIcon;
+                       break;
+                case "10":
+                        iconClass = ReportIcon;
+                        break;
+                default:
+                        iconClass = FileIcon;
+                        break;
+                }
+             return iconClass;
+         } 
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -57,8 +172,48 @@
 	private function showMessage(message:String,title:String):void {  
 		Alert.show(message, title, 0, null, null, null,4);                                 
 	}
+	
+	private function treeSelect(event:Event):void {
+		
+		var node:XML = XML(event.currentTarget.selectedItem);
+	}
+
 
 ]]>        
 </mx:Script>
+	<mx:Tree width="140"
+		id="tvItems" 
+		dataProvider="{treeData.node}"
+		labelField="@label"
+		iconFunction="setIcons"
+		change="treeSelect(event);" left="0" top="0" bottom="50"/>
 
+	<mx:HBox left="140" top="5" height="25" right="0">
+		<mx:Label text="Document Type:" top="15" left="10"/>
+		<mx:ComboBox id="cboDocumentType" dataProvider="{DocumentArray}" labelField="name"/>
+	</mx:HBox>
+
+	<mx:VBox bottom="82" top="30" left="140" right="0">
+		<mx:Canvas width="100%" height="100%">
+			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Account" dataField="col1"/>
+					<mx:DataGridColumn headerText="Document #" dataField="col2"/>
+					<mx:DataGridColumn headerText="Phone" dataField="col3"/>
+					<mx:DataGridColumn headerText="Location" dataField="col3"/>
+					<mx:DataGridColumn headerText="Wanted Date" dataField="col3"/>
+					<mx:DataGridColumn headerText="Hold State" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+	</mx:VBox>
+	<mx:HBox width="100%" height="40" right="0" bottom="0">
+		<mx:Label text="Find:"/>
+		<mx:ComboBox id="cboFind" dataProvider="{FindArray}" labelField="name"/>
+		<mx:TextInput id="txtFind"/>
+	</mx:HBox>
+	<mx:HBox bottom="50" right="0" left="140" height="28">
+		<mx:Label text="Filter:"/>
+		<mx:ComboBox id="cboDgFilter" dataProvider="{FilterArray}" labelField="name"/>
+	</mx:HBox>
 </mx:Panel>
