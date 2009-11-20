@@ -1,0 +1,30 @@
+PrePress
+Typesetting
+Design
+Proof
+Proof OK'd
+Camera
+Stripping
+Plate
+Outside Prepress
+PCX
+Production
+Staged - Print
+Running - Print
+Complete - drying
+Staged - Copy
+Running - Copy
+Staged - Color Copy
+Running - Color Copy
+Outside Production
+Complete
+Bindery
+Bindery in progress
+Outside bindery
+Boxing
+Shipping
+Pickup
+Waiting for Approval
+Waiting for Artwork
+Warehouse
+Mail Area
