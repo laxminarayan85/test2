@@ -116,7 +116,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		titleWindow.formIsEmpty = true;
 		contact = new Contact();
 		account= new Account();
-		   
+		dataService.getAll("Contact");  
 		salesRepDataService.getAll("SalesRep");
 		cityDataService.getAll("City");
 		stateDataService.getAll("State");

@@ -209,10 +209,12 @@ password="{passwordField.text}"/>
 		
 	}      
 	private function mapFromUserData():void{
-	if (user1.accessGroup != null)			
-			accessGroupList.selectedIndex = findItem(user1.accessGroup.name, accessGroups);
-	if (user1.accessLevel != null)			
-			accessLevelList.selectedIndex = findItem(user1.accessLevel.name, accessLevels);
+ 	if (user1 != null){ 
+		if (user1.accessGroup != null)			
+				accessGroupList.selectedIndex = findItem(user1.accessGroup.name, accessGroups);
+		if (user1.accessLevel != null)			
+				accessLevelList.selectedIndex = findItem(user1.accessLevel.name, accessLevels);
+		}
 		
 	}
 	private function doNext():void {
