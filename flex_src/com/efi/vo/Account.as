@@ -19,7 +19,7 @@ package com.efi.vo
 		public var customerPO:String = "";
 		public var shipToAddress:Address = new Address();
 		public var billToAddress:Address = new Address();
-		public var contact:Contact = new Contact();
+		public var contact:Contact = null;
 		public var billToContact:Contact = new Contact();
 		public var salesRank:Number = 0;
 		public var userAcctId:String = "";
