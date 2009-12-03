@@ -27,6 +27,7 @@ public class DefaultDataFactory {
 		//load states from file
 		dataservice = ds;
 		ProcessStateFile();
+		ProcessSecurityCommands();
 		ProcessAccessGroup();
 		ProcessEmployee();
 		ProcessCountryFile();
@@ -57,6 +58,62 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
+		AddSecuritySetup(accessgroup);
+
+		accessgroup = new AccessGroup();
+		accessgroup.setName("Minimum");
+		try {
+			dataservice.addUpdate(accessgroup);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		AddSecuritySetup(accessgroup);
+		
+		accessgroup = new AccessGroup();
+		accessgroup.setName("Production");
+		try {
+			dataservice.addUpdate(accessgroup);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		AddSecuritySetup(accessgroup);
+
+		accessgroup = new AccessGroup();
+		accessgroup.setName("Counter");
+		try {
+			dataservice.addUpdate(accessgroup);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		AddSecuritySetup(accessgroup);
+
+		accessgroup = new AccessGroup();
+		accessgroup.setName("Manager");
+		try {
+			dataservice.addUpdate(accessgroup);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		AddSecuritySetup(accessgroup);
+	}
+	
+	private void AddSecuritySetup(AccessGroup accessGroup){
+		List<?> itemList = (List<?>) dataservice.getAll("SecurityCommands");
+
+		for (int i = 0; i < itemList.size(); i++)
+		{
+			SecuritySetup securitySetup = new SecuritySetup();
+			securitySetup.setAccessGroup(accessGroup);
+			securitySetup.setMenu(((SecurityCommands)itemList.get(i)).getMenu());
+			securitySetup.setCommandName((((SecurityCommands)itemList.get(i)).getCommandName()));
+			try {
+				dataservice.addUpdate(securitySetup);
+			} catch (Exception e) {
+				log.debug("** Exception: " + e.getMessage());
+			}
+			
+		}
+
 	}
 	
 	private void ProcessEmployee(){
@@ -95,6 +152,9 @@ public class DefaultDataFactory {
 		} catch (IOException e) {
 			log.debug("** Exception: Country file Load failed.");
 		}
+	}
+	private void ProcessSecurityCommands(){
+		
 	}
 	
 	private void ProcessCreditCards(){
@@ -443,7 +503,7 @@ public class DefaultDataFactory {
 		String[] fileNames = pathName.list();
 		for (int i = 0; i <fileNames.length; i++)
 		{
-			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("state")==true)
+			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("productionlocations")==true)
 			{
 				File f = new File(pathName.getPath(),fileNames[i]);
 				int result = doProductionLocationsFile(f);
@@ -482,6 +542,71 @@ public class DefaultDataFactory {
 	    				productionLocations.setName(line.trim());
 	    				try {
 	    					dataservice.addUpdate(productionLocations);
+	    				} catch (Exception e) {
+	    					log.debug("** Exception: " + e.getMessage());
+	    					break;
+	    				}
+	    			}
+	    		} else{
+    				ProductionLocations productionLocations = new ProductionLocations();
+    				productionLocations.setName(line.trim());
+    				try {
+    					dataservice.addUpdate(productionLocations);
+    				} catch (Exception e) {
+    					log.debug("** Exception: " + e.getMessage());
+    					break;
+    				}
+	    		}
+	    	}
+	    }
+	    return rv;
+	}
+
+	private void LoadSecurityCommandsData(String[] args) throws IOException
+	{
+		if (args.length == 0) args = new String[]{".."};
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i <fileNames.length; i++)
+		{
+			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("securitycommands")==true)
+			{
+				File f = new File(pathName.getPath(),fileNames[i]);
+				int result = doSecurityCommandsFile(f);
+				if (result < 0)
+				{
+					log.debug("** Exception: SecurityCommands file Load failed.");
+				}
+				break;
+			}			
+		}
+	}
+
+	private int doSecurityCommandsFile(File file) throws java.io.IOException{
+		
+		List<?> securityCommandsList= (List<?>) dataservice.getAll("SecurityCommands");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+	    java.io.BufferedReader br = new java.io.BufferedReader(ip);
+	    String line = null;
+	    int rv = -1;
+	    while ((line = br.readLine()) != null){
+	    	if (line.length() > 0)
+	    	{
+	    		if (securityCommandsList.size() > 0){
+	    			boolean found = false;
+	    			for (int i = 0; i < securityCommandsList.size(); i++)
+    	    		{
+	    			}
+	    			if (found != true){
+	    				SecurityCommands securityCommands = new SecurityCommands();
+	    				
+	    				securityCommands.setCommandName(line.substring(line.indexOf(",")+1));
+	    				securityCommands.setMenu(line.substring(0, line.indexOf(",")-1));
+	    				try {
+	    					dataservice.addUpdate(securityCommands);
 	    				} catch (Exception e) {
 	    					log.debug("** Exception: " + e.getMessage());
 	    					break;
