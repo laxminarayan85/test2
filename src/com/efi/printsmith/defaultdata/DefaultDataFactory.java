@@ -54,7 +54,7 @@ public class DefaultDataFactory {
 		AccessGroup accessgroup = new AccessGroup();
 		accessgroup.setName("System");
 		try {
-			dataservice.addUpdate(accessgroup);
+			accessgroup = (AccessGroup)dataservice.addUpdate(accessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
@@ -63,7 +63,7 @@ public class DefaultDataFactory {
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Minimum");
 		try {
-			dataservice.addUpdate(accessgroup);
+			accessgroup = (AccessGroup)dataservice.addUpdate(accessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
@@ -72,7 +72,7 @@ public class DefaultDataFactory {
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Production");
 		try {
-			dataservice.addUpdate(accessgroup);
+			accessgroup = (AccessGroup)dataservice.addUpdate(accessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
@@ -81,7 +81,7 @@ public class DefaultDataFactory {
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Counter");
 		try {
-			dataservice.addUpdate(accessgroup);
+			accessgroup = (AccessGroup)dataservice.addUpdate(accessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
@@ -90,7 +90,7 @@ public class DefaultDataFactory {
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Manager");
 		try {
-			dataservice.addUpdate(accessgroup);
+			accessgroup = (AccessGroup)dataservice.addUpdate(accessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}

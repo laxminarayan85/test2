@@ -26,10 +26,9 @@
  	import mx.collections.ArrayCollection;   
 	import mx.containers.TitleWindow; 
 	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;  
+	import mx.rpc.events.FaultEvent;
 	import com.efi.vo.SecuritySetup;
 	import com.efi.vo.SecurityCommands;                                 
- 	
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
@@ -38,7 +37,7 @@
     [Bindable]
    	private var securtiyCommandsLists:ArrayCollection = new ArrayCollection();
 	[Bindable]                             
-	private var accessGroup:AccessGroup;   
+	private var access:AccessGroup;   
 	[Bindable]                             
 	private var security:SecuritySetup;     
 	[Bindable]
@@ -83,26 +82,28 @@
 		for (i= 0 ; i < securitySetupLists.length ; i++)
 		{
 			security = securitySetupLists.getItemAt(i,0) as SecuritySetup;
+			security.accessGroup = access;
 		 	SecuritydataService.addUpdate(security);
 		}
 	
 	}   
 	private function mapToAccessGroup():void{
-		accessGroup.name = name_edit.text;
-		dataService.addUpdate(accessGroup);
+		access.name = name_edit.text;
+		access = dataService.addUpdate(access);
 	}
 	public function doSave():void {                                    
 		
 		mapToAccessGroup();
 		mapToSecurityData();
-		dataService.addUpdate(accessGroup);   
+		dataService.addUpdate(access);   
 		SecuritydataService.addUpdate(security);                                    
 	}   
-	public function doNew():void {                                    
-		accessGroup = new AccessGroup();
+	public function doNew():void {
+		access = new AccessGroup();
+		accessGroupLists.addItem(access);
 		for each(var item:SecurityCommands in securtiyCommandsLists){
 			security = new SecuritySetup();
-			security.accessGroup = accessGroup;
+			security.accessGroup = access;
 			security.commandName = item.commandName;
 			security.menu = item.menu;
 		 	SecuritydataService.addUpdate(security);
@@ -120,13 +121,13 @@
 		                        		
 	}   
 	private function doUserGridClick():void {
-		accessGroup = dataGrid.selectedItem as AccessGroup;
+		access = dataGrid.selectedItem as AccessGroup;
 	}
 	private function doAccessGroup():void{
 		if (accessGroupLists.length > 0) {
-			accessGroup = accessGroupList.selectedItem as AccessGroup
-			SecuritydataService.getByAccessGroup("SecuritySetup",accessGroup); 
-			name_edit.text = accessGroup.name;
+			access = accessGroupList.selectedItem as AccessGroup
+			SecuritydataService.getByAccessGroup("SecuritySetup",access); 
+			name_edit.text = access.name;
 		}
 	}
 
@@ -135,7 +136,7 @@
 	<mx:Label x="26" y="89" text="Access Group:"/>
 	<mx:List x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" change="doAccessGroup();"></mx:List>
 	<mx:Label x="61" y="136" text="Name:"/>
-	<mx:TextInput x="121" y="134" id="name_edit" text="{accessGroup.name}" width="162" focusOut="mapToAccessGroup();"/>
+	<mx:TextInput x="121" y="134" id="name_edit" text="{access.name}" width="162" focusOut="mapToAccessGroup();"/>
 	
 	<!--<mx:AdvancedDataGrid  x="26" y="181" width="698" height="325" id="dataGrid" sortExpertMode="true"
 		 dataProvider="{securitySetupLists}">
