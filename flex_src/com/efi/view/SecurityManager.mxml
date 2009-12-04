@@ -10,12 +10,15 @@
 	<mx:method name="getByAccessGroup" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSecurityResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="dataServiceSecurityCommands" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSecurityCommandsResult(event)"/>
+</mx:RemoteObject>
 
 
 
 <mx:Script>  	
 <![CDATA[
+	import com.adobe.cairngorm.commands.Command;
 	import mx.containers.Panel;
 	import mx.managers.PopUpManager;
 	import flash.net.navigateToURL;
@@ -24,26 +27,30 @@
 	import mx.containers.TitleWindow; 
 	import mx.rpc.events.ResultEvent;                                         
 	import mx.rpc.events.FaultEvent;  
-	import com.efi.vo.SecuritySetup;                                 
+	import com.efi.vo.SecuritySetup;
+	import com.efi.vo.SecurityCommands;                                 
  	
  	
  	[Bindable]
-    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
+   	private var accessGroupLists:ArrayCollection = new ArrayCollection();
     [Bindable]
-    	private var securitySetupLists:ArrayCollection = new ArrayCollection();
-    	
+   	private var securitySetupLists:ArrayCollection = new ArrayCollection();
+    [Bindable]
+   	private var securtiyCommandsLists:ArrayCollection = new ArrayCollection();
 	[Bindable]                             
-		private var accessGroup:AccessGroup;   
+	private var accessGroup:AccessGroup;   
 	[Bindable]                             
-		private var security:SecuritySetup;     
-	
+	private var security:SecuritySetup;     
+	[Bindable]
+	private var securityCommands:SecurityCommands;
+			
 	public function init():void {
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
 	//	PopUpManager.centerPopUp(this);
 	              
 		dataService.getAll("AccessGroup"); 
-	
+		dataServiceSecurityCommands.getAll("SecurityCommands");
 		//SecuritydataService.getByAccessGroup("SecuritySetup", accessGroup.id); 
 		
 	}                
@@ -67,21 +74,18 @@
 	private function handleLoadSecurityResult(ev:ResultEvent):void {
 		securitySetupLists = ev.result as ArrayCollection;
 	}	
+	private function handleLoadSecurityCommandsResult(ev:ResultEvent):void {
+		securtiyCommandsLists = ev.result as ArrayCollection;
+	}	
 	
 	private function mapToSecurityData():void{
 		var i:int;
-	for (i= 0 ; i < securitySetupLists.length ; i++)
-	{
-		 security = securitySetupLists.getItemAt(i,0) as SecuritySetup;
-		 //security = DataGrid.getChildAt(i) as SecuritySetup;
-		 
-		 
-		 security.accessGroup = accessGroup;
-//		 security = DataGrid.getChildAt(0);
-		 SecuritydataService.addUpdate(security);
-		 
-	}
-		
+		for (i= 0 ; i < securitySetupLists.length ; i++)
+		{
+			security = securitySetupLists.getItemAt(i,0) as SecuritySetup;
+		 	SecuritydataService.addUpdate(security);
+		}
+	
 	}   
 	private function mapToAccessGroup():void{
 		accessGroup.name = name_edit.text;
@@ -95,7 +99,14 @@
 		SecuritydataService.addUpdate(security);                                    
 	}   
 	public function doNew():void {                                    
-		accessGroup = new AccessGroup();                                  
+		accessGroup = new AccessGroup();
+		for each(var item:SecurityCommands in securtiyCommandsLists){
+			security = new SecuritySetup();
+			security.accessGroup = accessGroup;
+			security.commandName = item.commandName;
+			security.menu = item.menu;
+		 	SecuritydataService.addUpdate(security);
+		}                       
 	}   
 	private function doNext():void {
 	 
@@ -122,7 +133,7 @@
 ]]>
 </mx:Script>
 	<mx:Label x="26" y="89" text="Access Group:"/>
-	<mx:List x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" click="doAccessGroup();" id="accessGroupList" width="173"></mx:List>
+	<mx:List x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" change="doAccessGroup();"></mx:List>
 	<mx:Label x="61" y="136" text="Name:"/>
 	<mx:TextInput x="121" y="134" id="name_edit" text="{accessGroup.name}" width="162" focusOut="mapToAccessGroup();"/>
 	

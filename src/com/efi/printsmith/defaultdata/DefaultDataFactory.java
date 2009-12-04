@@ -58,7 +58,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
-		AddSecuritySetup(accessgroup);
+		AddSecuritySetup(accessgroup,true);
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Minimum");
@@ -67,7 +67,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
-		AddSecuritySetup(accessgroup);
+		AddSecuritySetup(accessgroup,false);
 		
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Production");
@@ -76,7 +76,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
-		AddSecuritySetup(accessgroup);
+		AddSecuritySetup(accessgroup,false);
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Counter");
@@ -85,7 +85,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
-		AddSecuritySetup(accessgroup);
+		AddSecuritySetup(accessgroup,false);
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Manager");
@@ -94,10 +94,10 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + e.getMessage());
 		}
-		AddSecuritySetup(accessgroup);
+		AddSecuritySetup(accessgroup,false);
 	}
 	
-	private void AddSecuritySetup(AccessGroup accessGroup){
+	private void AddSecuritySetup(AccessGroup accessGroup,Boolean enabledStatus){
 		List<?> itemList = (List<?>) dataservice.getAll("SecurityCommands");
 
 		for (int i = 0; i < itemList.size(); i++)
@@ -105,6 +105,9 @@ public class DefaultDataFactory {
 			SecuritySetup securitySetup = new SecuritySetup();
 			securitySetup.setAccessGroup(accessGroup);
 			securitySetup.setMenu(((SecurityCommands)itemList.get(i)).getMenu());
+			if (enabledStatus == true){
+				securitySetup.setEnable(true);
+			}
 			securitySetup.setCommandName((((SecurityCommands)itemList.get(i)).getCommandName()));
 			try {
 				dataservice.addUpdate(securitySetup);
@@ -154,7 +157,12 @@ public class DefaultDataFactory {
 		}
 	}
 	private void ProcessSecurityCommands(){
-		
+		try {
+			LoadSecurityCommandsData(new String[]{currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: SecurityCommands file Load failed.");
+		}
+
 	}
 	
 	private void ProcessCreditCards(){
@@ -599,12 +607,16 @@ public class DefaultDataFactory {
 	    			boolean found = false;
 	    			for (int i = 0; i < securityCommandsList.size(); i++)
     	    		{
+    	    			if (((SecurityCommands)securityCommandsList.get(i)).getCommandName().trim().equals(line.substring(line.indexOf(",")+1)) == true && ((SecurityCommands)securityCommandsList.get(i)).getMenu().trim().equals(line.substring(0, line.indexOf(",")))){
+    	    				found = true;
+    	    				break;
+    	    			}
 	    			}
 	    			if (found != true){
 	    				SecurityCommands securityCommands = new SecurityCommands();
 	    				
 	    				securityCommands.setCommandName(line.substring(line.indexOf(",")+1));
-	    				securityCommands.setMenu(line.substring(0, line.indexOf(",")-1));
+	    				securityCommands.setMenu(line.substring(0, line.indexOf(",")));
 	    				try {
 	    					dataservice.addUpdate(securityCommands);
 	    				} catch (Exception e) {
@@ -613,10 +625,12 @@ public class DefaultDataFactory {
 	    				}
 	    			}
 	    		} else{
-    				ProductionLocations productionLocations = new ProductionLocations();
-    				productionLocations.setName(line.trim());
+    				SecurityCommands securityCommands = new SecurityCommands();
+    				
+    				securityCommands.setCommandName(line.substring(line.indexOf(",")+1));
+    				securityCommands.setMenu(line.substring(0, line.indexOf(",")));
     				try {
-    					dataservice.addUpdate(productionLocations);
+    					dataservice.addUpdate(securityCommands);
     				} catch (Exception e) {
     					log.debug("** Exception: " + e.getMessage());
     					break;
