@@ -12,6 +12,7 @@
 <mx:Script>
                                    
 <![CDATA[           
+	import com.efi.events.StockPickerSelectEvent;
     import com.efi.vo.StockDefinition;                
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
@@ -64,19 +65,22 @@
 	private function editStockDefinition():void {
 		
 	}   
-	
+
 	private function selectStockDefinition():void {	
-		var editStockDefinition:StockDefinitions = Snowmass.getInstance().mainNavigator.selectedChild as StockDefinitions;
-		if (dataGrid.selectedItem != null){
-			editStockDefinition.setStockDefinition(dataGrid.selectedItem as StockDefinition);
-			PopUpManager.removePopUp(this);
-		}
-		
+		var selectEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.SELECTSTOCK, dataGrid.selectedItem as StockDefinition);
+		dispatchEvent(selectEvent);
+		PopUpManager.removePopUp(this);
 	}     
 	
 	private function newStockDefinition():void {
-		var editStockDefinition:StockDefinitions = Snowmass.getInstance().mainNavigator.selectedChild as StockDefinitions;
-		editStockDefinition.setStockDefinition(null);
+		var newEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.SELECTNEWSTOCK, new StockDefinition());
+		dispatchEvent(newEvent);
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function cancelPicker():void {
+		var cancelEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.CANCELSELECTSTOCK, null);
+		dispatchEvent(cancelEvent);
 		PopUpManager.removePopUp(this);
 	}
 	
@@ -97,7 +101,7 @@
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="selectStockDefinition();"  width="108" x="465" y="10"/>
 		<mx:Button label="New" enabled="true" click="newStockDefinition();" id="new_button" width="108" x="465" y="40"/>
-		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="465" y="93"/>
+		<mx:Button label="Cancel" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>
 		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>

@@ -23,6 +23,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	import com.efi.vo.ChargeCommand;
 	import com.efi.vo.Location;
 	import com.efi.vo.ChargeCategory;
+	import com.efi.vo.ChargeDefinition;
     import com.efi.vo.Charge;
     import com.efi.vo.CostCenter;
     import com.efi.vo.FoldTemplate;
@@ -77,7 +78,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	private var waste:Boolean = false;
 
 	[Bindable]                                         
-	private var charge:Charge;
+	private var charge:ChargeDefinition;
                 
 	[Bindable]
 	private var charges:ArrayCollection = new ArrayCollection();
@@ -133,7 +134,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-	    charge = new Charge();
+	    charge = new ChargeDefinition();
 	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
 	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
 	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
@@ -282,7 +283,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		if (ev.result == null) {
 			Alert.show("Unable to add new charge.", "Error", 0, this, null);                                 
 		} else {
-			var localCharge:Charge = ev.result as Charge;
+			var localCharge:ChargeDefinition = ev.result as ChargeDefinition;
 
 			charge = localCharge;
 			chargeTree.selectedItem = charge;
@@ -337,7 +338,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	
 	private function doDuplicateCharge():void {
 		//TODO: verify that this copy is valid to use. We probably need to create a clone method for the .as objects.
-		var newCharge:Charge = ObjectUtil.copy(charge) as Charge;
+		var newCharge:ChargeDefinition = ObjectUtil.copy(charge) as ChargeDefinition;
 		var category:ChargeCategory = charge.parent;
 		
 		updateDataProvider();
@@ -385,12 +386,12 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		return null
 	}
 	
-	private function getSelectedTreeCharge():Charge {
+	private function getSelectedTreeCharge():ChargeDefinition {
 		var treeItem:Object = chargeTree.selectedItem;
         var classInfo:XML = describeType(treeItem);
 
-		if (classInfo.@name.toString() == "com.efi.vo::Charge") {
-			return treeItem as Charge;
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+			return treeItem as ChargeDefinition;
 		}
 		return null;
 	}
@@ -420,10 +421,10 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	
 	private function doNewCharge():void {
 		var category:ChargeCategory = getSelectedTreeCategory(true);
-		var localCharge:Charge = new Charge();
+		var localCharge:ChargeDefinition = new ChargeDefinition();
 		
 		if (category != null) {
-			localCharge = new Charge();				
+			localCharge = new ChargeDefinition();				
 			localCharge.name = "Untitled";
 			localCharge.title = "Untitled";
 			dataService.addChargeToCategory(localCharge, category);

@@ -21,7 +21,7 @@
 
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
-    <mx:HBox width="100%" top="32" right="0" bottom="0">
+    <mx:HBox x="0" y="32" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
@@ -99,6 +99,8 @@
 		import com.efi.view.AccountHistory;
 		import com.efi.view.EstimateHistory;
 		import com.efi.view.Tracker;
+		import com.efi.pages.Debug;
+		
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -319,6 +321,9 @@
 		
 		CONFIG::debugging
 		private function doDebug():void {
+			var debugPopup : Debug = Debug(PopUpManager.createPopUp(this, Debug, true));
+		//	this.mainContainer.visible=false;
+			PopUpManager.centerPopUp(debugPopup);
 		}
 		
 		CONFIG::release

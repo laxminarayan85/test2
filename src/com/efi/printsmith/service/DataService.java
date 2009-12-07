@@ -246,7 +246,7 @@ public class DataService {
 		}
 	}
 	
-	public Charge addChargeToCategory(Charge charge, ChargeCategory category) throws Exception {
+	public ChargeDefinition addChargeToCategory(ChargeDefinition charge, ChargeCategory category) throws Exception {
 		log.debug("** addChargeCategoryToCommand called...");
 		try {
 			EntityManager em;

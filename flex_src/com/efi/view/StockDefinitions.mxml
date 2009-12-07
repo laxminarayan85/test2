@@ -60,6 +60,7 @@
 	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListBase;
 
+	import com.efi.events.StockPickerSelectEvent;
 	import com.efi.events.AccountPickerSelectEvent;
 	
 	import mx.controls.Alert;                                         
@@ -295,9 +296,31 @@
 	}
 
 	private function doGet():void {
-		var titleWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
-		titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
+		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+		stockPickerWindow.setStyle("borderAlpha", 0.9);
+	    stockPickerWindow.formIsEmpty = true;
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);		
+	}
+	
+	private function handleStockPickerCancel(evt:StockPickerSelectEvent):void {
+		if (this.stockDefinitions == null) {
+			this.stockDefinitions = new StockDefinition;
+		}
+	}
+	
+	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
+		if (evt.stockDefinition != null) {
+			this.stockDefinitions = evt.stockDefinition;
+		} else {
+			this.stockDefinitions = new StockDefinition();
+			Alert.show("Stock Picker returned a null stock", "Error");
+		}
+	}
+	
+	private function handleStockPickerNew(evt:StockPickerSelectEvent):void {
+		this.stockDefinitions = new StockDefinition();
 	}
 	
 	private function doNext():void {  

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-		  xmlns:view="com.efi.view.*"
-		  xmlns:vo="com.efi.vo.*"
-		  xmlns:fc="http://www.adobe.com/2006/fc"
-		  xmlns:hc="com.hillelcoren.components.*"
-		  width="912"
-		  height="575"
-		  title="Job Charges"
-		  creationComplete="init()"
-		  label="Customer Editor"
-		  name="Customer Editor"
-		  horizontalScrollPolicy="off"
-		  verticalScrollPolicy="off"
-		  xmlns:ns1="com.adobe.flex.extras.controls.*">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:view="com.efi.view.*"
+				xmlns:vo="com.efi.vo.*"
+				xmlns:fc="http://www.adobe.com/2006/fc"
+				xmlns:hc="com.hillelcoren.components.*"
+				width="862"
+				height="649"
+				title="Job Charges"
+				creationComplete="init()"
+				label="Customer Editor"
+				name="Customer Editor"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off"
+				xmlns:ns1="com.adobe.flex.extras.controls.*"
+				fontSize="9"
+				titleIcon="@Embed(source='../../../assets/new_job.png')"
+				defaultButton="{done_button}"
+				showCloseButton="true">
 
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate"
 				   fault="handleFault(event)"
 				   result="handleSaveResult(event)"/>
@@ -53,24 +54,22 @@
 	<mx:RemoteObject id="chargeCommandDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
-					fault="handleFault(event)"
-					result="handleLoadChargeCommandResult(event)"/>
+				   fault="handleFault(event)"
+				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
-	
+
 	<mx:Script>
 		<![CDATA[
 			import com.efi.events.JobEditCompleteEvent;
-			import com.efi.vo.Invoice;
-			import com.efi.vo.Job;
-			import com.efi.vo.PressDefinition;
 			import com.efi.vo.Location;
 			import com.efi.vo.Account;
 			import com.efi.vo.ProductCode;
 			import com.efi.vo.Charge;
 			import com.efi.vo.ChargeCategory;
 			import com.efi.vo.ChargeCommand;
-			
-			import com.efi.events.JobEditCompleteEvent;
+			import com.efi.vo.ChargeDefinition;
+
+			import com.efi.events.ChargeDefinitionSelectEvent;
 
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -86,29 +85,29 @@
 			import mx.core.Application;
 			import mx.validators.Validator;
 			import mx.events.ValidationResultEvent;
-   			import mx.collections.ICollectionView;
+			import mx.collections.ICollectionView;
 
 			private var accounts:ArrayCollection=new ArrayCollection();
 			private var presses:ArrayCollection=new ArrayCollection();
 			private var locations:ArrayCollection=new ArrayCollection();
 			private var productCodes:ArrayCollection=new ArrayCollection();
 			[Bindable]
-			public var job:Job;
+			public var charges:ArrayCollection;
 
 			[Bindable]
-			private var invoice:Invoice;
+			public var charge:Charge;
 
 			[Bindable]
-			private var chargeCommands:ArrayCollection = new ArrayCollection();
+			private var chargeCommands:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
-			public var tempOpen:Object = new Object();
-			
+			public var tempOpen:Object=new Object();
+
 			[Bindable]
-			public var refreshSO:Boolean = false;
-			
+			public var refreshSO:Boolean=false;
+
 			[Bindable]
-			private var charges:ArrayCollection = new ArrayCollection();
+			private var chargeDefinitions:ArrayCollection=new ArrayCollection();
 
 			private var focussedFormControl:DisplayObject;
 
@@ -120,8 +119,6 @@
 				productDataService.getAll("ProductCode");
 				chargeDataService.getAll("Charge");
 				chargeCommandDataService.getAll("ChargeCommand");
-				job=new Job();
-
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -134,107 +131,6 @@
 					}
 				}
 				return -1;
-			}
-
-			private function doNew():void
-			{
-				job=new Job();
-				setJob(job);
-			}
-
-			private function doDelete():void
-			{
-				dataService.deleteItem("Job", job.id);
-			}
-
-			public function getInvoice():Invoice
-			{
-				return this.invoice;
-			}
-
-			public function setInvoice(invoice:Invoice):void
-			{
-				this.invoice=invoice;
-			}
-
-			private function doGet():void
-			{
-
-			}
-
-			public function setJob(job2:Job):void
-			{
-				this.job=job2;
-				mapFromJobData();
-			}
-
-			private function mapToJobData():void
-			{
-				job.binderyWaste=parseInt(bindery_waste.text);
-				job.brokered=check_brokered.selected;
-				//job.charges =
-				job.comment=job_comment.text;
-				job.costingPress=job_costing_press.selectedItem as PressDefinition;
-				//job.press = job_press.selectedItem as PressDefinition;
-				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
-				job.productCode=product.selectedItem as ProductCode;
-				job.description=job_description.text;
-				job.estWaste=parseInt(est_waste.text);
-				job.finished=checked_finished.selected;
-				job.inSetsOf=parseInt(sets_of.text);
-				job.on=parseInt(job_on.text);
-				job.oversUnders=parseInt(job_over_under.text);
-				job.qtyOrdered=parseInt(job_ordered.text);
-				job.sheets=parseInt(job_sheets.text);
-				job.signatures=parseInt(num_of_sig.text);
-				job.taxable=check_taxtable.selected;
-				job.up=parseInt(job_up.text);
-				job.jobNotes=job_notes.text;
-				//	job.jobNumber =
-				job.jobTicketNotes=check_job_notes.selectedField;
-				job.location=job_location.selectedItem as Location;
-				if (run_method_radiogroup.selectedValue != null)
-					job.runMethod=run_method_radiogroup.selectedValue.toString();
-
-
-
-
-				//	job.salesCategory=
-
-
-
-			}
-
-			private function mapFromJobData():void
-			{
-
-				if (job.pricingPress != null)
-					job_pricing_press.selectedIndex=findItem(job.pricingPress.name, presses);
-				if (job.costingPress != null)
-					job_costing_press.selectedIndex=findItem(job.costingPress.name, presses);
-				if (job.press != null)
-					job_press.selectedIndex=findItem(job.press.name, presses);
-
-				if (job.location != null)
-					job_location.selectedIndex=findItem(job.location.name, locations);
-				if (job.productCode != null)
-					product.selectedIndex=findItem(job.productCode.name, productCodes);
-				run_method_radiogroup.selectedValue=job.runMethod;
-
-			}
-
-			private function doSave():void
-			{
-				mapToJobData();
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
-				dispatchEvent(jobEditCompleteEvent);
-
-				PopUpManager.removePopUp(this);
-			}
-
-			private function handleLoadResult(ev:ResultEvent):void
-			{
-				//jobs = ev.result as ArrayCollection;
 			}
 
 			private function handleLoadPressResult(ev:ResultEvent):void
@@ -258,17 +154,17 @@
 
 			private function handleLoadChargeResult(ev:ResultEvent):void
 			{
-				charges=ev.result as ArrayCollection;
+				chargeDefinitions=ev.result as ArrayCollection;
 			}
 
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
 			{
 				chargeCommands=ev.result as ArrayCollection;
 			}
-			
+
 			private function handleSaveResult(ev:ResultEvent):void
 			{
-				
+
 			}
 
 
@@ -277,7 +173,7 @@
 				var message:String;
 
 				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
-				Alert.show(message, "Error", 0, null, null, null, null);
+				Alert.show(message, "Error", 0, null);
 			}
 
 
@@ -292,127 +188,175 @@
 
 			private function validate(validator:Validator):Boolean
 			{
-//        var validatorSource:DisplayObject = validator.source as DisplayObject;
-//     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
-//        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
-//        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
-//		formIsValid = formIsValid && currentControlIsValid;
-//         
-//		return currentControlIsValid;
 				return true;
 			}
-	private function refreshData():void{
-		//reset the root node to its original unfiltered data
-		var i:int;
-		for (i=0; i< chargeCommands.length; i++) {
-			chargeCommands[i].children = new ArrayCollection(chargeCommands[i].children.source);
-			refreshRecursiveChildren(chargeCommands.source[i]);
-		}
-		//update the Tree after the data has been filtered
-		chargeTree.invalidateList();
-	}
-	
-	private function refreshRecursiveChildren(item:Object):void{
-        var classInfo:XML = describeType(item);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
-			//loop through each child and filter its children
-			for each(var chargeCategoryItem:ChargeCategory in item.children.source){
-				refreshRecursiveChildren(chargeCategoryItem);
+			private function refreshData():void
+			{
+				//reset the root node to its original unfiltered data
+				var i:int;
+				for (i=0; i < chargeCommands.length; i++)
+				{
+					chargeCommands[i].children=new ArrayCollection(chargeCommands[i].children.source);
+					refreshRecursiveChildren(chargeCommands.source[i]);
+				}
+				//update the Tree after the data has been filtered
+				chargeTree.invalidateList();
 			}
-			item.children = new ArrayCollection(item.children.source);
-			item.children.filterFunction = filterData;
-			item.children.refresh();
-		} else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
-			//loop through each child and filter its children
-			for each(var chargeItem:Charge in item.children.source){
-				refreshRecursiveChildren(chargeItem);
+
+			private function refreshRecursiveChildren(item:Object):void
+			{
+				var classInfo:XML=describeType(item);
+
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+				{
+					//loop through each child and filter its children
+					for each (var chargeCategoryItem:ChargeCategory in item.children.source)
+					{
+						refreshRecursiveChildren(chargeCategoryItem);
+					}
+					item.children=new ArrayCollection(item.children.source);
+					item.children.filterFunction=filterData;
+					item.children.refresh();
+				}
+				else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+				{
+					//loop through each child and filter its children
+					for each (var chargeItem:Charge in item.children.source)
+					{
+						refreshRecursiveChildren(chargeItem);
+					}
+					item.children=new ArrayCollection(item.children.source);
+					item.children.filterFunction=filterData;
+					item.children.refresh();
+				}
 			}
-			item.children = new ArrayCollection(item.children.source);
-			item.children.filterFunction = filterData;
-			item.children.refresh();
-		}
-	}
-	
-	public function filterData(item:Object):Boolean{
-		//get the string to filter the nodes by
-		var searchString:String = tree_filter.text;
-		//if string is found in node return true.
-		//since the recursive filtering takes place from bottom up, if
-		//a collection still has children after filtering, also return true
-		if(searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
-			return true;
-        var classInfo:XML = describeType(item);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
-			return true;
-		}
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
-			return true;
-		}
-		return false;
-	}
-	
-	private function tree_itemClick(evt:Event):void {  
+			public function filterData(item:Object):Boolean
+			{
+				//get the string to filter the nodes by
+				var searchString:String=tree_filter.text;
+				//if string is found in node return true.
+				//since the recursive filtering takes place from bottom up, if
+				//a collection still has children after filtering, also return true
+				if (searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+					return true;
+				var classInfo:XML=describeType(item);
 
-	}
-	
-	private function updateDataProvider():void {
-		tempOpen = chargeTree.openItems;
-		refreshSO = true;	
-	}
-	
-	private function renderFunction():void {
-		if (refreshSO) {
-			refreshSO = false;
-           	chargeTree.invalidateList();
-			chargeTree.openItems = tempOpen;
-			chargeTree.validateNow();
-		}
-	}
-	private function treeLabel(item:Object):String {
-		var children:ICollectionView;
-		
-		var suffix:String = "";
-		if (chargeTree.dataDescriptor.isBranch(item)) {
-		    children = chargeTree.dataDescriptor.getChildren(item);
-		    suffix = " (" + children.length + ")";
-		}
-		return item.name + suffix;
-	}
-	private function treeSelectionChanged(event:Event):void {
-		var charge:Charge = getSelectedTreeCharge();
-		
-//		if (charge == null) {
-//			chargeCategory = getSelectedTreeCategory(false);
-//			if (chargeCategory == null) {
-//				chargeCommand = getSelectedTreeCommand(false);
-//				if (chargeCommand == null) {
-//					charge_stack.selectedChild = charge_blank_canvas;
-//				} else {
-//					charge_stack.selectedChild = charge_command_canvas;
-//				}
-//			} else {
-//				charge_stack.selectedChild = charge_category_canvas;			
-//				chargeCommand = getSelectedTreeCommand(true);
-//			}
-//		} else {
-//			charge_stack.selectedChild = charge_canvas;
-//			chargeCategory = getSelectedTreeCategory(true);
-//			chargeCommand = getSelectedTreeCommand(true);
-//		}
-	}
-	
-	private function getSelectedTreeCharge():Charge {
-		var treeItem:Object = chargeTree.selectedItem;
-        var classInfo:XML = describeType(treeItem);
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+				{
+					return true;
+				}
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+				{
+					return true;
+				}
+				return false;
+			}
 
-		if (classInfo.@name.toString() == "com.efi.vo::Charge") {
-			return treeItem as Charge;
-		}
-		return null;
-	}
-	]]>
+			private function tree_itemClick(evt:Event):void
+			{
+
+			}
+
+			private function updateDataProvider():void
+			{
+				tempOpen=chargeTree.openItems;
+				refreshSO=true;
+			}
+
+			private function renderFunction():void
+			{
+				if (refreshSO)
+				{
+					refreshSO=false;
+					chargeTree.invalidateList();
+					chargeTree.openItems=tempOpen;
+					chargeTree.validateNow();
+				}
+			}
+
+			private function invoiceChargeLabel(item:Object):String
+			{
+				return item.name;
+			}
+
+			private function treeLabel(item:Object):String
+			{
+				var children:ICollectionView;
+
+				var suffix:String="";
+				if (chargeTree.dataDescriptor.isBranch(item))
+				{
+					children=chargeTree.dataDescriptor.getChildren(item);
+					suffix=" (" + children.length + ")";
+				}
+				return item.name + suffix;
+			}
+
+			private function treeSelectionChanged(event:Event):void
+			{
+				var chargeDefinition:ChargeDefinition=getSelectedTreeChargeDefinition();
+
+				if (chargeDefinition != null)
+				{
+					charge=new Charge();
+					charge.chargeDefinition=chargeDefinition;
+					charge.finished=chargeDefinition.finished;
+					charge.taxable=chargeDefinition.taxable;
+					charge.brokered=chargeDefinition.brokered;
+					charge.displayQty=chargeDefinition.displayQty;
+					charge.hidden=chargeDefinition.hidden;
+					charge.hidePrice=chargeDefinition.hidePrice;
+				}
+				else
+				{
+					charge=null;
+				}
+			}
+
+			private function getSelectedTreeChargeDefinition():ChargeDefinition
+			{
+				var treeItem:Object=chargeTree.selectedItem;
+				var classInfo:XML=describeType(treeItem);
+
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition")
+				{
+					return treeItem as ChargeDefinition;
+				}
+				return null;
+			}
+
+			private function doDone():void
+			{
+				var doneEvent:ChargeDefinitionSelectEvent=new ChargeDefinitionSelectEvent(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, charges);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
+			}
+
+			private function doAdd():void
+			{
+				if (chargeDefinitions == null)
+				{
+					chargeDefinitions=new ArrayCollection;
+				}
+				this.charge.finished=finished_check.selected;
+				this.charge.taxable=taxable_check.selected;
+				this.charge.brokered=brokered_check.selected;
+				this.charge.displayQty=displayQty_check.selected;
+				this.charge.hidden=hidden_check.selected;
+				this.charge.hidePrice=hidePrice_check.selected;
+				this.charge.description=charge_description_edit.text;
+				this.charge.notes=charge_notes_edit.text;
+				//		this.charge.productionLocation = charge_production_location_;
+				this.charge.showNotes=showNotes_check.selected;
+				if (charges == null)
+				{
+					charges=new ArrayCollection;
+				}
+				charges.addItem(this.charge);
+			}
+		]]>
 
 	</mx:Script>
 
@@ -420,52 +364,440 @@
 			 height="100%"
 			 creationPolicy="all">
 		<mx:Canvas width="100%"
-				   height="516">
+				   height="610"
+				   verticalScrollPolicy="off"
+				   horizontalScrollPolicy="off">
 			<mx:HDividedBox x="10"
 							y="10"
 							width="100%"
-							height="100%">
-				<mx:Form height="507">
-					<mx:Tree width="200" height="90%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
-							labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);"></mx:Tree>
-					<mx:FormItem width="100%" label="Filter:" height="28">
-						<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
-					</mx:FormItem>
-				</mx:Form>
-				<mx:Canvas width="100%" height="100%">
-					<mx:VDividedBox x="10" y="10" width="100%" height="100%">
-						<mx:DataGrid height="100%" width="618">
-							<mx:columns>
-								<mx:DataGridColumn headerText="Document Charges" dataField="col1"/>
-								<mx:DataGridColumn headerText="Price" width="90" dataField="col2"/>
-							</mx:columns>
-						</mx:DataGrid>
-						<mx:Canvas width="100%" height="100%">
-							<mx:ViewStack x="10" y="10" id="viewstack1" width="100%" height="100%">
-								<mx:Canvas label="View 1" width="100%" height="100%">
-									<mx:CheckBox x="10" y="10" label="Finished" fontSize="9"/>
-									<mx:CheckBox x="93" y="10" label="Taxable" fontSize="9"/>
-									<mx:CheckBox x="166" y="10" label="Brokered" fontSize="9"/>
-									<mx:CheckBox x="244" y="10" label="Display Quantity" fontSize="9"/>
-									<mx:CheckBox x="362" y="10" label="Hidden" fontSize="9"/>
-									<mx:CheckBox x="430" y="10" label="Hide Price" fontSize="9"/>
-									<mx:Text x="164.5" y="49" text="Text" fontSize="9" fontWeight="bold"/>
-									<mx:Text x="123" y="49" text="Name:&#xd;" fontSize="9" fontWeight="bold"/>
-									<mx:Text x="89" y="68" text="Description:" fontSize="9"/>
-									<mx:Text x="117" y="108" text="Notes:" fontSize="9"/>
-									<mx:TextInput x="164" y="66" width="435" height="38" fontSize="9"/>
-									<mx:TextInput x="164" y="106" width="435" height="38" fontSize="9"/>
-									<mx:TextInput x="164" y="146" width="435" height="19.7" fontSize="9"/>
-									<mx:HRule x="0" y="39" width="609" height="2"/>
-									<mx:Text x="47" y="148" text="Production Location:" fontSize="9"/>
-									<mx:CheckBox x="164" y="173" label="Show Notes"/>
+							height="100%"
+							verticalScrollPolicy="off"
+							horizontalScrollPolicy="off">
+				<mx:Canvas width="230"
+						   height="100%">
+					<mx:Tree width="100%"
+							 render="renderFunction()"
+							 folderClosedIcon="{null}"
+							 folderOpenIcon="{null}"
+							 defaultLeafIcon="{null}"
+							 id="chargeTree"
+							 dataProvider="{chargeCommands}"
+							 labelFunction="treeLabel"
+							 visible="true"
+							 enabled="true"
+							 click="tree_itemClick(event);"
+							 dataChange="treeSelectionChanged(event)"
+							 change="treeSelectionChanged(event);"
+							 bottom="30"
+							 top="19">
+					</mx:Tree>
+					<mx:TextInput width="172"
+								  id="tree_filter"
+								  change="refreshData()"
+								  y="520"
+								  right="5"
+								  bottom="5"/>
+					<mx:Text x="10"
+							 y="506"
+							 text="Filter:"
+							 bottom="7"/>
+					<mx:Text x="3"
+							 y="3"
+							 text="Charge Definitions"
+							 fontWeight="bold"/>
+				</mx:Canvas>
+				<mx:Canvas width="100%"
+						   height="100%">
+					<mx:VDividedBox width="100%"
+									right="6"
+									bottom="50"
+									top="0">
+						<mx:Canvas width="100%"
+								   height="233"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:DataGrid height="100%"
+										 width="592"
+										 id="invoice_charge_datagrid"
+										 dataProvider="{charges}"
+										 left="5">
+								<mx:columns>
+									<mx:DataGridColumn headerText="Document Charges"
+													   dataField="description"/>
+									<mx:DataGridColumn headerText="Price"
+													   width="90"
+													   dataField="chargeDefinition.price"/>
+								</mx:columns>
+							</mx:DataGrid>
+						</mx:Canvas>
+						<mx:Canvas width="100%"
+								   height="325"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:ViewStack id="pricing_viewstack"
+										  width="100%"
+										  height="131"
+										  x="10"
+										  y="188">
+								<mx:Canvas width="100%"
+										   height="100%"
+										   verticalScrollPolicy="off"
+										   horizontalScrollPolicy="off"
+										   id="flat_rate_canvas"
+										   label="flat_rate_canvas">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="flat_rate_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+								</mx:Canvas>
+								<mx:Canvas label="markup_canvas"
+										   width="100%"
+										   height="100%"
+										   id="markup_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="markup_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+								</mx:Canvas>
+								<mx:Canvas label="always_ask_canvas"
+										   width="100%"
+										   height="100%"
+										   id="always_ask_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="always_ask_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+								</mx:Canvas>
+								<mx:Canvas label="price_list_canvas"
+										   width="100%"
+										   height="100%"
+										   id="price_list_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="price_list_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="103"
+												  width="100"
+												  height="20"
+												  id="price_list_quantity_edit"/>
+									<mx:Text x="63"
+											 y="104"
+											 text="Quanitity:"/>
+								</mx:Canvas>
+								<mx:Canvas label="rate_list_canvas"
+										   width="100%"
+										   height="100%"
+										   id="rate_list_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="rate_list_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="103"
+												  width="100"
+												  height="20"
+												  id="rate_list_quantity_edit"/>
+									<mx:Text x="63"
+											 y="104"
+											 text="Quanitity:"/>
+								</mx:Canvas>
+								<mx:Canvas label="cutting_charge_canvas"
+										   width="100%"
+										   height="100%"
+										   id="cutting_charge_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="cutting_charge_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="76"
+												  width="100"
+												  height="20"
+												  id="cutting_charge_cuts_edit"/>
+									<mx:Text x="63"
+											 y="77"
+											 text="Quanitity:"/>
+									<mx:Text x="127"
+											 y="104"
+											 id="cutting_charge_cut_type_text"/>
+								</mx:Canvas>
+								<mx:Canvas label="ink_charge_canvas"
+										   width="100%"
+										   height="100%">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="ink_charge_price_edit"/>
+									<mx:TextInput x="472"
+												  y="76"
+												  width="100"
+												  height="20"
+												  id="ink_charge_lbs_of_ink_edit"/>
+									<mx:Text x="405"
+											 y="78"
+											 text="Lbs of Ink:"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="76"
+												  width="100"
+												  height="20"
+												  id="ink_charge_coverage_edit"/>
+									<mx:Text x="42"
+											 y="78"
+											 text="Pct Coverage:&#xd;"/>
+								</mx:Canvas>
+								<mx:Canvas label="ship_charge_canvas"
+										   width="100%"
+										   height="100%"
+										   id="ship_charge_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="ink_charge_price_edit0"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="ink_charge_coverage_edit0"/>
+									<mx:TextInput x="127"
+												  y="10"
+												  width="186"
+												  height="20"
+												  id="ink_charge_coverage_edit1"/>
+									<mx:Text x="68"
+											 y="12"
+											 text="Ship Via:"/>
+									<mx:TextInput x="127"
+												  y="37"
+												  width="387"
+												  height="20"
+												  id="ink_charge_coverage_edit2"/>
+									<mx:Text x="72"
+											 y="39"
+											 text="Ship To:&#xd;"/>
+									<mx:Text x="47"
+											 y="104"
+											 text="Total Weight:"/>
+								</mx:Canvas>
+								<mx:Canvas label="linear_charge_canvas"
+										   width="100%"
+										   height="100%"
+										   id="linear_charge_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="linear_charge_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="127"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="linear_charge_quantity_edit"/>
+									<mx:Text x="66"
+											 y="104"
+											 text="Quantity:"/>
+									<mx:CheckBox x="308"
+												 y="10"
+												 id="linear_charge_location_top_check"/>
+									<mx:CheckBox x="333"
+												 y="41"
+												 id="linear_charge_location_right_check"/>
+									<mx:CheckBox x="284"
+												 y="41"
+												 id="linear_charge_location_left_check"/>
+									<mx:CheckBox x="308"
+												 y="71"
+												 id="linear_charge_location_bottom_check"/>
+								</mx:Canvas>
+								<mx:Canvas label="job_aware_canvas"
+										   width="100%"
+										   height="100%"
+										   id="job_aware_canvas"
+										   horizontalScrollPolicy="off"
+										   verticalScrollPolicy="off">
+									<mx:TextInput x="472"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="job_aware_price_edit"/>
+									<mx:Text x="429"
+											 y="103"
+											 text="Price:&#xd;"/>
+									<mx:TextInput x="124"
+												  y="10"
+												  width="100"
+												  height="20"
+												  id="job_aware_qty_edit"/>
+									<mx:TextInput x="124"
+												  y="32"
+												  width="100"
+												  height="20"
+												  id="job_aware_material_qty_edit"/>
+									<mx:Text x="63"
+											 y="12"
+											 text="Quantity:&#xd;"/>
+									<mx:Text x="16"
+											 y="34"
+											 text="Material Quanitity:&#xd;"/>
 								</mx:Canvas>
 							</mx:ViewStack>
+							<mx:CheckBox x="20"
+										 label="Finished"
+										 id="finished_check"
+										 fontSize="9"
+										 y="4"
+										 selected="{charge.finished}"/>
+							<mx:CheckBox x="103"
+										 label="Taxable"
+										 id="taxable_check"
+										 fontSize="9"
+										 y="4"
+										 selected="{charge.taxable}"/>
+							<mx:CheckBox x="176"
+										 label="Brokered"
+										 id="brokered_check"
+										 fontSize="9"
+										 y="4"
+										 selected="{charge.brokered}"/>
+							<mx:CheckBox x="254"
+										 label="Display Quantity"
+										 id="displayQty_check"
+										 fontSize="9"
+										 y="4"
+										 selected="{charge.displayQty}"/>
+							<mx:CheckBox x="381"
+										 label="Hidden"
+										 id="hidden_check"
+										 fontSize="9"
+										 y="4"
+										 selected="{charge.hidden}"/>
+							<mx:CheckBox x="453"
+										 label="Hide Price"
+										 id="hidePrice_check"
+										 fontSize="9"
+										 labelPlacement="right"
+										 y="4"
+										 selected="{charge.hidePrice}"/>
+							<mx:Text x="137.5"
+									 y="40"
+									 text="{charge.chargeDefinition.name}"
+									 fontSize="9"
+									 fontWeight="bold"
+									 id="charge_name_text"/>
+							<mx:Text x="93"
+									 y="40"
+									 text="Name:&#xd;"
+									 fontSize="9"
+									 fontWeight="bold"/>
+							<mx:Text x="64"
+									 y="59"
+									 text="Description:"
+									 fontSize="9"
+									 width="66"/>
+							<mx:Text x="91"
+									 y="99"
+									 text="Notes:"
+									 fontSize="9"/>
+							<mx:TextInput x="137"
+										  y="57"
+										  width="435"
+										  height="38"
+										  fontSize="9"
+										  id="charge_description_edit"
+										  text="{charge.description}"/>
+							<mx:TextInput x="137"
+										  y="97"
+										  width="435"
+										  height="38"
+										  fontSize="9"
+										  id="charge_notes_edit"
+										  text="{charge.notes}"/>
+							<mx:TextInput x="137"
+										  y="137"
+										  width="435"
+										  height="20"
+										  fontSize="9"/>
+							<mx:HRule height="2"
+									  right="5"
+									  left="5"
+									  y="30"/>
+							<mx:Text x="21"
+									 y="139"
+									 text="Production Location:"
+									 fontSize="9"/>
+							<mx:CheckBox x="137"
+										 y="162"
+										 label="Show Notes"
+										 selected="{charge.showNotes}"
+										 id="showNotes_check"/>
+
 						</mx:Canvas>
 					</mx:VDividedBox>
+					<mx:Button x="517"
+							   y="568"
+							   label="Done"
+							   click="doDone()"
+							   width="65"
+							   id="done_button"/>
+					<mx:Button x="444"
+							   y="568"
+							   label="Add"
+							   click="doAdd()"
+							   width="65"
+							   id="add_button"
+							   enabled="{charge != null}"/>
 				</mx:Canvas>
 			</mx:HDividedBox>
 
 		</mx:Canvas>
 	</mx:VBox>
-</mx:Panel>
+</mx:TitleWindow>

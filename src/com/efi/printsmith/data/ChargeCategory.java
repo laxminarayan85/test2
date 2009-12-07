@@ -58,25 +58,25 @@ public class ChargeCategory extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<Charge> children;
+	private java.util.List<ChargeDefinition> children;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Charge> getChildren(){
+	public java.util.List<ChargeDefinition> getChildren(){
 		return children; 
 	}
 
-	public void addChildren(Charge obj) {
+	public void addChildren(ChargeDefinition obj) {
 		obj.setParent(this);
 		if (children == null) {
-			children = new java.util.ArrayList<Charge>();
+			children = new java.util.ArrayList<ChargeDefinition>();
 		}
 		children.add(obj);
 	}
 	/**
 	 * @generated
 	 */	
-	public void setChildren(java.util.List<Charge> newVal) {
+	public void setChildren(java.util.List<ChargeDefinition> newVal) {
 		this.children = newVal;
 	}
  	
@@ -132,7 +132,7 @@ public class ChargeCategory extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<Charge>)newValue); else
+		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<ChargeDefinition>)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (PARENT.equals(propertyName)) setParent((ChargeCommand)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -145,7 +145,7 @@ public class ChargeCategory extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (PARENT.equals(propertyName)) 

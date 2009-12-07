@@ -31,4 +31,13 @@
 			</source>
 		</properties>
 	</destination>
+	
+	<destination id="pricingService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.PricingService
+			</source>
+		</properties>
+	</destination>
+	 
 </service>

@@ -14,4 +14,10 @@
 		<mx:method name="getAll"/>
 		<mx:method name="deleteItem"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="pricingService" destination="pricingService"
+		showBusyCursor="false">
+		<mx:method name="priceJob" />
+		<mx:method name="priceCharge" />
+		<mx:method name="priceInvoice" />
+	</mx:RemoteObject>
 </cairngorm:ServiceLocator>
