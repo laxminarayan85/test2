@@ -14,6 +14,10 @@
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceElements" destination="dataService">
+	<mx:method name="getFromParent" fault="handleFault(event)" result="handleLoadElementsResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveElementsResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="users"/>
 <mx:Consumer id="consumer" destination="pricelisteditor" message="messageHandler(event.message)"/>
@@ -89,7 +93,7 @@
 	    PopUpManager.centerPopUp(this);
 	    dataService.getAll(itemType);
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
-		if (itemType == "PriceList")
+		if (itemType == "PriceList" ||itemType == "PriceListBase")
 		{
 			this.title = "Price List"
 			this.label = "Price List"
@@ -106,17 +110,12 @@
 				priceList = new WasteChart();
 			} 
 		}
-		if (priceList.priceListElement != null)
-		{
-			PriceListElementArray = priceList.priceListElement as ArrayCollection;
-		}
 	}
 	                                
 	private function doSelect():void {	
 		var editPage:Container = parentContainer;
 
 		maptoPricelist();
-		UpdateElementData();
 		dataService.addUpdate(priceList);
 
 		switch(editPage.className) {
@@ -150,14 +149,11 @@
 	}
 	
 	private function UpdateElementData():void{
-		if (priceList.priceListElement == null)
-		{
-			priceList.priceListElement = new ArrayCollection()
-		}
-			 
+
 		for each (var item:PriceListElement in PriceListElementArray)
 		{
-			priceList.priceListElement.addItem(item);
+			item.priceListBase = priceList;
+			dataServiceElements.addUpdate(item);
 		}
 		
 
@@ -182,10 +178,6 @@
 		chkUseAsRateList.selected = priceList.isRate;
 		chkProductionDiscount.selected = priceList.isDiscount;
 		chkIgnoreGlobalPriceChange.selected = priceList.ignorePriceAdjustments;
-		if (priceList.priceListElement != null)
-		{
-			PriceListElementArray = priceList.priceListElement as ArrayCollection;
-		}
 	}
 	
 	private function maptoPricelist():void {
@@ -204,14 +196,31 @@
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
+		if (itemType == "PriceList" ||itemType == "PriceListBase")
+		{
+			priceList = ev.result as PriceList
+		}else{
+			priceList = ev.result as WasteChart
+		}
+		UpdateElementData();
 		dataService.getAll(itemType)
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		pricelists = ev.result as ArrayCollection;
+		dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getAll(itemType)
 		doNew();
+	}
+	private function handleLoadElementsResult(ev:ResultEvent):void {
+		PriceListElementArray = ev.result as ArrayCollection;
+		if (PriceListElementArray == null){
+			PriceListElementArray = new ArrayCollection();
+		}
+	}
+	private function handleSaveElementsResult(ev:ResultEvent):void {
+		dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
 	}
 	
 	private function doNewPriceListElement():void {

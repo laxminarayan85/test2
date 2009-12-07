@@ -22,7 +22,6 @@ package com.efi.vo
 		public var sequence:Boolean = true;
 		public var isPercentage:Boolean = true;
 		public var lastItemIsPriceAdditionalQty:Boolean = true;
-		public var priceListElement:ArrayCollection;
 	
 	}
 }

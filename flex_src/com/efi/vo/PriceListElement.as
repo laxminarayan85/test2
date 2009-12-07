@@ -14,6 +14,7 @@ package com.efi.vo
 		}
 		public var quantity:Number = 0;
 		public var amount:Number = 0;
+		public var priceListBase:PriceListBase = new PriceListBase();
 	
 	}
 }
