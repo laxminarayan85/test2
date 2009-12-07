@@ -116,6 +116,24 @@ public class DataService {
 		return new ArrayList();
 	}
 
+    public List<?> getFromParent(String className, String parentName, Long id) throws Exception {      
+    	try {            
+    		log.debug("** getId called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();       
+    		String queryString = "from "+className+" where "+parentName+"_id = :id";
+
+    		Query query = em.createQuery(queryString);           
+    		query.setParameter("id", id);            
+
+    		List<?>  list = query.getResultList();   
+    		if (list != null)
+    		 	log.debug("** Found " + list.size() + "records:");
+    		return list;        
+    	} catch (Exception e) { 
+    		log.error(e);       
+   		}        
+    	return null;            
+   	} 
 	
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
