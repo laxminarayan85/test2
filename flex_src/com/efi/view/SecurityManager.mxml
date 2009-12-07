@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="782" height="608"  title="Security Manager" label="Security Manager" xmlns:ns1="com.adobe.flex.extras.controls.*"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="782" height="608"  title="Security Manager" label="Security Manager" xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
 	 creationComplete="init()" xmlns:ns2="flexlib.controls.*" xmlns:components="com.efi.components.*">
 	 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -8,6 +8,7 @@
 </mx:RemoteObject>
 <mx:RemoteObject id="SecuritydataService" destination="dataService">
 	<mx:method name="getByAccessGroup" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
+	<mx:method name="getFromParent" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSecurityResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSecurityCommands" destination="dataService">
@@ -50,7 +51,6 @@
 	              
 		dataService.getAll("AccessGroup"); 
 		dataServiceSecurityCommands.getAll("SecurityCommands");
-		//SecuritydataService.getByAccessGroup("SecuritySetup", accessGroup.id); 
 		
 	}                
 
@@ -62,12 +62,18 @@
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		accessGroupLists = ev.result as ArrayCollection;
+		if (access == null){
+			access = accessGroupLists.getItemAt(0,0) as AccessGroup;
+		}
+		SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
+		access = ev.result as AccessGroup;
+		mapToSecurityData();
 		dataService.getAll("AccessGroup")
 	}	
 	private function handleSaveSecurityResult(ev:ResultEvent):void {
-		//dataService.getByAccessGroup("SecurityGroup")
+		SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}	
 	
 	private function handleLoadSecurityResult(ev:ResultEvent):void {
@@ -88,7 +94,6 @@
 	
 	}   
 	private function mapToAccessGroup():void{
-		access.name = name_edit.text;
 		access = dataService.addUpdate(access);
 	}
 	public function doSave():void {                                    
@@ -96,7 +101,6 @@
 		mapToAccessGroup();
 		mapToSecurityData();
 		dataService.addUpdate(access);   
-		SecuritydataService.addUpdate(security);                                    
 	}   
 	public function doNew():void {
 		access = new AccessGroup();
@@ -123,20 +127,43 @@
 	private function doUserGridClick():void {
 		access = dataGrid.selectedItem as AccessGroup;
 	}
-	private function doAccessGroup():void{
-		if (accessGroupLists.length > 0) {
-			access = accessGroupList.selectedItem as AccessGroup
-			SecuritydataService.getByAccessGroup("SecuritySetup",access); 
-			name_edit.text = access.name;
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
 		}
+		return -1;
+	}
+
+	private function doAccessGroup():void{
+//		if (accessGroupLists.length > 0) {
+//			access = accessGroupList.selectedItem as AccessGroup
+//			SecuritydataService.getByAccessGroup("SecuritySetup",access); 
+//			name_edit.text = access.name;
+//		}
+		var access:AccessGroup;
+		var result:Boolean;
+		
+		if (accessGroupList.typedText != null && accessGroupList.typedText != "" && accessGroupList.selectedIndex == -1) {
+			var item:int = findItem(accessGroupList.typedText, accessGroupLists);
+			if (item == -1) {
+				access = new AccessGroup();
+				access.name = accessGroupList.typedText;
+				dataService.addUpdate(access);
+			}
+			else {
+				accessGroupList.selectedItem = item;
+			}
+		}
+
 	}
 
 ]]>
 </mx:Script>
-	<mx:Label x="26" y="89" text="Access Group:"/>
-	<mx:List x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" change="doAccessGroup();"></mx:List>
-	<mx:Label x="61" y="136" text="Name:"/>
-	<mx:TextInput x="121" y="134" id="name_edit" text="{access.name}" width="162" focusOut="mapToAccessGroup();"/>
+	<mx:Label x="26" y="93.5" text="Access Group:"/>
+	<fc:AutoComplete  x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" focusOut="doAccessGroup()"/>
 	
 	<!--<mx:AdvancedDataGrid  x="26" y="181" width="698" height="325" id="dataGrid" sortExpertMode="true"
 		 dataProvider="{securitySetupLists}">
