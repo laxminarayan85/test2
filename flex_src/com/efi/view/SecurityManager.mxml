@@ -33,6 +33,8 @@
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
+   	[Bindable]
+   	private var currentItem:Object;
     [Bindable]
    	private var securitySetupLists:ArrayCollection = new ArrayCollection();
     [Bindable]
@@ -94,17 +96,14 @@
 	
 	}   
 	private function mapToAccessGroup():void{
-		access = dataService.addUpdate(access);
+		dataService.addUpdate(access);
 	}
 	public function doSave():void {                                    
-		
-		mapToAccessGroup();
-		mapToSecurityData();
-		dataService.addUpdate(access);   
+		mapToAccessGroup()
 	}   
 	public function doNew():void {
 		access = new AccessGroup();
-		accessGroupLists.addItem(access);
+		
 		for each(var item:SecurityCommands in securtiyCommandsLists){
 			security = new SecuritySetup();
 			security.accessGroup = access;
@@ -138,32 +137,28 @@
 	}
 
 	private function doAccessGroup():void{
-//		if (accessGroupLists.length > 0) {
-//			access = accessGroupList.selectedItem as AccessGroup
-//			SecuritydataService.getByAccessGroup("SecuritySetup",access); 
-//			name_edit.text = access.name;
-//		}
-		var access:AccessGroup;
-		var result:Boolean;
-		
-		if (accessGroupList.typedText != null && accessGroupList.typedText != "" && accessGroupList.selectedIndex == -1) {
-			var item:int = findItem(accessGroupList.typedText, accessGroupLists);
-			if (item == -1) {
-				access = new AccessGroup();
-				access.name = accessGroupList.typedText;
-				dataService.addUpdate(access);
-			}
-			else {
-				accessGroupList.selectedItem = item;
-			}
+		if (accessGroupList.selectedIndex != -1){
+			access = accessGroupList.selectedItem as AccessGroup
+			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
+		}else{
+			access = currentItem as AccessGroup;
+			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
+			accessGroupList.selectedItem = access; 
+			accessGroupList.typedText = access.name;
+			accessGroupList.text = access.name;
+			
 		}
+	}
 
+	private function setSelectedAccessGroup():void{
+		currentItem = accessGroupList.selectedItem 
 	}
 
 ]]>
 </mx:Script>
 	<mx:Label x="26" y="93.5" text="Access Group:"/>
-	<fc:AutoComplete  x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" focusOut="doAccessGroup()"/>
+	<mx:Label x="67" y="137" text="Name:"/>
+	<fc:AutoComplete  x="121" y="89" height="27" dataProvider="{accessGroupLists}"  labelField="name" id="accessGroupList" width="173" focusOut="doAccessGroup()" lookAhead="true" focusIn="setSelectedAccessGroup();"/>
 	
 	<!--<mx:AdvancedDataGrid  x="26" y="181" width="698" height="325" id="dataGrid" sortExpertMode="true"
 		 dataProvider="{securitySetupLists}">
@@ -192,5 +187,6 @@
 						<mx:AdvancedDataGridColumn headerText="Command Name" dataField="commandName"/>
 				</mx:columns>
 		</mx:AdvancedDataGrid>
+		<mx:TextInput x="121" y="132.5" width="173" height="27" text="{access.name}"/>
 		
 </mx:TitleWindow>
