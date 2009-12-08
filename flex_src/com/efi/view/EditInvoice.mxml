@@ -42,6 +42,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.vo.Estimate;
+			import com.efi.vo.InvoiceBase;
 			import mx.events.CloseEvent;
 			import com.efi.events.JobEditCompleteEvent;
 			import com.efi.events.AccountPickerSelectEvent;
@@ -81,15 +83,23 @@
 			import mx.validators.Validator;
 			import mx.events.ValidationResultEvent;
 			import mx.effects.easing.Back;
+			
+			public static var EDITINVOICE:String = "invoice";
+			public static var EDITESTIMATE:String = "estimate";
+			
 			private var accounts:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
-			private var invoice:Invoice=new Invoice();
+			private var invoice:InvoiceBase;
+			
 			[Bindable]
 			private var salesReps:ArrayCollection=new ArrayCollection();
+			
 			[Bindable]
 			private var shippingMethods:ArrayCollection=new ArrayCollection();
 
+			private var editorType = EDITINVOICE;
+			
 			public function init():void
 			{
 				vbox.getDividerAt(0).visible=false;
@@ -100,12 +110,35 @@
 				salesRepDataService.getAll("SalesRep");
 			}
 
-			public function setInvoice(invoice:Invoice):void
+			public function getEditorType():String
+			{
+				return this.editorType;
+			}
+			
+			public function setEditorType(editorType:String):void
+			{
+				if (editorType == EDITINVOICE || editorType == EDITESTIMATE) {
+					this.editorType = editorType;
+					if (editorType == EDITINVOICE) {
+						this.invoice = new Invoice();
+						this.title = "Edit Invoice";
+						this.name = "Edit Invoice";
+						this.label = "Edit Invoice";
+					} else if (editorType == EDITESTIMATE) {
+						this.invoice = new Estimate();
+						this.title = "Edit Estimate";
+						this.name = "Edit Estimate";
+						this.label = "Edit Estimate";
+					}
+				}
+			}
+			
+			public function setInvoice(invoice:InvoiceBase):void
 			{
 				this.invoice=invoice;
 			}
 
-			public function getInvoice():Invoice
+			public function getInvoice():InvoiceBase
 			{
 				return this.invoice;
 			}

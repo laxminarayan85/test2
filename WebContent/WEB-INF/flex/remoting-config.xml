@@ -39,5 +39,13 @@
 			</source>
 		</properties>
 	</destination>
+	
+	<destination id="estimatorService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.EstimatorService
+			</source>
+		</properties>
+	</destination>
 	 
 </service>

@@ -82,7 +82,6 @@
 		import com.efi.view.SystemPreferences;
 		import com.efi.view.CashRegister;
 		import com.efi.view.EditInvoice;
-		import com.efi.view.EditEstimate;
 		import com.efi.view.EditUser;
 		import com.efi.vo.Users;
 		import mx.effects.easing.Quadratic;
@@ -232,10 +231,12 @@
 		}
 		private function doCreateInvoice():void {
 			var child:EditInvoice = new EditInvoice();
+			child.setEditorType(EditInvoice.EDITINVOICE);
 			addUniqueTab(child);
 		}
 		private function doCreateEstimate():void {
-			var child:EditEstimate = new EditEstimate();
+			var child:EditInvoice = new EditInvoice();
+			child.setEditorType(EditInvoice.EDITESTIMATE);
 			addUniqueTab(child);
 		}
 		private function doTracker():void {

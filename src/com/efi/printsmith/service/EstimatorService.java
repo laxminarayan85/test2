@@ -20,15 +20,15 @@ import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 
-public class PricingService {
+public class EstimatorService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
-	protected static Logger log = Logger.getLogger(PricingService.class);
+	protected static Logger log = Logger.getLogger(EstimatorService.class);
 	
 	protected static EntityManagerFactory entityManagerFactory = null;
 	
-	public PricingService() {
+	public EstimatorService() {
 		super();
 		try {
 			if (entityManagerFactory == null) {
@@ -39,24 +39,19 @@ public class PricingService {
 		}
 	}
 	
-	public Charge priceCharge(Charge charge) {
-		log.info("Start priceCharge for charge " + charge.getId());
+	public Invoice saveInvoice(Invoice invoice) {
+		log.info("Start saveInvoice for invoice " + invoice.getId());
 		
-		log.info("Completed priceCharge for charge " + charge.getId());
-		return charge;
-	}
-
-	public Job priceJob(Job job) {
-		log.info("Start priceJob for job " + job.getId());
-		
-		log.info("Completed priceJob for job " + job.getId());
-		return job;
-	}
-	
-	public Invoice priceInvoice(Invoice invoice) {
-		log.info("Start priceInvoice for invoice " + invoice.getId());
-		
-		log.info("Completed priceInvoice for invoice " + invoice.getId());
+		log.info("Completed saveInvoice for invoice " + invoice.getId());
 		return invoice;
 	}
+	
+	public boolean validateInvoice(Invoice invoice) {
+		boolean invoiceValid = true;
+		log.info("Start validateInvoice for invoice " + invoice.getId());
+		
+		log.info("Start validateInvoice for invoice " + invoice.getId());
+		return invoiceValid;
+	}
+
 }

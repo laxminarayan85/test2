@@ -40,6 +40,19 @@ package com.efi.vo
 		public var costingPress:PressDefinition = new PressDefinition();
 		public var runMethod:String = "";
 		public var stock:StockDefinition = new StockDefinition();
+		public var parentSize:String = "";
+		public var runSize:String = "";
+		public var finishSize:String = "";
+		public var attribute1:int = 0;
+		public var foldedSize:String = "";
+		public var frontColors:int = 0;
+		public var backColors:int = 0;
+		public var frontPasses:int = 0;
+		public var backPasses:int = 0;
+		public var frontWashes:int = 0;
+		public var backWashes:int = 0;
+		public var frontInks:ArrayCollection;
+		public var backInks:InkColor = new InkColor();
 	
 	}
 }

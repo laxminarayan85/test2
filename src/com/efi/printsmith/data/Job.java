@@ -146,6 +146,58 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String STOCK = "Stock";
+	/**
+	 * @generated
+	 */
+	public static final String PARENTSIZE = "ParentSize";
+	/**
+	 * @generated
+	 */
+	public static final String RUNSIZE = "RunSize";
+	/**
+	 * @generated
+	 */
+	public static final String FINISHSIZE = "FinishSize";
+	/**
+	 * @generated
+	 */
+	public static final String ATTRIBUTE1 = "Attribute1";
+	/**
+	 * @generated
+	 */
+	public static final String FOLDEDSIZE = "FoldedSize";
+	/**
+	 * @generated
+	 */
+	public static final String FRONTCOLORS = "FrontColors";
+	/**
+	 * @generated
+	 */
+	public static final String BACKCOLORS = "BackColors";
+	/**
+	 * @generated
+	 */
+	public static final String FRONTPASSES = "FrontPasses";
+	/**
+	 * @generated
+	 */
+	public static final String BACKPASSES = "BackPasses";
+	/**
+	 * @generated
+	 */
+	public static final String FRONTWASHES = "FrontWashes";
+	/**
+	 * @generated
+	 */
+	public static final String BACKWASHES = "BackWashes";
+	/**
+	 * @generated
+	 */
+	public static final String FRONTINKS = "FrontInks";
+	/**
+	 * @generated
+	 */
+	public static final String BACKINKS = "BackInks";
 
 	/**
 	 * @generated
@@ -643,6 +695,233 @@ public class Job extends ModelBase {
 	public void setStock(StockDefinition newVal) {
 		this.stock = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String parentSize;
+	/**
+	 * @generated
+ 	 */
+	public String getParentSize(){
+		return parentSize; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setParentSize(String newVal) {
+		this.parentSize = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String runSize;
+	/**
+	 * @generated
+ 	 */
+	public String getRunSize(){
+		return runSize; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRunSize(String newVal) {
+		this.runSize = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String finishSize;
+	/**
+	 * @generated
+ 	 */
+	public String getFinishSize(){
+		return finishSize; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFinishSize(String newVal) {
+		this.finishSize = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer attribute1;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAttribute1(){
+		return attribute1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAttribute1(Integer newVal) {
+		this.attribute1 = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String foldedSize;
+	/**
+	 * @generated
+ 	 */
+	public String getFoldedSize(){
+		return foldedSize; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFoldedSize(String newVal) {
+		this.foldedSize = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer frontColors;
+	/**
+	 * @generated
+ 	 */
+	public Integer getFrontColors(){
+		return frontColors; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFrontColors(Integer newVal) {
+		this.frontColors = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer backColors;
+	/**
+	 * @generated
+ 	 */
+	public Integer getBackColors(){
+		return backColors; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBackColors(Integer newVal) {
+		this.backColors = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer frontPasses;
+	/**
+	 * @generated
+ 	 */
+	public Integer getFrontPasses(){
+		return frontPasses; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFrontPasses(Integer newVal) {
+		this.frontPasses = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer backPasses;
+	/**
+	 * @generated
+ 	 */
+	public Integer getBackPasses(){
+		return backPasses; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBackPasses(Integer newVal) {
+		this.backPasses = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer frontWashes;
+	/**
+	 * @generated
+ 	 */
+	public Integer getFrontWashes(){
+		return frontWashes; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFrontWashes(Integer newVal) {
+		this.frontWashes = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer backWashes;
+	/**
+	 * @generated
+ 	 */
+	public Integer getBackWashes(){
+		return backWashes; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBackWashes(Integer newVal) {
+		this.backWashes = newVal;
+	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<InkColor> frontInks;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<InkColor> getFrontInks(){
+		return frontInks; 
+	}
+
+	public void addFrontInks(InkColor obj) {
+		if (frontInks == null) {
+			frontInks = new java.util.ArrayList<InkColor>();
+		}
+		frontInks.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setFrontInks(java.util.List<InkColor> newVal) {
+		this.frontInks = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private InkColor backInks;
+	/**
+	 * @generated
+ 	 */
+	public InkColor getBackInks(){
+		return backInks; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBackInks(InkColor newVal) {
+		this.backInks = newVal;
+	}
 
 	/**
 	 * @generated
@@ -678,6 +957,19 @@ public class Job extends ModelBase {
 		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
 		if (RUNMETHOD.equals(propertyName)) return getRunMethod();
 		if (STOCK.equals(propertyName)) return getStock();
+		if (PARENTSIZE.equals(propertyName)) return getParentSize();
+		if (RUNSIZE.equals(propertyName)) return getRunSize();
+		if (FINISHSIZE.equals(propertyName)) return getFinishSize();
+		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
+		if (FOLDEDSIZE.equals(propertyName)) return getFoldedSize();
+		if (FRONTCOLORS.equals(propertyName)) return getFrontColors();
+		if (BACKCOLORS.equals(propertyName)) return getBackColors();
+		if (FRONTPASSES.equals(propertyName)) return getFrontPasses();
+		if (BACKPASSES.equals(propertyName)) return getBackPasses();
+		if (FRONTWASHES.equals(propertyName)) return getFrontWashes();
+		if (BACKWASHES.equals(propertyName)) return getBackWashes();
+		if (FRONTINKS.equals(propertyName)) return getFrontInks();
+		if (BACKINKS.equals(propertyName)) return getBackInks();
 		return super.getProperty(propertyName);
 	}
 	
@@ -715,6 +1007,19 @@ public class Job extends ModelBase {
 		if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
 		if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
 		if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
+		if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
+		if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
+		if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
+		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
+		if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((String)newValue); else
+		if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
+		if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
+		if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
+		if (BACKPASSES.equals(propertyName)) setBackPasses((Integer)newValue); else
+		if (FRONTWASHES.equals(propertyName)) setFrontWashes((Integer)newValue); else
+		if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
+		if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
+		if (BACKINKS.equals(propertyName)) setBackInks((InkColor)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -780,6 +1085,32 @@ public class Job extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (STOCK.equals(propertyName)) 
 			return new Class<?>[] {StockDefinition.class};		
+		if (PARENTSIZE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (RUNSIZE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FINISHSIZE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (ATTRIBUTE1.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (FOLDEDSIZE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FRONTCOLORS.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (BACKCOLORS.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (FRONTPASSES.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (BACKPASSES.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (FRONTWASHES.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (BACKWASHES.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (FRONTINKS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, InkColor.class};		
+		if (BACKINKS.equals(propertyName)) 
+			return new Class<?>[] {InkColor.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -818,6 +1149,19 @@ public class Job extends ModelBase {
 		if (COSTINGPRESS.equals(propertyName)) return Job.class;
 		if (RUNMETHOD.equals(propertyName)) return Job.class;
 		if (STOCK.equals(propertyName)) return Job.class;
+		if (PARENTSIZE.equals(propertyName)) return Job.class;
+		if (RUNSIZE.equals(propertyName)) return Job.class;
+		if (FINISHSIZE.equals(propertyName)) return Job.class;
+		if (ATTRIBUTE1.equals(propertyName)) return Job.class;
+		if (FOLDEDSIZE.equals(propertyName)) return Job.class;
+		if (FRONTCOLORS.equals(propertyName)) return Job.class;
+		if (BACKCOLORS.equals(propertyName)) return Job.class;
+		if (FRONTPASSES.equals(propertyName)) return Job.class;
+		if (BACKPASSES.equals(propertyName)) return Job.class;
+		if (FRONTWASHES.equals(propertyName)) return Job.class;
+		if (BACKWASHES.equals(propertyName)) return Job.class;
+		if (FRONTINKS.equals(propertyName)) return Job.class;
+		if (BACKINKS.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -884,6 +1228,32 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
 			return false;
 		if (! SmartEquals(getStock(), objT.getStock()))
+			return false;
+		if (! SmartEquals(getParentSize(), objT.getParentSize()))
+			return false;
+		if (! SmartEquals(getRunSize(), objT.getRunSize()))
+			return false;
+		if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
+			return false;
+		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+			return false;
+		if (! SmartEquals(getFoldedSize(), objT.getFoldedSize()))
+			return false;
+		if (! SmartEquals(getFrontColors(), objT.getFrontColors()))
+			return false;
+		if (! SmartEquals(getBackColors(), objT.getBackColors()))
+			return false;
+		if (! SmartEquals(getFrontPasses(), objT.getFrontPasses()))
+			return false;
+		if (! SmartEquals(getBackPasses(), objT.getBackPasses()))
+			return false;
+		if (! SmartEquals(getFrontWashes(), objT.getFrontWashes()))
+			return false;
+		if (! SmartEquals(getBackWashes(), objT.getBackWashes()))
+			return false;
+		if (! SmartEquals(getFrontInks(), objT.getFrontInks()))
+			return false;
+		if (! SmartEquals(getBackInks(), objT.getBackInks()))
 			return false;
 		return true;
 	}			
