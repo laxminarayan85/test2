@@ -220,7 +220,8 @@
 		}
 	}
 	private function handleSaveElementsResult(ev:ResultEvent):void {
-		dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
+		if (priceList != null)
+			dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
 	}
 	
 	private function doNewPriceListElement():void {
