@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
         height="214"
-        width="388"
+        width="438"
         showCloseButton="true"
         verticalScrollPolicy="off"
         horizontalScrollPolicy="off"
@@ -33,24 +33,24 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 	</mx:RemoteObject>
 		
-    <mx:Canvas width="360" height="167">
+    <mx:Canvas width="409" height="167">
     <mx:Label x="10" y="33" text="Street:" width="67" textAlign="right"/>
     <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
-    <mx:Label x="257" y="82" text="State:" width="39" textAlign="right"/>
-    <mx:Label x="10" y="108" text="Zip:" width="67" textAlign="right"/>
-    <mx:Label x="210" y="108" text="Country:" width="57" textAlign="right"/>
+    <mx:Label x="306" y="82" text="State:" width="39" textAlign="right"/>
+    <mx:Label x="10" y="106" text="Zip:" width="67" textAlign="right"/>
+    <mx:Label x="164" y="106" text="Country:" width="57" textAlign="right"/>
             
     <mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="10" width="265" id="company_edit" text="{address.name}"/>
-    <mx:TextInput x="85" y="33" width="265" id="street1_edit" text="{address.street1}"/>
-    <mx:TextInput x="85" y="56" width="265" id="street2_edit" text="{address.street2}"/>
+    <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}"/>
+    <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
+    <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
     <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
-    <fc:AutoComplete id="statecombo" x="304" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
-    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="126"/>
-    <fc:AutoComplete id="countrycombo" x="275" y="106" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="75"/>
+    <fc:AutoComplete id="statecombo" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
+    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="76"/>
+    <fc:AutoComplete id="countrycombo" x="224" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="175"/>
     	
-    <mx:Button x="192" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
-    <mx:Button x="275" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
