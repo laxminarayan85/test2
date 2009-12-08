@@ -1066,7 +1066,7 @@
 									 bottom="25"
 									 top="0"
 									 right="0"
-									 showHeaders="false" alternatingItemColors="#FFFFFF" color="#FFFFFF">
+									 showHeaders="false">
 							<mx:columns>
 								<mx:DataGridColumn headerText="Description"
 												   dataField="description"/>
