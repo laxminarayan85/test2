@@ -231,6 +231,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 
 		account.contact = ship_to_contact_editor.getContact();
 		account.billToContact = bill_to_contact_editor.getContact();
+		account.billToContact.parentAccount = account;
+		account.contact.parentAccount = account;
 		
 		account.marketing.birthDate = birthDate.selectedDate;
 		account.marketing.followup=  followUp.selectedDate;
