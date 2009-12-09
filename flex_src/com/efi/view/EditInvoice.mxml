@@ -65,7 +65,8 @@
 			import com.efi.vo.TaxTable;
 			import com.efi.vo.TaxCodes;
 			import com.efi.vo.SpecialInstructions;
-
+			import com.efi.vo.Job;
+			
 			import flash.geom.Matrix;
 			import com.efi.vo.Account;
 			import mx.controls.Alert;
@@ -389,6 +390,14 @@
 			{
 				this.setAccount(new Account());
 			}
+			
+			private function doDoubleclickInvoiceItem():void {
+				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+				editJobWindow.setStyle("borderAlpha", 0.9);
+				editJobWindow.setJob(selectedJob);
+				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
+			}
 		]]>
 
 	</mx:Script>
@@ -562,7 +571,9 @@
 									 id="invoice_job_grid"
 									 dataProvider="{invoice.jobs}"
 									 bottom="0"
-									 top="0">
+									 top="0"
+									 doubleClick="doDoubleclickInvoiceItem()"
+								  	 doubleClickEnabled="true">
 							<mx:columns>
 								<mx:DataGridColumn headerText=""
 												   width="30"

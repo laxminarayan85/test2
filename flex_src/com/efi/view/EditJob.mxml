@@ -341,6 +341,7 @@
 			private function doAddCharge():void
 			{
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
+				chargePicker.charges = this.job.charges;
 				chargePicker.setStyle("borderAlpha", 0.9);
 				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
 			}
@@ -394,6 +395,20 @@
 			private function handleStockPickerNew(evt:StockPickerSelectEvent):void
 			{
 				this.job.stock=new StockDefinition();
+			}
+			
+			private function handleFocusOutEvent(evt:FocusEvent):void
+			{
+				if (evt.target == job_parent) {
+					job.parentSize = job_parent.text;
+				} else if (evt.target == job_size) {
+					job.runSize = job_size.text;
+				} else if (evt.target == job_finish_size) {
+					job.finishSize = job_finish_size.text;
+				} else if (evt.target == job_fold_size) {
+					job.foldedSize = job_fold_size.text;
+				}
+				super.focusOutHandler(evt);
 			}
 		]]>
 
@@ -787,7 +802,10 @@
 											  id="job_parent"
 											  dataProvider="{dimensions}"
 											  labelField="name"
-											  fontSize="9"/>
+											  fontSize="9"
+											  text="{job.parentSize}"
+											  focusOut="handleFocusOutEvent(event)"
+											  />
 								<fc:AutoComplete x="107"
 											  y="101"
 											  width="100"
@@ -795,7 +813,10 @@
 											  id="job_size"
 											  dataProvider="{dimensions}"
 											  labelField="name"
-											  fontSize="9"/>
+											  fontSize="9"
+											  text="{job.runSize}"
+											  focusOut="handleFocusOutEvent(event)"
+											  />
 								<fc:AutoComplete x="107"
 											  y="123"
 											  width="100"
@@ -803,7 +824,10 @@
 											  id="job_finish_size"
 											  dataProvider="{dimensions}"
 											  labelField="name"
-											  fontSize="9"/>
+											  fontSize="9"
+											  text="{job.finishSize}"
+											  focusOut="handleFocusOutEvent(event)"
+											  />
 								<fc:AutoComplete x="107"
 											  y="145"
 											  width="100"
@@ -811,7 +835,10 @@
 											  id="job_fold_size"
 											  dataProvider="{dimensions}"
 											  labelField="name"
-											  fontSize="9"/>
+											  fontSize="9"
+											  text="{job.foldedSize}"
+											  focusOut="handleFocusOutEvent(event)"
+											  />
 								<mx:TextInput x="107"
 											  y="167"
 											  width="100"

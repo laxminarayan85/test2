@@ -58,6 +58,13 @@
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:states>
+		<mx:State name="New Charge" basedOn="">
+		</mx:State>
+		<mx:State name="Edit Charge" basedOn="">
+			<mx:SetProperty target="{add_button}" name="label" value="Save"/>
+		</mx:State>
+	</mx:states>
 	<mx:Script>
 		<![CDATA[
 			import com.efi.events.JobEditCompleteEvent;
@@ -119,6 +126,8 @@
 				productDataService.getAll("ProductCode");
 				chargeDataService.getAll("Charge");
 				chargeCommandDataService.getAll("ChargeCommand");
+				this.currentState="New Charge";
+			
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -301,6 +310,7 @@
 				if (chargeDefinition != null)
 				{
 					charge=new Charge();
+					charge.description = chargeDefinition.name;
 					charge.chargeDefinition=chargeDefinition;
 					charge.finished=chargeDefinition.finished;
 					charge.taxable=chargeDefinition.taxable;
@@ -308,6 +318,7 @@
 					charge.displayQty=chargeDefinition.displayQty;
 					charge.hidden=chargeDefinition.hidden;
 					charge.hidePrice=chargeDefinition.hidePrice;
+					this.currentState = "New Charge";
 				}
 				else
 				{
@@ -315,6 +326,12 @@
 				}
 			}
 
+			private function gridSelectionChanged():void
+			{
+				charge = invoice_charge_datagrid.selectedItem as Charge;
+				this.currentState = "Edit Charge";
+			}
+			
 			private function getSelectedTreeChargeDefinition():ChargeDefinition
 			{
 				var treeItem:Object=chargeTree.selectedItem;
@@ -352,9 +369,14 @@
 				this.charge.showNotes=showNotes_check.selected;
 				if (charges == null)
 				{
-					charges=new ArrayCollection;
+					charges = new ArrayCollection;
 				}
-				charges.addItem(this.charge);
+				if (this.currentState == "New Charge") {
+					charges.addItem(this.charge);
+				}
+				chargeTree.selectedItem = null;
+				invoice_charge_datagrid.selectedItem = null;
+				this.charge = new Charge();
 			}
 		]]>
 
@@ -420,7 +442,8 @@
 										 width="592"
 										 id="invoice_charge_datagrid"
 										 dataProvider="{charges}"
-										 left="5">
+										 left="5"
+										 change="gridSelectionChanged()">
 								<mx:columns>
 									<mx:DataGridColumn headerText="Document Charges"
 													   dataField="description"/>
