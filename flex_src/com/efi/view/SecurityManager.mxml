@@ -201,14 +201,14 @@
 		<mx:VBox bottom="0" right="0" left="200" top="80">
 			<mx:AdvancedDataGrid x="0" y="0" id="dataGrid" designViewDataType="flat" 
 				dataProvider="{securitySetupLists}" width="100%" height="100%"  
-				sortExpertMode="true">
+				sortExpertMode="true" editable="true">
 				<mx:columns>
 						<mx:AdvancedDataGridColumn  width="80" headerText="Enable" dataField="enable" 
 								itemRenderer="com.efi.components.GenericCheckboxRenderer" 
 								rendererIsEditor="true" 
 								editorDataField="selected"/>
-						<mx:AdvancedDataGridColumn headerText="Menu" dataField="menu" sortable="true" />
-						<mx:AdvancedDataGridColumn headerText="Command Name" dataField="commandName"/>
+						<mx:AdvancedDataGridColumn headerText="Menu" dataField="menu" sortable="true" editable="false"/>
+						<mx:AdvancedDataGridColumn headerText="Command Name" dataField="commandName" editable="false"/>
 				</mx:columns>
 			</mx:AdvancedDataGrid>
 
