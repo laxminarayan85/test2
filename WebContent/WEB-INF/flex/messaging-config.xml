@@ -32,7 +32,7 @@
 	<destination id="cashregister"/>
 	<destination id="timeperiod"/>
 	<destination id="timecards"/>
-	<destination id="pendinglist"/>
+	<destination id="invoicebase"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

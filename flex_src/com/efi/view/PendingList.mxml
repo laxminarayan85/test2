@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*" title="Pending List" label="Pending List" name="Pending List" xmlns:text="flash.text.*">
+	<mx:states>
+		<mx:State name="stateFilterDates">
+			<mx:AddChild relativeTo="{hbox1}" position="lastChild">
+				<mx:DateField id="txtDateFrom" showToday="true"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{hbox1}" position="lastChild">
+				<mx:Label text="to"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{hbox1}" position="lastChild">
+				<mx:DateField id="txtDateTo" showToday="true"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{cmdApplyFilter}"/>
+			<mx:AddChild relativeTo="{hbox1}" position="lastChild" target="{cmdApplyFilter}"/>
+		</mx:State>
+	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:Producer id="producer" destination="pendinglist"/>
-	<mx:Consumer id="consumer" destination="pendinglist" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="invoicebase"/>
+	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
 <mx:Script> 
@@ -21,10 +36,13 @@
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.collections.ArrayCollection;   
-                   
+	import com.efi.vo.InvoiceBase;
+	                   
 	[Bindable]                                         
     private var enableSave:Boolean = true;
 
+	[Bindable]
+	private var invoiceBase:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var DocumentArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -124,6 +142,8 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		
+		dataService.getAll("InvoiceBase");
+
 		fillDocumentArray(DocumentArray)
 		fillFilterArray(FilterArray)
 		fillFindArray(FindArray)
@@ -157,10 +177,11 @@
 	
 	private function messageHandler(message:IMessage):void
 	{
-//  		dataService.getAll("Users");
+  		dataService.getAll("InvoiceBase");
 	}
 
 	private function handleLoadResult(ev:ResultEvent):void {
+		invoiceBase = ev.result as ArrayCollection;
 	}
 
    	private function handleSaveResult(ev:ResultEvent):void {
@@ -178,6 +199,24 @@
 		var node:XML = XML(event.currentTarget.selectedItem);
 	}
 
+	private function DocumentTypeChange():void {
+	}
+	private function FindChange():void {
+	}
+	private function FilterChange():void {
+		if (this.cboDgFilter.text=="Due Between"){
+			this.currentState = "stateFilterDates";
+		}else{
+			this.currentState = "";
+		}
+
+	}
+	private function doApplyFind():void {
+		
+	}
+	private function doApplyFilter():void {
+		
+	}
 
 ]]>        
 </mx:Script>
@@ -190,7 +229,7 @@
 
 	<mx:HBox left="140" top="5" height="25" right="0">
 		<mx:Label text="Document Type:" top="15" left="10"/>
-		<mx:ComboBox id="cboDocumentType" dataProvider="{DocumentArray}" labelField="name"/>
+		<mx:ComboBox id="cboDocumentType" dataProvider="{DocumentArray}" labelField="name" change="DocumentTypeChange()"/>
 	</mx:HBox>
 
 	<mx:VBox bottom="82" top="30" left="140" right="0">
@@ -207,13 +246,15 @@
 			</mx:DataGrid>
 		</mx:Canvas>
 	</mx:VBox>
-	<mx:HBox width="100%" height="40" right="0" bottom="0">
+	<mx:HBox width="100%" height="40" right="0" bottom="0" id="hbox2">
 		<mx:Label text="Find:"/>
-		<mx:ComboBox id="cboFind" dataProvider="{FindArray}" labelField="name"/>
+		<mx:ComboBox id="cboFind" dataProvider="{FindArray}" labelField="name" change="FindChange()"/>
 		<mx:TextInput id="txtFind"/>
+		<mx:Button label="Apply" id="cmdApplyFind" click="doApplyFind()"/>
 	</mx:HBox>
-	<mx:HBox bottom="50" right="0" left="140" height="28">
+	<mx:HBox bottom="50" right="0" left="140" height="28" id="hbox1">
 		<mx:Label text="Filter:"/>
-		<mx:ComboBox id="cboDgFilter" dataProvider="{FilterArray}" labelField="name"/>
+		<mx:ComboBox id="cboDgFilter" dataProvider="{FilterArray}" labelField="name" change="FilterChange()"/>
+		<mx:Button label="Apply" id="cmdApplyFilter" click="doApplyFilter()"/>
 	</mx:HBox>
 </mx:Panel>
