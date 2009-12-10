@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="100%" title="Customer Editor"
+width="100%" height="624" title="Customer Editor"
 creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:ns1="com.efi.components.*">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
@@ -50,6 +50,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.SportsInterest;
+	import com.efi.vo.CommonInterest;
 	import com.efi.events.SaveAddressEvent;
 	import com.efi.vo.ModelBase;
 	import com.efi.vo.Marketing;
@@ -129,17 +131,16 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		this.doGet();
-		
-	    salesRepDataService.getAll("SalesRep");
-	    businessTypeDataService.getAll("BusinessType");
-	    shippingMethodDataService.getAll("ShippingMethod");
-	    taxTableDataService.getAll("TaxTable");
-	    taxCodeDataService.getAll("TaxCodes");
+		setSettings();
 		dataService.getAll("Account");
 	}      
 
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
-		this.setAccount(new Account());
+		
+		account = new Account();
+		setMarketing();
+		this.setAccount(account);
+
 	}
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
@@ -153,10 +154,12 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
 		this.account = new Account();
+		setMarketing();
 	}
 	
 	private function doNew():void {
 	    account = new Account();
+	    setMarketing();
 	    setAccount(account);
 	 	
 	}  
@@ -234,30 +237,42 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		account.billToContact.parentAccount = account;
 		account.contact.parentAccount = account;
 		
-		account.marketing.birthDate = birthDate.selectedDate;
-		account.marketing.followup=  followUp.selectedDate;
-		account.marketing.commonInterst = commonInterest.text;
-		account.marketing.sportsInterst = sportsInterest.text;
-		account.marketing.leadSource = leadSource.text;
-		account.marketing.leadSource2 = leadSource1.text;
-		account.marketing.mailerType = mailerType.text;
-		account.marketing.typeWork = typeofWork.text;
-		account.marketing.user3 =  userDate3.selectedDate;
-		account.marketing.user4 = userDate4.selectedDate;
-		account.marketing.user5 = userDate5.selectedDate;
-		account.marketing.user6 = user3Tag.text
-		account.marketing.user7 = user4Tag.text;
-		account.marketing.user8 = user8Tag.text;
-		account.marketing.user9 = user9Tag.text; 
-		account.marketing.annualRev = parseInt(annualRev.text);
-		account.marketing.customer = customer.selected;
-		account.marketing.prospect = prospect.selected
-		account.marketing.noMail = noMail.selected;
-		account.marketing.personalAcct = personalAccount.selected;
-		account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
+		if (account.marketing != null){
+			
 		
-		if (business_type_combo != null && business_type_combo.selectedItem != null) 
-			account.marketing.businessType = business_type_combo.selectedItem as BusinessType;
+			if (account.marketing.birthDate != null)
+				account.marketing.birthDate = birthDate.selectedDate;
+			if (account.marketing.followup != null)
+				account.marketing.followup=  followUp.selectedDate;
+			if (account.marketing.commonInterst != null)	
+				account.marketing.commonInterst = commonInterest.text;
+			if (account.marketing.sportsInterst != null)
+				account.marketing.sportsInterst = sportsInterest.text;
+			
+			account.marketing.leadSource = leadSource.text;
+			account.marketing.leadSource2 = leadSource1.text;
+			account.marketing.mailerType = mailerType.text;
+			account.marketing.typeWork = typeofWork.text;
+			if (account.marketing.user3 != null)
+				account.marketing.user3 =  userDate3.selectedDate;
+			if (account.marketing.user4 != null)
+				account.marketing.user4 = userDate4.selectedDate;
+			if (account.marketing.user5 != null)
+				account.marketing.user5 = userDate5.selectedDate;
+			account.marketing.user6 = user3Tag.text
+			account.marketing.user7 = user4Tag.text;
+			account.marketing.user8 = user8Tag.text;
+			account.marketing.user9 = user9Tag.text; 
+			account.marketing.annualRev = parseInt(annualRev.text);
+			account.marketing.customer = customer.selected;
+			account.marketing.prospect = prospect.selected
+			account.marketing.noMail = noMail.selected;
+			account.marketing.personalAcct = personalAccount.selected;
+			account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
+			
+			if (business_type_combo != null && business_type_combo.selectedItem != null) 
+				account.marketing.businessType = business_type_combo.selectedItem as BusinessType;
+		}
 		
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			account.salesRep = sales_rep_combo.selectedItem as SalesRep;
@@ -592,6 +607,27 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 			myPrintJob.send();
 	 	}
  	}
+ 	private function setMarketing():void{
+ 		
+ 		if ( account.marketing == null){
+ 			account.marketing = new Marketing();
+ 			account.marketing.birthDate = new Date();
+ 			account.marketing.followup = new Date();
+ 			account.marketing.user3 = new Date();
+ 			account.marketing.user4 = new Date();
+ 			account.marketing.user5 = new Date();
+ 		}
+ 		
+ 	}
+ 	private function setSettings():void{
+ 		
+ 		salesRepDataService.getAll("SalesRep");
+	    businessTypeDataService.getAll("BusinessType");
+	    shippingMethodDataService.getAll("ShippingMethod");
+	    taxTableDataService.getAll("TaxTable");
+	    taxCodeDataService.getAll("TaxCodes");
+ 		
+ 	}
  	
  	private function addCustomerLog():void {
  		var customerLog:CustomerLog = new CustomerLog();
@@ -625,7 +661,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
-		<mx:TabNavigator x="10" y="74" width="681" height="587" creationPolicy="all">
+		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
 			<mx:Canvas label="Address" width="100%" height="100%">
 				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" change="validateForm(event);"/>
 				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
@@ -702,7 +738,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:RadioButton x="10" y="130" label="Credit Card on File" id="type_credit_card_on_file_radio" groupName="acct_type" value="credit_card_on_file"/>
 				</mx:Panel>
 			</mx:Canvas>
-			<mx:Canvas label="Settings" width="100%" height="100%">
+			<mx:Canvas label="Settings" width="100%" height="100%" >
 				<mx:Label x="10" y="10" text="Master Account:" textAlign="right"/>
 				<mx:Label x="10" y="36" text="Sales Rep:" textAlign="right" width="93"/>
 				<mx:Label x="10" y="62" text="Business Type:" textAlign="right" width="93"/>
@@ -845,7 +881,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<mx:Label x="10" y="238" text="Statement Note:"/>
 				<mx:Label x="10" y="124" text="Job Note:"/>
 			</mx:Canvas>
-			<mx:Canvas label="Marketing" width="100%" height="100%">
+			<mx:Canvas label="Marketing" width="100%" height="100%" >
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
 				<mx:RadioButton x="10" y="10" label="Customer" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
 				<mx:RadioButton x="10" y="36" label="Prospect" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>

@@ -67,41 +67,44 @@
 			private function updateDisplayContact():void
 			{
 				displayContact="";
-				if (contact.prefix != null && contact.prefix != "")
-				{
-					displayContact+=contact.prefix + " ";
-				}
-
-				if (contact.firstName != null && contact.firstName != "")
-				{
-					displayContact+=contact.firstName + " ";
-				}
-
-				if (contact.lastName != null && contact.lastName != "")
-				{
-					displayContact+=contact.lastName + " ";
-				}
-
-				if (contact.suffix != null && contact.suffix != "")
-				{
-					displayContact+=contact.suffix;
-				}
-				
-				displayContact += "\n"
-
-				if (contact.jobTitle != null && contact.jobTitle != "")
-				{
-					displayContact+=contact.jobTitle + "\n";
-				}
-
-				if (contact.comLinks != null) {
-					var i:int;
+				if (contact != null){
+								
+					if (contact.prefix != null && contact.prefix != "")
+					{
+						displayContact+=contact.prefix + " ";
+					}
+	
+					if (contact.firstName != null && contact.firstName != "")
+					{
+						displayContact+=contact.firstName + " ";
+					}
+	
+					if (contact.lastName != null && contact.lastName != "")
+					{
+						displayContact+=contact.lastName + " ";
+					}
+	
+					if (contact.suffix != null && contact.suffix != "")
+					{
+						displayContact+=contact.suffix;
+					}
 					
-					for (i=0; i<contact.comLinks.length; i++) {
-						var comLink:ComLink = contact.comLinks.getItemAt(i) as ComLink;
+					displayContact += "\n"
+	
+					if (contact.jobTitle != null && contact.jobTitle != "")
+					{
+						displayContact+=contact.jobTitle + "\n";
+					}
+	
+					if (contact.comLinks != null) {
+						var i:int;
 						
-						if (comLink != null) {
-							displayContact+=comLink.type + ": " + comLink.value + "\n";
+						for (i=0; i<contact.comLinks.length; i++) {
+							var comLink:ComLink = contact.comLinks.getItemAt(i) as ComLink;
+							
+							if (comLink != null) {
+								displayContact+=comLink.type + ": " + comLink.value + "\n";
+							}
 						}
 					}
 				}

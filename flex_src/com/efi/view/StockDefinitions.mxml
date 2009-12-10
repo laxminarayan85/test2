@@ -126,7 +126,7 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
-
+		stockDefinitions = new StockDefinition;
 	    loadUomArray();
 	    loadUnitsArray();
 		loadStockDefinitions();

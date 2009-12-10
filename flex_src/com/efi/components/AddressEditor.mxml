@@ -36,7 +36,7 @@
 
 			[Bindable]
 			public var cityDataProvider:ArrayCollection=null;
-
+ 
 			[Bindable]
 			public var zipDataProvider:ArrayCollection=null;
 
@@ -58,7 +58,8 @@
 
 			public function init():void
 			{ 
-				address = new Address();
+				
+				
 			}
 
 			public function saveAddressHandler(evt:SaveAddressEvent):void {
@@ -80,39 +81,42 @@
 			private function updateDisplayAddress():void
 			{
 				displayAddress="";
-				if (address.name != null && address.name != "")
-				{
-					displayAddress+=address.name + "\n";
-				}
-
-				if (address.street1 != null && address.name != "")
-				{
-					displayAddress+=address.street1 + "\n";
-				}
-
-				if (address.street2 != null && address.street2 != "")
-				{
-					displayAddress+=address.street2 + "\n";
-				}
-
-				if (address.city != null && address.city.name != null && address.city.name != "")
-				{
-					displayAddress+=address.city.name + ", ";
-				}
-
-				if (address.state != null && address.state.name != null && address.state.name != "")
-				{
-					displayAddress+=address.state.name + " ";
-				}
-
-				if (address.zip != null && address.zip.name != null && address.zip.name != "")
-				{
-					displayAddress+=address.zip.name;
-				}
-
-				if (address.country != null && address.country.name != null && address.country.name != "")
-				{
-					displayAddress+="\n" + address.country.name;
+				if (address != null){
+					
+					if (address.name != null && address.name != "")
+					{
+						displayAddress+=address.name + "\n";
+					}
+	
+					if (address.street1 != null && address.name != "")
+					{
+						displayAddress+=address.street1 + "\n";
+					}
+	
+					if (address.street2 != null && address.street2 != "")
+					{
+						displayAddress+=address.street2 + "\n";
+					}
+	
+					if (address.city != null && address.city.name != null && address.city.name != "")
+					{
+						displayAddress+=address.city.name + ", ";
+					}
+	
+					if (address.state != null && address.state.name != null && address.state.name != "")
+					{
+						displayAddress+=address.state.name + " ";
+					}
+	
+					if (address.zip != null && address.zip.name != null && address.zip.name != "")
+					{
+						displayAddress+=address.zip.name;
+					}
+	
+					if (address.country != null && address.country.name != null && address.country.name != "")
+					{
+						displayAddress+="\n" + address.country.name;
+					}
 				}
 			}
 
@@ -129,6 +133,11 @@
 
 			private function doEditAddress():void
 			{
+				address = new Address();
+				address.city = new City();
+				address.state = new State();
+				address.country = new Country();
+				address.zip = new Zip();
 				titleWindow=AddressEditorPopup(PopUpManager.createPopUp(this, AddressEditorPopup, true));
 				titleWindow.setAddress(address);
 				titleWindow.cityDataProvider=cityDataProvider;
