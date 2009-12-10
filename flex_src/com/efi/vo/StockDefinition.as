@@ -14,17 +14,17 @@ package com.efi.vo
 		}
 		public var stockunit:int = 0;
 		public var name:String = "";
-		public var stkgroup:StockGroup = new StockGroup();
+		public var stkgroup:StockGroup;
 		public var stkclass:String = "";
 		public var stktype:String = "";
 		public var isMetric:Boolean = true;
-		public var finish:StockFinish = new StockFinish();
+		public var finish:StockFinish;
 		public var weight:int = 0;
-		public var color:StockColors = new StockColors();
-		public var grade:StockGrade = new StockGrade();
+		public var color:StockColors;
+		public var grade:StockGrade;
 		public var coated:String = "";
 		public var stocknumber:String = "";
-		public var vendor:Vendor = new Vendor();
+		public var vendor:Vendor;
 		public var basicsize:String = "";
 		public var parentsize:String = "";
 		public var thickness:int = 0;
@@ -71,7 +71,7 @@ package com.efi.vo
 		public var normalRunSize:int = 0;
 		public var cutsPer100:int = 0;
 		public var minCutCharge:Number = 0;
-		public var defaultPress:PressDefinition = new PressDefinition();
+		public var defaultPress:PressDefinition;
 		public var autoCalculateBlank:Boolean = true;
 		public var blankSheetqty1:int = 0;
 		public var blankSheetqty2:int = 0;
@@ -115,9 +115,9 @@ package com.efi.vo
 		public var fscCertified:Boolean = true;
 		public var sfiCertified:Boolean = true;
 		public var greenSealCertified:Boolean = true;
-		public var defaultPriceList:PriceList = new PriceList();
-		public var genericColor:GenericColors = new GenericColors();
-		public var account:Account = new Account();
+		public var defaultPriceList:PriceList;
+		public var genericColor:GenericColors;
+		public var account:Account;
 	
 	}
 }

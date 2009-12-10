@@ -34,7 +34,7 @@ package com.efi.vo
 		public var personalAcct:Boolean = true;
 		public var numberofEmployees:int = 0;
 		public var annualRev:int = 0;
-		public var businessType:BusinessType = new BusinessType();
+		public var businessType:BusinessType;
 	
 	}
 }

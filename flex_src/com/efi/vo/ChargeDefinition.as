@@ -38,19 +38,19 @@ package com.efi.vo
 		public var material:Number = 0;
 		public var minimum:Number = 0;
 		public var markup:Number = 0;
-		public var priceList:PriceListElement = new PriceListElement();
-		public var wasteChart:WasteChart = new WasteChart();
+		public var priceList:PriceListElement;
+		public var wasteChart:WasteChart;
 		public var fixedWaste:Number = 0;
 		public var wastePercentage:Number = 0;
 		public var baseLinearNumber:Number = 0;
-		public var location:Location = new Location();
-		public var costCenter:CostCenter = new CostCenter();
-		public var substrate:Substrate = new Substrate();
+		public var location:Location;
+		public var costCenter:CostCenter;
+		public var substrate:Substrate;
 		public var minimumTime:Number = 0;
 		public var sizeX:Number = 0;
 		public var sizeY:Number = 0;
 		public var plateThickness:Number = 0;
-		public var foldTemplate:FoldTemplate = new FoldTemplate();
+		public var foldTemplate:FoldTemplate;
 		public var excludeFromProductionList:Boolean = true;
 		public var preproduction:Boolean = true;
 		public var useMinimumTime:Boolean = true;
@@ -66,7 +66,7 @@ package com.efi.vo
 		public var note:String = "";
 		public var chargeGroup:String = "";
 		public var salesCategory:String = "";
-		public var taxTable:TaxTable = new TaxTable();
+		public var taxTable:TaxTable;
 		public var rateQty:Number = 0;
 		public var materialQty:Number = 0;
 		public var groupQty:Number = 0;
@@ -90,7 +90,7 @@ package com.efi.vo
 		public var overrideRateQuantity:Boolean = true;
 		public var overrideMaterialQty:Boolean = true;
 		public var version:int = 0;
-		public var shipMode:ShippingMethod = new ShippingMethod();
+		public var shipMode:ShippingMethod;
 		public var adjustUpsCount:int = 0;
 		public var hasLinkPrice:Boolean = true;
 		public var needLinkPrice:Boolean = true;
@@ -107,10 +107,10 @@ package com.efi.vo
 		public var label:String = "";
 		public var binderyCharge:Boolean = true;
 		public var name:String = "";
-		public var parent:ChargeCategory = new ChargeCategory();
+		public var parent:ChargeCategory;
 		public var useArea:Boolean = true;
 		public var useSetup:Boolean = true;
-		public var chargeCost:ChargeCost = new ChargeCost();
+		public var chargeCost:ChargeCost;
 	
 	}
 }

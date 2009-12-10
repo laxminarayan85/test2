@@ -795,24 +795,24 @@ public class Employee extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<Charge> employeeCharges;
+	private java.util.List<ChargeDefinition> employeeCharges;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Charge> getEmployeeCharges(){
+	public java.util.List<ChargeDefinition> getEmployeeCharges(){
 		return employeeCharges; 
 	}
 
-	public void addEmployeeCharges(Charge obj) {
+	public void addEmployeeCharges(ChargeDefinition obj) {
 		if (employeeCharges == null) {
-			employeeCharges = new java.util.ArrayList<Charge>();
+			employeeCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		employeeCharges.add(obj);
 	}
 	/**
 	 * @generated
 	 */	
-	public void setEmployeeCharges(java.util.List<Charge> newVal) {
+	public void setEmployeeCharges(java.util.List<ChargeDefinition> newVal) {
 		this.employeeCharges = newVal;
 	}
  	
@@ -1096,7 +1096,7 @@ public class Employee extends ModelBase {
 		if (ALLCHARGETYPES.equals(propertyName)) setAllChargeTypes((Boolean)newValue); else
 		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) setOnlyShowProductionParents((Boolean)newValue); else
 		if (EMPLOYEEPRICING.equals(propertyName)) setEmployeePricings((java.util.List<PricingMethod>)newValue); else
-		if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<Charge>)newValue); else
+		if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (EMPLOYEEPRESSES.equals(propertyName)) setEmployeePresses((java.util.List<PressDefinition>)newValue); else
 		if (EMPLOYEECOPIERS.equals(propertyName)) setEmployeeCopiers((java.util.List<CopierDefinition>)newValue); else
 		if (ANYPASTDUE.equals(propertyName)) setAnyPastDue((Boolean)newValue); else
@@ -1183,7 +1183,7 @@ public class Employee extends ModelBase {
 		if (EMPLOYEEPRICING.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, PricingMethod.class};		
 		if (EMPLOYEECHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		if (EMPLOYEEPRESSES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, PressDefinition.class};		
 		if (EMPLOYEECOPIERS.equals(propertyName)) 

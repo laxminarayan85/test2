@@ -60,18 +60,19 @@ width="1080" height="873" title="Copier Definitions"
 	}
                                   
 	public function setPriceList(price:PriceListBase): void {
-	 	if (copy){
-	 		copyDefinition.copierPriceList = price as PriceList;
-	 		copy = false;
-	 	}
-	 	if (stock){
-	 		copyDefinition.stockPriceList = price as PriceList;
-	 		stock= false;
-	 	}
-	 	if (waste){
-	 		copyDefinition.wasteChart = price as WasteChart;
-	 		waste= false;
-	 	}
+//		Following code doesn't compile...
+//	 	if (copy){
+//	 		copyDefinition.copierPriceList = price as PriceList;
+//	 		copy = false;
+//	 	}
+//	 	if (stock){
+//	 		copyDefinition.stockPriceList = price as PriceList;
+//	 		stock= false;
+//	 	}
+//	 	if (waste){
+//	 		copyDefinition.wasteChart = price as WasteChart;
+//	 		waste= false;
+//	 	}
 	}   
 	
 	private function doAddCopier():void {
@@ -322,8 +323,8 @@ width="1080" height="873" title="Copier Definitions"
 		<mx:TextInput x="471" y="516" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}"/>
 		<mx:TextInput x="471" y="543" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}"/>
 		<mx:TextInput x="471" y="573" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}"/>
-		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copyDefinition.wasteChart.name}"/>
-		<mx:Label x="10" y="704" text="Copy Markup:"/>
+<!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copyDefinition.wasteChart.name}"/>
+-->		<mx:Label x="10" y="704" text="Copy Markup:"/>
 		<mx:TextInput x="101" y="702" width="71" id="copyMarkup2"/>
 		<mx:Label x="10" y="730" text="Stock Markup:"/>
 		<mx:Label x="10" y="755" text="Side 2 Factor:" width="83"/>
@@ -342,7 +343,7 @@ width="1080" height="873" title="Copier Definitions"
 		<mx:CheckBox x="349" y="636" label="Square Are for Finish Size" id="squarefinishsize"/>
 		<mx:CheckBox x="349" y="659" label="Interpolate Matrix Values" id="interpolatematrix"/>
 		<mx:HRule x="0" y="689" width="882" height="7"/>
-		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copyDefinition.stockPriceList.name}"/>
+<!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copyDefinition.stockPriceList.name}"/>
 		<mx:Text x="459" y="805" id="copierPriceList" text="{copyDefinition.copierPriceList.name}"/>
-		
+-->		
 </mx:Panel>

@@ -33,7 +33,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "address")
-public class Address extends ModelBase {
+public abstract class Address extends ModelBase {
 	/**
 	 * @generated
 	 */

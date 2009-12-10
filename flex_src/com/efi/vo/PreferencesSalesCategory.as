@@ -12,7 +12,7 @@ package com.efi.vo
 		public function PreferencesSalesCategory() {
 		
 		}
-		public var category:SalesCategory = new SalesCategory();
+		public var category:SalesCategory;
 		public var accountNumber:String = "";
 	
 	}

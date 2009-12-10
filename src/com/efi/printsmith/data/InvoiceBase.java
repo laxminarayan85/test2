@@ -550,24 +550,24 @@ public class InvoiceBase extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<Charge> markupCharges;
+	private java.util.List<ChargeDefinition> markupCharges;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Charge> getMarkupCharges(){
+	public java.util.List<ChargeDefinition> getMarkupCharges(){
 		return markupCharges; 
 	}
 
-	public void addMarkupCharges(Charge obj) {
+	public void addMarkupCharges(ChargeDefinition obj) {
 		if (markupCharges == null) {
-			markupCharges = new java.util.ArrayList<Charge>();
+			markupCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		markupCharges.add(obj);
 	}
 	/**
 	 * @generated
 	 */	
-	public void setMarkupCharges(java.util.List<Charge> newVal) {
+	public void setMarkupCharges(java.util.List<ChargeDefinition> newVal) {
 		this.markupCharges = newVal;
 	}
  	
@@ -1309,7 +1309,7 @@ public class InvoiceBase extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
 		if (JOBS.equals(propertyName)) setJobs((java.util.List<Job>)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
-		if (MARKUPCHARGES.equals(propertyName)) setMarkupCharges((java.util.List<Charge>)newValue); else
+		if (MARKUPCHARGES.equals(propertyName)) setMarkupCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (SPECIALINSTRUCTIONS.equals(propertyName)) setSpecialInstructions((SpecialInstructions)newValue); else
 		if (NOTES.equals(propertyName)) setNotes((java.util.List<NotePad>)newValue); else
 		if (HOLDSTATE.equals(propertyName)) setHoldState((HoldState)newValue); else
@@ -1390,7 +1390,7 @@ public class InvoiceBase extends ModelBase {
 		if (CHARGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Charge.class};		
 		if (MARKUPCHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		if (SPECIALINSTRUCTIONS.equals(propertyName)) 
 			return new Class<?>[] {SpecialInstructions.class};		
 		if (NOTES.equals(propertyName)) 

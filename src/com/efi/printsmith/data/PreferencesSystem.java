@@ -1532,18 +1532,18 @@ public class PreferencesSystem extends ModelBase {
  	
 	
  	@Basic
-	private Boolean usePalmPilotTracking;
+	private Integer usePalmPilotTracking;
 	/**
 	 * @generated
  	 */
-	public Boolean getUsePalmPilotTracking(){
+	public Integer getUsePalmPilotTracking(){
 		return usePalmPilotTracking; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setUsePalmPilotTracking(Boolean newVal) {
+	public void setUsePalmPilotTracking(Integer newVal) {
 		this.usePalmPilotTracking = newVal;
 	}
  	
@@ -1757,7 +1757,7 @@ public class PreferencesSystem extends ModelBase {
 		if (PNI45ORLATER.equals(propertyName)) setPNI45orLater((Boolean)newValue); else
 		if (JDFCONNECTOR45ORLATER.equals(propertyName)) setJdfConnector45orLater((Boolean)newValue); else
 		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) setSupportsNonAsciiCharacters((Boolean)newValue); else
-		if (USEPALMPILOTTRACKING.equals(propertyName)) setUsePalmPilotTracking((Boolean)newValue); else
+		if (USEPALMPILOTTRACKING.equals(propertyName)) setUsePalmPilotTracking((Integer)newValue); else
 		if (PALMUSERPATH.equals(propertyName)) setPalmUserPath((Integer)newValue); else
 		if (PALMPOLLINGINTERVAL.equals(propertyName)) setPalmPollingInterval((Integer)newValue); else
 		if (DEFAULTCOUNTRY.equals(propertyName)) setDefaultCountry((Integer)newValue); else
@@ -1911,7 +1911,7 @@ public class PreferencesSystem extends ModelBase {
 		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (USEPALMPILOTTRACKING.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
+			return new Class<?>[] {Integer.class};		
 		if (PALMUSERPATH.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (PALMPOLLINGINTERVAL.equals(propertyName)) 

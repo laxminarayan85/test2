@@ -28,9 +28,9 @@ package com.efi.vo
 		public var companyTitle:String = "";
 		public var companyAddress1:String = "";
 		public var companyAddress2:String = "";
-		public var companyCity:City = new City();
-		public var companyState:State = new State();
-		public var companyZip:Zip = new Zip();
+		public var companyCity:City;
+		public var companyState:State;
+		public var companyZip:Zip;
 		public var companyPhone:String = "";
 		public var companyFax:String = "";
 		public var companyEmail:String = "";
@@ -82,7 +82,7 @@ package com.efi.vo
 		public var pNI45orLater:Boolean = true;
 		public var jDFConnector45orLater:Boolean = true;
 		public var supportsNonAsciiCharacters:Boolean = true;
-		public var usePalmPilotTracking:Boolean = true;
+		public var usePalmPilotTracking:int = 0;
 		public var palmUserPath:int = 0;
 		public var palmPollingInterval:int = 0;
 		public var defaultCountry:int = 0;

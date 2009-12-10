@@ -113,8 +113,8 @@
 				var i:int;
 				
 				for (i=0; i<pricingMethodNames.length; i++) {
-					 pricingMethod = new PricingMethod();
-					 pricingMethod.title = pricingMethodNames[i];
+					pricingMethod = new PricingMethod();
+					pricingMethod.name = pricingMethodNames[i];
 					pricingMethod.id = 0;
 					dataService.addUpdate(pricingMethod);
 				}								

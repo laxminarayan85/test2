@@ -178,18 +178,6 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String DEFAULTLARGEFORMAT = "Defaultlargeformat";
-	/**
-	 * @generated
-	 */
-	public static final String COPIERPRICELIST = "CopierPriceList";
-	/**
-	 * @generated
-	 */
-	public static final String STOCKPRICELIST = "StockPriceList";
-	/**
-	 * @generated
-	 */
-	public static final String WASTECHART = "WasteChart";
 
 	/**
 	 * @generated
@@ -811,57 +799,6 @@ public class CopierDefinition extends ModelBase {
 	public void setDefaultlargeformat(Boolean newVal) {
 		this.defaultlargeformat = newVal;
 	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private PriceList copierPriceList;
-	/**
-	 * @generated
- 	 */
-	public PriceList getCopierPriceList(){
-		return copierPriceList; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCopierPriceList(PriceList newVal) {
-		this.copierPriceList = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private PriceList stockPriceList;
-	/**
-	 * @generated
- 	 */
-	public PriceList getStockPriceList(){
-		return stockPriceList; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setStockPriceList(PriceList newVal) {
-		this.stockPriceList = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WasteChart wasteChart;
-	/**
-	 * @generated
- 	 */
-	public WasteChart getWasteChart(){
-		return wasteChart; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setWasteChart(WasteChart newVal) {
-		this.wasteChart = newVal;
-	}
 
 	/**
 	 * @generated
@@ -905,9 +842,6 @@ public class CopierDefinition extends ModelBase {
 		if (DEFAULTBLACKWHITE.equals(propertyName)) return getDefaultblackwhite();
 		if (DEFAULTCOLOR.equals(propertyName)) return getDefaultcolor();
 		if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultlargeformat();
-		if (COPIERPRICELIST.equals(propertyName)) return getCopierPriceList();
-		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
-		if (WASTECHART.equals(propertyName)) return getWasteChart();
 		return super.getProperty(propertyName);
 	}
 	
@@ -953,9 +887,6 @@ public class CopierDefinition extends ModelBase {
 		if (DEFAULTBLACKWHITE.equals(propertyName)) setDefaultblackwhite((Boolean)newValue); else
 		if (DEFAULTCOLOR.equals(propertyName)) setDefaultcolor((Boolean)newValue); else
 		if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultlargeformat((Boolean)newValue); else
-		if (COPIERPRICELIST.equals(propertyName)) setCopierPriceList((PriceList)newValue); else
-		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
-		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1037,12 +968,6 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (DEFAULTLARGEFORMAT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (COPIERPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (STOCKPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (WASTECHART.equals(propertyName)) 
-			return new Class<?>[] {WasteChart.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1089,9 +1014,6 @@ public class CopierDefinition extends ModelBase {
 		if (DEFAULTBLACKWHITE.equals(propertyName)) return CopierDefinition.class;
 		if (DEFAULTCOLOR.equals(propertyName)) return CopierDefinition.class;
 		if (DEFAULTLARGEFORMAT.equals(propertyName)) return CopierDefinition.class;
-		if (COPIERPRICELIST.equals(propertyName)) return CopierDefinition.class;
-		if (STOCKPRICELIST.equals(propertyName)) return CopierDefinition.class;
-		if (WASTECHART.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1174,12 +1096,6 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getDefaultcolor(), objT.getDefaultcolor()))
 			return false;
 		if (! SmartEquals(getDefaultlargeformat(), objT.getDefaultlargeformat()))
-			return false;
-		if (! SmartEquals(getCopierPriceList(), objT.getCopierPriceList()))
-			return false;
-		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
-			return false;
-		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
 			return false;
 		return true;
 	}			

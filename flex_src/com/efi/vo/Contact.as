@@ -12,20 +12,20 @@ package com.efi.vo
 		public function Contact() {
 		
 		}
-		public var shipToAddress:Address = new Address();
+		public var shipToAddress:Address;
 		public var firstName:String = "";
-		public var address:Address = new Address();
-		public var parentAccount:Account = null;
+		public var address:Address;
+		public var parentAccount:Account;
 		public var webAcctNameIncomplete:Boolean = true;
 		public var webCatalogChange:Boolean = true;
 		public var webStateChange:Boolean = true;
 		public var transmitted:Boolean = true;
 		public var useContactAddress:Boolean = true;
 		public var isIndividual:Boolean = true;
-		public var defaultSalesRep:SalesRep = new SalesRep();
+		public var defaultSalesRep:SalesRep;
 		public var mailerCampaigns:Boolean = true;
-		public var creditCard:CreditCard = new CreditCard();
-		public var marketing:Marketing = new Marketing();
+		public var creditCard:CreditCard;
+		public var marketing:Marketing;
 		public var lastName:String = "";
 		public var jobTitle:String = "";
 		public var suffix:String = "";

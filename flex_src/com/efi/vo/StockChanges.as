@@ -18,7 +18,7 @@ package com.efi.vo
 		public var howChanged:String = "";
 		public var quantity:int = 0;
 		public var reference:String = "";
-		public var stockDefinition:StockDefinition = new StockDefinition();
+		public var stockDefinition:StockDefinition;
 	
 	}
 }

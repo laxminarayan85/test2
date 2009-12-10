@@ -14,7 +14,7 @@ package com.efi.vo
 		}
 		public var firstName:String = "";
 		public var lastName:String = "";
-		public var address:Address = new Address();
+		public var address:Address;
 		public var comLinks:ArrayCollection;
 		public var sSN:String = "";
 		public var exportCode:int = 0;

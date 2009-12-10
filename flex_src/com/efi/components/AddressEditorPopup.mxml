@@ -107,7 +107,7 @@
 	}
 
 	private function handleLoadCity(ev:ResultEvent):void {
-		var	selectedItem = citycombo.selectedItem;
+		var	selectedItem:String = citycombo.selectedItem as String;
 	 	cityDataProvider = ev.result as ArrayCollection;
 		if (selectedItem != null){
 	 		citycombo.selectedIndex = findItem (selectedItem,cityDataProvider);
@@ -117,7 +117,7 @@
 	}   
 	
 	private function handleLoadState(ev:ResultEvent):void {
-		var selectedItem = statecombo.selectedItem;
+		var selectedItem:String = statecombo.selectedItem as String;
 		stateDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
 	 		statecombo.selectedIndex = findItem (selectedItem,stateDataProvider);
@@ -127,7 +127,7 @@
 	}
 	
 	private function handleLoadCountry(ev:ResultEvent):void {
-		var selectedItem = countrycombo.selectedItem;
+		var selectedItem:String = countrycombo.selectedItem as String;
 		countryDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
 	 		countrycombo.selectedIndex = findItem (selectedItem,countryDataProvider);
@@ -137,7 +137,7 @@
 	}   
 	
 	private function handleLoadZip(ev:ResultEvent):void {
-		var selectedItem = zipcombo.selectedItem;
+		var selectedItem:String = zipcombo.selectedItem as String;
 		zipDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
 	 		zipcombo.selectedIndex = findItem (selectedItem,zipDataProvider);

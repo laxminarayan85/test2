@@ -14,7 +14,7 @@ package com.efi.vo
 		}
 		public var children:ArrayCollection;
 		public var name:String = "";
-		public var parent:ChargeCommand = new ChargeCommand();
+		public var parent:ChargeCommand;
 	
 	}
 }

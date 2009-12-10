@@ -44,7 +44,7 @@ package com.efi.vo
 		public var blankMarkup4:Number = 0;
 		public var blankMarkup5:Number = 0;
 		public var blankMarkup6:Number = 0;
-		public var sizeTable:SizeTable = new SizeTable();
+		public var sizeTable:SizeTable;
 	
 	}
 }

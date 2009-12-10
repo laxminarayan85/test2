@@ -704,14 +704,14 @@ width="800" height="678" title="Preferences"
 		this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
 		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
 		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
-		
-		if (preferencesEstimating.defaultEstimate != null)
-			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
-
-		if (preferencesEstimating.defaultInvoice != null)
-			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
-
-		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
+//		Following code doesn't compile...		
+//		if (preferencesEstimating.defaultEstimate != null)
+//			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
+//
+//		if (preferencesEstimating.defaultInvoice != null)
+//			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
+//
+//		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
 
 		if (preferencesEstimating.runToFinishGrain != "")
 			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
@@ -864,7 +864,8 @@ width="800" height="678" title="Preferences"
 		if (cboDefaultInvoice != null && cboDefaultInvoice.selectedItem != null)
 	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
 
-		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
+//		Following code doesn't compile...
+//		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
 
 		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;

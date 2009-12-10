@@ -15,7 +15,7 @@ package com.efi.vo
 		public var referenceNumber:String = "";
 		public var date:Date = new Date();
 		public var amount:Number = 0;
-		public var type:DepositType = new DepositType();
+		public var type:DepositType;
 		public var creditCardType:int = 0;
 	
 	}

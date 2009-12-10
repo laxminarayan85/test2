@@ -23,8 +23,8 @@ package com.efi.vo
 		public var noCashReturn:Boolean = true;
 		public var showUserNameLog:Boolean = true;
 		public var quickAccess:Boolean = true;
-		public var accessLevel:AccessLevel = new AccessLevel();
-		public var accessGroup:AccessGroup = new AccessGroup();
+		public var accessLevel:AccessLevel;
+		public var accessGroup:AccessGroup;
 	
 	}
 }

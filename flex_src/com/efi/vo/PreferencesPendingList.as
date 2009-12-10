@@ -13,7 +13,7 @@ package com.efi.vo
 		
 		}
 		public var visible:Boolean = true;
-		public var columns:ColumnNames = new ColumnNames();
+		public var columns:ColumnNames;
 	
 	}
 }

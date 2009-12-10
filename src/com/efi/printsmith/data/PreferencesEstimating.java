@@ -597,35 +597,35 @@ public class PreferencesEstimating extends ModelBase {
  	
 	
  	@Basic
-	private String defaultInvoice;
+	private Integer defaultInvoice;
 	/**
 	 * @generated
  	 */
-	public String getDefaultInvoice(){
+	public Integer getDefaultInvoice(){
 		return defaultInvoice; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultInvoice(String newVal) {
+	public void setDefaultInvoice(Integer newVal) {
 		this.defaultInvoice = newVal;
 	}
  	
 	
  	@Basic
-	private String defaultEstimate;
+	private Integer defaultEstimate;
 	/**
 	 * @generated
  	 */
-	public String getDefaultEstimate(){
+	public Integer getDefaultEstimate(){
 		return defaultEstimate; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultEstimate(String newVal) {
+	public void setDefaultEstimate(Integer newVal) {
 		this.defaultEstimate = newVal;
 	}
  	
@@ -648,18 +648,18 @@ public class PreferencesEstimating extends ModelBase {
  	
 	
  	@Basic
-	private String dueFrom;
+	private Integer dueFrom;
 	/**
 	 * @generated
  	 */
-	public String getDueFrom(){
+	public Integer getDueFrom(){
 		return dueFrom; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDueFrom(String newVal) {
+	public void setDueFrom(Integer newVal) {
 		this.dueFrom = newVal;
 	}
  	
@@ -1332,10 +1332,10 @@ public class PreferencesEstimating extends ModelBase {
 		if (NORMALDUEDATEDAYS.equals(propertyName)) setNormalDueDateDays((Integer)newValue); else
 		if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName)) setCloseInvoiceAfterPrintingTicket((Boolean)newValue); else
 		if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) setCloseInvoicesAndEstimateAfterPrinting((Boolean)newValue); else
-		if (DEFAULTINVOICE.equals(propertyName)) setDefaultInvoice((String)newValue); else
-		if (DEFAULTESTIMATE.equals(propertyName)) setDefaultEstimate((String)newValue); else
+		if (DEFAULTINVOICE.equals(propertyName)) setDefaultInvoice((Integer)newValue); else
+		if (DEFAULTESTIMATE.equals(propertyName)) setDefaultEstimate((Integer)newValue); else
 		if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) setNumberOfDaysBeforeDue((Integer)newValue); else
-		if (DUEFROM.equals(propertyName)) setDueFrom((String)newValue); else
+		if (DUEFROM.equals(propertyName)) setDueFrom((Integer)newValue); else
 		if (USEGRIPEDGEGAP.equals(propertyName)) setUseGripEdgeGap((Boolean)newValue); else
 		if (GRIPEDGEGAP.equals(propertyName)) setGripEdgeGap((Double)newValue); else
 		if (USEFOLIOEDGE.equals(propertyName)) setUseFolioEdge((Boolean)newValue); else
@@ -1418,13 +1418,13 @@ public class PreferencesEstimating extends ModelBase {
 		if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (DEFAULTINVOICE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		if (DEFAULTESTIMATE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (DUEFROM.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		if (USEGRIPEDGEGAP.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (GRIPEDGEGAP.equals(propertyName)) 

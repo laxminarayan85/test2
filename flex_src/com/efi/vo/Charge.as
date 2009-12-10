@@ -12,10 +12,10 @@ package com.efi.vo
 		public function Charge() {
 		
 		}
-		public var chargeDefinition:ChargeDefinition = new ChargeDefinition();
+		public var chargeDefinition:ChargeDefinition;
 		public var description:String = "";
 		public var notes:String = "";
-		public var productionLocation:Location = new Location();
+		public var productionLocation:Location;
 		public var showNotes:Boolean = true;
 		public var finished:Boolean = true;
 		public var attribute1:int = 0;

@@ -12,15 +12,7 @@ package com.efi.vo
 		public function PricingMethod() {
 		
 		}
-		public var used:Boolean = true;
-		public var title:String = "";
-		public var abbreviation:String = "";
-		public var brokered:Boolean = true;
-		public var taxable:Boolean = true;
-		public var finished:Boolean = true;
-		public var showNotes:Boolean = true;
-		public var category:SalesCategory = new SalesCategory();
-		public var estimator:String = "";
+		public var name:int = 0;
 	
 	}
 }
