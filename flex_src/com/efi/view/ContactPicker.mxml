@@ -2,21 +2,25 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Contact Picker" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
-            
+
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
-                     
-<mx:Producer id="producer" destination="users"/>
+
+
 
 <mx:Script>
                                    
-<![CDATA[           
-    import com.efi.vo.Account; 
-    import com.efi.vo.Contact;               
+<![CDATA[
+	import com.efi.events.ContactPickerSelectEvent;
+	import com.efi.vo.Contact;           
+    import com.efi.view.EditContact;
+    import com.efi.view.EditCustomer; 
+    import com.efi.view.StockDefinitions;           
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
-	import mx.containers.Canvas;                                
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
 	import mx.rpc.events.ResultEvent;                                 
 	import mx.rpc.events.FaultEvent;                          
 	import mx.events.ValidationResultEvent;                          
@@ -54,8 +58,12 @@
 	                                                       
 	private function init():void {   
 	    PopUpManager.centerPopUp(this);
-	    resetFocus();              
-	    dataService.getAll("Contact");                       
+	    resetFocus();                                     
+		dataService.getAll("Contact");
+		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		if (editPage.className != "EditContact") {
+			new_button.visible = false;
+		}
 	}
 	                                
 	private function resetFocus():void {                           
@@ -67,21 +75,25 @@
 	}   
 	
 	private function selectContact():void {	
-		var editContactPage:EditContact = Snowmass.getInstance().mainNavigator.selectedChild as EditContact;
-		if (dataGrid.selectedItem != null){
-			editContactPage.setContact(dataGrid.selectedItem as Contact);
-			PopUpManager.removePopUp(this);
-		}
-		
+		var selectEvent:ContactPickerSelectEvent = new ContactPickerSelectEvent(ContactPickerSelectEvent.SELECTACCOUNT, dataGrid.selectedItem as Contact);
+		dispatchEvent(selectEvent);
+		PopUpManager.removePopUp(this);
 	}     
 	
 	private function newContact():void {
+		var newEvent:ContactPickerSelectEvent = new ContactPickerSelectEvent(ContactPickerSelectEvent.SELECTNEWACCOUNT, new Contact());
+		dispatchEvent(newEvent);
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function cancelPicker():void {
+		var cancelEvent:ContactPickerSelectEvent = new ContactPickerSelectEvent(ContactPickerSelectEvent.CANCELSELECTACCOUNT, null);
+		dispatchEvent(cancelEvent);
 		PopUpManager.removePopUp(this);
 	}
 	
 	private function updateDataGrid():void {
-		dataService.getContactByPartialName(filter_field.text);
-		
+		dataService.getContactsByPartialName(filter_field.text);
 	}
 ]]>        
 </mx:Script>
@@ -90,20 +102,20 @@
                              
 	<mx:Canvas width="583" height="541">
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
-		doubleClickEnabled="true" doubleClick="selectContact()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
+		doubleClickEnabled="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="firstName" headerText="First Name" />  
-		     <mx:DataGridColumn dataField="lastName" headerText="Last Name" />                         
+		     <mx:DataGridColumn dataField="lastName" headerText="Last Name" />                          
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="true" click="selectContact();"  width="108" x="465" y="10"/>
 		<mx:Button label="New" enabled="true" click="newContact();" id="new_button" width="108" x="465" y="40"/>
-		<mx:Button label="Cancel" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="465" y="93"/>
+		<mx:Button label="Cancel" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>
 		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>Name</mx:String>
-				<mx:String>Account #</mx:String>
+				<mx:String>Contact #</mx:String>
 				<mx:String>Reference #</mx:String>
 				<mx:String>Phone</mx:String>
 				<mx:String>Master Billing</mx:String>

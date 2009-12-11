@@ -67,6 +67,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	import com.efi.vo.Marketing;
 	import com.efi.vo.SalesRep;  
 	import com.efi.events.AccountPickerSelectEvent;
+	import com.efi.events.ContactPickerSelectEvent;
 	                                      
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -111,10 +112,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-		var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
-		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.formIsEmpty = true;
-		contact = new Contact();
+		this.doGet();
 		account= new Account();
 		dataService.getAll("Contact");  
 		salesRepDataService.getAll("SalesRep");
@@ -134,12 +132,14 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	}           
 	                                  	
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
-		this.setAccount(new Account());
+		account = new Account();
+		this.setAccount(account);
 	}
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		if (evt.account != null) {
 			this.setAccount(evt.account);
+			
 		} else {
 			this.setAccount(new Account());
 			Alert.show("Account Picker returned a null account", "Error");
@@ -163,8 +163,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 			this.contact = contact;
 			if (contact.address == null) contact.address = new Address(); 
 			if (contact.shipToAddress == null) contact.shipToAddress = new Address();
-			if (contact.marketing == null) contact.marketing = new Marketing();
-			if( contact.creditCard == null) contact.creditCard = new CreditCard();
+			if (contact.marketing == null) setMarketing();
+			if( contact.creditCard == null) setCreditCard();
 			mapFromContactData();
 		}
 	}
@@ -176,11 +176,44 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 			contact.parentAccount= this.account
 			accountName.text = account.title;
 		}
-		
-		
-		
+
 	}
-	
+	private function setMarketing():void{
+ 		
+ 		if ( contact.marketing == null){
+ 			contact.marketing = new Marketing();
+ 			contact.marketing.birthDate = new Date();
+ 			contact.marketing.followup = new Date();
+ 			contact.marketing.user3 = new Date();
+ 			contact.marketing.user4 = new Date();
+ 			contact.marketing.user5 = new Date();
+ 		}else{
+ 			if (contact.marketing.followup == null)
+				contact.marketing.followup = new Date();
+			if (contact.marketing.birthDate == null)
+				contact.marketing.birthDate = new Date();
+			if (contact.marketing.user3 == null)
+				contact.marketing.user3 = new Date();
+			if (contact.marketing.user4 == null)
+				contact.marketing.user4 = new Date();
+			if (contact.marketing.user5 == null)
+				contact.marketing.user5 = new Date();
+ 					
+ 		}
+ 		
+ 	}
+	private function setCreditCard():void{
+ 		
+ 		if ( contact.creditCard == null){
+ 			contact.creditCard = new CreditCard();
+ 		}else{
+ 			if (contact.creditCard.expiresDate == null)
+ 				contact.creditCard.expiresDate = new Date();
+ 			if ( contact.creditCard.address == null)
+ 				contact.creditCard.address = new Address();
+ 		}
+ 		
+ 	}
 	private function messageHandler(message:IMessage):void
 	{
 	}
@@ -223,11 +256,15 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		contact.marketing.user7 = user4Tag.text;
 		contact.marketing.user8 = user8Tag.text;
 		contact.marketing.user9 = user9Tag.text; 
+		
 		contact.creditCard.cardHolderName = cardholder.text;
 		contact.creditCard.cardNumber = cardnumber.text;
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
-		contact.creditCard.address.street1 = cardstreet.text;
-		contact.creditCard.address.zip.name = cardzip.text;
+		if (contact.creditCard.address != null){
+			contact.creditCard.address.street1 = cardstreet.text;
+			contact.creditCard.address.zip.name = cardzip.text;
+		}
+		
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
@@ -249,9 +286,12 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		address_editor.stateDataProvider = states1;
 		address_editor.zipDataProvider = zips;
 		address_editor.countryDataProvider = countrys;
-		accountName.text = contact.parentAccount.title;
-	 	if (contact.creditCard.address.zip != null)
+		if (contact.parentAccount != null)
+			accountName.text = contact.parentAccount.title;
+	 	if (contact.creditCard.address != null)
 			cardzip.selectedIndex = findItem(contact.creditCard.address.zip.name, zips);
+		if (contact.creditCard.expiresDate != null)
+		 	cardexpiresdate.selectedDate =contact.creditCard.expiresDate;
 		if (contact.marketing.followup != null)
 			followUp.selectedDate =contact.marketing.followup;
 		if (contact.marketing.birthDate != null)
@@ -279,7 +319,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	
 	private function doNew():void {
 	    contact = new Contact();
-	    setContact(contact);
+	    setMarketing();
+	    setCreditCard();
+	     setContact(contact);
 	 	
 	}  
 	private function doDelete():void {
@@ -287,11 +329,44 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	 	
 	}  
 	private function doGet():void{
-		var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+		
+		var contactPickerWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+	    contactPickerWindow.setStyle("borderAlpha", 0.9);
+	    contactPickerWindow.formIsEmpty = true;
+	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.CANCELSELECTACCOUNT, handleContactPickerCancel);
+	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.SELECTACCOUNT, handleContactPickerSelect);
+	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.SELECTNEWACCOUNT, handleContactPickerNew);
+		/* var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
 		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.formIsEmpty = true;
+		titleWindow.formIsEmpty = true; */
 	   	    
 	}    
+	private function handleContactPickerCancel(evt:ContactPickerSelectEvent):void {
+		
+		contact = new Contact();
+		setMarketing();
+		setCreditCard();
+		this.setContact(contact);
+
+	}
+	
+	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
+		if (evt.contact != null) {
+			this.setContact(evt.contact);
+			setMarketing();
+			setCreditCard();
+		} else {
+			this.setContact(new Contact());
+			Alert.show("Account Picker returned a null contact", "Error");
+		}
+	}
+	
+	private function handleContactPickerNew(evt:ContactPickerSelectEvent):void {
+		this.contact = new Contact();
+		setMarketing();
+		setCreditCard();
+	}
+	
 	private function doNext():void {  
 		var itemp:int;
 		itemp = contacts.getItemIndex(account); 
@@ -357,6 +432,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.contact = ev.result as Contact;
+		setContact(this.contact);
 		dataService.getAll("Contact");
 	}
 
