@@ -13,8 +13,8 @@
 		<mx:method name="getByTimeCardByEmployee" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:Producer id="producer" destination="timecards"/>
-	<mx:Consumer id="consumer" destination="timecards" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="employee"/>
+	<mx:Consumer id="consumer" destination="employee" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
@@ -65,9 +65,20 @@
 	
 	private function setup():void{
 		dataService.getAll("Employee");
+		
 	}
 	
 	private function messageHandler(message:IMessage):void{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "Employee") {
+				dataService.getAll("Employee");
+			}
+		}
 	}
      
 	private function handleFault(ev:FaultEvent):void {  

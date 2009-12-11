@@ -56,9 +56,10 @@
 	private var OnOffBreak:String="On Break";
 		
 	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
 		var application:Snowmass = Snowmass.getInstance();
-	/* 	consumer.subscribe();
-		notification_consumer.subscribe();      */
+
 		dataService.getAll("Employee");
 		//user = application.currentUser;
 	} 

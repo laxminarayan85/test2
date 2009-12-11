@@ -90,6 +90,9 @@
 	}
 	                                                       
 	private function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+
 	    PopUpManager.centerPopUp(this);
 	    dataService.getAll(itemType);
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;

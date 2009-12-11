@@ -35,6 +35,7 @@
 	<destination id="timecards"/>
 	<destination id="invoicebase"/>
 	<destination id="pricelist"/>
+	<destination id="accessgroup"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>
