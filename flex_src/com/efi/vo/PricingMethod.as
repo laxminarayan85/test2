@@ -12,7 +12,7 @@ package com.efi.vo
 		public function PricingMethod() {
 		
 		}
-		public var name:int = 0;
+		public var name:String = "";
 	
 	}
 }
