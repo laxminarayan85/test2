@@ -110,7 +110,7 @@
 					 y="10"
 					 id="pricingMethodCombo"
 					 dataProvider="{pricingMethods}"
-					 labelField="title">
+					 labelField="name">
 		</mx:ComboBox>
 		<mx:Text x="10"
 				 y="12"
