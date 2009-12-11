@@ -33,7 +33,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "address")
-public abstract class Address extends ModelBase {
+public class Address extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -211,6 +211,7 @@ public abstract class Address extends ModelBase {
 	public void setZone(String newVal) {
 		this.zone = newVal;
 	}
+
 	/**
 	 * @generated
 	 */		
