@@ -907,6 +907,58 @@ width="800" height="678" title="Preferences"
 	}
 	
 	private function messageHandler(message:IMessage):void{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "PreferencesSystem") {
+				dataServiceSystem.getAll("PreferencesSystem");
+			}
+			if (payloadType == "PreferencesPOS") {
+				dataServicePOS.getAll("PreferencesPOS");
+			}
+			if (payloadType == "PreferencesEstimating") {
+				dataServiceEstimator.getAll("PreferencesEstimating");
+			}
+			if (payloadType == "PreferencesAccounting") {
+				dataServiceAccounting.getAll("PreferencesAccounting");
+			}
+			if (payloadType == "PreferencesCashRegister") {
+				dataServiceCashRegister.getAll("PreferencesCashRegister");
+			}
+			if (payloadType == "PreferencesCashRegister") {
+				dataServiceCashRegister.getAll("PreferencesCashRegister");
+			}
+			if (payloadType == "PreferencesCreditCard") {
+				dataServiceCreditCard.getAll("PreferencesCreditCard");
+			}
+			if (payloadType == "OutsideServices") {
+				dataServiceMarkups.getAll("OutsideServices");
+			}
+			if (payloadType == "Merchandise") {
+				dataServiceMarkupsMerchandise.getAll("Merchandise")
+			}
+			if (payloadType == "PreferencesPendingList") {
+				dataServicePendingList.getAll("PreferencesPendingList");
+			}
+			if (payloadType == "PricingMethod") {
+				dataServicePricingMethod.getAll("PricingMethod");
+			}
+			if (payloadType == "PreferencesQuantityBreaks") {
+				dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+			}
+			if (payloadType == "PreferencesSalesCategory") {
+				dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+			}
+			if (payloadType == "PreferencesStockDefinition") {
+				dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+			}
+			if (payloadType == "PreferencesStocks") {
+				dataServiceStocks.getAll("PreferencesStocks");
+			}
+		}
 	}
      
 	private function handleFault(ev:FaultEvent):void {  

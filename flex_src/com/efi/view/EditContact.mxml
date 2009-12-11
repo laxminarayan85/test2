@@ -238,8 +238,6 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
 			contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
-		if (cardzip != null && cardzip.selectedItem != null) 
-			contact.creditCard.address.zip = cardzip.selectedItem as Zip;
 			
 			
 		contact.marketing.birthDate = birthDate.selectedDate;
@@ -262,7 +260,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
 		if (contact.creditCard.address != null){
 			contact.creditCard.address.street1 = cardstreet.text;
-			contact.creditCard.address.zip.name = cardzip.text;
+			if (cardzip != null && cardzip.selectedItem != null) 
+				contact.creditCard.address.zip = cardzip.selectedItem as Zip;
 		}
 		
 		contact.marketing.noMail = noMail.selected;

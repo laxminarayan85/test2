@@ -14,7 +14,8 @@
 
 	<destination id="users"/>
 	<destination id="accounts"/>
-	<destination id="contacts"/>
+	<destination id="contact"/>
+	<destination id="employee"/>
 	<destination id="pressdefinitions"/>
 	<destination id="salesreps"/>
 	<destination id="citys"/>
@@ -33,6 +34,7 @@
 	<destination id="timeperiod"/>
 	<destination id="timecards"/>
 	<destination id="invoicebase"/>
+	<destination id="pricelist"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

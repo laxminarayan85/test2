@@ -65,8 +65,16 @@
 	
 	private function messageHandler(message:IMessage):void
 	{
-		var messageBody:String = message.body as String;
-  		dataService.getAll("Employee");
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "Employee") {
+		  		dataService.getAll("Employee");
+			}
+		}
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		employeesArray = ev.result as ArrayCollection;

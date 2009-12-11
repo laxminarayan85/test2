@@ -42,7 +42,7 @@
     private var enableSave:Boolean = true;
 
 	[Bindable]
-	private var invoiceBase:ArrayCollection = new ArrayCollection();
+	private var invoiceBaseArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var DocumentArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -174,14 +174,23 @@
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null,4);                                 
 	}
-	
+
 	private function messageHandler(message:IMessage):void
 	{
-  		dataService.getAll("InvoiceBase");
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "InvoiceBase") {
+		  		dataService.getAll("InvoiceBase");
+			}
+		}
 	}
 
 	private function handleLoadResult(ev:ResultEvent):void {
-		invoiceBase = ev.result as ArrayCollection;
+		invoiceBaseArray = ev.result as ArrayCollection;
 	}
 
    	private function handleSaveResult(ev:ResultEvent):void {
@@ -234,14 +243,13 @@
 
 	<mx:VBox bottom="82" top="30" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
-			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0">
+			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0" dataProvider="{invoiceBaseArray}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="Account" dataField="col1"/>
-					<mx:DataGridColumn headerText="Document #" dataField="col2"/>
-					<mx:DataGridColumn headerText="Phone" dataField="col3"/>
-					<mx:DataGridColumn headerText="Location" dataField="col3"/>
-					<mx:DataGridColumn headerText="Wanted Date" dataField="col3"/>
-					<mx:DataGridColumn headerText="Hold State" dataField="col3"/>
+					<mx:DataGridColumn headerText="Account" dataField="name"/>
+					<mx:DataGridColumn headerText="Document #" dataField="invoiceNumber"/>
+					<mx:DataGridColumn headerText="Contact" dataField="contact"/>
+					<mx:DataGridColumn headerText="Wanted Date" dataField="wantedDate"/>
+					<mx:DataGridColumn headerText="Hold State" dataField="holdState"/>
 				</mx:columns>
 			</mx:DataGrid>
 		</mx:Canvas>

@@ -31,6 +31,9 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSecurityCommandsResult(event)"/>
 </mx:RemoteObject>
 
+	<mx:Producer id="producer" destination="accessgroup"/>
+	<mx:Consumer id="consumer" destination="accessgroup" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 
 <mx:Script>  	
@@ -48,6 +51,8 @@
 	import com.efi.vo.SecurityCommands;                                 
     import mx.events.DataGridEvent;
     import mx.events.DataGridEventReason;
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
@@ -63,8 +68,8 @@
 	private var securityCommands:SecurityCommands;
 			
 	public function init():void {
-		//consumer.subscribe();
-	//	notification_consumer.subscribe();  
+		consumer.subscribe();
+		notification_consumer.subscribe();
 	//	PopUpManager.centerPopUp(this);
 	              
 		dataService.getAll("AccessGroup"); 
@@ -106,6 +111,20 @@
 	private function handleLoadSecurityCommandsResult(ev:ResultEvent):void {
 		securtiyCommandsLists = ev.result as ArrayCollection;
 	}	
+
+  	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "AccessGroup") {
+				dataService.getAll("AccessGroup"); 
+			}
+		}
+	}
 
     private function tree_labelFunc(item:Object):String {
         return item.name;

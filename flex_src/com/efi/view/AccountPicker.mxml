@@ -5,9 +5,12 @@
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getAccountsByPartialName" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
 
-<mx:Producer id="producer" destination="users"/>
+<mx:Producer id="producer" destination="accounts"/>
+<mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script>
                                    
@@ -56,8 +59,25 @@
 		+ "Detail: " + ev.fault.faultDetail + " \n "                              
 		+ "Message: " + ev.fault.faultString;                                    
 	}
-	                                                       
+
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "Account") {
+				dataService.getAll("Account");
+			}
+		}
+	}
+		                                                       
 	private function init():void {   
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
 		dataService.getAll("Account");

@@ -9,7 +9,9 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
 
-<mx:Producer id="producer" destination="users"/>
+<mx:Producer id="producer" destination="pricelist"/>
+<mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script>
                                    
@@ -61,6 +63,20 @@
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, this, null);                                 
+	}
+
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == itemType) {
+				dataService.getAll(itemType)
+			}
+		}
 	}
 	                                                       
 	private function init():void {   
