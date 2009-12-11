@@ -148,7 +148,6 @@ public class DepositEntry extends ModelBase {
 	public void setCreditCardType(Integer newVal) {
 		this.creditCardType = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

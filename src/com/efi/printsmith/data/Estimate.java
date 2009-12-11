@@ -43,5 +43,4 @@ public class Estimate extends InvoiceBase {
 		this.modified = new Date();
 	}
 
-
 }

@@ -2122,7 +2122,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeCost(ChargeCost newVal) {
 		this.chargeCost = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

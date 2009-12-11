@@ -43,5 +43,4 @@ public class OutsideService extends PreferencesMarkups {
 		this.modified = new Date();
 	}
 
-
 }

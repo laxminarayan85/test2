@@ -1597,7 +1597,6 @@ public class PreferencesSystem extends ModelBase {
 	public void setDefaultCountry(Integer newVal) {
 		this.defaultCountry = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -1744,7 +1744,6 @@ public class Account extends ModelBase {
 	public void setAccountNote(String newVal) {
 		this.accountNote = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -820,7 +820,6 @@ public class PressDefinition extends ModelBase {
 	public void setStockPriceList(PriceList newVal) {
 		this.stockPriceList = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

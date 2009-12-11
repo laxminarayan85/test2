@@ -85,7 +85,6 @@ public class ComLink extends ModelBase {
 	public void setValue(String newVal) {
 		this.value = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

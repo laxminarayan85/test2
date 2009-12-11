@@ -2269,7 +2269,6 @@ public class StockDefinition extends ModelBase {
 	public void setAccount(Account newVal) {
 		this.account = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

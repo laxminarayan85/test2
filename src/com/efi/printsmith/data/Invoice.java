@@ -43,5 +43,4 @@ public class Invoice extends InvoiceBase {
 		this.modified = new Date();
 	}
 
-
 }

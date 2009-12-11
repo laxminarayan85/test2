@@ -232,7 +232,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setEstimator(String newVal) {
 		this.estimator = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

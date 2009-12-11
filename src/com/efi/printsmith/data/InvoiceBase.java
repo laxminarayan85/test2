@@ -1222,7 +1222,6 @@ public class InvoiceBase extends ModelBase {
 	public void setDiscountIsOneTime(Boolean newVal) {
 		this.discountIsOneTime = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

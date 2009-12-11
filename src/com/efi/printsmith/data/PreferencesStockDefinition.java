@@ -85,7 +85,6 @@ public class PreferencesStockDefinition extends ModelBase {
 	public void setColumns(ColumnNames newVal) {
 		this.columns = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

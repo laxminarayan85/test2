@@ -469,7 +469,6 @@ public class Contact extends ModelBase {
 	public void setComLinks(java.util.List<ComLink> newVal) {
 		this.comLinks = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

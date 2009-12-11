@@ -190,7 +190,6 @@ public class TimeCard extends ModelBase {
 	public void setEmployee(Employee newVal) {
 		this.employee = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

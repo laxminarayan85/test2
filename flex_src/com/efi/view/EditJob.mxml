@@ -156,6 +156,7 @@
 				pricingMethodDataService.getAll("PricingMethod");
 				dimensionDataService.getAll("Dimension");
 				job=new Job();
+				
 				var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
 				jobMethodPicker.setStyle("borderAlpha", 0.9);
 //			    editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
@@ -219,13 +220,13 @@
 				job.estWaste=parseInt(est_waste.text);
 				job.finished=checked_finished.selected;
 				job.inSetsOf=parseInt(sets_of.text);
-				job.on=parseInt(job_on.text);
+				job.numOn=parseInt(job_on.text);
 				job.oversUnders=parseInt(job_over_under.text);
 				job.qtyOrdered=parseInt(job_ordered.text);
 				job.sheets=parseInt(job_sheets.text);
 				job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
-				job.up=parseInt(job_up.text);
+				job.numUp=parseInt(job_up.text);
 				job.jobNotes=job_notes.text;
 				job.jobTicketNotes=check_job_notes.selectedField;
 				job.location=job_location.selectedItem as Location;
@@ -693,13 +694,13 @@
 									  y="93"
 									  width="45.300003"
 									  id="job_up"
-									  text="{job.up}"
+									  text="{job.numUp}"
 									  height="20"/>
 						<mx:TextInput x="548.3"
 									  y="93"
 									  width="45.700005"
 									  id="job_on"
-									  text="{job.on}"
+									  text="{job.numOn}"
 									  height="20"/>
 						<mx:TextInput x="496"
 									  y="115"

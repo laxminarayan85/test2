@@ -169,7 +169,6 @@ public class CreditCard extends ModelBase {
 	public void setType(String newVal) {
 		this.type = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

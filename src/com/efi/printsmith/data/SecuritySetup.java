@@ -127,7 +127,6 @@ public class SecuritySetup extends ModelBase {
 	public void setAccessGroup(AccessGroup newVal) {
 		this.accessGroup = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

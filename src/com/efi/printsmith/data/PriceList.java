@@ -43,5 +43,4 @@ public class PriceList extends PriceListBase {
 		this.modified = new Date();
 	}
 
-
 }

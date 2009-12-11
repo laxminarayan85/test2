@@ -113,7 +113,6 @@ public class ChargeCategory extends ModelBase {
 	public void setParent(ChargeCommand newVal) {
 		this.parent = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

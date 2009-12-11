@@ -106,7 +106,6 @@ public class Campaigns extends ModelBase {
 	public void setCampaignGradeID(Integer newVal) {
 		this.campaignGradeID = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

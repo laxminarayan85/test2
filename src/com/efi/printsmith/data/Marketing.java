@@ -526,7 +526,6 @@ public class Marketing extends ModelBase {
 	public void setBusinessType(BusinessType newVal) {
 		this.businessType = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

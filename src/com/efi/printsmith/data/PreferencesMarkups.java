@@ -106,7 +106,6 @@ public class PreferencesMarkups extends ModelBase {
 	public void setAbove(Boolean newVal) {
 		this.above = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

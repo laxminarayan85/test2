@@ -43,5 +43,4 @@ public class ChargeInit extends ModelBase {
 		this.modified = new Date();
 	}
 
-
 }

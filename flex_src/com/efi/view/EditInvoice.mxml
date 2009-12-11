@@ -99,7 +99,7 @@
 			[Bindable]
 			private var shippingMethods:ArrayCollection=new ArrayCollection();
 
-			private var editorType = EDITINVOICE;
+			private var editorType:String = EDITINVOICE;
 			
 			public function init():void
 			{

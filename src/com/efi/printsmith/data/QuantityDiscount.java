@@ -43,5 +43,4 @@ public class QuantityDiscount extends PriceListBase {
 		this.modified = new Date();
 	}
 
-
 }

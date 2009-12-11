@@ -85,7 +85,6 @@ public class Products extends ModelBase {
 	public void setKey(String newVal) {
 		this.key = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

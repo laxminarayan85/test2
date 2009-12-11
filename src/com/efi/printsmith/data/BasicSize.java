@@ -85,7 +85,6 @@ public class BasicSize extends ModelBase {
 	public void setSize(String newVal) {
 		this.size = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

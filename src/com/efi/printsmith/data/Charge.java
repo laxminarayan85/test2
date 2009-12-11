@@ -337,7 +337,6 @@ public class Charge extends ModelBase {
 	public void setHidePrice(Boolean newVal) {
 		this.hidePrice = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

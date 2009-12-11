@@ -106,7 +106,6 @@ public class PriceListElement extends ModelBase {
 	public void setPriceListBase(PriceListBase newVal) {
 		this.priceListBase = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

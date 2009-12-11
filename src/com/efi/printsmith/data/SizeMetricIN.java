@@ -85,7 +85,6 @@ public class SizeMetricIN extends ModelBase {
 	public void setSize(String newVal) {
 		this.size = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

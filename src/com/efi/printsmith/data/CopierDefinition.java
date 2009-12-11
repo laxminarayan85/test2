@@ -799,7 +799,6 @@ public class CopierDefinition extends ModelBase {
 	public void setDefaultlargeformat(Boolean newVal) {
 		this.defaultlargeformat = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

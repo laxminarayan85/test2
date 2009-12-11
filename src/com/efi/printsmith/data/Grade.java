@@ -85,7 +85,6 @@ public class Grade extends ModelBase {
 	public void setGradeID(Integer newVal) {
 		this.gradeID = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

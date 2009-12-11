@@ -85,7 +85,6 @@ public class ProductionCopiers extends ModelBase {
 	public void setKey(String newVal) {
 		this.key = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

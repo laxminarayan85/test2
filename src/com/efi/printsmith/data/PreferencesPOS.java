@@ -547,7 +547,6 @@ public class PreferencesPOS extends ModelBase {
 	public void setDataSize(String newVal) {
 		this.dataSize = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

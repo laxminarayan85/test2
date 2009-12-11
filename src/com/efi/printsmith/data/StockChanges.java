@@ -190,7 +190,6 @@ public class StockChanges extends ModelBase {
 	public void setStockDefinition(StockDefinition newVal) {
 		this.stockDefinition = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -316,7 +316,6 @@ public class Users extends ModelBase {
 	public void setAccessGroup(AccessGroup newVal) {
 		this.accessGroup = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

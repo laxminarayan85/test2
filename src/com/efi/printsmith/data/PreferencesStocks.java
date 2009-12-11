@@ -736,7 +736,6 @@ public class PreferencesStocks extends ModelBase {
 	public void setSizeTable(SizeTable newVal) {
 		this.sizeTable = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

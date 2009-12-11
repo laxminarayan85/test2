@@ -127,7 +127,6 @@ public class Dimension extends ModelBase {
 	public void setHeight(Float newVal) {
 		this.height = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -30,8 +30,8 @@ package com.efi.vo
 		public var oversUnders:Number = 0;
 		public var inSetsOf:Number = 0;
 		public var sheets:Number = 0;
-		public var up:Number = 0;
-		public var on:Number = 0;
+		public var numUp:Number = 0;
+		public var numOn:Number = 0;
 		public var press:PressDefinition;
 		public var binderyWaste:Number = 0;
 		public var estWaste:Number = 0;

@@ -109,11 +109,11 @@ public class Job extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String UP = "Up";
+	public static final String NUMUP = "NumUp";
 	/**
 	 * @generated
 	 */
-	public static final String ON = "On";
+	public static final String NUMON = "NumOn";
 	/**
 	 * @generated
 	 */
@@ -528,36 +528,36 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
-	private Long up;
+	private Long numUp;
 	/**
 	 * @generated
  	 */
-	public Long getUp(){
-		return up; 
+	public Long getNumUp(){
+		return numUp; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setUp(Long newVal) {
-		this.up = newVal;
+	public void setNumUp(Long newVal) {
+		this.numUp = newVal;
 	}
  	
 	
  	@Basic
-	private Long on;
+	private Long numOn;
 	/**
 	 * @generated
  	 */
-	public Long getOn(){
-		return on; 
+	public Long getNumOn(){
+		return numOn; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setOn(Long newVal) {
-		this.on = newVal;
+	public void setNumOn(Long newVal) {
+		this.numOn = newVal;
 	}
  	
 	
@@ -922,7 +922,6 @@ public class Job extends ModelBase {
 	public void setBackInks(InkColor newVal) {
 		this.backInks = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		
@@ -947,8 +946,8 @@ public class Job extends ModelBase {
 		if (OVERSUNDERS.equals(propertyName)) return getOversUnders();
 		if (INSETSOF.equals(propertyName)) return getInSetsOf();
 		if (SHEETS.equals(propertyName)) return getSheets();
-		if (UP.equals(propertyName)) return getUp();
-		if (ON.equals(propertyName)) return getOn();
+		if (NUMUP.equals(propertyName)) return getNumUp();
+		if (NUMON.equals(propertyName)) return getNumOn();
 		if (PRESS.equals(propertyName)) return getPress();
 		if (BINDERYWASTE.equals(propertyName)) return getBinderyWaste();
 		if (ESTWASTE.equals(propertyName)) return getEstWaste();
@@ -997,8 +996,8 @@ public class Job extends ModelBase {
 		if (OVERSUNDERS.equals(propertyName)) setOversUnders((Long)newValue); else
 		if (INSETSOF.equals(propertyName)) setInSetsOf((Long)newValue); else
 		if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
-		if (UP.equals(propertyName)) setUp((Long)newValue); else
-		if (ON.equals(propertyName)) setOn((Long)newValue); else
+		if (NUMUP.equals(propertyName)) setNumUp((Long)newValue); else
+		if (NUMON.equals(propertyName)) setNumOn((Long)newValue); else
 		if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
 		if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
 		if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
@@ -1065,9 +1064,9 @@ public class Job extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (SHEETS.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
-		if (UP.equals(propertyName)) 
+		if (NUMUP.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
-		if (ON.equals(propertyName)) 
+		if (NUMON.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (PRESS.equals(propertyName)) 
 			return new Class<?>[] {PressDefinition.class};		
@@ -1139,8 +1138,8 @@ public class Job extends ModelBase {
 		if (OVERSUNDERS.equals(propertyName)) return Job.class;
 		if (INSETSOF.equals(propertyName)) return Job.class;
 		if (SHEETS.equals(propertyName)) return Job.class;
-		if (UP.equals(propertyName)) return Job.class;
-		if (ON.equals(propertyName)) return Job.class;
+		if (NUMUP.equals(propertyName)) return Job.class;
+		if (NUMON.equals(propertyName)) return Job.class;
 		if (PRESS.equals(propertyName)) return Job.class;
 		if (BINDERYWASTE.equals(propertyName)) return Job.class;
 		if (ESTWASTE.equals(propertyName)) return Job.class;
@@ -1209,9 +1208,9 @@ public class Job extends ModelBase {
 			return false;
 		if (! SmartEquals(getSheets(), objT.getSheets()))
 			return false;
-		if (! SmartEquals(getUp(), objT.getUp()))
+		if (! SmartEquals(getNumUp(), objT.getNumUp()))
 			return false;
-		if (! SmartEquals(getOn(), objT.getOn()))
+		if (! SmartEquals(getNumOn(), objT.getNumOn()))
 			return false;
 		if (! SmartEquals(getPress(), objT.getPress()))
 			return false;

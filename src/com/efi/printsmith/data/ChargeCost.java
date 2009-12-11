@@ -274,7 +274,6 @@ public class ChargeCost extends ModelBase {
 	public void setCostingMethod(String newVal) {
 		this.costingMethod = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

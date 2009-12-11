@@ -85,7 +85,6 @@ public class SecurityCommands extends ModelBase {
 	public void setCommandName(String newVal) {
 		this.commandName = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

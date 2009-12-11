@@ -31,6 +31,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
+import com.efi.printsmith.messaging.MessageTypes;
 
 public class DataService {
 
@@ -214,7 +215,7 @@ public class DataService {
 			try {
 				object = em.merge(object);
 				tx.commit();
-				MessageServiceAdapter.sendNotification("Object Created");
+				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE, object.getClass().getSimpleName(), object.getId());
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();
@@ -247,7 +248,7 @@ public class DataService {
 					command.addChildren(category);
 					em.merge(command);
 					tx.commit();
-					MessageServiceAdapter.sendNotification("Object Created");
+				//	MessageServiceAdapter.sendNotification("Object Created");
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
@@ -281,7 +282,7 @@ public class DataService {
 					category.addChildren(charge);
 					em.merge(category);
 					tx.commit();
-					MessageServiceAdapter.sendNotification("Object Created");
+				//	MessageServiceAdapter.sendNotification("Object Created");
 					return charge;
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
@@ -446,7 +447,7 @@ public class DataService {
 			try {
 				em.remove(object);
 				tx.commit();
-				MessageServiceAdapter.sendNotification("Object Deleted");
+				MessageServiceAdapter.sendNotification(MessageTypes.DELETE, className, id);
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();

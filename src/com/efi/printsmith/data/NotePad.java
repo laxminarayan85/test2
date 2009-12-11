@@ -232,7 +232,6 @@ public class NotePad extends ModelBase {
 	public void setShowOnOpen(Boolean newVal) {
 		this.showOnOpen = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -253,7 +253,6 @@ public class PriceListBase extends ModelBase {
 	public void setLastItemIsPriceAdditionalQty(Boolean newVal) {
 		this.lastItemIsPriceAdditionalQty = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

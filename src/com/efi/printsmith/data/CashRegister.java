@@ -400,7 +400,6 @@ public class CashRegister extends ModelBase {
 	public void setCheckNumber(String newVal) {
 		this.checkNumber = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

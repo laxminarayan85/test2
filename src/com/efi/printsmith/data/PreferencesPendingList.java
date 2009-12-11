@@ -85,7 +85,6 @@ public class PreferencesPendingList extends ModelBase {
 	public void setColumns(ColumnNames newVal) {
 		this.columns = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

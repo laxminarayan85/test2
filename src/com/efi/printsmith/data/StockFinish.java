@@ -85,7 +85,6 @@ public class StockFinish extends ModelBase {
 	public void setKey(String newVal) {
 		this.key = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

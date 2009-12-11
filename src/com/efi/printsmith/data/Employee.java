@@ -1003,7 +1003,6 @@ public class Employee extends ModelBase {
 	public void setShowMessageClockin(Boolean newVal) {
 		this.showMessageClockin = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

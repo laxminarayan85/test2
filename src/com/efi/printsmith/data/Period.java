@@ -211,7 +211,6 @@ public class Period extends ModelBase {
 	public void setPeriodClosed(Boolean newVal) {
 		this.periodClosed = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

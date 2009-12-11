@@ -169,7 +169,6 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setTaxCodes(TaxCodes newVal) {
 		this.taxCodes = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

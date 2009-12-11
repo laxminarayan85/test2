@@ -1240,7 +1240,6 @@ public class PreferencesEstimating extends ModelBase {
 	public void setChargeDescription(String newVal) {
 		this.chargeDescription = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

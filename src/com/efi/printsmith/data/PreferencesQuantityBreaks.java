@@ -41,7 +41,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String BREAK = "Break";
+	public static final String QTYBREAK = "QtyBreak";
 
 	/**
 	 * @generated
@@ -85,7 +85,6 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setQtyBreak(Boolean newVal) {
 		this.qtyBreak = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		
@@ -93,7 +92,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (BREAK.equals(propertyName)) return getQtyBreak();
+		if (QTYBREAK.equals(propertyName)) return getQtyBreak();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,7 +103,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
-		if (BREAK.equals(propertyName)) setQtyBreak((Boolean)newValue); else
+		if (QTYBREAK.equals(propertyName)) setQtyBreak((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -116,7 +115,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
-		if (BREAK.equals(propertyName)) 
+		if (QTYBREAK.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
@@ -129,7 +128,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) return PreferencesQuantityBreaks.class;
-		if (BREAK.equals(propertyName)) return PreferencesQuantityBreaks.class;
+		if (QTYBREAK.equals(propertyName)) return PreferencesQuantityBreaks.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	

@@ -904,7 +904,6 @@ public class PreferencesAccounting extends ModelBase {
 	public void setRefundChecks(String newVal) {
 		this.refundChecks = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

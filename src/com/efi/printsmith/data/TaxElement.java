@@ -106,7 +106,6 @@ public class TaxElement extends ModelBase {
 	public void setUserForSeparateShippingTax(Boolean newVal) {
 		this.userForSeparateShippingTax = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

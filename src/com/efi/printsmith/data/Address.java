@@ -211,7 +211,6 @@ public abstract class Address extends ModelBase {
 	public void setZone(String newVal) {
 		this.zone = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

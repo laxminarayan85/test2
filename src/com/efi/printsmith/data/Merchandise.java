@@ -43,5 +43,4 @@ public class Merchandise extends PreferencesMarkups {
 		this.modified = new Date();
 	}
 
-
 }

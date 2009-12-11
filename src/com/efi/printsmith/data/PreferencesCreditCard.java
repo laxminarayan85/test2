@@ -127,7 +127,6 @@ public class PreferencesCreditCard extends ModelBase {
 	public void setCode(String newVal) {
 		this.code = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

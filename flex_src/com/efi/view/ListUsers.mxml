@@ -14,6 +14,7 @@ creationComplete="init()">
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.messaging.MessageBody;
                                          
 	import com.efi.vo.Users;                                         
 	import mx.controls.Alert;                                         
@@ -54,8 +55,16 @@ creationComplete="init()">
 					
 	private function messageHandler(message:IMessage):void
 	{
-		var messageBody:String = message.body as String;
-  		loadUsers();
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "Users") {
+				loadUsers();
+			}
+		}
 	}
                                   
 	private function deleteUser():void {              
