@@ -93,6 +93,7 @@
 		zipDataService.getAll("Zip");
 		
 	
+	
 	}      
 		
  	private function itemExists(list:ArrayCollection, item:Object):Boolean {
@@ -112,8 +113,11 @@
 		if (selectedItem != null){
 	 		citycombo.selectedIndex = findItem (selectedItem,cityDataProvider);
 	 	}
-	 	else 
-	 		citycombo.selectedIndex = findItem(this.address.city.name, cityDataProvider);
+	 	else	
+	 		if( this.address != null)
+	 			citycombo.selectedIndex = findItem(this.address.city.name, cityDataProvider);
+	 		else
+	 			citycombo.selectedIndex = -1;
 	}   
 	
 	private function handleLoadState(ev:ResultEvent):void {
@@ -123,7 +127,10 @@
 	 		statecombo.selectedIndex = findItem (selectedItem,stateDataProvider);
 	 	}
 	 	else
-	 		statecombo.selectedIndex = findItem(this.address.state.name, stateDataProvider);
+	 		if( this.address != null)
+	 			statecombo.selectedIndex = findItem(this.address.state.name, stateDataProvider);
+	 		else
+	 			statecombo.selectedIndex = -1;
 	}
 	
 	private function handleLoadCountry(ev:ResultEvent):void {
@@ -133,7 +140,10 @@
 	 		countrycombo.selectedIndex = findItem (selectedItem,countryDataProvider);
 	 	}
 	 	else
-	 		countrycombo.selectedIndex = findItem(this.address.country.name, countryDataProvider);
+	 		if( this.address != null)
+	 			countrycombo.selectedIndex = findItem(this.address.country.name, countryDataProvider);
+	 		else	
+	 			countrycombo.selectedIndex = -1;
 	}   
 	
 	private function handleLoadZip(ev:ResultEvent):void {
@@ -143,7 +153,10 @@
 	 		zipcombo.selectedIndex = findItem (selectedItem,zipDataProvider);
 	 	}
 	 	else
-	 		zipcombo.selectedIndex = findItem(this.address.zip.name, zipDataProvider);
+	 		if( this.address != null)
+	 			zipcombo.selectedIndex = findItem(this.address.zip.name, zipDataProvider);
+	 		else
+	 			zipcombo.selectedIndex = -1;
 	}                                 
 
 	private function handleSaveCityResult(ev:ResultEvent):void {
@@ -184,6 +197,13 @@
 	public function setAddress(addr:Address):void {
 		this.address = addr;
 		originalAddress = addr;
+		if ( this.address == null){
+			 this.address = new Address();
+			 this.address.city = new City();
+			 this.address.state = new State();
+			 this.address.country = new Country();
+			 this.address.zip = new Zip();
+		}
 		
 	}
 	

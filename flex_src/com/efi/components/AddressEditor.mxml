@@ -133,11 +133,13 @@
 
 			private function doEditAddress():void
 			{
-				address = new Address();
-				address.city = new City();
-				address.state = new State();
-				address.country = new Country();
-				address.zip = new Zip();
+				/* if ( address == null){
+					address = new Address();
+					address.city = new City();
+					address.state = new State();
+					address.country = new Country();
+					address.zip = new Zip();
+				} */
 				titleWindow=AddressEditorPopup(PopUpManager.createPopUp(this, AddressEditorPopup, true));
 				titleWindow.setAddress(address);
 				titleWindow.cityDataProvider=cityDataProvider;
