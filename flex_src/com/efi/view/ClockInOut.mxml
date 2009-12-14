@@ -14,8 +14,8 @@
 	</mx:RemoteObject>
 
 	
-	<mx:Producer id="producer" destination="employees"/>
-	<mx:Consumer id="consumer" destination="employees" message="messageHandler(event.message)"/>
+	<mx:Producer id="producer" destination="employee"/>
+	<mx:Consumer id="consumer" destination="employee" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
 <mx:Script>  	

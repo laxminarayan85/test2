@@ -69,7 +69,7 @@ password="{passwordField.text}"/>
 		dataService.getAll("Users"); 
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
-		user1 = new Users();
+		setUser();
 	}                      
 	private function handleSaveResult(ev:ResultEvent):void {                              
 	     clearFormHandler();
@@ -173,17 +173,23 @@ password="{passwordField.text}"/>
 		formIsEmpty = true;                           
 		formIsValid = false;                                
 		resetFocus();   
-		user1= new Users();          
+		setUser();      
 		dataService.getAll("Users"); 
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
 		                    
-	}        
+	} 
+	private function setUser():void{
+		user1= new Users();  
+		user1.accessGroup = new AccessGroup();
+		user1.accessLevel = new AccessLevel();
+	}       
 	private function handleLoadResult(ev:ResultEvent):void {
 		userslist = ev.result as ArrayCollection;
 	}
 	private function handleLoadAccessGroupResult(ev:ResultEvent):void {
 		accessGroups = ev.result as ArrayCollection;
+		
 	}
 	private function handleLoadAccessLevelResult(ev:ResultEvent):void {
 		accessLevels = ev.result as ArrayCollection;
@@ -217,6 +223,10 @@ password="{passwordField.text}"/>
 		}
 		
 	}
+	
+	private function AccessGroupChange():void{
+		user1.accessGroup = accessGroupList.selectedItem as AccessGroup;
+	}
 	private function doNext():void {
 	 
 	  
@@ -234,6 +244,7 @@ password="{passwordField.text}"/>
 		doUserGridClick();                          		
 	}   
 	private function doUserGridClick():void {
+		setUser();
 		user1 = dataGrid.selectedItem as Users;
 		mapFromUserData();
 	}    
@@ -269,9 +280,8 @@ password="{passwordField.text}"/>
 	<mx:CheckBox x="237" y="324" label="Show user name on log window" selected="{user1.showUserNameLog}" id="user_log_window"/>
 	<mx:CheckBox x="237" y="354" label="Can edit quick access panel" selected="{user1.quickAccess}" id="quick_access"/>
 	<mx:Label x="357" y="164" text="Access Group:"/>
-	
 	<mx:Label x="357" y="190" text="Access Level:"/>
-	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList"> </mx:List>
+	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:List>
 	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
 	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>
 	
