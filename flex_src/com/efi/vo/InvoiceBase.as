@@ -30,7 +30,7 @@ package com.efi.vo
 		public var charges:ArrayCollection;
 		public var markupCharges:ArrayCollection;
 		public var specialInstructions:SpecialInstructions;
-		public var notes:ArrayCollection;
+		public var notes:NotePad;
 		public var holdState:HoldState;
 		public var orderedDate:Date = new Date();
 		public var wantedDate:Date = new Date();

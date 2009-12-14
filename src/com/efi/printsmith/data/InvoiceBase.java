@@ -589,28 +589,18 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-    @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<NotePad> notes;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private NotePad notes;
 	/**
 	 * @generated
  	 */
-	public java.util.List<NotePad> getNotes(){
+	public NotePad getNotes(){
 		return notes; 
 	}
 
-	public void addNotes(NotePad obj) {
-		if (notes == null) {
-			notes = new java.util.ArrayList<NotePad>();
-		}
-		notes.add(obj);
+	public void setNotes(NotePad obj) {
+		this.notes = obj;
 	}
-	/**
-	 * @generated
-	 */	
-	public void setNotes(java.util.List<NotePad> newVal) {
-		this.notes = newVal;
-	}
- 	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private HoldState holdState;
@@ -1310,7 +1300,7 @@ public class InvoiceBase extends ModelBase {
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
 		if (MARKUPCHARGES.equals(propertyName)) setMarkupCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (SPECIALINSTRUCTIONS.equals(propertyName)) setSpecialInstructions((SpecialInstructions)newValue); else
-		if (NOTES.equals(propertyName)) setNotes((java.util.List<NotePad>)newValue); else
+		if (NOTES.equals(propertyName)) setNotes((NotePad)newValue); else
 		if (HOLDSTATE.equals(propertyName)) setHoldState((HoldState)newValue); else
 		if (ORDEREDDATE.equals(propertyName)) setOrderedDate((Date)newValue); else
 		if (WANTEDDATE.equals(propertyName)) setWantedDate((Date)newValue); else

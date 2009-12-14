@@ -281,8 +281,8 @@ password="{passwordField.text}"/>
 	<mx:CheckBox x="237" y="354" label="Can edit quick access panel" selected="{user1.quickAccess}" id="quick_access"/>
 	<mx:Label x="357" y="164" text="Access Group:"/>
 	<mx:Label x="357" y="190" text="Access Level:"/>
-	<mx:List x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:List>
-	<mx:List x="448" y="187" height="21" id="accessLevelList"></mx:List>
+	<mx:ComboBox x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
+	<mx:ComboBox x="448" y="187" height="21" id="accessLevelList"></mx:ComboBox>
 	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>
 	
 </mx:Canvas>
