@@ -45,7 +45,10 @@
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
 	import com.efi.pages.PendingStatus;
-		                   
+	import com.efi.pages.PendingLocation;
+	import com.efi.pages.PendingChangeDueDate;
+	import com.efi.pages.PendingNotify;
+			                   
 	[Bindable]                                         
     private var enableSave:Boolean = true;
 
@@ -224,6 +227,23 @@
 					var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
 	    			pendingStatus.setStyle("borderAlpha", 0.9);
                 }
+         }
+         switch(selectedname){
+                case "View":
+                case "Print":
+                case "Notify":
+					var pendingNotify:PendingNotifiy = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
+					pendingNotify.setStyle("borderAlpha", 0.9);
+                case "Due Date":
+					var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
+					pendingChangeDueDate.setStyle("borderAlpha", 0.9);
+                case "Location":
+					var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
+					pendingLocation.setStyle("borderAlpha", 0.9);
+                case "Pickup":
+					var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, false));
+					cashRegisterPopup.setStyle("borderAlpha", 0.9);
+
          } 
 
 	}
