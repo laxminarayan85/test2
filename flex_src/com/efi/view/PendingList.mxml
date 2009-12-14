@@ -234,15 +234,19 @@
                 case "Notify":
 					var pendingNotify:PendingNotifiy = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
 					pendingNotify.setStyle("borderAlpha", 0.9);
+					break;
                 case "Due Date":
 					var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
 					pendingChangeDueDate.setStyle("borderAlpha", 0.9);
+					break;
                 case "Location":
 					var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
 					pendingLocation.setStyle("borderAlpha", 0.9);
+					break;
                 case "Pickup":
 					var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, false));
 					cashRegisterPopup.setStyle("borderAlpha", 0.9);
+					break;
 
          } 
 
