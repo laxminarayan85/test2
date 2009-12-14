@@ -814,7 +814,8 @@
 	 stockDefinitions.minOrderQty = parseInt(MinOrderQty.text);
 	 stockDefinitions.expires = Expires.selectedDate;
 	 stockDefinitions.binLocation = BinLocation.text;
-	 stockDefinitions.account.title = account_name.text;
+	 if (stockDefinitions.account != null)
+	 	stockDefinitions.account.title = account_name.text;
 
 	}
 	private function doShell():void{
