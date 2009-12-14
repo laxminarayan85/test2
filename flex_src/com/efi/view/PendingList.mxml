@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*" title="Pending List" label="Pending List" name="Pending List" xmlns:text="flash.text.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" 
+		xmlns:fc="http://www.adobe.com/2006/fc" 
+		xmlns:pages="com.efi.pages.*"
+		xmlns:vo="com.efi.vo.*" 
+		title="Pending List" label="Pending List" name="Pending List" 
+		xmlns:text="flash.text.*">
 	<mx:states>
 		<mx:State name="stateFilterDates">
 			<mx:AddChild relativeTo="{hbox1}" position="lastChild">
@@ -37,7 +42,10 @@
 	import mx.messaging.messages.IMessage;
 	import mx.collections.ArrayCollection;   
 	import com.efi.vo.InvoiceBase;
-	                   
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import com.efi.pages.PendingStatus;
+		                   
 	[Bindable]                                         
     private var enableSave:Boolean = true;
 
@@ -206,6 +214,18 @@
 	private function treeSelect(event:Event):void {
 		
 		var node:XML = XML(event.currentTarget.selectedItem);
+        var selectedname:String = node.attribute("label");
+
+        switch (selectedname){
+                case "View":
+                case "Print":
+                default:
+                {
+					var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
+	    			pendingStatus.setStyle("borderAlpha", 0.9);
+                }
+         } 
+
 	}
 
 	private function DocumentTypeChange():void {
