@@ -39,6 +39,8 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockFinishResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:StringValidator id="stockDefinitionNameValidator" source="{stockName}" property="text" minLength="2" required="true"/>
+
 	<mx:Producer id="producer" destination="stockdefinitions"/>
 	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -122,6 +124,9 @@
 	[Bindable]
 	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
 	
+    private var formIsValid:Boolean = false;
+    
+    private var focussedFormControl:DisplayObject;
                                                                          
 	public function init():void {
 		consumer.subscribe();
@@ -348,7 +353,9 @@
 	private function doSave():void {
 		var name:String;
 		name = stockName.text; 
-		if (name.replace(/^\s*/, "").replace(/\s*$/, "") != "")
+		stockDefinitionNameValidator.validate(stockName,false)
+		
+		if (validate(stockDefinitionNameValidator) == true)
 		{
 			mapStockDefinitionData();
 			dataService.addUpdate(stockDefinitions);
@@ -824,7 +831,23 @@
 		else
 			btnAssignCustomerAccount.enabled = false;
 	}
-                                   
+	
+	private function validateStockName(event:Event):void{
+        focussedFormControl = event.target as DisplayObject;    
+        formIsValid = true;            
+        validate(stockDefinitionNameValidator);
+	}   
+	
+	private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+        return currentControlIsValid;
+	}
+                                
 ]]>
                              
 </mx:Script>	
@@ -840,7 +863,7 @@
 	<mx:Label x="84" y="111" text="Color:"/>
 	<fc:AutoComplete  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
 	<mx:Label x="299" y="87" text="Finish:"/>
-	<mx:TextInput x="126" y="85" width="160" id="stockName" text="{stockDefinitions.name}"/>
+	<mx:TextInput x="126" y="85" width="160" id="stockName" text="{stockDefinitions.name}" change="validateStockName(event);"/>
 	<fc:AutoComplete  x="344" y="85" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
 	<mx:Label x="39" y="135" text="Generic Color:"/>
 	<fc:AutoComplete  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" lookAhead="true" labelField="name" focusOut="doStockGenericColor()"/>
