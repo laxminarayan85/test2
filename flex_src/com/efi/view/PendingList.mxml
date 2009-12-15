@@ -293,7 +293,7 @@
 					<mx:DataGridColumn headerText="Document #" dataField="invoiceNumber"/>
 					<mx:DataGridColumn headerText="Contact" dataField="contact"/>
 					<mx:DataGridColumn headerText="Wanted Date" dataField="wantedDate"/>
-					<mx:DataGridColumn headerText="Hold State" dataField="holdState"/>
+					<mx:DataGridColumn headerText="Hold State" dataField="holdState.name"/>
 				</mx:columns>
 			</mx:DataGrid>
 		</mx:Canvas>
