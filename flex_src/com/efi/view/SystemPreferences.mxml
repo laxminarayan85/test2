@@ -105,7 +105,7 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.PreferencesCreditCard;
 	import com.efi.vo.PreferencesMarkups;
 	import com.efi.vo.PreferencesPendingList;
-	import com.efi.vo.PricingMethod;
+	import com.efi.vo.PreferencesPricingMethod;
 	import com.efi.vo.PreferencesQuantityBreaks;
 	import com.efi.vo.PreferencesSalesCategory;
 	import com.efi.vo.PreferencesStockDefinition;
@@ -550,7 +550,7 @@ width="800" height="678" title="Preferences"
 		dataServiceMarkups.getAll("OutsideServices");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
 		dataServicePendingList.getAll("PreferencesPendingList");
-		dataServicePricingMethod.getAll("PricingMethod");
+		dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
 		dataServiceStockDefinition.getAll("PreferencesStockDefinition");
@@ -577,7 +577,7 @@ width="800" height="678" title="Preferences"
 			dataServiceMarkupsMerchandise.deleteItem(deleteitem3, deleteitem3.id);
 		}
 		PreferencesMarkupsMerchandiseDeleteArray.removeAll()
-		for each(var deleteitem4:PricingMethod in PreferencesPricingMethodDeleteArray) {
+		for each(var deleteitem4:PreferencesPricingMethod in PreferencesPricingMethodDeleteArray) {
 			dataServicePricingMethod.deleteItem(deleteitem4, deleteitem4.id);
 		}
 		PreferencesPricingMethodDeleteArray.removeAll()
@@ -606,7 +606,7 @@ width="800" height="678" title="Preferences"
 		for each(var item5:PreferencesStockDefinition in PreferencesStockDefinitionArray) {
 			dataServiceStockDefinition.addUpdate(item5);
 		}
-		for each(var item6:PricingMethod in PreferencesPricingMethodArray) {
+		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
 			dataServicePricingMethod.addUpdate(item6);
 		}
 		for each(var item7:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
@@ -943,8 +943,8 @@ width="800" height="678" title="Preferences"
 			if (payloadType == "PreferencesPendingList") {
 				dataServicePendingList.getAll("PreferencesPendingList");
 			}
-			if (payloadType == "PricingMethod") {
-				dataServicePricingMethod.getAll("PricingMethod");
+			if (payloadType == "PreferencesPricingMethod") {
+				dataServicePricingMethod.getAll("PreferencesPricingMethod");
 			}
 			if (payloadType == "PreferencesQuantityBreaks") {
 				dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
@@ -1128,7 +1128,7 @@ width="800" height="678" title="Preferences"
     	dataServicePendingList.getAll("PreferencesPendingList");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PricingMethod");
+    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
 	}
 	private function handleSaveQuantityBreaksResult(ev:ResultEvent):void {
     	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
@@ -1168,7 +1168,7 @@ width="800" height="678" title="Preferences"
 	}
 	
 	private function handleDeletePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PricingMethod");
+    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
 	}
 	
 	private function handleDeleteSalesCategoryResult(ev:ResultEvent):void {
@@ -1271,19 +1271,23 @@ width="800" height="678" title="Preferences"
 		PreferencesCashRegisterArray.addItem(newItem);
 	}
 	private function doRemoveCashRegister():void{
-		var newItem:PreferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
-		PreferencesCashRegisterDeleteArray.addItem(newItem);
-		PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
+		if (CashRegisterGrid.selectedIndex > -1){
+			var newItem:PreferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
+			PreferencesCashRegisterDeleteArray.addItem(newItem);
+			PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
+		}
 	}
 
 	private function doNewPriceMethod():void{
-		var newItem:PricingMethod = new PricingMethod();
+		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod();
 		PreferencesPricingMethodArray.addItem(newItem);
 	}
 	private function doRemovePriceMethod():void{
-		var newItem:PricingMethod = PricingMethodGrid.selectedItem as PricingMethod;
-		PreferencesPricingMethodDeleteArray.addItem(newItem);
-		PreferencesPricingMethodArray.removeItemAt(PricingMethodGrid.selectedIndex);
+		if (PricingMethodGrid.selectedIndex > -1){
+			var newItem:PreferencesPricingMethod = PricingMethodGrid.selectedItem as PreferencesPricingMethod;
+			PreferencesPricingMethodDeleteArray.addItem(newItem);
+			PreferencesPricingMethodArray.removeItemAt(PricingMethodGrid.selectedIndex);
+		}
 	}
 
 	private function doNewMarkup(item:String):void{
@@ -1297,15 +1301,17 @@ width="800" height="678" title="Preferences"
 		}
 	}
 	private function doRemoveMarkup(item:String, dg:DataGrid):void{
-		if (item=="outside")
-		{
-			var newItem1:OutsideService = dg.selectedItem as OutsideService;
-			PreferencesMarkupsDeleteArray.addItem(newItem1);
-			PreferencesMarkupsArray.removeItemAt(dg.selectedIndex);
-		}else {
-			var newItem2:Merchandise = dg.selectedItem as Merchandise;
-			PreferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
-			PreferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
+		if (dg.selectedIndex > -1) {
+			if (item=="outside")
+			{
+				var newItem1:OutsideService = dg.selectedItem as OutsideService;
+				PreferencesMarkupsDeleteArray.addItem(newItem1);
+				PreferencesMarkupsArray.removeItemAt(dg.selectedIndex);
+			}else {
+				var newItem2:Merchandise = dg.selectedItem as Merchandise;
+				PreferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
+				PreferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
+			}
 		}
 	}
 
@@ -1314,9 +1320,11 @@ width="800" height="678" title="Preferences"
 		PreferencesSalesCategoryArray.addItem(newItem);
 	}
 	private function doRemoveSalesCategory():void{
-		var newItem:PreferencesSalesCategory = SalesCategoryGrid.selectedItem as PreferencesSalesCategory;
-		PreferencesSalesCategoryDeleteArray.addItem(newItem);
-		PreferencesSalesCategoryArray.removeItemAt(SalesCategoryGrid.selectedIndex);
+		if (SalesCategoryGrid.selectedIndex > -1){
+			var newItem:PreferencesSalesCategory = SalesCategoryGrid.selectedItem as PreferencesSalesCategory;
+			PreferencesSalesCategoryDeleteArray.addItem(newItem);
+			PreferencesSalesCategoryArray.removeItemAt(SalesCategoryGrid.selectedIndex);
+		}
 	}
 
 	private function doNewCreditCard():void{
@@ -1324,9 +1332,11 @@ width="800" height="678" title="Preferences"
 		PreferencesCreditCardArray.addItem(newItem);
 	}
 	private function doRemoveCreditCard():void{
-		var newItem:PreferencesCreditCard = CreditCardGrid.selectedItem as PreferencesCreditCard;
-		PreferencesCreditCardDeleteArray.addItem(newItem);
-		PreferencesCreditCardArray.removeItemAt(CreditCardGrid.selectedIndex);
+		if (CreditCardGrid.selectedIndex > -1){
+			var newItem:PreferencesCreditCard = CreditCardGrid.selectedItem as PreferencesCreditCard;
+			PreferencesCreditCardDeleteArray.addItem(newItem);
+			PreferencesCreditCardArray.removeItemAt(CreditCardGrid.selectedIndex);
+		}
 	}
 
 	private function processSalesCategoryGridData(event:DataGridEvent):void {
