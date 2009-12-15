@@ -67,7 +67,12 @@ width="786" height="479"  creationComplete="init()"
 
 
 	private function doGet():void {
-		
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
 	}  
 	
 	private function setAccount(account2:Account):void
@@ -111,12 +116,12 @@ width="786" height="479"  creationComplete="init()"
 	<mx:DataGrid x="10" y="119"  height="292" id="invoice_list" dataProvider="{invoices}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Posted" dataField="col1"/>
-			<mx:DataGridColumn headerText="Invoice #" dataField="col2"/>
-			<mx:DataGridColumn headerText="Description" dataField="col3"/>
-			<mx:DataGridColumn headerText="Total" dataField="col1"/>
+			<mx:DataGridColumn headerText="Invoice #" dataField="invoiceNumber"/>
+			<mx:DataGridColumn headerText="Title" dataField="name"/>
+			<mx:DataGridColumn headerText="Total" dataField="grandTotal"/>
 			<mx:DataGridColumn headerText="Paid on" dataField="col2"/>
 			<mx:DataGridColumn headerText="Ref #" dataField="col3"/>
-			<mx:DataGridColumn headerText="PO #" dataField="col1"/>
+			<mx:DataGridColumn headerText="PO #" dataField="customerPO"/>
 			
 		</mx:columns>
 	</mx:DataGrid>

@@ -1133,7 +1133,7 @@
 						 width="167"
 						 id="job_type"
 						 dataProvider="{pricingMethods}"
-						 labelField="title"
+						 labelField="name"
 						 right="0"
 						 left="710">
 			</mx:ComboBox>

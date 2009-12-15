@@ -332,6 +332,24 @@ public class DataService {
    		}        
     	return null;            
    	} 
+    public List<Contact> getContactsByAccountId(String className, Long id) throws Exception {      
+    	try {            
+    		log.debug("** getByaccountid Id called...");                
+    		EntityManager em = entityManagerFactory.createEntityManager();  
+    		
+    		String queryString = "select a from "+className+" a where a.parentAccount.id = :id";
+    		
+    		Query query = em.createQuery(queryString);           
+    		query.setParameter("id", id);            
+    		List<Contact>  contactlist = query.getResultList();   
+    		if (contactlist != null)
+    		 	log.debug("** Found " + contactlist.size() + "records:");
+    		return contactlist;        
+    	} catch (Exception e) { 
+    		log.error(e);       
+   		}        
+    	return null;            
+   	} 
 
     
 	public List<TimeCard> getByClockInOut(String className, Employee employee) throws Exception {      

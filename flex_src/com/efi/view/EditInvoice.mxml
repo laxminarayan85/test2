@@ -25,6 +25,9 @@
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
+				   
+				   
+				  
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -38,6 +41,12 @@
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadShippingMethods(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="accountDataService"
+					 destination="dataService">
+		<mx:method name="getContactsByAccountId"
+				   fault="handleFault(event)"
+				   result="handleLoadContacts(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Script>
@@ -95,6 +104,8 @@
 			
 			[Bindable]
 			private var salesReps:ArrayCollection=new ArrayCollection();
+			[Bindable]
+			private var accountcontacts:ArrayCollection=new ArrayCollection();
 			
 			[Bindable]
 			private var shippingMethods:ArrayCollection=new ArrayCollection();
@@ -109,6 +120,7 @@
 				invoice.jobs=new ArrayCollection();
 				invoice.charges=new ArrayCollection();
 				salesRepDataService.getAll("SalesRep");
+				shippingMethodDataService.getAll("ShippingMethod");
 			}
 
 			public function getEditorType():String
@@ -261,6 +273,7 @@
 				invoice.account=accountItem;
 				invoice.shipToAddress=accountItem.shipToAddress;
 				invoice.billToAddress=accountItem.billToAddress;
+				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
 				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
 			}
@@ -356,6 +369,12 @@
 				var selectedItem:Object=ship_via_combo.selectedItem;
 				shippingMethods=ev.result as ArrayCollection;
 				ship_via_combo.selectedItem=selectedItem;
+			}
+			private function handleLoadContacts(ev:ResultEvent):void
+			{
+				//var selectedItem:Object=contact_list.selectedItem;
+				accountcontacts=ev.result as ArrayCollection;
+				//contact_list.selectedItem=selectedItem;
 			}
 
 			private function doAccountPicker():void
@@ -727,8 +746,8 @@
 						<mx:ComboBox x="93"
 									 y="225"
 									 width="217"
-									 dataProvider="{invoice.account.contact}"
-									 id="contact_list">
+									 dataProvider="{accountcontacts}"
+									 id="contact_list" labelField="lastName">
 						</mx:ComboBox>
 						<mx:TextInput x="93"
 									  y="253"
