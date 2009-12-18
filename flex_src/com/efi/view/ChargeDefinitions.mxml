@@ -4,6 +4,8 @@ width="100%" height="779" title="Charge Definitions"
 creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
           
 <mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event);"/>
+
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event);"/>
 	<mx:method name="addChargeCategoryToCommand" fault="handleFault(event)" result="handleAddChargeCategoryToCommand(event);"/>
 </mx:RemoteObject>
@@ -32,6 +34,8 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
     import com.efi.vo.Substrate;
     import com.efi.vo.PriceListBase;
 	import com.efi.vo.ModelBase;
+	import com.efi.components.DataManagerCharges;
+	import com.efi.components.AppModelLocator;
 	
     import com.efi.vo.enums.ChargeMethod;
 	import com.efi.vo.enums.ChargeQtyType;
@@ -45,6 +49,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	import com.efi.events.ModelAddUpdateEvent;
 	import com.efi.events.ModelGetAllEvent;
 	import com.efi.events.ModelDeleteItemEvent;
+	import mx.events.TreeEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -65,6 +70,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
   	import com.adobe.ac.mxeffects.Flip;
 	import com.adobe.ac.mxeffects.DistortionConstants;
 	import mx.rpc.IResponder;
+	
 
     private var formDirty:Boolean = false;
     
@@ -121,7 +127,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	private var locations:ArrayCollection = new ArrayCollection();
 
 	[Bindable]
-	public var tempOpen:Object = new Object();
+	public var tempOpen:Array = new Array();
 	
 	[Bindable]
 	public var refreshSO:Boolean = false;
@@ -134,10 +140,22 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 
 	[Bindable]
 	private var selectedTreeItem:Object = null;
+
+    [Bindable]
+    public var acData:ArrayCollection;
+    
+    [Bindable]
+    public var gettingData:Boolean = true;
+    
+    [Bindable]
+    private var model:AppModelLocator = AppModelLocator.getInstance();
+    
+    private var dataManagerCharges:DataManagerCharges = DataManagerCharges.getInstance();
 		
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
+		treeSelectionChanged();
 	    charge = new ChargeDefinition();
 	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
 	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
@@ -148,6 +166,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	    
 		updateControlState();
+		
 	}      
 	     
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -269,6 +288,11 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	
 	private function handleLoadChargeCommandResult(ev:ResultEvent):void {
 		chargeCommands = ev.result as ArrayCollection;
+		dataManagerCharges.handleData(chargeCommands);
+		
+		resetTreeState();
+		treeSelectionChanged();
+
 	}
 	
 	private function handleLoadProductCodeResult(ev:ResultEvent):void {
@@ -284,21 +308,24 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 	}
 
 	private function handleAddChargeToCategory(ev:ResultEvent):void {
-	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
-	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
+//	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
+//	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
 	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+
 	}
 	
 	private function handleAddChargeCategoryToCommand(ev:ResultEvent):void {
-	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
-	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
+//	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
+//	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
 	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
+	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  
@@ -322,15 +349,31 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		return item.name + suffix;
 	}
 	
+	private function tree_openItems_change(evt:TreeEvent):void {
+    	/* Set the array and let binding do the real work. */
+		tempOpen = chargeTree.openItems as Array;
+	}
+
 	private function doNewCommand():void {
 		var chargeCommand:ChargeCommand = new ChargeCommand();
 		chargeCommand.name = "Untitled";
-		
+		gettingData= true;
 		dataService.addUpdate(chargeCommand);
-	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
-	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
-	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
+
+	private function resetTreeState():void{
+
+		updateDataProvider();
+		
+		for each (var item:Object in tempOpen)
+		{
+			chargeTree.expandItem(item,false,true,true);
+			chargeTree.expandItem(item,true,true,true);
+		}		
+		chargeTree.validateNow();
+	//	chargeTree.openItems = tempOpen;
+	
+	}	
 	
 	private function doNewCategory():void {
 		var treeItem:Object = chargeTree.selectedItem;
@@ -339,8 +382,26 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
 			var chargeCategory:ChargeCategory = new ChargeCategory();
 			chargeCategory.name = "Untitled Category";
+			gettingData= true;
 			dataService.addChargeCategoryToCommand(chargeCategory, treeItem);
+			resetTreeState();
+
 		}
+	}
+
+	private function doNewCharge():void {
+		var category:ChargeCategory = getSelectedTreeCategory(true);
+		var localCharge:ChargeDefinition = new ChargeDefinition();
+		
+		if (category != null) {
+			localCharge = new ChargeDefinition();				
+			localCharge.name = "Untitled";
+			localCharge.title = "Untitled";
+			gettingData= true;
+			dataService.addChargeToCategory(localCharge, category);
+			resetTreeState();
+		}
+//		chargeCommandDataService.getAll("ChargeCommand");
 	}
 	
 	private function doDuplicateCharge():void {
@@ -403,7 +464,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		return null;
 	}
 	
-	private function treeSelectionChanged(event:Event):void {
+	private function treeSelectionChanged():void {
 		if (charge_blank_canvas == null || charge_command_canvas == null || charge_category_canvas==null || charge_canvas==null){
 			return;
 		}
@@ -427,19 +488,6 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 			chargeCategory = getSelectedTreeCategory(true);
 			chargeCommand = getSelectedTreeCommand(true);
 		}
-	}
-	
-	private function doNewCharge():void {
-		var category:ChargeCategory = getSelectedTreeCategory(true);
-		var localCharge:ChargeDefinition = new ChargeDefinition();
-		
-		if (category != null) {
-			localCharge = new ChargeDefinition();				
-			localCharge.name = "Untitled";
-			localCharge.title = "Untitled";
-			dataService.addChargeToCategory(localCharge, category);
-		}
-//		chargeCommandDataService.getAll("ChargeCommand");
 	}
 	
 	private function doDelete():void {
@@ -703,27 +751,33 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		updateControlState();
 	}
 	
-	private function tree_itemClick(evt:Event):void {  
-		selectedTreeItem = evt.currentTarget;
-
-	}
-	
 	private function updateDataProvider():void {
-		tempOpen = chargeTree.openItems;
+		tempOpen = chargeTree.openItems as Array;
 		refreshSO = true;	
 	}
 	
 	private function renderFunction():void {
 		if (refreshSO) {
 			refreshSO = false;
-           	chargeTree.invalidateList();
-			chargeTree.openItems = tempOpen;
-			chargeTree.validateNow();
+//           	chargeTree.invalidateList();
+			chargeTree.openItems = tempOpen ;
+//			chargeTree.validateNow();
 		}
 	}
 
-	private function refreshData():void{
-		//reset the root node to its original unfiltered data
+	private function refreshData(event:Event):void{
+        //reset the data in the model
+        model.searchString = tree_filter.text;
+
+        //call the refresh function on the array collection 
+        //to get the data to refresh
+        model.acData.refresh();
+        
+        //there is a node within the array collection called children, 
+        //loop through each one, and because they are FolderVO's each one 
+        //has it's own filter function, and we call the refresh on that 
+        //arrayCollection to filter the data even more
+
 		var i:int;
 		for (i=0; i< chargeCommands.length; i++) {
 			chargeCommands[i].children = new ArrayCollection(chargeCommands[i].children.source);
@@ -731,10 +785,11 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		}
 		//update the Tree after the data has been filtered
 		chargeTree.invalidateList();
-		updateDataProvider();
+        
+        chargeTree.dataProvider = model.acData;
 
 	}
-	
+
 	private function refreshRecursiveChildren(item:Object):void{
         var classInfo:XML = describeType(item);
 
@@ -748,15 +803,15 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 			item.children.refresh();
 		} else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
 			//loop through each child and filter its children
-			for each(var chargeItem:Charge in item.children.source){
+			for each(var chargeItem:ChargeDefinition in item.children.source){
 				refreshRecursiveChildren(chargeItem);
 			}
 			item.children = new ArrayCollection(item.children.source);
 			item.children.filterFunction = filterData;
 			item.children.refresh();
 		}
-	}
-	
+	}	
+
 	public function filterData(item:Object):Boolean{
 		//get the string to filter the nodes by
 		var searchString:String = tree_filter.text;
@@ -775,6 +830,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 		}
 		return false;
 	}
+	
 
 	private function doPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
@@ -859,10 +915,19 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions">
 
 		<mx:HDividedBox x="0" y="71" width="100%" height="100%" liveDragging="true">
 			<mx:Form height="100%">
-				<mx:Tree width="100%" height="90%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
-					labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);"></mx:Tree>
+				<mx:Tree width="100%" height="90%" 
+					itemOpen="tree_openItems_change(event);"
+	                itemClose="tree_openItems_change(event);"
+					folderClosedIcon="{null}" 
+					folderOpenIcon="{null}" 
+					defaultLeafIcon="{null}" change="treeSelectionChanged();" 
+					id="chargeTree" 
+					dataProvider="{model.acData}" 
+					labelFunction="treeLabel" 
+					visible="true" 
+					enabled="true"></mx:Tree>
 				<mx:FormItem width="100%" label="Filter:" height="28">
-					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
+					<mx:TextInput width="100%" id="tree_filter" text="{model.searchString}" change="refreshData(event);"/>
 				</mx:FormItem>
 			</mx:Form>
 		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
