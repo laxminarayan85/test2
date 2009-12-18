@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*"
-width="1080" height="873" title="Copier Definitions"
- label="Copier Definitions" name="Copier Definitions">
+width="1080" height="801" title="Copier Definitions"
+ label="Copier Definitions" name="Copier Definitions" fontSize="9">
  
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -209,7 +209,7 @@ width="1080" height="873" title="Copier Definitions"
                              
 </mx:Script>	
 	<mx:Label x="78" y="197" text="Name:" width="45" textAlign="right"/>
-	<mx:Label x="32" y="223" text="Machine Name:" textAlign="right"/>
+	<mx:Label x="40" y="219" text="Machine Name:" textAlign="right"/>
 	<mx:AdvancedDataGrid x="10" y="71" width="825" id="dataGrid" dataProvider="{copyDefinitionArray}" height="116" sortExpertMode="true"
 		itemClick="doCopierGridClick()">
 		<mx:groupedColumns>
@@ -227,32 +227,32 @@ width="1080" height="873" title="Copier Definitions"
 			</mx:AdvancedDataGridColumnGroup>
 		</mx:groupedColumns>
 	</mx:AdvancedDataGrid>
-	<mx:Label x="10" y="249" text="Output Description:" textAlign="right"/>
-	<mx:Label x="5" y="279" text="Production Location:" textAlign="right"/>
-	<mx:Label x="47" y="309" text="Cost Center:" textAlign="right"/>
-	<mx:Label x="32" y="332" text="OEM Device ID:" textAlign="right"/>	
-	<mx:TextInput x="131" y="195" width="263" id="Name" text="{copyDefinition.name}"/>
-	<mx:TextInput x="131" y="221" width="263" id="MachineName" text="{copyDefinition.machineName}"/>
-	<mx:TextInput x="131" y="247" width="263" id="OutPutDescription" text="{copyDefinition.outputDescrip}"/>
-	<mx:TextInput x="131" y="277" id="ProductionLocation" width="263" text="{copyDefinition.productionLocation}" />
-	<mx:TextInput x="131" y="307" id="CostCenter" width="263" text="{copyDefinition.costCenter}"/>
-	<mx:TextInput x="131" y="330" id="OEMDeviceID" width="263" text="{copyDefinition.oEMDeviceID}"/>
-	<mx:Label x="402" y="200" text=" ID:"/>
-	<mx:TextInput x="437" y="198" width="83" id="copyID" text="{copyDefinition.copyID}" editable="true"/>
-	<mx:CheckBox x="413" y="226" label="Costing Copier" id="CostingCopier" selected="{copyDefinition.costingCopy}"/>
-	<mx:CheckBox x="402" y="256" label="Integrated Device" id="IntegratedDevice" selected="{copyDefinition.integratedDevice}"/>
+	<mx:Label x="18" y="241" text="Output Description:" textAlign="right"/>
+	<mx:Label x="14" y="263" text="Production Location:" textAlign="right"/>
+	<mx:Label x="53" y="285" text="Cost Center:" textAlign="right"/>
+	<mx:Label x="35" y="307" text="OEM Device ID:" textAlign="right"/>	
+	<mx:TextInput x="131" y="195" width="200" id="Name" text="{copyDefinition.name}" height="20"/>
+	<mx:TextInput x="131" y="217" width="200" id="MachineName" text="{copyDefinition.machineName}" height="20"/>
+	<mx:TextInput x="131" y="239" width="200" id="OutPutDescription" text="{copyDefinition.outputDescrip}" height="20"/>
+	<mx:TextInput x="131" y="261" id="ProductionLocation" width="200" text="{copyDefinition.productionLocation}"  height="20"/>
+	<mx:TextInput x="131" y="283" id="CostCenter" width="200" text="{copyDefinition.costCenter}" height="20"/>
+	<mx:TextInput x="131" y="305" id="OEMDeviceID" width="200" text="{copyDefinition.oEMDeviceID}" height="20"/>
+	<mx:Label x="351" y="197" text=" ID:"/>
+	<mx:TextInput x="384" y="195" width="83" id="copyID" text="{copyDefinition.copyID}" editable="true" height="20"/>
+	<mx:CheckBox x="351" y="222" label="Costing Copier" id="CostingCopier" selected="{copyDefinition.costingCopy}"/>
+	<mx:CheckBox x="351" y="245" label="Integrated Device" id="IntegratedDevice" selected="{copyDefinition.integratedDevice}"/>
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:HRule x="10" y="371" width="702" height="16"/>
-	<mx:Label x="71" y="484" text="Max Size:"/>
-	<mx:Label x="71" y="510" text="Min Size:"/>
-	<mx:TextInput x="139" y="482" id="MaxSize" text="{copyDefinition.maxSize}"/>
-	<mx:TextInput x="139" y="508" id="minSize" text="{copyDefinition.minSize}"/>
-	<mx:HRule x="0" y="601" width="892" height="6"/>
-	<mx:HRule x="10" y="781" width="872" height="12"/>
-	<mx:Button x="10" y="801" label="Stock Price List" click="doStockPriceList();"/>
-	<mx:Button x="334" y="801" label="Copier Price List" click="doCopyPriceList();"/>
-	<mx:Button x="590" y="247" label="Waste Chart" click="doWasteChart();"/>
-	<mx:Button x="590" y="198" label="Add Charges"/>
+	<mx:HRule y="353" height="13" left="5" right="5"/>
+	<mx:Label x="68" y="460" text="Max Size:"/>
+	<mx:Label x="71" y="482" text="Min Size:"/>
+	<mx:TextInput x="131" y="458" id="MaxSize" text="{copyDefinition.maxSize}" height="20" width="71"/>
+	<mx:TextInput x="131" y="480" id="minSize" text="{copyDefinition.minSize}" height="20" width="71"/>
+	<mx:HRule x="0" y="551" width="892" height="6" left="5" right="5"/>
+	<mx:HRule x="10" y="715" width="872" height="12"/>
+	<mx:Button x="10" y="731" label="Stock Price List" click="doStockPriceList();"/>
+	<mx:Button x="334" y="731" label="Copier Price List" click="doCopyPriceList();"/>
+	<mx:Button x="538" y="228" label="Waste Chart" click="doWasteChart();"/>
+	<mx:Button x="539" y="198" label="Add Charges"/>
 	<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
@@ -281,68 +281,68 @@ width="1080" height="873" title="Copier Definitions"
 		</mx:Button>
 		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
 		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
-		<mx:Label x="13" y="358" text="Printer Type: "/>
-		<mx:CheckBox x="102" y="356" label="BW" id="blackwhitecheck" selected="{copyDefinition.blackwhite}"/>
-		<mx:CheckBox x="153" y="356" label="Color" id="colorcheck" selected="{copyDefinition.color}"/>
-		<mx:CheckBox x="215" y="356" label="LargeFormat" id="largeformatCheck" selected="{copyDefinition.largeFormat}"/>
-		<mx:Label x="615" y="309" text="Method:"/>
-		<mx:Label x="606" y="339" text="Sales cat:"/>
-		<mx:List x="674" y="306" height="21" id="method"></mx:List>
-		<mx:List x="674" y="336" height="21" id="salescat"></mx:List>
-		<mx:Label x="62" y="535" text="Max Width:"/>
-		<mx:Label x="66" y="562" text="Min Width:"/>
-		<mx:TextInput x="139" y="533" id="maxWidthsize" text="{copyDefinition.maxWidth}"/>
-		<mx:TextInput x="139" y="560" id="minWidthsize" text="{copyDefinition.minWidth}"/>
-		<mx:Label x="50" y="384" text="Copy/Minutes:"/>
-		<mx:Label x="10" y="404" text="Monthly Burden Rate:"/>
-		<mx:Label x="48" y="430" text="Monthly Labor:"/>
-		<mx:Label x="71" y="460" text="Click Cost:" height="16"/>
-		<mx:TextInput x="139" y="382" id="copyMinutes" text="{copyDefinition.copyMinutes}"/>
-		<mx:TextInput x="139" y="402" id="monthlyBurdenRate" text="{copyDefinition.monthlyBurdenRate}"/>
-		<mx:TextInput x="139" y="428" id="monthlyLabor" text="{copyDefinition.monthlyLabor}"/>
-		<mx:TextInput x="139" y="458" id="clickCost" text="{copyDefinition.clickCost}"/>
-		<mx:Label x="572" y="384" text="Open Hours /Day:"/>
-		<mx:TextInput x="678" y="382" id="openhours" text="{copyDefinition.hoursOpen}" width="157"/>
-		<mx:Label x="551" y="410" text="Monthly Maintenance:"/>
-    	<mx:TextInput x="678" y="408" id="monthlyMaintenance" text="{copyDefinition.monthlyMaintenance}" width="157"/>
-		<mx:Label x="540" y="430" text="Machine Cost Per Copy:"/>
-		<mx:TextInput x="678" y="436" id="machineCostperCopy" text = "{copyDefinition.machineCostPerCopy}" width="157"/>
-		<mx:Label x="364" y="384" text="Open Days/ Year:"/>
-		<mx:TextInput x="471" y="382" width="71" id="openDays" text= "{copyDefinition.daysOpen}"/>
-		<mx:Label x="363" y="404" text="Monthly Payment:"/>
-		<mx:TextInput x="471" y="402" width="71" id="monthlyPayment" text ="{copyDefinition.monthlyPayment}"/>
-		<mx:Label x="377" y="430" text= "% Time in Use:"/>
-		<mx:TextInput x="471" y="428" width="71" id="percentageUse" text = "{copyDefinition.percentUsage}"/>
-		<mx:Label x="348" y="460" text="Hourly Costing Rate:"/>
-		<mx:TextInput x="471" y="458" width="71" id="hourlyCostingRate" text="{copyDefinition.hourCostRate}"/>
-		<mx:Label x="389" y="488" text="Labor/Copy:"/>
-		<mx:Label x="388" y="518" text="Toner/Copy:"/>
-		<mx:Label x="364" y="545" text="Developer/Copy:"/>
-		<mx:Label x="380" y="575" text="Copy Markup:"/>
-		<mx:TextInput x="471" y="486" width="71" id="laborCopy" text ="{copyDefinition.laborCopy}"/>
-		<mx:TextInput x="471" y="516" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}"/>
-		<mx:TextInput x="471" y="543" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}"/>
-		<mx:TextInput x="471" y="573" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}"/>
+		<mx:Label x="49" y="334" text="Printer Type: "/>
+		<mx:CheckBox x="131" y="332" label="B&amp;W" id="blackwhitecheck" selected="{copyDefinition.blackwhite}" labelPlacement="right"/>
+		<mx:CheckBox x="187" y="332" label="Color" id="colorcheck" selected="{copyDefinition.color}" labelPlacement="right"/>
+		<mx:CheckBox x="247" y="332" label="LargeFormat" id="largeformatCheck" selected="{copyDefinition.largeFormat}" labelPlacement="right"/>
+		<mx:Label x="527" y="273" text="Method:"/>
+		<mx:Label x="518" y="303" text="Sales cat:"/>
+		<mx:List x="586" y="270" height="21" id="method"></mx:List>
+		<mx:List x="586" y="300" height="21" id="salescat"></mx:List>
+		<mx:Label x="61" y="504" text="Max Width:"/>
+		<mx:Label x="64" y="526" text="Min Width:"/>
+		<mx:TextInput x="131" y="502" id="maxWidthsize" text="{copyDefinition.maxWidth}" height="20" width="71"/>
+		<mx:TextInput x="131" y="524" id="minWidthsize" text="{copyDefinition.minWidth}" height="20" width="71"/>
+		<mx:Label x="41" y="372" text="Copies/Minute:"/>
+		<mx:Label x="15" y="394" text="Monthly Burden Rate:"/>
+		<mx:Label x="43" y="416" text="Monthly Labor:"/>
+		<mx:Label x="61" y="438" text="Click Cost:" height="16"/>
+		<mx:TextInput x="131" y="370" id="copyMinutes" text="{copyDefinition.copyMinutes}" height="20" width="71"/>
+		<mx:TextInput x="131" y="392" id="monthlyBurdenRate" text="{copyDefinition.monthlyBurdenRate}" height="20" width="71"/>
+		<mx:TextInput x="131" y="414" id="monthlyLabor" text="{copyDefinition.monthlyLabor}" height="20" width="71"/>
+		<mx:TextInput x="131" y="436" id="clickCost" text="{copyDefinition.clickCost}" height="20" width="71"/>
+		<mx:Label x="506" y="370" text="Open Hours /Day:"/>
+		<mx:TextInput x="610" y="368" id="openhours" text="{copyDefinition.hoursOpen}" width="94" height="20"/>
+		<mx:Label x="486" y="392" text="Monthly Maintenance:"/>
+    	<mx:TextInput x="610" y="390" id="monthlyMaintenance" text="{copyDefinition.monthlyMaintenance}" width="94" height="20"/>
+		<mx:Label x="475" y="414" text="Machine Cost Per Copy:"/>
+		<mx:Text x="610" y="412" id="machineCostperCopy" text = "{copyDefinition.machineCostPerCopy}" width="94" height="20"/>
+		<mx:Label x="234" y="370" text="Open Days/ Year:"/>
+		<mx:TextInput x="337" y="368" width="71" id="openDays" text= "{copyDefinition.daysOpen}" height="20"/>
+		<mx:Label x="233" y="392" text="Monthly Payment:"/>
+		<mx:TextInput x="337" y="390" width="71" id="monthlyPayment" text ="{copyDefinition.monthlyPayment}" height="20"/>
+		<mx:Label x="246" y="414" text= "% Time in Use:"/>
+		<mx:TextInput x="337" y="412" width="71" id="percentageUse" text = "{copyDefinition.percentUsage}" height="20"/>
+		<mx:Label x="219" y="436" text="Hourly Costing Rate:"/>
+		<mx:TextInput x="337" y="434" width="71" id="hourlyCostingRate" text="{copyDefinition.hourCostRate}" height="20"/>
+		<mx:Label x="262" y="458" text="Labor/Copy:"/>
+		<mx:Label x="261" y="480" text="Toner/Copy:"/>
+		<mx:Label x="239" y="502" text="Developer/Copy:"/>
+		<mx:Label x="254" y="524" text="Copy Markup:"/>
+		<mx:TextInput x="337" y="456" width="71" id="laborCopy" text ="{copyDefinition.laborCopy}" height="20"/>
+		<mx:TextInput x="337" y="478" width="71" id="tonerCopy" text ="{copyDefinition.tonerCopy}" height="20"/>
+		<mx:TextInput x="337" y="500" width="71" id="developerCopy"  text="{copyDefinition.developerCopy}" height="20"/>
+		<mx:TextInput x="337" y="522" width="71" id="copyMarkup" text = "{copyDefinition.copyMarkup}" height="20"/>
 <!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copyDefinition.wasteChart.name}"/>
--->		<mx:Label x="10" y="704" text="Copy Markup:"/>
-		<mx:TextInput x="101" y="702" width="71" id="copyMarkup2"/>
-		<mx:Label x="10" y="730" text="Stock Markup:"/>
-		<mx:Label x="10" y="755" text="Side 2 Factor:" width="83"/>
-		<mx:TextInput x="101" y="728" width="71" id="stockMarkup"/>
-		<mx:TextInput x="101" y="753" width="71" id="side2Factor"/>
-		<mx:Label x="246" y="706" text="Stock Price is" height="14"/>
-		<mx:CheckBox x="246" y="728" label="Use Copier/Digital Stock Markup" id="copierDigitalStockmarkup"/>
-		<mx:Label x="246" y="755" text="Price 2 Sided by"/>
-		<mx:List x="348" y="703" height="25"></mx:List>
-		<mx:List x="348" y="752" height="25"></mx:List>
-		<mx:Button x="10" y="615" label="Edit Matrix"/>
-		<mx:CheckBox x="139" y="615" label="Matrix is Copy Cost" id="matrixcopycost"/>
-		<mx:CheckBox x="139" y="636" label="Matrix is Discount Table" id="matrixdiscount"/>
-		<mx:CheckBox x="139" y="659" label="Matrix is Step Table" id="matrixstep"/>
-		<mx:CheckBox x="349" y="615" label="Square Area for Run Size" id="squarerunsize"/>
-		<mx:CheckBox x="349" y="636" label="Square Are for Finish Size" id="squarefinishsize"/>
-		<mx:CheckBox x="349" y="659" label="Interpolate Matrix Values" id="interpolatematrix"/>
-		<mx:HRule x="0" y="689" width="882" height="7"/>
+-->		<mx:Label x="48" y="645" text="Copy Markup:"/>
+		<mx:TextInput x="131" y="643" width="71" id="copyMarkup2" height="20"/>
+		<mx:Label x="45" y="667" text="Stock Markup:"/>
+		<mx:Label x="47" y="689" text="Side 2 Factor:"/>
+		<mx:TextInput x="131" y="665" width="71" id="stockMarkup" height="20"/>
+		<mx:TextInput x="131" y="687" width="71" id="side2Factor" height="20"/>
+		<mx:Label x="246" y="645" text="Stock Price is" height="14"/>
+		<mx:CheckBox x="246" y="667" label="Use Copier/Digital Stock Markup" id="copierDigitalStockmarkup"/>
+		<mx:Label x="246" y="694" text="Price 2 Sided by"/>
+		<mx:List x="330" y="642" height="22"></mx:List>
+		<mx:List x="337" y="691" height="22"></mx:List>
+		<mx:Button x="10" y="564" label="Edit Matrix"/>
+		<mx:CheckBox x="139" y="564" label="Matrix is Copy Cost" id="matrixcopycost"/>
+		<mx:CheckBox x="139" y="583" label="Matrix is Discount Table" id="matrixdiscount"/>
+		<mx:CheckBox x="139" y="603" label="Matrix is Step Table" id="matrixstep"/>
+		<mx:CheckBox x="349" y="564" label="Square Area for Run Size" id="squarerunsize"/>
+		<mx:CheckBox x="349" y="583" label="Square Are for Finish Size" id="squarefinishsize"/>
+		<mx:CheckBox x="349" y="603" label="Interpolate Matrix Values" id="interpolatematrix"/>
+		<mx:HRule y="628" height="7" left="5" right="5"/>
 <!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copyDefinition.stockPriceList.name}"/>
 		<mx:Text x="459" y="805" id="copierPriceList" text="{copyDefinition.copierPriceList.name}"/>
 -->		
