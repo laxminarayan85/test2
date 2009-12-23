@@ -483,7 +483,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error");                                 
 	}
 	private function handleSaveCityResult(ev:ResultEvent):void {
 		

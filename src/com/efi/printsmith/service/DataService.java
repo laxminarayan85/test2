@@ -41,21 +41,22 @@ public class DataService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
 	protected static Logger log = Logger.getLogger(DataService.class);
-	
+
 	protected static EntityManagerFactory entityManagerFactory = null;
-	
+
 	public DataService() {
 		super();
 		try {
 			if (entityManagerFactory == null) {
-				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory(PERSISTENCE_UNIT);
 
 				boolean needToLoadStaticData = checkStaticData();
 
-				if (needToLoadStaticData==true)
-				{
+				if (needToLoadStaticData == true) {
 					try {
-						//LoadStaticData(new String[]{new DefaultDataFactory().getClass().getResource("DefaultDataFactory.class").getPath()});
+						// LoadStaticData(new String[]{new
+						// DefaultDataFactory().getClass().getResource("DefaultDataFactory.class").getPath()});
 						DefaultDataFactory df = new DefaultDataFactory();
 						df.LoadDefaultData(this);
 					} catch (Exception e) {
@@ -69,19 +70,17 @@ public class DataService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean checkStaticData()
-	{
+	private boolean checkStaticData() {
 		log.debug("** checkStaticData called.");
 		boolean retVal = false;
-		List<DataManager> dataManagerList = (List<DataManager>)this.getAll("DataManager");
+		List<DataManager> dataManagerList = (List<DataManager>) this
+				.getAll("DataManager");
 
 		log.debug("** Found " + dataManagerList.size() + "records:");
 
-		if (dataManagerList.size() > 0)
-		{
+		if (dataManagerList.size() > 0) {
 			DataManager dataManager = dataManagerList.get(0);
-			if (dataManager.getDataloaded() == false)
-			{
+			if (dataManager.getDataloaded() == false) {
 				dataManager.setDataloaded(true);
 				try {
 					this.addUpdate(dataManager);
@@ -90,9 +89,7 @@ public class DataService {
 				}
 				retVal = true;
 			}
-		}
-		else
-		{
+		} else {
 			DataManager dataManager = new DataManager();
 			dataManager.setDataloaded(true);
 			try {
@@ -125,100 +122,107 @@ public class DataService {
 			log.debug("** getSingle called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findQuery = em.createQuery("from " + className);
-			ModelBase result = (ModelBase)findQuery.getSingleResult();
+			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return null;
 	}
-	
-    public List<?> getFromParent(String className, String parentName, Long id) throws Exception {      
-    	try {            
-    		log.debug("** getId called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();       
-    		String queryString = "from "+className+" where "+parentName+"_id = :id";
 
-    		Query query = em.createQuery(queryString);           
-    		query.setParameter("id", id);            
+	public List<?> getFromParent(String className, String parentName, Long id)
+			throws Exception {
+		try {
+			log.debug("** getId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from " + className + " where " + parentName
+					+ "_id = :id";
 
-    		List<?>  list = query.getResultList();   
-    		if (list != null)
-    		 	log.debug("** Found " + list.size() + "records:");
-    		return list;        
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
-	
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", id);
+
+			List<?> list = query.getResultList();
+			if (list != null)
+				log.debug("** Found " + list.size() + "records:");
+			return list;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
 			log.debug("** getAccountsByPartialName called.");
-	
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-	
-			String queryString = "from Account where title like '" + name+ "%'";
+
+			String queryString = "from Account where title like '" + name
+					+ "%'";
 			Query query = em.createQuery(queryString);
 			List<Account> accounts = query.getResultList();
-	
+
 			if (accounts != null)
-	
+
 				log.debug("** Found " + accounts.size() + "records:");
-	
+
 			return accounts;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList<Account>();		
+		return new ArrayList<Account>();
 	}
-	public List<Employee> getByEmployeesPartialName(String name) throws Exception {
+
+	public List<Employee> getByEmployeesPartialName(String name)
+			throws Exception {
 		try {
 			log.debug("** getByEmployeesPartialName called.");
-	
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-	
-			String queryString = "from Employee where title like '" + name+ "%'";
+
+			String queryString = "from Employee where title like '" + name
+					+ "%'";
 			Query query = em.createQuery(queryString);
 			List<Employee> employees = query.getResultList();
-	
+
 			if (employees != null)
-	
+
 				log.debug("** Found " + employees.size() + "records:");
-	
+
 			return employees;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList<Employee>();		
+		return new ArrayList<Employee>();
 	}
-	
+
 	public List<Contact> getContactsByPartialName(String name) throws Exception {
 		try {
 			log.debug("** getCountactsByPartialName called.");
-	
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-	
-			String queryString = "from Contact where title like '" + name+ "%'";
+
+			String queryString = "from Contact where title like '" + name
+					+ "%'";
 			Query query = em.createQuery(queryString);
 			List<Contact> contacts = query.getResultList();
-	
+
 			if (contacts != null)
-	
+
 				log.debug("** Found " + contacts.size() + "records:");
-	
+
 			return contacts;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList<Contact>();		
+		return new ArrayList<Contact>();
 	}
-	
+
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
 		try {
 			EntityManager em;
-			em = entityManagerFactory.createEntityManager();					
+			em = entityManagerFactory.createEntityManager();
 			if (object.getId() == null || object.getId() == 0) {
 				object.setId(null);
 				object.setCreated(new Timestamp(new Date().getTime()));
@@ -231,7 +235,8 @@ public class DataService {
 			try {
 				object = em.merge(object);
 				tx.commit();
-				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE, object.getClass().getSimpleName(), object.getId());
+				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
+						object.getClass().getSimpleName(), object.getId());
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();
@@ -240,23 +245,23 @@ public class DataService {
 				log.info("** Closing Entity Manager.");
 				em.close();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Exception caught");
 		}
 		return object;
 	}
 
-	public void addChargeCategoryToCommand(ChargeCategory category, ChargeCommand command) throws Exception {
+	public void addChargeCategoryToCommand(ChargeCategory category,
+			ChargeCommand command) throws Exception {
 		log.debug("** addChargeCategoryToCommand called.");
 		try {
 			EntityManager em;
 			em = entityManagerFactory.createEntityManager();
-			
+
 			if (command == null || category == null) {
 				String msg = "null value passed to addChargeCategoryToCommand";
 				log.error(msg);
-				throw new Exception (msg);
+				throw new Exception(msg);
 			} else {
 				EntityTransaction tx = em.getTransaction();
 				tx.begin();
@@ -264,33 +269,33 @@ public class DataService {
 					command.addChildren(category);
 					em.merge(command);
 					tx.commit();
-				//	MessageServiceAdapter.sendNotification("Object Created");
+					// MessageServiceAdapter.sendNotification("Object Created");
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
 					throw new Exception(e.getMessage());
-					
+
 				} finally {
 					log.info("** Closing Entity Manager.");
 					em.close();
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Exception caught");
 		}
 	}
-	
-	public ChargeDefinition addChargeToCategory(ChargeDefinition charge, ChargeCategory category) throws Exception {
+
+	public ChargeDefinition addChargeToCategory(ChargeDefinition charge,
+			ChargeCategory category) throws Exception {
 		log.debug("** addChargeCategoryToCommand called.");
 		try {
 			EntityManager em;
 			em = entityManagerFactory.createEntityManager();
-			
+
 			if (charge == null || category == null) {
 				String msg = "null value passed to addChargeCategoryToCommand";
 				log.error(msg);
-				throw new Exception (msg);
+				throw new Exception(msg);
 			} else {
 				EntityTransaction tx = em.getTransaction();
 				tx.begin();
@@ -298,175 +303,192 @@ public class DataService {
 					category.addChildren(charge);
 					em.merge(category);
 					tx.commit();
-				//	MessageServiceAdapter.sendNotification("Object Created");
+					// MessageServiceAdapter.sendNotification("Object Created");
 					return charge;
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
 					throw new Exception(e.getMessage());
-					
+
 				} finally {
 					log.info("** Closing Entity Manager.");
 					em.close();
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Exception caught");
 		}
 		return null;
 	}
-	
-    public ModelBase getById(String className, Long id) throws Exception {      
-    	try {            
-    		log.debug("** getById called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();       
-    		Query query = em.createNamedQuery(className + ".byId");           
-    		query.setParameter("id", id);            
-    		ModelBase object = (ModelBase) query.getSingleResult();                
-    		return object;        
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
-    public List<Invoice> getByAccountId(String className, Long id) throws Exception {      
-    	try {            
-    		log.debug("** getByaccountid Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		String queryString = "select a from "+className+" a where a.account.id = :id";
-    		
-    		Query query = em.createQuery(queryString);           
-    		query.setParameter("id", id);            
-    		List<Invoice>  invoicelist = query.getResultList();   
-    		if (invoicelist != null)
-    		 	log.debug("** Found " + invoicelist.size() + "records:");
-    		return invoicelist;        
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
-    public List<Contact> getContactsByAccountId(String className, Long id) throws Exception {      
-    	try {            
-    		log.debug("** getByaccountid Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		String queryString = "select a from "+className+" a where a.parentAccount.id = :id";
-    		
-    		Query query = em.createQuery(queryString);           
-    		query.setParameter("id", id);            
-    		List<Contact>  contactlist = query.getResultList();   
-    		if (contactlist != null)
-    		 	log.debug("** Found " + contactlist.size() + "records:");
-    		return contactlist;        
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
 
-    
-	public List<TimeCard> getByClockInOut(String className, Employee employee) throws Exception {      
-    	try {            
-    		log.debug("** getByEmployee Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    		java.util.Date date = new java.util.Date();
-    		
-    		String queryString = "from "+className+" where to_char(startdatetime,'YYYY-MM-DD') = '"+dateFormat.format(date).toString() + "' and employee = :employee and onClock = 1";
+	public ModelBase getById(String className, Long id) throws Exception {
+		try {
+			log.debug("** getById called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query query = em.createNamedQuery(className + ".byId");
+			query.setParameter("id", id);
+			ModelBase object = (ModelBase) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+
+	public List<Invoice> getByAccountId(String className, Long id)
+			throws Exception {
+		try {
+			log.debug("** getByaccountid Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+
+			String queryString = "select a from " + className
+					+ " a where a.account.id = :id";
+
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", id);
+			List<Invoice> invoicelist = query.getResultList();
+			if (invoicelist != null)
+				log.debug("** Found " + invoicelist.size() + "records:");
+			return invoicelist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+
+	public List<Contact> getContactsByAccountId(String className, Long id)
+			throws Exception {
+		try {
+			log.debug("** getByaccountid Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+
+			String queryString = "select a from " + className
+					+ " a where a.parentAccount.id = :id";
+
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", id);
+			List<Contact> contactlist = query.getResultList();
+			if (contactlist != null)
+				log.debug("** Found " + contactlist.size() + "records:");
+			return contactlist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+
+	public List<TimeCard> getByClockInOut(String className, Employee employee)
+			throws Exception {
+		try {
+			log.debug("** getByEmployee Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+
+			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = new java.util.Date();
+
+			String queryString = "from " + className
+					+ " where to_char(startdatetime,'YYYY-MM-DD') = '"
+					+ dateFormat.format(date).toString()
+					+ "' and employee = :employee and onClock = 1";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
-    		List<TimeCard>  timecardlist = query.getResultList();   
-    		if (timecardlist != null)
-    		 	log.debug("** Found " + timecardlist.size() + "records:");
-    		return timecardlist;
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
-	public List<TimeCard> getByClockInOutBreak(String className, Employee employee) throws Exception {      
-    	try {            
-    		log.debug("** getByEmployee Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    		java.util.Date date = new java.util.Date();
-    		
-    		String queryString = "from "+className+" where to_char(breaktime,'YYYY-MM-DD') = '"+dateFormat.format(date).toString() + "' and employee = :employee";
+	public List<TimeCard> getByClockInOutBreak(String className,
+			Employee employee) throws Exception {
+		try {
+			log.debug("** getByEmployee Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+
+			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = new java.util.Date();
+
+			String queryString = "from " + className
+					+ " where to_char(breaktime,'YYYY-MM-DD') = '"
+					+ dateFormat.format(date).toString()
+					+ "' and employee = :employee";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
-    		List<TimeCard>  timecardlist = query.getResultList();   
-    		if (timecardlist != null)
-    		 	log.debug("** Found " + timecardlist.size() + "records:");
-    		return timecardlist;
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
-	public List<TimeCard> getByTimeCardByEmployee(String className, Employee employee) throws Exception {      
-    	try {            
-    		log.debug("** getByEmployee Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    		java.util.Date date = new java.util.Date();
-    		
-    		String queryString = "from "+className+" where to_char(created,'YYYY-MM-DD') = '"+dateFormat.format(date).toString() + "' and employee = :employee";
+	public List<TimeCard> getByTimeCardByEmployee(String className,
+			Employee employee) throws Exception {
+		try {
+			log.debug("** getByEmployee Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+
+			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = new java.util.Date();
+
+			String queryString = "from " + className
+					+ " where to_char(created,'YYYY-MM-DD') = '"
+					+ dateFormat.format(date).toString()
+					+ "' and employee = :employee";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
-    		List<TimeCard>  timecardlist = query.getResultList();   
-    		if (timecardlist != null)
-    		 	log.debug("** Found " + timecardlist.size() + "records:");
-    		return timecardlist;
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
-	public List<Period> getByPeriodOpen(String className) throws Exception {      
-    	try {            
-    		log.debug("** getByEmployee Id called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager();  
-    		
-    		String queryString = "from "+className+" where periodClosed = 0";
-			Query query = em.createQuery(queryString);
-    		List<Period>  periodlist = query.getResultList();   
-    		if (periodlist != null)
-    		 	log.debug("** Found " + periodlist.size() + "records:");
-    		return periodlist;
-    	} catch (Exception e) { 
-    		log.error(e);       
-   		}        
-    	return null;            
-   	} 
+	public List<Period> getByPeriodOpen(String className) throws Exception {
+		try {
+			log.debug("** getByEmployee Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
 
-    
-    public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      
-    	try {            
-    		log.debug("** getByAccess called.");                
-    		EntityManager em = entityManagerFactory.createEntityManager(); 
-    		String queryString = "select a from SecuritySetup a where a.accessGroup.id = :id";
+			String queryString = "from " + className
+					+ " where periodClosed = 0";
 			Query query = em.createQuery(queryString);
-    		query.setParameter("id", accessGroup.getId());            
-    		List<SecuritySetup>  securitySetups = query.getResultList();                
-    		 
-    		if (securitySetups != null)
-    		 	log.debug("** Found " + securitySetups.size() + "records:");
-    		return securitySetups;
-    		 
-    	} catch (Exception e) { 
-    		log.error(e);         
-   		}        
-    	return null;            
-   	} 
+			List<Period> periodlist = query.getResultList();
+			if (periodlist != null)
+				log.debug("** Found " + periodlist.size() + "records:");
+			return periodlist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+
+	public List<SecuritySetup> getByAccessGroup(String className,
+			AccessGroup accessGroup) throws Exception {
+		try {
+			log.debug("** getByAccess called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "select a from SecuritySetup a where a.accessGroup.id = :id";
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", accessGroup.getId());
+			List<SecuritySetup> securitySetups = query.getResultList();
+
+			if (securitySetups != null)
+				log.debug("** Found " + securitySetups.size() + "records:");
+			return securitySetups;
+
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
 	public void deleteItem(String className, Long id) {
 		log.debug("** deleteObject called.");
@@ -481,7 +503,8 @@ public class DataService {
 			try {
 				em.remove(object);
 				tx.commit();
-				MessageServiceAdapter.sendNotification(MessageTypes.DELETE, className, id);
+				MessageServiceAdapter.sendNotification(MessageTypes.DELETE,
+						className, id);
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();
@@ -491,39 +514,57 @@ public class DataService {
 			}
 		}
 	}
-	
-	public List<?> criteriaQuery(String entityName, List<RemoteCriterion> criteria) {
+
+	public List<?> criteriaQuery(String entityName,
+			List<RemoteCriterion> criteria) {
 		log.debug("** criteriaQuery called.");
 		try {
 			for (RemoteCriterion criterion : criteria) {
 				if (criterion instanceof RemoteRestriction) {
-					RemoteRestriction remoteRestriction = (RemoteRestriction)criterion;
-					
-					DetachedCriteria query = DetachedCriteria.forEntityName(entityName);
-					
+					RemoteRestriction remoteRestriction = (RemoteRestriction) criterion;
+
+					DetachedCriteria query = DetachedCriteria
+							.forEntityName(entityName);
+
 					String operator = remoteRestriction.getOperator();
 					if (operator.equals(RemoteRestriction.eq)) {
-						query.add(Restrictions.eq(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.eq(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					} else if (operator.equals(RemoteRestriction.between)) {
-						query.add(Restrictions.between(remoteRestriction.getPropertyName(), remoteRestriction.getLow(), remoteRestriction.getHigh()));
+						query.add(Restrictions.between(remoteRestriction
+								.getPropertyName(), remoteRestriction.getLow(),
+								remoteRestriction.getHigh()));
 					} else if (operator.equals(RemoteRestriction.ge)) {
-						query.add(Restrictions.ge(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.ge(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					} else if (operator.equals(RemoteRestriction.gt)) {
-						query.add(Restrictions.gt(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.gt(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					} else if (operator.equals(RemoteRestriction.le)) {
-						query.add(Restrictions.le(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.le(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					} else if (operator.equals(RemoteRestriction.lt)) {
-						query.add(Restrictions.lt(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.lt(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					} else if (operator.equals(RemoteRestriction.ne)) {
-						query.add(Restrictions.ne(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+						query.add(Restrictions.ne(remoteRestriction
+								.getPropertyName(), remoteRestriction
+								.getValue()));
 					}
-					EntityManager em = entityManagerFactory.createEntityManager();
-					Session session = (Session)em.getDelegate();
+					EntityManager em = entityManagerFactory
+							.createEntityManager();
+					Session session = (Session) em.getDelegate();
 					Transaction tx = session.beginTransaction();
-					List<?> resultList = query.getExecutableCriteria(session).list();
+					List<?> resultList = query.getExecutableCriteria(session)
+							.list();
 					tx.commit();
 					session.close();
-					
+
 					if (resultList != null) {
 						log.debug("** Found " + resultList.size() + "records.");
 					}

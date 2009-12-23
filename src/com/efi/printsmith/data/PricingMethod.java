@@ -50,18 +50,18 @@ public class PricingMethod extends ModelBase {
  	
 	
  	@Basic
-	private String name;
+	private Integer name;
 	/**
 	 * @generated
  	 */
-	public String getName(){
+	public Integer getName(){
 		return name; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setName(String newVal) {
+	public void setName(Integer newVal) {
 		this.name = newVal;
 	}
 	/**
@@ -80,7 +80,7 @@ public class PricingMethod extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (NAME.equals(propertyName)) setName((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -91,7 +91,7 @@ public class PricingMethod extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

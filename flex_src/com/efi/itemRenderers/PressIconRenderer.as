@@ -6,23 +6,20 @@ package com.efi.itemRenderers
     import mx.controls.listClasses.BaseListData;
     import mx.controls.listClasses.IDropInListItemRenderer;
            
-    public class DataGridIconRenderer extends Box
+    public class PressIconRenderer extends Box
         implements IDropInListItemRenderer
     {
                 
         // Embed icons.
-        [Embed(source="../../../assets/ColorIcon.png")]
-        public var colorIcon:Class; 
+        [Embed(source="../../../assets/SheetFedIcon.png")]
+        public var sfIcon:Class;
         
-        [Embed(source="../../../assets/BWIcon.png")]
-        public var bwIcon:Class;
-        
-        [Embed(source="../../../assets/LFIcon.png")]
-        public var lfIcon:Class;
+        [Embed(source="../../../assets/RollFedIcon.png")]
+        public var rfIcon:Class;
 
         private var image:Image;
         
-        public function DataGridIconRenderer()
+        public function PressIconRenderer()
         {
             super();
             setStyle("horizontalAlign", "center");
@@ -60,21 +57,16 @@ package com.efi.itemRenderers
                 image.source = null;
                 switch(currentValue) 
                 {
-                     case "color":
-                     	if (value.color == true) {
-	                        image.source = colorIcon;
+                     case "sheetFed":
+                     	if (value.sheetFed == true) {
+	                        image.source = sfIcon;
                      	}
                         break;
-                    case "blackwhite":
-                    	if (value.blackwhite == true) {
-                         	image.source = bwIcon;
+                    case "rollFed":
+                    	if (value.rollFed == true) {
+                         	image.source = rfIcon;
                      	}
                         break;
-                    case "largeFormat":
-                        if (value.largeFormat == true) {
-                        	image.source = lfIcon;
-                        } 
-                        break;                         
                      default:
                         image.source = null;
                  }

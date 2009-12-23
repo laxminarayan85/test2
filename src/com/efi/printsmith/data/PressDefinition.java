@@ -57,7 +57,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String OEMDEVICEID = "OEMDeviceID";
+	public static final String OEMDEVICEID = "OemDeviceID";
 	/**
 	 * @generated
 	 */
@@ -66,14 +66,6 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COSTINGPRESS = "CostingPress";
-	/**
-	 * @generated
-	 */
-	public static final String SHEETFED = "SheetFed";
-	/**
-	 * @generated
-	 */
-	public static final String ROLLTOROLL = "RolltoRoll";
 	/**
 	 * @generated
 	 */
@@ -157,19 +149,11 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTSHEET = "DefaultSheet";
+	public static final String SHEETFED = "SheetFed";
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTROLL = "DefaultRoll";
-	/**
-	 * @generated
-	 */
-	public static final String SHEETFEDPAPER = "SheetFedPaper";
-	/**
-	 * @generated
-	 */
-	public static final String ROLLFEDPAPER = "RollFedPaper";
+	public static final String ROLLFED = "RollFed";
 	/**
 	 * @generated
 	 */
@@ -279,19 +263,19 @@ public class PressDefinition extends ModelBase {
  	
 	
  	@Basic
-	private String oEMDeviceID;
+	private String oemDeviceID;
 	/**
 	 * @generated
  	 */
-	public String getOEMDeviceID(){
-		return oEMDeviceID; 
+	public String getOemDeviceID(){
+		return oemDeviceID; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setOEMDeviceID(String newVal) {
-		this.oEMDeviceID = newVal;
+	public void setOemDeviceID(String newVal) {
+		this.oemDeviceID = newVal;
 	}
  	
 	
@@ -326,40 +310,6 @@ public class PressDefinition extends ModelBase {
 	 */	
 	public void setCostingPress(Boolean newVal) {
 		this.costingPress = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean sheetFed;
-	/**
-	 * @generated
- 	 */
-	public Boolean getSheetFed(){
-		return sheetFed; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSheetFed(Boolean newVal) {
-		this.sheetFed = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean rolltoRoll;
-	/**
-	 * @generated
- 	 */
-	public Boolean getRolltoRoll(){
-		return rolltoRoll; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setRolltoRoll(Boolean newVal) {
-		this.rolltoRoll = newVal;
 	}
  	
 	
@@ -704,70 +654,36 @@ public class PressDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean defaultSheet;
+	private Boolean sheetFed;
 	/**
 	 * @generated
  	 */
-	public Boolean getDefaultSheet(){
-		return defaultSheet; 
+	public Boolean getSheetFed(){
+		return sheetFed; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultSheet(Boolean newVal) {
-		this.defaultSheet = newVal;
+	public void setSheetFed(Boolean newVal) {
+		this.sheetFed = newVal;
 	}
  	
 	
  	@Basic
-	private Boolean defaultRoll;
+	private Boolean rollFed;
 	/**
 	 * @generated
  	 */
-	public Boolean getDefaultRoll(){
-		return defaultRoll; 
+	public Boolean getRollFed(){
+		return rollFed; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultRoll(Boolean newVal) {
-		this.defaultRoll = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean sheetFedPaper;
-	/**
-	 * @generated
- 	 */
-	public Boolean getSheetFedPaper(){
-		return sheetFedPaper; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSheetFedPaper(Boolean newVal) {
-		this.sheetFedPaper = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean rollFedPaper;
-	/**
-	 * @generated
- 	 */
-	public Boolean getRollFedPaper(){
-		return rollFedPaper; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setRollFedPaper(Boolean newVal) {
-		this.rollFedPaper = newVal;
+	public void setRollFed(Boolean newVal) {
+		this.rollFed = newVal;
 	}
  	
 	
@@ -831,11 +747,9 @@ public class PressDefinition extends ModelBase {
 		if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
 		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
 		if (COSTCENTER.equals(propertyName)) return getCostCenter();
-		if (OEMDEVICEID.equals(propertyName)) return getOEMDeviceID();
+		if (OEMDEVICEID.equals(propertyName)) return getOemDeviceID();
 		if (MACHINEID.equals(propertyName)) return getMachineID();
 		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
-		if (SHEETFED.equals(propertyName)) return getSheetFed();
-		if (ROLLTOROLL.equals(propertyName)) return getRolltoRoll();
 		if (INTEGRATEDDEVICE.equals(propertyName)) return getIntegratedDevice();
 		if (MAXPAPERSIZE.equals(propertyName)) return getMaxPaperSize();
 		if (MINPAPERSIZE.equals(propertyName)) return getMinPaperSize();
@@ -856,10 +770,8 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) return getAvgImpressPerHour();
 		if (NUMBERHEADS.equals(propertyName)) return getNumberHeads();
 		if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
-		if (DEFAULTSHEET.equals(propertyName)) return getDefaultSheet();
-		if (DEFAULTROLL.equals(propertyName)) return getDefaultRoll();
-		if (SHEETFEDPAPER.equals(propertyName)) return getSheetFedPaper();
-		if (ROLLFEDPAPER.equals(propertyName)) return getRollFedPaper();
+		if (SHEETFED.equals(propertyName)) return getSheetFed();
+		if (ROLLFED.equals(propertyName)) return getRollFed();
 		if (WASTECHART.equals(propertyName)) return getWasteChart();
 		if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
 		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
@@ -877,11 +789,9 @@ public class PressDefinition extends ModelBase {
 		if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
 		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
 		if (COSTCENTER.equals(propertyName)) setCostCenter((String)newValue); else
-		if (OEMDEVICEID.equals(propertyName)) setOEMDeviceID((String)newValue); else
+		if (OEMDEVICEID.equals(propertyName)) setOemDeviceID((String)newValue); else
 		if (MACHINEID.equals(propertyName)) setMachineID((Long)newValue); else
 		if (COSTINGPRESS.equals(propertyName)) setCostingPress((Boolean)newValue); else
-		if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
-		if (ROLLTOROLL.equals(propertyName)) setRolltoRoll((Boolean)newValue); else
 		if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
 		if (MAXPAPERSIZE.equals(propertyName)) setMaxPaperSize((String)newValue); else
 		if (MINPAPERSIZE.equals(propertyName)) setMinPaperSize((String)newValue); else
@@ -902,10 +812,8 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
 		if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
 		if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
-		if (DEFAULTSHEET.equals(propertyName)) setDefaultSheet((Boolean)newValue); else
-		if (DEFAULTROLL.equals(propertyName)) setDefaultRoll((Boolean)newValue); else
-		if (SHEETFEDPAPER.equals(propertyName)) setSheetFedPaper((Boolean)newValue); else
-		if (ROLLFEDPAPER.equals(propertyName)) setRollFedPaper((Boolean)newValue); else
+		if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
+		if (ROLLFED.equals(propertyName)) setRollFed((Boolean)newValue); else
 		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
 		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
@@ -933,10 +841,6 @@ public class PressDefinition extends ModelBase {
 		if (MACHINEID.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (COSTINGPRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHEETFED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ROLLTOROLL.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (INTEGRATEDDEVICE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -978,13 +882,9 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (SETUPADDRUN.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
-		if (DEFAULTSHEET.equals(propertyName)) 
+		if (SHEETFED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (DEFAULTROLL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHEETFEDPAPER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ROLLFEDPAPER.equals(propertyName)) 
+		if (ROLLFED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (WASTECHART.equals(propertyName)) 
 			return new Class<?>[] {WasteChart.class};		
@@ -1010,8 +910,6 @@ public class PressDefinition extends ModelBase {
 		if (OEMDEVICEID.equals(propertyName)) return PressDefinition.class;
 		if (MACHINEID.equals(propertyName)) return PressDefinition.class;
 		if (COSTINGPRESS.equals(propertyName)) return PressDefinition.class;
-		if (SHEETFED.equals(propertyName)) return PressDefinition.class;
-		if (ROLLTOROLL.equals(propertyName)) return PressDefinition.class;
 		if (INTEGRATEDDEVICE.equals(propertyName)) return PressDefinition.class;
 		if (MAXPAPERSIZE.equals(propertyName)) return PressDefinition.class;
 		if (MINPAPERSIZE.equals(propertyName)) return PressDefinition.class;
@@ -1032,10 +930,8 @@ public class PressDefinition extends ModelBase {
 		if (AVGIMPRESSPERHOUR.equals(propertyName)) return PressDefinition.class;
 		if (NUMBERHEADS.equals(propertyName)) return PressDefinition.class;
 		if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
-		if (DEFAULTSHEET.equals(propertyName)) return PressDefinition.class;
-		if (DEFAULTROLL.equals(propertyName)) return PressDefinition.class;
-		if (SHEETFEDPAPER.equals(propertyName)) return PressDefinition.class;
-		if (ROLLFEDPAPER.equals(propertyName)) return PressDefinition.class;
+		if (SHEETFED.equals(propertyName)) return PressDefinition.class;
+		if (ROLLFED.equals(propertyName)) return PressDefinition.class;
 		if (WASTECHART.equals(propertyName)) return PressDefinition.class;
 		if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
 		if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
@@ -1060,15 +956,11 @@ public class PressDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
 			return false;
-		if (! SmartEquals(getOEMDeviceID(), objT.getOEMDeviceID()))
+		if (! SmartEquals(getOemDeviceID(), objT.getOemDeviceID()))
 			return false;
 		if (! SmartEquals(getMachineID(), objT.getMachineID()))
 			return false;
 		if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
-			return false;
-		if (! SmartEquals(getSheetFed(), objT.getSheetFed()))
-			return false;
-		if (! SmartEquals(getRolltoRoll(), objT.getRolltoRoll()))
 			return false;
 		if (! SmartEquals(getIntegratedDevice(), objT.getIntegratedDevice()))
 			return false;
@@ -1110,13 +1002,9 @@ public class PressDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getSetupAddRun(), objT.getSetupAddRun()))
 			return false;
-		if (! SmartEquals(getDefaultSheet(), objT.getDefaultSheet()))
+		if (! SmartEquals(getSheetFed(), objT.getSheetFed()))
 			return false;
-		if (! SmartEquals(getDefaultRoll(), objT.getDefaultRoll()))
-			return false;
-		if (! SmartEquals(getSheetFedPaper(), objT.getSheetFedPaper()))
-			return false;
-		if (! SmartEquals(getRollFedPaper(), objT.getRollFedPaper()))
+		if (! SmartEquals(getRollFed(), objT.getRollFed()))
 			return false;
 		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
 			return false;

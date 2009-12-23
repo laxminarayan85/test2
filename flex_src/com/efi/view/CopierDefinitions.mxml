@@ -86,43 +86,41 @@ width="1080" height="755" title="Copier Definitions"
 		copierDefinition = dataGrid.selectedItem as CopierDefinition;
 	}
 	private function mapAccountData():void {
-	 //copierDefinition.copyDefID = CopierDefID;
-	 copierDefinition.name = Name.text;
-	 copierDefinition.machineName = MachineName.text;
-	 copierDefinition.outputDescrip = OutPutDescription.text;
-	 copierDefinition.productionLocation = ProductionLocation.text;
-	 copierDefinition.costCenter = CostCenter.text;
-	 copierDefinition.oEMDeviceID = OEMDeviceID.text;
-	 copierDefinition.copyID = parseInt(copyID.text); 
-	 copierDefinition.costingCopy = CostingCopier.selected;
-	 copierDefinition.clickCost = parseInt(clickCost.text);
-	 copierDefinition.integratedDevice = IntegratedDevice.selected;
-	 copierDefinition.maxSize = MaxSize.text;
-	 copierDefinition.minSize= minSize.text;
-	 copierDefinition.maxWidth = maxWidthsize.text;
-	 copierDefinition.minWidth = minWidthsize.text;
-	 copierDefinition.monthlyLabor= parseInt(monthlyLabor.text);
-	 copierDefinition.blackwhite = blackwhitecheck.selected;
-	 copierDefinition.color = colorcheck.selected;
-	 copierDefinition.copyMarkup= parseInt(copyMarkup.text);
-	 copierDefinition.largeFormat = largeformatCheck.selected;
-	 copierDefinition.tonerCopy = parseInt(tonerCopy.text);
-	 copierDefinition.laborCopy = parseInt(laborCopy.text);
-	 copierDefinition.daysOpen = parseInt(openDays.text);
-	 copierDefinition.developerCopy = parseInt(developerCopy.text);
-	 copierDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
-	 copierDefinition.hoursOpen = parseInt(openhours.text);
-	 copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
-	 /* copierDefinition.method = ' '; */
-	 copierDefinition.percentUsage = percentageUse.text;
-	 copierDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
-	 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
-	 copierDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
-	 copierDefinition.copyMinutes = parseInt(copyMinutes.text);
-	 copierDefinition.defaultblackwhite 
-	 
-
+		 //copierDefinition.copyDefID = CopierDefID;
+		 copierDefinition.name = Name.text;
+		 copierDefinition.machineName = MachineName.text;
+		 copierDefinition.outputDescrip = OutPutDescription.text;
+		 copierDefinition.productionLocation = ProductionLocation.text;
+		 copierDefinition.costCenter = CostCenter.text;
+		 copierDefinition.oemDeviceID = OEMDeviceID.text;
+		 copierDefinition.copyID = parseInt(copyID.text); 
+		 copierDefinition.costingCopy = CostingCopier.selected;
+		 copierDefinition.clickCost = parseInt(clickCost.text);
+		 copierDefinition.integratedDevice = IntegratedDevice.selected;
+		 copierDefinition.maxSize = MaxSize.text;
+		 copierDefinition.minSize= minSize.text;
+		 copierDefinition.maxWidth = maxWidthsize.text;
+		 copierDefinition.minWidth = minWidthsize.text;
+		 copierDefinition.monthlyLabor= parseInt(monthlyLabor.text);
+		 copierDefinition.blackwhite = blackwhitecheck.selected;
+		 copierDefinition.color = colorcheck.selected;
+		 copierDefinition.copyMarkup= parseInt(copyMarkup.text);
+		 copierDefinition.largeFormat = largeformatCheck.selected;
+		 copierDefinition.tonerCopy = parseInt(tonerCopy.text);
+		 copierDefinition.laborCopy = parseInt(laborCopy.text);
+		 copierDefinition.daysOpen = parseInt(openDays.text);
+		 copierDefinition.developerCopy = parseInt(developerCopy.text);
+		 copierDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
+		 copierDefinition.hoursOpen = parseInt(openhours.text);
+		 copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
+		 /* copierDefinition.method = ' '; */
+		 copierDefinition.percentUsage = percentageUse.text;
+		 copierDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
+		 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
+		 copierDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
+		 copierDefinition.copyMinutes = parseInt(copyMinutes.text);
 	}
+	
 	private function doSave():void {
 	 
 		mapAccountData()
@@ -208,12 +206,12 @@ width="1080" height="755" title="Copier Definitions"
 		<mx:Label x="35" y="148" text="Machine Name:" textAlign="right"/>
 		<mx:DataGrid y="0" id="dataGrid" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="0">
 			<mx:columns>
-				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="blackwhite" itemRenderer="com.efi.itemRenderers.DataGridIconRenderer"/>
-				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.itemRenderers.DataGridIconRenderer"/>
-				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.itemRenderers.DataGridIconRenderer"/>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="blackwhite" itemRenderer="com.efi.itemRenderers.CopierIconRenderer"/>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.itemRenderers.CopierIconRenderer"/>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn headerText="Name" dataField="name"/>
 				<mx:DataGridColumn headerText="Machine" dataField="machineName"/>
-				<mx:DataGridColumn headerText="Device ID" dataField="oEMDeviceID" width="100"/>
+				<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="100"/>
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Label x="13" y="170" text="Output Description:" textAlign="right"/>
@@ -225,7 +223,7 @@ width="1080" height="755" title="Copier Definitions"
 		<mx:TextInput x="126" y="168" width="200" id="OutPutDescription" text="{copierDefinition.outputDescrip}" height="20"/>
 		<mx:TextInput x="126" y="190" id="ProductionLocation" width="200" text="{copierDefinition.productionLocation}"  height="20"/>
 		<mx:TextInput x="126" y="212" id="CostCenter" width="200" text="{copierDefinition.costCenter}" height="20"/>
-		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oEMDeviceID}" height="20"/>
+		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oemDeviceID}" height="20"/>
 		<mx:Label x="346" y="126" text=" ID:"/>
 		<mx:TextInput x="379" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
 		<mx:CheckBox x="346" y="151" label="Costing Copier" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>

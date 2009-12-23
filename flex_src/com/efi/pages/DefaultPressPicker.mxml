@@ -69,7 +69,7 @@
 			private function loadSheetFedPresses():void {
 				var criterion:RemoteRestriction = new RemoteRestriction();
 				criterion.setOperator(RemoteRestriction.eq);
-				criterion.setPropertyName("sheetFedPaper");
+				criterion.setPropertyName("sheetFed");
 				criterion.setValue(true);
 				var pressDefinition:PressDefinition = new PressDefinition();
 				var criteriaArray:ArrayCollection = new ArrayCollection();
@@ -81,7 +81,7 @@
 			private function loadRollFedPresses():void {
 				var criterion:RemoteRestriction = new RemoteRestriction();
 				criterion.setOperator(RemoteRestriction.eq);
-				criterion.setPropertyName("rollFedPaper");
+				criterion.setPropertyName("rollFed");
 				criterion.setValue(true);
 				var pressDefinition:PressDefinition = new PressDefinition();
 				var criteriaArray:ArrayCollection = new ArrayCollection();

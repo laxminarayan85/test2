@@ -18,11 +18,9 @@ package com.efi.vo
 		public var outputDescrip:String = "";
 		public var productionLocation:String = "";
 		public var costCenter:String = "";
-		public var oEMDeviceID:String = "";
+		public var oemDeviceID:String = "";
 		public var machineID:Number = 0;
 		public var costingPress:Boolean = true;
-		public var sheetFed:Boolean = true;
-		public var rolltoRoll:Boolean = true;
 		public var integratedDevice:Boolean = true;
 		public var maxPaperSize:String = "";
 		public var minPaperSize:String = "";
@@ -43,10 +41,8 @@ package com.efi.vo
 		public var avgImpressPerHour:Number = 0;
 		public var numberHeads:Number = 0;
 		public var setupAddRun:Number = 0;
-		public var defaultSheet:Boolean = true;
-		public var defaultRoll:Boolean = true;
-		public var sheetFedPaper:Boolean = true;
-		public var rollFedPaper:Boolean = true;
+		public var sheetFed:Boolean = true;
+		public var rollFed:Boolean = true;
 		public var wasteChart:WasteChart;
 		public var pressPriceList:PriceList;
 		public var stockPriceList:PriceList;

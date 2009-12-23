@@ -18,7 +18,7 @@ package com.efi.vo
 		public var outputDescrip:String = "";
 		public var productionLocation:String = "";
 		public var costCenter:String = "";
-		public var oEMDeviceID:String = "";
+		public var oemDeviceID:String = "";
 		public var costingCopy:Boolean = true;
 		public var blackwhite:Boolean = true;
 		public var color:Boolean = true;
@@ -46,9 +46,6 @@ package com.efi.vo
 		public var copyID:int = 0;
 		public var monthlyBurdenRate:int = 0;
 		public var copyMinutes:int = 0;
-		public var defaultblackwhite:Boolean = true;
-		public var defaultcolor:Boolean = true;
-		public var defaultlargeformat:Boolean = true;
 	
 	}
 }

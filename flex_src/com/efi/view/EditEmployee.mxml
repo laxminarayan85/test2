@@ -279,7 +279,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,null);                                 
+		Alert.show(message, "Error");                                 
 	}
 	private function validateForm(event:Event):void 
     {                    

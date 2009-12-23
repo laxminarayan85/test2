@@ -598,9 +598,13 @@ public class InvoiceBase extends ModelBase {
 		return notes; 
 	}
 
-	public void setNotes(NotePad obj) {
-		this.notes = obj;
+	/**
+	 * @generated
+	 */	
+	public void setNotes(NotePad newVal) {
+		this.notes = newVal;
 	}
+ 	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private HoldState holdState;
@@ -1383,7 +1387,7 @@ public class InvoiceBase extends ModelBase {
 		if (SPECIALINSTRUCTIONS.equals(propertyName)) 
 			return new Class<?>[] {SpecialInstructions.class};		
 		if (NOTES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, NotePad.class};		
+			return new Class<?>[] {NotePad.class};		
 		if (HOLDSTATE.equals(propertyName)) 
 			return new Class<?>[] {HoldState.class};		
 		if (ORDEREDDATE.equals(propertyName)) 
