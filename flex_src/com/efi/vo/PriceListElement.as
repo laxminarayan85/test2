@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PriceListElement() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PriceListElement";
 		}
+				
 		public var quantity:Number = 0;
 		public var amount:Number = 0;
 		public var priceListBase:PriceListBase;

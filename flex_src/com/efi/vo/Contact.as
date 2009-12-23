@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Contact() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Contact";
 		}
+				
 		public var shipToAddress:Address;
 		public var firstName:String = "";
 		public var address:Address;

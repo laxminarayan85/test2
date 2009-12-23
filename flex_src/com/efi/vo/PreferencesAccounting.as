@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesAccounting() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesAccounting";
 		}
+				
 		public var creditLimit:Number = 0;
 		public var financeChange:Number = 0;
 		public var inactivePeriod:Number = 0;

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Country() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Country";
 		}
+				
 		public var name:String = "";
 	
 	}

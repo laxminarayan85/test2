@@ -26,12 +26,15 @@ import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
+import com.efi.printsmith.query.RemoteCriterion;
+import com.efi.printsmith.query.RemoteRestriction;
 
 public class DataService {
 
@@ -68,7 +71,7 @@ public class DataService {
 	@SuppressWarnings("unchecked")
 	private boolean checkStaticData()
 	{
-		log.debug("** checkStaticData called...");
+		log.debug("** checkStaticData called.");
 		boolean retVal = false;
 		List<DataManager> dataManagerList = (List<DataManager>)this.getAll("DataManager");
 
@@ -104,7 +107,7 @@ public class DataService {
 
 	public List<?> getAll(String className) {
 		try {
-			log.debug("** getAll called...");
+			log.debug("** getAll called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findAllQuery = em.createQuery("from " + className);
 			List<?> resultList = findAllQuery.getResultList();
@@ -117,9 +120,22 @@ public class DataService {
 		return new ArrayList();
 	}
 
+	public ModelBase getSingle(String className) {
+		try {
+			log.debug("** getSingle called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query findQuery = em.createQuery("from " + className);
+			ModelBase result = (ModelBase)findQuery.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
     public List<?> getFromParent(String className, String parentName, Long id) throws Exception {      
     	try {            
-    		log.debug("** getId called...");                
+    		log.debug("** getId called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();       
     		String queryString = "from "+className+" where "+parentName+"_id = :id";
 
@@ -138,7 +154,7 @@ public class DataService {
 	
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
-			log.debug("** getAccountsByPartialName called...");
+			log.debug("** getAccountsByPartialName called.");
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
@@ -158,7 +174,7 @@ public class DataService {
 	}
 	public List<Employee> getByEmployeesPartialName(String name) throws Exception {
 		try {
-			log.debug("** getByEmployeesPartialName called...");
+			log.debug("** getByEmployeesPartialName called.");
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
@@ -179,7 +195,7 @@ public class DataService {
 	
 	public List<Contact> getContactsByPartialName(String name) throws Exception {
 		try {
-			log.debug("** getCountactsByPartialName called...");
+			log.debug("** getCountactsByPartialName called.");
 	
 			EntityManager em = entityManagerFactory.createEntityManager();
 	
@@ -199,7 +215,7 @@ public class DataService {
 	}
 	
 	public ModelBase addUpdate(ModelBase object) throws Exception {
-		log.debug("** addUpdateAccount called...");
+		log.debug("** addUpdateAccount called.");
 		try {
 			EntityManager em;
 			em = entityManagerFactory.createEntityManager();					
@@ -232,7 +248,7 @@ public class DataService {
 	}
 
 	public void addChargeCategoryToCommand(ChargeCategory category, ChargeCommand command) throws Exception {
-		log.debug("** addChargeCategoryToCommand called...");
+		log.debug("** addChargeCategoryToCommand called.");
 		try {
 			EntityManager em;
 			em = entityManagerFactory.createEntityManager();
@@ -266,7 +282,7 @@ public class DataService {
 	}
 	
 	public ChargeDefinition addChargeToCategory(ChargeDefinition charge, ChargeCategory category) throws Exception {
-		log.debug("** addChargeCategoryToCommand called...");
+		log.debug("** addChargeCategoryToCommand called.");
 		try {
 			EntityManager em;
 			em = entityManagerFactory.createEntityManager();
@@ -303,7 +319,7 @@ public class DataService {
 	
     public ModelBase getById(String className, Long id) throws Exception {      
     	try {            
-    		log.debug("** getById called...");                
+    		log.debug("** getById called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();       
     		Query query = em.createNamedQuery(className + ".byId");           
     		query.setParameter("id", id);            
@@ -316,7 +332,7 @@ public class DataService {
    	} 
     public List<Invoice> getByAccountId(String className, Long id) throws Exception {      
     	try {            
-    		log.debug("** getByaccountid Id called...");                
+    		log.debug("** getByaccountid Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		String queryString = "select a from "+className+" a where a.account.id = :id";
@@ -334,7 +350,7 @@ public class DataService {
    	} 
     public List<Contact> getContactsByAccountId(String className, Long id) throws Exception {      
     	try {            
-    		log.debug("** getByaccountid Id called...");                
+    		log.debug("** getByaccountid Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		String queryString = "select a from "+className+" a where a.parentAccount.id = :id";
@@ -354,7 +370,7 @@ public class DataService {
     
 	public List<TimeCard> getByClockInOut(String className, Employee employee) throws Exception {      
     	try {            
-    		log.debug("** getByEmployee Id called...");                
+    		log.debug("** getByEmployee Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -375,7 +391,7 @@ public class DataService {
 
 	public List<TimeCard> getByClockInOutBreak(String className, Employee employee) throws Exception {      
     	try {            
-    		log.debug("** getByEmployee Id called...");                
+    		log.debug("** getByEmployee Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -396,7 +412,7 @@ public class DataService {
 
 	public List<TimeCard> getByTimeCardByEmployee(String className, Employee employee) throws Exception {      
     	try {            
-    		log.debug("** getByEmployee Id called...");                
+    		log.debug("** getByEmployee Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -417,7 +433,7 @@ public class DataService {
 
 	public List<Period> getByPeriodOpen(String className) throws Exception {      
     	try {            
-    		log.debug("** getByEmployee Id called...");                
+    		log.debug("** getByEmployee Id called.");                
     		EntityManager em = entityManagerFactory.createEntityManager();  
     		
     		String queryString = "from "+className+" where periodClosed = 0";
@@ -435,7 +451,7 @@ public class DataService {
     
     public List<SecuritySetup> getByAccessGroup(String className, AccessGroup accessGroup) throws Exception {      
     	try {            
-    		log.debug("** getByAccess called...");                
+    		log.debug("** getByAccess called.");                
     		EntityManager em = entityManagerFactory.createEntityManager(); 
     		String queryString = "select a from SecuritySetup a where a.accessGroup.id = :id";
 			Query query = em.createQuery(queryString);
@@ -453,7 +469,7 @@ public class DataService {
    	} 
 
 	public void deleteItem(String className, Long id) {
-		log.debug("** deleteObject called...");
+		log.debug("** deleteObject called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		Query q = em.createNamedQuery(className + ".byId");
 		q.setParameter("id", id);
@@ -475,4 +491,51 @@ public class DataService {
 			}
 		}
 	}
+	
+	public List<?> criteriaQuery(String entityName, List<RemoteCriterion> criteria) {
+		log.debug("** criteriaQuery called.");
+		try {
+			for (RemoteCriterion criterion : criteria) {
+				if (criterion instanceof RemoteRestriction) {
+					RemoteRestriction remoteRestriction = (RemoteRestriction)criterion;
+					
+					DetachedCriteria query = DetachedCriteria.forEntityName(entityName);
+					
+					String operator = remoteRestriction.getOperator();
+					if (operator.equals(RemoteRestriction.eq)) {
+						query.add(Restrictions.eq(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					} else if (operator.equals(RemoteRestriction.between)) {
+						query.add(Restrictions.between(remoteRestriction.getPropertyName(), remoteRestriction.getLow(), remoteRestriction.getHigh()));
+					} else if (operator.equals(RemoteRestriction.ge)) {
+						query.add(Restrictions.ge(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					} else if (operator.equals(RemoteRestriction.gt)) {
+						query.add(Restrictions.gt(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					} else if (operator.equals(RemoteRestriction.le)) {
+						query.add(Restrictions.le(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					} else if (operator.equals(RemoteRestriction.lt)) {
+						query.add(Restrictions.lt(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					} else if (operator.equals(RemoteRestriction.ne)) {
+						query.add(Restrictions.ne(remoteRestriction.getPropertyName(), remoteRestriction.getValue()));
+					}
+					EntityManager em = entityManagerFactory.createEntityManager();
+					Session session = (Session)em.getDelegate();
+					Transaction tx = session.beginTransaction();
+					List<?> resultList = query.getExecutableCriteria(session).list();
+					tx.commit();
+					session.close();
+					
+					if (resultList != null) {
+						log.debug("** Found " + resultList.size() + "records.");
+					}
+					return resultList;
+				}
+			}
+		} catch (HibernateException e) {
+			log.error(e);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return new ArrayList();
+	}
+
 }

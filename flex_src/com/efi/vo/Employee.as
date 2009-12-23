@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Employee() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Employee";
 		}
+				
 		public var firstName:String = "";
 		public var lastName:String = "";
 		public var address:Address;

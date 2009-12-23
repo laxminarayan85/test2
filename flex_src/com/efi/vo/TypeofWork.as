@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TypeofWork() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TypeofWork";
 		}
+				
 		public var name:String = "";
 	
 	}

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function HoldState() {
-		
+			remoteObjectName = "com.efi.printsmith.data.HoldState";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

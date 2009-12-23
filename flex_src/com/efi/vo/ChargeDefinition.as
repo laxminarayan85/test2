@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ChargeDefinition() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ChargeDefinition";
 		}
+				
 		public var method:String = "";
 		public var quantityType:String = "";
 		public var markupType:String = "";

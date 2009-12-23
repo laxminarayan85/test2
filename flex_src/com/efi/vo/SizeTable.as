@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SizeTable() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SizeTable";
 		}
+				
 		public var name:int = 0;
 	
 	}

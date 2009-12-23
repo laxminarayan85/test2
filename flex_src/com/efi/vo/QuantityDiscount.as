@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function QuantityDiscount() {
-		
+			remoteObjectName = "com.efi.printsmith.data.QuantityDiscount";
 		}
+				
 	
 	}
 }

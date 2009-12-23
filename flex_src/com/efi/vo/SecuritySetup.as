@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SecuritySetup() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SecuritySetup";
 		}
+				
 		public var enable:Boolean = true;
 		public var menu:String = "";
 		public var commandName:String = "";

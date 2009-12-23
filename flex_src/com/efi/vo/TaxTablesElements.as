@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TaxTablesElements() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TaxTablesElements";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

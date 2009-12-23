@@ -15,6 +15,8 @@ package com.efi.control
 			this.addCommand(ModelAddUpdateEvent.ADDUPDATE, ModelAddUpdateCommand);
 			this.addCommand(ModelDeleteItemEvent.DELETE, ModelDeleteItemCommand);
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);
+			this.addCommand(ModelQueryByCriteriaEvent.QUERYBYCRITERIA, ModelQueryByCriteriaCommand);
+			this.addCommand(ModelGetSingleEvent.GETSINGLE, ModelGetSingleCommand);
 		}
 		
 	}

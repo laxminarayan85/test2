@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ProductionExceptions() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ProductionExceptions";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

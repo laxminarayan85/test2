@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Dimension() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Dimension";
 		}
+				
 		public var type:String = "";
 		public var name:String = "";
 		public var width:Number = 0;

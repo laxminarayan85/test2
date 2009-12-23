@@ -228,7 +228,7 @@
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
 				job.jobNotes=job_notes.text;
-				job.jobTicketNotes=check_job_notes.selectedField;
+				job.jobTicketNotes=check_job_notes.selected;
 				job.location=job_location.selectedItem as Location;
 				if (run_method_radiogroup.selectedValue != null)
 					job.runMethod=run_method_radiogroup.selectedValue.toString();

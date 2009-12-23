@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ProductionDates() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ProductionDates";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

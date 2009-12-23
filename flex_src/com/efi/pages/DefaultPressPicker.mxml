@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="340"
+				height="160"
+				defaultButton="{ok_btn}"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="PopUpManager.removePopUp(this);"
+				title="Select Default Presses:"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off">
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.events.DialogDoneEvent;
+			import com.efi.events.ModelGetSingleEvent;
+			import com.efi.events.ModelQueryByCriteriaEvent;
+			import com.efi.events.ModelAddUpdateEvent;
+			
+			import com.efi.vo.PreferencesDefaultPresses;
+			import com.efi.vo.PressDefinition;
+			import com.efi.vo.ModelBase;
+			
+			import com.efi.query.RemoteRestriction;
+			
+			import com.efi.view.EditContact;
+			import com.efi.view.EditCustomer;
+			import com.efi.view.StockDefinitions;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var sheetFedPresses:ArrayCollection = new ArrayCollection();
+
+			[Bindable]
+			private var rollFedPresses:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var defaultPresses:PreferencesDefaultPresses = new PreferencesDefaultPresses;
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+
+			}
+
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+	  			fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
+				loadSheetFedPresses();
+				loadRollFedPresses();
+			}
+
+			private function loadSheetFedPresses():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("sheetFedPaper");
+				criterion.setValue(true);
+				var pressDefinition:PressDefinition = new PressDefinition();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				
+				fireQueryByCriteriaEvent(pressDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadSheetFedPresses, handleFault));
+			}
+			
+			private function loadRollFedPresses():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("rollFedPaper");
+				criterion.setValue(true);
+				var pressDefinition:PressDefinition = new PressDefinition();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				
+				fireQueryByCriteriaEvent(pressDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadRollFedPresses, handleFault));
+			}
+			
+			private function fireGetSingleEvent(modelType:String, callbacks:IResponder):void {
+				var getSingleEvent:ModelGetSingleEvent = new ModelGetSingleEvent(modelType, callbacks);
+				getSingleEvent.dispatch();			
+			}
+
+			private function fireQueryByCriteriaEvent(modelType:String, criteria:ArrayCollection, callbacks:IResponder):void {
+				var queryByCriteriaEvent:ModelQueryByCriteriaEvent = new ModelQueryByCriteriaEvent(modelType, criteria, callbacks);
+				queryByCriteriaEvent.dispatch();
+			}
+
+			private function handleLoadPreferencesDefaultPressesResult(ev:ResultEvent):void
+			{
+				defaultPresses = ev.result as PreferencesDefaultPresses;
+				if (defaultPresses == null) {
+					defaultPresses = new PreferencesDefaultPresses();
+				}
+			}
+			
+			private function handleLoadSheetFedPresses(ev:ResultEvent):void
+			{
+				sheetFedPresses = ev.result as ArrayCollection;
+			}
+			
+			private function handleLoadRollFedPresses(ev:ResultEvent):void
+			{
+				rollFedPresses = ev.result as ArrayCollection;
+			}
+						
+			private function doOK():void
+			{
+				fireSaveEvent(this.defaultPresses);
+			}
+
+			private function doCancel():void
+			{
+				var doneEvent:DialogDoneEvent=new DialogDoneEvent(DialogDoneEvent.CANCEL);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
+			}
+
+			private function setDefaultPresses():void
+			{
+				this.defaultPresses.defaultRollFedPress = defaultSheetFed.selectedItem as PressDefinition;
+				this.defaultPresses.defaultSheetFedPress = defaultRollFed.selectedItem as PressDefinition;
+			}
+			
+			private function fireSaveEvent(item:ModelBase):void {
+				var callbacks:IResponder = new mx.rpc.Responder(handleSaveResult, handleFault);	
+				var addUpdateEvent:ModelAddUpdateEvent = new ModelAddUpdateEvent(item, callbacks);
+				addUpdateEvent.dispatch();			
+			}
+			
+			private function handleSaveResult(ev:ResultEvent):void {
+				var doneEvent:DialogDoneEvent=new DialogDoneEvent(DialogDoneEvent.OK);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+
+
+
+	<mx:Canvas width="311"
+			   height="107"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+		<mx:Button id="ok_btn"
+				   click="doOK()"
+				   x="143"
+				   y="70"
+				   label="OK"
+				   width="75"/>
+		<mx:Button id="cancel_btn"
+				   click="doCancel()"
+				   x="226"
+				   y="70"
+				   label="Cancel"
+				   width="75"/>
+		<mx:ComboBox x="102"
+					 y="10"
+					 id="defaultSheetFed"
+					 dataProvider="{sheetFedPresses}"
+					 change="setDefaultPresses()"
+					 labelField="name" width="199">
+		</mx:ComboBox>
+		<mx:Text x="10"
+				 y="12"
+				 text="Sheet Fed:"
+				 height="20" textAlign="right" width="84"/>
+		<mx:ComboBox x="102"
+					 y="40"
+					 id="defaultRollFed"
+					 dataProvider="{rollFedPresses}"
+					 change="setDefaultPresses()"
+					 labelField="name" width="199">
+		</mx:ComboBox>
+		<mx:Text x="10"
+				 y="42"
+				 text="Roll Fed:"
+				 height="20" textAlign="right" width="84"/>
+	</mx:Canvas>
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>

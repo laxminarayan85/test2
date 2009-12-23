@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Job() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Job";
 		}
+				
 		public var jobNumber:String = "";
 		public var jobIndex:Number = 0;
 		public var salesCategory:SalesCategory;

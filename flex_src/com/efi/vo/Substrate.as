@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Substrate() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Substrate";
 		}
+				
 		public var name:String = "";
 	
 	}

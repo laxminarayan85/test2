@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function DepositType() {
-		
+			remoteObjectName = "com.efi.printsmith.data.DepositType";
 		}
+				
 		public var name:String = "";
 	
 	}

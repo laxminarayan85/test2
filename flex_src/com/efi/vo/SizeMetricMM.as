@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SizeMetricMM() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SizeMetricMM";
 		}
+				
 		public var name:String = "";
 		public var size:String = "";
 	

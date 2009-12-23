@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function DepositEntry() {
-		
+			remoteObjectName = "com.efi.printsmith.data.DepositEntry";
 		}
+				
 		public var referenceNumber:String = "";
 		public var date:Date = new Date();
 		public var amount:Number = 0;

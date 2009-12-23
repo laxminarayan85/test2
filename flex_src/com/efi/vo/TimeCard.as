@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TimeCard() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TimeCard";
 		}
+				
 		public var period:String = "";
 		public var startDateTime:Date = new Date();
 		public var endDateTime:Date = new Date();

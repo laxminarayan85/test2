@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SpecialInstructions() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SpecialInstructions";
 		}
+				
 		public var instructions:String = "";
 	
 	}

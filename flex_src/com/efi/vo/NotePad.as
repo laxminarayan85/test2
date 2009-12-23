@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function NotePad() {
-		
+			remoteObjectName = "com.efi.printsmith.data.NotePad";
 		}
+				
 		public var who:String = "";
 		public var phoneNumber:String = "";
 		public var what:String = "";

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function StockChanges() {
-		
+			remoteObjectName = "com.efi.printsmith.data.StockChanges";
 		}
+				
 		public var stockChangeID:Number = 0;
 		public var user:String = "";
 		public var date:Date = new Date();

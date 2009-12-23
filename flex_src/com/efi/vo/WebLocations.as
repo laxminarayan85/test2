@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function WebLocations() {
-		
+			remoteObjectName = "com.efi.printsmith.data.WebLocations";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

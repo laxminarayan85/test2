@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Driver() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Driver";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

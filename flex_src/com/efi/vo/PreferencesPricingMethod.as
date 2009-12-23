@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesPricingMethod() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesPricingMethod";
 		}
+				
 		public var used:Boolean = true;
 		public var title:String = "";
 		public var abbreviation:String = "";

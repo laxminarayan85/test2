@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PressDefinition() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PressDefinition";
 		}
+				
 		public var name:String = "";
 		public var machineName:String = "";
 		public var outputDescrip:String = "";

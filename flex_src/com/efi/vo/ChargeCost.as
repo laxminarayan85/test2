@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ChargeCost() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ChargeCost";
 		}
+				
 		public var setupCost:Number = 0;
 		public var unitCost:Number = 0;
 		public var rateTable:RateTable;

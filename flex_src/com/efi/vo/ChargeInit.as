@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ChargeInit() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ChargeInit";
 		}
+				
 	
 	}
 }

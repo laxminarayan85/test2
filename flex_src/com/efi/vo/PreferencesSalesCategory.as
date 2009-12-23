@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesSalesCategory() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesSalesCategory";
 		}
+				
 		public var category:SalesCategory;
 		public var accountNumber:String = "";
 	

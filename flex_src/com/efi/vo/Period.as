@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Period() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Period";
 		}
+				
 		public var customtoDate:Date = new Date();
 		public var customfromDate:Date = new Date();
 		public var fromDate:Date = new Date();

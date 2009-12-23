@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Users() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Users";
 		}
+				
 		public var name:String = "";
 		public var password:String = "";
 		public var forcePasswordChange:Boolean = true;

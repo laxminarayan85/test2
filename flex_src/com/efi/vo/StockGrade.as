@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function StockGrade() {
-		
+			remoteObjectName = "com.efi.printsmith.data.StockGrade";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

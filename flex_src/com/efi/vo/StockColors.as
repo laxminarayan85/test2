@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function StockColors() {
-		
+			remoteObjectName = "com.efi.printsmith.data.StockColors";
 		}
+				
 		public var name:String = "";
 	
 	}

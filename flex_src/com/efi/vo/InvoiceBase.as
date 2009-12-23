@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function InvoiceBase() {
-		
+			remoteObjectName = "com.efi.printsmith.data.InvoiceBase";
 		}
+				
 		public var invoiceNumber:String = "";
 		public var version:Number = 0;
 		public var name:String = "";

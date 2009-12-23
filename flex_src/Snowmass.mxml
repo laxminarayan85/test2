@@ -135,7 +135,7 @@
 		public var currentUser:Users;
 
 		public var localeString : String = "en_US";
-        private static var thisInstance = null;  
+        private static var thisInstance:Snowmass = null;  
 
 		public static function getInstance() : Snowmass {
 			return thisInstance;

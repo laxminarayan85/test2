@@ -10,15 +10,16 @@ package com.efi.vo
 	{
 
 		public function Address() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Address";
 		}
+				
 		public var name:String = "";
 		public var street1:String = "";
 		public var street2:String = "";
-		public var city:City = new City();
-		public var state:State = new State();
-		public var zip:Zip = new Zip();
-		public var country:Country = new Country();
+		public var city:City;
+		public var state:State;
+		public var zip:Zip;
+		public var country:Country;
 		public var zone:String = "";
 	
 	}

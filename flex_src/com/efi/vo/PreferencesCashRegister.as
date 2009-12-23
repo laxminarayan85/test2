@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesCashRegister() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesCashRegister";
 		}
+				
 		public var tax:Boolean = true;
 		public var title:String = "";
 		public var category:SalesCategory;

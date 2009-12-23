@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SizeUS() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SizeUS";
 		}
+				
 		public var name:String = "";
 		public var size:String = "";
 	

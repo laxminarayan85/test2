@@ -10,9 +10,10 @@ package com.efi.vo
 	{
 
 		public function PricingMethod() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PricingMethod";
 		}
-		public var name:String = "";
+				
+		public var name:int = 0;
 	
 	}
 }

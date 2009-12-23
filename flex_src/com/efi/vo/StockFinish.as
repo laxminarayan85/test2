@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function StockFinish() {
-		
+			remoteObjectName = "com.efi.printsmith.data.StockFinish";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesSystem() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesSystem";
 		}
+				
 		public var eliminateWarningMessages:Boolean = true;
 		public var onlyPostMarkedReadyInvoices:Boolean = true;
 		public var enablePricingSystem:Boolean = true;

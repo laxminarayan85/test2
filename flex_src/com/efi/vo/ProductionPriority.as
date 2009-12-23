@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ProductionPriority() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ProductionPriority";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

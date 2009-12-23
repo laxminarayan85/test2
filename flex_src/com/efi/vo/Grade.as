@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Grade() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Grade";
 		}
+				
 		public var name:String = "";
 		public var gradeID:int = 0;
 	

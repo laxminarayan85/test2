@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TaxElement() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TaxElement";
 		}
+				
 		public var rate:Number = 0;
 		public var showTax:Boolean = true;
 		public var userForSeparateShippingTax:Boolean = true;

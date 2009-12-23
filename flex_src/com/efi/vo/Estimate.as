@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Estimate() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Estimate";
 		}
+				
 	
 	}
 }

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Account() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Account";
 		}
+				
 		public var status:String = "";
 		public var masterAcct:Number = 0;
 		public var resaleNumber:String = "";

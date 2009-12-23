@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function AccessGroup() {
-		
+			remoteObjectName = "com.efi.printsmith.data.AccessGroup";
 		}
+				
 		public var name:String = "";
 	
 	}

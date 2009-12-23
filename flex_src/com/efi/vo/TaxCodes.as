@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TaxCodes() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TaxCodes";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

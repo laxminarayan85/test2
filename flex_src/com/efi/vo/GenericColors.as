@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function GenericColors() {
-		
+			remoteObjectName = "com.efi.printsmith.data.GenericColors";
 		}
+				
 		public var name:String = "";
 	
 	}

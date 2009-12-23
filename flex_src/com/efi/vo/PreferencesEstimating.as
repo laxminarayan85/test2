@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesEstimating() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesEstimating";
 		}
+				
 		public var closeAfterCopy:Boolean = true;
 		public var stockCostInEstimator:Boolean = true;
 		public var canChangeAddress:Boolean = true;

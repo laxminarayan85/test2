@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CostCenter() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CostCenter";
 		}
+				
 		public var name:String = "";
 	
 	}

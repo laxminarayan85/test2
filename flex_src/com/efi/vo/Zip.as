@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Zip() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Zip";
 		}
+				
 		public var name:String = "";
 	
 	}

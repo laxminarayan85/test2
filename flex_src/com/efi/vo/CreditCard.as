@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CreditCard() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CreditCard";
 		}
+				
 		public var cardHolderName:String = "";
 		public var cardNumber:String = "";
 		public var expiresDate:Date = new Date();

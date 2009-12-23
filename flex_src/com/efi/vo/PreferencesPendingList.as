@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesPendingList() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesPendingList";
 		}
+				
 		public var visible:Boolean = true;
 		public var columns:ColumnNames;
 	

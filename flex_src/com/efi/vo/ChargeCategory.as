@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ChargeCategory() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ChargeCategory";
 		}
+				
 		public var children:ArrayCollection;
 		public var name:String = "";
 		public var parent:ChargeCommand;

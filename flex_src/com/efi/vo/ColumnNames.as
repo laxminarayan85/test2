@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ColumnNames() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ColumnNames";
 		}
+				
 		public var name:int = 0;
 	
 	}

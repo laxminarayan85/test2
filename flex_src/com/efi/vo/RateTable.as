@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function RateTable() {
-		
+			remoteObjectName = "com.efi.printsmith.data.RateTable";
 		}
+				
 		public var name:String = "";
 	
 	}

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CopierDefinition() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CopierDefinition";
 		}
+				
 		public var name:String = "";
 		public var machineName:String = "";
 		public var outputDescrip:String = "";

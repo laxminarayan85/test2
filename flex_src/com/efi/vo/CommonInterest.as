@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CommonInterest() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CommonInterest";
 		}
+				
 		public var name:String = "";
 	
 	}

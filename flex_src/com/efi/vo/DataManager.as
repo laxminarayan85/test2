@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function DataManager() {
-		
+			remoteObjectName = "com.efi.printsmith.data.DataManager";
 		}
+				
 		public var dataloaded:Boolean = true;
 	
 	}

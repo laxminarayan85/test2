@@ -94,7 +94,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	private var account:Account;
 	
 	               
-	 [Bindable]
+	[Bindable]
     private var salesReps:ArrayCollection = new ArrayCollection(); 
     [Bindable]
     private var citys:ArrayCollection = new ArrayCollection();   
@@ -103,7 +103,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
     [Bindable]
     private var countrys:ArrayCollection = new ArrayCollection();  
     [Bindable]
-    private var zips:ArrayCollection = new ArrayCollection();                  
+    private var zips:ArrayCollection = new ArrayCollection();
+                     
     private var formIsValid:Boolean = false;
     
     private var focussedFormControl:DisplayObject;
@@ -543,7 +544,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Label x="8" y="90" text="Account:" width="55"/>
 				<mx:Text x="80" y="90" width="142" id="accountName" text="{account.title}"/>
-				<mx:Button x="10" y="168" label="Accounts" id="AccountsPicker" click="doAccountPicker"/>
+				<mx:Button x="10" y="168" label="Accounts" id="AccountsPicker" click="doAccountPicker()"/>
 				<mx:Label x="224" y="10" text="First Name:" width="83" textAlign="right"/>
 				<mx:Label x="224" y="38" text="Last Name:" width="83" textAlign="right"/>
 				<mx:Label x="240" y="66" text="Prefix:" width="67" textAlign="right"/>

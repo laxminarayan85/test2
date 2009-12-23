@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function MarketingMailers() {
-		
+			remoteObjectName = "com.efi.printsmith.data.MarketingMailers";
 		}
+				
 		public var name:String = "";
 	
 	}

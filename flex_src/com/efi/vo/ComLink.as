@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ComLink() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ComLink";
 		}
+				
 		public var type:String = "";
 		public var value:String = "";
 	

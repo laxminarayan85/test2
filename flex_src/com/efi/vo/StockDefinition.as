@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function StockDefinition() {
-		
+			remoteObjectName = "com.efi.printsmith.data.StockDefinition";
 		}
+				
 		public var stockunit:int = 0;
 		public var name:String = "";
 		public var stkgroup:StockGroup;

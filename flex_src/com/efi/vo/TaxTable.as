@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function TaxTable() {
-		
+			remoteObjectName = "com.efi.printsmith.data.TaxTable";
 		}
+				
 		public var effectiveTaxRate:Number = 0;
 		public var taxElements:ArrayCollection;
 		public var taxTableIsCurrent:Boolean = true;

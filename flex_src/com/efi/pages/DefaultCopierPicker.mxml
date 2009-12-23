@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="300"
+				width="340"
 				height="190"
 				defaultButton="{ok_btn}"
 				showCloseButton="true"
@@ -13,20 +13,20 @@
 				borderStyle="solid"
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="off">
-
-	<mx:RemoteObject id="dataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadResult(event)"/>
-	</mx:RemoteObject>
-
 	<mx:Script>
 
 		<![CDATA[
-			import com.efi.events.AccountPickerSelectEvent;
-			import com.efi.vo.Contact;
-			import com.efi.vo.Account;
+			import com.efi.events.DialogDoneEvent;
+			import com.efi.events.ModelGetSingleEvent;
+			import com.efi.events.ModelQueryByCriteriaEvent;
+			import com.efi.events.ModelAddUpdateEvent;
+			
+			import com.efi.vo.PreferencesDefaultPresses;
+			import com.efi.vo.CopierDefinition;
+			import com.efi.vo.ModelBase;
+			
+			import com.efi.query.RemoteRestriction;
+			
 			import com.efi.view.EditContact;
 			import com.efi.view.EditCustomer;
 			import com.efi.view.StockDefinitions;
@@ -36,6 +36,7 @@
 			import mx.core.Container;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
 			import mx.events.ValidationResultEvent;
 			import mx.validators.Validator;
 			import mx.messaging.messages.AsyncMessage;
@@ -44,13 +45,17 @@
 			import mx.collections.ArrayCollection;
 
 			[Bindable]
-			private var pricingMethods:ArrayCollection=new ArrayCollection();
+			private var BWCopiers:ArrayCollection = new ArrayCollection();
 
-			private function handleLoadResult(event:ResultEvent):void
-			{
-				pricingMethods=event.result as ArrayCollection;
-			}
+			[Bindable]
+			private var colorCopiers:ArrayCollection = new ArrayCollection();
 
+			[Bindable]
+			private var largeFormatCopiers:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var defaultPresses:PreferencesDefaultPresses = new PreferencesDefaultPresses;
+			
 			private function handleFault(ev:FaultEvent):void
 			{
 
@@ -59,83 +64,166 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-				dataService.getAll("PricingMethod");
+	  			fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
+				loadColorCopiers();
+				loadBWCopiers();
+				loadLargeFormatCopiers();
+
 			}
 
-			private function newAccount():void
-			{
-				var newEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTNEWACCOUNT, new Account());
-				dispatchEvent(newEvent);
-				PopUpManager.removePopUp(this);
+			private function loadColorCopiers():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("color");
+				criterion.setValue(true);
+				var copierDefinition:CopierDefinition = new CopierDefinition();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadColorCopiers, handleFault));
+			}
+			
+			private function loadBWCopiers():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("blackwhite");
+				criterion.setValue(true);
+				var copierDefinition:CopierDefinition = new CopierDefinition();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadBWCopiers, handleFault));
+			}
+			
+			private function loadLargeFormatCopiers():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("largeFormat");
+				criterion.setValue(true);
+				var copierDefinition:CopierDefinition = new CopierDefinition();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadLargeFormatCopiers, handleFault));				
+			}
+			
+			private function fireGetSingleEvent(modelType:String, callbacks:IResponder):void {
+				var getSingleEvent:ModelGetSingleEvent = new ModelGetSingleEvent(modelType, callbacks);
+				getSingleEvent.dispatch();			
 			}
 
-			private function cancelPicker():void
-			{
-				var cancelEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.CANCELSELECTACCOUNT, null);
-				dispatchEvent(cancelEvent);
-				PopUpManager.removePopUp(this);
+			private function fireQueryByCriteriaEvent(modelType:String, criteria:ArrayCollection, callbacks:IResponder):void {
+				var queryByCriteriaEvent:ModelQueryByCriteriaEvent = new ModelQueryByCriteriaEvent(modelType, criteria, callbacks);
+				queryByCriteriaEvent.dispatch();
 			}
 
-			private function doOK():void
+			private function handleLoadPreferencesDefaultPressesResult(ev:ResultEvent):void
 			{
-				PopUpManager.removePopUp(this);
+				defaultPresses = ev.result as PreferencesDefaultPresses;
+				if (defaultPresses == null) {
+					defaultPresses = new PreferencesDefaultPresses();
+				}
+			}
+			
+			private function handleLoadBWCopiers(ev:ResultEvent):void
+			{
+				BWCopiers = ev.result as ArrayCollection;
+			}
+			
+			private function handleLoadColorCopiers(ev:ResultEvent):void
+			{
+				colorCopiers = ev.result as ArrayCollection;
+			}
+			
+			private function handleLoadLargeFormatCopiers(ev:ResultEvent):void
+			{
+				largeFormatCopiers = ev.result as ArrayCollection;
+			}
+			
+			private function doOK():void {
+				fireSaveEvent(this.defaultPresses);
 			}
 
 			private function doCancel():void
 			{
+				var doneEvent:DialogDoneEvent=new DialogDoneEvent(DialogDoneEvent.CANCEL);
+				dispatchEvent(doneEvent);
 				PopUpManager.removePopUp(this);
 			}
+			
+			private function setDefaultCopiers():void
+			{
+				this.defaultPresses.defaultBWCopier = defaultBW.selectedItem as CopierDefinition;
+				this.defaultPresses.defaultColorCopier = defaultColor.selectedItem as CopierDefinition;
+				this.defaultPresses.defaultLargeFormat = defaultLargeFormat.selectedItem as CopierDefinition;
+			}
+			
+			private function fireSaveEvent(item:ModelBase):void {
+				var callbacks:IResponder = new mx.rpc.Responder(handleSaveResult, handleFault);	
+				var addUpdateEvent:ModelAddUpdateEvent = new ModelAddUpdateEvent(item, callbacks);
+				addUpdateEvent.dispatch();			
+			}
+			
+			private function handleSaveResult(ev:ResultEvent):void {
+				var doneEvent:DialogDoneEvent=new DialogDoneEvent(DialogDoneEvent.OK);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
+			}
+
 		]]>
 	</mx:Script>
 
 
 
-	<mx:Canvas width="274"
+	<mx:Canvas width="311"
 			   height="142"
 			   horizontalScrollPolicy="off"
 			   verticalScrollPolicy="off">
 		<mx:Button id="ok_btn"
 				   click="doOK()"
-				   x="106"
-				   y="110"
+				   x="143"
+				   y="106"
 				   label="OK"
 				   width="75"/>
 		<mx:Button id="cancel_btn"
 				   click="doCancel()"
-				   x="189"
-				   y="110"
+				   x="226"
+				   y="106"
 				   label="Cancel"
 				   width="75"/>
-		<mx:ComboBox x="53"
+		<mx:ComboBox x="102"
 					 y="10"
-					 id="pricingMethodCombo"
-					 dataProvider="{pricingMethods}"
-					 labelField="name" width="211">
+					 id="defaultBW"
+					 dataProvider="{BWCopiers}"
+					 change="setDefaultCopiers()"
+					 labelField="name" width="199">
 		</mx:ComboBox>
 		<mx:Text x="10"
 				 y="12"
 				 text="B&amp;W:&#xd;"
-				 height="20"/>
-		<mx:ComboBox x="53"
+				 height="20" textAlign="right" width="84"/>
+		<mx:ComboBox x="102"
 					 y="70"
-					 id="pricingMethodCombo0"
-					 dataProvider="{pricingMethods}"
-					 labelField="name" width="211">
+					 id="defaultLargeFormat"
+					 dataProvider="{largeFormatCopiers}"
+					 change="setDefaultCopiers()"
+					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:ComboBox x="53"
+		<mx:ComboBox x="102"
 					 y="40"
-					 id="pricingMethodCombo1"
-					 dataProvider="{pricingMethods}"
-					 labelField="name" width="211">
+					 id="defaultColor"
+					 dataProvider="{colorCopiers}"
+					 change="setDefaultCopiers()"
+					 labelField="name" width="199">
 		</mx:ComboBox>
 		<mx:Text x="10"
 				 y="42"
-				 text="B&amp;W:&#xd;"
-				 height="20"/>
+				 text="Color:&#xd;"
+				 height="20" textAlign="right" width="84"/>
 		<mx:Text x="10"
 				 y="72"
-				 text="B&amp;W:&#xd;"
-				 height="20"/>
+				 text="Large Format:&#xd;"
+				 height="20" textAlign="right"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>
 

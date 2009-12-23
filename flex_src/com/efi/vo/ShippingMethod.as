@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ShippingMethod() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ShippingMethod";
 		}
+				
 		public var name:String = "";
 	
 	}

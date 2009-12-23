@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PhoneTags() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PhoneTags";
 		}
+				
 		public var name:String = "";
 	
 	}

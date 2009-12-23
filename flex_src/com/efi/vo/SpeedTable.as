@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function SpeedTable() {
-		
+			remoteObjectName = "com.efi.printsmith.data.SpeedTable";
 		}
+				
 		public var name:String = "";
 	
 	}

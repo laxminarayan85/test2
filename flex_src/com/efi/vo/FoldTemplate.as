@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function FoldTemplate() {
-		
+			remoteObjectName = "com.efi.printsmith.data.FoldTemplate";
 		}
+				
 		public var name:String = "";
 	
 	}

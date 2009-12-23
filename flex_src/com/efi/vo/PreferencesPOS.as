@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesPOS() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesPOS";
 		}
+				
 		public var receiptHeader:String = "";
 		public var receiptFooter:String = "";
 		public var receiptStartNumber:Boolean = true;

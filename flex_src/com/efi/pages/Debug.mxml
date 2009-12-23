@@ -18,6 +18,9 @@
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.vo.ModelBase;
+			import com.efi.query.RemoteRestriction;
+			import com.efi.query.RemoteCriterion;
 			import com.efi.vo.ProductCode;
 			import com.efi.vo.Location;
 			import com.efi.vo.SalesCategory;
@@ -26,6 +29,7 @@
 			import com.efi.vo.ChargeCost;
 			import com.efi.vo.enums.ChargeCostMethod;
 			import com.efi.vo.Dimension;
+			import com.efi.vo.City;
 			import mx.managers.PopUpManager;
 			import mx.controls.Alert;
 			import mx.containers.Canvas;
@@ -135,6 +139,18 @@
 					dataService.addUpdate(dimension);
 				}				
 			}
+			
+			private function doDBQuery():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("name");
+				criterion.setValue("Pittsburgh");
+				
+				var city:City = new City();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				dataService.criteriaQuery(city.getRemoteObjectName(), criteriaArray);			
+			}
 		]]>
 	</mx:Script>
 
@@ -160,6 +176,10 @@
 				   y="130"
 				   label="Populate Stock Dimensions"
 				   click="doPopulateDimensions();" width="188"/>
+		<mx:Button x="10"
+				   y="160"
+				   label="DB Query"
+				   click="doDBQuery();" width="188"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

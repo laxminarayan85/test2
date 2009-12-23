@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function InkColor() {
-		
+			remoteObjectName = "com.efi.printsmith.data.InkColor";
 		}
+				
 		public var name:String = "";
 	
 	}

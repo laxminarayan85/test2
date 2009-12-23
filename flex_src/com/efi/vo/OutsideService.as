@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function OutsideService() {
-		
+			remoteObjectName = "com.efi.printsmith.data.OutsideService";
 		}
+				
 	
 	}
 }

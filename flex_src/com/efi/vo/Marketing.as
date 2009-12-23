@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function Marketing() {
-		
+			remoteObjectName = "com.efi.printsmith.data.Marketing";
 		}
+				
 		public var marketID:int = 0;
 		public var followup:Date = new Date();
 		public var birthDate:Date = new Date();

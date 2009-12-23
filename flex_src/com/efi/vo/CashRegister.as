@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CashRegister() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CashRegister";
 		}
+				
 		public var customerAccount:Account;
 		public var taxTable:TaxTable;
 		public var taxCode:TaxCodes;

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesStockDefinition() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesStockDefinition";
 		}
+				
 		public var visible:Boolean = true;
 		public var columns:ColumnNames;
 	

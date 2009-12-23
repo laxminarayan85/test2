@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function AccessLevel() {
-		
+			remoteObjectName = "com.efi.printsmith.data.AccessLevel";
 		}
+				
 		public var name:String = "";
 	
 	}

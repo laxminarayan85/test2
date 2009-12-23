@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PreferencesCreditCard() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PreferencesCreditCard";
 		}
+				
 		public var used:Boolean = true;
 		public var cardType:String = "";
 		public var abbreviation:String = "";

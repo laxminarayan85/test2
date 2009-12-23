@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function PriceList() {
-		
+			remoteObjectName = "com.efi.printsmith.data.PriceList";
 		}
+				
 	
 	}
 }

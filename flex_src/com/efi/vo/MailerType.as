@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function MailerType() {
-		
+			remoteObjectName = "com.efi.printsmith.data.MailerType";
 		}
+				
 		public var name:String = "";
 	
 	}

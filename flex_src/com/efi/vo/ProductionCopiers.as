@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function ProductionCopiers() {
-		
+			remoteObjectName = "com.efi.printsmith.data.ProductionCopiers";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

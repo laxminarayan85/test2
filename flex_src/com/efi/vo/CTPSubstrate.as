@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function CTPSubstrate() {
-		
+			remoteObjectName = "com.efi.printsmith.data.CTPSubstrate";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	

@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function LeadSource() {
-		
+			remoteObjectName = "com.efi.printsmith.data.LeadSource";
 		}
+				
 		public var name:String = "";
 	
 	}

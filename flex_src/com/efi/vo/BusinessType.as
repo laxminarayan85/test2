@@ -10,8 +10,9 @@ package com.efi.vo
 	{
 
 		public function BusinessType() {
-		
+			remoteObjectName = "com.efi.printsmith.data.BusinessType";
 		}
+				
 		public var name:String = "";
 		public var key:String = "";
 	
