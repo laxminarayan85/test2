@@ -123,7 +123,7 @@
 			private var productCodes:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
-			public var job:Job;
+			public var job:Job=null;
 
 			[Bindable]
 			private var invoice:Invoice;
@@ -155,11 +155,11 @@
 				chargeCommandDataService.getAll("ChargeCommand");
 				pricingMethodDataService.getAll("PricingMethod");
 				dimensionDataService.getAll("Dimension");
-				job=new Job();
-				
-				var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
-				jobMethodPicker.setStyle("borderAlpha", 0.9);
-//			    editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
+				if (job == null) {
+					job=new Job();
+					var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
+					jobMethodPicker.setStyle("borderAlpha", 0.9);					
+				}				
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int

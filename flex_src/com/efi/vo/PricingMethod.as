@@ -13,7 +13,7 @@ package com.efi.vo
 			remoteObjectName = "com.efi.printsmith.data.PricingMethod";
 		}
 				
-		public var name:int = 0;
+		public var name:String = "";
 	
 	}
 }
