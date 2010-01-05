@@ -146,6 +146,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		if (evt.account != null) {
 			this.setAccount(evt.account);
+			setMarketing();
 		} else {
 			this.setAccount(new Account());
 			Alert.show("Account Picker returned a null account", "Error");
@@ -609,14 +610,27 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
  	}
  	private function setMarketing():void{
  		
- 		if ( account.marketing == null){
+ 		if ( account.marketing == null)
  			account.marketing = new Marketing();
- 			account.marketing.birthDate = new Date();
- 			account.marketing.followup = new Date();
- 			account.marketing.user3 = new Date();
- 			account.marketing.user4 = new Date();
- 			account.marketing.user5 = new Date();
+ 		else{
+ 			if (account.marketing.birthDate == null)
+ 				account.marketing.birthDate = new Date();
+ 			if (account.marketing.followup == null)
+ 				account.marketing.followup = new Date();
+ 			if (account.marketing.user3 == null)
+ 				account.marketing.user3 = new Date();
+ 			if (account.marketing.user4 == null)
+ 				account.marketing.user4 = new Date();
+ 			if (account.marketing.user5 == null)
+ 				account.marketing.user5 = new Date();
+ 			
  		}
+ 		if (account.creditCardExpiration == null)
+ 			account.creditCardExpiration = new Date();	
+ 		if ( account.resaleCertExpirationDate == null)
+ 			account.resaleCertExpirationDate = new Date();
+ 			
+ 		
  		
  	}
  	private function setSettings():void{
