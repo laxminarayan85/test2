@@ -251,7 +251,7 @@ public class DataService {
 		return object;
 	}
 
-	public void addChargeCategoryToCommand(ChargeCategory category,
+	public ChargeCategory addChargeCategoryToCommand(ChargeCategory category,
 			ChargeCommand command) throws Exception {
 		log.debug("** addChargeCategoryToCommand called.");
 		try {
@@ -267,9 +267,10 @@ public class DataService {
 				tx.begin();
 				try {
 					command.addChildren(category);
-					em.merge(command);
+					command = em.merge(command);
+					category = command.getChildren().get(command.getChildren().size()-1);
 					tx.commit();
-					// MessageServiceAdapter.sendNotification("Object Created");
+					return category;
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
@@ -283,6 +284,7 @@ public class DataService {
 		} catch (Exception e) {
 			log.error("Exception caught");
 		}
+		return null;
 	}
 
 	public ChargeDefinition addChargeToCategory(ChargeDefinition charge,
@@ -301,7 +303,8 @@ public class DataService {
 				tx.begin();
 				try {
 					category.addChildren(charge);
-					em.merge(category);
+					category = em.merge(category);
+					charge = category.getChildren().get(category.getChildren().size()-1);
 					tx.commit();
 					// MessageServiceAdapter.sendNotification("Object Created");
 					return charge;
