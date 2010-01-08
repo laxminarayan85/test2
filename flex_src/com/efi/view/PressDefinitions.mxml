@@ -13,6 +13,7 @@ width="912" height="722" title="Press Definitions"
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.SpeedTable;
 	import com.efi.vo.PressDefinition;
 	import com.efi.vo.PriceListBase;
 	import com.efi.vo.PriceList;
@@ -30,12 +31,11 @@ width="912" height="722" title="Press Definitions"
                    
 	[Bindable]
     private var enableSave:Boolean = true;
-    [Bindable]
+
     private var press:Boolean = false;
-    [Bindable]
     private var stock:Boolean = false; 
-    [Bindable]
 	private var waste:Boolean = false;
+	private var speedTable:Boolean = false;
 	
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
@@ -93,6 +93,13 @@ width="912" height="722" title="Press Definitions"
 	    press =  true;
 	}
 	
+	private function doSpeedTable():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.parentContainer = this;
+		titleWindow.itemType = "SpeedTable";
+		speedTable = true;
+	}
 	private function doStockPriceList():void {
 		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
@@ -213,6 +220,10 @@ width="912" height="722" title="Press Definitions"
 	 		pressDefinition.wasteChart = price as WasteChart;
 	 		waste= false;
 	 	}
+	 	if (speedTable){
+	 		pressDefinition.speedTable = price as SpeedTable;
+	 		speedTable=false; 
+	 	}
 	}
 	
 	private function doDefaultPresses():void {
@@ -298,18 +309,18 @@ width="912" height="722" title="Press Definitions"
 	<mx:Label x="347" y="428" text="Washup Time per fountain:" textAlign="right"/>
 	<mx:HRule x="10" y="453" width="732" height="6" left="5" right="5"/>
 	<mx:HRule x="10" y="552" width="732" height="6" left="5" right="5"/>
-	<mx:Button x="11" y="467" label="Speed Table " width="97"/>
+	<mx:Button x="11" y="467" label="Speed Table " width="97" click="doSpeedTable();"/>
 	<mx:Button x="380" y="467" label="Stock Price List" click="doStockPriceList();"/>
 	<mx:Button x="380" y="495" label="Press Price List" click="doPressPriceList();"/>
-	<mx:Button x="11" y="495" label="Waste Chart" click="doWasteChart();"/>
-	<mx:Button x="10" y="525" label="Add Charges"/>
+	<mx:Button x="11" y="495" label="Waste Chart" click="doWasteChart();" width="97"/>
+	<mx:Button x="10" y="523" label="Add Charges" width="98"/>
 	<mx:CheckBox x="424" y="154" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Label x="133" y="524" text="Grip Edge/Gap:"/>
-	<mx:TextInput x="223" y="522" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="82"/>
-	<mx:TextInput x="132" y="467"/>
-	<mx:Text x="132" y="497" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}"/>
-	<mx:Text x="501" y="469" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}"/>
-	<mx:Text x="502" y="497" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}"/>
+	<mx:TextInput x="223" y="522" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="104"/>
+	<mx:Text x="132" y="497" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195"/>
+	<mx:Text x="132" y="470" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195"/>
+	<mx:Text x="501" y="469" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>
+	<mx:Text x="502" y="497" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}" width="165"/>
 	<mx:Button x="171" y="566" label="Default Presses" click="doDefaultPresses()" width="107"/>
 	<mx:Button x="568" y="566" label="Save" click="doSave()" width="67"/>
 	<mx:Button x="493" y="566" label="New" click="doNew()" width="67"/>

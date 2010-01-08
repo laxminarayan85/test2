@@ -881,7 +881,7 @@
 	<mx:RadioButton x="581" y="145" label="Rigid Substrate" groupName="stockUnit"/>
 	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
-			<mx:Panel x="14.5" y="0" width="690" height="225" layout="absolute">
+			<mx:Panel x="14.5" y="0" width="690" height="225" layout="absolute" dropShadowEnabled="false">
 				<mx:Label x="54.5" y="7" text="Vendor:"/>
 				<fc:AutoComplete x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name" focusOut="doStockVendor()"/>
 				<mx:Label x="32.5" y="35" text="Stock Type:"/>
@@ -904,7 +904,7 @@
 				<mx:Text x="323" y="33" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
 				<mx:CheckBox x="248.5" y="144" id="chkcharge4entiteorder" label="Charge Customer for Entire Order"/>
 				<mx:ComboBox x="106.5" y="89" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
-				<mx:Panel x="470.5" y="10" width="193.5" height="168" layout="absolute" title="Chain of Custody">
+				<mx:Panel x="470.5" y="10" width="193.5" height="168" layout="absolute" title="Chain of Custody" dropShadowEnabled="false">
 					<mx:Label x="26.25" y="1" text="Forest Management:"/>
 					<mx:TextInput x="10" y="20" width="153.5" id="forestMgmt"/>
 					<mx:Label x="10" y="46" text="PCW Recycled %:"/>
@@ -915,7 +915,7 @@
 				</mx:Panel>
 				<mx:Label x="63" y="91" text="UOM:"/>
 			</mx:Panel>
-			<mx:Panel x="14.5" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments">
+			<mx:Panel x="14.5" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments" dropShadowEnabled="false">
 				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
 				<mx:Label x="44" y="50" text="Costs:"/>
 				<mx:Label x="49" y="70" text="CWT:"/>
@@ -959,18 +959,18 @@
 				<mx:Label x="73" y="137" text="Price Expires:"/>
 				<mx:DateField x="154" y="135" id="PriceExpires"/>
 			</mx:Panel>
-			<mx:Panel x="14.5" y="441" width="685.5" height="93" layout="absolute" title="Comments">
+			<mx:Panel x="14.5" y="441" width="685.5" height="93" layout="absolute" title="Comments" dropShadowEnabled="false">
 				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Pricing Options" id="page_pricingoptions" width="100%" height="100%">
-			<mx:Panel x="10" y="38" width="295" height="78" layout="absolute" title="Select Press for Printing">
-				<mx:Label x="8" y="12" text="Press:"/>
-				<fc:AutoComplete  x="52" y="10" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}" lookAhead="true" labelField="name" focusOut="doPressDefinition()"/>
+			<mx:Panel x="10" y="38" width="295" height="78" layout="absolute" title="Select Press for Printing" dropShadowEnabled="false">
+				<mx:Label x="8" y="11" text="Press:"/>
+				<fc:AutoComplete  x="52" y="7" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}" lookAhead="true" labelField="name" focusOut="doPressDefinition()"/>
 			</mx:Panel>
-			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing">
-				<mx:Button x="10" y="6" label="Select Schedule" click="doPriceList();"/>
-				<mx:Text x="133" y="8" text="{stockDefinitions.defaultPriceList.name}" width="224" id="defaultPriceList"/>
+			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing" dropShadowEnabled="false">
+				<mx:Button x="10" y="7" label="Select Schedule" click="doPriceList();"/>
+				<mx:Text x="133" y="9" text="{stockDefinitions.defaultPriceList.name}" width="224" id="defaultPriceList" height="20"/>
 			</mx:Panel>
 			<mx:TextInput x="113" y="9" width="85" id="NormalRunSize" text="{stockDefinitions.normalRunSize}"/>
 			<mx:TextInput x="270" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
@@ -978,7 +978,7 @@
 			<mx:Label x="10" y="11" text="Normal Run Size:"/>
 			<mx:Label x="204" y="11" text="Cut / 100:"/>
 			<mx:Label x="329" y="11" text="Min. Cut Chg.:"/>
-			<mx:Panel x="10" y="125" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets">
+			<mx:Panel x="10" y="125" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets" dropShadowEnabled="false">
 				<mx:TextInput x="68" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
 				<mx:TextInput x="146" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
 				<mx:TextInput x="224" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
@@ -995,7 +995,7 @@
 				<mx:Label x="24" y="25" text="Price:"/>
 				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute">
+			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute" dropShadowEnabled="false">
 				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
 				<mx:Label x="82" y="5" text="B&amp;W:"/>
 				<mx:Label x="78" y="30" text="Color:"/>
@@ -1007,13 +1007,13 @@
 				<mx:TextInput x="223" y="28" width="201"/>
 				<mx:TextInput x="223" y="53" width="201"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="Preset Up to 10 Charges">
+			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="Preset Up to 10 Charges" dropShadowEnabled="false">
 				<mx:Button x="10" y="4" label="Add Charges..." click="doAddCharges();"/>
 				<mx:Text x="128" y="6" id="Additional1" text="&lt;Nothing Selected&gt;" width="532"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="Inventory" id="page_inventory" width="100%" height="100%">
-			<mx:Panel x="10" y="10" width="690" height="244" layout="absolute" title="Inventory Settings">
+			<mx:Panel x="10" y="10" width="690" height="244" layout="absolute" title="Inventory Settings" dropShadowEnabled="false">
 				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item" change="standardItemCheckEvent();" id="chkstandardItem"/>
 				<mx:Label x="26" y="30" text="Stock On Hand:"/>
 				<mx:Label x="47" y="58" text="Committed:"/>
@@ -1038,9 +1038,9 @@
 				<mx:Text x="341" y="176" width="184" id="account_name" text="{stockDefinitions.account.title}" />
 				<mx:DateField x="127" y="148" id="Expires"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes">
+			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes" dropShadowEnabled="false">
 				<mx:Button x="10" y="204" label="Show Entire History" click="doShowHistory();"/>
-				<mx:DataGrid x="10" y="0" width="590" height="199" dataProvider="{stockChanges}">
+				<mx:DataGrid dataProvider="{stockChanges}" left="5" right="5" top="5" bottom="30">
 					<mx:columns>
 						<mx:DataGridColumn headerText="User" dataField="User"/>
 						<mx:DataGridColumn headerText="Date" dataField="Date"/>

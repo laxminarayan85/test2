@@ -92,6 +92,9 @@
 		if (this.itemType == "WasteChart"){
 			this.title = "Waste Chart"
 			this.label = "Waste Chart"
+		} else if (this.itemType =="SpeedTable") {
+			this.title = "Speed Table"
+			this.label = "Speed Table"
 		}
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 

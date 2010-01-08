@@ -46,6 +46,7 @@ package com.efi.vo
 		public var wasteChart:WasteChart;
 		public var pressPriceList:PriceList;
 		public var stockPriceList:PriceList;
+		public var speedTable:SpeedTable;
 	
 	}
 }

@@ -166,6 +166,10 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String STOCKPRICELIST = "StockPriceList";
+	/**
+	 * @generated
+	 */
+	public static final String SPEEDTABLE = "SpeedTable";
 
 	/**
 	 * @generated
@@ -736,6 +740,23 @@ public class PressDefinition extends ModelBase {
 	public void setStockPriceList(PriceList newVal) {
 		this.stockPriceList = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private SpeedTable speedTable;
+	/**
+	 * @generated
+ 	 */
+	public SpeedTable getSpeedTable(){
+		return speedTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSpeedTable(SpeedTable newVal) {
+		this.speedTable = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -775,6 +796,7 @@ public class PressDefinition extends ModelBase {
 		if (WASTECHART.equals(propertyName)) return getWasteChart();
 		if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
 		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
+		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
 		return super.getProperty(propertyName);
 	}
 	
@@ -817,6 +839,7 @@ public class PressDefinition extends ModelBase {
 		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
 		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
+		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -892,6 +915,8 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {PriceList.class};		
 		if (STOCKPRICELIST.equals(propertyName)) 
 			return new Class<?>[] {PriceList.class};		
+		if (SPEEDTABLE.equals(propertyName)) 
+			return new Class<?>[] {SpeedTable.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -935,6 +960,7 @@ public class PressDefinition extends ModelBase {
 		if (WASTECHART.equals(propertyName)) return PressDefinition.class;
 		if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
 		if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
+		if (SPEEDTABLE.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1011,6 +1037,8 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getPressPriceList(), objT.getPressPriceList()))
 			return false;
 		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
+			return false;
+		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
 			return false;
 		return true;
 	}			

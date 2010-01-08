@@ -33,11 +33,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "speedtable")
-public class SpeedTable extends ModelBase {
-	/**
-	 * @generated
-	 */
-	public static final String NAME = "Name";
+public class SpeedTable extends PriceListBase {
 
 	/**
 	 * @generated
@@ -47,75 +43,4 @@ public class SpeedTable extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
-	
- 	@Basic
-	private String name;
-	/**
-	 * @generated
- 	 */
-	public String getName(){
-		return name; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setName(String newVal) {
-		this.name = newVal;
-	}
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		return super.getProperty(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
-	
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
-	
-
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return SpeedTable.class;
-		return super.getPropertyOwner(propertyName);
-	}
-	
-	/**
-	 * @generated
-	 */			
-	@Override
-	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SpeedTable objT = (SpeedTable)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		return true;
-	}			
 }

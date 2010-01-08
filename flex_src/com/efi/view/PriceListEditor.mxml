@@ -26,6 +26,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.vo.SpeedTable;
 	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListElement;
 	import com.efi.view.CopierDefinitions;
@@ -96,22 +97,24 @@
 	    PopUpManager.centerPopUp(this);
 	    dataService.getAll(itemType);
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
-		if (itemType == "PriceList" ||itemType == "PriceListBase")
-		{
+		if (itemType == "PriceList" ||itemType == "PriceListBase") {
 			this.title = "Price List"
 			this.label = "Price List"
-			if (priceList == null)
-			{
+			if (priceList == null) {
 				priceList = new PriceList();
 			} 
-		}else
-		{	
+		} else if (itemType == "WasteCharge") {	
 			this.title = "Waste Chart"
 			this.label = "Waste Chart"
-			if (priceList == null)
-			{
+			if (priceList == null) {
 				priceList = new WasteChart();
 			} 
+		} else if (itemType == "SpeedTable") {
+			this.title = "Speed Table"
+			this.label = "Speed Table"
+			if (priceList == null) {
+				priceList = new SpeedTable();
+			}
 		}
 	}
 	                                
@@ -138,8 +141,7 @@
 	
 	private function UpdateElementData():void{
 
-		for each (var item:PriceListElement in PriceListElementArray)
-		{
+		for each (var item:PriceListElement in PriceListElementArray) {
 			item.priceListBase = priceList;
 			dataServiceElements.addUpdate(item);
 		}
@@ -184,11 +186,12 @@
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
-		if (itemType == "PriceList" ||itemType == "PriceListBase")
-		{
-			priceList = ev.result as PriceList
-		}else{
-			priceList = ev.result as WasteChart
+		if (itemType == "PriceList" || itemType == "PriceListBase") {
+			priceList = ev.result as PriceList;
+		} else if (itemType == "WasteChart") {
+			priceList = ev.result as WasteChart;
+		} else if (itemType == "SpeedTable") {
+			priceList = ev.result as SpeedTable;
 		}
 		UpdateElementData();
 
