@@ -406,13 +406,13 @@ public class DefaultDataFactory {
 		String[] fileNames = pathName.list();
 		for (int i = 0; i <fileNames.length; i++)
 		{
-			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("state")==true)
+			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("columnnames")==true)
 			{
 				File f = new File(pathName.getPath(),fileNames[i]);
 				int result = doColumnNames(f);
 				if (result < 0)
 				{
-					log.debug("** Exception: States file Load failed.");
+					log.debug("** Exception: ColumnNames file Load failed.");
 				}
 				break;
 			}			
