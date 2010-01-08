@@ -26,14 +26,14 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ColumnNames.findall", query = "from ColumnNames"),
-	@NamedQuery(name = "ColumnNames.byId", query = "select a from ColumnNames a where a.id= :id")
+	@NamedQuery(name = "EstimatorTypes.findall", query = "from EstimatorTypes"),
+	@NamedQuery(name = "EstimatorTypes.byId", query = "select a from EstimatorTypes a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "columnnames")
-public class ColumnNames extends ModelBase {
+@Table(name = "estimatortypes")
+public class EstimatorTypes extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -42,7 +42,7 @@ public class ColumnNames extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public ColumnNames() {
+	public EstimatorTypes() {
 		this.created = new Date();
 		this.modified = new Date();
 	}
@@ -50,18 +50,18 @@ public class ColumnNames extends ModelBase {
  	
 	
  	@Basic
-	private String name;
+	private Integer name;
 	/**
 	 * @generated
  	 */
-	public String getName(){
+	public Integer getName(){
 		return name; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setName(String newVal) {
+	public void setName(Integer newVal) {
 		this.name = newVal;
 	}
 	/**
@@ -80,7 +80,7 @@ public class ColumnNames extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (NAME.equals(propertyName)) setName((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -91,7 +91,7 @@ public class ColumnNames extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -102,7 +102,7 @@ public class ColumnNames extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return ColumnNames.class;
+		if (NAME.equals(propertyName)) return EstimatorTypes.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -113,7 +113,7 @@ public class ColumnNames extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		ColumnNames objT = (ColumnNames)obj;
+		EstimatorTypes objT = (EstimatorTypes)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;

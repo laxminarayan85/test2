@@ -42,6 +42,10 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	 * @generated
 	 */
 	public static final String QTYBREAK = "QtyBreak";
+	/**
+	 * @generated
+	 */
+	public static final String JOBMETHOD = "JobMethod";
 
 	/**
 	 * @generated
@@ -85,6 +89,23 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setQtyBreak(Boolean newVal) {
 		this.qtyBreak = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private JobMethod jobMethod;
+	/**
+	 * @generated
+ 	 */
+	public JobMethod getJobMethod(){
+		return jobMethod; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setJobMethod(JobMethod newVal) {
+		this.jobMethod = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -93,6 +114,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (QUANTITY.equals(propertyName)) return getQuantity();
 		if (QTYBREAK.equals(propertyName)) return getQtyBreak();
+		if (JOBMETHOD.equals(propertyName)) return getJobMethod();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,6 +126,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
 		if (QTYBREAK.equals(propertyName)) setQtyBreak((Boolean)newValue); else
+		if (JOBMETHOD.equals(propertyName)) setJobMethod((JobMethod)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -117,6 +140,8 @@ public class PreferencesQuantityBreaks extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (QTYBREAK.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (JOBMETHOD.equals(propertyName)) 
+			return new Class<?>[] {JobMethod.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -129,6 +154,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) return PreferencesQuantityBreaks.class;
 		if (QTYBREAK.equals(propertyName)) return PreferencesQuantityBreaks.class;
+		if (JOBMETHOD.equals(propertyName)) return PreferencesQuantityBreaks.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -143,6 +169,8 @@ public class PreferencesQuantityBreaks extends ModelBase {
 		if (! SmartEquals(getQuantity(), objT.getQuantity()))
 			return false;
 		if (! SmartEquals(getQtyBreak(), objT.getQtyBreak()))
+			return false;
+		if (! SmartEquals(getJobMethod(), objT.getJobMethod()))
 			return false;
 		return true;
 	}			

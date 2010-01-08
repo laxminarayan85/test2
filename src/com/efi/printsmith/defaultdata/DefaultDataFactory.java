@@ -36,6 +36,7 @@ public class DefaultDataFactory {
 		ProcessComLinkType();
 		ProcessShippingMethod();
 		ProcessProductionLocations();
+		ProcessColumnNames();
 	}
 
 	private void ProcessStateFile(){
@@ -45,7 +46,15 @@ public class DefaultDataFactory {
 			log.debug("** Exception: States file Load failed.");
 		}
 	}
-	
+
+	private void ProcessColumnNames(){
+		try {
+			LoadColumnNamesData(new String[]{currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: ColumnNames file Load failed.");
+		}
+	}
+
 	private void ProcessAccessGroup(){
 		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
 
@@ -389,6 +398,27 @@ public class DefaultDataFactory {
 		}
 	}
 	
+	private void LoadColumnNamesData(String[] args) throws IOException
+	{
+		if (args.length == 0) args = new String[]{".."};
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i <fileNames.length; i++)
+		{
+			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("state")==true)
+			{
+				File f = new File(pathName.getPath(),fileNames[i]);
+				int result = doColumnNames(f);
+				if (result < 0)
+				{
+					log.debug("** Exception: States file Load failed.");
+				}
+				break;
+			}			
+		}
+	}
+	
 	private int doStatesFile(File file) throws java.io.IOException{
 
 		List<?> stateList= (List<?>) dataservice.getAll("State");
@@ -425,6 +455,52 @@ public class DefaultDataFactory {
 		    		state.setName(line.trim());
 					try {
 						dataservice.addUpdate(state);
+					} catch (Exception e) {
+						log.debug("** Exception: " + e.getMessage());
+						break;
+					}
+	    		}
+	    	}
+	    }
+	    return rv;
+	}
+
+	private int doColumnNames(File file) throws java.io.IOException{
+
+		List<?> columnNameList= (List<?>) dataservice.getAll("ColumnNames");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+	    java.io.BufferedReader br = new java.io.BufferedReader(ip);
+	    String line = null;
+	    int rv = -1;
+	    while ((line = br.readLine()) != null){
+	    	if (line.length() > 0)
+	    	{
+	    		if (columnNameList.size() > 0){
+	    			boolean found = false;
+	    			for (int i = 0; i < columnNameList.size(); i++)
+    	    		{
+    	    			if (((ColumnNames)columnNameList.get(i)).getName().trim().equals(line.trim()) == true){
+    	    				found = true;
+    	    				break;
+    	    			}
+	    			}
+	    			if (found != true){
+	    				ColumnNames columnnames = new ColumnNames();
+	    	    		columnnames.setName(line.trim());
+	    				try {
+	    					dataservice.addUpdate(columnnames);
+	    				} catch (Exception e) {
+	    					log.debug("** Exception: " + e.getMessage());
+	    					break;
+	    				}
+	    			}
+	    		}else{
+					ColumnNames columnnames = new ColumnNames();
+		    		columnnames.setName(line.trim());
+					try {
+						dataservice.addUpdate(columnnames);
 					} catch (Exception e) {
 						log.debug("** Exception: " + e.getMessage());
 						break;

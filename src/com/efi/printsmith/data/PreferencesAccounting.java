@@ -89,22 +89,6 @@ public class PreferencesAccounting extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String CREDITCARDDROPFOLDER = "CreditCardDropFolder";
-	/**
-	 * @generated
-	 */
-	public static final String POLLINGINTERVAL = "PollingInterval";
-	/**
-	 * @generated
-	 */
-	public static final String USEADDRESSVALIDATION = "UseAddressValidation";
-	/**
-	 * @generated
-	 */
-	public static final String PROMPTUSERFORVALIDATION = "PromptUserForValidation";
-	/**
-	 * @generated
-	 */
 	public static final String INVOICEPREFIX = "InvoicePrefix";
 	/**
 	 * @generated
@@ -198,6 +182,58 @@ public class PreferencesAccounting extends ModelBase {
 	 * @generated
 	 */
 	public static final String REFUNDCHECKS = "RefundChecks";
+	/**
+	 * @generated
+	 */
+	public static final String USEOBSOLETEDROPFOLDER = "UseObsoleteDropFolder";
+	/**
+	 * @generated
+	 */
+	public static final String USESKIPJACKPROCESSOR = "UseSkipJackProcessor";
+	/**
+	 * @generated
+	 */
+	public static final String USEEFSPROCESSOR = "UseEfsProcessor";
+	/**
+	 * @generated
+	 */
+	public static final String CREDITCARDDROPFOLDER = "CreditCardDropFolder";
+	/**
+	 * @generated
+	 */
+	public static final String SKIPJACKMODE = "SkipJackMode";
+	/**
+	 * @generated
+	 */
+	public static final String INTERNETURL = "InternetURL";
+	/**
+	 * @generated
+	 */
+	public static final String SERIALNUMBER = "SerialNumber";
+	/**
+	 * @generated
+	 */
+	public static final String DEVELOPMENTNUMBER = "DevelopmentNumber";
+	/**
+	 * @generated
+	 */
+	public static final String PORTNUMBER = "PortNumber";
+	/**
+	 * @generated
+	 */
+	public static final String MERCHANTID = "MerchantID";
+	/**
+	 * @generated
+	 */
+	public static final String MERCHANTKEY = "MerchantKey";
+	/**
+	 * @generated
+	 */
+	public static final String USEADDRESSVALIDATION = "UseAddressValidation";
+	/**
+	 * @generated
+	 */
+	public static final String PROMPTUSERFORVALIDATIONINFO = "PromptUserForValidationInfo";
 
 	/**
 	 * @generated
@@ -427,74 +463,6 @@ public class PreferencesAccounting extends ModelBase {
 	 */	
 	public void setActivateCreditCardApproval(Boolean newVal) {
 		this.activateCreditCardApproval = newVal;
-	}
- 	
-	
- 	@Basic
-	private String creditCardDropFolder;
-	/**
-	 * @generated
- 	 */
-	public String getCreditCardDropFolder(){
-		return creditCardDropFolder; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCreditCardDropFolder(String newVal) {
-		this.creditCardDropFolder = newVal;
-	}
- 	
-	
- 	@Basic
-	private Integer pollingInterval;
-	/**
-	 * @generated
- 	 */
-	public Integer getPollingInterval(){
-		return pollingInterval; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPollingInterval(Integer newVal) {
-		this.pollingInterval = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean useAddressValidation;
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseAddressValidation(){
-		return useAddressValidation; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setUseAddressValidation(Boolean newVal) {
-		this.useAddressValidation = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean promptUserForValidation;
-	/**
-	 * @generated
- 	 */
-	public Boolean getPromptUserForValidation(){
-		return promptUserForValidation; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPromptUserForValidation(Boolean newVal) {
-		this.promptUserForValidation = newVal;
 	}
  	
 	
@@ -904,6 +872,227 @@ public class PreferencesAccounting extends ModelBase {
 	public void setRefundChecks(String newVal) {
 		this.refundChecks = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean useObsoleteDropFolder;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseObsoleteDropFolder(){
+		return useObsoleteDropFolder; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseObsoleteDropFolder(Boolean newVal) {
+		this.useObsoleteDropFolder = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean useSkipJackProcessor;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseSkipJackProcessor(){
+		return useSkipJackProcessor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseSkipJackProcessor(Boolean newVal) {
+		this.useSkipJackProcessor = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean useEfsProcessor;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseEfsProcessor(){
+		return useEfsProcessor; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseEfsProcessor(Boolean newVal) {
+		this.useEfsProcessor = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String creditCardDropFolder;
+	/**
+	 * @generated
+ 	 */
+	public String getCreditCardDropFolder(){
+		return creditCardDropFolder; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCreditCardDropFolder(String newVal) {
+		this.creditCardDropFolder = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer skipJackMode;
+	/**
+	 * @generated
+ 	 */
+	public Integer getSkipJackMode(){
+		return skipJackMode; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSkipJackMode(Integer newVal) {
+		this.skipJackMode = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String internetURL;
+	/**
+	 * @generated
+ 	 */
+	public String getInternetURL(){
+		return internetURL; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInternetURL(String newVal) {
+		this.internetURL = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String serialNumber;
+	/**
+	 * @generated
+ 	 */
+	public String getSerialNumber(){
+		return serialNumber; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSerialNumber(String newVal) {
+		this.serialNumber = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String developmentNumber;
+	/**
+	 * @generated
+ 	 */
+	public String getDevelopmentNumber(){
+		return developmentNumber; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDevelopmentNumber(String newVal) {
+		this.developmentNumber = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String portNumber;
+	/**
+	 * @generated
+ 	 */
+	public String getPortNumber(){
+		return portNumber; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPortNumber(String newVal) {
+		this.portNumber = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String merchantID;
+	/**
+	 * @generated
+ 	 */
+	public String getMerchantID(){
+		return merchantID; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMerchantID(String newVal) {
+		this.merchantID = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String merchantKey;
+	/**
+	 * @generated
+ 	 */
+	public String getMerchantKey(){
+		return merchantKey; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMerchantKey(String newVal) {
+		this.merchantKey = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean useAddressValidation;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseAddressValidation(){
+		return useAddressValidation; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseAddressValidation(Boolean newVal) {
+		this.useAddressValidation = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean promptUserForValidationInfo;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getPromptUserForValidationInfo(){
+		return promptUserForValidationInfo; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPromptUserForValidationInfo(Boolean newVal) {
+		this.promptUserForValidationInfo = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -923,10 +1112,6 @@ public class PreferencesAccounting extends ModelBase {
 		if (FROZEN.equals(propertyName)) return getFrozen();
 		if (FROZENNOTE.equals(propertyName)) return getFrozenNote();
 		if (ACTIVATECREDITCARDAPPROVAL.equals(propertyName)) return getActivateCreditCardApproval();
-		if (CREDITCARDDROPFOLDER.equals(propertyName)) return getCreditCardDropFolder();
-		if (POLLINGINTERVAL.equals(propertyName)) return getPollingInterval();
-		if (USEADDRESSVALIDATION.equals(propertyName)) return getUseAddressValidation();
-		if (PROMPTUSERFORVALIDATION.equals(propertyName)) return getPromptUserForValidation();
 		if (INVOICEPREFIX.equals(propertyName)) return getInvoicePrefix();
 		if (INVOICEDOCUMENT.equals(propertyName)) return getInvoiceDocument();
 		if (INVOICESUFFIX.equals(propertyName)) return getInvoiceSuffix();
@@ -951,6 +1136,19 @@ public class PreferencesAccounting extends ModelBase {
 		if (CASHOVERSHORT.equals(propertyName)) return getCashOverShort();
 		if (PAIDOUT.equals(propertyName)) return getPaidOut();
 		if (REFUNDCHECKS.equals(propertyName)) return getRefundChecks();
+		if (USEOBSOLETEDROPFOLDER.equals(propertyName)) return getUseObsoleteDropFolder();
+		if (USESKIPJACKPROCESSOR.equals(propertyName)) return getUseSkipJackProcessor();
+		if (USEEFSPROCESSOR.equals(propertyName)) return getUseEfsProcessor();
+		if (CREDITCARDDROPFOLDER.equals(propertyName)) return getCreditCardDropFolder();
+		if (SKIPJACKMODE.equals(propertyName)) return getSkipJackMode();
+		if (INTERNETURL.equals(propertyName)) return getInternetURL();
+		if (SERIALNUMBER.equals(propertyName)) return getSerialNumber();
+		if (DEVELOPMENTNUMBER.equals(propertyName)) return getDevelopmentNumber();
+		if (PORTNUMBER.equals(propertyName)) return getPortNumber();
+		if (MERCHANTID.equals(propertyName)) return getMerchantID();
+		if (MERCHANTKEY.equals(propertyName)) return getMerchantKey();
+		if (USEADDRESSVALIDATION.equals(propertyName)) return getUseAddressValidation();
+		if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) return getPromptUserForValidationInfo();
 		return super.getProperty(propertyName);
 	}
 	
@@ -973,10 +1171,6 @@ public class PreferencesAccounting extends ModelBase {
 		if (FROZEN.equals(propertyName)) setFrozen((Integer)newValue); else
 		if (FROZENNOTE.equals(propertyName)) setFrozenNote((String)newValue); else
 		if (ACTIVATECREDITCARDAPPROVAL.equals(propertyName)) setActivateCreditCardApproval((Boolean)newValue); else
-		if (CREDITCARDDROPFOLDER.equals(propertyName)) setCreditCardDropFolder((String)newValue); else
-		if (POLLINGINTERVAL.equals(propertyName)) setPollingInterval((Integer)newValue); else
-		if (USEADDRESSVALIDATION.equals(propertyName)) setUseAddressValidation((Boolean)newValue); else
-		if (PROMPTUSERFORVALIDATION.equals(propertyName)) setPromptUserForValidation((Boolean)newValue); else
 		if (INVOICEPREFIX.equals(propertyName)) setInvoicePrefix((String)newValue); else
 		if (INVOICEDOCUMENT.equals(propertyName)) setInvoiceDocument((String)newValue); else
 		if (INVOICESUFFIX.equals(propertyName)) setInvoiceSuffix((String)newValue); else
@@ -1001,6 +1195,19 @@ public class PreferencesAccounting extends ModelBase {
 		if (CASHOVERSHORT.equals(propertyName)) setCashOverShort((String)newValue); else
 		if (PAIDOUT.equals(propertyName)) setPaidOut((String)newValue); else
 		if (REFUNDCHECKS.equals(propertyName)) setRefundChecks((String)newValue); else
+		if (USEOBSOLETEDROPFOLDER.equals(propertyName)) setUseObsoleteDropFolder((Boolean)newValue); else
+		if (USESKIPJACKPROCESSOR.equals(propertyName)) setUseSkipJackProcessor((Boolean)newValue); else
+		if (USEEFSPROCESSOR.equals(propertyName)) setUseEfsProcessor((Boolean)newValue); else
+		if (CREDITCARDDROPFOLDER.equals(propertyName)) setCreditCardDropFolder((String)newValue); else
+		if (SKIPJACKMODE.equals(propertyName)) setSkipJackMode((Integer)newValue); else
+		if (INTERNETURL.equals(propertyName)) setInternetURL((String)newValue); else
+		if (SERIALNUMBER.equals(propertyName)) setSerialNumber((String)newValue); else
+		if (DEVELOPMENTNUMBER.equals(propertyName)) setDevelopmentNumber((String)newValue); else
+		if (PORTNUMBER.equals(propertyName)) setPortNumber((String)newValue); else
+		if (MERCHANTID.equals(propertyName)) setMerchantID((String)newValue); else
+		if (MERCHANTKEY.equals(propertyName)) setMerchantKey((String)newValue); else
+		if (USEADDRESSVALIDATION.equals(propertyName)) setUseAddressValidation((Boolean)newValue); else
+		if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) setPromptUserForValidationInfo((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1035,14 +1242,6 @@ public class PreferencesAccounting extends ModelBase {
 		if (FROZENNOTE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (ACTIVATECREDITCARDAPPROVAL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CREDITCARDDROPFOLDER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (POLLINGINTERVAL.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (USEADDRESSVALIDATION.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PROMPTUSERFORVALIDATION.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (INVOICEPREFIX.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -1092,6 +1291,32 @@ public class PreferencesAccounting extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (REFUNDCHECKS.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (USEOBSOLETEDROPFOLDER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (USESKIPJACKPROCESSOR.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (USEEFSPROCESSOR.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (CREDITCARDDROPFOLDER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SKIPJACKMODE.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (INTERNETURL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SERIALNUMBER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (DEVELOPMENTNUMBER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PORTNUMBER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (MERCHANTID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (MERCHANTKEY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (USEADDRESSVALIDATION.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1115,10 +1340,6 @@ public class PreferencesAccounting extends ModelBase {
 		if (FROZEN.equals(propertyName)) return PreferencesAccounting.class;
 		if (FROZENNOTE.equals(propertyName)) return PreferencesAccounting.class;
 		if (ACTIVATECREDITCARDAPPROVAL.equals(propertyName)) return PreferencesAccounting.class;
-		if (CREDITCARDDROPFOLDER.equals(propertyName)) return PreferencesAccounting.class;
-		if (POLLINGINTERVAL.equals(propertyName)) return PreferencesAccounting.class;
-		if (USEADDRESSVALIDATION.equals(propertyName)) return PreferencesAccounting.class;
-		if (PROMPTUSERFORVALIDATION.equals(propertyName)) return PreferencesAccounting.class;
 		if (INVOICEPREFIX.equals(propertyName)) return PreferencesAccounting.class;
 		if (INVOICEDOCUMENT.equals(propertyName)) return PreferencesAccounting.class;
 		if (INVOICESUFFIX.equals(propertyName)) return PreferencesAccounting.class;
@@ -1143,6 +1364,19 @@ public class PreferencesAccounting extends ModelBase {
 		if (CASHOVERSHORT.equals(propertyName)) return PreferencesAccounting.class;
 		if (PAIDOUT.equals(propertyName)) return PreferencesAccounting.class;
 		if (REFUNDCHECKS.equals(propertyName)) return PreferencesAccounting.class;
+		if (USEOBSOLETEDROPFOLDER.equals(propertyName)) return PreferencesAccounting.class;
+		if (USESKIPJACKPROCESSOR.equals(propertyName)) return PreferencesAccounting.class;
+		if (USEEFSPROCESSOR.equals(propertyName)) return PreferencesAccounting.class;
+		if (CREDITCARDDROPFOLDER.equals(propertyName)) return PreferencesAccounting.class;
+		if (SKIPJACKMODE.equals(propertyName)) return PreferencesAccounting.class;
+		if (INTERNETURL.equals(propertyName)) return PreferencesAccounting.class;
+		if (SERIALNUMBER.equals(propertyName)) return PreferencesAccounting.class;
+		if (DEVELOPMENTNUMBER.equals(propertyName)) return PreferencesAccounting.class;
+		if (PORTNUMBER.equals(propertyName)) return PreferencesAccounting.class;
+		if (MERCHANTID.equals(propertyName)) return PreferencesAccounting.class;
+		if (MERCHANTKEY.equals(propertyName)) return PreferencesAccounting.class;
+		if (USEADDRESSVALIDATION.equals(propertyName)) return PreferencesAccounting.class;
+		if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) return PreferencesAccounting.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1179,14 +1413,6 @@ public class PreferencesAccounting extends ModelBase {
 		if (! SmartEquals(getFrozenNote(), objT.getFrozenNote()))
 			return false;
 		if (! SmartEquals(getActivateCreditCardApproval(), objT.getActivateCreditCardApproval()))
-			return false;
-		if (! SmartEquals(getCreditCardDropFolder(), objT.getCreditCardDropFolder()))
-			return false;
-		if (! SmartEquals(getPollingInterval(), objT.getPollingInterval()))
-			return false;
-		if (! SmartEquals(getUseAddressValidation(), objT.getUseAddressValidation()))
-			return false;
-		if (! SmartEquals(getPromptUserForValidation(), objT.getPromptUserForValidation()))
 			return false;
 		if (! SmartEquals(getInvoicePrefix(), objT.getInvoicePrefix()))
 			return false;
@@ -1235,6 +1461,32 @@ public class PreferencesAccounting extends ModelBase {
 		if (! SmartEquals(getPaidOut(), objT.getPaidOut()))
 			return false;
 		if (! SmartEquals(getRefundChecks(), objT.getRefundChecks()))
+			return false;
+		if (! SmartEquals(getUseObsoleteDropFolder(), objT.getUseObsoleteDropFolder()))
+			return false;
+		if (! SmartEquals(getUseSkipJackProcessor(), objT.getUseSkipJackProcessor()))
+			return false;
+		if (! SmartEquals(getUseEfsProcessor(), objT.getUseEfsProcessor()))
+			return false;
+		if (! SmartEquals(getCreditCardDropFolder(), objT.getCreditCardDropFolder()))
+			return false;
+		if (! SmartEquals(getSkipJackMode(), objT.getSkipJackMode()))
+			return false;
+		if (! SmartEquals(getInternetURL(), objT.getInternetURL()))
+			return false;
+		if (! SmartEquals(getSerialNumber(), objT.getSerialNumber()))
+			return false;
+		if (! SmartEquals(getDevelopmentNumber(), objT.getDevelopmentNumber()))
+			return false;
+		if (! SmartEquals(getPortNumber(), objT.getPortNumber()))
+			return false;
+		if (! SmartEquals(getMerchantID(), objT.getMerchantID()))
+			return false;
+		if (! SmartEquals(getMerchantKey(), objT.getMerchantKey()))
+			return false;
+		if (! SmartEquals(getUseAddressValidation(), objT.getUseAddressValidation()))
+			return false;
+		if (! SmartEquals(getPromptUserForValidationInfo(), objT.getPromptUserForValidationInfo()))
 			return false;
 		return true;
 	}			

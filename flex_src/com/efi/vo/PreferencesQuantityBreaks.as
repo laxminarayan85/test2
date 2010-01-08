@@ -10,11 +10,11 @@ package com.efi.vo
 	{
 
 		public function PreferencesQuantityBreaks() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesQuantityBreaks";
+		
 		}
-				
 		public var quantity:int = 0;
 		public var qtyBreak:Boolean = true;
+		public var jobMethod:JobMethod;
 	
 	}
 }

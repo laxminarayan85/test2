@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PreferencesPricingMethod() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesPricingMethod";
+		
 		}
-				
 		public var used:Boolean = true;
 		public var title:String = "";
 		public var abbreviation:String = "";
@@ -21,7 +20,7 @@ package com.efi.vo
 		public var finished:Boolean = true;
 		public var showNotes:Boolean = true;
 		public var category:SalesCategory;
-		public var estimator:String = "";
+		public var estimator:EstimatorTypes;
 	
 	}
 }

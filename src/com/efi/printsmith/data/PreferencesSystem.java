@@ -253,14 +253,6 @@ public class PreferencesSystem extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String INTERNATIONALTEXTSORTING = "InternationalTextSorting";
-	/**
-	 * @generated
-	 */
-	public static final String CHILETAXIDVERIFICATION = "ChileTaxIdVerification";
-	/**
-	 * @generated
-	 */
 	public static final String DISABLETEXTSTYLES = "DisableTextStyles";
 	/**
 	 * @generated
@@ -290,42 +282,6 @@ public class PreferencesSystem extends ModelBase {
 	 * @generated
 	 */
 	public static final String TRACKERDATACOLLECTION = "TrackerDataCollection";
-	/**
-	 * @generated
-	 */
-	public static final String VALIDATIONCODE = "ValidationCode";
-	/**
-	 * @generated
-	 */
-	public static final String PNIADDRESS = "PNIAddress";
-	/**
-	 * @generated
-	 */
-	public static final String FIERYCONNECTORURL = "FieryConnectorUrl";
-	/**
-	 * @generated
-	 */
-	public static final String PNI45ORLATER = "PNI45orLater";
-	/**
-	 * @generated
-	 */
-	public static final String JDFCONNECTOR45ORLATER = "JDFConnector45orLater";
-	/**
-	 * @generated
-	 */
-	public static final String SUPPORTSNONASCIICHARACTERS = "SupportsNonAsciiCharacters";
-	/**
-	 * @generated
-	 */
-	public static final String USEPALMPILOTTRACKING = "UsePalmPilotTracking";
-	/**
-	 * @generated
-	 */
-	public static final String PALMUSERPATH = "PalmUserPath";
-	/**
-	 * @generated
-	 */
-	public static final String PALMPOLLINGINTERVAL = "PalmPollingInterval";
 	/**
 	 * @generated
 	 */
@@ -1260,40 +1216,6 @@ public class PreferencesSystem extends ModelBase {
  	
 	
  	@Basic
-	private Boolean internationalTextSorting;
-	/**
-	 * @generated
- 	 */
-	public Boolean getInternationalTextSorting(){
-		return internationalTextSorting; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setInternationalTextSorting(Boolean newVal) {
-		this.internationalTextSorting = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean chileTaxIdVerification;
-	/**
-	 * @generated
- 	 */
-	public Boolean getChileTaxIdVerification(){
-		return chileTaxIdVerification; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setChileTaxIdVerification(Boolean newVal) {
-		this.chileTaxIdVerification = newVal;
-	}
- 	
-	
- 	@Basic
 	private Boolean disableTextStyles;
 	/**
 	 * @generated
@@ -1430,159 +1352,6 @@ public class PreferencesSystem extends ModelBase {
  	
 	
  	@Basic
-	private String validationCode;
-	/**
-	 * @generated
- 	 */
-	public String getValidationCode(){
-		return validationCode; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setValidationCode(String newVal) {
-		this.validationCode = newVal;
-	}
- 	
-	
- 	@Basic
-	private String pNIAddress;
-	/**
-	 * @generated
- 	 */
-	public String getPNIAddress(){
-		return pNIAddress; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPNIAddress(String newVal) {
-		this.pNIAddress = newVal;
-	}
- 	
-	
- 	@Basic
-	private String fieryConnectorUrl;
-	/**
-	 * @generated
- 	 */
-	public String getFieryConnectorUrl(){
-		return fieryConnectorUrl; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setFieryConnectorUrl(String newVal) {
-		this.fieryConnectorUrl = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean pNI45orLater;
-	/**
-	 * @generated
- 	 */
-	public Boolean getPNI45orLater(){
-		return pNI45orLater; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPNI45orLater(Boolean newVal) {
-		this.pNI45orLater = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean jdfConnector45orLater;
-	/**
-	 * @generated
- 	 */
-	public Boolean getJdfConnector45orLater(){
-		return jdfConnector45orLater; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setJdfConnector45orLater(Boolean newVal) {
-		this.jdfConnector45orLater = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean supportsNonAsciiCharacters;
-	/**
-	 * @generated
- 	 */
-	public Boolean getSupportsNonAsciiCharacters(){
-		return supportsNonAsciiCharacters; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSupportsNonAsciiCharacters(Boolean newVal) {
-		this.supportsNonAsciiCharacters = newVal;
-	}
- 	
-	
- 	@Basic
-	private Integer usePalmPilotTracking;
-	/**
-	 * @generated
- 	 */
-	public Integer getUsePalmPilotTracking(){
-		return usePalmPilotTracking; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setUsePalmPilotTracking(Integer newVal) {
-		this.usePalmPilotTracking = newVal;
-	}
- 	
-	
- 	@Basic
-	private Integer palmUserPath;
-	/**
-	 * @generated
- 	 */
-	public Integer getPalmUserPath(){
-		return palmUserPath; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPalmUserPath(Integer newVal) {
-		this.palmUserPath = newVal;
-	}
- 	
-	
- 	@Basic
-	private Integer palmPollingInterval;
-	/**
-	 * @generated
- 	 */
-	public Integer getPalmPollingInterval(){
-		return palmPollingInterval; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPalmPollingInterval(Integer newVal) {
-		this.palmPollingInterval = newVal;
-	}
- 	
-	
- 	@Basic
 	private Integer defaultCountry;
 	/**
 	 * @generated
@@ -1657,8 +1426,6 @@ public class PreferencesSystem extends ModelBase {
 		if (CONVERSIONFACTOR.equals(propertyName)) return getConversionFactor();
 		if (ALTERNATEROUNDTO.equals(propertyName)) return getAlternateRoundto();
 		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) return getAlternateAlwaysRoundDown();
-		if (INTERNATIONALTEXTSORTING.equals(propertyName)) return getInternationalTextSorting();
-		if (CHILETAXIDVERIFICATION.equals(propertyName)) return getChileTaxIdVerification();
 		if (DISABLETEXTSTYLES.equals(propertyName)) return getDisableTextStyles();
 		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) return getAustrailianInvoiceRounding();
 		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) return getDisableNonTaxableOptions();
@@ -1667,15 +1434,6 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTHORIZEDECRYPT.equals(propertyName)) return getAuthorizeDecrypt();
 		if (CREDITCARDAPPROVAL.equals(propertyName)) return getCreditCardApproval();
 		if (TRACKERDATACOLLECTION.equals(propertyName)) return getTrackerDataCollection();
-		if (VALIDATIONCODE.equals(propertyName)) return getValidationCode();
-		if (PNIADDRESS.equals(propertyName)) return getPNIAddress();
-		if (FIERYCONNECTORURL.equals(propertyName)) return getFieryConnectorUrl();
-		if (PNI45ORLATER.equals(propertyName)) return getPNI45orLater();
-		if (JDFCONNECTOR45ORLATER.equals(propertyName)) return getJdfConnector45orLater();
-		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) return getSupportsNonAsciiCharacters();
-		if (USEPALMPILOTTRACKING.equals(propertyName)) return getUsePalmPilotTracking();
-		if (PALMUSERPATH.equals(propertyName)) return getPalmUserPath();
-		if (PALMPOLLINGINTERVAL.equals(propertyName)) return getPalmPollingInterval();
 		if (DEFAULTCOUNTRY.equals(propertyName)) return getDefaultCountry();
 		return super.getProperty(propertyName);
 	}
@@ -1740,8 +1498,6 @@ public class PreferencesSystem extends ModelBase {
 		if (CONVERSIONFACTOR.equals(propertyName)) setConversionFactor((Double)newValue); else
 		if (ALTERNATEROUNDTO.equals(propertyName)) setAlternateRoundto((Integer)newValue); else
 		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) setAlternateAlwaysRoundDown((Boolean)newValue); else
-		if (INTERNATIONALTEXTSORTING.equals(propertyName)) setInternationalTextSorting((Boolean)newValue); else
-		if (CHILETAXIDVERIFICATION.equals(propertyName)) setChileTaxIdVerification((Boolean)newValue); else
 		if (DISABLETEXTSTYLES.equals(propertyName)) setDisableTextStyles((Boolean)newValue); else
 		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) setAustrailianInvoiceRounding((Boolean)newValue); else
 		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) setDisableNonTaxableOptions((Boolean)newValue); else
@@ -1750,15 +1506,6 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTHORIZEDECRYPT.equals(propertyName)) setAuthorizeDecrypt((String)newValue); else
 		if (CREDITCARDAPPROVAL.equals(propertyName)) setCreditCardApproval((String)newValue); else
 		if (TRACKERDATACOLLECTION.equals(propertyName)) setTrackerDataCollection((String)newValue); else
-		if (VALIDATIONCODE.equals(propertyName)) setValidationCode((String)newValue); else
-		if (PNIADDRESS.equals(propertyName)) setPNIAddress((String)newValue); else
-		if (FIERYCONNECTORURL.equals(propertyName)) setFieryConnectorUrl((String)newValue); else
-		if (PNI45ORLATER.equals(propertyName)) setPNI45orLater((Boolean)newValue); else
-		if (JDFCONNECTOR45ORLATER.equals(propertyName)) setJdfConnector45orLater((Boolean)newValue); else
-		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) setSupportsNonAsciiCharacters((Boolean)newValue); else
-		if (USEPALMPILOTTRACKING.equals(propertyName)) setUsePalmPilotTracking((Integer)newValue); else
-		if (PALMUSERPATH.equals(propertyName)) setPalmUserPath((Integer)newValue); else
-		if (PALMPOLLINGINTERVAL.equals(propertyName)) setPalmPollingInterval((Integer)newValue); else
 		if (DEFAULTCOUNTRY.equals(propertyName)) setDefaultCountry((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -1877,10 +1624,6 @@ public class PreferencesSystem extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (INTERNATIONALTEXTSORTING.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CHILETAXIDVERIFICATION.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
 		if (DISABLETEXTSTYLES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) 
@@ -1897,24 +1640,6 @@ public class PreferencesSystem extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (TRACKERDATACOLLECTION.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (VALIDATIONCODE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PNIADDRESS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FIERYCONNECTORURL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PNI45ORLATER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (JDFCONNECTOR45ORLATER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEPALMPILOTTRACKING.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (PALMUSERPATH.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (PALMPOLLINGINTERVAL.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (DEFAULTCOUNTRY.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
@@ -1981,8 +1706,6 @@ public class PreferencesSystem extends ModelBase {
 		if (CONVERSIONFACTOR.equals(propertyName)) return PreferencesSystem.class;
 		if (ALTERNATEROUNDTO.equals(propertyName)) return PreferencesSystem.class;
 		if (ALTERNATEALWAYSROUNDDOWN.equals(propertyName)) return PreferencesSystem.class;
-		if (INTERNATIONALTEXTSORTING.equals(propertyName)) return PreferencesSystem.class;
-		if (CHILETAXIDVERIFICATION.equals(propertyName)) return PreferencesSystem.class;
 		if (DISABLETEXTSTYLES.equals(propertyName)) return PreferencesSystem.class;
 		if (AUSTRAILIANINVOICEROUNDING.equals(propertyName)) return PreferencesSystem.class;
 		if (DISABLENONTAXABLEOPTIONS.equals(propertyName)) return PreferencesSystem.class;
@@ -1991,15 +1714,6 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTHORIZEDECRYPT.equals(propertyName)) return PreferencesSystem.class;
 		if (CREDITCARDAPPROVAL.equals(propertyName)) return PreferencesSystem.class;
 		if (TRACKERDATACOLLECTION.equals(propertyName)) return PreferencesSystem.class;
-		if (VALIDATIONCODE.equals(propertyName)) return PreferencesSystem.class;
-		if (PNIADDRESS.equals(propertyName)) return PreferencesSystem.class;
-		if (FIERYCONNECTORURL.equals(propertyName)) return PreferencesSystem.class;
-		if (PNI45ORLATER.equals(propertyName)) return PreferencesSystem.class;
-		if (JDFCONNECTOR45ORLATER.equals(propertyName)) return PreferencesSystem.class;
-		if (SUPPORTSNONASCIICHARACTERS.equals(propertyName)) return PreferencesSystem.class;
-		if (USEPALMPILOTTRACKING.equals(propertyName)) return PreferencesSystem.class;
-		if (PALMUSERPATH.equals(propertyName)) return PreferencesSystem.class;
-		if (PALMPOLLINGINTERVAL.equals(propertyName)) return PreferencesSystem.class;
 		if (DEFAULTCOUNTRY.equals(propertyName)) return PreferencesSystem.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -2120,10 +1834,6 @@ public class PreferencesSystem extends ModelBase {
 			return false;
 		if (! SmartEquals(getAlternateAlwaysRoundDown(), objT.getAlternateAlwaysRoundDown()))
 			return false;
-		if (! SmartEquals(getInternationalTextSorting(), objT.getInternationalTextSorting()))
-			return false;
-		if (! SmartEquals(getChileTaxIdVerification(), objT.getChileTaxIdVerification()))
-			return false;
 		if (! SmartEquals(getDisableTextStyles(), objT.getDisableTextStyles()))
 			return false;
 		if (! SmartEquals(getAustrailianInvoiceRounding(), objT.getAustrailianInvoiceRounding()))
@@ -2139,24 +1849,6 @@ public class PreferencesSystem extends ModelBase {
 		if (! SmartEquals(getCreditCardApproval(), objT.getCreditCardApproval()))
 			return false;
 		if (! SmartEquals(getTrackerDataCollection(), objT.getTrackerDataCollection()))
-			return false;
-		if (! SmartEquals(getValidationCode(), objT.getValidationCode()))
-			return false;
-		if (! SmartEquals(getPNIAddress(), objT.getPNIAddress()))
-			return false;
-		if (! SmartEquals(getFieryConnectorUrl(), objT.getFieryConnectorUrl()))
-			return false;
-		if (! SmartEquals(getPNI45orLater(), objT.getPNI45orLater()))
-			return false;
-		if (! SmartEquals(getJdfConnector45orLater(), objT.getJdfConnector45orLater()))
-			return false;
-		if (! SmartEquals(getSupportsNonAsciiCharacters(), objT.getSupportsNonAsciiCharacters()))
-			return false;
-		if (! SmartEquals(getUsePalmPilotTracking(), objT.getUsePalmPilotTracking()))
-			return false;
-		if (! SmartEquals(getPalmUserPath(), objT.getPalmUserPath()))
-			return false;
-		if (! SmartEquals(getPalmPollingInterval(), objT.getPalmPollingInterval()))
 			return false;
 		if (! SmartEquals(getDefaultCountry(), objT.getDefaultCountry()))
 			return false;

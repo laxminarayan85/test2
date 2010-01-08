@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PreferencesSystem() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesSystem";
+		
 		}
-				
 		public var eliminateWarningMessages:Boolean = true;
 		public var onlyPostMarkedReadyInvoices:Boolean = true;
 		public var enablePricingSystem:Boolean = true;
@@ -67,8 +66,6 @@ package com.efi.vo
 		public var conversionFactor:Number = 0;
 		public var alternateRoundto:int = 0;
 		public var alternateAlwaysRoundDown:Boolean = true;
-		public var internationalTextSorting:Boolean = true;
-		public var chileTaxIdVerification:Boolean = true;
 		public var disableTextStyles:Boolean = true;
 		public var austrailianInvoiceRounding:Boolean = true;
 		public var disableNonTaxableOptions:Boolean = true;
@@ -77,15 +74,6 @@ package com.efi.vo
 		public var authorizeDecrypt:String = "";
 		public var creditCardApproval:String = "";
 		public var trackerDataCollection:String = "";
-		public var validationCode:String = "";
-		public var pNIAddress:String = "";
-		public var fieryConnectorUrl:String = "";
-		public var pNI45orLater:Boolean = true;
-		public var jDFConnector45orLater:Boolean = true;
-		public var supportsNonAsciiCharacters:Boolean = true;
-		public var usePalmPilotTracking:int = 0;
-		public var palmUserPath:int = 0;
-		public var palmPollingInterval:int = 0;
 		public var defaultCountry:int = 0;
 	
 	}

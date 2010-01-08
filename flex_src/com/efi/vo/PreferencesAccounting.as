@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PreferencesAccounting() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesAccounting";
+		
 		}
-				
 		public var creditLimit:Number = 0;
 		public var financeChange:Number = 0;
 		public var inactivePeriod:Number = 0;
@@ -26,10 +25,6 @@ package com.efi.vo
 		public var frozen:int = 0;
 		public var frozenNote:String = "";
 		public var activateCreditCardApproval:Boolean = true;
-		public var creditCardDropFolder:String = "";
-		public var pollingInterval:int = 0;
-		public var useAddressValidation:Boolean = true;
-		public var promptUserForValidation:Boolean = true;
 		public var invoicePrefix:String = "";
 		public var invoiceDocument:String = "";
 		public var invoiceSuffix:String = "";
@@ -54,6 +49,19 @@ package com.efi.vo
 		public var cashOverShort:String = "";
 		public var paidOut:String = "";
 		public var refundChecks:String = "";
+		public var useObsoleteDropFolder:Boolean = true;
+		public var useSkipJackProcessor:Boolean = true;
+		public var useEfsProcessor:Boolean = true;
+		public var creditCardDropFolder:String = "";
+		public var skipJackMode:int = 0;
+		public var internetURL:String = "";
+		public var serialNumber:String = "";
+		public var developmentNumber:String = "";
+		public var portNumber:String = "";
+		public var merchantID:String = "";
+		public var merchantKey:String = "";
+		public var useAddressValidation:Boolean = true;
+		public var promptUserForValidationInfo:Boolean = true;
 	
 	}
 }

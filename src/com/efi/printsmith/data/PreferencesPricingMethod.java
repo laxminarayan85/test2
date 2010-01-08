@@ -217,19 +217,19 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String estimator;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private EstimatorTypes estimator;
 	/**
 	 * @generated
  	 */
-	public String getEstimator(){
+	public EstimatorTypes getEstimator(){
 		return estimator; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setEstimator(String newVal) {
+	public void setEstimator(EstimatorTypes newVal) {
 		this.estimator = newVal;
 	}
 	/**
@@ -264,7 +264,7 @@ public class PreferencesPricingMethod extends ModelBase {
 		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
 		if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
 		if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
-		if (ESTIMATOR.equals(propertyName)) setEstimator((String)newValue); else
+		if (ESTIMATOR.equals(propertyName)) setEstimator((EstimatorTypes)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -291,7 +291,7 @@ public class PreferencesPricingMethod extends ModelBase {
 		if (CATEGORY.equals(propertyName)) 
 			return new Class<?>[] {SalesCategory.class};		
 		if (ESTIMATOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {EstimatorTypes.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

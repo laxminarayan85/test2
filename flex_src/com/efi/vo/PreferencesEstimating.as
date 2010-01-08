@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PreferencesEstimating() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesEstimating";
+		
 		}
-				
 		public var closeAfterCopy:Boolean = true;
 		public var stockCostInEstimator:Boolean = true;
 		public var canChangeAddress:Boolean = true;
@@ -23,7 +22,6 @@ package com.efi.vo
 		public var leaveFoldedSizeEmpty:Boolean = true;
 		public var doNotCostDuringPost:Boolean = true;
 		public var autoShowCharges:Boolean = true;
-		public var showSinglePassWorkTurnOptions:Boolean = true;
 		public var neverUsePresetPressOnStockChanges:Boolean = true;
 		public var addFixedWasteForEachPass:Boolean = true;
 		public var addFixedWasteForEachColor:Boolean = true;
@@ -66,9 +64,6 @@ package com.efi.vo
 		public var attachToJobTicket:Boolean = true;
 		public var jobTicketFormat:String = "";
 		public var customJobTicket:String = "";
-		public var showAmountOnTicket:Boolean = true;
-		public var addTrackingBarCode:Boolean = true;
-		public var showCustomerReferenceNumber:Boolean = true;
 		public var chargeDescription:String = "";
 	
 	}

@@ -77,10 +77,6 @@ public class PreferencesEstimating extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String SHOWSINGLEPASSWORKTURNOPTIONS = "ShowSinglePassWorkTurnOptions";
-	/**
-	 * @generated
-	 */
 	public static final String NEVERUSEPRESETPRESSONSTOCKCHANGES = "NeverUsePresetPressOnStockChanges";
 	/**
 	 * @generated
@@ -246,18 +242,6 @@ public class PreferencesEstimating extends ModelBase {
 	 * @generated
 	 */
 	public static final String CUSTOMJOBTICKET = "CustomJobTicket";
-	/**
-	 * @generated
-	 */
-	public static final String SHOWAMOUNTONTICKET = "ShowAmountOnTicket";
-	/**
-	 * @generated
-	 */
-	public static final String ADDTRACKINGBARCODE = "AddTrackingBarCode";
-	/**
-	 * @generated
-	 */
-	public static final String SHOWCUSTOMERREFERENCENUMBER = "ShowCustomerReferenceNumber";
 	/**
 	 * @generated
 	 */
@@ -440,23 +424,6 @@ public class PreferencesEstimating extends ModelBase {
 	 */	
 	public void setAutoShowCharges(Boolean newVal) {
 		this.autoShowCharges = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean showSinglePassWorkTurnOptions;
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowSinglePassWorkTurnOptions(){
-		return showSinglePassWorkTurnOptions; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setShowSinglePassWorkTurnOptions(Boolean newVal) {
-		this.showSinglePassWorkTurnOptions = newVal;
 	}
  	
 	
@@ -1175,57 +1142,6 @@ public class PreferencesEstimating extends ModelBase {
  	
 	
  	@Basic
-	private Boolean showAmountOnTicket;
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowAmountOnTicket(){
-		return showAmountOnTicket; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setShowAmountOnTicket(Boolean newVal) {
-		this.showAmountOnTicket = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean addTrackingBarCode;
-	/**
-	 * @generated
- 	 */
-	public Boolean getAddTrackingBarCode(){
-		return addTrackingBarCode; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAddTrackingBarCode(Boolean newVal) {
-		this.addTrackingBarCode = newVal;
-	}
- 	
-	
- 	@Basic
-	private Boolean showCustomerReferenceNumber;
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowCustomerReferenceNumber(){
-		return showCustomerReferenceNumber; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setShowCustomerReferenceNumber(Boolean newVal) {
-		this.showCustomerReferenceNumber = newVal;
-	}
- 	
-	
- 	@Basic
 	private String chargeDescription;
 	/**
 	 * @generated
@@ -1256,7 +1172,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) return getLeaveFoldedSizeEmpty();
 		if (DONOTCOSTDURINGPOST.equals(propertyName)) return getDoNotCostDuringPost();
 		if (AUTOSHOWCHARGES.equals(propertyName)) return getAutoShowCharges();
-		if (SHOWSINGLEPASSWORKTURNOPTIONS.equals(propertyName)) return getShowSinglePassWorkTurnOptions();
 		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) return getNeverUsePresetPressOnStockChanges();
 		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) return getAddFixedWasteForEachPass();
 		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) return getAddFixedWasteForEachColor();
@@ -1299,9 +1214,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (ATTACHTOJOBTICKET.equals(propertyName)) return getAttachToJobTicket();
 		if (JOBTICKETFORMAT.equals(propertyName)) return getJobTicketFormat();
 		if (CUSTOMJOBTICKET.equals(propertyName)) return getCustomJobTicket();
-		if (SHOWAMOUNTONTICKET.equals(propertyName)) return getShowAmountOnTicket();
-		if (ADDTRACKINGBARCODE.equals(propertyName)) return getAddTrackingBarCode();
-		if (SHOWCUSTOMERREFERENCENUMBER.equals(propertyName)) return getShowCustomerReferenceNumber();
 		if (CHARGEDESCRIPTION.equals(propertyName)) return getChargeDescription();
 		return super.getProperty(propertyName);
 	}
@@ -1322,7 +1234,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) setLeaveFoldedSizeEmpty((Boolean)newValue); else
 		if (DONOTCOSTDURINGPOST.equals(propertyName)) setDoNotCostDuringPost((Boolean)newValue); else
 		if (AUTOSHOWCHARGES.equals(propertyName)) setAutoShowCharges((Boolean)newValue); else
-		if (SHOWSINGLEPASSWORKTURNOPTIONS.equals(propertyName)) setShowSinglePassWorkTurnOptions((Boolean)newValue); else
 		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) setNeverUsePresetPressOnStockChanges((Boolean)newValue); else
 		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) setAddFixedWasteForEachPass((Boolean)newValue); else
 		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) setAddFixedWasteForEachColor((Boolean)newValue); else
@@ -1365,9 +1276,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (ATTACHTOJOBTICKET.equals(propertyName)) setAttachToJobTicket((Boolean)newValue); else
 		if (JOBTICKETFORMAT.equals(propertyName)) setJobTicketFormat((String)newValue); else
 		if (CUSTOMJOBTICKET.equals(propertyName)) setCustomJobTicket((String)newValue); else
-		if (SHOWAMOUNTONTICKET.equals(propertyName)) setShowAmountOnTicket((Boolean)newValue); else
-		if (ADDTRACKINGBARCODE.equals(propertyName)) setAddTrackingBarCode((Boolean)newValue); else
-		if (SHOWCUSTOMERREFERENCENUMBER.equals(propertyName)) setShowCustomerReferenceNumber((Boolean)newValue); else
 		if (CHARGEDESCRIPTION.equals(propertyName)) setChargeDescription((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -1397,8 +1305,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (DONOTCOSTDURINGPOST.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (AUTOSHOWCHARGES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWSINGLEPASSWORKTURNOPTIONS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -1484,12 +1390,6 @@ public class PreferencesEstimating extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (CUSTOMJOBTICKET.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (SHOWAMOUNTONTICKET.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ADDTRACKINGBARCODE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCUSTOMERREFERENCENUMBER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
 		if (CHARGEDESCRIPTION.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
@@ -1512,7 +1412,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) return PreferencesEstimating.class;
 		if (DONOTCOSTDURINGPOST.equals(propertyName)) return PreferencesEstimating.class;
 		if (AUTOSHOWCHARGES.equals(propertyName)) return PreferencesEstimating.class;
-		if (SHOWSINGLEPASSWORKTURNOPTIONS.equals(propertyName)) return PreferencesEstimating.class;
 		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) return PreferencesEstimating.class;
 		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) return PreferencesEstimating.class;
 		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) return PreferencesEstimating.class;
@@ -1555,9 +1454,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (ATTACHTOJOBTICKET.equals(propertyName)) return PreferencesEstimating.class;
 		if (JOBTICKETFORMAT.equals(propertyName)) return PreferencesEstimating.class;
 		if (CUSTOMJOBTICKET.equals(propertyName)) return PreferencesEstimating.class;
-		if (SHOWAMOUNTONTICKET.equals(propertyName)) return PreferencesEstimating.class;
-		if (ADDTRACKINGBARCODE.equals(propertyName)) return PreferencesEstimating.class;
-		if (SHOWCUSTOMERREFERENCENUMBER.equals(propertyName)) return PreferencesEstimating.class;
 		if (CHARGEDESCRIPTION.equals(propertyName)) return PreferencesEstimating.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -1589,8 +1485,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (! SmartEquals(getDoNotCostDuringPost(), objT.getDoNotCostDuringPost()))
 			return false;
 		if (! SmartEquals(getAutoShowCharges(), objT.getAutoShowCharges()))
-			return false;
-		if (! SmartEquals(getShowSinglePassWorkTurnOptions(), objT.getShowSinglePassWorkTurnOptions()))
 			return false;
 		if (! SmartEquals(getNeverUsePresetPressOnStockChanges(), objT.getNeverUsePresetPressOnStockChanges()))
 			return false;
@@ -1675,12 +1569,6 @@ public class PreferencesEstimating extends ModelBase {
 		if (! SmartEquals(getJobTicketFormat(), objT.getJobTicketFormat()))
 			return false;
 		if (! SmartEquals(getCustomJobTicket(), objT.getCustomJobTicket()))
-			return false;
-		if (! SmartEquals(getShowAmountOnTicket(), objT.getShowAmountOnTicket()))
-			return false;
-		if (! SmartEquals(getAddTrackingBarCode(), objT.getAddTrackingBarCode()))
-			return false;
-		if (! SmartEquals(getShowCustomerReferenceNumber(), objT.getShowCustomerReferenceNumber()))
 			return false;
 		if (! SmartEquals(getChargeDescription(), objT.getChargeDescription()))
 			return false;

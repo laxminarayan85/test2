@@ -250,42 +250,40 @@ width="800" height="678" title="Preferences"
 	private var treeData:XML =
     	<root>
 			<node label="System">
-				<node label="Behavior" isBranch="false" tag="0"/>
-				<node label="Company" isBranch="false" tag="1"/>
-				<node label="Business Calendar" isBranch="false" tag="2"/>
-				<node label="Numbers" isBranch="false" tag="3"/>
-				<node label="Alternate Currency" isBranch="false" tag="4"/>
-				<node label="International" isBranch="false" tag="5"/>
-				<node label="Product Activation" isBranch="false" tag="6"/>
-				<node label="Integration" isBranch="false" tag="7"/>
-				<node label="Palm Tracker" isBranch="false" tag="8"/>
-				<node label="Address Formatting" isBranch="false" tag="9"/>
+				<node label="Appearance" isBranch="false" tag="0"/>
+				<node label="Behavior" isBranch="false" tag="1"/>
+				<node label="Company" isBranch="false" tag="2"/>
+				<node label="Business Calendar" isBranch="false" tag="3"/>
+				<node label="Numbers" isBranch="false" tag="4"/>
+				<node label="Alternate Currency" isBranch="false" tag="5"/>
+				<node label="International" isBranch="false" tag="6"/>
+				<node label="Address Formatting" isBranch="false" tag="7"/>
 			</node>
 			<node label="POS">
-				<node label="Receipt" isBranch="false" tag="10"/>
-				<node label="Cash Drawer" isBranch="false" tag="11"/>
-				<node label="Cash Register" isBranch="false" tag="12"/>
-				<node label="Pending List" isBranch="false" tag="13"/>
+				<node label="Receipt" isBranch="false" tag="8"/>
+				<node label="Cash Drawer" isBranch="false" tag="9"/>
+				<node label="Cash Register" isBranch="false" tag="10"/>
+				<node label="Pending List" isBranch="false" tag="11"/>
 			</node>
 			<node label="Estimator">
-				<node label="Estimator Behavior" isBranch="false" tag="14"/>
-				<node label="Estimator Printing" isBranch="false" tag="15"/>
-				<node label="Paper Calculator" isBranch="false" tag="16"/>
-				<node label="Job Ticket" isBranch="false" tag="17"/>
-				<node label="Quantity Breaks" isBranch="false" tag="18"/>
-				<node label="Markups" isBranch="false" tag="19"/>
-				<node label="Stocks and Sizes" isBranch="false" tag="20"/>
-				<node label="Stock Definitions" isBranch="false" tag="21"/>
-				<node label="Pricing Method" isBranch="false" tag="22"/>
+				<node label="Estimator Behavior" isBranch="false" tag="12"/>
+				<node label="Estimator Printing" isBranch="false" tag="13"/>
+				<node label="Paper Calculator" isBranch="false" tag="14"/>
+				<node label="Job Ticket" isBranch="false" tag="15"/>
+				<node label="Quantity Breaks" isBranch="false" tag="16"/>
+				<node label="Markups" isBranch="false" tag="17"/>
+				<node label="Stocks and Sizes" isBranch="false" tag="18"/>
+				<node label="Stock Definitions" isBranch="false" tag="19"/>
+				<node label="Pricing Method" isBranch="false" tag="20"/>
 			</node>			
 			<node label="Accounting">
-				<node label="Credit/Defaults" isBranch="false" tag="23"/>
-				<node label="Aging Periods" isBranch="false" tag="24"/>
-				<node label="Sales Categories" isBranch="false" tag="25"/>
-				<node label="GL Profiles" isBranch="false" tag="26"/>
-				<node label="Credit Card Info" isBranch="false" tag="27"/>
-				<node label="Order Number Format" isBranch="false" tag="28"/>
-				<node label="Journal Entries" isBranch="false" tag="29"/>
+				<node label="Credit/Defaults" isBranch="false" tag="21"/>
+				<node label="Aging Periods" isBranch="false" tag="22"/>
+				<node label="Sales Categories" isBranch="false" tag="23"/>
+				<node label="GL Profiles" isBranch="false" tag="24"/>
+				<node label="Credit Card Info" isBranch="false" tag="25"/>
+				<node label="Order Number Format" isBranch="false" tag="26"/>
+				<node label="Journal Entries" isBranch="false" tag="27"/>
 			</node>
 		</root>;
 	
@@ -630,18 +628,13 @@ width="800" height="678" title="Preferences"
 		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes
 		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem
 		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed
-		this.chkJDFConnectorIsVersion45orLater.selected = preferencesSystem.jDFConnector45orLater
-		this.chkJDFConnectorSupportsNonAsciiCharacters.selected = preferencesSystem.supportsNonAsciiCharacters
 		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices
-		this.chkPNIIsVersion45orLater.selected = preferencesSystem.pNI45orLater
 		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity
 		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday
 		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp
 		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting
 		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency
 		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
-		this.chkUseChileTaxIdVerification.selected = preferencesSystem.chileTaxIdVerification
-		this.chkUseInternationalTextSorting.selected = preferencesSystem.internationalTextSorting
 		
 		//comboboxs
 		if (preferencesSystem.fiscalYearStartMonth != "")
@@ -658,9 +651,7 @@ width="800" height="678" title="Preferences"
 		this.chkAllowInvoicePrefixModification.selected = preferencesAccounting.invoiceAllowPrefixMod
 		this.chkAllowInvoiceSuffixModification.selected = preferencesAccounting.invoiceAllowSuffixMod
 		this.chkPrintDocument.selected = preferencesAccounting.printDocument
-		this.chkPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidation
 		this.chkRemoveDraftFromDeposit.selected = preferencesAccounting.removeDraftsFromDeposit
-		this.chkUseAddressValidation.selected = preferencesAccounting.useAddressValidation
 
 		if (preferencesAccounting.journalDocumentPreference != "")
 			cboJournalDocumentPreference.selectedIndex = findItem(preferencesAccounting.journalDocumentPreference, JournalDocumentPreferenceArray);
@@ -672,7 +663,6 @@ width="800" height="678" title="Preferences"
 	private function mapFromPreferencesEstimatingData():void {
 		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
 		this.chkAddFixedWasteForEachPass.selected = preferencesEstimating.addFixedWasteForEachPass
-		this.chkAddTrackingBarCodes.selected = preferencesEstimating.addTrackingBarCode
 		this.chkAlwaysUseStockParentSize.selected = preferencesEstimating.useStockParentSize
 		this.chkAttachToJobTicket.selected = preferencesEstimating.attachToJobTicket
 		this.chkAutoShowCharges.selected = preferencesEstimating.autoShowCharges
@@ -696,9 +686,6 @@ width="800" height="678" title="Preferences"
 		this.chkPrintParentToFinish.selected = preferencesEstimating.printParentToFinishSection
 		this.chkPrintParentToRun.selected = preferencesEstimating.printParentToRunSection
 		this.chkPrintRunToFinish.selected = preferencesEstimating.printRunToFinishSection
-		this.chkShowAmountsOnTicket.selected = preferencesEstimating.showAmountOnTicket
-		this.chkShowReferenceNumber.selected = preferencesEstimating.showCustomerReferenceNumber
-		this.chkShowSinglePassWorkAndTurnOptions.selected = preferencesEstimating.showSinglePassWorkTurnOptions
 		this.chkTrimFourSides.selected = preferencesEstimating.trimFourSides
 		this.chkUseHistoryTitle.selected = preferencesEstimating.useHistoryTitleforNewTitle
 		this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
@@ -785,18 +772,13 @@ width="800" height="678" title="Preferences"
 		preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
 		preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
 		preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
-		preferencesSystem.jDFConnector45orLater = this.chkJDFConnectorIsVersion45orLater.selected
-		preferencesSystem.supportsNonAsciiCharacters = this.chkJDFConnectorSupportsNonAsciiCharacters.selected
 		preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
-		preferencesSystem.pNI45orLater = this.chkPNIIsVersion45orLater.selected
 		preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
 		preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
 		preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
 		preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
 		preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
 		preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
-		preferencesSystem.chileTaxIdVerification = this.chkUseChileTaxIdVerification.selected
-		preferencesSystem.internationalTextSorting = this.chkUseInternationalTextSorting.selected
 
 //comboboxes
 		if (cboFiscalYearStartMonth != null && cboFiscalYearStartMonth.selectedItem != null)
@@ -813,9 +795,7 @@ width="800" height="678" title="Preferences"
 		preferencesAccounting.invoiceAllowPrefixMod = this.chkAllowInvoicePrefixModification.selected
 		preferencesAccounting.invoiceAllowSuffixMod = this.chkAllowInvoiceSuffixModification.selected
 		preferencesAccounting.printDocument = this.chkPrintDocument.selected
-		preferencesAccounting.promptUserForValidation = this.chkPromptUserForValidationInformation.selected
 		preferencesAccounting.removeDraftsFromDeposit = this.chkRemoveDraftFromDeposit.selected
-		preferencesAccounting.useAddressValidation = this.chkUseAddressValidation.selected
 		
 		if (cboAccountingPackages != null && cboAccountingPackages.selectedItem != null)
 	 		preferencesAccounting.accountingLinkTo = cboAccountingPackages.selectedItem.name;
@@ -826,7 +806,6 @@ width="800" height="678" title="Preferences"
 	private function mapToPreferencesEstimatingData():void {
 		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
 		preferencesEstimating.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
-		preferencesEstimating.addTrackingBarCode = this.chkAddTrackingBarCodes.selected
 		preferencesEstimating.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
 		preferencesEstimating.attachToJobTicket = this.chkAttachToJobTicket.selected
 		preferencesEstimating.autoShowCharges = this.chkAutoShowCharges.selected
@@ -850,9 +829,6 @@ width="800" height="678" title="Preferences"
 		preferencesEstimating.printParentToFinishSection = this.chkPrintParentToFinish.selected
 		preferencesEstimating.printParentToRunSection = this.chkPrintParentToRun.selected
 		preferencesEstimating.printRunToFinishSection = this.chkPrintRunToFinish.selected
-		preferencesEstimating.showAmountOnTicket = this.chkShowAmountsOnTicket.selected
-		preferencesEstimating.showCustomerReferenceNumber = this.chkShowReferenceNumber.selected
-		preferencesEstimating.showSinglePassWorkTurnOptions = this.chkShowSinglePassWorkAndTurnOptions.selected
 		preferencesEstimating.trimFourSides = this.chkTrimFourSides.selected
 		preferencesEstimating.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
 		preferencesEstimating.validateSalesRep = this.chkValidateSalesRep.selected
@@ -1453,12 +1429,16 @@ width="800" height="678" title="Preferences"
 
 	<mx:VBox id="vbox2" left="200" top="50" height="100%" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
+			<mx:Canvas width="100%" height="100%" id="appearance_canvas" hideEffect="effect" showEffect="effect">
+				<mx:Label x="0" y="0" width="100%" text="Appearance" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" text="Behavior" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="Eliminate some warning messages"/>
 				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="Only post invoices marked ready"/>
-				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="Enable Pricing system Import / Eport features"/>
+				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="Enable Pricing system Import / Export features"/>
 				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="Activate user event logging, all workstatioins."/>
 				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="Enable automatic log out" change="checkEnableAutoLogOut();"/>
 				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="Seconds of inactivity to trigger:" enabled="false"/>
@@ -1586,74 +1566,14 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="International" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="Disable text styles"/>
+				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="Use Australian invoice rounding"/>
+				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
 
-				<mx:CheckBox x="50" y="30"  id="chkUseInternationalTextSorting" label="Use international (slower) text sorting"/>
-				<mx:CheckBox x="50" y="60"  id="chkUseChileTaxIdVerification" label="Use Chile Tax ID verification"/>
-				<mx:CheckBox x="50" y="90"  id="chkDisableTextStyles" label="Disable text styles"/>
-				<mx:CheckBox x="50" y="120"  id="chkUseAustralianInvoiceRounding" label="Use Australian invoice rounding"/>
-				<mx:CheckBox x="50" y="150"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
-
-				<mx:Label x="26" y="182" text="Ink Weight(singular):"/>
-				<mx:TextInput x="154" y="180" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
-				<mx:Label x="39" y="212" text="Ink Weight(plural):"/>
-				<mx:TextInput x="154" y="210" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
-
-				<mx:Label x="27" y="272" text="Authorize the decrypt of CC to ADMIN users:"/>
-				<mx:TextInput x="280" y="270" width="187" id="txtAuthorizeDecrypt" text="{preferencesSystem.authorizeDecrypt}"/>
-
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="activation_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Product Activation" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="208" y="32" text="Credit Card Approval:"/>
-				<mx:Label x="194" y="62" text="Tracker Data Collection:"/>
-				<mx:Label x="235" y="92" text="Validation Code:"/>
-
-				<mx:TextInput x="335" y="30" id="txtCreditCardApproval" text="{preferencesSystem.creditCardApproval}"/>
-				<mx:TextInput x="335" y="60" id="txtTrackerDataCollection" text="{preferencesSystem.trackerDataCollection}"/>
-				<mx:TextInput x="335" y="90" id="txtValidationCode" enabled="false" text="{preferencesSystem.validationCode}"/>
-				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="integration_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Integration" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				
-				<mx:Panel x="10" y="27" width="520" height="174" layout="absolute" title="PNI">
-					<mx:Label x="20" y="12" text="PrintNet Integrator IP Address:"/>
-					<mx:Button x="20" y="35" label="Check Connection" click="doCheckPNIConnection();"/>
-					<mx:Label x="20" y="72" text="PNI Status:"/>
-
-					<mx:TextInput x="199" y="10" id="txtPNIAddress" width="291" text="{preferencesSystem.pNIAddress}"/>
-					<mx:TextInput x="165" y="37" id="txtPNIConnection" width="325" />
-					<mx:TextInput x="87" y="70" id="txtPNIStatus" width="403"/>
-
-					<mx:CheckBox x="20" y="100"  id="chkPNIIsVersion45orLater" label="The PrintNet Integrator is version 4.5 or later"/>
-				</mx:Panel>
-				<mx:Panel x="10" y="218" width="520" height="160" layout="absolute" title="JDF Connector">
-					<mx:Label x="20" y="12" text="Fiery Connector URL:"/>
-					<mx:TextInput x="141" y="10" id="txtFieryUrl" width="349" text="{preferencesSystem.fieryConnectorUrl}"/>
-
-					<mx:CheckBox x="20" y="50"  id="chkJDFConnectorIsVersion45orLater" label="The JDF Connector URL from the PNI (PNI 4.5 and later"/>
-					<mx:CheckBox x="20" y="80"  id="chkJDFConnectorSupportsNonAsciiCharacters" label="JDF Connector supports non-ASCII characters"/>
-				</mx:Panel>
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="palmtracking_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Palm Tracking" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:CheckBox x="50" y="30"  id="chkUsePalmPilotTracking" label="Use PalmPilot tracking"/>
-				<mx:Label x="50" y="60" text="Palm user path:"/>
-				<mx:TextInput x="50" y="78" id="txtPalmPath" width="349" text="{preferencesSystem.palmUserPath}"/>
-				<mx:Button x="50" y="110" label="Browse..." click="doBrowsePath();"/>
-				<mx:Label x="138" y="112" text="for HotSync application."/>
-				
-				<mx:Label x="50" y="142" text="Polling Interval:"/>
-				<mx:TextInput x="145" y="140" id="txtPalmPilotPollingInterval" width="57" text="{preferencesSystem.palmPollingInterval}"/>
-				<mx:Label x="205" y="142" text="seconds."/>
-
-				<mx:Button x="50" y="180" label="Create Location file" click="doCreateLocationFile();" width="141"/>
-				<mx:Button x="50" y="210" label="Check for Palm data" click="doCheckForPalmData();" width="141"/>
+				<mx:Label x="26" y="122" text="Ink Weight(singular):"/>
+				<mx:TextInput x="154" y="120" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
+				<mx:Label x="39" y="152" text="Ink Weight(plural):"/>
+				<mx:TextInput x="154" y="150" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="addressformatting_canvas" hideEffect="effect" showEffect="effect">
@@ -1813,17 +1733,16 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Behavior" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="Close cource document after copying"/>
+				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="Close source document after copying"/>
 				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="Enter Stock Cost in Estimator"/>
-				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="Can Change Address on ALL Documnets"/>
+				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="Can Change Address on ALL Documents"/>
 				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="Auto Show Paper Calculator on New Jobs"/>
-				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="AlwaysUseStockParentSize"/>
+				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="Always Use Stock Parent Size"/>
 				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="Calculate Re-Order Date on Invoice Copy"/>
 				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="Validate Sales Rep"/>
-				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="Leave Folded Size empty on new Jobs"/>
+				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="Leave Folded Size empty on New Jobs"/>
 				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="Do not perform Costing during invoice POST"/>
-				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="Auto Show Charges on new Jobs"/>
-				<mx:CheckBox x="50" y="280" id="chkShowSinglePassWorkAndTurnOptions" label="Show Single Pass Work and Turn Options"/>
+				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="Auto Show Charges on New Jobs"/>
 				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="Never Use Preset Press on Stock Changes"/>
 				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="Add Fixed Waste for Each Pass (Affects historic Documents)"/>
 				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="Add Fixed Waste for Each Color (Affects historic Documents)"/>
@@ -1934,22 +1853,6 @@ width="800" height="678" title="Preferences"
 				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="Standard Style" groupName="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="Custom Style:" groupName="opgTicketFormat"/>
 				<mx:ComboBox x="155" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="375"/>
-
-
-				<mx:Label x="30" y="120" text="Options:"/>
-				<mx:CheckBox x="50" y="140" id="chkShowAmountsOnTicket" label="Show Amount on Ticket"/>
-				<mx:CheckBox x="50" y="160" id="chkAddTrackingBarCodes" label="Add Tracking Bar Codes"/>
-				<mx:CheckBox x="50" y="180" id="chkShowReferenceNumber" label="Show Customer ext. Reference Number"/>
-				
-				<mx:Panel x="50" y="220" width="340" height="110" layout="absolute" title="Charge Description">
-					<mx:RadioButtonGroup id="opgChargeDescription" selectedValue="{opgChargeDescriptionValue}"/>
-					<mx:RadioButton x="10" y="5" id="opgShowName" label="Show Name" groupName="opgChargeDescription"/>
-					<mx:RadioButton x="10" y="25" id="opgShowDescription" label="Show Description" groupName="opgChargeDescription"/>
-					<mx:RadioButton x="10" y="45" id="opgShowBothIfDifferent" label="Show Both if Different" groupName="opgChargeDescription"/>
-				</mx:Panel>
-
-				<mx:Button x="50" y="345" label="Set Bar Code Font..." click="doSelectFont(null);" width="167"/>
-				<mx:Button x="50" y="375" label="Print Bar Codes..." click="doPrintBarCodes();" width="167"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
@@ -2245,13 +2148,6 @@ width="800" height="678" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
-				<mx:Label x="50" y="62" text="Credit Card processing drop folder"/>
-				<mx:TextInput x="50" y="80" id="txtCreditCardDropFolder" width="300" text="{preferencesAccounting.creditCardDropFolder}"/>
-				<mx:Button x="358" y="80" label="Browse..." click="doSelectFolder();"/>
-				<mx:Label x="50" y="112" text="Polling Interval:"/>
-				<mx:TextInput x="144" y="110" id="txtCreditCardPollingInterval" width="62" text="{preferencesAccounting.pollingInterval}"/>
-				<mx:CheckBox x="215" y="110" id="chkUseAddressValidation" label="Use Address Validation"/>
-				<mx:CheckBox x="215" y="140" id="chkPromptUserForValidationInformation" label="Prompt User for Validation Information"/>
 				
 				<mx:DataGrid x="50" y="179" width="300" height="323" id="CreditCardGrid"
 					dataProvider="{PreferencesCreditCardArray}"

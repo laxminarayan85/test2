@@ -1,0 +1,42 @@
+Account
+Document Number
+Phone
+Location
+Wanted Date
+Hold State
+Type
+Document Title
+Job Comment
+Proof Date
+Taken By
+Sales Rep
+Web Reference
+Job Count
+Name
+Weight
+Size
+Color
+Generic Color
+Finish
+Thickness
+Grade
+CWT
+Vendor
+Stock Number
+Product ID
+Quantity On Hand
+Committed
+Ordered
+Shell
+Run Size
+Basic Size
+Group
+Coated Sides
+Minimum Order
+Price
+Price Expires
+Forest Management
+Recycle
+FSC
+SFI
+GreenSeal
