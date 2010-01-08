@@ -74,6 +74,10 @@ public class PriceListBase extends ModelBase {
 	 * @generated
 	 */
 	public static final String LASTITEMISPRICEADDITIONALQTY = "LastItemIsPriceAdditionalQty";
+	/**
+	 * @generated
+	 */
+	public static final String ELEMENTS = "Elements";
 
 	/**
 	 * @generated
@@ -253,6 +257,29 @@ public class PriceListBase extends ModelBase {
 	public void setLastItemIsPriceAdditionalQty(Boolean newVal) {
 		this.lastItemIsPriceAdditionalQty = newVal;
 	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<PriceListElement> elements;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<PriceListElement> getElements(){
+		return elements; 
+	}
+
+	public void addElements(PriceListElement obj) {
+		if (elements == null) {
+			elements = new java.util.ArrayList<PriceListElement>();
+		}
+		elements.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setElements(java.util.List<PriceListElement> newVal) {
+		this.elements = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -269,6 +296,7 @@ public class PriceListBase extends ModelBase {
 		if (SEQUENCE.equals(propertyName)) return getSequence();
 		if (ISPERCENTAGE.equals(propertyName)) return getIsPercentage();
 		if (LASTITEMISPRICEADDITIONALQTY.equals(propertyName)) return getLastItemIsPriceAdditionalQty();
+		if (ELEMENTS.equals(propertyName)) return getElements();
 		return super.getProperty(propertyName);
 	}
 	
@@ -288,6 +316,7 @@ public class PriceListBase extends ModelBase {
 		if (SEQUENCE.equals(propertyName)) setSequence((Boolean)newValue); else
 		if (ISPERCENTAGE.equals(propertyName)) setIsPercentage((Boolean)newValue); else
 		if (LASTITEMISPRICEADDITIONALQTY.equals(propertyName)) setLastItemIsPriceAdditionalQty((Boolean)newValue); else
+		if (ELEMENTS.equals(propertyName)) setElements((java.util.List<PriceListElement>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -317,6 +346,8 @@ public class PriceListBase extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (LASTITEMISPRICEADDITIONALQTY.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (ELEMENTS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, PriceListElement.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -337,6 +368,7 @@ public class PriceListBase extends ModelBase {
 		if (SEQUENCE.equals(propertyName)) return PriceListBase.class;
 		if (ISPERCENTAGE.equals(propertyName)) return PriceListBase.class;
 		if (LASTITEMISPRICEADDITIONALQTY.equals(propertyName)) return PriceListBase.class;
+		if (ELEMENTS.equals(propertyName)) return PriceListBase.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -367,6 +399,8 @@ public class PriceListBase extends ModelBase {
 		if (! SmartEquals(getIsPercentage(), objT.getIsPercentage()))
 			return false;
 		if (! SmartEquals(getLastItemIsPriceAdditionalQty(), objT.getLastItemIsPriceAdditionalQty()))
+			return false;
+		if (! SmartEquals(getElements(), objT.getElements()))
 			return false;
 		return true;
 	}			

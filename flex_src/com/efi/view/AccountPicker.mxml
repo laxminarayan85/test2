@@ -121,7 +121,7 @@
                              
 
                              
-	<mx:Canvas width="583" height="541">
+	<mx:Canvas width="100%" height="100%">
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{accounts}"
 		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>

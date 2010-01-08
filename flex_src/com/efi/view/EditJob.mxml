@@ -1007,17 +1007,17 @@
 														   dataField="col3"/>
 									</mx:columns>
 								</mx:DataGrid>
-								<mx:Panel x="47"
+								<mx:Panel x="10"
 										  y="123"
-										  width="301"
-										  height="92"
+										  width="338"
+										  height="69"
 										  layout="absolute"
 										  title="Run Method"
 										  dropShadowEnabled="false"
 										  fontSize="9">
 									<mx:RadioButtonGroup id="run_method_radiogroup"/>
-									<mx:RadioButton x="10"
-													y="32"
+									<mx:RadioButton x="213"
+													y="6"
 													label="Work and Turn"
 													groupName="run_method_radiogroup"
 													height="18"
@@ -1028,7 +1028,7 @@
 													groupName="run_method_radiogroup"
 													height="18"
 													value="Sheetwise"/>
-									<mx:RadioButton x="125"
+									<mx:RadioButton x="94"
 													y="6"
 													label="Work and Tumble"
 													groupName="run_method_radiogroup"
@@ -1087,14 +1087,14 @@
 									   icon="@Embed(source='../../../assets/add16.png')"
 									   width="24"
 									   bottom="0"/>
-						<mx:DataGrid width="592"
+						<mx:DataGrid
 									 id="invoice_charge_datagrid"
 									 dataProvider="{job.charges}"
 									 left="0"
 									 bottom="25"
 									 top="0"
 									 right="0"
-									 showHeaders="false">
+									 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
 							<mx:columns>
 								<mx:DataGridColumn headerText="Description"
 												   dataField="description"/>

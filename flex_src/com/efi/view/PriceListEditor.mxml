@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="458" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="424" height="400" 
 	defaultButton="{select_button}" 
 	showCloseButton="false" 
 	creationComplete="init()"
@@ -7,22 +7,39 @@
     title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
     horizontalScrollPolicy="off" 
     label="Price List" name="Price List"
-    verticalScrollPolicy="off">
+    verticalScrollPolicy="off" fontSize="9">
 
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-</mx:RemoteObject>
-<mx:RemoteObject id="dataServiceElements" destination="dataService">
-	<mx:method name="getFromParent" fault="handleFault(event)" result="handleLoadElementsResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveElementsResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:states>
+	<mx:State name="Price List" basedOn="">
+		<mx:SetProperty name="title" value="Edit Price List {priceList.name}"/>
+	</mx:State>
+	<mx:State name="Speed Table" basedOn="Price List">
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="enabled" value="false"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="enabled" value="false"/>
+		<mx:SetProperty target="{radiobutton1}" name="enabled" value="false"/>
+		<mx:SetProperty target="{radiobutton2}" name="enabled" value="false"/>
+		<mx:SetProperty name="title" value="Edit Speed Table {priceList.name}"/>
+		
+	</mx:State>
+	<mx:State name="Waste Chart" basedOn="Price List">
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="enabled" value="false"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="enabled" value="false"/>
+		<mx:SetProperty target="{chkInterpolate}" name="enabled" value="false"/>
+		<mx:SetProperty target="{radiobutton1}" name="enabled" value="false"/>
+		<mx:SetProperty target="{radiobutton2}" name="enabled" value="false"/>
+		<mx:SetProperty name="title" value="Edit Waste Chart {priceList.name}"/>
+	</mx:State>
+</mx:states>
 <mx:Script>
                                    
 <![CDATA[
@@ -63,10 +80,6 @@
 	[Bindable] 
 	private var pricelists:ArrayCollection = new ArrayCollection();   
            
-	[Bindable] 
-    private var PriceListElementArray:ArrayCollection = new ArrayCollection();
-	[Bindable] 
-	private var PriceListElementDeleteArray:ArrayCollection = new ArrayCollection();
     [Bindable]
     private var quantity_header:String = "Quantity";
     
@@ -95,23 +108,28 @@
 		notification_consumer.subscribe();     
 
 	    PopUpManager.centerPopUp(this);
-	    dataService.getAll(itemType);
+
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (itemType == "PriceList" ||itemType == "PriceListBase") {
-			this.title = "Price List"
-			this.label = "Price List"
+			this.currentState = "Price List";
 			if (priceList == null) {
 				priceList = new PriceList();
-			} 
-		} else if (itemType == "WasteCharge") {	
+			}
+		} else if (itemType == "WasteChart") {	
+			this.currentState = "Waste Chart"
 			this.title = "Waste Chart"
 			this.label = "Waste Chart"
+			this.quantity_header = "Run Length";
+			this.price_header = "Spoilage";
 			if (priceList == null) {
 				priceList = new WasteChart();
 			} 
 		} else if (itemType == "SpeedTable") {
+			this.currentState = "Speed Table";
 			this.title = "Speed Table"
 			this.label = "Speed Table"
+			this.quantity_header = "Run Length";
+			this.price_header = "Speed";
 			if (priceList == null) {
 				priceList = new SpeedTable();
 			}
@@ -139,15 +157,6 @@
 		 dataService.deleteItem(itemType,priceList.id);
 	}
 	
-	private function UpdateElementData():void{
-
-		for each (var item:PriceListElement in PriceListElementArray) {
-			item.priceListBase = priceList;
-			dataServiceElements.addUpdate(item);
-		}
-		
-
-	}
 	public function mapfromPricelist(pricelist1:PriceListBase):void {
 		if (pricelist1 != null){
 			if (priceList == null){
@@ -171,13 +180,11 @@
 	}
 	
 	private function maptoPricelist():void {
-		
 		priceList.name = title_edit.text;
 		priceList.interpolate = chkInterpolate.selected;
 		priceList.isRate = chkUseAsRateList.selected;
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
-	
 	}
 	
 	
@@ -193,7 +200,6 @@
 		} else if (itemType == "SpeedTable") {
 			priceList = ev.result as SpeedTable;
 		}
-		UpdateElementData();
 
 		var editPage:Container = parentContainer;
 
@@ -211,66 +217,51 @@
 				(editPage as CopierDefinitions).setPriceList(priceList);
 				break;
 		}
-
-		dataService.getAll(itemType)
 	}
-	private function handleLoadResult(ev:ResultEvent):void {
-		pricelists = ev.result as ArrayCollection;
-		dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
-	}
-	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll(itemType)
-		doNew();
-	}
-	private function handleLoadElementsResult(ev:ResultEvent):void {
-		PriceListElementArray = ev.result as ArrayCollection;
-		if (PriceListElementArray == null){
-			PriceListElementArray = new ArrayCollection();
-		}
-	}
-	private function handleSaveElementsResult(ev:ResultEvent):void {
-		if (priceList != null)
-			dataServiceElements.getFromParent("PriceListElement","pricelistbase",priceList.id)
-	}
-	
+		
 	private function doNewPriceListElement():void {
 		var newItem:PriceListElement = new PriceListElement();
-		PriceListElementArray.addItem(newItem);
-
+		this.priceList.elements.addItem(newItem);
 	}
+	
 	private function doRemovePriceListElement():void {
-		var newItem:PriceListElement = dataGrid.selectedItem as PriceListElement;
-		PriceListElementDeleteArray.addItem(newItem);
-		PriceListElementArray.removeItemAt(dataGrid.selectedIndex);
+		var deleteItem:PriceListElement = dataGrid.selectedItem as PriceListElement;
+		this.priceList.elements.removeItemAt(priceList.elements.getItemIndex(deleteItem));
 	}
 
 ]]>        
 </mx:Script>            
-	<mx:Canvas width="400" height="406" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:DataGrid id="dataGrid" width="154" height="309" dataProvider="{PriceListElementArray}"
-		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" y="0" editable="true" enabled="true">               
+	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
+		<mx:DataGrid id="dataGrid" width="145" dataProvider="{priceList.elements}"
+		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" editable="true" enabled="true" bottom="25" top="0" rowHeight="15" alternatingItemColors="[#FFFFFF, #FFFFFF]">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" />
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" />
+		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false"/>
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="108" x="0" y="374"/>
-		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="108" x="116" y="374"/>
-		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="186"/>
+		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="97" x="229" y="254"/>
+		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="97" x="229" y="284"/>
+		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="176"/>
 		<mx:Label x="162" y="12" text="Title:"/>
 		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
-		<mx:RadioButton x="204" y="40" label="Amount is currency" groupName="amount_radio_group" value="amtiscurrency"/>
-		<mx:RadioButton x="204" y="62" label="Amount is percent" groupName="amount_radio_group" value="amtispercent"/>
-		<mx:CheckBox x="204" y="163" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
-		<mx:CheckBox x="204" y="96" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
-		<mx:CheckBox x="227" y="140" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
-		<mx:CheckBox x="204" y="118" label="Use as rate list" selected="{priceList.isRate}" id="chkUseAsRateList"/>
-		<mx:Button x="34" y="317" width="38" height="38" click="doNewPriceListElement();">
-			<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
-		</mx:Button>
-		<mx:Button x="84" y="317" width="38" height="38" click="doRemovePriceListElement();">
-			<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
-		</mx:Button>
+		<mx:RadioButton x="162" y="38" label="Amount is currency" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
+		<mx:RadioButton x="162" y="58" label="Amount is percent" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
+		<mx:CheckBox x="162" y="156" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
+		<mx:CheckBox x="162" y="94" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
+		<mx:CheckBox x="185" y="134" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
+		<mx:CheckBox x="162" y="114" label="Use as rate list" selected="{priceList.isRate}" id="chkUseAsRateList"/>
+		<mx:LinkButton x="89"
+					   id="remove_pricelistelement_button"
+					   click="doRemovePriceListElement()"
+					   icon="@Embed(source='../../../assets/delete16.png')"
+					   width="24"
+					   bottom="3"/>
+		<mx:LinkButton x="121"
+					   id="add_pricelistelement_button"
+					   click="doNewPriceListElement()"
+					   icon="@Embed(source='../../../assets/add16.png')"
+					   width="24"
+					   bottom="3"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

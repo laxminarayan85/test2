@@ -42,10 +42,6 @@ public class PriceListElement extends ModelBase {
 	 * @generated
 	 */
 	public static final String AMOUNT = "Amount";
-	/**
-	 * @generated
-	 */
-	public static final String PRICELISTBASE = "PriceListBase";
 
 	/**
 	 * @generated
@@ -89,23 +85,6 @@ public class PriceListElement extends ModelBase {
 	public void setAmount(Double newVal) {
 		this.amount = newVal;
 	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private PriceListBase priceListBase;
-	/**
-	 * @generated
- 	 */
-	public PriceListBase getPriceListBase(){
-		return priceListBase; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPriceListBase(PriceListBase newVal) {
-		this.priceListBase = newVal;
-	}
 	/**
 	 * @generated
 	 */		
@@ -114,7 +93,6 @@ public class PriceListElement extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (QUANTITY.equals(propertyName)) return getQuantity();
 		if (AMOUNT.equals(propertyName)) return getAmount();
-		if (PRICELISTBASE.equals(propertyName)) return getPriceListBase();
 		return super.getProperty(propertyName);
 	}
 	
@@ -126,7 +104,6 @@ public class PriceListElement extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
 		if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
-		if (PRICELISTBASE.equals(propertyName)) setPriceListBase((PriceListBase)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -140,8 +117,6 @@ public class PriceListElement extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (AMOUNT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
-		if (PRICELISTBASE.equals(propertyName)) 
-			return new Class<?>[] {PriceListBase.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -154,7 +129,6 @@ public class PriceListElement extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) return PriceListElement.class;
 		if (AMOUNT.equals(propertyName)) return PriceListElement.class;
-		if (PRICELISTBASE.equals(propertyName)) return PriceListElement.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -169,8 +143,6 @@ public class PriceListElement extends ModelBase {
 		if (! SmartEquals(getQuantity(), objT.getQuantity()))
 			return false;
 		if (! SmartEquals(getAmount(), objT.getAmount()))
-			return false;
-		if (! SmartEquals(getPriceListBase(), objT.getPriceListBase()))
 			return false;
 		return true;
 	}			
