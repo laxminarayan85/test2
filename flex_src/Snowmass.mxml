@@ -99,6 +99,7 @@
 		import com.efi.view.EstimateHistory;
 		import com.efi.view.Tracker;
 		import com.efi.pages.Debug;
+		import com.efi.vo.InvoiceBase;
 		
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
@@ -175,7 +176,7 @@
 		}
 		private function doContacts():void {
 			var child:EditContact = new EditContact();
-			addUniqueTab(child);
+			addUniqueTab(child); 
 		}
 		private function doPressDefinitions():void {
 			var child:PressDefinitions = new PressDefinitions();
@@ -234,11 +235,27 @@
 			child.setEditorType(EditInvoice.EDITINVOICE);
 			addUniqueTab(child);
 		}
+		
+		public function doEditInvoice(invoice:InvoiceBase):void {
+			var child:EditInvoice = new EditInvoice();
+			child.setEditorType(EditInvoice.EDITINVOICE);
+			child.setInvoice(invoice);
+			addUniqueTab(child);
+		}
+		
 		private function doCreateEstimate():void {
 			var child:EditInvoice = new EditInvoice();
 			child.setEditorType(EditInvoice.EDITESTIMATE);
 			addUniqueTab(child);
 		}
+
+		public function doEditEstimate(estimate:InvoiceBase):void {
+			var child:EditInvoice = new EditInvoice();
+			child.setEditorType(EditInvoice.EDITESTIMATE);
+			child.setInvoice(estimate);
+			addUniqueTab(child);
+		}
+
 		private function doTracker():void {
 			var child:Tracker = new Tracker();
 			addUniqueTab(child);

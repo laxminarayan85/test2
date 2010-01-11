@@ -1022,8 +1022,8 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
 			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
 			</mx:Canvas>
-			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
+				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto">
 					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}"/>
 					<mx:ComboBox x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name"></mx:ComboBox>
 					<mx:ComboBox x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name"></mx:ComboBox>

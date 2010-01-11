@@ -100,7 +100,7 @@
 			private var accounts:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
-			private var invoice:InvoiceBase;
+			private var invoice:InvoiceBase = null;
 			
 			[Bindable]
 			private var salesReps:ArrayCollection=new ArrayCollection();
@@ -116,9 +116,15 @@
 			{
 				vbox.getDividerAt(0).visible=false;
 				vbox.getDividerAt(1).visible=false;
-				invoice=new Invoice();
-				invoice.jobs=new ArrayCollection();
-				invoice.charges=new ArrayCollection();
+				if (invoice == null) {
+					invoice=new Invoice();
+				}
+				if (invoice.jobs == null) {
+					invoice.jobs=new ArrayCollection();
+				}
+				if (invoice.charges == null) {
+					invoice.charges=new ArrayCollection();
+				}				
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
 			}
