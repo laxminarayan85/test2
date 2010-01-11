@@ -89,27 +89,7 @@ public class PreferencesSystem extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String COMPANYTITLE = "CompanyTitle";
-	/**
-	 * @generated
-	 */
-	public static final String COMPANYADDRESS1 = "CompanyAddress1";
-	/**
-	 * @generated
-	 */
-	public static final String COMPANYADDRESS2 = "CompanyAddress2";
-	/**
-	 * @generated
-	 */
-	public static final String COMPANYCITY = "CompanyCity";
-	/**
-	 * @generated
-	 */
-	public static final String COMPANYSTATE = "CompanyState";
-	/**
-	 * @generated
-	 */
-	public static final String COMPANYZIP = "CompanyZip";
+	public static final String COMPANYADDRESS = "CompanyAddress";
 	/**
 	 * @generated
 	 */
@@ -518,105 +498,20 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String companyTitle;
-	/**
-	 * @generated
- 	 */
-	public String getCompanyTitle(){
-		return companyTitle; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCompanyTitle(String newVal) {
-		this.companyTitle = newVal;
-	}
- 	
-	
- 	@Basic
-	private String companyAddress1;
-	/**
-	 * @generated
- 	 */
-	public String getCompanyAddress1(){
-		return companyAddress1; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCompanyAddress1(String newVal) {
-		this.companyAddress1 = newVal;
-	}
- 	
-	
- 	@Basic
-	private String companyAddress2;
-	/**
-	 * @generated
- 	 */
-	public String getCompanyAddress2(){
-		return companyAddress2; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCompanyAddress2(String newVal) {
-		this.companyAddress2 = newVal;
-	}
- 	
-	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private City companyCity;
+	private Address companyAddress;
 	/**
 	 * @generated
  	 */
-	public City getCompanyCity(){
-		return companyCity; 
+	public Address getCompanyAddress(){
+		return companyAddress; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCompanyCity(City newVal) {
-		this.companyCity = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private State companyState;
-	/**
-	 * @generated
- 	 */
-	public State getCompanyState(){
-		return companyState; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCompanyState(State newVal) {
-		this.companyState = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Zip companyZip;
-	/**
-	 * @generated
- 	 */
-	public Zip getCompanyZip(){
-		return companyZip; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setCompanyZip(Zip newVal) {
-		this.companyZip = newVal;
+	public void setCompanyAddress(Address newVal) {
+		this.companyAddress = newVal;
 	}
  	
 	
@@ -1385,12 +1280,7 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTOMATICQUIT.equals(propertyName)) return getAutomaticQuit();
 		if (QUITTIME.equals(propertyName)) return getQuitTime();
 		if (SHUTDOWNMESSAGE.equals(propertyName)) return getShutdownMessage();
-		if (COMPANYTITLE.equals(propertyName)) return getCompanyTitle();
-		if (COMPANYADDRESS1.equals(propertyName)) return getCompanyAddress1();
-		if (COMPANYADDRESS2.equals(propertyName)) return getCompanyAddress2();
-		if (COMPANYCITY.equals(propertyName)) return getCompanyCity();
-		if (COMPANYSTATE.equals(propertyName)) return getCompanyState();
-		if (COMPANYZIP.equals(propertyName)) return getCompanyZip();
+		if (COMPANYADDRESS.equals(propertyName)) return getCompanyAddress();
 		if (COMPANYPHONE.equals(propertyName)) return getCompanyPhone();
 		if (COMPANYFAX.equals(propertyName)) return getCompanyFax();
 		if (COMPANYEMAIL.equals(propertyName)) return getCompanyEmail();
@@ -1457,12 +1347,7 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTOMATICQUIT.equals(propertyName)) setAutomaticQuit((Boolean)newValue); else
 		if (QUITTIME.equals(propertyName)) setQuitTime((String)newValue); else
 		if (SHUTDOWNMESSAGE.equals(propertyName)) setShutdownMessage((String)newValue); else
-		if (COMPANYTITLE.equals(propertyName)) setCompanyTitle((String)newValue); else
-		if (COMPANYADDRESS1.equals(propertyName)) setCompanyAddress1((String)newValue); else
-		if (COMPANYADDRESS2.equals(propertyName)) setCompanyAddress2((String)newValue); else
-		if (COMPANYCITY.equals(propertyName)) setCompanyCity((City)newValue); else
-		if (COMPANYSTATE.equals(propertyName)) setCompanyState((State)newValue); else
-		if (COMPANYZIP.equals(propertyName)) setCompanyZip((Zip)newValue); else
+		if (COMPANYADDRESS.equals(propertyName)) setCompanyAddress((Address)newValue); else
 		if (COMPANYPHONE.equals(propertyName)) setCompanyPhone((String)newValue); else
 		if (COMPANYFAX.equals(propertyName)) setCompanyFax((String)newValue); else
 		if (COMPANYEMAIL.equals(propertyName)) setCompanyEmail((String)newValue); else
@@ -1542,18 +1427,8 @@ public class PreferencesSystem extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (SHUTDOWNMESSAGE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (COMPANYTITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMPANYADDRESS1.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMPANYADDRESS2.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMPANYCITY.equals(propertyName)) 
-			return new Class<?>[] {City.class};		
-		if (COMPANYSTATE.equals(propertyName)) 
-			return new Class<?>[] {State.class};		
-		if (COMPANYZIP.equals(propertyName)) 
-			return new Class<?>[] {Zip.class};		
+		if (COMPANYADDRESS.equals(propertyName)) 
+			return new Class<?>[] {Address.class};		
 		if (COMPANYPHONE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (COMPANYFAX.equals(propertyName)) 
@@ -1665,12 +1540,7 @@ public class PreferencesSystem extends ModelBase {
 		if (AUTOMATICQUIT.equals(propertyName)) return PreferencesSystem.class;
 		if (QUITTIME.equals(propertyName)) return PreferencesSystem.class;
 		if (SHUTDOWNMESSAGE.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYTITLE.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYADDRESS1.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYADDRESS2.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYCITY.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYSTATE.equals(propertyName)) return PreferencesSystem.class;
-		if (COMPANYZIP.equals(propertyName)) return PreferencesSystem.class;
+		if (COMPANYADDRESS.equals(propertyName)) return PreferencesSystem.class;
 		if (COMPANYPHONE.equals(propertyName)) return PreferencesSystem.class;
 		if (COMPANYFAX.equals(propertyName)) return PreferencesSystem.class;
 		if (COMPANYEMAIL.equals(propertyName)) return PreferencesSystem.class;
@@ -1752,17 +1622,7 @@ public class PreferencesSystem extends ModelBase {
 			return false;
 		if (! SmartEquals(getShutdownMessage(), objT.getShutdownMessage()))
 			return false;
-		if (! SmartEquals(getCompanyTitle(), objT.getCompanyTitle()))
-			return false;
-		if (! SmartEquals(getCompanyAddress1(), objT.getCompanyAddress1()))
-			return false;
-		if (! SmartEquals(getCompanyAddress2(), objT.getCompanyAddress2()))
-			return false;
-		if (! SmartEquals(getCompanyCity(), objT.getCompanyCity()))
-			return false;
-		if (! SmartEquals(getCompanyState(), objT.getCompanyState()))
-			return false;
-		if (! SmartEquals(getCompanyZip(), objT.getCompanyZip()))
+		if (! SmartEquals(getCompanyAddress(), objT.getCompanyAddress()))
 			return false;
 		if (! SmartEquals(getCompanyPhone(), objT.getCompanyPhone()))
 			return false;

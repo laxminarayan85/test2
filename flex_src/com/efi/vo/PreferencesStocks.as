@@ -10,13 +10,13 @@ package com.efi.vo
 	{
 
 		public function PreferencesStocks() {
-			remoteObjectName = "com.efi.printsmith.data.PreferencesStocks";
+		
 		}
-				
 		public var weight:String = "";
 		public var points:String = "";
 		public var microns:String = "";
 		public var plies:String = "";
+		public var millimeters:String = "";
 		public var customerCost:Number = 0;
 		public var customerQuantity:int = 0;
 		public var customerMarkup:Number = 0;

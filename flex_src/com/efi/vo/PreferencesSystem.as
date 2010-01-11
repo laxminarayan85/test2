@@ -25,12 +25,7 @@ package com.efi.vo
 		public var automaticQuit:Boolean = true;
 		public var quitTime:String = "";
 		public var shutdownMessage:String = "";
-		public var companyTitle:String = "";
-		public var companyAddress1:String = "";
-		public var companyAddress2:String = "";
-		public var companyCity:City;
-		public var companyState:State;
-		public var companyZip:Zip;
+		public var companyAddress:Address;
 		public var companyPhone:String = "";
 		public var companyFax:String = "";
 		public var companyEmail:String = "";

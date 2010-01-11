@@ -53,6 +53,10 @@ public class PreferencesStocks extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String MILLIMETERS = "Millimeters";
+	/**
+	 * @generated
+	 */
 	public static final String CUSTOMERCOST = "CustomerCost";
 	/**
 	 * @generated
@@ -242,6 +246,23 @@ public class PreferencesStocks extends ModelBase {
 	 */	
 	public void setPlies(String newVal) {
 		this.plies = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String millimeters;
+	/**
+	 * @generated
+ 	 */
+	public String getMillimeters(){
+		return millimeters; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMillimeters(String newVal) {
+		this.millimeters = newVal;
 	}
  	
 	
@@ -746,6 +767,7 @@ public class PreferencesStocks extends ModelBase {
 		if (POINTS.equals(propertyName)) return getPoints();
 		if (MICRONS.equals(propertyName)) return getMicrons();
 		if (PLIES.equals(propertyName)) return getPlies();
+		if (MILLIMETERS.equals(propertyName)) return getMillimeters();
 		if (CUSTOMERCOST.equals(propertyName)) return getCustomerCost();
 		if (CUSTOMERQUANTITY.equals(propertyName)) return getCustomerQuantity();
 		if (CUSTOMERMARKUP.equals(propertyName)) return getCustomerMarkup();
@@ -788,6 +810,7 @@ public class PreferencesStocks extends ModelBase {
 		if (POINTS.equals(propertyName)) setPoints((String)newValue); else
 		if (MICRONS.equals(propertyName)) setMicrons((String)newValue); else
 		if (PLIES.equals(propertyName)) setPlies((String)newValue); else
+		if (MILLIMETERS.equals(propertyName)) setMillimeters((String)newValue); else
 		if (CUSTOMERCOST.equals(propertyName)) setCustomerCost((Double)newValue); else
 		if (CUSTOMERQUANTITY.equals(propertyName)) setCustomerQuantity((Integer)newValue); else
 		if (CUSTOMERMARKUP.equals(propertyName)) setCustomerMarkup((Double)newValue); else
@@ -833,6 +856,8 @@ public class PreferencesStocks extends ModelBase {
 		if (MICRONS.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (PLIES.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (MILLIMETERS.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (CUSTOMERCOST.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
@@ -906,6 +931,7 @@ public class PreferencesStocks extends ModelBase {
 		if (POINTS.equals(propertyName)) return PreferencesStocks.class;
 		if (MICRONS.equals(propertyName)) return PreferencesStocks.class;
 		if (PLIES.equals(propertyName)) return PreferencesStocks.class;
+		if (MILLIMETERS.equals(propertyName)) return PreferencesStocks.class;
 		if (CUSTOMERCOST.equals(propertyName)) return PreferencesStocks.class;
 		if (CUSTOMERQUANTITY.equals(propertyName)) return PreferencesStocks.class;
 		if (CUSTOMERMARKUP.equals(propertyName)) return PreferencesStocks.class;
@@ -953,6 +979,8 @@ public class PreferencesStocks extends ModelBase {
 		if (! SmartEquals(getMicrons(), objT.getMicrons()))
 			return false;
 		if (! SmartEquals(getPlies(), objT.getPlies()))
+			return false;
+		if (! SmartEquals(getMillimeters(), objT.getMillimeters()))
 			return false;
 		if (! SmartEquals(getCustomerCost(), objT.getCustomerCost()))
 			return false;

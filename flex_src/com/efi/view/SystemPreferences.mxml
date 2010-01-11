@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*"
 width="800" height="678" title="Preferences"
  label="Preferences" name="systempreferences" xmlns:ns1="com.efi.components.*">
- 
+
  	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSystemResult(event)"/>
@@ -617,6 +617,7 @@ width="800" height="678" title="Preferences"
 	}
 
 	private function mapFromPreferencesSystemData():void {
+		//check boxes
 		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging
 		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown
 		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown
@@ -642,7 +643,37 @@ width="800" height="678" title="Preferences"
 
 		//radio buttons
 		opgFirstDayOfWorkWeekValue = preferencesSystem.workFirstDayOfWeek
-		
+
+		//address editor
+		address_editor.setAddress(preferencesSystem.companyAddress);
+
+		this.txtInactivitySeconds.text = preferencesSystem.autoLogOutSeconds.toString();
+		this.txtTimeOfDayQuit.text = preferencesSystem.quitTime;
+		this.txtShutdownNotificationMessage.text = preferencesSystem.shutdownMessage;
+		this.txtPhone.text = preferencesSystem.companyPhone
+		this.txtFax.text = preferencesSystem.companyFax;
+		this.txtEmail.text = preferencesSystem.companyEmail; 
+		this.txtOther1.text = preferencesSystem.companyOther1;
+		this.txtOther2.text = preferencesSystem.companyOther2;
+		this.txtCompanyIdLabel.text = preferencesSystem.companyIdLabel; 
+		this.txtCompanyId.text = preferencesSystem.companyId;
+		this.txtStoreNumber.text = preferencesSystem.companyStoreNumber; 
+		this.txtLocationReference.text = preferencesSystem.companyStoreLocationRef;
+		this.txtIntegers.text = preferencesSystem.numbersIntegers;
+		this.txtPercentages.text = preferencesSystem.numbersPercentages;
+		this.txtAmount.text = preferencesSystem.numbersAmount;
+		this.txtRate.text = preferencesSystem.numbersRate;
+		this.txtFactor.text = preferencesSystem.numbersFactor;
+		this.txtInvoice.text = preferencesSystem.numbersInvoice;
+		this.txtShortPercent.text = preferencesSystem.numbersShortPercent;
+		this.txtRoundTo.text = preferencesSystem.numbersRoundto.toString();
+		this.txtFormat.text = preferencesSystem.displayFormat;
+		this.txtConversionFactor.text = preferencesSystem.conversionFactor.toString();
+		this.txtRoundToAlternateCurrency.text = preferencesSystem.alternateRoundto.toString();
+		this.txtInkWeightSingular.text = preferencesSystem.inkWeightSingular;
+		this.txtInkWeightPlural.text = preferencesSystem.inkWeightPlural;
+			
+
 	}
 	private function mapFromPreferencesAccountingData():void {
 		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
@@ -658,6 +689,38 @@ width="800" height="678" title="Preferences"
 		
 		if (preferencesAccounting.accountingLinkTo != "")
 			cboAccountingPackages.selectedIndex = findItem(preferencesAccounting.accountingLinkTo, AccountingPackagesArray);
+
+		this.txtCreditLimit.text = preferencesAccounting.creditLimit.toString();
+		this.txtFinanceCharge.text = preferencesAccounting.financeChange.toString();
+		this.txtInactivePeriod.text = preferencesAccounting.inactivePeriod.toString();
+		this.txtDefaultSalesRep.text = preferencesAccounting.defaultSalesRep;
+		this.txtDefaultShippingAddress.text = preferencesAccounting.defaultShipping;
+
+		this.txtPastDue.text = preferencesAccounting.pastDue.toString();
+		this.txtDelinquent.text = preferencesAccounting.delinquent.toString();
+		this.txtFrozen.text = preferencesAccounting.frozen.toString();
+		this.txtPastDueArea.text = preferencesAccounting.pastDueNote;
+		this.txtDelinquentArea.text = preferencesAccounting.delinquentNote;
+		this.txtFrozenArea.text = preferencesAccounting.frozenNote;
+
+		this.txtShippingCollected.text = preferencesAccounting.shippingCollected;
+		this.txtActualBankDeposit.text = preferencesAccounting.actualBankDeposit;
+		this.txtUndepositedReceipts.text = preferencesAccounting.undepositedReceipts;
+		this.txtDiscounts.text = preferencesAccounting.discounts;
+		this.txtSalesTax.text = preferencesAccounting.salesTax;
+		this.txtTotalARReceipts.text = preferencesAccounting.totalARReceipts;
+		this.txtDepositsOnInvoices.text = preferencesAccounting.depositsOnInvoices;
+		this.txtNewChargesToAR.text = preferencesAccounting.newChargesToAR;
+		this.txtCashOverShort.text = preferencesAccounting.cashOverShort;
+		this.txtPaidOut.text = preferencesAccounting.paidOut;
+		this.txtRefundChecks.text = preferencesAccounting.refundChecks;
+
+		this.txtInvoicePrefix.text = preferencesAccounting.invoicePrefix;
+		this.txtInvoiceDocument.text = preferencesAccounting.invoiceDocument;
+		this.txtInvoiceSuffix.text = preferencesAccounting.invoiceSuffix;
+		this.txtEstimatePrefix.text = preferencesAccounting.estimatePrefix;
+		this.txtEstimateDocument.text = preferencesAccounting.estimateDocument;
+		this.txtEstimateSuffix.text = preferencesAccounting.estimateSuffix;
 		
 	}
 	private function mapFromPreferencesEstimatingData():void {
@@ -708,6 +771,22 @@ width="800" height="678" title="Preferences"
 			
 		opgChargeDescriptionValue = preferencesEstimating.chargeDescription;
 
+		this.txtNumberOfDaysBeforeDue.text = preferencesEstimating.numberOfDaysBeforeDue.toString();
+		this.txtGripEdge.text = preferencesEstimating.gripEdgeGap.toString();
+		this.txtFolioEdge.text = preferencesEstimating.folioEdge.toString();
+		this.txtColorBar.text = preferencesEstimating.colorBar.toString();
+		this.txtWhiteSpace.text = preferencesEstimating.whiteSpace.toString();
+		this.txtWhiteSpaceRight.text = preferencesEstimating.whiteSpaceRight.toString();
+		this.txtGutter.text = preferencesEstimating.gutter.toString();
+		this.txtBleed.text = preferencesEstimating.bleed.toString();
+		this.txtBleedRight.text = preferencesEstimating.bleedRight.toString();
+		this.txtWhiteSpaceTop.text = preferencesEstimating.whiteSpaceTop.toString();
+		this.txtWhiteSpaceBottom.text = preferencesEstimating.whiteSpaceBottom.toString();
+		this.txtGutterHorizontal.text = preferencesEstimating.gutterHorizontal.toString();
+		this.txtBleedTop.text = preferencesEstimating.bleedTop.toString();
+		this.txtBleedBottom.text = preferencesEstimating.bleedBottom.toString();
+		this.txtDefaultPressCutoff.text = preferencesEstimating.defaultPressCuttOff.toString();
+
 	}
 	private function mapFromPreferencesPOSData():void {
 		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
@@ -732,10 +811,61 @@ width="800" height="678" title="Preferences"
 			cboParity.selectedIndex = findItem(preferencesPOS.parity, ParityArray);
 		if (preferencesPOS.dataSize != "")
 			cboDataSize.selectedIndex = findItem(preferencesPOS.dataSize, DataSizeArray);
+			
+		this.txtReceiptHeader.text = preferencesPOS.receiptHeader;
+		this.txtReceiptFooter.text = preferencesPOS.receiptFooter;
+		this.txtSerialNumber.text = preferencesPOS.startingNumber.toString();
+
+		this.txtSelectedPrinter.text = preferencesPOS.defaultPrinter;
+		this.txtAsciiCodeOpenDrawer.text = preferencesPOS.asciiCodeOpenDrawer.toString();
+		this.txtBlankBeforeReceipt.text = preferencesPOS.blankLinesBeforeReceipt.toString();
+		this.txtBlankAfterReceipt.text = preferencesPOS.blankLinesAfterReceipt.toString();
+		this.txtReceiptStartCode.text = preferencesPOS.receiptStartCode;
+		this.txtReceiptEndCode.text = preferencesPOS.receiptEndCode;
+
 	}
 
 	private function mapFromPreferencesStocksData():void {
 		this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
+
+		this.txtstdqty1.text = preferencesStocks.stdQty1.toString();
+		this.txtstdqty2.text = preferencesStocks.stdQty2.toString();
+		this.txtstdqty3.text = preferencesStocks.stdQty3.toString();
+		this.txtstdqty4.text = preferencesStocks.stdQty4.toString();
+		this.txtstdqty5.text = preferencesStocks.stdQty5.toString();
+		this.txtstdqty6.text = preferencesStocks.stdQty6.toString();
+
+		this.txtstdmarkup1.text = preferencesStocks.stdMarkup1.toString();
+		this.txtstdmarkup2.text = preferencesStocks.stdMarkup2.toString();
+		this.txtstdmarkup3.text = preferencesStocks.stdMarkup3.toString();
+		this.txtstdmarkup4.text = preferencesStocks.stdMarkup4.toString();
+		this.txtstdmarkup5.text = preferencesStocks.stdMarkup5.toString();
+		this.txtstdmarkup6.text = preferencesStocks.stdMarkup6.toString();
+	
+		this.txtStockWeight.text = preferencesStocks.weight;
+		this.txtstockPoints.text = preferencesStocks.points;
+		this.txtStockMicrons.text = preferencesStocks.microns;
+		this.txtStockPlies.text = preferencesStocks.plies;
+		this.txtStockMillimeters.text = preferencesStocks.millimeters;
+					
+		this.txtblankqty1.text = preferencesStocks.blankQty1.toString();
+		this.txtblankqty2.text = preferencesStocks.blankQty2.toString();
+		this.txtblankqty3.text = preferencesStocks.blankQty3.toString();
+		this.txtblankqty4.text = preferencesStocks.blankQty4.toString();
+		this.txtblankqty5.text = preferencesStocks.blankQty5.toString();
+		this.txtblankqty6.text = preferencesStocks.blankQty6.toString();
+		
+		this.txtblankmarkup1.text = preferencesStocks.blankMarkup1.toString();
+		this.txtblankmarkup2.text = preferencesStocks.blankMarkup2.toString();
+		this.txtblankmarkup3.text = preferencesStocks.blankMarkup3.toString();
+		this.txtblankmarkup4.text = preferencesStocks.blankMarkup4.toString();
+		this.txtblankmarkup5.text = preferencesStocks.blankMarkup5.toString();
+		this.txtblankmarkup6.text = preferencesStocks.blankMarkup6.toString();
+
+		this.txtcustomercost.text = preferencesStocks.customerCost.toString();
+		this.txtcustomerquantity.text = preferencesStocks.customerQuantity.toString();
+		this.txtcustomermarkup.text = preferencesStocks.customerMarkup.toString();
+
 	}
 
 	private function mapFromPreferencesAllData():void {
@@ -743,6 +873,7 @@ width="800" height="678" title="Preferences"
 		mapFromPreferencesEstimatingData();
 		mapFromPreferencesPOSData();
 		mapFromPreferencesSystemData();
+		mapFromPreferencesStocksData();
 //		this.chkAlwaysIncludePastDue.selected 
 //		this.chkColorPastDueEntries.selected 
 //		this.chkShowDocumentType.selected
@@ -753,6 +884,7 @@ width="800" height="678" title="Preferences"
 		mapToPreferencesEstimatingData();
 		mapToPreferencesPOSData();
 		mapToPreferencesSystem();
+		mapToPreferencesStocksData();
 //		this.chkAlwaysIncludePastDue.selected 
 //		this.chkColorPastDueEntries.selected 
 //		this.chkShowDocumentType.selected
@@ -761,6 +893,9 @@ width="800" height="678" title="Preferences"
 	}
 
 	private function mapToPreferencesSystem():void {
+		
+		preferencesSystem.companyAddress = address_editor.getAddress();
+
 		preferencesSystem.activateUserEventLogging = this.chkActivateUserEventLogging.selected
 		preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
 		preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
@@ -786,6 +921,33 @@ width="800" height="678" title="Preferences"
 
 //Radio buttons
 		preferencesSystem.workFirstDayOfWeek = opgFirstDayOfWorkWeekValue;
+
+		//textboxes
+		preferencesSystem.autoLogOutSeconds = parseInt(this.txtInactivitySeconds.text);
+		preferencesSystem.quitTime = this.txtTimeOfDayQuit.text;
+		preferencesSystem.shutdownMessage = this.txtShutdownNotificationMessage.text;
+		preferencesSystem.companyPhone = this.txtPhone.text;
+		preferencesSystem.companyFax =txtFax.text;
+		preferencesSystem.companyEmail = this.txtEmail.text; 
+		preferencesSystem.companyOther1 = this.txtOther1.text;
+		preferencesSystem.companyOther2 = this.txtOther2.text;
+		preferencesSystem.companyIdLabel = this.txtCompanyIdLabel.text; 
+		preferencesSystem.companyId = this.txtCompanyId.text;
+		preferencesSystem.companyStoreNumber = this.txtStoreNumber.text; 
+		preferencesSystem.companyStoreLocationRef = this.txtLocationReference.text;
+		preferencesSystem.numbersIntegers = this.txtIntegers.text;
+		preferencesSystem.numbersPercentages = this.txtPercentages.text;
+		preferencesSystem.numbersAmount = this.txtAmount.text;
+		preferencesSystem.numbersRate = this.txtRate.text;
+		preferencesSystem.numbersFactor = this.txtFactor.text;
+		preferencesSystem.numbersInvoice = this.txtInvoice.text;
+		preferencesSystem.numbersShortPercent = this.txtShortPercent.text;
+		preferencesSystem.numbersRoundto = parseInt(this.txtRoundTo.text);
+		preferencesSystem.displayFormat = this.txtFormat.text;
+		preferencesSystem.conversionFactor = parseFloat(this.txtConversionFactor.text);
+		preferencesSystem.alternateRoundto = parseInt(this.txtRoundToAlternateCurrency.text);
+		preferencesSystem.inkWeightSingular = this.txtInkWeightSingular.text;
+		preferencesSystem.inkWeightPlural = this.txtInkWeightPlural.text;
 		
 	}
 	private function mapToPreferencesAccountingData():void {
@@ -802,6 +964,40 @@ width="800" height="678" title="Preferences"
 		
 		if (cboJournalDocumentPreference != null && cboJournalDocumentPreference.selectedItem != null)
 			preferencesAccounting.journalDocumentPreference = cboJournalDocumentPreference.selectedItem.name;
+
+		//textboxes
+		preferencesAccounting.creditLimit = parseFloat(this.txtCreditLimit.text);
+		preferencesAccounting.financeChange = parseFloat(this.txtFinanceCharge.text);
+		preferencesAccounting.inactivePeriod = parseFloat(this.txtInactivePeriod.text);
+		preferencesAccounting.defaultSalesRep = this.txtDefaultSalesRep.text;
+		preferencesAccounting.defaultShipping = this.txtDefaultShippingAddress.text;
+
+		preferencesAccounting.pastDue = parseInt(this.txtPastDue.text);
+		preferencesAccounting.delinquent = parseInt(this.txtDelinquent.text);
+		preferencesAccounting.frozen = parseInt(this.txtFrozen.text);
+		preferencesAccounting.pastDueNote = this.txtPastDueArea.text;
+		preferencesAccounting.delinquentNote = this.txtDelinquentArea.text;
+		preferencesAccounting.frozenNote = this.txtFrozenArea.text;
+
+		preferencesAccounting.shippingCollected = this.txtShippingCollected.text;
+		preferencesAccounting.actualBankDeposit = this.txtActualBankDeposit.text;
+		preferencesAccounting.undepositedReceipts = this.txtUndepositedReceipts.text;
+		preferencesAccounting.discounts = this.txtDiscounts.text;
+		preferencesAccounting.salesTax = this.txtSalesTax.text;
+		preferencesAccounting.totalARReceipts = this.txtTotalARReceipts.text;
+		preferencesAccounting.depositsOnInvoices = this.txtDepositsOnInvoices.text;
+		preferencesAccounting.newChargesToAR = this.txtNewChargesToAR.text;
+		preferencesAccounting.cashOverShort = this.txtCashOverShort.text;
+		preferencesAccounting.paidOut = this.txtPaidOut.text;
+		preferencesAccounting.refundChecks = this.txtRefundChecks.text;
+
+		preferencesAccounting.invoicePrefix = this.txtInvoicePrefix.text;
+		preferencesAccounting.invoiceDocument = this.txtInvoiceDocument.text;
+		preferencesAccounting.invoiceSuffix = this.txtInvoiceSuffix.text;
+		preferencesAccounting.estimatePrefix = this.txtEstimatePrefix.text;
+		preferencesAccounting.estimateDocument = this.txtEstimateDocument.text;
+		preferencesAccounting.estimateSuffix = this.txtEstimateSuffix.text;
+
 	}
 	private function mapToPreferencesEstimatingData():void {
 		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
@@ -851,6 +1047,23 @@ width="800" height="678" title="Preferences"
 
 		preferencesEstimating.chargeDescription = opgChargeDescriptionValue;
 		
+		//textboxes
+		preferencesEstimating.numberOfDaysBeforeDue = parseInt(this.txtNumberOfDaysBeforeDue.text);
+		preferencesEstimating.gripEdgeGap = parseFloat(this.txtGripEdge.text);
+		preferencesEstimating.folioEdge = parseFloat(this.txtFolioEdge.text);
+		preferencesEstimating.colorBar = parseFloat(this.txtColorBar.text);
+		preferencesEstimating.whiteSpace = parseFloat(this.txtWhiteSpace.text);
+		preferencesEstimating.whiteSpaceRight = parseFloat(this.txtWhiteSpaceRight.text);
+		preferencesEstimating.gutter = parseFloat(this.txtGutter.text);
+		preferencesEstimating.bleed = parseFloat(this.txtBleed.text);
+		preferencesEstimating.bleedRight = parseFloat(this.txtBleedRight.text);
+		preferencesEstimating.whiteSpaceTop = parseFloat(this.txtWhiteSpaceTop.text);
+		preferencesEstimating.whiteSpaceBottom = parseFloat(this.txtWhiteSpaceBottom.text);
+		preferencesEstimating.gutterHorizontal = parseFloat(this.txtGutterHorizontal.text);
+		preferencesEstimating.bleedTop = parseFloat(this.txtBleedTop.text);
+		preferencesEstimating.bleedBottom = parseFloat(this.txtBleedBottom.text);
+		preferencesEstimating.defaultPressCuttOff = parseFloat(this.txtDefaultPressCutoff.text);
+
 	}
 	private function mapToPreferencesPOSData():void {
 		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
@@ -876,10 +1089,61 @@ width="800" height="678" title="Preferences"
 		if (cboDataSize != null && cboDataSize.selectedItem != null)
 			preferencesPOS.dataSize = cboDataSize.selectedItem.name;
 		
-		
+		//textboxes
+		preferencesPOS.receiptHeader = this.txtReceiptHeader.text
+		preferencesPOS.receiptFooter = this.txtReceiptFooter.text
+		preferencesPOS.startingNumber = parseInt(this.txtSerialNumber.text);
+
+		preferencesPOS.defaultPrinter = this.txtSelectedPrinter.text;
+		preferencesPOS.asciiCodeOpenDrawer = parseInt(this.txtAsciiCodeOpenDrawer.text);
+		preferencesPOS.blankLinesBeforeReceipt = parseInt(this.txtBlankBeforeReceipt.text);
+		preferencesPOS.blankLinesAfterReceipt = parseInt(this.txtBlankAfterReceipt.text);
+		preferencesPOS.receiptStartCode = this.txtReceiptStartCode.text;
+		preferencesPOS.receiptEndCode = this.txtReceiptEndCode.text;
+
+
 	}
 	private function mapToPreferencesStocksData():void {
 		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
+		
+		//textboxes
+		preferencesStocks.stdQty1 = parseInt(this.txtstdqty1.text);
+		preferencesStocks.stdQty2 = parseInt(this.txtstdqty2.text);
+		preferencesStocks.stdQty3 = parseInt(this.txtstdqty3.text);
+		preferencesStocks.stdQty4 = parseInt(this.txtstdqty4.text);
+		preferencesStocks.stdQty5 = parseInt(this.txtstdqty5.text);
+		preferencesStocks.stdQty6 = parseInt(this.txtstdqty6.text);
+		preferencesStocks.stdMarkup1 = parseFloat(this.txtstdmarkup1.text);
+		preferencesStocks.stdMarkup2 = parseFloat(this.txtstdmarkup2.text);
+		preferencesStocks.stdMarkup3 = parseFloat(this.txtstdmarkup3.text);
+		preferencesStocks.stdMarkup4 = parseFloat(this.txtstdmarkup4.text);
+		preferencesStocks.stdMarkup5 = parseFloat(this.txtstdmarkup5.text);
+		preferencesStocks.stdMarkup6 = parseFloat(this.txtstdmarkup6.text);
+	
+		preferencesStocks.weight = this.txtStockWeight.text;
+		preferencesStocks.points = this.txtstockPoints.text;
+		preferencesStocks.microns = this.txtStockMicrons.text;
+		preferencesStocks.plies = this.txtStockPlies.text;
+		preferencesStocks.millimeters = this.txtStockMillimeters.text;
+					
+		preferencesStocks.blankQty1 = parseInt(this.txtblankqty1.text);
+		preferencesStocks.blankQty2 = parseInt(this.txtblankqty2.text);
+		preferencesStocks.blankQty3 = parseInt(this.txtblankqty3.text);
+		preferencesStocks.blankQty4 = parseInt(this.txtblankqty4.text);
+		preferencesStocks.blankQty5 = parseInt(this.txtblankqty5.text);
+		preferencesStocks.blankQty6 = parseInt(this.txtblankqty6.text);
+		
+		preferencesStocks.blankMarkup1 = parseFloat(this.txtblankmarkup1.text);
+		preferencesStocks.blankMarkup2 = parseFloat(this.txtblankmarkup2.text);
+		preferencesStocks.blankMarkup3 = parseFloat(this.txtblankmarkup3.text);
+		preferencesStocks.blankMarkup4 = parseFloat(this.txtblankmarkup4.text);
+		preferencesStocks.blankMarkup5 = parseFloat(this.txtblankmarkup5.text);
+		preferencesStocks.blankMarkup6 = parseFloat(this.txtblankmarkup6.text);
+
+		preferencesStocks.customerCost = parseFloat(this.txtcustomercost.text);
+		preferencesStocks.customerQuantity = parseInt(this.txtcustomerquantity.text);
+		preferencesStocks.customerMarkup = parseFloat(this.txtcustomermarkup.text);
+
 	}
 	
 	private function messageHandler(message:IMessage):void{
@@ -1822,7 +2086,6 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93" text="{preferencesEstimating.gutterHorizontal}"/>
 				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimating.bleedTop}"/>
 				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimating.bleedBottom}"/>
-
 
 				<mx:Label x="27" y="462" text="Default Press Cutoff:"/>
 				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
