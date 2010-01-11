@@ -37,6 +37,7 @@ public class DefaultDataFactory {
 		ProcessShippingMethod();
 		ProcessProductionLocations();
 		ProcessColumnNames();
+		ProcessEstimatorTypes();
 	}
 
 	private void ProcessStateFile(){
@@ -52,6 +53,14 @@ public class DefaultDataFactory {
 			LoadColumnNamesData(new String[]{currentPath});
 		} catch (IOException e) {
 			log.debug("** Exception: ColumnNames file Load failed.");
+		}
+	}
+
+	private void ProcessEstimatorTypes(){
+		try {
+			LoadEstimatorTypesData(new String[]{currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: EstimatorTypes file Load failed.");
 		}
 	}
 
@@ -418,7 +427,28 @@ public class DefaultDataFactory {
 			}			
 		}
 	}
-	
+
+	private void LoadEstimatorTypesData(String[] args) throws IOException
+	{
+		if (args.length == 0) args = new String[]{".."};
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i <fileNames.length; i++)
+		{
+			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("estimatortypes")==true)
+			{
+				File f = new File(pathName.getPath(),fileNames[i]);
+				int result = doEstimatorTypes(f);
+				if (result < 0)
+				{
+					log.debug("** Exception: EstimatorTypes file Load failed.");
+				}
+				break;
+			}			
+		}
+	}
+
 	private int doStatesFile(File file) throws java.io.IOException{
 
 		List<?> stateList= (List<?>) dataservice.getAll("State");
@@ -501,6 +531,52 @@ public class DefaultDataFactory {
 		    		columnnames.setName(line.trim());
 					try {
 						dataservice.addUpdate(columnnames);
+					} catch (Exception e) {
+						log.debug("** Exception: " + e.getMessage());
+						break;
+					}
+	    		}
+	    	}
+	    }
+	    return rv;
+	}
+
+	private int doEstimatorTypes(File file) throws java.io.IOException{
+
+		List<?> estimatorTypesList = (List<?>) dataservice.getAll("EstimatorTypes");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+	    java.io.BufferedReader br = new java.io.BufferedReader(ip);
+	    String line = null;
+	    int rv = -1;
+	    while ((line = br.readLine()) != null){
+	    	if (line.length() > 0)
+	    	{
+	    		if (estimatorTypesList.size() > 0){
+	    			boolean found = false;
+	    			for (int i = 0; i < estimatorTypesList.size(); i++)
+    	    		{
+    	    			if (((EstimatorTypes)estimatorTypesList.get(i)).getName().trim().equals(line.trim()) == true){
+    	    				found = true;
+    	    				break;
+    	    			}
+	    			}
+	    			if (found != true){
+	    				EstimatorTypes estimatortypes = new EstimatorTypes();
+	    				estimatortypes.setName(line.trim());
+	    				try {
+	    					dataservice.addUpdate(estimatortypes);
+	    				} catch (Exception e) {
+	    					log.debug("** Exception: " + e.getMessage());
+	    					break;
+	    				}
+	    			}
+	    		}else{
+	    			EstimatorTypes estimatortypes = new EstimatorTypes();
+	    			estimatortypes.setName(line.trim());
+					try {
+						dataservice.addUpdate(estimatortypes);
 					} catch (Exception e) {
 						log.debug("** Exception: " + e.getMessage());
 						break;

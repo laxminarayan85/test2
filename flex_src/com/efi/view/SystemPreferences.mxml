@@ -2025,7 +2025,14 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="100" headerText="Estimator" dataField="estimator" editable="false"/>
+						<mx:DataGridColumn width="100" headerText="Estimator" dataField="estimator"
+							itemEditor="com.efi.itemRenderers.EstimatorTypesEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.estimator.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button x="50" y="510" width="38" height="38" click="doNewPriceMethod();">
