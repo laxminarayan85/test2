@@ -64,6 +64,7 @@
 
 	import com.efi.events.StockPickerSelectEvent;
 	import com.efi.events.AccountPickerSelectEvent;
+	import com.efi.events.PriceListPickerSelectEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -174,15 +175,27 @@
 	public function setPriceList(price:PriceListBase): void {
 	 	this.priceList = price as PriceList;
 	 	stockDefinitions.defaultPriceList = price as PriceList;
-	 	
 	}
 	
 	private function doPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "PriceList";
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
 	}
+	
+    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
+ 		if (evt.priceList != null) {
+			stock.defaultPriceList = evt.priceList as PriceList;
+		} else {
+			stock.defaultPriceList = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}     	
+    }
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
 
 	private function loadUomArray():void {
 		

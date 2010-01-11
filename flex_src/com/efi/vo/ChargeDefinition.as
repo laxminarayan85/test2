@@ -39,7 +39,7 @@ package com.efi.vo
 		public var material:Number = 0;
 		public var minimum:Number = 0;
 		public var markup:Number = 0;
-		public var priceList:PriceListElement;
+		public var priceList:PriceList;
 		public var wasteChart:WasteChart;
 		public var fixedWaste:Number = 0;
 		public var wastePercentage:Number = 0;

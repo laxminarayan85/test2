@@ -19,6 +19,7 @@ width="912" height="722" title="Press Definitions"
 	import com.efi.vo.PriceList;
 	import com.efi.vo.WasteChart;
 	import com.efi.pages.DefaultPressPicker;
+	import com.efi.events.PriceListPickerSelectEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -82,38 +83,39 @@ width="912" height="722" title="Press Definitions"
 	private function doGet():void{
 	 	var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
 		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.formIsEmpty = true; 
-	   	    
+		titleWindow.formIsEmpty = true;
 	}    
+	
 	private function doPressPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "PriceList";
-	    press =  true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPressPriceList);
 	}
 	
 	private function doSpeedTable():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.parentContainer = this;
-		titleWindow.itemType = "SpeedTable";
-		speedTable = true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "SpeedTable";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectSpeedTable);
 	}
+	
 	private function doStockPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "PriceList";
-	    stock = true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectStockPriceList);
 	}
 
 	private function doWasteChart():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "WasteChart";
-	    waste = true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "WasteChart";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
 	}
 	
 	public function setPressDef(pressdef:PressDefinition):void
@@ -240,7 +242,46 @@ width="912" height="722" title="Press Definitions"
 		+ ev.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
-                                   
+        
+    private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.wasteChart = evt.priceList as WasteChart;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectPressPriceList(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.pressPriceList = evt.priceList as PriceList;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.speedTable = evt.priceList as SpeedTable;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectStockPriceList(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.stockPriceList = evt.priceList as PriceList;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
 ]]>
                              
 </mx:Script>	

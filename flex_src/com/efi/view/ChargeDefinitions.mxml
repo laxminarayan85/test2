@@ -15,6 +15,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.events.PriceListPickerSelectEvent;
 	import com.efi.pages.ChargeCosting;
 	import com.efi.vo.ShippingMethod;
     import com.efi.vo.PriceList;
@@ -72,11 +73,6 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 
 	[Bindable]		
     private var enableSave:Boolean = true;
-
-    [Bindable]
-    private var press:Boolean = false;
-    [Bindable]
-	private var waste:Boolean = false;
 
 	[Bindable]                                         
 	private var charge:ChargeDefinition;
@@ -893,34 +889,51 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 		}
 		return false;
 	}
+	private function doPressPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	}
 
 	private function doPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "PriceList";
-	    press = true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
 	}
 
 	private function doWasteChart():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "WasteChart";
-	    waste = true;
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
 	}
-	public function setPriceList(price:PriceListBase): void {
-	 	if (press){
-	 		//priceList seems to be defined as a PriceListElement... not sure if that is what is really wanted
-	 		//charge.priceList = price as PriceList;
-	 		press = false;
-	 	}
-	 	if (waste){
-	 		charge.wasteChart = price as WasteChart;
-	 		waste= false;
-	 	}
-	}   
 	
+    private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			charge.wasteChart = evt.priceList as WasteChart;
+		} else {
+			charge.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
+ 		if (evt.priceList != null) {
+			charge.priceList = evt.priceList as PriceList;
+		} else {
+			charge.priceList = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}     	
+    }
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
+
 	private function updateButtons():void {
 		enableNewCommand = newCommandEnabled();
 		enableNewCategory = newCategoryEnabled();

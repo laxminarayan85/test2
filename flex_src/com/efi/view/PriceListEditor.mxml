@@ -192,21 +192,6 @@
 		}
 
 		var editPage:Container = parentContainer;
-
-		switch(editPage.className) {
-			case "PressDefinitions":
-				(editPage as PressDefinitions).setPriceList(priceList);
-				break;
-			case "ChargeDefinitions": 
-				(editPage as ChargeDefinitions).setPriceList(priceList as WasteChart);
-				break;
-			case "StockDefinitions":
-				(editPage as StockDefinitions).setPriceList(priceList);
-				break;
-			case "CopierDefinitions" :
-				(editPage as CopierDefinitions).setPriceList(priceList);
-				break;
-		}
 	}
 		
 	private function doNewPriceListElement():void {
