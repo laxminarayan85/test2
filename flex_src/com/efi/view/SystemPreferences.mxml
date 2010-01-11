@@ -561,7 +561,8 @@ width="800" height="678" title="Preferences"
 		dataServicePOS.addUpdate(preferencesPOS);
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
-
+		dataServiceStocks.addUpdate(preferencesStocks);
+		
 		//remove and or delete items from table
 		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
 			dataServiceCashRegister.deleteItem(deleteitem1, deleteitem1.id);
