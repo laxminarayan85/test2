@@ -156,7 +156,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:Label x="82" y="364" text="Created:"/>
 		<mx:Text x="144" y="364" text="{chargeCost.created}" width="186"/>
 		<mx:Label x="52" y="384" text="Last Modified:"/>
-		<mx:Text x="144" y="384" text="{chargeCost.modified}&#xd;" width="186"/>
+		<mx:Text x="144" y="384" text="{chargeCost.modified}" width="186"/>
 	</mx:Canvas>
 
 <mx:ControlBar horizontalAlign="center">                                   

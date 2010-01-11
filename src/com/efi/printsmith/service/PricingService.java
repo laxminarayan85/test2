@@ -36,7 +36,7 @@ public class PricingService {
 			}
 		} catch (RuntimeException e) {
 			log.error(e);
-		}
+		}	
 	}
 	
 	public Charge priceCharge(Charge charge) {

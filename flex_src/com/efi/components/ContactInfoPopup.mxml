@@ -83,13 +83,11 @@
 	}
 
 	private function handleLoadComLinks(ev:ResultEvent):void {
-		var	selectedItem = comlink_combo.selectedItem;
+		var	selectedItem:String = comlink_combo.selectedItem as String;
 	 	comLinkDataProvider = ev.result as ArrayCollection;
 		if (selectedItem != null){
 	 		comlink_combo.selectedIndex = findItem (selectedItem,comLinkDataProvider);
 	 	}
-//	 	else 
-//	 		comlink_combo.selectedIndex = findItem(this.contact.city.name, cityDataProvider);
 	}   
 
 	private function handleSaveComLinkResult(ev:ResultEvent):void {

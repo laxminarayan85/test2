@@ -158,6 +158,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
 	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
 	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+		charge_stack.selectedChild = charge_blank_canvas;
 	    throbber.play();
 		updateControlState();
 	}      
@@ -350,7 +351,7 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 	private function doNewCommand():void {
 		var chargeCommand:ChargeCommand = new ChargeCommand();
 		chargeCommand.name = "Untitled";
-		
+		dataService.addUpdate(chargeCommand);
 		fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
 	
@@ -1019,6 +1020,8 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 				<comp:Throbber id="throbber" height="20" width="20" x="103.5" y="95"/>
 			</mx:Canvas>
 		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
+			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
+			</mx:Canvas>
 			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}"/>
@@ -1133,8 +1136,6 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 			<mx:Canvas label="charge_command_canvas" width="100%" height="100%" id="charge_command_canvas">
 				<mx:TextInput x="125" y="3" width="430" id="charge_command_name_edit" text="{chargeCommand.name}"/>
 				<mx:Label x="13" y="5" text="Command Name:" textAlign="right"/>
-			</mx:Canvas>
-			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
 			</mx:Canvas>
 		</mx:ViewStack>
 	</mx:HDividedBox>

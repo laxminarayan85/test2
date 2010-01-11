@@ -4,16 +4,6 @@
 		   height="100%"
 		   xmlns:fc="http://www.adobe.com/2006/fc"
 		   creationComplete="init()">
-	<mx:Style>
-        TitleWindow {
-            roundedBottomCorners: false;
-            borderColor: haloSilver;
-            backgroundColor: haloSilver;
-            borderAlpha: 0.8;
-            backgroundAlpha: 0.8;
-            dropShadowEnabled: false;
-        }
-    </mx:Style>
 	<!--	<mx:LinkButton x="252" y="93" label="Edit" id="edit_button" click="doEditContact()"/>
 	-->
 	<mx:Script>

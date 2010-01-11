@@ -84,7 +84,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
     
+    [Bindable]
     private var enableSave:Boolean = true;
+    
     private var contacts:ArrayCollection = new ArrayCollection();
                  
 	[Bindable]                                         

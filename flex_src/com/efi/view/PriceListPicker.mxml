@@ -22,7 +22,8 @@
     import com.efi.view.EditCustomer;    
     import com.efi.view.PressDefinitions;
     import com.efi.vo.Charge;        
-	import mx.managers.PopUpManager;       
+	import mx.managers.PopUpManager;     
+	import com.efi.vo.SpeedTable;  
 	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListBase; 
 	import com.efi.vo.WasteChart;                          
@@ -73,7 +74,7 @@
 		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart") {
+			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable") {
 				dataService.getAll(payloadType)
 			}
 		}
@@ -85,7 +86,7 @@
 
 	    PopUpManager.centerPopUp(this);
 	    if (this.itemType == null)
-	    	this.itemType = "PriceListBase";
+	    	this.itemType = "PriceList";
 
 		dataService.getAll(this.itemType);
 		
@@ -125,10 +126,26 @@
 	}     
 	
 	private function doNew():void {
+	    var newPriceList:PriceListBase = null;
+	    switch (this.itemType) {
+	    case "WasteChart":
+	    	newPriceList = new WasteChart();
+	    	break;
+	    case "PriceList":
+	    	newPriceList = new PriceList();
+	    	break;
+	    case "SpeedTable":
+	    	newPriceList = new SpeedTable();
+	    	break;
+	    }
+	    if (newPriceList == null) {
+	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);
+	    	return
+	    }
 		var editPage:Container = parentContainer;
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.itemType= this.itemType;
+	    titleWindow.setPriceList(newPriceList);
 		PopUpManager.removePopUp(this);
 		dataService.getAll(this.itemType);
 		
@@ -138,7 +155,7 @@
 		var editPage:Container = parentContainer;
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.mapfromPricelist(dataGrid.selectedItem as PriceListBase);
+	    titleWindow.setPriceList(dataGrid.selectedItem as PriceListBase);
 		PopUpManager.removePopUp(this);
 	}
 		

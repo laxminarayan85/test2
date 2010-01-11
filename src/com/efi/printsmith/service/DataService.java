@@ -151,6 +151,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
 			log.debug("** getAccountsByPartialName called.");
@@ -163,7 +164,6 @@ public class DataService {
 			List<Account> accounts = query.getResultList();
 
 			if (accounts != null)
-
 				log.debug("** Found " + accounts.size() + "records:");
 
 			return accounts;
@@ -173,6 +173,7 @@ public class DataService {
 		return new ArrayList<Account>();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Employee> getByEmployeesPartialName(String name)
 			throws Exception {
 		try {
@@ -196,6 +197,7 @@ public class DataService {
 		return new ArrayList<Employee>();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByPartialName(String name) throws Exception {
 		try {
 			log.debug("** getCountactsByPartialName called.");
@@ -338,6 +340,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Invoice> getByAccountId(String className, Long id)
 			throws Exception {
 		try {
@@ -359,6 +362,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByAccountId(String className, Long id)
 			throws Exception {
 		try {
@@ -379,7 +383,8 @@ public class DataService {
 		}
 		return null;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByClockInOut(String className, Employee employee)
 			throws Exception {
 		try {
@@ -405,6 +410,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByClockInOutBreak(String className,
 			Employee employee) throws Exception {
 		try {
@@ -430,6 +436,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByTimeCardByEmployee(String className,
 			Employee employee) throws Exception {
 		try {
@@ -455,6 +462,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Period> getByPeriodOpen(String className) throws Exception {
 		try {
 			log.debug("** getByEmployee Id called.");
@@ -473,6 +481,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<SecuritySetup> getByAccessGroup(String className,
 			AccessGroup accessGroup) throws Exception {
 		try {
@@ -493,6 +502,7 @@ public class DataService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
 		log.debug("** deleteObject called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
