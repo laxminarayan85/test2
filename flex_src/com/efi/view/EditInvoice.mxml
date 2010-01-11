@@ -257,7 +257,7 @@
 			{
 				var target:EditJob=event.target as EditJob;
 
-				if (target.job != null)
+				if (target.job != null && !invoice.jobs.contains(target.job))
 				{
 					invoice.jobs.addItem(target.job);
 				}
