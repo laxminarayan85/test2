@@ -32,6 +32,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.vo.Estimate;
 	import com.efi.vo.Invoice;
 	import mx.controls.Alert;                          
@@ -285,6 +286,33 @@
 		}
 	}
 
+	public function getAccountLabel(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:Invoice = item as Invoice;
+		
+		if (tmpInvoice != null && tmpInvoice.account != null && tmpInvoice.account.title != null && tmpInvoice.account.title != "") {
+			return tmpInvoice.account.title;
+		} else {
+			return "None";
+		}
+	}
+	
+	public function getContactLabel(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:Invoice = item as Invoice;
+		
+		if (tmpInvoice != null && tmpInvoice.contact != null && tmpInvoice.contact.firstName != null && tmpInvoice.contact.lastName != null) {
+			var retVal:String = tmpInvoice.contact.firstName + " " + tmpInvoice.contact.lastName;
+			
+			if (retVal != "") {
+				return retVal;
+			} else {
+				return "None";
+			}
+		} else {
+			return "None";
+		}
+
+	}
+
 ]]>        
 </mx:Script>
 	<mx:Tree width="140"
@@ -303,9 +331,9 @@
 		<mx:Canvas width="100%" height="100%">
 			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0" dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()">
 				<mx:columns>
-					<mx:DataGridColumn headerText="Account" dataField="name"/>
+					<mx:DataGridColumn headerText="Account" labelFunction="getAccountLabel"/>
 					<mx:DataGridColumn headerText="Document #" dataField="invoiceNumber"/>
-					<mx:DataGridColumn headerText="Contact" dataField="contact"/>
+					<mx:DataGridColumn headerText="Contact" dataField="contact.firstName + contact.lastName"/>
 					<mx:DataGridColumn headerText="Wanted Date" dataField="wantedDate"/>
 					<mx:DataGridColumn headerText="Hold State" dataField="holdState.name"/>
 				</mx:columns>

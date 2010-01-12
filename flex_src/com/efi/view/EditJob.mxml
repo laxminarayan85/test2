@@ -260,6 +260,11 @@
 				job.location=job_location.selectedItem as Location;
 				if (run_method_radiogroup.selectedValue != null)
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
+				
+				job.parentSize = job_parent.text;
+				job.runSize = job_size.text;
+				job.foldedSize = job_fold_size.text;
+				job.finishSize = job_finish_size.text;
 			}
 
 			private function mapFromJobData():void
@@ -294,6 +299,12 @@
 			private function handleLoadDimensionResult(ev:ResultEvent):void
 			{
 				dimensions=ev.result as ArrayCollection;
+
+				this.job_parent.selectedIndex = findItem(job.parentSize, dimensions);
+				this.job_size.selectedIndex = findItem(job.runSize, dimensions);
+				this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensions);
+				this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensions);
+
 			}
 			
 			private function handleLoadPressResult(ev:ResultEvent):void
