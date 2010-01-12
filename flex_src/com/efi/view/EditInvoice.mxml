@@ -261,6 +261,20 @@
 				{
 					invoice.jobs.addItem(target.job);
 				}
+				
+				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
+				if (invoice.jobs != null && invoice.jobs.length > 0) {0
+					var i:int;
+					invoice.subTotal = 0;
+					for (i=0; i<invoice.jobs.length; i++) {
+						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;	
+					
+						invoice.subTotal += tmpJob.price;
+					}
+				}
+				
+				invoice.grandTotal = invoice.subTotal;
+				invoice.amountDue = invoice.grandTotal;
 			}
 
 			private function doChangeAcct():void
@@ -949,6 +963,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="net_subtotal_text"
+									 text="{invoice.priceSubTotal}"
 									 height="20"/>
 							<mx:Label x="24"
 									  y="54"
@@ -987,6 +1002,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="amt_due_text"
+									 text="{invoice.amountDue}"
 									 height="20"/>
 						</mx:Canvas>
 						<mx:Canvas label="costing_total_canvas"
