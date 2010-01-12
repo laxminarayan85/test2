@@ -17,6 +17,9 @@ package com.efi.control
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);
 			this.addCommand(ModelQueryByCriteriaEvent.QUERYBYCRITERIA, ModelQueryByCriteriaCommand);
 			this.addCommand(ModelGetSingleEvent.GETSINGLE, ModelGetSingleCommand);
+			this.addCommand(PriceJobEvent.PRICEJOB, PriceJobCommand);
+			this.addCommand(PriceChargeEvent.PRICECHARGE, PriceChargeCommand);
+			this.addCommand(PriceInvoiceEvent.PRICEINVOICE, PriceInvoiceCommand);
 		}
 		
 	}

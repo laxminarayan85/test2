@@ -3,6 +3,7 @@ package com.efi.events
 	import flash.events.Event;
 	import mx.rpc.IResponder;
 	import com.efi.vo.ModelBase;
+	import com.efi.vo.Charge;
 	
 	public class PriceChargeEvent extends EventBase
 	{

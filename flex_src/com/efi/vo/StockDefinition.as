@@ -69,7 +69,7 @@ package com.efi.vo
 		public var listPerM4:int = 0;
 		public var listPerM5:int = 0;
 		public var listPerM6:int = 0;
-		public var normalRunSize:int = 0;
+		public var normalRunSize:String = "";
 		public var cutsPer100:int = 0;
 		public var minCutCharge:Number = 0;
 		public var defaultPress:PressDefinition;

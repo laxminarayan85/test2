@@ -35,7 +35,6 @@
 
 			public function init():void
 			{ 
-				contact = new Contact();
 			}
 
 			public function saveContactHandler(evt:SaveContactEvent):void {
@@ -114,6 +113,7 @@
 			private function doEditContact():void
 			{
 				titleWindow=ContactInfoPopup(PopUpManager.createPopUp(this, ContactInfoPopup, true));
+				if (contact == null) contact = new Contact();
 				titleWindow.setContact(contact);
 
 				titleWindow.setStyle("borderAlpha", 0.9);

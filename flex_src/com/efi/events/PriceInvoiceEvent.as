@@ -3,6 +3,7 @@ package com.efi.events
 	import flash.events.Event;
 	import mx.rpc.IResponder;
 	import com.efi.vo.ModelBase;
+	import com.efi.vo.Invoice;
 	
 	public class PriceInvoiceEvent extends EventBase
 	{
@@ -11,12 +12,12 @@ package com.efi.events
 		
 		public function PriceInvoiceEvent(invoice:Invoice, callbacks:IResponder=null)
 		{
-			this.invoice:Invoice;
+			this.invoice = invoice;
 			super(PRICEINVOICE, callbacks);
 		}
 		
 		override public function clone():Event {
-			return new PriceInvoiceEvent(charge, callbacks);
+			return new PriceInvoiceEvent(invoice, callbacks);
 		}
 	}
 }

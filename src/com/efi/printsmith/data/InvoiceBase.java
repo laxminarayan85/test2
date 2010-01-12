@@ -245,6 +245,10 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String PRICETOTAL = "PriceTotal";
+	/**
+	 * @generated
+	 */
 	public static final String CONTAINSINVENTORIEDSTOCK = "ContainsInventoriedStock";
 	/**
 	 * @generated
@@ -254,6 +258,22 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */
 	public static final String DISCOUNTISONETIME = "DiscountIsOneTime";
+	/**
+	 * @generated
+	 */
+	public static final String TAKENBY = "TakenBy";
+	/**
+	 * @generated
+	 */
+	public static final String PRICESUBTOTAL = "PriceSubTotal";
+	/**
+	 * @generated
+	 */
+	public static final String SHIPPRICE = "ShipPrice";
+	/**
+	 * @generated
+	 */
+	public static final String TAX = "Tax";
 
 	/**
 	 * @generated
@@ -1168,6 +1188,23 @@ public class InvoiceBase extends ModelBase {
  	
 	
  	@Basic
+	private Double priceTotal;
+	/**
+	 * @generated
+ 	 */
+	public Double getPriceTotal(){
+		return priceTotal; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceTotal(Double newVal) {
+		this.priceTotal = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Boolean containsInventoriedStock;
 	/**
 	 * @generated
@@ -1215,6 +1252,74 @@ public class InvoiceBase extends ModelBase {
 	 */	
 	public void setDiscountIsOneTime(Boolean newVal) {
 		this.discountIsOneTime = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String takenBy;
+	/**
+	 * @generated
+ 	 */
+	public String getTakenBy(){
+		return takenBy; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTakenBy(String newVal) {
+		this.takenBy = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double priceSubTotal;
+	/**
+	 * @generated
+ 	 */
+	public Double getPriceSubTotal(){
+		return priceSubTotal; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceSubTotal(Double newVal) {
+		this.priceSubTotal = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double shipPrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getShipPrice(){
+		return shipPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShipPrice(Double newVal) {
+		this.shipPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double tax;
+	/**
+	 * @generated
+ 	 */
+	public Double getTax(){
+		return tax; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTax(Double newVal) {
+		this.tax = newVal;
 	}
 	/**
 	 * @generated
@@ -1274,9 +1379,14 @@ public class InvoiceBase extends ModelBase {
 		if (NOTTAXABLE.equals(propertyName)) return getNotTaxable();
 		if (FIRMWANTEDBYDATE.equals(propertyName)) return getFirmWantedByDate();
 		if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
+		if (PRICETOTAL.equals(propertyName)) return getPriceTotal();
 		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return getContainsInventoriedStock();
 		if (DISCOUNTISDOLLARS.equals(propertyName)) return getDiscountIsDollars();
 		if (DISCOUNTISONETIME.equals(propertyName)) return getDiscountIsOneTime();
+		if (TAKENBY.equals(propertyName)) return getTakenBy();
+		if (PRICESUBTOTAL.equals(propertyName)) return getPriceSubTotal();
+		if (SHIPPRICE.equals(propertyName)) return getShipPrice();
+		if (TAX.equals(propertyName)) return getTax();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1338,9 +1448,14 @@ public class InvoiceBase extends ModelBase {
 		if (NOTTAXABLE.equals(propertyName)) setNotTaxable((Boolean)newValue); else
 		if (FIRMWANTEDBYDATE.equals(propertyName)) setFirmWantedByDate((Boolean)newValue); else
 		if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
+		if (PRICETOTAL.equals(propertyName)) setPriceTotal((Double)newValue); else
 		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) setContainsInventoriedStock((Boolean)newValue); else
 		if (DISCOUNTISDOLLARS.equals(propertyName)) setDiscountIsDollars((Boolean)newValue); else
 		if (DISCOUNTISONETIME.equals(propertyName)) setDiscountIsOneTime((Boolean)newValue); else
+		if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
+		if (PRICESUBTOTAL.equals(propertyName)) setPriceSubTotal((Double)newValue); else
+		if (SHIPPRICE.equals(propertyName)) setShipPrice((Double)newValue); else
+		if (TAX.equals(propertyName)) setTax((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1454,12 +1569,22 @@ public class InvoiceBase extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (RELEASEDTOPRODUCTION.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (PRICETOTAL.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (DISCOUNTISDOLLARS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (DISCOUNTISONETIME.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (TAKENBY.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PRICESUBTOTAL.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (SHIPPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (TAX.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1522,9 +1647,14 @@ public class InvoiceBase extends ModelBase {
 		if (NOTTAXABLE.equals(propertyName)) return InvoiceBase.class;
 		if (FIRMWANTEDBYDATE.equals(propertyName)) return InvoiceBase.class;
 		if (RELEASEDTOPRODUCTION.equals(propertyName)) return InvoiceBase.class;
+		if (PRICETOTAL.equals(propertyName)) return InvoiceBase.class;
 		if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return InvoiceBase.class;
 		if (DISCOUNTISDOLLARS.equals(propertyName)) return InvoiceBase.class;
 		if (DISCOUNTISONETIME.equals(propertyName)) return InvoiceBase.class;
+		if (TAKENBY.equals(propertyName)) return InvoiceBase.class;
+		if (PRICESUBTOTAL.equals(propertyName)) return InvoiceBase.class;
+		if (SHIPPRICE.equals(propertyName)) return InvoiceBase.class;
+		if (TAX.equals(propertyName)) return InvoiceBase.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1640,11 +1770,21 @@ public class InvoiceBase extends ModelBase {
 			return false;
 		if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
 			return false;
+		if (! SmartEquals(getPriceTotal(), objT.getPriceTotal()))
+			return false;
 		if (! SmartEquals(getContainsInventoriedStock(), objT.getContainsInventoriedStock()))
 			return false;
 		if (! SmartEquals(getDiscountIsDollars(), objT.getDiscountIsDollars()))
 			return false;
 		if (! SmartEquals(getDiscountIsOneTime(), objT.getDiscountIsOneTime()))
+			return false;
+		if (! SmartEquals(getTakenBy(), objT.getTakenBy()))
+			return false;
+		if (! SmartEquals(getPriceSubTotal(), objT.getPriceSubTotal()))
+			return false;
+		if (! SmartEquals(getShipPrice(), objT.getShipPrice()))
+			return false;
+		if (! SmartEquals(getTax(), objT.getTax()))
 			return false;
 		return true;
 	}			

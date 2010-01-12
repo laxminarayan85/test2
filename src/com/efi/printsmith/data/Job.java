@@ -198,6 +198,34 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String BACKINKS = "BackInks";
+	/**
+	 * @generated
+	 */
+	public static final String PRICE = "Price";
+	/**
+	 * @generated
+	 */
+	public static final String OVERSUNITPRICE = "OversUnitPrice";
+	/**
+	 * @generated
+	 */
+	public static final String OVERSTOTALPRICE = "OversTotalPrice";
+	/**
+	 * @generated
+	 */
+	public static final String PREPPRICE = "PrepPrice";
+	/**
+	 * @generated
+	 */
+	public static final String BINDPRICE = "BindPrice";
+	/**
+	 * @generated
+	 */
+	public static final String OTHERCHARGEPRICE = "OtherChargePrice";
+	/**
+	 * @generated
+	 */
+	public static final String PRESSQTY = "PressQty";
 
 	/**
 	 * @generated
@@ -922,6 +950,125 @@ public class Job extends ModelBase {
 	public void setBackInks(InkColor newVal) {
 		this.backInks = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double price;
+	/**
+	 * @generated
+ 	 */
+	public Double getPrice(){
+		return price; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPrice(Double newVal) {
+		this.price = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double oversUnitPrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getOversUnitPrice(){
+		return oversUnitPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOversUnitPrice(Double newVal) {
+		this.oversUnitPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double oversTotalPrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getOversTotalPrice(){
+		return oversTotalPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOversTotalPrice(Double newVal) {
+		this.oversTotalPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double prepPrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getPrepPrice(){
+		return prepPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPrepPrice(Double newVal) {
+		this.prepPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double bindPrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getBindPrice(){
+		return bindPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBindPrice(Double newVal) {
+		this.bindPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double otherChargePrice;
+	/**
+	 * @generated
+ 	 */
+	public Double getOtherChargePrice(){
+		return otherChargePrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOtherChargePrice(Double newVal) {
+		this.otherChargePrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long pressQty;
+	/**
+	 * @generated
+ 	 */
+	public Long getPressQty(){
+		return pressQty; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPressQty(Long newVal) {
+		this.pressQty = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -969,6 +1116,13 @@ public class Job extends ModelBase {
 		if (BACKWASHES.equals(propertyName)) return getBackWashes();
 		if (FRONTINKS.equals(propertyName)) return getFrontInks();
 		if (BACKINKS.equals(propertyName)) return getBackInks();
+		if (PRICE.equals(propertyName)) return getPrice();
+		if (OVERSUNITPRICE.equals(propertyName)) return getOversUnitPrice();
+		if (OVERSTOTALPRICE.equals(propertyName)) return getOversTotalPrice();
+		if (PREPPRICE.equals(propertyName)) return getPrepPrice();
+		if (BINDPRICE.equals(propertyName)) return getBindPrice();
+		if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
+		if (PRESSQTY.equals(propertyName)) return getPressQty();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1019,6 +1173,13 @@ public class Job extends ModelBase {
 		if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
 		if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
 		if (BACKINKS.equals(propertyName)) setBackInks((InkColor)newValue); else
+		if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+		if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
+		if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((Double)newValue); else
+		if (PREPPRICE.equals(propertyName)) setPrepPrice((Double)newValue); else
+		if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
+		if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
+		if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1110,6 +1271,20 @@ public class Job extends ModelBase {
 			return new Class<?>[] {java.util.List.class, InkColor.class};		
 		if (BACKINKS.equals(propertyName)) 
 			return new Class<?>[] {InkColor.class};		
+		if (PRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OVERSUNITPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OVERSTOTALPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (PREPPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (BINDPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OTHERCHARGEPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (PRESSQTY.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1161,6 +1336,13 @@ public class Job extends ModelBase {
 		if (BACKWASHES.equals(propertyName)) return Job.class;
 		if (FRONTINKS.equals(propertyName)) return Job.class;
 		if (BACKINKS.equals(propertyName)) return Job.class;
+		if (PRICE.equals(propertyName)) return Job.class;
+		if (OVERSUNITPRICE.equals(propertyName)) return Job.class;
+		if (OVERSTOTALPRICE.equals(propertyName)) return Job.class;
+		if (PREPPRICE.equals(propertyName)) return Job.class;
+		if (BINDPRICE.equals(propertyName)) return Job.class;
+		if (OTHERCHARGEPRICE.equals(propertyName)) return Job.class;
+		if (PRESSQTY.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1253,6 +1435,20 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getFrontInks(), objT.getFrontInks()))
 			return false;
 		if (! SmartEquals(getBackInks(), objT.getBackInks()))
+			return false;
+		if (! SmartEquals(getPrice(), objT.getPrice()))
+			return false;
+		if (! SmartEquals(getOversUnitPrice(), objT.getOversUnitPrice()))
+			return false;
+		if (! SmartEquals(getOversTotalPrice(), objT.getOversTotalPrice()))
+			return false;
+		if (! SmartEquals(getPrepPrice(), objT.getPrepPrice()))
+			return false;
+		if (! SmartEquals(getBindPrice(), objT.getBindPrice()))
+			return false;
+		if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
+			return false;
+		if (! SmartEquals(getPressQty(), objT.getPressQty()))
 			return false;
 		return true;
 	}			

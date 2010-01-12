@@ -25,7 +25,7 @@ package com.efi.business
 			call.addResponder(responder);
 		}
 		
-		public funciton priceCharge(charge:Charge):void {
+		public function priceCharge(charge:Charge):void {
 			var call:Object = service.priceCharge(charge);
 			call.addResponder(responder);
 		}

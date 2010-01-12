@@ -1422,18 +1422,18 @@ public class StockDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer normalRunSize;
+	private String normalRunSize;
 	/**
 	 * @generated
  	 */
-	public Integer getNormalRunSize(){
+	public String getNormalRunSize(){
 		return normalRunSize; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setNormalRunSize(Integer newVal) {
+	public void setNormalRunSize(String newVal) {
 		this.normalRunSize = newVal;
 	}
  	
@@ -2446,7 +2446,7 @@ public class StockDefinition extends ModelBase {
 		if (LISTPERM4.equals(propertyName)) setListPerM4((Integer)newValue); else
 		if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
 		if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
-		if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((Integer)newValue); else
+		if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((String)newValue); else
 		if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
 		if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
 		if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
@@ -2618,7 +2618,7 @@ public class StockDefinition extends ModelBase {
 		if (LISTPERM6.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (NORMALRUNSIZE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {String.class};		
 		if (CUTSPER100.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MINCUTCHARGE.equals(propertyName)) 

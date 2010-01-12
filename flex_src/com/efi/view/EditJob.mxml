@@ -10,7 +10,7 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="off"
 				showCloseButton="true"
-				close="doDelete()" width="950" height="682">
+				close="doDelete()" width="950" height="642" xmlns:ns1="com.efi.components.*">
 
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -70,6 +70,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.events.PriceJobEvent;
 			import com.efi.vo.Invoice;
 			import com.efi.vo.Job;
 			import com.efi.vo.PressDefinition;
@@ -95,6 +96,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
 			import mx.messaging.messages.AsyncMessage;
 			import mx.messaging.messages.IMessage;
 			import mx.printing.FlexPrintJob;
@@ -104,6 +106,8 @@
 			import mx.validators.Validator;
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
+			import mx.core.UIComponent;
+			
 
 			[Bindable]
 			private var dimensions:ArrayCollection=new ArrayCollection();
@@ -156,6 +160,17 @@
 				dimensionDataService.getAll("Dimension");
 				if (job == null) {
 					job=new Job();
+					job.parentSize = "";
+					job.runSize = "";
+					job.finishSize = "";
+					job.foldedSize = "";
+					job.frontColors = 1;
+					job.frontPasses = 1;
+					job.inSetsOf = 1;
+					job.sheets = 1;
+					job.numOn = 1;
+					job.numUp = 1;
+					
 					var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
 					jobMethodPicker.setStyle("borderAlpha", 0.9);					
 				}				
@@ -166,7 +181,7 @@
 				for each (var element:Object in array)
 				{
 					if (name == element.name)
-					{
+					{ 
 						return array.getItemIndex(element);
 					}
 				}
@@ -228,6 +243,14 @@
 				job.numUp=parseInt(job_up.text);
 				job.jobNotes=job_notes.text;
 				job.jobTicketNotes=check_job_notes.selected;
+				job.frontColors=parseInt(this.front_colors_text.text);
+				//job.frontInks=this.front_inks_text.text;
+				job.frontPasses=parseInt(this.front_passes_text.text);
+				job.frontWashes=parseInt(this.front_washes_text.text);
+				job.backColors=parseInt(this.back_colors_text.text);
+				//job.backInks=this.back_inks_text;
+				job.backPasses=parseInt(this.back_passes_text.text);
+				job.backWashes=parseInt(this.back_washes_text.text);
 				job.location=job_location.selectedItem as Location;
 				if (run_method_radiogroup.selectedValue != null)
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
@@ -384,6 +407,9 @@
 				if (evt.stockDefinition != null)
 				{
 					this.job.stock=evt.stockDefinition;
+					this.job.parentSize = this.job.stock.normalRunSize;
+					this.job.runSize = this.job.stock.normalRunSize;
+					this.job.finishSize = this.job.stock.normalRunSize;
 				}
 				else
 				{
@@ -410,85 +436,145 @@
 				}
 				super.focusOutHandler(evt);
 			}
+			private function updatePrice():void
+			{
+				mapToJobData();
+				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+				priceJobEvent.dispatch();
+				pricing_throbber.visible = true;
+				pricing_throbber.play();
+			}
+			
+			private function handlePriceJobComplete(ev:ResultEvent):void
+			{
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;			
+			}
+			
+			private function handlePriceJobFault(ev:ResultEvent):void
+			{
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;			
+			}
+			
+			private function fieldChanged(evt:FocusEvent):void
+			{
+				var doUpdatePrice:Boolean = false;
+				switch (evt.currentTarget) {
+				case job_ordered:
+					doUpdatePrice = true;
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					break;
+				case job_over_under:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case sets_of:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case this.job_sheets:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case this.job_up:
+					doUpdatePrice = true;
+					break;
+				case this.job_on:
+					doUpdatePrice = true;
+					break;
+				case this.job_press:
+					doUpdatePrice = true;
+					break;
+				case this.bindery_waste:
+					doUpdatePrice = true;
+					break;
+				case this.est_waste:
+					doUpdatePrice = true;
+					break;
+					
+				}
+				if (doUpdatePrice) updatePrice();
+			}
 		]]>
 
 	</mx:Script>
 
 	<mx:VBox width="100%"
-			 height="100%"
+			 height="597"
 			 creationPolicy="all">
 		<mx:Canvas width="923"
-				   height="100%"
+				   height="599"
 				   verticalScrollPolicy="auto"
 				   fontSize="9">
-			<mx:Button x="10"
+			<mx:LinkButton x="10"
 					   y="10"
 					   width="38"
 					   height="38"
 					   click="doSave();"
 					   id="file_button">
 				<mx:icon>@Embed(source='../../../assets/file.png')</mx:icon>
-			</mx:Button>
+			</mx:LinkButton>
 			<mx:Label x="10"
 					  y="46"
 					  text="File"
 					  width="38"
 					  textAlign="center"/>
-			<mx:Button x="150.5"
+			<mx:LinkButton x="150.5"
 					   y="10"
 					   width="38"
 					   height="38"
 					   click="doGet();"
 					   id="note_pad_button">
 				<mx:icon>@Embed(source='../../../assets/notes.png')</mx:icon>
-			</mx:Button>
+			</mx:LinkButton>
 			<mx:Label x="139"
 					  y="46"
 					  text="Job Notes"
 					  width="61"
 					  textAlign="center"/>
-			<mx:Button x="253"
+			<mx:LinkButton x="253"
 					   y="10"
 					   width="38"
 					   height="38"
 					   click="doNew();"
 					   id="new_job_button">
 				<mx:icon>@Embed(source='../../../assets/preview.png')</mx:icon>
-			</mx:Button>
-			<mx:Button x="67"
+			</mx:LinkButton>
+			<mx:LinkButton x="67"
 					   y="10"
 					   width="38"
 					   height="38"
 					   click="doDelete();"
 					   id="cancel_button">
 				<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
-			</mx:Button>
+			</mx:LinkButton>
 			<mx:Label x="56"
 					  y="46"
 					  text="Cancel"
 					  width="58"
 					  textAlign="center"/>
-			<mx:Button x="396.5"
+			<mx:LinkButton x="396.5"
 					   y="10"
 					   width="38"
 					   height="38"
 					   id="tickets_button">
 				<mx:icon>@Embed(source='../../../assets/print_carton_labels.png')</mx:icon>
-			</mx:Button>
-			<mx:Button x="503"
+			</mx:LinkButton>
+			<mx:LinkButton x="503"
 					   y="10"
 					   width="38"
 					   height="38"
 					   id="print_button">
 				<mx:icon>@Embed(source='../../../assets/production.png')</mx:icon>
-			</mx:Button>
-			<mx:Button x="564"
+			</mx:LinkButton>
+			<mx:LinkButton x="564"
 					   y="10"
 					   width="38"
 					   height="38"
 					   id="preview_button">
 				<mx:icon>@Embed(source='../../../assets/submit.png')</mx:icon>
-			</mx:Button>
+			</mx:LinkButton>
 			<mx:Label x="554"
 					  y="46"
 					  text="Submit"
@@ -509,14 +595,14 @@
 					  text="Preview"
 					  width="58"
 					  textAlign="center"/>
-			<mx:Button x="319.5"
+			<mx:LinkButton x="319.5"
 					   y="10"
 					   width="38"
 					   height="38"
 					   click="doNew();"
 					   id="change_account_button">
 				<mx:icon>@Embed(source='../../../assets/print.png')</mx:icon>
-			</mx:Button>
+			</mx:LinkButton>
 			<mx:Label x="299"
 					  y="46"
 					  text="Job Ticket"
@@ -579,18 +665,18 @@
 						 right="0"
 						 left="710">
 			</mx:ComboBox>
-			<mx:Canvas x="0" y="121" width="100%" height="100%" verticalScrollPolicy="auto">
+			<mx:Canvas x="0" y="121" width="100%" height="476" verticalScrollPolicy="auto">
 				<mx:HDividedBox x="0"
 								y="1"
 								width="900"
-								height="510" verticalScrollPolicy="off">
+								height="474" verticalScrollPolicy="off">
 					<!--			<mx:Tree width="200"
 						 height="100%">
 						 </mx:Tree>
 					-->
 					<mx:ViewStack id="viewstack3"
-								  width="599"
-								  height="507">
+								  width="628"
+								  height="469">
 						<mx:Canvas label="View 1"
 								   width="100%"
 								   height="100%"
@@ -609,23 +695,23 @@
 										  id="job_over_under"
 										  text="{job.oversUnders}"
 										  height="20"
-										  width="98"/>
+										  width="98" focusOut="updatePrice()" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="47"
 										  id="sets_of"
 										  text="{job.inSetsOf}"
 										  height="20"
-										  width="98"/>
+										  width="98" focusOut="updatePrice()" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="301"
 										  id="overs_unit_price"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="323"
 										  id="overs_total_price"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:Label x="390.95"
 									  y="324"
 									  text="Overs Total Price:"/>
@@ -639,17 +725,17 @@
 									  y="345"
 									  width="98"
 									  id="job_prep"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="366"
 									  width="98"
 									  id="job_bind"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="387"
 									  width="98"
 									  id="joib_other"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="453.95"
 									  y="422"
 									  text="Total:"/>
@@ -657,28 +743,28 @@
 									  y="422"
 									  width="97.05"
 									  id="job_total"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="185"
 									  width="98"
 									  id="num_of_sig"
 									  text="{job.signatures}"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="206"
 									  width="98"
 									  id="job_imp"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="227"
 									  width="98"
 									  id="total_imp"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="248"
 									  width="98"
 									  id="job_weight"
-									  height="20"/>
+									  height="20" textAlign="right"/>
 							<mx:Label x="457.95"
 									  y="366"
 									  text="Bind:"/>
@@ -686,7 +772,7 @@
 										  y="279"
 										  id="job_price"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:Label x="453.95"
 									  y="280"
 									  text="Price:"/>
@@ -698,37 +784,37 @@
 										  id="job_sheets"
 										  text="{job.sheets}"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="93"
 										  width="45.300003"
 										  id="job_up"
 										  text="{job.numUp}"
-										  height="20"/>
+										  height="20" textAlign="right"/>
 							<mx:TextInput x="548.3"
 										  y="93"
 										  width="45.700005"
 										  id="job_on"
 										  text="{job.numOn}"
-										  height="20"/>
+										  height="20" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="115"
 										  id="job_press"
 										  height="20"
 										  width="98"
-										  text="{job.press}"/>
+										  text="{job.pressQty}" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="138"
 										  id="bindery_waste"
 										  text="{job.binderyWaste}"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="161"
 										  id="est_waste"
 										  text="{job.estWaste}"
 										  height="20"
-										  width="98"/>
+										  width="98" textAlign="right"/>
 							<mx:Label x="445.95"
 									  y="248"
 									  text="Weight:"/>
@@ -764,7 +850,7 @@
 										  id="job_ordered"
 										  text="{job.qtyOrdered}"
 										  height="20"
-										  width="98"/>
+										  width="98" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:Label x="438.95"
 									  y="2"
 									  text="Ordered:"/>
@@ -960,7 +1046,7 @@
 										  y="263"
 										  id="viewstack5"
 										  width="358"
-										  height="221">
+										  height="202">
 								<mx:Canvas label="View 1"
 										   width="100%"
 										   height="100%">
@@ -996,26 +1082,6 @@
 											  y="73"
 											  text="Front:"
 											  fontSize="9"/>
-									<mx:DataGrid x="47"
-												 y="72"
-												 width="301"
-												 height="43"
-												 showHeaders="false"
-												 fontSize="9">
-										<mx:columns>
-											<mx:DataGridColumn headerText="Colors"
-															   dataField="col1"
-															   width="50"/>
-											<mx:DataGridColumn headerText="Passes"
-															   dataField="col2"
-															   width="50"/>
-											<mx:DataGridColumn headerText="Washes"
-															   dataField="col3"
-															   width="50"/>
-											<mx:DataGridColumn headerText="Ink"
-															   dataField="col3"/>
-										</mx:columns>
-									</mx:DataGrid>
 									<mx:Panel x="10"
 											  y="123"
 											  width="338"
@@ -1044,37 +1110,94 @@
 														height="18"
 														value="Work_Tumble"/>
 									</mx:Panel>
-									<mx:Label x="46"
+									<mx:Label x="47"
 											  y="54"
 											  text="Colors"
 											  width="48"
 											  textAlign="center"
 											  fontSize="9"/>
-									<mx:Label x="93"
+									<mx:Label x="92"
 											  y="54"
 											  text="Passes"
 											  width="53"
 											  textAlign="center"
 											  fontSize="9"/>
-									<mx:Label x="147"
+									<mx:Label x="142"
 											  y="54"
 											  text="Washes"
 											  width="50"
 											  textAlign="center"
 											  fontSize="9"/>
-									<mx:Label x="198"
+									<mx:Label x="192"
 											  y="54"
 											  text="Ink"
-											  width="158"
+											  width="156"
 											  textAlign="center"
 											  fontSize="9"/>
+									<mx:TextInput x="48"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_colors_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontColors}"/>
+									<mx:TextInput x="96"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_passes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontPasses}"/>
+									<mx:TextInput x="96"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_passes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backPasses}"/>
+									<mx:TextInput x="144"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_washes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontWashes}"/>
+									<mx:TextInput x="192"
+												  y="71"
+												  width="156"
+												  height="20"
+												  id="front_inks_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontInks}"/>
+									<mx:TextInput x="192"
+												  y="94"
+												  width="156"
+												  height="20"
+												  id="back_inks_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backInks}"/>
+									<mx:TextInput x="144"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_washes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backWashes}"/>
+									<mx:TextInput x="48"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_colors_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backColors}"/>
 								</mx:Canvas>
 							</mx:ViewStack>
+							<ns1:Throbber visible="false" id="pricing_throbber" x="599" y="278" height="20" width="20"/>
 						
 						</mx:Canvas>
 					</mx:ViewStack>
-					<mx:Accordion width="100%"
-								  height="510"
+					<mx:Accordion width="262"
+								  height="468"
 								  fontSize="9">
 						<mx:Canvas label="Charges"
 								   width="100%"
@@ -1082,14 +1205,14 @@
 								   fontSize="9"
 								   verticalScrollPolicy="off"
 								   horizontalScrollPolicy="off">
-							<mx:LinkButton x="225"
+							<mx:LinkButton x="203"
 										   y="464"
 										   id="delete_charge_button"
 										   click="doDeleteCharge()"
 										   icon="@Embed(source='../../../assets/delete16.png')"
 										   width="24"
 										   bottom="0"/>
-							<mx:LinkButton x="257"
+							<mx:LinkButton x="234"
 										   y="464"
 										   id="add_charge_button"
 										   click="doAddCharge()"

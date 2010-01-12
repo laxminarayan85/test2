@@ -54,6 +54,13 @@ package com.efi.vo
 		public var backWashes:int = 0;
 		public var frontInks:ArrayCollection;
 		public var backInks:InkColor;
+		public var price:Number = 0;
+		public var oversUnitPrice:Number = 0;
+		public var oversTotalPrice:Number = 0;
+		public var prepPrice:Number = 0;
+		public var bindPrice:Number = 0;
+		public var otherChargePrice:Number = 0;
+		public var pressQty:Number = 0;
 	
 	}
 }

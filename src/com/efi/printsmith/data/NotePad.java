@@ -37,7 +37,7 @@ public class NotePad extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String WHO = "Who";
+	public static final String NOTESWHO = "NotesWho";
 	/**
 	 * @generated
 	 */
@@ -45,7 +45,7 @@ public class NotePad extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String WHAT = "What";
+	public static final String NOTESWHAT = "NotesWhat";
 	/**
 	 * @generated
 	 */
@@ -65,7 +65,7 @@ public class NotePad extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String WHEN = "When";
+	public static final String NOTESWHEN = "NotesWhen";
 	/**
 	 * @generated
 	 */
@@ -82,19 +82,19 @@ public class NotePad extends ModelBase {
  	
 	
  	@Basic
-	private String who;
+	private String notesWho;
 	/**
 	 * @generated
  	 */
-	public String getWho(){
-		return who; 
+	public String getNotesWho(){
+		return notesWho; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setWho(String newVal) {
-		this.who = newVal;
+	public void setNotesWho(String newVal) {
+		this.notesWho = newVal;
 	}
  	
 	
@@ -116,19 +116,19 @@ public class NotePad extends ModelBase {
  	
 	
  	@Basic
-	private String what;
+	private String notesWhat;
 	/**
 	 * @generated
  	 */
-	public String getWhat(){
-		return what; 
+	public String getNotesWhat(){
+		return notesWhat; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setWhat(String newVal) {
-		this.what = newVal;
+	public void setNotesWhat(String newVal) {
+		this.notesWhat = newVal;
 	}
  	
 	
@@ -201,19 +201,19 @@ public class NotePad extends ModelBase {
  	
 	
  	@Basic
-	private String when;
+	private String notesWhen;
 	/**
 	 * @generated
  	 */
-	public String getWhen(){
-		return when; 
+	public String getNotesWhen(){
+		return notesWhen; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setWhen(String newVal) {
-		this.when = newVal;
+	public void setNotesWhen(String newVal) {
+		this.notesWhen = newVal;
 	}
  	
 	
@@ -238,14 +238,14 @@ public class NotePad extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (WHO.equals(propertyName)) return getWho();
+		if (NOTESWHO.equals(propertyName)) return getNotesWho();
 		if (PHONENUMBER.equals(propertyName)) return getPhoneNumber();
-		if (WHAT.equals(propertyName)) return getWhat();
+		if (NOTESWHAT.equals(propertyName)) return getNotesWhat();
 		if (HOWMANY.equals(propertyName)) return getHowMany();
 		if (WHATSIZE.equals(propertyName)) return getWhatSize();
 		if (PAPER.equals(propertyName)) return getPaper();
 		if (NOTES.equals(propertyName)) return getNotes();
-		if (WHEN.equals(propertyName)) return getWhen();
+		if (NOTESWHEN.equals(propertyName)) return getNotesWhen();
 		if (SHOWONOPEN.equals(propertyName)) return getShowOnOpen();
 		return super.getProperty(propertyName);
 	}
@@ -256,14 +256,14 @@ public class NotePad extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (WHO.equals(propertyName)) setWho((String)newValue); else
+		if (NOTESWHO.equals(propertyName)) setNotesWho((String)newValue); else
 		if (PHONENUMBER.equals(propertyName)) setPhoneNumber((String)newValue); else
-		if (WHAT.equals(propertyName)) setWhat((String)newValue); else
+		if (NOTESWHAT.equals(propertyName)) setNotesWhat((String)newValue); else
 		if (HOWMANY.equals(propertyName)) setHowMany((String)newValue); else
 		if (WHATSIZE.equals(propertyName)) setWhatSize((String)newValue); else
 		if (PAPER.equals(propertyName)) setPaper((String)newValue); else
 		if (NOTES.equals(propertyName)) setNotes((String)newValue); else
-		if (WHEN.equals(propertyName)) setWhen((String)newValue); else
+		if (NOTESWHEN.equals(propertyName)) setNotesWhen((String)newValue); else
 		if (SHOWONOPEN.equals(propertyName)) setShowOnOpen((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -274,11 +274,11 @@ public class NotePad extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (WHO.equals(propertyName)) 
+		if (NOTESWHO.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (PHONENUMBER.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (WHAT.equals(propertyName)) 
+		if (NOTESWHAT.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (HOWMANY.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -288,7 +288,7 @@ public class NotePad extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (NOTES.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (WHEN.equals(propertyName)) 
+		if (NOTESWHEN.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SHOWONOPEN.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -302,14 +302,14 @@ public class NotePad extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (WHO.equals(propertyName)) return NotePad.class;
+		if (NOTESWHO.equals(propertyName)) return NotePad.class;
 		if (PHONENUMBER.equals(propertyName)) return NotePad.class;
-		if (WHAT.equals(propertyName)) return NotePad.class;
+		if (NOTESWHAT.equals(propertyName)) return NotePad.class;
 		if (HOWMANY.equals(propertyName)) return NotePad.class;
 		if (WHATSIZE.equals(propertyName)) return NotePad.class;
 		if (PAPER.equals(propertyName)) return NotePad.class;
 		if (NOTES.equals(propertyName)) return NotePad.class;
-		if (WHEN.equals(propertyName)) return NotePad.class;
+		if (NOTESWHEN.equals(propertyName)) return NotePad.class;
 		if (SHOWONOPEN.equals(propertyName)) return NotePad.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -322,11 +322,11 @@ public class NotePad extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		NotePad objT = (NotePad)obj;
-		if (! SmartEquals(getWho(), objT.getWho()))
+		if (! SmartEquals(getNotesWho(), objT.getNotesWho()))
 			return false;
 		if (! SmartEquals(getPhoneNumber(), objT.getPhoneNumber()))
 			return false;
-		if (! SmartEquals(getWhat(), objT.getWhat()))
+		if (! SmartEquals(getNotesWhat(), objT.getNotesWhat()))
 			return false;
 		if (! SmartEquals(getHowMany(), objT.getHowMany()))
 			return false;
@@ -336,7 +336,7 @@ public class NotePad extends ModelBase {
 			return false;
 		if (! SmartEquals(getNotes(), objT.getNotes()))
 			return false;
-		if (! SmartEquals(getWhen(), objT.getWhen()))
+		if (! SmartEquals(getNotesWhen(), objT.getNotesWhen()))
 			return false;
 		if (! SmartEquals(getShowOnOpen(), objT.getShowOnOpen()))
 			return false;

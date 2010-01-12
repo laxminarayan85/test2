@@ -27,6 +27,7 @@ package com.efi.vo
 		public var displayQty:Boolean = true;
 		public var hidden:Boolean = true;
 		public var hidePrice:Boolean = true;
+		public var price:Number = 0;
 	
 	}
 }

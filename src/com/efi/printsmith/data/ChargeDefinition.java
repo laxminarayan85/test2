@@ -884,18 +884,18 @@ public class ChargeDefinition extends ModelBase {
  	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private PriceListElement priceList;
+	private PriceList priceList;
 	/**
 	 * @generated
  	 */
-	public PriceListElement getPriceList(){
+	public PriceList getPriceList(){
 		return priceList; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPriceList(PriceListElement newVal) {
+	public void setPriceList(PriceList newVal) {
 		this.priceList = newVal;
 	}
  	
@@ -2262,7 +2262,7 @@ public class ChargeDefinition extends ModelBase {
 		if (MATERIAL.equals(propertyName)) setMaterial((Double)newValue); else
 		if (MINIMUM.equals(propertyName)) setMinimum((Double)newValue); else
 		if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
-		if (PRICELIST.equals(propertyName)) setPriceList((PriceListElement)newValue); else
+		if (PRICELIST.equals(propertyName)) setPriceList((PriceList)newValue); else
 		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
 		if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Long)newValue); else
 		if (WASTEPERCENTAGE.equals(propertyName)) setWastePercentage((Double)newValue); else
@@ -2397,7 +2397,7 @@ public class ChargeDefinition extends ModelBase {
 		if (MARKUP.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (PRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceListElement.class};		
+			return new Class<?>[] {PriceList.class};		
 		if (WASTECHART.equals(propertyName)) 
 			return new Class<?>[] {WasteChart.class};		
 		if (FIXEDWASTE.equals(propertyName)) 

@@ -65,9 +65,14 @@ package com.efi.vo
 		public var notTaxable:Boolean = true;
 		public var firmWantedByDate:Boolean = true;
 		public var releasedToProduction:Boolean = true;
+		public var priceTotal:Number = 0;
 		public var containsInventoriedStock:Boolean = true;
 		public var discountIsDollars:Boolean = true;
 		public var discountIsOneTime:Boolean = true;
+		public var takenBy:String = "";
+		public var priceSubTotal:Number = 0;
+		public var shipPrice:Number = 0;
+		public var tax:Number = 0;
 	
 	}
 }

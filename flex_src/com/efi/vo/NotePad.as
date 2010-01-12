@@ -13,14 +13,14 @@ package com.efi.vo
 			remoteObjectName = "com.efi.printsmith.data.NotePad";
 		}
 				
-		public var who:String = "";
+		public var notesWho:String = "";
 		public var phoneNumber:String = "";
-		public var what:String = "";
+		public var notesWhat:String = "";
 		public var howMany:String = "";
 		public var whatSize:String = "";
 		public var paper:String = "";
 		public var notes:String = "";
-		public var when:String = "";
+		public var notesWhen:String = "";
 		public var showOnOpen:Boolean = true;
 	
 	}

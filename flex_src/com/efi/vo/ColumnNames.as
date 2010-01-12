@@ -12,6 +12,7 @@ package com.efi.vo
 		public function ColumnNames() {
 		
 		}
+
 		public var name:String = "";
 	
 	}

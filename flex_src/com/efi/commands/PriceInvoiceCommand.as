@@ -2,7 +2,7 @@ package com.efi.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.efi.business.ModelGetAllDelegate;
+	import com.efi.business.PricingDelegate;
 	import com.efi.events.ModelGetAllEvent;
 	import com.efi.events.PriceInvoiceEvent;
 

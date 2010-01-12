@@ -205,9 +205,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		//producer.send(message);
 	}
 		
-	public function setAccount(account2:Account):void
+	public function setAccount(account:Account):void
 	{
-		this.account = account2;
+		this.account = account;
 		mapFromAccountData();
 	}			
 	
@@ -235,8 +235,12 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 
 		account.contact = ship_to_contact_editor.getContact();
 		account.billToContact = bill_to_contact_editor.getContact();
-		account.billToContact.parentAccount = account;
-		account.contact.parentAccount = account;
+		if (account.billToContact != null) {
+			account.billToContact.parentAccount = account;
+		}
+		if (account.contact != null) {
+			account.contact.parentAccount = account;
+		}
 		
 		if (account.marketing != null){
 			

@@ -118,6 +118,10 @@
 				vbox.getDividerAt(1).visible=false;
 				if (invoice == null) {
 					invoice=new Invoice();
+				} else {
+					this.bill_to_address_editor.setAddress(invoice.billToAddress);
+					if (invoice != null && invoice.account != null) 
+						accountDataService.getContactsByAccountId("Contact", invoice.account.id);
 				}
 				if (invoice.jobs == null) {
 					invoice.jobs=new ArrayCollection();
@@ -202,7 +206,7 @@
 				return true;
 			}
 
-			public function maptoInvoiceData():void
+			public function mapToInvoiceData():void
 			{
 
 				invoice.name=name_edit.text;
@@ -217,23 +221,12 @@
 					invoice.shippingMethod=ship_via_combo.selectedItem as ShippingMethod;
 				invoice.specialInstructions=special_instructions_edit.text as SpecialInstructions
 				invoice.billToAddress=bill_to_address_editor.getAddress();
-				//invoice.contact.address = address_editor.getAddress();
-			}
-
-			public function mapfromInvoiceData():void
-			{
-
-				if (invoice.shippingMethod != null)
-					ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);
-
-				if (invoice.salesRep != null)
-					inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
-				contact_list.selectedItem=invoice.account.contact as Contact;
+				invoice.takenBy = taken_by.text;
 			}
 
 			public function doSave():void
 			{
-				maptoInvoiceData();
+				mapToInvoiceData();
 				dataService.addUpdate(invoice);
 			}
 
@@ -365,22 +358,21 @@
 
 			private function handleLoadSalesReps(ev:ResultEvent):void
 			{
-				var selectedItem:Object=inv_sales_rep.selectedItem;
 				salesReps=ev.result as ArrayCollection;
-				inv_sales_rep.selectedItem=selectedItem;
+				if (invoice != null && invoice.salesRep != null)
+					inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
 			}
 
 			private function handleLoadShippingMethods(ev:ResultEvent):void
 			{
-				var selectedItem:Object=ship_via_combo.selectedItem;
 				shippingMethods=ev.result as ArrayCollection;
-				ship_via_combo.selectedItem=selectedItem;
+				if (invoice != null && invoice.shippingMethod != null)
+					ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);
 			}
 			private function handleLoadContacts(ev:ResultEvent):void
 			{
-				//var selectedItem:Object=contact_list.selectedItem;
 				accountcontacts=ev.result as ArrayCollection;
-				//contact_list.selectedItem=selectedItem;
+				contact_list.selectedItem=invoice.account.contact as Contact;
 			}
 
 			private function doAccountPicker():void
@@ -423,6 +415,7 @@
 				editJobWindow.setJob(selectedJob);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
 			}
+
 		]]>
 
 	</mx:Script>
@@ -758,7 +751,7 @@
 						<mx:TextInput x="93"
 									  y="253"
 									  id="taken_by"
-									  height="20"/>
+									  height="20" text="{invoice.takenBy}"/>
 						<fc:AutoComplete id="inv_sales_rep"
 										 x="93"
 										 y="275"

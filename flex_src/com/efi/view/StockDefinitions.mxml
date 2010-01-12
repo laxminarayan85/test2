@@ -38,6 +38,9 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockFinish(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockFinishResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dimensionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:StringValidator id="stockDefinitionNameValidator" source="{stockName}" property="text" minLength="2" required="true"/>
 
@@ -98,6 +101,9 @@
 	[Bindable]                                         
 	private var account:Account;
 	
+	[Bindable]
+	private var dimensions:ArrayCollection=new ArrayCollection();
+
 	[Bindable]                                
     private var stockChanges:ArrayCollection = new ArrayCollection();   
 
@@ -144,7 +150,7 @@
 	    loadStockGenericColor();
 	    loadStockFinish();
 	    loadPressDefinition();
-
+		loadDimensions();
 		doGet(); 
 		
 	}      
@@ -187,9 +193,9 @@
 	
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
  		if (evt.priceList != null) {
-			stock.defaultPriceList = evt.priceList as PriceList;
+			stockDefinitions.defaultPriceList = evt.priceList as PriceList;
 		} else {
-			stock.defaultPriceList = null;
+			stockDefinitions.defaultPriceList = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}     	
     }
@@ -260,6 +266,10 @@
 	
 	public function loadStockChanges():void {
 		stockChangesDataService.getAll("StockChanges");
+	}
+	
+	public function loadDimensions():void {
+		dimensionDataService.getAll("Dimension");
 	}
 	
 	public function loadPressDefinition():void {   
@@ -570,6 +580,10 @@
 	     loadStockDefinitions();
 	}
 	
+	private function handleLoadDimensionResult(ev:ResultEvent):void {
+		dimensions=ev.result as ArrayCollection;
+	}
+
 	private function handleLoadStockChangesResult(ev:ResultEvent):void {
 		 stockChanges = ev.result as ArrayCollection;
 	}
@@ -805,7 +819,7 @@
 	 stockDefinitions.forestManagement = forestMgmt.text;
 	 stockDefinitions.pcwRecycledPercent = pcwRecycled.text as Number;
 	 
-	 stockDefinitions.normalRunSize = parseInt(NormalRunSize.text);
+	 stockDefinitions.normalRunSize = NormalRunSize.text;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;
@@ -860,7 +874,17 @@
 		formIsValid = formIsValid && currentControlIsValid;
         return currentControlIsValid;
 	}
-                                
+	
+	private function handleFocusOutEvent(evt:FocusEvent):void
+	{
+		if (evt.target == parentSize) {
+			stockDefinitions.parentsize = parentSize.text;
+		} else if (evt.target == NormalRunSize) {
+			stockDefinitions.normalRunSize = NormalRunSize.text;
+		}
+		super.focusOutHandler(evt);
+	}
+
 ]]>
                              
 </mx:Script>	
@@ -902,7 +926,13 @@
 				<mx:Label x="267.5" y="7" text="Stock #:"/>
 				<mx:TextInput x="323" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
 				<mx:Label x="30.5" y="62" text="Parent Size:"/>
-				<mx:TextInput x="106.5" y="60" width="132" id="parentSize" text="{stockDefinitions.parentsize}"/>
+				<fc:AutoComplete x="106.5" y="60" width="132" 
+					  id="parentSize"
+					  dataProvider="{dimensions}"
+					  labelField="name"
+					  text="{stockDefinitions.parentsize}"
+					  focusOut="handleFocusOutEvent(event)"
+				/>
 				<mx:Label x="254.5" y="62" text="Thickness:"/>
 				<mx:Label x="254.5" y="35" text="Basic Size:"/>
 				<mx:TextInput x="323" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
@@ -985,7 +1015,13 @@
 				<mx:Button x="10" y="7" label="Select Schedule" click="doPriceList();"/>
 				<mx:Text x="133" y="9" text="{stockDefinitions.defaultPriceList.name}" width="224" id="defaultPriceList" height="20"/>
 			</mx:Panel>
-			<mx:TextInput x="113" y="9" width="85" id="NormalRunSize" text="{stockDefinitions.normalRunSize}"/>
+			<fc:AutoComplete x="113" y="9" width="85" 
+				  id="NormalRunSize"
+				  dataProvider="{dimensions}"
+				  labelField="name"
+				  text="{stockDefinitions.normalRunSize}"
+				  focusOut="handleFocusOutEvent(event)"
+			/>
 			<mx:TextInput x="270" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
 			<mx:TextInput x="418" y="9" width="50" id="MinCutCharge" text="{stockDefinitions.minCutCharge}"/>
 			<mx:Label x="10" y="11" text="Normal Run Size:"/>

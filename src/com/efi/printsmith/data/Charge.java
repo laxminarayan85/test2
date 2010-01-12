@@ -90,6 +90,10 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String HIDEPRICE = "HidePrice";
+	/**
+	 * @generated
+	 */
+	public static final String PRICE = "Price";
 
 	/**
 	 * @generated
@@ -337,6 +341,23 @@ public class Charge extends ModelBase {
 	public void setHidePrice(Boolean newVal) {
 		this.hidePrice = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double price;
+	/**
+	 * @generated
+ 	 */
+	public Double getPrice(){
+		return price; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPrice(Double newVal) {
+		this.price = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -357,6 +378,7 @@ public class Charge extends ModelBase {
 		if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
 		if (HIDDEN.equals(propertyName)) return getHidden();
 		if (HIDEPRICE.equals(propertyName)) return getHidePrice();
+		if (PRICE.equals(propertyName)) return getPrice();
 		return super.getProperty(propertyName);
 	}
 	
@@ -380,6 +402,7 @@ public class Charge extends ModelBase {
 		if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
 		if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
 		if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
+		if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -417,6 +440,8 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (HIDEPRICE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (PRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -441,6 +466,7 @@ public class Charge extends ModelBase {
 		if (DISPLAYQTY.equals(propertyName)) return Charge.class;
 		if (HIDDEN.equals(propertyName)) return Charge.class;
 		if (HIDEPRICE.equals(propertyName)) return Charge.class;
+		if (PRICE.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -479,6 +505,8 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getHidden(), objT.getHidden()))
 			return false;
 		if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
+			return false;
+		if (! SmartEquals(getPrice(), objT.getPrice()))
 			return false;
 		return true;
 	}			
