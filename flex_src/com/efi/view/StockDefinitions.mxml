@@ -960,7 +960,7 @@
 			</mx:Panel>
 			<mx:Panel x="14.5" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments" dropShadowEnabled="false">
 				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
-				<mx:Label x="44" y="50" text="Costs:"/>
+				<mx:Label x="49" y="50" text="Cost:"/>
 				<mx:Label x="49" y="70" text="CWT:"/>
 				<mx:Label x="34" y="91" text="Markup:"/>
 				<mx:Label x="34" y="112" text="List / M:"/>
