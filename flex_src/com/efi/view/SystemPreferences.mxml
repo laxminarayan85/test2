@@ -92,6 +92,7 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.TaxTable;
 	import com.efi.vo.TaxCodes;
 	import mx.controls.Text;
+	import com.efi.itemRenderers.EstimatorTypesEditor;
 	import com.efi.itemRenderers.SalesCategoryEditor;
 	import com.efi.itemRenderers.TaxCodeEditor;
 	import com.efi.itemRenderers.TaxTableEditor;
@@ -1630,7 +1631,7 @@ width="800" height="678" title="Preferences"
 			event.preventDefault();
 
 			// Get new category from editor.
-//			PricingMethodGrid.editedItemRenderer.data.estimator = EstimatorTypesEditor(DataGrid(event.target).itemEditorInstance).pickEstimator.selectedItem;
+			PricingMethodGrid.editedItemRenderer.data.estimator = EstimatorTypesEditor(DataGrid(event.target).itemEditorInstance).pickEstimator.selectedItem;
 
 			// Close the cell editor.
 			PricingMethodGrid.destroyItemEditor();
@@ -2307,8 +2308,14 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="Estimator" dataField="estimator" editable="false"/>
-						
+						<mx:DataGridColumn width="140" headerText="Estimator" dataField="estimator"
+							itemEditor="com.efi.itemRenderers.EstimatorTypesEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.estimator.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button x="50" y="510" width="38" height="38" click="doNewPriceMethod();">
