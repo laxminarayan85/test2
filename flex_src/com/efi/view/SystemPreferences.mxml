@@ -82,6 +82,19 @@ width="800" height="678" title="Preferences"
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCategoryResult(event)"/>
 	</mx:RemoteObject>
 
+    <mx:PhoneNumberValidator id="pnVPhone" 
+        source="{this.txtPhone}" property="text"
+        trigger="{this.btnSave}" 
+        triggerEvent="click"/>
+    <mx:PhoneNumberValidator id="pnVFax"
+        source="{this.txtFax}" property="text"
+        trigger="{this.btnSave}" 
+        triggerEvent="click"/>
+    <mx:EmailValidator id="emV" 
+        source="{this.txtEmail}" property="text"
+        trigger="{this.btnSave}" 
+        triggerEvent="click"/>
+
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -651,8 +664,20 @@ width="800" height="678" title="Preferences"
 		
 		//comboboxs
 		if (preferencesSystem.fiscalYearStartMonth != "")
+		{
 			cboFiscalYearStartMonth.selectedIndex = findItem(preferencesSystem.fiscalYearStartMonth, MonthsArray);
 
+//			var now:Date = new Date();
+//			var currentDate:Number = 1;
+//			var currentMonth:Number = cboFiscalYearStartMonth.selectedIndex;
+//			var currentYear:Number = now.fullYear; 
+
+//			var nextYear:Date = new Date(currentYear + 1, currentMonth, currentDate);
+			
+//			var tmpString:String = (cboFiscalYearStartMonth.selectedIndex+1).toString()+"/01/"+currentYear.toString()+ " - "+nextYear.toDateString();
+//			this.txtCurrentRange.text = tmpString;
+
+		}
 		//radio buttons
 		if (preferencesSystem.workFirstDayOfWeek != "")
 			this.opgFirstDayOfWorkWeek.selectedValue = parseInt(preferencesSystem.workFirstDayOfWeek)
@@ -1824,7 +1849,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="50" y="92" text="Fiscal year starts first day of:"/>
 				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
 				<mx:Label x="176" y="146" text="Current Range:"/>
-				<mx:TextArea x="270" y="145" height="19" width="210"/>
+				<mx:TextArea x="270" y="145" id="txtCurrentRange" height="19" width="210" enabled="false"/>
 				
 				<mx:Label x="50" y="185" text="Work Days:"/>
 				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
