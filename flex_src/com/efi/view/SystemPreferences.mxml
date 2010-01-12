@@ -218,11 +218,11 @@ width="800" height="678" title="Preferences"
 
 //Radio Buttons
 	[Bindable]
-	private var opgFirstDayOfWorkWeekValue:String = "opgSunday";
+	private var opgFirstDayOfWorkWeekValue:int = 1;
 	[Bindable]
-	private var optPaymentDueDaysValue:String = "opbFromNotifiedDate";
+	private var optPaymentDueDaysValue:String = "1";
 	[Bindable]
-	private var opgChargeDescriptionValue:String = "opgShowName";
+	private var opgChargeDescriptionValue:String = "1";
 //Data view variables
 	[Bindable]
 	private var preferencesSystem:PreferencesSystem;
@@ -643,7 +643,8 @@ width="800" height="678" title="Preferences"
 			cboFiscalYearStartMonth.selectedIndex = findItem(preferencesSystem.fiscalYearStartMonth, MonthsArray);
 
 		//radio buttons
-		opgFirstDayOfWorkWeekValue = preferencesSystem.workFirstDayOfWeek
+		if (preferencesSystem.workFirstDayOfWeek != "")
+			this.opgFirstDayOfWorkWeek.selectedValue = parseInt(preferencesSystem.workFirstDayOfWeek)
 
 		//address editor
 		address_editor.setAddress(preferencesSystem.companyAddress);
@@ -762,7 +763,7 @@ width="800" height="678" title="Preferences"
 //		if (preferencesEstimating.defaultInvoice != null)
 //			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
 //
-//		optPaymentDueDaysValue = preferencesEstimating.dueFrom;
+		optPaymentDueDays.selectedValue = preferencesEstimating.dueFrom.toString();
 
 		if (preferencesEstimating.runToFinishGrain != "")
 			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
@@ -921,7 +922,8 @@ width="800" height="678" title="Preferences"
 	 		preferencesSystem.fiscalYearStartMonth = cboFiscalYearStartMonth.selectedItem.name;
 
 //Radio buttons
-		preferencesSystem.workFirstDayOfWeek = opgFirstDayOfWorkWeekValue;
+		if (this.opgFirstDayOfWorkWeek.selectedValue != null)
+			preferencesSystem.workFirstDayOfWeek = this.opgFirstDayOfWorkWeek.selectedValue.toString();
 
 		//textboxes
 		preferencesSystem.autoLogOutSeconds = parseInt(this.txtInactivitySeconds.text);
@@ -1038,7 +1040,7 @@ width="800" height="678" title="Preferences"
 	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
 
 //		Following code doesn't compile...
-//		preferencesEstimating.dueFrom = optPaymentDueDaysValue;
+		preferencesEstimating.dueFrom = parseInt(optPaymentDueDays.selectedValue.toString());
 
 		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
@@ -1622,6 +1624,21 @@ width="800" height="678" title="Preferences"
 			// Notify the list control to update its display.
 			PricingMethodGrid.dataProvider.itemUpdated(event.itemRenderer.data);
 		}	
+		if(event.dataField == "estimator")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+//			PricingMethodGrid.editedItemRenderer.data.estimator = EstimatorTypesEditor(DataGrid(event.target).itemEditorInstance).pickEstimator.selectedItem;
+
+			// Close the cell editor.
+			PricingMethodGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			PricingMethodGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}	
+
 	}	
 	
 	private function processCashRegisterGridData(event:DataGridEvent):void {
@@ -1756,14 +1773,15 @@ width="800" height="678" title="Preferences"
 				<mx:TextArea x="270" y="145" height="19" width="210"/>
 				
 				<mx:Label x="50" y="185" text="Work Days:"/>
-				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek" selectedValue="{opgFirstDayOfWorkWeekValue}"/>
-				<mx:RadioButton x="53" y="250" id="opgSunday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="93" y="250" id="opgMonday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="133" y="250" id="opgTuesday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="173" y="250" id="opgWednesday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="213" y="250" id="opgThursday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="253" y="250" id="opgFriday" groupName="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="293" y="250" id="opgSaturday" groupName="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
+				<mx:RadioButton x="53" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="1"/>
+				<mx:RadioButton x="93" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="2"/>
+				<mx:RadioButton x="133" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="3"/>
+				<mx:RadioButton x="173" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="4"/>
+				<mx:RadioButton x="213" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="5"/>
+				<mx:RadioButton x="253" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="6"/>
+				<mx:RadioButton x="293" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="7"/>
+
 				<mx:Button x="40" y="211" label="S" width="40"/>
 				<mx:Button x="80" y="211" label="M" width="40"/>
 				<mx:Button x="120" y="211" label="T" width="40"/>
@@ -2037,12 +2055,12 @@ width="800" height="678" title="Preferences"
 					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
 					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
-					<mx:RadioButtonGroup id="optPaymentDueDays" selectedValue="{optPaymentDueDaysValue}"/>
-					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="From Completed Date" groupName="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="From Pickup Date" groupName="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="From Ordered Date" groupName="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="From Printed Date" groupName="optPaymentDueDays"/>
+					<mx:RadioButtonGroup id="optPaymentDueDays"/>
+					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays" value="1"/>
+					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="From Completed Date" groupName="optPaymentDueDays" value="2"/>
+					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="From Pickup Date" groupName="optPaymentDueDays" value="3"/>
+					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="From Ordered Date" groupName="optPaymentDueDays" value="4"/>
+					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="From Printed Date" groupName="optPaymentDueDays" value="5"/>
 				</mx:Panel>
 
 				
@@ -2289,14 +2307,8 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="100" headerText="Estimator" dataField="estimator"
-							itemEditor="com.efi.itemRenderers.EstimatorTypesEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.estimator.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
-						</mx:DataGridColumn>
+						<mx:DataGridColumn width="140" headerText="Estimator" dataField="estimator" editable="false"/>
+						
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button x="50" y="510" width="38" height="38" click="doNewPriceMethod();">
