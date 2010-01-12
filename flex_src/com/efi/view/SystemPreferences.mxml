@@ -92,6 +92,7 @@ width="800" height="678" title="Preferences"
 	import com.efi.vo.TaxTable;
 	import com.efi.vo.TaxCodes;
 	import mx.controls.Text;
+	import com.efi.itemRenderers.JobMethodEditor;
 	import com.efi.itemRenderers.EstimatorTypesEditor;
 	import com.efi.itemRenderers.SalesCategoryEditor;
 	import com.efi.itemRenderers.TaxCodeEditor;
@@ -178,6 +179,8 @@ width="800" height="678" title="Preferences"
 	private var PreferencesSalesCategoryDeleteArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesCreditCardDeleteArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesQuantityBreaksDeleteArray:ArrayCollection = new ArrayCollection();
 
 //AutoComplete arrays
 	[Bindable]
@@ -588,7 +591,11 @@ width="800" height="678" title="Preferences"
 		for each(var deleteitem6:PreferencesCreditCard in PreferencesCreditCardDeleteArray) {
 			dataServiceCreditCard.deleteItem(deleteitem6, deleteitem6.id);
 		}
-		PreferencesCreditCardDeleteArray.removeAll();
+		PreferencesCreditCardDeleteArray.removeAll()
+		for each(var deleteitem7:PreferencesQuantityBreaks in PreferencesQuantityBreaksDeleteArray) {
+			dataServiceCreditCard.deleteItem(deleteitem7, deleteitem7.id);
+		}
+		PreferencesQuantityBreaksDeleteArray.removeAll();
 
 		// commit changes add or updates to table
 		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {
@@ -614,6 +621,9 @@ width="800" height="678" title="Preferences"
 		}
 		for each(var item8:PreferencesCreditCard in PreferencesCreditCardArray) {
 			dataServiceCreditCard.addUpdate(item8);
+		}
+		for each(var item9:PreferencesQuantityBreaks in PreferencesQuantityBreaksArray) {
+			dataServiceQuantityBreaks.addUpdate(item9);
 		}
 
 	}
@@ -1522,6 +1532,20 @@ width="800" height="678" title="Preferences"
 		}
 	}
 
+	private function doNewQuantityBreak():void{
+		var newItem:PreferencesQuantityBreaks = new PreferencesQuantityBreaks();
+		PreferencesQuantityBreaksArray.addItem(newItem);
+		
+	}
+
+	private function doRemoveQuantityBreak():void{
+		if (QuantityBreaksGrid.selectedIndex > -1){
+			var newItem:PreferencesQuantityBreaks = QuantityBreaksGrid.selectedItem as PreferencesQuantityBreaks;
+			PreferencesQuantityBreaksDeleteArray.addItem(newItem);
+			PreferencesQuantityBreaksArray.removeItemAt(QuantityBreaksGrid.selectedIndex);
+		}
+	}
+
 	private function doNewPriceMethod():void{
 		var newItem:PreferencesPricingMethod = new PreferencesPricingMethod();
 		PreferencesPricingMethodArray.addItem(newItem);
@@ -1605,6 +1629,27 @@ width="800" height="678" title="Preferences"
 		}	
 	}	
 
+	private function processQuantityBreaksGridData(event:DataGridEvent):void {
+        if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+		if(event.dataField == "jobmethod")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			QuantityBreaksGrid.editedItemRenderer.data.jobmethod = JobMethodEditor(DataGrid(event.target).itemEditorInstance).pickJobMethod.selectedItem;
+
+			// Close the cell editor.
+			QuantityBreaksGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			QuantityBreaksGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}	
+		
+	}
 	private function processPricingMethodGridData(event:DataGridEvent):void {
         if (event.reason == DataGridEventReason.CANCELLED){
             // Do not update cell.
@@ -2141,6 +2186,33 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Quantity Breaks" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
+				
+				<mx:DataGrid x="50" y="27" width="270" height="475" id="QuantityBreaksGrid" 
+					dataProvider="{PreferencesQuantityBreaksArray}" 
+					editable="true" 
+					itemEditEnd="processQuantityBreaksGridData(event);">
+					<mx:columns>
+						<mx:DataGridColumn width="100" headerText="Quantity" dataField="quantity"/>
+						<mx:DataGridColumn width="50" headerText="Break" dataField="qtyBreak" editorDataField="selected"
+							itemEditor="mx.controls.CheckBox"
+							itemRenderer="com.efi.components.GenericCheckboxRenderer">
+						</mx:DataGridColumn>
+						<mx:DataGridColumn width="140" headerText="Job Method" dataField="jobMethod"
+							itemEditor="com.efi.itemRenderers.JobMethodEditor" editable="true">
+                			<mx:itemRenderer>
+                    			<mx:Component>
+	                        		<mx:Text selectable="false" text="{data.jobmethod.name}"/>
+                    			</mx:Component>
+                			</mx:itemRenderer>
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Button x="50" y="510" width="38" height="38" click="doNewQuantityBreak();">
+					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
+				</mx:Button>
+				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveQuantityBreak();">
+					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Markups" textAlign="center"/>

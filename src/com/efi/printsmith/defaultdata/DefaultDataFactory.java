@@ -38,6 +38,7 @@ public class DefaultDataFactory {
 		ProcessProductionLocations();
 		ProcessColumnNames();
 		ProcessEstimatorTypes();
+		ProcessJobMethods();
 	}
 
 	private void ProcessStateFile(){
@@ -64,6 +65,40 @@ public class DefaultDataFactory {
 		}
 	}
 
+	private void ProcessJobMethods(){
+//		Offset
+//		Digital
+//		Large Format		
+		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
+
+		if (itemList.size() > 0) return ;
+
+		JobMethod jobmethod = new JobMethod();
+		jobmethod.setName("Offset");
+		try {
+			jobmethod = (JobMethod)dataservice.addUpdate(jobmethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+
+		jobmethod = new JobMethod();
+		jobmethod.setName("Digital");
+		try {
+			jobmethod = (JobMethod)dataservice.addUpdate(jobmethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+
+		jobmethod = new JobMethod();
+		jobmethod.setName("Large Format");
+		try {
+			jobmethod = (JobMethod)dataservice.addUpdate(jobmethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+
+
+	}
 	private void ProcessAccessGroup(){
 		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
 
