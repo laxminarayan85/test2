@@ -774,7 +774,14 @@ width="800" height="678" title="Preferences"
 //		if (preferencesEstimating.defaultInvoice != null)
 //			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
 //
-		optPaymentDueDays.selectedValue = preferencesEstimating.dueFrom.toString();
+		if (preferencesEstimating.dueFrom != 0)
+		{
+			optPaymentDueDays.selectedValue = preferencesEstimating.dueFrom.toString();
+		}else
+		{
+			optPaymentDueDays.selectedValue="1"
+		}
+		
 
 		if (preferencesEstimating.runToFinishGrain != "")
 			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
@@ -1051,7 +1058,8 @@ width="800" height="678" title="Preferences"
 	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
 
 //		Following code doesn't compile...
-		preferencesEstimating.dueFrom = parseInt(optPaymentDueDays.selectedValue.toString());
+		if (optPaymentDueDays.selectedValue != null)
+			preferencesEstimating.dueFrom = parseInt(optPaymentDueDays.selectedValue.toString());
 
 		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
