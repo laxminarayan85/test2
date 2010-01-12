@@ -963,7 +963,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="net_subtotal_text"
-									 text="{invoice.priceSubTotal}"
+									 text="{invoice.subTotal}"
 									 height="20"/>
 							<mx:Label x="24"
 									  y="54"
