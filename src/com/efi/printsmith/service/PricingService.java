@@ -122,12 +122,12 @@ public class PricingService {
 
 		/* Press Price */
 		PressDefinition pricingPress = job.getPricingPress();
-		double time = getTimePerSheetFromSpeedTable(pricingPress.getSpeedTable(), job.getPressQty()) * 60;
+		double time = getTimePerSheetFromSpeedTable(pricingPress.getSpeedTable(), job.getPressQty()) * job.getPressQty()/60;
 		time += pricingPress.getSetupMin();
 		if (time < pricingPress.getMinLabor()) {
 			time = pricingPress.getMinLabor();
 		}
-		price = pricingPress.getLaborRate() * pricingPress.getLaborMarkup() * time;
+		price = pricingPress.getLaborRate() * pricingPress.getLaborMarkup() * time/60;
 		
 		/* Stock Price */
 		StockDefinition stock = job.getStock();
