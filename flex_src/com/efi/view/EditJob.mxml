@@ -230,7 +230,13 @@
 				//job.press = job_press.selectedItem as PressDefinition;
 				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
 				job.productCode=product.selectedItem as ProductCode;
-				job.description=job_description.text;
+				
+				if (job_description.text != "") {
+					job.description=job_description.text;
+				} else {
+					job.description = this.job_type.selectedLabel;
+				}
+				
 				job.estWaste=parseInt(est_waste.text);
 				job.finished=checked_finished.selected;
 				job.inSetsOf=parseInt(sets_of.text);
@@ -450,7 +456,9 @@
 			{
 				pricing_throbber.stop();
 				pricing_throbber.visible = false;		
-				job = ev.result as Job;	
+				var localJob:Job = ev.result as Job;
+				
+				job.price = localJob.price;	
 			}
 			
 			private function handlePriceJobFault(ev:ResultEvent):void
