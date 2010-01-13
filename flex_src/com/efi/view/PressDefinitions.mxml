@@ -312,14 +312,14 @@ width="912" height="722" title="Press Definitions"
 	<mx:CheckBox x="424" y="194" label="Costing Press" id="CostingPress" selected="{pressDefinition.costingPress}"/>
 	<mx:CheckBox x="424" y="174" label="Integrated Device" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
 	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
-	<mx:Label x="37" y="274" text="Max Paper Size:"/>
-	<mx:Label x="40" y="296" text="Min Paper Size:"/>
-	<mx:Label x="60" y="318" text="Labor Rate:"/>
-	<mx:Label x="41" y="340" text="Minimum labor:"/>
-	<mx:Label x="34" y="362" text="Setup (Minutes):"/>
-	<mx:Label x="34" y="384" text="Setup Add'l Run:"/>
-	<mx:Label x="55" y="406" text="Setup Add'l Signatures:"/>
-	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:"/>
+	<mx:Label x="37" y="274" text="Max Paper Size:" textAlign="right"/>
+	<mx:Label x="40" y="296" text="Min Paper Size:" textAlign="right"/>
+	<mx:Label x="60" y="318" text="Labor Rate:" textAlign="right"/>
+	<mx:Label x="41" y="340" text="Minimum labor:" textAlign="right"/>
+	<mx:Label x="34" y="362" text="Setup (Minutes):" textAlign="right"/>
+	<mx:Label x="34" y="384" text="Setup Add'l Run:" textAlign="right"/>
+	<mx:Label x="55" y="406" text="Setup Add'l Signatures:" textAlign="right"/>
+	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:" textAlign="right"/>
 	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20"/>
 	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
 	<mx:TextInput x="131" y="316" width="76" id="LaborRate" text="{pressDefinition.laborRate}" height="20"/>
@@ -340,13 +340,13 @@ width="912" height="722" title="Press Definitions"
 	<mx:Label x="610" y="406" text="(per wash)"/>
 	<mx:TextInput x="493" y="426" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20"/>
 	<mx:TextInput x="493" y="404" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20"/>
-	<mx:Label x="347" y="275" text="Avg. Impression per Hour:"/>
-	<mx:Label x="408" y="297" text="Labor Markup:"/>
+	<mx:Label x="347" y="275" text="Avg. Impression per Hour:" textAlign="right"/>
+	<mx:Label x="408" y="297" text="Labor Markup:" textAlign="right"/>
 	<mx:Label x="415" y="319" text="Fixed Waste:"/>
-	<mx:Label x="389" y="341" text="Setup Add'l Head:"/>
-	<mx:Label x="416" y="363" text="Washup Fee:"/>
-	<mx:Label x="335" y="385" text="Add'l Signatures Add'l Head:"/>
-	<mx:Label x="394" y="407" text="Washup Minutes:"/>
+	<mx:Label x="389" y="341" text="Setup Add'l Head:" textAlign="right"/>
+	<mx:Label x="416" y="363" text="Washup Fee:" textAlign="right"/>
+	<mx:Label x="335" y="385" text="Add'l Signatures Add'l Head:" textAlign="right"/>
+	<mx:Label x="394" y="407" text="Washup Minutes:" textAlign="right"/>
 	<mx:Label x="347" y="428" text="Washup Time per fountain:" textAlign="right"/>
 	<mx:HRule x="10" y="453" width="732" height="6" left="5" right="5"/>
 	<mx:HRule x="10" y="552" width="732" height="6" left="5" right="5"/>

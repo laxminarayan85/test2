@@ -269,8 +269,8 @@ password="{passwordField.text}"/>
 	<mx:Button label="Cancel" click="PopUpManager.removePopUp(this);" x="195" y="427"/>
 	<mx:Button label="Clear form" enabled="{!formIsEmpty}" click="clearFormHandler();"  x="101" y="427"/>
 	<mx:Button label="Save User" id="submitButton" enabled="{formIsValid}" click="saveUser();"  x="10" y="427"/>
-	<mx:Label x="10" y="164" text="User Name:"/>
-	<mx:Label x="20" y="190" text="Password:"/>
+	<mx:Label x="10" y="164" text="User Name:" textAlign="right"/>
+	<mx:Label x="20" y="190" text="Password:" textAlign="right"/>
 	<mx:CheckBox x="50" y="255" label="Use Robust Password Rules" id="robust_password" selected="{user1.robustPassword}"/>
 	<mx:CheckBox x="10" y="294" label="Not allow to override" selected="{user1.noOverride}" id="allow_override"/>
 	<mx:CheckBox x="10" y="324" label="Can override credit limit" selected="{user1.overrideCredit}" id="override_credit_limit"/>
@@ -279,8 +279,8 @@ password="{passwordField.text}"/>
 	<mx:CheckBox x="237" y="294" label="Not allow to return cash" selected="{user1.noCashReturn}" id="return_cash"/>
 	<mx:CheckBox x="237" y="324" label="Show user name on log window" selected="{user1.showUserNameLog}" id="user_log_window"/>
 	<mx:CheckBox x="237" y="354" label="Can edit quick access panel" selected="{user1.quickAccess}" id="quick_access"/>
-	<mx:Label x="357" y="164" text="Access Group:"/>
-	<mx:Label x="357" y="190" text="Access Level:"/>
+	<mx:Label x="357" y="164" text="Access Group:" textAlign="right"/>
+	<mx:Label x="357" y="190" text="Access Level:" textAlign="right"/>
 	<mx:ComboBox x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
 	<mx:ComboBox x="448" y="187" height="21" id="accessLevelList"></mx:ComboBox>
 	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>

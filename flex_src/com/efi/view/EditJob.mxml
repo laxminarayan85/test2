@@ -539,7 +539,7 @@
 			</mx:LinkButton>
 			<mx:Label x="10"
 					  y="46"
-					  text="File"
+					  text="Save"
 					  width="38"
 					  textAlign="center"/>
 			<mx:LinkButton x="150.5"
@@ -736,13 +736,13 @@
 										  width="98" textAlign="right"/>
 							<mx:Label x="390.95"
 									  y="324"
-									  text="Overs Total Price:"/>
+									  text="Overs Total Price:" textAlign="right"/>
 							<mx:Label x="450.95"
 									  y="387"
-									  text="Other:"/>
+									  text="Other:" textAlign="right"/>
 							<mx:Label x="456.95"
 									  y="345"
-									  text="Prep:"/>
+									  text="Prep:" textAlign="right"/>
 							<mx:Label x="496"
 									  y="345"
 									  width="98"
@@ -760,7 +760,7 @@
 									  height="20" textAlign="right"/>
 							<mx:Label x="453.95"
 									  y="422"
-									  text="Total:"/>
+									  text="Total:" textAlign="right"/>
 							<mx:Label x="496.95"
 									  y="422"
 									  width="97.05"
@@ -789,7 +789,7 @@
 									  height="20" textAlign="right"/>
 							<mx:Label x="457.95"
 									  y="366"
-									  text="Bind:"/>
+									  text="Bind:" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="279"
 										  id="job_price"
@@ -797,10 +797,10 @@
 										  width="98" textAlign="right" text="{job.price}"/>
 							<mx:Label x="453.95"
 									  y="280"
-									  text="Price:"/>
+									  text="Price:" textAlign="right"/>
 							<mx:Label x="395.95"
 									  y="303"
-									  text="Overs Unit Price:"/>
+									  text="Overs Unit Price:" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="70"
 										  id="job_sheets"
@@ -839,34 +839,34 @@
 										  width="98" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:Label x="445.95"
 									  y="248"
-									  text="Weight:"/>
+									  text="Weight:" textAlign="right"/>
 							<mx:Label x="439.95"
 									  y="227"
-									  text="Tot Imp:"/>
+									  text="Tot Imp:" textAlign="right"/>
 							<mx:Label x="440.95"
 									  y="206"
-									  text="Imp/Run"/>
+									  text="Imp/Run" textAlign="right"/>
 							<mx:Label x="403.95"
 									  y="185"
-									  text="# of Signatures:"/>
+									  text="# of Signatures:" textAlign="right"/>
 							<mx:Label x="428.95"
 									  y="162"
-									  text="Est Waste:"/>
+									  text="Est Waste:" textAlign="right"/>
 							<mx:Label x="407.95"
 									  y="139"
-									  text="Bindery Waste:"/>
+									  text="Bindery Waste:" textAlign="right"/>
 							<mx:Label x="450.95"
 									  y="118"
-									  text="Press:"/>
+									  text="Press:" textAlign="right"/>
 							<mx:Label x="446.95"
 									  y="94"
-									  text="Up/On:"/>
+									  text="Up/On:" textAlign="right"/>
 							<mx:Label x="444.95"
 									  y="71"
-									  text="Sheets:"/>
+									  text="Sheets:" textAlign="right"/>
 							<mx:Label x="431.95"
 									  y="48"
-									  text="In sets of:"/>
+									  text="In sets of:" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="1"
 										  id="job_ordered"
@@ -875,10 +875,10 @@
 										  width="98" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:Label x="438.95"
 									  y="2"
-									  text="Ordered:"/>
+									  text="Ordered:" textAlign="right"/>
 							<mx:Label x="408.95"
 									  y="25"
-									  text="Overs/Unders:"/>
+									  text="Overs/Unders:" textAlign="right"/>
 							<mx:VRule x="374"
 									  bottom="5"
 									  top="5"/>
@@ -966,15 +966,15 @@
 									<mx:Label x="32"
 											  y="148"
 											  text="Folded Size:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:Label x="59"
 											  y="126"
 											  text="Finish:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:Label x="39"
 											  y="192"
 											  text="Unit Price:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:TextInput x="107"
 												  y="189"
 												  width="100"
@@ -984,15 +984,15 @@
 									<mx:Label x="46"
 											  y="104"
 											  text="Run Size:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:Label x="56"
 											  y="82"
 											  text="Parent:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:Label x="8"
 											  y="170"
 											  text="Number of Lines:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:TextInput x="107"
 												  y="35"
 												  width="171"
@@ -1003,11 +1003,11 @@
 									<mx:Label x="60"
 											  y="38"
 											  text="Stock:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:Label x="62"
 											  y="60"
 											  text="Color:"
-											  fontSize="9"/>
+											  fontSize="9" textAlign="right"/>
 									<mx:CheckBox x="10"
 												 y="6"
 												 label="Customer Supplied Stock"

@@ -477,7 +477,7 @@
 					</mx:LinkButton>
 					<mx:Label x="10"
 							  y="46"
-							  text="File"
+							  text="Save"
 							  width="38"
 							  textAlign="center"/>
 					<mx:LinkButton x="165.5"
@@ -682,10 +682,10 @@
 						</mx:Panel>
 						<mx:Label x="349"
 								  y="249"
-								  text="Acct Status:"/>
+								  text="Acct Status:" textAlign="right"/>
 						<mx:Label x="355"
 								  y="270"
-								  text="Acct Type:"/>
+								  text="Acct Type:" textAlign="right"/>
 						<mx:Label x="23"
 								  y="253"
 								  text="Taken By:"/>
@@ -695,12 +695,12 @@
 						<mx:Label x="30"
 								  y="299"
 								  text="Ship Via:"/>
-						<mx:Label x="349"
+						<mx:Label x="355"
 								  y="292"
-								  text="Hold State:"/>
+								  text="Hold State:" textAlign="right"/>
 						<mx:Label x="379"
 								  y="314"
-								  text="PO #:"/>
+								  text="PO #:" textAlign="right"/>
 						<mx:Text x="425"
 								 y="249"
 								 width="146"
@@ -947,7 +947,7 @@
 								   horizontalScrollPolicy="off">
 							<mx:Label x="3"
 									  y="10"
-									  text="Cust Discount:"/>
+									  text="Cust Discount:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="10"
 									 width="117"
@@ -957,7 +957,7 @@
 									 height="20"/>
 							<mx:Label x="11"
 									  y="32"
-									  text="Net Subtotal:"/>
+									  text="Net Subtotal:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="32"
 									 width="117"
@@ -967,7 +967,7 @@
 									 height="20"/>
 							<mx:Label x="24"
 									  y="54"
-									  text="Sales Tax:"/>
+									  text="Sales Tax:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="54"
 									 width="117"
@@ -976,7 +976,7 @@
 									 height="20"/>
 							<mx:Label x="31"
 									  y="76"
-									  text="Shipping:"/>
+									  text="Shipping:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="76"
 									 width="117"
@@ -986,7 +986,7 @@
 									 height="20"/>
 							<mx:Label x="51"
 									  y="98"
-									  text="Total:"/>
+									  text="Total:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="98"
 									 width="117"
@@ -996,7 +996,7 @@
 									 height="20"/>
 							<mx:Label x="10"
 									  y="120"
-									  text="Amount Due:"/>
+									  text="Amount Due:" textAlign="right"/>
 							<mx:Text x="97"
 									 y="120"
 									 width="117"

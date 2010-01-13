@@ -906,8 +906,8 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<mx:CheckBox x="123" y="10" label="Personal account" id="personalAccount" selected="{account.marketing.personalAcct}"/>
 				<mx:CheckBox x="123" y="36" label="Do not mail" id="noMail" selected="{account.marketing.noMail}"/>
 				<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="Company Info" dropShadowEnabled="false">
-					<mx:Label x="12" y="10" text="Num Employees:"/>
-					<mx:Label x="10" y="38" text="Annual Revenue:"/>
+					<mx:Label x="12" y="10" text="Num Employees:" textAlign="right"/>
+					<mx:Label x="10" y="38" text="Annual Revenue:" textAlign="right"/>
 					<mx:TextInput x="119" y="38" width="152" id="annualRev" text="{account.marketing.annualRev}"/>
 					<mx:TextInput x="119" y="10" width="152" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
 					<!--<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
@@ -916,11 +916,11 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				-->
 				</mx:Panel>
 				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="Marketing Dates" dropShadowEnabled="false">
-					<mx:Label x="12" y="10" text="Follow Up:"/>
-					<mx:Label x="10" y="38" text="Birthdate:"/>
-					<mx:Label x="21" y="66" text="User 3:"/>
-					<mx:Label x="21" y="94" text="User 4:"/>
-					<mx:Label x="21" y="122" text="User 5:"/>
+					<mx:Label x="12" y="10" text="Follow Up:" textAlign="right"/>
+					<mx:Label x="10" y="38" text="Birthdate:" textAlign="right"/>
+					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>
+					<mx:Label x="21" y="94" text="User 4:" textAlign="right"/>
+					<mx:Label x="21" y="122" text="User 5:" textAlign="right"/>
 					<mx:DateField x="94" y="8" id="followUp" text="{account.marketing.followup}" showToday="false" width="136" />
 					<mx:DateField x="94" y="36" id="birthDate" text="{account.marketing.birthDate}" showToday="false" width="136"/>
 					<mx:DateField x="94" y="64" id="userDate3" text="{account.marketing.user3}" showToday="false" width="136"/>
@@ -928,26 +928,26 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:DateField x="94" y="120" id="userDate5" text="{account.marketing.user5}" showToday="false" width="136"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="Marketing Tags" dropShadowEnabled="false">
-					<mx:Label x="28" y="10" text="Lead Source:"/>
-					<mx:Label x="-3" y="38" text="Common Interest:"/>
+					<mx:Label x="28" y="10" text="Lead Source:" textAlign="right"/>
+					<mx:Label x="-3" y="38" text="Common Interest:" textAlign="right"/>
 					<mx:TextInput x="114" y="36" width="175" id="commonInterest" text="{account.marketing.commonInterst}"/>
 					<mx:TextInput x="114" y="64" width="175" id="user3Tag"  text="{account.marketing.user6}"/>
-					<mx:Label x="60" y="66" text="User 3:"/>
+					<mx:Label x="60" y="66" text="User 3:" textAlign="right"/>
 					<mx:TextInput x="114" y="92" width="175" id="user4Tag"  text="{account.marketing.user7}"/>
-					<mx:Label x="60" y="94" text="User 4:"/>
+					<mx:Label x="60" y="94" text="User 4:" textAlign="right"/>
 					<mx:TextInput x="114" y="118" width="175" id="typeofWork"  text="{account.marketing.typeWork}"/>
-					<mx:Label x="21" y="122" text="Type of Work:"/>
+					<mx:Label x="21" y="122" text="Type of Work:" textAlign="right"/>
 					<mx:TextInput x="114" y="8" width="175" id="leadSource"  text="{account.marketing.leadSource}"/>
 					<mx:TextInput x="454" y="38" width="175" id="sportsInterest"  text="{account.marketing.sportsInterst}"/>
 					<mx:TextInput x="454" y="66" width="175" id="user8Tag"  text="{account.marketing.user8}"/>
 					<mx:TextInput x="454" y="94" width="175" id="user9Tag"  text="{account.marketing.user9}"/>
 					<mx:TextInput x="454" y="120" width="175" id="mailerType"  text="{account.marketing.mailerType}"/>
 					<mx:TextInput x="454" y="10" width="175" id="leadSource1"  text="{account.marketing.leadSource2}"/>
-					<mx:Label x="368" y="12" text="Lead Source:"/>
-					<mx:Label x="359" y="40" text="Sport Interest:"/>
-					<mx:Label x="400" y="68" text="User 8:"/>
-					<mx:Label x="400" y="96" text="User 9:"/>
-					<mx:Label x="372" y="127" text="Mailer Type:"/>
+					<mx:Label x="368" y="12" text="Lead Source:" textAlign="right"/>
+					<mx:Label x="359" y="40" text="Sport Interest:" textAlign="right"/>
+					<mx:Label x="400" y="68" text="User 8:" textAlign="right"/>
+					<mx:Label x="400" y="96" text="User 9:" textAlign="right"/>
+					<mx:Label x="372" y="127" text="Mailer Type:" textAlign="right"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas label="Templates" width="100%" height="100%">
