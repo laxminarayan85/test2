@@ -248,7 +248,27 @@ password="{passwordField.text}"/>
 		user1 = dataGrid.selectedItem as Users;
 		mapFromUserData();
 	}    
-	                    
+	
+	public function getAccessgrouplabel(item:Object, column:DataGridColumn):String{
+		var tmpUser:Users ;
+		tmpUser = item as Users;
+		
+		if (tmpUser != null && tmpUser.accessGroup != null && tmpUser.accessGroup.name != null && tmpUser.accessGroup.name != "") {
+			return tmpUser.accessGroup.name;
+		} else {
+			return "None";
+		}
+	}   
+	public function getAccesslevellabel(item:Object, column:DataGridColumn):String{
+		var tmpUser:Users ;
+		tmpUser = item as Users;
+		
+		if (tmpUser != null && tmpUser.accessLevel != null && tmpUser.accessLevel.name != null && tmpUser.accessLevel.name != "") {
+			return tmpUser.accessLevel.name;
+		} else {
+			return "None";
+		}
+	}                                   
 ]]>        
 </mx:Script>
  <mx:Canvas width="100%" height="100%">                            
@@ -256,8 +276,8 @@ password="{passwordField.text}"/>
 	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
 		<mx:columns>
 			<mx:DataGridColumn headerText="User Name" dataField="name"/>
-			<mx:DataGridColumn headerText="Access Group" dataField="{user1.accessGroup.name}"/>
-					<mx:DataGridColumn headerText="Access Level" dataField="accessLevel.name"/>
+			<mx:DataGridColumn headerText="Access Group" labelFunction="getAccessgrouplabel"/>
+					<mx:DataGridColumn headerText="Access Level" labelFunction="getAccesslevellabel"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
