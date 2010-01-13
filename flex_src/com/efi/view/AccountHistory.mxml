@@ -9,6 +9,9 @@ width="786" height="479"  creationComplete="init()"
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
+<mx:Producer id="producer" destination="invoicebase"/>
+	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
 	import mx.controls.Alert;                                         
@@ -36,6 +39,9 @@ width="786" height="479"  creationComplete="init()"
     private var invoices:ArrayCollection = new ArrayCollection(); 
 	
 	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();
+		
 		doAccount();
 	}  
 	
@@ -102,7 +108,20 @@ width="786" height="479"  creationComplete="init()"
 		+ event.fault.faultDetail + " - "                                  
 		+ event.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null, 4);        	
-	} 		
+	} 	
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "InvoiceBase" || payloadType == "Invoice" || payloadType == "Estimate") {
+		  		dataService.getAll("InvoiceBase");
+			}
+		}
+	}	
 ]]>
                              
 </mx:Script>
