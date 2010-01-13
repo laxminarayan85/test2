@@ -1808,9 +1808,9 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
 				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
 				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.autoLogOutSeconds}"/>
-				<mx:Label x="50" y="330" text="Time of day to quit:"/>
+				<mx:Label x="50" y="330" text="Time of day to quit:" textAlign="right"/>
 				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>
-				<mx:Label x="80" y="367" text="Shut down notification message:"/>
+				<mx:Label x="80" y="367" text="Shut down notification message:" textAlign="right"/>
 				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" text="{preferencesSystem.shutdownMessage}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
@@ -1818,24 +1818,24 @@ width="800" height="678" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
 
-				<mx:Label x="79" y="197" text="Phone:"/>
+				<mx:Label x="79" y="197" text="Phone:" textAlign="right"/>
 				<mx:TextInput x="127" y="195" width="148" id="txtPhone" text="{preferencesSystem.companyPhone}"/>
-				<mx:Label x="344" y="197" text="Fax:"/>
+				<mx:Label x="344" y="197" text="Fax:" textAlign="right"/>
 				<mx:TextInput x="377" y="195" width="148" id="txtFax" text="{preferencesSystem.companyFax}"/>
-				<mx:Label x="79" y="227" text="E-Mail:"/>
+				<mx:Label x="79" y="227" text="E-Mail:" textAlign="right"/>
 				<mx:TextInput x="125" y="225" width="400" id="txtEmail" text="{preferencesSystem.companyEmail}"/>
-				<mx:Label x="81" y="257" text="Other:"/>
+				<mx:Label x="81" y="257" text="Other:" textAlign="right"/>
 				<mx:TextInput x="125" y="255" width="400" id="txtOther1" text="{preferencesSystem.companyOther1}"/>
-				<mx:Label x="81" y="287" text="Other:"/>
+				<mx:Label x="81" y="287" text="Other:" textAlign="right"/>
 				<mx:TextInput x="125" y="285" width="400" id="txtOther2" text="{preferencesSystem.companyOther2}"/>
-				<mx:Label x="8" y="317" text="Company ID Label:"/>
+				<mx:Label x="8" y="317" text="Company ID Label:" textAlign="right"/>
 				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel" text="{preferencesSystem.companyIdLabel}"/>
-				<mx:Label x="242" y="317" text="Company ID:"/>
+				<mx:Label x="242" y="317" text="Company ID:" textAlign="right"/>
 				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId" text="{preferencesSystem.companyId}"/>
 				
-				<mx:Label x="187" y="367" text="Store Number:"/>
+				<mx:Label x="187" y="367" text="Store Number:" textAlign="right"/>
 				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber" text="{preferencesSystem.companyStoreNumber}"/>
-				<mx:Label x="52" y="392" text="Workstation/Store Location Reference:"/>
+				<mx:Label x="52" y="392" text="Workstation/Store Location Reference:" textAlign="right"/>
 				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference" text="{preferencesSystem.companyStoreLocationRef}"/>
 				<mx:TextArea x="125" y="420" width="400" height="63">
 					<mx:text>The company ID is printed on Invoices and Estimates, the workstation specific Store location information prints on receipts and appears in the Account history transactions, if empy the global Store Number is used for these purposes.</mx:text>
@@ -1846,12 +1846,12 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Business Calendar" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="92" text="Fiscal year starts first day of:"/>
+				<mx:Label x="50" y="92" text="Fiscal year starts first day of:" textAlign="right"/>
 				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
-				<mx:Label x="176" y="146" text="Current Range:"/>
+				<mx:Label x="176" y="146" text="Current Range:" textAlign="right"/>
 				<mx:TextArea x="270" y="145" id="txtCurrentRange" height="19" width="210" enabled="false"/>
 				
-				<mx:Label x="50" y="185" text="Work Days:"/>
+				<mx:Label x="50" y="185" text="Work Days:" textAlign="right"/>
 				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
 				<mx:RadioButton x="53" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="1"/>
 				<mx:RadioButton x="93" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="2"/>
@@ -1868,7 +1868,7 @@ width="800" height="678" title="Preferences"
 				<mx:Button x="200" y="211" label="T" width="40"/>
 				<mx:Button x="240" y="211" label="F" width="40"/>
 				<mx:Button x="280" y="211" label="S" width="40"/>
-				<mx:Label x="325" y="250" text="First Day of Work Week"/>
+				<mx:Label x="325" y="250" text="First Day of Work Week" textAlign="right"/>
 				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="Future dates exclude days that company is Closed"/>
 				
 			</mx:Canvas>
@@ -1876,14 +1876,14 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Numbers" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="67" y="32" text="Integers:"/>
-				<mx:Label x="46" y="62" text="Percentages:"/>
-				<mx:Label x="71" y="92" text="Amount:"/>
-				<mx:Label x="88" y="122" text="Rate:"/>
-				<mx:Label x="81" y="152" text="Factor:"/>
-				<mx:Label x="74" y="182" text="Invoice:"/>
-				<mx:Label x="40" y="212" text="Short Percent:"/>
-				<mx:Label x="63" y="242" text="Round to:"/>
+				<mx:Label x="67" y="32" text="Integers:" textAlign="right"/>
+				<mx:Label x="46" y="62" text="Percentages:" textAlign="right"/>
+				<mx:Label x="71" y="92" text="Amount:" textAlign="right"/>
+				<mx:Label x="88" y="122" text="Rate:" textAlign="right"/>
+				<mx:Label x="81" y="152" text="Factor:" textAlign="right"/>
+				<mx:Label x="74" y="182" text="Invoice:" textAlign="right"/>
+				<mx:Label x="40" y="212" text="Short Percent:" textAlign="right"/>
+				<mx:Label x="63" y="242" text="Round to:" textAlign="right"/>
 
 				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
 				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
@@ -1911,18 +1911,18 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="Use Alternate Currency System." change="checkAlternateCurrency();"/>
 
-				<mx:Label x="84" y="62" text="Format:"/>
+				<mx:Label x="84" y="62" text="Format:" textAlign="right"/>
 				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false" text="{preferencesSystem.displayFormat}"/>
-				<mx:Label x="24" y="92" text="Conversion Factor:"/>
+				<mx:Label x="24" y="92" text="Conversion Factor:" textAlign="right"/>
 				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false" text="{preferencesSystem.conversionFactor}"/>
-				<mx:Label x="72" y="122" text="Round to:"/>
+				<mx:Label x="72" y="122" text="Round to:" textAlign="right"/>
 				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false" text="{preferencesSystem.alternateRoundto}"/>
 
 				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="Always Round Down" enabled="false"/>
 				
 				
 				<mx:TextArea x="23" y="203" height="40%" width="451" id="txtSampleArea" enabled="false"/>
-				<mx:Label x="50" y="186" text="Sample Currency" id="txtSampleDemo"/>
+				<mx:Label x="50" y="186" text="Sample Currency" id="txtSampleDemo" textAlign="right"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
@@ -1932,9 +1932,9 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="Use Australian invoice rounding"/>
 				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
 
-				<mx:Label x="26" y="122" text="Ink Weight(singular):"/>
+				<mx:Label x="26" y="122" text="Ink Weight(singular):" textAlign="right"/>
 				<mx:TextInput x="154" y="120" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
-				<mx:Label x="39" y="152" text="Ink Weight(plural):"/>
+				<mx:Label x="39" y="152" text="Ink Weight(plural):" textAlign="right"/>
 				<mx:TextInput x="154" y="150" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
 
 			</mx:Canvas>
@@ -1942,7 +1942,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Address Formatting" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="50" y="32" text="Default Country:"/>
+				<mx:Label x="50" y="32" text="Default Country:" textAlign="right"/>
 				<fc:AutoComplete  x="148" y="30" width="181" id="cboDefaultCountry" dataProvider="{CountryArray}" lookAhead="true" labelField="name" focusOut="doCountryFind(cboDefaultCountry,CountryArray)"/>
 				<mx:TextArea x="23" y="203" height="25%" width="451" id="txtSampleAddressArea" enabled="false"/>
 				<mx:Text x="50" y="186" text="Sample Address" id="txtSampleAddress"/>
@@ -1952,8 +1952,8 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Receipt" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="54" y="32" text="Header:"/>
-				<mx:Label x="59" y="182" text="Footer:"/>
+				<mx:Label x="54" y="32" text="Header:" textAlign="right"/>
+				<mx:Label x="59" y="182" text="Footer:" textAlign="right"/>
 				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130" text="{preferencesPOS.receiptHeader}"/>
 				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100" text="{preferencesPOS.receiptFooter}"/>
 
@@ -1966,9 +1966,9 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Drawer" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="Receipt Printer:"/>
+				<mx:Label x="50" y="32" text="Receipt Printer:" textAlign="right"/>
 				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
-				<mx:Label x="95" y="62" text="Printer:"/>
+				<mx:Label x="95" y="62" text="Printer:" textAlign="right"/>
 				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200" text="{preferencesPOS.defaultPrinter}"/>
 
 				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="Enable Cash Drawer"/>
@@ -1981,11 +1981,11 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="Use Master's Drawer"/>
 				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="Keep settings local"/>
 
-				<mx:Label x="50" y="273" text="ASCII Code to Open Drawer:"/>
-				<mx:Label x="56" y="298" text="Blank Lines Before Receipt:"/>
-				<mx:Label x="66" y="323" text="Blank Lines After Receipt:"/>
-				<mx:Label x="101" y="348" text="Receipt Start Code:"/>
-				<mx:Label x="107" y="373" text="Receipt End Code:"/>
+				<mx:Label x="50" y="273" text="ASCII Code to Open Drawer:" textAlign="right"/>
+				<mx:Label x="56" y="298" text="Blank Lines Before Receipt:" textAlign="right"/>
+				<mx:Label x="66" y="323" text="Blank Lines After Receipt:" textAlign="right"/>
+				<mx:Label x="101" y="348" text="Receipt Start Code:" textAlign="right"/>
+				<mx:Label x="107" y="373" text="Receipt End Code:" textAlign="right"/>
 
 				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47" text="{preferencesPOS.asciiCodeOpenDrawer}"/>
 				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47" text="{preferencesPOS.blankLinesBeforeReceipt}"/>
@@ -1993,10 +1993,10 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77" text="{preferencesPOS.receiptStartCode}"/>
 				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77" text="{preferencesPOS.receiptEndCode}"/>
 
-				<mx:Label x="50" y="420" text="Baud Rate:"/>
-				<mx:Label x="220" y="420" text="Stop Bits:"/>
-				<mx:Label x="77" y="445" text="Parity:"/>
-				<mx:Label x="216" y="445" text="Data Size:"/>
+				<mx:Label x="50" y="420" text="Baud Rate:" textAlign="right"/>
+				<mx:Label x="220" y="420" text="Stop Bits:" textAlign="right"/>
+				<mx:Label x="77" y="445" text="Parity:" textAlign="right"/>
+				<mx:Label x="216" y="445" text="Data Size:" textAlign="right"/>
 
 				<mx:ComboBox x="119" y="418" id="cboBaudRate"  dataProvider="{BaudRateArray}" labelField="name" width="90" enabled="false"/>
 				<mx:ComboBox x="281" y="418" id="cboStopBits"  dataProvider="{StopBitsArray}" labelField="name" width="90" enabled="false"/>
@@ -2111,7 +2111,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="Calculate INK by Impressions, Includes Waste (Affects history)"/>
 				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="Use the History Title for New Document Title"/>
 
-				<mx:Label x="50" y="442" text="Normal Due Date (days):"/>
+				<mx:Label x="50" y="442" text="Normal Due Date (days):" textAlign="right"/>
 				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
 				
 				
@@ -2123,15 +2123,15 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="Close Invoice after Printing Job Tickets"/>
 				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="Close Invoices and Estimates after Printing"/>
 
-				<mx:Label x="58" y="92" text="Default Invoice:"/>
-				<mx:Label x="50" y="117" text="Default Estimate:"/>
+				<mx:Label x="58" y="92" text="Default Invoice:" textAlign="right"/>
+				<mx:Label x="50" y="117" text="Default Estimate:" textAlign="right"/>
 
 				<mx:ComboBox x="160" y="90" id="cboDefaultInvoice"  dataProvider="{DefaultInvoiceArray}" labelField="name" width="250"/>
 				<mx:ComboBox x="160" y="115" id="cboDefaultEstimate"  dataProvider="{DefaultEstimateArray}" labelField="name" width="250"/>
 
 
 				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="Payment Due Date">
-					<mx:Label x="20" y="7" text="Number of Days Before Due:"/>
+					<mx:Label x="20" y="7" text="Number of Days Before Due:" textAlign="right"/>
 					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
 					<mx:RadioButtonGroup id="optPaymentDueDays"/>
@@ -2155,14 +2155,14 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="30" y="302" id="chkGutter"/>
 				<mx:CheckBox x="30" y="352" id="chkBleed"/>
 				
-				<mx:Label x="50" y="30" text="Grip Edge / Gap"/>
-				<mx:Label x="50" y="80" text="Folio Edge"/>
-				<mx:Label x="50" y="130" text="Color Bar"/>
-				<mx:Label x="50" y="180" text="White Space"/>
-				<mx:Label x="50" y="230" text="Right"/>
-				<mx:Label x="50" y="280" text="Gutter"/>
-				<mx:Label x="50" y="330" text="Bleed"/>
-				<mx:Label x="50" y="380" text="Right"/>
+				<mx:Label x="50" y="30" text="Grip Edge / Gap" textAlign="right"/>
+				<mx:Label x="50" y="80" text="Folio Edge" textAlign="right"/>
+				<mx:Label x="50" y="130" text="Color Bar" textAlign="right"/>
+				<mx:Label x="50" y="180" text="White Space" textAlign="right"/>
+				<mx:Label x="50" y="230" text="Right" textAlign="right"/>
+				<mx:Label x="50" y="280" text="Gutter" textAlign="right"/>
+				<mx:Label x="50" y="330" text="Bleed" textAlign="right"/>
+				<mx:Label x="50" y="380" text="Right" textAlign="right"/>
 
 				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimating.gripEdgeGap}"/>
 				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimating.folioEdge}"/>
@@ -2173,11 +2173,11 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimating.bleed}"/>
 				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimating.bleedRight}"/>
 
-				<mx:Label x="151" y="180" text="Top"/>
-				<mx:Label x="151" y="230" text="Bottom"/>
-				<mx:Label x="151" y="280" text="Horizontal"/>
-				<mx:Label x="151" y="330" text="Top"/>
-				<mx:Label x="151" y="380" text="Bottom"/>
+				<mx:Label x="151" y="180" text="Top" textAlign="right"/>
+				<mx:Label x="151" y="230" text="Bottom" textAlign="right"/>
+				<mx:Label x="151" y="280" text="Horizontal" textAlign="right"/>
+				<mx:Label x="151" y="330" text="Top" textAlign="right"/>
+				<mx:Label x="151" y="380" text="Bottom" textAlign="right"/>
 
 				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
 				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
@@ -2185,7 +2185,7 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimating.bleedTop}"/>
 				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimating.bleedBottom}"/>
 
-				<mx:Label x="27" y="462" text="Default Press Cutoff:"/>
+				<mx:Label x="27" y="462" text="Default Press Cutoff:" textAlign="right"/>
 				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
 
 
@@ -2193,7 +2193,7 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="Trim Four Sides"/>
 				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="Work And Tumble"/>
 
-				<mx:Label x="260" y="152" text="Run to Finish Grain:"/>
+				<mx:Label x="260" y="152" text="Run to Finish Grain:" textAlign="right"/>
 				<mx:ComboBox x="377" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="80"/>
 
 				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="Print Options">
@@ -2208,7 +2208,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Job Ticket" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="30" y="30" text="Ticket Format:"/>
+				<mx:Label x="30" y="30" text="Ticket Format:" textAlign="right"/>
 				<mx:RadioButtonGroup id="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="Old Style (pre 5.0)" groupName="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="Standard Style" groupName="opgTicketFormat"/>
@@ -2253,7 +2253,7 @@ width="800" height="678" title="Preferences"
 				
 				<mx:Text x="50" y="30" text="Markup is stepped and based on COST of job before markup, the first amount covers from zero cost to the specified cost, the last amount includes all above as well." height="38" width="488"/>
 
-				<mx:Label x="50" y="80" text="Outside Services"/>
+				<mx:Label x="50" y="80" text="Outside Services" textAlign="right"/>
 				<mx:DataGrid x="50" y="100" height="200" id="OutsideServicesGrid" 
 					dataProvider="{PreferencesMarkupsArray}" 
 					editable="true">
@@ -2270,7 +2270,7 @@ width="800" height="678" title="Preferences"
 					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
-				<mx:Label x="300" y="80" text="Merchandise"/>
+				<mx:Label x="300" y="80" text="Merchandise" textAlign="right"/>
 				<mx:DataGrid x="300" y="100" height="200" id="MerchandiseGrid" 
 					dataProvider="{PreferencesMarkupsMerchandiseArray}" 
 					editable="true">
@@ -2292,8 +2292,8 @@ width="800" height="678" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 				
 				<mx:Panel x="50" y="27" layout="absolute" title="Standard Stock and Special Order Markup" width="500" height="295">
-					<mx:Label x="9" y="5" text="Quantity:"/>
-					<mx:Label x="15" y="27" text="Markup:"/>
+					<mx:Label x="9" y="5" text="Quantity:" textAlign="right"/>
+					<mx:Label x="15" y="27" text="Markup:" textAlign="right"/>
 
 					<mx:TextInput x="66" y="3" id="txtstdqty1" width="50" text="{preferencesStocks.stdQty1}"/>
 					<mx:TextInput x="116" y="3" id="txtstdqty2" width="50" text="{preferencesStocks.stdQty2}"/>
@@ -2309,11 +2309,11 @@ width="800" height="678" title="Preferences"
 					<mx:TextInput x="266" y="26" id="txtstdmarkup5" width="50" text="{preferencesStocks.stdMarkup5}"/>
 					<mx:TextInput x="316" y="26" id="txtstdmarkup6" width="50" text="{preferencesStocks.stdMarkup6}"/>
 
-					<mx:Label x="15" y="55" text="Stock weight, name and finish"/>
-					<mx:Label x="15" y="95" text="Stock points, name and finish"/>
-					<mx:Label x="15" y="135" text="Stock microns, name and finish"/>
-					<mx:Label x="15" y="175" text="Stock plies, name and finish"/>
-					<mx:Label x="15" y="215" text="Stock millimeters, name and finish"/>
+					<mx:Label x="15" y="55" text="Stock weight, name and finish" textAlign="right"/>
+					<mx:Label x="15" y="95" text="Stock points, name and finish" textAlign="right"/>
+					<mx:Label x="15" y="135" text="Stock microns, name and finish" textAlign="right"/>
+					<mx:Label x="15" y="175" text="Stock plies, name and finish" textAlign="right"/>
+					<mx:Label x="15" y="215" text="Stock millimeters, name and finish" textAlign="right"/>
 
 					<mx:TextInput x="15" y="70" id="txtStockWeight" text="{preferencesStocks.weight}" width="172"/>
 					<mx:TextInput x="15" y="110" id="txtstockPoints" text="{preferencesStocks.points}" width="172"/>
@@ -2322,8 +2322,8 @@ width="800" height="678" title="Preferences"
 					<mx:TextInput x="15" y="230" id="txtStockMillimeters" text="" width="172"/>
 				</mx:Panel>
 				<mx:Panel x="50" y="326" layout="absolute" title="Blank Stock Pricing" width="500" height="92">				
-					<mx:Label x="9" y="5" text="Quantity:"/>
-					<mx:Label x="15" y="27" text="Markup:"/>
+					<mx:Label x="9" y="5" text="Quantity:" textAlign="right"/>
+					<mx:Label x="15" y="27" text="Markup:" textAlign="right"/>
 
 					<mx:TextInput x="66" y="3" id="txtblankqty1" width="50" text="{preferencesStocks.blankQty1}"/>
 					<mx:TextInput x="116" y="3" id="txtblankqty2" width="50" text="{preferencesStocks.blankQty2}"/>
@@ -2341,9 +2341,9 @@ width="800" height="678" title="Preferences"
 
 				</mx:Panel>
 				<mx:Panel x="50" y="422" layout="absolute" title="Customer Stock" width="500" height="134">
-					<mx:Label x="37" y="5" text="Stock Cost:"/>
-					<mx:Label x="49" y="27" text="Quantity:"/>
-					<mx:Label x="55" y="49" text="Markup:"/>
+					<mx:Label x="37" y="5" text="Stock Cost:" textAlign="right"/>
+					<mx:Label x="49" y="27" text="Quantity:" textAlign="right"/>
+					<mx:Label x="55" y="49" text="Markup:" textAlign="right"/>
 
 					<mx:TextInput x="109" y="3" id="txtcustomercost" width="50" text="{preferencesStocks.customerCost}"/>
 					<mx:TextInput x="109" y="26" id="txtcustomerquantity" width="50" text="{preferencesStocks.customerQuantity}"/>
@@ -2353,7 +2353,7 @@ width="800" height="678" title="Preferences"
 								
 				</mx:Panel>
 
-				<mx:Label x="50" y="564" text="Size Table to Use:"/>
+				<mx:Label x="50" y="564" text="Size Table to Use:" textAlign="right"/>
 				<mx:ComboBox x="160" y="562" id="cboSizeTableToUse"/>
 
 			</mx:Canvas>
@@ -2435,12 +2435,12 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit/Defaults" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="72" y="32" text="Credit Limit:"/>
-				<mx:Label x="50" y="62" text="Finance Charge:"/>
-				<mx:Label x="53" y="92" text="Inactive Period:"/>
+				<mx:Label x="72" y="32" text="Credit Limit:" textAlign="right"/>
+				<mx:Label x="50" y="62" text="Finance Charge:" textAlign="right"/>
+				<mx:Label x="53" y="92" text="Inactive Period:" textAlign="right"/>
 				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="Remove Drafts from Deposit Ticket"/>
-				<mx:Label x="50" y="152" text="Default Sales Rep for New Accounts:"/>
-				<mx:Label x="58" y="182" text="Default Shipping for New Accounts:"/>
+				<mx:Label x="50" y="152" text="Default Sales Rep for New Accounts:" textAlign="right"/>
+				<mx:Label x="58" y="182" text="Default Shipping for New Accounts:" textAlign="right"/>
 
 				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379" text="{preferencesAccounting.creditLimit}"/>
 				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379" text="{preferencesAccounting.financeChange}"/>
@@ -2452,9 +2452,9 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Aging Periods" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="28" y="32" text="Past Due:"/>
-				<mx:Label x="18" y="132" text="Delinquent:"/>
-				<mx:Label x="41" y="232" text="Frozen:"/>
+				<mx:Label x="28" y="32" text="Past Due:" textAlign="right"/>
+				<mx:Label x="18" y="132" text="Delinquent:" textAlign="right"/>
+				<mx:Label x="41" y="232" text="Frozen:" textAlign="right"/>
 				<mx:TextInput x="90" y="30" id="txtPastDue" width="60" text="{preferencesAccounting.pastDue}"/>
 				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60" text="{preferencesAccounting.delinquent}"/>
 				<mx:TextInput x="90" y="230" id="txtFrozen" width="60" text="{preferencesAccounting.frozen}"/>
@@ -2496,20 +2496,20 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="Link to:"/>
+				<mx:Label x="50" y="32" text="Link to:" textAlign="right"/>
 				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
 
-				<mx:Label x="50" y="62" text="Shipping Collected:"/>
-				<mx:Label x="42" y="92" text="Actual Bank Deposit:"/>
-				<mx:Label x="32" y="122" text="Undeposited Receipts:"/>
-				<mx:Label x="100" y="152" text="Discounts:"/>
-				<mx:Label x="98" y="182" text="Sales Tax:"/>
-				<mx:Label x="55" y="212" text="Total AR Receipts:"/>
-				<mx:Label x="37" y="242" text="Deposits on Invoices:"/>
-				<mx:Label x="48" y="272" text="New Charges to AR:"/>
-				<mx:Label x="61" y="302" text="Cash Over/Short:"/>
-				<mx:Label x="105" y="332" text="Paid Out:"/>
-				<mx:Label x="69" y="362" text="Refund Checks:"/>
+				<mx:Label x="50" y="62" text="Shipping Collected:" textAlign="right"/>
+				<mx:Label x="42" y="92" text="Actual Bank Deposit:" textAlign="right"/>
+				<mx:Label x="32" y="122" text="Undeposited Receipts:" textAlign="right"/>
+				<mx:Label x="100" y="152" text="Discounts:" textAlign="right"/>
+				<mx:Label x="98" y="182" text="Sales Tax:" textAlign="right"/>
+				<mx:Label x="55" y="212" text="Total AR Receipts:" textAlign="right"/>
+				<mx:Label x="37" y="242" text="Deposits on Invoices:" textAlign="right"/>
+				<mx:Label x="48" y="272" text="New Charges to AR:" textAlign="right"/>
+				<mx:Label x="61" y="302" text="Cash Over/Short:" textAlign="right"/>
+				<mx:Label x="105" y="332" text="Paid Out:" textAlign="right"/>
+				<mx:Label x="69" y="362" text="Refund Checks:" textAlign="right"/>
 
 				<mx:TextInput x="166" y="60"  id="txtShippingCollected" width="80" text="{preferencesAccounting.shippingCollected}"/>
 				<mx:TextInput x="166" y="90"  id="txtActualBankDeposit" width="80" text="{preferencesAccounting.actualBankDeposit}"/>
@@ -2523,19 +2523,19 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="166" y="330" id="txtPaidOut" width="80" text="{preferencesAccounting.paidOut}"/>
 				<mx:TextInput x="166" y="360" id="txtRefundChecks" width="80" text="{preferencesAccounting.refundChecks}"/>
 
-				<mx:Label x="250" y="62" text="(income)"/>
-				<mx:Label x="250" y="92" text="(asset)"/>
-				<mx:Label x="250" y="122" text="(asset)"/>
-				<mx:Label x="250" y="152" text="(expense)"/>
-				<mx:Label x="250" y="182" text="(liability)"/>
-				<mx:Label x="250" y="212" text="(asset)"/>
-				<mx:Label x="250" y="242" text="(liability)"/>
-				<mx:Label x="250" y="272" text="(asset)"/>
-				<mx:Label x="250" y="302" text="(expense)"/>
-				<mx:Label x="250" y="332" text="(expense)"/>
-				<mx:Label x="250" y="362" text="(asset)"/>
+				<mx:Label x="250" y="62" text="(income)" textAlign="right"/>
+				<mx:Label x="250" y="92" text="(asset)" textAlign="right"/>
+				<mx:Label x="250" y="122" text="(asset)" textAlign="right"/>
+				<mx:Label x="250" y="152" text="(expense)" textAlign="right"/>
+				<mx:Label x="250" y="182" text="(liability)" textAlign="right"/>
+				<mx:Label x="250" y="212" text="(asset)" textAlign="right"/>
+				<mx:Label x="250" y="242" text="(liability)" textAlign="right"/>
+				<mx:Label x="250" y="272" text="(asset)" textAlign="right"/>
+				<mx:Label x="250" y="302" text="(expense)" textAlign="right"/>
+				<mx:Label x="250" y="332" text="(expense)" textAlign="right"/>
+				<mx:Label x="250" y="362" text="(asset)" textAlign="right"/>
 
-				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information."/>
+				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information." textAlign="right"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
@@ -2571,9 +2571,9 @@ width="800" height="678" title="Preferences"
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:Panel x="50" y="27" layout="absolute" title="Invoice" width="500" height="226">
-					<mx:Label x="10" y="13" text="Prefix"/>
-					<mx:Label x="130" y="13" text="Document #"/>
-					<mx:Label x="250" y="13" text="Suffix"/>
+					<mx:Label x="10" y="13" text="Prefix" textAlign="right"/>
+					<mx:Label x="130" y="13" text="Document #" textAlign="right"/>
+					<mx:Label x="250" y="13" text="Suffix" textAlign="right"/>
 					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}"/>
@@ -2582,9 +2582,9 @@ width="800" height="678" title="Preferences"
 				</mx:Panel>
 
 				<mx:Panel x="50" y="261" layout="absolute" title="Estimate" width="500" height="226">
-					<mx:Label x="10" y="13" text="Prefix"/>
-					<mx:Label x="130" y="13" text="Document #"/>
-					<mx:Label x="250" y="13" text="Suffix"/>
+					<mx:Label x="10" y="13" text="Prefix" textAlign="right"/>
+					<mx:Label x="130" y="13" text="Document #" textAlign="right"/>
+					<mx:Label x="250" y="13" text="Suffix" textAlign="right"/>
 					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}"/>
@@ -2598,7 +2598,7 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="Print Document"/>
 				
-				<mx:Label x="50" y="92" text="Journal Document Preference:"/>
+				<mx:Label x="50" y="92" text="Journal Document Preference:" textAlign="right"/>
 				<mx:ComboBox x="224" y="90" id="cboJournalDocumentPreference"  dataProvider="{JournalDocumentPreferenceArray}" labelField="name" width="250"/>
 
 			</mx:Canvas>
