@@ -164,8 +164,22 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	{
 		if (contact != null){
 			this.contact = contact;
-			if (contact.address == null) contact.address = new Address(); 
-			if (contact.shipToAddress == null) contact.shipToAddress = new Address();
+			if (contact.address == null){
+				contact.address = new Address(); 
+				contact.address.city = new City();
+				contact.address.state = new State();
+				contact.address.zip = new Zip();
+				contact.address.country = new Country();
+			} 
+			if (contact.shipToAddress == null) {
+				contact.shipToAddress = new Address();
+				contact.shipToAddress = new Address(); 
+				contact.shipToAddress.city = new City();
+				contact.shipToAddress.state = new State();
+				contact.shipToAddress.zip = new Zip();
+				contact.shipToAddress.country = new Country();
+			}
+			
 			if (contact.marketing == null) setMarketing();
 			if( contact.creditCard == null) setCreditCard();
 			mapFromContactData();
