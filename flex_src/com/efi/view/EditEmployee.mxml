@@ -75,7 +75,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		 private var copiers:ArrayCollection = new ArrayCollection(); 
 	
 	[Bindable] 
-		 private var pricelists:ArrayCollection = new ArrayCollection();
+		 private var pricemethods:ArrayCollection = new ArrayCollection();
 	 [Bindable] 
 		 private var charges:ArrayCollection = new ArrayCollection();   
                     
@@ -100,8 +100,8 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		employee = new Employee();
 		pressService.getAll("PressDefinition");
 		copierService.getAll("CopierDefinition");
-		priceListService.getAll("PriceList");
-		chargeService.getAll("Charge");
+		priceListService.getAll("PricingMethod");
+		chargeService.getAll("ChargeDefinition");
 	}
 	private function messageHandler(message:IMessage):void
 	{
@@ -262,7 +262,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 	}     
 	private function handleLoadPriceList(ev:ResultEvent):void {
 	 	
-	 	pricelists = ev.result as ArrayCollection;
+	 	pricemethods = ev.result as ArrayCollection;
 		
 	}   
 	
@@ -450,7 +450,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="Pricing Methods">
 					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing" selected="{employee.allPricingMethods}"/>
-					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods" dataProvider="{pricelists}" labelField="name"></mx:List>
+					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="name"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="Charge Type">
 					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types" selected="{employee.allChargeTypes}"/>
