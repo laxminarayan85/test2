@@ -267,40 +267,39 @@ width="800" height="678" title="Preferences"
 	private var treeData:XML =
     	<root>
 			<node label="System">
-				<node label="Appearance" isBranch="false" tag="0"/>
-				<node label="Behavior" isBranch="false" tag="1"/>
-				<node label="Company" isBranch="false" tag="2"/>
-				<node label="Business Calendar" isBranch="false" tag="3"/>
-				<node label="Numbers" isBranch="false" tag="4"/>
-				<node label="Alternate Currency" isBranch="false" tag="5"/>
-				<node label="International" isBranch="false" tag="6"/>
-				<node label="Address Formatting" isBranch="false" tag="7"/>
+				<node label="Behavior" isBranch="false" tag="0"/>
+				<node label="Company" isBranch="false" tag="1"/>
+				<node label="Business Calendar" isBranch="false" tag="2"/>
+				<node label="Numbers" isBranch="false" tag="3"/>
+				<node label="Alternate Currency" isBranch="false" tag="4"/>
+				<node label="International" isBranch="false" tag="5"/>
+				<node label="Address Formatting" isBranch="false" tag="6"/>
 			</node>
 			<node label="POS">
-				<node label="Receipt" isBranch="false" tag="8"/>
-				<node label="Cash Drawer" isBranch="false" tag="9"/>
-				<node label="Cash Register" isBranch="false" tag="10"/>
-				<node label="Pending List" isBranch="false" tag="11"/>
+				<node label="Receipt" isBranch="false" tag="7"/>
+				<node label="Cash Drawer" isBranch="false" tag="8"/>
+				<node label="Cash Register" isBranch="false" tag="9"/>
+				<node label="Pending List" isBranch="false" tag="10"/>
 			</node>
 			<node label="Estimator">
-				<node label="Estimator Behavior" isBranch="false" tag="12"/>
-				<node label="Estimator Printing" isBranch="false" tag="13"/>
-				<node label="Paper Calculator" isBranch="false" tag="14"/>
-				<node label="Job Ticket" isBranch="false" tag="15"/>
-				<node label="Quantity Breaks" isBranch="false" tag="16"/>
-				<node label="Markups" isBranch="false" tag="17"/>
-				<node label="Stocks and Sizes" isBranch="false" tag="18"/>
-				<node label="Stock Definitions" isBranch="false" tag="19"/>
-				<node label="Pricing Method" isBranch="false" tag="20"/>
+				<node label="Estimator Behavior" isBranch="false" tag="11"/>
+				<node label="Estimator Printing" isBranch="false" tag="12"/>
+				<node label="Paper Calculator" isBranch="false" tag="13"/>
+				<node label="Job Ticket" isBranch="false" tag="14"/>
+				<node label="Quantity Breaks" isBranch="false" tag="15"/>
+				<node label="Markups" isBranch="false" tag="16"/>
+				<node label="Stocks and Sizes" isBranch="false" tag="17"/>
+				<node label="Stock Definitions" isBranch="false" tag="18"/>
+				<node label="Pricing Method" isBranch="false" tag="19"/>
 			</node>			
 			<node label="Accounting">
-				<node label="Credit/Defaults" isBranch="false" tag="21"/>
-				<node label="Aging Periods" isBranch="false" tag="22"/>
-				<node label="Sales Categories" isBranch="false" tag="23"/>
-				<node label="GL Profiles" isBranch="false" tag="24"/>
-				<node label="Credit Card Info" isBranch="false" tag="25"/>
-				<node label="Order Number Format" isBranch="false" tag="26"/>
-				<node label="Journal Entries" isBranch="false" tag="27"/>
+				<node label="Credit/Defaults" isBranch="false" tag="20"/>
+				<node label="Aging Periods" isBranch="false" tag="21"/>
+				<node label="Sales Categories" isBranch="false" tag="22"/>
+				<node label="GL Profiles" isBranch="false" tag="23"/>
+				<node label="Credit Card Info" isBranch="false" tag="24"/>
+				<node label="Order Number Format" isBranch="false" tag="25"/>
+				<node label="Journal Entries" isBranch="false" tag="26"/>
 			</node>
 		</root>;
 	
@@ -1790,10 +1789,6 @@ width="800" height="678" title="Preferences"
 
 	<mx:VBox id="vbox2" left="200" top="50" height="100%" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
-			<mx:Canvas width="100%" height="100%" id="appearance_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" text="Appearance" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" text="Behavior" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
