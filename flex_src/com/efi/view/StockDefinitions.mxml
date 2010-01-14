@@ -41,6 +41,9 @@
 	<mx:RemoteObject id="dimensionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:StringValidator id="stockDefinitionNameValidator" source="{stockName}" property="text" minLength="2" required="true"/>
 
@@ -53,6 +56,7 @@
 	import com.efi.vo.StockDefinition;
 	import com.efi.vo.StockChanges;
 	import com.efi.vo.Account;
+	import com.efi.vo.PreferencesSystem;
 
 	import com.efi.vo.StockGroup;
 	import com.efi.vo.StockGrade;
@@ -89,9 +93,13 @@
 
 	[Bindable]                                         
     private var priceList:PriceList;  
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
 
 	[Bindable]                                         
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
                          
 	[Bindable]                                         
 	private var stockDefinitions:StockDefinition;
@@ -152,6 +160,8 @@
 	    loadPressDefinition();
 		loadDimensions();
 		doGet(); 
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+
 		
 	}      
 
@@ -575,6 +585,11 @@
 	private function handleLoadResult(ev:ResultEvent):void {
 	     StockDefinitionArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+		this.btnExport.enabled = systemPreferences.enablePricingSystem;
+	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     loadStockDefinitions();
@@ -1124,6 +1139,10 @@
 		<mx:icon>@Embed(source='../../../assets/delete.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="360" y="41" text="Delete" width="58" textAlign="center"/>
+	<mx:Button x="436" y="5" width="38" height="38" id="btnExport" enabled="false">
+		<mx:icon>@Embed(source='../../../assets/export.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="426" y="41" text="Export" width="58" textAlign="center"/>
 	<mx:Button x="493" y="5" width="38" height="38" click="doRevert();">
 		<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 	</mx:Button>

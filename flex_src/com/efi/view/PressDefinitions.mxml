@@ -7,12 +7,16 @@ width="912" height="722" title="Press Definitions"
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="pressdefinitions"/>
 	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.vo.PreferencesSystem;
 	import com.efi.vo.SpeedTable;
 	import com.efi.vo.PressDefinition;
 	import com.efi.vo.PriceListBase;
@@ -40,6 +44,8 @@ width="912" height="722" title="Press Definitions"
 	
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
     
 	[Bindable]                                         
      private var priceList:PriceList;  
@@ -48,11 +54,15 @@ width="912" height="722" title="Press Definitions"
                                                                                	
 	[Bindable]                                
 	private var pressDefinitionArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
                                                                          
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		dataService.getAll("PressDefinition");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
 	    pressDefinition = new PressDefinition();
 	
 	}      
@@ -204,6 +214,12 @@ width="912" height="722" title="Press Definitions"
 	private function handleLoadResult(ev:ResultEvent):void {
 	     pressDefinitionArray = ev.result as ArrayCollection;
 	}
+
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+		this.btnExport.enabled = systemPreferences.enablePricingSystem;
+	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 		loadPressDefinitions();
@@ -369,4 +385,5 @@ width="912" height="722" title="Press Definitions"
 	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
 	<mx:RadioButton x="548" y="154" label="Sheet Fed" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" click="doPressType()"/>
 	<mx:RadioButton x="548" y="176" label="Roll Fed" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" click="doPressType()"/>
+	<mx:Button x="343" y="566" label="Export" width="67" id="btnExport"/>
 </mx:Panel>
