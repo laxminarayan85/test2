@@ -2,6 +2,23 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.components.*" xmlns:vo="com.efi.vo.*"
 width="912" height="722" title="Press Definitions"
  label="Press Definitions" name="Press Definitions" fontSize="9">
+	<mx:states>
+		<mx:State name="RollFedState">
+			<mx:SetProperty target="{label1}" name="text" value="Max Roll Width:"/>
+			<mx:SetProperty target="{label2}" name="text" value="Min Roll Width:"/>
+			<mx:RemoveChild target="{label3}"/>
+			<mx:RemoveChild target="{SetupAddRun}"/>
+			<mx:RemoveChild target="{WorkTurn}"/>
+			<mx:RemoveChild target="{label4}"/>
+			<mx:SetProperty target="{Perfector}" name="enabled" value="false"/>
+			<mx:AddChild relativeTo="{label5}" position="before">
+				<mx:TextInput x="131" y="382" width="79" id="CutoffLength" text="{pressDefinition.cutoffLength}" height="20"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label5}" position="before">
+				<mx:Label x="44" y="384" text="CutOff Length:"/>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -64,7 +81,7 @@ width="912" height="722" title="Press Definitions"
 		dataService.getAll("PressDefinition");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 	    pressDefinition = new PressDefinition();
-	
+		doPressType();
 	}      
 	                                                   	
 	public function loadPressDefinitions():void {   
@@ -136,18 +153,21 @@ width="912" height="722" title="Press Definitions"
 	
 	private function doPressType(): void {              
 	   if (pressDefinition.sheetFed ) {
-	   		pressDefinition.sheetFed = true;
-			pressDefinition.rollFed = false;
+	   		pressDefinition.sheetFed = false;
+			pressDefinition.rollFed = true;
+			this.currentState = "";
 	   }
 	   else {
-	   		pressDefinition.sheetFed = false;
-	        pressDefinition.rollFed = true;
+	   		pressDefinition.sheetFed = true;
+	        pressDefinition.rollFed = false;
+			this.currentState = "RollFedState";
 	   }
 	}
 
 
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
+		doPressType();
 	}
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
@@ -179,8 +199,13 @@ width="912" height="722" title="Press Definitions"
 		 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
 		 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 		 pressDefinition.numberHeads= parseInt(NumberHeads.text);
-		 pressDefinition.sheetFed = sheetFedRadio.selected;
-		 pressDefinition.rollFed = rollFedRadio.selected;
+		 if (sheetFedRadio.selected == true)
+		 {
+			 pressDefinition.sheetFed = sheetFedRadio.selected;
+		 }else
+		 {
+			 pressDefinition.rollFed = rollFedRadio.selected;
+		 }
 	}
 	private function doSave():void {
 	 
@@ -328,15 +353,15 @@ width="912" height="722" title="Press Definitions"
 	<mx:CheckBox x="424" y="194" label="Costing Press" id="CostingPress" selected="{pressDefinition.costingPress}"/>
 	<mx:CheckBox x="424" y="174" label="Integrated Device" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
 	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
-	<mx:Label x="37" y="274" text="Max Paper Size:" textAlign="right"/>
-	<mx:Label x="40" y="296" text="Min Paper Size:" textAlign="right"/>
+	<mx:Label x="37" y="274" text="Max Paper Size:" textAlign="right" id="label1"/>
+	<mx:Label x="40" y="296" text="Min Paper Size:" textAlign="right" id="label2"/>
 	<mx:Label x="60" y="318" text="Labor Rate:" textAlign="right"/>
 	<mx:Label x="41" y="340" text="Minimum labor:" textAlign="right"/>
 	<mx:Label x="34" y="362" text="Setup (Minutes):" textAlign="right"/>
-	<mx:Label x="34" y="384" text="Setup Add'l Run:" textAlign="right"/>
+	<mx:Label x="34" y="384" text="Setup Add'l Run:" textAlign="right" id="label3"/>
 	<mx:Label x="55" y="406" text="Setup Add'l Signatures:" textAlign="right"/>
-	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:" textAlign="right"/>
-	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20"/>
+	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:" textAlign="right" id="label4"/>
+	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20" width="171"/>
 	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
 	<mx:TextInput x="131" y="316" width="76" id="LaborRate" text="{pressDefinition.laborRate}" height="20"/>
 	<mx:TextInput x="131" y="338" width="92" id="MinLabor" text="{pressDefinition.minLabor}" height="20"/>
@@ -359,7 +384,7 @@ width="912" height="722" title="Press Definitions"
 	<mx:Label x="347" y="275" text="Avg. Impression per Hour:" textAlign="right"/>
 	<mx:Label x="408" y="297" text="Labor Markup:" textAlign="right"/>
 	<mx:Label x="415" y="319" text="Fixed Waste:"/>
-	<mx:Label x="389" y="341" text="Setup Add'l Head:" textAlign="right"/>
+	<mx:Label x="389" y="341" text="Setup Add'l Head:" textAlign="right" id="label5"/>
 	<mx:Label x="416" y="363" text="Washup Fee:" textAlign="right"/>
 	<mx:Label x="335" y="385" text="Add'l Signatures Add'l Head:" textAlign="right"/>
 	<mx:Label x="394" y="407" text="Washup Minutes:" textAlign="right"/>
@@ -383,7 +408,7 @@ width="912" height="722" title="Press Definitions"
 	<mx:Button x="493" y="566" label="New" click="doNew()" width="67"/>
 	<mx:Button x="418" y="566" label="Delete" click="doDelete()" width="67"/>
 	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
-	<mx:RadioButton x="548" y="154" label="Sheet Fed" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" click="doPressType()"/>
-	<mx:RadioButton x="548" y="176" label="Roll Fed" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" click="doPressType()"/>
+	<mx:RadioButton x="548" y="154" label="Sheet Fed" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
+	<mx:RadioButton x="548" y="176" label="Roll Fed" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
 	<mx:Button x="343" y="566" label="Export" width="67" id="btnExport"/>
 </mx:Panel>

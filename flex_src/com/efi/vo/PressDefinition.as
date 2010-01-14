@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PressDefinition() {
-			remoteObjectName = "com.efi.printsmith.data.PressDefinition";
+		
 		}
-				
 		public var name:String = "";
 		public var machineName:String = "";
 		public var outputDescrip:String = "";
@@ -47,6 +46,7 @@ package com.efi.vo
 		public var pressPriceList:PriceList;
 		public var stockPriceList:PriceList;
 		public var speedTable:SpeedTable;
+		public var cutoffLength:Number = 0;
 	
 	}
 }

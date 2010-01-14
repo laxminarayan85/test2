@@ -170,6 +170,10 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String SPEEDTABLE = "SpeedTable";
+	/**
+	 * @generated
+	 */
+	public static final String CUTOFFLENGTH = "CutoffLength";
 
 	/**
 	 * @generated
@@ -757,6 +761,23 @@ public class PressDefinition extends ModelBase {
 	public void setSpeedTable(SpeedTable newVal) {
 		this.speedTable = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Long cutoffLength;
+	/**
+	 * @generated
+ 	 */
+	public Long getCutoffLength(){
+		return cutoffLength; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCutoffLength(Long newVal) {
+		this.cutoffLength = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -797,6 +818,7 @@ public class PressDefinition extends ModelBase {
 		if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
 		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
 		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
+		if (CUTOFFLENGTH.equals(propertyName)) return getCutoffLength();
 		return super.getProperty(propertyName);
 	}
 	
@@ -840,6 +862,7 @@ public class PressDefinition extends ModelBase {
 		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
 		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
+		if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -917,6 +940,8 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {PriceList.class};		
 		if (SPEEDTABLE.equals(propertyName)) 
 			return new Class<?>[] {SpeedTable.class};		
+		if (CUTOFFLENGTH.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -961,6 +986,7 @@ public class PressDefinition extends ModelBase {
 		if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
 		if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
 		if (SPEEDTABLE.equals(propertyName)) return PressDefinition.class;
+		if (CUTOFFLENGTH.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1039,6 +1065,8 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
 			return false;
 		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
+			return false;
+		if (! SmartEquals(getCutoffLength(), objT.getCutoffLength()))
 			return false;
 		return true;
 	}			
