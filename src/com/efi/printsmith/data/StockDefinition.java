@@ -2221,18 +2221,18 @@ public class StockDefinition extends ModelBase {
  	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private PriceList defaultPriceList;
+	private PaperPrice defaultPriceList;
 	/**
 	 * @generated
  	 */
-	public PriceList getDefaultPriceList(){
+	public PaperPrice getDefaultPriceList(){
 		return defaultPriceList; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultPriceList(PriceList newVal) {
+	public void setDefaultPriceList(PaperPrice newVal) {
 		this.defaultPriceList = newVal;
 	}
  	
@@ -2493,7 +2493,7 @@ public class StockDefinition extends ModelBase {
 		if (FSCCERTIFIED.equals(propertyName)) setFscCertified((Boolean)newValue); else
 		if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
 		if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
-		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PriceList)newValue); else
+		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PaperPrice)newValue); else
 		if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
 		if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -2712,7 +2712,7 @@ public class StockDefinition extends ModelBase {
 		if (GREENSEALCERTIFIED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (DEFAULTPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
+			return new Class<?>[] {PaperPrice.class};		
 		if (GENERICCOLOR.equals(propertyName)) 
 			return new Class<?>[] {GenericColors.class};		
 		if (ACCOUNT.equals(propertyName)) 

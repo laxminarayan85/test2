@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+	<mx:Script>
+	<![CDATA[
+
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]
+	private var SidesArray:ArrayCollection = new ArrayCollection();
+
+	
+	public function init():void {
+		var Front:Object = new Object();
+		Front.name = "Front";
+		SidesArray.addItem(Front);
+		var Back:Object = new Object();
+		Back.name = "Back";
+		SidesArray.addItem(Back);
+	}
+
+	]]>
+	</mx:Script>
+    <mx:ComboBox id="pickSide" width="70" dataProvider="{SidesArray}" labelField="name" selectedItem="{data.name}">
+    </mx:ComboBox>
+</mx:VBox>

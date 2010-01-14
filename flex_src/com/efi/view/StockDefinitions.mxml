@@ -67,6 +67,7 @@
 	import com.efi.vo.Vendor;
 		
 	import com.efi.vo.PriceList;
+	import com.efi.vo.PaperPrice;
 	import com.efi.vo.PriceListBase;
 
 	import com.efi.events.StockPickerSelectEvent;
@@ -92,7 +93,7 @@
     private var enableSave:Boolean = true;
 
 	[Bindable]                                         
-    private var priceList:PriceList;  
+    private var priceList:PaperPrice;  
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
 
@@ -189,21 +190,21 @@
 	}
 
 	public function setPriceList(price:PriceListBase): void {
-	 	this.priceList = price as PriceList;
-	 	stockDefinitions.defaultPriceList = price as PriceList;
+	 	this.priceList = price as PaperPrice;
+	 	stockDefinitions.defaultPriceList = price as PaperPrice;
 	}
 	
 	private function doPriceList():void {
 	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
-	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.itemType = "PaperPrice";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
 	}
 	
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
  		if (evt.priceList != null) {
-			stockDefinitions.defaultPriceList = evt.priceList as PriceList;
+			stockDefinitions.defaultPriceList = evt.priceList as PaperPrice;
 		} else {
 			stockDefinitions.defaultPriceList = null;
 			Alert.show("Price List Picker returned a null price list", "Error");

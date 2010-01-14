@@ -42,6 +42,14 @@ public class PriceListElement extends ModelBase {
 	 * @generated
 	 */
 	public static final String AMOUNT = "Amount";
+	/**
+	 * @generated
+	 */
+	public static final String SIDE = "Side";
+	/**
+	 * @generated
+	 */
+	public static final String COLOR = "Color";
 
 	/**
 	 * @generated
@@ -85,6 +93,40 @@ public class PriceListElement extends ModelBase {
 	public void setAmount(Double newVal) {
 		this.amount = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Integer side;
+	/**
+	 * @generated
+ 	 */
+	public Integer getSide(){
+		return side; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSide(Integer newVal) {
+		this.side = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer color;
+	/**
+	 * @generated
+ 	 */
+	public Integer getColor(){
+		return color; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setColor(Integer newVal) {
+		this.color = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -93,6 +135,8 @@ public class PriceListElement extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (QUANTITY.equals(propertyName)) return getQuantity();
 		if (AMOUNT.equals(propertyName)) return getAmount();
+		if (SIDE.equals(propertyName)) return getSide();
+		if (COLOR.equals(propertyName)) return getColor();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,6 +148,8 @@ public class PriceListElement extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
 		if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
+		if (SIDE.equals(propertyName)) setSide((Integer)newValue); else
+		if (COLOR.equals(propertyName)) setColor((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -117,6 +163,10 @@ public class PriceListElement extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (AMOUNT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (SIDE.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (COLOR.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -129,6 +179,8 @@ public class PriceListElement extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (QUANTITY.equals(propertyName)) return PriceListElement.class;
 		if (AMOUNT.equals(propertyName)) return PriceListElement.class;
+		if (SIDE.equals(propertyName)) return PriceListElement.class;
+		if (COLOR.equals(propertyName)) return PriceListElement.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -143,6 +195,10 @@ public class PriceListElement extends ModelBase {
 		if (! SmartEquals(getQuantity(), objT.getQuantity()))
 			return false;
 		if (! SmartEquals(getAmount(), objT.getAmount()))
+			return false;
+		if (! SmartEquals(getSide(), objT.getSide()))
+			return false;
+		if (! SmartEquals(getColor(), objT.getColor()))
 			return false;
 		return true;
 	}			

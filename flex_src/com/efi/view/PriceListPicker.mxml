@@ -28,7 +28,9 @@
 	import com.efi.vo.SpeedTable;  
 	import com.efi.vo.PriceList;
 	import com.efi.vo.PriceListBase; 
-	import com.efi.vo.WasteChart;                          
+	import com.efi.vo.WasteChart; 
+	import com.efi.vo.PaperPrice;
+	                         
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
 	import mx.core.Container;                      
@@ -98,6 +100,9 @@
 		} else if (this.itemType =="SpeedTable") {
 			this.title = "Speed Table"
 			this.label = "Speed Table"
+		}else if (this.itemType =="PaperPrice") {
+			this.title = "Paper Price"
+			this.label = "Paper Price"
 		}
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 
@@ -120,6 +125,9 @@
 	    	break;
 	    case "SpeedTable":
 	    	newPriceList = new SpeedTable();
+	    	break;
+	    case "PaperPrice":
+	    	newPriceList = new PaperPrice();
 	    	break;
 	    }
 	    if (newPriceList == null) {

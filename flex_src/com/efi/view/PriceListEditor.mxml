@@ -53,6 +53,29 @@
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
 	</mx:State>
+	<mx:State name="Paper Price" basedOn="Price List">
+		<mx:SetProperty name="title" value="Edit Paper Price {priceList.name}"/>
+		<mx:RemoveChild target="{radiobutton2}"/>
+		<mx:RemoveChild target="{radiobutton1}"/>
+		<mx:RemoveChild target="{chkUseAsRateList}"/>
+		<mx:RemoveChild target="{chkInterpolate}"/>
+		<mx:RemoveChild target="{chkProductionDiscount}"/>
+		<mx:RemoveChild target="{chkIgnoreGlobalPriceChange}"/>
+
+		<mx:SetProperty target="{colSide}" name="visible" value="true"/>
+		<mx:SetProperty target="{colColor}" name="visible" value="true"/>
+		<mx:SetProperty target="{dataGrid}" name="width" value="196"/>
+		<mx:SetProperty target="{label1}" name="x" value="204"/>
+		<mx:SetProperty target="{title_edit}" name="y" value="38"/>
+		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="171"/>
+		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="139"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:ComboBox id="cboMethod" x="204" y="87" dataProvider="{PaperPriceMethodArray}" labelField="name" width="176"></mx:ComboBox>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:Label x="204" y="66" text="Method:" textAlign="right"/>
+		</mx:AddChild>
+	</mx:State>
 </mx:states>
 <mx:Script>
                                    
@@ -64,12 +87,9 @@
     import com.efi.view.PressDefinitions;
     import com.efi.view.StockDefinitions;
 
-	import com.efi.vo.WasteChart;                          
-	import com.efi.vo.PriceListBase; 
-	import com.efi.vo.Contact;           
-    import com.efi.vo.Account;    
-    import com.efi.view.EditContact;
-    import com.efi.view.EditCustomer;            
+	import com.efi.vo.WasteChart; 
+	import com.efi.vo.PaperPrice;
+	import com.efi.vo.PriceListBase;
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
@@ -82,18 +102,27 @@
 	import mx.messaging.messages.IMessage;
 	import mx.core.Application;
 	import mx.collections.ArrayCollection;
+	import com.efi.itemRenderers.SidesEditor;
+    import mx.events.DataGridEvent;
+    import mx.events.DataGridEventReason;
 	    
 	[Bindable]                                
 	public var priceList:PriceListBase;
 		
 	public var parentContainer:Container;
 
+	[Bindable]
+	private var PaperPriceMethodArray:ArrayCollection = new ArrayCollection();
+	
     [Bindable]
     private var quantity_header:String = "Quantity";
-    
     [Bindable]
     private var price_header:String = "Price";
-                                                                 	         
+    [Bindable]
+	private var side_header:String = "Side";
+    [Bindable]
+	private var color_header:String = "Color";                                                     	         
+
 	public var itemType:String;
 
 	[Bindable]
@@ -118,7 +147,30 @@
 	    PopUpManager.centerPopUp(this);
 
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+		fillArray();
 	}
+
+	private function fillArray():void {
+		var PaperMethod1:Object = new Object;
+		PaperMethod1.id = "1";
+		PaperMethod1.name = "Use ordered quantity"
+		PaperPriceMethodArray.addItem(PaperMethod1);
+
+		var PaperMethod2:Object = new Object;
+		PaperMethod2.id = "2";
+		PaperMethod2.name = "Use press sheets"
+		PaperPriceMethodArray.addItem(PaperMethod2);
+
+		var PaperMethod3:Object = new Object;
+		PaperMethod3.id = "3";
+		PaperMethod3.name = "Use press sheets and bindery waste"
+		PaperPriceMethodArray.addItem(PaperMethod3);
+
+		var PaperMethod4:Object = new Object;
+		PaperMethod4.id = "4";
+		PaperMethod4.name = "Use ordered quantity per sheet (originals)"
+		PaperPriceMethodArray.addItem(PaperMethod4);
+	}	
 	            
 	public function setPriceList(priceList:PriceListBase):void {
 		if (priceList == null) return;
@@ -137,6 +189,13 @@
 			this.label = "Speed Table"
 			this.quantity_header = "Run Length";
 			this.price_header = "Speed";
+		} else if (priceList is PaperPrice) {
+			itemType = "PaperPrice";
+			this.currentState = "Paper Price";
+			this.title = "Paper Price"
+			this.label = "Paper Price"
+			this.quantity_header = "Copies";
+			this.price_header = "Price";
 		} else {
 			itemType = "PriceList";
 			this.currentState = "Price List";
@@ -189,6 +248,8 @@
 			priceList = ev.result as WasteChart;
 		} else if (itemType == "SpeedTable") {
 			priceList = ev.result as SpeedTable;
+		} else if (itemType == "PaperPrice") {
+			priceList = ev.result as PaperPrice;
 		}
 
 		var editPage:Container = parentContainer;
@@ -208,20 +269,52 @@
 		priceList.elements.removeItemAt(priceList.elements.getItemIndex(deleteItem));
 	}
 
+	private function processSidesGridData(event:DataGridEvent):void {
+        if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+
+		if(event.dataField == "side")
+		{
+			// Disable copying data back to the control.
+			event.preventDefault();
+
+			// Get new category from editor.
+			dataGrid.editedItemRenderer.data.side = SidesEditor(DataGrid(event.target).itemEditorInstance).pickSide.selectedItem;
+
+			// Close the cell editor.
+			dataGrid.destroyItemEditor();
+
+			// Notify the list control to update its display.
+			dataGrid.dataProvider.itemUpdated(event.itemRenderer.data);
+		}	
+	}
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
 		<mx:DataGrid id="dataGrid" width="145" dataProvider="{priceList.elements}"
-		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" editable="true" enabled="true" bottom="25" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]">               
+		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" editable="true" enabled="true" bottom="25" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+		itemEditEnd="processSidesGridData(event);">
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false"/>
 		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false"/>
+		     <mx:DataGridColumn id="colSide" dataField="side" headerText="{side_header}" sortable="false" visible="false" width="75"
+ 				itemEditor="com.efi.itemRenderers.SidesEditor" editable="true">
+ 				
+    			<mx:itemRenderer>
+        			<mx:Component>
+                		<mx:Text selectable="false" text="{data.side}"/>
+        			</mx:Component>
+    			</mx:itemRenderer>
+			</mx:DataGridColumn>
+		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" sortable="false" visible="false"/>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="97" x="229" y="254"/>
 		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="97" x="229" y="284"/>
 		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="176"/>
-		<mx:Label x="162" y="12" text="Title:" id="label1"/>
+		<mx:Label x="162" y="12" text="Title:" id="label1" textAlign="right"/>
 		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
 		<mx:RadioButton x="162" y="38" label="Amount is currency" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
 		<mx:RadioButton x="162" y="58" label="Amount is percent" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>

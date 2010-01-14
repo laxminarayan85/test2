@@ -10,9 +10,8 @@ package com.efi.vo
 	{
 
 		public function PriceListBase() {
-			remoteObjectName = "com.efi.printsmith.data.PriceListBase";
+		
 		}
-				
 		public var name:String = "";
 		public var ignorePriceAdjustments:Boolean = true;
 		public var isDiscount:Boolean = true;
@@ -24,6 +23,7 @@ package com.efi.vo
 		public var isPercentage:Boolean = true;
 		public var lastItemIsPriceAdditionalQty:Boolean = true;
 		public var elements:ArrayCollection;
+		public var priceMethod:int = 0;
 	
 	}
 }
