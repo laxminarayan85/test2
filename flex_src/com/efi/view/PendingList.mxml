@@ -407,7 +407,7 @@
 	}
 	
 	public function getContactLabel(item:Object, column:DataGridColumn):String{
-		var tmpInvoice:Invoice = item as Invoice;
+		var tmpInvoice:InvoiceBase = item as InvoiceBase;
 		
 		if (tmpInvoice != null && tmpInvoice.contact != null && tmpInvoice.contact.firstName != null && tmpInvoice.contact.lastName != null) {
 			var retVal:String = tmpInvoice.contact.firstName + " " + tmpInvoice.contact.lastName;
@@ -441,7 +441,7 @@
 				<mx:columns>
 					<mx:DataGridColumn headerText="Account" labelFunction="getAccountLabel"/>
 					<mx:DataGridColumn headerText="Document #" dataField="invoiceNumber"/>
-					<mx:DataGridColumn headerText="Contact" dataField="contact.firstName + contact.lastName"/>
+					<mx:DataGridColumn headerText="Contact" labelFunction="getContactLabel"/>
 					<mx:DataGridColumn headerText="Wanted Date" dataField="wantedDate"/>
 					<mx:DataGridColumn headerText="Hold State" dataField="holdState.name"/>
 				</mx:columns>
