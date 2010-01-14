@@ -672,7 +672,22 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
          
 		return currentControlIsValid;
 	}
-              
+    private function changeName(evt:Event):void {
+    	validateForm(evt);
+    	if (name_edit.text != "") {
+	    	if (account.shipToAddress == null) {
+	    		account.shipToAddress = new Address();
+	    		account.shipToAddress.name = name_edit.text;
+	    		account.shipToAddress.street1 = "";
+	    		account.shipToAddress.street2 = "";
+	    		account.shipToAddress.city = new City();
+	    		account.shipToAddress.state = new State();
+	    		account.shipToAddress.zip = new Zip();
+	    		account.shipToAddress.zone = "";
+	    	}
+	    	this.ship_to_address_editor.setAddress(account.shipToAddress);
+	    }
+    }
 ]]>
                              
 </mx:Script>
@@ -681,7 +696,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
 		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
 			<mx:Canvas label="Address" width="100%" height="100%">
-				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" change="validateForm(event);"/>
+				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" focusOut="changeName(event)"/>
 				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.id}"/>
 				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
@@ -693,27 +708,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
 				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
-					 
-				<!--<mx:Panel x="344" y="259" width="325" height="282" layout="absolute" title="Statement Contact" dropShadowEnabled="false">
-					<mx:TextInput x="101" y="10" width="194" id="bill_contact_first_name_edit" text="{account.billToContact.firstName}" change="validateForm(event);"/>
-					<mx:Label x="10" y="12" text="First Name:" width="83" textAlign="right"/>
-					<mx:TextInput x="101" y="38" width="194" id="bill_contact_last_name_edit" text="{account.billToContact.lastName}" change="validateForm(event);"/>
-					<mx:TextInput x="101" y="66" width="46" id="bill_contact_prefix_edit" text="{account.billToContact.prefix}"/>
-					<mx:Label x="10" y="40" text="Last Name:" width="83" textAlign="right"/>
-					<mx:Label x="26" y="68" text="Prefix:" width="67" textAlign="right"/>
-					<mx:Label x="26" y="96" text="Job Title:" width="67" textAlign="right"/>
-					<mx:TextInput x="249" y="68" width="46" id="bill_contact_suffix_edit" text="{account.billToContact.suffix}"/>
-					<mx:Label x="193" y="70" text="Suffix:" width="48" textAlign="right"/>
-					<mx:TextInput x="101" y="94" width="194" id="bill_contact_job_title_edit" text="{account.billToContact.jobTitle}"/>
-					<mx:Label x="26" y="124" text="Salutation:" width="67" textAlign="right"/>
-					<mx:TextInput x="101" y="122" width="194" id="bill_contact_salutation_edit" text="{account.billToContact.salutation}"/>
-					<mx:TextInput x="172" y="150" width="123" id="bill_contact_comlink1_edit"/>
-					<mx:TextInput x="172" y="180" width="123" id="bill_contact_comlink2_edit"/>
-					<mx:TextInput x="172" y="210" width="123" id="bill_contact_comlink3_edit"/>
-					<mx:ComboBox x="10" y="180" width="137" id="bill_contact_comlink2_combo"></mx:ComboBox>
-					<mx:ComboBox x="10" y="150" width="137" id="bill_contact_comlink1_combo"></mx:ComboBox>
-					<mx:ComboBox x="10" y="210" width="137" id="bill_contact_comlink3_combo"></mx:ComboBox>
-				</mx:Panel>-->
 			</mx:Canvas>
 			<mx:Canvas label="Credit Control" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"/>
