@@ -234,7 +234,6 @@
 			<node label="Merch 2" isBranch="false" tag="6"/>
 			<node label="Misc" isBranch="false" tag="7"/>
 			<node label="No Sale" isBranch="false" tag="8"/>
-			<node label="INVOICE" isBranch="false" tag="9"/>
 		</root>;
 	
 	private function handleLoadTaxTableResult(ev:ResultEvent):void {
@@ -318,17 +317,14 @@
 
 		this.currentState = "";
 		
-		if (node.@label == "INVOICE")
-		{
-			this.currentState = "invoiceState";
-		}else
-		{
-			this.currentState = "paymentState";
-		}
+		this.currentState = "paymentState";
 		treeStateString = this.currentState;
 		
 	}
 
+	private function doInvoice():void {
+		this.currentState = "invoiceState";
+	}
 	private var paymentMethodStateString:String = "";
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
@@ -459,7 +455,7 @@
 
 	
 
-	<mx:Label x="20" y="20" text="DEPARTMENT"/>	
+	<mx:Label x="20" y="20" text="DEPARTMENT" textAlign="right"/>	
 	<mx:Tree x="0" y="50" width="130"  
 		id="tvItems" 
 		dataProvider="{treeData.node}"
@@ -471,6 +467,9 @@
 	</mx:Button>
 	<mx:Button x="196" y="10" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
 		<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="242" y="10" width="38" height="38" click="doInvoice();" enabled="{enableSave}" id="btnInvoice">
+		<mx:icon>@Embed(source='../../../assets/InvoiceWONotes.png')</mx:icon>
 	</mx:Button>
 
 	<mx:Canvas x="130" y="50" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
