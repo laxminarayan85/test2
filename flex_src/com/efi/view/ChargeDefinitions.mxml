@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.view.*" xmlns:vo="com.efi.vo.*" xmlns:comp="com.efi.components.*" xmlns:effect="com.adobe.ac.mxeffects.*" 
 width="100%" height="779" title="Charge Definitions"
-creationComplete="init()" label="Charge Definitions" name="Charge Definitions" xmlns:ns1="*">
+creationComplete="init()" label="Charge Definitions" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
           
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
@@ -10,6 +10,44 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
+
+<mx:states>
+	<mx:State name="Job Aware">
+		
+	</mx:State>
+	<mx:State name="Markup">
+		
+	</mx:State>
+	<mx:State name="Flat Rate">
+		
+	</mx:State>
+	<mx:State name="Always Ask">
+	</mx:State>
+	<mx:State name="Price List">
+		
+	</mx:State>
+	<mx:State name="Rate List">
+		
+	</mx:State>
+	<mx:State name="Cut">
+		
+	</mx:State>
+	<mx:State name="Ink">
+		
+	</mx:State>
+	<mx:State name="Shipping">
+		
+	</mx:State>
+	<mx:State name="Fold">
+		
+	</mx:State>
+	<mx:State name="Literal">
+		
+	</mx:State>
+	<mx:State name="Square Area">
+		
+	</mx:State>
+</mx:states>
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
@@ -985,6 +1023,30 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 		}
 		return false;
 	}
+	
+	private function priceListLabel():String {
+		if (charge.priceList != null) {
+			if (charge.priceList.name != null) {
+				return charge.priceList.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+	
+	private function wasteChartLabel():String {
+		if (charge.wasteChart != null) {
+			if (charge.wasteChart.name != null) {
+				return charge.wasteChart.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
 ]]>
                              
 </mx:Script>
@@ -1058,89 +1120,89 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
 			</mx:Canvas>
 			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
-				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto" id="canvas4">
 					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}"/>
-					<mx:ComboBox x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name"></mx:ComboBox>
-					<mx:Label x="0" y="254" text="Base Linear Quantity:" textAlign="right"/>
-					<mx:Label x="0" y="229" text="Fixed Spoilage:" textAlign="right"/>
+					<mx:ComboBox x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name" height="21"></mx:ComboBox>
+					<mx:ComboBox x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name" height="21"></mx:ComboBox>
+					<mx:Label x="0" y="237" text="Base Linear Quantity:" textAlign="right" id="label3"/>
+					<mx:Label x="0" y="212" text="Fixed Spoilage:" textAlign="right" id="label4"/>
 					<mx:Label x="313" y="30" text="Cost Center:" textAlign="right"/>
-					<mx:Label x="0" y="30" text="Production Location:" textAlign="right"/>
-					<mx:Label x="0" y="138" text="Prod Code:" textAlign="right"/>
-					<mx:Label x="17" y="58" text="Method:" textAlign="right"/>
-					<mx:Label x="31" y="5" text="Charge Name:" textAlign="right"/>
-					<mx:ComboBox x="76" y="56" width="132" id="charge_method_combo" change="changeChargeMethod(event);" dataProvider="{ChargeMethod.toArray()}"></mx:ComboBox>
-					<mx:Label x="11" y="84" text="Quantity:" textAlign="right"/>
-					<mx:ComboBox x="76" y="82" width="132" id="charge_quantity_combo" dataProvider="{ChargeQtyType.toArray()}"></mx:ComboBox>
-					<mx:Label x="5" y="110" text="Sales Cat:" textAlign="right"/>
-					<mx:ComboBox x="76" y="108" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name"></mx:ComboBox>
-					<mx:ComboBox x="76" y="136" width="132" editable="true" id="product_code_combo" dataProvider="{productCodes}" labelField="name"></mx:ComboBox>
+					<mx:Label x="0" y="30" text="Production Location:" textAlign="right" id="label6"/>
+					<mx:Label x="0" y="129" text="Prod Code:" textAlign="right" id="label10"/>
+					<mx:Label x="17" y="58" text="Method:" textAlign="right" id="label7"/>
+					<mx:Label x="31" y="5" text="Charge Name:" textAlign="right" id="label5"/>
+					<mx:ComboBox x="76" y="56" width="132" id="charge_method_combo" change="changeChargeMethod(event);" dataProvider="{ChargeMethod.toArray()}" height="21"></mx:ComboBox>
+					<mx:Label x="11" y="81" text="Quantity:" textAlign="right" id="label8"/>
+					<mx:ComboBox x="76" y="79" width="132" id="charge_quantity_combo" dataProvider="{ChargeQtyType.toArray()}" height="21"></mx:ComboBox>
+					<mx:Label x="5" y="104" text="Sales Cat:" textAlign="right" id="label9"/>
+					<mx:ComboBox x="76" y="102" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name" height="21"></mx:ComboBox>
+					<mx:ComboBox x="76" y="127" width="132" editable="true" id="product_code_combo" dataProvider="{productCodes}" labelField="name" height="21"></mx:ComboBox>
 					<mx:CheckBox x="234" y="56" label="No overrides" id="no_overrides_check" selected="{charge.noOverrides}"/>
-					<mx:CheckBox x="234" y="76" label="Adjustable sets" id="adjustable_sets_check" selected="{charge.adjustSets}"/>
-					<mx:CheckBox x="234" y="96" label="Adjustable rate" id="adjustable_rate_check" selected="{charge.enterRate}"/>
-					<mx:CheckBox x="234" y="117" label="Adjustable material" id="adjustable_material_check" selected="{charge.enterMaterial}"/>
-					<mx:CheckBox x="234" y="137" label="Adjustable up" id="adjustable_up_check" selected="{charge.adjustUps}"/>
-					<mx:CheckBox x="234" y="158" label="Do not discount" id="do_not_discount_check" selected="{charge.noDiscount}"/>
+					<mx:CheckBox x="234" y="74" label="Adjustable sets" id="adjustable_sets_check" selected="{charge.adjustSets}"/>
+					<mx:CheckBox x="234" y="92" label="Adjustable rate" id="adjustable_rate_check" selected="{charge.enterRate}"/>
+					<mx:CheckBox x="234" y="110" label="Adjustable material" id="adjustable_material_check" selected="{charge.enterMaterial}"/>
+					<mx:CheckBox x="234" y="128" label="Adjustable up" id="adjustable_up_check" selected="{charge.adjustUps}"/>
+					<mx:CheckBox x="234" y="146" label="Do not discount" id="do_not_discount_check" selected="{charge.noDiscount}"/>
 					<mx:CheckBox x="375" y="58" label="Hide price only" id="hide_price_only_check" selected="{charge.hidePrice}"/>
 					<mx:CheckBox x="375" y="76" label="Hide charge in printouts" id="hide_charge_in_printouts_check" selected="{charge.hidden}"/>
-					<mx:CheckBox x="375" y="96" label="Bindery operation" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
-					<mx:CheckBox x="375" y="117" label="Excluded from workflow" id="excluded_from_workflow_check" selected="{charge.excludeFromProductionList}"/>
-					<mx:CheckBox x="375" y="137" label="Tracker pre-production" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
-					<mx:CheckBox x="375" y="158" label="Ignore global price changes" id="ignore_global_price_changes_check" selected="{charge.ignorePriceAdjustment}"/>
-					<mx:CheckBox x="375" y="180" label="Integrated CTP device" id="integrated_ctp_device_check" selected="{charge.integratedCTP}"/>
-					<mx:TextInput x="100" y="227" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
-					<mx:TextInput x="134" y="252" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
-					<mx:HRule x="3" y="207" width="555" height="8"/>
-					<mx:HRule x="3" y="281" width="555" height="8"/>
-					<mx:HRule x="3" y="405" width="555" height="8"/>
-					<mx:CheckBox x="209" y="227" label="Minimum Charge:" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
-					<mx:TextInput x="342" y="227" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
-					<mx:CheckBox x="209" y="252" label="Minimum Time:" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
-					<mx:TextInput x="342" y="252" width="96" id="minimum_time_edit" text="{charge.minimum}"/>
-					<mx:RadioButton x="446" y="227" label="Run Area" groupName="area_group" id="run_area_radio"/>
-					<mx:RadioButton x="446" y="252" label="Finished Area" groupName="area_group" id="finished_area_radio"/>
-					<mx:RadioButton x="2" y="297" label="Cost Plus" groupName="pricing_method" id="cost_plus_radio"/>
-					<mx:RadioButton x="2" y="323" label="Piece Pricing" groupName="pricing_method" id="piece_pricing_radio"/>
-					<mx:TextInput x="182" y="297" width="124" id="markup_edit" text="{charge.markup}"/>
-					<mx:Text x="433" y="297" width="122" id="sale_price_per_unit_edit"/>
-					<mx:CheckBox x="105" y="325" label="Setup:" id="setup_check"/>
-					<mx:TextInput x="182" y="325" width="124" id="setup_edit" enabled="{setup_check.selected}"/>
-					<mx:CheckBox x="105" y="350" label="Rate:" id="rate_check"/>
-					<mx:TextInput x="182" y="350" width="124" id="rate_edit" enabled="{rate_check.selected}"/>
-					<mx:CheckBox x="105" y="375" label="Material:" id="material_check"/>
-					<mx:TextInput x="182" y="375" width="124" id="material_edit" enabled="{material_check.selected}"/>
-					<mx:CheckBox x="320" y="350" label="Area:" id="area_check"/>
-					<mx:TextInput x="397" y="350" width="124" id="area_edit" enabled="{area_check.selected}"/>
-					<mx:CheckBox x="320" y="375" label="In Sets:" id="in_sets_check"/>
-					<mx:TextInput x="397" y="375" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}"/>
-					<mx:Label x="314" y="297" text="Sale price per unit:"/>
-					<mx:Label x="123" y="299" text="Markup:"/>
-					<mx:ViewStack x="0" y="410" id="price_calc_stack" width="555" height="132" creationPolicy="all">
+					<mx:CheckBox x="375" y="94" label="Bindery operation" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
+					<mx:CheckBox x="375" y="112" label="Excluded from workflow" id="excluded_from_workflow_check" selected="{charge.excludeFromProductionList}"/>
+					<mx:CheckBox x="375" y="130" label="Tracker pre-production" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
+					<mx:CheckBox x="375" y="148" label="Ignore global price changes" id="ignore_global_price_changes_check" selected="{charge.ignorePriceAdjustment}"/>
+					<mx:CheckBox x="375" y="166" label="Integrated CTP device" id="integrated_ctp_device_check" selected="{charge.integratedCTP}"/>
+					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
+					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
+					<mx:HRule x="3" y="194" width="555" height="8" id="hrule1"/>
+					<mx:HRule x="3" y="264" width="555" height="8" id="hrule2"/>
+					<mx:HRule x="3" y="388" width="555" height="8" id="hrule3"/>
+					<mx:CheckBox x="209" y="210" label="Minimum Charge:" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
+					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
+					<mx:CheckBox x="209" y="235" label="Minimum Time:" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
+					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimum}"/>
+					<mx:RadioButton x="446" y="210" label="Run Area" groupName="area_group" id="run_area_radio"/>
+					<mx:RadioButton x="446" y="235" label="Finished Area" groupName="area_group" id="finished_area_radio"/>
+					<mx:RadioButton x="4" y="280" label="Cost Plus" groupName="pricing_method" id="cost_plus_radio"/>
+					<mx:RadioButton x="4" y="304" label="Piece Pricing" groupName="pricing_method" id="piece_pricing_radio"/>
+					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}"/>
+					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
+					<mx:CheckBox x="105" y="306" label="Setup:" id="setup_check"/>
+					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}"/>
+					<mx:CheckBox x="105" y="329" label="Rate:" id="rate_check"/>
+					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="105" y="352" label="Material:" id="material_check"/>
+					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="Area:" id="area_check"/>
+					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}"/>
+					<mx:CheckBox x="320" y="352" label="In Sets:" id="in_sets_check"/>
+					<mx:TextInput x="397" y="352" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}"/>
+					<mx:Label x="314" y="282" text="Sale price per unit:" id="label1"/>
+					<mx:Label x="123" y="282" text="Markup:" id="label2"/>
+					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="555" height="132" creationPolicy="all">
 						<mx:Canvas width="100%" height="100%" id="job_aware_canvas" label="job_aware" showEffect="dissolveIn" hideEffect="dissolveOut">
-							<mx:Text x="10" y="10" text="Select values in job to be used in calculating price:&#xd;" width="291" height="17" fontWeight="bold"/>
+							<mx:Text x="10" y="10" text="Select values in job to be used in calculating price:&#xd;" width="291" height="17" fontWeight="bold" id="text2"/>
 							<mx:RadioButtonGroup id="charge_group_1" selectedValue="{selected_charge_group_1}" change="charge_group_1_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_2" selectedValue="{selected_charge_group_2}" change="charge_group_2_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_3" selectedValue="{selected_charge_group_3}" change="charge_group_3_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_4" selectedValue="{selected_charge_group_4}" change="charge_group_4_change(event)"/>
-							<mx:Text x="123" y="70" text="X&#xd;"/>
-							<mx:Text x="389" y="70" text="X&#xd;"/>
-							<mx:Text x="256" y="70" text="X&#xd;"/>
+							<mx:Text x="123" y="70" text="X&#xd;" id="text4"/>
+							<mx:Text x="389" y="70" text="X&#xd;" id="text1"/>
+							<mx:Text x="256" y="70" text="X&#xd;" id="text3"/>
 							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
 								<mx:RadioButton x="8" y="5" label="N/A" groupName="charge_group_1" id="na1_radio"/>
 								<mx:RadioButton x="8" y="31" label="Ordered" groupName="charge_group_1" id="ordered_radio"/>
 								<mx:RadioButton x="8" y="57" label="Press" groupName="charge_group_1" id="press_radio"/>
 							</mx:Canvas>
-							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
 								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_2" id="na2_radio"/>
 								<mx:RadioButton x="10" y="31" label="Colors" groupName="charge_group_2" id="colors_radio"/>
 								<mx:RadioButton x="10" y="57" label="Sides" groupName="charge_group_2" id="sides_radio"/>
 							</mx:Canvas>
-							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
 								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_3" id="na3_radio"/>
 								<mx:RadioButton x="10" y="31" label="Sheets" groupName="charge_group_3" id="sheets_radio"/>
 								<mx:RadioButton x="10" y="57" label="Signatures" groupName="charge_group_3" id="signatures_radio"/>
 							</mx:Canvas>
-							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
 								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_4" id="na4_radio"/>
 								<mx:RadioButton x="10" y="31" label="xUp" groupName="charge_group_4" id="x_up_radio"/>
 								<mx:RadioButton x="10" y="57" label="/Up" groupName="charge_group_4" id="slash_up_radio"/>
@@ -1151,17 +1213,17 @@ creationComplete="init()" label="Charge Definitions" name="Charge Definitions" x
 						<mx:Canvas label="markup_canvas" width="100%" height="100%" id="markup_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 							<mx:RadioButtonGroup id="markup_type_group" selectedValue="{selected_markup_type_group}" change="markup_type_group_change(event)"/>
 							<mx:RadioButton x="10" y="35" label="Job Price" groupName="markup_type_group"/>
-							<mx:RadioButton x="10" y="61" label="Charges" groupName="markup_type_group"/>
+							<mx:RadioButton x="10" y="58" label="Charges" groupName="markup_type_group"/>
 							<mx:RadioButton x="107" y="35" label="Entire Job" groupName="markup_type_group"/>
-							<mx:RadioButton x="107" y="61" label="Invoice" groupName="markup_type_group"/>
+							<mx:RadioButton x="107" y="58" label="Invoice" groupName="markup_type_group"/>
 							<mx:Text x="10" y="10" text="Select the type of markup:&#xd;" width="291" height="17" fontWeight="bold"/>
 						</mx:Canvas>
 					</mx:ViewStack>
-					<mx:Button x="10" y="550" label="Price List..." width="109" id="price_list_button" click="doPriceList()"/>
-					<mx:Button x="10" y="580" label="Waste Chart..." id="waste_chart_button" click="doWasteChart()"/>
-					<mx:LinkButton x="132" y="550" width="291" id="price_list_link"/>
-					<mx:LinkButton x="132" y="581" width="291" id="waste_chart_link"/>
-					<mx:HRule x="-7" y="537" width="565" height="8"/>
+					<mx:Button x="10" y="533" label="Price List..." width="109" id="price_list_button" click="doPriceList()"/>
+					<mx:Button x="10" y="563" label="Waste Chart..." id="waste_chart_button" click="doWasteChart()" width="109"/>
+					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
+					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
+					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">

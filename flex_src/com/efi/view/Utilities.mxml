@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="392" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="Price List" name="Price List"
+    verticalScrollPolicy="off">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Producer id="producer" destination="pricelist"/>
+<mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+<mx:Script>
+                                   
+<![CDATA[ 
+	import com.efi.vo.Contact;           
+    import com.efi.vo.Account;    
+    import com.efi.view.EditContact;
+    import com.efi.view.EditCustomer;    
+    import com.efi.view.PressDefinitions;
+    import com.efi.vo.Charge;   
+    import com.efi.events.PriceListPickerSelectEvent;
+         
+	import mx.managers.PopUpManager;     
+	import com.efi.vo.SpeedTable;  
+	import com.efi.vo.PriceList;
+	import com.efi.vo.PriceListBase; 
+	import com.efi.vo.WasteChart;                          
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	import flash.net.FileReference;
+	
+	[Bindable]                                
+	private var list:ArrayCollection = new ArrayCollection();
+                                                                        	         
+	public var itemType:String;
+	
+	[Bindable]                                
+	public var priceList:PriceListBase;
+
+	public var parentContainer:Container;
+	// Holds a reference to the currently focussed control on the form.
+ 	private var focusedFormControl:DisplayObject;                           
+           
+	                    
+	private function handleLoadResult(event:ResultEvent):void {
+		list = event.result as ArrayCollection;
+	}
+	
+	private function handleFault(ev:FaultEvent):void {                               
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable") {
+				dataService.getAll(payloadType)
+			}
+		}
+	}
+	                                                       
+	private function init():void {   
+	}
+	
+	private function doCancel():void {
+		var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
+		dispatchEvent(cancelEvent);
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doImport():void {
+		var fileReference:FileReference = new FileReference();
+		
+		if (fileReference.browse()) {
+			
+		}
+	}
+]]>        
+</mx:Script>
+                             
+
+                             
+	<mx:Canvas width="361" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:Button label="Import" id="select_button" enabled="true" click="doImport();"  width="108" x="10" y="10"/>
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>
