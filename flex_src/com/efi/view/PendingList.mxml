@@ -156,7 +156,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		
-		dataService.getAll("InvoiceBase");
+		dataService.getAll("Invoice");
 
 		fillDocumentArray(DocumentArray)
 		fillFilterArray(FilterArray)
@@ -197,8 +197,8 @@
 		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "InvoiceBase" || payloadType == "Invoice" || payloadType == "Estimate") {
-		  		dataService.getAll("InvoiceBase");
+			if (payloadType == "Invoice") {
+		  		dataService.getAll("Invoice");
 			}
 		}
 	}

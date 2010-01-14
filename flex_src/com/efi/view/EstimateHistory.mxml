@@ -109,8 +109,8 @@ width="638" height="479"  creationComplete="init()"
 		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "InvoiceBase" || payloadType == "Invoice" || payloadType == "Estimate") {
-		  		dataService.getAll("InvoiceBase");
+			if (payloadType == "Estimate") {
+		  		dataService.getByAccountId("Estimate", this.account.id);
 			}
 		}
 	}		
@@ -124,10 +124,10 @@ width="638" height="479"  creationComplete="init()"
 		<mx:Label x="30" y="56" text="Get" width="38" textAlign="center"/>
 	<mx:DataGrid x="10" y="82"  height="292" id="estimate_grid" dataProvider="{estimates}">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Created" dataField="col1"/>
-			<mx:DataGridColumn headerText="Estimate #" dataField="col2"/>
-			<mx:DataGridColumn headerText="Title" dataField="col3"/>
-			<mx:DataGridColumn headerText="Total" dataField="col1"/>
+			<mx:DataGridColumn headerText="Created" dataField="created"/>
+			<mx:DataGridColumn headerText="Estimate #" dataField="invoiceNumber"/>
+			<mx:DataGridColumn headerText="Title" dataField="name"/>
+			<mx:DataGridColumn headerText="Total" dataField="grandTotal"/>
 			<mx:DataGridColumn headerText="Status" dataField="col2"/>
 			
 		</mx:columns>
