@@ -81,6 +81,7 @@ width="1080" height="755" title="Copier Definitions"
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		
 	    copierDefinition = new CopierDefinition();
+	    copierDefinition.largeFormat = false; 
 	}      
 	                                                   						
 	private function messageHandler(message:IMessage):void
