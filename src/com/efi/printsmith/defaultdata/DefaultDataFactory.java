@@ -49,14 +49,6 @@ public class DefaultDataFactory {
 		}
 	}
 
-	private void ProcessColumnNames(){
-		try {
-			LoadColumnNamesData(new String[]{currentPath});
-		} catch (IOException e) {
-			log.debug("** Exception: ColumnNames file Load failed.");
-		}
-	}
-
 	private void ProcessEstimatorTypes(){
 		try {
 			LoadEstimatorTypesData(new String[]{currentPath});
@@ -99,6 +91,413 @@ public class DefaultDataFactory {
 
 
 	}
+
+	private void ProcessColumnNames(){
+		List<?> itemList = (List<?>) dataservice.getAll("ColumnNames");
+
+		if (itemList.size() > 0) return ;
+
+		ColumnNames columnnames = new ColumnNames();
+		columnnames.setName("Account");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Document Number");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Phone");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Location");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Wanted Date");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+		
+		columnnames = new ColumnNames();
+		columnnames.setName("Hold State");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Type");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Document Title");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Job Comment");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Proof Date");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Taken By");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Sales Rep");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Web Reference");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Job Count");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencePendingList(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Name");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+
+		ProcessPreferencesStockDefinition(columnnames,true);
+		columnnames = new ColumnNames();
+		columnnames.setName("Weight");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Size");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+		
+		columnnames = new ColumnNames();
+		columnnames.setName("Color");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Generic Color");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Finish");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Thickness");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Grade");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("CWT");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Vendor");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Stock Number");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Product ID");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Quantity On Hand");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Committed");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Ordered");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Shell");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,true);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Run Size");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Basic Size");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Group");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Coated Sides");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Minimum Order");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Price");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Price Expires");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Forest Management");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("Recycle");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("FSC");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("SFI");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+		ProcessPreferencesStockDefinition(columnnames,false);
+
+		columnnames = new ColumnNames();
+		columnnames.setName("GreenSeal");
+		try {
+			columnnames = (ColumnNames)dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+	}
+
+	private void ProcessPreferencePendingList(ColumnNames columnname,Boolean visible){
+		PreferencesPendingList preferencesPendingList = new PreferencesPendingList();
+		preferencesPendingList.setColumns(columnname);
+		preferencesPendingList.setVisible(visible);
+		try {
+			dataservice.addUpdate(preferencesPendingList);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+	}
+	
+	private void ProcessPreferencesStockDefinition(ColumnNames columnname,Boolean visible){
+		PreferencesStockDefinition preferencesStockDefinition = new PreferencesStockDefinition();
+		preferencesStockDefinition.setColumns(columnname);
+		preferencesStockDefinition.setVisible(visible);
+		try {
+			dataservice.addUpdate(preferencesStockDefinition);
+		} catch (Exception e) {
+			log.debug("** Exception: " + e.getMessage());
+		}
+	}
+
 	private void ProcessAccessGroup(){
 		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
 
@@ -442,27 +841,6 @@ public class DefaultDataFactory {
 		}
 	}
 	
-	private void LoadColumnNamesData(String[] args) throws IOException
-	{
-		if (args.length == 0) args = new String[]{".."};
-		String path = new File(args[0]).getParent();
-		File pathName = new File(path);
-		String[] fileNames = pathName.list();
-		for (int i = 0; i <fileNames.length; i++)
-		{
-			if (fileNames[i].endsWith(".txt") == true && fileNames[i].toLowerCase().startsWith("columnnames")==true)
-			{
-				File f = new File(pathName.getPath(),fileNames[i]);
-				int result = doColumnNames(f);
-				if (result < 0)
-				{
-					log.debug("** Exception: ColumnNames file Load failed.");
-				}
-				break;
-			}			
-		}
-	}
-
 	private void LoadEstimatorTypesData(String[] args) throws IOException
 	{
 		if (args.length == 0) args = new String[]{".."};
@@ -520,52 +898,6 @@ public class DefaultDataFactory {
 		    		state.setName(line.trim());
 					try {
 						dataservice.addUpdate(state);
-					} catch (Exception e) {
-						log.debug("** Exception: " + e.getMessage());
-						break;
-					}
-	    		}
-	    	}
-	    }
-	    return rv;
-	}
-
-	private int doColumnNames(File file) throws java.io.IOException{
-
-		List<?> columnNameList= (List<?>) dataservice.getAll("ColumnNames");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-	    java.io.BufferedReader br = new java.io.BufferedReader(ip);
-	    String line = null;
-	    int rv = -1;
-	    while ((line = br.readLine()) != null){
-	    	if (line.length() > 0)
-	    	{
-	    		if (columnNameList.size() > 0){
-	    			boolean found = false;
-	    			for (int i = 0; i < columnNameList.size(); i++)
-    	    		{
-    	    			if (((ColumnNames)columnNameList.get(i)).getName().trim().equals(line.trim()) == true){
-    	    				found = true;
-    	    				break;
-    	    			}
-	    			}
-	    			if (found != true){
-	    				ColumnNames columnnames = new ColumnNames();
-	    	    		columnnames.setName(line.trim());
-	    				try {
-	    					dataservice.addUpdate(columnnames);
-	    				} catch (Exception e) {
-	    					log.debug("** Exception: " + e.getMessage());
-	    					break;
-	    				}
-	    			}
-	    		}else{
-					ColumnNames columnnames = new ColumnNames();
-		    		columnnames.setName(line.trim());
-					try {
-						dataservice.addUpdate(columnnames);
 					} catch (Exception e) {
 						log.debug("** Exception: " + e.getMessage());
 						break;

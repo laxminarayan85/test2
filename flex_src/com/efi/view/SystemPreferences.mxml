@@ -1769,7 +1769,41 @@ width="800" height="678" title="Preferences"
 			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
 		}
 
-	}           
+	}
+	   
+	private function columnnamePendingList(item:Object, column:DataGridColumn):String{
+		var tmpName:PreferencesPendingList = item as PreferencesPendingList;
+		
+		if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
+			var retVal:String = tmpName.columns.name;
+			
+			if (retVal != "") {
+				return retVal;
+			} else {
+				return "None";
+			}
+		} else {
+			return "None";
+		}
+
+	}
+	private function columnsnameStockDefinition(item:Object, column:DataGridColumn):String{
+		var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
+		
+		if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
+			var retVal:String = tmpName.columns.name;
+			
+			if (retVal != "") {
+				return retVal;
+			} else {
+				return "None";
+			}
+		} else {
+			return "None";
+		}
+		
+	}
+        
 
 ]]>
                              
@@ -2081,7 +2115,7 @@ width="800" height="678" title="Preferences"
 							itemEditor="mx.controls.CheckBox"
 							itemRenderer="com.efi.components.GenericCheckboxRenderer">
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="200" headerText="Column Title" dataField="columns.name"/>
+						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnnamePendingList" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
 
@@ -2364,7 +2398,7 @@ width="800" height="678" title="Preferences"
 							itemEditor="mx.controls.CheckBox"
 							itemRenderer="com.efi.components.GenericCheckboxRenderer">
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="200" headerText="Column Title" dataField="columns.name"/>
+						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnsnameStockDefinition" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
 
