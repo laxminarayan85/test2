@@ -588,8 +588,14 @@
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
-		systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
-		this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		}else{
+			this.btnExport.enabled = false;
+
+		}
 	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
