@@ -163,6 +163,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTableResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
+
 	<mx:Producer id="producer" destination="cashregister"/>
 	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -174,6 +178,7 @@
 	import com.efi.vo.TaxTable;
 	import com.efi.vo.TaxCodes;
 	import com.efi.vo.CashRegister;
+	import com.efi.vo.PreferencesSystem;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -187,6 +192,12 @@
 
 	[Bindable]
 	private var enableSave:Boolean = true;
+
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
+
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 
 	[Bindable]
 	private var itemQty:String;
@@ -205,7 +216,8 @@
 	private var payTendered:String;
 	[Bindable]
 	private var payChange:String;
-
+	[Bindable]
+	private var AustrailianRounding:Boolean;
 	
 //Data field arrays
 	[Bindable]
@@ -242,10 +254,24 @@
 	private function handleLoadTaxCodesResult(ev:ResultEvent):void {
 	     TaxCodesArray = ev.result as ArrayCollection;
 	}
+
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			AustrailianRounding = systemPreferences.austrailianInvoiceRounding;
+		}else {
+			AustrailianRounding = false;
+		}
+
+	}	                                 
 		
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
+
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
 		//openTree();
 		setup();
@@ -384,6 +410,14 @@
 			txtPaymentDescription.text = node.@label;
 		}
 	}
+
+	private function doPayment():void{
+		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
+			
+		}else{
+					
+		}
+	}	
 	
 	private function doSave():void{
 	}
@@ -495,7 +529,7 @@
 		</mx:Canvas>
 		<mx:Canvas x="198" y="133" width="210" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="PAYMENT METHOD"/>
-			<mx:Button x="10" y="180" label="Payment" width="186" id="btPayment"/>
+			<mx:Button x="10" y="180" label="Payment" width="186" id="btPayment" click="doPayment();"/>
 			<mx:RadioButtonGroup id="rgPaymentMethod" change="paymentMethodChanged(event)"/>
 			<mx:RadioButton x="10" y="34" label="Cash" id="rbCash" groupName="rgPaymentMethod"/>
 			<mx:RadioButton x="10" y="60" label="Credit Card" id="rbCreditCard" groupName="rgPaymentMethod"/>

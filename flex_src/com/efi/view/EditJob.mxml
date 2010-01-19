@@ -67,6 +67,9 @@
 				   fault="handleFault(event)"
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Script>
 		<![CDATA[
@@ -81,6 +84,7 @@
 			import com.efi.vo.ChargeCategory;
 			import com.efi.vo.ChargeCommand;
 			import com.efi.vo.StockDefinition;
+			import com.efi.vo.PreferencesSystem;
 
 			import com.efi.events.JobEditCompleteEvent;
 			import com.efi.events.StockPickerSelectEvent;
@@ -108,6 +112,11 @@
 			import mx.collections.ICollectionView;
 			import mx.core.UIComponent;
 			
+			[Bindable]                                         
+		    private var systemPreferences:PreferencesSystem;
+		
+			[Bindable]                                
+			private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 
 			[Bindable]
 			private var dimensions:ArrayCollection=new ArrayCollection();
@@ -147,6 +156,18 @@
 
 			private var focussedFormControl:DisplayObject;
 
+			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+				systemPreferencesArray = ev.result as ArrayCollection;
+				if (systemPreferencesArray.length > 0)
+				{
+					systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+					check_taxtable.visible = systemPreferences.disableNonTaxableOptions
+				}else {
+					check_taxtable.visible = true;
+				}
+		
+			}	                                 
+
 			public function init():void
 			{
 				this.height = parent.height - 80;
@@ -158,6 +179,7 @@
 				chargeCommandDataService.getAll("ChargeCommand");
 				pricingMethodDataService.getAll("PricingMethod");
 				dimensionDataService.getAll("Dimension");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");
 				if (job == null) {
 					job=new Job();
 					job.parentSize = "";

@@ -57,6 +57,9 @@
 				   fault="handleFault(event)"
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:states>
 		<mx:State name="New Charge" basedOn="">
@@ -75,6 +78,7 @@
 			import com.efi.vo.ChargeCategory;
 			import com.efi.vo.ChargeCommand;
 			import com.efi.vo.ChargeDefinition;
+			import com.efi.vo.PreferencesSystem;
 
 			import com.efi.events.ChargeDefinitionSelectEvent;
 
@@ -93,6 +97,12 @@
 			import mx.validators.Validator;
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
+
+			[Bindable]                                         
+		    private var systemPreferences:PreferencesSystem;
+		
+			[Bindable]                                
+			private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 
 			private var accounts:ArrayCollection=new ArrayCollection();
 			private var presses:ArrayCollection=new ArrayCollection();
@@ -118,6 +128,18 @@
 
 			private var focussedFormControl:DisplayObject;
 
+			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+				systemPreferencesArray = ev.result as ArrayCollection;
+				if (systemPreferencesArray.length > 0)
+				{
+					systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+					taxable_check.visible = systemPreferences.disableNonTaxableOptions; 
+				}else {
+					taxable_check.visible = true;
+				}
+		
+			}	                                 
+
 			public function init():void
 			{
 				PopUpManager.centerPopUp(this);
@@ -126,6 +148,7 @@
 				productDataService.getAll("ProductCode");
 				chargeDataService.getAll("Charge");
 				chargeCommandDataService.getAll("ChargeCommand");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");
 				this.currentState="New Charge";
 			
 			}
