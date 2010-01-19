@@ -166,6 +166,10 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPYMINUTES = "CopyMinutes";
+	/**
+	 * @generated
+	 */
+	public static final String CHARGES = "Charges";
 
 	/**
 	 * @generated
@@ -736,6 +740,29 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMinutes(Integer newVal) {
 		this.copyMinutes = newVal;
 	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<Charge> charges;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<Charge> getCharges(){
+		return charges; 
+	}
+
+	public void addCharges(Charge obj) {
+		if (charges == null) {
+			charges = new java.util.ArrayList<Charge>();
+		}
+		charges.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setCharges(java.util.List<Charge> newVal) {
+		this.charges = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -775,6 +802,7 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) return getCopyID();
 		if (MONTHLYBURDENRATE.equals(propertyName)) return getMonthlyBurdenRate();
 		if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
+		if (CHARGES.equals(propertyName)) return getCharges();
 		return super.getProperty(propertyName);
 	}
 	
@@ -817,6 +845,7 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
 		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Integer)newValue); else
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Integer)newValue); else
+		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -892,6 +921,8 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (COPYMINUTES.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
+		if (CHARGES.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, Charge.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -935,6 +966,7 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) return CopierDefinition.class;
 		if (MONTHLYBURDENRATE.equals(propertyName)) return CopierDefinition.class;
 		if (COPYMINUTES.equals(propertyName)) return CopierDefinition.class;
+		if (CHARGES.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1011,6 +1043,8 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getMonthlyBurdenRate(), objT.getMonthlyBurdenRate()))
 			return false;
 		if (! SmartEquals(getCopyMinutes(), objT.getCopyMinutes()))
+			return false;
+		if (! SmartEquals(getCharges(), objT.getCharges()))
 			return false;
 		return true;
 	}			
