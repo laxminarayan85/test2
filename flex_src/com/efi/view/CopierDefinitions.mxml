@@ -312,13 +312,13 @@ width="1080" height="755" title="Copier Definitions"
 		<mx:HRule y="644" height="12" left="5" right="5"/>
 		<mx:Button x="5" y="660" label="Stock Price List" click="doStockPriceList();" width="107"/>
 		<mx:Button x="120" y="660" label="Copier Price List" click="doCopyPriceList();" width="107"/>
-		<mx:Button x="235" y="660" label="Default Copiers" click="doDefaultCopiers()" width="107"/>
-		<mx:Button x="632" y="660" label="Save" click="doSave()" width="67"/>
-		<mx:Button x="557" y="660" label="New" click="doNew()" width="67"/>
-		<mx:Button x="482" y="660" label="Delete" click="doDelete()" width="67"/>
+		<mx:Button x="235" y="660" label="Default Copiers" click="doDefaultCopiers();" width="107"/>
+		<mx:Button x="632" y="660" label="Save" click="doSave();" width="67"/>
+		<mx:Button x="557" y="660" label="New" click="doNew();" width="67"/>
+		<mx:Button x="482" y="660" label="Delete" click="doDelete();" width="67"/>
 		<mx:Button x="407" y="660" label="Export" width="67" id="btnExport"/>
 		<mx:Button x="533" y="157" label="Waste Chart" click="doWasteChart();"/>
-		<mx:Button x="534" y="127" label="Add Charges" click="doAddCharge()"/>
+		<mx:Button x="534" y="127" label="Add Charges" click="doAddCharge();"/>
 		<mx:Label x="44" y="263" text="Printer Type: "/>
 		<mx:CheckBox x="126" y="261" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right"/>
 		<mx:CheckBox x="182" y="261" label="Color" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right"/>
