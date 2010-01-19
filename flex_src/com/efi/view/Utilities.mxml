@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*" width="392" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
-    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
-    label="Price List" name="Price List"
+    title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="Utilities" name="Utilities"
     verticalScrollPolicy="off">
-
-<mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-</mx:RemoteObject>
-
-<mx:Producer id="producer" destination="pricelist"/>
-<mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
-<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-
 <mx:Script>
                                    
 <![CDATA[ 
@@ -42,62 +33,51 @@
 	import mx.collections.ArrayCollection;
 	import flash.net.FileReference;
 	
-	[Bindable]                                
-	private var list:ArrayCollection = new ArrayCollection();
-                                                                        	         
-	public var itemType:String;
-	
-	[Bindable]                                
-	public var priceList:PriceListBase;
-
-	public var parentContainer:Container;
-	// Holds a reference to the currently focussed control on the form.
- 	private var focusedFormControl:DisplayObject;                           
-           
-	                    
-	private function handleLoadResult(event:ResultEvent):void {
-		list = event.result as ArrayCollection;
-	}
-	
-	private function handleFault(ev:FaultEvent):void {                               
-		var message:String;
-		              
-		message = "Error: "                          
-		+ ev.fault.faultCode + " - "                                  
-		+ ev.fault.faultDetail + " - "                                  
-		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, this, null);                                 
-	}
-
-	private function messageHandler(message:IMessage):void
-	{
-		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
-		
-		var messageType:String = messageBody.messageType;
-		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
-			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
-			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable") {
-				dataService.getAll(payloadType)
-			}
-		}
-	}
+	private var fileReference:FileReference;
+	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
+	private var loader:Loader;
 	                                                       
 	private function init():void {   
 	}
 	
-	private function doCancel():void {
-		var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
-		dispatchEvent(cancelEvent);
-		PopUpManager.removePopUp(this);
+	private function handleLoadFileComplete(event:Event):void {
+		fileReference=event.target as FileReference;
+		var data:ByteArray=fileReference["data"];
+		
+		loader=new Loader();
+		loader.loadBytes(data);
+		loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoaderComplete);
+	}
+	
+	private function handleLoaderComplete(event:Event):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	private function handleIOError(event:IOErrorEvent):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	private function handleSelectLocalFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		
+		servletTarget.method = URLRequestMethod.POST;
+		fileReference.upload(servletTarget);
+	}
+	
+	private function handleCancelLocalFile(evt:Event):void {
+		
 	}
 	
 	private function doImport():void {
-		var fileReference:FileReference = new FileReference();
-		
-		if (fileReference.browse()) {
-			
-		}
+		fileReference = new FileReference();
+		fileReference.addEventListener(Event.SELECT, handleSelectLocalFile);
+		fileReference.addEventListener(Event.CANCEL, handleCancelLocalFile);
+		fileReference.browse();
 	}
 ]]>        
 </mx:Script>
