@@ -2,6 +2,83 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.vo.*"
 width="800" height="678" title="Preferences"
  label="Preferences" name="systempreferences" xmlns:ns1="com.efi.components.*">
+ 	<mx:states>
+ 	 	<mx:State name="CreditCardProcessorSetup">
+ 	 	 	<mx:RemoveChild target="{CreditCardGrid}"/>
+ 	 	 	<mx:RemoveChild target="{button1}"/>
+ 	 	 	<mx:RemoveChild target="{button2}"/>
+ 	 	 	<mx:AddChild relativeTo="{creditcards_canvas}" position="lastChild">
+ 	 	 	 	<mx:Canvas x="38" y="185" width="440" height="365" id="canvas1">
+ 	 	 	 	 	<mx:Button x="49" y="333" label="Close" click="doProcessorSetup(null);"/>
+ 	 	 	 	 	<mx:Label x="49" y="103" text="Internet URL:" id="label1"/>
+ 	 	 	 	 	<mx:CheckBox x="49" y="257" label="Use Address Validation" id="chkCreditCardUseAddressValidation"/>
+ 	 	 	 	 	<mx:CheckBox x="49" y="278" label="Prompt User For Validation Information" id="chkCreditCardPromptUserForValidationInformation"/>
+ 	 	 	 	 	<mx:TextArea x="49" y="119" width="344" id="textarea1"/>
+ 	 	 	 	 	<mx:RadioButtonGroup id="SkipJackType"/>
+ 	 	 	 	</mx:Canvas>
+ 	 	 	</mx:AddChild>
+ 	 	</mx:State>
+ 	 	<mx:State name="DropFolderSetup" basedOn="CreditCardProcessorSetup">
+ 	 	 	<mx:RemoveChild target="{textarea1}"/>
+ 	 	 	<mx:RemoveChild target="{label1}"/>
+ 	 	 	<mx:RemoveChild target="{chkCreditCardUseAddressValidation}"/>
+ 	 	 	<mx:RemoveChild target="{chkCreditCardPromptUserForValidationInformation}"/>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="133" y="49" width="266" id="txtCreditCardDropFolder"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="10" y="51" text="Drop Folder Location:"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:SetProperty target="{rdoSkipJack}" name="label" value="Use SkipJack Processor"/>
+ 	 	</mx:State>
+ 	 	<mx:State name="SkipJackSetup" basedOn="CreditCardProcessorSetup">
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:RadioButton x="49" y="21" label="Normal" groupName="SkipJackType"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:RadioButton x="49" y="47" label="Advanced" groupName="SkipJackType"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:RadioButton x="49" y="73" label="Development" groupName="SkipJackType"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="95" y="173" text="Serial #:"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="56" y="199" text="Development#:"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="108" y="225" text="Port#:"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="151" y="171" id="txtSkipJackSerial"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="151" y="197" id="txtSkipJackDev"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="151" y="223" id="txtSkipJackPort"/>
+ 	 	 	</mx:AddChild>
+ 	 	</mx:State>
+ 	 	<mx:State name="EfsSetup" basedOn="CreditCardProcessorSetup">
+ 	 	 	<mx:SetProperty target="{label1}" name="y" value="20"/>
+ 	 	 	<mx:SetProperty target="{textarea1}" name="y" value="36"/>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="189" y="88" id="txtMerchantId"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:TextInput x="189" y="116" id="txtMerchantKey"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="73" y="90" text="Merchant Id (M_ID):"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+ 	 	 	 	<mx:Label x="58" y="118" text="Merchant Key (M_KEY):"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:SetProperty target="{chkCreditCardUseAddressValidation}" name="y" value="148"/>
+ 	 	 	<mx:SetProperty target="{chkCreditCardPromptUserForValidationInformation}" name="y" value="169"/>
+ 	 	</mx:State>
+ 	</mx:states>
 
  	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
@@ -515,7 +592,9 @@ width="800" height="678" title="Preferences"
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
-		
+
+		this.currentState="";
+
 		fillStaticData();
 		
 		getPreferencesData();
@@ -758,7 +837,56 @@ width="800" height="678" title="Preferences"
 		this.txtEstimatePrefix.text = preferencesAccounting.estimatePrefix;
 		this.txtEstimateDocument.text = preferencesAccounting.estimateDocument;
 		this.txtEstimateSuffix.text = preferencesAccounting.estimateSuffix;
-		
+
+		if (preferencesAccounting.useSkipJackProcessor==true){
+			CreditCardProcessor.selectedValue = "Use SkipJack Processor";
+
+			if (preferencesAccounting.skipJackMode==0){
+				SkipJackType.selectedValue = "Normal"; 
+			}
+			if (preferencesAccounting.skipJackMode==1){
+				SkipJackType.selectedValue = "Advanced"; 
+			}
+			if (preferencesAccounting.skipJackMode==2){
+				SkipJackType.selectedValue = "Development"; 
+			}
+			this.txtMerchantId.text = "";
+			this.txtMerchantKey.text = "";
+
+			this.txtSkipJackSerial.text = preferencesAccounting.serialNumber;
+			this.txtSkipJackPort.text = preferencesAccounting.portNumber;
+			this.txtSkipJackDev.text = preferencesAccounting.developmentNumber;
+			
+			this.chkCreditCardUseAddressValidation.selected = preferencesAccounting.useAddressValidation; 
+			this.chkCreditCardPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidationInfo;
+		} 
+		if (preferencesAccounting.useEfsProcessor==true){
+			CreditCardProcessor.selectedValue = "Use EFS Processor";
+			this.txtMerchantId.text = preferencesAccounting.merchantID;
+			this.txtMerchantKey.text = preferencesAccounting.merchantKey;
+
+			this.txtSkipJackSerial.text = "";
+			this.txtSkipJackPort.text = "";
+			this.txtSkipJackDev.text = "";
+
+			this.chkCreditCardUseAddressValidation.selected = preferencesAccounting.useAddressValidation; 
+			this.chkCreditCardPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidationInfo;
+		} 
+		if (preferencesAccounting.useObsoleteDropFolder==true){
+			CreditCardProcessor.selectedValue = "Use Obsolete Drop Folder";
+			this.txtCreditCardDropFolder.text = preferencesAccounting.creditCardDropFolder;
+
+			this.txtMerchantId.text = "";
+			this.txtMerchantKey.text = "";
+
+			this.txtSkipJackSerial.text = "";
+			this.txtSkipJackPort.text = "";
+			this.txtSkipJackDev.text = "";
+
+			this.chkCreditCardUseAddressValidation.selected = false; 
+			this.chkCreditCardPromptUserForValidationInformation.selected = false;
+
+		} 
 	}
 	private function mapFromPreferencesEstimatingData():void {
 		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
@@ -1043,6 +1171,69 @@ width="800" height="678" title="Preferences"
 		preferencesAccounting.estimateDocument = this.txtEstimateDocument.text;
 		preferencesAccounting.estimateSuffix = this.txtEstimateSuffix.text;
 
+
+		if (CreditCardProcessor.selectedValue == "Use SkipJack Processor"){
+			preferencesAccounting.useSkipJackProcessor = true;
+			preferencesAccounting.useEfsProcessor = false;
+			preferencesAccounting.useObsoleteDropFolder = false;
+			
+			if (SkipJackType.selectedValue == "Normal"){
+				preferencesAccounting.skipJackMode=0; 
+			}
+			if (SkipJackType.selectedValue == "Advanced"){ 
+				preferencesAccounting.skipJackMode=1;
+			}
+			if (SkipJackType.selectedValue == "Development"){ 
+				preferencesAccounting.skipJackMode=2;
+			}
+			preferencesAccounting.serialNumber = this.txtSkipJackSerial.text;
+			preferencesAccounting.portNumber = this.txtSkipJackPort.text;
+			preferencesAccounting.developmentNumber = this.txtSkipJackDev.text;
+			preferencesAccounting.useAddressValidation = this.chkCreditCardUseAddressValidation.selected; 
+			preferencesAccounting.promptUserForValidationInfo = this.chkCreditCardPromptUserForValidationInformation.selected;
+
+			preferencesAccounting.merchantID = "";
+			preferencesAccounting.merchantKey = "";
+
+			preferencesAccounting.creditCardDropFolder = "";
+
+		}
+		if (CreditCardProcessor.selectedValue == "Use EFS Processor"){
+			preferencesAccounting.useSkipJackProcessor = false;
+			preferencesAccounting.useEfsProcessor = true;
+			preferencesAccounting.useObsoleteDropFolder = false;
+
+			preferencesAccounting.merchantID = this.txtMerchantId.text;
+			preferencesAccounting.merchantKey = this.txtMerchantKey.text;
+			preferencesAccounting.useAddressValidation = this.chkCreditCardUseAddressValidation.selected; 
+			preferencesAccounting.promptUserForValidationInfo = this.chkCreditCardPromptUserForValidationInformation.selected;
+
+			preferencesAccounting.serialNumber = "";
+			preferencesAccounting.portNumber = "";
+			preferencesAccounting.developmentNumber = "";
+
+			preferencesAccounting.creditCardDropFolder = "";
+			
+		} 
+		if (CreditCardProcessor.selectedValue == "Use Obsolete Drop Folder"){
+			preferencesAccounting.useSkipJackProcessor = false;
+			preferencesAccounting.useEfsProcessor = false;
+			preferencesAccounting.useObsoleteDropFolder = true;
+
+			preferencesAccounting.creditCardDropFolder = this.txtCreditCardDropFolder.text;
+
+			preferencesAccounting.serialNumber = "";
+			preferencesAccounting.portNumber = "";
+			preferencesAccounting.developmentNumber = "";
+
+			preferencesAccounting.useAddressValidation = false; 
+			preferencesAccounting.promptUserForValidationInfo = false;
+
+			preferencesAccounting.merchantID = "";
+			preferencesAccounting.merchantKey = "";
+			
+		} 
+
 	}
 	private function mapToPreferencesEstimatingData():void {
 		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
@@ -1257,6 +1448,26 @@ width="800" height="678" title="Preferences"
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
 
+	private function doCreditCardProcessorChange() : void {
+		if (this.currentState!="" && this.currentState!=null){
+			doProcessorSetup(CreditCardProcessor.selectedValue);
+		}
+	}
+	private function doProcessorSetup(item:Object) : void {
+		this.currentState="";
+		if (item != null){
+			if (item == "Use Obsolete Drop Folder"){
+				this.currentState="DropFolderSetup";
+			}
+			if (item == "Use SkipJack Processor"){
+				this.currentState="SkipJackSetup";
+			}
+			if (item == "Use EFS Processor"){
+				this.currentState="EfsSetup";
+			}
+		}
+	}
+	
 	private function doCountryFind(completeTextObject:AutoComplete,lookupArray:ArrayCollection) : void {
 		var countries:Country;
 		var result:Boolean;
@@ -1478,6 +1689,7 @@ width="800" height="678" title="Preferences"
 	}
 
 	private function treeSelect(event:Event):void {
+		this.currentState = "";
 		
 		var node:XML = XML(event.currentTarget.selectedItem);
 		if( node == null ) return;
@@ -2573,7 +2785,7 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
 				
-				<mx:DataGrid x="50" y="179" width="300" height="323" id="CreditCardGrid"
+				<mx:DataGrid x="50" y="296" width="300" height="206" id="CreditCardGrid"
 					dataProvider="{PreferencesCreditCardArray}"
 					editable="true">
 					<mx:columns>
@@ -2587,12 +2799,17 @@ width="800" height="678" title="Preferences"
 					</mx:columns>
 				</mx:DataGrid>
 				
-				<mx:Button x="50" y="510" width="38" height="38" click="doNewCreditCard();">
+				<mx:Button x="50" y="510" width="38" height="38" click="doNewCreditCard();" id="button2">
 					<mx:icon>@Embed(source='../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveCreditCard();">
+				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveCreditCard();" id="button1">
 					<mx:icon>@Embed(source='../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
+				<mx:RadioButtonGroup enabled="{chkActivateCCAprovalProcess.selected}" id="CreditCardProcessor" change="doCreditCardProcessorChange();"/>
+				<mx:RadioButton x="70" y="60" label="Use Obsolete Drop Folder" groupName="CreditCardProcessor" id="rdoDropFolder"/>
+				<mx:RadioButton x="70" y="86" label="Use SkipJack Processor" groupName="CreditCardProcessor" id="rdoSkipJack"/>
+				<mx:RadioButton x="70" y="112" label="Use EFS Processor" groupName="CreditCardProcessor" id="rdoEfs"/>
+				<mx:Button x="86" y="155" enabled="{chkActivateCCAprovalProcess.selected}" label="Processor Setup" click="doProcessorSetup(CreditCardProcessor.selectedValue);" id="btnProcessorSetup"/>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
