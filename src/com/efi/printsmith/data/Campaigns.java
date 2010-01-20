@@ -41,11 +41,11 @@ public class Campaigns extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String CAMPAIGNID = "CampaignID";
+	public static final String APPLIED = "Applied";
 	/**
 	 * @generated
 	 */
-	public static final String CAMPAIGNGRADEID = "CampaignGradeID";
+	public static final String GLOBALCAMPAIGN = "GlobalCampaign";
 
 	/**
 	 * @generated
@@ -75,37 +75,38 @@ public class Campaigns extends ModelBase {
  	
 	
  	@Basic
-	private Integer campaignID;
+	private Boolean applied;
 	/**
 	 * @generated
  	 */
-	public Integer getCampaignID(){
-		return campaignID; 
+	public Boolean getApplied(){
+		return applied; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCampaignID(Integer newVal) {
-		this.campaignID = newVal;
+	public void setApplied(Boolean newVal) {
+		this.applied = newVal;
 	}
  	
 	
  	@Basic
-	private Integer campaignGradeID;
+	private Boolean globalCampaign;
 	/**
 	 * @generated
  	 */
-	public Integer getCampaignGradeID(){
-		return campaignGradeID; 
+	public Boolean getGlobalCampaign(){
+		return globalCampaign; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCampaignGradeID(Integer newVal) {
-		this.campaignGradeID = newVal;
+	public void setGlobalCampaign(Boolean newVal) {
+		this.globalCampaign = newVal;
 	}
+
 	/**
 	 * @generated
 	 */		
@@ -113,8 +114,8 @@ public class Campaigns extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
-		if (CAMPAIGNID.equals(propertyName)) return getCampaignID();
-		if (CAMPAIGNGRADEID.equals(propertyName)) return getCampaignGradeID();
+		if (APPLIED.equals(propertyName)) return getApplied();
+		if (GLOBALCAMPAIGN.equals(propertyName)) return getGlobalCampaign();
 		return super.getProperty(propertyName);
 	}
 	
@@ -125,8 +126,8 @@ public class Campaigns extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (CAMPAIGNID.equals(propertyName)) setCampaignID((Integer)newValue); else
-		if (CAMPAIGNGRADEID.equals(propertyName)) setCampaignGradeID((Integer)newValue); else
+		if (APPLIED.equals(propertyName)) setApplied((Boolean)newValue); else
+		if (GLOBALCAMPAIGN.equals(propertyName)) setGlobalCampaign((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -138,10 +139,10 @@ public class Campaigns extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (CAMPAIGNID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (CAMPAIGNGRADEID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+		if (APPLIED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (GLOBALCAMPAIGN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -153,8 +154,8 @@ public class Campaigns extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return Campaigns.class;
-		if (CAMPAIGNID.equals(propertyName)) return Campaigns.class;
-		if (CAMPAIGNGRADEID.equals(propertyName)) return Campaigns.class;
+		if (APPLIED.equals(propertyName)) return Campaigns.class;
+		if (GLOBALCAMPAIGN.equals(propertyName)) return Campaigns.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -168,9 +169,9 @@ public class Campaigns extends ModelBase {
 		Campaigns objT = (Campaigns)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
-		if (! SmartEquals(getCampaignID(), objT.getCampaignID()))
+		if (! SmartEquals(getApplied(), objT.getApplied()))
 			return false;
-		if (! SmartEquals(getCampaignGradeID(), objT.getCampaignGradeID()))
+		if (! SmartEquals(getGlobalCampaign(), objT.getGlobalCampaign()))
 			return false;
 		return true;
 	}			

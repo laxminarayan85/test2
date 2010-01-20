@@ -33,6 +33,10 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="campaignDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCampaigns(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCampaignResult(event)"/>
+</mx:RemoteObject>
 
 <mx:RemoteObject id="accountDataService" destination="dataService">
 	<mx:method name="getById" fault="handleFault(event)" result="handleLoadAccountById(event)"/>
@@ -54,6 +58,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayCollection;
 	import com.efi.vo.Contact;
 	import com.efi.vo.Address;                        
 	import com.efi.vo.Account; 
@@ -68,7 +74,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	import com.efi.vo.SalesRep;  
 	import com.efi.events.AccountPickerSelectEvent;
 	import com.efi.events.ContactPickerSelectEvent;
-	                                      
+	import com.efi.events.CampaignEditCompleteEvent;
+
+	                                  
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -106,6 +114,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
     private var countrys:ArrayCollection = new ArrayCollection();  
     [Bindable]
     private var zips:ArrayCollection = new ArrayCollection();
+    
+    [Bindable]
+    private var compaigns:ArrayCollection = new ArrayCollection();
                      
     private var formIsValid:Boolean = false;
     
@@ -122,7 +133,8 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		cityDataService.getAll("City");
 		stateDataService.getAll("State");
 		countryDataService.getAll("Country");
-		zipDataService.getAll("Zip");   		    
+		zipDataService.getAll("Zip"); 
+		campaignDataService.getAll("Campaigns");  		    
 	}      
 	      
 	private function doAccountPicker():void {
@@ -226,8 +238,11 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
  		}else{
  			if (contact.creditCard.expiresDate == null)
  				contact.creditCard.expiresDate = new Date();
- 			if ( contact.creditCard.address == null)
+ 			if ( contact.creditCard.address == null){
  				contact.creditCard.address = new Address();
+ 				contact.creditCard.address.zip = new Zip();
+ 			}
+ 				
  		}
  		
  	}
@@ -456,6 +471,9 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	private function handleLoadResult(ev:ResultEvent):void {
 		contacts = ev.result as ArrayCollection;
 	}
+	private function handleLoadCampaigns(ev:ResultEvent):void {
+		compaigns = ev.result as ArrayCollection;
+	}
 	private function handleLoadSalesReps(ev:ResultEvent):void {
 		var selectedItem:Object = sales_rep_combo.selectedItem;
 		salesReps = ev.result as ArrayCollection;
@@ -509,7 +527,10 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 	}      
 	private function handleSaveStateResult(ev:ResultEvent):void {
 		stateDataService.getAll("State");
-	}      
+	}   
+	private function handleSaveCampaignResult(ev:ResultEvent):void {
+		campaignDataService.getAll("Campaigns");
+	}       
 
 	private function handleSaveCountryResult(ev:ResultEvent):void {
 		countryDataService.getAll("Country");
@@ -537,7 +558,22 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 		formIsValid = formIsValid && currentControlIsValid;
         return currentControlIsValid;
 	}
- 
+	private function editCampaigns():void{
+		var editCampaignWindow:EditCampaigns = EditCampaigns(PopUpManager.createPopUp(this, EditCampaigns, true));
+	    editCampaignWindow.setStyle("borderAlpha", 0.9);
+		editCampaignWindow.addEventListener(CampaignEditCompleteEvent.CANCEL, handleCampaignEditCancel);
+		editCampaignWindow.addEventListener(CampaignEditCompleteEvent.SAVE, handleCampaignSave);
+		
+	    
+	}
+	private function handleCampaignEditCancel(evt:CampaignEditCompleteEvent):void {
+    	
+    }
+    private function handleCampaignSave(ev:CampaignEditCompleteEvent):void {
+		campaignDataService.getAll("Campaigns");
+	}     
+	
+	
 ]]>	
 
                              
@@ -611,6 +647,19 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 					<mx:Label x="400" y="96" text="User 9:" textAlign="right"/>
 					<mx:Label x="372" y="127" text="Mailer Type:" textAlign="right"/>
 				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Campaigns" width="100%" height="100%">
+				<mx:Button x="384" y="63" label="Edit Campaigns" id="camp_edit" click="editCampaigns();"/>
+				<mx:Button x="384" y="117" label="Select Grade" id="grade_select" width="113"/>
+				<mx:TextArea x="384" y="171" height="90" width="225">
+					<mx:text>The Campaign feature allows you to assign individual contacts to advertising campaigns that you've created. Grades are a group of campaigns that can be used as a template to assign one or more campaigns to mulitple contacts.</mx:text>
+				</mx:TextArea>
+			<mx:DataGrid y="20" id="dataGrid" dataProvider="{compaigns}" height="353"  showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="10" right="320">
+			<mx:columns>
+				<mx:DataGridColumn width="50" sortable="false" textAlign="center" headerText="Apply" dataField="applied" itemRenderer="com.efi.components.GenericCheckboxRenderer"/>
+				<mx:DataGridColumn headerText="Campaigns" dataField="name"/>
+			</mx:columns>
+		</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas label="Credit Info" width="100%" height="100%">
 				<mx:Label x="159" y="32" text="Card Holder:" textAlign="right"/>

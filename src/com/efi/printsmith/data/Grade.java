@@ -41,7 +41,7 @@ public class Grade extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String GRADEID = "GradeID";
+	public static final String CAMPAIGNS = "Campaigns";
 
 	/**
 	 * @generated
@@ -70,21 +70,28 @@ public class Grade extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private Integer gradeID;
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<Campaigns> campaigns;
 	/**
 	 * @generated
  	 */
-	public Integer getGradeID(){
-		return gradeID; 
+	public java.util.List<Campaigns> getCampaigns(){
+		return campaigns; 
 	}
 
+	public void addCampaigns(Campaigns obj) {
+		if (campaigns == null) {
+			campaigns = new java.util.ArrayList<Campaigns>();
+		}
+		campaigns.add(obj);
+	}
 	/**
 	 * @generated
 	 */	
-	public void setGradeID(Integer newVal) {
-		this.gradeID = newVal;
+	public void setCampaigns(java.util.List<Campaigns> newVal) {
+		this.campaigns = newVal;
 	}
+
 	/**
 	 * @generated
 	 */		
@@ -92,7 +99,7 @@ public class Grade extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
-		if (GRADEID.equals(propertyName)) return getGradeID();
+		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
 		return super.getProperty(propertyName);
 	}
 	
@@ -103,7 +110,7 @@ public class Grade extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (GRADEID.equals(propertyName)) setGradeID((Integer)newValue); else
+		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -115,8 +122,8 @@ public class Grade extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (GRADEID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+		if (CAMPAIGNS.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, Campaigns.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -128,7 +135,7 @@ public class Grade extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return Grade.class;
-		if (GRADEID.equals(propertyName)) return Grade.class;
+		if (CAMPAIGNS.equals(propertyName)) return Grade.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -142,7 +149,7 @@ public class Grade extends ModelBase {
 		Grade objT = (Grade)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
-		if (! SmartEquals(getGradeID(), objT.getGradeID()))
+		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
 			return false;
 		return true;
 	}			
