@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="412" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="412" height="346" showCloseButton="false" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
@@ -41,65 +41,159 @@
 	}
 	
 	private function handleLoadFileComplete(event:Event):void {
-		fileReference=event.target as FileReference;
-		var data:ByteArray=fileReference["data"];
+	}
 		
-		loader=new Loader();
-		loader.loadBytes(data);
-		loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoaderComplete);
-	}
-	
-	private function handleLoaderComplete(event:Event):void {
-		if (event.target != null) {
-			
-		}
-	}
-	
 	private function handleIOError(event:IOErrorEvent):void {
 		if (event.target != null) {
 			
 		}
 	}
 	
-	private function handleSelectLocalFile(evt:Event):void {
+	private function handleSelectChargeDefinitionsFile(evt:Event):void {
 		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
-		
+		uploadFile("ChargeDefinitions");
+	}
+	
+	private function handleSelectContactsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Contacts");
+	}
+	
+	private function handleSelectCopierDefinitionsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("CopierDefinitions");
+	}
+
+	private function handleSelectCustomerLogsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("CustomerLogs");
+	}
+	
+	private function handleSelectCustomerFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Customers");
+	}
+
+	private function handleSelectInvoicesFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Invoices");
+	}
+	
+	private function handleSelectJobsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Jobs");
+	}
+	
+	private function handleSelectPressDefinitionsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("PressDefinitions");
+	}
+
+	private function handleSelectPriceListsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("PriceLists");
+	}
+
+	private function handleSelectStockDefinitionsFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("StockDefinitions");
+	}
+
+	private function handleSelectTaxTablesFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("TaxTables");
+	}
+
+	private function uploadFile(fileType:String):void {
 		var urlVariables:URLVariables = new URLVariables();
-		urlVariables.name = "Customers";
-		urlVariables.shortDescription = "Customers";
+		urlVariables.importType = fileType;
 		servletTarget.data = urlVariables;
 		servletTarget.method = URLRequestMethod.POST;
-		fileReference.upload(servletTarget);
+		fileReference.upload(servletTarget);		
 	}
 	
-	private function handleCancelLocalFile(evt:Event):void {
+	private function handleCancelFile(evt:Event):void {
 		
 	}
 	
-	private function doImport():void {
+	private function doImport(listener:Function):void {
 		fileReference = new FileReference();
-		fileReference.addEventListener(Event.SELECT, handleSelectLocalFile);
-		fileReference.addEventListener(Event.CANCEL, handleCancelLocalFile);
+		fileReference.addEventListener(Event.SELECT, listener);
+		fileReference.addEventListener(Event.CANCEL, handleCancelFile);
 		fileReference.browse();
 	}
+	private function doImportCustomers():void {
+		doImport(handleSelectCustomerFile);
+	}
+	
+	private function doImportChargeDefinitions():void {
+		doImport(handleSelectChargeDefinitionsFile);
+	}
+
+	private function doImportContacts():void {
+		doImport(handleSelectContactsFile);
+	}
+	
+	private function doImportCustomerLogs():void {
+		doImport(handleSelectCustomerLogsFile);
+	}
+	
+	private function doImportInvoices():void {
+		doImport(handleSelectInvoicesFile);
+	} 
+
+	private function doImportJobs():void {
+		doImport(handleSelectJobsFile); 
+	}
+	
+	private function doImportPressDefinitions():void {  
+		doImport(handleSelectPressDefinitionsFile);
+	}
+	
+	private function doImportPriceLists():void {
+		doImport(handleSelectPriceListsFile);
+	}
+	
+	private function doImportCopierDefinitions():void {
+		doImport(handleSelectCopierDefinitionsFile);
+	}
+
+	private function doImportStockDefinitions():void {
+		doImport(handleSelectStockDefinitionsFile);
+	}
+	
+	private function doImportTaxTables():void {
+		doImport(handleSelectTaxTablesFile);
+	}
+
 ]]>        
 </mx:Script>
                              
 
                              
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:Button label="Import Customers" id="select_button" enabled="true" click="doImport();"  width="175" x="10" y="70"/>
-		<mx:Button label="Import Charge Definitions" id="select_button0" enabled="true" click="doImport();"  width="175" x="10" y="10"/>
-		<mx:Button label="Import Contacts" id="select_button1" enabled="true" click="doImport();"  width="175" x="10" y="40"/>
-		<mx:Button label="Import Customer Logs" id="select_button2" enabled="true" click="doImport();"  width="175" x="10" y="100"/>
-		<mx:Button label="Import Invoices" id="select_button3" enabled="true" click="doImport();"  width="175" x="10" y="130"/>
-		<mx:Button label="Import Jobs" id="select_button4" enabled="true" click="doImport();"  width="175" x="10" y="160"/>
-		<mx:Button label="Import Press Definitions" id="select_button5" enabled="true" click="doImport();"  width="175" x="10" y="190"/>
-		<mx:Button label="Import Price Lists" id="select_button6" enabled="true" click="doImport();"  width="175" x="10" y="220"/>
-		<mx:Button label="Import Price Lists" id="select_button7" enabled="true" click="doImport();"  width="175" x="193" y="10"/>
-		<mx:Button label="Import Stock Definitions" id="select_button8" enabled="true" click="doImport();"  width="175" x="193" y="40"/>
-		<mx:Button label="Import Tax Tables" id="select_button9" enabled="true" click="doImport();"  width="175" x="193" y="70"/>
+		<mx:Button label="Import Customers" id="import_customers" enabled="true" click="doImportCustomers();"  width="175" x="10" y="70"/>
+		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="175" x="10" y="10"/>
+		<mx:Button label="Import Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="175" x="10" y="40"/>
+		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="175" x="10" y="100"/>
+		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="175" x="10" y="130"/>
+		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="175" x="10" y="160"/>
+		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="175" x="10" y="190"/>
+		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="175" x="10" y="220"/>
+		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="175" x="193" y="10"/>
+		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="175" x="193" y="40"/>
+		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="175" x="193" y="70"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

@@ -6,7 +6,7 @@ import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.StockDefinition;
 
-public class StockDefinitionMapper {
+public class StockDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
 		StockDefinition stockDefinition = new StockDefinition();
 		

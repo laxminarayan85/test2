@@ -14,7 +14,7 @@
 
 <mx:Script>
                                    
-<![CDATA[
+<![CDATA[ 
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.data.Account;    
