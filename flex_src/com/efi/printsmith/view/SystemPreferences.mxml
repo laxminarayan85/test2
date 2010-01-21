@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationPolicy="all" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.vo.*"
 width="800" height="678" title="Preferences"
  label="Preferences" name="systempreferences" xmlns:ns1="com.efi.printsmith.components.*">
  	<mx:states>
@@ -840,7 +840,7 @@ width="800" height="678" title="Preferences"
 
 		if (preferencesAccounting.useSkipJackProcessor==true){
 			CreditCardProcessor.selectedValue = "Use SkipJack Processor";
-
+			this.currentState="SkipJackSetup"
 			if (preferencesAccounting.skipJackMode==0){
 				SkipJackType.selectedValue = "Normal"; 
 			}
@@ -850,8 +850,6 @@ width="800" height="678" title="Preferences"
 			if (preferencesAccounting.skipJackMode==2){
 				SkipJackType.selectedValue = "Development"; 
 			}
-			this.txtMerchantId.text = "";
-			this.txtMerchantKey.text = "";
 
 			this.txtSkipJackSerial.text = preferencesAccounting.serialNumber;
 			this.txtSkipJackPort.text = preferencesAccounting.portNumber;
@@ -859,33 +857,23 @@ width="800" height="678" title="Preferences"
 			
 			this.chkCreditCardUseAddressValidation.selected = preferencesAccounting.useAddressValidation; 
 			this.chkCreditCardPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidationInfo;
+			this.currentState="";
 		} 
 		if (preferencesAccounting.useEfsProcessor==true){
 			CreditCardProcessor.selectedValue = "Use EFS Processor";
+			this.currentState="EfsSetup";
 			this.txtMerchantId.text = preferencesAccounting.merchantID;
 			this.txtMerchantKey.text = preferencesAccounting.merchantKey;
 
-			this.txtSkipJackSerial.text = "";
-			this.txtSkipJackPort.text = "";
-			this.txtSkipJackDev.text = "";
-
 			this.chkCreditCardUseAddressValidation.selected = preferencesAccounting.useAddressValidation; 
 			this.chkCreditCardPromptUserForValidationInformation.selected = preferencesAccounting.promptUserForValidationInfo;
+			this.currentState="";
 		} 
 		if (preferencesAccounting.useObsoleteDropFolder==true){
 			CreditCardProcessor.selectedValue = "Use Obsolete Drop Folder";
+			this.currentState="DropFolderSetup";
 			this.txtCreditCardDropFolder.text = preferencesAccounting.creditCardDropFolder;
-
-			this.txtMerchantId.text = "";
-			this.txtMerchantKey.text = "";
-
-			this.txtSkipJackSerial.text = "";
-			this.txtSkipJackPort.text = "";
-			this.txtSkipJackDev.text = "";
-
-			this.chkCreditCardUseAddressValidation.selected = false; 
-			this.chkCreditCardPromptUserForValidationInformation.selected = false;
-
+			this.currentState="";
 		} 
 	}
 	private function mapFromPreferencesEstimatingData():void {
@@ -2779,7 +2767,7 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information." textAlign="right"/>
 				
 			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect">
+			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect" creationPolicy="all">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
