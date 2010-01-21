@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="300"
+				height="128"
+				defaultButton="{ok_btn}"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="PopUpManager.removePopUp(this);"
+				title="Select a Job Method:"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off">
+
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.events.AccountPickerSelectEvent;
+			import com.efi.printsmith.data.Contact;
+			import com.efi.printsmith.data.Account;
+			import com.efi.printsmith.view.EditContact;
+			import com.efi.printsmith.view.EditCustomer;
+			import com.efi.printsmith.view.StockDefinitions;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var pricingMethods:ArrayCollection=new ArrayCollection();
+
+			private function handleLoadResult(event:ResultEvent):void
+			{
+				pricingMethods=event.result as ArrayCollection;
+			}
+
+			private function handleFault(ev:FaultEvent):void
+			{
+
+			}
+
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+				dataService.getAll("PricingMethod");
+			}
+
+			private function newAccount():void
+			{
+				var newEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTNEWACCOUNT, new Account());
+				dispatchEvent(newEvent);
+				PopUpManager.removePopUp(this);
+			}
+
+			private function cancelPicker():void
+			{
+				var cancelEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.CANCELSELECTACCOUNT, null);
+				dispatchEvent(cancelEvent);
+				PopUpManager.removePopUp(this);
+			}
+
+			private function doOK():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			private function doCancel():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+
+
+
+	<mx:Canvas width="272"
+			   height="82"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+		<mx:Button id="ok_btn"
+				   click="doOK()"
+				   x="104"
+				   y="50"
+				   label="OK"
+				   width="75"/>
+		<mx:Button id="cancel_btn"
+				   click="doCancel()"
+				   x="187"
+				   y="50"
+				   label="Cancel"
+				   width="75"/>
+		<mx:ComboBox x="92"
+					 y="10"
+					 id="pricingMethodCombo"
+					 dataProvider="{pricingMethods}"
+					 labelField="name">
+		</mx:ComboBox>
+		<mx:Text x="10"
+				 y="12"
+				 text="Job Method:"
+				 height="20"/>
+	</mx:Canvas>
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>

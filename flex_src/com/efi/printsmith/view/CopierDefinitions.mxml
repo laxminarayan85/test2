@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+width="1080" height="755" title="Copier Definitions"
+ label="Copier Definitions" name="Copier Definitions" fontSize="9">
+	<mx:states>
+		<mx:State name="Large Format">
+			<mx:SetProperty target="{colorcheck}" name="selected" value="false"/>
+			<mx:SetProperty target="{colorcheck}" name="enabled" value="false"/>
+			<mx:SetProperty target="{blackwhitecheck}" name="enabled" value="false"/>
+			<mx:SetProperty target="{blackwhitecheck}" name="selected" value="false"/>
+			<mx:SetProperty target="{label1}" name="text" value="Length/Minute:"/>
+			<mx:RemoveChild target="{label2}"/>
+			<mx:RemoveChild target="{MaxSize}"/>
+			<mx:RemoveChild target="{minSize}"/>
+			<mx:RemoveChild target="{label3}"/>
+			<mx:SetProperty target="{label4}" name="text" value="Machine Cost Per Sq. Unit:"/>
+			<mx:SetProperty target="{label4}" name="x" value="456"/>
+			<mx:SetProperty target="{label4}" name="y" value="341"/>
+		</mx:State>
+	</mx:states>
+ 
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+</mx:RemoteObject>
+	<mx:RemoteObject id="chargeDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Producer id="producer" destination="copydefinitions"/>
+	<mx:Consumer id="consumer" destination="copydefinitions" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.data.Charge;
+	import com.efi.printsmith.pages.DefaultCopierPicker;
+	
+	import com.efi.printsmith.data.PreferencesSystem;
+	
+	import com.efi.printsmith.data.PriceListBase;
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.WasteChart;
+	import com.efi.printsmith.data.CopierDefinition;
+
+	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+
+	[Bindable]                   
+    private var enableSave:Boolean = true;
+    [Bindable]
+    private var copy:Boolean = false;
+    [Bindable]
+    private var stock:Boolean = false; 
+    [Bindable]
+	private var waste:Boolean = false;
+	
+    [Bindable]                                         
+    private var priceList:PriceList;  
+                         
+	[Bindable]                                         
+    private var copierDefinition:CopierDefinition;
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
+	[Bindable]                                
+	private var copierDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var charges:ArrayCollection=new ArrayCollection();
+
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+		dataService.getAll("CopierDefinition");
+		chargeDataService.getAll("Charge");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		
+	    copierDefinition = new CopierDefinition();
+	    copierDefinition.largeFormat = false; 
+	}      
+	                                                   						
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+	public function setPriceList(price:PriceListBase): void {
+//	 	if (copy){
+//	 		copierDefinition.copierPriceList = price as PriceList;
+//	 		copy = false;
+//	 	}
+//	 	if (stock){
+//	 		copierDefinition.stockPriceList = price as PriceList;
+//	 		stock= false;
+//	 	}
+//	 	if (waste){
+//	 		copierDefinition.wasteChart = price as WasteChart;
+//	 		waste= false;
+//	 	}
+	}   
+
+	private function doAddCopier():void {
+		dataService.addUpdate(copierDefinition);
+	}     
+
+	private function doAddCharge():void{
+		var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
+		chargePicker.charges = this.charges;
+		chargePicker.setStyle("borderAlpha", 0.9);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
+
+	}
+
+	private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
+	{
+		this.copierDefinition.charges=evt.chargeArray;
+	}
+
+	private function doDeleteCopier():void {         
+		dataService.deleteItem("CopierDefinition", copierDefinition.id);     
+	}
+
+	private function doCopierGridClick():void {
+		copierDefinition = dataGrid.selectedItem as CopierDefinition;
+	}
+	private function mapAccountData():void {
+		 //copierDefinition.copyDefID = CopierDefID;
+		 copierDefinition.name = Name.text;
+		 copierDefinition.machineName = MachineName.text;
+		 copierDefinition.outputDescrip = OutPutDescription.text;
+		 copierDefinition.productionLocation = ProductionLocation.text;
+		 copierDefinition.costCenter = CostCenter.text;
+		 copierDefinition.oemDeviceID = OEMDeviceID.text;
+		 copierDefinition.copyID = parseInt(copyID.text); 
+		 copierDefinition.costingCopy = CostingCopier.selected;
+		 copierDefinition.clickCost = parseInt(clickCost.text);
+		 copierDefinition.integratedDevice = IntegratedDevice.selected;
+		 copierDefinition.maxSize = MaxSize.text;
+		 copierDefinition.minSize= minSize.text;
+		 copierDefinition.maxWidth = maxWidthsize.text;
+		 copierDefinition.minWidth = minWidthsize.text;
+		 copierDefinition.monthlyLabor= parseInt(monthlyLabor.text);
+		 copierDefinition.copyMarkup= parseInt(copyMarkup.text);
+		 copierDefinition.tonerCopy = parseInt(tonerCopy.text);
+		 copierDefinition.laborCopy = parseInt(laborCopy.text);
+		 copierDefinition.daysOpen = parseInt(openDays.text);
+		 copierDefinition.developerCopy = parseInt(developerCopy.text);
+		 copierDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
+		 copierDefinition.hoursOpen = parseInt(openhours.text);
+		 copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
+		 /* copierDefinition.method = ' '; */
+		 copierDefinition.percentUsage = percentageUse.text;
+		 copierDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
+		 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
+		 copierDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
+		 copierDefinition.copyMinutes = parseInt(copyMinutes.text);
+		 
+		 copierDefinition.blackwhite = blackwhitecheck.selected;
+		 copierDefinition.color = colorcheck.selected;
+		 copierDefinition.largeFormat = largeformatCheck.selected;
+		 doCheckDefaultLargeFormat();
+
+	}
+	
+	private function doSave():void {
+	 
+		mapAccountData()
+		dataService.addUpdate(copierDefinition);
+	}       
+
+	private function doNew():void {
+	    copierDefinition = new CopierDefinition();
+	 	
+	}       
+
+	private function doDelete():void {
+		dataService.deleteItem("CopierDefinition",copierDefinition.id);
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		dataService.getAll("CopierDefinition");
+	}
+
+	private function handleLoadChargeResult(ev:ResultEvent):void
+	{
+		charges=ev.result as ArrayCollection;
+	}
+	
+	private function doCheckDefaultBW():void {
+    	
+	}
+	private function doCheckDefaultColor():void {
+    	
+	}
+	private function doCheckDefaultLargeFormat():void {
+    	if (largeformatCheck.selected == true){
+    		this.currentState = "Large Format";
+    	}else{
+    		this.currentState = "";
+    	}
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     copierDefinitionArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		}else{
+			this.btnExport.enabled = false;
+
+		}
+	}	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("CopierDefinition");
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+       
+	private function doCopyPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
+	    copy =  true;
+	   	}
+	private function doStockPriceList():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "PriceList";
+	    stock = true;
+	}
+
+	private function doWasteChart():void {
+		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.parentContainer = this;
+	    titleWindow.itemType = "WasteChart";
+	    waste = true;
+	}
+	
+	private function doDefaultCopiers():void {
+		var defaultCopierWindow:DefaultCopierPicker = DefaultCopierPicker(PopUpManager.createPopUp(this, DefaultCopierPicker, true));
+		defaultCopierWindow.setStyle("borderAlpha", 0.9);
+	}
+
+]]>
+                             
+</mx:Script>	
+	<mx:RadioButtonGroup id="PaperStyle"/>
+	<mx:Canvas x="0" y="0" width="100%" height="100%" horizontalScrollPolicy="off">
+		<mx:Label x="73" y="126" text="Name:" width="45" textAlign="right"/>
+		<mx:Label x="35" y="148" text="Machine Name:" textAlign="right"/>
+		<mx:DataGrid y="0" id="dataGrid" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="0">
+			<mx:columns>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="blackwhite" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
+				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
+				<mx:DataGridColumn headerText="Name" dataField="name"/>
+				<mx:DataGridColumn headerText="Machine" dataField="machineName"/>
+				<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="100"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Label x="13" y="170" text="Output Description:" textAlign="right"/>
+		<mx:Label x="9" y="192" text="Production Location:" textAlign="right"/>
+		<mx:Label x="48" y="214" text="Cost Center:" textAlign="right"/>
+		<mx:Label x="30" y="236" text="OEM Device ID:" textAlign="right"/>
+		<mx:TextInput x="126" y="124" width="200" id="Name" text="{copierDefinition.name}" height="20"/>
+		<mx:TextInput x="126" y="146" width="200" id="MachineName" text="{copierDefinition.machineName}" height="20"/>
+		<mx:TextInput x="126" y="168" width="200" id="OutPutDescription" text="{copierDefinition.outputDescrip}" height="20"/>
+		<mx:TextInput x="126" y="190" id="ProductionLocation" width="200" text="{copierDefinition.productionLocation}"  height="20"/>
+		<mx:TextInput x="126" y="212" id="CostCenter" width="200" text="{copierDefinition.costCenter}" height="20"/>
+		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oemDeviceID}" height="20"/>
+		<mx:Label x="346" y="126" text=" ID:"/>
+		<mx:TextInput x="379" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
+		<mx:CheckBox x="346" y="151" label="Costing Copier" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
+		<mx:CheckBox x="346" y="174" label="Integrated Device" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
+		<mx:HRule y="282" height="13" left="5" right="5"/>
+		<mx:Label x="63" y="389" text="Max Size:" id="label2"/>
+		<mx:Label x="66" y="411" text="Min Size:" id="label3"/>
+		<mx:TextInput x="126" y="387" id="MaxSize" text="{copierDefinition.maxSize}" height="20" width="71"/>
+		<mx:TextInput x="126" y="409" id="minSize" text="{copierDefinition.minSize}" height="20" width="71"/>
+		<mx:HRule y="480" height="6" left="5" right="5"/>
+		<mx:HRule y="644" height="12" left="5" right="5"/>
+		<mx:Button x="5" y="660" label="Stock Price List" click="doStockPriceList();" width="107"/>
+		<mx:Button x="120" y="660" label="Copier Price List" click="doCopyPriceList();" width="107"/>
+		<mx:Button x="235" y="660" label="Default Copiers" click="doDefaultCopiers();" width="107"/>
+		<mx:Button x="632" y="660" label="Save" click="doSave();" width="67"/>
+		<mx:Button x="557" y="660" label="New" click="doNew();" width="67"/>
+		<mx:Button x="482" y="660" label="Delete" click="doDelete();" width="67"/>
+		<mx:Button x="407" y="660" label="Export" width="67" id="btnExport"/>
+		<mx:Button x="533" y="157" label="Waste Chart" click="doWasteChart();"/>
+		<mx:Button x="534" y="127" label="Add Charges" click="doAddCharge();"/>
+		<mx:Label x="44" y="263" text="Printer Type: "/>
+		<mx:CheckBox x="126" y="261" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right"/>
+		<mx:CheckBox x="182" y="261" label="Color" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right"/>
+		<mx:CheckBox x="242" y="261" label="LargeFormat" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
+		<mx:Label x="355" y="206" text="Method:"/>
+		<mx:Label x="346" y="236" text="Sales cat:"/>
+		<mx:List x="414" y="203" height="21" id="method"></mx:List>
+		<mx:List x="414" y="233" height="21" id="salescat"></mx:List>
+		<mx:Label x="56" y="433" text="Max Width:"/>
+		<mx:Label x="59" y="455" text="Min Width:"/>
+		<mx:TextInput x="126" y="431" id="maxWidthsize" text="{copierDefinition.maxWidth}" height="20" width="71"/>
+		<mx:TextInput x="126" y="453" id="minWidthsize" text="{copierDefinition.minWidth}" height="20" width="71"/>
+		<mx:Label x="36" y="301" text="Copies/Minute:" id="label1"/>
+		<mx:Label x="10" y="323" text="Monthly Burden Rate:"/>
+		<mx:Label x="38" y="345" text="Monthly Labor:"/>
+		<mx:Label x="56" y="367" text="Click Cost:" height="16"/>
+		<mx:TextInput x="126" y="299" id="copyMinutes" text="{copierDefinition.copyMinutes}" height="20" width="71"/>
+		<mx:TextInput x="126" y="321" id="monthlyBurdenRate" text="{copierDefinition.monthlyBurdenRate}" height="20" width="71"/>
+		<mx:TextInput x="126" y="343" id="monthlyLabor" text="{copierDefinition.monthlyLabor}" height="20" width="71"/>
+		<mx:TextInput x="126" y="365" id="clickCost" text="{copierDefinition.clickCost}" height="20" width="71"/>
+		<mx:Label x="501" y="299" text="Open Hours /Day:"/>
+		<mx:TextInput x="605" y="297" id="openhours" text="{copierDefinition.hoursOpen}" width="94" height="20"/>
+		<mx:Label x="481" y="321" text="Monthly Maintenance:"/>
+		<mx:TextInput x="605" y="319" id="monthlyMaintenance" text="{copierDefinition.monthlyMaintenance}" width="94" height="20"/>
+		<mx:Label x="470" y="343" text="Machine Cost Per Copy:" id="label4"/>
+		<mx:Text x="605" y="341" id="machineCostperCopy" text = "{copierDefinition.machineCostPerCopy}" width="94" height="20"/>
+		<mx:Label x="229" y="299" text="Open Days/ Year:"/>
+		<mx:TextInput x="332" y="297" width="71" id="openDays" text= "{copierDefinition.daysOpen}" height="20"/>
+		<mx:Label x="228" y="321" text="Monthly Payment:"/>
+		<mx:TextInput x="332" y="319" width="71" id="monthlyPayment" text ="{copierDefinition.monthlyPayment}" height="20"/>
+		<mx:Label x="241" y="343" text= "% Time in Use:"/>
+		<mx:TextInput x="332" y="341" width="71" id="percentageUse" text = "{copierDefinition.percentUsage}" height="20"/>
+		<mx:Label x="214" y="365" text="Hourly Costing Rate:"/>
+		<mx:TextInput x="332" y="363" width="71" id="hourlyCostingRate" text="{copierDefinition.hourCostRate}" height="20"/>
+		<mx:Label x="257" y="387" text="Labor/Copy:"/>
+		<mx:Label x="256" y="409" text="Toner/Copy:"/>
+		<mx:Label x="234" y="431" text="Developer/Copy:"/>
+		<mx:Label x="249" y="453" text="Copy Markup:"/>
+		<mx:TextInput x="332" y="385" width="71" id="laborCopy" text ="{copierDefinition.laborCopy}" height="20"/>
+		<mx:TextInput x="332" y="407" width="71" id="tonerCopy" text ="{copierDefinition.tonerCopy}" height="20"/>
+		<mx:TextInput x="332" y="429" width="71" id="developerCopy"  text="{copierDefinition.developerCopy}" height="20"/>
+		<mx:TextInput x="332" y="451" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
+		<mx:Label x="43" y="574" text="Copy Markup:"/>
+		<mx:TextInput x="126" y="572" width="71" id="copyMarkup2" height="20"/>
+		<mx:Label x="40" y="596" text="Stock Markup:"/>
+		<mx:Label x="42" y="618" text="Side 2 Factor:"/>
+		<mx:TextInput x="126" y="594" width="71" id="stockMarkup" height="20"/>
+		<mx:TextInput x="126" y="616" width="71" id="side2Factor" height="20"/>
+		<mx:Label x="241" y="575" text="Stock Price is" height="14"/>
+		<mx:CheckBox x="238" y="594" label="Use Copier/Digital Stock Markup" id="copierDigitalStockmarkup"/>
+		<mx:Label x="234" y="617" text="Price 2 Sided by"/>
+		<mx:List x="325" y="572" height="22"></mx:List>
+		<mx:List x="325" y="614" height="22"></mx:List>
+		<mx:Button x="5" y="493" label="Edit Matrix"/>
+		<mx:CheckBox x="134" y="493" label="Matrix is Copy Cost" id="matrixcopycost"/>
+		<mx:CheckBox x="134" y="512" label="Matrix is Discount Table" id="matrixdiscount"/>
+		<mx:CheckBox x="134" y="532" label="Matrix is Step Table" id="matrixstep"/>
+		<mx:CheckBox x="344" y="493" label="Square Area for Run Size" id="squarerunsize"/>
+		<mx:CheckBox x="344" y="512" label="Square Are for Finish Size" id="squarefinishsize"/>
+		<mx:CheckBox x="344" y="532" label="Interpolate Matrix Values" id="interpolatematrix"/>
+		<mx:HRule y="557" height="7" left="5" right="5"/>
+	</mx:Canvas>
+<!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copierDefinition.wasteChart.name}"/>
+-->																						<!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copierDefinition.stockPriceList.name}"/>
+		<mx:Text x="459" y="805" id="copierPriceList" text="{copierDefinition.copierPriceList.name}"/>
+-->		
+</mx:Panel>

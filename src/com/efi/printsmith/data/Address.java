@@ -128,70 +128,70 @@ public class Address extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private City city;
+ 	@Basic
+	private String city;
 	/**
 	 * @generated
  	 */
-	public City getCity(){
+	public String getCity(){
 		return city; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCity(City newVal) {
+	public void setCity(String newVal) {
 		this.city = newVal;
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private State state;
+ 	@Basic
+	private String state;
 	/**
 	 * @generated
  	 */
-	public State getState(){
+	public String getState(){
 		return state; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setState(State newVal) {
+	public void setState(String newVal) {
 		this.state = newVal;
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Zip zip;
+ 	@Basic
+	private String zip;
 	/**
 	 * @generated
  	 */
-	public Zip getZip(){
+	public String getZip(){
 		return zip; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setZip(Zip newVal) {
+	public void setZip(String newVal) {
 		this.zip = newVal;
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Country country;
+ 	@Basic
+	private String country;
 	/**
 	 * @generated
  	 */
-	public Country getCountry(){
+	public String getCountry(){
 		return country; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCountry(Country newVal) {
+	public void setCountry(String newVal) {
 		this.country = newVal;
 	}
  	
@@ -237,10 +237,10 @@ public class Address extends ModelBase {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (STREET1.equals(propertyName)) setStreet1((String)newValue); else
 		if (STREET2.equals(propertyName)) setStreet2((String)newValue); else
-		if (CITY.equals(propertyName)) setCity((City)newValue); else
-		if (STATE.equals(propertyName)) setState((State)newValue); else
-		if (ZIP.equals(propertyName)) setZip((Zip)newValue); else
-		if (COUNTRY.equals(propertyName)) setCountry((Country)newValue); else
+		if (CITY.equals(propertyName)) setCity((String)newValue); else
+		if (STATE.equals(propertyName)) setState((String)newValue); else
+		if (ZIP.equals(propertyName)) setZip((String)newValue); else
+		if (COUNTRY.equals(propertyName)) setCountry((String)newValue); else
 		if (ZONE.equals(propertyName)) setZone((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -258,13 +258,13 @@ public class Address extends ModelBase {
 		if (STREET2.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (CITY.equals(propertyName)) 
-			return new Class<?>[] {City.class};		
+			return new Class<?>[] {String.class};		
 		if (STATE.equals(propertyName)) 
-			return new Class<?>[] {State.class};		
+			return new Class<?>[] {String.class};		
 		if (ZIP.equals(propertyName)) 
-			return new Class<?>[] {Zip.class};		
+			return new Class<?>[] {String.class};		
 		if (COUNTRY.equals(propertyName)) 
-			return new Class<?>[] {Country.class};		
+			return new Class<?>[] {String.class};		
 		if (ZONE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);

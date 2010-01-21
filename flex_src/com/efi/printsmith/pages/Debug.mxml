@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="386"
+				height="522"
+				defaultButton="{okButton}"
+				showCloseButton="true"
+				close="PopUpManager.removePopUp(this);"
+				title="Debug"
+				xmlns:text="flash.text.*">
+
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.data.ModelBase;
+			import com.efi.printsmith.query.RemoteRestriction;
+			import com.efi.printsmith.query.RemoteCriterion;
+			import com.efi.printsmith.data.ProductCode;
+			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.SalesCategory;
+			import com.efi.printsmith.data.PricingMethod;
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.ChargeCost;
+			import com.efi.printsmith.data.enums.ChargeCostMethod;
+			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.City;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+
+			private var salesCategoryNames:Array = ["Print", "Bindery", "PrePress", "HS Copy", "Color Copy", "Merch", "Mailing", "Misc...",
+													"Typesetting", "Graphics", "Large Format", "Outside Svcs", "Disc-Markups", "Postage", "Interest", "Shipping"];
+			private var pricingMethodNames:Array = ["Printing", "Roll-Fed", "B&W", "Color", "Large Format", "Blank", "List", "Charges Only", "Outside Services",
+													"Merchandise", "Lines & Inches", "Mailing"];
+			private var locationNames:Array = ["PrePress","Typesetting","Design","Proof","Proof OK'd","Camera","Stripping","Plate","Outside Prepress","PCX","Production",
+												"Staged - Print","Running - Print","Complete - drying","Staged - Copy","Running - Copy","Staged - Color Copy","Running - Color Copy",
+												"Outside Production","Complete","Bindery","Bindery in progress","Outside bindery","Boxing","Shipping","Pickup","Waiting for Approval",
+												"Waiting for Artwork","Warehouse","Mail Area"];
+			private var productCodeNames:Array = ["Booklet","Brochure","Newsletter","Rerun","Special"];
+			private var dimensionSizes:Array = ["2 x 3.5","5.5 x 8.5","7 x 10.25","8.5 x 11","8.5 x 14","11 x 17","11.5 x 17.5","12.5 x 19","16 x 21","17 x 22","17.5 x 22.5",
+												"17.5 x 23","17 x 28","19 x 25","23 x 29","23 x 35","24 x 38","25 x 38","35 x 45","33.1 x 46.8","23.4 x 33.1","16.5 x 23.4","11.7 x 16.5",
+												"8.3 x 11.7","5.8 x 8.3","4.1 x 5.8","2.9 x 4.1","2 x 2.9","1.5 x 2","1 x 1.5","39.4 x 55.7","27.8 x 39.3","19.7 x 27.8","13.9 x 19.7",
+												"9.8 x 13.9","6.9 x 9.8","4.9 x 6.9","3.5 x 4.9","9 x 12.8","6.3 x 9","4.5 x 6.3","4.3 x 8.7","4.125 x 9.5","3.875 x 8.875","24 x 36",
+												"48 x 48"]; 	
+			private var dimensionNames:Array = ["2 x 3.5","5.5 x 8.5","Monarch","8.5 x 11","8.5 x 14","11 x 17","11.5 x 17.5","12.5 x 19","Government Size","17 x 22","17.5 x 22.5",
+												"17.5 x 23","17 x 28","19 x 25","23 x 29","23 x 35","24 x 38","25 x 38","35 x 45","A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","A10",
+												"BO","B1","B2","B3","B4","B5","B6","B7","C4","C5","C6","DL","#10 Envelope","#9 Envelope","Small Poster","Large Poster"];
+
+			private function handleFault(ev:FaultEvent):void
+			{
+				
+			}
+			
+			private function handleSaveResult(ev:Event):void
+			{
+				
+			}
+			
+			private function doOK():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function doPopulateEstimators():void {
+				
+			}
+			
+			private function doPopulateProductCodes():void {
+				var productCode:ProductCode;
+				var i:int;
+				
+				for (i=0; i<productCodeNames.length; i++) {
+					productCode = new ProductCode();
+					productCode.name = productCodeNames[i];
+					productCode.id = 0;
+					dataService.addUpdate(productCode);
+				}
+			}
+			
+			private function doPopulateLocations():void {
+				var location:Location;
+				var i:int;
+				
+				for (i=0; i<locationNames.length; i++) {
+					location = new Location();
+					location.name = locationNames[i];
+					location.id = 0;
+					dataService.addUpdate(location);
+				}
+			}
+			private function doPopulateSalesCategories():void {
+				var salesCategory:SalesCategory;
+				var i:int;
+				
+				for (i=0; i<salesCategoryNames.length; i++) {
+					salesCategory = new SalesCategory();
+					salesCategory.name = salesCategoryNames[i];
+					salesCategory.id = 0;
+					dataService.addUpdate(salesCategory);
+				}				
+			}
+			
+			private function doPopulatePricingMethods():void {
+				var pricingMethod:PricingMethod;
+				var i:int;
+				
+				for (i=0; i<pricingMethodNames.length; i++) {
+					pricingMethod = new PricingMethod();
+					pricingMethod.name = pricingMethodNames[i];
+					pricingMethod.id = 0;
+					dataService.addUpdate(pricingMethod);
+				}								
+			}
+
+			private function doPopulateDimensions():void {
+				var dimension:Dimension;
+				var i:int;
+				
+				for (i=0; i<dimensionNames.length; i++) {
+					dimension = new Dimension();
+					dimension.name = dimensionNames[i];
+					dimension.type = "US - Imperial";
+					var dimensionString:String = dimensionSizes[i].toString();
+					dimension.width = parseFloat(dimensionString.substr(0, dimensionString.indexOf(" x ")));
+					dimension.height = parseFloat(dimensionString.substr(dimensionString.indexOf(" x ")+3, dimensionString.length+1));
+					dimension.id = 0;
+					dataService.addUpdate(dimension);
+				}				
+			}
+			
+			private function doDBQuery():void {
+				var criterion:RemoteRestriction = new RemoteRestriction();
+				criterion.setOperator(RemoteRestriction.eq);
+				criterion.setPropertyName("name");
+				criterion.setValue("Pittsburgh");
+				
+				var city:City = new City();
+				var criteriaArray:ArrayCollection = new ArrayCollection();
+				criteriaArray.addItem(criterion);
+				dataService.criteriaQuery(city.getRemoteObjectName(), criteriaArray);			
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Canvas width="100%"
+			   height="100%">
+		<mx:Button x="10"
+				   y="10"
+				   label="Populate Pricing Methods"
+				   click="doPopulatePricingMethods();" width="188"/>
+		<mx:Button x="10"
+				   y="40"
+				   label="Populate Sales Categories"
+				   click="doPopulateSalesCategories();" width="188"/>
+		<mx:Button x="10"
+				   y="70"
+				   label="Populate Locations"
+				   click="doPopulateLocations();" width="188"/>
+		<mx:Button x="10"
+				   y="100"
+				   label="Populate Product Codes"
+				   click="doPopulateProductCodes();" width="188"/>
+		<mx:Button x="10"
+				   y="130"
+				   label="Populate Stock Dimensions"
+				   click="doPopulateDimensions();" width="188"/>
+		<mx:Button x="10"
+				   y="160"
+				   label="DB Query"
+				   click="doDBQuery();" width="188"/>
+	</mx:Canvas>
+
+	<mx:ControlBar horizontalAlign="center">
+		<mx:Button label="OK"
+				   id="okButton"
+				   enabled="true"
+				   click="doOK();"/>
+		<mx:Button label="Cancel"
+				   click="PopUpManager.removePopUp(this);"/>
+	</mx:ControlBar>
+
+</mx:TitleWindow>

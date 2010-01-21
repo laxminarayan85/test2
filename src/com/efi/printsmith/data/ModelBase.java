@@ -39,6 +39,10 @@ abstract public class ModelBase {
 	@Column(name = "modified", nullable = true)
 	Date modified;
 	
+	@Basic
+	@Column(name = "previd", nullable = true)
+	String prevId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,7 +61,12 @@ abstract public class ModelBase {
 	public void setModified(Date modified) {
 		this.modified = modified;
 	}
-	
+	public String getPrevId() {
+		return prevId;
+	}
+	public void setPrevId(String prevId) {
+		this.prevId = prevId;
+	}
 //	public static final String GUID = "GUID";
 //	protected String guid;
 //	@Column(name = "guid", nullable = false, length = 36)

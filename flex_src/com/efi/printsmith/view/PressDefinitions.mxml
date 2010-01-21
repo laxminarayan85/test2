@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+width="912" height="722" title="Press Definitions"
+ label="Press Definitions" name="Press Definitions" fontSize="9">
+	<mx:states>
+		<mx:State name="RollFedState">
+			<mx:SetProperty target="{label1}" name="text" value="Max Roll Width:"/>
+			<mx:SetProperty target="{label2}" name="text" value="Min Roll Width:"/>
+			<mx:RemoveChild target="{label3}"/>
+			<mx:RemoveChild target="{SetupAddRun}"/>
+			<mx:RemoveChild target="{WorkTurn}"/>
+			<mx:RemoveChild target="{label4}"/>
+			<mx:SetProperty target="{Perfector}" name="enabled" value="false"/>
+			<mx:AddChild relativeTo="{label5}" position="before">
+				<mx:TextInput x="131" y="382" width="79" id="CutoffLength" text="{pressDefinition.cutoffLength}" height="20"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label5}" position="before">
+				<mx:Label x="44" y="384" text="CutOff Length:"/>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+</mx:RemoteObject>
+
+	<mx:Producer id="producer" destination="pressdefinitions"/>
+	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.data.PreferencesSystem;
+	import com.efi.printsmith.data.SpeedTable;
+	import com.efi.printsmith.data.PressDefinition;
+	import com.efi.printsmith.data.PriceListBase;
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.WasteChart;
+	import com.efi.printsmith.pages.DefaultPressPicker;
+	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+                   
+	[Bindable]
+    private var enableSave:Boolean = true;
+
+    private var press:Boolean = false;
+    private var stock:Boolean = false; 
+	private var waste:Boolean = false;
+	private var speedTable:Boolean = false;
+	
+	[Bindable]                                         
+     private var pressDefinition:PressDefinition;
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
+    
+	[Bindable]                                         
+     private var priceList:PriceList;  
+    [Bindable]                                         
+    private var wasteChart:WasteChart;  
+                                                                               	
+	[Bindable]                                
+	private var pressDefinitionArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+                                                                         
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+		dataService.getAll("PressDefinition");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+	    pressDefinition = new PressDefinition();
+		doPressType();
+	}      
+	                                                   	
+	public function loadPressDefinitions():void {   
+		dataService.getAll("PressDefinition");
+	}
+					
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "PressDefinition") {
+				loadPressDefinitions()
+			}
+		}
+	}
+                                  
+		          
+	private function doDelete():void {
+	    dataService.deleteItem("PressDefinition",pressDefinition.id);
+	 	
+	}  
+	private function doGet():void{
+	 	var titleWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
+		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.formIsEmpty = true;
+	}    
+	
+	private function doPressPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPressPriceList);
+	}
+	
+	private function doSpeedTable():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "SpeedTable";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectSpeedTable);
+	}
+	
+	private function doStockPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectStockPriceList);
+	}
+
+	private function doWasteChart():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "WasteChart";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
+	}
+	
+	public function setPressDef(pressdef:PressDefinition):void
+	{
+		this.pressDefinition = pressdef;
+		
+	}		                                       
+	
+	private function doPressType(): void {              
+	   if (pressDefinition.sheetFed ) {
+	   		pressDefinition.sheetFed = false;
+			pressDefinition.rollFed = true;
+			this.currentState = "";
+	   }
+	   else {
+	   		pressDefinition.sheetFed = true;
+	        pressDefinition.rollFed = false;
+			this.currentState = "RollFedState";
+	   }
+	}
+
+
+	private function doPressGridClick():void {
+		pressDefinition = dataGrid.selectedItem as PressDefinition;
+		doPressType();
+	}
+	private function mapAccountData():void {
+		 //pressDefinition.pressDefID = PressDefID;
+		 pressDefinition.name = Name.text;
+		 pressDefinition.machineName = MachineName.text;
+		 pressDefinition.outputDescrip = OutPutDescription.text;
+		 pressDefinition.productionLocation = ProductionLocation.text;
+		 pressDefinition.costCenter = CostCenter.text;
+		 pressDefinition.oemDeviceID = OEMDeviceID.text;
+		 pressDefinition.machineID = parseInt(MachineId.text) 
+		 pressDefinition.costingPress = CostingPress.selected;
+		 pressDefinition.integratedDevice = IntegratedDevice.selected;
+		 pressDefinition.maxPaperSize = MaxPaperSize.text;
+		 pressDefinition.minPaperSize = MinPaperSize.text;
+		 pressDefinition.laborRate = parseInt(LaborRate.text);
+		 pressDefinition.laborMarkup = parseInt(laborMarkup.text);
+		 pressDefinition.fixedWaste = parseInt(FixedWaste.text);
+		 pressDefinition.minLabor = parseInt(MinLabor.text);
+		 pressDefinition.setupMin = parseInt(SetupMin.text);
+		 pressDefinition.setupAddSig= parseInt(SetupAddSig.text);
+		 pressDefinition.workTurnSetup= parseInt(WorkTurn.text);
+		 pressDefinition.setupAddHead = parseInt(setupAddHead.text);
+		 pressDefinition.washupFee = parseInt(WashupFee.text);
+		 pressDefinition.addSigAddHead= parseInt(AddSigAddHead.text);
+		 pressDefinition.washupMin = parseInt(WashupMin.text);
+		 pressDefinition.washupPerFountain = parseInt(WashupTimeFountain.text);
+		 pressDefinition.gripEdge = parseInt(GripEdge.text);
+		 pressDefinition.perfector = Perfector.selected;
+		 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
+		 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
+		 pressDefinition.numberHeads= parseInt(NumberHeads.text);
+		 if (sheetFedRadio.selected == true)
+		 {
+			 pressDefinition.sheetFed = sheetFedRadio.selected;
+		 }else
+		 {
+			 pressDefinition.rollFed = rollFedRadio.selected;
+		 }
+	}
+	private function doSave():void {
+	 
+		mapAccountData()
+		dataService.addUpdate(pressDefinition);
+	}       
+	private function doNext():void {
+	 
+	  
+		doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex+1;
+		dataGrid.setFocus();
+		doPressGridClick();
+		                                        		
+	}       
+	private function doPrev():void {
+	  
+	 	doSave();  
+		dataGrid.selectedIndex = dataGrid.selectedIndex-1;
+		dataGrid.setFocus();
+		doPressGridClick();                          		
+	}       
+	private function doNew():void {
+	    pressDefinition = new PressDefinition();
+	 	
+	}       
+	private function handleSaveResult(ev:ResultEvent):void {
+    	loadPressDefinitions();
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     pressDefinitionArray = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		}else{
+			this.btnExport.enabled = false;
+
+		}
+	}	                                 
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+		loadPressDefinitions();
+		doNew();
+	}
+	public function setPriceList(price:PriceListBase): void {
+	 	if (press){
+	 		pressDefinition.pressPriceList = price as PriceList;
+	 		press = false;
+	 	}
+	 	if (stock){
+	 		pressDefinition.stockPriceList = price as PriceList;
+	 		stock= false;
+	 	}
+	 	if (waste){
+	 		pressDefinition.wasteChart = price as WasteChart;
+	 		waste= false;
+	 	}
+	 	if (speedTable){
+	 		pressDefinition.speedTable = price as SpeedTable;
+	 		speedTable=false; 
+	 	}
+	}
+	
+	private function doDefaultPresses():void {
+		var defaultPressWindow:DefaultPressPicker = DefaultPressPicker(PopUpManager.createPopUp(this, DefaultPressPicker, true));
+		defaultPressWindow.setStyle("borderAlpha", 0.9);
+	}
+
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+        
+    private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.wasteChart = evt.priceList as WasteChart;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectPressPriceList(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.pressPriceList = evt.priceList as PriceList;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.speedTable = evt.priceList as SpeedTable;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectStockPriceList(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			pressDefinition.stockPriceList = evt.priceList as PriceList;
+		} else {
+			this.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
+]]>
+                             
+</mx:Script>	
+	<mx:Label x="78" y="126" text="Name:" width="45" textAlign="right"/>
+	<mx:Label x="40" y="148" text="Machine Name:" textAlign="right"/>
+	<mx:DataGrid x="10" y="0" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="0">
+		<mx:columns>
+			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
+			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="rollFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
+			<mx:DataGridColumn headerText="Name" dataField="name"/>
+			<mx:DataGridColumn headerText="Machine" dataField="machineName"/>
+			<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="100"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+	<mx:Label x="18" y="170" text="Output Description:" textAlign="right"/>
+	<mx:Label x="14" y="192" text="Production Location:" textAlign="right"/>
+	<mx:Label x="51" y="214" text="Cost Center:" textAlign="right"/>
+	<mx:Label x="35" y="236" text="OEM Device ID:" textAlign="right"/>	
+	<mx:TextInput x="131" y="124" width="263" id="Name" text="{pressDefinition.name}" height="20"/>
+	<mx:TextInput x="131" y="146" width="263" id="MachineName" text="{pressDefinition.machineName}" height="20"/>
+	<mx:TextInput x="131" y="168" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}" height="20"/>
+	<mx:TextInput x="131" y="190" id="ProductionLocation" width="263" text="{pressDefinition.productionLocation}"  height="20"/>
+	<mx:TextInput x="131" y="212" id="CostCenter" width="263" text="{pressDefinition.costCenter}" height="20"/>
+	<mx:TextInput x="131" y="234" id="OEMDeviceID" width="263" text="{pressDefinition.oemDeviceID}" height="20"/>
+	<mx:Label x="402" y="126" text="Machine ID:"/>
+	<mx:TextInput x="477" y="124" width="146" id="MachineId" text="{pressDefinition.machineID}" editable="true"/>
+	<mx:CheckBox x="424" y="194" label="Costing Press" id="CostingPress" selected="{pressDefinition.costingPress}"/>
+	<mx:CheckBox x="424" y="174" label="Integrated Device" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
+	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
+	<mx:Label x="37" y="274" text="Max Paper Size:" textAlign="right" id="label1"/>
+	<mx:Label x="40" y="296" text="Min Paper Size:" textAlign="right" id="label2"/>
+	<mx:Label x="60" y="318" text="Labor Rate:" textAlign="right"/>
+	<mx:Label x="41" y="340" text="Minimum labor:" textAlign="right"/>
+	<mx:Label x="34" y="362" text="Setup (Minutes):" textAlign="right"/>
+	<mx:Label x="34" y="384" text="Setup Add'l Run:" textAlign="right" id="label3"/>
+	<mx:Label x="55" y="406" text="Setup Add'l Signatures:" textAlign="right"/>
+	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:" textAlign="right" id="label4"/>
+	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20" width="171"/>
+	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
+	<mx:TextInput x="131" y="316" width="76" id="LaborRate" text="{pressDefinition.laborRate}" height="20"/>
+	<mx:TextInput x="131" y="338" width="92" id="MinLabor" text="{pressDefinition.minLabor}" height="20"/>
+	<mx:TextInput x="131" y="360" width="92" id="SetupMin" text="{pressDefinition.setupMin}" height="20"/>
+	<mx:TextInput x="131" y="382" width="92" id="SetupAddRun" text="{pressDefinition.setupAddRun}" height="20"/>
+	<mx:TextInput x="187" y="404" id="SetupAddSig" text="{pressDefinition.setupAddSig}" height="20" width="82"/>
+	<mx:TextInput x="187" y="426" id="WorkTurn" text="{pressDefinition.workTurnSetup}" height="20" width="82"/>
+	<mx:Label x="231" y="340" text="(Minutes)"/>
+	<mx:Label x="231" y="362" text="# Heads:"/>
+	<mx:TextInput x="290" y="360" width="37" id="NumberHeads" text="{pressDefinition.numberHeads}" height="20"/>
+	<mx:TextInput x="493" y="272" width="106" id="AvgImpressPerhour" text="{pressDefinition.avgImpressPerHour}" height="20"/>
+	<mx:TextInput x="493" y="294" width="106" id="laborMarkup" text="{pressDefinition.laborMarkup}" height="20"/>
+	<mx:TextInput x="493" y="316" width="79" id="FixedWaste" text="{pressDefinition.fixedWaste}" height="20"/>
+	<mx:TextInput x="493" y="338" width="79" id="setupAddHead" text="{pressDefinition.setupAddHead}" height="20"/>
+	<mx:TextInput x="493" y="360" width="106" id="WashupFee" text="{pressDefinition.washupFee}" height="20"/>
+	<mx:TextInput x="493" y="382" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}" height="20"/>
+	<mx:Label x="610" y="406" text="(per wash)"/>
+	<mx:TextInput x="493" y="426" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20"/>
+	<mx:TextInput x="493" y="404" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20"/>
+	<mx:Label x="347" y="275" text="Avg. Impression per Hour:" textAlign="right"/>
+	<mx:Label x="408" y="297" text="Labor Markup:" textAlign="right"/>
+	<mx:Label x="415" y="319" text="Fixed Waste:"/>
+	<mx:Label x="389" y="341" text="Setup Add'l Head:" textAlign="right" id="label5"/>
+	<mx:Label x="416" y="363" text="Washup Fee:" textAlign="right"/>
+	<mx:Label x="335" y="385" text="Add'l Signatures Add'l Head:" textAlign="right"/>
+	<mx:Label x="394" y="407" text="Washup Minutes:" textAlign="right"/>
+	<mx:Label x="347" y="428" text="Washup Time per fountain:" textAlign="right"/>
+	<mx:HRule x="10" y="453" width="732" height="6" left="5" right="5"/>
+	<mx:HRule x="10" y="552" width="732" height="6" left="5" right="5"/>
+	<mx:Button x="11" y="467" label="Speed Table " width="97" click="doSpeedTable();"/>
+	<mx:Button x="380" y="467" label="Stock Price List" click="doStockPriceList();"/>
+	<mx:Button x="380" y="495" label="Press Price List" click="doPressPriceList();"/>
+	<mx:Button x="11" y="495" label="Waste Chart" click="doWasteChart();" width="97"/>
+	<mx:Button x="10" y="523" label="Add Charges" width="98"/>
+	<mx:CheckBox x="424" y="154" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
+	<mx:Label x="133" y="524" text="Grip Edge/Gap:"/>
+	<mx:TextInput x="223" y="522" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="104"/>
+	<mx:Text x="132" y="497" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195"/>
+	<mx:Text x="132" y="470" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195"/>
+	<mx:Text x="501" y="469" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>
+	<mx:Text x="502" y="497" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}" width="165"/>
+	<mx:Button x="171" y="566" label="Default Presses" click="doDefaultPresses()" width="107"/>
+	<mx:Button x="568" y="566" label="Save" click="doSave()" width="67"/>
+	<mx:Button x="493" y="566" label="New" click="doNew()" width="67"/>
+	<mx:Button x="418" y="566" label="Delete" click="doDelete()" width="67"/>
+	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
+	<mx:RadioButton x="548" y="154" label="Sheet Fed" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
+	<mx:RadioButton x="548" y="176" label="Roll Fed" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
+	<mx:Button x="343" y="566" label="Export" width="67" id="btnExport"/>
+</mx:Panel>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="412" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="Utilities" name="Utilities"
+    verticalScrollPolicy="off">
+<mx:Script>
+                                   
+<![CDATA[ 
+	import com.efi.printsmith.data.Contact;           
+    import com.efi.printsmith.data.Account;    
+    import com.efi.printsmith.view.EditContact;
+    import com.efi.printsmith.view.EditCustomer;    
+    import com.efi.printsmith.view.PressDefinitions;
+    import com.efi.printsmith.data.Charge;   
+    import com.efi.printsmith.events.PriceListPickerSelectEvent;
+         
+	import mx.managers.PopUpManager;     
+	import com.efi.printsmith.data.SpeedTable;  
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.PriceListBase; 
+	import com.efi.printsmith.data.WasteChart;                          
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	import flash.net.FileReference;
+	
+	private var fileReference:FileReference;
+	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
+	private var loader:Loader;
+	                                                       
+	private function init():void {   
+	}
+	
+	private function handleLoadFileComplete(event:Event):void {
+		fileReference=event.target as FileReference;
+		var data:ByteArray=fileReference["data"];
+		
+		loader=new Loader();
+		loader.loadBytes(data);
+		loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoaderComplete);
+	}
+	
+	private function handleLoaderComplete(event:Event):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	private function handleIOError(event:IOErrorEvent):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	private function handleSelectLocalFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		
+		var urlVariables:URLVariables = new URLVariables();
+		urlVariables.name = "Customers";
+		urlVariables.shortDescription = "Customers";
+		servletTarget.data = urlVariables;
+		servletTarget.method = URLRequestMethod.POST;
+		fileReference.upload(servletTarget);
+	}
+	
+	private function handleCancelLocalFile(evt:Event):void {
+		
+	}
+	
+	private function doImport():void {
+		fileReference = new FileReference();
+		fileReference.addEventListener(Event.SELECT, handleSelectLocalFile);
+		fileReference.addEventListener(Event.CANCEL, handleCancelLocalFile);
+		fileReference.browse();
+	}
+]]>        
+</mx:Script>
+                             
+
+                             
+	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:Button label="Import Customers" id="select_button" enabled="true" click="doImport();"  width="175" x="10" y="70"/>
+		<mx:Button label="Import Charge Definitions" id="select_button0" enabled="true" click="doImport();"  width="175" x="10" y="10"/>
+		<mx:Button label="Import Contacts" id="select_button1" enabled="true" click="doImport();"  width="175" x="10" y="40"/>
+		<mx:Button label="Import Customer Logs" id="select_button2" enabled="true" click="doImport();"  width="175" x="10" y="100"/>
+		<mx:Button label="Import Invoices" id="select_button3" enabled="true" click="doImport();"  width="175" x="10" y="130"/>
+		<mx:Button label="Import Jobs" id="select_button4" enabled="true" click="doImport();"  width="175" x="10" y="160"/>
+		<mx:Button label="Import Press Definitions" id="select_button5" enabled="true" click="doImport();"  width="175" x="10" y="190"/>
+		<mx:Button label="Import Price Lists" id="select_button6" enabled="true" click="doImport();"  width="175" x="10" y="220"/>
+		<mx:Button label="Import Price Lists" id="select_button7" enabled="true" click="doImport();"  width="175" x="193" y="10"/>
+		<mx:Button label="Import Stock Definitions" id="select_button8" enabled="true" click="doImport();"  width="175" x="193" y="40"/>
+		<mx:Button label="Import Tax Tables" id="select_button9" enabled="true" click="doImport();"  width="175" x="193" y="70"/>
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

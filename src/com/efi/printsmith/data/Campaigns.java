@@ -106,7 +106,6 @@ public class Campaigns extends ModelBase {
 	public void setGlobalCampaign(Boolean newVal) {
 		this.globalCampaign = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="534" title="Time Period" label="Time Period" 
+	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
+ 
+ 	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="getByPeriodOpen" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:Producer id="producer" destination="timeperiod"/>
+	<mx:Consumer id="consumer" destination="timeperiod" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>
+<![CDATA[
+	import com.efi.printsmith.data.Period;
+	import mx.controls.Text;
+
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+
+	[Bindable]
+	private var enableSave:Boolean = true;
+	[Bindable]
+	private var opgPeriodTypeValue:String = "opbWeekly";
+
+//Data field arrays
+	[Bindable]
+	private var timeperiodArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var DaysArray:ArrayCollection = new ArrayCollection();
+
+//Data view variables
+	[Bindable]
+	private var period:Period;
+
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();
+
+		setup();
+		
+	}
+	
+	private function setup():void{
+		dataService.getByPeriodOpen("Period")
+		fillDaysArray(DaysArray);
+	}
+	
+	private function messageHandler(message:IMessage):void{
+	}
+     
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+
+
+// Data Load Handlers
+	private function handleLoadResult(ev:ResultEvent):void {
+		timeperiodArray = ev.result as ArrayCollection;
+		if (timeperiodArray != null && timeperiodArray.length > 0)
+		{
+			period = timeperiodArray.getItemAt(0,0) as Period;
+		} else
+		{
+			period = new Period();
+			if (timeperiodArray == null)
+			{
+				timeperiodArray = new ArrayCollection()
+			}
+			timeperiodArray.addItem(period);
+		}
+	}
+
+// Data Save Handlers
+	private function handleSaveResult(ev:ResultEvent):void {
+    	dataService.getByPeriodOpen("Period");
+	}
+
+
+	private function doSave():void{
+	}
+	
+	private function doRevert():void{
+	}
+
+	private function doClosePeriod():void{
+		period.periodClosed = true;
+		dataService.addUpdate(period);
+		dataService.getByPeriodOpen("Period")
+	}
+	
+	private function doClickPeriod(selectedButton:RadioButton):void{
+		if (selectedButton.label == "Custom")
+		{
+			this.txtCustomFrom.enabled = true;
+			this.txtCustomTo.enabled = true;
+		} else {
+			this.txtCustomFrom.enabled = false;
+			this.txtCustomTo.enabled = false;
+		}
+	}
+	
+	private function fillDaysArray(fillArray:ArrayCollection):void {
+		var day:Object=new Object();
+		day.name="Sunday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Monday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Tuesday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Wednesday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Thursday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Friday";
+		fillArray.addItem(day);
+		day=new Object();
+		day.name="Saturday";
+		fillArray.addItem(day);
+		
+	}
+
+]]>
+                             
+</mx:Script>	
+	<mx:DateFormatter id="dateFormatter" formatString="HH:NN:SS A"/>
+
+	<mx:Button x="10" y="446" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
+		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="56" y="446" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+	</mx:Button>
+
+	<mx:Panel x="10" y="10" width="199" height="196" layout="absolute" title="Current Period">
+		<mx:Label x="17" y="11" text="Period #:"/>
+		<mx:TextArea x="76" y="10" id="txtPeriodNumber" height="19" width="63" text="{period.periodNumber}"/>
+		<mx:Label x="36" y="57" text="From:"/>
+		<mx:Label x="50" y="81" text="To:"/>
+		<mx:DateField x="76" y="55" id="txtCurrentFrom" text="{period.fromDate}"/>
+		<mx:DateField x="76" y="79" id="txtCurrentTo" text="{period.toDate}"/>
+		
+		<mx:Button x="19.5" y="124" id="cmdCloseCurrentPeriod" label="Close current period" click="doClosePeriod();"/>
+		
+	</mx:Panel>
+
+	<mx:Panel x="10" y="214" width="199" height="79" layout="absolute" title="Start Of Work Week">
+		<mx:Label x="10" y="10" text="Day:"/>
+		<mx:ComboBox x="42" y="8" id="cboStartOfWorkWeek" width="105" dataProvider="{DaysArray}" labelField="name"></mx:ComboBox>
+	</mx:Panel>
+
+	<mx:Panel x="213" y="10" width="199" height="283" layout="absolute" title="Period Type">
+		<mx:RadioButtonGroup id="opgPeriodType" selectedValue="{opgPeriodTypeValue}"/>
+		<mx:RadioButton x="10" y="5" label="Weekly" groupName="opgPeriodType" id="opbWeekly" click="doClickPeriod(opbWeekly);"/>
+		<mx:RadioButton x="10" y="30" label="Bi-Weekly" groupName="opgPeriodType" id="opbBiWeekly" click="doClickPeriod(opbBiWeekly);"/>
+		<mx:RadioButton x="10" y="60" label="Semi-Monthly" groupName="opgPeriodType" id="opSemiMonthly" click="doClickPeriod(opSemiMonthly);"/>
+		<mx:RadioButton x="10" y="90" label="Monthly" groupName="opgPeriodType" id="opbMonthly" click="doClickPeriod(opbMonthly);"/>
+		<mx:RadioButton x="10" y="120" label="Custom" groupName="opgPeriodType" id="opbCustom" click="doClickPeriod(opbCustom);"/>
+		<mx:Label x="34" y="147" text="From:"/>
+		<mx:Label x="48" y="170" text="To:"/>
+		<mx:DateField x="80" y="145" id="txtCustomFrom" text="{period.customfromDate}" enabled="false"/>
+		<mx:DateField x="80" y="168" id="txtCustomTo" text="{period.customtoDate}" enabled="false"/>
+	</mx:Panel>
+	<mx:Panel x="10" y="301" width="402" height="137" layout="absolute" title="Comment">
+		<mx:TextArea x="0" y="0" width="100%" height="100%" id="txtComment" text="Time periods control the grouping of Employee time cards, to start a new time period press the &quot;Close current period&quot; button"/>
+	</mx:Panel>
+
+</mx:TitleWindow>
+

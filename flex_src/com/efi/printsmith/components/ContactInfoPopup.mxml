@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+        height="364"
+        width="388"
+        showCloseButton="true"
+        verticalScrollPolicy="off"
+        horizontalScrollPolicy="off"
+        creationComplete="init()"
+        close="doCancel()"
+        defaultButton="{ok_button}" title="Edit Contact">
+        
+	<mx:Metadata>
+		[Event(name="SaveContactEvent", type="com.efi.events.SaveContactEvent")]
+ 	</mx:Metadata>
+	
+	<mx:RemoteObject id="comLinkDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadComLinks(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveComLinkResult(event)"/>
+	</mx:RemoteObject>
+	
+    <mx:Canvas width="360" height="294">
+    <mx:Label x="10" y="12" text="First:" width="67" textAlign="right"/>
+    <mx:TextInput x="85" y="10" width="265" id="first_name_edit" text="{contact.firstName}"/>
+    <mx:Label x="10" y="38" text="Last:" width="67" textAlign="right"/>
+    <mx:TextInput x="85" y="36" width="265" id="last_name_edit" text="{contact.lastName}"/>
+    <mx:Label x="10" y="64" text="Prefix:" width="67" textAlign="right"/>
+    <mx:Label x="193" y="64" text="Suffix:" width="56" textAlign="right"/>
+    <mx:TextInput x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
+    <mx:Label x="10" y="92" text="Job Title:" width="67" textAlign="right"/>
+    <mx:TextInput x="85" y="90" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
+    <mx:Label x="10" y="120" text="Salutation:" width="67" textAlign="right"/>
+    <mx:TextInput x="85" y="118" width="265" id="salutation_edit" text="{contact.salutation}"/>
+    <fc:AutoComplete id="comlink_combo" x="10" y="146" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
+    <mx:TextInput x="148" y="146" width="202" id="comlink_edit"/>
+    <mx:TextInput x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
+    	
+    <mx:Button x="192" y="262" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="275" y="262" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    </mx:Canvas>
+<mx:Script>
+	<![CDATA[
+		import com.efi.printsmith.data.ComLink;
+		import com.efi.printsmith.data.ComLinkType;
+	import com.efi.printsmith.events.SaveContactEvent;
+	import com.efi.printsmith.events.UpdateDataProviderEvent;
+	import com.efi.printsmith.data.Contact;
+    import com.efi.printsmith.data.City;
+	import com.efi.printsmith.data.Country;
+	import com.efi.printsmith.data.State;
+	import com.efi.printsmith.data.Zip;
+	import com.efi.printsmith.data.ModelBase;
+	
+	import mx.collections.ArrayCollection;
+	import mx.managers.PopUpManager;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]                                         
+	private var contact:Contact ;
+
+	[Bindable]
+	public var comLinkDataProvider:ArrayCollection = null;
+	    
+    private var originalContact:Contact = null;
+	
+	private function init():void {
+		comLinkDataService.getAll("ComLinkType");
+		if (contact.comLinks == null)
+			contact.comLinks = new ArrayCollection();
+		
+	}      
+		
+ 	private function itemExists(list:ArrayCollection, item:Object):Boolean {
+		var i:int;
+		
+		for (i=0; i<list.length; i++) {
+			if (list.getItemAt(i).name == item.name) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function handleLoadComLinks(ev:ResultEvent):void {
+		var	selectedItem:String = comlink_combo.selectedItem as String;
+	 	comLinkDataProvider = ev.result as ArrayCollection;
+		if (selectedItem != null){
+	 		comlink_combo.selectedIndex = findItem (selectedItem,comLinkDataProvider);
+	 	}
+	}   
+
+	private function handleSaveComLinkResult(ev:ResultEvent):void {
+		comLinkDataService.getAll("ComLinkType");
+	}      
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+ 	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+   
+	public function setContact(addr:Contact):void {
+		this.contact = addr;
+		originalContact = addr;
+		if (this.contact.comLinks != null){
+			var comLink:ComLink = this.contact.comLinks.getItemAt(0) as ComLink
+			comlink_edit.text = comLink.value;
+		}
+		
+	}
+	
+	public function getContact():Contact {
+		return this.contact;
+	}
+	
+	private function focusOutComLink(): void{                             
+		var comLinkType:ComLinkType;
+		var result:Boolean;
+		
+		if (comlink_combo.typedText != null && comlink_combo.typedText != "" && comlink_combo.selectedIndex == -1) {
+			var item:int = findItem(comlink_combo.typedText, comLinkDataProvider);
+			if (item == -1) {
+				comLinkType = new ComLinkType();
+				comLinkType.type = comlink_combo.text;
+				comLinkDataService.addUpdate(comLinkType);
+			}
+			else {
+				comlink_combo.selectedItem = item;
+			}
+		
+		}
+		var comLinks:ArrayCollection = contact.comLinks;
+		if (comLinks == null) {
+			comLinks = new ArrayCollection();
+			if (comLink == null) {
+				comLink = new ComLink();
+			}
+		}
+		if (comLink == null) {
+				comLink = new ComLink();
+			}
+		if (comLinks.length > 0){
+			var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
+			if (comLink == null) {
+				comLink = new ComLink();
+			}
+			if (comlink_combo.selectedItem != null){
+			comLinkType = comlink_combo.selectedItem as ComLinkType;
+			if (comLinkType.type != null)
+				comLink.type = comLinkType.type;
+			contact.comLinks.setItemAt(comLink, 0);
+			}
+		
+		}
+		
+		
+	}
+	
+	private function doCancel():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doOK():void {
+		contact.firstName = first_name_edit.text;
+		contact.lastName = last_name_edit.text;
+		contact.jobTitle = job_title_edit.text;
+		contact.suffix = suffix_edit.text;
+		contact.prefix = prefix_edit.text;
+		contact.salutation = salutation_edit.text;
+		var comLinks:ArrayCollection = contact.comLinks;
+		if (comLinks == null) {
+			comLinks = new ArrayCollection();
+			
+		}
+		if (comLink == null) {
+				comLink = new ComLink();
+			}
+		else{
+			if (comLinks.length >=0){
+				var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
+				if (comLink == null) {
+					comLink = new ComLink();
+				}
+			}
+		}
+		if (comlink_combo.selectedItem != null){
+			var comLinkType:ComLinkType = comlink_combo.selectedItem as ComLinkType;
+			if (comLinkType.type != null)
+				comLink.type = comLinkType.type;
+			
+			comLink.value = comlink_edit.text;
+			if (contact.comLinks.length == 0)
+				contact.comLinks.addItem(comLink)
+			else
+				contact.comLinks.setItemAt(comLink, 0);
+		
+		}
+		
+		var eventObj:SaveContactEvent = new SaveContactEvent("SaveContactEvent", contact);
+		dispatchEvent(eventObj);
+		PopUpManager.removePopUp(this);
+	}
+
+	]]>
+</mx:Script>
+    
+</mx:TitleWindow>

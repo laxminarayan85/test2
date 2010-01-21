@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="818" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" title="Stock Definition" label="Stock Definition" name="Stock Definition">
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="stockChangesDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockChangesResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGroupResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="vendorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadVendor(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveVendorResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockGradeDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGrade(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGradeResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockColorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockColor(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockColorResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockGenericColorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGenericColor(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGenericColorResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockFinishDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockFinish(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockFinishResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dimensionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:StringValidator id="stockDefinitionNameValidator" source="{stockName}" property="text" minLength="2" required="true"/>
+
+	<mx:Producer id="producer" destination="stockdefinitions"/>
+	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.data.PressDefinition;
+	import com.efi.printsmith.data.StockDefinition;
+	import com.efi.printsmith.data.StockChanges;
+	import com.efi.printsmith.data.Account;
+	import com.efi.printsmith.data.PreferencesSystem;
+
+	import com.efi.printsmith.data.StockGroup;
+	import com.efi.printsmith.data.StockGrade;
+	import com.efi.printsmith.data.StockColors;
+	import com.efi.printsmith.data.GenericColors;
+	import com.efi.printsmith.data.StockFinish;
+	import com.efi.printsmith.data.StockForest;
+	import com.efi.printsmith.data.Vendor;
+		
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.PaperPrice;
+	import com.efi.printsmith.data.PriceListBase;
+
+	import com.efi.printsmith.events.StockPickerSelectEvent;
+	import com.efi.printsmith.events.AccountPickerSelectEvent;
+	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;
+                   
+	[Bindable]                                         
+    private var enableSave:Boolean = true;
+
+	[Bindable]                                         
+    private var priceList:PaperPrice;  
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
+
+	[Bindable]                                         
+	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+                         
+	[Bindable]                                         
+	private var stockDefinitions:StockDefinition;
+	
+	[Bindable]                                         
+	private var stockChange:StockChanges;
+	[Bindable]                                         
+	private var account:Account;
+	
+	[Bindable]
+	private var dimensions:ArrayCollection=new ArrayCollection();
+
+	[Bindable]                                
+    private var stockChanges:ArrayCollection = new ArrayCollection();   
+
+	[Bindable]
+    private var stockColor:ArrayCollection = new ArrayCollection();   
+	[Bindable]      
+    private var stockGroup:ArrayCollection = new ArrayCollection();   
+	[Bindable]      
+    private var stockGrade:ArrayCollection = new ArrayCollection();   
+	[Bindable]                                
+    private var stockFinish:ArrayCollection = new ArrayCollection();   
+	[Bindable] 
+    private var stockForest:ArrayCollection = new ArrayCollection();   
+	[Bindable]                                
+    private var stockVendor:ArrayCollection = new ArrayCollection();   
+	[Bindable]                                
+	private var stockGenericColor:ArrayCollection = new ArrayCollection();   
+
+	[Bindable]                                
+	private var stockUom:ArrayCollection = new ArrayCollection();   
+	
+	[Bindable]                                
+	private var stockUnits:ArrayCollection = new ArrayCollection();   
+	
+	[Bindable]
+	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
+	
+    private var formIsValid:Boolean = false;
+    
+    private var focussedFormControl:DisplayObject;
+                                                                         
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();
+		stockDefinitions = new StockDefinition;
+	    loadUomArray();
+	    loadUnitsArray();
+		loadStockDefinitions();
+		loadStockChanges();
+	    loadStockGroup();
+	    loadStockVendor();
+	    loadStockGrade();
+	    loadStockColor();
+	    loadStockGenericColor();
+	    loadStockFinish();
+	    loadPressDefinition();
+		loadDimensions();
+		doGet(); 
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+
+		
+	}      
+
+	private function loadUnitsArray():void {
+		
+		var Envelope:Object = new Object;
+		Envelope.name = "Envelope"
+		stockUnits.addItem(Envelope);
+
+		var Sheet:Object = new Object;
+		Sheet.name = "Sheet Stock"
+		stockUnits.addItem(Sheet);
+
+		var Roll:Object = new Object;
+		Roll.name = "Roll Stock"
+		stockUnits.addItem(Roll);
+
+		var Large:Object = new Object;
+		Large.name = "Large Format"
+		stockUnits.addItem(Large);
+
+		var Rigid:Object = new Object;
+		Rigid.name = "Rigid Substrate"
+		stockUnits.addItem(Rigid);
+	}
+
+	public function setPriceList(price:PriceListBase): void {
+	 	this.priceList = price as PaperPrice;
+	 	stockDefinitions.defaultPriceList = price as PaperPrice;
+	}
+	
+	private function doPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PaperPrice";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	}
+	
+    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
+ 		if (evt.priceList != null) {
+			stockDefinitions.defaultPriceList = evt.priceList as PaperPrice;
+		} else {
+			stockDefinitions.defaultPriceList = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}     	
+    }
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
+
+	private function loadUomArray():void {
+		
+		var Caliper:Object = new Object;
+		Caliper.name = "Caliper"
+		stockUom.addItem(Caliper);
+
+		var Microns:Object = new Object;
+		Microns.name = "Microns"
+		stockUom.addItem(Microns);
+
+		var Points:Object = new Object;
+		Points.name = "Points"
+		stockUom.addItem(Points);
+
+		var Mils:Object = new Object;
+		Mils.name = "Mils"
+		stockUom.addItem(Mils);
+
+		var Thous:Object = new Object;
+		Thous.name = "Thous"
+		stockUom.addItem(Thous);
+
+		var Plies:Object = new Object;
+		Plies.name = "Plies"
+		stockUom.addItem(Plies);
+
+		var Millimeters:Object = new Object;
+		Millimeters.name = "Millimeters"
+		stockUom.addItem(Millimeters);
+		
+	}
+	
+	public function setStockDefinition(stockDefinition:StockDefinition):void
+	{
+		if (stockDefinition != null)
+		{
+			stockDefinitions = stockDefinition;
+			mapFromStockDefinitionData();
+		} else {
+	    	stockDefinitions = new StockDefinition();
+	    	mapFromStockDefinitionData();
+		}
+		
+	    stockChange = new StockChanges();
+	    
+	     loadStockChanges();
+	  /*  loadStockGroup();
+	    loadStockVendor();
+	    loadStockGrade();
+	    loadStockColor();
+	    loadStockGenericColor();
+	    loadStockFinish();
+	    loadPressDefinition(); */
+	    
+		standardItemCheckEvent();
+	}			
+	                                                   	
+	public function loadStockDefinitions():void {   
+		dataService.getAll("StockDefinition");
+	}
+	
+	public function loadStockChanges():void {
+		stockChangesDataService.getAll("StockChanges");
+	}
+	
+	public function loadDimensions():void {
+		dimensionDataService.getAll("Dimension");
+	}
+	
+	public function loadPressDefinition():void {   
+	    pressDefinitionDataService.getAll("PressDefinition");
+	}
+
+	public function loadStockGrade():void {   
+	    stockGradeDataService.getAll("StockGrade");
+	}
+
+	public function loadStockGroup():void {   
+	    stockGroupDataService.getAll("StockGroup");
+	}
+
+	public function loadStockColor():void {   
+	    stockColorDataService.getAll("StockColors");
+	}
+
+	public function loadStockGenericColor():void {   
+	    stockGenericColorDataService.getAll("GenericColors");
+	}
+
+	public function loadStockVendor():void {   
+	    vendorDataService.getAll("Vendor");
+	}
+
+	public function loadStockFinish():void {   
+	    stockFinishDataService.getAll("StockFinish");
+	}
+					
+	private function messageHandler(message:IMessage):void
+	{
+	}
+
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+
+
+	private function findItemById(name:int, array:ArrayCollection):String {
+		var retVal:String;
+		retVal = "";
+		if (name > -1) {
+			retVal = array.getItemAt(name,0).name;
+		}
+		return retVal;
+	}
+
+	private function doGet():void {
+		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+		stockPickerWindow.setStyle("borderAlpha", 0.9);
+	    stockPickerWindow.formIsEmpty = true;
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);		
+	}
+	
+	private function handleStockPickerCancel(evt:StockPickerSelectEvent):void {
+		if (this.stockDefinitions == null) {
+			this.stockDefinitions = new StockDefinition;
+		}
+	}
+	
+	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
+		if (evt.stockDefinition != null) {
+			this.stockDefinitions = evt.stockDefinition;
+		} else {
+			this.stockDefinitions = new StockDefinition();
+			Alert.show("Stock Picker returned a null stock", "Error");
+		}
+	}
+	
+	private function handleStockPickerNew(evt:StockPickerSelectEvent):void {
+		this.stockDefinitions = new StockDefinition();
+	}
+	
+	private function doNext():void {  
+		var itemp:int;
+		itemp = StockDefinitionArray.getItemIndex(stockDefinitions); 
+		itemp++;
+		if (itemp == StockDefinitionArray.length){
+			itemp = StockDefinitionArray.length - 1;
+		}
+		stockDefinitions = StockDefinitionArray.getItemAt(itemp,0) as StockDefinition;   
+	    mapFromStockDefinitionData();                         
+	}
+	
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = StockDefinitionArray.getItemIndex(stockDefinitions); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		stockDefinitions = StockDefinitionArray.getItemAt(itemp,0) as StockDefinition;   
+	    mapFromStockDefinitionData();                                           
+	}                                           
+
+	private function doSave():void {
+		var name:String;
+		name = stockName.text; 
+		stockDefinitionNameValidator.validate(stockName,false)
+		
+		if (validate(stockDefinitionNameValidator) == true)
+		{
+			mapStockDefinitionData();
+			dataService.addUpdate(stockDefinitions);
+			stockChangesDataService.addUpdate(stockChange);
+			standardItemCheckEvent();
+		}else {
+			showMessage("Cannot save Stock Definition with an empty name.","Cannot Save");
+		}
+	}
+
+	private function doNew():void {
+		doSave();
+  	    stockDefinitions = new StockDefinition();
+  	    setStockDefinition(stockDefinitions);
+  	    standardItemCheckEvent();
+	}       
+
+	private function doDelete():void {
+		dataService.deleteItem("StockDefinition", stockDefinitions.id);     
+		doPrev();
+	}
+
+	private function doRevert():void {
+	    stockDefinitions = new StockDefinition();
+	    setStockDefinition(stockDefinitions);                                           
+	}
+
+
+	private function doStockGroup() : void {
+		var group:StockGroup;
+		var result:Boolean;
+		
+		if (cboStockGroup.typedText != null && cboStockGroup.typedText != "" && cboStockGroup.selectedIndex == -1) {
+			var item:int = findItem(cboStockGroup.typedText, stockGroup);
+			if (item == -1) {
+				group = new StockGroup();
+				group.name = cboStockGroup.text;
+				stockGroupDataService.addUpdate(group);
+				stockDefinitions.stkgroup = group;
+			}
+			else {
+				cboStockGroup.selectedItem = item;
+			}
+		}
+	}
+
+
+	private function doStockGenericColor() : void {
+		var colors:GenericColors;
+		var result:Boolean;
+		
+		if (cboGenericColor.typedText != null && cboGenericColor.typedText != "" && cboGenericColor.selectedIndex == -1) {
+			var item:int = findItem(cboGenericColor.typedText, stockGenericColor);
+			if (item == -1) {
+				colors = new GenericColors();
+				colors.name = cboGenericColor.text;
+				stockGenericColorDataService.addUpdate(colors);
+				stockDefinitions.genericColor = colors;
+			}
+			else {
+				cboGenericColor.selectedItem = item;
+				
+			}
+		}
+	}
+
+	private function doStockColor() : void {
+		var colors:StockColors;
+		var result:Boolean;
+		
+		if (cbostkcolor.typedText != null && cbostkcolor.typedText != "" && cbostkcolor.selectedIndex == -1) {
+			var item:int = findItem(cbostkcolor.typedText, stockColor);
+			if (item == -1) {
+				colors = new StockColors();
+				colors.name = cbostkcolor.text;
+				stockColorDataService.addUpdate(colors);
+				stockDefinitions.color = colors;
+			}
+			else {
+				cbostkcolor.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockGrade() : void {
+		var grades:StockGrade;
+		var result:Boolean;
+		
+		if (cboStockGrade.typedText != null && cboStockGrade.typedText != "" && cboStockGrade.selectedIndex == -1) {
+			var item:int = findItem(cboStockGrade.typedText, stockGrade);
+			if (item == -1) {
+				grades = new StockGrade();
+				grades.name = cboStockGrade.text;
+				stockGradeDataService.addUpdate(grades);
+				stockDefinitions.grade = grades;
+			}
+			else {
+				cboStockGrade.selectedItem = item;
+			}
+		}
+	}
+
+
+	private function doStockFinish() : void {
+		var finishing:StockFinish;
+		var result:Boolean;
+		
+		if (cboFinish.typedText != null && cboFinish.typedText != "" && cboFinish.selectedIndex == -1) {
+			var item:int = findItem(cboFinish.typedText, stockFinish);
+			if (item == -1) {
+				finishing = new StockFinish();
+				finishing.name = this.cboFinish.text;
+				
+				stockFinishDataService.addUpdate(finishing);
+				stockDefinitions.finish = finishing;
+			}
+			else {
+				cboFinish.selectedItem = item;
+			}
+		}
+	}
+
+	private function doStockVendor() : void {
+		var stockvendor:Vendor;
+		var result:Boolean;
+		
+		if (cboVendor.typedText != null && cboVendor.typedText != "" && cboVendor.selectedIndex == -1) {
+			var item:int = findItem(cboVendor.typedText, stockFinish);
+			if (item == -1) {
+				stockvendor = new Vendor();
+				stockvendor.name = this.cboVendor.text;
+				
+				vendorDataService.addUpdate(stockvendor);
+				stockDefinitions.vendor = stockvendor;
+			}
+			else {
+				cboVendor.selectedItem = item;
+			}
+		}
+	}
+
+
+	private function doPressDefinition() : void {
+		var pressdef:PressDefinition;
+		var result:Boolean;
+		
+		if (cboDefaultPress.typedText != null && cboDefaultPress.typedText != "" && cboDefaultPress.selectedIndex == -1) {
+			var item:int = findItem(cboDefaultPress.typedText, pressDefinitions);
+			if (item == -1) {
+				cboDefaultPress.selectedItem = null;
+			}
+			else {
+				cboDefaultPress.selectedItem = item;
+			}
+		}
+	}
+		
+	private function doAddCharges():void {
+		
+	}
+
+	private function doShowHistory():void {
+		
+	}
+
+	private function handleSaveResult(ev:ResultEvent):void {
+    	loadStockDefinitions();
+	}
+	
+	private function handleSaveStockChangesResult(ev:ResultEvent):void {
+    	loadStockChanges();
+	}
+	
+	private function handleSaveStockGradeResult(ev:ResultEvent):void {
+    	loadStockGrade();
+	}
+	private function handleSaveStockGroupResult(ev:ResultEvent):void {
+    	loadStockGroup();
+	}
+	private function handleSaveStockColorResult(ev:ResultEvent):void {
+    	loadStockColor();
+	}
+	private function handleSaveStockGenericColorResult(ev:ResultEvent):void {
+    	loadStockGenericColor();
+	}
+
+	private function handleSaveVendorResult(ev:ResultEvent):void {
+    	loadStockVendor();
+	}
+	private function handleSaveStockFinishResult(ev:ResultEvent):void {
+    	loadStockFinish();
+	}
+
+	private function handleLoadResult(ev:ResultEvent):void {
+	     StockDefinitionArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		}else{
+			this.btnExport.enabled = false;
+
+		}
+	}	                                 
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	     loadStockDefinitions();
+	}
+	
+	private function handleLoadDimensionResult(ev:ResultEvent):void {
+		dimensions=ev.result as ArrayCollection;
+	}
+
+	private function handleLoadStockChangesResult(ev:ResultEvent):void {
+		 stockChanges = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadPressDefinition(ev:ResultEvent):void {
+		 pressDefinitions = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadStockGroup(ev:ResultEvent):void {
+		 stockGroup = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadVendor(ev:ResultEvent):void {
+		 stockVendor = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadStockGrade(ev:ResultEvent):void {
+		 stockGrade = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadStockColor(ev:ResultEvent):void {
+		 stockColor = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadStockGenericColor(ev:ResultEvent):void {
+		 stockGenericColor = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadStockFinish(ev:ResultEvent):void {
+		 stockFinish = ev.result as ArrayCollection;
+	}
+	     
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null,4);                                 
+	}
+
+	private function showMessage(message:String,title:String):void {  
+		Alert.show(message, title, 0, null, null, null,4);                                 
+	}
+	
+	private function standardItemCheckEvent():void {
+		var checked:Boolean;
+		checked = chkstandardItem.selected;
+		OnHand.enabled = checked;
+		Committed.enabled = checked;
+		OnOrder.enabled = checked;
+		TargetLevel.enabled = checked;
+		ReOrderPoint.enabled = checked;
+		MinOrderQty.enabled = checked;
+		Expires.enabled = checked;
+		BinLocation.enabled = checked;
+		ShellItem.enabled = checked;
+		btnAssignCustomerAccount.enabled = checked;
+		chkEvenIncrements.enabled = checked;
+	}
+	
+	private function doAccount():void {
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+	}
+
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		this.setAccount(new Account());
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+	}
+
+	private function setAccount(account2:Account):void
+	{
+		this.account = account2;
+		stockDefinitions.account = this.account;
+		account_name.text  = stockDefinitions.account.title;
+	}			
+	
+	private function mapFromStockDefinitionData():void {
+		
+		if (stockDefinitions.defaultPress != null)
+	 		cboDefaultPress.selectedIndex = findItem(stockDefinitions.defaultPress.name, pressDefinitions);
+
+		if (stockDefinitions.stkgroup != null)
+			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
+
+		if (stockDefinitions.color != null) 
+			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+		if (stockDefinitions.genericColor != null)
+				cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		
+		
+		if (stockDefinitions.vendor != null)
+			cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
+		
+		if (stockDefinitions.grade != null)
+			cboStockGrade.selectedIndex = findItem(stockDefinitions.grade.name, stockGrade);
+
+		if (stockDefinitions.finish != null)
+			cboFinish.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
+
+		if (stockDefinitions.uom != null)
+			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+			
+		if (stockDefinitions.stockunit != -1)
+			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
+		
+		if (stockDefinitions.priceExpires != null)
+			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
+		if (stockDefinitions.expires != null)
+			Expires.selectedDate = stockDefinitions.expires;	
+			
+			//// check box values here
+			chkstandardItem.selected = stockDefinitions.standardItem;
+			chkIsMetric.selected = stockDefinitions.isMetric;
+			chkAutocalcblankstock.selected = stockDefinitions.autoCalculateBlank;
+			chkEvenIncrements.selected = stockDefinitions.evenIncrements;
+			chkcharge4entiteorder.selected = stockDefinitions.entireOrderCharge;
+			chkCostIsInSets.selected = stockDefinitions.isCostInSets;
+			chkfscCertified.selected = stockDefinitions.fscCertified;
+			chksfiCertified.selected = stockDefinitions.sfiCertified
+			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
+	}
+
+	private function mapStockDefinitionData():void {
+	 //stockDefinition.stockDefID = stockDefID;
+	 
+	 //combobox and select box values
+	 if (cboStockGrade != null && cboStockGrade.selectedItem != null) 
+	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
+
+	 if (cbostkcolor != null && cbostkcolor.selectedItem != null) 
+	 	stockDefinitions.color = cbostkcolor.selectedItem as StockColors;
+
+	 if (cboStockGroup != null && cboStockGroup.selectedItem != null) 
+	 	stockDefinitions.stkgroup = cboStockGroup.selectedItem as StockGroup;
+
+	 if (cboFinish != null && cboFinish.selectedItem != null) 
+	 	stockDefinitions.finish = cboFinish.selectedItem as StockFinish;
+
+	 if (cboVendor != null && cboVendor.selectedItem != null) 
+	 	stockDefinitions.vendor = cboVendor.selectedItem as Vendor;
+
+	 if (cboGenericColor != null && cboGenericColor.selectedItem != null) 
+	 	stockDefinitions.genericColor = cboGenericColor.selectedItem as GenericColors;
+	 
+	 if (cboUom != null && cboUom.selectedItem != null)
+	 	stockDefinitions.uom = cboUom.selectedItem.name as String; 
+	 
+	 if (stockUnit != null && stockUnit.selectedValue != null)
+	 	stockDefinitions.stockunit = findItem(stockUnit.selectedValue.toString(),stockUnits);
+	 
+	 if (cboDefaultPress != null && cboDefaultPress.selectedItem != null) 
+	 	stockDefinitions.defaultPress = cboDefaultPress.selectedItem as PressDefinition;
+	 	
+	 //check boxes
+	 stockDefinitions.standardItem = chkstandardItem.selected;
+	 stockDefinitions.isMetric = chkIsMetric.selected;
+	 stockDefinitions.autoCalculateBlank = chkAutocalcblankstock.selected;
+	 stockDefinitions.evenIncrements = chkEvenIncrements.selected;
+	 stockDefinitions.entireOrderCharge = chkcharge4entiteorder.selected;
+	 stockDefinitions.isCostInSets = chkCostIsInSets.selected;
+	 stockDefinitions.fscCertified = chkfscCertified.selected;
+	 stockDefinitions.sfiCertified = chksfiCertified.selected;
+	 stockDefinitions.greenSealCertified = chkgreensealCertified.selected;
+	 
+	 
+	 //text and textboxes
+	 stockDefinitions.stkclass = stockClass.text;
+	 stockDefinitions.name = stockName.text;
+	 stockDefinitions.weight = parseInt(weight.text);
+	 stockDefinitions.coated = coated.text;
+	 stockDefinitions.stocknumber = stockNumber.text;
+	 stockDefinitions.basicsize = Basicsize.text;
+	 stockDefinitions.parentsize = parentSize.text;
+	 stockDefinitions.thickness = parseInt(thickNess.text);
+	 stockDefinitions.mweight = parseInt(mWeight.text);
+	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text);
+	 stockDefinitions.minorder = parseInt(minOrder.text);
+	 stockDefinitions.comments = Comments.text;
+
+	 stockDefinitions.costunits = parseInt(Costunits.text);
+	 stockDefinitions.sheetsPerSet = parseInt(SheetsPerSet.text);
+	 stockDefinitions.priceExpires = PriceExpires.selectedDate;
+	 stockDefinitions.qtybreak1 = parseInt(Qtybreak1.text);
+	 stockDefinitions.qtybreak2 = parseInt(Qtybreak2.text);
+	 stockDefinitions.qtybreak3 = parseInt(Qtybreak3.text);
+	 stockDefinitions.qtybreak4 = parseInt(Qtybreak4.text);
+	 stockDefinitions.qtybreak5 = parseInt(Qtybreak5.text);
+	 stockDefinitions.qtybreak6 = parseInt(Qtybreak6.text);
+	 stockDefinitions.cost1 = parseInt(Cost1.text);
+	 stockDefinitions.cost2 = parseInt(Cost2.text);
+	 stockDefinitions.cost3 = parseInt(Cost3.text);
+	 stockDefinitions.cost4 = parseInt(Cost4.text);
+	 stockDefinitions.cost5 = parseInt(Cost5.text);
+	 stockDefinitions.cost6 = parseInt(Cost6.text);
+	 stockDefinitions.cwt1 = parseInt(Cwt1.text);
+	 stockDefinitions.cwt2 = parseInt(Cwt2.text);
+	 stockDefinitions.cwt3 = parseInt(Cwt3.text);
+	 stockDefinitions.cwt4 = parseInt(Cwt4.text);
+	 stockDefinitions.cwt5 = parseInt(Cwt5.text);
+	 stockDefinitions.cwt6 = parseInt(Cwt6.text);
+	 stockDefinitions.markup1 = parseInt(Markup1.text);
+	 stockDefinitions.markup2 = parseInt(Markup2.text);
+	 stockDefinitions.markup3 = parseInt(Markup3.text);
+	 stockDefinitions.markup4 = parseInt(Markup4.text);
+	 stockDefinitions.markup5 = parseInt(Markup5.text);
+	 stockDefinitions.markup6 = parseInt(Markup6.text);
+	 stockDefinitions.listPerM1 = parseInt(ListPerM1.text);
+	 stockDefinitions.listPerM2 = parseInt(ListPerM2.text);
+	 stockDefinitions.listPerM3 = parseInt(ListPerM3.text);
+	 stockDefinitions.listPerM4 = parseInt(ListPerM4.text);
+	 stockDefinitions.listPerM5 = parseInt(ListPerM5.text);
+	 stockDefinitions.listPerM6 = parseInt(ListPerM6.text);
+	 
+	 stockDefinitions.forestManagement = forestMgmt.text;
+	 stockDefinitions.pcwRecycledPercent = pcwRecycled.text as Number;
+	 
+	 stockDefinitions.normalRunSize = NormalRunSize.text;
+	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
+	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
+	// stockDefinitions.defaultPress = DefaultPress.text;
+	 stockDefinitions.blankSheetqty1 = parseInt(BlankSheetqty1.text);
+	 stockDefinitions.blankSheetqty2 = parseInt(BlankSheetqty2.text);
+	 stockDefinitions.blankSheetqty3 = parseInt(BlankSheetqty3.text);
+	 stockDefinitions.blankSheetqty4 = parseInt(BlankSheetqty4.text);
+	 stockDefinitions.blankSheetqty5 = parseInt(BlankSheetqty5.text);
+	 stockDefinitions.blankSheetqty6 = parseInt(BlankSheetqty6.text);
+	 stockDefinitions.blankSheetPrice1 = parseInt(BlankSheetPrice1.text);
+	 stockDefinitions.blankSheetPrice2 = parseInt(BlankSheetPrice2.text);
+	 stockDefinitions.blankSheetPrice3 = parseInt(BlankSheetPrice3.text);
+	 stockDefinitions.blankSheetPrice4 = parseInt(BlankSheetPrice4.text);
+	 stockDefinitions.blankSheetPrice5 = parseInt(BlankSheetPrice5.text);
+	 stockDefinitions.blankSheetPrice6 = parseInt(BlankSheetPrice6.text);
+	 
+	 stockDefinitions.defaultBW = DefaultBW.text;
+	 stockDefinitions.defaultColor = DefaultColor.text;
+	 stockDefinitions.defaultLargeFormat = DefaultLargeFormat.text;
+	 stockDefinitions.onHand = parseInt(OnHand.text);
+	 stockDefinitions.committed = parseInt(Committed.text);
+	 stockDefinitions.available = parseInt(Available.text);
+	 stockDefinitions.onOrder = parseInt(OnOrder.text);
+	 stockDefinitions.targetLevel = parseInt(TargetLevel.text);
+	 stockDefinitions.reOrderPoint = parseInt(ReOrderPoint.text);
+	 stockDefinitions.minOrderQty = parseInt(MinOrderQty.text);
+	 stockDefinitions.expires = Expires.selectedDate;
+	 stockDefinitions.binLocation = BinLocation.text;
+	 if (stockDefinitions.account != null)
+	 	stockDefinitions.account.title = account_name.text;
+
+	}
+	private function doShell():void{
+		if (ShellItem.selected == true) 
+			btnAssignCustomerAccount.enabled = true;
+		else
+			btnAssignCustomerAccount.enabled = false;
+	}
+	
+	private function validateStockName(event:Event):void{
+        focussedFormControl = event.target as DisplayObject;    
+        formIsValid = true;            
+        validate(stockDefinitionNameValidator);
+	}   
+	
+	private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+        return currentControlIsValid;
+	}
+	
+	private function handleFocusOutEvent(evt:FocusEvent):void
+	{
+		if (evt.target == parentSize) {
+			stockDefinitions.parentsize = parentSize.text;
+		} else if (evt.target == NormalRunSize) {
+			stockDefinitions.normalRunSize = NormalRunSize.text;
+		}
+		super.focusOutHandler(evt);
+	}
+
+]]>
+                             
+</mx:Script>	
+<vo:StockDefinition id="stock"/>                           
+
+	<mx:RadioButtonGroup id="PaperStyle"/>
+	<mx:Label x="80" y="63" text="Group:"/>
+	<mx:Label x="301" y="63" text="Class:"/>
+	<fc:AutoComplete id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" lookAhead="true" width="116"/>
+	<mx:TextInput x="344" y="61" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
+	<mx:CheckBox x="513.5" y="61" id="chkIsMetric" label="Metric"/>
+	<mx:Label x="81" y="87" text="Name:"/>
+	<mx:Label x="84" y="111" text="Color:"/>
+	<fc:AutoComplete  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
+	<mx:Label x="299" y="87" text="Finish:"/>
+	<mx:TextInput x="126" y="85" width="160" id="stockName" text="{stockDefinitions.name}" change="validateStockName(event);"/>
+	<fc:AutoComplete  x="344" y="85" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
+	<mx:Label x="39" y="135" text="Generic Color:"/>
+	<fc:AutoComplete  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" lookAhead="true" labelField="name" focusOut="doStockGenericColor()"/>
+	<mx:Label x="298" y="111" text="Grade:"/>
+	<fc:AutoComplete  x="344" y="109" width="105" id="cboStockGrade" dataProvider="{stockGrade}" lookAhead="true" labelField="name" focusOut="doStockGrade()"/>
+	<mx:Label x="461.5" y="87" text="Weight:"/>
+	<mx:TextInput x="513.5" y="85" width="55" id="weight" text="{stockDefinitions.weight}"/>
+	<mx:Label x="460.5" y="111" text="Coated:"/>
+	<mx:TextInput x="513.5" y="109" width="55" id="coated" text="{stockDefinitions.coated}"/>
+	<mx:RadioButtonGroup id="stockUnit"/>
+	<mx:RadioButton x="581" y="62" label="Envelope" groupName="stockUnit"/>
+	<mx:RadioButton x="581" y="82" label="Sheet Stock" groupName="stockUnit"/>
+	<mx:RadioButton x="581" y="103" label="Roll Stock" groupName="stockUnit"/>
+	<mx:RadioButton x="581" y="124" label="Large Format" groupName="stockUnit"/>
+	<mx:RadioButton x="581" y="145" label="Rigid Substrate" groupName="stockUnit"/>
+	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
+		<mx:Canvas label="Specification and Pricing" id="page_specification_and_pricing" width="100%" height="100%">
+			<mx:Panel x="14.5" y="0" width="690" height="225" layout="absolute" dropShadowEnabled="false">
+				<mx:Label x="54.5" y="7" text="Vendor:" textAlign="right"/>
+				<fc:AutoComplete x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name" focusOut="doStockVendor()"/>
+				<mx:Label x="32.5" y="35" text="Stock Type:" textAlign="right"/>
+				<mx:TextInput x="106.5" y="33" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
+				<mx:Label x="267.5" y="7" text="Stock #:" textAlign="right"/>
+				<mx:TextInput x="323" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
+				<mx:Label x="30.5" y="62" text="Parent Size:" textAlign="right"/>
+				<fc:AutoComplete x="106.5" y="60" width="132" 
+					  id="parentSize"
+					  dataProvider="{dimensions}"
+					  labelField="name"
+					  text="{stockDefinitions.parentsize}"
+					  focusOut="handleFocusOutEvent(event)"
+				/>
+				<mx:Label x="254.5" y="62" text="Thickness:" textAlign="right"/>
+				<mx:Label x="254.5" y="35" text="Basic Size:" textAlign="right"/>
+				<mx:TextInput x="323" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
+				<mx:Label x="5.5" y="118" text="Sheets / Carton:" textAlign="right"/>
+				<mx:TextInput x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
+				<mx:Label x="257.5" y="91" text="M Weight:" textAlign="right"/>
+				<mx:TextInput x="323" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}" enabled="false"/>
+				<mx:Label x="35.5" y="146" text="Min. Order:" textAlign="right"/>
+				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
+				<mx:Label x="229.5" y="118" text="Carton Weight:" textAlign="right"/>
+				<mx:TextInput x="323" y="116" width="64.5" enabled="false"/>
+				<mx:Text x="323" y="33" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
+				<mx:CheckBox x="248.5" y="144" id="chkcharge4entiteorder" label="Charge Customer for Entire Order"/>
+				<mx:ComboBox x="106.5" y="89" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
+				<mx:Panel x="470.5" y="10" width="193.5" height="168" layout="absolute" title="Chain of Custody" dropShadowEnabled="false">
+					<mx:Label x="26.25" y="1" text="Forest Management:"/>
+					<mx:TextInput x="10" y="20" width="153.5" id="forestMgmt"/>
+					<mx:Label x="10" y="46" text="PCW Recycled %:"/>
+					<mx:TextInput x="115.75" y="44" width="47.75" id="pcwRecycled"/>
+					<mx:CheckBox x="10" y="65" label="FSC Certified" id="chkfscCertified"/>
+					<mx:CheckBox x="10" y="84" label="SFI Certified" id="chksfiCertified"/>
+					<mx:CheckBox x="10" y="104" label="GreenSeal Certified" id="chkgreensealCertified"/>
+				</mx:Panel>
+				<mx:Label x="63" y="91" text="UOM:" textAlign="right"/>
+			</mx:Panel>
+			<mx:Panel x="14.5" y="233" width="690" height="200" layout="absolute" title="Qty. Adjustments" dropShadowEnabled="false">
+				<mx:Label x="10" y="30" text="Qty. Breaks:"/>
+				<mx:Label x="49" y="50" text="Cost:"/>
+				<mx:Label x="49" y="70" text="CWT:"/>
+				<mx:Label x="34" y="91" text="Markup:"/>
+				<mx:Label x="34" y="112" text="List / M:"/>
+				<mx:TextInput x="88" y="28" width="66" id="Qtybreak1" text="{stockDefinitions.qtybreak1}"/>
+				<mx:TextInput x="88" y="48" width="66" id="Cost1" text="{stockDefinitions.cost1}"/>
+				<mx:TextInput x="88" y="68" width="66" id="Cwt1" text="{stockDefinitions.cwt1}"/>
+				<mx:TextInput x="88" y="89" width="66" id="Markup1" text="{stockDefinitions.markup1}"/>
+				<mx:TextInput x="88" y="110" width="66" id="ListPerM1" text="{stockDefinitions.listPerM1}"/>
+				<mx:TextInput x="151" y="28" width="66" id="Qtybreak2" text="{stockDefinitions.qtybreak2}"/>
+				<mx:TextInput x="151" y="48" width="66" id="Cost2" text="{stockDefinitions.cost2}"/>
+				<mx:TextInput x="151" y="68" width="66" id="Cwt2" text="{stockDefinitions.cwt2}"/>
+				<mx:TextInput x="151" y="89" width="66" id="Markup2" text="{stockDefinitions.markup2}"/>
+				<mx:TextInput x="151" y="110" width="66" id="ListPerM2" text="{stockDefinitions.listPerM2}"/>
+				<mx:TextInput x="214" y="28" width="66" id="Qtybreak3" text="{stockDefinitions.qtybreak3}"/>
+				<mx:TextInput x="214" y="48" width="66" id="Cost3" text="{stockDefinitions.cost3}"/>
+				<mx:TextInput x="214" y="68" width="66" id="Cwt3" text="{stockDefinitions.cwt3}"/>
+				<mx:TextInput x="214" y="89" width="66" id="Markup3" text="{stockDefinitions.markup3}"/>
+				<mx:TextInput x="214" y="110" width="66" id="ListPerM3" text="{stockDefinitions.listPerM3}"/>
+				<mx:TextInput x="275.5" y="28" width="66" id="Qtybreak4" text="{stockDefinitions.qtybreak4}"/>
+				<mx:TextInput x="275.5" y="48" width="66" id="Cost4" text="{stockDefinitions.cost4}"/>
+				<mx:TextInput x="275.5" y="68" width="66" id="Cwt4" text="{stockDefinitions.cwt4}"/>
+				<mx:TextInput x="275.5" y="89" width="66" id="Markup4" text="{stockDefinitions.markup4}"/>
+				<mx:TextInput x="275.5" y="110" width="66" id="ListPerM4" text="{stockDefinitions.listPerM4}"/>
+				<mx:TextInput x="339" y="28" width="66" id="Qtybreak5" text="{stockDefinitions.qtybreak5}"/>
+				<mx:TextInput x="339" y="48" width="66" id="Cost5" text="{stockDefinitions.cost5}"/>
+				<mx:TextInput x="339" y="68" width="66" id="Cwt5" text="{stockDefinitions.cwt5}"/>
+				<mx:TextInput x="339" y="89" width="66" id="Markup5" text="{stockDefinitions.markup5}"/>
+				<mx:TextInput x="339" y="110" width="66" id="ListPerM5" text="{stockDefinitions.listPerM5}"/>
+				<mx:TextInput x="403" y="28" width="66" id="Qtybreak6" text="{stockDefinitions.qtybreak6}"/>
+				<mx:TextInput x="403" y="48" width="66" id="Cost6" text="{stockDefinitions.cost6}"/>
+				<mx:TextInput x="403" y="68" width="66" id="Cwt6" text="{stockDefinitions.cwt6}"/>
+				<mx:TextInput x="403" y="89" width="66" id="Markup6" text="{stockDefinitions.markup6}"/>
+				<mx:TextInput x="403" y="110" width="66" id="ListPerM6" text="{stockDefinitions.listPerM6}"/>
+				<mx:Label x="69" y="4" text="Costing Units:"/>
+				<mx:Label x="257" y="4" text="# Sheets / Set:"/>
+				<mx:TextInput x="157" y="2" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>
+				<mx:TextInput x="352" y="2" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}"/>
+				<mx:CheckBox x="450" y="2" label="Cost is in Sets" id="chkCostIsInSets"/>
+				<mx:Label x="73" y="137" text="Price Expires:"/>
+				<mx:DateField x="154" y="135" id="PriceExpires"/>
+			</mx:Panel>
+			<mx:Panel x="14.5" y="441" width="685.5" height="93" layout="absolute" title="Comments" dropShadowEnabled="false">
+				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
+			</mx:Panel>
+		</mx:Canvas>
+		<mx:Canvas label="Pricing Options" id="page_pricingoptions" width="100%" height="100%">
+			<mx:Panel x="10" y="38" width="295" height="78" layout="absolute" title="Select Press for Printing" dropShadowEnabled="false">
+				<mx:Label x="8" y="11" text="Press:" textAlign="right"/>
+				<fc:AutoComplete  x="52" y="7" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}" lookAhead="true" labelField="name" focusOut="doPressDefinition()"/>
+			</mx:Panel>
+			<mx:Panel x="313" y="38" width="387" height="78" layout="absolute" title="Schedule for List Pricing" dropShadowEnabled="false">
+				<mx:Button x="10" y="7" label="Select Schedule" click="doPriceList();"/>
+				<mx:Text x="133" y="9" text="{stockDefinitions.defaultPriceList.name}" width="224" id="defaultPriceList" height="20"/>
+			</mx:Panel>
+			<fc:AutoComplete x="113" y="9" width="85" 
+				  id="NormalRunSize"
+				  dataProvider="{dimensions}"
+				  labelField="name"
+				  text="{stockDefinitions.normalRunSize}"
+				  focusOut="handleFocusOutEvent(event)"
+			/>
+			<mx:TextInput x="270" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
+			<mx:TextInput x="418" y="9" width="50" id="MinCutCharge" text="{stockDefinitions.minCutCharge}"/>
+			<mx:Label x="10" y="11" text="Normal Run Size:"/>
+			<mx:Label x="204" y="11" text="Cut / 100:"/>
+			<mx:Label x="329" y="11" text="Min. Cut Chg.:"/>
+			<mx:Panel x="10" y="125" width="690" height="108" layout="absolute" title="Pricing for Blank Sheets" dropShadowEnabled="false">
+				<mx:TextInput x="68" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
+				<mx:TextInput x="146" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
+				<mx:TextInput x="224" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
+				<mx:TextInput x="302" y="2" width="80" id="BlankSheetqty4" text="{stockDefinitions.blankSheetqty4}"/>
+				<mx:TextInput x="381" y="2" width="80" id="BlankSheetqty5" text="{stockDefinitions.blankSheetqty5}"/>
+				<mx:TextInput x="459" y="2" width="80" id="BlankSheetqty6" text="{stockDefinitions.blankSheetqty6}"/>
+				<mx:TextInput x="68" y="23" width="80" id="BlankSheetPrice1" text="{stockDefinitions.blankSheetPrice1}"/>
+				<mx:TextInput x="146" y="23" width="80" id="BlankSheetPrice2" text="{stockDefinitions.blankSheetPrice2}"/>
+				<mx:TextInput x="224" y="23" width="80" id="BlankSheetPrice3" text="{stockDefinitions.blankSheetPrice3}"/>
+				<mx:TextInput x="302" y="23" width="80" id="BlankSheetPrice4" text="{stockDefinitions.blankSheetPrice4}"/>
+				<mx:TextInput x="381" y="23" width="80" id="BlankSheetPrice5" text="{stockDefinitions.blankSheetPrice5}"/>
+				<mx:TextInput x="459" y="23" width="80" id="BlankSheetPrice6" text="{stockDefinitions.blankSheetPrice6}"/>
+				<mx:Label x="3" y="4" text="Quantity:" textAlign="right"/>
+				<mx:Label x="24" y="25" text="Price:" textAlign="right"/>
+				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="Auto Calculate Blank Stock"/>
+			</mx:Panel>
+			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute" dropShadowEnabled="false">
+				<mx:title>Adjust Copier / Digital Matrix and Select Defaults</mx:title>
+				<mx:Label x="82" y="5" text="B&amp;W:" textAlign="right"/>
+				<mx:Label x="78" y="30" text="Color:" textAlign="right"/>
+				<mx:Label x="33" y="55" text="Large Format:" textAlign="right"/>
+				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{stockDefinitions.defaultBW}"/>
+				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{stockDefinitions.defaultColor}"/>
+				<mx:TextInput x="125" y="53" width="90" id="DefaultLargeFormat" text="{stockDefinitions.defaultLargeFormat}"/>
+				<mx:TextInput x="223" y="3" width="201"/>
+				<mx:TextInput x="223" y="28" width="201"/>
+				<mx:TextInput x="223" y="53" width="201"/>
+			</mx:Panel>
+			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="Preset Up to 10 Charges" dropShadowEnabled="false">
+				<mx:Button x="10" y="4" label="Add Charges..." click="doAddCharges();"/>
+				<mx:Text x="128" y="6" id="Additional1" text="&lt;Nothing Selected&gt;" width="532"/>
+			</mx:Panel>
+		</mx:Canvas>
+		<mx:Canvas label="Inventory" id="page_inventory" width="100%" height="100%">
+			<mx:Panel x="10" y="10" width="690" height="244" layout="absolute" title="Inventory Settings" dropShadowEnabled="false">
+				<mx:CheckBox x="39" y="0" label="Stock is Standard Inventory Item" change="standardItemCheckEvent();" id="chkstandardItem"/>
+				<mx:Label x="26" y="30" text="Stock On Hand:" textAlign="right"/>
+				<mx:Label x="47" y="58" text="Committed:" textAlign="right"/>
+				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false"/>
+				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false"/>
+				<mx:Label x="59" y="88" text="Available:" textAlign="right"/>
+				<mx:Label x="35" y="150" text="Stock Expires:"/>
+				<mx:Label x="42" y="178" text="Bin Location:"/>
+				<mx:TextInput x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22" enabled="false"/>
+				<mx:Label x="273" y="30" text="On Order:" textAlign="right"/>
+				<mx:TextInput x="337" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false"/>
+				<mx:Label x="255" y="58" text="Target Level:" textAlign="right"/>
+				<mx:TextInput x="337" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false"/>
+				<mx:Label x="248" y="88" text="Reorder Point:" textAlign="right"/>
+				<mx:TextInput x="337" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false"/>
+				<mx:Label x="239" y="118" text="Min. Order Qty.:" textAlign="right"/>
+				<mx:TextInput x="337" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
+				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
+				<mx:CheckBox x="251" y="148" id="ShellItem" label="Shell Item" enabled="false"  change="doShell();"/>
+				<mx:Button x="341" y="148" label="Assign Customer Account..." enabled="false" id="btnAssignCustomerAccount" click="doAccount();"/>
+				<mx:CheckBox x="429" y="116" label="Even increments, like ream size" enabled="false" id="chkEvenIncrements"/>
+				<mx:Text x="341" y="176" width="184" id="account_name" text="{stockDefinitions.account.title}" />
+				<mx:DateField x="127" y="148" id="Expires"/>
+			</mx:Panel>
+			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="10 Most Recent Inventory Changes" dropShadowEnabled="false">
+				<mx:Button x="10" y="204" label="Show Entire History" click="doShowHistory();"/>
+				<mx:DataGrid dataProvider="{stockChanges}" left="5" right="5" top="5" bottom="30">
+					<mx:columns>
+						<mx:DataGridColumn headerText="User" dataField="User"/>
+						<mx:DataGridColumn headerText="Date" dataField="Date"/>
+						<mx:DataGridColumn headerText="How Changed" dataField="HowChanged"/>
+						<mx:DataGridColumn headerText="Quantity" dataField="Quantity"/>
+						<mx:DataGridColumn headerText="Reference" dataField="Reference"/>
+					</mx:columns>
+				</mx:DataGrid>
+			</mx:Panel>
+		</mx:Canvas>
+	</mx:TabNavigator>
+	<mx:Button x="10" y="5" width="38" height="38" click="doPrev();">
+		<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="56" y="5" width="38" height="38" click="doNext();">
+		<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="10" y="41" text="Prev" width="38" textAlign="center"/>
+	<mx:Label x="56" y="41" text="Next" width="38" textAlign="center"/>
+	<mx:Button x="171" y="5" width="38" height="38" click="doSave();" enabled="{enableSave}">
+		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="171" y="41" text="Save" width="38" textAlign="center"/>
+	<mx:Button x="217" y="5" width="38" height="38" click="doGet();">
+		<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="217" y="41" text="Get" width="38" textAlign="center"/>
+	<mx:Button x="263" y="5" width="38" height="38" click="doNew();">
+		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="370" y="5" width="38" height="38" click="doDelete();">
+		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="360" y="41" text="Delete" width="58" textAlign="center"/>
+	<mx:Button x="436" y="5" width="38" height="38" id="btnExport" enabled="false">
+		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="426" y="41" text="Export" width="58" textAlign="center"/>
+	<mx:Button x="493" y="5" width="38" height="38" click="doRevert();">
+		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="483" y="41" text="Revert" width="58" textAlign="center"/>
+	<mx:Label x="263" y="41" text="New" width="38" textAlign="center"/>
+</mx:Panel>

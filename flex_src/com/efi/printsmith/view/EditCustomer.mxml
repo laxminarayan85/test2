@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
+width="100%" height="624" title="Customer Editor"
+creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:ns1="com.efi.printsmith.components.*">
+<mx:Metadata>
+    [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
+</mx:Metadata>                            
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="logDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCustomerLogs(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveLogResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteLogResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="salesRepDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
+    <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
+	
+</mx:RemoteObject>
+<mx:RemoteObject id="businessTypeDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBusinessTypes(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBusinessTypeResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="shippingMethodDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveShippingMethodResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="taxTableDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxTableResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="taxCodeDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodes(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxCodeResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Producer id="producer" destination="accounts"/>
+<mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+<mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.data.SportsInterest;
+	import com.efi.printsmith.data.CommonInterest;
+	import com.efi.printsmith.events.SaveAddressEvent;
+	import com.efi.printsmith.data.ModelBase;
+	import com.efi.printsmith.data.Marketing;
+	import com.efi.printsmith.data.BusinessType;
+	import com.efi.printsmith.data.SalesRep;
+	import com.efi.printsmith.data.Contact;
+	import com.efi.printsmith.data.Address;
+    import com.efi.printsmith.data.CustomerLog;
+    import com.efi.printsmith.data.City;
+	import com.efi.printsmith.data.Country;
+	import com.efi.printsmith.data.State;
+	import com.efi.printsmith.data.Zip;
+	import com.efi.printsmith.data.ShippingMethod;
+	import com.efi.printsmith.data.TaxTable;
+	import com.efi.printsmith.data.TaxCodes;           
+	import com.efi.printsmith.data.Account; 
+	import com.efi.printsmith.events.UpdateDataProviderEvent;
+	import com.efi.printsmith.events.AccountPickerSelectEvent;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
+    
+    private var accounts:ArrayCollection = new ArrayCollection();
+                 
+	[Bindable]                                         
+	private var account:Account;
+                
+	[Bindable]
+	private var autoDiscountRadioValue:String = "discount_dollars";
+	
+	[Bindable]
+	private var acctStatusRadioValue:String = "acct_status_new_radio";
+	
+	[Bindable]
+	private var acctTypeRadioValue:String = "cash_only";
+	               
+	[Bindable]
+	private var balances:ArrayCollection = new ArrayCollection([
+            {Aged:"Current", Value:0},
+            {Aged:"30", Value:0},
+            {Aged:"60", Value:0},
+            {Aged:"90", Value:0}
+         ]);                   
+    
+    [Bindable]
+    private var customerLogs:ArrayCollection = new ArrayCollection();
+                     
+    [Bindable]
+    private var salesReps:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var businessTypes:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var taxTables:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var taxCodes:ArrayCollection = new ArrayCollection();
+                           	
+    [Bindable]
+    private var shippingMethods:ArrayCollection = new ArrayCollection();                
+    [Bindable]
+    private var formIsValid:Boolean = false;
+    
+    private var focussedFormControl:DisplayObject;
+    
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+		this.doGet();
+		setSettings();
+		dataService.getAll("Account");
+	}      
+
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		
+		account = new Account();
+		setMarketing();
+		this.setAccount(account);
+
+	}
+	
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		if (evt.account != null) {
+			this.setAccount(evt.account);
+			setMarketing();
+		} else {
+			this.setAccount(new Account());
+			Alert.show("Account Picker returned a null account", "Error");
+		}
+	}
+	
+	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
+		this.account = new Account();
+		setMarketing();
+	}
+	
+	private function doNew():void {
+	    account = new Account();
+	    setMarketing();
+	    setAccount(account);
+	 	
+	}  
+	
+	private function doDelete():void {
+	    dataService.deleteItem("Account",account.id);
+	}  
+	
+	private function doGet():void{
+	    var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	   	    
+	}    
+	
+	private function doNext():void {  
+		var itemp:int;
+		itemp = accounts.getItemIndex(account); 
+		itemp++;
+		if (itemp == accounts.length){
+			itemp = accounts.length - 1;
+		}
+		account = accounts.getItemAt(itemp,0) as Account;   
+	    setAccount(account);                         
+	}
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = accounts.getItemIndex(account); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		account = accounts.getItemAt(itemp,0) as Account;   
+	    setAccount(account);                                           
+	}                                                	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.accounts = "*";
+		//producer.send(message);
+	}
+		
+	public function setAccount(account:Account):void
+	{
+		this.account = account;
+		mapFromAccountData();
+	}			
+	
+	private function messageHandler(message:IMessage):void
+	{
+	}
+                                  
+	private function deleteAccount():void {              
+	                                         
+	}
+	
+	
+	                                                         
+	private function updateUser():void {
+	}
+	
+	private function mapToAccountData():void {
+		account.title = name_edit.text;
+		account.externalRef = external_ref_edit.text;
+		account.externalAcctId = external_acct_id_edit.text;
+		
+		account.shipToAddress = ship_to_address_editor.getAddress();
+		account.billToAddress = bill_to_address_editor.getAddress();
+
+
+		account.contact = ship_to_contact_editor.getContact();
+		account.billToContact = bill_to_contact_editor.getContact();
+		if (account.billToContact != null) {
+			account.billToContact.parentAccount = account;
+		}
+		if (account.contact != null) {
+			account.contact.parentAccount = account;
+		}
+		
+		if (account.marketing != null){
+			
+		
+			if (account.marketing.birthDate != null)
+				account.marketing.birthDate = birthDate.selectedDate;
+			if (account.marketing.followup != null)
+				account.marketing.followup=  followUp.selectedDate;
+			if (account.marketing.commonInterst != null)	
+				account.marketing.commonInterst = commonInterest.text;
+			if (account.marketing.sportsInterst != null)
+				account.marketing.sportsInterst = sportsInterest.text;
+			
+			account.marketing.leadSource = leadSource.text;
+			account.marketing.leadSource2 = leadSource1.text;
+			account.marketing.mailerType = mailerType.text;
+			account.marketing.typeWork = typeofWork.text;
+			if (account.marketing.user3 != null)
+				account.marketing.user3 =  userDate3.selectedDate;
+			if (account.marketing.user4 != null)
+				account.marketing.user4 = userDate4.selectedDate;
+			if (account.marketing.user5 != null)
+				account.marketing.user5 = userDate5.selectedDate;
+			account.marketing.user6 = user3Tag.text
+			account.marketing.user7 = user4Tag.text;
+			account.marketing.user8 = user8Tag.text;
+			account.marketing.user9 = user9Tag.text; 
+			account.marketing.annualRev = parseInt(annualRev.text);
+			account.marketing.customer = customer.selected;
+			account.marketing.prospect = prospect.selected
+			account.marketing.noMail = noMail.selected;
+			account.marketing.personalAcct = personalAccount.selected;
+			account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
+			
+			if (business_type_combo != null && business_type_combo.selectedItem != null) 
+				account.marketing.businessType = business_type_combo.selectedItem as BusinessType;
+		}
+		
+		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
+			account.salesRep = sales_rep_combo.selectedItem as SalesRep;
+		
+		if (tax_table_combo != null && tax_table_combo.selectedItem != null) 
+			account.taxTable = tax_table_combo.selectedItem as TaxTable;
+			
+		if (tax_code_combo != null && tax_code_combo.selectedItem != null) 
+			account.taxCode = tax_code_combo.selectedItem as TaxCodes;
+			
+		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
+			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
+			
+		account.financeRate = parseInt(monthly_finance_charge_edit.text);
+		account.creditLimit = parseInt(credit_limit_edit.text);
+		account.termsNet = parseInt(due_days_edit.text);
+		account.applyFinanceCharges = never_calculate_finance_check.selected;
+		account.oneTimeDiscount = one_time_discount_check.selected;
+		
+		account.poRequired = po_required_check.selected;
+		account.generateStatements = do_not_generate_statements_check .selected;
+		account.payCommissions = account_is_commissioned.selected;
+		account.fileOriginals = always_file_originals.selected;
+		account.taxExempt = tax_exempt_check.selected;
+		account.resaleNumber = resale_number_edit.text;
+		account.resaleCertExpirationDate = certificate_expires_edit.selectedDate;
+		account.accountNote = acct_selection_note_edit.text;
+		account.statementNote = statement_note_edit.text;
+		account.jobNote = job_note_edit.text;
+		
+		
+		auto_discount_percent_radio
+		if (auto_discount.selectedValue == "discount_dollars") {
+			account.dollarDiscount = true;
+			account.discountDollarAmt = parseInt(auto_discount_dollar_text.text);
+		} else {
+			account.dollarDiscount = false; 
+			account.discount = parseInt(auto_discount_percent_edit.text);
+						
+		}
+		
+		if (acct_type.selectedValue != null)
+			account.type = acct_type.selectedValue.toString();
+		if (acct_status.selectedValue != null)
+			account.status = acct_status.selectedValue.toString();
+	}
+	
+	private function mapFromAccountData():void{
+		balances = new ArrayCollection([
+			{Aged:"Current", Value:account.balanceCurrent},
+			{Aged:"30", Value:account.balance30Day},
+			{Aged:"60", Value:account.balance60Day},
+			{Aged:"90", Value:account.balance90Day}
+		]);
+		if (account.dollarDiscount) {
+			autoDiscountRadioValue = "discount_dollars";
+		} else {
+			autoDiscountRadioValue = "discount_percent";
+						
+		}
+		acctStatusRadioValue = account.status;
+		acctTypeRadioValue = account.type;
+		logDataService.getAll("CustomerLog");
+		
+		if (account.marketing.businessType != null)
+			business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
+		if (account.shippingMode != null)			
+			ship_via_combo.selectedIndex = findItem(account.shippingMode.name, shippingMethods);
+		if (account.taxCode != null)		
+			tax_code_combo.selectedIndex = findItem(account.taxCode.name, taxCodes);
+		if (account.salesRep != null)
+			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
+		if (account.taxCode!= null)
+			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
+
+		ship_to_address_editor.setAddress(account.shipToAddress);
+        ship_to_contact_editor.setContact(account.contact);
+		bill_to_address_editor.setAddress(account.billToAddress);
+		bill_to_contact_editor.setContact(account.billToContact);
+		
+		if (account.marketing.followup != null)
+			followUp.selectedDate =account.marketing.followup;
+		if (account.marketing.birthDate != null)
+			birthDate.selectedDate =account.marketing.birthDate;
+		if (account.marketing.user3!= null)
+			userDate3.selectedDate =account.marketing.user3;
+		if (account.marketing.user4!= null)
+			userDate4.selectedDate =account.marketing.user4;
+		if (account.marketing.user5!= null)
+			userDate5.selectedDate =account.marketing.user5;
+		ClearLabel();
+	}
+	
+	private function doSave():void {
+		mapToAccountData();
+		dataService.addUpdate(account);                                        		
+	} 
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	private function doSaleRep(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+		if (sales_rep_combo.typedText != null && sales_rep_combo.typedText != "" && sales_rep_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.typedText, salesReps);
+			if (item == -1) {
+				sales = new SalesRep();
+				sales.name = sales_rep_combo.text;
+				salesRepDataService.addUpdate(sales);
+				account.salesRep = sales
+			}
+			else {
+				sales_rep_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doTaxTable(): void{                             
+		var taxtable:TaxTable;
+		var result:Boolean;
+		
+		if (tax_table_combo.typedText != null && tax_table_combo.typedText != "" && tax_table_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.typedText, taxTables);
+			if (item == -1) {
+				taxtable = new TaxTable();
+				taxtable.name = tax_table_combo.text;
+				taxTableDataService.addUpdate(taxtable);
+				account.taxTable = taxtable;
+			}
+			else {
+				tax_table_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doTaxCode(): void{                             
+		var taxcode:TaxCodes;
+		var result:Boolean;
+		
+		if (tax_code_combo.typedText != null && tax_code_combo.typedText != "" && tax_code_combo.selectedIndex == -1) {
+			var item:int = findItem(tax_code_combo.typedText, taxCodes);
+			if (item == -1) {
+				taxcode = new TaxCodes();
+				taxcode.name = tax_code_combo.text;
+				taxCodeDataService.addUpdate(taxcode);
+				account.taxCode = taxcode;
+			}
+			else {
+				tax_table_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doShipVia(): void{                             
+		var shipv:ShippingMethod;
+		var result:Boolean;
+		
+		if (ship_via_combo.typedText != null && ship_via_combo.typedText != "" && ship_via_combo.selectedIndex == -1) {
+			var item:int = findItem(ship_via_combo.typedText, shippingMethods);
+			if (item == -1) {
+				shipv = new ShippingMethod();
+				shipv.name = ship_via_combo.text;
+				shippingMethodDataService.addUpdate(shipv);
+				account.shippingMode = shipv;
+			}
+			else {
+				ship_via_combo.selectedItem = item;
+			}
+		}
+	}
+	private function doBusinessType(): void{                             
+		var business:BusinessType;
+		var result:Boolean;
+		
+		if (business_type_combo.typedText != null && business_type_combo.typedText != "" && business_type_combo.selectedIndex == -1) {
+			var item:int = findItem(business_type_combo.typedText, businessTypes);
+			if (item == -1) {
+				business = new BusinessType();
+				business.name = business_type_combo.text;
+				businessTypeDataService.addUpdate(business);
+				account.marketing.businessType= business;
+			}
+			else {
+				business_type_combo.selectedItem = item;
+			}
+		}
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		this.account = ev.result as Account;
+		dataService.getAll("Account")
+	}
+//// load
+	private function handleLoadResult(ev:ResultEvent):void {
+		accounts = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadSalesReps(ev:ResultEvent):void {
+		var selectedItem:Object = sales_rep_combo.selectedItem;
+		salesReps = ev.result as ArrayCollection;
+		sales_rep_combo.selectedItem = selectedItem;
+	}
+	private function handleLoadBusinessTypes(ev:ResultEvent):void {
+		var selectedItem:Object = business_type_combo.selectedItem;
+		businessTypes = ev.result as ArrayCollection;
+		business_type_combo.selectedItem = selectedItem;
+	}
+	
+	private function handleLoadTaxTables(ev:ResultEvent):void {
+		var selectedItem:Object = tax_table_combo.selectedItem;
+		taxTables = ev.result as ArrayCollection;
+		tax_table_combo.selectedItem= selectedItem;
+	}
+	
+	private function handleLoadTaxCodes(ev:ResultEvent):void {
+		var selectedItem:Object = tax_code_combo.selectedItem;
+		taxCodes = ev.result as ArrayCollection;
+		tax_code_combo.selectedItem = selectedItem;
+	}
+	
+	
+	private function handleLoadShippingMethods(ev:ResultEvent):void {
+		var selectedItem:Object = ship_via_combo.selectedItem;
+		shippingMethods = ev.result as ArrayCollection;
+		ship_via_combo.selectedItem = selectedItem;
+	}
+	
+	private function handleLoadCustomerLogs(ev:ResultEvent):void {
+		
+		customerLogs = ev.result as ArrayCollection;
+	}
+	
+	
+	
+//EndLOAD	
+	
+	private function handleSaveLogResult(ev:ResultEvent):void {
+		logDataService.getAll("CustomerLog");
+	}
+	
+	private function handleDeleteLogResult(ev:ResultEvent):void {
+		logDataService.getAll("CustomerLog");
+	}
+	
+	
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("Account")
+		doNew();
+	}
+		
+	      
+//SAVE 	
+	private function handleSaveBusinessTypeResult(ev:ResultEvent):void {
+		businessTypeDataService.getAll("BusinessType");
+	}      
+	private function handleSaveTaxTableResult(ev:ResultEvent):void {
+		taxTableDataService.getAll("TaxTable");
+	}      
+	private function handleSaveTaxCodeResult(ev:ResultEvent):void {
+		taxCodeDataService.getAll("TaxCodes");
+	}    
+	private function handleSaveShippingMethodResult(ev:ResultEvent):void {
+		shippingMethodDataService.getAll("ShippingMethod");
+	}      
+
+	private function handleSaveSalesRepResult(ev:ResultEvent):void {
+		salesRepDataService.getAll("SalesRep");
+	}   
+	   
+
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+ 
+ 	private function deleteCustomerLog():void {
+ 		var log:CustomerLog = log_dataGrid.selectedItem as CustomerLog;
+ 		logDataService.deleteItem("CustomerLog", log.id);
+ 	}
+ 	
+ 	private function printCustomerLog():void {
+		var myPrintJob:FlexPrintJob = new FlexPrintJob();
+	
+		if (myPrintJob.start()) {
+			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	
+			//Set the print view properties.
+			myPrintDataGrid.width = myPrintJob.pageWidth;
+			myPrintDataGrid.height = myPrintJob.pageHeight;
+	
+			// Set the data provider of the FormPrintView component's data grid
+			// to be the data provider of the displayed data grid.
+			myPrintDataGrid.dataProvider = log_dataGrid.dataProvider;
+			myPrintDataGrid.columns = log_dataGrid.columns;
+			myPrintDataGrid.visible = false;
+			myPrintDataGrid.includeInLayout = false;
+			
+			Application.application.addChild(myPrintDataGrid);
+	
+			if(!myPrintDataGrid.validNextPage) {
+				myPrintJob.addObject(myPrintDataGrid);
+			} else {
+				myPrintJob.addObject(myPrintDataGrid);
+	
+				while(true) {
+					// Move the next page of data to the top of the print grid.
+					myPrintDataGrid.nextPage();
+	
+					if(!myPrintDataGrid.validNextPage) {
+						// This is the last page; queue it and exit the print loop.
+						myPrintJob.addObject(myPrintDataGrid);
+	
+						break;
+					} else {
+						myPrintJob.addObject(myPrintDataGrid);
+					}
+				} 
+	
+			}
+	
+			Application.application.removeChild(myPrintDataGrid);
+			myPrintJob.send();
+	 	}
+ 	}
+ 	private function setMarketing():void{
+ 		
+ 		if ( account.marketing == null)
+ 			account.marketing = new Marketing();
+ 		else{
+ 			if (account.marketing.birthDate == null)
+ 				account.marketing.birthDate = new Date();
+ 			if (account.marketing.followup == null)
+ 				account.marketing.followup = new Date();
+ 			if (account.marketing.user3 == null)
+ 				account.marketing.user3 = new Date();
+ 			if (account.marketing.user4 == null)
+ 				account.marketing.user4 = new Date();
+ 			if (account.marketing.user5 == null)
+ 				account.marketing.user5 = new Date();
+ 			
+ 		}
+ 		if (account.creditCardExpiration == null)
+ 			account.creditCardExpiration = new Date();	
+ 		if ( account.resaleCertExpirationDate == null)
+ 			account.resaleCertExpirationDate = new Date();
+ 			
+ 		
+ 		
+ 	}
+ 	private function setSettings():void{
+ 		
+ 		salesRepDataService.getAll("SalesRep");
+	    businessTypeDataService.getAll("BusinessType");
+	    shippingMethodDataService.getAll("ShippingMethod");
+	    taxTableDataService.getAll("TaxTable");
+	    taxCodeDataService.getAll("TaxCodes");
+ 		
+ 	}
+ 	
+ 	private function addCustomerLog():void {
+ 		var customerLog:CustomerLog = new CustomerLog();
+ 		customerLog.id = 0; // Always created new log entries - don't allow editing old ones.
+ 		customerLog.logEntry = selected_comment_edit.text;
+ 		logDataService.addUpdate(customerLog);
+ 	}
+ 	
+    private function validateForm(event:Event):void 
+    {                    
+        focussedFormControl = event.target as DisplayObject;    
+
+        formIsValid = true;            
+        validate(nameValidator);
+    }
+ 
+    private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+         
+		return currentControlIsValid;
+	}
+    private function changeName(evt:Event):void {
+    	validateForm(evt);
+    	if (name_edit.text != "") {
+	    	if (account.shipToAddress == null) {
+	    		account.shipToAddress = new Address();
+	    		account.shipToAddress.name = name_edit.text;
+	    		account.shipToAddress.street1 = "";
+	    		account.shipToAddress.street2 = "";
+	    		account.shipToAddress.city = "";
+	    		account.shipToAddress.state = "";
+	    		account.shipToAddress.zip = "";
+	    		account.shipToAddress.country = "";
+	    		account.shipToAddress.zone = "";
+	    	}
+	    	if (account.billToAddress == null) {
+	    		account.billToAddress = new Address();
+	    		account.billToAddress.name = name_edit.text;
+	    		account.billToAddress.street1 = "";
+	    		account.billToAddress.street2 = "";
+	    		account.billToAddress.city = "";
+	    		account.billToAddress.state = "";
+	    		account.billToAddress.zip = "";
+	    		account.billToAddress.country = "";
+	    		account.billToAddress.zone = "";
+	    	}
+	    	this.ship_to_address_editor.setAddress(account.shipToAddress);
+	    	this.bill_to_address_editor.setAddress(account.billToAddress);
+	    }
+    }
+   private function ClearLabel():void{
+    	
+    	if (credit_limit_edit.text == "" || credit_limit_edit.text == "0") 
+    		limit.visible = true;
+    	else
+    		limit.visible = false;
+    		
+    	if (monthly_finance_charge_edit.text == "" || monthly_finance_charge_edit.text == "0")
+    		standardratelabel.visible = true;
+    	else
+    		standardratelabel.visible = false;
+    }
+]]>
+                             
+</mx:Script>
+
+<mx:VBox width="100%" height="100%">
+	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
+		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
+			<mx:Canvas label="Address" width="100%" height="100%">
+				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" focusOut="changeName(event)"/>
+				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
+				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.id}"/>
+				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
+				<mx:TextInput x="282" y="38" id="external_ref_edit"  text="{account.externalRef}"/>
+				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
+				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
+				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
+				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
+				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
+				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
+			</mx:Canvas>
+			<mx:Canvas label="Credit Control" width="100%" height="100%">
+				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>
+				<mx:Label x="99" y="12" text="Credit Limit:" textAlign="right"/>
+				<mx:TextInput x="181" y="38" id="due_days_edit" text="{account.termsNet}"/>
+				<mx:TextInput x="181" y="66" id="monthly_finance_charge_edit" text="{account.financeRate}"  focusOut="ClearLabel();"/>
+				<mx:Label x="10" y="68" text="Monthly Finance Charge Pct:" textAlign="right"/>
+				<mx:Label x="45" y="94" text="Finance Charges YTD:" textAlign="right"/>
+				<mx:Label x="45" y="120" text="Current Balance:" textAlign="right" width="128"/>
+				<mx:Label x="181" y="120" text="0.00" textAlign="right" width="160" id="current_balance_edit"/>
+				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160" id="finance_charges_ytd_edit"/>
+				<mx:Label x="36" y="40" text="Due days from posting:" textAlign="right"/>
+				<mx:Text x="349" y="12" text="(Using system limit of 2,500.00)&#xd;" width="348" fontWeight="bold" id="limit"/>
+				<mx:Text x="349" y="40" text="Avg. Days to Pay&#xd;" width="304" fontWeight="bold"/>
+				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)" width="348" fontWeight="bold" id="standardratelabel"/>
+				<mx:CheckBox x="384" y="92" label="Never calculate finance charges" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
+				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="Automatic Discount" dropShadowEnabled="false">
+					<mx:TextInput x="85" y="10" width="132" id="auto_discount_percent_edit" text="{account.discount}"/>
+					<mx:TextInput x="85" y="40" width="132" id="auto_discount_dollar_text" text="{account.discountDollarAmt}"/>
+					<mx:RadioButtonGroup id="auto_discount" selectedValue="{autoDiscountRadioValue}"/>
+					<mx:RadioButton x="10" y="10" label="Percent:" id="auto_discount_percent_radio" value="discount_percent" groupName="auto_discount"/>
+					<mx:RadioButton x="10" y="40" label="Dollars:" id="auto_discount_dollar_radio" value="discount_dollar" groupName="auto_discount"/>
+					<mx:CheckBox x="225" y="40" label="One-time discount" id="one_time_discount_check" selected="{account.oneTimeDiscount}"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="Account Status" dropShadowEnabled="false">
+					<mx:RadioButtonGroup id="acct_status" selectedValue="{acctStatusRadioValue}"/>
+					<mx:RadioButton x="10" y="10" label="New" id="acct_status_new_radio" groupName="acct_status"/>
+					<mx:RadioButton x="138" y="10" label="Current" id="acct_status_current_radio" groupName="acct_status"/>
+					<mx:RadioButton x="138" y="40" label="Delinquent" id="acct_status_delinquent_radio" groupName="acct_status"/>
+					<mx:RadioButton x="303" y="10" label="Inactive" id="acct_status_inactive_radio" groupName="acct_status"/>
+					<mx:RadioButton x="303" y="43" label="Frozen" id="acct_status_frozen_radio" groupName="acct_status"/>
+					<mx:RadioButton x="10" y="40" label="Past Due" id="acct_status_past_due_radio" groupName="acct_status"/>
+				</mx:Panel>
+				<mx:Panel x="420" y="146" width="208" height="241" layout="absolute" title="Type" dropShadowEnabled="false">
+					<mx:RadioButtonGroup id="acct_type" selectedValue="{acctTypeRadioValue}"/>
+					<mx:RadioButton x="10" y="10" label="Full Deposit" id="type_full_deposit_radio" groupName="acct_type" value="full_deposit"/>
+					<mx:RadioButton x="10" y="40" label="Cash only" id="type_cash_only_radio" groupName="acct_type" value="cash_only"/>
+					<mx:RadioButton x="10" y="70" label="Cash/Check/Credit Card" id="type_cash_check_credit_radio" groupName="acct_type" value="cash_check_credit"/>
+					<mx:RadioButton x="10" y="100" label="Charge Account" id="type_charge_account_radio" groupName="acct_type" value="charge_acct"/>
+					<mx:RadioButton x="10" y="130" label="Credit Card on File" id="type_credit_card_on_file_radio" groupName="acct_type" value="credit_card_on_file"/>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Settings" width="100%" height="100%" >
+				<mx:Label x="10" y="10" text="Master Account:" textAlign="right"/>
+				<mx:Label x="10" y="36" text="Sales Rep:" textAlign="right" width="93"/>
+				<mx:Label x="10" y="62" text="Business Type:" textAlign="right" width="93"/>
+				<mx:Label x="10" y="116" text="PO Number:" textAlign="right" width="93"/>
+				<mx:Label x="305" y="234" text="Security level:" textAlign="right" width="93"/>
+				<mx:Text x="111" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
+				<mx:Text x="111" y="10" width="464" id="master_acct_edit"/>
+				<mx:Button x="583" y="8" label="Select..."/>
+				<fc:AutoComplete id="sales_rep_combo" x="111" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
+				<fc:AutoComplete id="business_type_combo" x="111" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
+					
+				<mx:Label x="10" y="90" text="Ship Via:" textAlign="right" width="93"/>
+				<fc:AutoComplete id="ship_via_combo" x="111" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
+				
+				<mx:Label x="10" y="264" text="Default Invoice:" textAlign="right" width="102"/>
+				<mx:ComboBox x="120" y="262" width="160" id="default_invoice_combo"></mx:ComboBox>
+				<mx:Label x="10" y="292" text="Default Estimate:" textAlign="right" width="102"/>
+				<mx:ComboBox x="120" y="290" width="160" id="default_estimate_combo"></mx:ComboBox>
+				<mx:CheckBox x="10" y="142" label="PO Required on invoices" width="236" id="po_required_check" selected="{account.poRequired}"/>
+				<mx:CheckBox x="10" y="172" label="Do not generate statements" width="236" id="do_not_generate_statements_check" selected="{account.generateStatements}"/>
+				<mx:CheckBox x="10" y="202" label="Account is commissioned" width="236" id="account_is_commissioned" selected="{account.payCommissions}"/>
+				<mx:CheckBox x="10" y="232" label="Always file originals" width="236" id="always_file_originals" selected="{account.fileOriginals}"/>
+				<mx:Panel x="305" y="38" width="351" height="186" layout="absolute" title="Tax Setup" dropShadowEnabled="false">
+					<mx:Label x="0" y="12" text="Tax Table:" textAlign="right" width="93"/>
+					
+					<fc:AutoComplete id="tax_table_combo" x="101" y="10" width="160" dataProvider="{taxTables}"  labelField="name" focusOut="doTaxTable()" lookAhead="true" />
+					<fc:AutoComplete id="tax_code_combo" x="101" y="38" width="160" dataProvider="{taxCodes}"  labelField="name" focusOut="doTaxCode()" lookAhead="true" />
+			
+					<mx:Label x="0" y="38" text="Tax Code:" textAlign="right" width="93"/>
+					<mx:Label x="10" y="64" text="Resale #:" textAlign="right" width="83"/>
+					<mx:TextInput x="101" y="64" width="160" id="resale_number_edit"  text="{account.resaleNumber}"/>
+					<mx:Label x="10" y="90" text="Cert Expires:" textAlign="right" width="83"/>
+					<mx:CheckBox x="101" y="116" label="Tax Exempt" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
+					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="318" width="350" height="103" layout="absolute" title="Charges Setup" dropShadowEnabled="false">
+					<mx:Label x="10" y="10" text="Invoice &amp; Estimate Charges:"/>
+					<mx:Label x="94" y="36" text="Job Charges:"/>
+					<mx:Button x="181" y="8" label="Edit..." id="inv_estimate_charges_edit"/>
+					<mx:Button x="181" y="34" label="Edit..." id="job_charges_edit"/>
+				</mx:Panel>
+				<mx:TextInput x="406" y="232" id="security_level_edit"/>
+			</mx:Canvas>
+			<mx:Canvas label="Sales Info" width="100%" height="100%">
+				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="Balance" dropShadowEnabled="false">
+					<mx:Label x="22" y="10" text="Current:"/>
+					<mx:Label x="18" y="36" text="30 Days:"/>
+					<mx:Text x="81" y="10" width="64" id="balance_current_text"  text="{account.balance}"/>
+					<mx:Label x="181" y="10" text="Acct Status:"/>
+					<mx:Label x="168" y="36" text="POS Charges:"/>
+					<mx:Text x="259" y="36" text="&#xd;&#xd;" width="88" textAlign="right" height="18" id="pos_charges_text"/>
+					<mx:Label x="153" y="64" text="Current Balance:"/>
+					<mx:Text x="259" y="10" width="88" textAlign="right" height="18" id="acct_status_text"  text="{account.status}"/>
+					<mx:Text x="259" y="64" width="88" textAlign="right" height="18" id="current_balance_text" text="{account.balanceCurrent}"/>
+					<mx:Text x="81" y="36" width="64" id="balance_30_day_text" text="{account.balance30Day}"/>
+					<mx:Label x="18" y="62" text="60 Days:"/>
+					<mx:Text x="81" y="62" width="64" id="balance_60_day_text" text="{account.balance60Day}"/>
+					<mx:Label x="10" y="88" text="90+ Days:"/>
+					<mx:Text x="81" y="88" width="64" id="balance_90_day_text" text="{account.balance90Day}"/>
+					<mx:Button x="259" y="86" label="Age Now" id="age_now_button"/>
+				</mx:Panel>
+				<mx:ColumnChart x="395" y="10" id="balance_chart" width="274" height="163" dataProvider="{balances}" showDataTips="true">
+		            <mx:horizontalAxis>
+		                   <mx:CategoryAxis 
+		                   		dataProvider="{balances}" 
+		                    	categoryField="Aged"
+		                   />
+		            </mx:horizontalAxis>
+		            <mx:series>
+		                   <mx:ColumnSeries 
+		                    	xField="Aged" 
+		                    	yField="Value" 		                   
+		                   />
+		            </mx:series>				
+		        </mx:ColumnChart>
+				<mx:Label x="39" y="181" text="Sales Ranking:"/>
+				<mx:Label x="63" y="207" text="Sales Rep:"/>
+				<mx:Text x="137" y="207" width="64" id="sales_rep_text" text="{account.salesRep.name}"/>
+				<mx:Text x="137" y="181" width="64" id="sales_ranking_text"/>
+				<mx:Panel x="10" y="233" width="377" height="191" layout="absolute" title="Sales History" dropShadowEnabled="false">
+					<mx:Label x="56" y="29" text="Sales"/>
+					<mx:Label x="37" y="55" text="# Orders"/>
+					<mx:Text x="99" y="29" width="64"/>
+					<mx:Text x="99" y="55" width="64"/>
+					<mx:Label x="31" y="81" text="Avg Order"/>
+					<mx:Text x="99" y="81" width="64"/>
+					<mx:Label x="10" y="107" text="Quote:Orders"/>
+					<mx:Text x="99" y="107" width="64"/>
+					<mx:Text x="171" y="29" width="64"/>
+					<mx:Text x="171" y="55" width="64"/>
+					<mx:Text x="171" y="81" width="64"/>
+					<mx:Text x="171" y="107" width="64"/>
+					<mx:Text x="243" y="29" width="64"/>
+					<mx:Text x="243" y="55" width="64"/>
+					<mx:Text x="243" y="81" width="64"/>
+					<mx:Text x="243" y="107" width="64"/>
+					<mx:Label x="99" y="10" text="Month" width="64" textAlign="center" fontWeight="bold"/>
+					<mx:Label x="171" y="10" text="Cur Year" width="64" textAlign="center" fontWeight="bold"/>
+					<mx:Label x="243" y="10" text="Last Year" width="64" textAlign="center" fontWeight="bold"/>
+				</mx:Panel>
+				<mx:Label x="458" y="181" text="Created:"/>
+				<mx:Label x="433" y="207" text="Total Orders:"/>
+				<mx:Text x="520" y="181" width="149" id="created_date_text"/>
+				<mx:Text x="520" y="207" width="149" id="total_orders_qty_text"/>
+				<mx:Label x="445" y="233" text="Last Billed:"/>
+				<mx:Text x="520" y="233" width="149" id="last_billed_text"/>
+				<mx:Label x="426" y="259" text="Last Payment:"/>
+				<mx:Text x="520" y="259" width="149" id="last_payment_date_text"/>
+				<mx:Label x="447" y="285" text="Last Aged:"/>
+				<mx:Text x="520" y="285" width="149" id="last_aged_date_text"/>
+				<mx:Label x="435" y="311" text="Last Invoice:"/>
+				<mx:Text x="520" y="311" width="149" id="last_invoice_date_text"/>
+				<mx:Label x="427" y="337" text="Last Estimate:"/>
+				<mx:Text x="520" y="337" width="149" id="last_estimate_date_text"/>
+				<mx:Label x="435" y="363" text="First Invoice:"/>
+				<mx:Label x="427" y="389" text="First Estimate:"/>
+				<mx:Label x="429" y="415" text="Est Won/Lost:"/>
+				<mx:Text x="520" y="363" width="149" id="first_invoice_date_text"/>
+				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text"/>
+				<mx:Text x="520" y="415" width="149" id="won_lost_text"/>
+			</mx:Canvas>
+			<mx:Canvas label="Log" width="100%" height="100%">
+				<mx:DataGrid x="10" y="10" width="659" height="226" id="log_dataGrid" dataProvider="{customerLogs}">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Created" dataField="modified"/>
+						<mx:DataGridColumn headerText="Comment" dataField="logEntry"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:TextArea x="134" y="244" width="535" height="103" id="selected_comment_edit"/>
+				<mx:Label x="10" y="245" text="Selected Comment:"/>
+				<mx:Button x="589" y="355" label="Delete" width="80" id="delete_log_button" click="deleteCustomerLog()"/>
+				<mx:Button x="501" y="355" label="Add..." width="80" id="add_log_button" click="addCustomerLog()"/>
+				<mx:Button x="337" y="355" label="Print Log" width="80" id="print_log_button" click="printCustomerLog()"/>
+			</mx:Canvas>
+			<mx:Canvas label="Notes" width="100%" height="100%">
+				<mx:TextArea x="10" y="36" editable="true" width="659" height="80" id="acct_selection_note_edit" text= "{account.accountNote}"/>
+				<mx:Label x="10" y="10" text="Account Selection Note:"/>
+				<mx:TextArea x="10" y="150" editable="true" width="659" height="80" id="job_note_edit" text="{account.jobNote}"/>
+				<mx:TextArea x="10" y="264" editable="true" width="659" height="80" id="statement_note_edit" text="{account.statementNote}"/>
+				<mx:Label x="10" y="238" text="Statement Note:"/>
+				<mx:Label x="10" y="124" text="Job Note:"/>
+			</mx:Canvas>
+			<mx:Canvas label="Marketing" width="100%" height="100%" >
+				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
+				<mx:RadioButton x="10" y="10" label="Customer" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
+				<mx:RadioButton x="10" y="36" label="Prospect" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>
+				<mx:CheckBox x="123" y="10" label="Personal account" id="personalAccount" selected="{account.marketing.personalAcct}"/>
+				<mx:CheckBox x="123" y="36" label="Do not mail" id="noMail" selected="{account.marketing.noMail}"/>
+				<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="Company Info" dropShadowEnabled="false">
+					<mx:Label x="12" y="10" text="Num Employees:" textAlign="right"/>
+					<mx:Label x="10" y="38" text="Annual Revenue:" textAlign="right"/>
+					<mx:TextInput x="119" y="38" width="152" id="annualRev" text="{account.marketing.annualRev}"/>
+					<mx:TextInput x="119" y="10" width="152" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
+					<!--<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
+					
+					<fc:AutoComplete id="business_type_combo" x="119" y="64" width="152" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
+				-->
+				</mx:Panel>
+				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="Marketing Dates" dropShadowEnabled="false">
+					<mx:Label x="12" y="10" text="Follow Up:" textAlign="right"/>
+					<mx:Label x="10" y="38" text="Birthdate:" textAlign="right"/>
+					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>
+					<mx:Label x="21" y="94" text="User 4:" textAlign="right"/>
+					<mx:Label x="21" y="122" text="User 5:" textAlign="right"/>
+					<mx:DateField x="94" y="8" id="followUp" text="{account.marketing.followup}" showToday="false" width="136" />
+					<mx:DateField x="94" y="36" id="birthDate" text="{account.marketing.birthDate}" showToday="false" width="136"/>
+					<mx:DateField x="94" y="64" id="userDate3" text="{account.marketing.user3}" showToday="false" width="136"/>
+					<mx:DateField x="94" y="92" id="userDate4" text="{account.marketing.user4}" showToday="false" width="136"/>
+					<mx:DateField x="94" y="120" id="userDate5" text="{account.marketing.user5}" showToday="false" width="136"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="Marketing Tags" dropShadowEnabled="false">
+					<mx:Label x="28" y="10" text="Lead Source:" textAlign="right"/>
+					<mx:Label x="-3" y="38" text="Common Interest:" textAlign="right"/>
+					<mx:TextInput x="114" y="36" width="175" id="commonInterest" text="{account.marketing.commonInterst}"/>
+					<mx:TextInput x="114" y="64" width="175" id="user3Tag"  text="{account.marketing.user6}"/>
+					<mx:Label x="60" y="66" text="User 3:" textAlign="right"/>
+					<mx:TextInput x="114" y="92" width="175" id="user4Tag"  text="{account.marketing.user7}"/>
+					<mx:Label x="60" y="94" text="User 4:" textAlign="right"/>
+					<mx:TextInput x="114" y="118" width="175" id="typeofWork"  text="{account.marketing.typeWork}"/>
+					<mx:Label x="21" y="122" text="Type of Work:" textAlign="right"/>
+					<mx:TextInput x="114" y="8" width="175" id="leadSource"  text="{account.marketing.leadSource}"/>
+					<mx:TextInput x="454" y="38" width="175" id="sportsInterest"  text="{account.marketing.sportsInterst}"/>
+					<mx:TextInput x="454" y="66" width="175" id="user8Tag"  text="{account.marketing.user8}"/>
+					<mx:TextInput x="454" y="94" width="175" id="user9Tag"  text="{account.marketing.user9}"/>
+					<mx:TextInput x="454" y="120" width="175" id="mailerType"  text="{account.marketing.mailerType}"/>
+					<mx:TextInput x="454" y="10" width="175" id="leadSource1"  text="{account.marketing.leadSource2}"/>
+					<mx:Label x="368" y="12" text="Lead Source:" textAlign="right"/>
+					<mx:Label x="359" y="40" text="Sport Interest:" textAlign="right"/>
+					<mx:Label x="400" y="68" text="User 8:" textAlign="right"/>
+					<mx:Label x="400" y="96" text="User 9:" textAlign="right"/>
+					<mx:Label x="372" y="127" text="Mailer Type:" textAlign="right"/>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Templates" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Web" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:TabNavigator>
+		<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
+			<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
+			<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{formIsValid}">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="217" y="10" width="38" height="38" click="doGet();">
+			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
+			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
+			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+	</mx:Canvas>
+</mx:VBox>
+</mx:Panel>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
 		width="100%" height="100%" 
- 		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.view.*" 
+ 		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
  		xmlns:flexlib="http://code.google.com/p/flexlib/" 
  		xmlns:ns2="flexlib.controls.*"
- 		xmlns:business="com.efi.business.*"
- 		xmlns:control="com.efi.control.*">
+ 		xmlns:business="com.efi.printsmith.business.*"
+ 		xmlns:control="com.efi.printsmith.control.*">
 	    <mx:Move 
 	        id="moveLogo" target="{logo}" 
 	        easingFunction="mx.effects.easing.Quadratic.easeIn" effectEnd="endMoveLogo()" duration="2000" xTo="480"
@@ -78,31 +78,31 @@
 
 <mx:Script>
 	<![CDATA[
-		import com.efi.view.Utilities;
-		import com.efi.view.PendingList;
-		import com.efi.view.PriceListPicker;
-		import com.efi.view.PriceListEditor;
-		import com.efi.view.SystemPreferences;
-		import com.efi.view.CashRegister;
-		import com.efi.view.EditInvoice;
-		import com.efi.view.EditUser;
-		import com.efi.vo.Users;
+		import com.efi.printsmith.view.Utilities;
+		import com.efi.printsmith.view.PendingList;
+		import com.efi.printsmith.view.PriceListPicker;
+		import com.efi.printsmith.view.PriceListEditor;
+		import com.efi.printsmith.view.SystemPreferences;
+		import com.efi.printsmith.view.CashRegister;
+		import com.efi.printsmith.view.EditInvoice;
+		import com.efi.printsmith.view.EditUser;
+		import com.efi.printsmith.data.Users;
 		import mx.effects.easing.Quadratic;
-		import com.efi.view.ChargeDefinitions;
-		import com.efi.view.EditCustomer;
-		import com.efi.view.PressDefinitions;
-		import com.efi.view.StockDefinitions;
-		import com.efi.view.CopierDefinitions;
-		import com.efi.view.ClockInOut;
-		import com.efi.view.EditContact;
-		import com.efi.view.EmployeeManager;
-		import com.efi.view.ScheduleManager;
-		import com.efi.view.SecurityManager;
-		import com.efi.view.AccountHistory;
-		import com.efi.view.EstimateHistory;
-		import com.efi.view.Tracker;
-		import com.efi.pages.Debug;
-		import com.efi.vo.InvoiceBase;
+		import com.efi.printsmith.view.ChargeDefinitions;
+		import com.efi.printsmith.view.EditCustomer;
+		import com.efi.printsmith.view.PressDefinitions;
+		import com.efi.printsmith.view.StockDefinitions;
+		import com.efi.printsmith.view.CopierDefinitions;
+		import com.efi.printsmith.view.ClockInOut;
+		import com.efi.printsmith.view.EditContact;
+		import com.efi.printsmith.view.EmployeeManager;
+		import com.efi.printsmith.view.ScheduleManager;
+		import com.efi.printsmith.view.SecurityManager;
+		import com.efi.printsmith.view.AccountHistory;
+		import com.efi.printsmith.view.EstimateHistory;
+		import com.efi.printsmith.view.Tracker;
+		import com.efi.printsmith.pages.Debug;
+		import com.efi.printsmith.data.InvoiceBase;
 		
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
@@ -116,14 +116,14 @@
 		import mx.effects.Zoom;
 		import mx.containers.Panel;
 		import mx.managers.PopUpManager;
-		import com.efi.pages.Login;
+		import com.efi.printsmith.pages.Login;
 		import mx.managers.ToolTipManager;
 		import flash.events.EventDispatcher;
 		import flash.events.TimerEvent;
 		import flash.external.ExternalInterface;
 		import flash.utils.Timer;
-		import com.efi.view.EditCustomer;
-		import com.efi.view.ListUsers;
+		import com.efi.printsmith.view.EditCustomer;
+		import com.efi.printsmith.view.ListUsers;
 		import flexlib.controls.SuperTabBar;
 		import flexlib.events.TabReorderEvent;
 		import flexlib.controls.tabBarClasses.SuperTab;

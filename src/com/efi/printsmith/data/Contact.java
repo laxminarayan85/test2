@@ -118,6 +118,10 @@ public class Contact extends ModelBase {
 	 * @generated
 	 */
 	public static final String CAMPAIGNS = "Campaigns";
+	/**
+	 * @generated
+	 */
+	public static final String CONTACTID = "ContactId";
 
 	/**
 	 * @generated
@@ -496,7 +500,23 @@ public class Contact extends ModelBase {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
 		this.campaigns = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String contactId;
+	/**
+	 * @generated
+ 	 */
+	public String getContactId(){
+		return contactId; 
+	}
 
+	/**
+	 * @generated
+	 */	
+	public void setContactId(String newVal) {
+		this.contactId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -524,6 +544,7 @@ public class Contact extends ModelBase {
 		if (SALUTATION.equals(propertyName)) return getSalutation();
 		if (COMLINKS.equals(propertyName)) return getComLinks();
 		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
+		if (CONTACTID.equals(propertyName)) return getContactId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -554,6 +575,7 @@ public class Contact extends ModelBase {
 		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
 		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
 		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
+		if (CONTACTID.equals(propertyName)) setContactId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -605,6 +627,8 @@ public class Contact extends ModelBase {
 			return new Class<?>[] {java.util.List.class, ComLink.class};		
 		if (CAMPAIGNS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Campaigns.class};		
+		if (CONTACTID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -636,6 +660,7 @@ public class Contact extends ModelBase {
 		if (SALUTATION.equals(propertyName)) return Contact.class;
 		if (COMLINKS.equals(propertyName)) return Contact.class;
 		if (CAMPAIGNS.equals(propertyName)) return Contact.class;
+		if (CONTACTID.equals(propertyName)) return Contact.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -688,6 +713,8 @@ public class Contact extends ModelBase {
 		if (! SmartEquals(getComLinks(), objT.getComLinks()))
 			return false;
 		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
+			return false;
+		if (! SmartEquals(getContactId(), objT.getContactId()))
 			return false;
 		return true;
 	}			

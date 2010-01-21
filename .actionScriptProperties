@@ -22,7 +22,7 @@
 <application path="PSUserDef.mxml"/>
 </applications>
 <modules>
-<module application="flex_src/Snowmass.mxml" destPath="com/efi/view/AccountHistory.swf" optimize="true" sourcePath="flex_src/com/efi/view/AccountHistory.mxml"/>
+<module application="flex_src/Snowmass.mxml" destPath="com/efi/printsmith/view/AccountHistory.swf" optimize="true" sourcePath="flex_src/com/efi/printsmith/view/AccountHistory.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

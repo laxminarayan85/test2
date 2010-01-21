@@ -45,6 +45,10 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String ATTRIBUTE1 = "Attribute1";
+	/**
+	 * @generated
+	 */
 	public static final String RATETABLE = "RateTable";
 	/**
 	 * @generated
@@ -61,6 +65,10 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String ATTRIBUTE2 = "Attribute2";
+	/**
+	 * @generated
+	 */
 	public static final String SETUPMINUTES = "SetupMinutes";
 	/**
 	 * @generated
@@ -73,11 +81,11 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String SPEEDTABLE = "SpeedTable";
+	public static final String COSTINGMETHOD = "CostingMethod";
 	/**
 	 * @generated
 	 */
-	public static final String COSTINGMETHOD = "CostingMethod";
+	public static final String SPEEDTABLE = "SpeedTable";
 
 	/**
 	 * @generated
@@ -120,6 +128,23 @@ public class ChargeCost extends ModelBase {
 	 */	
 	public void setUnitCost(Double newVal) {
 		this.unitCost = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer attribute1;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAttribute1(){
+		return attribute1; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAttribute1(Integer newVal) {
+		this.attribute1 = newVal;
 	}
  	
 	
@@ -192,6 +217,23 @@ public class ChargeCost extends ModelBase {
  	
 	
  	@Basic
+	private Integer attribute2;
+	/**
+	 * @generated
+ 	 */
+	public Integer getAttribute2(){
+		return attribute2; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAttribute2(Integer newVal) {
+		this.attribute2 = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Double setupMinutes;
 	/**
 	 * @generated
@@ -209,18 +251,18 @@ public class ChargeCost extends ModelBase {
  	
 	
  	@Basic
-	private Long piecesPerHour;
+	private Double piecesPerHour;
 	/**
 	 * @generated
  	 */
-	public Long getPiecesPerHour(){
+	public Double getPiecesPerHour(){
 		return piecesPerHour; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPiecesPerHour(Long newVal) {
+	public void setPiecesPerHour(Double newVal) {
 		this.piecesPerHour = newVal;
 	}
  	
@@ -242,23 +284,6 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private SpeedTable speedTable;
-	/**
-	 * @generated
- 	 */
-	public SpeedTable getSpeedTable(){
-		return speedTable; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSpeedTable(SpeedTable newVal) {
-		this.speedTable = newVal;
-	}
- 	
-	
  	@Basic
 	private String costingMethod;
 	/**
@@ -274,6 +299,23 @@ public class ChargeCost extends ModelBase {
 	public void setCostingMethod(String newVal) {
 		this.costingMethod = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private SpeedTable speedTable;
+	/**
+	 * @generated
+ 	 */
+	public SpeedTable getSpeedTable(){
+		return speedTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSpeedTable(SpeedTable newVal) {
+		this.speedTable = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -282,15 +324,17 @@ public class ChargeCost extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (SETUPCOST.equals(propertyName)) return getSetupCost();
 		if (UNITCOST.equals(propertyName)) return getUnitCost();
+		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
 		if (RATETABLE.equals(propertyName)) return getRateTable();
 		if (FIXEDMATERIALS.equals(propertyName)) return getFixedMaterials();
 		if (UNITMATERIALS.equals(propertyName)) return getUnitMaterials();
 		if (LABORRATE.equals(propertyName)) return getLaborRate();
+		if (ATTRIBUTE2.equals(propertyName)) return getAttribute2();
 		if (SETUPMINUTES.equals(propertyName)) return getSetupMinutes();
 		if (PIECESPERHOUR.equals(propertyName)) return getPiecesPerHour();
 		if (TOTALUNITCOST.equals(propertyName)) return getTotalUnitCost();
-		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
 		if (COSTINGMETHOD.equals(propertyName)) return getCostingMethod();
+		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
 		return super.getProperty(propertyName);
 	}
 	
@@ -302,15 +346,17 @@ public class ChargeCost extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (SETUPCOST.equals(propertyName)) setSetupCost((Double)newValue); else
 		if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
 		if (RATETABLE.equals(propertyName)) setRateTable((RateTable)newValue); else
 		if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((Double)newValue); else
 		if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((Double)newValue); else
 		if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+		if (ATTRIBUTE2.equals(propertyName)) setAttribute2((Integer)newValue); else
 		if (SETUPMINUTES.equals(propertyName)) setSetupMinutes((Double)newValue); else
-		if (PIECESPERHOUR.equals(propertyName)) setPiecesPerHour((Long)newValue); else
+		if (PIECESPERHOUR.equals(propertyName)) setPiecesPerHour((Double)newValue); else
 		if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((Double)newValue); else
-		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
 		if (COSTINGMETHOD.equals(propertyName)) setCostingMethod((String)newValue); else
+		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -324,6 +370,8 @@ public class ChargeCost extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (UNITCOST.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (ATTRIBUTE1.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
 		if (RATETABLE.equals(propertyName)) 
 			return new Class<?>[] {RateTable.class};		
 		if (FIXEDMATERIALS.equals(propertyName)) 
@@ -332,16 +380,18 @@ public class ChargeCost extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (LABORRATE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (ATTRIBUTE2.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
 		if (SETUPMINUTES.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (PIECESPERHOUR.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
+			return new Class<?>[] {Double.class};		
 		if (TOTALUNITCOST.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
-		if (SPEEDTABLE.equals(propertyName)) 
-			return new Class<?>[] {SpeedTable.class};		
 		if (COSTINGMETHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (SPEEDTABLE.equals(propertyName)) 
+			return new Class<?>[] {SpeedTable.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -354,15 +404,17 @@ public class ChargeCost extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (SETUPCOST.equals(propertyName)) return ChargeCost.class;
 		if (UNITCOST.equals(propertyName)) return ChargeCost.class;
+		if (ATTRIBUTE1.equals(propertyName)) return ChargeCost.class;
 		if (RATETABLE.equals(propertyName)) return ChargeCost.class;
 		if (FIXEDMATERIALS.equals(propertyName)) return ChargeCost.class;
 		if (UNITMATERIALS.equals(propertyName)) return ChargeCost.class;
 		if (LABORRATE.equals(propertyName)) return ChargeCost.class;
+		if (ATTRIBUTE2.equals(propertyName)) return ChargeCost.class;
 		if (SETUPMINUTES.equals(propertyName)) return ChargeCost.class;
 		if (PIECESPERHOUR.equals(propertyName)) return ChargeCost.class;
 		if (TOTALUNITCOST.equals(propertyName)) return ChargeCost.class;
-		if (SPEEDTABLE.equals(propertyName)) return ChargeCost.class;
 		if (COSTINGMETHOD.equals(propertyName)) return ChargeCost.class;
+		if (SPEEDTABLE.equals(propertyName)) return ChargeCost.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -378,6 +430,8 @@ public class ChargeCost extends ModelBase {
 			return false;
 		if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
 			return false;
+		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+			return false;
 		if (! SmartEquals(getRateTable(), objT.getRateTable()))
 			return false;
 		if (! SmartEquals(getFixedMaterials(), objT.getFixedMaterials()))
@@ -386,15 +440,17 @@ public class ChargeCost extends ModelBase {
 			return false;
 		if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
 			return false;
+		if (! SmartEquals(getAttribute2(), objT.getAttribute2()))
+			return false;
 		if (! SmartEquals(getSetupMinutes(), objT.getSetupMinutes()))
 			return false;
 		if (! SmartEquals(getPiecesPerHour(), objT.getPiecesPerHour()))
 			return false;
 		if (! SmartEquals(getTotalUnitCost(), objT.getTotalUnitCost()))
 			return false;
-		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
-			return false;
 		if (! SmartEquals(getCostingMethod(), objT.getCostingMethod()))
+			return false;
+		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
 			return false;
 		return true;
 	}			

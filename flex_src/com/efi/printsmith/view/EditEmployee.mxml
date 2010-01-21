@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
+width="100%" height="846" title="Employee Editor" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
+creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="pressService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPress(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="copierService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopier(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="priceListService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPriceList(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="chargeService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCharge(event)"/>
+</mx:RemoteObject>
+
+
+<mx:Producer id="producer" destination="employees"/>
+<mx:Consumer id="consumer" destination="employees"  message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+
+<mx:StringValidator id="employeeFirstValidator" source="{firstName_edit}"	property="text"	minLength="2" required="true"/>
+<mx:StringValidator id="employeeLastValidator" source="{lastName_edit}"	property="text"	minLength="2" required="true"/>
+<mx:NumberValidator id= "timeValidator" source="{hour_edit}" property= "text" maxValue="24" minValue="1"/>
+<mx:NumberValidator id= "timeValidator2" source="{minute_edit}" property= "text" maxValue="59" minValue="0" />
+
+
+
+
+<mx:Script> 
+                                  
+<![CDATA[
+	import mx.controls.DateField;
+	
+	import com.efi.printsmith.data.Employee;
+	import com.efi.printsmith.data.Address;                        
+	import com.efi.printsmith.data.Employee;                          
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;    
+    
+    
+   
+    private var enableSave:Boolean = true;
+   	[Bindable]
+    	private var employees:ArrayCollection = new ArrayCollection();
+
+  
+    [Bindable]                                         
+		private var employee:Employee;
+	
+	[Bindable] 
+		 private var presses:ArrayCollection = new ArrayCollection(); 
+	[Bindable] 
+		 private var copiers:ArrayCollection = new ArrayCollection(); 
+	
+	[Bindable] 
+		 private var pricemethods:ArrayCollection = new ArrayCollection();
+	 [Bindable] 
+		 private var charges:ArrayCollection = new ArrayCollection();   
+                    
+    [Bindable]
+    	private var formIsValid:Boolean = false;
+    [Bindable]
+	private var customerWantType:String = "Due_Today";
+	
+    [Bindable]
+	private var employeeStatus:String = "Active";
+	
+    private var focussedFormControl:DisplayObject;
+    
+	public function init():void {
+		//consumer.subscribe();
+	//	notification_consumer.subscribe();  
+		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+		titleWindow.parentContainer = this;
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true;
+		dataService.getAll("Employee");   
+		employee = new Employee();
+		pressService.getAll("PressDefinition");
+		copierService.getAll("CopierDefinition");
+		priceListService.getAll("PricingMethod");
+		chargeService.getAll("ChargeDefinition");
+	}
+	private function messageHandler(message:IMessage):void
+	{
+	}	
+	public function setEmployee(employee2:Employee):void
+	{
+		this.employee = employee2;
+		mapFromEmployeeData();
+	}	
+	private function mapFromEmployeeData():void{
+		
+		address_editor.setAddress(employee.address);
+		
+		customerWantType = employee.customerWant;
+		if (employee.active) 
+			employeeStatus= "Active"
+		else
+			employeeStatus= "InActive"
+	}	
+	
+	
+	private function mapToEmployeeData():void {
+	
+		
+		employee.firstName = firstName_edit.text;
+		employee.lastName = lastName_edit.text;
+		
+		employee.address = address_editor.getAddress();
+		
+		employee.customerWant = Due.selectedValue.toString();
+		
+		if (employee_status.selectedValue == "Active")
+			employee.active= true;
+		else
+			employee.active = false;
+			
+		
+		employee.rate= parseInt(rate_edit.text); 
+		employee.allowOverrideCost = override_cost_check.selected;
+		employee.costingAmounts = hide_cost_amount_check.selected;
+		employee.hideNonReleaseProduction = hide_non_production_items.selected;
+		employee.hideEstimateTimeTracker = hide_est_time_tracker.selected;
+		employee.productionSettings = modify_production_settings.selected;
+		employee.trackerNextLocation = tracker_next_location.selected;
+		employee.trackerClockIn = show_tracker_console.selected;
+		employee.showWorkCenter = show_work_center.selected;
+		employee.pinRequired = requirePin.selected;
+		employee.pin = pin_edit.text;
+		employee.magCardReader = allow_mag_reader.selected
+		employee.includeInvoice = invoice_check.selected;
+		employee.includeEstimate = estimate_check.selected;
+		employee.includeJobs = jobs_check.selected;
+		employee.includeJobCharges = job_charges.selected;
+		employee.includeInvoiceCharges = invoice_level_charges.selected;
+
+		employee.onlyShowProductionParents = show_check_production.selected;
+		employee.allPricingMethods = all_pricing.selected;
+		employee.allChargeTypes = all_charge_types.selected;
+		employee.allPresses	= all_presses.selected;
+		employee.allCopiers	= all_copiers.selected;
+		employee.anyPastDue = any_past_due.selected;
+		employee.showMessageClockin= show_message_clockIn.selected;
+		employee.showMessageClockout = show_message_clockOut.selected;
+		employee.autoHour = parseInt(hour_edit.text);
+		employee.autoMin = parseInt(minute_edit.text);
+		employee.message = message.text;
+	
+			
+	}
+	
+	private function doSave():void {
+		mapToEmployeeData();
+		dataService.addUpdate(employee); 
+		                             		
+	} 
+	
+		
+    private function doNew():void {
+	    employee = new Employee();
+	    setEmployee(employee);
+	 	
+	}  
+	private function doDelete():void {
+	    dataService.deleteItem("Employee",employee.id);
+	 	
+	}  
+	private function doGet():void{
+		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.formIsEmpty = true; 
+	   	    
+	}    
+	private function doNext():void {  
+		var itemp:int;
+		itemp = employees.getItemIndex(employee); 
+		itemp++;
+		if (itemp == employees.length){
+			itemp = employees.length - 1;
+		}
+		employee = employees.getItemAt(itemp,0) as Employee;   
+	    setEmployee(employee);                         
+	}
+	private function doPrev():void {              
+	    var itemp:int;
+		itemp = employees.getItemIndex(employee); 
+		itemp--;
+		if (itemp < 0){
+			itemp = 0; 
+		}
+		employee = employees.getItemAt(itemp,0) as Employee;   
+	    setEmployee(employee);                                           
+	}                                                	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.accounts = "*";
+		//producer.send(message);
+	}      
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	
+	
+	
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		
+		this.employee = ev.result as Employee;
+		dataService.getAll("Employee")
+		
+	}
+	
+     
+	private function handleLoadResult(ev:ResultEvent):void {
+		employees = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadPress(ev:ResultEvent):void {
+	 	
+	 	presses = ev.result as ArrayCollection;
+		
+	}   
+	private function handleLoadCopier(ev:ResultEvent):void {
+	 	
+	 	copiers = ev.result as ArrayCollection;
+		
+	} 
+	private function handleLoadCharge(ev:ResultEvent):void {
+	 	
+	 	charges = ev.result as ArrayCollection;
+		
+	}     
+	private function handleLoadPriceList(ev:ResultEvent):void {
+	 	
+	 	pricemethods = ev.result as ArrayCollection;
+		
+	}   
+	
+	private function handleDeleteResult(ev:ResultEvent):void {
+		dataService.getAll("Employee")
+		doNew();
+	}
+	
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	private function validateForm(event:Event):void 
+    {                    
+        focussedFormControl = event.target as DisplayObject;    
+
+        formIsValid = true;            
+
+        validate(employeeFirstValidator);
+        validate(employeeLastValidator);
+        validate(timeValidator);
+        validate(timeValidator2)
+      
+        
+        
+    }
+ 
+    private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+         
+		return currentControlIsValid;
+	}
+	private function doShowTime():void{
+		var temp1:String;
+		var temp2:String;
+		var ampm: String;
+		var hour:int;
+		var min:int;
+		if (formIsValid){
+			temp1 = hour_edit.text;
+			hour = parseInt(hour_edit.text);
+			temp2 = minute_edit.text;	
+			if ( hour > 12){
+				ampm = 'PM';
+				temp1= (hour - 12).toString();
+			}
+			else
+				ampm = 'AM';
+			
+			real_time.text = temp1+":"+temp2+ampm;
+			}
+	}
+]]>
+                             
+</mx:Script>
+	<mx:Canvas width="100%" height="100%">
+		<mx:Button width="38" height="38" click="doNext();" x="56" y="10">
+			<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="38" height="38" click="doGet();" x="217" y="10">
+			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="38" height="38" click="doPrev();" x="10" y="10">
+			<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
+			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="314" y="10" width="38" height="38" click="doDelete();">
+			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="309" y="46" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="493" y="10" width="38" height="38">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:TabNavigator x="0" y="80" width="895" height="100%" creationPolicy="all">
+			<mx:Canvas label="Settings" width="100%" height="100%">	
+				<mx:Label x="51" y="19" text="ID Number:" width="71" textAlign="right"/>
+				<mx:Text x="143" y="17" id="employeeID" text="{employee.id}" width="106" />
+				<mx:Label x="47" y="80" text="First Name:" textAlign="right"/>
+				<mx:Label x="47" y="106" text="Last Name:" textAlign="right"/>
+				<!--<mx:Label x="73" y="132" text="Street:"/>-->
+				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
+				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
+				<ns1:AddressEditor x="381" y="78" id="address_editor" height="157" width="325"/>
+				<!--<mx:TextInput x="124" y="130" id="street_edit" text="{employee.address.street1}" width="205"/>
+				<mx:TextInput x="124" y="160" id="street1_edit" text="{employee.address.street2}" width="205"/>
+				<mx:Label x="81" y="193" text="City:"/>
+				<ns1:AutoComplete x="124" y="191" id="citycombo" dataProvider="{citys}" width="205" labelField="name" focusOut="doCity()" lookAhead="true" />
+				
+				<mx:Label x="77" y="219" text="State:"/>
+				<ns1:AutoComplete x="124" y="221" width="80" id="statecombo" dataProvider="{states1}" labelField="name" focusOut="doState()" lookAhead="true"/>
+				<mx:Label x="56" y="254" text="Zip Code:"/>
+				<ns1:AutoComplete x="124" y="252" id="zipcombo" dataProvider="{zips}" width="205" labelField="name" focusOut="doZip()" lookAhead="true" change=""/>
+				<mx:Label x="63" y="280" text="Country:"/>
+				<ns1:AutoComplete x="124" y="278" id="countrycombo" dataProvider="{countrys}" width="205" labelField="name" focusOut="doCountry()" lookAhead="true"/>-->
+				<mx:Label x="73" y="136" text="Phone:" textAlign="right"/>
+				<mx:Label x="73" y="164" text="Mobile:" textAlign="right"/>
+				<mx:Label x="79" y="190" text="Email:" textAlign="right"/>
+				<mx:Label x="88" y="216" text="SSN:" textAlign="right"/>
+				<mx:Label x="41" y="246" text="Export Code:" />
+				<mx:TextInput x="127" y="134" id="phone_edit"/>
+				<mx:TextInput x="127" y="162" id="mobile_edit"/>
+				<mx:TextInput x="127" y="188" id="email_edit"/>
+				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.sSN}"/>
+				<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
+			</mx:Canvas>
+			<mx:Canvas label="Personal" width="100%" height="100%">	
+				<mx:Label x="10" y="42" text="Rate:"/>
+				<mx:Panel x="10" y="68" width="295" height="133" layout="absolute" title="Status">
+					<mx:RadioButtonGroup  id="employee_status" selectedValue="{employeeStatus}"/>
+					<mx:RadioButton x="10" y="19" label="Active" groupName="employee_status" width="78" value="Active"/>
+					<mx:RadioButton x="10" y="45" label="Inactive" groupName="employee_status" value="InActive"/>
+				</mx:Panel>
+				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="PIN Settings">
+					<mx:CheckBox x="10" y="10" label="Require PIN" id="requirePin" selected="{employee.pinRequired}"/>
+					<mx:Label x="10" y="40" text="PIN:"/>
+					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>
+				</mx:Panel>
+				<mx:TextInput x="54" y="40" id="rate_edit" text="{employee.rate}"/>
+				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="Editable Production Options">
+					<mx:CheckBox x="10" y="10" label="Allowed to Overide Cost" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
+					<mx:CheckBox x="10" y="40" label="Hide Costing Amounts" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
+					<mx:CheckBox x="10" y="70" label="Hide Items not released to Production" id="hide_non_production_items" selected="{employee.hideNonReleaseProduction}"/>
+					<mx:CheckBox x="10" y="100" label="Hide Estimated time in Tracker Console" id="hide_est_time_tracker" selected="{employee.hideEstimateTimeTracker}"/>
+					<mx:CheckBox x="10" y="130" label="Allow to modify production settings" id="modify_production_settings" selected="{employee.productionSettings}"/>
+					<mx:CheckBox x="10" y="160" label="Allow Tracker Next location to be modified" id="tracker_next_location" selected="{employee.trackerNextLocation}"/>
+					<mx:CheckBox x="10" y="190" label="Auto  show Tracker Console at clock-in" id="show_tracker_console" selected="{employee.trackerClockIn}"/>
+					<mx:CheckBox x="10" y="218" label="Auto show My Work Center at clock-in" id="show_work_center" selected="{employee.showWorkCenter}"/>
+				</mx:Panel>
+				<mx:Panel x="368" y="255" width="349" height="86" layout="absolute" title="Magnetic Card Reader Authentication">
+					<mx:CheckBox x="10" y="10" label="Allow authentication with magnetic card..." id="allow_mag_reader" selected="{employee.magCardReader}"/>
+				</mx:Panel>
+				<mx:Panel x="368" y="405" width="349" height="109" layout="absolute" title="Auto Out">
+					<mx:Label x="22" y="10" text="Hour:" textAlign="right"/>
+					<mx:Label x="11" y="36" text="Minute:" textAlign="right"/>
+					<mx:TextInput x="66" y="8" width="79" id="hour_edit" focusOut="doShowTime();" change="validateForm(event);" text="{employee.autoHour}"/>
+					<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
+					<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="532" width="796" height="185" layout="absolute" title="Message" >
+					<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
+					<mx:CheckBox x="10" y="97" label="Show Message on Clock In" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
+					<mx:CheckBox x="239" y="97" label="Show Message on Clock Out" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>
+				</mx:Panel>
+			</mx:Canvas>
+			<mx:Canvas label="Production Filter" width="100%" height="100%">	
+				<mx:Panel x="10" y="30" width="185" height="255" layout="absolute" title="Include">
+					<mx:CheckBox x="10" y="10" label="Invoice" id="invoice_check" selected="{employee.includeInvoice}"/>
+					<mx:CheckBox x="10" y="40" label="Estimate" id="estimate_check" selected="{employee.includeEstimate}"/>
+					<mx:CheckBox x="38" y="70" label="Jobs" id="jobs_check" selected="{employee.includeJobs}"/>
+					<mx:CheckBox x="66" y="100" label="Charges" id="job_charges" selected="{employee.includeJobCharges}"/>
+					<mx:CheckBox x="10" y="143" label="Invoice Level Charges" id="invoice_level_charges" selected="{employee.includeInvoiceCharges}"/>
+				</mx:Panel>
+				<mx:Panel x="215" y="30" width="218" height="255" layout="absolute" title="Customer Wanted By">
+					<mx:RadioButtonGroup id="Due" selectedValue="{customerWantType}"/>
+					<mx:RadioButton x="10" y="20" label="Due Today" groupName="Due" id="dueToday" value="Due_Today"/>
+					<mx:RadioButton x="10" y="46" label="Due Tomorrow" groupName="Due" id="dueTomorrow" value="Due_Tomorrow"/>
+					<mx:RadioButton x="10" y="76" label="Due This Week" groupName="Due" height="18" id="duethisweek" value="Due_This_Week"/>
+					<mx:RadioButton x="10" y="98" label="Due Next (7) days" groupName="Due" id="duenextweek" value="Due_Next"/>
+					<mx:RadioButton x="10" y="124" label="Due Any Time" groupName="Due" id="dueanytime" value="Due_Any_Time"/>
+					<mx:CheckBox x="10" y="154" label="Any Past Due" id="any_past_due" selected="{employee.anyPastDue}"/>
+				</mx:Panel>
+				<mx:Panel x="454" y="30" width="279" height="255" layout="absolute" title="Production Parents">
+					<mx:List x="10" y="35" id="production_parents" width="230"></mx:List>
+					<mx:CheckBox x="10" y="5" label="Only Show checked Production Parents" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
+				</mx:Panel>
+				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="Pricing Methods">
+					<mx:CheckBox x="10" y="10" label="Use All Pricing Methods" id="all_pricing" selected="{employee.allPricingMethods}"/>
+					<mx:List x="10" y="40" width="283" height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="name"></mx:List>
+				</mx:Panel>
+				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="Charge Type">
+					<mx:CheckBox x="10" y="10" label="Use All Charge Types" id="all_charge_types" selected="{employee.allChargeTypes}"/>
+					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name"></mx:List>
+				</mx:Panel>
+				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="Presses">
+					<mx:CheckBox x="10" y="10" label="Use all Presses" id="all_presses" selected="{employee.allPresses}"/>
+					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name"></mx:List>
+				</mx:Panel>
+				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="Copiers">
+					<mx:CheckBox x="10" y="10" label="Use all Copiers" id="all_copiers"  selected="{employee.allCopiers}"/>
+					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name"></mx:List>
+				</mx:Panel>
+			</mx:Canvas>	
+		</mx:TabNavigator>
+		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+		<mx:Label x="484" y="46" text="Revert" width="58" textAlign="center"/>
+		<mx:Button x="385" y="10" label="Print" height="38" width="38"  id="print_button" icon="@Embed(source='../../../../assets/print.png')"/>
+		<mx:Label x="388" y="46" text="Print"/>
+	</mx:Canvas>
+
+</mx:TitleWindow>

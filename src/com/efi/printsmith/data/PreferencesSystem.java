@@ -805,18 +805,18 @@ public class PreferencesSystem extends ModelBase {
  	
 	
  	@Basic
-	private String workFirstDayOfWeek;
+	private Integer workFirstDayOfWeek;
 	/**
 	 * @generated
  	 */
-	public String getWorkFirstDayOfWeek(){
+	public Integer getWorkFirstDayOfWeek(){
 		return workFirstDayOfWeek; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setWorkFirstDayOfWeek(String newVal) {
+	public void setWorkFirstDayOfWeek(Integer newVal) {
 		this.workFirstDayOfWeek = newVal;
 	}
  	
@@ -1365,7 +1365,7 @@ public class PreferencesSystem extends ModelBase {
 		if (WORKTHURSDAY.equals(propertyName)) setWorkThursday((Boolean)newValue); else
 		if (WORKFRIDAY.equals(propertyName)) setWorkFriday((Boolean)newValue); else
 		if (WORKSATURDAY.equals(propertyName)) setWorkSaturday((Boolean)newValue); else
-		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) setWorkFirstDayOfWeek((String)newValue); else
+		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) setWorkFirstDayOfWeek((Integer)newValue); else
 		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) setFutureDatesExcludeClosed((Boolean)newValue); else
 		if (NUMBERSINTEGERS.equals(propertyName)) setNumbersIntegers((String)newValue); else
 		if (NUMBERSPERCENTAGES.equals(propertyName)) setNumbersPercentages((String)newValue); else
@@ -1464,7 +1464,7 @@ public class PreferencesSystem extends ModelBase {
 		if (WORKSATURDAY.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (WORKFIRSTDAYOFWEEK.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Integer.class};		
 		if (FUTUREDATESEXCLUDECLOSED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (NUMBERSINTEGERS.equals(propertyName)) 

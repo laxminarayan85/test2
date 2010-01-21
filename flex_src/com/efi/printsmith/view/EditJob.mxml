@@ -1,0 +1,1311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:view="com.efi.printsmith.view.*"
+				xmlns:vo="com.efi.printsmith.vo.*"
+				xmlns:fc="http://www.adobe.com/2006/fc"
+				title="Job Editor"
+				creationComplete="init()"
+				label="Customer Editor"
+				name="Customer Editor"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off"
+				showCloseButton="true"
+				close="doDelete()" width="950" height="642" xmlns:ns1="com.efi.printsmith.components.*">
+
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="pressDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadPressResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dimensionDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadDimensionResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="pricingMethodDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadPricingMethodResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="locationDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadLocationResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="productDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadProductResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="chargeDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="chargeCommandDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeCommandResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.PriceJobEvent;
+			import com.efi.printsmith.data.Invoice;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.PressDefinition;
+			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.Account;
+			import com.efi.printsmith.data.ProductCode;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.ChargeCategory;
+			import com.efi.printsmith.data.ChargeCommand;
+			import com.efi.printsmith.data.StockDefinition;
+			import com.efi.printsmith.data.PreferencesSystem;
+
+			import com.efi.printsmith.events.JobEditCompleteEvent;
+			import com.efi.printsmith.events.StockPickerSelectEvent;
+			import com.efi.printsmith.events.JobEditCompleteEvent;
+			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+
+			import com.efi.printsmith.pages.JobMethodPicker;
+			import com.efi.printsmith.view.StockPicker;
+
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.printing.FlexPrintJob;
+			import mx.printing.PrintAdvancedDataGrid;
+			import mx.printing.PrintDataGrid;
+			import mx.core.Application;
+			import mx.validators.Validator;
+			import mx.events.ValidationResultEvent;
+			import mx.collections.ICollectionView;
+			import mx.core.UIComponent;
+			
+			[Bindable]                                         
+		    private var systemPreferences:PreferencesSystem;
+		
+			[Bindable]                                
+			private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+
+			[Bindable]
+			private var dimensions:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			private var accounts:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			private var presses:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			private var locations:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			private var productCodes:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			public var job:Job=null;
+
+			[Bindable]
+			private var invoice:Invoice;
+
+			[Bindable]
+			private var chargeCommands:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			public var tempOpen:Object=new Object();
+
+			[Bindable]
+			public var refreshSO:Boolean=false;
+
+			[Bindable]
+			private var charges:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			private var pricingMethods:ArrayCollection=new ArrayCollection();
+
+			private var focussedFormControl:DisplayObject;
+
+			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+				systemPreferencesArray = ev.result as ArrayCollection;
+				if (systemPreferencesArray.length > 0)
+				{
+					systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+					check_taxtable.visible = systemPreferences.disableNonTaxableOptions
+				}else {
+					check_taxtable.visible = true;
+				}
+		
+			}	                                 
+
+			public function init():void
+			{
+				this.height = parent.height - 80;
+				PopUpManager.centerPopUp(this);
+				pressDataService.getAll("PressDefinition");
+				locationDataService.getAll("Location");
+				productDataService.getAll("ProductCode");
+				chargeDataService.getAll("Charge");
+				chargeCommandDataService.getAll("ChargeCommand");
+				pricingMethodDataService.getAll("PricingMethod");
+				dimensionDataService.getAll("Dimension");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");
+				if (job == null) {
+					job=new Job();
+					job.parentSize = "";
+					job.runSize = "";
+					job.finishSize = "";
+					job.foldedSize = "";
+					job.frontColors = 1;
+					job.frontPasses = 1;
+					job.inSetsOf = 1;
+					job.sheets = 1;
+					job.numOn = 1;
+					job.numUp = 1;
+					
+					var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
+					jobMethodPicker.setStyle("borderAlpha", 0.9);					
+				}				
+			}
+
+			private function findItem(name:String, array:ArrayCollection):int
+			{
+				for each (var element:Object in array)
+				{
+					if (name == element.name)
+					{ 
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
+
+			private function doNew():void
+			{
+				job=new Job();
+				setJob(job);
+			}
+
+			private function doDelete():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			public function getInvoice():Invoice
+			{
+				return this.invoice;
+			}
+
+			public function setInvoice(invoice:Invoice):void
+			{
+				this.invoice=invoice;
+			}
+
+			private function doGet():void
+			{
+
+			}
+
+			public function setJob(job2:Job):void
+			{
+				this.job=job2;
+				mapFromJobData();
+			}
+
+			private function mapToJobData():void
+			{
+				job.binderyWaste=parseInt(bindery_waste.text);
+				job.brokered=check_brokered.selected;
+				//job.charges =
+				job.comment=job_comment.text;
+				job.costingPress=job_costing_press.selectedItem as PressDefinition;
+				//job.press = job_press.selectedItem as PressDefinition;
+				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
+				job.productCode=product.selectedItem as ProductCode;
+				
+				if (job_description.text != "") {
+					job.description=job_description.text;
+				} else {
+					job.description = this.job_type.selectedLabel;
+				}
+				
+				job.estWaste=parseInt(est_waste.text);
+				job.finished=checked_finished.selected;
+				job.inSetsOf=parseInt(sets_of.text);
+				job.numOn=parseInt(job_on.text);
+				job.oversUnders=parseInt(job_over_under.text);
+				job.qtyOrdered=parseInt(job_ordered.text);
+				job.sheets=parseInt(job_sheets.text);
+				job.signatures=parseInt(num_of_sig.text);
+				job.taxable=check_taxtable.selected;
+				job.numUp=parseInt(job_up.text);
+				job.jobNotes=job_notes.text;
+				job.jobTicketNotes=check_job_notes.selected;
+				job.frontColors=parseInt(this.front_colors_text.text);
+				//job.frontInks=this.front_inks_text.text;
+				job.frontPasses=parseInt(this.front_passes_text.text);
+				job.frontWashes=parseInt(this.front_washes_text.text);
+				job.backColors=parseInt(this.back_colors_text.text);
+				//job.backInks=this.back_inks_text;
+				job.backPasses=parseInt(this.back_passes_text.text);
+				job.backWashes=parseInt(this.back_washes_text.text);
+				job.location=job_location.selectedItem as Location;
+				if (run_method_radiogroup.selectedValue != null)
+					job.runMethod=run_method_radiogroup.selectedValue.toString();
+				
+				job.parentSize = job_parent.text;
+				job.runSize = job_size.text;
+				job.foldedSize = job_fold_size.text;
+				job.finishSize = job_finish_size.text;
+			}
+
+			private function mapFromJobData():void
+			{
+
+				if (job.pricingPress != null)
+					job_pricing_press.selectedIndex=findItem(job.pricingPress.name, presses);
+				if (job.costingPress != null)
+					job_costing_press.selectedIndex=findItem(job.costingPress.name, presses);
+				if (job.location != null)
+					job_location.selectedIndex=findItem(job.location.name, locations);
+				if (job.productCode != null)
+					product.selectedIndex=findItem(job.productCode.name, productCodes);
+				run_method_radiogroup.selectedValue=job.runMethod;
+
+			}
+
+			private function doSave():void
+			{
+				mapToJobData();
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+				dispatchEvent(jobEditCompleteEvent);
+
+				PopUpManager.removePopUp(this);
+			}
+
+			private function handleLoadResult(ev:ResultEvent):void
+			{
+				//jobs = ev.result as ArrayCollection;
+			}
+
+			private function handleLoadDimensionResult(ev:ResultEvent):void
+			{
+				dimensions=ev.result as ArrayCollection;
+
+				this.job_parent.selectedIndex = findItem(job.parentSize, dimensions);
+				this.job_size.selectedIndex = findItem(job.runSize, dimensions);
+				this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensions);
+				this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensions);
+
+			}
+			
+			private function handleLoadPressResult(ev:ResultEvent):void
+			{
+				presses=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadLocationResult(ev:ResultEvent):void
+			{
+				locations=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadProductResult(ev:ResultEvent):void
+			{
+				productCodes=ev.result as ArrayCollection;
+			}
+
+			private function handleDeleteResult(ev:ResultEvent):void
+			{
+			}
+
+			private function handleLoadChargeResult(ev:ResultEvent):void
+			{
+				charges=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadChargeCommandResult(ev:ResultEvent):void
+			{
+				chargeCommands=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadPricingMethodResult(ev:ResultEvent):void
+			{
+				pricingMethods=ev.result as ArrayCollection;
+			}
+
+			private function handleSaveResult(ev:ResultEvent):void
+			{
+
+			}
+
+
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+
+
+
+			private function validateForm(event:Event):void
+			{
+				focussedFormControl=event.target as DisplayObject;
+
+				//formIsValid = true;                    
+
+			}
+
+			private function validate(validator:Validator):Boolean
+			{
+//        var validatorSource:DisplayObject = validator.source as DisplayObject;
+//     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+//        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+//        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+//		formIsValid = formIsValid && currentControlIsValid;
+//         
+//		return currentControlIsValid;
+				return true;
+			}
+
+
+			private function doAddCharge():void
+			{
+				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
+				chargePicker.charges = this.job.charges;
+				chargePicker.setStyle("borderAlpha", 0.9);
+				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
+			}
+
+			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
+			{
+				this.job.charges=evt.chargeArray;
+			}
+
+			private function doDeleteCharge():void
+			{
+				if (invoice_charge_datagrid.selectedItem != null)
+				{
+					var charge:Charge=invoice_charge_datagrid.selectedItem as Charge;
+					var index:int=this.job.charges.getItemIndex(charge);
+					this.job.charges.removeItemAt(index);
+				}
+			}
+
+			private function changeStockDefinition():void
+			{
+				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+				stockPickerWindow.setStyle("borderAlpha", 0.9);
+				stockPickerWindow.formIsEmpty=true;
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
+			}
+
+			private function handleStockPickerCancel(evt:StockPickerSelectEvent):void
+			{
+				if (this.job.stock == null)
+				{
+					this.job.stock=new StockDefinition();
+				}
+			}
+
+			private function handleStockPickerSelect(evt:StockPickerSelectEvent):void
+			{
+				if (evt.stockDefinition != null)
+				{
+					this.job.stock=evt.stockDefinition;
+					this.job.parentSize = this.job.stock.normalRunSize;
+					this.job.runSize = this.job.stock.normalRunSize;
+					this.job.finishSize = this.job.stock.normalRunSize;
+					updatePrice();
+				}
+				else
+				{
+					this.job.stock=new StockDefinition();
+					Alert.show("Stock Picker returned a null stock", "Error");
+				}
+			}
+
+			private function handleStockPickerNew(evt:StockPickerSelectEvent):void
+			{
+				this.job.stock=new StockDefinition();
+			}
+			
+			private function handleFocusOutEvent(evt:FocusEvent):void
+			{
+				if (evt.target == job_parent) {
+					job.parentSize = job_parent.text;
+				} else if (evt.target == job_size) {
+					job.runSize = job_size.text;
+				} else if (evt.target == job_finish_size) {
+					job.finishSize = job_finish_size.text;
+				} else if (evt.target == job_fold_size) {
+					job.foldedSize = job_fold_size.text;
+				}
+				super.focusOutHandler(evt);
+			}
+			private function updatePrice():void
+			{
+				mapToJobData();
+				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+				priceJobEvent.dispatch();
+				pricing_throbber.visible = true;
+				pricing_throbber.play();
+			}
+			
+			private function handlePriceJobComplete(ev:ResultEvent):void
+			{
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;		
+				var localJob:Job = ev.result as Job;
+				
+				job.price = localJob.price;	
+			}
+			
+			private function handlePriceJobFault(ev:ResultEvent):void
+			{
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;			
+			}
+			
+			private function fieldChanged(evt:FocusEvent):void
+			{	
+				var doUpdatePrice:Boolean = false;
+				mapToJobData();
+				switch (evt.currentTarget) {
+				case job_ordered:
+					doUpdatePrice = true;
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					break;
+				case job_over_under:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case sets_of:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case this.job_sheets:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case this.job_up:
+					doUpdatePrice = true;
+					break;
+				case this.job_on:
+					doUpdatePrice = true;
+					break;
+				case this.job_press:
+					doUpdatePrice = true;
+					break;
+				case this.bindery_waste:
+					doUpdatePrice = true;
+					break;
+				case this.est_waste:
+					doUpdatePrice = true;
+					break;
+					
+				}
+				if (doUpdatePrice) updatePrice();
+			}
+		]]>
+
+	</mx:Script>
+
+	<mx:VBox width="100%"
+			 height="597"
+			 creationPolicy="all">
+		<mx:Canvas width="923"
+				   height="599"
+				   verticalScrollPolicy="auto"
+				   fontSize="9">
+			<mx:LinkButton x="10"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doSave();"
+					   id="file_button">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="10"
+					  y="46"
+					  text="Save"
+					  width="38"
+					  textAlign="center"/>
+			<mx:LinkButton x="150.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doGet();"
+					   id="note_pad_button">
+				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="139"
+					  y="46"
+					  text="Job Notes"
+					  width="61"
+					  textAlign="center"/>
+			<mx:LinkButton x="253"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doNew();"
+					   id="new_job_button">
+				<mx:icon>@Embed(source='../../../../assets/preview.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:LinkButton x="67"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doDelete();"
+					   id="cancel_button">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="56"
+					  y="46"
+					  text="Cancel"
+					  width="58"
+					  textAlign="center"/>
+			<mx:LinkButton x="396.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="tickets_button">
+				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:LinkButton x="503"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="print_button">
+				<mx:icon>@Embed(source='../../../../assets/production.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:LinkButton x="564"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="preview_button">
+				<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="554"
+					  y="46"
+					  text="Submit"
+					  width="58"
+					  textAlign="center"/>
+			<mx:Label x="488"
+					  y="46"
+					  text="Production"
+					  width="68"
+					  textAlign="center"/>
+			<mx:Label x="371"
+					  y="46"
+					  text="Carton Labels"
+					  width="89"
+					  textAlign="center"/>
+			<mx:Label x="243"
+					  y="46"
+					  text="Preview"
+					  width="58"
+					  textAlign="center"/>
+			<mx:LinkButton x="319.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doNew();"
+					   id="change_account_button">
+				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="299"
+					  y="46"
+					  text="Job Ticket"
+					  width="79"
+					  textAlign="center"/>
+			<mx:CheckBox x="10"
+						 y="68"
+						 label="Brokered"
+						 id="check_brokered"
+						 selected="{job.brokered}"/>
+			<mx:CheckBox x="93"
+						 y="68"
+						 label="Taxable"
+						 id="check_taxtable"
+						 selected="{job.taxable}"/>
+			<mx:CheckBox x="171"
+						 y="68"
+						 label="Finished"
+						 id="checked_finished"
+						 selected="{job.finished}"/>
+			<fc:AutoComplete x="309"
+							 y="68"
+							 width="125.5"
+							 id="product"
+							 dataProvider="{productCodes}"
+							 labelField="name"
+							 height="20"/>
+			<mx:TextInput x="95"
+						  y="94"
+						  width="807"
+						  id="job_comment"
+						  text="{job.comment}"
+						  height="20"
+						  right="0"/>
+			<mx:Label x="30"
+					  y="96"
+					  text="Comment:"/>
+			<fc:AutoComplete x="506.5"
+							 y="68"
+							 width="124"
+							 id="job_location"
+							 dataProvider="{locations}"
+							 labelField="name"
+							 height="20"/>
+			<mx:Label x="250"
+					  y="70"
+					  text="Product:"/>
+			<mx:Label x="446.5"
+					  y="71"
+					  text="Location:"/>
+			<mx:Label x="647.5"
+					  y="71"
+					  text="Job Type:"/>
+			<mx:ComboBox x="705.5"
+						 y="65"
+						 width="167"
+						 id="job_type"
+						 dataProvider="{pricingMethods}"
+						 labelField="name"
+						 right="0"
+						 left="710">
+			</mx:ComboBox>
+			<mx:Canvas x="0" y="121" width="100%" height="476" verticalScrollPolicy="auto">
+				<mx:HDividedBox x="0"
+								y="1"
+								width="900"
+								height="474" verticalScrollPolicy="off">
+					<!--			<mx:Tree width="200"
+						 height="100%">
+						 </mx:Tree>
+					-->
+					<mx:ViewStack id="viewstack3"
+								  width="628"
+								  height="469">
+						<mx:Canvas label="View 1"
+								   width="100%"
+								   height="100%"
+								   fontSize="9">
+							<mx:TextArea x="85"
+										 y="1"
+										 width="277"
+										 id="job_description"
+										 text="{job.description}"
+										 height="40"/>
+							<mx:Label x="10"
+									  y="2"
+									  text="Description:"/>
+							<mx:TextInput x="496"
+										  y="24"
+										  id="job_over_under"
+										  text="{job.oversUnders}"
+										  height="20"
+										  width="98" focusOut="fieldChanged(event)" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="47"
+										  id="sets_of"
+										  text="{job.inSetsOf}"
+										  height="20"
+										  width="98" focusOut="fieldChanged(event)" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="301"
+										  id="overs_unit_price"
+										  height="20"
+										  width="98" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="323"
+										  id="overs_total_price"
+										  height="20"
+										  width="98" textAlign="right"/>
+							<mx:Label x="390.95"
+									  y="324"
+									  text="Overs Total Price:" textAlign="right"/>
+							<mx:Label x="450.95"
+									  y="387"
+									  text="Other:" textAlign="right"/>
+							<mx:Label x="456.95"
+									  y="345"
+									  text="Prep:" textAlign="right"/>
+							<mx:Label x="496"
+									  y="345"
+									  width="98"
+									  id="job_prep"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="366"
+									  width="98"
+									  id="job_bind"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="387"
+									  width="98"
+									  id="joib_other"
+									  height="20" textAlign="right"/>
+							<mx:Label x="453.95"
+									  y="422"
+									  text="Total:" textAlign="right"/>
+							<mx:Label x="496.95"
+									  y="422"
+									  width="97.05"
+									  id="job_total"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="185"
+									  width="98"
+									  id="num_of_sig"
+									  text="{job.signatures}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="206"
+									  width="98"
+									  id="job_imp"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="227"
+									  width="98"
+									  id="total_imp"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="248"
+									  width="98"
+									  id="job_weight"
+									  height="20" textAlign="right"/>
+							<mx:Label x="457.95"
+									  y="366"
+									  text="Bind:" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="279"
+										  id="job_price"
+										  height="20"
+										  width="98" textAlign="right" text="{job.price}"/>
+							<mx:Label x="453.95"
+									  y="280"
+									  text="Price:" textAlign="right"/>
+							<mx:Label x="395.95"
+									  y="303"
+									  text="Overs Unit Price:" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="70"
+										  id="job_sheets"
+										  text="{job.sheets}"
+										  height="20"
+										  width="98" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="93"
+										  width="45.300003"
+										  id="job_up"
+										  text="{job.numUp}"
+										  height="20" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="548.3"
+										  y="93"
+										  width="45.700005"
+										  id="job_on"
+										  text="{job.numOn}"
+										  height="20" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="115"
+										  id="job_press"
+										  height="20"
+										  width="98"
+										  text="{job.pressQty}" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="138"
+										  id="bindery_waste"
+										  text="{job.binderyWaste}"
+										  height="20"
+										  width="98" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="161"
+										  id="est_waste"
+										  text="{job.estWaste}"
+										  height="20"
+										  width="98" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:Label x="445.95"
+									  y="248"
+									  text="Weight:" textAlign="right"/>
+							<mx:Label x="439.95"
+									  y="227"
+									  text="Tot Imp:" textAlign="right"/>
+							<mx:Label x="440.95"
+									  y="206"
+									  text="Imp/Run" textAlign="right"/>
+							<mx:Label x="403.95"
+									  y="185"
+									  text="# of Signatures:" textAlign="right"/>
+							<mx:Label x="428.95"
+									  y="162"
+									  text="Est Waste:" textAlign="right"/>
+							<mx:Label x="407.95"
+									  y="139"
+									  text="Bindery Waste:" textAlign="right"/>
+							<mx:Label x="450.95"
+									  y="118"
+									  text="Press:" textAlign="right"/>
+							<mx:Label x="446.95"
+									  y="94"
+									  text="Up/On:" textAlign="right"/>
+							<mx:Label x="444.95"
+									  y="71"
+									  text="Sheets:" textAlign="right"/>
+							<mx:Label x="431.95"
+									  y="48"
+									  text="In sets of:" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="1"
+										  id="job_ordered"
+										  text="{job.qtyOrdered}"
+										  height="20"
+										  width="98" focusOut="fieldChanged(event)" textAlign="right"/>
+							<mx:Label x="438.95"
+									  y="2"
+									  text="Ordered:" textAlign="right"/>
+							<mx:Label x="408.95"
+									  y="25"
+									  text="Overs/Unders:" textAlign="right"/>
+							<mx:VRule x="374"
+									  bottom="5"
+									  top="5"/>
+							<mx:HRule y="273"
+									  height="2.0054946"
+									  right="5"
+									  left="380"/>
+							<mx:HRule y="411"
+									  height="2.0054946"
+									  right="5"
+									  left="380"/>
+							<mx:HRule y="415"
+									  height="2.0054946"
+									  right="5"
+									  left="380"/>
+							<mx:HRule x="10"
+									  y="46"
+									  width="356"
+									  height="2"/>
+							<mx:ViewStack x="10"
+										  y="46"
+										  id="viewstack4"
+										  width="358"
+										  height="218">
+								<mx:Canvas label="View 1"
+										   width="100%"
+										   height="100%">
+									<mx:Text x="107"
+											 y="57"
+											 width="247"
+											 height="20"
+											 id="job_color"
+											 text="{job.stock.color.name}"
+											 fontSize="9"/>
+								    <fc:AutoComplete x="107"
+								      y="79"
+								      width="100"
+								      height="20"
+								      id="job_parent"
+								      dataProvider="{dimensions}"
+								      labelField="name"
+								      fontSize="9"
+								      text="{job.parentSize}"
+								      focusOut="handleFocusOutEvent(event)"
+								      />
+									<fc:AutoComplete x="107"
+												  y="101"
+												  width="100"
+												  height="20"
+												  id="job_size"
+												  dataProvider="{dimensions}"
+												  labelField="name"
+												  fontSize="9"
+												  text="{job.runSize}"
+												  focusOut="handleFocusOutEvent(event)"
+												  />
+									<fc:AutoComplete x="107"
+												  y="123"
+												  width="100"
+												  height="20"
+												  id="job_finish_size"
+												  dataProvider="{dimensions}"
+												  labelField="name"
+												  fontSize="9"
+												  text="{job.finishSize}"
+												  focusOut="handleFocusOutEvent(event)"
+												  />
+									<fc:AutoComplete x="107"
+												  y="145"
+												  width="100"
+												  height="20"
+												  id="job_fold_size"
+												  dataProvider="{dimensions}"
+												  labelField="name"
+												  fontSize="9"
+												  text="{job.foldedSize}"
+												  focusOut="handleFocusOutEvent(event)"
+												  />
+									<mx:TextInput x="107"
+												  y="167"
+												  width="100"
+												  height="20"
+												  id="number_lines"
+												  fontSize="9"/>
+									<mx:Label x="32"
+											  y="148"
+											  text="Folded Size:"
+											  fontSize="9" textAlign="right"/>
+									<mx:Label x="59"
+											  y="126"
+											  text="Finish:"
+											  fontSize="9" textAlign="right"/>
+									<mx:Label x="39"
+											  y="192"
+											  text="Unit Price:"
+											  fontSize="9" textAlign="right"/>
+									<mx:TextInput x="107"
+												  y="189"
+												  width="100"
+												  height="20"
+												  id="job_unit_price"
+												  fontSize="9"/>
+									<mx:Label x="46"
+											  y="104"
+											  text="Run Size:"
+											  fontSize="9" textAlign="right"/>
+									<mx:Label x="56"
+											  y="82"
+											  text="Parent:"
+											  fontSize="9" textAlign="right"/>
+									<mx:Label x="8"
+											  y="170"
+											  text="Number of Lines:"
+											  fontSize="9" textAlign="right"/>
+									<mx:TextInput x="107"
+												  y="35"
+												  width="171"
+												  height="20"
+												  id="job_stock"
+												  text="{job.stock.name}"
+												  fontSize="9"/>
+									<mx:Label x="60"
+											  y="38"
+											  text="Stock:"
+											  fontSize="9" textAlign="right"/>
+									<mx:Label x="62"
+											  y="60"
+											  text="Color:"
+											  fontSize="9" textAlign="right"/>
+									<mx:CheckBox x="10"
+												 y="6"
+												 label="Customer Supplied Stock"
+												 id="customer_suppliled_stock"
+												 fontSize="9"/>
+									<mx:CheckBox x="218"
+												 y="7"
+												 fontSize="9"/>
+									<mx:Button x="240"
+											   y="7"
+											   label="Special Order..."
+											   fontSize="9"
+											   height="18"
+											   id="special_order_button"/>
+									<mx:Image x="215"
+											  y="81"
+											  width="139"
+											  height="124"/>
+									<mx:HRule x="2"
+											  y="215"
+											  width="356"
+											  height="2"/>
+									<mx:Button x="286"
+											   y="35"
+											   label="Change"
+											   fontSize="9"
+											   height="18"
+											   id="chage_stock_button"
+											   click="changeStockDefinition()"/>
+								</mx:Canvas>
+								<mx:Canvas label="merchandise_canvas"
+										   width="100%"
+										   height="100%">
+									<mx:TextArea x="79"
+												 y="10"
+												 width="277"
+												 id="job_notes"
+												 text="{job.jobNotes}"/>
+									<mx:Label x="30"
+											  y="11"
+											  text="Notes:"/>
+									<mx:CheckBox x="79"
+												 y="62"
+												 label="Show notes"
+												 id="check_job_notes"
+												 selected="{job.jobTicketNotes}"/>
+									<mx:TextInput x="79"
+												  y="92"
+												  width="277"
+												  height="22"
+												  id="vendor_edit"/>
+									<mx:Label x="22"
+											  y="94"
+											  text="Vendor:"/>
+								</mx:Canvas>
+							</mx:ViewStack>
+							<mx:ViewStack x="10"
+										  y="263"
+										  id="viewstack5"
+										  width="358"
+										  height="202">
+								<mx:Canvas label="View 1"
+										   width="100%"
+										   height="100%">
+									<fc:AutoComplete x="107"
+													 y="5"
+													 width="241"
+													 height="20"
+													 id="job_pricing_press"
+													 dataProvider="{presses}"
+													 labelField="name"
+													 fontSize="9"/>
+									<mx:Label x="23"
+											  y="8"
+											  text="Pricing Press:"
+											  fontSize="9"/>
+									<fc:AutoComplete x="107"
+													 y="28"
+													 width="241"
+													 height="20"
+													 id="job_costing_press"
+													 dataProvider="{presses}"
+													 labelField="name"
+													 fontSize="9"/>
+									<mx:Label x="19"
+											  y="31"
+											  text="Costing Press:"
+											  fontSize="9"/>
+									<mx:Label x="6"
+											  y="96"
+											  text="Back:"
+											  fontSize="9"/>
+									<mx:Label x="5"
+											  y="73"
+											  text="Front:"
+											  fontSize="9"/>
+									<mx:Panel x="10"
+											  y="123"
+											  width="338"
+											  height="69"
+											  layout="absolute"
+											  title="Run Method"
+											  dropShadowEnabled="false"
+											  fontSize="9">
+										<mx:RadioButtonGroup id="run_method_radiogroup"/>
+										<mx:RadioButton x="213"
+														y="6"
+														label="Work and Turn"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="Work_Turn"/>
+										<mx:RadioButton x="10"
+														y="6"
+														label="Sheetwise"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="Sheetwise"/>
+										<mx:RadioButton x="94"
+														y="6"
+														label="Work and Tumble"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="Work_Tumble"/>
+									</mx:Panel>
+									<mx:Label x="47"
+											  y="54"
+											  text="Colors"
+											  width="48"
+											  textAlign="center"
+											  fontSize="9"/>
+									<mx:Label x="92"
+											  y="54"
+											  text="Passes"
+											  width="53"
+											  textAlign="center"
+											  fontSize="9"/>
+									<mx:Label x="142"
+											  y="54"
+											  text="Washes"
+											  width="50"
+											  textAlign="center"
+											  fontSize="9"/>
+									<mx:Label x="192"
+											  y="54"
+											  text="Ink"
+											  width="156"
+											  textAlign="center"
+											  fontSize="9"/>
+									<mx:TextInput x="48"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_colors_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontColors}" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="96"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_passes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontPasses}" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="96"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_passes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backPasses}" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="144"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_washes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontWashes}" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="192"
+												  y="71"
+												  width="156"
+												  height="20"
+												  id="front_inks_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.frontInks}"/>
+									<mx:TextInput x="192"
+												  y="94"
+												  width="156"
+												  height="20"
+												  id="back_inks_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backInks}"/>
+									<mx:TextInput x="144"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_washes_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backWashes}" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="48"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_colors_text"
+												  fontSize="9" textAlign="center"
+												  text="{job.backColors}" focusOut="fieldChanged(event)"/>
+								</mx:Canvas>
+							</mx:ViewStack>
+							<ns1:Throbber visible="false" id="pricing_throbber" x="599" y="278" height="20" width="20"/>
+						
+						</mx:Canvas>
+					</mx:ViewStack>
+					<mx:Accordion width="262"
+								  height="468"
+								  fontSize="9">
+						<mx:Canvas label="Charges"
+								   width="100%"
+								   height="100%"
+								   fontSize="9"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:LinkButton x="203"
+										   y="464"
+										   id="delete_charge_button"
+										   click="doDeleteCharge()"
+										   icon="@Embed(source='../../../../assets/delete16.png')"
+										   width="24"
+										   bottom="0"/>
+							<mx:LinkButton x="234"
+										   y="464"
+										   id="add_charge_button"
+										   click="doAddCharge()"
+										   icon="@Embed(source='../../../../assets/add16.png')"
+										   width="24"
+										   bottom="0"/>
+							<mx:DataGrid
+										 id="invoice_charge_datagrid"
+										 dataProvider="{job.charges}"
+										 left="0"
+										 bottom="25"
+										 top="0"
+										 right="0"
+										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
+								<mx:columns>
+									<mx:DataGridColumn headerText="Description"
+													   dataField="description"/>
+									<mx:DataGridColumn headerText="Price"
+													   width="90"
+													   dataField="chargeDefinition.price"/>
+								</mx:columns>
+							</mx:DataGrid>
+						</mx:Canvas>
+						<mx:Canvas label="Commands"
+								   width="100%"
+								   height="100%">
+							<mx:LinkButton x="10"
+										   y="10"
+										   label="Print Job Ticket"/>
+							<mx:LinkButton x="10"
+										   y="30"
+										   label="Preview Job Ticket"/>
+							<mx:LinkButton x="10"
+										   y="50"
+										   label="Job Ticket Notes"/>
+							<mx:LinkButton x="10"
+										   y="70"
+										   label="Web Worksheet"/>
+							<mx:LinkButton x="10"
+										   y="90"
+										   label="Digital Assets"/>
+							<mx:LinkButton x="10"
+										   y="110"
+										   label="Multi-Quantity"/>
+						</mx:Canvas>
+					</mx:Accordion>
+				</mx:HDividedBox>
+			</mx:Canvas>
+
+		</mx:Canvas>
+	</mx:VBox>
+</mx:TitleWindow>

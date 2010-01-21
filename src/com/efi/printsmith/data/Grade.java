@@ -91,7 +91,6 @@ public class Grade extends ModelBase {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
 		this.campaigns = newVal;
 	}
-
 	/**
 	 * @generated
 	 */		

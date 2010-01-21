@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.data.*" xmlns:comp="com.efi.printsmith.components.*" xmlns:effect="com.adobe.ac.mxeffects.*" 
+width="100%" height="779" title="Charge Definitions"
+creationComplete="init()" label="Charge Definitions" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
+          
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
+	<mx:method name="addChargeCategoryToCommand" fault="handleFault(event)" result="handleAddChargeCategoryToCommand(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+</mx:RemoteObject>
+
+<mx:states>
+	<mx:State name="Job Aware">
+		
+	</mx:State>
+	<mx:State name="Markup">
+		
+	</mx:State>
+	<mx:State name="Flat Rate">
+		
+	</mx:State>
+	<mx:State name="Always Ask">
+	</mx:State>
+	<mx:State name="Price List">
+		
+	</mx:State>
+	<mx:State name="Rate List">
+		
+	</mx:State>
+	<mx:State name="Cut">
+		
+	</mx:State>
+	<mx:State name="Ink">
+		
+	</mx:State>
+	<mx:State name="Shipping">
+		
+	</mx:State>
+	<mx:State name="Fold">
+		
+	</mx:State>
+	<mx:State name="Literal">
+		
+	</mx:State>
+	<mx:State name="Square Area">
+		
+	</mx:State>
+</mx:states>
+
+<mx:Producer id="producer" destination="accounts"/>
+<mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.pages.ChargeCosting;
+	import com.efi.printsmith.data.ShippingMethod;
+    import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.PriceListElement;
+	import com.efi.printsmith.data.WasteChart;	
+	import com.efi.printsmith.data.ChargeCost;
+	import com.efi.printsmith.data.ChargeCommand;
+	import com.efi.printsmith.data.Location;
+	import com.efi.printsmith.data.ChargeCategory;
+	import com.efi.printsmith.data.ChargeDefinition;
+    import com.efi.printsmith.data.Charge;
+    import com.efi.printsmith.data.CostCenter;
+    import com.efi.printsmith.data.FoldTemplate;
+    import com.efi.printsmith.data.TaxTable;
+    import com.efi.printsmith.data.Substrate;
+    import com.efi.printsmith.data.PriceListBase;
+	import com.efi.printsmith.data.ModelBase;
+	import com.efi.printsmith.data.PreferencesSystem;
+	
+    import com.efi.printsmith.data.enums.ChargeMethod;
+	import com.efi.printsmith.data.enums.ChargeQtyType;
+	import com.efi.printsmith.data.enums.ChargeInkCoverage;
+	import com.efi.printsmith.data.enums.ChargeMarkupType;
+	import com.efi.printsmith.data.enums.ChargePriceMethod;
+	import com.efi.printsmith.data.enums.JobQuantity;
+	import com.efi.printsmith.data.enums.ChargeInkCoverage;
+	import com.efi.printsmith.data.enums.ChargeJobQuantity;
+	
+	import com.efi.printsmith.events.ModelAddUpdateEvent;
+	import com.efi.printsmith.events.ModelGetAllEvent;
+	import com.efi.printsmith.events.ModelDeleteItemEvent;
+	
+	import mx.controls.Alert;                                         
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection; 
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    import mx.validators.*;
+    import mx.events.ListEvent;
+    import mx.collections.ICollectionView;
+    import mx.utils.ObjectUtil;
+  	import com.adobe.ac.mxeffects.Flip;
+	import com.adobe.ac.mxeffects.DistortionConstants;
+	import mx.rpc.IResponder;
+
+    private var formDirty:Boolean = false;
+    
+    private var accounts:ArrayCollection = new ArrayCollection();
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
+
+	[Bindable]		
+    private var enableSave:Boolean = true;
+
+	[Bindable]                                         
+	private var charge:ChargeDefinition;
+                
+	[Bindable]
+	private var charges:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var productCodes:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var salesCategories:ArrayCollection = new ArrayCollection();
+
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var selected_charge_group_1:String;
+	
+	[Bindable]
+	private var selected_charge_group_2:String;
+	
+	[Bindable]
+	private var selected_charge_group_3:String;
+	
+	[Bindable]
+	private var selected_charge_group_4:String;
+	
+	[Bindable]
+	private var selected_area_group:String;
+	
+	[Bindable]
+	private var selected_markup_type_group:String;
+	
+	[Bindable]
+	private var chargeCommands:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var chargeCategories:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var costCenters:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	private var locations:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	public var tempOpen:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+	public var refreshSO:Boolean = false;
+	
+	[Bindable]
+	public var selectedItem:Object = null;
+	
+	[Bindable]
+	public var chargeCategory:ChargeCategory = null;
+	
+	[Bindable]
+	public var chargeCommand:ChargeCommand = null;
+	
+	[Bindable]
+	public var enableNewCommand:Boolean = true;
+	
+	[Bindable]
+	public var enableNewCategory:Boolean = false;
+	
+	[Bindable]
+	public var enableNewCharge:Boolean = false;
+	
+	[Bindable]
+	public var enableDuplicate:Boolean = false;
+	
+	public function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    charge = new ChargeDefinition();
+	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
+	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
+	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
+	    fireGetAllEvent("Location", new mx.rpc.Responder(handleLoadLocationResult, handleFault));
+	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
+	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
+	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+		charge_stack.selectedChild = charge_blank_canvas;
+	    throbber.play();
+		updateControlState();
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+
+	}      
+	     
+	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
+		var getAllEvent:ModelGetAllEvent = new ModelGetAllEvent(modelType, callbacks);
+		getAllEvent.dispatch();			
+	}
+                                              	
+	private function send():void
+	{
+		var message:IMessage = new AsyncMessage();
+		message.body.accounts = "*";
+		//producer.send(message);
+	}
+			
+	private function messageHandler(message:IMessage):void
+	{
+	}
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			this.btnExport.enabled = systemPreferences.enablePricingSystem;
+		}else{
+			this.btnExport.enabled = false;
+
+		}
+	}	                                 
+                                  	
+	private function doSave():void {
+		if (charge_stack.selectedChild == charge_canvas && charge != null) {
+			mapToCharge();		
+			fireSaveEvent(charge);
+		} else if (charge_stack.selectedChild == charge_category_canvas && chargeCategory != null) {
+			chargeCategory.name = charge_category_name_edit.text;
+			fireSaveEvent(chargeCategory);
+		} else if (charge_stack.selectedChild == charge_command_canvas && chargeCommand != null) {
+			chargeCommand.name = charge_command_name_edit.text;
+			fireSaveEvent(chargeCommand);
+		}
+	}                 
+	
+	private function fireSaveEvent(item:ModelBase):void {
+		var callbacks:IResponder = new mx.rpc.Responder(handleSaveResult, handleFault);	
+		var addUpdateEvent:ModelAddUpdateEvent = new ModelAddUpdateEvent(item, callbacks);
+		addUpdateEvent.dispatch();			
+	}
+	
+	private function doCosting():void {
+	    var titleWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
+	    PopUpManager.centerPopUp(titleWindow);
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    if (charge.chargeCost == null) charge.chargeCost = new ChargeCost();
+	    titleWindow.chargeCost = charge.chargeCost;
+	    titleWindow.formIsEmpty = false;
+	}
+	
+	private function sampleResult(evt:Event):void {
+		
+	}
+	
+    private function charge_group_1_change(evt:Event):void {
+		if (charge_group_1.selectedValue == "Ordered") {
+			charge.jobQty = ChargeJobQuantity.PRESS;
+		} else if (charge_group_1.selectedValue == "Press") {
+			charge.quantityType = ChargeJobQuantity.FINISH;
+		} else {
+			charge.quantityType = ChargeJobQuantity.NONE;
+		}
+    }
+
+    private function charge_group_2_change(evt:Event):void {
+		if (charge_group_2.selectedValue == "Colors") {
+			charge.useColors = true;
+			charge.useSides = false;			
+		} else if (charge_group_2.selectedValue == "Side") {
+			charge.useColors = false;
+			charge.useSides = true;
+		} else {
+			charge.useColors = false;
+			charge.useSides = false;
+		}
+    }
+
+    private function charge_group_3_change(evt:Event):void {
+		if (charge_group_3.selectedValue == "Sheets") {
+			charge.useOriginals = true;
+			charge.useSignatures = false;
+		} else if (charge_group_3.selectedValue == "Signatures") {
+			charge.useOriginals = false;
+			charge.useSignatures = true;			
+		} else {
+			charge.useOriginals = false;
+			charge.useSignatures = false;						
+		}
+    }
+
+    private function charge_group_4_change(evt:Event):void {
+		if (charge_group_4.selectedValue == "xUp") {
+			charge.useMultiplyUpCount = true;
+			charge.useDivideByUpCount = false;
+		} else if (charge_group_4.selectedValue == "/Up") {
+			charge.useMultiplyUpCount = false;
+			charge.useDivideByUpCount = true;			
+		} else {
+			charge.useMultiplyUpCount = false;
+			charge.useDivideByUpCount = false;			
+		}
+    }
+	
+	private function markup_type_group_change(evt:Event):void {
+		
+	}
+	
+	private function area_group_change(evt:Event):void {
+		
+	}
+	
+	private function handleLoadLocationResult(ev:ResultEvent):void {
+		locations = ev.result as ArrayCollection;
+	}
+
+	private function handleLoadCostCenterResult(ev:ResultEvent):void {
+		costCenters = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadChargeCategoryResult(ev:ResultEvent):void {
+		chargeCategories = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadChargeCommandResult(ev:ResultEvent):void {
+		throbber.stop();
+		throbber.visible = false;
+		updateDataProvider();
+		chargeCommands = ev.result as ArrayCollection;
+		chargeCommands.filterFunction = filterData;
+	}
+	
+	private function handleLoadProductCodeResult(ev:ResultEvent):void {
+		productCodes = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
+		salesCategories = ev.result as ArrayCollection;
+	}
+	
+	private function handleLoadChargeResult(ev:ResultEvent):void {
+		charges = ev.result as ArrayCollection;
+	}
+
+	private function handleAddChargeCategoryToCommand(ev:ResultEvent):void {
+		if (ev.result == null) {
+			Alert.show("Unable to add new Category.", "Error", 0, this, null);                                 
+		} else {
+			charge = null;
+			chargeCategory = ev.result as ChargeCategory;
+			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+		}
+	}
+	
+	private function handleAddChargeToCategory(ev:ResultEvent):void {
+		if (ev.result == null) {
+			Alert.show("Unable to add new charge.", "Error", 0, this, null);                                 
+		} else {
+			var localCharge:ChargeDefinition = ev.result as ChargeDefinition;
+
+			charge = localCharge;
+			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+		}
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+	}
+	                                 
+	private function handleDeleteResult(ev:ResultEvent):void {
+	}
+	      
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+	
+	private function treeLabel(item:Object):String {
+		var children:ICollectionView;
+		
+		var suffix:String = "";
+		if (chargeTree.dataDescriptor.isBranch(item)) {
+		    children = chargeTree.dataDescriptor.getChildren(item);
+		    suffix = " (" + children.length + ")";
+		}
+		return item.name + suffix;
+	}
+	
+	private function doNewCommand():void {
+		var chargeCommand:ChargeCommand = new ChargeCommand();
+		chargeCommand.name = "Untitled";
+		dataService.addUpdate(chargeCommand);
+		fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+	}
+	
+	private function doNewCategory():void {
+		var treeItem:Object = chargeTree.selectedItem;
+        var classInfo:XML = describeType(treeItem);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+			var chargeCategory:ChargeCategory = new ChargeCategory();
+			chargeCategory.name = "Untitled Category";
+			dataService.addChargeCategoryToCommand(chargeCategory, treeItem);
+		}
+	}
+	
+	private function doDuplicateCharge():void {
+		//TODO: verify that this copy is valid to use. We probably need to create a clone method for the .as objects.
+		var newCharge:ChargeDefinition = ObjectUtil.copy(charge) as ChargeDefinition;
+		var category:ChargeCategory = charge.parent;
+		
+		updateDataProvider();
+		
+		newCharge.id = 0;
+		newCharge.parent = null;
+		
+		dataService.addChargeToCategory(newCharge, category);
+	}
+	
+	private function getSelectedTreeCommand(deep:Boolean):ChargeCommand {
+		var treeItem:Object = chargeTree.selectedItem;
+		if (treeItem == null) return null;
+		
+        var classInfo:XML = describeType(treeItem);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+			return treeItem as ChargeCommand;
+		}
+		if (deep) {
+			if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+				var tmpCategory:ChargeCategory = treeItem.parent as ChargeCategory;
+				if (tmpCategory != null) {
+					return tmpCategory.parent;
+				}
+				return chargeTree.getParentItem(tmpCategory);
+			} else {
+				return treeItem.parent as ChargeCommand;				
+			}
+		}
+		return null;
+	}
+	
+	private function getSelectedTreeCategory(deep:Boolean):ChargeCategory {
+		var treeItem:Object = chargeTree.selectedItem;
+        var classInfo:XML = describeType(treeItem);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory") {
+			return treeItem as ChargeCategory;
+		}
+		
+		if (deep) {
+			if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+				return treeItem.parent as ChargeCategory;
+			}
+		}
+		return null
+	}
+	
+	private function getSelectedTreeCharge():ChargeDefinition {
+		var treeItem:Object = chargeTree.selectedItem;
+        var classInfo:XML = describeType(treeItem);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+			return treeItem as ChargeDefinition;
+		}
+		return null;
+	}
+	
+	private function treeSelectionChanged(event:Event):void {
+		updateTreeSelection();
+	}
+	
+	private function updateTreeSelection():void {
+		charge = getSelectedTreeCharge();
+		
+		if (charge == null) {
+			chargeCategory = getSelectedTreeCategory(false);
+			if (chargeCategory == null) {
+				chargeCommand = getSelectedTreeCommand(false);
+				if (chargeCommand == null) {
+					charge_stack.selectedChild = charge_blank_canvas;
+				} else {
+					charge_stack.selectedChild = charge_command_canvas;
+				}
+			} else {
+				charge_stack.selectedChild = charge_category_canvas;			
+				chargeCommand = getSelectedTreeCommand(true);
+			}
+		} else {
+			charge_stack.selectedChild = charge_canvas;
+			chargeCategory = getSelectedTreeCategory(true);
+			chargeCommand = getSelectedTreeCommand(true);
+		}	
+		updateButtons();
+	}
+	
+	private function doNewCharge():void {
+		var category:ChargeCategory = getSelectedTreeCategory(true);
+		var localCharge:ChargeDefinition = new ChargeDefinition();
+		
+		if (category != null) {
+			localCharge = new ChargeDefinition();				
+			localCharge.name = "Untitled";
+			localCharge.title = "Untitled";
+			dataService.addChargeToCategory(localCharge, category);
+		}
+//		chargeCommandDataService.getAll("ChargeCommand");
+	}
+	
+	private function doDelete():void {
+		fireDeleteEvent(charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+//		dataService.deleteItem("Charge", charge.id);
+	}
+
+	private function fireDeleteEvent(item:ModelBase, callbacks:IResponder):void {
+		var deleteEvent:ModelDeleteItemEvent = new ModelDeleteItemEvent(item, callbacks);
+		deleteEvent.dispatch();			
+	}
+
+	private function selectCharge():void {
+		
+	}
+	
+	private function mapToCharge():void {
+		charge.title = charge_name_edit.text;
+		charge.name = charge_name_edit.text;
+		charge.location = location_combo.selectedItem as Location;
+		charge.costCenter = cost_center_combo.selectedItem as CostCenter;
+		charge.method = charge_method_combo.selectedItem as String;
+		charge.quantityType = charge_quantity_combo.selectedItem as String;
+		charge.salesCategory = charge_sales_category_combo.selectedItem as String;
+
+		charge.noOverrides = no_overrides_check.selected;
+		charge.adjustSets = adjustable_sets_check.selected;
+		charge.enterRate = adjustable_rate_check.selected;
+		charge.enterMaterial = adjustable_material_check.selected;
+		charge.adjustUps = adjustable_up_check.selected;
+		charge.noDiscount = do_not_discount_check.selected;
+		charge.hidePrice = hide_price_only_check.selected;
+		charge.hidden = hide_charge_in_printouts_check.selected;
+		charge.binderyCharge = bindery_operation_check.selected;
+		charge.excludeFromProductionList = excluded_from_workflow_check.selected;
+		charge.preproduction = tracker_pre_production_check.selected;
+		charge.ignorePriceAdjustment = ignore_global_price_changes_check.selected;
+		charge.integratedCTP = integrated_ctp_device_check.selected;
+		charge.fixedWaste = parseInt(fixed_spoilage_edit.text);
+		charge.baseLinearNumber = parseInt(base_linear_quantity_edit.text);
+		charge.useMinimumCharge = minimum_charge_check.selected;
+		charge.minimum = parseFloat(minimum_charge_edit.text);
+		charge.useMinimumTime = minimum_time_check.selected;
+		charge.minimum = parseFloat(minimum_time_edit.text);
+
+		// Note: Radio buttons are updated dynamically via change events (see charge_group_1_change, etc.)
+		charge.markup = parseFloat(markup_edit.text);
+		charge.useSetup = setup_check.selected;
+		charge.material = setup_edit.text as Number;
+		charge.useRate = rate_check.selected;
+		charge.rate = parseFloat(rate_edit.text);
+		charge.useMaterial = material_check.selected;
+		charge.material = material_edit.text as Number;
+
+		//TOOD: Area/In Sets, etc...
+		charge.useRateSets = in_sets_check.selected;
+		charge.rateSetCount = in_sets_edit.text as Number;
+	}
+	
+	private function updateControlState():void {
+		var newCanvas:Canvas=blank_canvas;
+				
+		switch (charge_method_combo.selectedItem) {
+		case ChargeMethod.ASK:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = true;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+			
+		case ChargeMethod.CUT:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		case ChargeMethod.FLATRATE:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = blank_canvas;
+			break;
+		case ChargeMethod.FOLD:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		case ChargeMethod.INK:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = true;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		case ChargeMethod.JOBAWARE:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = true;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		case ChargeMethod.LITERAL:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = true;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		case ChargeMethod.MARKUP:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = markup_canvas;
+			break;
+		case ChargeMethod.PRICELIST:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = false;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = blank_canvas;
+			break;
+		case ChargeMethod.RATELIST:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = false;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = blank_canvas;
+			break;
+		case ChargeMethod.SHIPPING:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = false;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = false;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = blank_canvas;
+			break;
+		case ChargeMethod.SQUAREAREA:
+			no_overrides_check.enabled = true;
+			adjustable_sets_check.enabled = true;
+			adjustable_rate_check.enabled = true;
+			adjustable_material_check.enabled = false;
+			adjustable_up_check.enabled = false;
+			do_not_discount_check.enabled = true;
+			hide_price_only_check.enabled = true;
+			hide_charge_in_printouts_check.enabled = true;
+			bindery_operation_check.enabled = true;
+			excluded_from_workflow_check.enabled = true;
+			tracker_pre_production_check.enabled = false;
+			ignore_global_price_changes_check.enabled = true;
+			integrated_ctp_device_check.enabled = true;
+			newCanvas = job_aware_canvas;
+			break;
+		}
+		price_calc_stack.selectedChild = newCanvas;		
+	}
+	private function changeChargeMethod(event:Event):void {
+		updateControlState();
+	}
+	
+	private function tree_itemClick(evt:Event):void {  
+
+	}
+	
+	private function updateDataProvider():void {
+		tempOpen = new ArrayCollection();
+		var openItems:Array = chargeTree.openItems as Array;
+		var i:int;
+		
+		for (i=0; i<openItems.length; i++) {
+			tempOpen.addItem(openItems[i].id);
+		}
+		refreshSO = true;	
+	}
+
+	/* The charge that's returned by the server is not the same object
+	   as its equivalent in the tree. Search the tree for the charge and
+	   replace the charge object in the tree */	
+	private function setCurrentChargeToTreeItem():void {
+		var found:Boolean = false;
+        var i:int;
+        var j:int;
+        var k:int;
+        
+        if (chargeCommand == null) return;
+       	for (i = 0; i < chargeCommands.length; i++ ) {
+       		var localChargeCommand:ChargeCommand = chargeCommands.getItemAt(i) as ChargeCommand;
+       		if (chargeCategory == null) {
+       			if (localChargeCommand.id == chargeCommand.id) {
+       				chargeCommand = localChargeCommand;
+       				found = true;
+       			}
+       		} else {
+	       		for (j = 0; j < localChargeCommand.children.length; j++) {
+	       			var localChargeCategory:ChargeCategory = localChargeCommand.children.getItemAt(j) as ChargeCategory;
+	       			if (charge == null) {
+	       				if (localChargeCategory.id == chargeCategory.id) {
+	       					chargeCategory = localChargeCategory;
+	       					chargeCommand = chargeCategory.parent;
+	       					found = true;
+	       					break;
+	       				}
+	       			} else {
+	       				for (k = 0; k < localChargeCategory.children.length; k++) {
+		       				var chargeDefinition:ChargeDefinition = localChargeCategory.children.getItemAt(k) as ChargeDefinition;
+		       				if (chargeDefinition.id == charge.id) {
+		       					charge = chargeDefinition;
+		       					chargeCategory = charge.parent;
+		       					chargeCommand = chargeCategory.parent;
+		       					found = true;
+		       					break;
+		       				}
+		       			}
+	       			}
+	       			if (found) break;
+	       		}
+       		}
+       		if (found) break;
+       	}
+	}
+	
+	private function renderFunction():void {
+		if (refreshSO) {
+			refreshSO = false;
+			
+           	chargeTree.invalidateList();
+           	var openItems:Array = new Array();
+           	var i:int;
+           	var j:int;
+           	
+           	for (i = 0; i < chargeCommands.length; i++) {
+           		var chargeCommand:ChargeCommand = chargeCommands.getItemAt(i) as ChargeCommand;
+           		if (tempOpen.contains(chargeCommand.id)) {
+           			openItems.push(chargeCommand);
+           		}
+           		
+           		for (j=0; j<chargeCommand.children.length; j++) {
+           			if (tempOpen.contains(chargeCommand.children.getItemAt(j).id)) {
+           				openItems.push(chargeCommand.children.getItemAt(j));
+           			}
+           		}
+           	}
+           	
+			setCurrentChargeToTreeItem();
+           	if (charge != null) {
+				if (charge.parent != null) openItems.push(charge.parent);
+           	}
+           	
+           	if (chargeCategory != null) {
+           		if (chargeCategory.parent != null) openItems.push(chargeCategory.parent);
+           	}
+           	
+			chargeTree.openItems = openItems;
+			chargeTree.validateNow();
+			if (charge != null) {
+				chargeTree.selectedItem = charge;
+			} else if (chargeCategory != null) {
+				chargeTree.selectedItem = chargeCategory;
+			} else if (chargeCommand != null) {
+				chargeTree.selectedItem = chargeCommand;
+			}
+			if (chargeTree.selectedIndex != -1)
+				chargeTree.scrollToIndex(chargeTree.selectedIndex);
+			updateTreeSelection();
+		}
+	}
+
+	private function refreshData():void{
+		//reset the root node to its original unfiltered data
+		var i:int;
+		for (i=0; i< chargeCommands.length; i++) {
+			chargeCommands[i].children = new ArrayCollection(chargeCommands[i].children.source);
+			refreshRecursiveChildren(chargeCommands.source[i]);
+		} 
+		//update the Tree after the data has been filtered
+		chargeCommands.refresh();
+		chargeTree.invalidateList();
+	}
+	
+	private function refreshRecursiveChildren(item:Object):void{
+        var classInfo:XML = describeType(item);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
+			//loop through each child and filter its children
+			for each(var chargeCategoryItem:ChargeCategory in item.children.source){
+				refreshRecursiveChildren(chargeCategoryItem);
+			}
+			item.children = new ArrayCollection(item.children.source);
+			item.children.filterFunction = filterData;
+			item.children.refresh();
+		} else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
+			//loop through each child and filter its children
+			for each(var chargeItem:ChargeDefinition in item.children.source){
+				refreshRecursiveChildren(chargeItem);
+			}
+			item.children = new ArrayCollection(item.children.source);
+			item.children.filterFunction = filterData;
+			item.children.refresh();
+		}
+	}
+	
+	public function filterData(item:Object):Boolean{
+		//get the string to filter the nodes by
+		var searchString:String = tree_filter.text;
+		//if string is found in node return true.
+		//since the recursive filtering takes place from bottom up, if
+		//a collection still has children after filtering, also return true
+		if(searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+			return true;
+					
+        var classInfo:XML = describeType(item);
+
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+			return false;
+		}
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null && item.children.length > 0) {
+			return true;
+		}
+		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null && item.children.length > 0) {
+			return true;
+		}
+		return false;
+	}
+	private function doPressPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	}
+
+	private function doPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	}
+
+	private function doWasteChart():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
+	}
+	
+    private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			charge.wasteChart = evt.priceList as WasteChart;
+		} else {
+			charge.wasteChart = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}  
+    }
+    
+    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
+ 		if (evt.priceList != null) {
+			charge.priceList = evt.priceList as PriceList;
+		} else {
+			charge.priceList = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}     	
+    }
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
+
+	private function updateButtons():void {
+		enableNewCommand = newCommandEnabled();
+		enableNewCategory = newCategoryEnabled();
+		enableNewCharge = newChargeEnabled();
+		enableDuplicate = duplicateChargeEnabled();
+	}
+	
+	private function newCategoryEnabled():Boolean {
+		var command:ChargeCommand = getSelectedTreeCommand(true);
+		
+		if (command != null) {
+			return true;
+		}
+		return false;
+	}  
+
+	private function newCommandEnabled():Boolean {
+		return true; 
+	}
+	
+	private function newChargeEnabled():Boolean {
+		var category:ChargeCategory = getSelectedTreeCategory(true);
+		
+		if (category != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private function duplicateChargeEnabled():Boolean { 
+		if (charge != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private function priceListLabel():String {
+		if (charge.priceList != null) {
+			if (charge.priceList.name != null) {
+				return charge.priceList.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+	
+	private function wasteChartLabel():String {
+		if (charge.wasteChart != null) {
+			if (charge.wasteChart.name != null) {
+				return charge.wasteChart.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+]]>
+                             
+</mx:Script>
+<mx:CurrencyValidator id="currency_check"
+	source="{rate_edit}"
+	property="text" currencySymbol="$" trigger="{save_button}" triggerEvent="click"/>
+    <mx:Dissolve id="dissolveOut" duration="400" alphaFrom="1.0" alphaTo="0.0"/>
+    <mx:Dissolve id="dissolveIn" duration="400" alphaFrom="0.0" alphaTo="1.0"/>
+
+<mx:VBox width="100%" height="100%">
+    	<mx:Canvas width="100%" height="100%">
+		<mx:Button x="353" y="9" width="38" height="38" click="doSave();" enabled="{enableSave}" id="save_button">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="353" y="45" text="Save" width="38" textAlign="center"/>
+		<mx:Button x="406" y="9" width="38" height="38" id="duplicate_button" click="doDuplicateCharge()" enabled="{enableDuplicate}">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="392" y="45" text="Duplicate" width="66" textAlign="center"/>
+		<mx:Button x="130.5" y="10" width="38" height="38" id="new_category_button" click="doNewCategory()" enabled="{enableNewCategory}">
+			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="216.5" y="10" width="38" height="38" click="doNewCharge()" id="new_charge_button" enabled="{enableNewCharge}">
+			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+		</mx:Button>
+
+		<mx:Button x="297" y="9" width="38" height="38" id="btnExport" enabled="false">
+			<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="287" y="45" text="Export" width="58" textAlign="center"/>
+		
+		<mx:Button x="462" y="9" width="38" height="38" click="doDelete()" id="delete_button">
+			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="452" y="45" text="Delete" width="58" textAlign="center"/>
+		<mx:Button x="545" y="9" width="38" height="38" id="revert_button">
+			<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="535" y="45" text="Revert" width="58" textAlign="center"/>
+		<mx:Button x="645" y="10" width="38" height="38" id="find_button">
+			<mx:icon>@Embed(source='../../../../assets/find.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="645" y="46" text="Find" width="38" textAlign="center"/>
+		<mx:Button x="730" y="11" width="38" height="38" id="preset_info_button">
+			<mx:icon>@Embed(source='../../../../assets/presets.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="712" y="47" text="Preset Info" width="68" textAlign="center"/>
+		<mx:Button x="788" y="11" width="38" height="38" click="doCosting()" id="costing_button">
+			<mx:icon>@Embed(source='../../../../assets/costing.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="776" y="47" text="Costing" width="63" textAlign="center"/>
+		<mx:Label x="109" y="46" text="New Category" width="81" textAlign="center"/>
+		<mx:Button x="42" y="10" width="38" height="38" id="new_command_button" click="doNewCommand()" enabled="{enableNewCommand}">
+			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="16" y="46" text="New Command" width="90" textAlign="center"/>
+		<mx:Label x="198" y="46" text="New Charge" width="81" textAlign="center"/>
+		<mx:RadioButtonGroup id="area_group" selectedValue="{selected_area_group}" change="area_group_change(event)"/>
+		<mx:RadioButtonGroup id="pricing_method"/>
+
+		<mx:HDividedBox x="0" y="71" width="100%" height="100%" liveDragging="true">
+			<mx:Canvas height="100%" width="227">
+				<mx:Tree width="100%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
+						labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);" bottom="36" top="0"></mx:Tree>
+				<mx:FormItem width="100%" label="Filter:" height="28" bottom="0">
+					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
+				</mx:FormItem>
+				<comp:Throbber id="throbber" height="20" width="20" x="103.5" y="95"/>
+			</mx:Canvas>
+		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
+			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
+			</mx:Canvas>
+			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
+				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto" id="canvas4">
+					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}"/>
+					<mx:ComboBox x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name" height="21"></mx:ComboBox>
+					<mx:ComboBox x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name" height="21"></mx:ComboBox>
+					<mx:Label x="0" y="237" text="Base Linear Quantity:" textAlign="right" id="label3"/>
+					<mx:Label x="0" y="212" text="Fixed Spoilage:" textAlign="right" id="label4"/>
+					<mx:Label x="313" y="30" text="Cost Center:" textAlign="right"/>
+					<mx:Label x="0" y="30" text="Production Location:" textAlign="right" id="label6"/>
+					<mx:Label x="0" y="129" text="Prod Code:" textAlign="right" id="label10"/>
+					<mx:Label x="17" y="58" text="Method:" textAlign="right" id="label7"/>
+					<mx:Label x="31" y="5" text="Charge Name:" textAlign="right" id="label5"/>
+					<mx:ComboBox x="76" y="56" width="132" id="charge_method_combo" change="changeChargeMethod(event);" dataProvider="{ChargeMethod.toArray()}" height="21"></mx:ComboBox>
+					<mx:Label x="11" y="81" text="Quantity:" textAlign="right" id="label8"/>
+					<mx:ComboBox x="76" y="79" width="132" id="charge_quantity_combo" dataProvider="{ChargeQtyType.toArray()}" height="21"></mx:ComboBox>
+					<mx:Label x="5" y="104" text="Sales Cat:" textAlign="right" id="label9"/>
+					<mx:ComboBox x="76" y="102" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name" height="21"></mx:ComboBox>
+					<mx:ComboBox x="76" y="127" width="132" editable="true" id="product_code_combo" dataProvider="{productCodes}" labelField="name" height="21"></mx:ComboBox>
+					<mx:CheckBox x="234" y="56" label="No overrides" id="no_overrides_check" selected="{charge.noOverrides}"/>
+					<mx:CheckBox x="234" y="74" label="Adjustable sets" id="adjustable_sets_check" selected="{charge.adjustSets}"/>
+					<mx:CheckBox x="234" y="92" label="Adjustable rate" id="adjustable_rate_check" selected="{charge.enterRate}"/>
+					<mx:CheckBox x="234" y="110" label="Adjustable material" id="adjustable_material_check" selected="{charge.enterMaterial}"/>
+					<mx:CheckBox x="234" y="128" label="Adjustable up" id="adjustable_up_check" selected="{charge.adjustUps}"/>
+					<mx:CheckBox x="234" y="146" label="Do not discount" id="do_not_discount_check" selected="{charge.noDiscount}"/>
+					<mx:CheckBox x="375" y="58" label="Hide price only" id="hide_price_only_check" selected="{charge.hidePrice}"/>
+					<mx:CheckBox x="375" y="76" label="Hide charge in printouts" id="hide_charge_in_printouts_check" selected="{charge.hidden}"/>
+					<mx:CheckBox x="375" y="94" label="Bindery operation" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
+					<mx:CheckBox x="375" y="112" label="Excluded from workflow" id="excluded_from_workflow_check" selected="{charge.excludeFromProductionList}"/>
+					<mx:CheckBox x="375" y="130" label="Tracker pre-production" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
+					<mx:CheckBox x="375" y="148" label="Ignore global price changes" id="ignore_global_price_changes_check" selected="{charge.ignorePriceAdjustment}"/>
+					<mx:CheckBox x="375" y="166" label="Integrated CTP device" id="integrated_ctp_device_check" selected="{charge.integratedCTP}"/>
+					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
+					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
+					<mx:HRule x="3" y="194" width="555" height="8" id="hrule1"/>
+					<mx:HRule x="3" y="264" width="555" height="8" id="hrule2"/>
+					<mx:HRule x="3" y="388" width="555" height="8" id="hrule3"/>
+					<mx:CheckBox x="209" y="210" label="Minimum Charge:" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
+					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
+					<mx:CheckBox x="209" y="235" label="Minimum Time:" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
+					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimum}"/>
+					<mx:RadioButton x="446" y="210" label="Run Area" groupName="area_group" id="run_area_radio"/>
+					<mx:RadioButton x="446" y="235" label="Finished Area" groupName="area_group" id="finished_area_radio"/>
+					<mx:RadioButton x="4" y="280" label="Cost Plus" groupName="pricing_method" id="cost_plus_radio"/>
+					<mx:RadioButton x="4" y="304" label="Piece Pricing" groupName="pricing_method" id="piece_pricing_radio"/>
+					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}"/>
+					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
+					<mx:CheckBox x="105" y="306" label="Setup:" id="setup_check"/>
+					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}"/>
+					<mx:CheckBox x="105" y="329" label="Rate:" id="rate_check"/>
+					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="105" y="352" label="Material:" id="material_check"/>
+					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="Area:" id="area_check"/>
+					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}"/>
+					<mx:CheckBox x="320" y="352" label="In Sets:" id="in_sets_check"/>
+					<mx:TextInput x="397" y="352" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}"/>
+					<mx:Label x="314" y="282" text="Sale price per unit:" id="label1"/>
+					<mx:Label x="123" y="282" text="Markup:" id="label2"/>
+					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="555" height="132" creationPolicy="all">
+						<mx:Canvas width="100%" height="100%" id="job_aware_canvas" label="job_aware" showEffect="dissolveIn" hideEffect="dissolveOut">
+							<mx:Text x="10" y="10" text="Select values in job to be used in calculating price:&#xd;" width="291" height="17" fontWeight="bold" id="text2"/>
+							<mx:RadioButtonGroup id="charge_group_1" selectedValue="{selected_charge_group_1}" change="charge_group_1_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_2" selectedValue="{selected_charge_group_2}" change="charge_group_2_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_3" selectedValue="{selected_charge_group_3}" change="charge_group_3_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_4" selectedValue="{selected_charge_group_4}" change="charge_group_4_change(event)"/>
+							<mx:Text x="123" y="70" text="X&#xd;" id="text4"/>
+							<mx:Text x="389" y="70" text="X&#xd;" id="text1"/>
+							<mx:Text x="256" y="70" text="X&#xd;" id="text3"/>
+							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+								<mx:RadioButton x="8" y="5" label="N/A" groupName="charge_group_1" id="na1_radio"/>
+								<mx:RadioButton x="8" y="31" label="Ordered" groupName="charge_group_1" id="ordered_radio"/>
+								<mx:RadioButton x="8" y="57" label="Press" groupName="charge_group_1" id="press_radio"/>
+							</mx:Canvas>
+							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
+								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_2" id="na2_radio"/>
+								<mx:RadioButton x="10" y="31" label="Colors" groupName="charge_group_2" id="colors_radio"/>
+								<mx:RadioButton x="10" y="57" label="Sides" groupName="charge_group_2" id="sides_radio"/>
+							</mx:Canvas>
+							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
+								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_3" id="na3_radio"/>
+								<mx:RadioButton x="10" y="31" label="Sheets" groupName="charge_group_3" id="sheets_radio"/>
+								<mx:RadioButton x="10" y="57" label="Signatures" groupName="charge_group_3" id="signatures_radio"/>
+							</mx:Canvas>
+							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
+								<mx:RadioButton x="10" y="5" label="N/A" groupName="charge_group_4" id="na4_radio"/>
+								<mx:RadioButton x="10" y="31" label="xUp" groupName="charge_group_4" id="x_up_radio"/>
+								<mx:RadioButton x="10" y="57" label="/Up" groupName="charge_group_4" id="slash_up_radio"/>
+							</mx:Canvas>
+						</mx:Canvas>
+						<mx:Canvas label="blank_canvas" width="100%" height="100%" id="blank_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
+						</mx:Canvas>
+						<mx:Canvas label="markup_canvas" width="100%" height="100%" id="markup_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
+							<mx:RadioButtonGroup id="markup_type_group" selectedValue="{selected_markup_type_group}" change="markup_type_group_change(event)"/>
+							<mx:RadioButton x="10" y="35" label="Job Price" groupName="markup_type_group"/>
+							<mx:RadioButton x="10" y="58" label="Charges" groupName="markup_type_group"/>
+							<mx:RadioButton x="107" y="35" label="Entire Job" groupName="markup_type_group"/>
+							<mx:RadioButton x="107" y="58" label="Invoice" groupName="markup_type_group"/>
+							<mx:Text x="10" y="10" text="Select the type of markup:&#xd;" width="291" height="17" fontWeight="bold"/>
+						</mx:Canvas>
+					</mx:ViewStack>
+					<mx:Button x="10" y="533" label="Price List..." width="109" id="price_list_button" click="doPriceList()"/>
+					<mx:Button x="10" y="563" label="Waste Chart..." id="waste_chart_button" click="doWasteChart()" width="109"/>
+					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
+					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
+					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
+				</mx:Canvas>
+			</mx:Canvas>
+			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">
+				<mx:TextInput x="125" y="3" width="430" id="charge_category_name_edit" text="{chargeCategory.name}"/>
+				<mx:Label x="21" y="5" text="Category Name:" textAlign="right"/>
+			</mx:Canvas>
+			<mx:Canvas label="charge_command_canvas" width="100%" height="100%" id="charge_command_canvas">
+				<mx:TextInput x="125" y="3" width="430" id="charge_command_name_edit" text="{chargeCommand.name}"/>
+				<mx:Label x="13" y="5" text="Command Name:" textAlign="right"/>
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:HDividedBox>
+<!--
+		<mx:DataGrid x="17" y="72" width="259" height="622" id="charge_datagrid" dataProvider="{charges}" click="{selectCharge()}">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Charges" dataField="title"/>
+			</mx:columns>
+		</mx:DataGrid>-->
+	</mx:Canvas>
+</mx:VBox>
+</mx:Panel>

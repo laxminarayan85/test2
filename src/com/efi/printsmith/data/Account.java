@@ -358,6 +358,10 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public static final String ACCOUNTNOTE = "AccountNote";
+	/**
+	 * @generated
+	 */
+	public static final String ACCOUNTID = "AccountId";
 
 	/**
 	 * @generated
@@ -1744,6 +1748,23 @@ public class Account extends ModelBase {
 	public void setAccountNote(String newVal) {
 		this.accountNote = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String accountId;
+	/**
+	 * @generated
+ 	 */
+	public String getAccountId(){
+		return accountId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setAccountId(String newVal) {
+		this.accountId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1831,6 +1852,7 @@ public class Account extends ModelBase {
 		if (STATEMENTNOTE.equals(propertyName)) return getStatementNote();
 		if (JOBNOTE.equals(propertyName)) return getJobNote();
 		if (ACCOUNTNOTE.equals(propertyName)) return getAccountNote();
+		if (ACCOUNTID.equals(propertyName)) return getAccountId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1921,6 +1943,7 @@ public class Account extends ModelBase {
 		if (STATEMENTNOTE.equals(propertyName)) setStatementNote((String)newValue); else
 		if (JOBNOTE.equals(propertyName)) setJobNote((String)newValue); else
 		if (ACCOUNTNOTE.equals(propertyName)) setAccountNote((String)newValue); else
+		if (ACCOUNTID.equals(propertyName)) setAccountId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2092,6 +2115,8 @@ public class Account extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (ACCOUNTNOTE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (ACCOUNTID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2183,6 +2208,7 @@ public class Account extends ModelBase {
 		if (STATEMENTNOTE.equals(propertyName)) return Account.class;
 		if (JOBNOTE.equals(propertyName)) return Account.class;
 		if (ACCOUNTNOTE.equals(propertyName)) return Account.class;
+		if (ACCOUNTID.equals(propertyName)) return Account.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2355,6 +2381,8 @@ public class Account extends ModelBase {
 		if (! SmartEquals(getJobNote(), objT.getJobNote()))
 			return false;
 		if (! SmartEquals(getAccountNote(), objT.getAccountNote()))
+			return false;
+		if (! SmartEquals(getAccountId(), objT.getAccountId()))
 			return false;
 		return true;
 	}			

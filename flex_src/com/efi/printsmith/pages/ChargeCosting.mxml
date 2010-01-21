@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*"
+width="386" height="522" defaultButton="{submitButton}"
+showCloseButton="true" creationComplete="creationCompleteHandler();"
+    close="PopUpManager.removePopUp(this);"
+    title="Costing" xmlns:text="flash.text.*">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+</mx:RemoteObject>
+<mx:Script>
+                                   
+<![CDATA[
+	import mx.collections.ArrayCollection;
+	import com.efi.printsmith.data.ChargeCost;
+    import com.efi.printsmith.data.enums.ChargeCostMethod;
+                                
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;                                
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	                             
+	[Bindable]                             
+	private var message:String;                                   
+	[Bindable]                             
+	private var formIsValid:Boolean = false;                               
+	[Bindable]                                     
+	public var formIsEmpty:Boolean;    
+	[Bindable]
+	public var chargeCost:ChargeCost;
+	                      
+	[Bindable]
+	public var totalCost:Number = 0;
+		       
+	[Bindable]
+	// Holds a reference to the currently focussed control on the form.
+ 	private var focusedFormControl:DisplayObject;                           
+           
+	                      
+	private function handleSaveResult(ev:ResultEvent):void {                              
+	     clearFormHandler();
+	     validateForm(ev);
+	                                      
+		// Reload the list.                      
+		//parentApplication.listUsers.loaderService.getUsers();                             
+		PopUpManager.removePopUp(this);
+	}
+                                     
+	private function handleFault(ev:FaultEvent):void {                               
+		message = "Error: " + ev.fault.faultCode + " \n "                                            
+		+ "Detail: " + ev.fault.faultDetail + " \n "                              
+		+ "Message: " + ev.fault.faultString;                                    
+	}
+	                     
+	public function saveUser():void {                                    
+		dataService.addUpdate(chargeCost);                                        
+	}
+                                  
+	private function creationCompleteHandler():void {   
+	}
+	                                
+	private function resetFocus():void {                           
+	}
+	     
+	// Validate the form
+	                                         
+	public function validateForm(event:Event):void  {
+	     focusedFormControl = event.target as DisplayObject;    
+	     formIsValid = true;
+	
+	     // Check if form is empty          
+	     formIsEmpty = (setup_cost_edit.text == "" && unit_cost_edit.text == "" && fixed_materials_edit.text == "" && 
+	     		unit_materials_edit.text == "" && labor_rate_edit.text == "" && setup_minutes_edit.text == "" && 
+	     		pieces_per_hour_edit.text == "");
+	     
+	     validate(setupCostValidator);                 
+	     validate(unitCostValidator);      
+	     validate(fixedMaterialsValidator);                 
+	     validate(unitMaterialsValidator);      
+	     validate(laborRateValidator);                 
+	     validate(setupMinutesValidator);      
+	     validate(piecesPerHourValidator);                 
+	}
+	    
+	private function validate(validator:Validator):Boolean {		   
+		var validatorSource:DisplayObject = validator.source as DisplayObject;  
+		var suppressEvents:Boolean = (validatorSource != focusedFormControl);  
+		var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+		                                               
+		var currentControlIsValid:Boolean = (event.type ==
+		ValidationResultEvent.VALID);
+		                                         
+		formIsValid = formIsValid && currentControlIsValid;
+		                               
+		return currentControlIsValid;	                                         
+	}
+	                                 
+	private function clearFormHandler():void {
+		// Clear all input fields.
+		setup_cost_edit.text = "";
+		unit_cost_edit.text = "";
+		fixed_materials_edit.text = "";
+		unit_materials_edit.text = "";
+		labor_rate_edit.text = "";
+		setup_minutes_edit.text = "";
+		pieces_per_hour_edit.text = "";
+		
+		formIsEmpty = true;                           
+		formIsValid = false;                                
+		resetFocus();                             
+	}                            
+]]>        
+</mx:Script>
+                             
+
+                             
+<mx:CurrencyValidator id="setupCostValidator" source="{setup_cost_edit}" property="text"/>
+<mx:CurrencyValidator id="unitCostValidator" source="{unit_cost_edit}" property="text"/>
+<mx:CurrencyValidator id="fixedMaterialsValidator" source="{fixed_materials_edit}" property="text"/>
+<mx:CurrencyValidator id="unitMaterialsValidator" source="{unit_materials_edit}" property="text"/>
+<mx:CurrencyValidator id="laborRateValidator" source="{labor_rate_edit}" property="text"/>
+<mx:NumberValidator id="setupMinutesValidator" source="{setup_minutes_edit}" property="text"/>
+<mx:NumberValidator id="piecesPerHourValidator" source="{pieces_per_hour_edit}" precision="0" allowNegative="false" property="text"/>
+                             
+	<mx:Canvas width="100%" height="100%">
+		<mx:ComboBox x="144" y="8" width="186" dataProvider="{ChargeCostMethod.toArray()}" id="costing_method_combo" change="validateForm(event);" ></mx:ComboBox>
+		<mx:Label x="44" y="10" text="Costing Method"/>
+		<mx:Label x="65" y="40" text="Setup Cost:"/>
+		<mx:Label x="75" y="70" text="Unit Cost:"/>
+		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right"/>
+		<mx:TextInput x="144" y="68" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="42" y="151" text="Fixed Materials:"/>
+		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{chargeCost.fixedMaterials}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="55" y="179" text="Unit Materials"/>
+		<mx:TextInput x="144" y="175" width="186" id="unit_materials_edit" text="{chargeCost.unitMaterials}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="65" y="207" text="Labor Rate:"/>
+		<mx:TextInput x="144" y="203" width="186" id="labor_rate_edit" text="{chargeCost.laborRate}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="40" y="235" text="Setup (minutes)"/>
+		<mx:TextInput x="144" y="231" width="186" id="setup_minutes_edit" text="{chargeCost.setupMinutes}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="65" y="263" text="Pieces/Hour"/>
+		<mx:TextInput x="144" y="259" width="186" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right"/>
+		<mx:Label x="43" y="291" text="Total Unit Cost:"/>
+		<mx:Button x="12" y="100" label="Rate..."/>
+		<mx:LinkButton x="85" y="101" id="rate_table_link"/>
+		<mx:Button x="12" y="317" label="Speed..."/>
+		<mx:LinkButton x="93" y="318" id="speed_table_link"/>
+		<mx:HRule x="0" y="130" width="339" height="0"/>
+		<mx:HRule x="0" y="130" width="339" height="9"/>
+		<mx:HRule x="0" y="347" width="339" height="9"/>
+		<mx:Text x="144" y="291" text="{totalCost}" width="186" id="total_cost_text" textAlign="right"/>
+		<mx:Label x="82" y="364" text="Created:"/>
+		<mx:Text x="144" y="364" text="{chargeCost.created}" width="186"/>
+		<mx:Label x="52" y="384" text="Last Modified:"/>
+		<mx:Text x="144" y="384" text="{chargeCost.modified}" width="186"/>
+	</mx:Canvas>
+
+<mx:ControlBar horizontalAlign="center">                                   
+     <mx:Button label="Save" id="submitButton" enabled="{formIsValid}" click="saveUser();" />                                   
+     <mx:Button label="Cancel" click="PopUpManager.removePopUp(this);"/> 
+</mx:ControlBar>
+
+</mx:TitleWindow>
