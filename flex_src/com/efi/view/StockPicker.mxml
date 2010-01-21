@@ -13,7 +13,8 @@
 
 <mx:Script>
                                    
-<![CDATA[           
+<![CDATA[
+	import mx.collections.ArrayCollection;           
 	import com.efi.events.StockPickerSelectEvent;
     import com.efi.vo.StockDefinition;                
 	import mx.managers.PopUpManager;                                 
@@ -73,14 +74,10 @@
 		notification_consumer.subscribe();     
 
 	    PopUpManager.centerPopUp(this);
-	    resetFocus();                                     
 		dataService.getAll("StockDefinition");
 	}
 	                                
-	private function resetFocus():void {                           
-	     focusManager.setFocus(filter_field);                                    
-	}    
-	
+
 	private function editStockDefinition():void {
 		
 	}   
@@ -106,31 +103,77 @@
 	private function updateDataGrid():void {
 		// loaderService.getStockDefinitionByPartialName(filter_field.text);
 	}
+	
+	private function clearSearch():void{
+		
+	}
+	
 ]]>        
 </mx:Script>
                              
 
                              
-	<mx:Canvas width="583" height="541">
-		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{stockDefinitions}"
-		doubleClickEnabled="true" doubleClick="selectStockDefinition()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
+	<mx:Canvas width="100%" height="100%">
+		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
+		doubleClickEnabled="true" doubleClick="selectStockDefinition()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="name" headerText="Name" />
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="Select" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectStockDefinition();"  width="108" x="465" y="10"/>
-		<mx:Button label="New" enabled="true" click="newStockDefinition();" id="new_button" width="108" x="465" y="40"/>
-		<mx:Button label="Cancel" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>
-		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
-		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
-			<mx:ArrayCollection>
-				<mx:String>Name</mx:String>
-				<mx:String>Stock Number</mx:String>
-				<mx:String>Grade</mx:String>
-				<mx:String>Size</mx:String>
-			</mx:ArrayCollection>
-		</mx:ComboBox>
-		<mx:Label x="10" y="495" text="Filter:"/>
+		<mx:Button label="Select" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectStockDefinition();"  width="108" x="10" y="10"/>
+		<mx:Button label="New" enabled="true" click="newStockDefinition();" id="new_button" width="108" x="242" y="10"/>
+		<mx:Button label="Cancel" click="cancelPicker();" id="cancel_button" width="108" x="478" y="10"/>
+		<mx:Button label="Clear Search" click="clearSearch();" id="clear_button" width="108" x="126" y="10" enabled="false"/>
+		<mx:Label x="57" y="64" text="Group:"/>
+		<mx:Label x="58" y="116" text="Name:"/>
+		<mx:Label x="58" y="142" text="Finish:"/>
+		<mx:Label x="61" y="168" text="Color:"/>
+		<mx:Label x="57" y="194" text="Grade:"/>
+		<mx:Label x="4" y="220" text="Minimum Order:"/>
+		<mx:Label x="51" y="246" text="Vendor:"/>
+		<mx:Label x="258" y="64" text="Type:"/>
+		<mx:Label x="227" y="116" text="Product ID:"/>
+		<mx:Label x="211" y="142" text="Coated Sides:"/>
+		<mx:Label x="211" y="168" text="Generic Color:"/>
+		<mx:Label x="230" y="194" text="Thickness:"/>
+		<mx:Label x="212" y="220" text="# Sheets/Set:"/>
+		<mx:Label x="208" y="246" text="Stock Number:"/>
+		<mx:Label x="445" y="64" text="Size:"/>
+		<mx:Label x="490" y="40" text="Min"/>
+		<mx:Label x="545" y="40" text="Max"/>
+		<mx:Label x="429" y="90" text="Weight:"/>
+		<mx:Label x="442" y="116" text="CWT:"/>
+		<mx:Label x="396" y="142" text="Qty On Hand:"/>
+		<mx:Label x="411" y="168" text="Roll Width:"/>
+		<mx:CheckBox x="418" y="192" label="Show Roll Stock"/>
+		<mx:CheckBox x="418" y="207" label="Show Large Format Stock"/>
+		<mx:CheckBox x="418" y="222" label="Show Rigid Substrate"/>
+		<mx:CheckBox x="418" y="237" label="Show Inventoried Stock"/>
+		<mx:CheckBox x="418" y="252" label="Show Shells (Account: All)"/>
+		<mx:TextInput x="99" y="62" width="98"/>
+		<mx:TextInput x="99" y="114" width="98"/>
+		<mx:TextInput x="99" y="140" width="98"/>
+		<mx:TextInput x="99" y="166" width="98"/>
+		<mx:TextInput x="99" y="192" width="98"/>
+		<mx:TextInput x="99" y="218" width="98"/>
+		<mx:TextInput x="99" y="244" width="98"/>
+		<mx:TextInput x="295" y="62" width="98"/>
+		<mx:TextInput x="478" y="62" width="48"/>
+		<mx:TextInput x="478" y="88" width="48"/>
+		<mx:TextInput x="534" y="88" width="48"/>
+		<mx:TextInput x="478" y="114" width="48"/>
+		<mx:TextInput x="534" y="114" width="48"/>
+		<mx:TextInput x="478" y="140" width="48"/>
+		<mx:TextInput x="534" y="140" width="48"/>
+		<mx:TextInput x="478" y="166" width="48"/>
+		<mx:TextInput x="534" y="166" width="48"/>
+		<mx:TextInput x="534" y="62" width="48"/>
+		<mx:TextInput x="295" y="114" width="98"/>
+		<mx:TextInput x="295" y="140" width="98"/>
+		<mx:TextInput x="295" y="166" width="98"/>
+		<mx:TextInput x="295" y="192" width="98"/>
+		<mx:TextInput x="295" y="218" width="98"/>
+		<mx:TextInput x="295" y="244" width="98"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
