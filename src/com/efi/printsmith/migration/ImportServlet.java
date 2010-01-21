@@ -47,6 +47,10 @@ import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.migration.Utilities;
 
 public class ImportServlet extends HttpServlet implements Servlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected static Logger log = Logger.getLogger(ImportServlet.class);
 	protected static DataService dataService = new DataService();
 	
@@ -58,6 +62,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		doPost(request, response);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -65,9 +70,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				FileItemFactory factory = new DiskFileItemFactory();
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				
-				List items = upload.parseRequest(request);
+				List<FileItem> items = upload.parseRequest(request);
 				
-				Iterator iter = items.iterator();
+				Iterator<FileItem> iter = items.iterator();
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					if (item.isFormField()) {
@@ -89,12 +94,6 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	}
 	
 	private void processUploadedFile(FileItem item) throws Exception {
-		String fieldName = item.getFieldName();
-		String fileName = item.getName();
-		String contentType = item.getContentType();
-		boolean isInMemory = item.isInMemory();
-		long sizeInBytes = item.getSize();
-		
 		boolean writeToFile = true;
 				
 		if (writeToFile) {
@@ -105,6 +104,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 			item.write(uploadedFile);
 			
 			importCustomers(uploadedFile);
+			uploadedFile.delete();
 		} else {
 			
 		}
@@ -112,7 +112,6 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	
 	void importCustomers(File uploadedFile) throws Exception {
 		FileInputStream fis = new FileInputStream(uploadedFile);
-		boolean validTokens = true;
 		InputStreamReader fileReader = new InputStreamReader(fis);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		String fieldString = bufferedReader.readLine();

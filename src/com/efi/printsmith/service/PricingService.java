@@ -48,28 +48,28 @@ public class PricingService {
 		return charge;
 	}
 
-	private double interpolatePriceFromPriceList(PriceList priceList, long qty) {
-		double retVal = 0.0;
-		if (priceList != null) {
-			List <PriceListElement> priceListElements = priceList.getElements();
-			PriceListElement elementToUse = null;
-			if(priceListElements != null && priceListElements.size() > 0) {
-				elementToUse = priceListElements.get(0);
-				for (int i=1; i < priceListElements.size(); i++) {
-					PriceListElement curElement = priceListElements.get(i);
-					if (curElement.getQuantity() > qty) {
-						elementToUse = priceListElements.get(i-1);
-						break;
-					}
-				}
-				if (elementToUse.getQuantity() > 0) {
-					retVal = elementToUse.getAmount()/elementToUse.getQuantity()*qty;
-				}
-			}
-		}
-		return retVal;
-		
-	}
+//	private double interpolatePriceFromPriceList(PriceList priceList, long qty) {
+//		double retVal = 0.0;
+//		if (priceList != null) {
+//			List <PriceListElement> priceListElements = priceList.getElements();
+//			PriceListElement elementToUse = null;
+//			if(priceListElements != null && priceListElements.size() > 0) {
+//				elementToUse = priceListElements.get(0);
+//				for (int i=1; i < priceListElements.size(); i++) {
+//					PriceListElement curElement = priceListElements.get(i);
+//					if (curElement.getQuantity() > qty) {
+//						elementToUse = priceListElements.get(i-1);
+//						break;
+//					}
+//				}
+//				if (elementToUse.getQuantity() > 0) {
+//					retVal = elementToUse.getAmount()/elementToUse.getQuantity()*qty;
+//				}
+//			}
+//		}
+//		return retVal;
+//		
+//	}
 	 
 	private double getTimePerSheetFromSpeedTable(SpeedTable speedTable, long qty) {
 		double retVal = 0.0;

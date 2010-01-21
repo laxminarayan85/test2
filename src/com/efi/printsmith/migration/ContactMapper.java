@@ -14,235 +14,165 @@ public class ContactMapper extends ImportMapper {
 
 			if ("recno".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("rtype".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("importedChargeID".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("description".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("notes".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("list ID".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("charge ID".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("sales cat".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("sales cat name".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("rate qty".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("mat qty".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("number of sets".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("material sets".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("price".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("start".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("stop".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("shownotes".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("finished".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("brokered".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("taxable".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("displayqty".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("oprice".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("orqty".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("omqty".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("method".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("qty type".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("markup type".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("job qty type".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("hidden".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("no overrrides".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("adjust sets".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("enter rate".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("enter material".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use material".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use rate".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use rate sets".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use material sets".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use setup".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use minimum".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("bindery operation".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use colors".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use orig".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("use sigs".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("rate set count".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("material rate".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("minimum".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("xNotUsed".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("sku".equals(currentImportToken)) {
-				/* TODO */
-			} else if ("special".equals(currentImportToken)) {
-				/* TODO */
 			} else if ("rstatus".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("xdesc".equals(currentImportToken)) {
+			} else if ("rtype".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("category id".equals(currentImportToken)) {
+			} else if ("contact id".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("labels".equals(currentImportToken)) {
+			} else if ("cust acct".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("description custom".equals(currentImportToken)) {
+			} else if ("cust record".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("expandedShort".equals(currentImportToken)) {
+			} else if ("title".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("obs_tax rate ID".equals(currentImportToken)) {
+			} else if ("address".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("not used byte".equals(currentImportToken)) {
+			} else if ("name".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("tax table ID".equals(currentImportToken)) {
+			} else if ("street1".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("tax table".equals(currentImportToken)) {
+			} else if ("street2".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("customer charge".equals(currentImportToken)) {
+			} else if ("addr3".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("press charge".equals(currentImportToken)) {
+			} else if ("addr4".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("deleted preset".equals(currentImportToken)) {
+			} else if ("city".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("ignore cuts".equals(currentImportToken)) {
+			} else if ("state".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("stock charge".equals(currentImportToken)) {
+			} else if ("zip".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("o Cut qty".equals(currentImportToken)) {
+			} else if ("country".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("version".equals(currentImportToken)) {
+			} else if ("contact".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("sequence".equals(currentImportToken)) {
+			} else if ("first name".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("ship method".equals(currentImportToken)) {
+			} else if ("last name".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("adjust up count".equals(currentImportToken)) {
+			} else if ("salutation".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("extra long".equals(currentImportToken)) {
+			} else if ("job title".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("has link charge".equals(currentImportToken)) {
+			} else if ("phone".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("need link charge".equals(currentImportToken)) {
+			} else if ("fax".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("has shipped".equals(currentImportToken)) {
+			} else if ("phone 2".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("should ship".equals(currentImportToken)) {
+			} else if ("phone 3".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("reserve bit 5".equals(currentImportToken)) {
+			} else if ("phone 4".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("hide price".equals(currentImportToken)) {
+			} else if ("prefix".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("ignore price adj".equals(currentImportToken)) {
+			} else if ("suffix".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("costing press charge".equals(currentImportToken)) {
+			} else if ("ship address ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("linear x1".equals(currentImportToken)) {
+			} else if ("bill address ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("linear x2".equals(currentImportToken)) {
+			} else if ("sales ranking".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("linear y1".equals(currentImportToken)) {
+			} else if ("external ref number".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("linear y2".equals(currentImportToken)) {
+			} else if ("web Access".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("override rate".equals(currentImportToken)) {
+			} else if ("do not mail".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("pricing type".equals(currentImportToken)) {
+			} else if ("use contact address".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("ink coverage type".equals(currentImportToken)) {
+			} else if ("notCompany".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("use sides".equals(currentImportToken)) {
+			} else if ("sales rep".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("noDiscount".equals(currentImportToken)) {
+			} else if ("shipping data".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("no m quant".equals(currentImportToken)) {
+			} else if ("cc ptr".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("mat set count".equals(currentImportToken)) {
+			} else if ("created".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("markup".equals(currentImportToken)) {
+			} else if ("marketing dates[1]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("price list".equals(currentImportToken)) {
+			} else if ("marketing dates[2]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("waste chart".equals(currentImportToken)) {
+			} else if ("marketing dates[3]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("fixed waste".equals(currentImportToken)) {
+			} else if ("marketing dates[4]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("waste percent".equals(currentImportToken)) {
+			} else if ("marketing dates[5]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("base linear number".equals(currentImportToken)) {
+			} else if ("marketing dates[6]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("production location ID".equals(currentImportToken)) {
+			} else if ("marketing dates[7]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("production location".equals(currentImportToken)) {
+			} else if ("marketing dates[8]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("cost center ID".equals(currentImportToken)) {
+			} else if ("marketing dates[9]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("cost center".equals(currentImportToken)) {
+			} else if ("marketing dates[10]".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("substrate ID".equals(currentImportToken)) {
+			} else if ("leadsource ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("plate substrate".equals(currentImportToken)) {
+			} else if ("leadsource".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("min time".equals(currentImportToken)) {
+			} else if ("leadsource2 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("plate size X".equals(currentImportToken)) {
+			} else if ("leadsource2".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("plate size".equals(currentImportToken)) {
+			} else if ("user1 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("plate size Y".equals(currentImportToken)) {
+			} else if ("user1".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("plate thickness".equals(currentImportToken)) {
+			} else if ("user2 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("exclude from production".equals(currentImportToken)) {
+			} else if ("user2".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("pre production".equals(currentImportToken)) {
+			} else if ("user3 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("use min time".equals(currentImportToken)) {
+			} else if ("user3".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("use divide up count".equals(currentImportToken)) {
+			} else if ("user4 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("use multiply up count".equals(currentImportToken)) {
+			} else if ("user4".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("adjust up".equals(currentImportToken)) {
+			} else if ("user5 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("cuts are prepress".equals(currentImportToken)) {
+			} else if ("user5".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("integrated CTP".equals(currentImportToken)) {
+			} else if ("user6 ID".equals(currentImportToken)) {
 				/* TODO */
-			} else if ("new from import".equals(currentImportToken)) {
+			} else if ("user6".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("user7 ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("user7".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("user8 ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("user8".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Contact ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Catalog Role ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Pricing Role ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Currency Code".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Language Code".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Address ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Parent Org ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Company ID".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("web Acct Name".equals(currentImportToken)) {
+				/* TODO */
+			} else if ("special".equals(currentImportToken)) {
 				/* TODO */
 			}
 		}

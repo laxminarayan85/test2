@@ -103,18 +103,18 @@ public class DataService {
 	}
 
 	public List<?> getAll(String className) {
+		List<?> resultList = new ArrayList<Object>();
 		try {
 			log.debug("** getAll called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findAllQuery = em.createQuery("from " + className);
-			List<?> resultList = findAllQuery.getResultList();
+			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
-			return resultList;
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList();
+		return resultList;
 	}
 
 	public ModelBase getSingle(String className) {
@@ -531,6 +531,7 @@ public class DataService {
 	public List<?> criteriaQuery(String entityName,
 			List<RemoteCriterion> criteria) {
 		log.debug("** criteriaQuery called.");
+		List<?> resultList = new ArrayList<Object>();
 		try {
 			for (RemoteCriterion criterion : criteria) {
 				if (criterion instanceof RemoteRestriction) {
@@ -573,7 +574,7 @@ public class DataService {
 							.createEntityManager();
 					Session session = (Session) em.getDelegate();
 					Transaction tx = session.beginTransaction();
-					List<?> resultList = query.getExecutableCriteria(session)
+					resultList = query.getExecutableCriteria(session)
 							.list();
 					tx.commit();
 					session.close();
@@ -581,7 +582,6 @@ public class DataService {
 					if (resultList != null) {
 						log.debug("** Found " + resultList.size() + "records.");
 					}
-					return resultList;
 				}
 			}
 		} catch (HibernateException e) {
@@ -589,7 +589,7 @@ public class DataService {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return new ArrayList();
+		return resultList;
 	}
 
 }
