@@ -47,6 +47,7 @@ package com.efi.printsmith.data
 		public var monthlyBurdenRate:int = 0;
 		public var copyMinutes:int = 0;
 		public var charges:ArrayCollection;
+		public var copierId:String = "";
 	
 	}
 }

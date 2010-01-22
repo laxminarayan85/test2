@@ -458,6 +458,10 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String ACCOUNT = "Account";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKID = "StockId";
 
 	/**
 	 * @generated
@@ -2269,6 +2273,23 @@ public class StockDefinition extends ModelBase {
 	public void setAccount(Account newVal) {
 		this.account = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String stockId;
+	/**
+	 * @generated
+ 	 */
+	public String getStockId(){
+		return stockId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockId(String newVal) {
+		this.stockId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2381,6 +2402,7 @@ public class StockDefinition extends ModelBase {
 		if (DEFAULTPRICELIST.equals(propertyName)) return getDefaultPriceList();
 		if (GENERICCOLOR.equals(propertyName)) return getGenericColor();
 		if (ACCOUNT.equals(propertyName)) return getAccount();
+		if (STOCKID.equals(propertyName)) return getStockId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2496,6 +2518,7 @@ public class StockDefinition extends ModelBase {
 		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PaperPrice)newValue); else
 		if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
 		if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+		if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2717,6 +2740,8 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {GenericColors.class};		
 		if (ACCOUNT.equals(propertyName)) 
 			return new Class<?>[] {Account.class};		
+		if (STOCKID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2833,6 +2858,7 @@ public class StockDefinition extends ModelBase {
 		if (DEFAULTPRICELIST.equals(propertyName)) return StockDefinition.class;
 		if (GENERICCOLOR.equals(propertyName)) return StockDefinition.class;
 		if (ACCOUNT.equals(propertyName)) return StockDefinition.class;
+		if (STOCKID.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3055,6 +3081,8 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getGenericColor(), objT.getGenericColor()))
 			return false;
 		if (! SmartEquals(getAccount(), objT.getAccount()))
+			return false;
+		if (! SmartEquals(getStockId(), objT.getStockId()))
 			return false;
 		return true;
 	}			

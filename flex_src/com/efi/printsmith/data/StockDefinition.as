@@ -119,6 +119,7 @@ package com.efi.printsmith.data
 		public var defaultPriceList:PaperPrice;
 		public var genericColor:GenericColors;
 		public var account:Account;
+		public var stockId:String = "";
 	
 	}
 }

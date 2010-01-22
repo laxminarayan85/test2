@@ -48,6 +48,7 @@ package com.efi.printsmith.data
 		public var stockPriceList:PriceList;
 		public var speedTable:SpeedTable;
 		public var cutoffLength:Number = 0;
+		public var pressId:String = "";
 	
 	}
 }

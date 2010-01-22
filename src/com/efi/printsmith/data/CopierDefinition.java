@@ -170,6 +170,10 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHARGES = "Charges";
+	/**
+	 * @generated
+	 */
+	public static final String COPIERID = "CopierId";
 
 	/**
 	 * @generated
@@ -763,6 +767,23 @@ public class CopierDefinition extends ModelBase {
 	public void setCharges(java.util.List<Charge> newVal) {
 		this.charges = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String copierId;
+	/**
+	 * @generated
+ 	 */
+	public String getCopierId(){
+		return copierId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopierId(String newVal) {
+		this.copierId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -803,6 +824,7 @@ public class CopierDefinition extends ModelBase {
 		if (MONTHLYBURDENRATE.equals(propertyName)) return getMonthlyBurdenRate();
 		if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
 		if (CHARGES.equals(propertyName)) return getCharges();
+		if (COPIERID.equals(propertyName)) return getCopierId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -846,6 +868,7 @@ public class CopierDefinition extends ModelBase {
 		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Integer)newValue); else
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Integer)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
+		if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -923,6 +946,8 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (CHARGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Charge.class};		
+		if (COPIERID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -967,6 +992,7 @@ public class CopierDefinition extends ModelBase {
 		if (MONTHLYBURDENRATE.equals(propertyName)) return CopierDefinition.class;
 		if (COPYMINUTES.equals(propertyName)) return CopierDefinition.class;
 		if (CHARGES.equals(propertyName)) return CopierDefinition.class;
+		if (COPIERID.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1045,6 +1071,8 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getCopyMinutes(), objT.getCopyMinutes()))
 			return false;
 		if (! SmartEquals(getCharges(), objT.getCharges()))
+			return false;
+		if (! SmartEquals(getCopierId(), objT.getCopierId()))
 			return false;
 		return true;
 	}			
