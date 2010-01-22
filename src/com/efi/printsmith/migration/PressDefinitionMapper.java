@@ -14,15 +14,15 @@ public class PressDefinitionMapper extends ImportMapper {
 			String currentImportToken = importTokens.get(i);
 			
 			if ("recno".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setPrevId(currentImportToken);
 			} else if ("name".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setName(currentImportToken);
 			} else if ("id".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setPressId(currentImportToken);
 			} else if ("machine id".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setMachineID(Utilities.tokenToLong(currentImportToken));
 			} else if ("heads".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setNumberHeads(Utilities.tokenToLong(currentImportToken));
 			} else if ("sales cat".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("setup time".equals(currentImportToken)) {
@@ -34,11 +34,11 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("press speed".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("fixed spoilage".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setFixedWaste(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor rate".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setLaborRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor markup".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setLaborMarkup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minimum time".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("plate charge".equals(currentImportToken)) {
@@ -48,7 +48,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("maxX".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("max stock size".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setMaxPaperSize(currentImportToken);
 			} else if ("maxY".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentImportToken)) {
@@ -90,13 +90,19 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("not used".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("device ID".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setOemDeviceID(currentImportToken);
 			} else if ("output desc".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setOutputDescrip(currentImportToken);
 			} else if ("paperStyle".equals(currentImportToken)) {
-				/* TODO */
+				if ("0".equals(currentImportToken)) {
+					pressDefinition.setSheetFed(true);
+					pressDefinition.setRollFed(false);
+				} else if ("1".equals(currentImportToken)) {
+					pressDefinition.setRollFed(true);
+					pressDefinition.setSheetFed(false);
+				}
 			} else if ("is costing definition".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setCostingPress(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("exp3".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("exp4".equals(currentImportToken)) {
@@ -124,33 +130,33 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("production location ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("production location".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setProductionLocation(currentImportToken);
 			} else if ("cost center ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("cost center".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setCostCenter(currentImportToken);
 			} else if ("machine name ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("machine name".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setMachineName(currentImportToken);
 			} else if ("wash minutes".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));
 			} else if ("wash fountain".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setWashupPerFountain(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minX".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("minY".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("rollFedCutoffLength".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setCutoffLength(Utilities.tokenToLong(currentImportToken));
 			} else if ("defaultSheetFed".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("digital integration".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("time in seconds".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("perfector".equals(currentImportToken)) {
-				/* TODO */
+				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("defaultRollFed".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("TargetPriceTableVersion".equals(currentImportToken)) {

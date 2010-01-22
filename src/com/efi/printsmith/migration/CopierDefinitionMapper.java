@@ -13,31 +13,31 @@ public class CopierDefinitionMapper extends ImportMapper {
 			String currentImportToken = importTokens.get(i);
 			
 			if ("recno".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setPrevId(currentImportToken);
 			} else if ("name".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("machine ID".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setOemDeviceID(currentImportToken);
 			} else if ("days per year".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setDaysOpen(Utilities.tokenToInt(currentImportToken));
 			} else if ("hours per day".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setHoursOpen(Utilities.tokenToInt(currentImportToken));
 			} else if ("speed".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCopyMinutes(Utilities.tokenToInt(currentImportToken));
 			} else if ("efficiency".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("maintenance".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setMonthlyMaintenance(Utilities.tokenToInt(currentImportToken));
 			} else if ("payment".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setMonthlyPayment(Utilities.tokenToDouble(currentImportToken));
 			} else if ("machine".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("labor".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setLaborCopy(Utilities.tokenToDouble(currentImportToken));
 			} else if ("toner".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setTonerCopy(Utilities.tokenToInt(currentImportToken));
 			} else if ("developer".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setDeveloperCopy(Utilities.tokenToInt(currentImportToken));
 			} else if ("copy range[1]".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("copy range[2]".equals(currentImportToken)) {
@@ -75,9 +75,9 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("stockfactor[6]".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("id".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCopierId(currentImportToken);
 			} else if ("markup".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCopyMarkup(Utilities.tokenToInt(currentImportToken));
 			} else if ("charges[1]".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("charges[2]".equals(currentImportToken)) {
@@ -771,7 +771,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("stock markup".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("copy markup".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCopyMarkup(Utilities.tokenToInt(currentImportToken));
 			} else if ("back factor".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("use factors".equals(currentImportToken)) {
@@ -805,25 +805,25 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("monthly overhead".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("monthly labor".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setMonthlyLabor(Utilities.tokenToDouble(currentImportToken));
 			} else if ("monthly click cost".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setClickCost(Utilities.tokenToDouble(currentImportToken));
 			} else if ("production location ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("production location".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setProductionLocation(currentImportToken);
 			} else if ("cost center ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("cost center".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCostCenter(currentImportToken);
 			} else if ("machine name ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("machine name".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setMachineName(currentImportToken);
 			} else if ("setup time".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("labor rate".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setLaborCopy(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minimum".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("sheet area type[1]".equals(currentImportToken)) {
@@ -869,17 +869,17 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("default LF".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("capable BW".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setBlackwhite(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("capable Color".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setColor(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("capable LF".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setLargeFormat(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use waste".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("is costing definition".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setCostingCopy(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("digital integration".equals(currentImportToken)) {
-				/* TODO */
+				copierDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("interpolate".equals(currentImportToken)) {
 				/* TODO */
 			}

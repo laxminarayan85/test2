@@ -2,24 +2,28 @@ package com.efi.printsmith.migration;
 
 import java.util.ArrayList;
 
+import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.Contact;
+import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
 
 public class ContactMapper extends ImportMapper {
 	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
 		Contact contact = new Contact();
+		Address address = new Address();
+		Marketing marketing = new Marketing();
 		
 		for (int i=0; i < fieldTokens.size(); i++) {
 			String currentImportToken = importTokens.get(i);
 
 			if ("recno".equals(currentImportToken)) {
-				/* TODO */
+				contact.setPrefix(currentImportToken);
 			} else if ("rstatus".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("rtype".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("contact id".equals(currentImportToken)) {
-				/* TODO */
+				contact.setContactId(currentImportToken);
 			} else if ("cust acct".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("cust record".equals(currentImportToken)) {
@@ -29,47 +33,57 @@ public class ContactMapper extends ImportMapper {
 			} else if ("address".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("name".equals(currentImportToken)) {
-				/* TODO */
+				address.setName(currentImportToken);
 			} else if ("street1".equals(currentImportToken)) {
-				/* TODO */
+				address.setStreet1(currentImportToken);
 			} else if ("street2".equals(currentImportToken)) {
-				/* TODO */
+				address.setStreet2(currentImportToken);
 			} else if ("addr3".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("addr4".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("city".equals(currentImportToken)) {
-				/* TODO */
+				address.setCity(currentImportToken);
 			} else if ("state".equals(currentImportToken)) {
-				/* TODO */
+				address.setState(currentImportToken);
 			} else if ("zip".equals(currentImportToken)) {
-				/* TODO */
+				address.setZip(currentImportToken);
 			} else if ("country".equals(currentImportToken)) {
-				/* TODO */
+				address.setCountry(currentImportToken);
 			} else if ("contact".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("first name".equals(currentImportToken)) {
-				/* TODO */
+				contact.setFirstName(currentImportToken);
 			} else if ("last name".equals(currentImportToken)) {
-				/* TODO */
+				contact.setLastName(currentImportToken);
 			} else if ("salutation".equals(currentImportToken)) {
-				/* TODO */
+				contact.setSalutation(currentImportToken);
 			} else if ("job title".equals(currentImportToken)) {
-				/* TODO */
+				contact.setJobTitle(currentImportToken);
 			} else if ("phone".equals(currentImportToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				}
 			} else if ("fax".equals(currentImportToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Fax"));
+				}
 			} else if ("phone 2".equals(currentImportToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				}
 			} else if ("phone 3".equals(currentImportToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				}
 			} else if ("phone 4".equals(currentImportToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				}
 			} else if ("prefix".equals(currentImportToken)) {
-				/* TODO */
+				contact.setPrefix(currentImportToken);
 			} else if ("suffix".equals(currentImportToken)) {
-				/* TODO */
+				contact.setSuffix(currentImportToken);
 			} else if ("ship address ID".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("bill address ID".equals(currentImportToken)) {
@@ -81,11 +95,11 @@ public class ContactMapper extends ImportMapper {
 			} else if ("web Access".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("do not mail".equals(currentImportToken)) {
-				/* TODO */
+				marketing.setNoMail(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use contact address".equals(currentImportToken)) {
-				/* TODO */
+				contact.setUseContactAddress(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("notCompany".equals(currentImportToken)) {
-				/* TODO */
+				marketing.setPersonalAcct(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("sales rep".equals(currentImportToken)) {
 				/* TODO */
 			} else if ("shipping data".equals(currentImportToken)) {
