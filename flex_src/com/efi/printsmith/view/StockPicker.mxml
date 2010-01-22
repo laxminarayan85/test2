@@ -6,7 +6,10 @@
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	</mx:RemoteObject>
-                     
+    <mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
+
 	<mx:Producer id="producer" destination="stockdefinitions"/>
 	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -14,9 +17,13 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.collections.ArrayCollection;           
 	import com.efi.printsmith.events.StockPickerSelectEvent;
-    import com.efi.printsmith.data.StockDefinition;                
+    import com.efi.printsmith.data.StockDefinition;   
+    
+    import com.efi.printsmith.data.PreferencesStockDefinition;
+                 
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -37,18 +44,36 @@
 	                                  
 	[Bindable]                                
 	private var stockDefinitions:ArrayCollection = new ArrayCollection();
-                                                                         
+    [Bindable]
+    private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
+                                                                     
 	[Bindable]                               
 	private var stockDefinitionRecords:int = 0;
 	         
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
            
-	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
 	}
-	
+
+	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
+		preferencesStockDefinitions = event.result as ArrayCollection;
+		
+		for each(var element:PreferencesStockDefinition in preferencesStockDefinitions)
+		{
+			
+			for each(var column:DataGridColumn in dataGrid.columns)
+			{
+				if (column.headerText==element.columns.name)
+				{
+					column.visible = element.visible;
+					break;
+				}
+			}
+		} 
+	}
+
 	private function handleFault(ev:FaultEvent):void {                               
 		message = "Error: " + ev.fault.faultCode + " \n "                                            
 		+ "Detail: " + ev.fault.faultDetail + " \n "                              
@@ -72,9 +97,9 @@
 	private function init():void {   
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-
 	    PopUpManager.centerPopUp(this);
 		dataService.getAll("StockDefinition");
+		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
 	                                
 
@@ -108,16 +133,48 @@
 		
 	}
 	
+	private function doRollStockChanged():void{
+		txtRollWidthMin.enabled = chkShowRollStock.selected;
+		txtRollWidthMax.enabled = chkShowRollStock.selected;
+	}
+	
 ]]>        
 </mx:Script>
                              
 
                              
-	<mx:Canvas width="100%" height="100%">
+	<mx:Canvas width="100%" height="100%" creationPolicy="all">
 		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
-		doubleClickEnabled="true" doubleClick="selectStockDefinition()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
+		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="name" headerText="Name" />
+		     <mx:DataGridColumn dataField="name" headerText="Name" width="100"/>
+		     <mx:DataGridColumn dataField="weight" headerText="Weight"/>
+		     <mx:DataGridColumn dataField="parentsize" headerText="Size"/>
+		     <mx:DataGridColumn dataField="color" headerText="Color"/>
+		     <mx:DataGridColumn dataField="genericColor" headerText="Generic Color"/>
+		     <mx:DataGridColumn dataField="finish" headerText="Finish"/>
+		     <mx:DataGridColumn dataField="thickness" headerText="Thickness"/>
+		     <mx:DataGridColumn dataField="grade" headerText="Grade"/>
+		     <mx:DataGridColumn dataField="cwt1" headerText="CWT"/>
+		     <mx:DataGridColumn dataField="vendor" headerText="Vendor"/>
+		     <mx:DataGridColumn dataField="stocknumber" headerText="Stock Number"/>
+		     <mx:DataGridColumn dataField="id" headerText="Product ID"/>
+		     <mx:DataGridColumn dataField="onHand" headerText="Quantity On Hand"/>
+		     <mx:DataGridColumn dataField="committed" headerText="Committed"/>
+		     <mx:DataGridColumn dataField="onOrder" headerText="Ordered"/>
+		     <mx:DataGridColumn dataField="shellItem" headerText="Shell"/>
+		     <mx:DataGridColumn dataField="normalRunSize" headerText="Run Size"/>
+		     <mx:DataGridColumn dataField="basicsize" headerText="Basic Size"/>
+		     <mx:DataGridColumn dataField="stkgroup" headerText="Group"/>
+		     <mx:DataGridColumn dataField="coated" headerText="Coated Sides"/>
+		     <mx:DataGridColumn dataField="minorder" headerText="Minimum Order"/>
+		     <mx:DataGridColumn dataField="cost1" headerText="Price"/>
+		     <mx:DataGridColumn dataField="priceExpires" headerText="Price Expires"/>
+		     <mx:DataGridColumn dataField="forestManagement" headerText="Forest Management"/>
+		     <mx:DataGridColumn dataField="pcwRecycledPercent" headerText="Recycle" />
+		     <mx:DataGridColumn dataField="fscCertified" headerText="FSC"/>
+		     <mx:DataGridColumn dataField="sfiCertified" headerText="SFI"/>
+		     <mx:DataGridColumn dataField="greenSealCertified" headerText="GreenSeal"/>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="Select" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectStockDefinition();"  width="108" x="10" y="10"/>
@@ -145,35 +202,35 @@
 		<mx:Label x="442" y="116" text="CWT:"/>
 		<mx:Label x="396" y="142" text="Qty On Hand:"/>
 		<mx:Label x="411" y="168" text="Roll Width:"/>
-		<mx:CheckBox x="418" y="192" label="Show Roll Stock"/>
-		<mx:CheckBox x="418" y="207" label="Show Large Format Stock"/>
-		<mx:CheckBox x="418" y="222" label="Show Rigid Substrate"/>
-		<mx:CheckBox x="418" y="237" label="Show Inventoried Stock"/>
-		<mx:CheckBox x="418" y="252" label="Show Shells (Account: All)"/>
-		<mx:TextInput x="99" y="62" width="98"/>
-		<mx:TextInput x="99" y="114" width="98"/>
-		<mx:TextInput x="99" y="140" width="98"/>
-		<mx:TextInput x="99" y="166" width="98"/>
-		<mx:TextInput x="99" y="192" width="98"/>
-		<mx:TextInput x="99" y="218" width="98"/>
-		<mx:TextInput x="99" y="244" width="98"/>
-		<mx:TextInput x="295" y="62" width="98"/>
-		<mx:TextInput x="478" y="62" width="48"/>
-		<mx:TextInput x="478" y="88" width="48"/>
-		<mx:TextInput x="534" y="88" width="48"/>
-		<mx:TextInput x="478" y="114" width="48"/>
-		<mx:TextInput x="534" y="114" width="48"/>
-		<mx:TextInput x="478" y="140" width="48"/>
-		<mx:TextInput x="534" y="140" width="48"/>
-		<mx:TextInput x="478" y="166" width="48"/>
-		<mx:TextInput x="534" y="166" width="48"/>
-		<mx:TextInput x="534" y="62" width="48"/>
-		<mx:TextInput x="295" y="114" width="98"/>
-		<mx:TextInput x="295" y="140" width="98"/>
-		<mx:TextInput x="295" y="166" width="98"/>
-		<mx:TextInput x="295" y="192" width="98"/>
-		<mx:TextInput x="295" y="218" width="98"/>
-		<mx:TextInput x="295" y="244" width="98"/>
+		<mx:CheckBox x="418" y="192" label="Show Roll Stock" id="chkShowRollStock" change="doRollStockChanged();"/>
+		<mx:CheckBox x="418" y="207" label="Show Large Format Stock" id="chkShowLargeFormatStock"/>
+		<mx:CheckBox x="418" y="222" label="Show Rigid Substrate" id="chkShowRigidSubstrate"/>
+		<mx:CheckBox x="418" y="237" label="Show Inventoried Stock" id="chkShowInventoriedStock"/>
+		<mx:CheckBox x="418" y="252" label="Show Shells (Account: All)" id="chkShowShells"/>
+		<mx:TextInput x="99" y="62" width="98" id="txtGroup"/>
+		<mx:TextInput x="99" y="114" width="98" id="txtName"/>
+		<mx:TextInput x="99" y="140" width="98" id="txtFinish"/>
+		<mx:TextInput x="99" y="166" width="98" id="txtColor"/>
+		<mx:TextInput x="99" y="192" width="98" id="txtGrade"/>
+		<mx:TextInput x="99" y="218" width="98" id="txtMinOrder"/>
+		<mx:TextInput x="99" y="244" width="98" id="txtVendor"/>
+		<mx:TextInput x="295" y="62" width="98" id="txtStockType"/>
+		<mx:TextInput x="478" y="62" width="48" id="txtSizeMin"/>
+		<mx:TextInput x="478" y="88" width="48" id="txtWeightMin"/>
+		<mx:TextInput x="534" y="88" width="48" id="txtWeightMax"/>
+		<mx:TextInput x="478" y="114" width="48" id="txtCwtMin"/>
+		<mx:TextInput x="534" y="114" width="48" id="txtCwtMax"/>
+		<mx:TextInput x="478" y="140" width="48" id="txtQtyOnHandMin"/>
+		<mx:TextInput x="534" y="140" width="48" id="txtQtyOnHandMax"/>
+		<mx:TextInput x="478" y="166" width="48" enabled="false" id="txtRollWidthMin"/>
+		<mx:TextInput x="534" y="166" width="48" enabled="false" id="txtRollWidthMax"/>
+		<mx:TextInput x="534" y="62" width="48" id="txtSizeMax"/>
+		<mx:TextInput x="295" y="114" width="98" id="txtProductId"/>
+		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides"/>
+		<mx:TextInput x="295" y="166" width="98" id="txtGenericColors"/>
+		<mx:TextInput x="295" y="192" width="98" id="txtThickness"/>
+		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet"/>
+		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
