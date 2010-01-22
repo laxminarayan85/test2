@@ -78,7 +78,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
-					if (item.isFormField()) {
+					if (item.isFormField() && item.getName() != null) {
 						if (item.getName().equals("importType")) {
 							importType = item.getString();
 						}
