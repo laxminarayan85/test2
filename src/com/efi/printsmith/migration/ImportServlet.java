@@ -76,14 +76,24 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				Iterator<FileItem> iter = items.iterator();
 				String importType = null;
 				
+				/* First figure out what kind of file we're importing based on the hint given by the client */
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
-					if (item.isFormField() && item.getName() != null) {
-						if (item.getName().equals("importType")) {
-							importType = item.getString();
+					if (item.isFormField()) {
+						String name = item.getFieldName();
+						String value = item.getString();
+						if (name.equals("importType")) {
+							importType = value;
 						}
-						processFormField(item);
-					} else {
+					}
+				}
+				iter = items.iterator();
+
+				/* Now perform the actual import once we've found the file information in the passed parameters */
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+
+					if (!item.isFormField()) {
 						if (importType != null) {
 							processUploadedFile(item, importType);
 						} else {
@@ -97,11 +107,11 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		}
 	}
 	
-	private void processFormField(FileItem item) {
-		String name = item.getFieldName();
-		String value = item.getString();
-		System.out.println("Item name: " + name + " ; value: " + value);
-	}
+//	private void processFormField(FileItem item) {
+//		String name = item.getFieldName();
+//		String value = item.getString();
+//		System.out.println("Item name: " + name + " ; value: " + value);
+//	}
 	
 	private void processUploadedFile(FileItem item, String importType) throws Exception {
 		boolean writeToFile = true;
