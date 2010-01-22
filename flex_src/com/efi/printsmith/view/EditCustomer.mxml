@@ -342,8 +342,6 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		acctTypeRadioValue = account.type;
 		logDataService.getAll("CustomerLog");
 		
-		if (account.marketing.businessType != null)
-			business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
 		if (account.shippingMode != null)			
 			ship_via_combo.selectedIndex = findItem(account.shippingMode.name, shippingMethods);
 		if (account.taxCode != null)		
@@ -358,16 +356,23 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		bill_to_address_editor.setAddress(account.billToAddress);
 		bill_to_contact_editor.setContact(account.billToContact);
 		
-		if (account.marketing.followup != null)
-			followUp.selectedDate =account.marketing.followup;
-		if (account.marketing.birthDate != null)
-			birthDate.selectedDate =account.marketing.birthDate;
-		if (account.marketing.user3!= null)
-			userDate3.selectedDate =account.marketing.user3;
-		if (account.marketing.user4!= null)
-			userDate4.selectedDate =account.marketing.user4;
-		if (account.marketing.user5!= null)
-			userDate5.selectedDate =account.marketing.user5;
+		if (account.marketing != null){
+			
+		
+			if (account.marketing.businessType != null)
+				business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
+			if (account.marketing.followup != null)
+				followUp.selectedDate =account.marketing.followup;
+			if (account.marketing.birthDate != null)
+				birthDate.selectedDate =account.marketing.birthDate;
+			if (account.marketing.user3!= null)
+				userDate3.selectedDate =account.marketing.user3;
+			if (account.marketing.user4!= null)
+				userDate4.selectedDate =account.marketing.user4;
+			if (account.marketing.user5!= null)
+				userDate5.selectedDate =account.marketing.user5;
+			
+		}	
 		ClearLabel();
 	}
 	
