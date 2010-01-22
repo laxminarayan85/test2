@@ -7,2065 +7,2066 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.StockDefinition;
 
 public class PressDefinitionMapper extends ImportMapper {
-	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		PressDefinition pressDefinition = new PressDefinition();
 		
-		for (int i=0; i < fieldTokens.size(); i++) {
-			String currentImportToken = importTokens.get(i);
+		for (int i=0; i < fieldTokens.length; i++) {
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
 			
-			if ("recno".equals(currentImportToken)) {
+			if ("recno".equals(currentFieldToken)) {
 				pressDefinition.setPrevId(currentImportToken);
-			} else if ("name".equals(currentImportToken)) {
+			} else if ("name".equals(currentFieldToken)) {
 				pressDefinition.setName(currentImportToken);
-			} else if ("id".equals(currentImportToken)) {
+			} else if ("id".equals(currentFieldToken)) {
 				pressDefinition.setPressId(currentImportToken);
-			} else if ("machine id".equals(currentImportToken)) {
+			} else if ("machine id".equals(currentFieldToken)) {
 				pressDefinition.setMachineID(Utilities.tokenToLong(currentImportToken));
-			} else if ("heads".equals(currentImportToken)) {
+			} else if ("heads".equals(currentFieldToken)) {
 				pressDefinition.setNumberHeads(Utilities.tokenToLong(currentImportToken));
-			} else if ("sales cat".equals(currentImportToken)) {
+			} else if ("sales cat".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("setup time".equals(currentImportToken)) {
+			} else if ("setup time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl head".equals(currentImportToken)) {
+			} else if ("addl head".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl run".equals(currentImportToken)) {
+			} else if ("addl run".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("press speed".equals(currentImportToken)) {
+			} else if ("press speed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("fixed spoilage".equals(currentImportToken)) {
+			} else if ("fixed spoilage".equals(currentFieldToken)) {
 				pressDefinition.setFixedWaste(Utilities.tokenToDouble(currentImportToken));
-			} else if ("labor rate".equals(currentImportToken)) {
+			} else if ("labor rate".equals(currentFieldToken)) {
 				pressDefinition.setLaborRate(Utilities.tokenToDouble(currentImportToken));
-			} else if ("labor markup".equals(currentImportToken)) {
+			} else if ("labor markup".equals(currentFieldToken)) {
 				pressDefinition.setLaborMarkup(Utilities.tokenToDouble(currentImportToken));
-			} else if ("minimum time".equals(currentImportToken)) {
+			} else if ("minimum time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("plate charge".equals(currentImportToken)) {
+			} else if ("plate charge".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("wash rate".equals(currentImportToken)) {
+			} else if ("wash rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("maxX".equals(currentImportToken)) {
+			} else if ("maxX".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("max stock size".equals(currentImportToken)) {
+			} else if ("max stock size".equals(currentFieldToken)) {
 				pressDefinition.setMaxPaperSize(currentImportToken);
-			} else if ("maxY".equals(currentImportToken)) {
+			} else if ("maxY".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("isWeb".equals(currentImportToken)) {
+			} else if ("isWeb".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("variable speed".equals(currentImportToken)) {
+			} else if ("variable speed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use waste".equals(currentImportToken)) {
+			} else if ("use waste".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[1]".equals(currentImportToken)) {
+			} else if ("charges[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[2]".equals(currentImportToken)) {
+			} else if ("charges[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[3]".equals(currentImportToken)) {
+			} else if ("charges[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[4]".equals(currentImportToken)) {
+			} else if ("charges[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[5]".equals(currentImportToken)) {
+			} else if ("charges[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[6]".equals(currentImportToken)) {
+			} else if ("charges[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[7]".equals(currentImportToken)) {
+			} else if ("charges[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[8]".equals(currentImportToken)) {
+			} else if ("charges[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[9]".equals(currentImportToken)) {
+			} else if ("charges[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("charges[10]".equals(currentImportToken)) {
+			} else if ("charges[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("special".equals(currentImportToken)) {
+			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("speed table ptr".equals(currentImportToken)) {
+			} else if ("speed table ptr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("waste table ptr".equals(currentImportToken)) {
+			} else if ("waste table ptr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rstatus".equals(currentImportToken)) {
+			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rtype".equals(currentImportToken)) {
+			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("not used".equals(currentImportToken)) {
+			} else if ("not used".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("device ID".equals(currentImportToken)) {
+			} else if ("device ID".equals(currentFieldToken)) {
 				pressDefinition.setOemDeviceID(currentImportToken);
-			} else if ("output desc".equals(currentImportToken)) {
+			} else if ("output desc".equals(currentFieldToken)) {
 				pressDefinition.setOutputDescrip(currentImportToken);
-			} else if ("paperStyle".equals(currentImportToken)) {
-				if ("0".equals(currentImportToken)) {
+			} else if ("paperStyle".equals(currentFieldToken)) {
+				if ("0".equals(currentFieldToken)) {
 					pressDefinition.setSheetFed(true);
 					pressDefinition.setRollFed(false);
-				} else if ("1".equals(currentImportToken)) {
+				} else if ("1".equals(currentFieldToken)) {
 					pressDefinition.setRollFed(true);
 					pressDefinition.setSheetFed(false);
 				}
-			} else if ("is costing definition".equals(currentImportToken)) {
+			} else if ("is costing definition".equals(currentFieldToken)) {
 				pressDefinition.setCostingPress(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("exp3".equals(currentImportToken)) {
+			} else if ("exp3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp4".equals(currentImportToken)) {
+			} else if ("exp4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp5".equals(currentImportToken)) {
+			} else if ("exp5".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp6".equals(currentImportToken)) {
+			} else if ("exp6".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp7".equals(currentImportToken)) {
+			} else if ("exp7".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp8".equals(currentImportToken)) {
+			} else if ("exp8".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl setup 1".equals(currentImportToken)) {
+			} else if ("addl setup 1".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl setup 2".equals(currentImportToken)) {
+			} else if ("addl setup 2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl sigs".equals(currentImportToken)) {
+			} else if ("addl sigs".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl sigs per head".equals(currentImportToken)) {
+			} else if ("addl sigs per head".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sequence".equals(currentImportToken)) {
+			} else if ("sequence".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("gripper edge".equals(currentImportToken)) {
+			} else if ("gripper edge".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("production location ID".equals(currentImportToken)) {
+			} else if ("production location ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("production location".equals(currentImportToken)) {
+			} else if ("production location".equals(currentFieldToken)) {
 				pressDefinition.setProductionLocation(currentImportToken);
-			} else if ("cost center ID".equals(currentImportToken)) {
+			} else if ("cost center ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("cost center".equals(currentImportToken)) {
+			} else if ("cost center".equals(currentFieldToken)) {
 				pressDefinition.setCostCenter(currentImportToken);
-			} else if ("machine name ID".equals(currentImportToken)) {
+			} else if ("machine name ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("machine name".equals(currentImportToken)) {
+			} else if ("machine name".equals(currentFieldToken)) {
 				pressDefinition.setMachineName(currentImportToken);
-			} else if ("wash minutes".equals(currentImportToken)) {
+			} else if ("wash minutes".equals(currentFieldToken)) {
 				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));
-			} else if ("wash fountain".equals(currentImportToken)) {
+			} else if ("wash fountain".equals(currentFieldToken)) {
 				pressDefinition.setWashupPerFountain(Utilities.tokenToDouble(currentImportToken));
-			} else if ("minX".equals(currentImportToken)) {
+			} else if ("minX".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("minY".equals(currentImportToken)) {
+			} else if ("minY".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rollFedCutoffLength".equals(currentImportToken)) {
+			} else if ("rollFedCutoffLength".equals(currentFieldToken)) {
 				pressDefinition.setCutoffLength(Utilities.tokenToLong(currentImportToken));
-			} else if ("defaultSheetFed".equals(currentImportToken)) {
+			} else if ("defaultSheetFed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital integration".equals(currentImportToken)) {
+			} else if ("digital integration".equals(currentFieldToken)) {
 				pressDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("time in seconds".equals(currentImportToken)) {
+			} else if ("time in seconds".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("perfector".equals(currentImportToken)) {
+			} else if ("perfector".equals(currentFieldToken)) {
 				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("defaultRollFed".equals(currentImportToken)) {
+			} else if ("defaultRollFed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TargetPriceTableVersion".equals(currentImportToken)) {
+			} else if ("TargetPriceTableVersion".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_interpolate".equals(currentImportToken)) {
+			} else if ("TPT_interpolate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_inited".equals(currentImportToken)) {
+			} else if ("TPT_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ignoreCharges".equals(currentImportToken)) {
+			} else if ("TPT_ignoreCharges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_disabled".equals(currentImportToken)) {
+			} else if ("TPT_disabled".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_usePressCnt".equals(currentImportToken)) {
+			} else if ("TPT_usePressCnt".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_skipWashup".equals(currentImportToken)) {
+			} else if ("TPT_skipWashup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_skipStock".equals(currentImportToken)) {
+			} else if ("TPT_skipStock".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_filler1".equals(currentImportToken)) {
+			} else if ("TPT_filler1".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_filler2".equals(currentImportToken)) {
+			} else if ("TPT_filler2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_filler3".equals(currentImportToken)) {
+			} else if ("TPT_filler3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_notused".equals(currentImportToken)) {
+			} else if ("TPT_notused".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_laborMarkup".equals(currentImportToken)) {
+			} else if ("TPT_laborMarkup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyCount".equals(currentImportToken)) {
+			} else if ("TPT_qtyCount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[1]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[2]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[3]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[4]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[5]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[6]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[7]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[8]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[9]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[10]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[11]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[11]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[12]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[12]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[13]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[13]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[14]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[14]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_qtyElements[15]".equals(currentImportToken)) {
+			} else if ("TPT_qtyElements[15]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_passesFront".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_passesFront".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_passesBack".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_passesBack".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_minMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_minMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_maxMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_maxMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData1_Cell_avgMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData1_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_passesFront".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_passesFront".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_passesBack".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_passesBack".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_minMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_minMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_maxMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_maxMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData2_Cell_avgMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData2_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_passesFront".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_passesFront".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_passesBack".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_passesBack".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_minMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_minMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_maxMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_maxMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData3_Cell_avgMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData3_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_passesFront".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_passesFront".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_passesBack".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_passesBack".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_minMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_minMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_maxMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_maxMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData4_Cell_avgMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData4_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_passesFront".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_passesFront".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_passesBack".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_passesBack".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_labor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_labor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_chargeTota".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_Charges".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_stdPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_factor".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_factor".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_targetPric".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_margin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_h".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_var_v".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_inited".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_inited".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_filler".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_filler".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_minMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_minMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_maxMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_maxMargin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("TPT_ColumnData5_Cell_avgMargin".equals(currentImportToken)) {
+			} else if ("TPT_ColumnData5_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
 			}
 		}

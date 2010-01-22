@@ -34,18 +34,18 @@ package com.efi.printsmith.data
 		public var daysOpen:int = 0;
 		public var monthlyPayment:Number = 0;
 		public var percentUsage:String = "";
-		public var hourCostRate:int = 0;
-		public var tonerCopy:int = 0;
-		public var developerCopy:int = 0;
-		public var copyMarkup:int = 0;
+		public var hourCostRate:Number = 0;
+		public var tonerCopy:Number = 0;
+		public var developerCopy:Number = 0;
+		public var copyMarkup:Number = 0;
 		public var hoursOpen:int = 0;
-		public var monthlyMaintenance:int = 0;
-		public var machineCostPerCopy:int = 0;
+		public var monthlyMaintenance:Number = 0;
+		public var machineCostPerCopy:Number = 0;
 		public var method:String = "";
 		public var salesCat:String = "";
 		public var copyID:int = 0;
-		public var monthlyBurdenRate:int = 0;
-		public var copyMinutes:int = 0;
+		public var monthlyBurdenRate:Number = 0;
+		public var copyMinutes:Number = 0;
 		public var charges:ArrayCollection;
 		public var copierId:String = "";
 	

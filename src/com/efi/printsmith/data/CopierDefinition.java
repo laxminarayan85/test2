@@ -543,69 +543,69 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer hourCostRate;
+	private Double hourCostRate;
 	/**
 	 * @generated
  	 */
-	public Integer getHourCostRate(){
+	public Double getHourCostRate(){
 		return hourCostRate; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setHourCostRate(Integer newVal) {
+	public void setHourCostRate(Double newVal) {
 		this.hourCostRate = newVal;
 	}
  	
 	
  	@Basic
-	private Integer tonerCopy;
+	private Double tonerCopy;
 	/**
 	 * @generated
  	 */
-	public Integer getTonerCopy(){
+	public Double getTonerCopy(){
 		return tonerCopy; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setTonerCopy(Integer newVal) {
+	public void setTonerCopy(Double newVal) {
 		this.tonerCopy = newVal;
 	}
  	
 	
  	@Basic
-	private Integer developerCopy;
+	private Double developerCopy;
 	/**
 	 * @generated
  	 */
-	public Integer getDeveloperCopy(){
+	public Double getDeveloperCopy(){
 		return developerCopy; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDeveloperCopy(Integer newVal) {
+	public void setDeveloperCopy(Double newVal) {
 		this.developerCopy = newVal;
 	}
  	
 	
  	@Basic
-	private Integer copyMarkup;
+	private Double copyMarkup;
 	/**
 	 * @generated
  	 */
-	public Integer getCopyMarkup(){
+	public Double getCopyMarkup(){
 		return copyMarkup; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCopyMarkup(Integer newVal) {
+	public void setCopyMarkup(Double newVal) {
 		this.copyMarkup = newVal;
 	}
  	
@@ -628,35 +628,35 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer monthlyMaintenance;
+	private Double monthlyMaintenance;
 	/**
 	 * @generated
  	 */
-	public Integer getMonthlyMaintenance(){
+	public Double getMonthlyMaintenance(){
 		return monthlyMaintenance; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setMonthlyMaintenance(Integer newVal) {
+	public void setMonthlyMaintenance(Double newVal) {
 		this.monthlyMaintenance = newVal;
 	}
  	
 	
  	@Basic
-	private Integer machineCostPerCopy;
+	private Double machineCostPerCopy;
 	/**
 	 * @generated
  	 */
-	public Integer getMachineCostPerCopy(){
+	public Double getMachineCostPerCopy(){
 		return machineCostPerCopy; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setMachineCostPerCopy(Integer newVal) {
+	public void setMachineCostPerCopy(Double newVal) {
 		this.machineCostPerCopy = newVal;
 	}
  	
@@ -713,35 +713,35 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer monthlyBurdenRate;
+	private Double monthlyBurdenRate;
 	/**
 	 * @generated
  	 */
-	public Integer getMonthlyBurdenRate(){
+	public Double getMonthlyBurdenRate(){
 		return monthlyBurdenRate; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setMonthlyBurdenRate(Integer newVal) {
+	public void setMonthlyBurdenRate(Double newVal) {
 		this.monthlyBurdenRate = newVal;
 	}
  	
 	
  	@Basic
-	private Integer copyMinutes;
+	private Double copyMinutes;
 	/**
 	 * @generated
  	 */
-	public Integer getCopyMinutes(){
+	public Double getCopyMinutes(){
 		return copyMinutes; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCopyMinutes(Integer newVal) {
+	public void setCopyMinutes(Double newVal) {
 		this.copyMinutes = newVal;
 	}
  	
@@ -855,18 +855,18 @@ public class CopierDefinition extends ModelBase {
 		if (DAYSOPEN.equals(propertyName)) setDaysOpen((Integer)newValue); else
 		if (MONTHLYPAYMENT.equals(propertyName)) setMonthlyPayment((Double)newValue); else
 		if (PERCENTUSAGE.equals(propertyName)) setPercentUsage((String)newValue); else
-		if (HOURCOSTRATE.equals(propertyName)) setHourCostRate((Integer)newValue); else
-		if (TONERCOPY.equals(propertyName)) setTonerCopy((Integer)newValue); else
-		if (DEVELOPERCOPY.equals(propertyName)) setDeveloperCopy((Integer)newValue); else
-		if (COPYMARKUP.equals(propertyName)) setCopyMarkup((Integer)newValue); else
+		if (HOURCOSTRATE.equals(propertyName)) setHourCostRate((Double)newValue); else
+		if (TONERCOPY.equals(propertyName)) setTonerCopy((Double)newValue); else
+		if (DEVELOPERCOPY.equals(propertyName)) setDeveloperCopy((Double)newValue); else
+		if (COPYMARKUP.equals(propertyName)) setCopyMarkup((Double)newValue); else
 		if (HOURSOPEN.equals(propertyName)) setHoursOpen((Integer)newValue); else
-		if (MONTHLYMAINTENANCE.equals(propertyName)) setMonthlyMaintenance((Integer)newValue); else
-		if (MACHINECOSTPERCOPY.equals(propertyName)) setMachineCostPerCopy((Integer)newValue); else
+		if (MONTHLYMAINTENANCE.equals(propertyName)) setMonthlyMaintenance((Double)newValue); else
+		if (MACHINECOSTPERCOPY.equals(propertyName)) setMachineCostPerCopy((Double)newValue); else
 		if (METHOD.equals(propertyName)) setMethod((String)newValue); else
 		if (SALESCAT.equals(propertyName)) setSalesCat((String)newValue); else
 		if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
-		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Integer)newValue); else
-		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Integer)newValue); else
+		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Double)newValue); else
+		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
 		if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -921,19 +921,19 @@ public class CopierDefinition extends ModelBase {
 		if (PERCENTUSAGE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (HOURCOSTRATE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (TONERCOPY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (DEVELOPERCOPY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (COPYMARKUP.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (HOURSOPEN.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MONTHLYMAINTENANCE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (MACHINECOSTPERCOPY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (METHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SALESCAT.equals(propertyName)) 
@@ -941,9 +941,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MONTHLYBURDENRATE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (COPYMINUTES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CHARGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Charge.class};		
 		if (COPIERID.equals(propertyName)) 

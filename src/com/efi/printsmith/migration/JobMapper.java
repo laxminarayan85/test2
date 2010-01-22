@@ -6,863 +6,864 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.ModelBase;
 
 public class JobMapper extends ImportMapper {
-	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		Job job = new Job();
 		
-		for (int i=0; i < fieldTokens.size(); i++) {
-			String currentImportToken = importTokens.get(i);
+		for (int i=0; i < fieldTokens.length; i++) {
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
 			
-			if ("recno".equals(currentImportToken)) {
+			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rstatus".equals(currentImportToken)) {
+			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rtype".equals(currentImportToken)) {
+			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("doc type".equals(currentImportToken)) {
+			} else if ("doc type".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("order number".equals(currentImportToken)) {
+			} else if ("order number".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("job number".equals(currentImportToken)) {
+			} else if ("job number".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sales category".equals(currentImportToken)) {
+			} else if ("sales category".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sales cat name".equals(currentImportToken)) {
+			} else if ("sales cat name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("press ID".equals(currentImportToken)) {
+			} else if ("press ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("press name".equals(currentImportToken)) {
+			} else if ("press name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("job ticket notes".equals(currentImportToken)) {
+			} else if ("job ticket notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("order qty".equals(currentImportToken)) {
+			} else if ("order qty".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl qty[1]".equals(currentImportToken)) {
+			} else if ("addl qty[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl qty[2]".equals(currentImportToken)) {
+			} else if ("addl qty[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl qty[3]".equals(currentImportToken)) {
+			} else if ("addl qty[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("product code".equals(currentImportToken)) {
+			} else if ("product code".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("book id".equals(currentImportToken)) {
+			} else if ("book id".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("press".equals(currentImportToken)) {
+			} else if ("press".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("runs".equals(currentImportToken)) {
+			} else if ("runs".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("originals".equals(currentImportToken)) {
+			} else if ("originals".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("signatures".equals(currentImportToken)) {
+			} else if ("signatures".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sets".equals(currentImportToken)) {
+			} else if ("sets".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("up".equals(currentImportToken)) {
+			} else if ("up".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("on".equals(currentImportToken)) {
+			} else if ("on".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("runout".equals(currentImportToken)) {
+			} else if ("runout".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pricing method".equals(currentImportToken)) {
+			} else if ("pricing method".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("colors front".equals(currentImportToken)) {
+			} else if ("colors front".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("colors back".equals(currentImportToken)) {
+			} else if ("colors back".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("passes front".equals(currentImportToken)) {
+			} else if ("passes front".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("passes back".equals(currentImportToken)) {
+			} else if ("passes back".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("wash front".equals(currentImportToken)) {
+			} else if ("wash front".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("wash back".equals(currentImportToken)) {
+			} else if ("wash back".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sheets".equals(currentImportToken)) {
+			} else if ("sheets".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("waste".equals(currentImportToken)) {
+			} else if ("waste".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("impressions".equals(currentImportToken)) {
+			} else if ("impressions".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("total impressions".equals(currentImportToken)) {
+			} else if ("total impressions".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock id".equals(currentImportToken)) {
+			} else if ("stock id".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("parent X".equals(currentImportToken)) {
+			} else if ("parent X".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("parent size".equals(currentImportToken)) {
+			} else if ("parent size".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("parent Y".equals(currentImportToken)) {
+			} else if ("parent Y".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run X".equals(currentImportToken)) {
+			} else if ("run X".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run size".equals(currentImportToken)) {
+			} else if ("run size".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run Y".equals(currentImportToken)) {
+			} else if ("run Y".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish X".equals(currentImportToken)) {
+			} else if ("finish X".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish size".equals(currentImportToken)) {
+			} else if ("finish size".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish Y".equals(currentImportToken)) {
+			} else if ("finish Y".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock cost".equals(currentImportToken)) {
+			} else if ("stock cost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock units".equals(currentImportToken)) {
+			} else if ("stock units".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock markup".equals(currentImportToken)) {
+			} else if ("stock markup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("material cost".equals(currentImportToken)) {
+			} else if ("material cost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("material markup amt".equals(currentImportToken)) {
+			} else if ("material markup amt".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("press speed".equals(currentImportToken)) {
+			} else if ("press speed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("labor rate".equals(currentImportToken)) {
+			} else if ("labor rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("labor markup".equals(currentImportToken)) {
+			} else if ("labor markup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("setup time".equals(currentImportToken)) {
+			} else if ("setup time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run time".equals(currentImportToken)) {
+			} else if ("run time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("labor cost".equals(currentImportToken)) {
+			} else if ("labor cost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("labor markup amt".equals(currentImportToken)) {
+			} else if ("labor markup amt".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o sets".equals(currentImportToken)) {
+			} else if ("o sets".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o overprice".equals(currentImportToken)) {
+			} else if ("o overprice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o overunitprice".equals(currentImportToken)) {
+			} else if ("o overunitprice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o runtime".equals(currentImportToken)) {
+			} else if ("o runtime".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o Setuptime".equals(currentImportToken)) {
+			} else if ("o Setuptime".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o stockUnits".equals(currentImportToken)) {
+			} else if ("o stockUnits".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o stockMarkup".equals(currentImportToken)) {
+			} else if ("o stockMarkup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o stockCost".equals(currentImportToken)) {
+			} else if ("o stockCost".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o Waste".equals(currentImportToken)) {
+			} else if ("o Waste".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o Prod".equals(currentImportToken)) {
+			} else if ("o Prod".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o unit".equals(currentImportToken)) {
+			} else if ("o unit".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o price".equals(currentImportToken)) {
+			} else if ("o price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o runout".equals(currentImportToken)) {
+			} else if ("o runout".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o labor markup".equals(currentImportToken)) {
+			} else if ("o labor markup".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o labor rate".equals(currentImportToken)) {
+			} else if ("o labor rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o aimp".equals(currentImportToken)) {
+			} else if ("o aimp".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("isWeb".equals(currentImportToken)) {
+			} else if ("isWeb".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("workNturn".equals(currentImportToken)) {
+			} else if ("workNturn".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("dutch".equals(currentImportToken)) {
+			} else if ("dutch".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("grain".equals(currentImportToken)) {
+			} else if ("grain".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock ordered".equals(currentImportToken)) {
+			} else if ("stock ordered".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tickets printed".equals(currentImportToken)) {
+			} else if ("tickets printed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finished".equals(currentImportToken)) {
+			} else if ("finished".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("brokered".equals(currentImportToken)) {
+			} else if ("brokered".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxable".equals(currentImportToken)) {
+			} else if ("taxable".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o pass front".equals(currentImportToken)) {
+			} else if ("o pass front".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o pass back".equals(currentImportToken)) {
+			} else if ("o pass back".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("noPages".equals(currentImportToken)) {
+			} else if ("noPages".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("hasCover".equals(currentImportToken)) {
+			} else if ("hasCover".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("hidden".equals(currentImportToken)) {
+			} else if ("hidden".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("overs".equals(currentImportToken)) {
+			} else if ("overs".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("overs unit price".equals(currentImportToken)) {
+			} else if ("overs unit price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("overs price".equals(currentImportToken)) {
+			} else if ("overs price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("prep price".equals(currentImportToken)) {
+			} else if ("prep price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("prod price".equals(currentImportToken)) {
+			} else if ("prod price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bind price".equals(currentImportToken)) {
+			} else if ("bind price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("markup total".equals(currentImportToken)) {
+			} else if ("markup total".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("prod charge total".equals(currentImportToken)) {
+			} else if ("prod charge total".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("add M".equals(currentImportToken)) {
+			} else if ("add M".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("unit price".equals(currentImportToken)) {
+			} else if ("unit price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("price".equals(currentImportToken)) {
+			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("total price".equals(currentImportToken)) {
+			} else if ("total price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("description".equals(currentImportToken)) {
+			} else if ("description".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock name".equals(currentImportToken)) {
+			} else if ("stock name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock color".equals(currentImportToken)) {
+			} else if ("stock color".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front".equals(currentImportToken)) {
+			} else if ("ink front".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back".equals(currentImportToken)) {
+			} else if ("ink back".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("notes".equals(currentImportToken)) {
+			} else if ("notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("location".equals(currentImportToken)) {
+			} else if ("location".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("special".equals(currentImportToken)) {
+			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("base sets".equals(currentImportToken)) {
+			} else if ("base sets".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("gripper edge".equals(currentImportToken)) {
+			} else if ("gripper edge".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("grip side".equals(currentImportToken)) {
+			} else if ("grip side".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("folio edge".equals(currentImportToken)) {
+			} else if ("folio edge".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("folio side".equals(currentImportToken)) {
+			} else if ("folio side".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish bleed[1]".equals(currentImportToken)) {
+			} else if ("finish bleed[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish bleed[2]".equals(currentImportToken)) {
+			} else if ("finish bleed[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish bleed[3]".equals(currentImportToken)) {
+			} else if ("finish bleed[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish bleed[4]".equals(currentImportToken)) {
+			} else if ("finish bleed[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish gutter[1]".equals(currentImportToken)) {
+			} else if ("finish gutter[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish gutter[2]".equals(currentImportToken)) {
+			} else if ("finish gutter[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("parent out".equals(currentImportToken)) {
+			} else if ("parent out".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("cuts run".equals(currentImportToken)) {
+			} else if ("cuts run".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("cuts finish".equals(currentImportToken)) {
+			} else if ("cuts finish".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use grip".equals(currentImportToken)) {
+			} else if ("use grip".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use folio".equals(currentImportToken)) {
+			} else if ("use folio".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use finish bleed".equals(currentImportToken)) {
+			} else if ("use finish bleed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use finish gutter".equals(currentImportToken)) {
+			} else if ("use finish gutter".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use color bar".equals(currentImportToken)) {
+			} else if ("use color bar".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o run cuts".equals(currentImportToken)) {
+			} else if ("o run cuts".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o finish cuts".equals(currentImportToken)) {
+			} else if ("o finish cuts".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o up".equals(currentImportToken)) {
+			} else if ("o up".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o parent out".equals(currentImportToken)) {
+			} else if ("o parent out".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("product code name".equals(currentImportToken)) {
+			} else if ("product code name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("costing press id".equals(currentImportToken)) {
+			} else if ("costing press id".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("costing press name".equals(currentImportToken)) {
+			} else if ("costing press name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 1".equals(currentImportToken)) {
+			} else if ("ink front 1".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital que ID".equals(currentImportToken)) {
+			} else if ("digital que ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("job comment".equals(currentImportToken)) {
+			} else if ("job comment".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 2".equals(currentImportToken)) {
+			} else if ("ink front 2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 3".equals(currentImportToken)) {
+			} else if ("ink front 3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 4".equals(currentImportToken)) {
+			} else if ("ink front 4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 5".equals(currentImportToken)) {
+			} else if ("ink front 5".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 6".equals(currentImportToken)) {
+			} else if ("ink front 6".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink front 7".equals(currentImportToken)) {
+			} else if ("ink front 7".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 2".equals(currentImportToken)) {
+			} else if ("ink back 2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 3".equals(currentImportToken)) {
+			} else if ("ink back 3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 4".equals(currentImportToken)) {
+			} else if ("ink back 4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 5".equals(currentImportToken)) {
+			} else if ("ink back 5".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 6".equals(currentImportToken)) {
+			} else if ("ink back 6".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ink back 7".equals(currentImportToken)) {
+			} else if ("ink back 7".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital asset 1".equals(currentImportToken)) {
+			} else if ("digital asset 1".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital asset 2".equals(currentImportToken)) {
+			} else if ("digital asset 2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital asset 3".equals(currentImportToken)) {
+			} else if ("digital asset 3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital asset 4".equals(currentImportToken)) {
+			} else if ("digital asset 4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital asset 5".equals(currentImportToken)) {
+			} else if ("digital asset 5".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("fiery workflow".equals(currentImportToken)) {
+			} else if ("fiery workflow".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web notes rec".equals(currentImportToken)) {
+			} else if ("web notes rec".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web notes".equals(currentImportToken)) {
+			} else if ("web notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("cost rec".equals(currentImportToken)) {
+			} else if ("cost rec".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("paper template ptr".equals(currentImportToken)) {
+			} else if ("paper template ptr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("paper template name".equals(currentImportToken)) {
+			} else if ("paper template name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker route rec".equals(currentImportToken)) {
+			} else if ("tracker route rec".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker route def".equals(currentImportToken)) {
+			} else if ("tracker route def".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker total time".equals(currentImportToken)) {
+			} else if ("tracker total time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker total time text".equals(currentImportToken)) {
+			} else if ("tracker total time text".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker priority ID".equals(currentImportToken)) {
+			} else if ("tracker priority ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock committed".equals(currentImportToken)) {
+			} else if ("stock committed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock consumed".equals(currentImportToken)) {
+			} else if ("stock consumed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker location ID".equals(currentImportToken)) {
+			} else if ("tracker location ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracker location".equals(currentImportToken)) {
+			} else if ("tracker location".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock ordered date".equals(currentImportToken)) {
+			} else if ("stock ordered date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock ordered time".equals(currentImportToken)) {
+			} else if ("stock ordered time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web component ID".equals(currentImportToken)) {
+			} else if ("web component ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[1]".equals(currentImportToken)) {
+			} else if ("tracking date[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[2]".equals(currentImportToken)) {
+			} else if ("tracking date[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[3]".equals(currentImportToken)) {
+			} else if ("tracking date[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[4]".equals(currentImportToken)) {
+			} else if ("tracking date[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[5]".equals(currentImportToken)) {
+			} else if ("tracking date[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[6]".equals(currentImportToken)) {
+			} else if ("tracking date[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[7]".equals(currentImportToken)) {
+			} else if ("tracking date[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[8]".equals(currentImportToken)) {
+			} else if ("tracking date[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[9]".equals(currentImportToken)) {
+			} else if ("tracking date[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[10]".equals(currentImportToken)) {
+			} else if ("tracking date[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[11]".equals(currentImportToken)) {
+			} else if ("tracking date[11]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[12]".equals(currentImportToken)) {
+			} else if ("tracking date[12]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[13]".equals(currentImportToken)) {
+			} else if ("tracking date[13]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[14]".equals(currentImportToken)) {
+			} else if ("tracking date[14]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[15]".equals(currentImportToken)) {
+			} else if ("tracking date[15]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking date[16]".equals(currentImportToken)) {
+			} else if ("tracking date[16]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[1]".equals(currentImportToken)) {
+			} else if ("tracking time[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[2]".equals(currentImportToken)) {
+			} else if ("tracking time[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[3]".equals(currentImportToken)) {
+			} else if ("tracking time[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[4]".equals(currentImportToken)) {
+			} else if ("tracking time[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[5]".equals(currentImportToken)) {
+			} else if ("tracking time[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[6]".equals(currentImportToken)) {
+			} else if ("tracking time[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[7]".equals(currentImportToken)) {
+			} else if ("tracking time[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[8]".equals(currentImportToken)) {
+			} else if ("tracking time[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[9]".equals(currentImportToken)) {
+			} else if ("tracking time[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[10]".equals(currentImportToken)) {
+			} else if ("tracking time[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[11]".equals(currentImportToken)) {
+			} else if ("tracking time[11]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[12]".equals(currentImportToken)) {
+			} else if ("tracking time[12]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[13]".equals(currentImportToken)) {
+			} else if ("tracking time[13]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[14]".equals(currentImportToken)) {
+			} else if ("tracking time[14]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[15]".equals(currentImportToken)) {
+			} else if ("tracking time[15]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tracking time[16]".equals(currentImportToken)) {
+			} else if ("tracking time[16]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital submit date".equals(currentImportToken)) {
+			} else if ("digital submit date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital submit time".equals(currentImportToken)) {
+			} else if ("digital submit time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital start by date".equals(currentImportToken)) {
+			} else if ("digital start by date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital start by time".equals(currentImportToken)) {
+			} else if ("digital start by time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital run by date".equals(currentImportToken)) {
+			} else if ("digital run by date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital run by time".equals(currentImportToken)) {
+			} else if ("digital run by time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital completed date".equals(currentImportToken)) {
+			} else if ("digital completed date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital completed time".equals(currentImportToken)) {
+			} else if ("digital completed time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("percent complete".equals(currentImportToken)) {
+			} else if ("percent complete".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("jdf submit status".equals(currentImportToken)) {
+			} else if ("jdf submit status".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("not used byte".equals(currentImportToken)) {
+			} else if ("not used byte".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("extra stock".equals(currentImportToken)) {
+			} else if ("extra stock".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("odd run count".equals(currentImportToken)) {
+			} else if ("odd run count".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("odd sig per run".equals(currentImportToken)) {
+			} else if ("odd sig per run".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("folded X".equals(currentImportToken)) {
+			} else if ("folded X".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("folded size".equals(currentImportToken)) {
+			} else if ("folded size".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("folded Y".equals(currentImportToken)) {
+			} else if ("folded Y".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock lot count".equals(currentImportToken)) {
+			} else if ("stock lot count".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run size area".equals(currentImportToken)) {
+			} else if ("run size area".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("white space[1]".equals(currentImportToken)) {
+			} else if ("white space[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("white space[2]".equals(currentImportToken)) {
+			} else if ("white space[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("white space[3]".equals(currentImportToken)) {
+			} else if ("white space[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("white space[4]".equals(currentImportToken)) {
+			} else if ("white space[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("across".equals(currentImportToken)) {
+			} else if ("across".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("down".equals(currentImportToken)) {
+			} else if ("down".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("dAcross".equals(currentImportToken)) {
+			} else if ("dAcross".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("dDown".equals(currentImportToken)) {
+			} else if ("dDown".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("r margin".equals(currentImportToken)) {
+			} else if ("r margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("b margin".equals(currentImportToken)) {
+			} else if ("b margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("t margin".equals(currentImportToken)) {
+			} else if ("t margin".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("used area".equals(currentImportToken)) {
+			} else if ("used area".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("parent area".equals(currentImportToken)) {
+			} else if ("parent area".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("washup time".equals(currentImportToken)) {
+			} else if ("washup time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock group".equals(currentImportToken)) {
+			} else if ("pick stock group".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock type".equals(currentImportToken)) {
+			} else if ("pick stock type".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock coat".equals(currentImportToken)) {
+			} else if ("pick stock coat".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock grade".equals(currentImportToken)) {
+			} else if ("pick stock grade".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock generic finish".equals(currentImportToken)) {
+			} else if ("pick stock generic finish".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock generic color".equals(currentImportToken)) {
+			} else if ("pick stock generic color".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock vendor ID".equals(currentImportToken)) {
+			} else if ("pick stock vendor ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("vender name".equals(currentImportToken)) {
+			} else if ("vender name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("pick stock weight".equals(currentImportToken)) {
+			} else if ("pick stock weight".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("shipping weight".equals(currentImportToken)) {
+			} else if ("shipping weight".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run weight".equals(currentImportToken)) {
+			} else if ("run weight".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("mQuant".equals(currentImportToken)) {
+			} else if ("mQuant".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use paper calc up".equals(currentImportToken)) {
+			} else if ("use paper calc up".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("completed".equals(currentImportToken)) {
+			} else if ("completed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("show notes".equals(currentImportToken)) {
+			} else if ("show notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("oParentSize".equals(currentImportToken)) {
+			} else if ("oParentSize".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("price locked".equals(currentImportToken)) {
+			} else if ("price locked".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o bind waste".equals(currentImportToken)) {
+			} else if ("o bind waste".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("copier side adjust".equals(currentImportToken)) {
+			} else if ("copier side adjust".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use white space".equals(currentImportToken)) {
+			} else if ("use white space".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("is crouser".equals(currentImportToken)) {
+			} else if ("is crouser".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("run & tumble".equals(currentImportToken)) {
+			} else if ("run & tumble".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("obs_tax in price".equals(currentImportToken)) {
+			} else if ("obs_tax in price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("dutch bottom".equals(currentImportToken)) {
+			} else if ("dutch bottom".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finish".equals(currentImportToken)) {
+			} else if ("finish".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("back trim parent".equals(currentImportToken)) {
+			} else if ("back trim parent".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("back trim run".equals(currentImportToken)) {
+			} else if ("back trim run".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("diagram on job".equals(currentImportToken)) {
+			} else if ("diagram on job".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("digital submitted".equals(currentImportToken)) {
+			} else if ("digital submitted".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("work & turn new".equals(currentImportToken)) {
+			} else if ("work & turn new".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("override washup time".equals(currentImportToken)) {
+			} else if ("override washup time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("production release".equals(currentImportToken)) {
+			} else if ("production release".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("attach routing list".equals(currentImportToken)) {
+			} else if ("attach routing list".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("use booklet total clicks".equals(currentImportToken)) {
+			} else if ("use booklet total clicks".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("stock is inventoried".equals(currentImportToken)) {
+			} else if ("stock is inventoried".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inventory consumed by Tracker".equals(currentImportToken)) {
+			} else if ("inventory consumed by Tracker".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web adjusted price".equals(currentImportToken)) {
+			} else if ("web adjusted price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("o Qty Ordered".equals(currentImportToken)) {
+			} else if ("o Qty Ordered".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("is Print Job".equals(currentImportToken)) {
+			} else if ("is Print Job".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("is Copy Job".equals(currentImportToken)) {
+			} else if ("is Copy Job".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("is large format".equals(currentImportToken)) {
+			} else if ("is large format".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("is Roll Job".equals(currentImportToken)) {
+			} else if ("is Roll Job".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("est has mult qty".equals(currentImportToken)) {
+			} else if ("est has mult qty".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("est selected multi qty version".equals(currentImportToken)) {
+			} else if ("est selected multi qty version".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table ptr".equals(currentImportToken)) {
+			} else if ("tax table ptr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table ID".equals(currentImportToken)) {
+			} else if ("tax table ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table name".equals(currentImportToken)) {
+			} else if ("tax table name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table".equals(currentImportToken)) {
+			} else if ("tax table".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code ID".equals(currentImportToken)) {
+			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code name".equals(currentImportToken)) {
+			} else if ("tax code name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code".equals(currentImportToken)) {
+			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("quantity".equals(currentImportToken)) {
+			} else if ("quantity".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("price".equals(currentImportToken)) {
+			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("accumulatedTaxes".equals(currentImportToken)) {
+			} else if ("accumulatedTaxes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("quantity".equals(currentImportToken)) {
+			} else if ("quantity".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("price".equals(currentImportToken)) {
+			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("accumulatedTaxes".equals(currentImportToken)) {
+			} else if ("accumulatedTaxes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("quantity".equals(currentImportToken)) {
+			} else if ("quantity".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("price".equals(currentImportToken)) {
+			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("accumulatedTaxes".equals(currentImportToken)) {
+			} else if ("accumulatedTaxes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("target price".equals(currentImportToken)) {
+			} else if ("target price".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("amount".equals(currentImportToken)) {
+			} else if ("amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("shippingInAmount".equals(currentImportToken)) {
+			} else if ("shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("amountPaid".equals(currentImportToken)) {
+			} else if ("amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax".equals(currentImportToken)) {
+			} else if ("calculatedTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("amount".equals(currentImportToken)) {
+			} else if ("amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("shippingInAmount".equals(currentImportToken)) {
+			} else if ("shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("amountPaid".equals(currentImportToken)) {
+			} else if ("amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inUse".equals(currentImportToken)) {
+			} else if ("inUse".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableDBRecNo".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableDBRecNo".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inUse".equals(currentImportToken)) {
+			} else if ("inUse".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableDBRecNo".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableDBRecNo".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inUse".equals(currentImportToken)) {
+			} else if ("inUse".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableDBRecNo".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableDBRecNo".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inUse".equals(currentImportToken)) {
+			} else if ("inUse".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableDBRecNo".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableDBRecNo".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inUse".equals(currentImportToken)) {
+			} else if ("inUse".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxTableDBRecNo".equals(currentImportToken)) {
+			} else if ("taxTable_taxTableDBRecNo".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableID".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTable_taxCodeTableName".equals(currentImportToken)) {
+			} else if ("taxTable_taxCodeTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amount".equals(currentImportToken)) {
+			} else if ("taxableAmount_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_shippingInAmount".equals(currentImportToken)) {
+			} else if ("taxableAmount_shippingInAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxableAmount_amountPaid".equals(currentImportToken)) {
+			} else if ("taxableAmount_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amount".equals(currentImportToken)) {
+			} else if ("calculatedTax_amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("calculatedTax_amountPaid".equals(currentImportToken)) {
+			} else if ("calculatedTax_amountPaid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl price[1]".equals(currentImportToken)) {
+			} else if ("addl price[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl price[2]".equals(currentImportToken)) {
+			} else if ("addl price[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl price[3]".equals(currentImportToken)) {
+			} else if ("addl price[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl tax[1]".equals(currentImportToken)) {
+			} else if ("addl tax[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl tax[2]".equals(currentImportToken)) {
+			} else if ("addl tax[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("addl tax[3]".equals(currentImportToken)) {
+			} else if ("addl tax[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax sub".equals(currentImportToken)) {
+			} else if ("tax sub".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax".equals(currentImportToken)) {
+			} else if ("tax".equals(currentFieldToken)) {
 				/* TODO */
 			}
 		}

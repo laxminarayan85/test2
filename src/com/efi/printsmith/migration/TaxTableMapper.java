@@ -6,195 +6,196 @@ import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.TaxTable;
 
 public class TaxTableMapper extends ImportMapper {
-	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		TaxTable taxTable = new TaxTable();
 		
-		for (int i=0; i < fieldTokens.size(); i++) {
-			String currentImportToken = importTokens.get(i);
+		for (int i=0; i < fieldTokens.length; i++) {
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
 			
-			if ("recno".equals(currentImportToken)) {
+			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rstatus".equals(currentImportToken)) {
+			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rtype".equals(currentImportToken)) {
+			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableTableID".equals(currentImportToken)) {
+			} else if ("taxTableTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableTableName".equals(currentImportToken)) {
+			} else if ("taxTableTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableTableKey".equals(currentImportToken)) {
+			} else if ("taxTableTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableEntryCreated".equals(currentImportToken)) {
+			} else if ("taxTableEntryCreated".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableEntryCreatedTime".equals(currentImportToken)) {
+			} else if ("taxTableEntryCreatedTime".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableEntryCreatedAsLocalDate".equals(currentImportToken)) {
+			} else if ("taxTableEntryCreatedAsLocalDate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableEntryCreatedAsLocalTime".equals(currentImportToken)) {
+			} else if ("taxTableEntryCreatedAsLocalTime".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("effectiveTaxRate".equals(currentImportToken)) {
+			} else if ("effectiveTaxRate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableID".equals(currentImportToken)) {
+			} else if ("taxTableElementTableID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableName".equals(currentImportToken)) {
+			} else if ("taxTableElementTableName".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableElementTableKey".equals(currentImportToken)) {
+			} else if ("taxTableElementTableKey".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rate".equals(currentImportToken)) {
+			} else if ("rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("showTheTax".equals(currentImportToken)) {
+			} else if ("showTheTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("useForSeparateShippingTax".equals(currentImportToken)) {
+			} else if ("useForSeparateShippingTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("minimumTaxableAmount".equals(currentImportToken)) {
+			} else if ("minimumTaxableAmount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTableIsTheCurrentOne".equals(currentImportToken)) {
+			} else if ("taxTableIsTheCurrentOne".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxShipping".equals(currentImportToken)) {
+			} else if ("taxShipping".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("separateShippingTaxElements".equals(currentImportToken)) {
+			} else if ("separateShippingTaxElements".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxTax".equals(currentImportToken)) {
+			} else if ("taxTax".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("roundTaxUp".equals(currentImportToken)) {
+			} else if ("roundTaxUp".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("taxInPrice".equals(currentImportToken)) {
+			} else if ("taxInPrice".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("doDetail".equals(currentImportToken)) {
+			} else if ("doDetail".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("dontRoundShownTaxElements".equals(currentImportToken)) {
+			} else if ("dontRoundShownTaxElements".equals(currentFieldToken)) {
 				/* TODO */
 			}
 		}

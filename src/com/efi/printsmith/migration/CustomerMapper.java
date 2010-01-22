@@ -9,21 +9,22 @@ import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.SalesRep;
 
 public class CustomerMapper extends ImportMapper{
-	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		Account customer = new Account();
 		Address shipToAddress = new Address();
 		Address billToAddress = new Address();
 		Contact shipToContact = new Contact();
 		Contact billToContact = new Contact();
 		
-		for (int i=0; i < fieldTokens.size(); i++) {
-			String currentImportToken = importTokens.get(i);
+		for (int i=0; i < fieldTokens.length; i++) {
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
 			
-			if ("recno".equals(fieldTokens.get(i))) {
+			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("account number".equals(fieldTokens.get(i))) {
+			} else if ("account number".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("account type".equals(fieldTokens.get(i))) {
+			} else if ("account type".equals(currentFieldToken)) {
 				if ("1".equals(currentImportToken)) {
 					customer.setType("CustomerTypeDeposit");
 				} else if ("2".equals(currentImportToken)) {
@@ -35,7 +36,7 @@ public class CustomerMapper extends ImportMapper{
 				} else if ("5".equals(currentImportToken)) {
 					customer.setType("CustomerTypeCreditCardOnFile");					
 				}
-			} else if ("account status".equals(fieldTokens.get(i))) {
+			} else if ("account status".equals(currentFieldToken)) {
 				if ("1".equals(currentImportToken)) {
 					customer.setStatus("CustomerStatusNew");
 				} else if ("2".equals(currentImportToken)) {
@@ -49,417 +50,417 @@ public class CustomerMapper extends ImportMapper{
 				} else if ("6".equals(currentImportToken)) {
 					customer.setStatus("CustomerStatusFrozen");					
 				}
-			} else if ("resale id".equals(fieldTokens.get(i))) {
+			} else if ("resale id".equals(currentFieldToken)) {
 				customer.setResaleNumber(currentImportToken);
-			} else if ("title".equals(fieldTokens.get(i))) {
+			} else if ("title".equals(currentFieldToken)) {
 				customer.setTitle(currentImportToken);
-			} else if ("inv name".equals(fieldTokens.get(i))) {
+			} else if ("inv name".equals(currentFieldToken)) {
 				shipToAddress.setName(currentImportToken);
-			} else if ("inv phone".equals(fieldTokens.get(i))) {
+			} else if ("inv phone".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					shipToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("inv fax".equals(fieldTokens.get(i))) {
+			} else if ("inv fax".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					shipToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("inv city".equals(fieldTokens.get(i))) {
+			} else if ("inv city".equals(currentFieldToken)) {
 				shipToAddress.setCity(currentImportToken);
-			} else if ("inv zip".equals(fieldTokens.get(i))) {
+			} else if ("inv zip".equals(currentFieldToken)) {
 				shipToAddress.setZip(currentImportToken);
-			} else if ("inv first name".equals(fieldTokens.get(i))) {
+			} else if ("inv first name".equals(currentFieldToken)) {
 				shipToContact.setFirstName(currentImportToken);
-			} else if ("inv last name".equals(fieldTokens.get(i))) {
+			} else if ("inv last name".equals(currentFieldToken)) {
 				shipToContact.setLastName(currentImportToken);
-			} else if ("inv addr1".equals(fieldTokens.get(i))) {
+			} else if ("inv addr1".equals(currentFieldToken)) {
 				shipToAddress.setStreet1(currentImportToken);
-			} else if ("inv addr2".equals(fieldTokens.get(i))) {
+			} else if ("inv addr2".equals(currentFieldToken)) {
 				shipToAddress.setStreet2(currentImportToken);
-			} else if ("inv state".equals(fieldTokens.get(i))) {
+			} else if ("inv state".equals(currentFieldToken)) {
 				shipToAddress.setState(currentImportToken);
-			} else if ("inv refno".equals(fieldTokens.get(i))) {
+			} else if ("inv refno".equals(currentFieldToken)) {
 				customer.setExternalRef(currentImportToken);
-			} else if ("bill name".equals(fieldTokens.get(i))) {
+			} else if ("bill name".equals(currentFieldToken)) {
 				billToAddress.setName(currentImportToken);
-			} else if ("bill street1".equals(fieldTokens.get(i))) {
+			} else if ("bill street1".equals(currentFieldToken)) {
 				billToAddress.setStreet1(currentImportToken);
-			} else if ("bill street2".equals(fieldTokens.get(i))) {
+			} else if ("bill street2".equals(currentFieldToken)) {
 				billToAddress.setStreet2(currentImportToken);
-			} else if ("bill city".equals(fieldTokens.get(i))) {
+			} else if ("bill city".equals(currentFieldToken)) {
 				billToAddress.setCity(currentImportToken);
-			} else if ("bill state".equals(fieldTokens.get(i))) {
+			} else if ("bill state".equals(currentFieldToken)) {
 				billToAddress.setState(currentImportToken);
-			} else if ("bill zip".equals(fieldTokens.get(i))) {
+			} else if ("bill zip".equals(currentFieldToken)) {
 				billToAddress.setZip(currentImportToken);
-			} else if ("bill phone".equals(fieldTokens.get(i))) {
+			} else if ("bill phone".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					billToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("bill last name".equals(fieldTokens.get(i))) {
+			} else if ("bill last name".equals(currentFieldToken)) {
 				billToContact.setLastName(currentImportToken);
-			} else if ("bill fax".equals(fieldTokens.get(i))) {
+			} else if ("bill fax".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					billToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Fax"));
 				}
-			} else if ("bill refno".equals(fieldTokens.get(i))) {
+			} else if ("bill refno".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code".equals(fieldTokens.get(i))) {
+			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table".equals(fieldTokens.get(i))) {
+			} else if ("tax table".equals(currentFieldToken)) {
 				/* TODO */				
-			} else if ("sales ranking".equals(fieldTokens.get(i))) {
+			} else if ("sales ranking".equals(currentFieldToken)) {
 				/* TODO */		
-			} else if ("do statement".equals(fieldTokens.get(i))) {
+			} else if ("do statement".equals(currentFieldToken)) {
 				customer.setGenerateStatements(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("do finance charges".equals(fieldTokens.get(i))) {
+			} else if ("do finance charges".equals(currentFieldToken)) {
 				customer.setApplyFinanceCharges(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("po required".equals(fieldTokens.get(i))) {
+			} else if ("po required".equals(currentFieldToken)) {
 				customer.setPoRequired(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("business type code".equals(fieldTokens.get(i))) {
+			} else if ("business type code".equals(currentFieldToken)) {
 				
-			} else if ("sales rep".equals(fieldTokens.get(i))) {
+			} else if ("sales rep".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					SalesRep salesRep = new SalesRep(); /* TODO - this needs to use existing state if it exists. Don't always create one. */
 					
 					salesRep.setName(currentImportToken);
 					customer.setSalesRep(salesRep);
 				}				
-			} else if ("on account".equals(fieldTokens.get(i))) {
+			} else if ("on account".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("balance".equals(fieldTokens.get(i))) {
+			} else if ("balance".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sales month".equals(fieldTokens.get(i))) {
+			} else if ("sales month".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sales year".equals(fieldTokens.get(i))) {
+			} else if ("sales year".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("sales prior year".equals(fieldTokens.get(i))) {
+			} else if ("sales prior year".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("orders year".equals(fieldTokens.get(i))) {
+			} else if ("orders year".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("estimate count".equals(fieldTokens.get(i))) {
+			} else if ("estimate count".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("credit limit".equals(fieldTokens.get(i))) {
+			} else if ("credit limit".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("discount rate".equals(fieldTokens.get(i))) {
+			} else if ("discount rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finance rate".equals(fieldTokens.get(i))) {
+			} else if ("finance rate".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("finance YTD".equals(fieldTokens.get(i))) {
+			} else if ("finance YTD".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("created".equals(fieldTokens.get(i))) {
+			} else if ("created".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("invoice date".equals(fieldTokens.get(i))) {
+			} else if ("invoice date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("estimate date".equals(fieldTokens.get(i))) {
+			} else if ("estimate date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last aged".equals(fieldTokens.get(i))) {
+			} else if ("last aged".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last billed".equals(fieldTokens.get(i))) {
+			} else if ("last billed".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last payment".equals(fieldTokens.get(i))) {
+			} else if ("last payment".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last posted".equals(fieldTokens.get(i))) {
+			} else if ("last posted".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rank date".equals(fieldTokens.get(i))) {
+			} else if ("rank date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("invoice notes".equals(fieldTokens.get(i))) {
+			} else if ("invoice notes".equals(currentFieldToken)) {
 				customer.setAccountNote(currentImportToken);
-			} else if ("job notes".equals(fieldTokens.get(i))) {
+			} else if ("job notes".equals(currentFieldToken)) {
 				customer.setJobNote(currentImportToken);
-			} else if ("contact record".equals(fieldTokens.get(i))) {
+			} else if ("contact record".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("master acct".equals(fieldTokens.get(i))) {
+			} else if ("master acct".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("access level".equals(fieldTokens.get(i))) {
+			} else if ("access level".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("external ref number".equals(fieldTokens.get(i))) {
+			} else if ("external ref number".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax exempt".equals(fieldTokens.get(i))) {
+			} else if ("tax exempt".equals(currentFieldToken)) {
 				customer.setTaxExempt(Utilities.tokenToBooleanValue(currentImportToken));
 				/* TODO */
-			} else if ("rtype".equals(fieldTokens.get(i))) {
+			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */ /* Note: determines whether this is customer or prospect */
-			} else if ("inv addr".equals(fieldTokens.get(i))) {
+			} else if ("inv addr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inv country".equals(fieldTokens.get(i))) {
+			} else if ("inv country".equals(currentFieldToken)) {
 				shipToAddress.setCountry(currentImportToken);
-			} else if ("bill addr".equals(fieldTokens.get(i))) {
+			} else if ("bill addr".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill country".equals(fieldTokens.get(i))) {
+			} else if ("bill country".equals(currentFieldToken)) {
 				billToAddress.setCountry(currentImportToken);
-			} else if ("ship contact".equals(fieldTokens.get(i))) {
+			} else if ("ship contact".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inv salutation".equals(fieldTokens.get(i))) {
+			} else if ("inv salutation".equals(currentFieldToken)) {
 				shipToContact.setSalutation(currentImportToken);
-			} else if ("inv job title".equals(fieldTokens.get(i))) {
+			} else if ("inv job title".equals(currentFieldToken)) {
 				shipToContact.setJobTitle(currentImportToken);
-			} else if ("inv phone 2".equals(fieldTokens.get(i))) {
+			} else if ("inv phone 2".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					shipToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("inv phone 3".equals(fieldTokens.get(i))) {
+			} else if ("inv phone 3".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					shipToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("inv prefix".equals(fieldTokens.get(i))) {
+			} else if ("inv prefix".equals(currentFieldToken)) {
 				shipToContact.setPrefix(currentImportToken);
-			} else if ("inv suffix".equals(fieldTokens.get(i))) {
+			} else if ("inv suffix".equals(currentFieldToken)) {
 				shipToContact.setSuffix(currentImportToken);
-			} else if ("bill contact".equals(fieldTokens.get(i))) {
+			} else if ("bill contact".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill first name".equals(fieldTokens.get(i))) {
+			} else if ("bill first name".equals(currentFieldToken)) {
 				billToContact.setFirstName(currentImportToken);
-			} else if ("bill salutation".equals(fieldTokens.get(i))) {
+			} else if ("bill salutation".equals(currentFieldToken)) {
 				billToContact.setSalutation(currentImportToken);
-			} else if ("bill job title".equals(fieldTokens.get(i))) {
+			} else if ("bill job title".equals(currentFieldToken)) {
 				billToContact.setJobTitle(currentImportToken);
-			} else if ("bill phone 2".equals(fieldTokens.get(i))) {
+			} else if ("bill phone 2".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					billToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("bill phone 3".equals(fieldTokens.get(i))) {
+			} else if ("bill phone 3".equals(currentFieldToken)) {
 				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
 					billToContact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
 				}
-			} else if ("bill prefix".equals(fieldTokens.get(i))) {
+			} else if ("bill prefix".equals(currentFieldToken)) {
 				billToContact.setPrefix(currentImportToken);
-			} else if ("bill suffix".equals(fieldTokens.get(i))) {
+			} else if ("bill suffix".equals(currentFieldToken)) {
 				billToContact.setSuffix(currentImportToken);
-			} else if ("do commissions".equals(fieldTokens.get(i))) {
+			} else if ("do commissions".equals(currentFieldToken)) {
 				customer.setPayCommissions(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("notCompany".equals(fieldTokens.get(i))) {
+			} else if ("notCompany".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("do not mail".equals(fieldTokens.get(i))) {
+			} else if ("do not mail".equals(currentFieldToken)) {
 				customer.setOptOutMarketing(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("default inv".equals(fieldTokens.get(i))) {
+			} else if ("default inv".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("default est".equals(fieldTokens.get(i))) {
+			} else if ("default est".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("shipping mode".equals(fieldTokens.get(i))) {
+			} else if ("shipping mode".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("aging[1]".equals(fieldTokens.get(i))) {
+			} else if ("aging[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("aging[2]".equals(fieldTokens.get(i))) {
+			} else if ("aging[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("aging[3]".equals(fieldTokens.get(i))) {
+			} else if ("aging[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("aging[4]".equals(fieldTokens.get(i))) {
+			} else if ("aging[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("aging[5]".equals(fieldTokens.get(i))) {
+			} else if ("aging[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("history notes".equals(fieldTokens.get(i))) {
+			} else if ("history notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("statement notes".equals(fieldTokens.get(i))) {
+			} else if ("statement notes".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill contact record".equals(fieldTokens.get(i))) {
+			} else if ("bill contact record".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[1]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[2]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[3]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[4]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[5]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[6]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[7]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[8]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[9]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("marketing dates[10]".equals(fieldTokens.get(i))) {
+			} else if ("marketing dates[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("leadsource".equals(fieldTokens.get(i))) {
+			} else if ("leadsource".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user1".equals(fieldTokens.get(i))) {
+			} else if ("user1".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user2".equals(fieldTokens.get(i))) {
+			} else if ("user2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user3".equals(fieldTokens.get(i))) {
+			} else if ("user3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user4".equals(fieldTokens.get(i))) {
+			} else if ("user4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user5".equals(fieldTokens.get(i))) {
+			} else if ("user5".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user6".equals(fieldTokens.get(i))) {
+			} else if ("user6".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user7".equals(fieldTokens.get(i))) {
+			} else if ("user7".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user8".equals(fieldTokens.get(i))) {
+			} else if ("user8".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("number employees".equals(fieldTokens.get(i))) {
+			} else if ("number employees".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("business type".equals(fieldTokens.get(i))) {
+			} else if ("business type".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("business type name".equals(fieldTokens.get(i))) {
+			} else if ("business type name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("annual revenue".equals(fieldTokens.get(i))) {
+			} else if ("annual revenue".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("master acct name".equals(fieldTokens.get(i))) {
+			} else if ("master acct name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("account PO".equals(fieldTokens.get(i))) {
+			} else if ("account PO".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inv addr3".equals(fieldTokens.get(i))) {
+			} else if ("inv addr3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inv addr4".equals(fieldTokens.get(i))) {
+			} else if ("inv addr4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill addr3".equals(fieldTokens.get(i))) {
+			} else if ("bill addr3".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill addr4".equals(fieldTokens.get(i))) {
+			} else if ("bill addr4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("inv phone 4".equals(fieldTokens.get(i))) {
+			} else if ("inv phone 4".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("ship address ID".equals(fieldTokens.get(i))) {
+			} else if ("ship address ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("bill address ID".equals(fieldTokens.get(i))) {
+			} else if ("bill address ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table ID".equals(fieldTokens.get(i))) {
+			} else if ("tax table ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table title".equals(fieldTokens.get(i))) {
+			} else if ("tax table title".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code ID".equals(fieldTokens.get(i))) {
+			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax code title".equals(fieldTokens.get(i))) {
+			} else if ("tax code title".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("expand short".equals(fieldTokens.get(i))) {
+			} else if ("expand short".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[1]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[2]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[3]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[4]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[5]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("customRanking[6]".equals(fieldTokens.get(i))) {
+			} else if ("customRanking[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("external accounting ID".equals(fieldTokens.get(i))) {
+			} else if ("external accounting ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("filler bits".equals(fieldTokens.get(i))) {
+			} else if ("filler bits".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("file originals".equals(fieldTokens.get(i))) {
+			} else if ("file originals".equals(currentFieldToken)) {
 				customer.setFileOriginals(Utilities.tokenToBooleanValue(currentImportToken));
-			} else if ("web access".equals(fieldTokens.get(i))) {
+			} else if ("web access".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("never a customer".equals(fieldTokens.get(i))) {
+			} else if ("never a customer".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("invoiceTemplateID".equals(fieldTokens.get(i))) {
+			} else if ("invoiceTemplateID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("estimateTemplateID".equals(fieldTokens.get(i))) {
+			} else if ("estimateTemplateID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("shipping mode ID".equals(fieldTokens.get(i))) {
+			} else if ("shipping mode ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("total invoices".equals(fieldTokens.get(i))) {
+			} else if ("total invoices".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("terms net".equals(fieldTokens.get(i))) {
+			} else if ("terms net".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("terms discount".equals(fieldTokens.get(i))) {
+			} else if ("terms discount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("estimate won cnt".equals(fieldTokens.get(i))) {
+			} else if ("estimate won cnt".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("estimate lost cnt".equals(fieldTokens.get(i))) {
+			} else if ("estimate lost cnt".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("discount single amount".equals(fieldTokens.get(i))) {
+			} else if ("discount single amount".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("first invoice date".equals(fieldTokens.get(i))) {
+			} else if ("first invoice date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("first estimate date".equals(fieldTokens.get(i))) {
+			} else if ("first estimate date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("touch date".equals(fieldTokens.get(i))) {
+			} else if ("touch date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[1]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[2]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[3]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[4]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[5]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[6]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[7]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[8]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[9]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset job charges[10]".equals(fieldTokens.get(i))) {
+			} else if ("preset job charges[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[1]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[1]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[2]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[2]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[3]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[3]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[4]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[4]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[5]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[5]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[6]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[6]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[7]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[7]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[8]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[8]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[9]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[9]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("preset inv charges[10]".equals(fieldTokens.get(i))) {
+			} else if ("preset inv charges[10]".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("contact count".equals(fieldTokens.get(i))) {
+			} else if ("contact count".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("leadsource1 ID".equals(fieldTokens.get(i))) {
+			} else if ("leadsource1 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("leadsource2 ID".equals(fieldTokens.get(i))) {
+			} else if ("leadsource2 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("leadsource2".equals(fieldTokens.get(i))) {
+			} else if ("leadsource2".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user1 ID".equals(fieldTokens.get(i))) {
+			} else if ("user1 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user2 ID".equals(fieldTokens.get(i))) {
+			} else if ("user2 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user3 ID".equals(fieldTokens.get(i))) {
+			} else if ("user3 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user4 ID".equals(fieldTokens.get(i))) {
+			} else if ("user4 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user5 ID".equals(fieldTokens.get(i))) {
+			} else if ("user5 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user6 ID".equals(fieldTokens.get(i))) {
+			} else if ("user6 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user7 ID".equals(fieldTokens.get(i))) {
+			} else if ("user7 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user8 ID".equals(fieldTokens.get(i))) {
+			} else if ("user8 ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("items paid".equals(fieldTokens.get(i))) {
+			} else if ("items paid".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("time to pay".equals(fieldTokens.get(i))) {
+			} else if ("time to pay".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("autopay Template ID".equals(fieldTokens.get(i))) {
+			} else if ("autopay Template ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web Company ID".equals(fieldTokens.get(i))) {
+			} else if ("web Company ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web Catalog Role ID".equals(fieldTokens.get(i))) {
+			} else if ("web Catalog Role ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web Pricing Role ID".equals(fieldTokens.get(i))) {
+			} else if ("web Pricing Role ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web Address ID".equals(fieldTokens.get(i))) {
+			} else if ("web Address ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("web Bill Address ID".equals(fieldTokens.get(i))) {
+			} else if ("web Bill Address ID".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("resale cert expire".equals(fieldTokens.get(i))) {
+			} else if ("resale cert expire".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last notified date".equals(fieldTokens.get(i))) {
+			} else if ("last notified date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("last notified time".equals(fieldTokens.get(i))) {
+			} else if ("last notified time".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("exp data 2".equals(fieldTokens.get(i))) {
+			} else if ("exp data 2".equals(currentFieldToken)) {
 				/* TODO */
 			}
 		}

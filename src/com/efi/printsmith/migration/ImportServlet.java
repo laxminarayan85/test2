@@ -31,6 +31,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.log4j.Logger;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Address;
@@ -133,15 +135,15 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	void importData(File uploadedFile, String importType) throws Exception {
 		FileInputStream fis = new FileInputStream(uploadedFile);
 		InputStreamReader fileReader = new InputStreamReader(fis);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		String fieldString = bufferedReader.readLine();
-		ArrayList<String> fieldTokens = new ArrayList<String>();
+		CSVReader csvReader = new CSVReader(fileReader);
 		
-		StringTokenizer parser = new StringTokenizer(fieldString, "\",\"", false); // Use "," as the delimiter - ensures that commas embedded in the data are not treated as a delimiter
+		String[] fieldTokens = csvReader.readNext();
+		
+		//StringTokenizer parser = new StringTokenizer(fieldString, "\",\"", false); // Use "," as the delimiter - ensures that commas embedded in the data are not treated as a delimiter
 
-		while(parser.hasMoreTokens()) {
-			fieldTokens.add(parser.nextToken().replaceAll("\"","")); // Add token to the tokens list (strip any quotation marks)
-		}
+//		while(parser.hasMoreTokens()) {
+//			fieldTokens.add(parser.nextToken().replaceAll("\"","")); // Add token to the tokens list (strip any quotation marks)
+//		}
 		ImportMapper mapper = null;
 		
 		if (importType != null) {
@@ -175,25 +177,20 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		}				
 		
 		int lineNumber = 2;
-		String importDataString = bufferedReader.readLine();
-		while (importDataString != null) {
-			ArrayList<String> importTokens = new ArrayList<String>();
-			importDataString = importDataString.replaceAll("\"\"", "\" \""); // Insert a space into blank records so the tokenizer recognizes them as actual tokens
-			StringTokenizer importDataParser = new StringTokenizer(importDataString, "\",\"", false);
-			while (importDataParser.hasMoreTokens()) {
-				importTokens.add(importDataParser.nextToken().replaceAll("\"","")); 
-			}
-			if (importTokens.size() != fieldTokens.size()) {
+		String[] importTokens = null;
+		
+		while ((importTokens = csvReader.readNext()) != null) {
+			if (importTokens.length != fieldTokens.length) {
 				throw new InvalidParameterException("Wrong number of fields on line #" + lineNumber + ".");
 			} else {
-				ModelBase modelBase = mapper.importTokens(fieldTokens, importTokens);
-				dataService.addUpdate(modelBase);
+				try {
+					ModelBase modelBase = mapper.importTokens(fieldTokens, importTokens);
+					dataService.addUpdate(modelBase);
+				} catch (Exception e) {
+					log.error(e);
+				}
 			}
 			lineNumber++;
-			importDataString = bufferedReader.readLine();
 		}
-	}
-	void importPressDefinitionTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
-
 	}
 }

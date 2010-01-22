@@ -6,27 +6,28 @@ import com.efi.printsmith.data.CustomerLog;
 import com.efi.printsmith.data.ModelBase;
 
 public class CustomerLogMapper extends ImportMapper{
-	public ModelBase importTokens(ArrayList<String> fieldTokens, ArrayList<String> importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		CustomerLog customerLog = new CustomerLog();
 		
-		for (int i=0; i < fieldTokens.size(); i++) {
-			String currentImportToken = importTokens.get(i);
+		for (int i=0; i < fieldTokens.length; i++) {
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
 			
-			if ("recno".equals(currentImportToken)) {
+			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rstatus".equals(currentImportToken)) {
+			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("rtype".equals(currentImportToken)) {
+			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("acct".equals(currentImportToken)) {
+			} else if ("acct".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("account name".equals(currentImportToken)) {
+			} else if ("account name".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("date".equals(currentImportToken)) {
+			} else if ("date".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("user".equals(currentImportToken)) {
+			} else if ("user".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("data".equals(currentImportToken)) {
+			} else if ("data".equals(currentFieldToken)) {
 				/* TODO */		
 			}
 		}
