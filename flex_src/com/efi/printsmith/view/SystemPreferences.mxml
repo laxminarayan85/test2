@@ -2244,8 +2244,12 @@ width="800" height="678" title="Preferences"
 					itemEditEnd="processCashRegisterGridData(event);">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.tax=!data.tax"  selected="{data.tax}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
 						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
@@ -2312,8 +2316,12 @@ width="800" height="678" title="Preferences"
 					editable="true">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnnamePendingList" editable="false"/>
 					</mx:columns>
@@ -2456,8 +2464,12 @@ width="800" height="678" title="Preferences"
 					<mx:columns>
 						<mx:DataGridColumn width="100" headerText="Quantity" dataField="quantity"/>
 						<mx:DataGridColumn width="50" headerText="Break" dataField="qtyBreak" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.qtybreak=!data.qtybreak"  selected="{data.qtybreak}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="140" headerText="Job Method" dataField="jobMethod"
 							itemEditor="com.efi.printsmith.itemRenderers.JobMethodEditor" editable="true">
@@ -2595,8 +2607,12 @@ width="800" height="678" title="Preferences"
 					editable="true">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnsnameStockDefinition" editable="false"/>
 					</mx:columns>
@@ -2613,26 +2629,46 @@ width="800" height="678" title="Preferences"
 					itemEditEnd="processPricingMethodGridData(event);">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.used=!data.used"  selected="{data.used}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
 						<mx:DataGridColumn width="100" headerText="Abbreviation" dataField="abbreviation"/>
 						<mx:DataGridColumn width="40" headerText="B" dataField="brokered" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.brokered=!data.brokered"  selected="{data.brokered}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="40" headerText="T" dataField="taxable" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.taxable=!data.taxable"  selected="{data.taxable}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="40" headerText="F" dataField="finished" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.finished=!data.finished"  selected="{data.finished}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="40" headerText="N" dataField="showNotes" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.showNotes=!data.showNotes"  selected="{data.showNotes}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
@@ -2778,8 +2814,12 @@ width="800" height="678" title="Preferences"
 					editable="true">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
-							itemEditor="mx.controls.CheckBox"
-							itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer">
+								itemEditor="mx.controls.CheckBox">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox click="data.used=!data.used"  selected="{data.used}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="Card Title" dataField="cardType"/>
 						<mx:DataGridColumn headerText="Abbrev." dataField="abbreviation" width="60"/>
