@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
-width="1080" height="755" title="Copier Definitions"
+width="828" height="755" title="Copier Definitions"
  label="Copier Definitions" name="Copier Definitions" fontSize="9">
 	<mx:states>
 		<mx:State name="Large Format">
@@ -276,17 +276,17 @@ width="1080" height="755" title="Copier Definitions"
                              
 </mx:Script>	
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:Canvas x="0" y="0" width="100%" height="100%" horizontalScrollPolicy="off">
+	<mx:Canvas x="0" y="0" width="781" height="100%" horizontalScrollPolicy="off">
 		<mx:Label x="73" y="126" text="Name:" width="45" textAlign="right"/>
 		<mx:Label x="35" y="148" text="Machine Name:" textAlign="right"/>
-		<mx:DataGrid y="0" id="dataGrid" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="0">
+	 	<mx:DataGrid y="0" id="dataGrid" verticalScrollPolicy="on"  horizontalScrollPolicy="on" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="13">
 			<mx:columns>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="blackwhite" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
-				<mx:DataGridColumn headerText="Name" dataField="name"/>
-				<mx:DataGridColumn headerText="Machine" dataField="machineName"/>
-				<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="100"/>
+				<mx:DataGridColumn headerText="Name" dataField="name" width="300"/>
+				<mx:DataGridColumn headerText="Machine" dataField="machineName" width="250"/>
+				<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="75"/>
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Label x="13" y="170" text="Output Description:" textAlign="right"/>
