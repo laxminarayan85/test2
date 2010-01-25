@@ -2238,10 +2238,10 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" y="30" width="508" height="380" id="CashRegisterGrid" 
+				<mx:DataGrid width="508" id="CashRegisterGrid" 
 					dataProvider="{PreferencesCashRegisterArray}" 
 					editable="true" 
-					itemEditEnd="processCashRegisterGridData(event);">
+					itemEditEnd="processCashRegisterGridData(event);" bottom="80" top="27" right="22">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2280,10 +2280,10 @@ width="800" height="678" title="Preferences"
 					</mx:columns>
 				</mx:DataGrid>
 
-				<mx:Button x="50" y="418" width="38" height="38" click="doNewCashRegister();">
+				<mx:Button x="50" width="38" height="38" click="doNewCashRegister();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="418" width="38" height="38" click="doRemoveCashRegister();">
+				<mx:Button x="100" width="38" height="38" click="doRemoveCashRegister();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
@@ -2292,26 +2292,26 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="120" id="chkShowDocumentType" label="Show Document Type in Number"/>
-				<mx:CheckBox x="50" y="145" id="chkAlwaysIncludePastDue" label="Always Include Past Due Documents in Filter"/>
-				<mx:CheckBox x="50" y="170" id="chkColorPastDueEntries" label="Color Past Due Entries"/>
+				<mx:CheckBox x="50" y="265" id="chkShowDocumentType" label="Show Document Type in Number"/>
+				<mx:CheckBox x="50" y="290" id="chkAlwaysIncludePastDue" label="Always Include Past Due Documents in Filter"/>
+				<mx:CheckBox x="50" y="315" id="chkColorPastDueEntries" label="Color Past Due Entries"/>
 
-				<mx:Button x="50" y="200" label="Past Due Color..." click="doSelectColor(txtPastDueColor);" width="167"/>
-				<mx:Button x="50" y="230" label="Ready for Pickup Color..." click="doSelectColor(txtReadyforPickupColor);" width="167"/>
-				<mx:Button x="50" y="260" label="Invoice Color..." click="doSelectColor(txtInvoiceColor);" width="167"/>
-				<mx:Button x="50" y="290" label="Estimate Color..." click="doSelectColor(txtEstimateColor);" width="167"/>
+				<mx:Button x="50" y="345" label="Past Due Color..." click="doSelectColor(txtPastDueColor);" width="167"/>
+				<mx:Button x="50" y="375" label="Ready for Pickup Color..." click="doSelectColor(txtReadyforPickupColor);" width="167"/>
+				<mx:Button x="50" y="405" label="Invoice Color..." click="doSelectColor(txtInvoiceColor);" width="167"/>
+				<mx:Button x="50" y="435" label="Estimate Color..." click="doSelectColor(txtEstimateColor);" width="167"/>
 
-				<mx:Button x="50" y="320" label="List Font..." click="doSelectFont(txtListFont);" width="167"/>
-				<mx:Button x="50" y="350" label="Header Font..." click="doSelectFont(txtHeaderFont);" width="167"/>
+				<mx:Button x="50" y="465" label="List Font..." click="doSelectFont(txtListFont);" width="167"/>
+				<mx:Button x="50" y="495" label="Header Font..." click="doSelectFont(txtHeaderFont);" width="167"/>
 
-				<mx:TextInput x="225" y="200" id="txtPastDueColor" width="80"/>
-				<mx:TextInput x="225" y="230" id="txtReadyforPickupColor" width="80"/>
-				<mx:TextInput x="225" y="260" id="txtInvoiceColor" width="80"/>
-				<mx:TextInput x="225" y="290" id="txtEstimateColor" width="80"/>
-				<mx:TextInput x="225" y="320" id="txtListFont" width="150"/>
-				<mx:TextInput x="225" y="350" id="txtHeaderFont" width="150"/>
+				<mx:TextInput x="225" y="345" id="txtPastDueColor" width="80"/>
+				<mx:TextInput x="225" y="375" id="txtReadyforPickupColor" width="80"/>
+				<mx:TextInput x="225" y="405" id="txtInvoiceColor" width="80"/>
+				<mx:TextInput x="225" y="435" id="txtEstimateColor" width="80"/>
+				<mx:TextInput x="225" y="465" id="txtListFont" width="150"/>
+				<mx:TextInput x="225" y="495" id="txtHeaderFont" width="150"/>
 
-				<mx:DataGrid x="50" y="27" width="442" height="85" id="PendingListGrid" 
+				<mx:DataGrid x="50" y="27" width="442" height="230" id="PendingListGrid" 
 					dataProvider="{PreferencesPendingListArray}" 
 					editable="true">
 					<mx:columns>
@@ -2457,10 +2457,10 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Quantity Breaks" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:DataGrid x="50" y="27" width="270" height="475" id="QuantityBreaksGrid" 
+				<mx:DataGrid width="270" id="QuantityBreaksGrid" 
 					dataProvider="{PreferencesQuantityBreaksArray}" 
 					editable="true" 
-					itemEditEnd="processQuantityBreaksGridData(event);">
+					itemEditEnd="processQuantityBreaksGridData(event);" top="27" bottom="80" x="50">
 					<mx:columns>
 						<mx:DataGridColumn width="100" headerText="Quantity" dataField="quantity"/>
 						<mx:DataGridColumn width="50" headerText="Break" dataField="qtyBreak" editorDataField="selected"
@@ -2481,10 +2481,10 @@ width="800" height="678" title="Preferences"
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:Button x="50" y="510" width="38" height="38" click="doNewQuantityBreak();">
+				<mx:Button x="50" width="38" height="38" click="doNewQuantityBreak();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveQuantityBreak();">
+				<mx:Button x="100" width="38" height="38" click="doRemoveQuantityBreak();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 			</mx:Canvas>
@@ -2495,35 +2495,35 @@ width="800" height="678" title="Preferences"
 				<mx:Text x="50" y="30" text="Markup is stepped and based on COST of job before markup, the first amount covers from zero cost to the specified cost, the last amount includes all above as well." height="38" width="488"/>
 
 				<mx:Label x="50" y="80" text="Outside Services" textAlign="right"/>
-				<mx:DataGrid x="50" y="100" height="200" id="OutsideServicesGrid" 
+				<mx:DataGrid x="50" id="OutsideServicesGrid" 
 					dataProvider="{PreferencesMarkupsArray}" 
-					editable="true">
+					editable="true" top="100" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
 						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
 
-				<mx:Button x="50" y="318" width="38" height="38" click="doNewMarkup(&quot;outside&quot;);">
+				<mx:Button x="50" width="38" height="38" click="doNewMarkup(&quot;outside&quot;);" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="318" width="38" height="38" click="doRemoveMarkup(&quot;outside&quot;,OutsideServicesGrid);">
+				<mx:Button x="100" width="38" height="38" click="doRemoveMarkup(&quot;outside&quot;,OutsideServicesGrid);" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
 				<mx:Label x="300" y="80" text="Merchandise" textAlign="right"/>
-				<mx:DataGrid x="300" y="100" height="200" id="MerchandiseGrid" 
+				<mx:DataGrid x="300" id="MerchandiseGrid" 
 					dataProvider="{PreferencesMarkupsMerchandiseArray}" 
-					editable="true">
+					editable="true" top="100" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
 						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:Button x="300" y="318" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);">
+				<mx:Button x="300" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="350" y="318" width="38" height="38" click="doRemoveMarkup(&quot;merchandise&quot;,MerchandiseGrid);">
+				<mx:Button x="350" width="38" height="38" click="doRemoveMarkup(&quot;merchandise&quot;,MerchandiseGrid);" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 				
@@ -2602,9 +2602,9 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" y="27" width="442" height="300" id="StockDefinitionGrid"
+				<mx:DataGrid x="50" width="442" id="StockDefinitionGrid"
 					dataProvider="{PreferencesStockDefinitionArray}" 
-					editable="true">
+					editable="true" bottom="80" top="27">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2623,10 +2623,10 @@ width="800" height="678" title="Preferences"
 				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" y="27" width="500" height="475" id="PricingMethodGrid" 
+				<mx:DataGrid x="50" width="500" id="PricingMethodGrid" 
 					dataProvider="{PreferencesPricingMethodArray}" 
 					editable="true" 
-					itemEditEnd="processPricingMethodGridData(event);">
+					itemEditEnd="processPricingMethodGridData(event);" top="27" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2688,10 +2688,10 @@ width="800" height="678" title="Preferences"
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:Button x="50" y="510" width="38" height="38" click="doNewPriceMethod();">
+				<mx:Button x="50" width="38" height="38" click="doNewPriceMethod();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="510" width="38" height="38" click="doRemovePriceMethod();">
+				<mx:Button x="100" width="38" height="38" click="doRemovePriceMethod();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
@@ -2732,10 +2732,10 @@ width="800" height="678" title="Preferences"
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:DataGrid x="50" y="27" width="200" height="475" id="SalesCategoryGrid"
+				<mx:DataGrid x="50" width="200" id="SalesCategoryGrid"
 					dataProvider="{PreferencesSalesCategoryArray}"
 					editable="true"
-					itemEditEnd="processSalesCategoryGridData(event);">
+					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="Name" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
@@ -2749,10 +2749,10 @@ width="800" height="678" title="Preferences"
 					</mx:columns>
 				</mx:DataGrid>
 				
-				<mx:Button x="50" y="510" width="38" height="38" click="doNewSalesCategory();">
+				<mx:Button x="50" width="38" height="38" click="doNewSalesCategory();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveSalesCategory();">
+				<mx:Button x="100" width="38" height="38" click="doRemoveSalesCategory();" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
@@ -2809,9 +2809,9 @@ width="800" height="678" title="Preferences"
 
 				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
 				
-				<mx:DataGrid x="50" y="296" width="300" height="206" id="CreditCardGrid"
+				<mx:DataGrid x="50" width="300" id="CreditCardGrid"
 					dataProvider="{PreferencesCreditCardArray}"
-					editable="true">
+					editable="true" top="296" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2827,10 +2827,10 @@ width="800" height="678" title="Preferences"
 					</mx:columns>
 				</mx:DataGrid>
 				
-				<mx:Button x="50" y="510" width="38" height="38" click="doNewCreditCard();" id="button2">
+				<mx:Button x="50" width="38" height="38" click="doNewCreditCard();" id="button2" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="100" y="510" width="38" height="38" click="doRemoveCreditCard();" id="button1">
+				<mx:Button x="100" width="38" height="38" click="doRemoveCreditCard();" id="button1" bottom="25">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 				<mx:RadioButtonGroup enabled="{chkActivateCCAprovalProcess.selected}" id="CreditCardProcessor" change="doCreditCardProcessorChange();"/>
