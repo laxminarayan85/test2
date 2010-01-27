@@ -41,7 +41,7 @@
 				<mx:Button x="674" y="292" label="Post Payments" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
 				<mx:Button x="675" y="480" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
 				<mx:Button x="674" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
-				<mx:Button x="508" y="386" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')"/>
+				<mx:Button x="508" y="386" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();"/>
 				<mx:Button x="508" y="480" label="Utilities" width="158" height="86" id="utilities" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" click="doUtilities();"/>
 				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
 				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
@@ -78,6 +78,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.view.DeliveryTicket;
 		import com.efi.printsmith.view.Utilities;
 		import com.efi.printsmith.view.PendingList;
 		import com.efi.printsmith.view.PriceListPicker;
@@ -354,7 +355,12 @@
 		CONFIG::release
 		private function doDebug():void {
 		}
-		
+
+		private function doDeliveryTicket():void{
+			var child:DeliveryTicket = new DeliveryTicket();
+			addUniqueTab(child);
+			
+		}		
 ]]>		
 </mx:Script>
 	<business:Services id="services" />
