@@ -6,17 +6,13 @@ package com.efi.printsmith.data
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Employee")]
 
-	public class Employee extends ModelBase
+	public class Employee extends Party
 	{
 
 		public function Employee() {
 			remoteObjectName = "com.efi.printsmith.data.Employee";
 		}
 				
-		public var firstName:String = "";
-		public var lastName:String = "";
-		public var address:Address;
-		public var comLinks:ArrayCollection;
 		public var sSN:String = "";
 		public var exportCode:int = 0;
 		public var clockIn:Boolean = true;

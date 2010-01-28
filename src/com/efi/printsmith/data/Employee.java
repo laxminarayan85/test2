@@ -33,23 +33,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "employee")
-public class Employee extends ModelBase {
-	/**
-	 * @generated
-	 */
-	public static final String FIRSTNAME = "FirstName";
-	/**
-	 * @generated
-	 */
-	public static final String LASTNAME = "LastName";
-	/**
-	 * @generated
-	 */
-	public static final String ADDRESS = "Address";
-	/**
-	 * @generated
-	 */
-	public static final String COMLINKS = "ComLinks";
+public class Employee extends Party {
 	/**
 	 * @generated
 	 */
@@ -219,80 +203,6 @@ public class Employee extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
-	
- 	@Basic
-	private String firstName;
-	/**
-	 * @generated
- 	 */
-	public String getFirstName(){
-		return firstName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setFirstName(String newVal) {
-		this.firstName = newVal;
-	}
- 	
-	
- 	@Basic
-	private String lastName;
-	/**
-	 * @generated
- 	 */
-	public String getLastName(){
-		return lastName; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setLastName(String newVal) {
-		this.lastName = newVal;
-	}
- 	
-	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Address address;
-	/**
-	 * @generated
- 	 */
-	public Address getAddress(){
-		return address; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAddress(Address newVal) {
-		this.address = newVal;
-	}
- 	
-	
-    @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<ComLink> comLinks;
-	/**
-	 * @generated
- 	 */
-	public java.util.List<ComLink> getComLinks(){
-		return comLinks; 
-	}
-
-	public void addComLinks(ComLink obj) {
-		if (comLinks == null) {
-			comLinks = new java.util.ArrayList<ComLink>();
-		}
-		comLinks.add(obj);
-	}
-	/**
-	 * @generated
-	 */	
-	public void setComLinks(java.util.List<ComLink> newVal) {
-		this.comLinks = newVal;
-	}
  	
 	
  	@Basic
@@ -1009,10 +919,6 @@ public class Employee extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (FIRSTNAME.equals(propertyName)) return getFirstName();
-		if (LASTNAME.equals(propertyName)) return getLastName();
-		if (ADDRESS.equals(propertyName)) return getAddress();
-		if (COMLINKS.equals(propertyName)) return getComLinks();
 		if (SSN.equals(propertyName)) return getSSN();
 		if (EXPORTCODE.equals(propertyName)) return getExportCode();
 		if (CLOCKIN.equals(propertyName)) return getClockIn();
@@ -1062,10 +968,6 @@ public class Employee extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
-		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
-		if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
 		if (SSN.equals(propertyName)) setSSN((String)newValue); else
 		if (EXPORTCODE.equals(propertyName)) setExportCode((Integer)newValue); else
 		if (CLOCKIN.equals(propertyName)) setClockIn((Boolean)newValue); else
@@ -1115,14 +1017,6 @@ public class Employee extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (FIRSTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (LASTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDRESS.equals(propertyName)) 
-			return new Class<?>[] {Address.class};		
-		if (COMLINKS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ComLink.class};		
 		if (SSN.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (EXPORTCODE.equals(propertyName)) 
@@ -1213,10 +1107,6 @@ public class Employee extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (FIRSTNAME.equals(propertyName)) return Employee.class;
-		if (LASTNAME.equals(propertyName)) return Employee.class;
-		if (ADDRESS.equals(propertyName)) return Employee.class;
-		if (COMLINKS.equals(propertyName)) return Employee.class;
 		if (SSN.equals(propertyName)) return Employee.class;
 		if (EXPORTCODE.equals(propertyName)) return Employee.class;
 		if (CLOCKIN.equals(propertyName)) return Employee.class;
@@ -1268,14 +1158,6 @@ public class Employee extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		Employee objT = (Employee)obj;
-		if (! SmartEquals(getFirstName(), objT.getFirstName()))
-			return false;
-		if (! SmartEquals(getLastName(), objT.getLastName()))
-			return false;
-		if (! SmartEquals(getAddress(), objT.getAddress()))
-			return false;
-		if (! SmartEquals(getComLinks(), objT.getComLinks()))
-			return false;
 		if (! SmartEquals(getSSN(), objT.getSSN()))
 			return false;
 		if (! SmartEquals(getExportCode(), objT.getExportCode()))

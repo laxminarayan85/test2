@@ -109,12 +109,6 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		}
 	}
 	
-//	private void processFormField(FileItem item) {
-//		String name = item.getFieldName();
-//		String value = item.getString();
-//		System.out.println("Item name: " + name + " ; value: " + value);
-//	}
-	
 	private void processUploadedFile(FileItem item, String importType) throws Exception {
 		boolean writeToFile = true;
 				
@@ -139,11 +133,6 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		
 		String[] fieldTokens = csvReader.readNext();
 		
-		//StringTokenizer parser = new StringTokenizer(fieldString, "\",\"", false); // Use "," as the delimiter - ensures that commas embedded in the data are not treated as a delimiter
-
-//		while(parser.hasMoreTokens()) {
-//			fieldTokens.add(parser.nextToken().replaceAll("\"","")); // Add token to the tokens list (strip any quotation marks)
-//		}
 		ImportMapper mapper = null;
 		
 		if (importType != null) {

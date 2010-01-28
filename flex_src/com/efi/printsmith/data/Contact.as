@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Contact")]
 
-	public class Contact extends ModelBase
+	public class Contact extends Party
 	{
 
 		public function Contact() {
@@ -14,8 +14,6 @@ package com.efi.printsmith.data
 		}
 				
 		public var shipToAddress:Address;
-		public var firstName:String = "";
-		public var address:Address;
 		public var parentAccount:Account;
 		public var webAcctNameIncomplete:Boolean = true;
 		public var webCatalogChange:Boolean = true;
@@ -27,12 +25,10 @@ package com.efi.printsmith.data
 		public var mailerCampaigns:Boolean = true;
 		public var creditCard:CreditCard;
 		public var marketing:Marketing;
-		public var lastName:String = "";
 		public var jobTitle:String = "";
 		public var suffix:String = "";
 		public var prefix:String = "";
 		public var salutation:String = "";
-		public var comLinks:ArrayCollection;
 		public var campaigns:ArrayCollection;
 		public var contactId:String = "";
 	
