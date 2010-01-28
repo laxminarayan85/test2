@@ -765,12 +765,12 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 				</mx:Panel>
 				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="Account Status" dropShadowEnabled="false">
 					<mx:RadioButtonGroup id="acct_status" selectedValue="{acctStatusRadioValue}"/>
-					<mx:RadioButton x="10" y="10" label="New" id="acct_status_new_radio" groupName="acct_status"/>
-					<mx:RadioButton x="138" y="10" label="Current" id="acct_status_current_radio" groupName="acct_status"/>
-					<mx:RadioButton x="138" y="40" label="Delinquent" id="acct_status_delinquent_radio" groupName="acct_status"/>
-					<mx:RadioButton x="303" y="10" label="Inactive" id="acct_status_inactive_radio" groupName="acct_status"/>
-					<mx:RadioButton x="303" y="43" label="Frozen" id="acct_status_frozen_radio" groupName="acct_status"/>
-					<mx:RadioButton x="10" y="40" label="Past Due" id="acct_status_past_due_radio" groupName="acct_status"/>
+					<mx:RadioButton x="10" y="10" label="New" id="acct_status_new_radio" groupName="acct_status" value="CustomerStatusNew"/>
+					<mx:RadioButton x="138" y="10" label="Current" id="acct_status_current_radio" groupName="acct_status" value="CustomerStatusCurrent"/>
+					<mx:RadioButton x="138" y="40" label="Delinquent" id="acct_status_delinquent_radio" groupName="acct_status" value ="CustomerStatusDeliguent"/>
+					<mx:RadioButton x="303" y="10" label="Inactive" id="acct_status_inactive_radio" groupName="acct_status" value="CustomerStatusInactive"/>
+					<mx:RadioButton x="303" y="43" label="Frozen" id="acct_status_frozen_radio" groupName="acct_status"  value="CustomerStatusFrozen"/>
+					<mx:RadioButton x="10" y="40" label="Past Due" id="acct_status_past_due_radio" groupName="acct_status" value="CustomerStatusPastDue" />
 				</mx:Panel>
 				<mx:Panel x="420" y="146" width="208" height="241" layout="absolute" title="Type" dropShadowEnabled="false">
 					<mx:RadioButtonGroup id="acct_type" selectedValue="{acctTypeRadioValue}"/>
