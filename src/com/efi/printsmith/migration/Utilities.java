@@ -1,7 +1,9 @@
 package com.efi.printsmith.migration;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -50,5 +52,13 @@ public class Utilities {
 		retVal = number.doubleValue();
 
 		return retVal;
+	}
+	
+	static public Date tokenToDate(String token) throws ParseException {
+		DateFormat fmt = DateFormat.getDateInstance();
+		Date date = fmt.parse(token);
+		
+		return date;
+		
 	}
 }

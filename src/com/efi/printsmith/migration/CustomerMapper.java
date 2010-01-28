@@ -21,9 +21,9 @@ public class CustomerMapper extends ImportMapper{
 			String currentFieldToken = fieldTokens[i];
 			
 			if ("recno".equals(currentFieldToken)) {
-				/* TODO */
+				customer.setPrevId(currentImportToken);
 			} else if ("account number".equals(currentFieldToken)) {
-				/* TODO */
+				customer.setAccountId(currentImportToken);
 			} else if ("account type".equals(currentFieldToken)) {
 				if ("1".equals(currentImportToken)) {
 					customer.setType("CustomerTypeDeposit");
