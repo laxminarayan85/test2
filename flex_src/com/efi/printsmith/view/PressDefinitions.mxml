@@ -167,7 +167,7 @@ width="912" height="722" title="Press Definitions"
 
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
-		doPressType();
+	//	doPressType();
 	}
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
@@ -334,13 +334,13 @@ width="912" height="722" title="Press Definitions"
 </mx:Script>	
 	<mx:Label x="78" y="126" text="Name:" width="45" textAlign="right"/>
 	<mx:Label x="40" y="148" text="Machine Name:" textAlign="right"/>
-	<mx:DataGrid x="10" y="0" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="0">
+	<mx:DataGrid x="10" y="0" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="0">
 		<mx:columns>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="rollFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
-			<mx:DataGridColumn headerText="Name" dataField="name"/>
-			<mx:DataGridColumn headerText="Machine" dataField="machineName"/>
-			<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="100"/>
+			<mx:DataGridColumn headerText="Name" dataField="name" width="300"/>
+			<mx:DataGridColumn headerText="Machine" dataField="machineName" width="300"/>
+			<mx:DataGridColumn headerText="Machine ID" dataField="machineID" width="100"/>
 		</mx:columns>
 	</mx:DataGrid>
 
