@@ -768,18 +768,18 @@ public class PressDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Long cutoffLength;
+	private Double cutoffLength;
 	/**
 	 * @generated
  	 */
-	public Long getCutoffLength(){
+	public Double getCutoffLength(){
 		return cutoffLength; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCutoffLength(Long newVal) {
+	public void setCutoffLength(Double newVal) {
 		this.cutoffLength = newVal;
 	}
  	
@@ -884,7 +884,7 @@ public class PressDefinition extends ModelBase {
 		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
 		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
-		if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Long)newValue); else
+		if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Double)newValue); else
 		if (PRESSID.equals(propertyName)) setPressId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -964,7 +964,7 @@ public class PressDefinition extends ModelBase {
 		if (SPEEDTABLE.equals(propertyName)) 
 			return new Class<?>[] {SpeedTable.class};		
 		if (CUTOFFLENGTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
+			return new Class<?>[] {Double.class};		
 		if (PRESSID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);

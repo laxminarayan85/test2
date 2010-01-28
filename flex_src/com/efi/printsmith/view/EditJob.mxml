@@ -494,10 +494,15 @@
 				job.price = localJob.price;	
 			}
 			
-			private function handlePriceJobFault(ev:ResultEvent):void
+			private function handlePriceJobFault(ev:FaultEvent):void
 			{
 				pricing_throbber.stop();
-				pricing_throbber.visible = false;			
+				pricing_throbber.visible = false;
+				if (ev != null && ev.fault != null && ev.fault.faultString != null) {				
+					Alert.show(ev.fault.faultString, "Error in Pricing", 0, null);
+				} else {
+					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
+				}
 			}
 			
 			private function fieldChanged(evt:FocusEvent):void
@@ -505,15 +510,15 @@
 				var doUpdatePrice:Boolean = false;
 				mapToJobData();
 				switch (evt.currentTarget) {
-				case job_ordered:
+				case this.job_ordered:
 					doUpdatePrice = true;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					break;
-				case job_over_under:
+				case this.job_over_under:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
-				case sets_of:
+				case this.sets_of:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;

@@ -1,5 +1,8 @@
 package com.efi.printsmith.migration;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.ComLink;
@@ -39,9 +42,13 @@ public class Utilities {
 		return retVal;
 	}
 	
-	static public double tokenToDouble(String token) throws NumberFormatException {
+	static public double tokenToDouble(String token) throws NumberFormatException, ParseException {
 		double retVal = -1;
-		retVal = Double.parseDouble(token);
+		
+		NumberFormat fmt = NumberFormat.getInstance();
+		Number number = fmt.parse(token);
+		retVal = number.doubleValue();
+
 		return retVal;
 	}
 }

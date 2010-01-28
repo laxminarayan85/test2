@@ -13,7 +13,6 @@ public class PressDefinitionMapper extends ImportMapper {
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
-			
 			if ("recno".equals(currentFieldToken)) {
 				pressDefinition.setPrevId(currentImportToken);
 			} else if ("name".equals(currentFieldToken)) {
@@ -149,7 +148,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("minY".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rollFedCutoffLength".equals(currentFieldToken)) {
-				pressDefinition.setCutoffLength(Utilities.tokenToLong(currentImportToken));
+				pressDefinition.setCutoffLength(Utilities.tokenToDouble(currentImportToken));
 			} else if ("defaultSheetFed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("digital integration".equals(currentFieldToken)) {
