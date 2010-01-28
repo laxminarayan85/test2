@@ -85,27 +85,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */
-	public static final String JOBTITLE = "JobTitle";
-	/**
-	 * @generated
-	 */
-	public static final String SUFFIX = "Suffix";
-	/**
-	 * @generated
-	 */
-	public static final String PREFIX = "Prefix";
-	/**
-	 * @generated
-	 */
-	public static final String SALUTATION = "Salutation";
-	/**
-	 * @generated
-	 */
 	public static final String CAMPAIGNS = "Campaigns";
-	/**
-	 * @generated
-	 */
-	public static final String CONTACTID = "ContactId";
 
 	/**
 	 * @generated
@@ -321,74 +301,6 @@ public class Contact extends Party {
 	}
  	
 	
- 	@Basic
-	private String jobTitle;
-	/**
-	 * @generated
- 	 */
-	public String getJobTitle(){
-		return jobTitle; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setJobTitle(String newVal) {
-		this.jobTitle = newVal;
-	}
- 	
-	
- 	@Basic
-	private String suffix;
-	/**
-	 * @generated
- 	 */
-	public String getSuffix(){
-		return suffix; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSuffix(String newVal) {
-		this.suffix = newVal;
-	}
- 	
-	
- 	@Basic
-	private String prefix;
-	/**
-	 * @generated
- 	 */
-	public String getPrefix(){
-		return prefix; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPrefix(String newVal) {
-		this.prefix = newVal;
-	}
- 	
-	
- 	@Basic
-	private String salutation;
-	/**
-	 * @generated
- 	 */
-	public String getSalutation(){
-		return salutation; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setSalutation(String newVal) {
-		this.salutation = newVal;
-	}
- 	
-	
     @OneToMany( cascade = {CascadeType.ALL})
 	private java.util.List<Campaigns> campaigns;
 	/**
@@ -410,23 +322,6 @@ public class Contact extends Party {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
 		this.campaigns = newVal;
 	}
- 	
-	
- 	@Basic
-	private String contactId;
-	/**
-	 * @generated
- 	 */
-	public String getContactId(){
-		return contactId; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setContactId(String newVal) {
-		this.contactId = newVal;
-	}
 	/**
 	 * @generated
 	 */		
@@ -445,12 +340,7 @@ public class Contact extends Party {
 		if (MAILERCAMPAIGNS.equals(propertyName)) return getMailerCampaigns();
 		if (CREDITCARD.equals(propertyName)) return getCreditCard();
 		if (MARKETING.equals(propertyName)) return getMarketing();
-		if (JOBTITLE.equals(propertyName)) return getJobTitle();
-		if (SUFFIX.equals(propertyName)) return getSuffix();
-		if (PREFIX.equals(propertyName)) return getPrefix();
-		if (SALUTATION.equals(propertyName)) return getSalutation();
 		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
-		if (CONTACTID.equals(propertyName)) return getContactId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -472,12 +362,7 @@ public class Contact extends Party {
 		if (MAILERCAMPAIGNS.equals(propertyName)) setMailerCampaigns((Boolean)newValue); else
 		if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
 		if (MARKETING.equals(propertyName)) setMarketing((Marketing)newValue); else
-		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
-		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
-		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
-		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
 		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
-		if (CONTACTID.equals(propertyName)) setContactId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -511,18 +396,8 @@ public class Contact extends Party {
 			return new Class<?>[] {CreditCard.class};		
 		if (MARKETING.equals(propertyName)) 
 			return new Class<?>[] {Marketing.class};		
-		if (JOBTITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SUFFIX.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PREFIX.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SALUTATION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
 		if (CAMPAIGNS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Campaigns.class};		
-		if (CONTACTID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -545,12 +420,7 @@ public class Contact extends Party {
 		if (MAILERCAMPAIGNS.equals(propertyName)) return Contact.class;
 		if (CREDITCARD.equals(propertyName)) return Contact.class;
 		if (MARKETING.equals(propertyName)) return Contact.class;
-		if (JOBTITLE.equals(propertyName)) return Contact.class;
-		if (SUFFIX.equals(propertyName)) return Contact.class;
-		if (PREFIX.equals(propertyName)) return Contact.class;
-		if (SALUTATION.equals(propertyName)) return Contact.class;
 		if (CAMPAIGNS.equals(propertyName)) return Contact.class;
-		if (CONTACTID.equals(propertyName)) return Contact.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -586,17 +456,7 @@ public class Contact extends Party {
 			return false;
 		if (! SmartEquals(getMarketing(), objT.getMarketing()))
 			return false;
-		if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
-			return false;
-		if (! SmartEquals(getSuffix(), objT.getSuffix()))
-			return false;
-		if (! SmartEquals(getPrefix(), objT.getPrefix()))
-			return false;
-		if (! SmartEquals(getSalutation(), objT.getSalutation()))
-			return false;
 		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
-			return false;
-		if (! SmartEquals(getContactId(), objT.getContactId()))
 			return false;
 		return true;
 	}			

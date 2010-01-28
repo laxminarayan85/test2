@@ -220,6 +220,107 @@ public class DataService {
 		return new ArrayList<Contact>();
 	}
 
+	// The following Id generation code is a temporary placeholder for the real handlers, but should work for a few days in 
+	// a single user environment. And yes it's ugly as snot...
+	
+	private PreferencesSequenceValues getSequenceValues() throws Exception {
+		PreferencesSequenceValues sequenceValues = (PreferencesSequenceValues) this.getSingle("PreferencesSequenceValues");
+		if (sequenceValues == null) {
+			sequenceValues = new PreferencesSequenceValues();
+			sequenceValues.setAccount(new Long(0));
+			sequenceValues.setBroker(new Long(0));
+			sequenceValues.setChargeDefinition(new Long(0));
+			sequenceValues.setContact(new Long(0));
+			sequenceValues.setCopierDefinition(new Long(0));
+			sequenceValues.setEmployee(new Long(0));
+			sequenceValues.setInvoice(new Long(0));
+			sequenceValues.setJob(new Long(0));
+			sequenceValues.setPressDefinition(new Long(0));
+			sequenceValues.setStockDefinition(new Long(0));
+		}
+		return sequenceValues;
+	}
+	private void setAccountId(Account account) throws Exception {
+		if (account.getAccountId() != null && account.getAccountId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getAccount()+1;
+		account.setAccountId(value.toString());
+		sequenceValues.setAccount(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setEmployeeId(Employee employee) throws Exception {
+		if (employee.getPartyId() != null && employee.getPartyId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getEmployee()+1;
+		employee.setPartyId(value.toString());
+		sequenceValues.setEmployee(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setContactId(Contact contact) throws Exception {
+		if (contact.getPartyId() != null && contact.getPartyId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getContact()+1;
+		contact.setPartyId(value.toString());
+		sequenceValues.setContact(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setBrokerId(Broker broker) throws Exception {
+		if (broker.getPartyId() != null && broker.getPartyId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getBroker()+1;
+		broker.setPartyId(value.toString());
+		sequenceValues.setBroker(value);
+		this.addUpdate(sequenceValues);
+	}
+
+	private void setStockDefinitionId(StockDefinition stockDefinition) throws Exception {
+		if (stockDefinition.getStockId() != null && stockDefinition.getStockId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getStockDefinition()+1;
+		stockDefinition.setStockId(value.toString());
+		sequenceValues.setStockDefinition(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setInvoiceId(Invoice invoice) throws Exception {
+		if (invoice.getInvoiceNumber() != null && invoice.getInvoiceNumber().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getInvoice()+1;
+		invoice.setInvoiceNumber(value.toString());
+		sequenceValues.setInvoice(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setJobId(Job job) throws Exception {
+		if (job.getJobNumber() != null && job.getJobNumber().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getJob()+1;
+		job.setJobNumber(value.toString());
+		sequenceValues.setJob(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setPressDefinitionId(PressDefinition pressDefinition) throws Exception {
+		if (pressDefinition.getPressId() != null && pressDefinition.getPressId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getPressDefinition()+1;
+		pressDefinition.setPressId(value.toString());
+		sequenceValues.setPressDefinition(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	private void setCopierDefinitionId(CopierDefinition copierDefinition) throws Exception {
+		if (copierDefinition.getCopierId() != null && copierDefinition.getCopierId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getCopierDefinition()+1;
+		copierDefinition.setCopierId(value.toString());
+		sequenceValues.setCopierDefinition(value);
+		this.addUpdate(sequenceValues);
+	}
+	
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
 		try {
@@ -232,6 +333,26 @@ public class DataService {
 			} else {
 				// Existing object is updated - do nothing.
 			}
+			if (object instanceof Account) {
+				this.setAccountId((Account)object);
+			} else if (object instanceof Employee) {
+				this.setEmployeeId((Employee)object);
+			} else if (object instanceof Contact) {
+				this.setContactId((Contact)object);
+			} else if (object instanceof Broker) {
+				this.setBrokerId((Broker)object);
+			} else if (object instanceof StockDefinition) {
+				this.setStockDefinitionId((StockDefinition)object);
+			} else if (object instanceof Invoice) {
+				this.setInvoiceId((Invoice)object);
+			} else if (object instanceof Job) {
+				this.setJobId((Job)object);			
+			} else if (object instanceof PressDefinition) {
+				this.setPressDefinitionId((PressDefinition)object);
+			} else if (object instanceof CopierDefinition) {
+				this.setCopierDefinitionId((CopierDefinition)object);
+			}
+			
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			try {

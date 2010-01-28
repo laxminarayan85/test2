@@ -62,6 +62,18 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
 	 */
 	public static final String STOCKDEFINITION = "StockDefinition";
+	/**
+	 * @generated
+	 */
+	public static final String EMPLOYEE = "Employee";
+	/**
+	 * @generated
+	 */
+	public static final String BROKER = "Broker";
+	/**
+	 * @generated
+	 */
+	public static final String COPIERDEFINITION = "CopierDefinition";
 
 	/**
 	 * @generated
@@ -190,6 +202,57 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setStockDefinition(Long newVal) {
 		this.stockDefinition = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Long employee;
+	/**
+	 * @generated
+ 	 */
+	public Long getEmployee(){
+		return employee; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEmployee(Long newVal) {
+		this.employee = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long broker;
+	/**
+	 * @generated
+ 	 */
+	public Long getBroker(){
+		return broker; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBroker(Long newVal) {
+		this.broker = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long copierDefinition;
+	/**
+	 * @generated
+ 	 */
+	public Long getCopierDefinition(){
+		return copierDefinition; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopierDefinition(Long newVal) {
+		this.copierDefinition = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -203,6 +266,9 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) return getAccount();
 		if (CONTACT.equals(propertyName)) return getContact();
 		if (STOCKDEFINITION.equals(propertyName)) return getStockDefinition();
+		if (EMPLOYEE.equals(propertyName)) return getEmployee();
+		if (BROKER.equals(propertyName)) return getBroker();
+		if (COPIERDEFINITION.equals(propertyName)) return getCopierDefinition();
 		return super.getProperty(propertyName);
 	}
 	
@@ -219,6 +285,9 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) setAccount((Long)newValue); else
 		if (CONTACT.equals(propertyName)) setContact((Long)newValue); else
 		if (STOCKDEFINITION.equals(propertyName)) setStockDefinition((Long)newValue); else
+		if (EMPLOYEE.equals(propertyName)) setEmployee((Long)newValue); else
+		if (BROKER.equals(propertyName)) setBroker((Long)newValue); else
+		if (COPIERDEFINITION.equals(propertyName)) setCopierDefinition((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -242,6 +311,12 @@ public class PreferencesSequenceValues extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (STOCKDEFINITION.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (EMPLOYEE.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (BROKER.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (COPIERDEFINITION.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -259,6 +334,9 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) return PreferencesSequenceValues.class;
 		if (CONTACT.equals(propertyName)) return PreferencesSequenceValues.class;
 		if (STOCKDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+		if (EMPLOYEE.equals(propertyName)) return PreferencesSequenceValues.class;
+		if (BROKER.equals(propertyName)) return PreferencesSequenceValues.class;
+		if (COPIERDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -283,6 +361,12 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (! SmartEquals(getContact(), objT.getContact()))
 			return false;
 		if (! SmartEquals(getStockDefinition(), objT.getStockDefinition()))
+			return false;
+		if (! SmartEquals(getEmployee(), objT.getEmployee()))
+			return false;
+		if (! SmartEquals(getBroker(), objT.getBroker()))
+			return false;
+		if (! SmartEquals(getCopierDefinition(), objT.getCopierDefinition()))
 			return false;
 		return true;
 	}			

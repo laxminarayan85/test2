@@ -588,7 +588,7 @@ creationComplete="init()" label="Contact Editor" name="Contact Editor" xmlns:ns1
 				<ns1:AddressEditor x="10" y="215" id="address_editor" height="157" width="325"/>
 				<mx:Label x="40" y="12" text="ID:" textAlign="right"/>
 				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.accountId}"/>
-				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
+				<mx:Text x="80" y="12" text="{contact.partyId}" id="contactID"/>
 				<mx:Label x="241" y="170" text="Sales Rep:" textAlign="right"/>
 				<mx:Label x="249" y="144" text="Created: " textAlign="right"/>
 				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.date}" height="27"/>

@@ -25,12 +25,7 @@ package com.efi.printsmith.data
 		public var mailerCampaigns:Boolean = true;
 		public var creditCard:CreditCard;
 		public var marketing:Marketing;
-		public var jobTitle:String = "";
-		public var suffix:String = "";
-		public var prefix:String = "";
-		public var salutation:String = "";
 		public var campaigns:ArrayCollection;
-		public var contactId:String = "";
 	
 	}
 }

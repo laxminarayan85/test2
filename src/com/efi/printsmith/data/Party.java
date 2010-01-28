@@ -37,6 +37,22 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String PREFIX = "Prefix";
+	/**
+	 * @generated
+	 */
+	public static final String SUFFIX = "Suffix";
+	/**
+	 * @generated
+	 */
+	public static final String SALUTATION = "Salutation";
+	/**
+	 * @generated
+	 */
+	public static final String JOBTITLE = "JobTitle";
+	/**
+	 * @generated
+	 */
 	public static final String ADDRESS = "Address";
 	/**
 	 * @generated
@@ -50,6 +66,10 @@ public class Party extends ModelBase {
 	 * @generated
 	 */
 	public static final String COMLINKS = "ComLinks";
+	/**
+	 * @generated
+	 */
+	public static final String PARTYID = "PartyId";
 
 	/**
 	 * @generated
@@ -59,6 +79,74 @@ public class Party extends ModelBase {
 		this.modified = new Date();
 	}
 
+ 	
+	
+ 	@Basic
+	private String prefix;
+	/**
+	 * @generated
+ 	 */
+	public String getPrefix(){
+		return prefix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPrefix(String newVal) {
+		this.prefix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String suffix;
+	/**
+	 * @generated
+ 	 */
+	public String getSuffix(){
+		return suffix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSuffix(String newVal) {
+		this.suffix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String salutation;
+	/**
+	 * @generated
+ 	 */
+	public String getSalutation(){
+		return salutation; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalutation(String newVal) {
+		this.salutation = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String jobTitle;
+	/**
+	 * @generated
+ 	 */
+	public String getJobTitle(){
+		return jobTitle; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setJobTitle(String newVal) {
+		this.jobTitle = newVal;
+	}
  	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
@@ -133,16 +221,38 @@ public class Party extends ModelBase {
 	public void setComLinks(java.util.List<ComLink> newVal) {
 		this.comLinks = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String partyId;
+	/**
+	 * @generated
+ 	 */
+	public String getPartyId(){
+		return partyId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPartyId(String newVal) {
+		this.partyId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
+		if (PREFIX.equals(propertyName)) return getPrefix();
+		if (SUFFIX.equals(propertyName)) return getSuffix();
+		if (SALUTATION.equals(propertyName)) return getSalutation();
+		if (JOBTITLE.equals(propertyName)) return getJobTitle();
 		if (ADDRESS.equals(propertyName)) return getAddress();
 		if (LASTNAME.equals(propertyName)) return getLastName();
 		if (FIRSTNAME.equals(propertyName)) return getFirstName();
 		if (COMLINKS.equals(propertyName)) return getComLinks();
+		if (PARTYID.equals(propertyName)) return getPartyId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -152,10 +262,15 @@ public class Party extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
+		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
+		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
+		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
 		if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
 		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
 		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
 		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
+		if (PARTYID.equals(propertyName)) setPartyId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -165,6 +280,14 @@ public class Party extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+		if (PREFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SUFFIX.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SALUTATION.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (JOBTITLE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		if (ADDRESS.equals(propertyName)) 
 			return new Class<?>[] {Address.class};		
 		if (LASTNAME.equals(propertyName)) 
@@ -173,6 +296,8 @@ public class Party extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (COMLINKS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, ComLink.class};		
+		if (PARTYID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -183,10 +308,15 @@ public class Party extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+		if (PREFIX.equals(propertyName)) return Party.class;
+		if (SUFFIX.equals(propertyName)) return Party.class;
+		if (SALUTATION.equals(propertyName)) return Party.class;
+		if (JOBTITLE.equals(propertyName)) return Party.class;
 		if (ADDRESS.equals(propertyName)) return Party.class;
 		if (LASTNAME.equals(propertyName)) return Party.class;
 		if (FIRSTNAME.equals(propertyName)) return Party.class;
 		if (COMLINKS.equals(propertyName)) return Party.class;
+		if (PARTYID.equals(propertyName)) return Party.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -198,6 +328,14 @@ public class Party extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		Party objT = (Party)obj;
+		if (! SmartEquals(getPrefix(), objT.getPrefix()))
+			return false;
+		if (! SmartEquals(getSuffix(), objT.getSuffix()))
+			return false;
+		if (! SmartEquals(getSalutation(), objT.getSalutation()))
+			return false;
+		if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
+			return false;
 		if (! SmartEquals(getAddress(), objT.getAddress()))
 			return false;
 		if (! SmartEquals(getLastName(), objT.getLastName()))
@@ -205,6 +343,8 @@ public class Party extends ModelBase {
 		if (! SmartEquals(getFirstName(), objT.getFirstName()))
 			return false;
 		if (! SmartEquals(getComLinks(), objT.getComLinks()))
+			return false;
+		if (! SmartEquals(getPartyId(), objT.getPartyId()))
 			return false;
 		return true;
 	}			

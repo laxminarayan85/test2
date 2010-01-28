@@ -122,12 +122,14 @@ public class PricingService {
 
 		/* Press Price */
 		PressDefinition pricingPress = job.getPricingPress();
-		double time = getTimePerSheetFromSpeedTable(pricingPress.getSpeedTable(), job.getPressQty()) * job.getPressQty()/60;
-		time += pricingPress.getSetupMin();
-		if (time < pricingPress.getMinLabor()) {
-			time = pricingPress.getMinLabor();
+		if (pricingPress != null) {
+			double time = getTimePerSheetFromSpeedTable(pricingPress.getSpeedTable(), job.getPressQty()) * job.getPressQty()/60;
+			time += pricingPress.getSetupMin();
+			if (time < pricingPress.getMinLabor()) {
+				time = pricingPress.getMinLabor();
+			}
+			price = pricingPress.getLaborRate() * pricingPress.getLaborMarkup() * time/60;
 		}
-		price = pricingPress.getLaborRate() * pricingPress.getLaborMarkup() * time/60;
 		
 		/* Stock Price */
 		StockDefinition stock = job.getStock();
@@ -137,7 +139,7 @@ public class PricingService {
 		
 		if (job.getCharges() != null) {
 			for (Charge charge : job.getCharges()) {
-				priceCharge(charge);
+				if (charge != null) priceCharge(charge);
 			}
 		}
 

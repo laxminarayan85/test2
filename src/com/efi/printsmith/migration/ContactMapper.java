@@ -18,13 +18,13 @@ public class ContactMapper extends ImportMapper {
 			String currentFieldToken = fieldTokens[i];
 
 			if ("recno".equals(currentFieldToken)) {
-				contact.setPrefix(currentImportToken);
+				contact.setPrevId(currentImportToken);
 			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("contact id".equals(currentFieldToken)) {
-				contact.setContactId(currentImportToken);
+				contact.setPartyId(currentImportToken);
 			} else if ("cust acct".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cust record".equals(currentFieldToken)) {

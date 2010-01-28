@@ -20,6 +20,9 @@ package com.efi.printsmith.data
 		public var account:Number = 0;
 		public var contact:Number = 0;
 		public var stockDefinition:Number = 0;
+		public var employee:Number = 0;
+		public var broker:Number = 0;
+		public var copierDefinition:Number = 0;
 	
 	}
 }
