@@ -17,6 +17,11 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.StockGrade;
+	import com.efi.printsmith.data.Vendor;
+	import com.efi.printsmith.data.StockFinish;
+	import com.efi.printsmith.data.GenericColors;
+	import com.efi.printsmith.data.StockColors;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.collections.ArrayCollection;           
 	import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -137,7 +142,62 @@
 		txtRollWidthMin.enabled = chkShowRollStock.selected;
 		txtRollWidthMax.enabled = chkShowRollStock.selected;
 	}
-	
+
+	public function getColorLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:StockColors ;
+		tmpItem = item.color as StockColors;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+
+	public function getGenericColorLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:GenericColors ;
+		tmpItem = item as GenericColors;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+
+	public function getFinishLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:StockFinish ;
+		tmpItem = item.finish as StockFinish;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+
+	public function getGradeLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:StockGrade ;
+		tmpItem = item.grade as StockGrade;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+
+	public function getVendorLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:Vendor ;
+		tmpItem = item.vendor as Vendor;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+
 ]]>        
 </mx:Script>
                              
@@ -150,13 +210,13 @@
 		     <mx:DataGridColumn dataField="name" headerText="Name" width="100"/>
 		     <mx:DataGridColumn dataField="weight" headerText="Weight"/>
 		     <mx:DataGridColumn dataField="parentsize" headerText="Size"/>
-		     <mx:DataGridColumn dataField="color" headerText="Color"/>
-		     <mx:DataGridColumn dataField="genericColor" headerText="Generic Color"/>
-		     <mx:DataGridColumn dataField="finish" headerText="Finish"/>
+		     <mx:DataGridColumn labelFunction="getColorLabel" headerText="Color"/>
+		     <mx:DataGridColumn labelFunction="getGenericColorLabel" headerText="Generic Color"/>
+		     <mx:DataGridColumn labelFunction="getFinishLabel" headerText="Finish"/>
 		     <mx:DataGridColumn dataField="thickness" headerText="Thickness"/>
-		     <mx:DataGridColumn dataField="grade" headerText="Grade"/>
+		     <mx:DataGridColumn labelFunction="getGradeLabel" headerText="Grade"/>
 		     <mx:DataGridColumn dataField="cwt1" headerText="CWT"/>
-		     <mx:DataGridColumn dataField="vendor" headerText="Vendor"/>
+		     <mx:DataGridColumn labelFunction="getVendorLabel" headerText="Vendor"/>
 		     <mx:DataGridColumn dataField="stocknumber" headerText="Stock Number"/>
 		     <mx:DataGridColumn dataField="id" headerText="Product ID"/>
 		     <mx:DataGridColumn dataField="onHand" headerText="Quantity On Hand"/>
