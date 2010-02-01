@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+        height="214"
+        width="438"
+        showCloseButton="true"
+        verticalScrollPolicy="off"
+        horizontalScrollPolicy="off"
+        creationComplete="init()"
+        close="doCancel()"
+        defaultButton="{ok_button}" title="Edit PriceList Item">
+        
+	<mx:Metadata>
+		[Event(name="SavePriceListElementEvent", type="com.efi.events.SavePriceListElementEvent")]
+ 	</mx:Metadata>
+	
+	<mx:RemoteObject id="ColorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadColor(event)"/>
+	</mx:RemoteObject>
+
+    <mx:Canvas width="409" height="167">
+    <mx:Label x="10" y="10" text="Quantity:" width="67" textAlign="right"/>
+    <mx:Label x="10" y="35" text="Price:" width="67" textAlign="right"/>
+    <mx:Label x="38" y="61" text="Side:" width="39" textAlign="right"/>
+    <mx:Label x="10" y="83" text="Color:" width="67" textAlign="right"/>
+
+    <mx:TextInput x="85" y="10" width="314" id="quantity_edit" text="{element.quantity}"/>
+    <mx:TextInput x="85" y="33" width="314" id="amount_edit" text="{element.amount}"/>
+    <mx:ComboBox x="85" y="56" width="314" id="side_edit" dataProvider="{SidesArray}" labelField="name"/> 
+    <mx:ComboBox x="85" y="81" width="314" id="color_edit" dataProvider="{ColorArray}" labelField="name"/>
+    	
+    <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    </mx:Canvas>
+<mx:Script>
+	<![CDATA[
+	import com.efi.printsmith.events.SavePriceListElementEvent;
+	import com.efi.printsmith.data.PriceListElement;
+	
+	import mx.collections.ArrayCollection;
+	import mx.managers.PopUpManager;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]                                         
+	public var element:PriceListElement ;
+
+	[Bindable]
+	private var SidesArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var ColorArray:ArrayCollection = new ArrayCollection();
+
+	private function fillSidesArray(fillArray:ArrayCollection):void {
+		var sides:Object=new Object();
+		sides.side="1";
+		sides.name="Front";
+		fillArray.addItem(sides);
+		sides=new Object();
+		sides.side="2";
+		sides.name="Back";
+		fillArray.addItem(sides);
+	}
+	
+	private function init():void {
+		fillSidesArray(SidesArray);
+		if (element.side>0){
+			side_edit.selectedIndex = (element.side - 1);
+		}else{
+			side_edit.selectedIndex = 0;
+		}
+			
+		ColorDataService.getAll("StockColors")
+	}      
+
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+	private function handleLoadColor(ev:ResultEvent):void {
+		 ColorArray = ev.result as ArrayCollection;
+		if (element.color>0){
+			 color_edit.selectedIndex = element.color;
+		}else{
+			color_edit.selectedIndex = 0;
+		} 
+	}
+
+	private function doCancel():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doOK():void {
+		element.quantity = parseInt(quantity_edit.text);
+		element.amount = parseFloat(amount_edit.text); 
+
+		element.side = side_edit.selectedIndex==0?1:2;
+		element.color = color_edit.selectedIndex;
+		
+		var eventObj:SavePriceListElementEvent = new SavePriceListElementEvent("SavePriceListElementEvent", element);
+		
+		dispatchEvent(eventObj);
+		PopUpManager.removePopUp(this);
+	}
+
+	]]>
+</mx:Script>
+    
+</mx:TitleWindow>

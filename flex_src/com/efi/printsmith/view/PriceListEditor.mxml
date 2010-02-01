@@ -12,6 +12,9 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="ColorDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadColor(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
@@ -80,39 +83,39 @@
 <mx:Script>
                                    
 <![CDATA[
-	import com.efi.printsmith.data.SpeedTable;
-	import com.efi.printsmith.data.PriceList;
-	import com.efi.printsmith.data.PriceListElement;
-	import com.efi.printsmith.view.CopierDefinitions;
-    import com.efi.printsmith.view.PressDefinitions;
-    import com.efi.printsmith.view.StockDefinitions;
+	import com.efi.printsmith.events.SavePriceListElementEvent;
 
-	import com.efi.printsmith.data.WasteChart; 
-	import com.efi.printsmith.data.PaperPrice;
-	import com.efi.printsmith.data.PriceListBase;
+	import com.efi.printsmith.view.*;
+	import com.efi.printsmith.data.*; 
+
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
 	import mx.core.Container;                      
-	import mx.rpc.events.ResultEvent;                                 
-	import mx.rpc.events.FaultEvent;                          
-	import mx.events.ValidationResultEvent;                          
+	import mx.rpc.events.*;                                 
 	import mx.validators.Validator;       
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.core.Application;
 	import mx.collections.ArrayCollection;
-	import com.efi.printsmith.itemRenderers.SidesEditor;
-    import mx.events.DataGridEvent;
-    import mx.events.DataGridEventReason;
+    import mx.events.*;
+    
+    import com.efi.printsmith.events.*;
+    import com.efi.printsmith.components.*;
 	    
 	[Bindable]                                
 	public var priceList:PriceListBase;
+	
+	[Bindable]
+	private var priceListElement:PriceListElement;
 		
 	public var parentContainer:Container;
 
 	[Bindable]
 	private var PaperPriceMethodArray:ArrayCollection = new ArrayCollection();
+
+	[Bindable]
+	private var ColorArray:ArrayCollection = new ArrayCollection();
 	
     [Bindable]
     private var quantity_header:String = "Quantity";
@@ -148,6 +151,8 @@
 
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		fillArray();
+		ColorDataService.getAll("StockColors")
+
 	}
 
 	private function fillArray():void {
@@ -171,6 +176,10 @@
 		PaperMethod4.name = "Use ordered quantity per sheet (originals)"
 		PaperPriceMethodArray.addItem(PaperMethod4);
 	}	
+
+	private function handleLoadColor(ev:ResultEvent):void {
+		 ColorArray = ev.result as ArrayCollection;
+	}
 	            
 	public function setPriceList(priceList:PriceListBase):void {
 		if (priceList == null) return;
@@ -269,49 +278,80 @@
 		priceList.elements.removeItemAt(priceList.elements.getItemIndex(deleteItem));
 	}
 
-	private function processSidesGridData(event:DataGridEvent):void {
-        if (event.reason == DataGridEventReason.CANCELLED){
-            // Do not update cell.
-            return;
-        }           
 
-		if(event.dataField == "side")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
+	
+	private function showSide(item:Object, column:DataGridColumn):String{
+		
+		if (item != null && item.side != null) {
+			var retVal:String = item.side==2?"Back":"Front";
+			
+			if (retVal != "") {
+				return retVal;
+			} else {
+				return "None";
+			}
+		} else {
+			return "None";
+		}
 
-			// Get new category from editor.
-			dataGrid.editedItemRenderer.data.side = SidesEditor(DataGrid(event.target).itemEditorInstance).pickSide.selectedItem;
-
-			// Close the cell editor.
-			dataGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			dataGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}	
 	}
+	private function showColor(item:Object, column:DataGridColumn):String{
+		
+		if (item != null && item.color != null && ColorArray.length > 0) {
+			var retVal:String = ColorArray.getItemAt(item.color,0).name;
+			
+			if (retVal != "") {
+				return retVal;
+			} else {
+				return "None";
+			}
+		} else {
+			return "None";
+		}
+
+	}
+
+	private function popupClose(event:CloseEvent):void
+	{
+	}
+
+	private var titleWindow:PriceListElementEditorPopup=null;
+
+	private function savePriceListElementHandler(evt:SavePriceListElementEvent):void {
+		dataGrid.selectedItem = evt.element;
+	}
+	
+	private function doubleClickHandler(event:ListEvent):void {
+		priceListElement = dataGrid.selectedItem as PriceListElement; 
+		titleWindow=PriceListElementEditorPopup(PopUpManager.createPopUp(this, PriceListElementEditorPopup,true));
+		titleWindow.element = priceListElement; 
+		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
+		titleWindow.addEventListener("SavePriceListElementEvent", savePriceListElementHandler, false, 1);
+	}
+	
+	private function gridInit(event:FlexEvent):void {
+		event.currentTarget.itemRenderer.properties = {doubleClickEnabled:true};
+	}
+	
+		
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
 		<mx:DataGrid id="dataGrid" width="145" dataProvider="{priceList.elements}"
-		showHeaders="true" borderStyle="solid" borderThickness="3" x="0" editable="true" enabled="true" bottom="25" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
-		itemEditEnd="processSidesGridData(event);">
+			showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
+			editable="false" enabled="true" 
+			bottom="25" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+			doubleClickEnabled="true" itemDoubleClick="doubleClickHandler(event);"
+			initialize="gridInit(event);">
 		<mx:columns>
-		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false"/>
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false"/>
-		     <mx:DataGridColumn id="colSide" dataField="side" headerText="{side_header}" sortable="false" visible="false" width="75"
- 				itemEditor="com.efi.printsmith.itemRenderers.SidesEditor" editable="true">
- 				
-    			<mx:itemRenderer>
-        			<mx:Component>
-                		<mx:Text selectable="false" text="{data.side}"/>
-        			</mx:Component>
-    			</mx:itemRenderer>
-			</mx:DataGridColumn>
-		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" sortable="false" visible="false"/>
+		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false" width="40"/>
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false" width="40"/>
+			 <mx:DataGridColumn id="colSide" headerText="{side_header}" dataField="side" labelFunction="showSide"/>
+		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="30"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect()"  width="97" x="229" y="254"/>
+		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect();"  width="97" x="229" y="254"/>
 		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="97" x="229" y="284"/>
 		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="176"/>
 		<mx:Label x="162" y="12" text="Title:" id="label1" textAlign="right"/>

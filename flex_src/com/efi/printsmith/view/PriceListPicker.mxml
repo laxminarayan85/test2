@@ -88,7 +88,6 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 
-	    PopUpManager.centerPopUp(this);
 	    if (this.itemType == null)
 	    	this.itemType = "PriceList";
 
