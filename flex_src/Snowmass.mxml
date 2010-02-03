@@ -6,6 +6,10 @@
  		xmlns:ns2="flexlib.controls.*"
  		xmlns:business="com.efi.printsmith.business.*"
  		xmlns:control="com.efi.printsmith.control.*">
+ 		<mx:Metadata>
+ 			[ResourceBundle("psResources")]
+ 		</mx:Metadata>
+ 		
 	    <mx:Move 
 	        id="moveLogo" target="{logo}" 
 	        easingFunction="mx.effects.easing.Quadratic.easeIn" effectEnd="endMoveLogo()" duration="2000" xTo="480"
@@ -134,14 +138,16 @@
 		
 		private var remoteObject:RemoteObject;
 		
+		private static const RESOURCE_BUNDLE:String = "psResources";
+		
 		public var userName:String;
 		public var userPass:String;
 		[Bindable]
 		public var currentUser:Users;
 
-		public var localeString : String = "en_US";
         private static var thisInstance:Snowmass = null;  
 
+		private var locales:Array = ["en_US", "fr_FR", "ja_JP"];
 		public static function getInstance() : Snowmass {
 			return thisInstance;
 		}		
@@ -361,10 +367,66 @@
 			addUniqueTab(child);
 			
 		}		
+		
+		/**
+		 *  The labelFunction for the Language combobox.
+		 *  It takes a locale such as "en_US"
+		 *  and produces the localized string "English".
+		 */
+		private function languageComboBoxLabelFunction(item:Object):String
+		{
+			var locale:String = String(item);
+			return resourceManager.getString(RESOURCE_BUNDLE, locale);
+		}
+		
+		/**
+		 *  Comparison function for sorting the 'locales' Array,
+		 *  which is the dataProvider for the Language combobox.
+		 *  The sort order is locale-dependent,
+		 *  because the localized language names for the locales
+		 *  are presented in alphabetical order.
+		 */
+		private function localeCompareFunction(item1:Object, item2:Object):int
+		{
+			var language1:String = languageComboBoxLabelFunction(item1);
+			var language2:String = languageComboBoxLabelFunction(item2);
+			
+			if (language1 < language2)
+				return -1;
+			if (language1 > language2)
+				return 1;
+			return 0;
+		}
+		
+		/**
+		 *  Repopulates the Language combobox with localized language names
+		 *  for the supported locales, alphabetized by language name.
+		 */
+		private function updateLanguageComboBox():void
+		{
+			var oldSelectedItem:Object = languageComboBox.selectedItem;
+			
+			// Repopulate the combobox with locales,
+			// re-sorting by localized language name.
+			locales.sort(localeCompareFunction);
+			languageComboBox.dataProvider = locales;
+			
+			languageComboBox.selectedItem = oldSelectedItem;
+		}
+
+		private function languageComboBox_changeHandler(event:Event):void
+		{
+			resourceManager.localeChain = [ languageComboBox.selectedItem ];
+			updateLanguageComboBox();
+		}
 ]]>		
 </mx:Script>
 	<business:Services id="services" />
 	<control:MainController id="controller" />
 	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
-	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="100" top="5"/>
+	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
+	<mx:ComboBox x="386" y="5" id="languageComboBox" dataProvider="{locales}"				 
+					labelFunction="languageComboBoxLabelFunction"
+					change="languageComboBox_changeHandler(event)"/>
+	<mx:Text x="304" y="7" text="{resourceManager.getString(RESOURCE_BUNDLE, 'LANGUAGE_LABEL')}" textAlign="right" width="74" height="17"/>
 </mx:Application>
