@@ -15,6 +15,8 @@ public class CustomerMapper extends ImportMapper{
 		Address billToAddress = new Address();
 		Contact shipToContact = new Contact();
 		Contact billToContact = new Contact();
+		String contactId = "";
+		String billContactId = "";
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -168,7 +170,7 @@ public class CustomerMapper extends ImportMapper{
 			} else if ("job notes".equals(currentFieldToken)) {
 				customer.setJobNote(currentImportToken);
 			} else if ("contact record".equals(currentFieldToken)) {
-				/* TODO */
+				contactId = currentImportToken;
 			} else if ("master acct".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("access level".equals(currentFieldToken)) {
@@ -253,7 +255,7 @@ public class CustomerMapper extends ImportMapper{
 			} else if ("statement notes".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("bill contact record".equals(currentFieldToken)) {
-				/* TODO */
+				billContactId = currentImportToken;
 			} else if ("marketing dates[1]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("marketing dates[2]".equals(currentFieldToken)) {
@@ -467,7 +469,14 @@ public class CustomerMapper extends ImportMapper{
 		customer.setShipToAddress(shipToAddress);
 		customer.setBillToAddress(billToAddress);
 		customer.setContact(shipToContact);
-		customer.setBillToContact(billToContact);
+		if (contactId.equals(billContactId))
+		{
+			customer.setBillToContact(shipToContact);
+		}
+		else
+		{
+			customer.setBillToContact(billToContact);
+		}
 		
 		return customer;
 	}
