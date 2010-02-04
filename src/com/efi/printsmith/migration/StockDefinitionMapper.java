@@ -1,6 +1,7 @@
 package com.efi.printsmith.migration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.GenericColors;
@@ -10,10 +11,13 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.StockFinish;
 import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.Vendor;
+import com.efi.printsmith.service.DataService;
+
 
 public class StockDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		StockDefinition stockDefinition = new StockDefinition();
+		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -28,10 +32,12 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("name".equals(currentFieldToken)) {
 				stockDefinition.setName(currentImportToken);
 			}  else if ("color".equals(currentFieldToken)) {
-				/* TODO - don't create one every time...use existing if it exists. */
-				StockColors stockColor = new StockColors();
-				
-				stockColor.setName(currentImportToken);
+				StockColors stockColor = dataService.getByStockColorName(currentImportToken);
+				if (stockColor == null)
+				{
+					stockColor = new StockColors();
+					stockColor.setName(currentImportToken);
+				}
 				stockDefinition.setColor(stockColor);
 				
 			}  else if ("vendor".equals(currentFieldToken)) {
@@ -171,16 +177,24 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("generic color id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("generic color name".equals(currentFieldToken)) {
-				GenericColors genericColor = new GenericColors();
+				GenericColors genericColors = dataService.getByGenericColorsName(currentImportToken);
+				if (genericColors == null)
+				{
+					genericColors = new GenericColors();
+					genericColors.setName(currentImportToken);
+				}
+				stockDefinition.setGenericColor(genericColors);
 				
-				genericColor.setName(currentImportToken);
-				stockDefinition.setGenericColor(genericColor);
 			}  else if ("generic finish id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("generic finish name".equals(currentFieldToken)) {
-				StockFinish finish = new StockFinish();
-				finish.setName(currentImportToken);
-				stockDefinition.setFinish(finish);
+				StockFinish stockFinish = dataService.getByStockFinishName(currentImportToken);
+				if (stockFinish == null)
+				{
+					stockFinish = new StockFinish();
+					stockFinish.setName(currentImportToken);
+				}
+				stockDefinition.setFinish(stockFinish);
 			}  else if ("grade id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("grade name".equals(currentFieldToken)) {

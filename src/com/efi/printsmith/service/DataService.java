@@ -150,7 +150,52 @@ public class DataService {
 		}
 		return null;
 	}
-
+	
+	public StockColors getByStockColorName(String name) throws Exception {
+		try {
+			log.debug("** getBySockColorName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockColors where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockColors object = (StockColors) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public StockFinish getByStockFinishName(String name) throws Exception {
+		try {
+			log.debug("** getBySockFinishName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockFinish where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockFinish object = (StockFinish) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public GenericColors getByGenericColorsName(String name) throws Exception {
+		try {
+			log.debug("** getByGenericColorsName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from GenericColors where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			GenericColors object = (GenericColors) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
