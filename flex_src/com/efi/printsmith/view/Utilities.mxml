@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="412" height="346" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="346" showCloseButton="false" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
@@ -183,17 +183,17 @@
 
                              
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:Button label="Import Customers" id="import_customers" enabled="true" click="doImportCustomers();"  width="175" x="10" y="70"/>
-		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="175" x="10" y="10"/>
-		<mx:Button label="Import Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="175" x="10" y="40"/>
-		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="175" x="10" y="100"/>
-		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="175" x="10" y="130"/>
-		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="175" x="10" y="160"/>
-		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="175" x="10" y="190"/>
-		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="175" x="10" y="220"/>
-		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="175" x="193" y="10"/>
-		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="175" x="193" y="40"/>
-		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="175" x="193" y="70"/>
+		<mx:Button label="Import Customers &amp; Customer Contacts" id="import_customers" enabled="true" click="doImportCustomers();"  width="256" x="10" y="70"/>
+		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="256" x="10" y="10"/>
+		<mx:Button label="Import Standalone Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="256" x="10" y="40"/>
+		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="10" y="100"/>
+		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="10" y="130"/>
+		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="10" y="160"/>
+		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="190"/>
+		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="220"/>
+		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="10"/>
+		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
+		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="274" y="70"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
