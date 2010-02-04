@@ -12,6 +12,7 @@ public class ContactMapper extends ImportMapper {
 		Contact contact = new Contact();
 		Address address = new Address();
 		Marketing marketing = new Marketing();
+		String custAcct = "";
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -26,7 +27,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("contact id".equals(currentFieldToken)) {
 				contact.setPartyId(currentImportToken);
 			} else if ("cust acct".equals(currentFieldToken)) {
-				/* TODO */
+				custAcct = currentImportToken;
 			} else if ("cust record".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("title".equals(currentFieldToken)) {
@@ -190,6 +191,11 @@ public class ContactMapper extends ImportMapper {
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			}
+		}
+		
+		if (!custAcct.equals("") && !custAcct.equals("0"))
+		{
+			contact = null;
 		}
 		return contact;
 	}
