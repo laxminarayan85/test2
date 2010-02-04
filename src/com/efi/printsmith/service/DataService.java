@@ -196,6 +196,20 @@ public class DataService {
 		return null;
 	}
 	
+	public StockGrade getByStockGradeName(String name) throws Exception {
+		try {
+			log.debug("** getByStockGradeName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockGrade where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockGrade object = (StockGrade) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {

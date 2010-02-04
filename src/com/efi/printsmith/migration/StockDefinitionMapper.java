@@ -198,9 +198,13 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("grade id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("grade name".equals(currentFieldToken)) {
-				StockGrade grade = new StockGrade();
-				grade.setName(currentImportToken);
-				stockDefinition.setGrade(grade);
+				StockGrade stockGrade = dataService.getByStockGradeName(currentImportToken);
+				if (stockGrade == null)
+				{
+					stockGrade = new StockGrade();
+					stockGrade.setName(currentImportToken);
+				}
+				stockDefinition.setGrade(stockGrade);
 			}  else if ("mill".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("mWeight".equals(currentFieldToken)) {
