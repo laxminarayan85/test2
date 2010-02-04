@@ -94,10 +94,10 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("output desc".equals(currentFieldToken)) {
 				pressDefinition.setOutputDescrip(currentImportToken);
 			} else if ("paperStyle".equals(currentFieldToken)) {
-				if ("0".equals(currentFieldToken)) {
+				if ("0".equals(currentImportToken)) {
 					pressDefinition.setSheetFed(true);
 					pressDefinition.setRollFed(false);
-				} else if ("1".equals(currentFieldToken)) {
+				} else if ("1".equals(currentImportToken)) {
 					pressDefinition.setRollFed(true);
 					pressDefinition.setSheetFed(false);
 				}
