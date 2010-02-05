@@ -54,7 +54,7 @@
 				<mx:Button x="10" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Pricing')}" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
 				<mx:Button x="10" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.AccountHistory')}" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
 				<mx:Button x="10" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
-				<mx:Button x="674" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.OpenCashRegiser')}" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
+				<mx:Button x="674" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.OpenCashRegister')}" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
 				<mx:Button x="508" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
 				<mx:Button x="342" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="342" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PressDefinitions')}" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
@@ -308,7 +308,11 @@
 		private function init() : void {
 			thisInstance = this;
 			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
-			
+			var eventDispatcher:IEventDispatcher = resourceManager.loadResourceModule("Resources_en_US.swf");
+            eventDispatcher.addEventListener(ResourceEvent.COMPLETE, completeHandler);
+            eventDispatcher.addEventListener(ResourceEvent.ERROR, resourceFaultHandler);
+            resourceManager.localeChain = [ "en_US" ];
+			this.languageComboBox.selectedItem = "en_US";
 			userName = Application.application.parameters.userName;
 			userPass = Application.application.parameters.userPass;
 			
@@ -495,5 +499,4 @@
 	<mx:ComboBox x="475" y="4" id="languageComboBox" dataProvider="{locales}"				 
 					labelFunction="languageComboBoxLabelFunction"
 					change="languageComboBox_changeHandler(event)"/>
-	<mx:Text x="304" y="6" text="{resourceManager.getString(RESOURCE_BUNDLE, 'rPriceList.Press')}" textAlign="right" width="163" height="17"/>
 </mx:Application>
