@@ -34,6 +34,10 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "broker")
 public class Broker extends Party {
+	/**
+	 * @generated
+	 */
+	public static final String BROKERID = "BrokerId";
 
 	/**
 	 * @generated
@@ -43,4 +47,75 @@ public class Broker extends Party {
 		this.modified = new Date();
 	}
 
+ 	
+	
+ 	@Basic
+	private String brokerId;
+	/**
+	 * @generated
+ 	 */
+	public String getBrokerId(){
+		return brokerId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBrokerId(String newVal) {
+		this.brokerId = newVal;
+	}
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
+		if (BROKERID.equals(propertyName)) return getBrokerId();
+		return super.getProperty(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+		if (BROKERID.equals(propertyName)) setBrokerId((String)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+		if (BROKERID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		return super.getPropertyClass(propertyName);
+	}
+	
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+		if (BROKERID.equals(propertyName)) return Broker.class;
+		return super.getPropertyOwner(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */			
+	@Override
+	public boolean deepEquals(Object obj) {
+		if (! super.deepEquals(obj))
+			return false;
+		Broker objT = (Broker)obj;
+		if (! SmartEquals(getBrokerId(), objT.getBrokerId()))
+			return false;
+		return true;
+	}			
 }

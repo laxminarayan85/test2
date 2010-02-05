@@ -53,6 +53,7 @@ package com.efi.printsmith.data
 		public var message:String = "";
 		public var showMessageClockout:Boolean = true;
 		public var showMessageClockin:Boolean = true;
+		public var employeeId:String = "";
 	
 	}
 }

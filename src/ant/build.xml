@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="sourceGenerator">
+	<property name="classes" value="${basedir}/classes" />
+	<property name="taskdefJar" value="${basedir}/SourceGeneratorTasks.jar" />
+	<property name="tempgensrc" value="${basedir}/tempgensrc" />
+	<property name="jetgensrc" value="${tempgensrc}/gensrc" />
+
+	<property file="${basedir}/build.properties"/>
+		
+	<target name="clean">
+		<delete dir="${tempgensrc}"></delete>
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${classes}" />
+		<mkdir dir="${tempgensrc}" />
+	    <mkdir dir="${jetgensrc}" />	
+	</target>
+
+	<path id="project.class.path">
+		<pathelement location="${classes}" />
+		<pathelement location="${taskdefJar}" />
+	</path>
+
+	<taskdef name="translateXMI" classname="com.efi.jet.generator.ant.xmitojdfxml.XMIToJDFXMLConvertor" classpath="${taskdefJar}"/>
+	<taskdef name="compileTemplates" classname="com.efi.jet.generator.ant.jetcompile.JETCompilerTask" classpath="${taskdefJar}"/>
+	<taskdef name="generateSourceFromJET" classname="com.efi.jet.generator.ant.jettransform.JETGeneratorTask" classpathref="project.class.path"/>
+
+
+	<target name="translateXMIs" depends="init">
+		<translateXMI inputXMIFileNames="${inputXMIFileNames}" inputArgumentsFile="${basedir}/jettemplate/arguments.xml" outputDir="${tempgensrc}" outputFileName="ObjectModel.xml" skipPackages=".svn"/>
+	</target>
+
+	<target  name="compileTemplates" depends="init">
+		<compileTemplates templateDir="${basedir}/jettemplate/templates" templateLoaderClass="org.eclipse.jet.compiled._jet_transformation" outputDir="${jetgensrc}"/>		
+		<javac classpathref="project.class.path" debug="${debug}"  deprecation="${deprecation}" destdir="${classes}" nowarn="${nowarn}" source="${source}" target="${target}">
+			<src path="${jetgensrc}" />
+		</javac>
+	</target>
+	
+
+	<target  name="generateSource" depends="compileTemplates">
+		<generateSourceFromJET inputXML="${tempgensrc}/ObjectModel.xml" templateDir="${basedir}/jettemplate/templates" startTemplate="${basedir}/jettemplate/templates/main.jet" templateLoaderClass="org.eclipse.jet.compiled._jet_transformation"/>
+	</target>
+
+	
+	<target name="source" depends="init">
+	   <antcall target="generateSource"/>
+	</target>
+	<target name="all" depends="clean,translateXMIs, source">
+	</target>
+</project>

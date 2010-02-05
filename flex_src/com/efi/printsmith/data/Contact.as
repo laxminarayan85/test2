@@ -26,6 +26,7 @@ package com.efi.printsmith.data
 		public var creditCard:CreditCard;
 		public var marketing:Marketing;
 		public var campaigns:ArrayCollection;
+		public var contactId:String = "";
 	
 	}
 }

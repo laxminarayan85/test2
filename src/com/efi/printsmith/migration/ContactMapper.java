@@ -25,7 +25,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("contact id".equals(currentFieldToken)) {
-				contact.setPartyId(currentImportToken);
+				contact.setContactId(currentImportToken);
 			} else if ("cust acct".equals(currentFieldToken)) {
 				custAcct = currentImportToken;
 			} else if ("cust record".equals(currentFieldToken)) {

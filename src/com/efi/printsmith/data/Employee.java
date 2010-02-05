@@ -194,6 +194,10 @@ public class Employee extends Party {
 	 * @generated
 	 */
 	public static final String SHOWMESSAGECLOCKIN = "ShowMessageClockin";
+	/**
+	 * @generated
+	 */
+	public static final String EMPLOYEEID = "EmployeeId";
 
 	/**
 	 * @generated
@@ -913,6 +917,23 @@ public class Employee extends Party {
 	public void setShowMessageClockin(Boolean newVal) {
 		this.showMessageClockin = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String employeeId;
+	/**
+	 * @generated
+ 	 */
+	public String getEmployeeId(){
+		return employeeId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEmployeeId(String newVal) {
+		this.employeeId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -959,6 +980,7 @@ public class Employee extends Party {
 		if (MESSAGE.equals(propertyName)) return getMessage();
 		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return getShowMessageClockout();
 		if (SHOWMESSAGECLOCKIN.equals(propertyName)) return getShowMessageClockin();
+		if (EMPLOYEEID.equals(propertyName)) return getEmployeeId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1008,6 +1030,7 @@ public class Employee extends Party {
 		if (MESSAGE.equals(propertyName)) setMessage((String)newValue); else
 		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) setShowMessageClockout((Boolean)newValue); else
 		if (SHOWMESSAGECLOCKIN.equals(propertyName)) setShowMessageClockin((Boolean)newValue); else
+		if (EMPLOYEEID.equals(propertyName)) setEmployeeId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1097,6 +1120,8 @@ public class Employee extends Party {
 			return new Class<?>[] {Boolean.class};		
 		if (SHOWMESSAGECLOCKIN.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (EMPLOYEEID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1147,6 +1172,7 @@ public class Employee extends Party {
 		if (MESSAGE.equals(propertyName)) return Employee.class;
 		if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return Employee.class;
 		if (SHOWMESSAGECLOCKIN.equals(propertyName)) return Employee.class;
+		if (EMPLOYEEID.equals(propertyName)) return Employee.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1237,6 +1263,8 @@ public class Employee extends Party {
 		if (! SmartEquals(getShowMessageClockout(), objT.getShowMessageClockout()))
 			return false;
 		if (! SmartEquals(getShowMessageClockin(), objT.getShowMessageClockin()))
+			return false;
+		if (! SmartEquals(getEmployeeId(), objT.getEmployeeId()))
 			return false;
 		return true;
 	}			

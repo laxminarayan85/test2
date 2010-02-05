@@ -66,10 +66,6 @@ public class Party extends ModelBase {
 	 * @generated
 	 */
 	public static final String COMLINKS = "ComLinks";
-	/**
-	 * @generated
-	 */
-	public static final String PARTYID = "PartyId";
 
 	/**
 	 * @generated
@@ -221,23 +217,6 @@ public class Party extends ModelBase {
 	public void setComLinks(java.util.List<ComLink> newVal) {
 		this.comLinks = newVal;
 	}
- 	
-	
- 	@Basic
-	private String partyId;
-	/**
-	 * @generated
- 	 */
-	public String getPartyId(){
-		return partyId; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setPartyId(String newVal) {
-		this.partyId = newVal;
-	}
 	/**
 	 * @generated
 	 */		
@@ -252,7 +231,6 @@ public class Party extends ModelBase {
 		if (LASTNAME.equals(propertyName)) return getLastName();
 		if (FIRSTNAME.equals(propertyName)) return getFirstName();
 		if (COMLINKS.equals(propertyName)) return getComLinks();
-		if (PARTYID.equals(propertyName)) return getPartyId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -270,7 +248,6 @@ public class Party extends ModelBase {
 		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
 		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
 		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
-		if (PARTYID.equals(propertyName)) setPartyId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -296,8 +273,6 @@ public class Party extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (COMLINKS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, ComLink.class};		
-		if (PARTYID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -316,7 +291,6 @@ public class Party extends ModelBase {
 		if (LASTNAME.equals(propertyName)) return Party.class;
 		if (FIRSTNAME.equals(propertyName)) return Party.class;
 		if (COMLINKS.equals(propertyName)) return Party.class;
-		if (PARTYID.equals(propertyName)) return Party.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -343,8 +317,6 @@ public class Party extends ModelBase {
 		if (! SmartEquals(getFirstName(), objT.getFirstName()))
 			return false;
 		if (! SmartEquals(getComLinks(), objT.getComLinks()))
-			return false;
-		if (! SmartEquals(getPartyId(), objT.getPartyId()))
 			return false;
 		return true;
 	}			

@@ -86,6 +86,10 @@ public class Contact extends Party {
 	 * @generated
 	 */
 	public static final String CAMPAIGNS = "Campaigns";
+	/**
+	 * @generated
+	 */
+	public static final String CONTACTID = "ContactId";
 
 	/**
 	 * @generated
@@ -322,6 +326,23 @@ public class Contact extends Party {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
 		this.campaigns = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String contactId;
+	/**
+	 * @generated
+ 	 */
+	public String getContactId(){
+		return contactId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setContactId(String newVal) {
+		this.contactId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -341,6 +362,7 @@ public class Contact extends Party {
 		if (CREDITCARD.equals(propertyName)) return getCreditCard();
 		if (MARKETING.equals(propertyName)) return getMarketing();
 		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
+		if (CONTACTID.equals(propertyName)) return getContactId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -363,6 +385,7 @@ public class Contact extends Party {
 		if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
 		if (MARKETING.equals(propertyName)) setMarketing((Marketing)newValue); else
 		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
+		if (CONTACTID.equals(propertyName)) setContactId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -398,6 +421,8 @@ public class Contact extends Party {
 			return new Class<?>[] {Marketing.class};		
 		if (CAMPAIGNS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Campaigns.class};		
+		if (CONTACTID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -421,6 +446,7 @@ public class Contact extends Party {
 		if (CREDITCARD.equals(propertyName)) return Contact.class;
 		if (MARKETING.equals(propertyName)) return Contact.class;
 		if (CAMPAIGNS.equals(propertyName)) return Contact.class;
+		if (CONTACTID.equals(propertyName)) return Contact.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -457,6 +483,8 @@ public class Contact extends Party {
 		if (! SmartEquals(getMarketing(), objT.getMarketing()))
 			return false;
 		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
+			return false;
+		if (! SmartEquals(getContactId(), objT.getContactId()))
 			return false;
 		return true;
 	}			

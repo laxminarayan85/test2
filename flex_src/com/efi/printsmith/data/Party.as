@@ -21,7 +21,6 @@ package com.efi.printsmith.data
 		public var lastName:String = "";
 		public var firstName:String = "";
 		public var comLinks:ArrayCollection;
-		public var partyId:String = "";
 	
 	}
 }

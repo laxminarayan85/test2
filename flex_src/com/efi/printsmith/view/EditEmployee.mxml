@@ -359,7 +359,7 @@ creationComplete="init()" label="Employee Editor" name="Employee Editor" xmlns:n
 		<mx:TabNavigator x="0" y="80" width="895" height="100%" creationPolicy="all">
 			<mx:Canvas label="Settings" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="ID Number:" width="71" textAlign="right"/>
-				<mx:Text x="143" y="17" id="employeeID" text="{employee.partyId}" width="106" />
+				<mx:Text x="143" y="17" id="employeeID" text="{employee.employeeId}" width="106" />
 				<mx:Label x="47" y="80" text="First Name:" textAlign="right"/>
 				<mx:Label x="47" y="106" text="Last Name:" textAlign="right"/>
 				<!--<mx:Label x="73" y="132" text="Street:"/>-->

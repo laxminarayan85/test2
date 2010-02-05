@@ -1,3 +1,18 @@
-#Fri Jan 22 16:47:19 EST 2010
+#Thu Feb 04 10:22:42 EST 2010
 eclipse.preferences.version=1
+encoding//locale/de_DE/psResources.properties=UTF-8
+encoding//locale/en_AU/psResources.properties=UTF-8
+encoding//locale/en_GB/psResources.properties=UTF-8
+encoding//locale/en_US/psResources.properties=UTF-8
+encoding//locale/es_CL/psResources.properties=UTF-8
+encoding//locale/es_CO/psResources.properties=UTF-8
+encoding//locale/es_ES/psResources.properties=UTF-8
+encoding//locale/es_MX/psResources.properties=UTF-8
+encoding//locale/fr_CA/psResources.properties=UTF-8
+encoding//locale/fr_FR/psResources.properties=UTF-8
+encoding//locale/ja_JP/psResources.properties=UTF-8
+encoding//locale/lv_LV/psResources.properties=UTF-8
+encoding//locale/nl_NL/psResources.properties=UTF-8
+encoding//locale/pt_PT/psResources.properties=UTF-8
+encoding//locale/ru_RU/psResources.properties=UTF-8
 encoding/<project>=UTF-8

@@ -37,38 +37,38 @@
 			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
 		  		<mx:Image x="-185" y="579" width="186" height="61" id="logo" source="assets/printsmith_logo.png"/>
 				
-				<mx:Button x="10" y="10" label="Create Estimate" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();"/>
-				<mx:Button x="674" y="104" label="Tracker Console" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')" click="doTracker();"/>
-				<mx:Button x="176" y="10" label="Accounts" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
-				<mx:Button x="176" y="198" label="Users" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
-				<mx:Button x="176" y="104" label="Contacts" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();"/>
-				<mx:Button x="674" y="292" label="Post Payments" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
-				<mx:Button x="675" y="480" label="Closeout..." width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
-				<mx:Button x="674" y="386" label="Monthly Closeout" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
-				<mx:Button x="508" y="386" label="Delivery Ticket Mgr" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();"/>
+				<mx:Button x="10" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateEstimate')}" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();"/>
+				<mx:Button x="674" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.TrackerConsole')}" width="158" height="86" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')" click="doTracker();"/>
+				<mx:Button x="176" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}" width="158" height="86" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()"/>
+				<mx:Button x="176" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.UserDefinitions')}" width="158" height="86" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();"/>
+				<mx:Button x="176" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Contacts')}" width="158" height="86" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();"/>
+				<mx:Button x="674" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PostPayments')}" width="158" height="86" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')"/>
+				<mx:Button x="675" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Closeout')}" width="158" height="86" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')"/>
+				<mx:Button x="674" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MonthlyCloseout')}" width="158" height="86" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')"/>
+				<mx:Button x="508" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DeliveryTicketManage')}" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();"/>
 				<mx:Button x="508" y="480" label="Utilities" width="158" height="86" id="utilities" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" click="doUtilities();"/>
-				<mx:Button x="674" y="10" label="Shedule Board Mgr" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
-				<mx:Button x="176" y="480" label="Clock In/Out" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
-				<mx:Button x="10" y="104" label="Create Invoice" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
-				<mx:Button x="10" y="386" label="Pending Documents" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')" click="doPendingList();"/>
-				<mx:Button x="10" y="480" label="Pricing" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
-				<mx:Button x="10" y="198" label="Account History" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
-				<mx:Button x="10" y="292" label="Estimate History" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
-				<mx:Button x="674" y="198" label="Open Cash Register" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
-				<mx:Button x="508" y="10" label="Work In Progress" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
-				<mx:Button x="342" y="10" label="Stock Definitions" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
-				<mx:Button x="342" y="104" label="Press Definitions" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
-				<mx:Button x="342" y="198" label="Copier/Digital Defs" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
-				<mx:Button x="342" y="292" label="Charge Definitions" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')" click="doChargeDefinitions()"/>
-				<mx:Button x="342" y="386" label="Preferences" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')" click="doSystemPreferences()"/>
-				<mx:Button x="342" y="480" label="Document Preferences" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
-				<mx:Button x="508" y="104" label="Mailing Labels" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
-				<mx:Button x="508" y="198" label="Report Manager" width="158" height="86" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')"/>
-				<mx:Button x="508" y="292" label="Report Writer" width="158" height="86" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')"/>
+				<mx:Button x="674" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
+				<mx:Button x="176" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
+				<mx:Button x="10" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateInvoice')}" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
+				<mx:Button x="10" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PendingDocumentWindo')}" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')" click="doPendingList();"/>
+				<mx:Button x="10" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Pricing')}" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
+				<mx:Button x="10" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.AccountHistory')}" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
+				<mx:Button x="10" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
+				<mx:Button x="674" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.OpenCashRegiser')}" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
+				<mx:Button x="508" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
+				<mx:Button x="342" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
+				<mx:Button x="342" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PressDefinitions')}" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
+				<mx:Button x="342" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CopierDigitalDefinit')}" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
+				<mx:Button x="342" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ChargeDefinitions')}" width="158" height="86" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')" click="doChargeDefinitions()"/>
+				<mx:Button x="342" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Preferences')}" width="158" height="86" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')" click="doSystemPreferences()"/>
+				<mx:Button x="342" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DocumentPreferences')}" width="158" height="86" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')"/>
+				<mx:Button x="508" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MailingLabels')}" width="158" height="86" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')"/>
+				<mx:Button x="508" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportManager')}" width="158" height="86" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')"/>
+				<mx:Button x="508" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportWriter')}" width="158" height="86" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')"/>
 				<mx:Image x="91" y="574" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="89" height="28"/>
 				<mx:Text x="10" y="587" text="Powered by:&#xd;" id="powered_by" alpha="0.0"/>
-				<mx:Button x="176" y="386" label="Employee" width="158" height="86" icon="@Embed(source='assets/employeeManager.png')" click="doEmployee();"/>
-				<mx:Button x="176" y="292" label="Security" width="158" height="86" id="admin_button" labelPlacement="bottom" click="doSecurity();"/>
+				<mx:Button x="176" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" width="158" height="86" icon="@Embed(source='assets/employeeManager.png')" labelPlacement="bottom" click="doEmployee();"/>
+				<mx:Button x="176" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" width="158" height="86" id="admin_button" labelPlacement="bottom" click="doSecurity();"/>
 			</mx:Canvas>
 		</flexlib:SuperTabNavigator>
 
@@ -116,6 +116,7 @@
 		import mx.resources.ResourceBundle;
 		import mx.rpc.remoting.mxml.RemoteObject;
 		import mx.rpc.events.FaultEvent;
+		import mx.events.ResourceEvent;
 		import mx.controls.Alert;
 		import mx.rpc.events.ResultEvent;
 		import mx.effects.Zoom;
@@ -146,8 +147,9 @@
 		public var currentUser:Users;
 
         private static var thisInstance:Snowmass = null;  
-
-		private var locales:Array = ["en_US", "fr_FR", "ja_JP"];
+		
+		[Bindable]
+		private var locales:Array = ["de_DE", "en_AU", "en_GB", "en_US", "es_CL", "es_CO", "es_ES", "es_MX", "fr_CA", "fr_FR", "ja_JP", "lv_LV", "nl_NL", "pt_PT", "ru_RU"];
 		public static function getInstance() : Snowmass {
 			return thisInstance;
 		}		
@@ -365,7 +367,6 @@
 		private function doDeliveryTicket():void{
 			var child:DeliveryTicket = new DeliveryTicket();
 			addUniqueTab(child);
-			
 		}		
 		
 		/**
@@ -373,12 +374,58 @@
 		 *  It takes a locale such as "en_US"
 		 *  and produces the localized string "English".
 		 */
-		private function languageComboBoxLabelFunction(item:Object):String
-		{
+		private function languageComboBoxLabelFunction(item:Object):String {
 			var locale:String = String(item);
+			switch (locale) {
+				case "de_DE":
+					return "Deutsch";
+					break;
+				case "en_AU":
+					return "English (Australia)";
+					break;
+				case "en_GB":
+					return "English (UK)";
+					break;
+				case "en_US":
+					return "English (US)";
+					break;
+				case "es_CL":
+					return "Español (Chile)";
+					break;
+				case "es_CO":
+					return "Español (Colombia)";
+					break;
+				case "es_ES":
+					return "Español (España)";
+					break;
+				case "es_MX":
+					return "Español (México)";
+					break;
+				case "fr_CA":
+					return "Français (Le Canada)";
+					break;
+				case "fr_FR":
+					return "Français (La France)";
+					break;
+				case "ja_JP":
+					return "日本語"
+					break;
+				case "lv_LV":
+					return "Latvian"
+					break;
+				case "nl_NL":
+					return "Nederlands"
+					break;
+				case "pt_PT":
+					return "Português"
+					break;
+				case "ru_RU":
+					return "Русско"
+					break;
+			}
 			return resourceManager.getString(RESOURCE_BUNDLE, locale);
 		}
-		
+				
 		/**
 		 *  Comparison function for sorting the 'locales' Array,
 		 *  which is the dataProvider for the Language combobox.
@@ -386,8 +433,7 @@
 		 *  because the localized language names for the locales
 		 *  are presented in alphabetical order.
 		 */
-		private function localeCompareFunction(item1:Object, item2:Object):int
-		{
+		private function localeCompareFunction(item1:Object, item2:Object):int {
 			var language1:String = languageComboBoxLabelFunction(item1);
 			var language2:String = languageComboBoxLabelFunction(item2);
 			
@@ -402,8 +448,7 @@
 		 *  Repopulates the Language combobox with localized language names
 		 *  for the supported locales, alphabetized by language name.
 		 */
-		private function updateLanguageComboBox():void
-		{
+		private function updateLanguageComboBox():void {
 			var oldSelectedItem:Object = languageComboBox.selectedItem;
 			
 			// Repopulate the combobox with locales,
@@ -414,19 +459,41 @@
 			languageComboBox.selectedItem = oldSelectedItem;
 		}
 
-		private function languageComboBox_changeHandler(event:Event):void
-		{
-			resourceManager.localeChain = [ languageComboBox.selectedItem ];
-			updateLanguageComboBox();
+		private function languageComboBox_changeHandler(event:Event):void {
+            var newLocale:String = String(languageComboBox.selectedItem);
+
+            if (resourceManager.getLocales().indexOf(newLocale) != -1)
+            {
+                completeHandler(null);
+            }
+            else
+            {
+                var resourceModuleURL:String = "Resources_" + newLocale + ".swf";
+                var eventDispatcher:IEventDispatcher =
+                    resourceManager.loadResourceModule(resourceModuleURL);
+                eventDispatcher.addEventListener(
+                    ResourceEvent.COMPLETE, completeHandler);
+                eventDispatcher.addEventListener(
+                	ResourceEvent.ERROR, resourceFaultHandler);
+            }
+            updateLanguageComboBox();
 		}
+		
+        private function completeHandler(event:ResourceEvent):void {
+            resourceManager.localeChain = [ languageComboBox.selectedItem ];
+        }
+        
+        private function resourceFaultHandler(event:ResourceEvent):void {
+			Alert.show("Error loading resources: " + event.errorText, null, Alert.OK, null, null, null, Alert.OK);
+        }
 ]]>		
 </mx:Script>
 	<business:Services id="services" />
 	<control:MainController id="controller" />
 	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
 	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
-	<mx:ComboBox x="386" y="5" id="languageComboBox" dataProvider="{locales}"				 
+	<mx:ComboBox x="475" y="4" id="languageComboBox" dataProvider="{locales}"				 
 					labelFunction="languageComboBoxLabelFunction"
 					change="languageComboBox_changeHandler(event)"/>
-	<mx:Text x="304" y="7" text="{resourceManager.getString(RESOURCE_BUNDLE, 'LANGUAGE_LABEL')}" textAlign="right" width="74" height="17"/>
+	<mx:Text x="304" y="6" text="{resourceManager.getString(RESOURCE_BUNDLE, 'rPriceList.Press')}" textAlign="right" width="163" height="17"/>
 </mx:Application>

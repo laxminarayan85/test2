@@ -309,28 +309,28 @@ public class DataService {
 	}
 	
 	private void setEmployeeId(Employee employee) throws Exception {
-		if (employee.getPartyId() != null && employee.getPartyId().length() > 0) return;
+		if (employee.getEmployeeId() != null && employee.getEmployeeId().length() > 0) return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getEmployee()+1;
-		employee.setPartyId(value.toString());
+		employee.setEmployeeId(value.toString());
 		sequenceValues.setEmployee(value);
 		this.addUpdate(sequenceValues);
 	}
 	
 	private void setContactId(Contact contact) throws Exception {
-		if (contact.getPartyId() != null && contact.getPartyId().length() > 0) return;
+		if (contact.getContactId() != null && contact.getContactId().length() > 0) return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getContact()+1;
-		contact.setPartyId(value.toString());
+		contact.setContactId(value.toString());
 		sequenceValues.setContact(value);
 		this.addUpdate(sequenceValues);
 	}
 	
 	private void setBrokerId(Broker broker) throws Exception {
-		if (broker.getPartyId() != null && broker.getPartyId().length() > 0) return;
+		if (broker.getBrokerId() != null && broker.getBrokerId().length() > 0) return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getBroker()+1;
-		broker.setPartyId(value.toString());
+		broker.setBrokerId(value.toString());
 		sequenceValues.setBroker(value);
 		this.addUpdate(sequenceValues);
 	}

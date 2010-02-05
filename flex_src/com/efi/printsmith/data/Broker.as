@@ -13,6 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.Broker";
 		}
 				
+		public var brokerId:String = "";
 	
 	}
 }
