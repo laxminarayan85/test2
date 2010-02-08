@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
-import com.efi.printsmith.data.PressDefinition;
-import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.ChargeCost;
+import com.efi.printsmith.data.CostCenter;
+import com.efi.printsmith.data.Location;
+import com.efi.printsmith.data.PriceList;
+import com.efi.printsmith.data.ShippingMethod;
+import com.efi.printsmith.data.Substrate;
+import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.service.DataService;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		ChargeDefinition chargeDefinition = new ChargeDefinition();
+		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -20,43 +28,45 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("importedChargeID".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setId(Utilities.tokenToLong(currentImportToken));
 			} else if ("description".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("notes".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setNote(currentImportToken);
 			} else if ("list ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("charge ID".equals(currentFieldToken)) {
-				/* TODO */
+				ChargeCost chargeCost = new ChargeCost();
+				chargeCost.setId(Utilities.tokenToLong(currentImportToken));
+				chargeDefinition.setChargeCost(chargeCost);
 			} else if ("sales cat".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setSalesCategory(currentImportToken);
 			} else if ("sales cat name".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setSalesCategory(currentImportToken);
 			} else if ("rate qty".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setRateQty(Utilities.tokenToDouble(currentImportToken));
 			} else if ("mat qty".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMaterialQty(Utilities.tokenToDouble(currentImportToken));
 			} else if ("number of sets".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("material sets".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMaterialSetCount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("price".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("start".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stop".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("shownotes".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setShowNotes(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("finished".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setFinished(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("brokered".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setBrokered(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("displayqty".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setDisplayQty(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("oprice".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("orqty".equals(currentFieldToken)) {
@@ -64,55 +74,55 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("omqty".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("method".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMethod(currentImportToken);
 			} else if ("qty type".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setQuantityType(currentImportToken);
 			} else if ("markup type".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMarkupType(currentImportToken);
 			} else if ("job qty type".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setJobQty(currentImportToken);
 			} else if ("hidden".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setHidden(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("no overrrides".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setNoOverrides(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("adjust sets".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setAdjustSets(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("enter rate".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setEnterRate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("enter material".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setEnterMaterial(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use material".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseMaterial(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use rate".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseRate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use rate sets".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseRateSets(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use material sets".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("use setup".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseSetup(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use minimum".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseMinimumCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("bindery operation".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setBinderyCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use colors".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseColors(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use orig".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseOriginals(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use sigs".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseSignatures(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("rate set count".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setRateSetCount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("rate".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("material rate".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("minimum".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMinimum(Utilities.tokenToDouble(currentImportToken));
 			} else if ("xNotUsed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sku".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setSku(currentImportToken);
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rstatus".equals(currentFieldToken)) {
@@ -122,7 +132,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("category id".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("labels".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setLabel(currentImportToken);
 			} else if ("description custom".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("expandedShort".equals(currentFieldToken)) {
@@ -134,117 +144,180 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("tax table ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
+				if (taxTable == null)
+					{
+						taxTable = new TaxTable();
+						taxTable.setName(currentImportToken);
+					}
+					chargeDefinition.setTaxTable(taxTable);
+				}
 			} else if ("customer charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setCustomerCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("press charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setPressCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("deleted preset".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setDeletedPreset(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("ignore cuts".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setIgnoreCuts(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("stock charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setStockCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o Cut qty".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("version".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setVersion(Utilities.tokenToInt(currentImportToken));
 			} else if ("sequence".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("ship method".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					ShippingMethod shippingMethod = dataService.getByShippingMethodName(currentImportToken);
+					if (shippingMethod == null)
+					{
+						shippingMethod = new ShippingMethod();
+						shippingMethod.setName(currentImportToken);
+					}
+					chargeDefinition.setShipMode(shippingMethod);
+				}
 			} else if ("adjust up count".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setAdjustUpsCount(Utilities.tokenToInt(currentImportToken));
 			} else if ("extra long".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("has link charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setHasLinkPrice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("need link charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setNeedLinkPrice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("has shipped".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setHasShipped(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("should ship".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setShouldShip(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("reserve bit 5".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("hide price".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setHidePrice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("ignore price adj".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setIgnorePriceAdjustment(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("costing press charge".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setCostingPressCharge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("linear x1".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setLinearX1(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("linear x2".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setLinearX2(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("linear y1".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setLinearY1(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("linear y2".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setLinearY2(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("override rate".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setOverrideRate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pricing type".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("ink coverage type".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setInkCoverage(currentImportToken);
 			} else if ("use sides".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseSides(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("noDiscount".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setNoDiscount(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("no m quant".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setNoMaterialQuantity(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("mat set count".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("markup".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setMarkup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("price list".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					PriceList priceList = dataService.getByPirceListName(currentImportToken);
+					if (priceList == null)
+					{
+						priceList = new PriceList();
+						priceList.setName(currentImportToken);
+					}
+					chargeDefinition.setPriceList(priceList);
+				}
 			} else if ("waste chart".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					WasteChart wasteChart = dataService.getByWasteChartName(currentImportToken);
+					if (wasteChart == null)
+					{
+						wasteChart = new WasteChart();
+						wasteChart.setName(currentImportToken);
+					}
+					chargeDefinition.setWasteChart(wasteChart);
+				}
 			} else if ("fixed waste".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setFixedWaste(Utilities.tokenToLong(currentImportToken));
 			} else if ("waste percent".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setWastePercentage(Utilities.tokenToDouble(currentImportToken));
 			} else if ("base linear number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production location ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production location".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					Location location = dataService.getByLocationName(currentImportToken);
+					if (location == null)
+					{
+						location = new Location();
+						location.setName(currentImportToken);
+					}
+					chargeDefinition.setLocation(location);
+				}
 			} else if ("cost center ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cost center".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					CostCenter costCenter = dataService.getByCostCenterName(currentImportToken);
+					if (costCenter == null)
+					{
+						costCenter = new CostCenter();
+						costCenter.setName(currentImportToken);
+					}
+					chargeDefinition.setCostCenter(costCenter);
+				}
 			} else if ("substrate ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("plate substrate".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					Substrate substrate = dataService.getBySubstrateName(currentImportToken);
+					if (substrate == null)
+					{
+						substrate = new Substrate();
+						substrate.setName(currentImportToken);
+					}
+					chargeDefinition.setSubstrate(substrate);
+				}
 			} else if ("min time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("plate size X".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setSizeX(Utilities.tokenToDouble(currentImportToken));
 			} else if ("plate size".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("plate size Y".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setSizeY(Utilities.tokenToDouble(currentImportToken));
 			} else if ("plate thickness".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setPlateThickness(Utilities.tokenToDouble(currentImportToken));
 			} else if ("exclude from production".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setExcludeFromProductionList(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pre production".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setPreproduction(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use min time".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseMinimumTime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use divide up count".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseDivideByUpCount(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use multiply up count".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setUseMultiplyUpCount(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("adjust up".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setAdjustUps(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("cuts are prepress".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setCutsArePrePress(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("integrated CTP".equals(currentFieldToken)) {
-				/* TODO */
+				chargeDefinition.setIntegratedCTP(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("new from import".equals(currentFieldToken)) {
 				/* TODO */
 			}
