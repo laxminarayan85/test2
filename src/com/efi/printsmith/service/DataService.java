@@ -210,6 +210,104 @@ public class DataService {
 		return null;
 	}
 	
+	public CostCenter getByCostCenterName(String name) throws Exception {
+		try {
+			log.debug("** getByCostCenterName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from CostCenter where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			CostCenter object = (CostCenter) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public Location getByLocationName(String name) throws Exception {
+		try {
+			log.debug("** getByLocationName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from Location where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			Location object = (Location) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public PriceList getByPirceListName(String name) throws Exception {
+		try {
+			log.debug("** getByPriceListName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from PriceList where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			PriceList object = (PriceList) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public ShippingMethod getByShippingMethodName(String name) throws Exception {
+		try {
+			log.debug("** getByShippingMethodName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from ShippingMethod where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			ShippingMethod object = (ShippingMethod) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public Substrate getBySubstrateName(String name) throws Exception {
+		try {
+			log.debug("** getBySubstrateName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from Substrate where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			Substrate object = (Substrate) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public TaxTable getByTaxTableName(String name) throws Exception {
+		try {
+			log.debug("** getByTaxTableName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from TaxTable where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			TaxTable object = (TaxTable) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public WasteChart getByWasteChartName(String name) throws Exception {
+		try {
+			log.debug("** getByWasteChartName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from WasteChart where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			WasteChart object = (WasteChart) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
