@@ -32,14 +32,16 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("name".equals(currentFieldToken)) {
 				stockDefinition.setName(currentImportToken);
 			}  else if ("color".equals(currentFieldToken)) {
-				StockColors stockColor = dataService.getByStockColorName(currentImportToken);
-				if (stockColor == null)
+				if (currentImportToken != "")
 				{
-					stockColor = new StockColors();
-					stockColor.setName(currentImportToken);
+					StockColors stockColor = dataService.getByStockColorName(currentImportToken);
+					if (stockColor == null)
+					{
+						stockColor = new StockColors();
+						stockColor.setName(currentImportToken);
+					}
+					stockDefinition.setColor(stockColor);
 				}
-				stockDefinition.setColor(stockColor);
-				
 			}  else if ("vendor".equals(currentFieldToken)) {
 				/* TODO - don't create one every time...use existing if it exists. */
 				Vendor vendor = new Vendor();
@@ -177,34 +179,42 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("generic color id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("generic color name".equals(currentFieldToken)) {
-				GenericColors genericColors = dataService.getByGenericColorsName(currentImportToken);
-				if (genericColors == null)
+				if (currentImportToken != "")
 				{
-					genericColors = new GenericColors();
-					genericColors.setName(currentImportToken);
+					GenericColors genericColors = dataService.getByGenericColorsName(currentImportToken);
+					if (genericColors == null)
+					{
+						genericColors = new GenericColors();
+						genericColors.setName(currentImportToken);
+					}
+					stockDefinition.setGenericColor(genericColors);
 				}
-				stockDefinition.setGenericColor(genericColors);
-				
 			}  else if ("generic finish id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("generic finish name".equals(currentFieldToken)) {
-				StockFinish stockFinish = dataService.getByStockFinishName(currentImportToken);
-				if (stockFinish == null)
+				if (currentImportToken != "")
 				{
-					stockFinish = new StockFinish();
-					stockFinish.setName(currentImportToken);
+					StockFinish stockFinish = dataService.getByStockFinishName(currentImportToken);
+					if (stockFinish == null)
+					{
+						stockFinish = new StockFinish();
+						stockFinish.setName(currentImportToken);
+					}
+					stockDefinition.setFinish(stockFinish);
 				}
-				stockDefinition.setFinish(stockFinish);
 			}  else if ("grade id".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("grade name".equals(currentFieldToken)) {
-				StockGrade stockGrade = dataService.getByStockGradeName(currentImportToken);
-				if (stockGrade == null)
+				if (currentImportToken != "")
 				{
-					stockGrade = new StockGrade();
-					stockGrade.setName(currentImportToken);
+					StockGrade stockGrade = dataService.getByStockGradeName(currentImportToken);
+					if (stockGrade == null)
+					{
+						stockGrade = new StockGrade();
+						stockGrade.setName(currentImportToken);
+					}
+					stockDefinition.setGrade(stockGrade);
 				}
-				stockDefinition.setGrade(stockGrade);
 			}  else if ("mill".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("mWeight".equals(currentFieldToken)) {
