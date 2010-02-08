@@ -286,7 +286,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Name')}" dataField="name" width="300"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="machineName" width="250"/>
-				<mx:DataGridColumn headerText="Device ID" dataField="oemDeviceID" width="75"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" dataField="oemDeviceID" width="75"/>
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Label x="13" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OutputDescription')}" textAlign="right"/>
