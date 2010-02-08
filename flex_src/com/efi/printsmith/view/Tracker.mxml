@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="976" height="920" title="Tracker Console" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="976" height="920" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TrackerConsole')" 
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
-	creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TrackerConsole')" name="Tracker COnsole">
+	creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TrackerConsole')" name="Tracker Console">
 	
 <mx:Script> 
                                   
