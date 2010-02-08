@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="534" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TimePeriods')" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TimePeriods')" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="534" 
+	title="Time Periods" 
+	label="Time Periods" 
 	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
  
  	<mx:RemoteObject id="dataService" destination="dataService">

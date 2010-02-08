@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.EmployeeTimeCards')" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.EmployeeTimeCards')" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" 
+	title="Time Cards" 
+	label="Time Cards" 
 	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
  
  	<mx:RemoteObject id="dataService" destination="dataService">
@@ -152,21 +154,21 @@
 		<mx:DataGrid x="10" y="10" width="178" id="employeeGrid" dataProvider="{employeesArray}" height="478"
 			itemClick="doGrid()">
 			<mx:columns>
-				<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')" dataField="id" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')" dataField="firstName" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')" dataField="lastName"/>
+				<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')}" dataField="id" />
+				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" dataField="firstName" />
+				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" dataField="lastName"/>
 			</mx:columns>
 		</mx:DataGrid>
 	
 		<mx:DataGrid x="194" y="49" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
 			itemClick="doTimeCardGrid()">
 			<mx:columns>
-				<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')" dataField="period" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')" dataField="startDateTime" labelFunction="getDateLabel" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')" dataField="endDateTime" labelFunction="getDateLabel"/>
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')" dataField="breakTime" labelFunction="getDateLabel"/>
-				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')" dataField="onClock" />
-				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')" dataField="billable"/>
+				<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period" />
+				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel" />
+				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel"/>
+				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel"/>
+				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" />
+				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable"/>
 			</mx:columns>
 		</mx:DataGrid>
 </mx:TitleWindow>
