@@ -477,6 +477,8 @@ public class CustomerMapper extends ImportMapper{
 		{
 			customer.setBillToContact(billToContact);
 		}
+		shipToContact.setParentAccount(customer);
+		billToContact.setParentAccount(customer);
 		
 		return customer;
 	}
