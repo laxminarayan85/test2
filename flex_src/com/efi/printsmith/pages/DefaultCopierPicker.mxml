@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="340"
+				width="432"
 				height="190"
 				defaultButton="{ok_btn}"
 				showCloseButton="true"
 				creationComplete="init()"
 				close="PopUpManager.removePopUp(this);"
-				title="Select Default Copiers:"
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SelectCopierDigital')}"
 				xmlns:text="flash.text.*"
 				borderThickness="3"
 				borderStyle="solid"
@@ -175,7 +175,7 @@
 
 
 
-	<mx:Canvas width="311"
+	<mx:Canvas width="392"
 			   height="142"
 			   horizontalScrollPolicy="off"
 			   verticalScrollPolicy="off">
@@ -183,46 +183,46 @@
 				   click="doOK()"
 				   x="143"
 				   y="106"
-				   label="OK"
+				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
 				   width="75"/>
 		<mx:Button id="cancel_btn"
 				   click="doCancel()"
 				   x="226"
 				   y="106"
-				   label="Cancel"
+				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 				   width="75"/>
-		<mx:ComboBox x="102"
-					 y="10"
+		<mx:ComboBox x="167"
+					 y="70"
 					 id="defaultBW"
 					 dataProvider="{BWCopiers}"
 					 change="setDefaultCopiers()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="10"
+		<mx:Text x="75"
 				 y="12"
 				 text="B&amp;W:&#xd;"
 				 height="20" textAlign="right" width="84"/>
-		<mx:ComboBox x="102"
-					 y="70"
+		<mx:ComboBox x="167"
+					 y="10"
 					 id="defaultLargeFormat"
 					 dataProvider="{largeFormatCopiers}"
 					 change="setDefaultCopiers()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:ComboBox x="102"
+		<mx:ComboBox x="167"
 					 y="40"
 					 id="defaultColor"
 					 dataProvider="{colorCopiers}"
 					 change="setDefaultCopiers()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="10"
+		<mx:Text x="75"
 				 y="42"
-				 text="Color:&#xd;"
+				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"
 				 height="20" textAlign="right" width="84"/>
-		<mx:Text x="10"
+		<mx:Text x="41"
 				 y="72"
-				 text="Large Format:&#xd;"
+				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"
 				 height="20" textAlign="right"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>

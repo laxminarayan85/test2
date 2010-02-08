@@ -3,7 +3,7 @@
 width="386" height="522" defaultButton="{submitButton}"
 showCloseButton="true" creationComplete="creationCompleteHandler();"
     close="PopUpManager.removePopUp(this);"
-    title="Costing" xmlns:text="flash.text.*">
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Costing')}" xmlns:text="flash.text.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -129,39 +129,39 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
                              
 	<mx:Canvas width="100%" height="100%">
 		<mx:ComboBox x="144" y="8" width="186" dataProvider="{ChargeCostMethod.toArray()}" id="costing_method_combo" change="validateForm(event);" ></mx:ComboBox>
-		<mx:Label x="44" y="10" text="Costing Method"/>
-		<mx:Label x="65" y="40" text="Setup Cost:"/>
-		<mx:Label x="75" y="70" text="Unit Cost:"/>
+		<mx:Label x="16" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right"/>
+		<mx:Label x="12" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.SetupCost')}" textAlign="right"/>
+		<mx:Label x="18" y="70" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitCost')}" textAlign="right"/>
 		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right"/>
 		<mx:TextInput x="144" y="68" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="42" y="151" text="Fixed Materials:"/>
+		<mx:Label x="25" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.FixedMaterials')}" textAlign="right"/>
 		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{chargeCost.fixedMaterials}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="55" y="179" text="Unit Materials"/>
+		<mx:Label x="25" y="177" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitMaterials')}" textAlign="right"/>
 		<mx:TextInput x="144" y="175" width="186" id="unit_materials_edit" text="{chargeCost.unitMaterials}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="65" y="207" text="Labor Rate:"/>
+		<mx:Label x="10" y="203" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LaborRate')}" textAlign="right"/>
 		<mx:TextInput x="144" y="203" width="186" id="labor_rate_edit" text="{chargeCost.laborRate}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="40" y="235" text="Setup (minutes)"/>
+		<mx:Label x="10" y="233" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Setupminutes')}" textAlign="right"/>
 		<mx:TextInput x="144" y="231" width="186" id="setup_minutes_edit" text="{chargeCost.setupMinutes}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="65" y="263" text="Pieces/Hour"/>
+		<mx:Label x="10" y="261" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.PiecesHour')}" textAlign="right"/>
 		<mx:TextInput x="144" y="259" width="186" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right"/>
-		<mx:Label x="43" y="291" text="Total Unit Cost:"/>
-		<mx:Button x="12" y="100" label="Rate..."/>
+		<mx:Label x="25" y="287" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Totalunitcost')}" textAlign="right"/>
+		<mx:Button x="12" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Rate')}"/>
 		<mx:LinkButton x="85" y="101" id="rate_table_link"/>
-		<mx:Button x="12" y="317" label="Speed..."/>
+		<mx:Button x="12" y="317" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Speed')}"/>
 		<mx:LinkButton x="93" y="318" id="speed_table_link"/>
 		<mx:HRule x="0" y="130" width="339" height="0"/>
 		<mx:HRule x="0" y="130" width="339" height="9"/>
 		<mx:HRule x="0" y="347" width="339" height="9"/>
 		<mx:Text x="144" y="291" text="{totalCost}" width="186" id="total_cost_text" textAlign="right"/>
-		<mx:Label x="82" y="364" text="Created:"/>
+		<mx:Label x="15" y="364" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Created')}" textAlign="right"/>
 		<mx:Text x="144" y="364" text="{chargeCost.created}" width="186"/>
-		<mx:Label x="52" y="384" text="Last Modified:"/>
+		<mx:Label x="11" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LastChange')}" textAlign="right"/>
 		<mx:Text x="144" y="384" text="{chargeCost.modified}" width="186"/>
 	</mx:Canvas>
 
 <mx:ControlBar horizontalAlign="center">                                   
-     <mx:Button label="Save" id="submitButton" enabled="{formIsValid}" click="saveUser();" />                                   
-     <mx:Button label="Cancel" click="PopUpManager.removePopUp(this);"/> 
+     <mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" id="submitButton" enabled="{formIsValid}" click="saveUser();" />                                   
+     <mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="PopUpManager.removePopUp(this);"/> 
 </mx:ControlBar>
 
 </mx:TitleWindow>

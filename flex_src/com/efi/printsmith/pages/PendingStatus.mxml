@@ -3,7 +3,7 @@
 width="494" height="352"
 showCloseButton="true" creationComplete="init();"
     close="PopUpManager.removePopUp(this);"
-    title="Status" xmlns:text="flash.text.*">
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'balanceCmd.Status')}" xmlns:text="flash.text.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -46,19 +46,19 @@ showCloseButton="true" creationComplete="init();"
 </mx:Script>
 	<mx:HBox width="100%" height="60%">
 		<mx:Canvas width="70%" height="100%">
-			<mx:Label x="10" y="10" text="Invoice:"/>
+			<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice')}"/>
 			<mx:TextInput x="10" y="36" width="306"/>
-			<mx:Label x="10" y="66" text="Wanted by:"/>
+			<mx:Label x="10" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.WantedB')}"/>
 			<mx:TextInput x="80" y="64" width="236"/>
-			<mx:Label x="14" y="92" text="Sales Rep:"/>
-			<mx:Label x="25" y="120" text="Ship Via:"/>
-			<mx:Label x="132" y="92" text="Taken by:"/>
+			<mx:Label x="14" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.SalesRep')}"/>
+			<mx:Label x="25" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}"/>
+			<mx:Label x="132" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Takenby')}"/>
 			<mx:TextInput x="80" y="90" width="51"/>
 			<mx:TextInput x="196" y="90" width="120"/>
-			<mx:Label x="142" y="120" text="Notified:"/>
+			<mx:Label x="142" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Notified')}"/>
 			<mx:TextInput x="80" y="118" width="51"/>
 			<mx:TextInput x="196" y="118" width="120"/>
-			<mx:Label x="10" y="146" text="Location updated on:"/>
+			<mx:Label x="10" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Locationupdatedon')}"/>
 			<mx:TextInput x="142" y="144" width="174"/>
 			<mx:TextInput x="62" y="8" width="254"/>
 		</mx:Canvas>

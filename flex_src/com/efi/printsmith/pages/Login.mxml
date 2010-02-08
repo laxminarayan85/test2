@@ -4,8 +4,8 @@
 	<mx:Image x="0" y="0" width="521" height="400" id="Splash" source="assets/splash.png" scaleContent="false" autoLoad="true"/>
 	<mx:TextInput x="352" y="332" id="username"/>
 	<mx:TextInput x="352" y="362" id="password" displayAsPassword="true"/>
-	<mx:Label x="255" y="334" text="User Name:" width="89" textAlign="right"/>
-	<mx:Label x="255" y="364" text="Password:" width="89" textAlign="right"/>
+	<mx:Label x="255" y="334" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" width="89" textAlign="right"/>
+	<mx:Label x="255" y="364" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'signonCmd.Password')}" width="89" textAlign="right"/>
 	<mx:Button id="login_btn" click="doLogin()" x="437" y="392" label="Login" width="75"/>
 	<mx:Label x="99" y="374" width="124" id="version"/>
 	</mx:Canvas>

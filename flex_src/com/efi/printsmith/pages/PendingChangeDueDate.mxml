@@ -3,7 +3,7 @@
 width="412" height="196"
 showCloseButton="true" creationComplete="init();"
     close="PopUpManager.removePopUp(this);"
-    title="Change Due Date" xmlns:text="flash.text.*">
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posDueCmd.ChangeDueDate')}" xmlns:text="flash.text.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -53,11 +53,11 @@ showCloseButton="true" creationComplete="init();"
 </mx:Script>
 	<mx:HBox width="100%" height="100%">
 		<mx:Canvas width="100%" height="100%">
-			<mx:Label x="10" y="10" text="Invoice:"/>
-			<mx:TextInput x="10" y="36" width="306"/>
-			<mx:TextInput x="62" y="8" width="254"/>
-			<mx:Button x="105" width="67" label="OK" click="doSelect();" bottom="10"/>
-			<mx:Button x="214" width="65" label="Cancel" click="doCancel();" bottom="10"/>
+			<mx:Label x="-8" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice')}" textAlign="right"/>
+			<mx:TextInput x="68" y="36" width="306"/>
+			<mx:TextInput x="120" y="8" width="254"/>
+			<mx:Button x="105" width="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doSelect();" bottom="10"/>
+			<mx:Button x="214" width="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" bottom="10"/>
 		</mx:Canvas>
 	</mx:HBox>
                             
