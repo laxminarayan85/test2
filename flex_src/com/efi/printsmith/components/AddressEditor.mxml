@@ -40,7 +40,7 @@
 			private var displayAddress:String="";
 
 			[Bindable]
-			public var addressLabel:String="Address";
+			public var addressLabel:String=""
 
 			private var focussedFormControl:DisplayObject;
 			private var originalAddress:Address;
@@ -48,7 +48,7 @@
 
 			public function init():void
 			{ 
-				
+				addressLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Address');
 				
 			}
 
@@ -165,7 +165,7 @@
 				 height="75"/>
 		<mx:LinkButton x="249"
 					   y="93"
-					   label="Edit"
+					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
 					   click="doEditAddress();"/>
 	</mx:Panel>

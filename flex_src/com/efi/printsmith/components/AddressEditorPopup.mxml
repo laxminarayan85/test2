@@ -34,13 +34,13 @@
 	</mx:RemoteObject>
 		
     <mx:Canvas width="409" height="167">
-    <mx:Label x="10" y="33" text="Street:" width="67" textAlign="right"/>
-    <mx:Label x="10" y="82" text="City:" width="67" textAlign="right"/>
-    <mx:Label x="306" y="82" text="State:" width="39" textAlign="right"/>
-    <mx:Label x="10" y="106" text="Zip:" width="67" textAlign="right"/>
-    <mx:Label x="164" y="106" text="Country:" width="57" textAlign="right"/>
+    <mx:Label x="10" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Street')}" width="67" textAlign="right"/>
+    <mx:Label x="10" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.City')}" width="67" textAlign="right"/>
+    <mx:Label x="306" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.State')}" width="39" textAlign="right"/>
+    <mx:Label x="10" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Zip')}" width="67" textAlign="right"/>
+    <mx:Label x="164" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Country')}" width="57" textAlign="right"/>
             
-    <mx:Label x="10" y="10" text="Company:" width="67" textAlign="right"/>
+    <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Company')}" width="67" textAlign="right"/>
     <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}"/>
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>

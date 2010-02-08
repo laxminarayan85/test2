@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Account History" name="Account History"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}"
 width="786" height="479"  creationComplete="init()"  
      title="Account History" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -10,13 +10,17 @@ width="786" height="479"  creationComplete="init()"
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="invoicebase"/>
-	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
-	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+	
+
+
+
 <mx:Script>                                   
 <![CDATA[
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
-	import mx.containers.TitleWindow;                                         
+	import mx.containers.TitleWindow;                                  
 	import mx.collections.ArrayCollection;                                         
 	import mx.rpc.events.ResultEvent;                                         
 	import mx.rpc.events.FaultEvent;                                         
@@ -125,26 +129,27 @@ width="786" height="479"  creationComplete="init()"
 ]]>
                              
 </mx:Script>
+
 <mx:Canvas width="100%" height="100%">
 	<mx:Button x="30" y="10" width="38" height="38" click="doGet();">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="30" y="56" text="Get" width="38" textAlign="center"/>
-		<mx:Label text="Current Balance:" width="102" fontWeight="bold" y="82" x="10"/>
+		<mx:Label x="30" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" textAlign="right"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.CurrentBalance')}" width="102" fontWeight="bold" y="82" x="10"/>
 		<mx:Text x="131" y="82"  text="Text" width="81"/>
 	<mx:DataGrid x="10" y="119"  height="292" id="invoice_list" dataProvider="{invoices}">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Posted" dataField="col1"/>
-			<mx:DataGridColumn headerText="Invoice #" dataField="invoiceNumber"/>
-			<mx:DataGridColumn headerText="Title" dataField="name"/>
-			<mx:DataGridColumn headerText="Total" dataField="grandTotal"/>
-			<mx:DataGridColumn headerText="Paid on" dataField="col2"/>
-			<mx:DataGridColumn headerText="Ref #" dataField="col3"/>
-			<mx:DataGridColumn headerText="PO #" dataField="customerPO"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Posted')}" />
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Invoice')}" dataField="invoiceNumber"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Description')}" dataField="name"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Total')}" dataField="grandTotal"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Paidon')}" />
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.Ref')}" />
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.PO')}" dataField="customerPO"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:Label x="420" y="82" text="Show History Type:"/>
+	<mx:Label x="420" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.ShowHistoryType')}"/>
 	<mx:List x="539" y="79" height="21" id="history_Type"></mx:List>
 
 </mx:Canvas>

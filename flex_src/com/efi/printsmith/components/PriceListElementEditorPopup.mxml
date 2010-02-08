@@ -18,18 +18,18 @@
 	</mx:RemoteObject>
 
     <mx:Canvas width="409" height="167">
-    <mx:Label x="10" y="10" text="Quantity:" width="67" textAlign="right"/>
-    <mx:Label x="10" y="35" text="Price:" width="67" textAlign="right"/>
-    <mx:Label x="38" y="61" text="Side:" width="39" textAlign="right"/>
-    <mx:Label x="10" y="83" text="Color:" width="67" textAlign="right"/>
+    <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Quantity')}" width="67" textAlign="right"/>
+    <mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" width="67" textAlign="right"/>
+    <mx:Label x="38" y="61" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides')}" width="39" textAlign="right"/>
+    <mx:Label x="10" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="67" textAlign="right"/>
 
     <mx:TextInput x="85" y="10" width="314" id="quantity_edit" text="{element.quantity}"/>
     <mx:TextInput x="85" y="33" width="314" id="amount_edit" text="{element.amount}"/>
     <mx:ComboBox x="85" y="56" width="314" id="side_edit" dataProvider="{SidesArray}" labelField="name"/> 
     <mx:ComboBox x="85" y="81" width="314" id="color_edit" dataProvider="{ColorArray}" labelField="name"/>
     	
-    <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
-    <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    <mx:Button x="241" y="135" id="ok_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="75" click="doOK()"/>
+    <mx:Button x="324" y="135" id="cancel_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" width="75" click="doCancel()"/>
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[

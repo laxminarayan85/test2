@@ -34,7 +34,7 @@
 		<mx:Canvas height="2" width="100%">
 		</mx:Canvas>	
 		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
-			<mx:Canvas height="100%" width="100%" id="mainWindow" label="PrintSmith QuickAccess" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
+			<mx:Canvas height="100%" width="100%" id="mainWindow" label="{resourceManager.getString(RESOURCE_BUNDLE, 'usecCmd.QuickAccessPanel')}" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
 		  		<mx:Image x="-185" y="579" width="186" height="61" id="logo" source="assets/printsmith_logo.png"/>
 				
 				<mx:Button x="10" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateEstimate')}" width="158" height="86" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();"/>
@@ -139,7 +139,7 @@
 		
 		private var remoteObject:RemoteObject;
 		
-		private static const RESOURCE_BUNDLE:String = "psResources";
+		public static const RESOURCE_BUNDLE:String = "psResources";
 		
 		public var userName:String;
 		public var userPass:String;

@@ -144,7 +144,7 @@
 				 height="75"/>
 		<mx:LinkButton x="249"
 					   y="93"
-					   label="Edit"
+					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_contact_button"
 					   click="doEditContact();"/>
 	</mx:Panel>
