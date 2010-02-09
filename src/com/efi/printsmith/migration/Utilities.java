@@ -14,6 +14,30 @@ import com.efi.printsmith.data.ComLink;
 
 public class Utilities {
 	protected static Logger log = Logger.getLogger(Utilities.class);
+	
+	@SuppressWarnings("static-access")
+	static public long tokenMillisecondToHours(String token){
+		long milliseconds = Long.parseLong(token);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(milliseconds);
+		return (long)calendar.HOUR;
+	}
+	
+	@SuppressWarnings("static-access")
+	static public long tokenMillisecondToSeconds(String token){
+		long milliseconds = Long.parseLong(token);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(milliseconds);
+		return (long)calendar.SECOND;
+	}
+	
+	@SuppressWarnings("static-access")
+	static public long tokenMillisecondToMinutes(String token){
+		long milliseconds = Long.parseLong(token);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(milliseconds);
+		return (long)calendar.MINUTE;
+	}
 
 	static public boolean tokenToBooleanValue(String token) {
 		if ("1".equals(token) || "TRUE".equals(token.toUpperCase()) || "YES".equals(token.toUpperCase())) {

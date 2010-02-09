@@ -34,7 +34,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("press speed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("fixed spoilage".equals(currentFieldToken)) {
-				pressDefinition.setFixedWaste(Utilities.tokenToDouble(currentImportToken));
+				pressDefinition.setFixedWaste((double)Utilities.tokenMillisecondToMinutes(currentImportToken));
 			} else if ("labor rate".equals(currentFieldToken)) {
 				pressDefinition.setLaborRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor markup".equals(currentFieldToken)) {
@@ -140,7 +140,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("machine name".equals(currentFieldToken)) {
 				pressDefinition.setMachineName(currentImportToken);
 			} else if ("wash minutes".equals(currentFieldToken)) {
-				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));
+				pressDefinition.setWashupMin(Utilities.tokenMillisecondToMinutes(currentImportToken));
 			} else if ("wash fountain".equals(currentFieldToken)) {
 				pressDefinition.setWashupPerFountain(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minX".equals(currentFieldToken)) {
