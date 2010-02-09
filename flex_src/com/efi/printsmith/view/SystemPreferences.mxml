@@ -9,10 +9,10 @@ width="800" height="678" title="Preferences"
  	 	 	<mx:RemoveChild target="{button2}"/>
  	 	 	<mx:AddChild relativeTo="{creditcards_canvas}" position="lastChild">
  	 	 	 	<mx:Canvas x="38" y="185" width="440" height="365" id="canvas1">
- 	 	 	 	 	<mx:Button x="49" y="333" label="Close" click="doProcessorSetup(null);"/>
- 	 	 	 	 	<mx:Label x="49" y="103" text="Internet URL:" id="label1"/>
- 	 	 	 	 	<mx:CheckBox x="49" y="257" label="Use Address Validation" id="chkCreditCardUseAddressValidation"/>
- 	 	 	 	 	<mx:CheckBox x="49" y="278" label="Prompt User For Validation Information" id="chkCreditCardPromptUserForValidationInformation"/>
+ 	 	 	 	 	<mx:Button x="49" y="333" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kSupportCenterCommand.Close')}" click="doProcessorSetup(null);"/>
+ 	 	 	 	 	<mx:Label x="49" y="103" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.InternetURL')}" id="label1"/>
+ 	 	 	 	 	<mx:CheckBox x="49" y="257" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Useaddressvalidation')}" id="chkCreditCardUseAddressValidation"/>
+ 	 	 	 	 	<mx:CheckBox x="49" y="278" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Promptuserforvalidat')}" id="chkCreditCardPromptUserForValidationInformation"/>
  	 	 	 	 	<mx:TextArea x="49" y="119" width="344" id="textarea1"/>
  	 	 	 	 	<mx:RadioButtonGroup id="SkipJackType"/>
  	 	 	 	</mx:Canvas>
@@ -29,26 +29,26 @@ width="800" height="678" title="Preferences"
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
  	 	 	 	<mx:Label x="10" y="51" text="Drop Folder Location:"/>
  	 	 	</mx:AddChild>
- 	 	 	<mx:SetProperty target="{rdoSkipJack}" name="label" value="Use SkipJack Processor"/>
+ 	 	 	<mx:SetProperty target="{rdoSkipJack}" name="label" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UseSkipjackprocessor')}"/>
  	 	</mx:State>
  	 	<mx:State name="SkipJackSetup" basedOn="CreditCardProcessorSetup">
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:RadioButton x="49" y="21" label="Normal" groupName="SkipJackType"/>
+ 	 	 	 	<mx:RadioButton x="49" y="21" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.NormalMode')}" groupName="SkipJackType"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:RadioButton x="49" y="47" label="Advanced" groupName="SkipJackType"/>
+ 	 	 	 	<mx:RadioButton x="49" y="47" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.AdvancedMode')}" groupName="SkipJackType"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
  	 	 	 	<mx:RadioButton x="49" y="73" label="Development" groupName="SkipJackType"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:Label x="95" y="173" text="Serial #:"/>
+ 	 	 	 	<mx:Label x="95" y="173" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Serial')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:Label x="56" y="199" text="Development#:"/>
+ 	 	 	 	<mx:Label x="56" y="199" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Development')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:Label x="108" y="225" text="Port#:"/>
+ 	 	 	 	<mx:Label x="108" y="225" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Port')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
  	 	 	 	<mx:TextInput x="151" y="171" id="txtSkipJackSerial"/>
@@ -70,10 +70,10 @@ width="800" height="678" title="Preferences"
  	 	 	 	<mx:TextInput x="189" y="116" id="txtMerchantKey"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:Label x="73" y="90" text="Merchant Id (M_ID):"/>
+ 	 	 	 	<mx:Label x="73" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.MerchantIdM_ID')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{canvas1}" position="lastChild">
- 	 	 	 	<mx:Label x="58" y="118" text="Merchant Key (M_KEY):"/>
+ 	 	 	 	<mx:Label x="58" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.MerchantKeyM_KEY')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:SetProperty target="{chkCreditCardUseAddressValidation}" name="y" value="148"/>
  	 	 	<mx:SetProperty target="{chkCreditCardPromptUserForValidationInformation}" name="y" value="169"/>
@@ -343,40 +343,40 @@ width="800" height="678" title="Preferences"
 	[Bindable]
 	private var treeData:XML =
     	<root>
-			<node label="System">
-				<node label="Behavior" isBranch="false" tag="0"/>
-				<node label="Company" isBranch="false" tag="1"/>
-				<node label="Business Calendar" isBranch="false" tag="2"/>
-				<node label="Numbers" isBranch="false" tag="3"/>
-				<node label="Alternate Currency" isBranch="false" tag="4"/>
-				<node label="International" isBranch="false" tag="5"/>
-				<node label="Address Formatting" isBranch="false" tag="6"/>
+			<node label="genericPrefCmd.System">
+				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0"/>
+				<node label="genericPrefCmd.Company" isBranch="false" tag="1"/>
+				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2"/>
+				<node label="genericPrefCmd.Numbers" isBranch="false" tag="3"/>
+				<node label="genericPrefCmd.AlternateCurrency" isBranch="false" tag="4"/>
+				<node label="genericPrefCmd.International" isBranch="false" tag="5"/>
+				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6"/>
 			</node>
-			<node label="POS">
-				<node label="Receipt" isBranch="false" tag="7"/>
-				<node label="Cash Drawer" isBranch="false" tag="8"/>
-				<node label="Cash Register" isBranch="false" tag="9"/>
-				<node label="Pending List" isBranch="false" tag="10"/>
+			<node label="genericPrefCmd.POS">
+				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7"/>
+				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8"/>
+				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9"/>
+				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10"/>
 			</node>
-			<node label="Estimator">
-				<node label="Estimator Behavior" isBranch="false" tag="11"/>
-				<node label="Estimator Printing" isBranch="false" tag="12"/>
-				<node label="Paper Calculator" isBranch="false" tag="13"/>
-				<node label="Job Ticket" isBranch="false" tag="14"/>
-				<node label="Quantity Breaks" isBranch="false" tag="15"/>
-				<node label="Markups" isBranch="false" tag="16"/>
-				<node label="Stocks and Sizes" isBranch="false" tag="17"/>
-				<node label="Stock Definitions" isBranch="false" tag="18"/>
-				<node label="Pricing Method" isBranch="false" tag="19"/>
+			<node label="genericPrefCmd.Estimator">
+				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11"/>
+				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12"/>
+				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13"/>
+				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14"/>
+				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15"/>
+				<node label="genericPrefCmd.Markups" isBranch="false" tag="16"/>
+				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17"/>
+				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18"/>
+				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19"/>
 			</node>			
-			<node label="Accounting">
-				<node label="Credit/Defaults" isBranch="false" tag="20"/>
-				<node label="Aging Periods" isBranch="false" tag="21"/>
-				<node label="Sales Categories" isBranch="false" tag="22"/>
-				<node label="GL Profiles" isBranch="false" tag="23"/>
-				<node label="Credit Card Info" isBranch="false" tag="24"/>
-				<node label="Order Number Format" isBranch="false" tag="25"/>
-				<node label="Journal Entries" isBranch="false" tag="26"/>
+			<node label="genericPrefCmd.Accounting">
+				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20"/>
+				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21"/>
+				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22"/>
+				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23"/>
+				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24"/>
+				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25"/>
+				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26"/>
 			</node>
 		</root>;
 	
@@ -2003,7 +2003,9 @@ width="800" height="678" title="Preferences"
 		}
 		
 	}
-        
+	private function TreeDisplayLabel(item:XML):String {
+		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
+	}        
 
 ]]>
                              
@@ -2011,8 +2013,7 @@ width="800" height="678" title="Preferences"
 	<mx:Tree x="0" y="0" width="200"  
 		id="tvPreference" 
 		dataProvider="{treeData.node}"
-		labelField="@label"
-		height="100%" change="treeSelect(event);"></mx:Tree>
+		height="100%" change="treeSelect(event);" labelFunction="TreeDisplayLabel"></mx:Tree>
 
 	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
@@ -2024,63 +2025,64 @@ width="800" height="678" title="Preferences"
 	<mx:VBox id="vbox2" left="200" top="50" height="100%" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
 			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" text="Behavior" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Behavior')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="Eliminate some warning messages"/>
-				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="Only post invoices marked ready"/>
-				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="Enable Pricing system Import / Export features"/>
-				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="Activate user event logging, all workstatioins."/>
-				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="Enable automatic log out" change="checkEnableAutoLogOut();"/>
-				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="Seconds of inactivity to trigger:" enabled="false"/>
-				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="Trigger after posting" enabled="false"/>
-				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="Show invoices with firm due date of &quot;today&quot; at login"/>
-				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="Enable line-item taxes"/>
-				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="Enable automatic quit"/>
+				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Eliminatesomewarning')}"/>
+				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Onlypostinvoicesmark')}"/>
+				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}"/>
+				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Activateusereventlog')}"/>
+				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Enableautomaticlogou')}" change="checkEnableAutoLogOut();"/>
+				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" enabled="false"/>
+				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TriggerafterPosting')}" enabled="false"/>
+				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}"/>
+				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}"/>
+				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Enableautomaticquit')}"/>
 				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.autoLogOutSeconds}"/>
-				<mx:Label x="50" y="330" text="Time of day to quit:" textAlign="right"/>
+				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Timeofdaytoquit')}" textAlign="right"/>
 				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>
-				<mx:Label x="80" y="367" text="Shut down notification message:" textAlign="right"/>
-				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" text="{preferencesSystem.shutdownMessage}"/>
+				<mx:Label x="80" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Shutdownnotification')}" textAlign="right"/>
+				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" 
+					text="{preferencesSystem.shutdownMessage}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Company" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Company')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
 
-				<mx:Label x="79" y="197" text="Phone:" textAlign="right"/>
+				<mx:Label x="79" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
 				<mx:TextInput x="127" y="195" width="148" id="txtPhone" text="{preferencesSystem.companyPhone}"/>
-				<mx:Label x="344" y="197" text="Fax:" textAlign="right"/>
+				<mx:Label x="344" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Fax')}" textAlign="right"/>
 				<mx:TextInput x="377" y="195" width="148" id="txtFax" text="{preferencesSystem.companyFax}"/>
-				<mx:Label x="79" y="227" text="E-Mail:" textAlign="right"/>
+				<mx:Label x="79" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
 				<mx:TextInput x="125" y="225" width="400" id="txtEmail" text="{preferencesSystem.companyEmail}"/>
-				<mx:Label x="81" y="257" text="Other:" textAlign="right"/>
+				<mx:Label x="81" y="257" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Other')}" textAlign="right"/>
 				<mx:TextInput x="125" y="255" width="400" id="txtOther1" text="{preferencesSystem.companyOther1}"/>
-				<mx:Label x="81" y="287" text="Other:" textAlign="right"/>
+				<mx:Label x="81" y="287" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Other')}" textAlign="right"/>
 				<mx:TextInput x="125" y="285" width="400" id="txtOther2" text="{preferencesSystem.companyOther2}"/>
-				<mx:Label x="8" y="317" text="Company ID Label:" textAlign="right"/>
+				<mx:Label x="8" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyIDLabel')}" textAlign="right"/>
 				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel" text="{preferencesSystem.companyIdLabel}"/>
-				<mx:Label x="242" y="317" text="Company ID:" textAlign="right"/>
+				<mx:Label x="242" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyID')}" textAlign="right"/>
 				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId" text="{preferencesSystem.companyId}"/>
 				
-				<mx:Label x="187" y="367" text="Store Number:" textAlign="right"/>
+				<mx:Label x="187" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.StoreNumber')}" textAlign="right"/>
 				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber" text="{preferencesSystem.companyStoreNumber}"/>
-				<mx:Label x="52" y="392" text="Workstation/Store Location Reference:" textAlign="right"/>
+				<mx:Label x="52" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.WorkstationStoreloca')}" textAlign="right"/>
 				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference" text="{preferencesSystem.companyStoreLocationRef}"/>
 				<mx:TextArea x="125" y="420" width="400" height="63">
-					<mx:text>The company ID is printed on Invoices and Estimates, the workstation specific Store location information prints on receipts and appears in the Account history transactions, if empy the global Store Number is used for these purposes.</mx:text>
+					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TheCompanyIDisprinte')}</mx:text>
 				</mx:TextArea>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="calendar_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Business Calendar" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.BusinessCalendar')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="92" text="Fiscal year starts first day of:" textAlign="right"/>
+				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fiscalyearstartsfirs')}" textAlign="right"/>
 				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
-				<mx:Label x="176" y="146" text="Current Range:" textAlign="right"/>
+				<mx:Label x="176" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CurrentRange')}" textAlign="right"/>
 				<mx:TextArea x="270" y="145" id="txtCurrentRange" height="19" width="210" enabled="false"/>
 				
-				<mx:Label x="50" y="185" text="Work Days:" textAlign="right"/>
+				<mx:Label x="50" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Workdays')}" textAlign="right"/>
 				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
 				<mx:RadioButton x="53" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="1"/>
 				<mx:RadioButton x="93" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="2"/>
@@ -2097,22 +2099,22 @@ width="800" height="678" title="Preferences"
 				<mx:Button x="200" y="211" label="T" width="40"/>
 				<mx:Button x="240" y="211" label="F" width="40"/>
 				<mx:Button x="280" y="211" label="S" width="40"/>
-				<mx:Label x="325" y="250" text="First Day of Work Week" textAlign="right"/>
-				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="Future dates exclude days that company is Closed"/>
+				<mx:Label x="325" y="250" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FirstDayofWorkWeek')}" textAlign="right"/>
+				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Futuredatesexcludeda')}"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="numbers_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Numbers" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Numbers')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="67" y="32" text="Integers:" textAlign="right"/>
-				<mx:Label x="46" y="62" text="Percentages:" textAlign="right"/>
-				<mx:Label x="71" y="92" text="Amount:" textAlign="right"/>
-				<mx:Label x="88" y="122" text="Rate:" textAlign="right"/>
-				<mx:Label x="81" y="152" text="Factor:" textAlign="right"/>
-				<mx:Label x="74" y="182" text="Invoice:" textAlign="right"/>
-				<mx:Label x="40" y="212" text="Short Percent:" textAlign="right"/>
-				<mx:Label x="63" y="242" text="Round to:" textAlign="right"/>
+				<mx:Label x="67" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Integers')}" textAlign="right"/>
+				<mx:Label x="46" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Percentages')}" textAlign="right"/>
+				<mx:Label x="71" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Amount')}" textAlign="right"/>
+				<mx:Label x="88" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Rate')}" textAlign="right"/>
+				<mx:Label x="81" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Factor')}" textAlign="right"/>
+				<mx:Label x="74" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Invoice')}" textAlign="right"/>
+				<mx:Label x="40" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShortPercent')}" textAlign="right"/>
+				<mx:Label x="63" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right"/>
 
 				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
 				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
@@ -2123,98 +2125,98 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="127" y="210" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);" text="{preferencesSystem.numbersShortPercent}"/>
 				<mx:TextInput x="127" y="240" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);" text="{preferencesSystem.numbersRoundto}"/>
 
-				<mx:CheckBox x="216" y="240"  id="chkAlwaysRoundDown" label="Always Round Down"/>
-				<mx:CheckBox x="216" y="270"  id="chkTaxRoundUp" label="Tax Round Up"/>
+				<mx:CheckBox x="216" y="240"  id="chkAlwaysRoundDown" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}"/>
+				<mx:CheckBox x="216" y="270"  id="chkTaxRoundUp" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}"/>
 
-				<mx:Button x="50" y="320" label="Dollar"  width="75"/>
-				<mx:Button x="130" y="320" label="Pound"  width="75"/>
-				<mx:Button x="210" y="320" label="Yen"  width="75"/>
-				<mx:Button x="290" y="320" label="Euro"  width="75"/>
-				<mx:Button x="370" y="320" label="Space"  width="75"/>
+				<mx:Button x="50" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Dollar')}"  width="75"/>
+				<mx:Button x="130" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Pound')}"  width="75"/>
+				<mx:Button x="210" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Yen')}"  width="75"/>
+				<mx:Button x="290" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Euro')}"  width="75"/>
+				<mx:Button x="370" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Space')}"  width="75"/>
 				<mx:TextArea x="23" y="391" height="131" width="451" id="txtDisplayArea" enabled="false"/>
 				<mx:Text x="50" y="374" text="xx" id="txtDisplayDemo"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="alternatecurrency_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Alternate Currency" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AlternateCurrency')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="Use Alternate Currency System." change="checkAlternateCurrency();"/>
+				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Usealternatecurrency')}" change="checkAlternateCurrency();"/>
 
-				<mx:Label x="84" y="62" text="Format:" textAlign="right"/>
+				<mx:Label x="84" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}" textAlign="right"/>
 				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false" text="{preferencesSystem.displayFormat}"/>
-				<mx:Label x="24" y="92" text="Conversion Factor:" textAlign="right"/>
+				<mx:Label x="24" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}" textAlign="right"/>
 				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false" text="{preferencesSystem.conversionFactor}"/>
-				<mx:Label x="72" y="122" text="Round to:" textAlign="right"/>
+				<mx:Label x="72" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right"/>
 				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false" text="{preferencesSystem.alternateRoundto}"/>
 
-				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="Always Round Down" enabled="false"/>
+				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}" enabled="false"/>
 				
 				
 				<mx:TextArea x="23" y="203" height="40%" width="451" id="txtSampleArea" enabled="false"/>
-				<mx:Label x="50" y="186" text="Sample Currency" id="txtSampleDemo" textAlign="right"/>
+				<mx:Label x="50" y="186" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SampleCurrency')}" id="txtSampleDemo" textAlign="right"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="International" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.International')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="Disable text styles"/>
-				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="Use Australian invoice rounding"/>
-				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="Disable non-taxable options for invoices, jobs and charges"/>
+				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}"/>
+				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}"/>
+				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}"/>
 
-				<mx:Label x="26" y="122" text="Ink Weight(singular):" textAlign="right"/>
+				<mx:Label x="26" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}" textAlign="right"/>
 				<mx:TextInput x="154" y="120" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
-				<mx:Label x="39" y="152" text="Ink Weight(plural):" textAlign="right"/>
+				<mx:Label x="39" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}" textAlign="right"/>
 				<mx:TextInput x="154" y="150" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="addressformatting_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Address Formatting" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AddressFormatting')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="50" y="32" text="Default Country:" textAlign="right"/>
+				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultcountry')}" textAlign="right"/>
 				<fc:AutoComplete  x="148" y="30" width="181" id="cboDefaultCountry" dataProvider="{CountryArray}" lookAhead="true" labelField="name" focusOut="doCountryFind(cboDefaultCountry,CountryArray)"/>
 				<mx:TextArea x="23" y="203" height="25%" width="451" id="txtSampleAddressArea" enabled="false"/>
 				<mx:Text x="50" y="186" text="Sample Address" id="txtSampleAddress"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="receipt_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Receipt" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Receipt')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="54" y="32" text="Header:" textAlign="right"/>
-				<mx:Label x="59" y="182" text="Footer:" textAlign="right"/>
+				<mx:Label x="54" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Header')}" textAlign="right"/>
+				<mx:Label x="59" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Footer')}" textAlign="right"/>
 				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130" text="{preferencesPOS.receiptHeader}"/>
 				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100" text="{preferencesPOS.receiptFooter}"/>
 
 				<mx:TextInput x="272" y="300" id="txtSerialNumber" width="70" text="{preferencesPOS.startingNumber}"/>
-				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="Serial numbers on receipts start at:"/>
-				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="Hide tax in line items"/>
+				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Serialnumbersonrecei')}"/>
+				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Hidetaxinlineitems')}"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashdrawer_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Drawer" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashDrawer')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="Receipt Printer:" textAlign="right"/>
+				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptPrinter')}" textAlign="right"/>
 				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
-				<mx:Label x="95" y="62" text="Printer:" textAlign="right"/>
+				<mx:Label x="95" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterRptPackageCmd.Printer')}" textAlign="right"/>
 				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200" text="{preferencesPOS.defaultPrinter}"/>
 
-				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="Enable Cash Drawer"/>
-				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="Print Receipts"/>
-				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="Print (2) for Credit Cards"/>
-				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="Print (2) for Cash"/>
-				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="Print Invoices"/>
-				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="Lock Settings"/>
+				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}"/>
+				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}"/>
+				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}"/>
+				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}"/>
+				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}"/>
+				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}"/>
 
-				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="Use Master's Drawer"/>
-				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="Keep settings local"/>
+				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}"/>
+				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}"/>
 
-				<mx:Label x="50" y="273" text="ASCII Code to Open Drawer:" textAlign="right"/>
-				<mx:Label x="56" y="298" text="Blank Lines Before Receipt:" textAlign="right"/>
-				<mx:Label x="66" y="323" text="Blank Lines After Receipt:" textAlign="right"/>
-				<mx:Label x="101" y="348" text="Receipt Start Code:" textAlign="right"/>
-				<mx:Label x="107" y="373" text="Receipt End Code:" textAlign="right"/>
+				<mx:Label x="50" y="273" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}" textAlign="right"/>
+				<mx:Label x="56" y="298" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesbeforeRece')}" textAlign="right"/>
+				<mx:Label x="66" y="323" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesafterRecei')}" textAlign="right"/>
+				<mx:Label x="101" y="348" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptStartCode')}" textAlign="right"/>
+				<mx:Label x="107" y="373" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}" textAlign="right"/>
 
 				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47" text="{preferencesPOS.asciiCodeOpenDrawer}"/>
 				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47" text="{preferencesPOS.blankLinesBeforeReceipt}"/>
@@ -2222,10 +2224,10 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77" text="{preferencesPOS.receiptStartCode}"/>
 				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77" text="{preferencesPOS.receiptEndCode}"/>
 
-				<mx:Label x="50" y="420" text="Baud Rate:" textAlign="right"/>
-				<mx:Label x="220" y="420" text="Stop Bits:" textAlign="right"/>
-				<mx:Label x="77" y="445" text="Parity:" textAlign="right"/>
-				<mx:Label x="216" y="445" text="Data Size:" textAlign="right"/>
+				<mx:Label x="50" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}" textAlign="right"/>
+				<mx:Label x="220" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}" textAlign="right"/>
+				<mx:Label x="77" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}" textAlign="right"/>
+				<mx:Label x="216" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}" textAlign="right"/>
 
 				<mx:ComboBox x="119" y="418" id="cboBaudRate"  dataProvider="{BaudRateArray}" labelField="name" width="90" enabled="false"/>
 				<mx:ComboBox x="281" y="418" id="cboStopBits"  dataProvider="{StopBitsArray}" labelField="name" width="90" enabled="false"/>
@@ -2235,7 +2237,7 @@ width="800" height="678" title="Preferences"
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Cash Register" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:DataGrid width="508" id="CashRegisterGrid" 
@@ -2243,7 +2245,7 @@ width="800" height="678" title="Preferences"
 					editable="true" 
 					itemEditEnd="processCashRegisterGridData(event);" bottom="80" top="27" right="22">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Tax" dataField="tax" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Tax')}" dataField="tax" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2251,8 +2253,8 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
-						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Title')}" dataField="title"/>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.SalesCategory')}" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2260,8 +2262,8 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="50" headerText="Rate" dataField="rate" editable="true"/>
-						<mx:DataGridColumn width="140" headerText="Tax Table" dataField="taxTable"
+						<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Rate')}" dataField="rate" editable="true"/>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" dataField="taxTable"
 							itemEditor="com.efi.printsmith.itemRenderers.TaxTableEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2269,7 +2271,7 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="Tax Code" dataField="taxCodes"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.TaxCode')}" dataField="taxCodes"
 							itemEditor="com.efi.printsmith.itemRenderers.TaxCodeEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2289,20 +2291,20 @@ width="800" height="678" title="Preferences"
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Pending List" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="265" id="chkShowDocumentType" label="Show Document Type in Number"/>
-				<mx:CheckBox x="50" y="290" id="chkAlwaysIncludePastDue" label="Always Include Past Due Documents in Filter"/>
-				<mx:CheckBox x="50" y="315" id="chkColorPastDueEntries" label="Color Past Due Entries"/>
+				<mx:CheckBox x="50" y="265" id="chkShowDocumentType" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ShowDocumentTypeInNu')}"/>
+				<mx:CheckBox x="50" y="290" id="chkAlwaysIncludePastDue" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.AlwaysIncludePastDue')}"/>
+				<mx:CheckBox x="50" y="315" id="chkColorPastDueEntries" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColorPastDueEntries')}"/>
 
-				<mx:Button x="50" y="345" label="Past Due Color..." click="doSelectColor(txtPastDueColor);" width="167"/>
-				<mx:Button x="50" y="375" label="Ready for Pickup Color..." click="doSelectColor(txtReadyforPickupColor);" width="167"/>
-				<mx:Button x="50" y="405" label="Invoice Color..." click="doSelectColor(txtInvoiceColor);" width="167"/>
-				<mx:Button x="50" y="435" label="Estimate Color..." click="doSelectColor(txtEstimateColor);" width="167"/>
+				<mx:Button x="50" y="345" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.PastDueColor')}" click="doSelectColor(txtPastDueColor);" width="167"/>
+				<mx:Button x="50" y="375" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ReadyforPickupColor')}" click="doSelectColor(txtReadyforPickupColor);" width="167"/>
+				<mx:Button x="50" y="405" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.InvoiceColor')}" click="doSelectColor(txtInvoiceColor);" width="167"/>
+				<mx:Button x="50" y="435" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.EstimateColor')}" click="doSelectColor(txtEstimateColor);" width="167"/>
 
-				<mx:Button x="50" y="465" label="List Font..." click="doSelectFont(txtListFont);" width="167"/>
-				<mx:Button x="50" y="495" label="Header Font..." click="doSelectFont(txtHeaderFont);" width="167"/>
+				<mx:Button x="50" y="465" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ListFont')}" click="doSelectFont(txtListFont);" width="167"/>
+				<mx:Button x="50" y="495" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.HeaderFont')}" click="doSelectFont(txtHeaderFont);" width="167"/>
 
 				<mx:TextInput x="225" y="345" id="txtPastDueColor" width="80"/>
 				<mx:TextInput x="225" y="375" id="txtReadyforPickupColor" width="80"/>
@@ -2315,7 +2317,7 @@ width="800" height="678" title="Preferences"
 					dataProvider="{PreferencesPendingListArray}" 
 					editable="true">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2323,66 +2325,66 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnnamePendingList" editable="false"/>
+						<mx:DataGridColumn width="200" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColumnTitle')}" labelFunction="columnnamePendingList" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Behavior" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorBehavior')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="Close source document after copying"/>
-				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="Enter Stock Cost in Estimator"/>
-				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="Can Change Address on ALL Documents"/>
-				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="Auto Show Paper Calculator on New Jobs"/>
-				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="Always Use Stock Parent Size"/>
-				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="Calculate Re-Order Date on Invoice Copy"/>
-				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="Validate Sales Rep"/>
-				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="Leave Folded Size empty on New Jobs"/>
-				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="Do not perform Costing during invoice POST"/>
-				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="Auto Show Charges on New Jobs"/>
-				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="Never Use Preset Press on Stock Changes"/>
-				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="Add Fixed Waste for Each Pass (Affects historic Documents)"/>
-				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="Add Fixed Waste for Each Color (Affects historic Documents)"/>
-				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="Calculate INK by Impressions, Includes Waste (Affects history)"/>
-				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="Use the History Title for New Document Title"/>
+				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Closesourcedocumenta')}"/>
+				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.EnterStockCostinEsti')}"/>
+				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CanchangeaddressonAL')}"/>
+				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AutoshowPaperCalcula')}"/>
+				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AlwaysuseStocksParen')}"/>
+				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CalculateReorderdate')}"/>
+				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Validatesalesrep')}"/>
+				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.LeaveFoldedsizeempty')}"/>
+				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DonotperformCostingd')}"/>
+				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AutoshowChargesonnew')}"/>
+				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}"/>
+				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"/>
+				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"/>
+				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}"/>
+				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}"/>
 
-				<mx:Label x="50" y="442" text="Normal Due Date (days):" textAlign="right"/>
+				<mx:Label x="50" y="442" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Normalduedatedays')}" textAlign="right"/>
 				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
 				
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="estimatorprinting_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Estimator Printing" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorPrinting')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="Close Invoice after Printing Job Tickets"/>
-				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="Close Invoices and Estimates after Printing"/>
+				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}"/>
+				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}"/>
 
-				<mx:Label x="58" y="92" text="Default Invoice:" textAlign="right"/>
-				<mx:Label x="50" y="117" text="Default Estimate:" textAlign="right"/>
+				<mx:Label x="58" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}" textAlign="right"/>
+				<mx:Label x="50" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}" textAlign="right"/>
 
 				<mx:ComboBox x="160" y="90" id="cboDefaultInvoice"  dataProvider="{DefaultInvoiceArray}" labelField="name" width="250"/>
 				<mx:ComboBox x="160" y="115" id="cboDefaultEstimate"  dataProvider="{DefaultEstimateArray}" labelField="name" width="250"/>
 
 
-				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="Payment Due Date">
-					<mx:Label x="20" y="7" text="Number of Days Before Due:" textAlign="right"/>
+				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PaymentDueDate')}">
+					<mx:Label x="20" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}" textAlign="right"/>
 					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
 					<mx:RadioButtonGroup id="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="From Notified Date" groupName="optPaymentDueDays" value="1"/>
-					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="From Completed Date" groupName="optPaymentDueDays" value="2"/>
-					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="From Pickup Date" groupName="optPaymentDueDays" value="3"/>
-					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="From Ordered Date" groupName="optPaymentDueDays" value="4"/>
-					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="From Printed Date" groupName="optPaymentDueDays" value="5"/>
+					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}" groupName="optPaymentDueDays" value="1"/>
+					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}" groupName="optPaymentDueDays" value="2"/>
+					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}" groupName="optPaymentDueDays" value="3"/>
+					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}" groupName="optPaymentDueDays" value="4"/>
+					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}" groupName="optPaymentDueDays" value="5"/>
 				</mx:Panel>
 
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="papercalculator_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Paper Calculator" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:CheckBox x="30" y="52" id="chkGripEdge"/>
@@ -2392,14 +2394,14 @@ width="800" height="678" title="Preferences"
 				<mx:CheckBox x="30" y="302" id="chkGutter"/>
 				<mx:CheckBox x="30" y="352" id="chkBleed"/>
 				
-				<mx:Label x="50" y="30" text="Grip Edge / Gap" textAlign="right"/>
-				<mx:Label x="50" y="80" text="Folio Edge" textAlign="right"/>
-				<mx:Label x="50" y="130" text="Color Bar" textAlign="right"/>
-				<mx:Label x="50" y="180" text="White Space" textAlign="right"/>
-				<mx:Label x="50" y="230" text="Right" textAlign="right"/>
-				<mx:Label x="50" y="280" text="Gutter" textAlign="right"/>
-				<mx:Label x="50" y="330" text="Bleed" textAlign="right"/>
-				<mx:Label x="50" y="380" text="Right" textAlign="right"/>
+				<mx:Label x="50" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" textAlign="right"/>
+				<mx:Label x="50" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FolioEdge')}" textAlign="right"/>
+				<mx:Label x="50" y="130" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ColorBar')}" textAlign="right"/>
+				<mx:Label x="50" y="180" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WhiteSpace')}" textAlign="right"/>
+				<mx:Label x="50" y="230" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
+				<mx:Label x="50" y="280" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Gutter')}" textAlign="right"/>
+				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}" textAlign="right"/>
+				<mx:Label x="50" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
 
 				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimating.gripEdgeGap}"/>
 				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimating.folioEdge}"/>
@@ -2410,11 +2412,11 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimating.bleed}"/>
 				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimating.bleedRight}"/>
 
-				<mx:Label x="151" y="180" text="Top" textAlign="right"/>
-				<mx:Label x="151" y="230" text="Bottom" textAlign="right"/>
-				<mx:Label x="151" y="280" text="Horizontal" textAlign="right"/>
-				<mx:Label x="151" y="330" text="Top" textAlign="right"/>
-				<mx:Label x="151" y="380" text="Bottom" textAlign="right"/>
+				<mx:Label x="151" y="180" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
+				<mx:Label x="151" y="230" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
+				<mx:Label x="151" y="280" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Horizontal')}" textAlign="right"/>
+				<mx:Label x="151" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
+				<mx:Label x="151" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
 
 				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
 				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
@@ -2422,22 +2424,22 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimating.bleedTop}"/>
 				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimating.bleedBottom}"/>
 
-				<mx:Label x="27" y="462" text="Default Press Cutoff:" textAlign="right"/>
+				<mx:Label x="27" y="462" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DefaultPressCutoff')}" textAlign="right"/>
 				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
 
 
-				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="Back Trim, Parent"/>
-				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="Trim Four Sides"/>
-				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="Work And Tumble"/>
+				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"/>
+				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"/>
+				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"/>
 
-				<mx:Label x="260" y="152" text="Run to Finish Grain:" textAlign="right"/>
+				<mx:Label x="260" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right"/>
 				<mx:ComboBox x="377" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="80"/>
 
-				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="Print Options">
-					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="Print Parent to Finish Section"/>
-					<mx:CheckBox x="10" y="25" id="chkPrintParentToRun" label="Print Parent to Run Section"/>
-					<mx:CheckBox x="10" y="45" id="chkPrintRunToFinish" label="Print Run to Finish Section"/>
-					<mx:CheckBox x="10" y="65" id="chkAttachToJobTicket" label="Attach To Job Ticket"/>
+				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
+					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"/>
+					<mx:CheckBox x="10" y="25" id="chkPrintParentToRun" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}"/>
+					<mx:CheckBox x="10" y="45" id="chkPrintRunToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}"/>
+					<mx:CheckBox x="10" y="65" id="chkAttachToJobTicket" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}"/>
 				</mx:Panel>
 				
 			</mx:Canvas>
