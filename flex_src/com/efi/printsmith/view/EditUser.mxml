@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="User Editor" name="User Editor"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
 width="100%" height="557" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="true" 
     close="PopUpManager.removePopUp(this);"
-    title="User Form" xmlns:text="flash.text.*">
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -275,9 +275,9 @@ password="{passwordField.text}"/>
  
 	<mx:DataGrid x="10" y="10" width="712" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
 		<mx:columns>
-			<mx:DataGridColumn headerText="User Name" dataField="name"/>
-			<mx:DataGridColumn headerText="Access Group" labelFunction="getAccessgrouplabel"/>
-					<mx:DataGridColumn headerText="Access Level" labelFunction="getAccesslevellabel"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" dataField="name"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" labelFunction="getAccessgrouplabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" labelFunction="getAccesslevellabel"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
@@ -285,25 +285,25 @@ password="{passwordField.text}"/>
 	<mx:Text text="{message}" fontWeight="bold" width="300"  x="22" y="476"/>
 	<mx:TextInput id="nameField" text="{user1.name}" change="validateForm(event);"  x="103" y="162"/>            
     <mx:TextInput id="passwordField" text="{user1.password}" change="validateForm(event);"  x="103" y="188"/>                                   
-	<mx:CheckBox label="Force Password Change at Signon" x="50" y="225" id="force_password" selected="{user1.forcePasswordChange}"/>
-	<mx:Button label="Cancel" click="PopUpManager.removePopUp(this);" x="195" y="427"/>
-	<mx:Button label="Clear form" enabled="{!formIsEmpty}" click="clearFormHandler();"  x="101" y="427"/>
-	<mx:Button label="Save User" id="submitButton" enabled="{formIsValid}" click="saveUser();"  x="10" y="427"/>
-	<mx:Label x="10" y="164" text="User Name:" textAlign="right"/>
-	<mx:Label x="20" y="190" text="Password:" textAlign="right"/>
-	<mx:CheckBox x="50" y="255" label="Use Robust Password Rules" id="robust_password" selected="{user1.robustPassword}"/>
-	<mx:CheckBox x="10" y="294" label="Not allow to override" selected="{user1.noOverride}" id="allow_override"/>
-	<mx:CheckBox x="10" y="324" label="Can override credit limit" selected="{user1.overrideCredit}" id="override_credit_limit"/>
-	<mx:CheckBox x="10" y="354" label="Lock sales rep names" selected="{user1.lockSalesRep}" id="lock_salesrep"/>
-	<mx:CheckBox x="10" y="384" label="Can  refund credit cards" selected="{user1.refundCreditCards}" id="refund_credit_cards"/>
-	<mx:CheckBox x="237" y="294" label="Not allow to return cash" selected="{user1.noCashReturn}" id="return_cash"/>
-	<mx:CheckBox x="237" y="324" label="Show user name on log window" selected="{user1.showUserNameLog}" id="user_log_window"/>
-	<mx:CheckBox x="237" y="354" label="Can edit quick access panel" selected="{user1.quickAccess}" id="quick_access"/>
-	<mx:Label x="357" y="164" text="Access Group:" textAlign="right"/>
-	<mx:Label x="357" y="190" text="Access Level:" textAlign="right"/>
+	<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Forcepasswordchangea')}" x="50" y="225" id="force_password" selected="{user1.forcePasswordChange}"/>
+	<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="PopUpManager.removePopUp(this);" x="195" y="427"/>
+	<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Clear')}" enabled="{!formIsEmpty}" click="clearFormHandler();"  x="101" y="427"/>
+	<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" id="submitButton" enabled="{formIsValid}" click="saveUser();"  x="10" y="427"/>
+	<mx:Label x="10" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" textAlign="right"/>
+	<mx:Label x="20" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'signonCmd.Password')}" textAlign="right"/>
+	<mx:CheckBox x="50" y="255" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Userobustpasswordrul')}" id="robust_password" selected="{user1.robustPassword}"/>
+	<mx:CheckBox x="10" y="294" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Notallowedtooverride')}" selected="{user1.noOverride}" id="allow_override"/>
+	<mx:CheckBox x="10" y="324" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Canoverridecreditlim')}" selected="{user1.overrideCredit}" id="override_credit_limit"/>
+	<mx:CheckBox x="10" y="354" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Locksalesrepnames')}" selected="{user1.lockSalesRep}" id="lock_salesrep"/>
+	<mx:CheckBox x="10" y="384" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Canrefundoncreditcar')}" selected="{user1.refundCreditCards}" id="refund_credit_cards"/>
+	<mx:CheckBox x="237" y="294" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Notallowedtoreturnca')}" selected="{user1.noCashReturn}" id="return_cash"/>
+	<mx:CheckBox x="237" y="324" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.ShowusernameonLogInw')}" selected="{user1.showUserNameLog}" id="user_log_window"/>
+	<mx:CheckBox x="237" y="354" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.CaneditQuickAccessPa')}" selected="{user1.quickAccess}" id="quick_access"/>
+	<mx:Label x="357" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" textAlign="right"/>
+	<mx:Label x="357" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right"/>
 	<mx:ComboBox x="448" y="161" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
 	<mx:ComboBox x="448" y="187" height="21" id="accessLevelList"></mx:ComboBox>
-	<mx:Button x="266" y="427" label="Delete User" click="deleteUser();"/>
+	<mx:Button x="266" y="427" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="deleteUser();"/>
 	
 </mx:Canvas>
 </mx:TitleWindow>
