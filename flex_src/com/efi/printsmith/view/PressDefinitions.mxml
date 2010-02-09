@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
-width="912" height="722" title="Press Definitions"
- label="Press Definitions" name="Press Definitions" fontSize="9">
+width="912" height="722" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
+ label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" name="Press Definitions" fontSize="9">
 	<mx:states>
 		<mx:State name="RollFedState">
 			<mx:SetProperty target="{label1}" name="text" value="Max Roll Width:"/>
@@ -332,41 +332,41 @@ width="912" height="722" title="Press Definitions"
 ]]>
                              
 </mx:Script>	
-	<mx:Label x="78" y="126" text="Name:" width="45" textAlign="right"/>
-	<mx:Label x="40" y="148" text="Machine Name:" textAlign="right"/>
+	<mx:Label x="78" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Name')}" width="45" textAlign="right"/>
+	<mx:Label x="10" y="148" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" textAlign="right"/>
 	<mx:DataGrid x="10" y="0" width="712" id="dataGrid" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="0">
 		<mx:columns>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="rollFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
-			<mx:DataGridColumn headerText="Name" dataField="name" width="300"/>
-			<mx:DataGridColumn headerText="Machine" dataField="machineName" width="300"/>
-			<mx:DataGridColumn headerText="Machine ID" dataField="machineID" width="100"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Name')}" dataField="name" width="300"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" dataField="machineName" width="300"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID')}" dataField="machineID" width="100"/>
 		</mx:columns>
 	</mx:DataGrid>
 
-	<mx:Label x="18" y="170" text="Output Description:" textAlign="right"/>
-	<mx:Label x="14" y="192" text="Production Location:" textAlign="right"/>
-	<mx:Label x="51" y="214" text="Cost Center:" textAlign="right"/>
-	<mx:Label x="35" y="236" text="OEM Device ID:" textAlign="right"/>	
+	<mx:Label x="22" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OutputDescription')}" textAlign="right"/>
+	<mx:Label x="22" y="192" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.ProductionLocation')}" textAlign="right"/>
+	<mx:Label x="14" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.CostCenter')}" textAlign="right"/>
+	<mx:Label x="8" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OEMDeviceID')}" textAlign="right"/>	
 	<mx:TextInput x="131" y="124" width="263" id="Name" text="{pressDefinition.name}" height="20"/>
 	<mx:TextInput x="131" y="146" width="263" id="MachineName" text="{pressDefinition.machineName}" height="20"/>
 	<mx:TextInput x="131" y="168" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}" height="20"/>
 	<mx:TextInput x="131" y="190" id="ProductionLocation" width="263" text="{pressDefinition.productionLocation}"  height="20"/>
 	<mx:TextInput x="131" y="212" id="CostCenter" width="263" text="{pressDefinition.costCenter}" height="20"/>
 	<mx:TextInput x="131" y="234" id="OEMDeviceID" width="263" text="{pressDefinition.oemDeviceID}" height="20"/>
-	<mx:Label x="402" y="126" text="Machine ID:"/>
+	<mx:Label x="402" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID')}"/>
 	<mx:TextInput x="477" y="124" width="146" id="MachineId" text="{pressDefinition.machineID}" editable="true"/>
-	<mx:CheckBox x="424" y="194" label="Costing Press" id="CostingPress" selected="{pressDefinition.costingPress}"/>
-	<mx:CheckBox x="424" y="174" label="Integrated Device" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
+	<mx:CheckBox x="424" y="194" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
+	<mx:CheckBox x="424" y="174" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
 	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
-	<mx:Label x="37" y="274" text="Max Paper Size:" textAlign="right" id="label1"/>
-	<mx:Label x="40" y="296" text="Min Paper Size:" textAlign="right" id="label2"/>
-	<mx:Label x="60" y="318" text="Labor Rate:" textAlign="right"/>
-	<mx:Label x="41" y="340" text="Minimum labor:" textAlign="right"/>
-	<mx:Label x="34" y="362" text="Setup (Minutes):" textAlign="right"/>
-	<mx:Label x="34" y="384" text="Setup Add'l Run:" textAlign="right" id="label3"/>
-	<mx:Label x="55" y="406" text="Setup Add'l Signatures:" textAlign="right"/>
-	<mx:Label x="19" y="428" text="Work and Turn 2nd Side Setup:" textAlign="right" id="label4"/>
+	<mx:Label x="37" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MaxPaperSize')}" textAlign="right" id="label1"/>
+	<mx:Label x="40" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MinPaperSize')}" textAlign="right" id="label2"/>
+	<mx:Label x="60" y="318" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.LaborRate')}" textAlign="right"/>
+	<mx:Label x="41" y="340" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MinimumLabor')}" textAlign="right"/>
+	<mx:Label x="34" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Setupminutes')}" textAlign="right"/>
+	<mx:Label x="34" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlRun')}" textAlign="right" id="label3"/>
+	<mx:Label x="77" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlSignatures')}" textAlign="right"/>
+	<mx:Label x="69" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WorkAndTurn2ndSideSe')}" textAlign="right" id="label4"/>
 	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20" width="171"/>
 	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
 	<mx:TextInput x="131" y="316" width="76" id="LaborRate" text="{pressDefinition.laborRate}" height="20"/>
@@ -375,8 +375,8 @@ width="912" height="722" title="Press Definitions"
 	<mx:TextInput x="131" y="382" width="92" id="SetupAddRun" text="{pressDefinition.setupAddRun}" height="20"/>
 	<mx:TextInput x="187" y="404" id="SetupAddSig" text="{pressDefinition.setupAddSig}" height="20" width="82"/>
 	<mx:TextInput x="187" y="426" id="WorkTurn" text="{pressDefinition.workTurnSetup}" height="20" width="82"/>
-	<mx:Label x="231" y="340" text="(Minutes)"/>
-	<mx:Label x="231" y="362" text="# Heads:"/>
+	<mx:Label x="231" y="340" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.minutes')}"/>
+	<mx:Label x="231" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Heads')}"/>
 	<mx:TextInput x="290" y="360" width="37" id="NumberHeads" text="{pressDefinition.numberHeads}" height="20"/>
 	<mx:TextInput x="493" y="272" width="106" id="AvgImpressPerhour" text="{pressDefinition.avgImpressPerHour}" height="20"/>
 	<mx:TextInput x="493" y="294" width="106" id="laborMarkup" text="{pressDefinition.laborMarkup}" height="20"/>
@@ -384,37 +384,37 @@ width="912" height="722" title="Press Definitions"
 	<mx:TextInput x="493" y="338" width="79" id="setupAddHead" text="{pressDefinition.setupAddHead}" height="20"/>
 	<mx:TextInput x="493" y="360" width="106" id="WashupFee" text="{pressDefinition.washupFee}" height="20"/>
 	<mx:TextInput x="493" y="382" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}" height="20"/>
-	<mx:Label x="610" y="406" text="(per wash)"/>
+	<mx:Label x="610" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perwash')}"/>
 	<mx:TextInput x="493" y="426" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20"/>
 	<mx:TextInput x="493" y="404" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20"/>
-	<mx:Label x="347" y="275" text="Avg. Impression per Hour:" textAlign="right"/>
-	<mx:Label x="408" y="297" text="Labor Markup:" textAlign="right"/>
-	<mx:Label x="415" y="319" text="Fixed Waste:"/>
-	<mx:Label x="389" y="341" text="Setup Add'l Head:" textAlign="right" id="label5"/>
-	<mx:Label x="416" y="363" text="Washup Fee:" textAlign="right"/>
-	<mx:Label x="335" y="385" text="Add'l Signatures Add'l Head:" textAlign="right"/>
-	<mx:Label x="394" y="407" text="Washup Minutes:" textAlign="right"/>
-	<mx:Label x="347" y="428" text="Washup Time per fountain:" textAlign="right"/>
+	<mx:Label x="378" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AvgImpressionsHour')}" textAlign="right"/>
+	<mx:Label x="378" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.LaborMarkup')}" textAlign="right"/>
+	<mx:Label x="376" y="318" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.FixedWaste')}"/>
+	<mx:Label x="374" y="340" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlHead')}" textAlign="right" id="label5"/>
+	<mx:Label x="369" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupFee')}" textAlign="right"/>
+	<mx:Label x="377" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddlSignaturesAddlHe')}" textAlign="right"/>
+	<mx:Label x="369" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupMinutes')}" textAlign="right"/>
+	<mx:Label x="380" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupTimePerFountai')}" textAlign="right"/>
 	<mx:HRule x="10" y="453" width="732" height="6" left="5" right="5"/>
 	<mx:HRule x="10" y="552" width="732" height="6" left="5" right="5"/>
-	<mx:Button x="11" y="467" label="Speed Table " width="97" click="doSpeedTable();"/>
-	<mx:Button x="380" y="467" label="Stock Price List" click="doStockPriceList();"/>
-	<mx:Button x="380" y="495" label="Press Price List" click="doPressPriceList();"/>
-	<mx:Button x="11" y="495" label="Waste Chart" click="doWasteChart();" width="97"/>
-	<mx:Button x="10" y="523" label="Add Charges" width="98"/>
-	<mx:CheckBox x="424" y="154" label="Perfector" id="Perfector" selected="{pressDefinition.perfector}"/>
-	<mx:Label x="133" y="524" text="Grip Edge/Gap:"/>
+	<mx:Button x="11" y="467" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SpeedTable')}" width="97" click="doSpeedTable();"/>
+	<mx:Button x="380" y="467" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.StockPriceList')}" click="doStockPriceList();"/>
+	<mx:Button x="380" y="495" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressPriceList')}" click="doPressPriceList();"/>
+	<mx:Button x="11" y="495" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WasteChart')}" click="doWasteChart();" width="97"/>
+	<mx:Button x="10" y="523" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddCharges')}" width="98"/>
+	<mx:CheckBox x="424" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
+	<mx:Label x="133" y="524" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.GripperEdge')}"/>
 	<mx:TextInput x="223" y="522" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="104"/>
 	<mx:Text x="132" y="497" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195"/>
 	<mx:Text x="132" y="470" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195"/>
 	<mx:Text x="501" y="469" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>
 	<mx:Text x="502" y="497" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}" width="165"/>
-	<mx:Button x="171" y="566" label="Default Presses" click="doDefaultPresses()" width="107"/>
-	<mx:Button x="568" y="566" label="Save" click="doSave()" width="67"/>
-	<mx:Button x="493" y="566" label="New" click="doNew()" width="67"/>
-	<mx:Button x="418" y="566" label="Delete" click="doDelete()" width="67"/>
+	<mx:Button x="171" y="566" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Default')}" click="doDefaultPresses()" width="107"/>
+	<mx:Button x="568" y="566" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" click="doSave()" width="67"/>
+	<mx:Button x="493" y="566" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew()" width="67"/>
+	<mx:Button x="418" y="566" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete()" width="67"/>
 	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
-	<mx:RadioButton x="548" y="154" label="Sheet Fed" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
-	<mx:RadioButton x="548" y="176" label="Roll Fed" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
-	<mx:Button x="343" y="566" label="Export" width="67" id="btnExport"/>
+	<mx:RadioButton x="548" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
+	<mx:RadioButton x="548" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
+	<mx:Button x="343" y="566" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="67" id="btnExport"/>
 </mx:Panel>
