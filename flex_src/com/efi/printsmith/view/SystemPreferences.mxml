@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationPolicy="all" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.vo.*"
-width="800" height="678" title="Preferences"
- label="Preferences" name="systempreferences" xmlns:ns1="com.efi.printsmith.components.*">
+width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
+ label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" name="systempreferences" xmlns:ns1="com.efi.printsmith.components.*">
  	<mx:states>
  	 	<mx:State name="CreditCardProcessorSetup">
  	 	 	<mx:RemoveChild target="{CreditCardGrid}"/>
@@ -2444,19 +2444,19 @@ width="800" height="678" title="Preferences"
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Job Ticket" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="30" y="30" text="Ticket Format:" textAlign="right"/>
+				<mx:Label x="30" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}" textAlign="right"/>
 				<mx:RadioButtonGroup id="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="Old Style (pre 5.0)" groupName="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="Standard Style" groupName="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="Custom Style:" groupName="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OldStylepre50')}" groupName="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStyle')}" groupName="opgTicketFormat"/>
+				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomStyle')}" groupName="opgTicketFormat"/>
 				<mx:ComboBox x="155" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="375"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Quantity Breaks" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
 				<mx:DataGrid width="270" id="QuantityBreaksGrid" 
@@ -2464,8 +2464,8 @@ width="800" height="678" title="Preferences"
 					editable="true" 
 					itemEditEnd="processQuantityBreaksGridData(event);" top="27" bottom="80" x="50">
 					<mx:columns>
-						<mx:DataGridColumn width="100" headerText="Quantity" dataField="quantity"/>
-						<mx:DataGridColumn width="50" headerText="Break" dataField="qtyBreak" editorDataField="selected"
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" dataField="quantity"/>
+						<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" dataField="qtyBreak" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2473,7 +2473,7 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="Job Method" dataField="jobMethod"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}" dataField="jobMethod"
 							itemEditor="com.efi.printsmith.itemRenderers.JobMethodEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2491,18 +2491,18 @@ width="800" height="678" title="Preferences"
 				</mx:Button>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Markups" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Markups')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Text x="50" y="30" text="Markup is stepped and based on COST of job before markup, the first amount covers from zero cost to the specified cost, the last amount includes all above as well." height="38" width="488"/>
+				<mx:Text x="50" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markupissteppedandba')}" height="38" width="488"/>
 
-				<mx:Label x="50" y="80" text="Outside Services" textAlign="right"/>
+				<mx:Label x="50" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}" textAlign="right"/>
 				<mx:DataGrid x="50" id="OutsideServicesGrid" 
 					dataProvider="{PreferencesMarkupsArray}" 
 					editable="true" top="100" bottom="80">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
 
@@ -2513,13 +2513,13 @@ width="800" height="678" title="Preferences"
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 
-				<mx:Label x="300" y="80" text="Merchandise" textAlign="right"/>
+				<mx:Label x="300" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}" textAlign="right"/>
 				<mx:DataGrid x="300" id="MerchandiseGrid" 
 					dataProvider="{PreferencesMarkupsMerchandiseArray}" 
 					editable="true" top="100" bottom="80">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Total Cost" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="Markup" dataField="markup"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup"/>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button x="300" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);" bottom="25">
@@ -2531,12 +2531,12 @@ width="800" height="678" title="Preferences"
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="stocksizes_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Stocks And Sizes" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StocksandSizes')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Panel x="50" y="27" layout="absolute" title="Standard Stock and Special Order Markup" width="500" height="295">
-					<mx:Label x="9" y="5" text="Quantity:" textAlign="right"/>
-					<mx:Label x="15" y="27" text="Markup:" textAlign="right"/>
+				<mx:Panel x="50" y="27" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStockandSpec')}" width="500" height="295">
+					<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
+					<mx:Label x="15" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
 
 					<mx:TextInput x="66" y="3" id="txtstdqty1" width="50" text="{preferencesStocks.stdQty1}"/>
 					<mx:TextInput x="116" y="3" id="txtstdqty2" width="50" text="{preferencesStocks.stdQty2}"/>
@@ -2552,11 +2552,11 @@ width="800" height="678" title="Preferences"
 					<mx:TextInput x="266" y="26" id="txtstdmarkup5" width="50" text="{preferencesStocks.stdMarkup5}"/>
 					<mx:TextInput x="316" y="26" id="txtstdmarkup6" width="50" text="{preferencesStocks.stdMarkup6}"/>
 
-					<mx:Label x="15" y="55" text="Stock weight, name and finish" textAlign="right"/>
-					<mx:Label x="15" y="95" text="Stock points, name and finish" textAlign="right"/>
-					<mx:Label x="15" y="135" text="Stock microns, name and finish" textAlign="right"/>
-					<mx:Label x="15" y="175" text="Stock plies, name and finish" textAlign="right"/>
-					<mx:Label x="15" y="215" text="Stock millimeters, name and finish" textAlign="right"/>
+					<mx:Label x="15" y="55" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockweightnameandfi')}" textAlign="right"/>
+					<mx:Label x="15" y="95" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpointsnameandfi')}" textAlign="right"/>
+					<mx:Label x="15" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmicronsnameandf')}" textAlign="right"/>
+					<mx:Label x="15" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfinh')}" textAlign="right"/>
+					<mx:Label x="15" y="215" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmillimetersname')}" textAlign="right"/>
 
 					<mx:TextInput x="15" y="70" id="txtStockWeight" text="{preferencesStocks.weight}" width="172"/>
 					<mx:TextInput x="15" y="110" id="txtstockPoints" text="{preferencesStocks.points}" width="172"/>
@@ -2564,9 +2564,9 @@ width="800" height="678" title="Preferences"
 					<mx:TextInput x="15" y="190" id="txtStockPlies" text="{preferencesStocks.plies}" width="172"/>
 					<mx:TextInput x="15" y="230" id="txtStockMillimeters" text="" width="172"/>
 				</mx:Panel>
-				<mx:Panel x="50" y="326" layout="absolute" title="Blank Stock Pricing" width="500" height="92">				
-					<mx:Label x="9" y="5" text="Quantity:" textAlign="right"/>
-					<mx:Label x="15" y="27" text="Markup:" textAlign="right"/>
+				<mx:Panel x="50" y="326" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.BlankStockPricing')}" width="500" height="92">				
+					<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
+					<mx:Label x="15" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
 
 					<mx:TextInput x="66" y="3" id="txtblankqty1" width="50" text="{preferencesStocks.blankQty1}"/>
 					<mx:TextInput x="116" y="3" id="txtblankqty2" width="50" text="{preferencesStocks.blankQty2}"/>
@@ -2583,32 +2583,32 @@ width="800" height="678" title="Preferences"
 					<mx:TextInput x="316" y="26" id="txtblankmarkup6" width="50" text="{preferencesStocks.blankMarkup6}"/>
 
 				</mx:Panel>
-				<mx:Panel x="50" y="422" layout="absolute" title="Customer Stock" width="500" height="134">
-					<mx:Label x="37" y="5" text="Stock Cost:" textAlign="right"/>
-					<mx:Label x="49" y="27" text="Quantity:" textAlign="right"/>
-					<mx:Label x="55" y="49" text="Markup:" textAlign="right"/>
+				<mx:Panel x="50" y="422" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomerStock')}" width="500" height="134">
+					<mx:Label x="37" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StockCost')}" textAlign="right"/>
+					<mx:Label x="49" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
+					<mx:Label x="55" y="49" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
 
 					<mx:TextInput x="109" y="3" id="txtcustomercost" width="50" text="{preferencesStocks.customerCost}"/>
 					<mx:TextInput x="109" y="26" id="txtcustomerquantity" width="50" text="{preferencesStocks.customerQuantity}"/>
 					<mx:TextInput x="109" y="49" id="txtcustomermarkup" width="50" text="{preferencesStocks.customerMarkup}"/>
 
-					<mx:CheckBox x="10" y="71" id="chkMarkupOnly" label="Markup Only (no stock cost)"/>
+					<mx:CheckBox x="10" y="71" id="chkMarkupOnly" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.MarkupOnlynostockcos')}"/>
 								
 				</mx:Panel>
 
-				<mx:Label x="50" y="564" text="Size Table to Use:" textAlign="right"/>
+				<mx:Label x="50" y="564" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SizeTabletoUse')}" textAlign="right"/>
 				<mx:ComboBox x="160" y="562" id="cboSizeTableToUse"/>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Stock Definitions" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StockDefinitions')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:DataGrid x="50" width="442" id="StockDefinitionGrid"
 					dataProvider="{PreferencesStockDefinitionArray}" 
 					editable="true" bottom="80" top="27">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Visible" dataField="visible" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2616,13 +2616,13 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="200" headerText="Column Title" labelFunction="columnsnameStockDefinition" editable="false"/>
+						<mx:DataGridColumn width="200" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ColumnTitle')}" labelFunction="columnsnameStockDefinition" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="pricingmethod_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Pricing Method" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
 				<mx:DataGrid x="50" width="500" id="PricingMethodGrid" 
@@ -2630,7 +2630,7 @@ width="800" height="678" title="Preferences"
 					editable="true" 
 					itemEditEnd="processPricingMethodGridData(event);" top="27" bottom="80">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Use')}" dataField="used" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2638,9 +2638,9 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="100" headerText="Title" dataField="title"/>
-						<mx:DataGridColumn width="100" headerText="Abbreviation" dataField="abbreviation"/>
-						<mx:DataGridColumn width="40" headerText="B" dataField="brokered" editorDataField="selected"
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Title')}" dataField="title"/>
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Abbreviation')}" dataField="abbreviation"/>
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.B')}" dataField="brokered" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2648,7 +2648,7 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="T" dataField="taxable" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.T')}" dataField="taxable" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2656,7 +2656,7 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="F" dataField="finished" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.F')}" dataField="finished" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2664,7 +2664,7 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="N" dataField="showNotes" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.N')}" dataField="showNotes" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2672,7 +2672,7 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="Sales Category" dataField="category"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.SalesCategory')}" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2680,7 +2680,7 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="Estimator" dataField="estimator"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Estimator')}" dataField="estimator"
 							itemEditor="com.efi.printsmith.itemRenderers.EstimatorTypesEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2699,15 +2699,15 @@ width="800" height="678" title="Preferences"
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditdefaults_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Credit/Defaults" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditDefaults')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="72" y="32" text="Credit Limit:" textAlign="right"/>
-				<mx:Label x="50" y="62" text="Finance Charge:" textAlign="right"/>
-				<mx:Label x="53" y="92" text="Inactive Period:" textAlign="right"/>
-				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="Remove Drafts from Deposit Ticket"/>
-				<mx:Label x="50" y="152" text="Default Sales Rep for New Accounts:" textAlign="right"/>
-				<mx:Label x="58" y="182" text="Default Shipping for New Accounts:" textAlign="right"/>
+				<mx:Label x="72" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right"/>
+				<mx:Label x="50" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FinanceCharge')}" textAlign="right"/>
+				<mx:Label x="53" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InactivePeriod')}" textAlign="right"/>
+				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Removedraftsfromdepo')}"/>
+				<mx:Label x="50" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}" textAlign="right"/>
+				<mx:Label x="58" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}" textAlign="right"/>
 
 				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379" text="{preferencesAccounting.creditLimit}"/>
 				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379" text="{preferencesAccounting.financeChange}"/>
@@ -2716,12 +2716,12 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="275" text="{preferencesAccounting.defaultShipping}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="agingperiods_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Aging Periods" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AgingPeriods')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="28" y="32" text="Past Due:" textAlign="right"/>
-				<mx:Label x="18" y="132" text="Delinquent:" textAlign="right"/>
-				<mx:Label x="41" y="232" text="Frozen:" textAlign="right"/>
+				<mx:Label x="28" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PastDue')}" textAlign="right"/>
+				<mx:Label x="18" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Delinquent')}" textAlign="right"/>
+				<mx:Label x="41" y="232" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frozen')}" textAlign="right"/>
 				<mx:TextInput x="90" y="30" id="txtPastDue" width="60" text="{preferencesAccounting.pastDue}"/>
 				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60" text="{preferencesAccounting.delinquent}"/>
 				<mx:TextInput x="90" y="230" id="txtFrozen" width="60" text="{preferencesAccounting.frozen}"/>
@@ -2732,14 +2732,14 @@ width="800" height="678" title="Preferences"
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Sales Categories" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SalesCategories')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				<mx:DataGrid x="50" width="200" id="SalesCategoryGrid"
 					dataProvider="{PreferencesSalesCategoryArray}"
 					editable="true"
 					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80">
 					<mx:columns>
-						<mx:DataGridColumn width="140" headerText="Name" dataField="category"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -2747,7 +2747,7 @@ width="800" height="678" title="Preferences"
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="GL Account" dataField="accountNumber" width="100"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}" dataField="accountNumber" width="100"/>
 					</mx:columns>
 				</mx:DataGrid>
 				
@@ -2760,23 +2760,23 @@ width="800" height="678" title="Preferences"
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="glprofiles_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="GL Profiles" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.GLProfiles')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="Link to:" textAlign="right"/>
+				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Linkto')}" textAlign="right"/>
 				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
 
-				<mx:Label x="50" y="62" text="Shipping Collected:" textAlign="right"/>
-				<mx:Label x="42" y="92" text="Actual Bank Deposit:" textAlign="right"/>
-				<mx:Label x="32" y="122" text="Undeposited Receipts:" textAlign="right"/>
-				<mx:Label x="100" y="152" text="Discounts:" textAlign="right"/>
-				<mx:Label x="98" y="182" text="Sales Tax:" textAlign="right"/>
-				<mx:Label x="55" y="212" text="Total AR Receipts:" textAlign="right"/>
-				<mx:Label x="37" y="242" text="Deposits on Invoices:" textAlign="right"/>
-				<mx:Label x="48" y="272" text="New Charges to AR:" textAlign="right"/>
-				<mx:Label x="61" y="302" text="Cash Over/Short:" textAlign="right"/>
-				<mx:Label x="105" y="332" text="Paid Out:" textAlign="right"/>
-				<mx:Label x="69" y="362" text="Refund Checks:" textAlign="right"/>
+				<mx:Label x="50" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ShippingCollected')}" textAlign="right"/>
+				<mx:Label x="42" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ActualBankDeposit')}" textAlign="right"/>
+				<mx:Label x="32" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UndepositedReceipts')}" textAlign="right"/>
+				<mx:Label x="100" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Discounts')}" textAlign="right"/>
+				<mx:Label x="98" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SalesTax')}" textAlign="right"/>
+				<mx:Label x="55" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TotalARReceipts')}" textAlign="right"/>
+				<mx:Label x="37" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DepositsonInvoices')}" textAlign="right"/>
+				<mx:Label x="48" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.NewChargestoAR')}" textAlign="right"/>
+				<mx:Label x="61" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.CashOverShort')}" textAlign="right"/>
+				<mx:Label x="105" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.PaidOut')}" textAlign="right"/>
+				<mx:Label x="69" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.RefundChecks')}" textAlign="right"/>
 
 				<mx:TextInput x="166" y="60"  id="txtShippingCollected" width="80" text="{preferencesAccounting.shippingCollected}"/>
 				<mx:TextInput x="166" y="90"  id="txtActualBankDeposit" width="80" text="{preferencesAccounting.actualBankDeposit}"/>
@@ -2790,32 +2790,32 @@ width="800" height="678" title="Preferences"
 				<mx:TextInput x="166" y="330" id="txtPaidOut" width="80" text="{preferencesAccounting.paidOut}"/>
 				<mx:TextInput x="166" y="360" id="txtRefundChecks" width="80" text="{preferencesAccounting.refundChecks}"/>
 
-				<mx:Label x="250" y="62" text="(income)" textAlign="right"/>
-				<mx:Label x="250" y="92" text="(asset)" textAlign="right"/>
-				<mx:Label x="250" y="122" text="(asset)" textAlign="right"/>
-				<mx:Label x="250" y="152" text="(expense)" textAlign="right"/>
-				<mx:Label x="250" y="182" text="(liability)" textAlign="right"/>
-				<mx:Label x="250" y="212" text="(asset)" textAlign="right"/>
-				<mx:Label x="250" y="242" text="(liability)" textAlign="right"/>
-				<mx:Label x="250" y="272" text="(asset)" textAlign="right"/>
-				<mx:Label x="250" y="302" text="(expense)" textAlign="right"/>
-				<mx:Label x="250" y="332" text="(expense)" textAlign="right"/>
-				<mx:Label x="250" y="362" text="(asset)" textAlign="right"/>
+				<mx:Label x="250" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.income')}" textAlign="right"/>
+				<mx:Label x="250" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
+				<mx:Label x="250" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
+				<mx:Label x="250" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
+				<mx:Label x="250" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="right"/>
+				<mx:Label x="250" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
+				<mx:Label x="250" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="right"/>
+				<mx:Label x="250" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
+				<mx:Label x="250" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
+				<mx:Label x="250" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
+				<mx:Label x="250" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
 
-				<mx:Label x="30" y="392" text="Enter General Ledger control account numbers to use when exporting accounting information." textAlign="right"/>
+				<mx:Label x="30" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnterGeneralLedgerco')}" textAlign="right"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect" creationPolicy="all">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Credit Card Info" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditCardInfo')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="Activate Credit Card Approval Processing"/>
+				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Activatecreditcardap')}"/>
 				
 				<mx:DataGrid x="50" width="300" id="CreditCardGrid"
 					dataProvider="{PreferencesCreditCardArray}"
 					editable="true" top="296" bottom="80">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="Use" dataField="used" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Use')}" dataField="used" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2823,9 +2823,9 @@ width="800" height="678" title="Preferences"
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="Card Title" dataField="cardType"/>
-						<mx:DataGridColumn headerText="Abbrev." dataField="abbreviation" width="60"/>
-						<mx:DataGridColumn headerText="Code" dataField="code" width="50"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CardTitle')}" dataField="cardType"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Abbrev')}" dataField="abbreviation" width="60"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Code')}" dataField="code" width="50"/>
 					</mx:columns>
 				</mx:DataGrid>
 				
@@ -2843,38 +2843,38 @@ width="800" height="678" title="Preferences"
 
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="ordernumberformat_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Order Number Format" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.OrderNumberFormat')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Panel x="50" y="27" layout="absolute" title="Invoice" width="500" height="226">
-					<mx:Label x="10" y="13" text="Prefix" textAlign="right"/>
-					<mx:Label x="130" y="13" text="Document #" textAlign="right"/>
-					<mx:Label x="250" y="13" text="Suffix" textAlign="right"/>
+				<mx:Panel x="50" y="27" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice')}" width="500" height="226">
+					<mx:Label x="10" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}" textAlign="right"/>
+					<mx:Label x="130" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}" textAlign="right"/>
+					<mx:Label x="250" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}" textAlign="right"/>
 					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}"/>
-					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="Allow Prefix Modification"/>
-					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="Allow Suffix Modification"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"/>
 				</mx:Panel>
 
-				<mx:Panel x="50" y="261" layout="absolute" title="Estimate" width="500" height="226">
-					<mx:Label x="10" y="13" text="Prefix" textAlign="right"/>
-					<mx:Label x="130" y="13" text="Document #" textAlign="right"/>
-					<mx:Label x="250" y="13" text="Suffix" textAlign="right"/>
+				<mx:Panel x="50" y="261" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate')}" width="500" height="226">
+					<mx:Label x="10" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}" textAlign="right"/>
+					<mx:Label x="130" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}" textAlign="right"/>
+					<mx:Label x="250" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}" textAlign="right"/>
 					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}"/>
-					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="Allow Prefix Modification"/>
-					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="Allow Suffix Modification"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="journalentries_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="Journal Entries" textAlign="center"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JournalEntries')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="Print Document"/>
+				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.PrintDocument')}"/>
 				
-				<mx:Label x="50" y="92" text="Journal Document Preference:" textAlign="right"/>
+				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.JournalDocumentPrefe')}" textAlign="right"/>
 				<mx:ComboBox x="224" y="90" id="cboJournalDocumentPreference"  dataProvider="{JournalDocumentPreferenceArray}" labelField="name" width="250"/>
 
 			</mx:Canvas>
