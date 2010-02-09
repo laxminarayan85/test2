@@ -726,114 +726,114 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
 		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
-			<mx:Canvas label="Address" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
 				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" focusOut="changeName(event)"/>
-				<mx:Text x="10" y="12" text="Acct #:&#xd;" width="46"/>
+				<mx:Text x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.accountId}"/>
-				<mx:Label x="232" y="12" text="Name:" textAlign="right"/>
+				<mx:Label x="232" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Name')}" textAlign="right"/>
 				<mx:TextInput x="282" y="38" id="external_ref_edit"  text="{account.externalRef}"/>
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
-				<mx:Label x="139" y="68" text="External Accounting ID:" textAlign="right"/>
-				<mx:Label x="184" y="40" text="External Ref #:" textAlign="right"/>
+				<mx:Label x="139" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ExternalAccountingID')}" textAlign="right"/>
+				<mx:Label x="184" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.ExternalRef')}" textAlign="right"/>
 				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
 				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 			</mx:Canvas>
-			<mx:Canvas label="Credit Control" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>
-				<mx:Label x="99" y="12" text="Credit Limit:" textAlign="right"/>
+				<mx:Label x="99" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right"/>
 				<mx:TextInput x="181" y="38" id="due_days_edit" text="{account.termsNet}"/>
 				<mx:TextInput x="181" y="66" id="monthly_finance_charge_edit" text="{account.financeRate}"  focusOut="ClearLabel();"/>
-				<mx:Label x="10" y="68" text="Monthly Finance Charge Pct:" textAlign="right"/>
-				<mx:Label x="45" y="94" text="Finance Charges YTD:" textAlign="right"/>
-				<mx:Label x="45" y="120" text="Current Balance:" textAlign="right" width="128"/>
+				<mx:Label x="10" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.MonthlyFinanceCharge')}" textAlign="right"/>
+				<mx:Label x="45" y="94" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FinanceChargesYTD')}" textAlign="right"/>
+				<mx:Label x="45" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CurrentBalance')}" textAlign="right" width="128"/>
 				<mx:Label x="181" y="120" text="0.00" textAlign="right" width="160" id="current_balance_edit"/>
 				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160" id="finance_charges_ytd_edit"/>
-				<mx:Label x="36" y="40" text="Due days from posting:" textAlign="right"/>
+				<mx:Label x="36" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Duedaysfromposting')}" textAlign="right"/>
 				<mx:Text x="349" y="12" text="(Using system limit of 2,500.00)&#xd;" width="348" fontWeight="bold" id="limit"/>
 				<mx:Text x="349" y="40" text="Avg. Days to Pay&#xd;" width="304" fontWeight="bold"/>
 				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)" width="348" fontWeight="bold" id="standardratelabel"/>
-				<mx:CheckBox x="384" y="92" label="Never calculate finance charges" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
-				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="Automatic Discount" dropShadowEnabled="false">
+				<mx:CheckBox x="384" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Nevercalculatefinanc')}" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
+				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AutomaticDiscount')}" dropShadowEnabled="false">
 					<mx:TextInput x="85" y="10" width="132" id="auto_discount_percent_edit" text="{account.discount}"/>
 					<mx:TextInput x="85" y="40" width="132" id="auto_discount_dollar_text" text="{account.discountDollarAmt}"/>
 					<mx:RadioButtonGroup id="auto_discount" selectedValue="{autoDiscountRadioValue}"/>
-					<mx:RadioButton x="10" y="10" label="Percent:" id="auto_discount_percent_radio" value="discount_percent" groupName="auto_discount"/>
-					<mx:RadioButton x="10" y="40" label="Dollars:" id="auto_discount_dollar_radio" value="discount_dollar" groupName="auto_discount"/>
-					<mx:CheckBox x="225" y="40" label="One-time discount" id="one_time_discount_check" selected="{account.oneTimeDiscount}"/>
+					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Percent')}" id="auto_discount_percent_radio" value="discount_percent" groupName="auto_discount"/>
+					<mx:RadioButton x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Dollars')}" id="auto_discount_dollar_radio" value="discount_dollar" groupName="auto_discount"/>
+					<mx:CheckBox x="225" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Onetimediscount')}" id="one_time_discount_check" selected="{account.oneTimeDiscount}"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="Account Status" dropShadowEnabled="false">
+				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AccountStatus')}" dropShadowEnabled="false">
 					<mx:RadioButtonGroup id="acct_status" selectedValue="{acctStatusRadioValue}"/>
-					<mx:RadioButton x="10" y="10" label="New" id="acct_status_new_radio" groupName="acct_status" value="CustomerStatusNew"/>
-					<mx:RadioButton x="138" y="10" label="Current" id="acct_status_current_radio" groupName="acct_status" value="CustomerStatusCurrent"/>
-					<mx:RadioButton x="138" y="40" label="Delinquent" id="acct_status_delinquent_radio" groupName="acct_status" value ="CustomerStatusDeliguent"/>
-					<mx:RadioButton x="303" y="10" label="Inactive" id="acct_status_inactive_radio" groupName="acct_status" value="CustomerStatusInactive"/>
-					<mx:RadioButton x="303" y="43" label="Frozen" id="acct_status_frozen_radio" groupName="acct_status"  value="CustomerStatusFrozen"/>
-					<mx:RadioButton x="10" y="40" label="Past Due" id="acct_status_past_due_radio" groupName="acct_status" value="CustomerStatusPastDue" />
+					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.New')}" id="acct_status_new_radio" groupName="acct_status" value="CustomerStatusNew"/>
+					<mx:RadioButton x="138" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Current')}" id="acct_status_current_radio" groupName="acct_status" value="CustomerStatusCurrent"/>
+					<mx:RadioButton x="138" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Delinquent')}" id="acct_status_delinquent_radio" groupName="acct_status" value ="CustomerStatusDeliguent"/>
+					<mx:RadioButton x="303" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Inactive')}" id="acct_status_inactive_radio" groupName="acct_status" value="CustomerStatusInactive"/>
+					<mx:RadioButton x="303" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Frozen')}" id="acct_status_frozen_radio" groupName="acct_status"  value="CustomerStatusFrozen"/>
+					<mx:RadioButton x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.PastDue')}" id="acct_status_past_due_radio" groupName="acct_status" value="CustomerStatusPastDue" />
 				</mx:Panel>
-				<mx:Panel x="420" y="146" width="208" height="241" layout="absolute" title="Type" dropShadowEnabled="false">
+				<mx:Panel x="420" y="146" width="208" height="241" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Type')}" dropShadowEnabled="false">
 					<mx:RadioButtonGroup id="acct_type" selectedValue="{acctTypeRadioValue}"/>
-					<mx:RadioButton x="10" y="10" label="Full Deposit" id="type_full_deposit_radio" groupName="acct_type" value="full_deposit"/>
-					<mx:RadioButton x="10" y="40" label="Cash only" id="type_cash_only_radio" groupName="acct_type" value="cash_only"/>
-					<mx:RadioButton x="10" y="70" label="Cash/Check/Credit Card" id="type_cash_check_credit_radio" groupName="acct_type" value="cash_check_credit"/>
-					<mx:RadioButton x="10" y="100" label="Charge Account" id="type_charge_account_radio" groupName="acct_type" value="charge_acct"/>
-					<mx:RadioButton x="10" y="130" label="Credit Card on File" id="type_credit_card_on_file_radio" groupName="acct_type" value="credit_card_on_file"/>
+					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.FullDeposit')}" id="type_full_deposit_radio" groupName="acct_type" value="full_deposit"/>
+					<mx:RadioButton x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashOnly')}" id="type_cash_only_radio" groupName="acct_type" value="cash_only"/>
+					<mx:RadioButton x="10" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashCheckCreditCard')}" id="type_cash_check_credit_radio" groupName="acct_type" value="cash_check_credit"/>
+					<mx:RadioButton x="10" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.ChargeAccount')}" id="type_charge_account_radio" groupName="acct_type" value="charge_acct"/>
+					<mx:RadioButton x="10" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CreditCardonFile')}" id="type_credit_card_on_file_radio" groupName="acct_type" value="credit_card_on_file"/>
 				</mx:Panel>
 			</mx:Canvas>
-			<mx:Canvas label="Settings" width="100%" height="100%" >
-				<mx:Label x="10" y="10" text="Master Account:" textAlign="right"/>
-				<mx:Label x="10" y="36" text="Sales Rep:" textAlign="right" width="93"/>
-				<mx:Label x="10" y="62" text="Business Type:" textAlign="right" width="93"/>
-				<mx:Label x="10" y="116" text="PO Number:" textAlign="right" width="93"/>
-				<mx:Label x="305" y="234" text="Security level:" textAlign="right" width="93"/>
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Settings')}" width="100%" height="100%" >
+				<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}" textAlign="right"/>
+				<mx:Label x="10" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.SalesRep')}" textAlign="right" width="93"/>
+				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.BusinessType')}" textAlign="right" width="93"/>
+				<mx:Label x="10" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PONumber')}" textAlign="right" width="93"/>
+				<mx:Label x="305" y="234" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Securitylevelofthisa')}" textAlign="right" width="93"/>
 				<mx:Text x="111" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
 				<mx:Text x="111" y="10" width="464" id="master_acct_edit"/>
-				<mx:Button x="583" y="8" label="Select..."/>
+				<mx:Button x="583" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Select')}"/>
 				<fc:AutoComplete id="sales_rep_combo" x="111" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<fc:AutoComplete id="business_type_combo" x="111" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
 					
-				<mx:Label x="10" y="90" text="Ship Via:" textAlign="right" width="93"/>
+				<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" textAlign="right" width="93"/>
 				<fc:AutoComplete id="ship_via_combo" x="111" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
 				
-				<mx:Label x="10" y="264" text="Default Invoice:" textAlign="right" width="102"/>
+				<mx:Label x="10" y="264" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DefaultInvoice')}" textAlign="right" width="102"/>
 				<mx:ComboBox x="120" y="262" width="160" id="default_invoice_combo"></mx:ComboBox>
-				<mx:Label x="10" y="292" text="Default Estimate:" textAlign="right" width="102"/>
+				<mx:Label x="10" y="292" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DefaultEstimate')}" textAlign="right" width="102"/>
 				<mx:ComboBox x="120" y="290" width="160" id="default_estimate_combo"></mx:ComboBox>
-				<mx:CheckBox x="10" y="142" label="PO Required on invoices" width="236" id="po_required_check" selected="{account.poRequired}"/>
-				<mx:CheckBox x="10" y="172" label="Do not generate statements" width="236" id="do_not_generate_statements_check" selected="{account.generateStatements}"/>
-				<mx:CheckBox x="10" y="202" label="Account is commissioned" width="236" id="account_is_commissioned" selected="{account.payCommissions}"/>
-				<mx:CheckBox x="10" y="232" label="Always file originals" width="236" id="always_file_originals" selected="{account.fileOriginals}"/>
-				<mx:Panel x="305" y="38" width="351" height="186" layout="absolute" title="Tax Setup" dropShadowEnabled="false">
-					<mx:Label x="0" y="12" text="Tax Table:" textAlign="right" width="93"/>
+				<mx:CheckBox x="10" y="142" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.POReq')}" width="236" id="po_required_check" selected="{account.poRequired}"/>
+				<mx:CheckBox x="10" y="172" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DoNOTgeneratestateme')}" width="236" id="do_not_generate_statements_check" selected="{account.generateStatements}"/>
+				<mx:CheckBox x="10" y="202" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Accountiscommissione')}" width="236" id="account_is_commissioned" selected="{account.payCommissions}"/>
+				<mx:CheckBox x="10" y="232" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Alwaysfileoriginals')}" width="236" id="always_file_originals" selected="{account.fileOriginals}"/>
+				<mx:Panel x="305" y="38" width="351" height="186" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxSetup')}" dropShadowEnabled="false">
+					<mx:Label x="0" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" textAlign="right" width="93"/>
 					
 					<fc:AutoComplete id="tax_table_combo" x="101" y="10" width="160" dataProvider="{taxTables}"  labelField="name" focusOut="doTaxTable()" lookAhead="true" />
 					<fc:AutoComplete id="tax_code_combo" x="101" y="38" width="160" dataProvider="{taxCodes}"  labelField="name" focusOut="doTaxCode()" lookAhead="true" />
 			
-					<mx:Label x="0" y="38" text="Tax Code:" textAlign="right" width="93"/>
-					<mx:Label x="10" y="64" text="Resale #:" textAlign="right" width="83"/>
+					<mx:Label x="0" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}" textAlign="right" width="93"/>
+					<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Resale')}" textAlign="right" width="83"/>
 					<mx:TextInput x="101" y="64" width="160" id="resale_number_edit"  text="{account.resaleNumber}"/>
-					<mx:Label x="10" y="90" text="Cert Expires:" textAlign="right" width="83"/>
-					<mx:CheckBox x="101" y="116" label="Tax Exempt" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
+					<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CertExpires')}" textAlign="right" width="83"/>
+					<mx:CheckBox x="101" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxExempt')}" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
 					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="318" width="350" height="103" layout="absolute" title="Charges Setup" dropShadowEnabled="false">
 					<mx:Label x="10" y="10" text="Invoice &amp; Estimate Charges:"/>
 					<mx:Label x="94" y="36" text="Job Charges:"/>
-					<mx:Button x="181" y="8" label="Edit..." id="inv_estimate_charges_edit"/>
-					<mx:Button x="181" y="34" label="Edit..." id="job_charges_edit"/>
+					<mx:Button x="181" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Edit')}" id="inv_estimate_charges_edit"/>
+					<mx:Button x="181" y="34" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Edit')}" id="job_charges_edit"/>
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
 			</mx:Canvas>
-			<mx:Canvas label="Sales Info" width="100%" height="100%">
-				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="Balance" dropShadowEnabled="false">
-					<mx:Label x="22" y="10" text="Current:"/>
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" width="100%" height="100%">
+				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Balance')}" dropShadowEnabled="false">
+					<mx:Label x="22" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'agingLabelText.Current')}"/>
 					<mx:Label x="18" y="36" text="30 Days:"/>
 					<mx:Text x="81" y="10" width="64" id="balance_current_text"  text="{account.balance}"/>
-					<mx:Label x="181" y="10" text="Acct Status:"/>
-					<mx:Label x="168" y="36" text="POS Charges:"/>
+					<mx:Label x="181" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Status')}"/>
+					<mx:Label x="168" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.POSCharges')}"/>
 					<mx:Text x="259" y="36" text="&#xd;&#xd;" width="88" textAlign="right" height="18" id="pos_charges_text"/>
-					<mx:Label x="153" y="64" text="Current Balance:"/>
+					<mx:Label x="153" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CurrentBalance')}"/>
 					<mx:Text x="259" y="10" width="88" textAlign="right" height="18" id="acct_status_text"  text="{account.status}"/>
 					<mx:Text x="259" y="64" width="88" textAlign="right" height="18" id="current_balance_text" text="{account.balanceCurrent}"/>
 					<mx:Text x="81" y="36" width="64" id="balance_30_day_text" text="{account.balance30Day}"/>
@@ -841,7 +841,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:Text x="81" y="62" width="64" id="balance_60_day_text" text="{account.balance60Day}"/>
 					<mx:Label x="10" y="88" text="90+ Days:"/>
 					<mx:Text x="81" y="88" width="64" id="balance_90_day_text" text="{account.balance90Day}"/>
-					<mx:Button x="259" y="86" label="Age Now" id="age_now_button"/>
+					<mx:Button x="259" y="86" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Agenow')}" id="age_now_button"/>
 				</mx:Panel>
 				<mx:ColumnChart x="395" y="10" id="balance_chart" width="274" height="163" dataProvider="{balances}" showDataTips="true">
 		            <mx:horizontalAxis>
@@ -857,18 +857,18 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		                   />
 		            </mx:series>				
 		        </mx:ColumnChart>
-				<mx:Label x="39" y="181" text="Sales Ranking:"/>
-				<mx:Label x="63" y="207" text="Sales Rep:"/>
+				<mx:Label x="39" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRanking')}"/>
+				<mx:Label x="63" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}"/>
 				<mx:Text x="137" y="207" width="64" id="sales_rep_text" text="{account.salesRep.name}"/>
 				<mx:Text x="137" y="181" width="64" id="sales_ranking_text"/>
-				<mx:Panel x="10" y="233" width="377" height="191" layout="absolute" title="Sales History" dropShadowEnabled="false">
-					<mx:Label x="56" y="29" text="Sales"/>
-					<mx:Label x="37" y="55" text="# Orders"/>
+				<mx:Panel x="10" y="233" width="377" height="191" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.History')}" dropShadowEnabled="false">
+					<mx:Label x="56" y="29" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}"/>
+					<mx:Label x="37" y="55" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.orders')}"/>
 					<mx:Text x="99" y="29" width="64"/>
 					<mx:Text x="99" y="55" width="64"/>
-					<mx:Label x="31" y="81" text="Avg Order"/>
+					<mx:Label x="31" y="81" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AverageOrder')}"/>
 					<mx:Text x="99" y="81" width="64"/>
-					<mx:Label x="10" y="107" text="Quote:Orders"/>
+					<mx:Label x="10" y="107" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.QuotesOrders')}"/>
 					<mx:Text x="99" y="107" width="64"/>
 					<mx:Text x="171" y="29" width="64"/>
 					<mx:Text x="171" y="55" width="64"/>
@@ -878,61 +878,61 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:Text x="243" y="55" width="64"/>
 					<mx:Text x="243" y="81" width="64"/>
 					<mx:Text x="243" y="107" width="64"/>
-					<mx:Label x="99" y="10" text="Month" width="64" textAlign="center" fontWeight="bold"/>
-					<mx:Label x="171" y="10" text="Cur Year" width="64" textAlign="center" fontWeight="bold"/>
-					<mx:Label x="243" y="10" text="Last Year" width="64" textAlign="center" fontWeight="bold"/>
+					<mx:Label x="99" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ThisMonth')}" width="64" textAlign="center" fontWeight="bold"/>
+					<mx:Label x="171" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ThisYear')}" width="64" textAlign="center" fontWeight="bold"/>
+					<mx:Label x="243" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastYear')}" width="64" textAlign="center" fontWeight="bold"/>
 				</mx:Panel>
-				<mx:Label x="458" y="181" text="Created:"/>
-				<mx:Label x="433" y="207" text="Total Orders:"/>
+				<mx:Label x="458" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}"/>
+				<mx:Label x="433" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Totalorders')}"/>
 				<mx:Text x="520" y="181" width="149" id="created_date_text"/>
 				<mx:Text x="520" y="207" width="149" id="total_orders_qty_text"/>
-				<mx:Label x="445" y="233" text="Last Billed:"/>
+				<mx:Label x="445" y="233" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastBilled')}"/>
 				<mx:Text x="520" y="233" width="149" id="last_billed_text"/>
-				<mx:Label x="426" y="259" text="Last Payment:"/>
+				<mx:Label x="426" y="259" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastPayment')}"/>
 				<mx:Text x="520" y="259" width="149" id="last_payment_date_text"/>
-				<mx:Label x="447" y="285" text="Last Aged:"/>
+				<mx:Label x="447" y="285" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastAged')}"/>
 				<mx:Text x="520" y="285" width="149" id="last_aged_date_text"/>
-				<mx:Label x="435" y="311" text="Last Invoice:"/>
+				<mx:Label x="435" y="311" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastInvoice')}"/>
 				<mx:Text x="520" y="311" width="149" id="last_invoice_date_text"/>
-				<mx:Label x="427" y="337" text="Last Estimate:"/>
+				<mx:Label x="427" y="337" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastEstimate')}"/>
 				<mx:Text x="520" y="337" width="149" id="last_estimate_date_text"/>
-				<mx:Label x="435" y="363" text="First Invoice:"/>
-				<mx:Label x="427" y="389" text="First Estimate:"/>
-				<mx:Label x="429" y="415" text="Est Won/Lost:"/>
+				<mx:Label x="435" y="363" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstInvoice')}"/>
+				<mx:Label x="427" y="389" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstEstimate')}"/>
+				<mx:Label x="429" y="415" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.EstimatesWonLost')}"/>
 				<mx:Text x="520" y="363" width="149" id="first_invoice_date_text"/>
 				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text"/>
 				<mx:Text x="520" y="415" width="149" id="won_lost_text"/>
 			</mx:Canvas>
-			<mx:Canvas label="Log" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Log')}" width="100%" height="100%">
 				<mx:DataGrid x="10" y="10" width="659" height="226" id="log_dataGrid" dataProvider="{customerLogs}">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Created" dataField="modified"/>
-						<mx:DataGridColumn headerText="Comment" dataField="logEntry"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Created')}" dataField="modified"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Comment')}" dataField="logEntry"/>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:TextArea x="134" y="244" width="535" height="103" id="selected_comment_edit"/>
-				<mx:Label x="10" y="245" text="Selected Comment:"/>
-				<mx:Button x="589" y="355" label="Delete" width="80" id="delete_log_button" click="deleteCustomerLog()"/>
-				<mx:Button x="501" y="355" label="Add..." width="80" id="add_log_button" click="addCustomerLog()"/>
-				<mx:Button x="337" y="355" label="Print Log" width="80" id="print_log_button" click="printCustomerLog()"/>
+				<mx:Label x="10" y="245" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'portableCmd.Selected')}"/>
+				<mx:Button x="589" y="355" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="80" id="delete_log_button" click="deleteCustomerLog()"/>
+				<mx:Button x="501" y="355" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Add')}" width="80" id="add_log_button" click="addCustomerLog()"/>
+				<mx:Button x="337" y="355" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}" width="80" id="print_log_button" click="printCustomerLog()"/>
 			</mx:Canvas>
-			<mx:Canvas label="Notes" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Notes')}" width="100%" height="100%">
 				<mx:TextArea x="10" y="36" editable="true" width="659" height="80" id="acct_selection_note_edit" text= "{account.accountNote}"/>
-				<mx:Label x="10" y="10" text="Account Selection Note:"/>
+				<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Accountselectionnoti')}"/>
 				<mx:TextArea x="10" y="150" editable="true" width="659" height="80" id="job_note_edit" text="{account.jobNote}"/>
 				<mx:TextArea x="10" y="264" editable="true" width="659" height="80" id="statement_note_edit" text="{account.statementNote}"/>
-				<mx:Label x="10" y="238" text="Statement Note:"/>
-				<mx:Label x="10" y="124" text="Job Note:"/>
+				<mx:Label x="10" y="238" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Noticetoplaceonstate')}"/>
+				<mx:Label x="10" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Notestoinsertineachj')}"/>
 			</mx:Canvas>
-			<mx:Canvas label="Marketing" width="100%" height="100%" >
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%" >
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
-				<mx:RadioButton x="10" y="10" label="Customer" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
-				<mx:RadioButton x="10" y="36" label="Prospect" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>
-				<mx:CheckBox x="123" y="10" label="Personal account" id="personalAccount" selected="{account.marketing.personalAcct}"/>
-				<mx:CheckBox x="123" y="36" label="Do not mail" id="noMail" selected="{account.marketing.noMail}"/>
-				<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="Company Info" dropShadowEnabled="false">
-					<mx:Label x="12" y="10" text="Num Employees:" textAlign="right"/>
-					<mx:Label x="10" y="38" text="Annual Revenue:" textAlign="right"/>
+				<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
+				<mx:RadioButton x="10" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')}" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>
+				<mx:CheckBox x="123" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PersonalAccount')}" id="personalAccount" selected="{account.marketing.personalAcct}"/>
+				<mx:CheckBox x="123" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Donotmail')}" id="noMail" selected="{account.marketing.noMail}"/>
+				<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Company')}" dropShadowEnabled="false">
+					<mx:Label x="12" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.NumberofEmployees')}" textAlign="right"/>
+					<mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AnnualRevenue')}" textAlign="right"/>
 					<mx:TextInput x="119" y="38" width="152" id="annualRev" text="{account.marketing.annualRev}"/>
 					<mx:TextInput x="119" y="10" width="152" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
 					<!--<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
@@ -940,7 +940,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<fc:AutoComplete id="business_type_combo" x="119" y="64" width="152" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
 				-->
 				</mx:Panel>
-				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="Marketing Dates" dropShadowEnabled="false">
+				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingDates')}" dropShadowEnabled="false">
 					<mx:Label x="12" y="10" text="Follow Up:" textAlign="right"/>
 					<mx:Label x="10" y="38" text="Birthdate:" textAlign="right"/>
 					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>
@@ -952,7 +952,7 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:DateField x="94" y="92" id="userDate4" text="{account.marketing.user4}" showToday="false" width="136"/>
 					<mx:DateField x="94" y="120" id="userDate5" text="{account.marketing.user5}" showToday="false" width="136"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="Marketing Tags" dropShadowEnabled="false">
+				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingTags')}" dropShadowEnabled="false">
 					<mx:Label x="28" y="10" text="Lead Source:" textAlign="right"/>
 					<mx:Label x="-3" y="38" text="Common Interest:" textAlign="right"/>
 					<mx:TextInput x="114" y="36" width="175" id="commonInterest" text="{account.marketing.commonInterst}"/>
@@ -975,9 +975,9 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 					<mx:Label x="372" y="127" text="Mailer Type:" textAlign="right"/>
 				</mx:Panel>
 			</mx:Canvas>
-			<mx:Canvas label="Templates" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Templates')}" width="100%" height="100%">
 			</mx:Canvas>
-			<mx:Canvas label="Web" width="100%" height="100%">
+			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.We')}" width="100%" height="100%">
 			</mx:Canvas>
 		</mx:TabNavigator>
 		<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
@@ -986,28 +986,28 @@ creationComplete="init()" label="Customer Editor" name="Customer Editor" xmlns:n
 		<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
 			<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="10" y="46" text="Prev" width="38" textAlign="center"/>
-		<mx:Label x="56" y="46" text="Next" width="38" textAlign="center"/>
-		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{formIsValid}">
+		<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center"/>
+		<mx:Label x="56" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center"/>
+		<mx:Button x="171" y="10" width="38" height="38" click="doSave();">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="171" y="46" text="Save" width="38" textAlign="center"/>
+		<mx:Label x="171" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
 		<mx:Button x="217" y="10" width="38" height="38" click="doGet();">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="217" y="46" text="Get" width="38" textAlign="center"/>
+		<mx:Label x="217" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
 		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
 		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="360" y="46" text="Delete" width="58" textAlign="center"/>
+	    <mx:Label x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
 		<mx:Button x="493" y="10" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="483" y="46" text="Revert" width="58" textAlign="center"/>
-		<mx:Label x="263" y="46" text="New" width="38" textAlign="center"/>
+		<mx:Label x="483" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
+		<mx:Label x="263" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
 	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>
