@@ -4,9 +4,11 @@
 	showCloseButton="false" 
 	creationComplete="init()"
     close="PopUpManager.removePopUp(this);" 
-    title="Price List" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
+    xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
     horizontalScrollPolicy="off" 
-    label="Price List" name="Price List"
+    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
+    name="Price List"
     verticalScrollPolicy="off" fontSize="9">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -76,7 +78,7 @@
 			<mx:ComboBox id="cboMethod" x="204" y="87" dataProvider="{PaperPriceMethodArray}" labelField="name" width="176"></mx:ComboBox>
 		</mx:AddChild>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:Label x="204" y="66" text="Method:" textAlign="right"/>
+			<mx:Label x="204" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right"/>
 		</mx:AddChild>
 	</mx:State>
 </mx:states>
@@ -118,13 +120,13 @@
 	private var ColorArray:ArrayCollection = new ArrayCollection();
 	
     [Bindable]
-    private var quantity_header:String = "Quantity";
+    private var quantity_header:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
     [Bindable]
-    private var price_header:String = "Price";
+    private var price_header:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price');
     [Bindable]
-	private var side_header:String = "Side";
+	private var side_header:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides');
     [Bindable]
-	private var color_header:String = "Color";                                                     	         
+	private var color_header:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color'); 
 
 	public var itemType:String;
 
@@ -351,17 +353,20 @@
 		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="30"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="OK" id="select_button" enabled="true" click="doSelect();"  width="97" x="229" y="254"/>
-		<mx:Button label="Cancel" enabled="true" click="doClear();" id="clear_button" width="97" x="229" y="284"/>
 		<mx:TextInput x="204" y="10" id="title_edit" text="{priceList.name}" width="176"/>
-		<mx:Label x="162" y="12" text="Title:" id="label1" textAlign="right"/>
+
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="229" y="254"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="229" y="284"/>
+		<mx:Label x="162" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right"/>
+
 		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
-		<mx:RadioButton x="162" y="38" label="Amount is currency" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
-		<mx:RadioButton x="162" y="58" label="Amount is percent" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
-		<mx:CheckBox x="162" y="156" label="Ignore global price changes" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
-		<mx:CheckBox x="162" y="94" label="Interpolate" selected="{priceList.interpolate}" id="chkInterpolate"/>
-		<mx:CheckBox x="185" y="134" label="Production discount" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
-		<mx:CheckBox x="162" y="114" label="Use as rate list" selected="{priceList.isRate}" id="chkUseAsRateList"/>
+		<mx:RadioButton x="162" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
+		<mx:RadioButton x="162" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
+		<mx:CheckBox x="162" y="156" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
+		<mx:CheckBox x="162" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Interpolate')}" selected="{priceList.interpolate}" id="chkInterpolate"/>
+		<mx:CheckBox x="185" y="134" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.ProductionDiscount')}" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
+		<mx:CheckBox x="162" y="114" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UseasRateList')}" selected="{priceList.isRate}" id="chkUseAsRateList"/>
+
 		<mx:LinkButton x="89"
 					   id="remove_pricelistelement_button"
 					   click="doRemovePriceListElement()"
