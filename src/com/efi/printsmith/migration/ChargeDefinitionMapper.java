@@ -13,10 +13,13 @@ import com.efi.printsmith.data.Substrate;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.data.Charge;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		ChargeDefinition chargeDefinition = new ChargeDefinition();
+		Charge charge = new Charge();
+		
 		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
@@ -30,9 +33,10 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("importedChargeID".equals(currentFieldToken)) {
 				chargeDefinition.setId(Utilities.tokenToLong(currentImportToken));
 			} else if ("description".equals(currentFieldToken)) {
-				/* TODO */
+				charge.setDescription(currentImportToken);
 			} else if ("notes".equals(currentFieldToken)) {
 				chargeDefinition.setNote(currentImportToken);
+				charge.setNotes(currentImportToken);
 			} else if ("list ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("charge ID".equals(currentFieldToken)) {
@@ -53,20 +57,26 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setMaterialSetCount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("price".equals(currentFieldToken)) {
 				chargeDefinition.setPrice(Utilities.tokenToDouble(currentImportToken));
+				charge.setPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("start".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stop".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("shownotes".equals(currentFieldToken)) {
 				chargeDefinition.setShowNotes(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setShowNotes(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("finished".equals(currentFieldToken)) {
 				chargeDefinition.setFinished(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setFinished(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("brokered".equals(currentFieldToken)) {
 				chargeDefinition.setBrokered(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setBrokered(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
 				chargeDefinition.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("displayqty".equals(currentFieldToken)) {
 				chargeDefinition.setDisplayQty(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setDisplayQty(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("oprice".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("orqty".equals(currentFieldToken)) {
@@ -83,6 +93,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setJobQty(currentImportToken);
 			} else if ("hidden".equals(currentFieldToken)) {
 				chargeDefinition.setHidden(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setHidden(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("no overrrides".equals(currentFieldToken)) {
 				chargeDefinition.setNoOverrides(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("adjust sets".equals(currentFieldToken)) {
@@ -197,6 +208,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				/* TODO */
 			} else if ("hide price".equals(currentFieldToken)) {
 				chargeDefinition.setHidePrice(Utilities.tokenToBooleanValue(currentImportToken));
+				charge.setHidePrice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("ignore price adj".equals(currentFieldToken)) {
 				chargeDefinition.setIgnorePriceAdjustment(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("costing press charge".equals(currentFieldToken)) {
@@ -265,6 +277,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						location.setName(currentImportToken);
 					}
 					chargeDefinition.setLocation(location);
+					charge.setProductionLocation(location);
 				}
 			} else if ("cost center ID".equals(currentFieldToken)) {
 				/* TODO */
@@ -322,6 +335,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
-		return chargeDefinition;
+		charge.setChargeDefinition(chargeDefinition);
+		return charge;
 	}
 }
