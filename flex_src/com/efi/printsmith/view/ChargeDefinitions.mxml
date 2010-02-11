@@ -415,7 +415,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var treeItem:Object = chargeTree.selectedItem;
         var classInfo:XML = describeType(treeItem);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCommand") {
 			var chargeCategory:ChargeCategory = new ChargeCategory();
 			chargeCategory.name = "Untitled Category";
 			dataService.addChargeCategoryToCommand(chargeCategory, treeItem);
@@ -441,18 +441,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
         var classInfo:XML = describeType(treeItem);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCommand") {
 			return treeItem as ChargeCommand;
 		}
 		if (deep) {
-			if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+			if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeDefinition") {
 				var tmpCategory:ChargeCategory = treeItem.parent as ChargeCategory;
 				if (tmpCategory != null) {
 					return tmpCategory.parent;
 				}
 				return chargeTree.getParentItem(tmpCategory);
 			} else {
-				return treeItem.parent as ChargeCommand;				
+				return treeItem as ChargeCommand;				
 			}
 		}
 		return null;
@@ -462,12 +462,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var treeItem:Object = chargeTree.selectedItem;
         var classInfo:XML = describeType(treeItem);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory") {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCategory") {
 			return treeItem as ChargeCategory;
 		}
 		
 		if (deep) {
-			if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+			if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeDefinition") {
 				return treeItem.parent as ChargeCategory;
 			}
 		}
@@ -478,7 +478,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var treeItem:Object = chargeTree.selectedItem;
         var classInfo:XML = describeType(treeItem);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition") {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeDefinition") {
 			return treeItem as ChargeDefinition;
 		}
 		return null;
@@ -908,7 +908,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function refreshRecursiveChildren(item:Object):void{
         var classInfo:XML = describeType(item);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null) {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCommand" && item.children != null) {
 			//loop through each child and filter its children
 			for each(var chargeCategoryItem:ChargeCategory in item.children.source){
 				refreshRecursiveChildren(chargeCategoryItem);
@@ -916,7 +916,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			item.children = new ArrayCollection(item.children.source);
 			item.children.filterFunction = filterData;
 			item.children.refresh();
-		} else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null) {
+		} else if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCategory" && item.children != null) {
 			//loop through each child and filter its children
 			for each(var chargeItem:ChargeDefinition in item.children.source){
 				refreshRecursiveChildren(chargeItem);
@@ -938,13 +938,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					
         var classInfo:XML = describeType(item);
 
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand") {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCommand") {
 			return false;
 		}
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null && item.children.length > 0) {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCommand" && item.children != null && item.children.length > 0) {
 			return true;
 		}
-		if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null && item.children.length > 0) {
+		if (classInfo.@name.toString() == "com.efi.printsmith.data::ChargeCategory" && item.children != null && item.children.length > 0) {
 			return true;
 		}
 		return false;
