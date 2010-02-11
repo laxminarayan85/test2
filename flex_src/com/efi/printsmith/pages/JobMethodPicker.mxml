@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="300"
+				width="334"
 				height="128"
 				defaultButton="{ok_btn}"
 				showCloseButton="true"
@@ -90,32 +90,32 @@
 
 
 
-	<mx:Canvas width="272"
+	<mx:Canvas width="360"
 			   height="82"
 			   horizontalScrollPolicy="off"
 			   verticalScrollPolicy="off">
 		<mx:Button id="ok_btn"
 				   click="doOK()"
-				   x="104"
+				   x="142.5"
 				   y="50"
 				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
 				   width="75"/>
 		<mx:Button id="cancel_btn"
 				   click="doCancel()"
-				   x="187"
+				   x="226"
 				   y="50"
 				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 				   width="75"/>
-		<mx:ComboBox x="125"
+		<mx:ComboBox x="173"
 					 y="10"
 					 id="pricingMethodCombo"
 					 dataProvider="{pricingMethods}"
-					 labelField="name">
+					 labelField="name" width="128">
 		</mx:ComboBox>
-		<mx:Text x="-10"
+		<mx:Text x="36"
 				 y="12"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
-				 height="20"/>
+				 height="20" textAlign="right" width="129"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>
 
