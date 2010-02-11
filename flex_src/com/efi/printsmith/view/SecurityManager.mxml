@@ -185,6 +185,26 @@
 			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}
 
+	private function gridDisplayLabelCommand(item:Object, column:DataGridColumn):String{
+		var tmpItem:SecuritySetup = item as SecuritySetup;
+		var returnvalue:String = "";
+		if (tmpItem != null) {
+			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.commandName.toString())
+		} else {
+			returnvalue="Item Not Found"
+		}
+		return returnvalue;
+	}
+	private function gridDisplayLabelMenu(item:Object, column:DataGridColumn):String{
+		var tmpItem:SecuritySetup = item as SecuritySetup;
+		var returnvalue:String = "";
+		if (tmpItem != null) {
+			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.menu.toString())
+		} else {
+			returnvalue="Item Not Found"
+		}
+		return returnvalue;
+	}
 
 ]]>
 </mx:Script>
@@ -215,8 +235,8 @@
 					   </mx:itemRenderer>
 					</mx:DataGridColumn>
 
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" dataField="menu" sortable="true" editable="false"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.CommandName')}" dataField="commandName" editable="false"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" labelFunction="gridDisplayLabelMenu" sortable="true" editable="false"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.CommandName')}" labelFunction="gridDisplayLabelCommand" editable="false"/>
 				</mx:columns>
 			</mx:DataGrid>
 
