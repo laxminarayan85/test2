@@ -308,6 +308,34 @@ public class DataService {
 		return null;
 	}
 	
+	public ChargeCommand getByChargeCommandName(String name) throws Exception {
+		try {
+			log.debug("** getByChargeCommandName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from ChargeCommand where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			ChargeCommand object = (ChargeCommand) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public ChargeCategory getByChargeCategoryName(String name) throws Exception {
+		try {
+			log.debug("** getByChargeCategoryName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from ChargeCategory where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			ChargeCategory object = (ChargeCategory) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {

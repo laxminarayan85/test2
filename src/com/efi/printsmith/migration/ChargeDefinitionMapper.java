@@ -14,13 +14,32 @@ import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.ChargeCommand;
+import com.efi.printsmith.data.ChargeCategory;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
-		ChargeDefinition chargeDefinition = new ChargeDefinition();
 		Charge charge = new Charge();
-		
 		DataService dataService = new DataService();
+		ChargeCommand chargeCommand = dataService.getByChargeCommandName("Unknown");
+		ChargeCategory chargeCategory = dataService.getByChargeCategoryName("Untitled Category");
+
+		if (chargeCommand == null)
+		{
+			chargeCommand = new ChargeCommand();
+			chargeCommand.setName("Unknown");
+			chargeCommand = (ChargeCommand)dataService.addUpdate(chargeCommand);
+			chargeCommand.setId(chargeCommand.getId());
+		}
+		
+		if (chargeCategory == null)
+		{
+			chargeCategory = new ChargeCategory();
+			chargeCategory.setName("Untitled Category");
+			chargeCategory = (ChargeCategory)dataService.addChargeCategoryToCommand(chargeCategory, chargeCommand);
+			chargeCategory.setId(chargeCategory.getId());
+		}
+		ChargeDefinition chargeDefinition = new ChargeDefinition();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -34,6 +53,8 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setId(Utilities.tokenToLong(currentImportToken));
 			} else if ("description".equals(currentFieldToken)) {
 				charge.setDescription(currentImportToken);
+				chargeDefinition.setTitle(currentImportToken);
+				chargeDefinition.setName(currentImportToken);
 			} else if ("notes".equals(currentFieldToken)) {
 				chargeDefinition.setNote(currentImportToken);
 				charge.setNotes(currentImportToken);
@@ -335,7 +356,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
-		charge.setChargeDefinition(chargeDefinition);
-		return charge;
+		dataService.addChargeToCategory(chargeDefinition, chargeCategory);
+		return null;
 	}
 }
