@@ -1285,7 +1285,7 @@
 								</mx:columns>
 							</mx:DataGrid>
 						</mx:Canvas>
-						<mx:Canvas label="Commands"
+						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
 								   width="100%"
 								   height="100%">
 							<mx:LinkButton x="10"
