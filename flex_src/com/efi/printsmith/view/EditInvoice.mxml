@@ -171,10 +171,9 @@
 
 			}
 
-			private function handleSaveResult(event:Event):void
+			private function handleSaveResult(ev:ResultEvent):void
 			{
-
-
+				this.invoice = ev.result as InvoiceBase;
 			}
 
 			private function handleDeleteResult(event:Event):void
