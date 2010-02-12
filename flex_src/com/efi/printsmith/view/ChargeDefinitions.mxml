@@ -33,6 +33,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	</mx:State>
 	<mx:State name="Ink">
+		<mx:SetProperty target="{area_edit}" name="text"/>
 		
 	</mx:State>
 	<mx:State name="Shipping">
@@ -1164,23 +1165,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="209" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
 					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
 					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
-					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimum}"/>
+					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}"/>
 					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio"/>
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio"/>
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio"/>
 					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio"/>
 					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}"/>
 					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
-					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check"/>
-					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}"/>
-					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check"/>
-					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}"/>
-					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check"/>
-					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check"/>
-					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}"/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check"/>
-					<mx:TextInput x="397" y="352" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}"/>
+					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}"/>
+					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text=""/>
+					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}"/>
+					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{charge.rate}"/>
+					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}"/>
+					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}" text="{charge.material}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}"/>
+					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}" text=""/>
+					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}"/>
+					<mx:TextInput x="397" y="352" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}"/>
 					<mx:Label x="314" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1"/>
 					<mx:Label x="123" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Markup')}" id="label2"/>
 					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="555" height="132" creationPolicy="all">
