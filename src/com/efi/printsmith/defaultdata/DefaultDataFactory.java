@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import com.efi.printsmith.service.DataService;
@@ -575,6 +576,9 @@ public class DefaultDataFactory {
 			}
 			securitySetup.setCommandName((((SecurityCommands) itemList.get(i))
 					.getCommandName()));
+			
+			securitySetup.setCommandId((((SecurityCommands) itemList.get(i))
+					.getCommandId()));
 			try {
 				dataservice.addUpdate(securitySetup);
 			} catch (Exception e) {
@@ -1159,13 +1163,18 @@ public class DefaultDataFactory {
 						}
 					}
 					if (found != true) {
-						SecurityCommands securityCommands = new SecurityCommands();
-
-						securityCommands.setCommandName(line.substring(line
-								.indexOf(",") + 1));
-						securityCommands.setMenu(line.substring(0, line
-								.indexOf(",")));
+//						securityCommands.setCommandName(line.substring(line
+//								.indexOf(",") + 1));
+//						securityCommands.setMenu(line.substring(0, line
+//								.indexOf(",")));
+//						securityCommands.setCommandId(line.substring(line.indexOf(",")+1));
 						try {
+							SecurityCommands securityCommands = new SecurityCommands();
+							StringTokenizer stringTokenizer = new StringTokenizer(line,",");
+						
+							securityCommands.setMenu(stringTokenizer.nextToken());
+							securityCommands.setCommandName(stringTokenizer.nextToken());
+							securityCommands.setCommandId(stringTokenizer.nextToken());
 							dataservice.addUpdate(securityCommands);
 						} catch (Exception e) {
 							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
@@ -1173,13 +1182,13 @@ public class DefaultDataFactory {
 						}
 					}
 				} else {
-					SecurityCommands securityCommands = new SecurityCommands();
-
-					securityCommands.setCommandName(line.substring(line
-							.indexOf(",") + 1));
-					securityCommands.setMenu(line.substring(0, line
-							.indexOf(",")));
 					try {
+						SecurityCommands securityCommands = new SecurityCommands();
+						StringTokenizer stringTokenizer = new StringTokenizer(line,",");
+					
+						securityCommands.setMenu(stringTokenizer.nextToken());
+						securityCommands.setCommandName(stringTokenizer.nextToken());
+						securityCommands.setCommandId(stringTokenizer.nextToken());
 						dataservice.addUpdate(securityCommands);
 					} catch (Exception e) {
 						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));

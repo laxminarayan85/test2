@@ -1,285 +1,285 @@
-kVersionActivationCmd.PrintSmith,rStandardMenuText.AboutPrintSmith
-kVersionActivationCmd.PrintSmith,rStandardMenuText.SupportCenter
-kVersionActivationCmd.PrintSmith,usecCmd.QuickAccessPanel
-kVersionActivationCmd.PrintSmith,rStandardMenuText.1
-rStandardMenuText.File,rStandardMenuText.New
-rStandardMenuText.File,rStandardMenuText.Open
-rStandardMenuText.File,rStandardMenuText.Close
-rStandardMenuText.File,rStandardMenuText.1
-rStandardMenuText.File,rStandardMenuText.Save
-rStandardMenuText.File,rStandardMenuText.Saveas
-rStandardMenuText.File,rStandardMenuText.SaveasPDF
-rStandardMenuText.File,rStandardMenuText.Revert
-rStandardMenuText.File,rStandardMenuText.1
-rStandardMenuText.File,rStandardMenuText.PageSetup
-rStandardMenuText.File,rStandardMenuText.Print
-rStandardMenuText.File,rStandardMenuText.1
-rStandardMenuText.File,rStandardMenuText.Quit
-rStandardMenuText.File,	rAltMenuText.Abort
-rStandardMenuText.File,	rAltMenuText.AutoShutdown
-rStandardMenuText.Edit,rStandardMenuText.Undo
-rStandardMenuText.Edit,rStandardMenuText.1
-rStandardMenuText.Edit,rStandardMenuText.Cut
-rStandardMenuText.Edit,rStandardMenuText.Copy
-rStandardMenuText.Edit,rStandardMenuText.Paste
-rStandardMenuText.Edit,rStandardMenuText.Clear
-rStandardMenuText.Edit,rStandardMenuText.1
-rStandardMenuText.Edit,rStandardMenuText.HideItem
-rStandardMenuText.Edit,rStandardMenuText.SpellCheckSelection
-rStandardMenuText.Edit,rStandardMenuText.1
-rStandardMenuText.Edit,rStandardMenuText.SendMail
-rStandardMenuText.Invoice,rStandardMenuText.CreateInvoice
-rStandardMenuText.Invoice,	rStandardMenuText.ModifyInvoices
-rStandardMenuText.Invoice,rAltMenuText.CopytonewInvoice
-rStandardMenuText.Invoice,rStandardMenuText.UpdatePendingDocumen
-rStandardMenuText.Invoice,rStandardMenuText.ReviewAnyDocument
-rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate
-rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate
-rStandardMenuText.Invoice,rStandardMenuText.1
-rStandardMenuText.Invoice,rStandardMenuText.AccountInfo
-rStandardMenuText.AccountInfo,rStandardMenuText.ReNumberDocuments
-rStandardMenuText.Invoice,rAltMenuText.ChangeAccount
-rStandardMenuText.Invoice,	rAltMenuText.Canchangeholdstate
-rStandardMenuText.Invoice,rStandardMenuText.Jobs
-rStandardMenuText.Invoice,	rStandardMenuText.JobProductionData
-rStandardMenuText.Invoice,rStandardMenuText.Charges
-rStandardMenuText.Invoice,	rUserMenuText.PrePress
-rStandardMenuText.Invoice,	rUserMenuText.Bindery
-rStandardMenuText.Invoice,	rUserMenuText.Merchandise
-rStandardMenuText.Invoice,	rUserMenuText.MailingServices
-rStandardMenuText.Invoice,	rUserMenuText.Miscellaneous
-rStandardMenuText.Invoice,	rUserMenuText.Production
-rStandardMenuText.Invoice,rStandardMenuText.DepositEntry
-rStandardMenuText.Invoice,rStandardMenuText.DocumentTotals
-rStandardMenuText.Invoice,	rStandardMenuText.LockPrices
-rStandardMenuText.Invoice,	rStandardMenuText.OverrideDisableNonTa
-rStandardMenuText.Invoice,rStandardMenuText.NotePad
-rStandardMenuText.Invoice,rStandardMenuText.1
-rStandardMenuText.Invoice,rStandardMenuText.ConverttoInvoice
-rStandardMenuText.Invoice,rStandardMenuText.FileDocument
-rStandardMenuText.Invoice,rStandardMenuText.CancelDocument
-rStandardMenuText.Invoice,rStandardMenuText.CreateCustomerfmDocu
-rStandardMenuText.Invoice,rStandardMenuText.TrackerStatus
-rStandardMenuText.Invoice,rStandardMenuText.GenerateDeliveryTick
-rStandardMenuText.Invoice,rStandardMenuText.OpenEstimatorCheckli
-rStandardMenuText.POS,rStandardMenuText.OpenCashRegister
-rStandardMenuText.POS,rStandardMenuText.1
-rStandardMenuText.POS,rStandardMenuText.CashRegisterWindow
-rStandardMenuText.POS,	rStandardMenuText.PostPOSCharges
-rStandardMenuText.POS,rStandardMenuText.PendingDocumentWindo
-rStandardMenuText.POS,	posPendCmd.PickUp
-rStandardMenuText.POS,	posPendCmd.Status
-rStandardMenuText.POS,	posPendCmd.Location
-rStandardMenuText.POS,	posPendCmd.Open
-rStandardMenuText.POS,	posPendCmd.Notify
-rStandardMenuText.POS,	posPendCmd.Deliver
-rStandardMenuText.POS,rStandardMenuText.StatusWindow
-rStandardMenuText.POS,rStandardMenuText.TransactionWindow
-rStandardMenuText.POS,rStandardMenuText.1
-rStandardMenuText.POS,rStandardMenuText.OpenTape
-rStandardMenuText.POS,	tapeCmd.VoidTransaction
-rStandardMenuText.POS,rStandardMenuText.1
-rStandardMenuText.POS,rStandardMenuText.CashDrawerStatus
-rStandardMenuText.POS,rStandardMenuText.ChangeDueDate
-rStandardMenuText.AR,rStandardMenuText.Accounts
-rStandardMenuText.AR,	rStandardMenuText.ImportProspects
-rStandardMenuText.AR,	rStandardMenuText.AddressPanel
-rStandardMenuText.AR,	rStandardMenuText.CreditControlPanel
-rStandardMenuText.AR,	rStandardMenuText.SettingsPanel
-rStandardMenuText.AR,	rStandardMenuText.SalesPanel
-rStandardMenuText.AR,	rStandardMenuText.LogPanel
-rStandardMenuText.AR,	rStandardMenuText.NotesPanel
-rStandardMenuText.AR,	rStandardMenuText.MarketingPanel
-rStandardMenuText.AR,	rStandardMenuText.WEBPanel
-rStandardMenuText.AR,	rStandardMenuText.DeleteAccount
-rStandardMenuText.AR,rStandardMenuText.Contacts
-rStandardMenuText.AR,	rStandardMenuText.AddressPanel
-rStandardMenuText.AR,	rStandardMenuText.MarketingPanel
-rStandardMenuText.AR,	rStandardMenuText.DeleteAccount
-rStandardMenuText.AR,	rStandardMenuText.CreditInfo
-rStandardMenuText.AR,	rStandardMenuText.CampaignsandGrades
-rStandardMenuText.AR,rStandardMenuText.PostPayments
-rStandardMenuText.AR,rStandardMenuText.DailyCloseout
-rStandardMenuText.AR,rStandardMenuText.MonthlyCloseout
-rStandardMenuText.AR,rStandardMenuText.GenerateStatements
-rStandardMenuText.AR,-
-rStandardMenuText.AR,rStandardMenuText.VerifyReceivableBala
-rStandardMenuText.AR,rStandardMenuText.VerifyCustomerBalanc
-rStandardMenuText.AR,rStandardMenuText.VerifyAllBalances
-rStandardMenuText.AR,rStandardMenuText.1
-rStandardMenuText.AR,rStandardMenuText.AccountAging
-rStandardMenuText.AR,rStandardMenuText.JournalEntry
-rStandardMenuText.AR,rStandardMenuText.PostPOSCharges
-rStandardMenuText.Pricing,rStandardMenuText.StockDefinitions
-rStandardMenuText.Pricing,	rStandardMenuText.DeleteStock
-rStandardMenuText.Pricing,rStandardMenuText.PressDefinitions
-rStandardMenuText.Pricing,rStandardMenuText.CopierDigitalDefinit
-rStandardMenuText.Pricing,rStandardMenuText.ListPriceSchedules
-rStandardMenuText.Pricing,rStandardMenuText.StampSchedule
-rStandardMenuText.Pricing,rStandardMenuText.ChargeDefinitions
-rStandardMenuText.Pricing,	rUserMenuText.PrePress
-rStandardMenuText.Pricing,	rUserMenuText.Bindery
-rStandardMenuText.Pricing,	rUserMenuText.Merchandise
-rStandardMenuText.Pricing,	rUserMenuText.MailingServices
-rStandardMenuText.Pricing,	rUserMenuText.Miscellaneous
-rStandardMenuText.Pricing,	rUserMenuText.Production
-rStandardMenuText.Pricing,rStandardMenuText.1
-rStandardMenuText.Pricing,rStandardMenuText.WasteChart
-rStandardMenuText.Pricing,rStandardMenuText.SalesTax
-rStandardMenuText.Pricing,rStandardMenuText.1
-rStandardMenuText.Pricing,rStandardMenuText.GeneratePriceBook
-rStandardMenuText.Pricing,rStandardMenuText.ChangePrices
-rStandardMenuText.Pricing,rStandardMenuText.ImportStockCatalog
-rStandardMenuText.Reports,rStandardMenuText.AccountHistory
-rStandardMenuText.Reports,rStandardMenuText.EstimateHistory
-rStandardMenuText.Reports,rStandardMenuText.WorkinProgress
-rStandardMenuText.Reports,rStandardMenuText.MailingLabels
-rStandardMenuText.Reports,rStandardMenuText.1
-rStandardMenuText.Reports,rStandardMenuText.CustomerList
-rStandardMenuText.Reports,rStandardMenuText.DailySales
-rStandardMenuText.Reports,rStandardMenuText.AccountRanking
-rStandardMenuText.Reports,rStandardMenuText.MonthlySales
-rStandardMenuText.Reports,rStandardMenuText.OpenOldTape
-rStandardMenuText.Reports,rStandardMenuText.DepositTicket
-rStandardMenuText.Reports,rStandardMenuText.1
-rStandardMenuText.Reports,rStandardMenuText.StockOrder
-rStandardMenuText.Reports,rStandardMenuText.ReOrderList
-rStandardMenuText.Reports,rStandardMenuText.1
-rStandardMenuText.Reports,rStandardMenuText.MailerCampaigns
-rStandardMenuText.Reports,rStandardMenuText.ReportManager
-rStandardMenuText.Reports,rStandardMenuText.ReportWriter
-rStandardMenuText.DownLoader,rStandardMenuText.Downloader
-rStandardMenuText.Reports,rStandardMenuText.1
-rStandardMenuText.Reports,rStandardMenuText.1
-rStandardMenuText.Reports,rStandardMenuText.Browse
-rStandardMenuText.Admin,rStandardMenuText.ChangePassword
-rStandardMenuText.Admin,rStandardMenuText.ConfigureQuickAccess
-rStandardMenuText.Admin,rStandardMenuText.UserLogIn
-rStandardMenuText.Admin,	rAltMenuText.AutoLogIn
-rStandardMenuText.Admin,rStandardMenuText.1
-rStandardMenuText.Admin,rStandardMenuText.UserDefinitions
-rStandardMenuText.Admin,rStandardMenuText.SecuritySetup
-rStandardMenuText.Admin,rStandardMenuText.KeyboardShortcuts
-rStandardMenuText.Admin,rStandardMenuText.WebAdministration
-rStandardMenuText.Admin,	kWebAdminCmd.Site
-rStandardMenuText.Admin,	kWebAdminCmd.Branding
-rStandardMenuText.Admin,	kWebAdminCmd.Catalogs
-rStandardMenuText.Admin,	kWebAdminCmd.Categories
-rStandardMenuText.Admin,	kWebAdminCmd.Products
-rStandardMenuText.Admin,	kWebAdminCmd.Questions
-rStandardMenuText.Admin,	kWebAdminCmd.Graphics
-rStandardMenuText.Admin,	kWebAdminCmd.Admin
-rStandardMenuText.Admin,	consoleCmd.WebConnection
-rStandardMenuText.Admin,	webDataCmd.WebDataConsole
-rStandardMenuText.Admin,rStandardMenuText.TrackerConsole
-rStandardMenuText.Admin,rStandardMenuText.TrackerManager
-rStandardMenuText.Admin,	rStandardMenuText.TrackerRoutings
-rStandardMenuText.Admin,rStandardMenuText.EmployeeManager
-rStandardMenuText.Admin,	rStandardMenuText.ClockInOut
-rStandardMenuText.Admin,	rStandardMenuText.Employees
-rStandardMenuText.Admin,	rStandardMenuText._SettingsPanel
-rStandardMenuText.Admin,	rStandardMenuText._PersonalPanel
-rStandardMenuText.Admin,	rStandardMenuText._ProductionPanel
-rStandardMenuText.Admin,	rStandardMenuText.ClockOptions
-rStandardMenuText.Admin,	rStandardMenuText.TimePeriods
-rStandardMenuText.Admin,	rStandardMenuText.EditTimeCards
-rStandardMenuText.Admin,	rStandardMenuText.Reports
-rStandardMenuText.Admin,	rStandardMenuText.Exports
-rStandardMenuText.Admin,rStandardMenuText.DeliveryTicketManage
-rStandardMenuText.Admin,rStandardMenuText.ScheduleBoardManager
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.JobListNewTags
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowDepartments
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowCostCenter
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.LateandCompleteTags
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.MyWorkCenter
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.EditDepartments
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.EditCostCenters
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.Preferences
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.Reports
-rStandardMenuText.Admin,	rStandardMenuText.1
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.ViewTagdetails
-rStandardMenuText.Admin,	scheduleBoardMgrCmd.ModifyTagProductionT
-rStandardMenuText.Admin,rStandardMenuText.SystemMonitor
-rStandardMenuText.Admin,rStandardMenuText.CreditCardManager
-rStandardMenuText.Admin,	rAltMenuText.ReadMagneticCardSwip
-rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar
-rStandardMenuText.Admin,rStandardMenuText.1
-rStandardMenuText.Admin,rStandardMenuText.Preferences
-rStandardMenuText.Admin,	genericPrefCmd.System
-rStandardMenuText.Admin,	genericPrefCmd.Behavior
-rStandardMenuText.Admin,	genericPrefCmd.Company
-rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar=Business Calendar
-rStandardMenuText.Admin,	genericPrefCmd.Numbers
-rStandardMenuText.Admin,	genericPrefCmd.AlternateCurrency
-rStandardMenuText.Admin,	genericPrefCmd.International
-rStandardMenuText.Admin,	genericPrefCmd.ProductActivation
-rStandardMenuText.Admin,	genericPrefCmd.Integration
-rStandardMenuText.Admin,	genericPrefCmd.PalmTracker
-rStandardMenuText.Admin,	genericPrefCmd.AddressFormatting
-rStandardMenuText.Admin,	genericPrefCmd.POS
-rStandardMenuText.Admin,	genericPrefCmd.Receipt
-rStandardMenuText.Admin,	genericPrefCmd.CashDrawer
-rStandardMenuText.Admin,	genericPrefCmd.CashRegister
-rStandardMenuText.Admin,	genericPrefCmd.PendingList
-rStandardMenuText.Admin,	genericPrefCmd.Estimator
-rStandardMenuText.Admin,	genericPrefCmd.EstimatorBehavior
-rStandardMenuText.Admin,	genericPrefCmd.EstimatorPrinting
-rStandardMenuText.Admin,	genericPrefCmd.PaperCalculator
-rStandardMenuText.Admin,	genericPrefCmd.EstimatorCalculation
-rStandardMenuText.Admin,	genericPrefCmd.StockIndex
-rStandardMenuText.Admin,	genericPrefCmd.JobTicket
-rStandardMenuText.Admin,	genericPrefCmd.QuantityBreaks
-rStandardMenuText.Admin,	genericPrefCmd.Markups
-rStandardMenuText.Admin,	genericPrefCmd.StocksandSizes
-rStandardMenuText.Admin,	genericPrefCmd.PricingMethod
-rStandardMenuText.Admin,	genericPrefCmd.ShippingLink
-rStandardMenuText.Admin,	genericPrefCmd.StockDefinitions
-rStandardMenuText.Admin,	genericPrefCmd.Accounting
-rStandardMenuText.Admin,	genericPrefCmd.CreditDefaults
-rStandardMenuText.Admin,	genericPrefCmd.AgingPeriods
-rStandardMenuText.Admin,	genericPrefCmd.SalesCategories
-rStandardMenuText.Admin,	genericPrefCmd.GLProfiles
-rStandardMenuText.Admin,	genericPrefCmd.CreditCardInfo
-rStandardMenuText.Admin,	genericPrefCmd.JournalEntries
-rStandardMenuText.Admin,rStandardMenuText.DocumentPreferences
-rStandardMenuText.Admin,rStandardMenuText.TableEditor
-rStandardMenuText.Admin,rStandardMenuText.1
-rStandardMenuText.Admin,rStandardMenuText.ClearEstimates
-rStandardMenuText.Admin,rStandardMenuText.PaperCalculator
-rStandardMenuText.Admin,rStandardMenuText.PaperTemplates
-rStandardMenuText.Admin,rStandardMenuText.FoldTemplates
-rStandardMenuText.Admin,rStandardMenuText.OrderStock
-rStandardMenuText.Admin,rStandardMenuText.BatchPrintDocuments
-rStandardMenuText.Admin,rStandardMenuText.SynchronizePortable
-rStandardMenuText.Admin,	portableCmd.UpdateDataFolder
-rStandardMenuText.Admin,rStandardMenuText.UpdatePricingFolder
-rStandardMenuText.Admin,rStandardMenuText.SendFile
-rStandardMenuText.Job,	rStandardMenuText.ChangePricingMethod
-rStandardMenuText.Job,	rStandardMenuText.1
-rStandardMenuText.Job,	rStandardMenuText.ChangeStockSelection
-rStandardMenuText.Job,	rStandardMenuText.ChangePressSelection
-rStandardMenuText.Job,	rStandardMenuText.ChangeScheduleSelect
-rStandardMenuText.Job,	rStandardMenuText.1
-rStandardMenuText.Job,	rStandardMenuText.TrackerProduction
-rStandardMenuText.Job,	rStandardMenuText.GeneratePriceList
-rStandardMenuText.Job,	rStandardMenuText.OrderStock
-rStandardMenuText.Job,	rStandardMenuText.JobTicketNotes
-rStandardMenuText.Job,	rStandardMenuText.WebWorkSheet
-rStandardMenuText.Job,	rStandardMenuText.DigitalAssets
-rStandardMenuText.Job,	rStandardMenuText.PrintJobTicket
-rStandardMenuText.Job,	rStandardMenuText.PreviewJobTicket
-rStandardMenuText.Job,	rStandardMenuText.1
-rStandardMenuText.Job,	rStandardMenuText.MultiQuantity
-rStandardMenuText.Job,	rStandardMenuText.OversUnders
-rStandardMenuText.Job,	rStandardMenuText.CartonLabels
-rStandardMenuText.Job,	rStandardMenuText.SubmittoFiery
-rStandardMenuText.Job,	rStandardMenuText.VoidSubmittedJob
-rStandardMenuText.Job,	rStandardMenuText.OpenEstimatorCheckli
-rStandardMenuText.Help,rAltMenuText.PrintSmithHelp	
-rStandardMenuText.Help,rStandardMenuText.Contents
-rStandardMenuText.Help,rStandardMenuText.Keys
-rStandardMenuText.Help,rStandardMenuText.HowtoUseHelp
-rStandardMenuText.Help,rStandardMenuText.1
-rStandardMenuText.Help,usecCmd.QuickAccessPanel
-rStandardMenuText.Help,rStandardMenuText.SupportCenter
+kVersionActivationCmd.PrintSmith,rStandardMenuText.AboutPrintSmith,CMD_AboutPrintSmith
+kVersionActivationCmd.PrintSmith,rStandardMenuText.SupportCenter,CMD_SupportCenter
+kVersionActivationCmd.PrintSmith,usecCmd.QuickAccessPanel,CMD_
+kVersionActivationCmd.PrintSmith,rStandardMenuText.1,CMD_
+rStandardMenuText.File,rStandardMenuText.New,CMD_
+rStandardMenuText.File,rStandardMenuText.Open,CMD_
+rStandardMenuText.File,rStandardMenuText.Close,CMD_
+rStandardMenuText.File,rStandardMenuText.1,CMD_
+rStandardMenuText.File,rStandardMenuText.Save,CMD_
+rStandardMenuText.File,rStandardMenuText.Saveas,CMD_
+rStandardMenuText.File,rStandardMenuText.SaveasPDF,CMD_
+rStandardMenuText.File,rStandardMenuText.Revert,CMD_
+rStandardMenuText.File,rStandardMenuText.1,CMD_
+rStandardMenuText.File,rStandardMenuText.PageSetup,CMD_
+rStandardMenuText.File,rStandardMenuText.Print,CMD_
+rStandardMenuText.File,rStandardMenuText.1,CMD_
+rStandardMenuText.File,rStandardMenuText.Quit,CMD_
+rStandardMenuText.File,	rAltMenuText.Abort,CMD_
+rStandardMenuText.File,	rAltMenuText.AutoShutdown,CMD_
+rStandardMenuText.Edit,rStandardMenuText.Undo,CMD_
+rStandardMenuText.Edit,rStandardMenuText.1,CMD_
+rStandardMenuText.Edit,rStandardMenuText.Cut,CMD_
+rStandardMenuText.Edit,rStandardMenuText.Copy,CMD_
+rStandardMenuText.Edit,rStandardMenuText.Paste,CMD_
+rStandardMenuText.Edit,rStandardMenuText.Clear,CMD_
+rStandardMenuText.Edit,rStandardMenuText.1,CMD_
+rStandardMenuText.Edit,rStandardMenuText.HideItem,CMD_
+rStandardMenuText.Edit,rStandardMenuText.SpellCheckSelection,CMD_
+rStandardMenuText.Edit,rStandardMenuText.1,CMD_
+rStandardMenuText.Edit,rStandardMenuText.SendMail,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CreateInvoice,CMD_
+rStandardMenuText.Invoice,	rStandardMenuText.ModifyInvoices,CMD_
+rStandardMenuText.Invoice,rAltMenuText.CopytonewInvoice,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.UpdatePendingDocumen,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.ReviewAnyDocument,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate,CMD_
+rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.1,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,CMD_
+rStandardMenuText.AccountInfo,rStandardMenuText.ReNumberDocuments,CMD_
+rStandardMenuText.Invoice,rAltMenuText.ChangeAccount,CMD_
+rStandardMenuText.Invoice,	rAltMenuText.Canchangeholdstate,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.Jobs,CMD_
+rStandardMenuText.Invoice,	rStandardMenuText.JobProductionData,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.Charges,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.PrePress,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.Bindery,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.Merchandise,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.MailingServices,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.Miscellaneous,CMD_
+rStandardMenuText.Invoice,	rUserMenuText.Production,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.DepositEntry,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.DocumentTotals,CMD_
+rStandardMenuText.Invoice,	rStandardMenuText.LockPrices,CMD_
+rStandardMenuText.Invoice,	rStandardMenuText.OverrideDisableNonTa,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.NotePad,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.1,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.ConverttoInvoice,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.FileDocument,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CancelDocument,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CreateCustomerfmDocu,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.TrackerStatus,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.GenerateDeliveryTick,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.OpenEstimatorCheckli,CMD_
+rStandardMenuText.POS,rStandardMenuText.OpenCashRegister,CMD_
+rStandardMenuText.POS,rStandardMenuText.1,CMD_
+rStandardMenuText.POS,rStandardMenuText.CashRegisterWindow,CMD_
+rStandardMenuText.POS,	rStandardMenuText.PostPOSCharges,CMD_
+rStandardMenuText.POS,rStandardMenuText.PendingDocumentWindo,CMD_
+rStandardMenuText.POS,	posPendCmd.PickUp,CMD_
+rStandardMenuText.POS,	posPendCmd.Status,CMD_
+rStandardMenuText.POS,	posPendCmd.Location,CMD_
+rStandardMenuText.POS,	posPendCmd.Open,CMD_
+rStandardMenuText.POS,	posPendCmd.Notify,CMD_
+rStandardMenuText.POS,	posPendCmd.Deliver,CMD_
+rStandardMenuText.POS,rStandardMenuText.StatusWindow,CMD_
+rStandardMenuText.POS,rStandardMenuText.TransactionWindow,CMD_
+rStandardMenuText.POS,rStandardMenuText.1,CMD_
+rStandardMenuText.POS,rStandardMenuText.OpenTape,CMD_
+rStandardMenuText.POS,	tapeCmd.VoidTransaction,CMD_
+rStandardMenuText.POS,rStandardMenuText.1,CMD_
+rStandardMenuText.POS,rStandardMenuText.CashDrawerStatus,CMD_
+rStandardMenuText.POS,rStandardMenuText.ChangeDueDate,CMD_
+rStandardMenuText.AR,rStandardMenuText.Accounts,CMD_EditCustomer
+rStandardMenuText.AR,	rStandardMenuText.ImportProspects,CMD_
+rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.CreditControlPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.SettingsPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.SalesPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.LogPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.NotesPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
+rStandardMenuText.AR,rStandardMenuText.Contacts,CMD_
+rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
+rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
+rStandardMenuText.AR,	rStandardMenuText.CreditInfo,CMD_
+rStandardMenuText.AR,	rStandardMenuText.CampaignsandGrades,CMD_
+rStandardMenuText.AR,rStandardMenuText.PostPayments,CMD_
+rStandardMenuText.AR,rStandardMenuText.DailyCloseout,CMD_
+rStandardMenuText.AR,rStandardMenuText.MonthlyCloseout,CMD_
+rStandardMenuText.AR,rStandardMenuText.GenerateStatements,CMD_
+rStandardMenuText.AR,-,CMD_
+rStandardMenuText.AR,rStandardMenuText.VerifyReceivableBala,CMD_
+rStandardMenuText.AR,rStandardMenuText.VerifyCustomerBalanc,CMD_
+rStandardMenuText.AR,rStandardMenuText.VerifyAllBalances,CMD_
+rStandardMenuText.AR,rStandardMenuText.1,CMD_
+rStandardMenuText.AR,rStandardMenuText.AccountAging,CMD_
+rStandardMenuText.AR,rStandardMenuText.JournalEntry,CMD_
+rStandardMenuText.AR,rStandardMenuText.PostPOSCharges,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.StockDefinitions,CMD_
+rStandardMenuText.Pricing,	rStandardMenuText.DeleteStock,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.PressDefinitions,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.CopierDigitalDefinit,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.ListPriceSchedules,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.StampSchedule,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.ChargeDefinitions,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.PrePress,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.Bindery,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.Merchandise,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.MailingServices,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.Miscellaneous,CMD_
+rStandardMenuText.Pricing,	rUserMenuText.Production,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.1,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.WasteChart,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.SalesTax,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.1,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.GeneratePriceBook,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.ChangePrices,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.ImportStockCatalog,CMD_
+rStandardMenuText.Reports,rStandardMenuText.AccountHistory,CMD_
+rStandardMenuText.Reports,rStandardMenuText.EstimateHistory,CMD_
+rStandardMenuText.Reports,rStandardMenuText.WorkinProgress,CMD_
+rStandardMenuText.Reports,rStandardMenuText.MailingLabels,CMD_
+rStandardMenuText.Reports,rStandardMenuText.1,CMD_
+rStandardMenuText.Reports,rStandardMenuText.CustomerList,CMD_
+rStandardMenuText.Reports,rStandardMenuText.DailySales,CMD_
+rStandardMenuText.Reports,rStandardMenuText.AccountRanking,CMD_
+rStandardMenuText.Reports,rStandardMenuText.MonthlySales,CMD_
+rStandardMenuText.Reports,rStandardMenuText.OpenOldTape,CMD_
+rStandardMenuText.Reports,rStandardMenuText.DepositTicket,CMD_
+rStandardMenuText.Reports,rStandardMenuText.1,CMD_
+rStandardMenuText.Reports,rStandardMenuText.StockOrder,CMD_
+rStandardMenuText.Reports,rStandardMenuText.ReOrderList,CMD_
+rStandardMenuText.Reports,rStandardMenuText.1,CMD_
+rStandardMenuText.Reports,rStandardMenuText.MailerCampaigns,CMD_
+rStandardMenuText.Reports,rStandardMenuText.ReportManager,CMD_
+rStandardMenuText.Reports,rStandardMenuText.ReportWriter,CMD_
+rStandardMenuText.DownLoader,rStandardMenuText.Downloader,CMD_
+rStandardMenuText.Reports,rStandardMenuText.1,CMD_
+rStandardMenuText.Reports,rStandardMenuText.1,CMD_
+rStandardMenuText.Reports,rStandardMenuText.Browse,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ChangePassword,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ConfigureQuickAccess,CMD_
+rStandardMenuText.Admin,rStandardMenuText.UserLogIn,CMD_
+rStandardMenuText.Admin,	rAltMenuText.AutoLogIn,CMD_
+rStandardMenuText.Admin,rStandardMenuText.1,CMD_
+rStandardMenuText.Admin,rStandardMenuText.UserDefinitions,CMD_
+rStandardMenuText.Admin,rStandardMenuText.SecuritySetup,CMD_
+rStandardMenuText.Admin,rStandardMenuText.KeyboardShortcuts,CMD_
+rStandardMenuText.Admin,rStandardMenuText.WebAdministration,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Site,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Branding,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Catalogs,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Categories,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Products,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Questions,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Graphics,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Admin,CMD_
+rStandardMenuText.Admin,	consoleCmd.WebConnection,CMD_
+rStandardMenuText.Admin,	webDataCmd.WebDataConsole,CMD_
+rStandardMenuText.Admin,rStandardMenuText.TrackerConsole,CMD_
+rStandardMenuText.Admin,rStandardMenuText.TrackerManager,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.TrackerRoutings,CMD_
+rStandardMenuText.Admin,rStandardMenuText.EmployeeManager,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.ClockInOut,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.Employees,CMD_
+rStandardMenuText.Admin,	rStandardMenuText._SettingsPanel,CMD_
+rStandardMenuText.Admin,	rStandardMenuText._PersonalPanel,CMD_
+rStandardMenuText.Admin,	rStandardMenuText._ProductionPanel,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.ClockOptions,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.TimePeriods,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.EditTimeCards,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.Reports,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.Exports,CMD_
+rStandardMenuText.Admin,rStandardMenuText.DeliveryTicketManage,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ScheduleBoardManager,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.JobListNewTags,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowDepartments,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowCostCenter,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.LateandCompleteTags,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.MyWorkCenter,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.EditDepartments,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.EditCostCenters,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.Preferences,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.Reports,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.1,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.ViewTagdetails,CMD_
+rStandardMenuText.Admin,	scheduleBoardMgrCmd.ModifyTagProductionT,CMD_
+rStandardMenuText.Admin,rStandardMenuText.SystemMonitor,CMD_
+rStandardMenuText.Admin,rStandardMenuText.CreditCardManager,CMD_
+rStandardMenuText.Admin,	rAltMenuText.ReadMagneticCardSwip,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar,CMD_
+rStandardMenuText.Admin,rStandardMenuText.1,CMD_
+rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.System,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Behavior,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Company,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar=Business Calendar,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Numbers,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.AlternateCurrency,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.International,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.ProductActivation,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Integration,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.PalmTracker,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.AddressFormatting,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.POS,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Receipt,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.CashDrawer,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.CashRegister,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.PendingList,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Estimator,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.EstimatorBehavior,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.EstimatorPrinting,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.PaperCalculator,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.EstimatorCalculation,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.StockIndex,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.JobTicket,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.QuantityBreaks,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Markups,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.StocksandSizes,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.PricingMethod,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.ShippingLink,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.StockDefinitions,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.Accounting,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.CreditDefaults,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.AgingPeriods,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.SalesCategories,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.GLProfiles,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.CreditCardInfo,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.JournalEntries,CMD_
+rStandardMenuText.Admin,rStandardMenuText.DocumentPreferences,CMD_
+rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_
+rStandardMenuText.Admin,rStandardMenuText.1,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ClearEstimates,CMD_
+rStandardMenuText.Admin,rStandardMenuText.PaperCalculator,CMD_
+rStandardMenuText.Admin,rStandardMenuText.PaperTemplates,CMD_
+rStandardMenuText.Admin,rStandardMenuText.FoldTemplates,CMD_
+rStandardMenuText.Admin,rStandardMenuText.OrderStock,CMD_
+rStandardMenuText.Admin,rStandardMenuText.BatchPrintDocuments,CMD_
+rStandardMenuText.Admin,rStandardMenuText.SynchronizePortable,CMD_
+rStandardMenuText.Admin,	portableCmd.UpdateDataFolder,CMD_
+rStandardMenuText.Admin,rStandardMenuText.UpdatePricingFolder,CMD_
+rStandardMenuText.Admin,rStandardMenuText.SendFile,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangePricingMethod,CMD_
+rStandardMenuText.Job,	rStandardMenuText.1,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangeStockSelection,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangePressSelection,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangeScheduleSelect,CMD_
+rStandardMenuText.Job,	rStandardMenuText.1,CMD_
+rStandardMenuText.Job,	rStandardMenuText.TrackerProduction,CMD_
+rStandardMenuText.Job,	rStandardMenuText.GeneratePriceList,CMD_
+rStandardMenuText.Job,	rStandardMenuText.OrderStock,CMD_
+rStandardMenuText.Job,	rStandardMenuText.JobTicketNotes,CMD_
+rStandardMenuText.Job,	rStandardMenuText.WebWorkSheet,CMD_
+rStandardMenuText.Job,	rStandardMenuText.DigitalAssets,CMD_
+rStandardMenuText.Job,	rStandardMenuText.PrintJobTicket,CMD_
+rStandardMenuText.Job,	rStandardMenuText.PreviewJobTicket,CMD_
+rStandardMenuText.Job,	rStandardMenuText.1,CMD_
+rStandardMenuText.Job,	rStandardMenuText.MultiQuantity,CMD_
+rStandardMenuText.Job,	rStandardMenuText.OversUnders,CMD_
+rStandardMenuText.Job,	rStandardMenuText.CartonLabels,CMD_
+rStandardMenuText.Job,	rStandardMenuText.SubmittoFiery,CMD_
+rStandardMenuText.Job,	rStandardMenuText.VoidSubmittedJob,CMD_
+rStandardMenuText.Job,	rStandardMenuText.OpenEstimatorCheckli,CMD_
+rStandardMenuText.Help,rAltMenuText.PrintSmithHelp,CMD_
+rStandardMenuText.Help,rStandardMenuText.Contents,CMD_
+rStandardMenuText.Help,rStandardMenuText.Keys,CMD_
+rStandardMenuText.Help,rStandardMenuText.HowtoUseHelp,CMD_
+rStandardMenuText.Help,rStandardMenuText.1,CMD_
+rStandardMenuText.Help,usecCmd.QuickAccessPanel,CMD_
+rStandardMenuText.Help,rStandardMenuText.SupportCenter,CMD_
 rStandardMenuText.Help,rStandardMenuText.AboutPrintSmith

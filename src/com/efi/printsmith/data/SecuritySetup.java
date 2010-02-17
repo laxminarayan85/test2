@@ -45,6 +45,10 @@ public class SecuritySetup extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String COMMANDID = "CommandId";
+	/**
+	 * @generated
+	 */
 	public static final String COMMANDNAME = "CommandName";
 	/**
 	 * @generated
@@ -96,6 +100,23 @@ public class SecuritySetup extends ModelBase {
  	
 	
  	@Basic
+	private String commandId;
+	/**
+	 * @generated
+ 	 */
+	public String getCommandId(){
+		return commandId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCommandId(String newVal) {
+		this.commandId = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private String commandName;
 	/**
 	 * @generated
@@ -135,6 +156,7 @@ public class SecuritySetup extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (ENABLE.equals(propertyName)) return getEnable();
 		if (MENU.equals(propertyName)) return getMenu();
+		if (COMMANDID.equals(propertyName)) return getCommandId();
 		if (COMMANDNAME.equals(propertyName)) return getCommandName();
 		if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
 		return super.getProperty(propertyName);
@@ -148,6 +170,7 @@ public class SecuritySetup extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (ENABLE.equals(propertyName)) setEnable((Boolean)newValue); else
 		if (MENU.equals(propertyName)) setMenu((String)newValue); else
+		if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
 		if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
 		if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -162,6 +185,8 @@ public class SecuritySetup extends ModelBase {
 		if (ENABLE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (MENU.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (COMMANDID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (COMMANDNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
@@ -179,6 +204,7 @@ public class SecuritySetup extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (ENABLE.equals(propertyName)) return SecuritySetup.class;
 		if (MENU.equals(propertyName)) return SecuritySetup.class;
+		if (COMMANDID.equals(propertyName)) return SecuritySetup.class;
 		if (COMMANDNAME.equals(propertyName)) return SecuritySetup.class;
 		if (ACCESSGROUP.equals(propertyName)) return SecuritySetup.class;
 		return super.getPropertyOwner(propertyName);
@@ -195,6 +221,8 @@ public class SecuritySetup extends ModelBase {
 		if (! SmartEquals(getEnable(), objT.getEnable()))
 			return false;
 		if (! SmartEquals(getMenu(), objT.getMenu()))
+			return false;
+		if (! SmartEquals(getCommandId(), objT.getCommandId()))
 			return false;
 		if (! SmartEquals(getCommandName(), objT.getCommandName()))
 			return false;

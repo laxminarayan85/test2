@@ -3,17 +3,13 @@
 	class="flex.messaging.services.RemotingService">
 
 	<adapters>
-
 		<adapter-definition id="java-object"
 			class="flex.messaging.services.remoting.adapters.JavaAdapter"
 			default="true" />
-
 	</adapters>
 
 	<default-channels>
-
 		<channel ref="my-amf" />
-
 	</default-channels>
 
 	<destination id="loginService">
@@ -47,5 +43,5 @@
 			</source>
 		</properties>
 	</destination>
-	 
+
 </service>

@@ -82,6 +82,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.events.commandEvents.EditCustomerEvent;
 		import com.efi.printsmith.view.DeliveryTicket;
 		import com.efi.printsmith.view.Utilities;
 		import com.efi.printsmith.view.PendingList;
@@ -109,6 +110,8 @@
 		import com.efi.printsmith.pages.Debug;
 		import com.efi.printsmith.data.InvoiceBase;
 		
+		import com.efi.printsmith.security.PSSecurity;
+		
 		import mx.formatters.NumberFormatter;
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
@@ -122,6 +125,8 @@
 		import mx.effects.Zoom;
 		import mx.containers.Panel;
 		import mx.managers.PopUpManager;
+		import mx.rpc.IResponder;
+		
 		import com.efi.printsmith.pages.Login;
 		import mx.managers.ToolTipManager;
 		import flash.events.EventDispatcher;
@@ -143,6 +148,9 @@
 		
 		public var userName:String;
 		public var userPass:String;
+		
+		public var security:com.efi.printsmith.security.PSSecurity;
+		
 		[Bindable]
 		public var currentUser:Users;
 
@@ -176,11 +184,17 @@
 		private function onLogout():void {
 			
 		}
+
+		public function handleUIEvent(evt:ResultEvent):void {
+			var child:DisplayObject = evt.result as DisplayObject;
+			addUniqueTab(child);
+		}		
 		
 		private function doAccounts():void {
-			var child:EditCustomer = new EditCustomer();
-			addUniqueTab(child);
+			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
+
 		private function doUsers():void {
 		//	var child:ListUsers = new ListUsers();
 			var child:EditUser = new EditUser();
@@ -333,6 +347,7 @@
 			var res:Users = event.result as Users;
 			if (res != null) {
 				currentUser = res;
+				security = new PSSecurity(currentUser);
 			} else {
 				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				showLogin();

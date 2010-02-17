@@ -3,7 +3,9 @@ package com.efi.printsmith.control
 	import com.adobe.cairngorm.control.FrontController;
 	import com.efi.printsmith.events.*;
 	import com.efi.printsmith.commands.*;
-
+	import com.efi.printsmith.commands.commandCommands.*;
+	import com.efi.printsmith.events.commandEvents.*;
+	
 	public class MainController extends FrontController
 	{
 		public function MainController() {
@@ -20,6 +22,7 @@ package com.efi.printsmith.control
 			this.addCommand(PriceJobEvent.PRICEJOB, PriceJobCommand);
 			this.addCommand(PriceChargeEvent.PRICECHARGE, PriceChargeCommand);
 			this.addCommand(PriceInvoiceEvent.PRICEINVOICE, PriceInvoiceCommand);
+			this.addCommand(EditCustomerEvent.COMMANDID, EditCustomerCommand);
 		}
 		
 	}

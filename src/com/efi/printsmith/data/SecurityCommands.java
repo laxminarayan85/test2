@@ -42,6 +42,10 @@ public class SecurityCommands extends ModelBase {
 	 * @generated
 	 */
 	public static final String COMMANDNAME = "CommandName";
+	/**
+	 * @generated
+	 */
+	public static final String COMMANDID = "CommandId";
 
 	/**
 	 * @generated
@@ -85,6 +89,23 @@ public class SecurityCommands extends ModelBase {
 	public void setCommandName(String newVal) {
 		this.commandName = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String commandId;
+	/**
+	 * @generated
+ 	 */
+	public String getCommandId(){
+		return commandId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCommandId(String newVal) {
+		this.commandId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -93,6 +114,7 @@ public class SecurityCommands extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (MENU.equals(propertyName)) return getMenu();
 		if (COMMANDNAME.equals(propertyName)) return getCommandName();
+		if (COMMANDID.equals(propertyName)) return getCommandId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -104,6 +126,7 @@ public class SecurityCommands extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (MENU.equals(propertyName)) setMenu((String)newValue); else
 		if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
+		if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -117,6 +140,8 @@ public class SecurityCommands extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (COMMANDNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (COMMANDID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -129,6 +154,7 @@ public class SecurityCommands extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (MENU.equals(propertyName)) return SecurityCommands.class;
 		if (COMMANDNAME.equals(propertyName)) return SecurityCommands.class;
+		if (COMMANDID.equals(propertyName)) return SecurityCommands.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -143,6 +169,8 @@ public class SecurityCommands extends ModelBase {
 		if (! SmartEquals(getMenu(), objT.getMenu()))
 			return false;
 		if (! SmartEquals(getCommandName(), objT.getCommandName()))
+			return false;
+		if (! SmartEquals(getCommandId(), objT.getCommandId()))
 			return false;
 		return true;
 	}			

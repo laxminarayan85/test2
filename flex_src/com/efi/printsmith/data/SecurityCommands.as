@@ -15,6 +15,7 @@ package com.efi.printsmith.data
 				
 		public var menu:String = "";
 		public var commandName:String = "";
+		public var commandId:String = "";
 	
 	}
 }

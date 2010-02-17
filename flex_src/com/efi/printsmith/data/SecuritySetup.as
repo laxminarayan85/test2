@@ -15,6 +15,7 @@ package com.efi.printsmith.data
 				
 		public var enable:Boolean = true;
 		public var menu:String = "";
+		public var commandId:String = "";
 		public var commandName:String = "";
 		public var accessGroup:AccessGroup;
 	

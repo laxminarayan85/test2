@@ -30,6 +30,8 @@
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.remoting.mxml.RemoteObject;
 			import mx.rpc.remoting.mxml.Operation;			
+	
+			import com.efi.printsmith.security.PSSecurity;
 			
 			private function init():void	{
 			} 
@@ -42,6 +44,7 @@
 					PopUpManager.removePopUp(this);
 					application.mainContainer.visible = true;
 					application.currentUser = res;
+					application.security = new PSSecurity(res);
 				} else {
 					Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				}

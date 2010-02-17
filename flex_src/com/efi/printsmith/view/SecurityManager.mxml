@@ -154,6 +154,7 @@
 			security = new SecuritySetup();
 			security.accessGroup = access;
 			security.commandName = item.commandName;
+			security.commandId = item.commandId;
 			security.menu = item.menu;
 			security.enable = false;
 		 	securitySetupLists.addItem(security);
