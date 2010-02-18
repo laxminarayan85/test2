@@ -83,6 +83,23 @@
 <mx:Script>
 	<![CDATA[
 		import com.efi.printsmith.events.commandEvents.EditCustomerEvent;
+		import com.efi.printsmith.events.commandEvents.EditStockDefinitionEvent;
+		import com.efi.printsmith.events.commandEvents.EditSystemPreferencesEvent;
+		import com.efi.printsmith.events.commandEvents.EditUserEvent;
+		import com.efi.printsmith.events.commandEvents.EditContactEvent;
+		import com.efi.printsmith.events.commandEvents.EditPressDefinitionEvent;
+		import com.efi.printsmith.events.commandEvents.EditCopierDefinitionEvent;
+		import com.efi.printsmith.events.commandEvents.EditChargeDefinitionEvent;
+		import com.efi.printsmith.events.commandEvents.EditAccountHistoryEvent;
+		import com.efi.printsmith.events.commandEvents.EditEstimateHistoryEvent;
+		import com.efi.printsmith.events.commandEvents.EditCashRegisterEvent;
+		import com.efi.printsmith.events.commandEvents.EditPendingListEvent;
+		import com.efi.printsmith.events.commandEvents.EditEmployeeEvent;
+		import com.efi.printsmith.events.commandEvents.EditScheduleEvent;
+		import com.efi.printsmith.events.commandEvents.EditSecurityEvent;
+		import com.efi.printsmith.events.commandEvents.EditTrackerEvent;
+		import com.efi.printsmith.events.commandEvents.EditPricingEvent;
+		
 		import com.efi.printsmith.view.DeliveryTicket;
 		import com.efi.printsmith.view.Utilities;
 		import com.efi.printsmith.view.PendingList;
@@ -196,65 +213,81 @@
 		}
 
 		private function doUsers():void {
-		//	var child:ListUsers = new ListUsers();
-			var child:EditUser = new EditUser();
-			addUniqueTab(child);
+			var event:EditUserEvent = new EditUserEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doContacts():void {
-			var child:EditContact = new EditContact();
-			addUniqueTab(child); 
+			var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doPressDefinitions():void {
-			var child:PressDefinitions = new PressDefinitions();
-			addUniqueTab(child);
+			var event:EditPressDefinitionEvent = new EditPressDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doCopyDefinitions():void {
-			var child:CopierDefinitions = new CopierDefinitions();
-			addUniqueTab(child);
+			var event:EditCopierDefinitionEvent = new EditCopierDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 
 		private function doChargeDefinitions():void {
-			var child:ChargeDefinitions = new ChargeDefinitions()
-			addUniqueTab(child);
+			var event:EditChargeDefinitionEvent = new EditChargeDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
+		
 		private function doAccountHistory():void {
-			var child:AccountHistory = new AccountHistory()
-			addUniqueTab(child);
+			var event:EditAccountHistoryEvent = new EditAccountHistoryEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doEstimateHistory():void {
-			var child:EstimateHistory = new EstimateHistory()
-			addUniqueTab(child);
+			var event:EditEstimateHistoryEvent = new EditEstimateHistoryEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		
 		private function doStockDefinitions():void {
-			var child:StockDefinitions = new StockDefinitions();
-			addUniqueTab(child);
+			var event:EditStockDefinitionEvent = new EditStockDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
+		
 		private function doSystemPreferences():void {
-			var child:SystemPreferences = new SystemPreferences();
-			addUniqueTab(child);
+			var event:EditSystemPreferencesEvent = new EditSystemPreferencesEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doCashRegister():void {
-			var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, true));
-			cashRegisterPopup.setStyle("borderAlpha", 0.9);
-			PopUpManager.centerPopUp(cashRegisterPopup);
+			var event:EditCashRegisterEvent = new EditCashRegisterEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+
+		private function doPendingList():void {
+			var event:EditPendingListEvent = new EditPendingListEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doEmployee():void {
-			var child:EmployeeManager = new EmployeeManager();
-			addUniqueTab(child);
+			var event:EditEmployeeEvent = new EditEmployeeEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doSchedule():void {
-			var child:ScheduleManager = new ScheduleManager();
-			addUniqueTab(child);
+			var event:EditScheduleEvent = new EditScheduleEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
+		private function doSecurity():void {
+			var event:EditSecurityEvent = new EditSecurityEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doTracker():void {
+			var event:EditTrackerEvent = new EditTrackerEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doPricing():void {
+			var event:EditPricingEvent = new EditPricingEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+
+
 		private function doUtilities():void {
 			var child:Utilities = new Utilities();
 			addUniqueTab(child);
 		}
-		private function doSecurity():void {
-			var child:SecurityManager = new SecurityManager();
-			addUniqueTab(child);
-		}
+
 		private function doClockInOut():void {
 			var child:ClockInOut = new ClockInOut();
 			child.showCloseButton=false
@@ -286,18 +319,6 @@
 			addUniqueTab(child);
 		}
 
-		private function doTracker():void {
-			var child:Tracker = new Tracker();
-			addUniqueTab(child);
-		}
-		private function doPricing():void {
-			var child:PriceListPicker = new PriceListPicker();
-			addUniqueTab(child);
-		}
-		private function doPendingList():void {
-			var child:PendingList = new PendingList();
-			addUniqueTab(child);
-		}
 		private function doLogout():void {
 			this.currentUser = null;
 			this.showLogin();

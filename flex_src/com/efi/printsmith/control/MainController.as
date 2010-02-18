@@ -23,6 +23,24 @@ package com.efi.printsmith.control
 			this.addCommand(PriceChargeEvent.PRICECHARGE, PriceChargeCommand);
 			this.addCommand(PriceInvoiceEvent.PRICEINVOICE, PriceInvoiceCommand);
 			this.addCommand(EditCustomerEvent.COMMANDID, EditCustomerCommand);
+			this.addCommand(EditChargeDefinitionEvent.COMMANDID, EditChargeDefinitionCommand);
+			this.addCommand(EditContactEvent.COMMANDID, EditContactCommand);
+			this.addCommand(EditCopierDefinitionEvent.COMMANDID, EditCopierDefinitionCommand);
+			this.addCommand(EditPressDefinitionEvent.COMMANDID, EditPressDefinitionCommand);
+			this.addCommand(EditStockDefinitionEvent.COMMANDID, EditStockDefinitionCommand);
+			this.addCommand(EditSystemPreferencesEvent.COMMANDID, EditSystemPreferencesCommand);
+			this.addCommand(EditUserEvent.COMMANDID, EditUserCommand);
+			
+			this.addCommand(EditAccountHistoryEvent.COMMANDID, EditAccountHistoryCommand);
+			this.addCommand(EditEstimateHistoryEvent.COMMANDID, EditEstimateHistoryCommand);
+			
+			this.addCommand(EditPendingListEvent.COMMANDID, EditPendingListCommand);
+			this.addCommand(EditEmployeeEvent.COMMANDID, EditEmployeeCommand);
+			this.addCommand(EditScheduleEvent.COMMANDID, EditScheduleCommand);
+			this.addCommand(EditSecurityEvent.COMMANDID, EditSecurityCommand);
+			this.addCommand(EditTrackerEvent.COMMANDID, EditTrackerCommand);
+			this.addCommand(EditPricingEvent.COMMANDID, EditPricingCommand);
+			
 		}
 		
 	}

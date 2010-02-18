@@ -59,14 +59,14 @@ rStandardMenuText.Invoice,rStandardMenuText.ConverttoInvoice,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.FileDocument,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.CancelDocument,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.CreateCustomerfmDocu,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.TrackerStatus,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.TrackerStatus,CMD_Tracker
 rStandardMenuText.Invoice,rStandardMenuText.GenerateDeliveryTick,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.OpenEstimatorCheckli,CMD_
-rStandardMenuText.POS,rStandardMenuText.OpenCashRegister,CMD_
+rStandardMenuText.POS,rStandardMenuText.OpenCashRegister,CMD_CashRegister
 rStandardMenuText.POS,rStandardMenuText.1,CMD_
-rStandardMenuText.POS,rStandardMenuText.CashRegisterWindow,CMD_
+rStandardMenuText.POS,rStandardMenuText.CashRegisterWindow,CMD_CashRegister
 rStandardMenuText.POS,	rStandardMenuText.PostPOSCharges,CMD_
-rStandardMenuText.POS,rStandardMenuText.PendingDocumentWindo,CMD_
+rStandardMenuText.POS,rStandardMenuText.PendingDocumentWindo,CMD_PendingList
 rStandardMenuText.POS,	posPendCmd.PickUp,CMD_
 rStandardMenuText.POS,	posPendCmd.Status,CMD_
 rStandardMenuText.POS,	posPendCmd.Location,CMD_
@@ -92,7 +92,7 @@ rStandardMenuText.AR,	rStandardMenuText.NotesPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
-rStandardMenuText.AR,rStandardMenuText.Contacts,CMD_
+rStandardMenuText.AR,rStandardMenuText.Contacts,CMD_Contact
 rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
@@ -110,13 +110,13 @@ rStandardMenuText.AR,rStandardMenuText.1,CMD_
 rStandardMenuText.AR,rStandardMenuText.AccountAging,CMD_
 rStandardMenuText.AR,rStandardMenuText.JournalEntry,CMD_
 rStandardMenuText.AR,rStandardMenuText.PostPOSCharges,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.StockDefinitions,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.StockDefinitions,CMD_StockDefinition
 rStandardMenuText.Pricing,	rStandardMenuText.DeleteStock,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.PressDefinitions,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.CopierDigitalDefinit,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.ListPriceSchedules,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.PressDefinitions,CMD_PressDefinition
+rStandardMenuText.Pricing,rStandardMenuText.CopierDigitalDefinit,CMD_CopierDefinition
+rStandardMenuText.Pricing,rStandardMenuText.ListPriceSchedules,CMD_PriceList
 rStandardMenuText.Pricing,rStandardMenuText.StampSchedule,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.ChargeDefinitions,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.ChargeDefinitions,CMD_ChargeDefinition
 rStandardMenuText.Pricing,	rUserMenuText.PrePress,CMD_
 rStandardMenuText.Pricing,	rUserMenuText.Bindery,CMD_
 rStandardMenuText.Pricing,	rUserMenuText.Merchandise,CMD_
@@ -130,8 +130,8 @@ rStandardMenuText.Pricing,rStandardMenuText.1,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.GeneratePriceBook,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.ChangePrices,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.ImportStockCatalog,CMD_
-rStandardMenuText.Reports,rStandardMenuText.AccountHistory,CMD_
-rStandardMenuText.Reports,rStandardMenuText.EstimateHistory,CMD_
+rStandardMenuText.Reports,rStandardMenuText.AccountHistory,CMD_AccountHistory
+rStandardMenuText.Reports,rStandardMenuText.EstimateHistory,CMD_EstimateHistory
 rStandardMenuText.Reports,rStandardMenuText.WorkinProgress,CMD_
 rStandardMenuText.Reports,rStandardMenuText.MailingLabels,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
@@ -157,8 +157,8 @@ rStandardMenuText.Admin,rStandardMenuText.ConfigureQuickAccess,CMD_
 rStandardMenuText.Admin,rStandardMenuText.UserLogIn,CMD_
 rStandardMenuText.Admin,	rAltMenuText.AutoLogIn,CMD_
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_
-rStandardMenuText.Admin,rStandardMenuText.UserDefinitions,CMD_
-rStandardMenuText.Admin,rStandardMenuText.SecuritySetup,CMD_
+rStandardMenuText.Admin,rStandardMenuText.UserDefinitions,CMD_Users
+rStandardMenuText.Admin,rStandardMenuText.SecuritySetup,CMD_Security
 rStandardMenuText.Admin,rStandardMenuText.KeyboardShortcuts,CMD_
 rStandardMenuText.Admin,rStandardMenuText.WebAdministration,CMD_
 rStandardMenuText.Admin,	kWebAdminCmd.Site,CMD_
@@ -171,22 +171,22 @@ rStandardMenuText.Admin,	kWebAdminCmd.Graphics,CMD_
 rStandardMenuText.Admin,	kWebAdminCmd.Admin,CMD_
 rStandardMenuText.Admin,	consoleCmd.WebConnection,CMD_
 rStandardMenuText.Admin,	webDataCmd.WebDataConsole,CMD_
-rStandardMenuText.Admin,rStandardMenuText.TrackerConsole,CMD_
-rStandardMenuText.Admin,rStandardMenuText.TrackerManager,CMD_
+rStandardMenuText.Admin,rStandardMenuText.TrackerConsole,CMD_Tracker
+rStandardMenuText.Admin,rStandardMenuText.TrackerManager,CMD_Tracker
 rStandardMenuText.Admin,	rStandardMenuText.TrackerRoutings,CMD_
-rStandardMenuText.Admin,rStandardMenuText.EmployeeManager,CMD_
-rStandardMenuText.Admin,	rStandardMenuText.ClockInOut,CMD_
-rStandardMenuText.Admin,	rStandardMenuText.Employees,CMD_
+rStandardMenuText.Admin,rStandardMenuText.EmployeeManager,CMD_Employee
+rStandardMenuText.Admin,	rStandardMenuText.ClockInOut,CMD_ClockInOut
+rStandardMenuText.Admin,	rStandardMenuText.Employees,CMD_EmployeeItem
 rStandardMenuText.Admin,	rStandardMenuText._SettingsPanel,CMD_
 rStandardMenuText.Admin,	rStandardMenuText._PersonalPanel,CMD_
 rStandardMenuText.Admin,	rStandardMenuText._ProductionPanel,CMD_
 rStandardMenuText.Admin,	rStandardMenuText.ClockOptions,CMD_
 rStandardMenuText.Admin,	rStandardMenuText.TimePeriods,CMD_
-rStandardMenuText.Admin,	rStandardMenuText.EditTimeCards,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.EditTimeCards,CMD_TimeCards
 rStandardMenuText.Admin,	rStandardMenuText.Reports,CMD_
 rStandardMenuText.Admin,	rStandardMenuText.Exports,CMD_
 rStandardMenuText.Admin,rStandardMenuText.DeliveryTicketManage,CMD_
-rStandardMenuText.Admin,rStandardMenuText.ScheduleBoardManager,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ScheduleBoardManager,CMD_Schedule
 rStandardMenuText.Admin,	scheduleBoardMgrCmd.JobListNewTags,CMD_
 rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowDepartments,CMD_
 rStandardMenuText.Admin,	scheduleBoardMgrCmd.ShowCostCenter,CMD_
@@ -204,7 +204,7 @@ rStandardMenuText.Admin,rStandardMenuText.CreditCardManager,CMD_
 rStandardMenuText.Admin,	rAltMenuText.ReadMagneticCardSwip,CMD_
 rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar,CMD_
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_
-rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_
+rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_SystemPreferences
 rStandardMenuText.Admin,	genericPrefCmd.System,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.Behavior,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.Company,CMD_
