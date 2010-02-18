@@ -510,6 +510,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 	}
+	AccessGroup adminaccessgroup = new AccessGroup();
 
 	private void ProcessAccessGroup() {
 		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
@@ -517,16 +518,16 @@ public class DefaultDataFactory {
 		if (itemList.size() > 0)
 			return;
 
-		AccessGroup accessgroup = new AccessGroup();
-		accessgroup.setName("System");
+		
+		adminaccessgroup.setName("System");
 		try {
-			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);
+			adminaccessgroup = (AccessGroup) dataservice.addUpdate(adminaccessgroup);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup, true);
+		AddSecuritySetup(adminaccessgroup, true);
 
-		accessgroup = new AccessGroup();
+		AccessGroup accessgroup = new AccessGroup();
 		accessgroup.setName("Minimum");
 		try {
 			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);
@@ -614,6 +615,7 @@ public class DefaultDataFactory {
 		Users users = new Users();
 		users.setName("admin");
 		users.setPassword("admin");
+		users.setAccessGroup(adminaccessgroup);
 		try {
 			dataservice.addUpdate(users);
 		} catch (Exception e) {
