@@ -48,6 +48,8 @@ package com.efi.printsmith.data
 		public var copyMinutes:Number = 0;
 		public var charges:ArrayCollection;
 		public var copierId:String = "";
+		public var flateRate:Number = 0;
+		public var copyMarkup2:Number = 0;
 	
 	}
 }

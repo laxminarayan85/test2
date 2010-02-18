@@ -174,6 +174,14 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPIERID = "CopierId";
+	/**
+	 * @generated
+	 */
+	public static final String FLATERATE = "FlateRate";
+	/**
+	 * @generated
+	 */
+	public static final String COPYMARKUP2 = "CopyMarkup2";
 
 	/**
 	 * @generated
@@ -784,6 +792,40 @@ public class CopierDefinition extends ModelBase {
 	public void setCopierId(String newVal) {
 		this.copierId = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double flateRate;
+	/**
+	 * @generated
+ 	 */
+	public Double getFlateRate(){
+		return flateRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFlateRate(Double newVal) {
+		this.flateRate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double copyMarkup2;
+	/**
+	 * @generated
+ 	 */
+	public Double getCopyMarkup2(){
+		return copyMarkup2; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopyMarkup2(Double newVal) {
+		this.copyMarkup2 = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -825,6 +867,8 @@ public class CopierDefinition extends ModelBase {
 		if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
 		if (CHARGES.equals(propertyName)) return getCharges();
 		if (COPIERID.equals(propertyName)) return getCopierId();
+		if (FLATERATE.equals(propertyName)) return getFlateRate();
+		if (COPYMARKUP2.equals(propertyName)) return getCopyMarkup2();
 		return super.getProperty(propertyName);
 	}
 	
@@ -869,6 +913,8 @@ public class CopierDefinition extends ModelBase {
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
 		if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
+		if (FLATERATE.equals(propertyName)) setFlateRate((Double)newValue); else
+		if (COPYMARKUP2.equals(propertyName)) setCopyMarkup2((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -948,6 +994,10 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {java.util.List.class, Charge.class};		
 		if (COPIERID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (FLATERATE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (COPYMARKUP2.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -993,6 +1043,8 @@ public class CopierDefinition extends ModelBase {
 		if (COPYMINUTES.equals(propertyName)) return CopierDefinition.class;
 		if (CHARGES.equals(propertyName)) return CopierDefinition.class;
 		if (COPIERID.equals(propertyName)) return CopierDefinition.class;
+		if (FLATERATE.equals(propertyName)) return CopierDefinition.class;
+		if (COPYMARKUP2.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1073,6 +1125,10 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getCharges(), objT.getCharges()))
 			return false;
 		if (! SmartEquals(getCopierId(), objT.getCopierId()))
+			return false;
+		if (! SmartEquals(getFlateRate(), objT.getFlateRate()))
+			return false;
+		if (! SmartEquals(getCopyMarkup2(), objT.getCopyMarkup2()))
 			return false;
 		return true;
 	}			

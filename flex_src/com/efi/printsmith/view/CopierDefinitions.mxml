@@ -200,6 +200,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
 		 copierDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
 		 copierDefinition.copyMinutes = parseInt(copyMinutes.text);
+		 copierDefinition.flateRate = parseInt(RateCopy.text);
+		 copierDefinition.copyMarkup2= parseInt(copyMarkup2.text);
 		 
 		 copierDefinition.blackwhite = blackwhitecheck.selected;
 		 copierDefinition.color = colorcheck.selected;
@@ -545,8 +547,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="332" y="451" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
 		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel"/>
 		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" enabled="false"/>
-		<mx:TextInput x="126" y="572" width="71" id="copyMarkup2" height="20"/>
-		<mx:TextInput x="126" y="572" width="71" id="RateCopy" height="20" visible="false" enabled="false"/>
+		<mx:TextInput x="126" y="572" width="71" id="copyMarkup2" height="20" text="{copierDefinition.copyMarkup2}"/>
+		<mx:TextInput x="126" y="572" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flateRate}"/>
 		<mx:Label x="40" y="596" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockMarkup')}"/>
 		<mx:Label x="42" y="618" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Side2Factor')}"/>
 		<mx:TextInput x="126" y="594" width="71" id="stockMarkup" height="20"/>
