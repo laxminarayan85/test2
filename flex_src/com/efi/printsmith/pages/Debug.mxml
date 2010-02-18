@@ -24,8 +24,6 @@
 			import com.efi.printsmith.data.ProductCode;
 			import com.efi.printsmith.data.Location;
 			import com.efi.printsmith.data.SalesCategory;
-			import com.efi.printsmith.data.chargePricingMethod;
-			import com.efi.printsmith.data.copierPricingMethod;
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.ChargeCost;
 			import com.efi.printsmith.data.enums.ChargeCostMethod;
@@ -43,11 +41,9 @@
 
 			private var salesCategoryNames:Array = ["Print", "Bindery", "PrePress", "HS Copy", "Color Copy", "Merch", "Mailing", "Misc...",
 													"Typesetting", "Graphics", "Large Format", "Outside Svcs", "Disc-Markups", "Postage", "Interest", "Shipping"];
-			private var chargepricingMethodNames:Array = ["Printing", "Roll-Fed", "B&W", "Color", "Large Format", "Blank", "List", "Charges Only", "Outside Services",
+			/* private var chargepricingMethodNames:Array = ["Printing", "Roll-Fed", "B&W", "Color", "Large Format", "Blank", "List", "Charges Only", "Outside Services",
 													"Merchandise", "Lines & Inches", "Mailing"];
-			private var copierpricingMethodNames:Array = ["Cost Plus", "Flat Rate", "Copies and Originals", "Copies per Orginals", "Total of all Copies", "Square Area and Originals", "Total of Square Area", "Square Area and Copies ",
-														"Square Area per Copy"];
-												
+												 */
 			private var locationNames:Array = ["PrePress","Typesetting","Design","Proof","Proof OK'd","Camera","Stripping","Plate","Outside Prepress","PCX","Production",
 												"Staged - Print","Running - Print","Complete - drying","Staged - Copy","Running - Copy","Staged - Color Copy","Running - Color Copy",
 												"Outside Production","Complete","Bindery","Bindery in progress","Outside bindery","Boxing","Shipping","Pickup","Waiting for Approval",
@@ -116,7 +112,7 @@
 				}				
 			}
 			
-			private function doPopulatePricingMethods():void {
+			/* private function doPopulatePricingMethods():void {
 				var pricingMethod:chargePricingMethod;
 				var i:int;
 				
@@ -137,7 +133,7 @@
 					pricingMethod.id = 0;
 					dataService.addUpdate(pricingMethod);
 				}								
-			}
+			} */
 
 			private function doPopulateDimensions():void {
 				var dimension:Dimension;
@@ -172,10 +168,6 @@
 	<mx:Canvas width="100%"
 			   height="100%">
 		<mx:Button x="10"
-				   y="10"
-				   label="Populate Charge Pricing Methods"
-				   click="doPopulatePricingMethods();" width="188"/>
-		<mx:Button x="10"
 				   y="70"
 				   label="Populate Sales Categories"
 				   click="doPopulateSalesCategories();" width="188"/>
@@ -195,8 +187,6 @@
 				   y="190"
 				   label="DB Query"
 				   click="doDBQuery();" width="188"/>
-		<mx:Button x="10" y="40" label="Populate Copier Pricing Method" width="188" 
-			click="doPopulateCopierPricingMethods();"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

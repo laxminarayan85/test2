@@ -100,7 +100,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		employee = new Employee();
 		pressService.getAll("PressDefinition");
 		copierService.getAll("CopierDefinition");
-		priceListService.getAll("PricingMethod");
+		priceListService.getAll("PerferencesPricingMethod");
 		chargeService.getAll("ChargeDefinition");
 	}
 	private function messageHandler(message:IMessage):void

@@ -686,24 +686,24 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<chargePricingMethod> employeePricings;
+	private java.util.List<PreferencesPricingMethod> employeePricings;
 	/**
 	 * @generated
  	 */
-	public java.util.List<chargePricingMethod> getEmployeePricings(){
+	public java.util.List<PreferencesPricingMethod> getEmployeePricings(){
 		return employeePricings; 
 	}
 
-	public void addEmployeePricings(chargePricingMethod obj) {
+	public void addEmployeePricings(PreferencesPricingMethod obj) {
 		if (employeePricings == null) {
-			employeePricings = new java.util.ArrayList<chargePricingMethod>();
+			employeePricings = new java.util.ArrayList<PreferencesPricingMethod>();
 		}
 		employeePricings.add(obj);
 	}
 	/**
 	 * @generated
 	 */	
-	public void setEmployeePricings(java.util.List<chargePricingMethod> newVal) {
+	public void setEmployeePricings(java.util.List<PreferencesPricingMethod> newVal) {
 		this.employeePricings = newVal;
 	}
  	
@@ -1018,7 +1018,7 @@ public class Employee extends Party {
 		if (ALLCOPIERS.equals(propertyName)) setAllCopiers((Boolean)newValue); else
 		if (ALLCHARGETYPES.equals(propertyName)) setAllChargeTypes((Boolean)newValue); else
 		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) setOnlyShowProductionParents((Boolean)newValue); else
-		if (EMPLOYEEPRICING.equals(propertyName)) setEmployeePricings((java.util.List<chargePricingMethod>)newValue); else
+		if (EMPLOYEEPRICING.equals(propertyName)) setEmployeePricings((java.util.List<PreferencesPricingMethod>)newValue); else
 		if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (EMPLOYEEPRESSES.equals(propertyName)) setEmployeePresses((java.util.List<PressDefinition>)newValue); else
 		if (EMPLOYEECOPIERS.equals(propertyName)) setEmployeeCopiers((java.util.List<CopierDefinition>)newValue); else
@@ -1097,7 +1097,7 @@ public class Employee extends Party {
 		if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (EMPLOYEEPRICING.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, chargePricingMethod.class};		
+			return new Class<?>[] {java.util.List.class, PreferencesPricingMethod.class};		
 		if (EMPLOYEECHARGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		if (EMPLOYEEPRESSES.equals(propertyName)) 

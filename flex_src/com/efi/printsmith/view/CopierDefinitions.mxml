@@ -49,6 +49,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.WasteChart;
 	import com.efi.printsmith.data.CopierDefinition;
+	import com.efi.printsmith.data.enums.CopierPricingMethod;
 
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 
@@ -60,6 +61,10 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import mx.rpc.events.FaultEvent;                                         
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+	import mx.rpc.IResponder;
+	import com.efi.printsmith.events.ModelAddUpdateEvent;
+	import com.efi.printsmith.events.ModelGetAllEvent;
+	import com.efi.printsmith.events.ModelDeleteItemEvent;
 
 	[Bindable]                   
     private var enableSave:Boolean = true;
@@ -72,7 +77,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
     [Bindable]                                         
     private var priceList:PriceList;  
-                         
+    [Bindable]
+	private var salesCategories:ArrayCollection = new ArrayCollection();                     
 	[Bindable]                                         
     private var copierDefinition:CopierDefinition;
 	[Bindable]                                         
@@ -87,7 +93,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	public function init():void {
 		consumer.subscribe();
-		notification_consumer.subscribe();     
+		notification_consumer.subscribe();   
+		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
 		dataService.getAll("CopierDefinition");
 		chargeDataService.getAll("Charge");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
@@ -95,7 +102,10 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	    copierDefinition = new CopierDefinition();
 	    copierDefinition.largeFormat = false; 
 	}      
-	                                                   						
+	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
+		var getAllEvent:ModelGetAllEvent = new ModelGetAllEvent(modelType, callbacks);
+		getAllEvent.dispatch();			
+	}                                                   						
 	private function messageHandler(message:IMessage):void
 	{
 	}
@@ -138,6 +148,25 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	private function doCopierGridClick():void {
 		copierDefinition = dataGrid.selectedItem as CopierDefinition;
+		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
+		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat, salesCategories);
+		updateControlState()
+	}
+	private function findItemArray(name:String, array:Array):int {
+		for each(var element:Object in array) {
+			if (name == element) {
+				return array.indexOf(element,0)
+			}
+		}
+		return -1;
+	}
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
 	}
 	private function mapAccountData():void {
 		 //copierDefinition.copyDefID = CopierDefID;
@@ -164,7 +193,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 copierDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
 		 copierDefinition.hoursOpen = parseInt(openhours.text);
 		 copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
-		 /* copierDefinition.method = ' '; */
+		 copierDefinition.method = pricing_method_combo.selectedItem.toString();
+		 copierDefinition.salesCat = charge_sales_category_combo.text;
 		 copierDefinition.percentUsage = percentageUse.text;
 		 copierDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
 		 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
@@ -200,6 +230,9 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadChargeResult(ev:ResultEvent):void
 	{
 		charges=ev.result as ArrayCollection;
+	}
+	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
+		salesCategories = ev.result as ArrayCollection;
 	}
 	
 	private function doCheckDefaultBW():void {
@@ -271,6 +304,155 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var defaultCopierWindow:DefaultCopierPicker = DefaultCopierPicker(PopUpManager.createPopUp(this, DefaultCopierPicker, true));
 		defaultCopierWindow.setStyle("borderAlpha", 0.9);
 	}
+	private function changePricingMethod(event:Event):void {
+		updateControlState();
+	}
+	private function updateControlState():void {
+		
+		switch (pricing_method_combo.selectedItem) {
+			case CopierPricingMethod.COSTPLUS:
+				Matrix_button.visible = false;
+				matrixcopycost.visible= false;
+				matrixdiscount.visible= false;
+				matrixstep.visible= false;
+				squarerunsize.visible= false;
+				squarefinishsize.visible= false;
+				interpolatematrix.visible= false;
+				copyMarkup2.visible = false;
+				copymarkuplabel.visible = false;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			
+			case CopierPricingMethod.FLATRATE:
+				Matrix_button.visible = false;
+				matrixcopycost.visible= false;
+				matrixdiscount.visible= false;
+				matrixstep.visible= false;
+				squarerunsize.visible= false;
+				squarefinishsize.visible= false;
+				interpolatematrix.visible= false;
+				ratecopylabel.visible = true;
+				RateCopy.visible =true;
+				
+				break;
+			case CopierPricingMethod.COPIESANDORIGINALS:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = false;
+				squarerunsize.selected = false;
+				squarefinishsize.enabled= false;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.COPIESPERORIGINALS:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = false;
+				squarerunsize.selected = false;
+				squarefinishsize.enabled= false;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.TOTALOFALLCOPIES:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = false;
+				squarerunsize.selected = false;
+				squarefinishsize.enabled= false;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.SQUAREAREAOFORIGINALS:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = true;
+				squarefinishsize.enabled= true;
+				squarerunsize.selected = true;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.TOTALSQUAREAREA:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = true;
+				squarefinishsize.enabled= true;
+				squarerunsize.selected = true;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.SQUAREAREAANDCOPIES:
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = true;
+				squarefinishsize.enabled= true;
+				squarerunsize.selected = true;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+			case CopierPricingMethod.SQUAREAREAPERCOPY:			
+				Matrix_button.visible = true;
+				matrixcopycost.visible= true;
+				matrixdiscount.visible= true;
+				matrixstep.visible= true;
+				squarerunsize.visible= true;
+				squarefinishsize.visible= true;
+				interpolatematrix.visible= true;
+				squarerunsize.enabled = true;
+				squarerunsize.selected = true;
+				squarefinishsize.enabled= true;
+				copyMarkup2.visible = true;
+				copymarkuplabel.visible = true;
+				ratecopylabel.visible = false;
+				RateCopy.visible =false;
+				break;
+				
+				
+			}
+	
+	}
 
 ]]>
                              
@@ -323,10 +505,10 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:CheckBox x="126" y="261" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right"/>
 		<mx:CheckBox x="182" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color')}" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right"/>
 		<mx:CheckBox x="242" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
-		<mx:Label x="355" y="206" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}"/>
-		<mx:Label x="346" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}"/>
-		<mx:List x="414" y="203" height="21" id="method"></mx:List>
-		<mx:List x="414" y="233" height="21" id="salescat"></mx:List>
+		<mx:Label x="346" y="206" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right"/>
+		<mx:Label x="346" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right"/>
+		<mx:ComboBox x="462" y="204.5" height="21" id="pricing_method_combo" dataProvider="{CopierPricingMethod.toArray()}" change="changePricingMethod(event);" width="144" textAlign="right"></mx:ComboBox>
+		<mx:ComboBox x="462" y="234.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="144" textAlign="right"></mx:ComboBox>
 		<mx:Label x="56" y="433" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumWidth')}"/>
 		<mx:Label x="59" y="455" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumWidth')}"/>
 		<mx:TextInput x="126" y="431" id="maxWidthsize" text="{copierDefinition.maxWidth}" height="20" width="71"/>
@@ -361,8 +543,10 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="332" y="407" width="71" id="tonerCopy" text ="{copierDefinition.tonerCopy}" height="20"/>
 		<mx:TextInput x="332" y="429" width="71" id="developerCopy"  text="{copierDefinition.developerCopy}" height="20"/>
 		<mx:TextInput x="332" y="451" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
-		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}"/>
+		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel"/>
+		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" enabled="false"/>
 		<mx:TextInput x="126" y="572" width="71" id="copyMarkup2" height="20"/>
+		<mx:TextInput x="126" y="572" width="71" id="RateCopy" height="20" visible="false" enabled="false"/>
 		<mx:Label x="40" y="596" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockMarkup')}"/>
 		<mx:Label x="42" y="618" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Side2Factor')}"/>
 		<mx:TextInput x="126" y="594" width="71" id="stockMarkup" height="20"/>
@@ -372,7 +556,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="234" y="617" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Price2SidedBy')}"/>
 		<mx:List x="325" y="572" height="22"></mx:List>
 		<mx:List x="325" y="614" height="22"></mx:List>
-		<mx:Button x="5" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.EditMatrix')}"/>
+		<mx:Button x="5" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.EditMatrix')}" id="Matrix_button"/>
 		<mx:CheckBox x="134" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsCopyCost')}" id="matrixcopycost"/>
 		<mx:CheckBox x="134" y="512" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsDiscountTabl')}" id="matrixdiscount"/>
 		<mx:CheckBox x="134" y="532" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsStepTable')}" id="matrixstep"/>
