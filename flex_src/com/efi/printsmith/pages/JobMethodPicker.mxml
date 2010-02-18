@@ -59,7 +59,7 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-				dataService.getAll("PricingMethod");
+				dataService.getAll("PerferncesPricingMethod");
 			}
 
 			private function newAccount():void
