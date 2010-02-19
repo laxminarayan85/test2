@@ -99,6 +99,11 @@
 		import com.efi.printsmith.events.commandEvents.EditSecurityEvent;
 		import com.efi.printsmith.events.commandEvents.EditTrackerEvent;
 		import com.efi.printsmith.events.commandEvents.EditPricingEvent;
+		import com.efi.printsmith.events.commandEvents.EditClockInOutEvent;
+		import com.efi.printsmith.events.commandEvents.EditCreateEstimateEvent;
+		import com.efi.printsmith.events.commandEvents.EditCreateInvoiceEvent;
+		import com.efi.printsmith.events.commandEvents.EditEditEstimateEvent;
+		import com.efi.printsmith.events.commandEvents.EditEditInvoiceEvent;
 		
 		import com.efi.printsmith.view.DeliveryTicket;
 		import com.efi.printsmith.view.Utilities;
@@ -206,6 +211,7 @@
 			var child:DisplayObject = evt.result as DisplayObject;
 			addUniqueTab(child);
 		}		
+
 		
 		private function doAccounts():void {
 			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
@@ -289,36 +295,26 @@
 		}
 
 		private function doClockInOut():void {
-			var child:ClockInOut = new ClockInOut();
-			child.showCloseButton=false
-			addUniqueTab(child);
+			var event:EditClockInOutEvent = new EditClockInOutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doCreateEstimate():void {
+			var event:EditCreateEstimateEvent = new EditCreateEstimateEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
 		private function doCreateInvoice():void {
-			var child:EditInvoice = new EditInvoice();
-			child.setEditorType(EditInvoice.EDITINVOICE);
-			addUniqueTab(child);
+			var event:EditCreateInvoiceEvent = new EditCreateInvoiceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
-		
-		public function doEditInvoice(invoice:InvoiceBase):void {
-			var child:EditInvoice = new EditInvoice();
-			child.setEditorType(EditInvoice.EDITINVOICE);
-			child.setInvoice(invoice);
-			addUniqueTab(child);
-		}
-		
-		private function doCreateEstimate():void {
-			var child:EditInvoice = new EditInvoice();
-			child.setEditorType(EditInvoice.EDITESTIMATE);
-			addUniqueTab(child);
-		}
-
 		public function doEditEstimate(estimate:InvoiceBase):void {
-			var child:EditInvoice = new EditInvoice();
-			child.setEditorType(EditInvoice.EDITESTIMATE);
-			child.setInvoice(estimate);
-			addUniqueTab(child);
+			var event:EditEditEstimateEvent = new EditEditEstimateEvent(estimate, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
 		}
-
+		public function doEditInvoice(invoice:InvoiceBase):void {
+			var event:EditEditInvoiceEvent = new EditEditInvoiceEvent(invoice, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		
 		private function doLogout():void {
 			this.currentUser = null;
 			this.showLogin();

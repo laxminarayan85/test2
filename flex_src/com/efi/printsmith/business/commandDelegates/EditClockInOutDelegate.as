@@ -1,23 +1,24 @@
 package com.efi.printsmith.business.commandDelegates
 {
 	import com.efi.printsmith.data.*;
-	import com.efi.printsmith.events.commandEvents.EditCashRegisterEvent;
-	import com.efi.printsmith.view.CashRegister;
-
+	import com.efi.printsmith.events.commandEvents.EditClockInOutEvent;
+	import com.efi.printsmith.view.ClockInOut;
+	
 	import mx.controls.Alert;
 	import mx.rpc.IResponder;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
-	public class EditCashRegisterDelegate extends InterfaceCommandDelegate 
+	public class EditClockInOutDelegate extends InterfaceCommandDelegate 
 	{
-		public function EditCashRegisterDelegate(responder:IResponder) {
+		public function EditClockInOutDelegate(responder:IResponder) {
 			super(responder);
 		}
 		
-		public function handleUIEvent(event:EditCashRegisterEvent):void {
-			if (checkSecurity(EditCashRegisterEvent.COMMANDID)) {
-				var child:com.efi.printsmith.view.CashRegister = new com.efi.printsmith.view.CashRegister();
+		public function handleUIEvent(event:EditClockInOutEvent):void {
+			if (checkSecurity(EditClockInOutEvent.COMMANDID)) {
+				var child:ClockInOut = new ClockInOut();
+				child.showCloseButton=false;
 				var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
 				responder.result(resEvent);
 			} else {

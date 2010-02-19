@@ -10,8 +10,7 @@
 	creationComplete="init()" 
 	xmlns:components="com.efi.printsmith.components.*" 
 	xmlns:vo="com.efi.printsmith.vo.*" 
-	showCloseButton="true" 
-	close="PopUpManager.removePopUp(this) ">
+	showCloseButton="true">
 
 	<mx:CurrencyFormatter precision="2" id="currencyFormatter"/>
 	<mx:NumberFormatter precision="2" id="numberFormatter"/>

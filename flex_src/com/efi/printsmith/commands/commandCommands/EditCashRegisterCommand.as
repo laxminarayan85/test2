@@ -16,9 +16,9 @@ package com.efi.printsmith.commands.commandCommands
 		public function execute(event:CairngormEvent):void
 		{
 			var editCashRegisterEvent:EditCashRegisterEvent = event as EditCashRegisterEvent;
-			var delegate:EditCashRegisterDelegate = new EditUserDelegate(editCashRegisterEvent.callbacks);
+			var delegate:EditCashRegisterDelegate = new EditCashRegisterDelegate(editCashRegisterEvent.callbacks);
 			
-			delegate.handleUIEvent(editUserEvent);
+			delegate.handleUIEvent(editCashRegisterEvent);
 		}
 		
 	}

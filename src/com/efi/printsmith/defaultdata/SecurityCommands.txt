@@ -28,13 +28,13 @@ rStandardMenuText.Edit,rStandardMenuText.HideItem,CMD_
 rStandardMenuText.Edit,rStandardMenuText.SpellCheckSelection,CMD_
 rStandardMenuText.Edit,rStandardMenuText.1,CMD_
 rStandardMenuText.Edit,rStandardMenuText.SendMail,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.CreateInvoice,CMD_
-rStandardMenuText.Invoice,	rStandardMenuText.ModifyInvoices,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CreateInvoice,CMD_CreateInvoice
+rStandardMenuText.Invoice,	rStandardMenuText.ModifyInvoices,CMD_EditInvoice
 rStandardMenuText.Invoice,rAltMenuText.CopytonewInvoice,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.UpdatePendingDocumen,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.ReviewAnyDocument,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate,CMD_
-rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate,CMD_CreateEstimate
+rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate,CMD_EditEstimate
 rStandardMenuText.Invoice,rStandardMenuText.1,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,CMD_
 rStandardMenuText.AccountInfo,rStandardMenuText.ReNumberDocuments,CMD_
