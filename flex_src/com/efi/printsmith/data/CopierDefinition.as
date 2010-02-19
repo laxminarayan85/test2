@@ -50,6 +50,9 @@ package com.efi.printsmith.data
 		public var copierId:String = "";
 		public var flateRate:Number = 0;
 		public var copyMarkup2:Number = 0;
+		public var wasteChart:WasteChart;
+		public var stockPriceList:PriceList;
+		public var copierPriceList:PriceList;
 	
 	}
 }

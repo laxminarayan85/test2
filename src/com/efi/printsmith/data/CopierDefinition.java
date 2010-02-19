@@ -182,6 +182,18 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPYMARKUP2 = "CopyMarkup2";
+	/**
+	 * @generated
+	 */
+	public static final String WASTECHART = "WasteChart";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKPRICELIST = "StockPriceList";
+	/**
+	 * @generated
+	 */
+	public static final String COPIERPRICELIST = "CopierPriceList";
 
 	/**
 	 * @generated
@@ -755,24 +767,24 @@ public class CopierDefinition extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
-	private java.util.List<Charge> charges;
+	private java.util.List<ChargeDefinition> charges;
 	/**
 	 * @generated
  	 */
-	public java.util.List<Charge> getCharges(){
+	public java.util.List<ChargeDefinition> getCharges(){
 		return charges; 
 	}
 
-	public void addCharges(Charge obj) {
+	public void addCharges(ChargeDefinition obj) {
 		if (charges == null) {
-			charges = new java.util.ArrayList<Charge>();
+			charges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		charges.add(obj);
 	}
 	/**
 	 * @generated
 	 */	
-	public void setCharges(java.util.List<Charge> newVal) {
+	public void setCharges(java.util.List<ChargeDefinition> newVal) {
 		this.charges = newVal;
 	}
  	
@@ -826,6 +838,57 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMarkup2(Double newVal) {
 		this.copyMarkup2 = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private WasteChart wasteChart;
+	/**
+	 * @generated
+ 	 */
+	public WasteChart getWasteChart(){
+		return wasteChart; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWasteChart(WasteChart newVal) {
+		this.wasteChart = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PriceList stockPriceList;
+	/**
+	 * @generated
+ 	 */
+	public PriceList getStockPriceList(){
+		return stockPriceList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockPriceList(PriceList newVal) {
+		this.stockPriceList = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PriceList copierPriceList;
+	/**
+	 * @generated
+ 	 */
+	public PriceList getCopierPriceList(){
+		return copierPriceList; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopierPriceList(PriceList newVal) {
+		this.copierPriceList = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -869,6 +932,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPIERID.equals(propertyName)) return getCopierId();
 		if (FLATERATE.equals(propertyName)) return getFlateRate();
 		if (COPYMARKUP2.equals(propertyName)) return getCopyMarkup2();
+		if (WASTECHART.equals(propertyName)) return getWasteChart();
+		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
+		if (COPIERPRICELIST.equals(propertyName)) return getCopierPriceList();
 		return super.getProperty(propertyName);
 	}
 	
@@ -911,10 +977,13 @@ public class CopierDefinition extends ModelBase {
 		if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
 		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Double)newValue); else
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
-		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
+		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
 		if (FLATERATE.equals(propertyName)) setFlateRate((Double)newValue); else
 		if (COPYMARKUP2.equals(propertyName)) setCopyMarkup2((Double)newValue); else
+		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
+		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
+		if (COPIERPRICELIST.equals(propertyName)) setCopierPriceList((PriceList)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -991,13 +1060,19 @@ public class CopierDefinition extends ModelBase {
 		if (COPYMINUTES.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (CHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		if (COPIERID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (FLATERATE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (COPYMARKUP2.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (WASTECHART.equals(propertyName)) 
+			return new Class<?>[] {WasteChart.class};		
+		if (STOCKPRICELIST.equals(propertyName)) 
+			return new Class<?>[] {PriceList.class};		
+		if (COPIERPRICELIST.equals(propertyName)) 
+			return new Class<?>[] {PriceList.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1045,6 +1120,9 @@ public class CopierDefinition extends ModelBase {
 		if (COPIERID.equals(propertyName)) return CopierDefinition.class;
 		if (FLATERATE.equals(propertyName)) return CopierDefinition.class;
 		if (COPYMARKUP2.equals(propertyName)) return CopierDefinition.class;
+		if (WASTECHART.equals(propertyName)) return CopierDefinition.class;
+		if (STOCKPRICELIST.equals(propertyName)) return CopierDefinition.class;
+		if (COPIERPRICELIST.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1129,6 +1207,12 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getFlateRate(), objT.getFlateRate()))
 			return false;
 		if (! SmartEquals(getCopyMarkup2(), objT.getCopyMarkup2()))
+			return false;
+		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
+			return false;
+		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
+			return false;
+		if (! SmartEquals(getCopierPriceList(), objT.getCopierPriceList()))
 			return false;
 		return true;
 	}			

@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:view="com.efi.printsmith.view.*"
+				xmlns:vo="com.efi.printsmith.vo.*"
+				xmlns:fc="http://www.adobe.com/2006/fc"
+				xmlns:hc="com.hillelcoren.components.*"
+				width="862"
+				height="649"
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
+				creationComplete="init()"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
+				name="Job Charges"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off"
+				xmlns:ns1="com.adobe.flex.extras.controls.*"
+				fontSize="9"
+				titleIcon="@Embed(source='../../../../assets/new_job.png')"
+				defaultButton="{done_button}"
+				showCloseButton="true">
+
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="chargeDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="chargeCommandDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadChargeCommandResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:states>
+		<mx:State name="New Charge" basedOn="">
+		</mx:State>
+		<mx:State name="Edit Charge" basedOn="">
+			<mx:SetProperty target="{cancelbutton}" name="label" value="Save"/>
+		</mx:State>
+	</mx:states>
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.JobEditCompleteEvent;
+			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.Account;
+			import com.efi.printsmith.data.ProductCode;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.ChargeCategory;
+			import com.efi.printsmith.data.ChargeCommand;
+			import com.efi.printsmith.data.ChargeDefinition;
+			import com.efi.printsmith.data.PreferencesSystem;
+
+			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.printing.FlexPrintJob;
+			import mx.printing.PrintAdvancedDataGrid;
+			import mx.printing.PrintDataGrid;
+			import mx.core.Application;
+			import mx.validators.Validator;
+			import mx.events.ValidationResultEvent;
+			import mx.collections.ICollectionView;
+
+			[Bindable]                                         
+		    private var systemPreferences:PreferencesSystem;
+		
+			[Bindable]                                
+			private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+
+			private var accounts:ArrayCollection=new ArrayCollection();
+			private var presses:ArrayCollection=new ArrayCollection();
+			private var locations:ArrayCollection=new ArrayCollection();
+			private var productCodes:ArrayCollection=new ArrayCollection();
+			[Bindable]
+			public var charges:ArrayCollection;
+
+			[Bindable]
+			public var charge:Charge;
+
+			[Bindable]
+			private var chargeCommands:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
+			public var tempOpen:Object=new Object();
+
+			[Bindable]
+			public var refreshSO:Boolean=false;
+
+			[Bindable]
+			private var chargeDefinitions:ArrayCollection=new ArrayCollection();
+
+			private var focussedFormControl:DisplayObject;
+
+			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+				/* systemPreferencesArray = ev.result as ArrayCollection;
+				if (systemPreferencesArray.length > 0)
+				{
+					systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+					taxable_check.visible = systemPreferences.disableNonTaxableOptions; 
+				}else {
+					taxable_check.visible = true;
+				}
+		 */
+			}	                                 
+
+			public function init():void
+			{
+				PopUpManager.centerPopUp(this);
+				chargeDataService.getAll("Charge");
+				chargeCommandDataService.getAll("ChargeCommand");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");
+				this.currentState="New Charge";
+			
+			}
+
+			private function findItem(name:String, array:ArrayCollection):int
+			{
+				for each (var element:Object in array)
+				{
+					if (name == element.name)
+					{
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
+
+		
+			private function handleDeleteResult(ev:ResultEvent):void
+			{
+			}
+
+			private function handleLoadChargeResult(ev:ResultEvent):void
+			{
+				chargeDefinitions=ev.result as ArrayCollection;
+			}
+
+			private function handleLoadChargeCommandResult(ev:ResultEvent):void
+			{
+				chargeCommands=ev.result as ArrayCollection;
+			}
+
+			private function handleSaveResult(ev:ResultEvent):void
+			{
+
+			}
+
+
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+
+
+
+			private function validateForm(event:Event):void
+			{
+				focussedFormControl=event.target as DisplayObject;
+
+				//formIsValid = true;                    
+
+			}
+
+			private function validate(validator:Validator):Boolean
+			{
+				return true;
+			}
+
+			private function refreshData():void
+			{
+				//reset the root node to its original unfiltered data
+				var i:int;
+				for (i=0; i < chargeCommands.length; i++)
+				{
+					chargeCommands[i].children=new ArrayCollection(chargeCommands[i].children.source);
+					refreshRecursiveChildren(chargeCommands.source[i]);
+				}
+				//update the Tree after the data has been filtered
+				chargeTree.invalidateList();
+			}
+
+			private function refreshRecursiveChildren(item:Object):void
+			{
+				var classInfo:XML=describeType(item);
+
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+				{
+					//loop through each child and filter its children
+					for each (var chargeCategoryItem:ChargeCategory in item.children.source)
+					{
+						refreshRecursiveChildren(chargeCategoryItem);
+					}
+					item.children=new ArrayCollection(item.children.source);
+					item.children.filterFunction=filterData;
+					item.children.refresh();
+				}
+				else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+				{
+					//loop through each child and filter its children
+					for each (var chargeItem:Charge in item.children.source)
+					{
+						refreshRecursiveChildren(chargeItem);
+					}
+					item.children=new ArrayCollection(item.children.source);
+					item.children.filterFunction=filterData;
+					item.children.refresh();
+				}
+			}
+
+			public function filterData(item:Object):Boolean
+			{
+				//get the string to filter the nodes by
+				var searchString:String=tree_filter.text;
+				//if string is found in node return true.
+				//since the recursive filtering takes place from bottom up, if
+				//a collection still has children after filtering, also return true
+				if (searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+					return true;
+				var classInfo:XML=describeType(item);
+
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+				{
+					return true;
+				}
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+				{
+					return true;
+				}
+				return false;
+			}
+
+			private function tree_itemClick(evt:Event):void
+			{
+				var treeItem:Object=chargeTree.selectedItem;
+				var temp:ChargeDefinition;
+				temp = treeItem as ChargeDefinition
+				if (temp != null)
+					if ( findItem(temp.name, charges)== -1 )
+						charges.addItem(temp);
+				
+			}
+			private function RemoveCharge():void
+			{
+				charges.removeItemAt(selectedChargeDefintions.selectedIndex);
+			}
+			private function updateDataProvider():void
+			{
+				tempOpen=chargeTree.openItems;
+				refreshSO=true;
+			}
+
+			private function renderFunction():void
+			{
+				if (refreshSO)
+				{
+					refreshSO=false;
+					chargeTree.invalidateList();
+					chargeTree.openItems=tempOpen;
+					chargeTree.validateNow();
+				}
+			}
+
+			private function invoiceChargeLabel(item:Object):String
+			{
+				return item.name;
+			}
+
+			private function treeLabel(item:Object):String
+			{
+				var children:ICollectionView;
+
+				var suffix:String="";
+				if (chargeTree.dataDescriptor.isBranch(item))
+				{
+					children=chargeTree.dataDescriptor.getChildren(item);
+					suffix=" (" + children.length + ")";
+				}
+				return item.name + suffix;
+			}
+
+			private function treeSelectionChanged(event:Event):void
+			{
+				var chargeDefinition:ChargeDefinition=getSelectedTreeChargeDefinition();
+
+				if (chargeDefinition != null)
+				{
+					charge=new Charge();
+					charge.description = chargeDefinition.name;
+					charge.chargeDefinition=chargeDefinition;
+					charge.finished=chargeDefinition.finished;
+					charge.taxable=chargeDefinition.taxable;
+					charge.brokered=chargeDefinition.brokered;
+					charge.displayQty=chargeDefinition.displayQty;
+					charge.hidden=chargeDefinition.hidden;
+					charge.hidePrice=chargeDefinition.hidePrice;
+					this.currentState = "New Charge";
+				}
+				else
+				{
+					charge=null;
+				}
+			}
+
+			
+			private function getSelectedTreeChargeDefinition():ChargeDefinition
+			{
+				var treeItem:Object=chargeTree.selectedItem;
+				var classInfo:XML=describeType(treeItem);
+
+				if (classInfo.@name.toString() == "com.efi.vo::ChargeDefinition")
+				{
+					return treeItem as ChargeDefinition;
+				}
+				return null;
+			}
+
+			private function doDone():void
+			{
+				var doneEvent:ChargeDefinitionSelectEvent=new ChargeDefinitionSelectEvent(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, charges);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
+			}
+
+			private function doCancel():void
+			{
+				
+			}
+			private function doAddCharge():void{
+				var treeItem:Object=chargeTree.selectedItem;
+				charges.addItem(treeItem as ChargeDefinition);
+				
+			}
+		]]>
+
+	</mx:Script>
+
+	<mx:VBox width="100%"
+			 height="100%"
+			 creationPolicy="all">
+		<mx:Canvas width="100%"
+				   height="610"
+				   verticalScrollPolicy="off"
+				   horizontalScrollPolicy="off">
+			<mx:HDividedBox x="10"
+							y="10"
+							width="100%"
+							height="100%"
+							verticalScrollPolicy="off"
+							horizontalScrollPolicy="off">
+				<mx:Canvas width="230"
+						   height="100%">
+					<mx:Tree width="100%"
+							 render="renderFunction()"
+							 folderClosedIcon="{null}"
+							 folderOpenIcon="{null}"
+							 defaultLeafIcon="{null}"
+							 id="chargeTree"
+							 dataProvider="{chargeCommands}"
+							 labelFunction="treeLabel"
+							 visible="true"
+							 enabled="true"
+							 click="tree_itemClick(event);"
+							 doubleClick="doAddCharge();"
+							 bottom="30"
+							 top="19">
+					</mx:Tree>
+					<mx:TextInput width="172"
+								  id="tree_filter"
+								  change="refreshData()"
+								  y="520"
+								  right="5"
+								  bottom="5"/>
+					<mx:Text x="10"
+							 y="506"
+							 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}"
+							 bottom="7"/>
+					<mx:Text x="3"
+							 y="3"
+							 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
+							 fontWeight="bold"/>
+				</mx:Canvas>
+				<mx:Canvas width="100%"
+						   height="100%">
+					<mx:VDividedBox width="394"
+									right="196"
+									bottom="237"
+									top="0">
+						<mx:Canvas width="204"
+								   height="332"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:List x="22" y="22" width="172" height="244" id="selectedChargeDefintions" dataProvider="{charges}" 
+								labelField="name"
+								 doubleClick="RemoveCharge();"></mx:List>
+							<mx:Button x="22" y="295" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
+						</mx:Canvas>
+					</mx:VDividedBox>
+					<mx:Button x="195"
+							   y="382"
+							   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
+							   click="doDone()"
+							   width="65"
+							   id="done_button"/>
+					<mx:Button x="280"
+							   y="382"
+							   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
+							   click="doCancel()"
+							   width="65"
+							   id="cancelbutton"
+							   enabled="true"/>
+				</mx:Canvas>
+			</mx:HDividedBox>
+
+		</mx:Canvas>
+	</mx:VBox>
+</mx:TitleWindow>

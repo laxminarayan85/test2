@@ -226,6 +226,10 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRESSQTY = "PressQty";
+	/**
+	 * @generated
+	 */
+	public static final String PRICINGRECORD = "PricingRecord";
 
 	/**
 	 * @generated
@@ -1069,6 +1073,23 @@ public class Job extends ModelBase {
 	public void setPressQty(Long newVal) {
 		this.pressQty = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PricingRecord pricingRecord;
+	/**
+	 * @generated
+ 	 */
+	public PricingRecord getPricingRecord(){
+		return pricingRecord; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPricingRecord(PricingRecord newVal) {
+		this.pricingRecord = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1123,6 +1144,7 @@ public class Job extends ModelBase {
 		if (BINDPRICE.equals(propertyName)) return getBindPrice();
 		if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
 		if (PRESSQTY.equals(propertyName)) return getPressQty();
+		if (PRICINGRECORD.equals(propertyName)) return getPricingRecord();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1180,6 +1202,7 @@ public class Job extends ModelBase {
 		if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
 		if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
 		if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
+		if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1285,6 +1308,8 @@ public class Job extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (PRESSQTY.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (PRICINGRECORD.equals(propertyName)) 
+			return new Class<?>[] {PricingRecord.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1343,6 +1368,7 @@ public class Job extends ModelBase {
 		if (BINDPRICE.equals(propertyName)) return Job.class;
 		if (OTHERCHARGEPRICE.equals(propertyName)) return Job.class;
 		if (PRESSQTY.equals(propertyName)) return Job.class;
+		if (PRICINGRECORD.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1449,6 +1475,8 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
 			return false;
 		if (! SmartEquals(getPressQty(), objT.getPressQty()))
+			return false;
+		if (! SmartEquals(getPricingRecord(), objT.getPricingRecord()))
 			return false;
 		return true;
 	}			

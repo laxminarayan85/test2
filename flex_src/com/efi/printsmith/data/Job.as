@@ -61,6 +61,7 @@ package com.efi.printsmith.data
 		public var bindPrice:Number = 0;
 		public var otherChargePrice:Number = 0;
 		public var pressQty:Number = 0;
+		public var pricingRecord:PricingRecord;
 	
 	}
 }
