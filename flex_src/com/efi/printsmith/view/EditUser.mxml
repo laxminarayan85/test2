@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
 width="100%" height="557" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="true" 
-    close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -64,7 +63,6 @@ password="{passwordField.text}"/>
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-		PopUpManager.centerPopUp(this);
 	    resetFocus();              
 		dataService.getAll("Users"); 
 		accessGroupService.getAll("AccessGroup");
