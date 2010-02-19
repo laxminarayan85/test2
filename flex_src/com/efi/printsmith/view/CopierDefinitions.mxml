@@ -529,8 +529,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
 		<mx:CheckBox x="346" y="174" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
 		<mx:HRule y="282" height="13" left="5" right="5"/>
-		<mx:Label x="63" y="389" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2"/>
-		<mx:Label x="66" y="411" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumSize')}" id="label3"/>
+		<mx:Label x="54" y="389" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2"/>
+		<mx:Label x="38" y="411" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumSize')}" id="label3"/>
 		<mx:TextInput x="126" y="387" id="MaxSize" text="{copierDefinition.maxSize}" height="20" width="71"/>
 		<mx:TextInput x="126" y="409" id="minSize" text="{copierDefinition.minSize}" height="20" width="71"/>
 		<mx:HRule y="480" height="6" left="5" right="5"/>
@@ -552,8 +552,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="407" y="263" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right"/>
 		<mx:ComboBox x="533" y="234.5" height="21" id="pricing_method_combo" dataProvider="{CopierPricingMethod.toArray()}" change="changePricingMethod(event);" width="144" textAlign="right"></mx:ComboBox>
 		<mx:ComboBox x="533" y="261.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="144" textAlign="right"></mx:ComboBox>
-		<mx:Label x="56" y="433" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumWidth')}"/>
-		<mx:Label x="59" y="455" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumWidth')}"/>
+		<mx:Label x="34" y="433" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumWidth')}"/>
+		<mx:Label x="37" y="455" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumWidth')}"/>
 		<mx:TextInput x="126" y="431" id="maxWidthsize" text="{copierDefinition.maxWidth}" height="20" width="71"/>
 		<mx:TextInput x="126" y="453" id="minWidthsize" text="{copierDefinition.minWidth}" height="20" width="71"/>
 		<mx:Label x="36" y="301" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopiesMinute')}" id="label1"/>
