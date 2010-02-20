@@ -185,6 +185,10 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String FLATRATE = "FlatRate";
+	/**
+	 * @generated
+	 */
 	public static final String WASTECHART = "WasteChart";
 	/**
 	 * @generated
@@ -194,6 +198,14 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPIERPRICELIST = "CopierPriceList";
+	/**
+	 * @generated
+	 */
+	public static final String PRICETWOSIDE = "PriceTwoSide";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKPRICEIS = "StockPriceIs";
 
 	/**
 	 * @generated
@@ -546,18 +558,18 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private String percentUsage;
+	private Double percentUsage;
 	/**
 	 * @generated
  	 */
-	public String getPercentUsage(){
+	public Double getPercentUsage(){
 		return percentUsage; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setPercentUsage(String newVal) {
+	public void setPercentUsage(Double newVal) {
 		this.percentUsage = newVal;
 	}
  	
@@ -840,6 +852,23 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+ 	@Basic
+	private Double flatRate;
+	/**
+	 * @generated
+ 	 */
+	public Double getFlatRate(){
+		return flatRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setFlatRate(Double newVal) {
+		this.flatRate = newVal;
+	}
+ 	
+	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
 	/**
@@ -889,6 +918,40 @@ public class CopierDefinition extends ModelBase {
 	public void setCopierPriceList(PriceList newVal) {
 		this.copierPriceList = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String priceTwoSide;
+	/**
+	 * @generated
+ 	 */
+	public String getPriceTwoSide(){
+		return priceTwoSide; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceTwoSide(String newVal) {
+		this.priceTwoSide = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String stockPriceIs;
+	/**
+	 * @generated
+ 	 */
+	public String getStockPriceIs(){
+		return stockPriceIs; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockPriceIs(String newVal) {
+		this.stockPriceIs = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -932,9 +995,12 @@ public class CopierDefinition extends ModelBase {
 		if (COPIERID.equals(propertyName)) return getCopierId();
 		if (FLATERATE.equals(propertyName)) return getFlateRate();
 		if (COPYMARKUP2.equals(propertyName)) return getCopyMarkup2();
+		if (FLATRATE.equals(propertyName)) return getFlatRate();
 		if (WASTECHART.equals(propertyName)) return getWasteChart();
 		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
 		if (COPIERPRICELIST.equals(propertyName)) return getCopierPriceList();
+		if (PRICETWOSIDE.equals(propertyName)) return getPriceTwoSide();
+		if (STOCKPRICEIS.equals(propertyName)) return getStockPriceIs();
 		return super.getProperty(propertyName);
 	}
 	
@@ -964,7 +1030,7 @@ public class CopierDefinition extends ModelBase {
 		if (MINWIDTH.equals(propertyName)) setMinWidth((String)newValue); else
 		if (DAYSOPEN.equals(propertyName)) setDaysOpen((Integer)newValue); else
 		if (MONTHLYPAYMENT.equals(propertyName)) setMonthlyPayment((Double)newValue); else
-		if (PERCENTUSAGE.equals(propertyName)) setPercentUsage((String)newValue); else
+		if (PERCENTUSAGE.equals(propertyName)) setPercentUsage((Double)newValue); else
 		if (HOURCOSTRATE.equals(propertyName)) setHourCostRate((Double)newValue); else
 		if (TONERCOPY.equals(propertyName)) setTonerCopy((Double)newValue); else
 		if (DEVELOPERCOPY.equals(propertyName)) setDeveloperCopy((Double)newValue); else
@@ -981,9 +1047,12 @@ public class CopierDefinition extends ModelBase {
 		if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
 		if (FLATERATE.equals(propertyName)) setFlateRate((Double)newValue); else
 		if (COPYMARKUP2.equals(propertyName)) setCopyMarkup2((Double)newValue); else
+		if (FLATRATE.equals(propertyName)) setFlatRate((Double)newValue); else
 		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
 		if (COPIERPRICELIST.equals(propertyName)) setCopierPriceList((PriceList)newValue); else
+		if (PRICETWOSIDE.equals(propertyName)) setPriceTwoSide((String)newValue); else
+		if (STOCKPRICEIS.equals(propertyName)) setStockPriceIs((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1034,7 +1103,7 @@ public class CopierDefinition extends ModelBase {
 		if (MONTHLYPAYMENT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (PERCENTUSAGE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {Double.class};		
 		if (HOURCOSTRATE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (TONERCOPY.equals(propertyName)) 
@@ -1067,12 +1136,18 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (COPYMARKUP2.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (FLATRATE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		if (WASTECHART.equals(propertyName)) 
 			return new Class<?>[] {WasteChart.class};		
 		if (STOCKPRICELIST.equals(propertyName)) 
 			return new Class<?>[] {PriceList.class};		
 		if (COPIERPRICELIST.equals(propertyName)) 
 			return new Class<?>[] {PriceList.class};		
+		if (PRICETWOSIDE.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (STOCKPRICEIS.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1120,9 +1195,12 @@ public class CopierDefinition extends ModelBase {
 		if (COPIERID.equals(propertyName)) return CopierDefinition.class;
 		if (FLATERATE.equals(propertyName)) return CopierDefinition.class;
 		if (COPYMARKUP2.equals(propertyName)) return CopierDefinition.class;
+		if (FLATRATE.equals(propertyName)) return CopierDefinition.class;
 		if (WASTECHART.equals(propertyName)) return CopierDefinition.class;
 		if (STOCKPRICELIST.equals(propertyName)) return CopierDefinition.class;
 		if (COPIERPRICELIST.equals(propertyName)) return CopierDefinition.class;
+		if (PRICETWOSIDE.equals(propertyName)) return CopierDefinition.class;
+		if (STOCKPRICEIS.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1208,11 +1286,17 @@ public class CopierDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getCopyMarkup2(), objT.getCopyMarkup2()))
 			return false;
+		if (! SmartEquals(getFlatRate(), objT.getFlatRate()))
+			return false;
 		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
 			return false;
 		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
 			return false;
 		if (! SmartEquals(getCopierPriceList(), objT.getCopierPriceList()))
+			return false;
+		if (! SmartEquals(getPriceTwoSide(), objT.getPriceTwoSide()))
+			return false;
+		if (! SmartEquals(getStockPriceIs(), objT.getStockPriceIs()))
 			return false;
 		return true;
 	}			

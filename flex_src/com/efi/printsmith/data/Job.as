@@ -62,6 +62,11 @@ package com.efi.printsmith.data
 		public var otherChargePrice:Number = 0;
 		public var pressQty:Number = 0;
 		public var pricingRecord:PricingRecord;
+		public var pricingCopier:CopierDefinition;
+		public var costingCopier:CopierDefinition;
+		public var pricingMethod:PreferencesPricingMethod;
+		public var doubleSided:Boolean = true;
+		public var singleSided:Boolean = true;
 	
 	}
 }

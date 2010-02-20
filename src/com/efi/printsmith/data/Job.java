@@ -230,6 +230,26 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRICINGRECORD = "PricingRecord";
+	/**
+	 * @generated
+	 */
+	public static final String PRICINGCOPIER = "PricingCopier";
+	/**
+	 * @generated
+	 */
+	public static final String COSTINGCOPIER = "CostingCopier";
+	/**
+	 * @generated
+	 */
+	public static final String PRICINGMETHOD = "PricingMethod";
+	/**
+	 * @generated
+	 */
+	public static final String DOUBLESIDED = "DoubleSided";
+	/**
+	 * @generated
+	 */
+	public static final String SINGLESIDED = "SingleSided";
 
 	/**
 	 * @generated
@@ -1090,6 +1110,91 @@ public class Job extends ModelBase {
 	public void setPricingRecord(PricingRecord newVal) {
 		this.pricingRecord = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition pricingCopier;
+	/**
+	 * @generated
+ 	 */
+	public CopierDefinition getPricingCopier(){
+		return pricingCopier; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPricingCopier(CopierDefinition newVal) {
+		this.pricingCopier = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition costingCopier;
+	/**
+	 * @generated
+ 	 */
+	public CopierDefinition getCostingCopier(){
+		return costingCopier; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCostingCopier(CopierDefinition newVal) {
+		this.costingCopier = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private PreferencesPricingMethod pricingMethod;
+	/**
+	 * @generated
+ 	 */
+	public PreferencesPricingMethod getPricingMethod(){
+		return pricingMethod; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPricingMethod(PreferencesPricingMethod newVal) {
+		this.pricingMethod = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean doubleSided;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDoubleSided(){
+		return doubleSided; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDoubleSided(Boolean newVal) {
+		this.doubleSided = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean singleSided;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSingleSided(){
+		return singleSided; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSingleSided(Boolean newVal) {
+		this.singleSided = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1145,6 +1250,11 @@ public class Job extends ModelBase {
 		if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
 		if (PRESSQTY.equals(propertyName)) return getPressQty();
 		if (PRICINGRECORD.equals(propertyName)) return getPricingRecord();
+		if (PRICINGCOPIER.equals(propertyName)) return getPricingCopier();
+		if (COSTINGCOPIER.equals(propertyName)) return getCostingCopier();
+		if (PRICINGMETHOD.equals(propertyName)) return getPricingMethod();
+		if (DOUBLESIDED.equals(propertyName)) return getDoubleSided();
+		if (SINGLESIDED.equals(propertyName)) return getSingleSided();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1203,6 +1313,11 @@ public class Job extends ModelBase {
 		if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
 		if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
 		if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
+		if (PRICINGCOPIER.equals(propertyName)) setPricingCopier((CopierDefinition)newValue); else
+		if (COSTINGCOPIER.equals(propertyName)) setCostingCopier((CopierDefinition)newValue); else
+		if (PRICINGMETHOD.equals(propertyName)) setPricingMethod((PreferencesPricingMethod)newValue); else
+		if (DOUBLESIDED.equals(propertyName)) setDoubleSided((Boolean)newValue); else
+		if (SINGLESIDED.equals(propertyName)) setSingleSided((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1310,6 +1425,16 @@ public class Job extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (PRICINGRECORD.equals(propertyName)) 
 			return new Class<?>[] {PricingRecord.class};		
+		if (PRICINGCOPIER.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (COSTINGCOPIER.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (PRICINGMETHOD.equals(propertyName)) 
+			return new Class<?>[] {PreferencesPricingMethod.class};		
+		if (DOUBLESIDED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SINGLESIDED.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1369,6 +1494,11 @@ public class Job extends ModelBase {
 		if (OTHERCHARGEPRICE.equals(propertyName)) return Job.class;
 		if (PRESSQTY.equals(propertyName)) return Job.class;
 		if (PRICINGRECORD.equals(propertyName)) return Job.class;
+		if (PRICINGCOPIER.equals(propertyName)) return Job.class;
+		if (COSTINGCOPIER.equals(propertyName)) return Job.class;
+		if (PRICINGMETHOD.equals(propertyName)) return Job.class;
+		if (DOUBLESIDED.equals(propertyName)) return Job.class;
+		if (SINGLESIDED.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1477,6 +1607,16 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getPressQty(), objT.getPressQty()))
 			return false;
 		if (! SmartEquals(getPricingRecord(), objT.getPricingRecord()))
+			return false;
+		if (! SmartEquals(getPricingCopier(), objT.getPricingCopier()))
+			return false;
+		if (! SmartEquals(getCostingCopier(), objT.getCostingCopier()))
+			return false;
+		if (! SmartEquals(getPricingMethod(), objT.getPricingMethod()))
+			return false;
+		if (! SmartEquals(getDoubleSided(), objT.getDoubleSided()))
+			return false;
+		if (! SmartEquals(getSingleSided(), objT.getSingleSided()))
 			return false;
 		return true;
 	}			

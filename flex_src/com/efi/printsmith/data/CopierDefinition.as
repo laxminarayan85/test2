@@ -33,7 +33,7 @@ package com.efi.printsmith.data
 		public var minWidth:String = "";
 		public var daysOpen:int = 0;
 		public var monthlyPayment:Number = 0;
-		public var percentUsage:String = "";
+		public var percentUsage:Number = 0;
 		public var hourCostRate:Number = 0;
 		public var tonerCopy:Number = 0;
 		public var developerCopy:Number = 0;
@@ -50,9 +50,12 @@ package com.efi.printsmith.data
 		public var copierId:String = "";
 		public var flateRate:Number = 0;
 		public var copyMarkup2:Number = 0;
+		public var flatRate:Number = 0;
 		public var wasteChart:WasteChart;
 		public var stockPriceList:PriceList;
 		public var copierPriceList:PriceList;
+		public var priceTwoSide:String = "";
+		public var stockPriceIs:String = "";
 	
 	}
 }
