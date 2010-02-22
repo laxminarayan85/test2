@@ -362,6 +362,14 @@ public class Account extends ModelBase {
 	 * @generated
 	 */
 	public static final String ACCOUNTID = "AccountId";
+	/**
+	 * @generated
+	 */
+	public static final String INVOICEESTIMATECHARGES = "InvoiceEstimateCharges";
+	/**
+	 * @generated
+	 */
+	public static final String JOBCHARGES = "JobCharges";
 
 	/**
 	 * @generated
@@ -1765,6 +1773,52 @@ public class Account extends ModelBase {
 	public void setAccountId(String newVal) {
 		this.accountId = newVal;
 	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<ChargeDefinition> getInvoiceEstimateCharges(){
+		return invoiceEstimateCharges; 
+	}
+
+	public void addInvoiceEstimateCharges(ChargeDefinition obj) {
+		if (invoiceEstimateCharges == null) {
+			invoiceEstimateCharges = new java.util.ArrayList<ChargeDefinition>();
+		}
+		invoiceEstimateCharges.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setInvoiceEstimateCharges(java.util.List<ChargeDefinition> newVal) {
+		this.invoiceEstimateCharges = newVal;
+	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<ChargeDefinition> jobCharges;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<ChargeDefinition> getJobCharges(){
+		return jobCharges; 
+	}
+
+	public void addJobCharges(ChargeDefinition obj) {
+		if (jobCharges == null) {
+			jobCharges = new java.util.ArrayList<ChargeDefinition>();
+		}
+		jobCharges.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setJobCharges(java.util.List<ChargeDefinition> newVal) {
+		this.jobCharges = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1853,6 +1907,8 @@ public class Account extends ModelBase {
 		if (JOBNOTE.equals(propertyName)) return getJobNote();
 		if (ACCOUNTNOTE.equals(propertyName)) return getAccountNote();
 		if (ACCOUNTID.equals(propertyName)) return getAccountId();
+		if (INVOICEESTIMATECHARGES.equals(propertyName)) return getInvoiceEstimateCharges();
+		if (JOBCHARGES.equals(propertyName)) return getJobCharges();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1944,6 +2000,8 @@ public class Account extends ModelBase {
 		if (JOBNOTE.equals(propertyName)) setJobNote((String)newValue); else
 		if (ACCOUNTNOTE.equals(propertyName)) setAccountNote((String)newValue); else
 		if (ACCOUNTID.equals(propertyName)) setAccountId((String)newValue); else
+		if (INVOICEESTIMATECHARGES.equals(propertyName)) setInvoiceEstimateCharges((java.util.List<ChargeDefinition>)newValue); else
+		if (JOBCHARGES.equals(propertyName)) setJobCharges((java.util.List<ChargeDefinition>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2117,6 +2175,10 @@ public class Account extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (ACCOUNTID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (INVOICEESTIMATECHARGES.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+		if (JOBCHARGES.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2209,6 +2271,8 @@ public class Account extends ModelBase {
 		if (JOBNOTE.equals(propertyName)) return Account.class;
 		if (ACCOUNTNOTE.equals(propertyName)) return Account.class;
 		if (ACCOUNTID.equals(propertyName)) return Account.class;
+		if (INVOICEESTIMATECHARGES.equals(propertyName)) return Account.class;
+		if (JOBCHARGES.equals(propertyName)) return Account.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2383,6 +2447,10 @@ public class Account extends ModelBase {
 		if (! SmartEquals(getAccountNote(), objT.getAccountNote()))
 			return false;
 		if (! SmartEquals(getAccountId(), objT.getAccountId()))
+			return false;
+		if (! SmartEquals(getInvoiceEstimateCharges(), objT.getInvoiceEstimateCharges()))
+			return false;
+		if (! SmartEquals(getJobCharges(), objT.getJobCharges()))
 			return false;
 		return true;
 	}			

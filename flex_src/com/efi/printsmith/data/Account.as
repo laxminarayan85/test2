@@ -95,6 +95,8 @@ package com.efi.printsmith.data
 		public var jobNote:String = "";
 		public var accountNote:String = "";
 		public var accountId:String = "";
+		public var invoiceEstimateCharges:ArrayCollection;
+		public var jobCharges:ArrayCollection;
 	
 	}
 }

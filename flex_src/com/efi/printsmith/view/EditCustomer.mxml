@@ -70,6 +70,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.Account; 
 	import com.efi.printsmith.events.UpdateDataProviderEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
+	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -124,7 +126,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var shippingMethods:ArrayCollection = new ArrayCollection();                
     [Bindable]
     private var formIsValid:Boolean = false;
-    
+    [Bindable]
+	private var EstInvCharges:ArrayCollection=new ArrayCollection();
+	[Bindable]
+	private var JobCharges:ArrayCollection=new ArrayCollection();
+
     private var focussedFormControl:DisplayObject;
     
 	public function init():void {
@@ -147,6 +153,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (evt.account != null) {
 			this.setAccount(evt.account);
 			setMarketing();
+			this.JobCharges = evt.account.jobCharges;
+			this.EstInvCharges = evt.account.invoiceEstimateCharges;
 		} else {
 			this.setAccount(new Account());
 			Alert.show("Account Picker returned a null account", "Error");
@@ -719,6 +727,40 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     	else
     		standardratelabel.visible = false;
     }
+    
+    private function doEstInvCharge():void{
+        var chargePicker:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
+		chargePicker.charges = this.EstInvCharges;
+		chargePicker.setStyle("borderAlpha", 0.9);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionEstInvComplete);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
+    }
+     private function doJobCharges():void{
+        var chargePicker1:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
+		chargePicker1.charges = this.JobCharges;
+		chargePicker1.setStyle("borderAlpha", 0.9);
+		chargePicker1.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionJobComplete);
+		chargePicker1.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
+    }
+	
+	private function handleChargeDefinitionEstInvComplete(evt:ChargeDefinitionSelectEvent):void
+	{
+		account.invoiceEstimateCharges=evt.chargeArray;
+	}
+	private function handleChargeDefinitionJobComplete(evt:ChargeDefinitionSelectEvent):void
+	{
+		account.jobCharges=evt.chargeArray;
+	}
+	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
+	{
+		
+	}
+
+
+    
+    
+    
+    
 ]]>
                              
 </mx:Script>
@@ -820,8 +862,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Panel x="10" y="318" width="397" height="103" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CertExpires')}" dropShadowEnabled="false">
 					<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoInvoicesandEsti')}" textAlign="right" width="198"/>
 					<mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoJobs')}" textAlign="right" width="198"/>
-					<mx:Button x="216" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="inv_estimate_charges_edit"/>
-					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit"/>
+					<mx:Button x="216" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="inv_estimate_charges_edit" click="doEstInvCharge();"/>
+					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit" click="doJobCharges();"/>
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
 			</mx:Canvas>

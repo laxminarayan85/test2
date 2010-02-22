@@ -4,8 +4,8 @@
 				xmlns:vo="com.efi.printsmith.vo.*"
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:hc="com.hillelcoren.components.*"
-				width="862"
-				height="649"
+				width="626"
+				height="493"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				creationComplete="init()"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
@@ -358,20 +358,20 @@
 	</mx:Script>
 
 	<mx:VBox width="100%"
-			 height="100%"
+			 height="431"
 			 creationPolicy="all">
 		<mx:Canvas width="100%"
-				   height="610"
+				   height="431"
 				   verticalScrollPolicy="off"
 				   horizontalScrollPolicy="off">
 			<mx:HDividedBox x="10"
 							y="10"
 							width="100%"
-							height="100%"
+							height="418"
 							verticalScrollPolicy="off"
 							horizontalScrollPolicy="off">
 				<mx:Canvas width="230"
-						   height="100%">
+						   height="402">
 					<mx:Tree width="100%"
 							 render="renderFunction()"
 							 folderClosedIcon="{null}"
@@ -384,7 +384,7 @@
 							 enabled="true"
 							 click="tree_itemClick(event);"
 							 doubleClick="doAddCharge();"
-							 bottom="30"
+							 bottom="35"
 							 top="19">
 					</mx:Tree>
 					<mx:TextInput width="172"
@@ -402,35 +402,25 @@
 							 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
 							 fontWeight="bold"/>
 				</mx:Canvas>
-				<mx:Canvas width="100%"
-						   height="100%">
-					<mx:VDividedBox width="394"
-									right="196"
-									bottom="237"
-									top="0">
-						<mx:Canvas width="204"
-								   height="332"
-								   verticalScrollPolicy="off"
-								   horizontalScrollPolicy="off">
-							<mx:List x="22" y="22" width="172" height="244" id="selectedChargeDefintions" dataProvider="{charges}" 
-								labelField="name"
-								 doubleClick="RemoveCharge();"></mx:List>
-							<mx:Button x="22" y="295" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
-						</mx:Canvas>
-					</mx:VDividedBox>
-					<mx:Button x="195"
-							   y="382"
+				<mx:Canvas width="322"
+						   height="399">
+					<mx:Button x="67"
+							   y="350"
 							   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
 							   click="doDone()"
 							   width="65"
 							   id="done_button"/>
-					<mx:Button x="280"
-							   y="382"
+					<mx:Button x="140"
+							   y="350"
 							   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 							   click="doCancel()"
 							   width="65"
 							   id="cancelbutton"
 							   enabled="true"/>
+					<mx:List x="22" y="22" width="172" height="244" id="selectedChargeDefintions" dataProvider="{charges}" 
+						labelField="name"
+						 doubleClick="RemoveCharge();"></mx:List>
+					<mx:Button x="22" y="295" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
 				</mx:Canvas>
 			</mx:HDividedBox>
 

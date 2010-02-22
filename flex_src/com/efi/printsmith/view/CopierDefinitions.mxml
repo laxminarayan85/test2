@@ -160,6 +160,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceIs, StockPriceIs.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat, salesCategories);
+		this.charges = copierDefinition.charges;
 		updateControlState()
 	}
 	private function findItemArray(name:String, array:Array):int {

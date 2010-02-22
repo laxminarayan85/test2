@@ -126,11 +126,11 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}    
 	
 	private function doPressPriceList():void {
-	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	  /*   var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
 	    priceListPickerWindow.itemType = "PriceList";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPressPriceList);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPressPriceList); */
 	}
 	
 	private function doSpeedTable():void {
@@ -142,11 +142,11 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function doStockPriceList():void {
-	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	   /*  var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
 		priceListPickerWindow.itemType = "PriceList";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectStockPriceList);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectStockPriceList); */
 	}
 
 	private function doWasteChart():void {
@@ -188,6 +188,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
 		charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat, salesCategories);
+		this.charges = pressDefinition.charges;
 		updateControlState();
 	//	doPressType();
 	}
