@@ -14,6 +14,9 @@ package com.efi.printsmith.control
 		
 		public function initialize():void {
 			this.addCommand(LoginEvent.LOGIN, LoginCommand);
+			
+			//security registered items
+			//default quick access panel items
 			this.addCommand(ModelAddUpdateEvent.ADDUPDATE, ModelAddUpdateCommand);
 			this.addCommand(ModelDeleteItemEvent.DELETE, ModelDeleteItemCommand);
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);
@@ -30,27 +33,24 @@ package com.efi.printsmith.control
 			this.addCommand(EditStockDefinitionEvent.COMMANDID, EditStockDefinitionCommand);
 			this.addCommand(EditSystemPreferencesEvent.COMMANDID, EditSystemPreferencesCommand);
 			this.addCommand(EditUserEvent.COMMANDID, EditUserCommand);
-
 			this.addCommand(EditCashRegisterEvent.COMMANDID, EditCashRegisterCommand);
-			
 			this.addCommand(EditAccountHistoryEvent.COMMANDID, EditAccountHistoryCommand);
 			this.addCommand(EditEstimateHistoryEvent.COMMANDID, EditEstimateHistoryCommand);
-			
-			
 			this.addCommand(EditPendingListEvent.COMMANDID, EditPendingListCommand);
 			this.addCommand(EditEmployeeEvent.COMMANDID, EditEmployeeCommand);
 			this.addCommand(EditScheduleEvent.COMMANDID, EditScheduleCommand);
 			this.addCommand(EditSecurityEvent.COMMANDID, EditSecurityCommand);
 			this.addCommand(EditTrackerEvent.COMMANDID, EditTrackerCommand);
 			this.addCommand(EditPricingEvent.COMMANDID, EditPricingCommand);
-
 			this.addCommand(EditClockInOutEvent.COMMANDID, EditClockInOutCommand);
-
 			this.addCommand(EditCreateEstimateEvent.COMMANDID, EditCreateEstimateCommand);
 			this.addCommand(EditEditEstimateEvent.COMMANDID, EditEditEstimateCommand);
 			this.addCommand(EditCreateInvoiceEvent.COMMANDID, EditCreateInvoiceCommand);
 			this.addCommand(EditEditInvoiceEvent.COMMANDID, EditEditInvoiceCommand);
-			
+
+			//form level items
+			this.addCommand(DeleteStockDefinitionEvent.COMMANDID, DeleteStockDefinitionCommand);
+						
 		}
 		
 	}
