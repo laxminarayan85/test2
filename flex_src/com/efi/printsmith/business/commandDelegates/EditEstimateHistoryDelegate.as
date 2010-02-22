@@ -5,6 +5,7 @@ package com.efi.printsmith.business.commandDelegates
 	import com.efi.printsmith.view.EstimateHistory;
 	
 	import mx.controls.Alert;
+	import mx.rpc.Fault;
 	import mx.rpc.IResponder;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -22,8 +23,8 @@ package com.efi.printsmith.business.commandDelegates
 				responder.result(resEvent);
 			} else {
 				/* report error */
-				Alert.show("Security Exception", null, Alert.OK, null, null, null, Alert.OK);
-				var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT,false, true, null, null, null);
+				var fault:Fault = new Fault("InvalidSecurityAccess","","genericPrefCmd.Insufficientaccessle")
+				var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT,false, true, fault, null, null);
 				responder.fault(faultEvent);
 			}
 		}

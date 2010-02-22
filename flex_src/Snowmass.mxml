@@ -372,8 +372,13 @@
 		}
 		
 		private function handleFault(ev:FaultEvent):void {
-			if (ev.fault != null)
-				Alert.show(ev.fault.faultCode,ev.fault.faultDetail, Alert.OK, null, null, null, Alert.OK);
+			var errorDetail:String="";
+			if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+				errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+			}else{
+				errorDetail = ev.fault.faultDetail;
+			}
+			Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
 		}
 		
 		private function enableLogout():Boolean {
