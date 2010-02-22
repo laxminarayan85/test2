@@ -178,6 +178,22 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRESSID = "PressId";
+	/**
+	 * @generated
+	 */
+	public static final String CHARGES = "Charges";
+	/**
+	 * @generated
+	 */
+	public static final String MAXROLLWIDTH = "MaxRollWidth";
+	/**
+	 * @generated
+	 */
+	public static final String MINROLLWIDTH = "MinRollWidth";
+	/**
+	 * @generated
+	 */
+	public static final String SALESCAT = "SalesCat";
 
 	/**
 	 * @generated
@@ -799,6 +815,80 @@ public class PressDefinition extends ModelBase {
 	public void setPressId(String newVal) {
 		this.pressId = newVal;
 	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+	private java.util.List<ChargeDefinition> charges;
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<ChargeDefinition> getCharges(){
+		return charges; 
+	}
+
+	public void addCharges(ChargeDefinition obj) {
+		if (charges == null) {
+			charges = new java.util.ArrayList<ChargeDefinition>();
+		}
+		charges.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setCharges(java.util.List<ChargeDefinition> newVal) {
+		this.charges = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String maxRollWidth;
+	/**
+	 * @generated
+ 	 */
+	public String getMaxRollWidth(){
+		return maxRollWidth; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMaxRollWidth(String newVal) {
+		this.maxRollWidth = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String minRollWidth;
+	/**
+	 * @generated
+ 	 */
+	public String getMinRollWidth(){
+		return minRollWidth; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMinRollWidth(String newVal) {
+		this.minRollWidth = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String salesCat;
+	/**
+	 * @generated
+ 	 */
+	public String getSalesCat(){
+		return salesCat; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSalesCat(String newVal) {
+		this.salesCat = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -841,6 +931,10 @@ public class PressDefinition extends ModelBase {
 		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
 		if (CUTOFFLENGTH.equals(propertyName)) return getCutoffLength();
 		if (PRESSID.equals(propertyName)) return getPressId();
+		if (CHARGES.equals(propertyName)) return getCharges();
+		if (MAXROLLWIDTH.equals(propertyName)) return getMaxRollWidth();
+		if (MINROLLWIDTH.equals(propertyName)) return getMinRollWidth();
+		if (SALESCAT.equals(propertyName)) return getSalesCat();
 		return super.getProperty(propertyName);
 	}
 	
@@ -886,6 +980,10 @@ public class PressDefinition extends ModelBase {
 		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
 		if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Double)newValue); else
 		if (PRESSID.equals(propertyName)) setPressId((String)newValue); else
+		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
+		if (MAXROLLWIDTH.equals(propertyName)) setMaxRollWidth((String)newValue); else
+		if (MINROLLWIDTH.equals(propertyName)) setMinRollWidth((String)newValue); else
+		if (SALESCAT.equals(propertyName)) setSalesCat((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -967,6 +1065,14 @@ public class PressDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (PRESSID.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (CHARGES.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+		if (MAXROLLWIDTH.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (MINROLLWIDTH.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (SALESCAT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1013,6 +1119,10 @@ public class PressDefinition extends ModelBase {
 		if (SPEEDTABLE.equals(propertyName)) return PressDefinition.class;
 		if (CUTOFFLENGTH.equals(propertyName)) return PressDefinition.class;
 		if (PRESSID.equals(propertyName)) return PressDefinition.class;
+		if (CHARGES.equals(propertyName)) return PressDefinition.class;
+		if (MAXROLLWIDTH.equals(propertyName)) return PressDefinition.class;
+		if (MINROLLWIDTH.equals(propertyName)) return PressDefinition.class;
+		if (SALESCAT.equals(propertyName)) return PressDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1095,6 +1205,14 @@ public class PressDefinition extends ModelBase {
 		if (! SmartEquals(getCutoffLength(), objT.getCutoffLength()))
 			return false;
 		if (! SmartEquals(getPressId(), objT.getPressId()))
+			return false;
+		if (! SmartEquals(getCharges(), objT.getCharges()))
+			return false;
+		if (! SmartEquals(getMaxRollWidth(), objT.getMaxRollWidth()))
+			return false;
+		if (! SmartEquals(getMinRollWidth(), objT.getMinRollWidth()))
+			return false;
+		if (! SmartEquals(getSalesCat(), objT.getSalesCat()))
 			return false;
 		return true;
 	}			

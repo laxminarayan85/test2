@@ -49,6 +49,10 @@ package com.efi.printsmith.data
 		public var speedTable:SpeedTable;
 		public var cutoffLength:Number = 0;
 		public var pressId:String = "";
+		public var charges:ArrayCollection;
+		public var maxRollWidth:String = "";
+		public var minRollWidth:String = "";
+		public var salesCat:String = "";
 	
 	}
 }
