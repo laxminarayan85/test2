@@ -57,6 +57,7 @@
     import mx.events.DataGridEventReason;
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
+	import mx.utils.StringUtil;
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
@@ -191,6 +192,9 @@
 		var returnvalue:String = "";
 		if (tmpItem != null) {
 			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.commandName.toString())
+			if(returnvalue == null){ 
+				returnvalue = "\t"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, StringUtil.trim(tmpItem.commandName.toString()))
+			}
 		} else {
 			returnvalue="Item Not Found"
 		}
@@ -201,6 +205,9 @@
 		var returnvalue:String = "";
 		if (tmpItem != null) {
 			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.menu.toString())
+			if(returnvalue == null){
+				"\t"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, StringUtil.trim(tmpItem.menu.toString()))
+			}
 		} else {
 			returnvalue="Item Not Found"
 		}

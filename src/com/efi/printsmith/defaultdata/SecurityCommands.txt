@@ -102,7 +102,7 @@ rStandardMenuText.AR,rStandardMenuText.PostPayments,CMD_
 rStandardMenuText.AR,rStandardMenuText.DailyCloseout,CMD_
 rStandardMenuText.AR,rStandardMenuText.MonthlyCloseout,CMD_
 rStandardMenuText.AR,rStandardMenuText.GenerateStatements,CMD_
-rStandardMenuText.AR,-,CMD_
+rStandardMenuText.AR,rStandardMenuText.1,CMD_
 rStandardMenuText.AR,rStandardMenuText.VerifyReceivableBala,CMD_
 rStandardMenuText.AR,rStandardMenuText.VerifyCustomerBalanc,CMD_
 rStandardMenuText.AR,rStandardMenuText.VerifyAllBalances,CMD_
@@ -208,7 +208,7 @@ rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_SystemPreferences
 rStandardMenuText.Admin,	genericPrefCmd.System,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.Behavior,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.Company,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar=Business Calendar,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.Numbers,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.AlternateCurrency,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.International,CMD_
