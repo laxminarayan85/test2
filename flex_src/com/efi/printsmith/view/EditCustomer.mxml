@@ -817,11 +817,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="101" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxExempt')}" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
 					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="318" width="350" height="103" layout="absolute" title="Charges Setup" dropShadowEnabled="false">
-					<mx:Label x="10" y="10" text="Invoice &amp; Estimate Charges:"/>
-					<mx:Label x="94" y="36" text="Job Charges:"/>
-					<mx:Button x="181" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Edit')}" id="inv_estimate_charges_edit"/>
-					<mx:Button x="181" y="34" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Edit')}" id="job_charges_edit"/>
+				<mx:Panel x="10" y="318" width="397" height="103" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CertExpires')}" dropShadowEnabled="false">
+					<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoInvoicesandEsti')}" textAlign="right" width="198"/>
+					<mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoJobs')}" textAlign="right" width="198"/>
+					<mx:Button x="216" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="inv_estimate_charges_edit"/>
+					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit"/>
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
 			</mx:Canvas>

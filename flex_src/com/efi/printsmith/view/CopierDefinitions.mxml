@@ -296,18 +296,18 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
        
 	private function doCopyPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+		/* var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
-	    copy =  true;
+	    copy =  true; */
 	   	}
 	private function doStockPriceList():void {
-		var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+		/* var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "PriceList";
-	    stock = true;
+	    stock = true; */
 	}
 
 	private function doWasteChart():void {

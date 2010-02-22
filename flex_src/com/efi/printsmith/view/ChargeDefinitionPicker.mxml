@@ -17,6 +17,7 @@
 				titleIcon="@Embed(source='../../../../assets/new_job.png')"
 				defaultButton="{done_button}"
 				showCloseButton="true">
+				
 
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -46,9 +47,6 @@
 
 	<mx:states>
 		<mx:State name="New Charge" basedOn="">
-		</mx:State>
-		<mx:State name="Edit Charge" basedOn="">
-			<mx:SetProperty target="{cancelbutton}" name="label" value="Save"/>
 		</mx:State>
 	</mx:states>
 	<mx:Script>
@@ -346,7 +344,9 @@
 
 			private function doCancel():void
 			{
-				
+				var doneEvent:ChargeDefinitionSelectEvent=new ChargeDefinitionSelectEvent(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, charges);
+				dispatchEvent(doneEvent);
+				PopUpManager.removePopUp(this);
 			}
 			private function doAddCharge():void{
 				var treeItem:Object=chargeTree.selectedItem;
