@@ -46,6 +46,8 @@ public class DefaultDataFactory {
 			ProcessColumnNames();
 			ProcessEstimatorTypes();
 			ProcessJobMethods();
+			ProcessPricingMethods();
+			
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
@@ -58,7 +60,145 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 	}
+	private void ProcessPricingMethods(){
 
+		List<?> itemList = (List<?>) dataservice.getAll("PreferencesPricingMethod");
+
+		if (itemList.size() > 0)
+			return;
+
+		PreferencesPricingMethod pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Printing");
+		pricingMethod.setAbbreviation("Printing");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Roll-Fed");
+		pricingMethod.setAbbreviation("Roll-Fed");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("B&W");
+		pricingMethod.setAbbreviation("B&W");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Color");
+		pricingMethod.setAbbreviation("Color");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Large Format");
+		pricingMethod.setAbbreviation("Large Format");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Blank");
+		pricingMethod.setAbbreviation("Blank");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("List");
+		pricingMethod.setAbbreviation("List");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Charges Only");
+		pricingMethod.setAbbreviation("Charges Only");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Outside Services");
+		pricingMethod.setAbbreviation("Outside Services");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Merchandise");
+		pricingMethod.setAbbreviation("Merchandise");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Lines & Inches");
+		pricingMethod.setAbbreviation("Lines & Inches");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Mailing");
+		pricingMethod.setAbbreviation("Mailing");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+	}
 	private void ProcessEstimatorTypes() {
 		try {
 			LoadEstimatorTypesData(new String[] { currentPath });
