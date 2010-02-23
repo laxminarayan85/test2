@@ -23,6 +23,8 @@ package com.efi.printsmith.data
 		public var employee:Number = 0;
 		public var broker:Number = 0;
 		public var copierDefinition:Number = 0;
+		public var campaign:Number = 0;
+		public var grade:Number = 0;
 	
 	}
 }

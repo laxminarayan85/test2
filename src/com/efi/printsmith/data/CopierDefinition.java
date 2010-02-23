@@ -210,6 +210,10 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String SIDETWOFACTOR = "SideTwoFactor";
+	/**
+	 * @generated
+	 */
+	public static final String COPIERMATRIX = "CopierMatrix";
 
 	/**
 	 * @generated
@@ -973,6 +977,23 @@ public class CopierDefinition extends ModelBase {
 	public void setSideTwoFactor(Double newVal) {
 		this.sideTwoFactor = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Matrix copierMatrix;
+	/**
+	 * @generated
+ 	 */
+	public Matrix getCopierMatrix(){
+		return copierMatrix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopierMatrix(Matrix newVal) {
+		this.copierMatrix = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1023,6 +1044,7 @@ public class CopierDefinition extends ModelBase {
 		if (PRICETWOSIDE.equals(propertyName)) return getPriceTwoSide();
 		if (STOCKPRICEIS.equals(propertyName)) return getStockPriceIs();
 		if (SIDETWOFACTOR.equals(propertyName)) return getSideTwoFactor();
+		if (COPIERMATRIX.equals(propertyName)) return getCopierMatrix();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1076,6 +1098,7 @@ public class CopierDefinition extends ModelBase {
 		if (PRICETWOSIDE.equals(propertyName)) setPriceTwoSide((String)newValue); else
 		if (STOCKPRICEIS.equals(propertyName)) setStockPriceIs((String)newValue); else
 		if (SIDETWOFACTOR.equals(propertyName)) setSideTwoFactor((Double)newValue); else
+		if (COPIERMATRIX.equals(propertyName)) setCopierMatrix((Matrix)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1173,6 +1196,8 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (SIDETWOFACTOR.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (COPIERMATRIX.equals(propertyName)) 
+			return new Class<?>[] {Matrix.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1227,6 +1252,7 @@ public class CopierDefinition extends ModelBase {
 		if (PRICETWOSIDE.equals(propertyName)) return CopierDefinition.class;
 		if (STOCKPRICEIS.equals(propertyName)) return CopierDefinition.class;
 		if (SIDETWOFACTOR.equals(propertyName)) return CopierDefinition.class;
+		if (COPIERMATRIX.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1325,6 +1351,8 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getStockPriceIs(), objT.getStockPriceIs()))
 			return false;
 		if (! SmartEquals(getSideTwoFactor(), objT.getSideTwoFactor()))
+			return false;
+		if (! SmartEquals(getCopierMatrix(), objT.getCopierMatrix()))
 			return false;
 		return true;
 	}			

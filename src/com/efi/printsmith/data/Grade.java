@@ -42,6 +42,10 @@ public class Grade extends ModelBase {
 	 * @generated
 	 */
 	public static final String CAMPAIGNS = "Campaigns";
+	/**
+	 * @generated
+	 */
+	public static final String GRADEID = "GradeId";
 
 	/**
 	 * @generated
@@ -91,6 +95,23 @@ public class Grade extends ModelBase {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
 		this.campaigns = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String gradeId;
+	/**
+	 * @generated
+ 	 */
+	public String getGradeId(){
+		return gradeId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setGradeId(String newVal) {
+		this.gradeId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -99,6 +120,7 @@ public class Grade extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
 		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
+		if (GRADEID.equals(propertyName)) return getGradeId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -110,6 +132,7 @@ public class Grade extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
+		if (GRADEID.equals(propertyName)) setGradeId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -123,6 +146,8 @@ public class Grade extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (CAMPAIGNS.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, Campaigns.class};		
+		if (GRADEID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -135,6 +160,7 @@ public class Grade extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return Grade.class;
 		if (CAMPAIGNS.equals(propertyName)) return Grade.class;
+		if (GRADEID.equals(propertyName)) return Grade.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -149,6 +175,8 @@ public class Grade extends ModelBase {
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
+			return false;
+		if (! SmartEquals(getGradeId(), objT.getGradeId()))
 			return false;
 		return true;
 	}			

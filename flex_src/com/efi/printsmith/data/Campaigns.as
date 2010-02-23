@@ -16,6 +16,7 @@ package com.efi.printsmith.data
 		public var name:String = "";
 		public var applied:Boolean = true;
 		public var globalCampaign:Boolean = true;
+		public var campaignId:String = "";
 	
 	}
 }

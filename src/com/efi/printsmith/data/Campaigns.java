@@ -46,6 +46,10 @@ public class Campaigns extends ModelBase {
 	 * @generated
 	 */
 	public static final String GLOBALCAMPAIGN = "GlobalCampaign";
+	/**
+	 * @generated
+	 */
+	public static final String CAMPAIGNID = "CampaignId";
 
 	/**
 	 * @generated
@@ -106,6 +110,23 @@ public class Campaigns extends ModelBase {
 	public void setGlobalCampaign(Boolean newVal) {
 		this.globalCampaign = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String campaignId;
+	/**
+	 * @generated
+ 	 */
+	public String getCampaignId(){
+		return campaignId; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCampaignId(String newVal) {
+		this.campaignId = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -115,6 +136,7 @@ public class Campaigns extends ModelBase {
 		if (NAME.equals(propertyName)) return getName();
 		if (APPLIED.equals(propertyName)) return getApplied();
 		if (GLOBALCAMPAIGN.equals(propertyName)) return getGlobalCampaign();
+		if (CAMPAIGNID.equals(propertyName)) return getCampaignId();
 		return super.getProperty(propertyName);
 	}
 	
@@ -127,6 +149,7 @@ public class Campaigns extends ModelBase {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (APPLIED.equals(propertyName)) setApplied((Boolean)newValue); else
 		if (GLOBALCAMPAIGN.equals(propertyName)) setGlobalCampaign((Boolean)newValue); else
+		if (CAMPAIGNID.equals(propertyName)) setCampaignId((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -142,6 +165,8 @@ public class Campaigns extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (GLOBALCAMPAIGN.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (CAMPAIGNID.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -155,6 +180,7 @@ public class Campaigns extends ModelBase {
 		if (NAME.equals(propertyName)) return Campaigns.class;
 		if (APPLIED.equals(propertyName)) return Campaigns.class;
 		if (GLOBALCAMPAIGN.equals(propertyName)) return Campaigns.class;
+		if (CAMPAIGNID.equals(propertyName)) return Campaigns.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -171,6 +197,8 @@ public class Campaigns extends ModelBase {
 		if (! SmartEquals(getApplied(), objT.getApplied()))
 			return false;
 		if (! SmartEquals(getGlobalCampaign(), objT.getGlobalCampaign()))
+			return false;
+		if (! SmartEquals(getCampaignId(), objT.getCampaignId()))
 			return false;
 		return true;
 	}			

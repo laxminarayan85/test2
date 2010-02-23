@@ -74,6 +74,14 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPIERDEFINITION = "CopierDefinition";
+	/**
+	 * @generated
+	 */
+	public static final String CAMPAIGN = "Campaign";
+	/**
+	 * @generated
+	 */
+	public static final String GRADE = "Grade";
 
 	/**
 	 * @generated
@@ -253,6 +261,40 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setCopierDefinition(Long newVal) {
 		this.copierDefinition = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Long campaign;
+	/**
+	 * @generated
+ 	 */
+	public Long getCampaign(){
+		return campaign; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCampaign(Long newVal) {
+		this.campaign = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long grade;
+	/**
+	 * @generated
+ 	 */
+	public Long getGrade(){
+		return grade; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setGrade(Long newVal) {
+		this.grade = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -269,6 +311,8 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (EMPLOYEE.equals(propertyName)) return getEmployee();
 		if (BROKER.equals(propertyName)) return getBroker();
 		if (COPIERDEFINITION.equals(propertyName)) return getCopierDefinition();
+		if (CAMPAIGN.equals(propertyName)) return getCampaign();
+		if (GRADE.equals(propertyName)) return getGrade();
 		return super.getProperty(propertyName);
 	}
 	
@@ -288,6 +332,8 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (EMPLOYEE.equals(propertyName)) setEmployee((Long)newValue); else
 		if (BROKER.equals(propertyName)) setBroker((Long)newValue); else
 		if (COPIERDEFINITION.equals(propertyName)) setCopierDefinition((Long)newValue); else
+		if (CAMPAIGN.equals(propertyName)) setCampaign((Long)newValue); else
+		if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -317,6 +363,10 @@ public class PreferencesSequenceValues extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (COPIERDEFINITION.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (CAMPAIGN.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (GRADE.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -337,6 +387,8 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (EMPLOYEE.equals(propertyName)) return PreferencesSequenceValues.class;
 		if (BROKER.equals(propertyName)) return PreferencesSequenceValues.class;
 		if (COPIERDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+		if (CAMPAIGN.equals(propertyName)) return PreferencesSequenceValues.class;
+		if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -367,6 +419,10 @@ public class PreferencesSequenceValues extends ModelBase {
 		if (! SmartEquals(getBroker(), objT.getBroker()))
 			return false;
 		if (! SmartEquals(getCopierDefinition(), objT.getCopierDefinition()))
+			return false;
+		if (! SmartEquals(getCampaign(), objT.getCampaign()))
+			return false;
+		if (! SmartEquals(getGrade(), objT.getGrade()))
 			return false;
 		return true;
 	}			
