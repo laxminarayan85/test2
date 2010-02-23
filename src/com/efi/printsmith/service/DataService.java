@@ -422,6 +422,8 @@ public class DataService {
 			sequenceValues.setJob(new Long(0));
 			sequenceValues.setPressDefinition(new Long(0));
 			sequenceValues.setStockDefinition(new Long(0));
+			sequenceValues.setCampaign(new Long(0));
+			sequenceValues.setGrade(new Long(0));
 		}
 		return sequenceValues;
 	}
@@ -505,6 +507,22 @@ public class DataService {
 		sequenceValues.setCopierDefinition(value);
 		this.addUpdate(sequenceValues);
 	}
+	private void setCampaignId(Campaigns campaign) throws Exception {
+		if (campaign.getCampaignId() != null && campaign.getCampaignId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getCampaign()+1;
+		campaign.setCampaignId(value.toString());
+		sequenceValues.setCampaign(value);
+		this.addUpdate(sequenceValues);
+	}
+	private void setGradeId(Grade grade) throws Exception {
+		if (grade.getGradeId() != null && grade.getGradeId().length() > 0) return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getGrade()+1;
+		grade.setGradeId(value.toString());
+		sequenceValues.setGrade(value);
+		this.addUpdate(sequenceValues);
+	}
 	
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
@@ -536,6 +554,10 @@ public class DataService {
 				this.setPressDefinitionId((PressDefinition)object);
 			} else if (object instanceof CopierDefinition) {
 				this.setCopierDefinitionId((CopierDefinition)object);
+			}else if (object instanceof Campaigns) {
+				this.setCampaignId((Campaigns)object);
+			}else if (object instanceof Grade) {
+				this.setGradeId((Grade)object);			
 			}
 			
 			EntityTransaction tx = em.getTransaction();
