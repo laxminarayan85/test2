@@ -745,11 +745,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleChargeDefinitionEstInvComplete(evt:ChargeDefinitionSelectEvent):void
 	{
-		account.invoiceEstimateCharges=evt.chargeArray;
+		this.account.invoiceEstimateCharges = evt.chargeArray;
 	}
 	private function handleChargeDefinitionJobComplete(evt:ChargeDefinitionSelectEvent):void
 	{
-		account.jobCharges=evt.chargeArray;
+		this.account.jobCharges=evt.chargeArray;
 	}
 	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
 	{
@@ -859,7 +859,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="101" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxExempt')}" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
 					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" text="{account.resaleCertExpirationDate}"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="318" width="397" height="103" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CertExpires')}" dropShadowEnabled="false">
+				<mx:Panel x="10" y="318" width="397" height="103" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.PresetCharges')}" dropShadowEnabled="false">
 					<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoInvoicesandEsti')}" textAlign="right" width="198"/>
 					<mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoJobs')}" textAlign="right" width="198"/>
 					<mx:Button x="216" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="inv_estimate_charges_edit" click="doEstInvCharge();"/>
