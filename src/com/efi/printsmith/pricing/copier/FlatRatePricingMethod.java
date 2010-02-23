@@ -1,0 +1,62 @@
+package com.efi.printsmith.pricing.copier;
+
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import com.efi.printsmith.data.CopierDefinition;
+import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.PriceLogEntry;
+import com.efi.printsmith.data.PricingRecord;
+import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.service.PricingService;
+
+public class FlatRatePricingMethod implements CopierPricingMethod {
+	protected static Logger log = Logger.getLogger(FlatRatePricingMethod.class);
+
+	public Job priceCopierJob(Job job) {
+		log.info("Start priceJob for job " + job.getId());
+		double price = 0.0;
+
+		CopierDefinition pricingCopier = job.getPricingCopier();
+		if (pricingCopier != null) {
+			double ratePerCopy = pricingCopier.getFlatRate();
+			PricingRecord pricingRecord = new PricingRecord();
+			PriceLogEntry priceLogEntry = new PriceLogEntry();
+			PriceLogEntry detailLogEntry = new PriceLogEntry();
+			priceLogEntry.setDate(new Date());
+			priceLogEntry.setDescription("Price Flat Rate Copier Job");
+			priceLogEntry.setMethod("FlatRatePricingMethod");
+			priceLogEntry.setValue(price);
+			
+			price = ratePerCopy*job.getQtyOrdered();
+			detailLogEntry.setDate(priceLogEntry.getDate());
+			detailLogEntry.setDescription("Side One Price");
+			detailLogEntry.setMethod("FlatRatePricingMethod");
+			detailLogEntry.setValue(price);
+			priceLogEntry.addChildren(detailLogEntry);
+			if (job.getDoubleSided()) {
+				double secondSidePrice = ratePerCopy*(pricingCopier.getSideTwoFactor()-1)*job.getQtyOrdered();
+				price += secondSidePrice;
+				
+				detailLogEntry = new PriceLogEntry();
+				detailLogEntry.setDate(priceLogEntry.getDate());
+				detailLogEntry.setDescription("Side One Price");
+				detailLogEntry.setMethod("FlatRatePricingMethod");
+				detailLogEntry.setValue(price);
+				priceLogEntry.addChildren(detailLogEntry);
+			}
+			
+			job.setPrice(price);
+			
+			priceLogEntry.setValue(price);
+			pricingRecord.setPriceLogEntry(priceLogEntry);
+			job.setPricingRecord(pricingRecord);
+		} else {
+			log.error("No pricing copier found for job");
+		}
+		
+		return job;
+	}
+}

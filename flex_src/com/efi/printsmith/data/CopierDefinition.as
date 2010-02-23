@@ -56,6 +56,7 @@ package com.efi.printsmith.data
 		public var copierPriceList:PriceList;
 		public var priceTwoSide:String = "";
 		public var stockPriceIs:String = "";
+		public var sideTwoFactor:Number = 0;
 	
 	}
 }

@@ -2640,7 +2640,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Title')}" dataField="title"/>
 						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Abbreviation')}" dataField="abbreviation"/>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.B')}" dataField="brokered" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.B')}" textAlign="center" dataField="brokered" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2648,7 +2648,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.T')}" dataField="taxable" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.T')}" textAlign="center" dataField="taxable" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2656,7 +2656,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.F')}" dataField="finished" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.F')}" textAlign="center" dataField="finished" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
@@ -2664,7 +2664,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.N')}" dataField="showNotes" editorDataField="selected"
+						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.N')}" textAlign="center" dataField="showNotes" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>

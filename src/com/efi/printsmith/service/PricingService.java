@@ -3,6 +3,7 @@ package com.efi.printsmith.service;
 import java.util.List;
 
 import com.efi.printsmith.data.*;
+import com.efi.printsmith.data.enums.CopierPricingMethod;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -21,6 +22,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
+import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
+import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
+import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
+import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 
 public class PricingService {
 
@@ -116,35 +121,30 @@ public class PricingService {
 		return retVal;
 	}
 	
-	public Job priceJob(Job job) {		
-		log.info("Start priceJob for job " + job.getId());
-		double price = 0.0;
-
-		/* Press Price */
-		PressDefinition pricingPress = job.getPricingPress();
-		if (pricingPress != null) {
-			double time = getTimePerSheetFromSpeedTable(pricingPress.getSpeedTable(), job.getPressQty()) * job.getPressQty()/60;
-			time += pricingPress.getSetupMin();
-			if (time < pricingPress.getMinLabor()) {
-				time = pricingPress.getMinLabor();
-			}
-			price = pricingPress.getLaborRate() * pricingPress.getLaborMarkup() * time/60;
+	public Job priceJob(Job job) {
+		/* Currently assumes copier job - need to check job type */
+		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
+		CopierDefinition copierDefinition = job.getPricingCopier();
+		
+		String copierPricingMethodDesc = copierDefinition.getMethod();
+		com.efi.printsmith.pricing.copier.CopierPricingMethod copierPricingMethod = null;
+		
+		if (copierPricingMethodDesc.equals(CopierPricingMethod.FlatRate.name())) {
+			copierPricingMethod = new FlatRatePricingMethod();
+		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CopiesAndOriginals.name())) {
+			copierPricingMethod = new CopiesPlusOriginalsPricingMethod();
+		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CopiesPerOriginals.name())) {
+			copierPricingMethod = new CopiesPerOriginalPricingMethod();
+		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CostPlus.name())) {
+			copierPricingMethod = new CostPlusPricingMethod();			
 		}
 		
-		/* Stock Price */
-		StockDefinition stock = job.getStock();
-		if (stock != null) {
-			price += getStockPrice(stock, job.getPressQty());
+		if (copierPricingMethod != null) {
+			return copierPricingMethod.priceCopierJob(job);
+		} else {
+			log.error("No pricing method found for CopierPricingMethod: " + copierPricingMethodDesc);
 		}
 		
-		if (job.getCharges() != null) {
-			for (Charge charge : job.getCharges()) {
-				if (charge != null) priceCharge(charge);
-			}
-		}
-
-		job.setPrice(price);
-		log.info("Completed priceJob for job " + job.getId());
 		return job;
 	}
 	

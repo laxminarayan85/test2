@@ -179,7 +179,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 		return -1;
 	}
-	private function mapAccountData():void {
+	private function mapCopierData():void {
 		 //copierDefinition.copyDefID = CopierDefID;
 		 copierDefinition.name = Name.text;
 		 copierDefinition.machineName = MachineName.text;
@@ -189,20 +189,20 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 copierDefinition.oemDeviceID = OEMDeviceID.text;
 		 copierDefinition.copyID = parseInt(copyID.text); 
 		 copierDefinition.costingCopy = CostingCopier.selected;
-		 copierDefinition.clickCost = parseInt(clickCost.text);
+		 copierDefinition.clickCost = parseFloat(clickCost.text);
 		 copierDefinition.integratedDevice = IntegratedDevice.selected;
 		 copierDefinition.maxSize = MaxSize.text;
 		 copierDefinition.minSize= minSize.text;
 		 copierDefinition.maxWidth = maxWidthsize.text;
 		 copierDefinition.minWidth = minWidthsize.text;
-		 copierDefinition.monthlyLabor= parseInt(monthlyLabor.text);
-		 copierDefinition.copyMarkup= parseInt(copyMarkup.text);
-		 copierDefinition.tonerCopy = parseInt(tonerCopy.text);
-		 copierDefinition.laborCopy = parseInt(laborCopy.text);
+		 copierDefinition.monthlyLabor= parseFloat(monthlyLabor.text);
+		 copierDefinition.copyMarkup= parseFloat(copyMarkup.text);
+		 copierDefinition.tonerCopy = parseFloat(tonerCopy.text);
+		 copierDefinition.laborCopy = parseFloat(laborCopy.text);
 		 copierDefinition.daysOpen = parseInt(openDays.text);
-		 copierDefinition.developerCopy = parseInt(developerCopy.text);
-		 copierDefinition.hourCostRate = parseInt(hourlyCostingRate.text);
-		 copierDefinition.hoursOpen = parseInt(openhours.text);
+		 copierDefinition.developerCopy = parseFloat(developerCopy.text);
+		 copierDefinition.hourCostRate = parseFloat(hourlyCostingRate.text);
+		 copierDefinition.hoursOpen = parseFloat(openhours.text);
 		 copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
 		 if (pricing_method_combo.selectedItem != null)
 		 	copierDefinition.method = pricing_method_combo.selectedItem.toString();
@@ -212,14 +212,14 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 	copierDefinition.priceTwoSide = price_2_side.selectedItem.toString();	
 		 		
 		 copierDefinition.salesCat = charge_sales_category_combo.text;
-		 copierDefinition.percentUsage = parseInt(percentageUse.text);
-		 copierDefinition.monthlyMaintenance = parseInt(monthlyMaintenance.text);
-		 copierDefinition.copyMarkup = parseInt(copyMarkup.text);
-		 copierDefinition.monthlyBurdenRate = parseInt(monthlyBurdenRate.text);
+		 copierDefinition.percentUsage = parseFloat(percentageUse.text);
+		 copierDefinition.monthlyMaintenance = parseFloat(monthlyMaintenance.text);
+		 copierDefinition.copyMarkup = parseFloat(copyMarkup.text);
+		 copierDefinition.monthlyBurdenRate = parseFloat(monthlyBurdenRate.text);
 		 copierDefinition.copyMinutes = parseInt(copyMinutes.text);
-		 copierDefinition.flateRate = parseInt(RateCopy.text);
-		 copierDefinition.copyMarkup2= parseInt(copyMarkup2.text);
-		 
+		 copierDefinition.flatRate = parseFloat(RateCopy.text);
+		 copierDefinition.copyMarkup2= parseFloat(copyMarkup2.text);
+		 copierDefinition.sideTwoFactor = parseFloat(side2Factor.text);
 		 copierDefinition.blackwhite = blackwhitecheck.selected;
 		 copierDefinition.color = colorcheck.selected;
 		 copierDefinition.largeFormat = largeformatCheck.selected;
@@ -229,7 +229,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function doSave():void {
 	 
-		mapAccountData()
+		mapCopierData()
 		dataService.addUpdate(copierDefinition);
 	}       
 
@@ -385,6 +385,8 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				interpolatematrix.visible= false;
 				ratecopylabel.visible = true;
 				ratecopylabel.enabled = true;
+				copyMarkup2.visible = false;
+				copymarkuplabel.visible = false;
 				RateCopy.visible =true;
 				RateCopy.enabled = true;
 				
@@ -599,11 +601,11 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel"/>
 		<mx:Label x="43" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" enabled="false"/>
 		<mx:TextInput x="126" y="572" width="71" id="copyMarkup2" height="20" text="{copierDefinition.copyMarkup2}"/>
-		<mx:TextInput x="126" y="572" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flateRate}"/>
+		<mx:TextInput x="126" y="572" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flatRate}"/>
 		<mx:Label x="40" y="596" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockMarkup')}"/>
 		<mx:Label x="42" y="618" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Side2Factor')}"/>
 		<mx:TextInput x="126" y="594" width="71" id="stockMarkup" height="20"/>
-		<mx:TextInput x="126" y="616" width="71" id="side2Factor" height="20"/>
+		<mx:TextInput x="126" y="616" width="71" id="side2Factor" height="20" text="{copierDefinition.sideTwoFactor}"/>
 		<mx:Label x="241" y="575" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockPriceis')}" height="14"/>
 		<mx:CheckBox x="238" y="594" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.UseCopierDigitalStoc')}" id="copierDigitalStockmarkup"/>
 		<mx:Label x="234" y="617" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Price2SidedBy')}"/>

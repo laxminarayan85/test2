@@ -24,12 +24,14 @@
 	<mx:Script>
 
 		<![CDATA[
-			import com.efi.printsmith.events.AccountPickerSelectEvent;
+			import mx.messaging.AbstractConsumer;
+			import com.efi.printsmith.events.JobMethodSelectEvent;
 			import com.efi.printsmith.data.Contact;
 			import com.efi.printsmith.data.Account;
 			import com.efi.printsmith.view.EditContact;
 			import com.efi.printsmith.view.EditCustomer;
 			import com.efi.printsmith.view.StockDefinitions;
+			import com.efi.printsmith.data.PreferencesPricingMethod;
 			import mx.managers.PopUpManager;
 			import mx.controls.Alert;
 			import mx.containers.Canvas;
@@ -44,7 +46,7 @@
 			import mx.collections.ArrayCollection;
 
 			[Bindable]
-			private var pricingMethods:ArrayCollection=new ArrayCollection();
+			public var pricingMethods:ArrayCollection;
 
 			private function handleLoadResult(event:ResultEvent):void
 			{
@@ -59,25 +61,25 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-				dataService.getAll("PerferncesPricingMethod");
+				//dataService.getAll("PreferencesPricingMethod");  // Now passed in from parent window.
 			}
 
-			private function newAccount():void
-			{
-				var newEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTNEWACCOUNT, new Account());
-				dispatchEvent(newEvent);
-				PopUpManager.removePopUp(this);
+			public function setPricingMethods(pricingMethods:ArrayCollection):void {
+				this.pricingMethods = pricingMethods;
 			}
-
+			
 			private function cancelPicker():void
 			{
-				var cancelEvent:AccountPickerSelectEvent=new AccountPickerSelectEvent(AccountPickerSelectEvent.CANCELSELECTACCOUNT, null);
+				var cancelEvent:JobMethodSelectEvent=new JobMethodSelectEvent(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, null);
 				dispatchEvent(cancelEvent);
 				PopUpManager.removePopUp(this);
 			}
 
 			private function doOK():void
 			{
+				var selectedMethod:PreferencesPricingMethod = pricingMethodCombo.selectedItem as PreferencesPricingMethod;
+				var selectedEvent:JobMethodSelectEvent=new JobMethodSelectEvent(JobMethodSelectEvent.SELECTJOBMETHOD, selectedMethod);
+				dispatchEvent(selectedEvent);
 				PopUpManager.removePopUp(this);
 			}
 
@@ -106,16 +108,16 @@
 				   y="50"
 				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 				   width="75"/>
-		<mx:ComboBox x="173"
+		<mx:ComboBox x="126.5"
 					 y="10"
 					 id="pricingMethodCombo"
 					 dataProvider="{pricingMethods}"
-					 labelField="name" width="128">
+					 labelField="title" width="174.5">
 		</mx:ComboBox>
-		<mx:Text x="36"
+		<mx:Text x="10"
 				 y="12"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
-				 height="20" textAlign="right" width="129"/>
+				 height="20" textAlign="right" width="108.5"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>
 
