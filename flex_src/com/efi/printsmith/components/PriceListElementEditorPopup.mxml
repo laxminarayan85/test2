@@ -20,8 +20,8 @@
     <mx:Canvas width="409" height="167">
     <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Quantity')}" width="67" textAlign="right"/>
     <mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" width="67" textAlign="right"/>
-    <mx:Label x="38" y="61" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides')}" width="39" textAlign="right"/>
-    <mx:Label x="10" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="67" textAlign="right"/>
+    <mx:Label x="10" y="61" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides')}" width="67" textAlign="right" id="lblSides"/>
+    <mx:Label x="10" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="67" textAlign="right" id="lblColor"/>
 
     <mx:TextInput x="85" y="10" width="314" id="quantity_edit" text="{element.quantity}"/>
     <mx:TextInput x="85" y="33" width="314" id="amount_edit" text="{element.amount}"/>
@@ -73,6 +73,12 @@
 		ColorDataService.getAll("StockColors")
 	}      
 
+	public function SetVisible(value:Boolean):void{
+		this.side_edit.visible=value;
+		this.color_edit.visible=value;
+		this.lblColor.visible=value;
+		this.lblSides.visible=value;
+	}
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              

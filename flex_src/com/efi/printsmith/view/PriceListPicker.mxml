@@ -33,6 +33,7 @@
 	import com.efi.printsmith.data.PriceListBase; 
 	import com.efi.printsmith.data.WasteChart; 
 	import com.efi.printsmith.data.PaperPrice;
+	import com.efi.printsmith.data.Matrix;
 	                         
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
@@ -81,7 +82,7 @@
 		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable") {
+			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable" || payloadType == "Matrix") {
 				dataService.getAll(payloadType)
 			}
 		}
@@ -105,6 +106,9 @@
 		}else if (this.itemType =="PaperPrice") {
 			this.title = "Paper Price"
 			this.label = "Paper Price"
+		}else if (this.itemType =="Matrix") {
+			this.title = "Copier Price Matrix"
+			this.label = "Copier Price Matrix"
 		}
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 
@@ -130,6 +134,9 @@
 	    	break;
 	    case "PaperPrice":
 	    	newPriceList = new PaperPrice();
+	    	break;
+	    case "Matrix":
+	    	newPriceList = new com.efi.printsmith.data.Matrix();
 	    	break;
 	    }
 	    if (newPriceList == null) {

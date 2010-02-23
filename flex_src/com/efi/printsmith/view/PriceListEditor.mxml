@@ -26,7 +26,10 @@
 	<mx:State name="Price List" basedOn="">
 		<mx:SetProperty name="title" value="Edit Price List {priceList.name}"/>
 		<mx:SetProperty target="{title_edit}" name="height" value="20"/>
-		<mx:SetProperty target="{label1}" name="x" value="164"/>
+		<mx:SetProperty target="{label1}" name="x" value="229"/>
+		<mx:SetProperty target="{label1}" name="width" value="128.5"/>
+		<mx:SetProperty target="{colSide}" name="visible" value="false"/>
+		<mx:SetProperty target="{colColor}" name="visible" value="false"/>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -59,6 +62,7 @@
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
 		<mx:SetProperty target="{label1}" name="x" value="260.5"/>
+
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
 		<mx:SetProperty name="title" value="Edit Paper Price {priceList.name}"/>
@@ -83,6 +87,29 @@
 			<mx:Label x="249" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right"/>
 		</mx:AddChild>
 		<mx:SetProperty target="{label1}" name="y" value="40"/>
+	</mx:State>
+	<mx:State name="CopierMatrix" basedOn="Price List">
+		<mx:RemoveChild target="{label1}"/>
+		<mx:RemoveChild target="{title_edit}"/>
+		<mx:RemoveChild target="{radiobutton2}"/>
+		<mx:RemoveChild target="{radiobutton1}"/>
+		<mx:RemoveChild target="{chkInterpolate}"/>
+		<mx:RemoveChild target="{chkUseAsRateList}"/>
+		<mx:RemoveChild target="{chkProductionDiscount}"/>
+		<mx:RemoveChild target="{chkIgnoreGlobalPriceChange}"/>
+		<mx:SetProperty target="{select_button}" name="x" value="10"/>
+		<mx:SetProperty target="{select_button}" name="y" value="302"/>
+		<mx:SetProperty target="{clear_button}" name="x" value="115"/>
+		<mx:SetProperty target="{clear_button}" name="y" value="302"/>
+		<mx:RemoveChild target="{select_button}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{select_button}"/>
+		<mx:SetStyle target="{dataGrid}" name="bottom" value="60"/>
+		<mx:RemoveChild target="{clear_button}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{clear_button}"/>
+		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="32"/>
+		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="32"/>
+		<mx:SetProperty target="{canvas1}" name="width" value="233"/>
+		<mx:SetProperty name="width" value="262"/>
 	</mx:State>
 </mx:states>
 <mx:Script>
@@ -213,6 +240,13 @@
 			this.label = "Paper Price"
 			this.quantity_header = "Copies";
 			this.price_header = "Price";
+		} else if (priceList is com.efi.printsmith.data.Matrix) {
+			itemType = "Matrix";
+			this.currentState = "CopierMatrix";
+			this.title = "Copier Price Matrix"
+			this.label = "Copier Price Matrix"
+			this.quantity_header = "Copies";
+			this.price_header = "Price/Side";
 		} else {
 			itemType = "PriceList";
 			this.currentState = "Price List";
@@ -267,6 +301,8 @@
 			priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
 			priceList = ev.result as PaperPrice;
+		} else if (itemType == "Matrix") {
+			priceList = ev.result as com.efi.printsmith.data.Matrix;
 		}
 
 		var editPage:Container = parentContainer;
@@ -334,6 +370,7 @@
 		titleWindow=PriceListElementEditorPopup(PopUpManager.createPopUp(this, PriceListElementEditorPopup,true));
 		titleWindow.element = priceListElement; 
 		titleWindow.setStyle("borderAlpha", 0.9);
+		titleWindow.SetVisible(itemType != "Matrix");
 		titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
 		titleWindow.addEventListener("SavePriceListElementEvent", savePriceListElementHandler, false, 1);
 	}
@@ -363,7 +400,7 @@
 
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="291" y="254"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="396" y="254"/>
-		<mx:Label x="279" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right" width="87.5"/>
+		<mx:Label x="240" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right" width="117.5"/>
 
 		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
 		<mx:RadioButton x="356" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
