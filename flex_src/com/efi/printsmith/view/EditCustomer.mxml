@@ -50,6 +50,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.commands.commandCommands.AccountsAddressPanelCommand;
+	import com.efi.printsmith.events.commandEvents.DeleteAccountEvent;
 	import com.efi.printsmith.data.SportsInterest;
 	import com.efi.printsmith.data.CommonInterest;
 	import com.efi.printsmith.events.SaveAddressEvent;
@@ -71,14 +73,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.UpdateDataProviderEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
-
+	import com.efi.printsmith.events.commandEvents.AccountsAddressPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsCreditControlPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsLogPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsMarketingPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsNotesPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsSalesPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsSettingsPanelEvent;
+	import com.efi.printsmith.events.commandEvents.AccountsWebPanelEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection;                                         
 	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                         
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.Responder;                                         
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
     import mx.printing.FlexPrintJob;
@@ -139,8 +149,48 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.doGet();
 		setSettings();
 		dataService.getAll("Account");
-	}      
 
+		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventAddress.dispatch();
+
+		var eventCreditControl:AccountsCreditControlPanelEvent = new AccountsCreditControlPanelEvent(canvasCreditControl, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventCreditControl.dispatch();
+
+		var eventLog:AccountsLogPanelEvent = new AccountsLogPanelEvent(canvasLog, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventLog.dispatch();
+
+		var eventMarketing:AccountsMarketingPanelEvent = new AccountsMarketingPanelEvent(canvasMarketing, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventMarketing.dispatch();
+
+		var eventNotes:AccountsNotesPanelEvent = new AccountsNotesPanelEvent(canvasNotes, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventNotes.dispatch();
+
+		var eventSales:AccountsSalesPanelEvent = new AccountsSalesPanelEvent(canvasSales, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventSales.dispatch();
+
+		var eventSettings:AccountsSettingsPanelEvent = new AccountsSettingsPanelEvent(canvasSettings, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventSettings.dispatch();
+
+		var eventWeb:AccountsWebPanelEvent = new AccountsWebPanelEvent(canvasWeb, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventWeb.dispatch();
+	}
+
+	public function handleUIEvent(evt:ResultEvent):void {
+		if (evt.result != null){
+			dataService.deleteItem("Account", evt.result.id);
+		}
+	}		
+
+	public function handleUIPanelEvent(evt:ResultEvent):void {
+		evt.result.panel.enabled = evt.result.enabled;
+	}		
+	private function handleUIPanelFault(ev:FaultEvent):void {  
+	}
+	
+	private function doDelete():void {
+		var event:DeleteAccountEvent = new DeleteAccountEvent(account, new mx.rpc.Responder(handleUIEvent, handleFault));
+		event.dispatch();
+	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
 		account = new Account();
@@ -173,9 +223,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 	
 	}  
 	
-	private function doDelete():void {
-	    dataService.deleteItem("Account",account.id);
-	}  
 	
 	private function doGet():void{
 	    var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
@@ -768,7 +815,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
 		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
+			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
 				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" focusOut="changeName(event)"/>
 				<mx:Text x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" width="46"/>
 				<mx:Text x="55" y="12" width="76" id="acct_text" text="{account.accountId}"/>
@@ -782,7 +829,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
+			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>
 				<mx:Label x="99" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right"/>
 				<mx:TextInput x="181" y="38" id="due_days_edit" text="{account.termsNet}"/>
@@ -823,7 +870,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:RadioButton x="10" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CreditCardonFile')}" id="type_credit_card_on_file_radio" groupName="acct_type" value="credit_card_on_file"/>
 				</mx:Panel>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Settings')}" width="100%" height="100%" >
+			<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Settings')}" width="100%" height="100%" >
 				<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}" textAlign="right"/>
 				<mx:Label x="10" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.SalesRep')}" textAlign="right" width="93"/>
 				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.BusinessType')}" textAlign="right" width="93"/>
@@ -867,7 +914,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" width="100%" height="100%">
+			<mx:Canvas id="canvasSales" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" width="100%" height="100%">
 				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Balance')}" dropShadowEnabled="false">
 					<mx:Label x="22" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'agingLabelText.Current')}"/>
 					<mx:Label x="18" y="36" text="30 Days:"/>
@@ -945,7 +992,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text" text="{account.firstEstimateDate}"/>
 				<mx:Text x="520" y="415" width="149" id="won_lost_text" text="{account.estimatesWon}:{account.estimatesLost}"/>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Log')}" width="100%" height="100%">
+			<mx:Canvas id="canvasLog" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Log')}" width="100%" height="100%">
 				<mx:DataGrid x="10" y="10" width="659" height="226" id="log_dataGrid" dataProvider="{customerLogs}">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Created')}" dataField="modified"/>
@@ -958,7 +1005,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Button x="501" y="355" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Add')}" width="80" id="add_log_button" click="addCustomerLog()"/>
 				<mx:Button x="337" y="355" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}" width="80" id="print_log_button" click="printCustomerLog()"/>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Notes')}" width="100%" height="100%">
+			<mx:Canvas id="canvasNotes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Notes')}" width="100%" height="100%">
 				<mx:TextArea x="10" y="36" editable="true" width="659" height="80" id="acct_selection_note_edit" text= "{account.accountNote}"/>
 				<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Accountselectionnoti')}"/>
 				<mx:TextArea x="10" y="150" editable="true" width="659" height="80" id="job_note_edit" text="{account.jobNote}"/>
@@ -966,7 +1013,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="10" y="238" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Noticetoplaceonstate')}"/>
 				<mx:Label x="10" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custNotesCmd.Notestoinsertineachj')}"/>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%" >
+			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%" >
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
 				<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
 				<mx:RadioButton x="10" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')}" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>
@@ -1017,9 +1064,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Label x="372" y="127" text="Mailer Type:" textAlign="right"/>
 				</mx:Panel>
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Templates')}" width="100%" height="100%">
+			<mx:Canvas id="canvasTemplates" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Templates')}" width="100%" height="100%" >
 			</mx:Canvas>
-			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.We')}" width="100%" height="100%">
+			<mx:Canvas id="canvasWeb" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Web')}" width="100%" height="100%">
 			</mx:Canvas>
 		</mx:TabNavigator>
 		<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
