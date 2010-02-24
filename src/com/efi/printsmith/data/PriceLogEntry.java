@@ -155,6 +155,7 @@ public class PriceLogEntry extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "pricelogentry_children")
 	private java.util.List<PriceLogEntry> children;
 	/**
 	 * @generated

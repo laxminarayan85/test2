@@ -330,6 +330,7 @@ public class Job extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "job_children")
 	private java.util.List<Job> children;
 	/**
 	 * @generated
@@ -353,6 +354,7 @@ public class Job extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "job_charges")
 	private java.util.List<Charge> charges;
 	/**
 	 * @generated
@@ -937,6 +939,7 @@ public class Job extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "job_frontinks")
 	private java.util.List<InkColor> frontInks;
 	/**
 	 * @generated

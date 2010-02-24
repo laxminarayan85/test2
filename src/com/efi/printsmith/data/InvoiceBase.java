@@ -524,6 +524,7 @@ public class InvoiceBase extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "invoicebase_jobs")
 	private java.util.List<Job> jobs;
 	/**
 	 * @generated
@@ -547,6 +548,7 @@ public class InvoiceBase extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
 	/**
 	 * @generated
@@ -570,6 +572,7 @@ public class InvoiceBase extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;
 	/**
 	 * @generated

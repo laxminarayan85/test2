@@ -54,6 +54,7 @@ public class ChargeCommand extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "chargecommand_children")
 	private java.util.List<ChargeCategory> children;
 	/**
 	 * @generated

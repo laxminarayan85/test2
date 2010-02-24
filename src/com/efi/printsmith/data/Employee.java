@@ -686,6 +686,7 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	/**
 	 * @generated
@@ -709,6 +710,7 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeDefinition> employeeCharges;
 	/**
 	 * @generated
@@ -732,6 +734,7 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "employee_employeepresses")
 	private java.util.List<PressDefinition> employeePresses;
 	/**
 	 * @generated
@@ -755,6 +758,7 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<CopierDefinition> employeeCopiers;
 	/**
 	 * @generated
@@ -812,6 +816,7 @@ public class Employee extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	/**
 	 * @generated

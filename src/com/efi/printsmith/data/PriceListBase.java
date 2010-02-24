@@ -264,6 +264,7 @@ public class PriceListBase extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "pricelistbase_elements")
 	private java.util.List<PriceListElement> elements;
 	/**
 	 * @generated

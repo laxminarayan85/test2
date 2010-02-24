@@ -103,6 +103,7 @@ public class TaxTable extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "taxtable_taxelements")
 	private java.util.List<TaxElement> taxElements;
 	/**
 	 * @generated

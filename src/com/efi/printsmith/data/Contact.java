@@ -306,6 +306,7 @@ public class Contact extends Party {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	/**
 	 * @generated

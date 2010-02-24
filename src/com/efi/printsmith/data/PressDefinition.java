@@ -818,6 +818,7 @@ public class PressDefinition extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "pressdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	/**
 	 * @generated

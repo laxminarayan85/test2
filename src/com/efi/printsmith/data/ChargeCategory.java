@@ -58,6 +58,7 @@ public class ChargeCategory extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
 	/**
 	 * @generated

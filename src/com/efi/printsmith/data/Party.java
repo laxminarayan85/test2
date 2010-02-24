@@ -197,6 +197,7 @@ public class Party extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
 	/**
 	 * @generated

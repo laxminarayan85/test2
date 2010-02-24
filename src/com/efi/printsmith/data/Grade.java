@@ -75,6 +75,7 @@ public class Grade extends ModelBase {
  	
 	
     @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "grade_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	/**
 	 * @generated
