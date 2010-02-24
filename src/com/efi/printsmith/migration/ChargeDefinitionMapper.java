@@ -64,6 +64,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				ChargeCost chargeCost = new ChargeCost();
 				chargeCost.setId(Utilities.tokenToLong(currentImportToken));
 				chargeDefinition.setChargeCost(chargeCost);
+				chargeDefinition.setPrevId(currentImportToken);
 			} else if ("sales cat".equals(currentFieldToken)) {
 				chargeDefinition.setSalesCategory(currentImportToken);
 			} else if ("sales cat name".equals(currentFieldToken)) {

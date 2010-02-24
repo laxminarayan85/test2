@@ -123,12 +123,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("minimum cut".equals(currentFieldToken)) {
 				stockDefinition.setMinCutCharge(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("charges[1]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
-				if (modelBase != null) {
-					long id = modelBase.getId();
-					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
-					
-				}
+				/* TODO */
 			}  else if ("charges[2]".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("charges[3]".equals(currentFieldToken)) {

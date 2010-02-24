@@ -4,9 +4,15 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.SalesRep;
+import com.efi.printsmith.data.Marketing;
+import com.efi.printsmith.data.MarketingDateLabels;
+import com.efi.printsmith.data.MarketingMailers;
+import com.efi.printsmith.data.BusinessType;
+import com.efi.printsmith.service.DataService;
 
 public class CustomerMapper extends ImportMapper{
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
@@ -15,8 +21,11 @@ public class CustomerMapper extends ImportMapper{
 		Address billToAddress = new Address();
 		Contact shipToContact = new Contact();
 		Contact billToContact = new Contact();
+		Marketing marketing = new Marketing();
+		BusinessType businessType = new BusinessType();
 		String contactId = "";
 		String billContactId = "";
+		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -277,31 +286,31 @@ public class CustomerMapper extends ImportMapper{
 			} else if ("marketing dates[10]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("leadsource".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setLeadSource(currentImportToken);
 			} else if ("user1".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setCommonInterst(currentImportToken);
 			} else if ("user2".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setSportsInterst(currentImportToken);
 			} else if ("user3".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser3(Utilities.tokenToDate(currentImportToken));
 			} else if ("user4".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser4(Utilities.tokenToDate(currentImportToken));
 			} else if ("user5".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser5(Utilities.tokenToDate(currentImportToken));
 			} else if ("user6".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser6(currentImportToken);
 			} else if ("user7".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser7(currentImportToken);
 			} else if ("user8".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setUser8(currentImportToken);
 			} else if ("number employees".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setNumberofEmployees(Utilities.tokenToInt(currentImportToken));
 			} else if ("business type".equals(currentFieldToken)) {
-				/* TODO */
+				businessType.setKey(currentImportToken);
 			} else if ("business type name".equals(currentFieldToken)) {
-				/* TODO */
+				businessType.setName(currentImportToken);
 			} else if ("annual revenue".equals(currentFieldToken)) {
-				/* TODO */
+				marketing.setAnnualRev(Utilities.tokenToInt(currentImportToken));
 			} else if ("master acct name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("account PO".equals(currentFieldToken)) {
@@ -377,45 +386,145 @@ public class CustomerMapper extends ImportMapper{
 			} else if ("touch date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("preset job charges[1]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[2]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[3]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[4]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[5]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[6]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[7]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[8]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[9]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset job charges[10]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addJobCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[1]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[2]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[3]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[4]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[5]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[6]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[7]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[8]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[9]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("preset inv charges[10]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					customer.addInvoiceEstimateCharges(chargeDefinition);
+				}
 			} else if ("contact count".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("leadsource1 ID".equals(currentFieldToken)) {
@@ -477,6 +586,8 @@ public class CustomerMapper extends ImportMapper{
 		{
 			customer.setBillToContact(billToContact);
 		}
+		customer.setMarketing(marketing);
+		marketing.setBusinessType(businessType);
 		shipToContact.setParentAccount(customer);
 		billToContact.setParentAccount(customer);
 		

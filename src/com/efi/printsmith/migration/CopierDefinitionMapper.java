@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.service.DataService;
 
 public class CopierDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		CopierDefinition copierDefinition = new CopierDefinition();
-		
+		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -32,7 +34,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("payment".equals(currentFieldToken)) {
 				copierDefinition.setMonthlyPayment(Utilities.tokenToDouble(currentImportToken));
 			} else if ("machine".equals(currentFieldToken)) {
-				/* TODO */
+				copierDefinition.setMachineName(currentImportToken);
 			} else if ("labor".equals(currentFieldToken)) {
 				copierDefinition.setLaborCopy(Utilities.tokenToDouble(currentImportToken));
 			} else if ("toner".equals(currentFieldToken)) {
@@ -80,25 +82,75 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("markup".equals(currentFieldToken)) {
 				copierDefinition.setCopyMarkup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("charges[1]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[2]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[3]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[4]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[5]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[6]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[7]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[8]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[9]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("charges[10]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					copierDefinition.addCharges(chargeDefinition);
+				}
 			} else if ("chart qty[1]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("chart qty[2]".equals(currentFieldToken)) {
@@ -836,13 +888,13 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("max sheet X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("max sheet".equals(currentFieldToken)) {
-				/* TODO */
+				copierDefinition.setMaxSize(currentImportToken);
 			} else if ("max sheet Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("min sheet X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("min sheet".equals(currentFieldToken)) {
-				/* TODO */
+				copierDefinition.setMinSize(currentImportToken);
 			} else if ("min sheet Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("max roll width".equals(currentFieldToken)) {
