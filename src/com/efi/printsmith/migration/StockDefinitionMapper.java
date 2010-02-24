@@ -12,7 +12,7 @@ import com.efi.printsmith.data.StockFinish;
 import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
-
+import com.efi.printsmith.data.ChargeDefinition;
 
 public class StockDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
@@ -123,7 +123,12 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("minimum cut".equals(currentFieldToken)) {
 				stockDefinition.setMinCutCharge(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("charges[1]".equals(currentFieldToken)) {
-				/* TODO */
+				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					
+				}
 			}  else if ("charges[2]".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("charges[3]".equals(currentFieldToken)) {
