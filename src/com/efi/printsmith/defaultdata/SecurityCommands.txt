@@ -83,15 +83,15 @@ rStandardMenuText.POS,rStandardMenuText.CashDrawerStatus,CMD_
 rStandardMenuText.POS,rStandardMenuText.ChangeDueDate,CMD_
 rStandardMenuText.AR,rStandardMenuText.Accounts,CMD_EditCustomer
 rStandardMenuText.AR,	rStandardMenuText.ImportProspects,CMD_
-rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.CreditControlPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.SettingsPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.SalesPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.LogPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.NotesPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
+rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_Account_AddressPanel
+rStandardMenuText.AR,	rStandardMenuText.CreditControlPanel,CMD_Account_CreditControlPanel
+rStandardMenuText.AR,	rStandardMenuText.SettingsPanel,CMD_Account_SettingsPanel
+rStandardMenuText.AR,	rStandardMenuText.SalesPanel,CMD_Account_SalesPanel
+rStandardMenuText.AR,	rStandardMenuText.LogPanel,CMD_Account_LogPanel
+rStandardMenuText.AR,	rStandardMenuText.NotesPanel,CMD_Account_NotesPanel
+rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_Account_MarketingPanel
+rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_Account_WEBPanel
+rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_Account_Delete
 rStandardMenuText.AR,rStandardMenuText.Contacts,CMD_Contact
 rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
 rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
