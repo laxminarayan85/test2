@@ -59,6 +59,12 @@ package com.efi.printsmith.control
 			this.addCommand(AccountsSalesPanelEvent.COMMANDID, AccountsSalesPanelCommand);
 			this.addCommand(AccountsSettingsPanelEvent.COMMANDID, AccountsSettingsPanelCommand);
 			this.addCommand(AccountsWebPanelEvent.COMMANDID, AccountsWebPanelCommand);
+
+			this.addCommand(ContactsAddressPanelEvent.COMMANDID, ContactsAddressPanelCommand);
+			this.addCommand(ContactsCreditInfoPanelEvent.COMMANDID, ContactsCreditInfoPanelCommand);
+			this.addCommand(ContactsMarketingPanelEvent.COMMANDID, ContactsMarketingPanelCommand);
+			this.addCommand(ContactsWebPanelEvent.COMMANDID, ContactsWebPanelCommand);
+			this.addCommand(ContactsCampaignsPanelEvent.COMMANDID, ContactsCampaignsPanelCommand);
 			
 						
 		}

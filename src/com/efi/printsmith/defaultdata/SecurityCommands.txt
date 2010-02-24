@@ -93,11 +93,12 @@ rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_Account_MarketingPane
 rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_Account_WEBPanel
 rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_Account_Delete
 rStandardMenuText.AR,rStandardMenuText.Contacts,CMD_Contact
-rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_
-rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_
-rStandardMenuText.AR,	rStandardMenuText.CreditInfo,CMD_
-rStandardMenuText.AR,	rStandardMenuText.CampaignsandGrades,CMD_
+rStandardMenuText.AR,	rStandardMenuText.AddressPanel,CMD_Contact_AddressPanel
+rStandardMenuText.AR,	rStandardMenuText.MarketingPanel,CMD_Contact_MarketingPanel
+rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_Contact_Account_Delete
+rStandardMenuText.AR,	rStandardMenuText.CreditInfo,CMD_Contact_CreditInfoPanel
+rStandardMenuText.AR,	rStandardMenuText.CampaignsandGrades,CMD_Contact_CampaignsPanel
+rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_Contact_WEBPanel
 rStandardMenuText.AR,rStandardMenuText.PostPayments,CMD_
 rStandardMenuText.AR,rStandardMenuText.DailyCloseout,CMD_
 rStandardMenuText.AR,rStandardMenuText.MonthlyCloseout,CMD_
