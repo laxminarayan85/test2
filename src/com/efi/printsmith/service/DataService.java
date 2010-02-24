@@ -132,6 +132,20 @@ public class DataService {
 		}
 		return null;
 	}
+	
+	public ModelBase getByPrevId(String prevId) {
+		try {
+			log.debug("** getByPrevId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from ModelBase where prevId = '" + prevId + "'";
+			Query query = em.createQuery(queryString);
+			ModelBase object = (ModelBase) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
 	public List<?> getFromParent(String className, String parentName, Long id)
 			throws Exception {
