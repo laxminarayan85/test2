@@ -3,6 +3,7 @@ package com.efi.printsmith.service;
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.defaultdata.*;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 
 import org.apache.log4j.Logger;
 import org.hibernate.*;
@@ -30,6 +32,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
@@ -567,6 +570,12 @@ public class DataService {
 				tx.commit();
 				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
 						object.getClass().getSimpleName(), object.getId());
+			} catch (RollbackException e) {
+				ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
+				SQLException sqle = cve.getSQLException().getNextException();
+				while (sqle != null) {
+					sqle = sqle.getNextException();
+				}
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();

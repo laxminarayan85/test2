@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="660"
+				height="342"
+				defaultButton="{ok_btn}"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="PopUpManager.removePopUp(this);"
+				title="Job Pricing Details"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off">
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.events.DialogDoneEvent;
+			import com.efi.printsmith.events.ModelGetSingleEvent;
+			import com.efi.printsmith.events.ModelQueryByCriteriaEvent;
+			import com.efi.printsmith.events.ModelAddUpdateEvent;
+			
+			import com.efi.printsmith.data.ModelBase;
+			import com.efi.printsmith.data.PriceLogEntry;
+			
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			public var priceLogEntry:ArrayCollection = new ArrayCollection;
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+
+			}
+
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+
+			}
+			
+			private function doOK():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function setPriceLogEntry(priceLogEntry:PriceLogEntry):void {
+				this.priceLogEntry = new ArrayCollection;
+				this.priceLogEntry.addItem(priceLogEntry);
+			}
+			
+			private function treeLabel(item:Object):String {
+				var entry:PriceLogEntry = item as PriceLogEntry;
+				var result:String = "";
+				var formattedDollars:String = usdFormatter.format(entry.value);
+				result = entry.description + "\n" + entry.method + "\n" + formattedDollars;
+				
+				return result;
+			}
+
+		]]>
+	</mx:Script>
+
+   <mx:CurrencyFormatter id="usdFormatter" precision="2" currencySymbol="$" decimalSeparatorFrom="."  rounding="nearest"
+        decimalSeparatorTo="." useNegativeSign="true" useThousandsSeparator="true" alignSymbol="left"/>
+
+	<mx:Canvas width="627"
+			   height="293"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+			   
+		<mx:Button id="ok_btn"
+				   click="doOK()"
+				   x="276"
+				   y="261"
+				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
+				   width="75"/>
+		<mx:TabNavigator x="0" y="10" width="618" height="243">
+			<mx:Canvas label="Pricing Detail" width="100%" height="100%">
+				<mx:Tree x="0" y="0" width="616" height="210" dataProvider="{priceLogEntry}" labelFunction="treeLabel"></mx:Tree>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:Canvas>
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>
