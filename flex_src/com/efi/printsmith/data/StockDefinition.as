@@ -120,6 +120,7 @@ package com.efi.printsmith.data
 		public var genericColor:GenericColors;
 		public var account:Account;
 		public var stockId:String = "";
+		public var charges:ArrayCollection;
 	
 	}
 }

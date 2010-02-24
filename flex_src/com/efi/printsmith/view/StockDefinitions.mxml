@@ -174,6 +174,7 @@
 	import com.efi.printsmith.events.StockPickerSelectEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -211,7 +212,9 @@
 	private var stockChange:StockChanges;
 	[Bindable]                                         
 	private var account:Account;
-	
+	[Bindable]
+		private var charges:ArrayCollection=new ArrayCollection();
+
 	[Bindable]
 	private var dimensions:ArrayCollection=new ArrayCollection();
 
@@ -658,6 +661,20 @@
 		
 	private function doAddCharges():void {
 		
+		var chargePicker:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
+		chargePicker.charges = this.charges;
+		chargePicker.setStyle("borderAlpha", 0.9);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
+
+	}
+	private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
+	{
+		this.stockDefinitions.charges=evt.chargeArray;
+	}
+	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
+	{
+		
 	}
 
 	private function doShowHistory():void {
@@ -860,6 +877,7 @@
 			chkfscCertified.selected = stockDefinitions.fscCertified;
 			chksfiCertified.selected = stockDefinitions.sfiCertified
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
+			this.charges = stockDefinitions.charges;
 	}
 
 	private function mapStockDefinitionData():void {
@@ -1190,7 +1208,7 @@
 				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
 			</mx:Panel>
 		</mx:Canvas>
-		<mx:Canvas label="Pricing Options" id="page_pricingoptions" width="100%" height="100%">
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PricingOptions')}" id="page_pricingoptions" width="100%" height="100%">
 			<mx:Panel x="10" y="38" width="295" height="78" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SelectPressforPrinti')}" dropShadowEnabled="false">
 				<mx:Label x="0" y="11" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Press')}" textAlign="right" width="53"/>
 				<fc:AutoComplete  x="52" y="7" width="182" id="cboDefaultPress" dataProvider="{pressDefinitions}" lookAhead="true" labelField="name" focusOut="doPressDefinition()"/>
@@ -1247,7 +1265,7 @@
 			</mx:Panel>
 			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PresetuptoCharges')}" dropShadowEnabled="false">
 				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>
-				<mx:Text x="128" y="6" id="Additional1" text="&lt;Nothing Selected&gt;" width="532"/>
+				<mx:List x="128" y="6" id="Additional1" dataProvider="{stockDefinitions.charges}"  labelField="name" width="238" height="98"/>
 			</mx:Panel>
 		</mx:Canvas>
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Inventory')}" id="page_inventory" width="100%" height="100%">

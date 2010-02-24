@@ -874,7 +874,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Text x="81" y="10" width="64" id="balance_current_text"  text="{account.balance}"/>
 					<mx:Label x="181" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Status')}"/>
 					<mx:Label x="168" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.POSCharges')}"/>
-					<mx:Text x="259" y="36" text="&#xd;&#xd;" width="88" textAlign="right" height="18" id="pos_charges_text"/>
+					<mx:Text x="259" y="36" text="" width="88" textAlign="right" height="18" id="pos_charges_text"/>
 					<mx:Label x="153" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CurrentBalance')}"/>
 					<mx:Text x="259" y="10" width="88" textAlign="right" height="18" id="acct_status_text"  text="{account.status}"/>
 					<mx:Text x="259" y="64" width="88" textAlign="right" height="18" id="current_balance_text" text="{account.balanceCurrent}"/>
@@ -926,24 +926,24 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:Panel>
 				<mx:Label x="458" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}"/>
 				<mx:Label x="433" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Totalorders')}"/>
-				<mx:Text x="520" y="181" width="149" id="created_date_text"/>
-				<mx:Text x="520" y="207" width="149" id="total_orders_qty_text"/>
+				<mx:Text x="520" y="181" width="149" id="created_date_text" text="{account.created}"/>
+				<mx:Text x="520" y="207" width="149" id="total_orders_qty_text" text="{account.ordersTotal}"/>
 				<mx:Label x="445" y="233" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastBilled')}"/>
-				<mx:Text x="520" y="233" width="149" id="last_billed_text"/>
+				<mx:Text x="520" y="233" width="149" id="last_billed_text" text="{account.lastBilledDate}"/>
 				<mx:Label x="426" y="259" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastPayment')}"/>
-				<mx:Text x="520" y="259" width="149" id="last_payment_date_text"/>
+				<mx:Text x="520" y="259" width="149" id="last_payment_date_text" text="{account.lastPaymentDate}"/>
 				<mx:Label x="447" y="285" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastAged')}"/>
-				<mx:Text x="520" y="285" width="149" id="last_aged_date_text"/>
+				<mx:Text x="520" y="285" width="149" id="last_aged_date_text" text="{account.lastAgedDate}"/>
 				<mx:Label x="435" y="311" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastInvoice')}"/>
-				<mx:Text x="520" y="311" width="149" id="last_invoice_date_text"/>
+				<mx:Text x="520" y="311" width="149" id="last_invoice_date_text" text="{account.lastInvoiceDate}"/>
 				<mx:Label x="427" y="337" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.LastEstimate')}"/>
-				<mx:Text x="520" y="337" width="149" id="last_estimate_date_text"/>
+				<mx:Text x="520" y="337" width="149" id="last_estimate_date_text" text="{account.lastEstimateDate}"/>
 				<mx:Label x="435" y="363" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstInvoice')}"/>
 				<mx:Label x="427" y="389" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstEstimate')}"/>
 				<mx:Label x="429" y="415" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.EstimatesWonLost')}"/>
-				<mx:Text x="520" y="363" width="149" id="first_invoice_date_text"/>
-				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text"/>
-				<mx:Text x="520" y="415" width="149" id="won_lost_text"/>
+				<mx:Text x="520" y="363" width="149" id="first_invoice_date_text" text="{account.firstInvoiceDate}"/>
+				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text" text="{account.firstEstimateDate}"/>
+				<mx:Text x="520" y="415" width="149" id="won_lost_text" text="{account.estimatesWon}:{account.estimatesLost}"/>
 			</mx:Canvas>
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Log')}" width="100%" height="100%">
 				<mx:DataGrid x="10" y="10" width="659" height="226" id="log_dataGrid" dataProvider="{customerLogs}">
