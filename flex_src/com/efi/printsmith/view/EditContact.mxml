@@ -195,6 +195,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			if (contact.marketing == null) setMarketing();
 			if( contact.creditCard == null) setCreditCard();
 			mapFromContactData();
+			setCampaigns()
 		}
 	}
 					
@@ -302,8 +303,32 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.creditCard.type = cardtype.text;
 		if (contact.parentAccount != null)
 			contact.parentAccount.accountId = accountID.text;
+		saveCampaigns();
+		
 	}
-	
+	private function saveCampaigns():void{
+		var i:int;
+		for (i=0; i<compaigns.length; i++) {
+			 var tmpcampaigns:Campaigns = compaigns.getItemAt(i) as Campaigns;
+			 if (tmpcampaigns.applied)
+			 	contact.campaigns.addItem(tmpcampaigns)
+		}
+	}
+	private function setCampaigns():void{
+		var i:int;
+		var t:int;
+		
+		for (i=0; i<contact.campaigns.length; i++) {
+			var tmpcampaigns:Campaigns = contact.campaigns.getItemAt(i) as Campaigns;
+			for (t=0; t<compaigns.length; t++){
+				var tmpcampaigns2:Campaigns = compaigns.getItemAt(t) as Campaigns;
+				if (tmpcampaigns2.id == tmpcampaigns.id){
+					tmpcampaigns2.applied = true;
+					compaigns.setItemAt(tmpcampaigns2, t);
+				}
+			}
+		}
+	}
 	private function mapFromContactData():void{
 		
 	 	ship_to_address_editor.setAddress(contact.shipToAddress);
@@ -572,7 +597,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private function handleCampaignSave(ev:CampaignEditCompleteEvent):void {
 		campaignDataService.getAll("Campaigns");
 	}     
-	
+	private function setApplied():void{
+		var i:int;
+		for (i=0; i<contact.campaigns.length; i++) {
+			checkbox1.dataField
+			dataGrid.selectedItem
+			var tmpcampaigns:Campaigns = contact.campaigns.getItemAt(i) as Campaigns;
+		}
+			
+	}
 	
 ]]>	
 
@@ -654,9 +687,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:TextArea x="384" y="171" height="90" width="225">  
 					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Thecampaignfeatureal')}</mx:text>
 				</mx:TextArea>
-			<mx:DataGrid y="20" id="dataGrid" dataProvider="{compaigns}" height="353"  showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="10" right="320">
+			<mx:DataGrid y="10" id="dataGrid" dataProvider="{compaigns}" height="353"  showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="10" right="320" change="setApplied();">
 			<mx:columns>
-				<mx:DataGridColumn width="50" sortable="false" textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Apply')}" dataField="applied" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"/>
+				<mx:DataGridColumn  id="checkbox1" width="50" sortable="false" textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Apply')}" dataField="applied" editorDataField="selected" rendererIsEditor="false" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" dataField="name"/>
 			</mx:columns>
 		</mx:DataGrid>

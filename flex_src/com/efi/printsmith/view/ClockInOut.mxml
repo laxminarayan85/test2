@@ -239,7 +239,7 @@
 
 	<mx:Button x="20" y="37" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockIn')}" width="132" height="107" icon="@Embed(source='../../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
 	<mx:Button x="20" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockOut')}" width="132" height="107" icon="@Embed(source='../../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
-	<mx:Button x="20" y="310" label="{OnOffBreak}" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
+	<mx:Button x="20" y="310" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
 	<mx:AdvancedDataGrid x="167" y="37" width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="380" sortExpertMode="true"
 		itemClick="doGrid()">
 		<mx:groupedColumns>
