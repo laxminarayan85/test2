@@ -60,8 +60,13 @@ public class Utilities {
 	}
 	
 	static public int tokenToInt(String token) throws NumberFormatException {
-		int retVal = -1;
-		retVal = Integer.parseInt(token);
+		int retVal = 0;
+		try {
+			retVal = Integer.parseInt(token);
+		}
+		catch (RuntimeException e) {
+			retVal = 0;
+		}
 		return retVal;
 	}
 	
