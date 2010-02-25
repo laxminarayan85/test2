@@ -52,8 +52,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.printsmith.commands.commandCommands.AccountsAddressPanelCommand;
-	import com.efi.printsmith.events.commandEvents.DeleteAccountEvent;
 	import com.efi.printsmith.data.SportsInterest;
 	import com.efi.printsmith.data.CommonInterest;
 	import com.efi.printsmith.events.SaveAddressEvent;
@@ -75,14 +73,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.UpdateDataProviderEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsAddressPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsCreditControlPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsLogPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsMarketingPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsNotesPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsSalesPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsSettingsPanelEvent;
-	import com.efi.printsmith.events.commandEvents.AccountsWebPanelEvent;
+
+	import com.efi.printsmith.events.commandEvents.Accounts.*;
 	
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         

@@ -91,11 +91,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.core.Application;
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
-   	import com.efi.printsmith.events.commandEvents.ContactsAddressPanelEvent;
-   	import com.efi.printsmith.events.commandEvents.ContactsCampaignsPanelEvent;
-   	import com.efi.printsmith.events.commandEvents.ContactsCreditInfoPanelEvent;
-   	import com.efi.printsmith.events.commandEvents.ContactsMarketingPanelEvent;
-   	import com.efi.printsmith.events.commandEvents.ContactsWebPanelEvent;
+   	import com.efi.printsmith.events.commandEvents.Contacts.*;
 
     [Bindable]
     private var enableSave:Boolean = true;
