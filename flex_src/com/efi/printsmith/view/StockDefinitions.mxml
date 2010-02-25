@@ -152,7 +152,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.printsmith.events.commandEvents.DeleteStockDefinitionEvent;
+	import com.efi.printsmith.events.commandEvents.StockDefinitions.DeleteStockDefinitionEvent;
 	import com.efi.printsmith.data.PressDefinition;
 	import com.efi.printsmith.data.StockDefinition;
 	import com.efi.printsmith.data.StockChanges;

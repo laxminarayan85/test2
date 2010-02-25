@@ -5,7 +5,20 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.commands.*;
 	import com.efi.printsmith.commands.commandCommands.*;
 	import com.efi.printsmith.events.commandEvents.*;
-	
+
+	import com.efi.printsmith.commands.commandCommands.Accounts.*;
+	import com.efi.printsmith.events.commandEvents.Accounts.*;
+
+	import com.efi.printsmith.commands.commandCommands.Contacts.*;
+	import com.efi.printsmith.events.commandEvents.Contacts.*;
+
+	import com.efi.printsmith.commands.commandCommands.StockDefinitions.*;
+	import com.efi.printsmith.events.commandEvents.StockDefinitions.*;
+
+	import com.efi.printsmith.commands.commandCommands.EditForms.*;
+	import com.efi.printsmith.events.commandEvents.EditForms.*;
+
+
 	public class MainController extends FrontController
 	{
 		public function MainController() {
