@@ -344,14 +344,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function setCampaigns():void{
 		var i:int;
 		var t:int;
-		
-		for (i=0; i<contact.campaigns.length; i++) {
-			var tmpcampaigns:Campaigns = contact.campaigns.getItemAt(i) as Campaigns;
-			for (t=0; t<compaigns.length; t++){
-				var tmpcampaigns2:Campaigns = compaigns.getItemAt(t) as Campaigns;
-				if (tmpcampaigns2.id == tmpcampaigns.id){
-					tmpcampaigns2.applied = true;
-					compaigns.setItemAt(tmpcampaigns2, t);
+		if (contact.campaigns != null){
+			for (i=0; i<contact.campaigns.length; i++) {
+				var tmpcampaigns:Campaigns = contact.campaigns.getItemAt(i) as Campaigns;
+				for (t=0; t<compaigns.length; t++){
+					var tmpcampaigns2:Campaigns = compaigns.getItemAt(t) as Campaigns;
+					if (tmpcampaigns2.id == tmpcampaigns.id){
+						tmpcampaigns2.applied = true;
+						compaigns.setItemAt(tmpcampaigns2, t);
+					}
 				}
 			}
 		}

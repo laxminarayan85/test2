@@ -10,7 +10,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="contactdataService" destination="dataService">
+		<mx:method name="getContactsByAccountId" fault="handleFault(event)"  result="handleLoadContacts(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="logDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCustomerLogs(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveLogResult(event)"/>
@@ -99,6 +101,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.events.ValidationResultEvent;    
     
     private var accounts:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var contacts:ArrayCollection = new ArrayCollection();
                  
 	[Bindable]                                         
 	private var account:Account;
@@ -202,6 +206,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		if (evt.account != null) {
 			this.setAccount(evt.account);
+			contactdataService.getContactsByAccountId("Contact", account.id);
 			setMarketing();
 			this.JobCharges = evt.account.jobCharges;
 			this.EstInvCharges = evt.account.invoiceEstimateCharges;
@@ -802,11 +807,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	{
 		
 	}
+	private function handleLoadContacts(ev:ResultEvent):void
+	{
+		contacts=ev.result as ArrayCollection
+	}
 
-
+    private function updateStatementContact():void{
+    	account.billToContact = statementcontactlist.selectedItem as Contact;
+    	bill_to_contact_editor.setContact(account.billToContact);
+    }
+    private function updateInvoiceContact():void{
+     account.contact= invoicecontactlist.selectedItem as Contact;
+     ship_to_contact_editor.setContact(account.contact);
+    }
     
-    
-    
+     
+	
+		
     
 ]]>
                              
@@ -828,6 +845,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
 				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
+				<mx:Label x="10" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
+				<mx:Label x="344" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
+				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelField="lastName" enabled="true" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
+				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelField="lastName" change="updateStatementContact();" width="160"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>
@@ -1029,7 +1050,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<fc:AutoComplete id="business_type_combo" x="119" y="64" width="152" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
 				-->
 				</mx:Panel>
-				<mx:Panel x="319" y="10" width="350" height="190" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingDates')}" dropShadowEnabled="false">
+				<mx:Panel x="309" y="10" width="350" height="190" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingDates')}" dropShadowEnabled="false">
 					<mx:Label x="12" y="10" text="Follow Up:" textAlign="right"/>
 					<mx:Label x="10" y="38" text="Birthdate:" textAlign="right"/>
 					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>
