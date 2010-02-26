@@ -206,42 +206,39 @@ rStandardMenuText.Admin,	rAltMenuText.ReadMagneticCardSwip,CMD_
 rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar,CMD_
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_
 rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_SystemPreferences
-rStandardMenuText.Admin,	genericPrefCmd.System,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Behavior,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Company,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Numbers,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.AlternateCurrency,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.International,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.ProductActivation,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Integration,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.PalmTracker,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.AddressFormatting,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.POS,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Receipt,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.CashDrawer,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.CashRegister,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.PendingList,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Estimator,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.EstimatorBehavior,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.EstimatorPrinting,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.PaperCalculator,CMD_
+rStandardMenuText.Admin,	genericPrefCmd.System,CMD_Preferences_System
+rStandardMenuText.Admin,	genericPrefCmd.Behavior,CMD_Preferences_Behavior
+rStandardMenuText.Admin,	genericPrefCmd.Company,CMD_Preferences_Company
+rStandardMenuText.Admin,	genericPrefCmd.BusinessCalendar,CMD_Preferences_BusinessCalendar
+rStandardMenuText.Admin,	genericPrefCmd.Numbers,CMD_Preferences_Numbers
+rStandardMenuText.Admin,	genericPrefCmd.AlternateCurrency,CMD_Preferences_AlternateCurrency
+rStandardMenuText.Admin,	genericPrefCmd.International,CMD_Preferences_International
+rStandardMenuText.Admin,	genericPrefCmd.AddressFormatting,CMD_Preferences_AddressFormatting
+rStandardMenuText.Admin,	genericPrefCmd.POS,CMD_Preferences_POS
+rStandardMenuText.Admin,	genericPrefCmd.Receipt,CMD_Preferences_Receipt
+rStandardMenuText.Admin,	genericPrefCmd.CashDrawer,CMD_Preferences_CashDrawer
+rStandardMenuText.Admin,	genericPrefCmd.CashRegister,CMD_Preferences_CashRegister
+rStandardMenuText.Admin,	genericPrefCmd.PendingList,CMD_Preferences_PendingList
+rStandardMenuText.Admin,	genericPrefCmd.Estimator,CMD_Preferences_Estimator
+rStandardMenuText.Admin,	genericPrefCmd.EstimatorBehavior,CMD_Preferences_EstimatorBehavior
+rStandardMenuText.Admin,	genericPrefCmd.EstimatorPrinting,CMD_Preferences_EstimatorPrinting
+rStandardMenuText.Admin,	genericPrefCmd.PaperCalculator,CMD_Preferences_PaperCalculator
+rStandardMenuText.Admin,	genericPrefCmd.JobTicket,CMD_Preferences_JobTicket
+rStandardMenuText.Admin,	genericPrefCmd.QuantityBreaks,CMD_Preferences_QuantityBreaks
+rStandardMenuText.Admin,	genericPrefCmd.Markups,CMD_Preferences_Markups
+rStandardMenuText.Admin,	genericPrefCmd.StocksandSizes,CMD_Preferences_StocksandSizes
+rStandardMenuText.Admin,	genericPrefCmd.StockDefinitions,CMD_Preferences_StockDefinitions
+rStandardMenuText.Admin,	genericPrefCmd.PricingMethod,CMD_Preferences_PricingMethod
+rStandardMenuText.Admin,	genericPrefCmd.Accounting,CMD_Preferences_Accounting
+rStandardMenuText.Admin,	genericPrefCmd.CreditDefaults,CMD_Preferences_CreditDefaults
+rStandardMenuText.Admin,	genericPrefCmd.AgingPeriods,CMD_Preferences_AgingPeriods
+rStandardMenuText.Admin,	genericPrefCmd.SalesCategories,CMD_Preferences_SalesCategories
+rStandardMenuText.Admin,	genericPrefCmd.GLProfiles,CMD_Preferences_GLProfiles
+rStandardMenuText.Admin,	genericPrefCmd.CreditCardInfo,CMD_Preferences_CreditCardInfo
+rStandardMenuText.Admin,	genericPrefCmd.JournalEntries,CMD_Preferences_JournalEntries
 rStandardMenuText.Admin,	genericPrefCmd.EstimatorCalculation,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.StockIndex,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.JobTicket,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.QuantityBreaks,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Markups,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.StocksandSizes,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.PricingMethod,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.ShippingLink,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.StockDefinitions,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.Accounting,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.CreditDefaults,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.AgingPeriods,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.SalesCategories,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.GLProfiles,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.CreditCardInfo,CMD_
-rStandardMenuText.Admin,	genericPrefCmd.JournalEntries,CMD_
 rStandardMenuText.Admin,rStandardMenuText.DocumentPreferences,CMD_
 rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_

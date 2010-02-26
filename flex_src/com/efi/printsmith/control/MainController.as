@@ -15,6 +15,9 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.commands.commandCommands.StockDefinitions.*;
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.*;
 
+	import com.efi.printsmith.commands.commandCommands.SystemPreferences.*;
+	import com.efi.printsmith.events.commandEvents.SystemPreferences.*;
+	
 	import com.efi.printsmith.commands.commandCommands.EditForms.*;
 	import com.efi.printsmith.events.commandEvents.EditForms.*;
 
@@ -78,6 +81,34 @@ package com.efi.printsmith.control
 			this.addCommand(ContactsMarketingPanelEvent.COMMANDID, ContactsMarketingPanelCommand);
 			this.addCommand(ContactsWebPanelEvent.COMMANDID, ContactsWebPanelCommand);
 			this.addCommand(ContactsCampaignsPanelEvent.COMMANDID, ContactsCampaignsPanelCommand);
+
+			this.addCommand(SystemPreferencesAddressFormattingPanelEvent.COMMANDID, SystemPreferencesAddressFormattingPanelCommand);
+			this.addCommand(SystemPreferencesAgingPeriodsPanelEvent.COMMANDID, SystemPreferencesAgingPeriodsPanelCommand);
+			this.addCommand(SystemPreferencesAlternateCurrencyPanelEvent.COMMANDID, SystemPreferencesAlternateCurrencyPanelCommand);
+			this.addCommand(SystemPreferencesBehaviorPanelEvent.COMMANDID, SystemPreferencesBehaviorPanelCommand);
+			this.addCommand(SystemPreferencesBusinessCalendarPanelEvent.COMMANDID, SystemPreferencesBusinessCalendarPanelCommand);
+			this.addCommand(SystemPreferencesCashDrawerPanelEvent.COMMANDID, SystemPreferencesCashDrawerPanelCommand);
+			this.addCommand(SystemPreferencesCashRegisterPanelEvent.COMMANDID, SystemPreferencesCashRegisterPanelCommand);
+			this.addCommand(SystemPreferencesCompanyPanelEvent.COMMANDID, SystemPreferencesCompanyPanelCommand);
+			this.addCommand(SystemPreferencesCreditCardInfoPanelEvent.COMMANDID, SystemPreferencesCreditCardInfoPanelCommand);
+			this.addCommand(SystemPreferencesCreditDefaultsPanelEvent.COMMANDID, SystemPreferencesCreditDefaultsPanelCommand);
+			this.addCommand(SystemPreferencesEstimatorBehaviorPanelEvent.COMMANDID, SystemPreferencesEstimatorBehaviorPanelCommand);
+			this.addCommand(SystemPreferencesEstimatorPrintingPanelEvent.COMMANDID, SystemPreferencesEstimatorPrintingPanelCommand);
+			this.addCommand(SystemPreferencesGLProfilesPanelEvent.COMMANDID, SystemPreferencesGLProfilesPanelCommand);
+			this.addCommand(SystemPreferencesInternationalPanelEvent.COMMANDID, SystemPreferencesInternationalPanelCommand);
+			this.addCommand(SystemPreferencesJobTicketPanelEvent.COMMANDID, SystemPreferencesJobTicketPanelCommand);
+			this.addCommand(SystemPreferencesJournalEntriesPanelEvent.COMMANDID, SystemPreferencesJournalEntriesPanelCommand);
+			this.addCommand(SystemPreferencesMarkupsPanelEvent.COMMANDID, SystemPreferencesMarkupsPanelCommand);
+			this.addCommand(SystemPreferencesNumbersPanelEvent.COMMANDID, SystemPreferencesNumbersPanelCommand);
+			this.addCommand(SystemPreferencesPaperCalculatorPanelEvent.COMMANDID, SystemPreferencesPaperCalculatorPanelCommand);
+			this.addCommand(SystemPreferencesPendingListPanelEvent.COMMANDID, SystemPreferencesPendingListPanelCommand);
+			this.addCommand(SystemPreferencesPricingMethodPanelEvent.COMMANDID, SystemPreferencesPricingMethodPanelCommand);
+			this.addCommand(SystemPreferencesQuantityBreaksPanelEvent.COMMANDID, SystemPreferencesQuantityBreaksPanelCommand);
+			this.addCommand(SystemPreferencesReceiptPanelEvent.COMMANDID, SystemPreferencesReceiptPanelCommand);
+			this.addCommand(SystemPreferencesSalesCategoriesPanelEvent.COMMANDID, SystemPreferencesSalesCategoriesPanelCommand);
+			this.addCommand(SystemPreferencesStockDefinitionsPanelEvent.COMMANDID, SystemPreferencesStockDefinitionsPanelCommand);
+			this.addCommand(SystemPreferencesStocksandSizesPanelEvent.COMMANDID, SystemPreferencesStocksandSizesPanelCommand);
+			
 			
 						
 		}

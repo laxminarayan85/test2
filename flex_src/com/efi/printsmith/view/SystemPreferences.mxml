@@ -223,6 +223,9 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.collections.XMLListCollection;
+	import mx.rpc.Responder;
+	
+   	import com.efi.printsmith.events.commandEvents.SystemPreferences.*;
 
 	[Bindable]
 	private var enableSave:Boolean = true;
@@ -343,40 +346,40 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	[Bindable]
 	private var treeData:XML =
     	<root>
-			<node label="genericPrefCmd.System">
-				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0"/>
-				<node label="genericPrefCmd.Company" isBranch="false" tag="1"/>
-				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2"/>
-				<node label="genericPrefCmd.Numbers" isBranch="false" tag="3"/>
-				<node label="genericPrefCmd.AlternateCurrency" isBranch="false" tag="4"/>
-				<node label="genericPrefCmd.International" isBranch="false" tag="5"/>
-				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6"/>
+			<node label="genericPrefCmd.System" command="CMD_Preferences_System">
+				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0" command="CMD_Preferences_Behavior"/>
+				<node label="genericPrefCmd.Company" isBranch="false" tag="1" command="CMD_Preferences_Company"/>
+				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2" command="CMD_Preferences_BusinessCalendar"/>
+				<node label="genericPrefCmd.Numbers" isBranch="false" tag="3" command="CMD_Preferences_Numbers"/>
+				<node label="genericPrefCmd.AlternateCurrency" isBranch="false" tag="4" command="CMD_Preferences_AlternateCurrency"/>
+				<node label="genericPrefCmd.International" isBranch="false" tag="5" command="CMD_Preferences_International"/>
+				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6" command="CMD_Preferences_AddressFormatting"/>
 			</node>
-			<node label="genericPrefCmd.POS">
-				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7"/>
-				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8"/>
-				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9"/>
-				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10"/>
+			<node label="genericPrefCmd.POS" command="CMD_Preferences_POS">
+				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7" command="CMD_Preferences_Receipt"/>
+				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8" command="CMD_Preferences_CashDrawer"/>
+				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9" command="CMD_Preferences_CashRegister"/>
+				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10" command="CMD_Preferences_PendingList"/>
 			</node>
-			<node label="genericPrefCmd.Estimator">
-				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11"/>
-				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12"/>
-				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13"/>
-				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14"/>
-				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15"/>
-				<node label="genericPrefCmd.Markups" isBranch="false" tag="16"/>
-				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17"/>
-				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18"/>
-				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19"/>
+			<node label="genericPrefCmd.Estimator" command="CMD_Preferences_Estimator">
+				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11" command="CMD_Preferences_EstimatorBehavior"/>
+				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12" command="CMD_Preferences_EstimatorPrinting"/>
+				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13" command="CMD_Preferences_PaperCalculator"/>
+				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14" command="CMD_Preferences_JobTicket"/>
+				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15" command="CMD_Preferences_QuantityBreaks"/>
+				<node label="genericPrefCmd.Markups" isBranch="false" tag="16" command="CMD_Preferences_Markups"/>
+				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17" command="CMD_Preferences_StocksandSizes"/>
+				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18" command="CMD_Preferences_StockDefinitions"/>
+				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19" command="CMD_Preferences_PricingMethod"/>
 			</node>			
-			<node label="genericPrefCmd.Accounting">
-				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20"/>
-				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21"/>
-				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22"/>
-				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23"/>
-				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24"/>
-				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25"/>
-				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26"/>
+			<node label="genericPrefCmd.Accounting" command="CMD_Preferences_Accounting">
+				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20" command="CMD_Preferences_CreditDefaults"/>
+				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21" command="CMD_Preferences_AgingPeriods"/>
+				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22" command="CMD_Preferences_SalesCategories"/>
+				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23" command="CMD_Preferences_GLProfiles"/>
+				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24" command="CMD_Preferences_CreditCardInfo"/>
+				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command=""/>
+				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="CMD_Preferences_JournalEntries"/>
 			</node>
 		</root>;
 	
@@ -603,9 +606,67 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 		openTree();
 		setup();
-		
-	}
-	
+
+		var eventbehavior:SystemPreferencesBehaviorPanelEvent = new SystemPreferencesBehaviorPanelEvent(behavior_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventbehavior.dispatch();
+		var eventcompany:SystemPreferencesCompanyPanelEvent = new SystemPreferencesCompanyPanelEvent(company_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcompany.dispatch();
+		var eventcalendar:SystemPreferencesBusinessCalendarPanelEvent = new SystemPreferencesBusinessCalendarPanelEvent(calendar_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcalendar.dispatch();
+		var eventnumbers:SystemPreferencesNumbersPanelEvent = new SystemPreferencesNumbersPanelEvent(numbers_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventnumbers.dispatch();
+		var eventalternatecurrency:SystemPreferencesAlternateCurrencyPanelEvent = new SystemPreferencesAlternateCurrencyPanelEvent(alternatecurrency_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventalternatecurrency.dispatch();
+		var eventinternational:SystemPreferencesInternationalPanelEvent = new SystemPreferencesInternationalPanelEvent(international_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventinternational.dispatch();
+		var eventaddressformatting:SystemPreferencesAddressFormattingPanelEvent = new SystemPreferencesAddressFormattingPanelEvent(addressformatting_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventaddressformatting.dispatch();
+		var eventreceipt:SystemPreferencesReceiptPanelEvent = new SystemPreferencesReceiptPanelEvent(receipt_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventreceipt.dispatch();
+		var eventcashdrawer:SystemPreferencesCashDrawerPanelEvent = new SystemPreferencesCashDrawerPanelEvent(cashdrawer_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcashdrawer.dispatch();
+		var eventcashregister:SystemPreferencesCashRegisterPanelEvent = new SystemPreferencesCashRegisterPanelEvent(cashregister_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcashregister.dispatch();
+		var eventpendinglist:SystemPreferencesPendingListPanelEvent = new SystemPreferencesPendingListPanelEvent(pendinglist_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventpendinglist.dispatch();
+		var eventestimatorbehavior:SystemPreferencesEstimatorBehaviorPanelEvent = new SystemPreferencesEstimatorBehaviorPanelEvent(estimatorbehavior_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventestimatorbehavior.dispatch();
+		var eventestimatorprinting:SystemPreferencesEstimatorPrintingPanelEvent = new SystemPreferencesEstimatorPrintingPanelEvent(estimatorprinting_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventestimatorprinting.dispatch();
+		var eventpapercalculator:SystemPreferencesPaperCalculatorPanelEvent = new SystemPreferencesPaperCalculatorPanelEvent(papercalculator_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventpapercalculator.dispatch();
+		var eventjobticket:SystemPreferencesJobTicketPanelEvent = new SystemPreferencesJobTicketPanelEvent(jobticket_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventjobticket.dispatch();
+		var eventquantitybreaks:SystemPreferencesQuantityBreaksPanelEvent = new SystemPreferencesQuantityBreaksPanelEvent(quantitybreaks_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventquantitybreaks.dispatch();
+		var eventmarkups:SystemPreferencesMarkupsPanelEvent = new SystemPreferencesMarkupsPanelEvent(markups_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventmarkups.dispatch();
+		var eventstocksizes:SystemPreferencesStocksandSizesPanelEvent = new SystemPreferencesStocksandSizesPanelEvent(stocksizes_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventstocksizes.dispatch();
+		var eventstockdefinitions:SystemPreferencesStockDefinitionsPanelEvent = new SystemPreferencesStockDefinitionsPanelEvent(stockdefinitions_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventstockdefinitions.dispatch();
+		var eventpricingmethod:SystemPreferencesPricingMethodPanelEvent = new SystemPreferencesPricingMethodPanelEvent(pricingmethod_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventpricingmethod.dispatch();
+		var eventcreditdefaults:SystemPreferencesCreditDefaultsPanelEvent = new SystemPreferencesCreditDefaultsPanelEvent(creditdefaults_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcreditdefaults.dispatch();
+		var eventagingperiods:SystemPreferencesAgingPeriodsPanelEvent = new SystemPreferencesAgingPeriodsPanelEvent(agingperiods_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventagingperiods.dispatch();
+		var eventsalescategories:SystemPreferencesSalesCategoriesPanelEvent = new SystemPreferencesSalesCategoriesPanelEvent(salescategories_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventsalescategories.dispatch();
+		var eventglprofiles:SystemPreferencesGLProfilesPanelEvent = new SystemPreferencesGLProfilesPanelEvent(glprofiles_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventglprofiles.dispatch();
+		var eventcreditcards:SystemPreferencesCreditCardInfoPanelEvent = new SystemPreferencesCreditCardInfoPanelEvent(creditcards_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventcreditcards.dispatch();
+		var eventjournalentries:SystemPreferencesJournalEntriesPanelEvent = new SystemPreferencesJournalEntriesPanelEvent(journalentries_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		eventjournalentries.dispatch();
+		    
+	}      
+
+	public function handleUIPanelEvent(evt:ResultEvent):void {
+		evt.result.panel.enabled = evt.result.enabled;
+	}		
+	private function handleUIPanelFault(ev:FaultEvent):void {  
+	}	
 	private function setup():void{
 		
 		for each(var element:Object in CategoryArray) {
@@ -2008,7 +2069,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}        
 
 ]]>
-                             
+
 </mx:Script>	
 	<mx:Tree x="0" y="0" width="200"  
 		id="tvPreference" 
