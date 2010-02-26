@@ -13,8 +13,11 @@ import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
+import java.io.File;
 
 public class StockDefinitionMapper extends ImportMapper {
+	public void importFile(File uploadedFile) throws Exception {
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		StockDefinition stockDefinition = new StockDefinition();
 		DataService dataService = new DataService();
@@ -123,25 +126,95 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("minimum cut".equals(currentFieldToken)) {
 				stockDefinition.setMinCutCharge(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("charges[1]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[2]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[3]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[4]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[5]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[6]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[7]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[8]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[9]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("charges[10]".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						stockDefinition.addCharges(chargeDefinition);
+					}
+				}
 			}  else if ("omarkup".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("oCopy2".equals(currentFieldToken)) {

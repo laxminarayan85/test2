@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.TaxTable;
+import java.io.File;
 
 public class TaxTableMapper extends ImportMapper {
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		TaxTable taxTable = new TaxTable();
 		

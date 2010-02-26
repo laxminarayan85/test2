@@ -1,12 +1,19 @@
 package com.efi.printsmith.migration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.service.DataService;
 
 public class JobMapper extends ImportMapper {
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		DataService dataService = new DataService();
 		Job job = new Job();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
@@ -24,19 +31,21 @@ public class JobMapper extends ImportMapper {
 			} else if ("order number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job number".equals(currentFieldToken)) {
-				/* TODO */
+				job.setJobNumber(currentImportToken);
 			} else if ("sales category".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales cat name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("press ID".equals(currentFieldToken)) {
-				/* TODO */
+				PressDefinition pressDefinition = (PressDefinition) dataService.getById("PressDefinition", Utilities.tokenToLong(currentImportToken));
+				if (pressDefinition != null)
+					job.setPress(pressDefinition);
 			} else if ("press name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job ticket notes".equals(currentFieldToken)) {
-				/* TODO */
+				job.setJobTicketNotes(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("order qty".equals(currentFieldToken)) {
-				/* TODO */
+				job.setQtyOrdered(Utilities.tokenToLong(currentImportToken));
 			} else if ("addl qty[1]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("addl qty[2]".equals(currentFieldToken)) {

@@ -1,11 +1,15 @@
 package com.efi.printsmith.migration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.CustomerLog;
 import com.efi.printsmith.data.ModelBase;
 
 public class CustomerLogMapper extends ImportMapper{
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		CustomerLog customerLog = new CustomerLog();
 		

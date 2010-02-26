@@ -1,5 +1,6 @@
 package com.efi.printsmith.migration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.Invoice;
@@ -10,6 +11,9 @@ import com.efi.printsmith.data.PriceListElement;
 import com.efi.printsmith.service.DataService;
 
 public class PriceListMapper extends ImportMapper {
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	@SuppressWarnings("null")
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {

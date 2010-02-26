@@ -1,5 +1,6 @@
 package com.efi.printsmith.migration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.Account;
@@ -15,6 +16,9 @@ import com.efi.printsmith.data.BusinessType;
 import com.efi.printsmith.service.DataService;
 
 public class CustomerMapper extends ImportMapper{
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		Account customer = new Account();
 		Address shipToAddress = new Address();

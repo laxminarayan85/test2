@@ -1,5 +1,6 @@
 package com.efi.printsmith.migration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.Address;
@@ -8,6 +9,9 @@ import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
 
 public class ContactMapper extends ImportMapper {
+	public void importFile(File uploadedFile) throws Exception {
+		
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		Contact contact = new Contact();
 		Address address = new Address();
