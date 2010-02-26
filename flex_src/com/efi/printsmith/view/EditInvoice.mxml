@@ -267,7 +267,7 @@
 					for (i=0; i<invoice.jobs.length; i++) {
 						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;	
 					
-						invoice.subTotal += tmpJob.price;
+						invoice.subTotal += tmpJob.pricingRecord.totalPrice;
 					}
 				}
 				

@@ -51,7 +51,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.data.CopierDefinition;
 	import com.efi.printsmith.data.enums.CopierPricingMethod;
 	import com.efi.printsmith.data.enums.Price2Side;
-	import com.efi.printsmith.data.enums.StockPriceIs;
+	import com.efi.printsmith.data.enums.StockPriceMethod;
 
 
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
@@ -158,7 +158,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doCopierGridClick():void {
 		copierDefinition = dataGrid.selectedItem as CopierDefinition;
 		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
-		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceIs, StockPriceIs.toArray());
+		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat, salesCategories);
 		this.charges = copierDefinition.charges;
@@ -208,7 +208,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 if (pricing_method_combo.selectedItem != null)
 		 	copierDefinition.method = pricing_method_combo.selectedItem.toString();
 		 if (stock_Price_is_combo.selectedItem != null)
-		 	copierDefinition.stockPriceIs = stock_Price_is_combo.selectedItem.toString();
+		 	copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.toString();
 		 if (price_2_side.selectedItem != null)
 		 	copierDefinition.priceTwoSide = price_2_side.selectedItem.toString();	
 		 		
@@ -608,7 +608,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="241" y="575" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockPriceis')}" height="14"/>
 		<mx:CheckBox x="238" y="594" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.UseCopierDigitalStoc')}" id="copierDigitalStockmarkup"/>
 		<mx:Label x="234" y="617" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Price2SidedBy')}"/>
-		<mx:ComboBox x="349" y="573" height="22" id="stock_Price_is_combo" dataProvider="{StockPriceIs.toArray()}" width="150"></mx:ComboBox>
+		<mx:ComboBox x="349" y="573" height="22" id="stock_Price_is_combo" dataProvider="{StockPriceMethod.toArray()}" width="150"></mx:ComboBox>
 		<mx:ComboBox x="349" y="615" height="22" id="price_2_side" dataProvider="{Price2Side.toArray()}"  width="150"></mx:ComboBox>
 		<mx:Button x="5" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.EditMatrix')}" id="Matrix_button" click="doCopierMatrix();"/>
 		<mx:CheckBox x="134" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsCopyCost')}" id="matrixcopycost"/>

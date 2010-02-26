@@ -205,7 +205,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String STOCKPRICEIS = "StockPriceIs";
+	public static final String STOCKPRICEMETHOD = "StockPriceMethod";
 	/**
 	 * @generated
 	 */
@@ -947,19 +947,19 @@ public class CopierDefinition extends ModelBase {
  	
 	
  	@Basic
-	private String stockPriceIs;
+	private String stockPriceMethod;
 	/**
 	 * @generated
  	 */
-	public String getStockPriceIs(){
-		return stockPriceIs; 
+	public String getStockPriceMethod(){
+		return stockPriceMethod; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setStockPriceIs(String newVal) {
-		this.stockPriceIs = newVal;
+	public void setStockPriceMethod(String newVal) {
+		this.stockPriceMethod = newVal;
 	}
  	
 	
@@ -1043,7 +1043,7 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
 		if (COPIERPRICELIST.equals(propertyName)) return getCopierPriceList();
 		if (PRICETWOSIDE.equals(propertyName)) return getPriceTwoSide();
-		if (STOCKPRICEIS.equals(propertyName)) return getStockPriceIs();
+		if (STOCKPRICEMETHOD.equals(propertyName)) return getStockPriceMethod();
 		if (SIDETWOFACTOR.equals(propertyName)) return getSideTwoFactor();
 		if (COPIERMATRIX.equals(propertyName)) return getCopierMatrix();
 		return super.getProperty(propertyName);
@@ -1097,7 +1097,7 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
 		if (COPIERPRICELIST.equals(propertyName)) setCopierPriceList((PriceList)newValue); else
 		if (PRICETWOSIDE.equals(propertyName)) setPriceTwoSide((String)newValue); else
-		if (STOCKPRICEIS.equals(propertyName)) setStockPriceIs((String)newValue); else
+		if (STOCKPRICEMETHOD.equals(propertyName)) setStockPriceMethod((String)newValue); else
 		if (SIDETWOFACTOR.equals(propertyName)) setSideTwoFactor((Double)newValue); else
 		if (COPIERMATRIX.equals(propertyName)) setCopierMatrix((Matrix)newValue); else
 		super.setProperty(propertyName, newValue);
@@ -1193,7 +1193,7 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {PriceList.class};		
 		if (PRICETWOSIDE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (STOCKPRICEIS.equals(propertyName)) 
+		if (STOCKPRICEMETHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SIDETWOFACTOR.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
@@ -1251,7 +1251,7 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICELIST.equals(propertyName)) return CopierDefinition.class;
 		if (COPIERPRICELIST.equals(propertyName)) return CopierDefinition.class;
 		if (PRICETWOSIDE.equals(propertyName)) return CopierDefinition.class;
-		if (STOCKPRICEIS.equals(propertyName)) return CopierDefinition.class;
+		if (STOCKPRICEMETHOD.equals(propertyName)) return CopierDefinition.class;
 		if (SIDETWOFACTOR.equals(propertyName)) return CopierDefinition.class;
 		if (COPIERMATRIX.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
@@ -1349,7 +1349,7 @@ public class CopierDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getPriceTwoSide(), objT.getPriceTwoSide()))
 			return false;
-		if (! SmartEquals(getStockPriceIs(), objT.getStockPriceIs()))
+		if (! SmartEquals(getStockPriceMethod(), objT.getStockPriceMethod()))
 			return false;
 		if (! SmartEquals(getSideTwoFactor(), objT.getSideTwoFactor()))
 			return false;

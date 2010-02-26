@@ -991,9 +991,9 @@
 	 stockDefinitions.blankSheetPrice5 = parseFloat(BlankSheetPrice5.text);
 	 stockDefinitions.blankSheetPrice6 = parseFloat(BlankSheetPrice6.text);
 	 
-	 stockDefinitions.defaultBW = DefaultBW.text;
-	 stockDefinitions.defaultColor = DefaultColor.text;
-	 stockDefinitions.defaultLargeFormat = DefaultLargeFormat.text;
+	 stockDefinitions.copier1PricePerSheet = parseFloat(DefaultBW.text);
+	 stockDefinitions.copier2PricePerSheet = parseFloat(DefaultColor.text);
+	 stockDefinitions.copier3PricePerSheet = parseFloat(DefaultLargeFormat.text);
 	 stockDefinitions.onHand = parseInt(OnHand.text);
 	 stockDefinitions.committed = parseInt(Committed.text);
 	 stockDefinitions.available = parseInt(Available.text);
@@ -1256,9 +1256,9 @@
 				<mx:Label x="33" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" textAlign="right" width="93"/>
 				<mx:Label x="42" y="56" text="Large Format:" textAlign="right"/>
 
-				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{stockDefinitions.defaultBW}"/>
-				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{stockDefinitions.defaultColor}"/>
-				<mx:TextInput x="125" y="53" width="90" id="DefaultLargeFormat" text="{stockDefinitions.defaultLargeFormat}"/>
+				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{stockDefinitions.copier1PricePerSheet}"/>
+				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{stockDefinitions.copier2PricePerSheet}"/>
+				<mx:TextInput x="125" y="53" width="90" id="DefaultLargeFormat" text="{stockDefinitions.copier3PricePerSheet}"/>
 				<mx:TextInput x="223" y="3" width="201" id="textinput2"/>
 				<mx:TextInput x="223" y="28" width="201" id="textinput3"/>
 				<mx:TextInput x="223" y="53" width="201" id="textinput4"/>

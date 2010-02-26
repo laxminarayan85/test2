@@ -329,15 +329,15 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTBW = "DefaultBW";
+	public static final String DEFAULTCOPIER1 = "DefaultCopier1";
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTCOLOR = "DefaultColor";
+	public static final String DEFAULTCOPIER2 = "DefaultCopier2";
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTLARGEFORMAT = "DefaultLargeFormat";
+	public static final String DEFAULTCOPIER3 = "DefaultCopier3";
 	/**
 	 * @generated
 	 */
@@ -466,6 +466,18 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHARGES = "Charges";
+	/**
+	 * @generated
+	 */
+	public static final String COPIER1PRICEPERSHEET = "Copier1PricePerSheet";
+	/**
+	 * @generated
+	 */
+	public static final String COPIER2PRICEPERSHEET = "Copier2PricePerSheet";
+	/**
+	 * @generated
+	 */
+	public static final String COPIER3PRICEPERSHEET = "Copier3PricePerSheet";
 
 	/**
 	 * @generated
@@ -1718,54 +1730,54 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String defaultBW;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultCopier1;
 	/**
 	 * @generated
  	 */
-	public String getDefaultBW(){
-		return defaultBW; 
+	public CopierDefinition getDefaultCopier1(){
+		return defaultCopier1; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultBW(String newVal) {
-		this.defaultBW = newVal;
+	public void setDefaultCopier1(CopierDefinition newVal) {
+		this.defaultCopier1 = newVal;
 	}
  	
 	
- 	@Basic
-	private String defaultColor;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultCopier2;
 	/**
 	 * @generated
  	 */
-	public String getDefaultColor(){
-		return defaultColor; 
+	public CopierDefinition getDefaultCopier2(){
+		return defaultCopier2; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultColor(String newVal) {
-		this.defaultColor = newVal;
+	public void setDefaultCopier2(CopierDefinition newVal) {
+		this.defaultCopier2 = newVal;
 	}
  	
 	
- 	@Basic
-	private String defaultLargeFormat;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultCopier3;
 	/**
 	 * @generated
  	 */
-	public String getDefaultLargeFormat(){
-		return defaultLargeFormat; 
+	public CopierDefinition getDefaultCopier3(){
+		return defaultCopier3; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setDefaultLargeFormat(String newVal) {
-		this.defaultLargeFormat = newVal;
+	public void setDefaultCopier3(CopierDefinition newVal) {
+		this.defaultCopier3 = newVal;
 	}
  	
 	
@@ -2318,6 +2330,57 @@ public class StockDefinition extends ModelBase {
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
 		this.charges = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double copier1PricePerSheet;
+	/**
+	 * @generated
+ 	 */
+	public Double getCopier1PricePerSheet(){
+		return copier1PricePerSheet; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopier1PricePerSheet(Double newVal) {
+		this.copier1PricePerSheet = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double copier2PricePerSheet;
+	/**
+	 * @generated
+ 	 */
+	public Double getCopier2PricePerSheet(){
+		return copier2PricePerSheet; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopier2PricePerSheet(Double newVal) {
+		this.copier2PricePerSheet = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double copier3PricePerSheet;
+	/**
+	 * @generated
+ 	 */
+	public Double getCopier3PricePerSheet(){
+		return copier3PricePerSheet; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCopier3PricePerSheet(Double newVal) {
+		this.copier3PricePerSheet = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2397,9 +2460,9 @@ public class StockDefinition extends ModelBase {
 		if (BLANKSHEETPRICE4.equals(propertyName)) return getBlankSheetPrice4();
 		if (BLANKSHEETPRICE5.equals(propertyName)) return getBlankSheetPrice5();
 		if (BLANKSHEETPRICE6.equals(propertyName)) return getBlankSheetPrice6();
-		if (DEFAULTBW.equals(propertyName)) return getDefaultBW();
-		if (DEFAULTCOLOR.equals(propertyName)) return getDefaultColor();
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultLargeFormat();
+		if (DEFAULTCOPIER1.equals(propertyName)) return getDefaultCopier1();
+		if (DEFAULTCOPIER2.equals(propertyName)) return getDefaultCopier2();
+		if (DEFAULTCOPIER3.equals(propertyName)) return getDefaultCopier3();
 		if (ADDITIONAL1.equals(propertyName)) return getAdditional1();
 		if (ADDITIONAL2.equals(propertyName)) return getAdditional2();
 		if (ADDITIONAL3.equals(propertyName)) return getAdditional3();
@@ -2432,6 +2495,9 @@ public class StockDefinition extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) return getAccount();
 		if (STOCKID.equals(propertyName)) return getStockId();
 		if (CHARGES.equals(propertyName)) return getCharges();
+		if (COPIER1PRICEPERSHEET.equals(propertyName)) return getCopier1PricePerSheet();
+		if (COPIER2PRICEPERSHEET.equals(propertyName)) return getCopier2PricePerSheet();
+		if (COPIER3PRICEPERSHEET.equals(propertyName)) return getCopier3PricePerSheet();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2514,9 +2580,9 @@ public class StockDefinition extends ModelBase {
 		if (BLANKSHEETPRICE4.equals(propertyName)) setBlankSheetPrice4((Double)newValue); else
 		if (BLANKSHEETPRICE5.equals(propertyName)) setBlankSheetPrice5((Double)newValue); else
 		if (BLANKSHEETPRICE6.equals(propertyName)) setBlankSheetPrice6((Double)newValue); else
-		if (DEFAULTBW.equals(propertyName)) setDefaultBW((String)newValue); else
-		if (DEFAULTCOLOR.equals(propertyName)) setDefaultColor((String)newValue); else
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultLargeFormat((String)newValue); else
+		if (DEFAULTCOPIER1.equals(propertyName)) setDefaultCopier1((CopierDefinition)newValue); else
+		if (DEFAULTCOPIER2.equals(propertyName)) setDefaultCopier2((CopierDefinition)newValue); else
+		if (DEFAULTCOPIER3.equals(propertyName)) setDefaultCopier3((CopierDefinition)newValue); else
 		if (ADDITIONAL1.equals(propertyName)) setAdditional1((String)newValue); else
 		if (ADDITIONAL2.equals(propertyName)) setAdditional2((String)newValue); else
 		if (ADDITIONAL3.equals(propertyName)) setAdditional3((String)newValue); else
@@ -2549,6 +2615,9 @@ public class StockDefinition extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
 		if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
+		if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((Double)newValue); else
+		if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
+		if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2704,12 +2773,12 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (BLANKSHEETPRICE6.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
-		if (DEFAULTBW.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DEFAULTCOLOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+		if (DEFAULTCOPIER1.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (DEFAULTCOPIER2.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (DEFAULTCOPIER3.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
 		if (ADDITIONAL1.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (ADDITIONAL2.equals(propertyName)) 
@@ -2774,6 +2843,12 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (CHARGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+		if (COPIER1PRICEPERSHEET.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (COPIER2PRICEPERSHEET.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (COPIER3PRICEPERSHEET.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2857,9 +2932,9 @@ public class StockDefinition extends ModelBase {
 		if (BLANKSHEETPRICE4.equals(propertyName)) return StockDefinition.class;
 		if (BLANKSHEETPRICE5.equals(propertyName)) return StockDefinition.class;
 		if (BLANKSHEETPRICE6.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTBW.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTCOLOR.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTCOPIER1.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTCOPIER2.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTCOPIER3.equals(propertyName)) return StockDefinition.class;
 		if (ADDITIONAL1.equals(propertyName)) return StockDefinition.class;
 		if (ADDITIONAL2.equals(propertyName)) return StockDefinition.class;
 		if (ADDITIONAL3.equals(propertyName)) return StockDefinition.class;
@@ -2892,6 +2967,9 @@ public class StockDefinition extends ModelBase {
 		if (ACCOUNT.equals(propertyName)) return StockDefinition.class;
 		if (STOCKID.equals(propertyName)) return StockDefinition.class;
 		if (CHARGES.equals(propertyName)) return StockDefinition.class;
+		if (COPIER1PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+		if (COPIER2PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+		if (COPIER3PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3049,11 +3127,11 @@ public class StockDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getBlankSheetPrice6(), objT.getBlankSheetPrice6()))
 			return false;
-		if (! SmartEquals(getDefaultBW(), objT.getDefaultBW()))
+		if (! SmartEquals(getDefaultCopier1(), objT.getDefaultCopier1()))
 			return false;
-		if (! SmartEquals(getDefaultColor(), objT.getDefaultColor()))
+		if (! SmartEquals(getDefaultCopier2(), objT.getDefaultCopier2()))
 			return false;
-		if (! SmartEquals(getDefaultLargeFormat(), objT.getDefaultLargeFormat()))
+		if (! SmartEquals(getDefaultCopier3(), objT.getDefaultCopier3()))
 			return false;
 		if (! SmartEquals(getAdditional1(), objT.getAdditional1()))
 			return false;
@@ -3118,6 +3196,12 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getStockId(), objT.getStockId()))
 			return false;
 		if (! SmartEquals(getCharges(), objT.getCharges()))
+			return false;
+		if (! SmartEquals(getCopier1PricePerSheet(), objT.getCopier1PricePerSheet()))
+			return false;
+		if (! SmartEquals(getCopier2PricePerSheet(), objT.getCopier2PricePerSheet()))
+			return false;
+		if (! SmartEquals(getCopier3PricePerSheet(), objT.getCopier3PricePerSheet()))
 			return false;
 		return true;
 	}			

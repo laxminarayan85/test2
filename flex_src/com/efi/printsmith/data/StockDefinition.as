@@ -86,9 +86,9 @@ package com.efi.printsmith.data
 		public var blankSheetPrice4:Number = 0;
 		public var blankSheetPrice5:Number = 0;
 		public var blankSheetPrice6:Number = 0;
-		public var defaultBW:String = "";
-		public var defaultColor:String = "";
-		public var defaultLargeFormat:String = "";
+		public var defaultCopier1:CopierDefinition;
+		public var defaultCopier2:CopierDefinition;
+		public var defaultCopier3:CopierDefinition;
 		public var additional1:String = "";
 		public var additional2:String = "";
 		public var additional3:String = "";
@@ -121,6 +121,9 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var stockId:String = "";
 		public var charges:ArrayCollection;
+		public var copier1PricePerSheet:Number = 0;
+		public var copier2PricePerSheet:Number = 0;
+		public var copier3PricePerSheet:Number = 0;
 	
 	}
 }

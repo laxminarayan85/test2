@@ -10,11 +10,44 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="off"
 				showCloseButton="true"
-				close="doDelete()" width="950" height="642" xmlns:ns1="com.efi.printsmith.components.*">
+				close="doDelete()" width="950" height="680" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
 		</mx:State>
 		<mx:State name="CopyMethod">
+			<mx:SetProperty target="{job_total}" name="y" value="444"/>
+			<mx:SetProperty target="{hrule1}" name="y" value="437"/>
+			<mx:SetProperty target="{hrule2}" name="y" value="433"/>
+			<mx:SetProperty target="{joib_other}" name="y" value="409"/>
+			<mx:SetProperty target="{job_bind}" name="y" value="388"/>
+			<mx:SetProperty target="{job_prep}" name="y" value="367"/>
+			<mx:SetProperty target="{label2}" name="y" value="409"/>
+			<mx:SetProperty target="{label3}" name="y" value="367"/>
+			<mx:SetProperty target="{label4}" name="y" value="444"/>
+			<mx:SetProperty target="{label5}" name="y" value="388"/>
+			<mx:SetProperty target="{overs_total_price}" name="y" value="345"/>
+			<mx:SetProperty target="{label1}" name="y" value="347"/>
+			<mx:SetProperty target="{overs_unit_price}" name="y" value="323"/>
+			<mx:SetProperty target="{label6}" name="y" value="325"/>
+			<mx:SetProperty target="{label7}" name="y" value="303"/>
+			<mx:SetProperty target="{refresh_price_btn}" name="y" value="300"/>
+			<mx:SetProperty target="{price_info_btn}" name="y" value="300"/>
+			<mx:SetProperty target="{job_price}" name="y" value="301"/>
+			<mx:AddChild relativeTo="{label7}" position="before">
+				<mx:TextInput x="496"
+							  y="279"
+							  id="job_unitPrice"
+							  height="20"
+							  width="98" textAlign="right" text="{job.pricingRecord.unitPrice}"
+							  focusOut="editUnitPrice(event)"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label7}" position="before">
+				<mx:Label x="385"
+						  y="281"
+						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label0"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{copy_single_radio}" name="width" value="230"/>
+			<mx:SetProperty target="{copy_double_radio}" name="width" value="230"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
@@ -84,6 +117,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PricingRecord;
 			import com.efi.printsmith.pages.JobPricingInfo;
 			import com.efi.printsmith.data.PreferencesPricingMethod;
 			import com.efi.printsmith.events.PriceJobEvent;
@@ -212,7 +246,8 @@
 					job.numOn = 1;
 					job.numUp = 1;	
 					job.singleSided = true;
-					job.doubleSided = false;									
+					job.doubleSided = false;	
+					job.pricingRecord = new PricingRecord;								
 				}				
 				this.copy_single_radio.selected = this.job.singleSided;
 			}
@@ -537,7 +572,7 @@
 				var localJob:Job = ev.result as Job;
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
-				job.price = localJob.price;	
+				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;	
 				job.pricingRecord = localJob.pricingRecord;
 			}
 			
@@ -592,6 +627,7 @@
 				}
 				if (doUpdatePrice) updatePrice();
 			}
+			
 			public function changeJobSides(evt:Event):void {
 				if (this.copy_single_radio.selected == true) {
 					this.job.singleSided = true;
@@ -600,20 +636,27 @@
 					this.job.singleSided = false;
 					this.job.doubleSided = true;
 				}
+				updatePrice();
 			}
+			
 			public function updatePricingMethod():void {
 				// TODO: The pricing method needs to be based on the ESTIMATOR used NOT the title - each estimator may have multiple titles...
 				var pricingMethod:PreferencesPricingMethod = job_type.selectedItem as PreferencesPricingMethod;
 				
 				if (pricingMethod.title == "Printing") {
+					this.currentState = "PrintMethod";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
 				} else if (pricingMethod.title == "Roll-Fed") {
-					
+					this.currentState = "PrintMethod";
+					estimator_viewstack.selectedChild = printing_estimator_canvas;
 				} else if (pricingMethod.title == "B&W") {
+					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;										
 				} else if (pricingMethod.title == "Color") {
+					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;					
 				} else if (pricingMethod.title == "Large Format") {
+					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;					
 				} else if (pricingMethod.title == "Charges Only") {
 					
@@ -642,17 +685,27 @@
 	    		jobPricingInfoWindow.setStyle("borderAlpha", 0.9);
 	    		jobPricingInfoWindow.setPriceLogEntry(this.job.pricingRecord.priceLogEntry);		
 	    	}
+	    	
+	    	private function editUnitPrice(evt:Event):void {
+	    		if (job_unitPrice.text = "") {
+	    			job.pricingRecord.unitPriceOverride = false;
+	    			job.pricingRecord.unitPrice = 0;
+	    		} else {
+	    			job.pricingRecord.unitPriceOverride = true;
+	    			job.pricingRecord.unitPrice = parseFloat(job_unitPrice.text); 
+	    		}
+	    	}
 		]]>
 
 	</mx:Script>
 
 	<mx:VBox width="100%"
-			 height="597"
-			 creationPolicy="all">
+			 height="631"
+			 creationPolicy="all" id="vbox1">
 		<mx:Canvas width="923"
-				   height="599"
+				   height="631"
 				   verticalScrollPolicy="auto"
-				   fontSize="9">
+				   fontSize="9" id="canvas1">
 			<mx:LinkButton x="10"
 					   y="10"
 					   width="38"
@@ -811,11 +864,10 @@
 						 right="10"
 						 left="710">
 			</mx:ComboBox>
-			<mx:Canvas x="0" y="121" width="100%" height="476" verticalScrollPolicy="auto">
+			<mx:Canvas x="0" y="121" width="100%" height="512" verticalScrollPolicy="auto" id="canvas2">
 				<mx:HDividedBox x="0"
-								y="1"
 								width="900"
-								height="474" verticalScrollPolicy="off">
+								height="512" verticalScrollPolicy="off" id="hdividedbox1" bottom="0">
 					<!--			<mx:Tree width="200"
 						 height="100%">
 						 </mx:Tree>
@@ -860,13 +912,13 @@
 										  width="98" textAlign="right"/>
 							<mx:Label x="385"
 									  y="325"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108" id="label1"/>
 							<mx:Label x="385"
 									  y="387"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Other')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Other')}" textAlign="right" width="108" id="label2"/>
 							<mx:Label x="385"
 									  y="345"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Prep')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Prep')}" textAlign="right" width="108" id="label3"/>
 							<mx:Label x="496"
 									  y="345"
 									  width="98"
@@ -884,7 +936,7 @@
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
 									  y="422"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Total')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Total')}" textAlign="right" width="108" id="label4"/>
 							<mx:Label x="496.95"
 									  y="422"
 									  width="97.05"
@@ -913,18 +965,18 @@
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
 									  y="366"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
 							<mx:TextInput x="496"
 										  y="279"
 										  id="job_price"
 										  height="20"
-										  width="98" textAlign="right" text="{job.price}"/>
+										  width="98" textAlign="right" text="{job.pricingRecord.totalPrice}"/>
 							<mx:Label x="385"
 									  y="281"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
 							<mx:Label x="385"
 									  y="303"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnitPrice')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnitPrice')}" textAlign="right" width="108" id="label6"/>
 							<mx:TextInput x="496"
 										  y="70"
 										  id="job_sheets"
@@ -1013,11 +1065,11 @@
 							<mx:HRule y="411"
 									  height="2.0054946"
 									  right="5"
-									  left="380"/>
+									  left="380" id="hrule2"/>
 							<mx:HRule y="415"
 									  height="2.0054946"
 									  right="5"
-									  left="380"/>
+									  left="380" id="hrule1"/>
 							<mx:HRule x="10"
 									  y="46"
 									  width="356"
@@ -1338,7 +1390,7 @@
 												  text="{job.backColors}" focusOut="fieldChanged(event)"/>
 								</mx:Canvas>
 								<mx:Canvas id="copy_estimator_canvas" label="Copiers" width="100%" height="100%">
-									<fc:AutoComplete x="107"
+									<mx:ComboBox x="107"
 													 y="5"
 													 width="241"
 													 height="20"
@@ -1346,11 +1398,11 @@
 													 dataProvider="{copiers}"
 													 labelField="name"
 													 fontSize="9"/>
-									<mx:Label x="-1"
+									<mx:Label x="10"
 											  y="7"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingCopier')}"
-											  fontSize="9"/>
-									<fc:AutoComplete x="107"
+											  fontSize="9" width="90" textAlign="right"/>
+									<mx:ComboBox x="107"
 													 y="28"
 													 width="241"
 													 height="20"
@@ -1358,10 +1410,10 @@
 													 dataProvider="{copiers}"
 													 labelField="name"
 													 fontSize="9"/>
-									<mx:Label x="0"
+									<mx:Label x="10"
 											  y="30"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingCopier')}"
-											  fontSize="9"/>
+											  fontSize="9" width="90" textAlign="right"/>
 									<mx:RadioButtonGroup id="copierSides"/>
 									<mx:RadioButton x="107" y="58" click="changeJobSides(event)" id="copy_single_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SingleSided')}" groupName="copierSides" fontSize="9"/>
 									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>

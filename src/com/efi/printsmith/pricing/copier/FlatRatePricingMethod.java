@@ -24,7 +24,12 @@ public class FlatRatePricingMethod implements CopierPricingMethod {
 		CopierDefinition pricingCopier = job.getPricingCopier();
 		if (pricingCopier != null) {
 			double ratePerCopy = pricingCopier.getFlatRate();
-			PricingRecord pricingRecord = new PricingRecord();
+			PricingRecord pricingRecord = job.getPricingRecord();
+			if (pricingRecord == null) {
+				pricingRecord = new PricingRecord();
+				pricingRecord.setUnitPriceOverride(false);
+				pricingRecord.setTotalPriceOverride(false);
+			}
 			PriceLogEntry priceLogEntry = new PriceLogEntry();
 			pricingRecord.setPriceLogEntry(priceLogEntry);
 			PriceLogEntry detailLogEntry = new PriceLogEntry();
@@ -52,11 +57,11 @@ public class FlatRatePricingMethod implements CopierPricingMethod {
 			}
 			
 			if (job.getStock() != null) {
-				double stockPrice = priceStockEngine.priceStock(job.getStock(), job.getQtyOrdered()*job.getSheets(), pricingRecord);
+				double stockPrice = priceStockEngine.priceStock(job);
 				
 				price += stockPrice;
 			}
-			job.setPrice(price);
+			pricingRecord.setTotalPrice(price);
 			
 			priceLogEntry.setValue(price);
 			job.setPricingRecord(pricingRecord);
@@ -65,5 +70,13 @@ public class FlatRatePricingMethod implements CopierPricingMethod {
 		}
 		
 		return job;
+	}
+	
+	private void calculateUnitPrice(Job job) {
+		if (job.getPricingRecord().getUnitPriceOverride()) {
+			return;
+		} else {
+			
+		}
 	}
 }
