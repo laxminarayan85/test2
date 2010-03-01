@@ -10,6 +10,8 @@ package com.efi.printsmith.data.enums
 	 	public static const TIME:String = "Time";
 	 	public static const NONE:String = "None";
 	 	public static const SETUPSETS:String = "SetupSets";
+	 	public static const TOTALWEIGHT:String = "TotalWeight";
+	 	public static const SHIPPINGQTY:String = "ShippingQty";
 	
 		public function ChargeQtyType() {}
 	 

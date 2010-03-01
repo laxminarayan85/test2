@@ -689,7 +689,7 @@
 	    	}
 	    	
 	    	private function editUnitPrice(evt:Event):void {
-	    		if (job_unitPrice.text = "") {
+	    		if (job_unitPrice.text == "") {
 	    			job.pricingRecord.unitPriceOverride = false;
 	    			job.pricingRecord.unitPrice = 0;
 	    		} else {

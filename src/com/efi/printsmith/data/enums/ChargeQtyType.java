@@ -10,7 +10,9 @@ public enum ChargeQtyType {
 	 Quantity,
 	 Time,
 	 None,
-	 SetupSets;
+	 SetupSets,
+	 TotalWeight,
+	 ShippingQty;
 	public String getLocalizedValue(java.util.Locale locale) {
 		String retVal = toString();
 		return retVal;

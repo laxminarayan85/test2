@@ -58,10 +58,6 @@ public class PriceLogEntry extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHILDREN = "Children";
-	/**
-	 * @generated
-	 */
-	public static final String INCLUDEVALUEINTOTAL = "IncludeValueInTotal";
 
 	/**
 	 * @generated
@@ -180,23 +176,6 @@ public class PriceLogEntry extends ModelBase {
 	public void setChildren(java.util.List<PriceLogEntry> newVal) {
 		this.children = newVal;
 	}
- 	
-	
- 	@Basic
-	private Boolean includeValueInTotal;
-	/**
-	 * @generated
- 	 */
-	public Boolean getIncludeValueInTotal(){
-		return includeValueInTotal; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setIncludeValueInTotal(Boolean newVal) {
-		this.includeValueInTotal = newVal;
-	}
 	/**
 	 * @generated
 	 */		
@@ -209,7 +188,6 @@ public class PriceLogEntry extends ModelBase {
 		if (VALUE.equals(propertyName)) return getValue();
 		if (DATE.equals(propertyName)) return getDate();
 		if (CHILDREN.equals(propertyName)) return getChildren();
-		if (INCLUDEVALUEINTOTAL.equals(propertyName)) return getIncludeValueInTotal();
 		return super.getProperty(propertyName);
 	}
 	
@@ -225,7 +203,6 @@ public class PriceLogEntry extends ModelBase {
 		if (VALUE.equals(propertyName)) setValue((Double)newValue); else
 		if (DATE.equals(propertyName)) setDate((Date)newValue); else
 		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<PriceLogEntry>)newValue); else
-		if (INCLUDEVALUEINTOTAL.equals(propertyName)) setIncludeValueInTotal((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -247,8 +224,6 @@ public class PriceLogEntry extends ModelBase {
 			return new Class<?>[] {Date.class};		
 		if (CHILDREN.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, PriceLogEntry.class};		
-		if (INCLUDEVALUEINTOTAL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -265,7 +240,6 @@ public class PriceLogEntry extends ModelBase {
 		if (VALUE.equals(propertyName)) return PriceLogEntry.class;
 		if (DATE.equals(propertyName)) return PriceLogEntry.class;
 		if (CHILDREN.equals(propertyName)) return PriceLogEntry.class;
-		if (INCLUDEVALUEINTOTAL.equals(propertyName)) return PriceLogEntry.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -288,8 +262,6 @@ public class PriceLogEntry extends ModelBase {
 		if (! SmartEquals(getDate(), objT.getDate()))
 			return false;
 		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
-		if (! SmartEquals(getIncludeValueInTotal(), objT.getIncludeValueInTotal()))
 			return false;
 		return true;
 	}			

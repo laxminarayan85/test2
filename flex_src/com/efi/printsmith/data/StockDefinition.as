@@ -86,9 +86,9 @@ package com.efi.printsmith.data
 		public var blankSheetPrice4:Number = 0;
 		public var blankSheetPrice5:Number = 0;
 		public var blankSheetPrice6:Number = 0;
-		public var defaultCopier1:CopierDefinition;
-		public var defaultCopier2:CopierDefinition;
-		public var defaultCopier3:CopierDefinition;
+		public var defaultBW:String = "";
+		public var defaultColor:String = "";
+		public var defaultLargeFormat:String = "";
 		public var additional1:String = "";
 		public var additional2:String = "";
 		public var additional3:String = "";

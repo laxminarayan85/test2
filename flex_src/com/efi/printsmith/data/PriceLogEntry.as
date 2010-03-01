@@ -19,7 +19,6 @@ package com.efi.printsmith.data
 		public var value:Number = 0;
 		public var date:Date = new Date();
 		public var children:ArrayCollection;
-		public var includeValueInTotal:Boolean = true;
 	
 	}
 }

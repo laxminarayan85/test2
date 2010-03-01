@@ -16,7 +16,7 @@ package com.efi.printsmith.data.enums
 	 	public static const INK:String = "Ink";
 	 	public static const SHIPPING:String = "Shipping";
 	 	public static const FOLD:String = "Fold";
-	 	public static const LITERAL:String = "Literal";
+	 	public static const LINEAR:String = "Linear";
 	 	public static const SQUAREAREA:String = "SquareArea";
 	
 		public function ChargeMethod() {}

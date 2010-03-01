@@ -17,7 +17,7 @@ public enum ChargeMethod {
 	 Ink,
 	 Shipping,
 	 Fold,
-	 Literal,
+	 Linear,
 	 SquareArea;
 	public String getLocalizedValue(java.util.Locale locale) {
 		String retVal = toString();
