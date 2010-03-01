@@ -67,12 +67,14 @@ rStandardMenuText.POS,rStandardMenuText.1,CMD_
 rStandardMenuText.POS,rStandardMenuText.CashRegisterWindow,CMD_CashRegister
 rStandardMenuText.POS,	rStandardMenuText.PostPOSCharges,CMD_
 rStandardMenuText.POS,rStandardMenuText.PendingDocumentWindo,CMD_PendingList
-rStandardMenuText.POS,	posPendCmd.PickUp,CMD_
-rStandardMenuText.POS,	posPendCmd.Status,CMD_
-rStandardMenuText.POS,	posPendCmd.Location,CMD_
-rStandardMenuText.POS,	posPendCmd.Open,CMD_
-rStandardMenuText.POS,	posPendCmd.Notify,CMD_
-rStandardMenuText.POS,	posPendCmd.Deliver,CMD_
+rStandardMenuText.POS,	posPendCmd.PickUp,CMD_PendingList_Pickup
+rStandardMenuText.POS,	posPendCmd.Status,CMD_PendingList_Status
+rStandardMenuText.POS,	posPendCmd.Location,CMD_PendingList_Location
+rStandardMenuText.POS,	posPendCmd.Open,CMD_PendingList_Open
+rStandardMenuText.POS,	posPendCmd.Notify,CMD_PendingList_Notify
+rStandardMenuText.POS,	posPendCmd.Deliver,CMD_PendingList_Deliver
+rStandardMenuText.POS,	posPendCmd.Schedule,CMD_PendingList_Schedule
+rStandardMenuText.POS,	posPendCmd.Tracker,CMD_PendingList_Tracker
 rStandardMenuText.POS,rStandardMenuText.StatusWindow,CMD_
 rStandardMenuText.POS,rStandardMenuText.TransactionWindow,CMD_
 rStandardMenuText.POS,rStandardMenuText.1,CMD_
