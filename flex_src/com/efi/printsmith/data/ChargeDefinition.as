@@ -112,6 +112,13 @@ package com.efi.printsmith.data
 		public var useArea:Boolean = true;
 		public var useSetup:Boolean = true;
 		public var chargeCost:ChargeCost;
+		public var area:Number = 0;
+		public var coverlb_check:Boolean = true;
+		public var sheet_lift_check:Boolean = true;
+		public var ship_markup_check:Boolean = true;
+		public var coverlbInk:Number = 0;
+		public var sheetliftCut:int = 0;
+		public var shipMarkup:Number = 0;
 	
 	}
 }

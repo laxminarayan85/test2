@@ -585,6 +585,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		//TOOD: Area/In Sets, etc...
 		charge.useRateSets = in_sets_check.selected;
 		charge.rateSetCount = in_sets_edit.text as Number;
+		charge.useArea =  area_check.selected;
+		charge.area= parseFloat(area_edit.text);
+		charge.sheet_lift_check = sheet_lift_check.selected;
+		charge.sheetliftCut= parseFloat(sheet_lift_edit.text);
+		charge.coverlb_check= cover_ink_check.selected;
+		charge.coverlbInk = parseFloat(cover_ink_edit.text);
+		charge.ship_markup_check = ship_markup_check.selected;
+		charge.shipMarkup= parseFloat(ship_markup_edit.text);
+		charge.useMerchandiseSets =  in_set_mat_check.selected;
+		charge.materialSetCount = parseInt(in_sets_mat_edit.text);
 	}
 	
 	private function updateQtyComboBox(chargeMethod:ChargeMethod):void {
@@ -647,7 +657,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
-			newCanvas = job_aware_canvas;
+			newCanvas = blank_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
+			
+			
 			break;
 			
 		case ChargeMethod.CUT:
@@ -667,6 +693,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = job_aware_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = false;
+			in_sets_edit.visible = false;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = true;
+			sheet_lift_edit.visible = true;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.FLATRATE:
 			no_overrides_check.enabled = true;
@@ -685,6 +725,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = false;
 			waste_chart_button.enabled = false;
 			newCanvas = blank_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.FOLD:
 			no_overrides_check.enabled = true;
@@ -703,6 +757,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			newCanvas = job_aware_canvas;
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.INK:
 			no_overrides_check.enabled = true;
@@ -721,6 +789,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = false;
 			newCanvas = job_aware_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = false;
+			in_sets_edit.visible = false;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = true;
+			cover_ink_edit.visible = true;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.JOBAWARE:
 			no_overrides_check.enabled = true;
@@ -739,6 +821,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = job_aware_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.LINEAR:
 			no_overrides_check.enabled = true;
@@ -757,6 +853,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = job_aware_canvas;
+			base_linear_quantity_edit.visible = true;	
+			label3.visible =true;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.MARKUP:
 			no_overrides_check.enabled = true;
@@ -775,6 +885,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = false;
 			newCanvas = markup_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.PRICELIST:
 			no_overrides_check.enabled = true;
@@ -793,6 +917,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = blank_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.RATELIST:
 			no_overrides_check.enabled = true;
@@ -811,6 +949,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = blank_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = true;
+			in_sets_edit.visible = true;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		case ChargeMethod.SHIPPING:
 			no_overrides_check.enabled = true;
@@ -829,6 +981,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = false;
 			newCanvas = blank_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = false;
+			area_check.visible = false;
+			in_sets_check.visible = false;
+			in_sets_edit.visible = false;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = true;
+			ship_markup_edit.visible = true;
 			break;
 		case ChargeMethod.SQUAREAREA:
 			no_overrides_check.enabled = true;
@@ -847,6 +1013,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			price_list_button.enabled = true;
 			waste_chart_button.enabled = true;
 			newCanvas = job_aware_canvas;
+			base_linear_quantity_edit.visible = false;	
+			label3.visible =false;
+			area_edit.visible = true;
+			area_check.visible = true;
+			in_sets_check.visible = false;
+			in_sets_edit.visible = false;
+			in_set_mat_check.visible = true;
+			in_sets_mat_edit.visible = true;
+			sheet_lift_check.visible = false;
+			sheet_lift_edit.visible = false;
+			cover_ink_check.visible = false;
+			cover_ink_edit.visible = false;
+			ship_markup_check.visible = false;
+			ship_markup_edit.visible = false;
 			break;
 		}
 		price_calc_stack.selectedChild = newCanvas;		
@@ -1239,18 +1419,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio"/>
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93"/>
 					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93"/>
-					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}"/>
+					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}"/>
 					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
-					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69"/>
+					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}"/>
 					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text=""/>
-					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69"/>
+					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}"/>
 					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{charge.rate}"/>
-					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69"/>
+					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69" enabled="{piece_pricing_radio.selected}"/>
 					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}" text="{charge.material}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="69"/>
-					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}" text=""/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="69"/>
-					<mx:TextInput x="397" y="352" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="69" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}" text="{charge.area}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="69" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="329" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}"/>
 					<mx:Label x="314" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1"/>
 					<mx:Label x="105" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Markup')}" id="label2" width="69" textAlign="right"/>
 					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="555" height="132" creationPolicy="all">
@@ -1300,6 +1480,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
 					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
 					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
+					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="352" width="124" enabled="{in_set_mat_check.selected}" text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="329" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="329" id="cover_ink_edit"  text="{charge.coverlbInk}" width="124" enabled="{cover_ink_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}"/>
+					<mx:TextInput x="397" y="329" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}"/>
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">

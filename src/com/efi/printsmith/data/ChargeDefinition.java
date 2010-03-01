@@ -430,6 +430,34 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHARGECOST = "ChargeCost";
+	/**
+	 * @generated
+	 */
+	public static final String AREA = "Area";
+	/**
+	 * @generated
+	 */
+	public static final String COVERLB_CHECK = "Coverlb_check";
+	/**
+	 * @generated
+	 */
+	public static final String SHEET_LIFT_CHECK = "Sheet_lift_check";
+	/**
+	 * @generated
+	 */
+	public static final String SHIP_MARKUP_CHECK = "Ship_markup_check";
+	/**
+	 * @generated
+	 */
+	public static final String COVERLBINK = "CoverlbInk";
+	/**
+	 * @generated
+	 */
+	public static final String SHEETLIFTCUT = "SheetliftCut";
+	/**
+	 * @generated
+	 */
+	public static final String SHIPMARKUP = "ShipMarkup";
 
 	/**
 	 * @generated
@@ -2122,6 +2150,125 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeCost(ChargeCost newVal) {
 		this.chargeCost = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double area;
+	/**
+	 * @generated
+ 	 */
+	public Double getArea(){
+		return area; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setArea(Double newVal) {
+		this.area = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean coverlb_check;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getCoverlb_check(){
+		return coverlb_check; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCoverlb_check(Boolean newVal) {
+		this.coverlb_check = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean sheet_lift_check;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSheet_lift_check(){
+		return sheet_lift_check; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSheet_lift_check(Boolean newVal) {
+		this.sheet_lift_check = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean ship_markup_check;
+	/**
+	 * @generated
+ 	 */
+	public Boolean getShip_markup_check(){
+		return ship_markup_check; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShip_markup_check(Boolean newVal) {
+		this.ship_markup_check = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double coverlbInk;
+	/**
+	 * @generated
+ 	 */
+	public Double getCoverlbInk(){
+		return coverlbInk; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCoverlbInk(Double newVal) {
+		this.coverlbInk = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Integer sheetliftCut;
+	/**
+	 * @generated
+ 	 */
+	public Integer getSheetliftCut(){
+		return sheetliftCut; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSheetliftCut(Integer newVal) {
+		this.sheetliftCut = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double shipMarkup;
+	/**
+	 * @generated
+ 	 */
+	public Double getShipMarkup(){
+		return shipMarkup; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setShipMarkup(Double newVal) {
+		this.shipMarkup = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2227,6 +2374,13 @@ public class ChargeDefinition extends ModelBase {
 		if (USEAREA.equals(propertyName)) return getUseArea();
 		if (USESETUP.equals(propertyName)) return getUseSetup();
 		if (CHARGECOST.equals(propertyName)) return getChargeCost();
+		if (AREA.equals(propertyName)) return getArea();
+		if (COVERLB_CHECK.equals(propertyName)) return getCoverlb_check();
+		if (SHEET_LIFT_CHECK.equals(propertyName)) return getSheet_lift_check();
+		if (SHIP_MARKUP_CHECK.equals(propertyName)) return getShip_markup_check();
+		if (COVERLBINK.equals(propertyName)) return getCoverlbInk();
+		if (SHEETLIFTCUT.equals(propertyName)) return getSheetliftCut();
+		if (SHIPMARKUP.equals(propertyName)) return getShipMarkup();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2335,6 +2489,13 @@ public class ChargeDefinition extends ModelBase {
 		if (USEAREA.equals(propertyName)) setUseArea((Boolean)newValue); else
 		if (USESETUP.equals(propertyName)) setUseSetup((Boolean)newValue); else
 		if (CHARGECOST.equals(propertyName)) setChargeCost((ChargeCost)newValue); else
+		if (AREA.equals(propertyName)) setArea((Double)newValue); else
+		if (COVERLB_CHECK.equals(propertyName)) setCoverlb_check((Boolean)newValue); else
+		if (SHEET_LIFT_CHECK.equals(propertyName)) setSheet_lift_check((Boolean)newValue); else
+		if (SHIP_MARKUP_CHECK.equals(propertyName)) setShip_markup_check((Boolean)newValue); else
+		if (COVERLBINK.equals(propertyName)) setCoverlbInk((Double)newValue); else
+		if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Integer)newValue); else
+		if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2542,6 +2703,20 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (CHARGECOST.equals(propertyName)) 
 			return new Class<?>[] {ChargeCost.class};		
+		if (AREA.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (COVERLB_CHECK.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SHEET_LIFT_CHECK.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SHIP_MARKUP_CHECK.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (COVERLBINK.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (SHEETLIFTCUT.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (SHIPMARKUP.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2651,6 +2826,13 @@ public class ChargeDefinition extends ModelBase {
 		if (USEAREA.equals(propertyName)) return ChargeDefinition.class;
 		if (USESETUP.equals(propertyName)) return ChargeDefinition.class;
 		if (CHARGECOST.equals(propertyName)) return ChargeDefinition.class;
+		if (AREA.equals(propertyName)) return ChargeDefinition.class;
+		if (COVERLB_CHECK.equals(propertyName)) return ChargeDefinition.class;
+		if (SHEET_LIFT_CHECK.equals(propertyName)) return ChargeDefinition.class;
+		if (SHIP_MARKUP_CHECK.equals(propertyName)) return ChargeDefinition.class;
+		if (COVERLBINK.equals(propertyName)) return ChargeDefinition.class;
+		if (SHEETLIFTCUT.equals(propertyName)) return ChargeDefinition.class;
+		if (SHIPMARKUP.equals(propertyName)) return ChargeDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2859,6 +3041,20 @@ public class ChargeDefinition extends ModelBase {
 		if (! SmartEquals(getUseSetup(), objT.getUseSetup()))
 			return false;
 		if (! SmartEquals(getChargeCost(), objT.getChargeCost()))
+			return false;
+		if (! SmartEquals(getArea(), objT.getArea()))
+			return false;
+		if (! SmartEquals(getCoverlb_check(), objT.getCoverlb_check()))
+			return false;
+		if (! SmartEquals(getSheet_lift_check(), objT.getSheet_lift_check()))
+			return false;
+		if (! SmartEquals(getShip_markup_check(), objT.getShip_markup_check()))
+			return false;
+		if (! SmartEquals(getCoverlbInk(), objT.getCoverlbInk()))
+			return false;
+		if (! SmartEquals(getSheetliftCut(), objT.getSheetliftCut()))
+			return false;
+		if (! SmartEquals(getShipMarkup(), objT.getShipMarkup()))
 			return false;
 		return true;
 	}			
