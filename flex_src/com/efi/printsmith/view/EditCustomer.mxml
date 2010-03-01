@@ -890,8 +890,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="10" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PONumber')}" textAlign="right" width="93"/>
 				<mx:Label x="305" y="234" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Securitylevelofthisa')}" textAlign="right" width="93"/>
 				<mx:Text x="111" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
-				<mx:Text x="111" y="10" width="464" id="master_acct_edit"/>
-				<mx:Button x="583" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Select')}"/>
+				<mx:Text x="274" y="10" width="181" id="master_acct_edit" text=""/>
+				<mx:Button x="528" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Select')}"/>
 				<fc:AutoComplete id="sales_rep_combo" x="111" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<fc:AutoComplete id="business_type_combo" x="111" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
 					
@@ -926,6 +926,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit" click="doJobCharges();"/>
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
+				<mx:Text x="134" y="10" text="Text" width="69" id="masteracctId"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasSales" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" width="100%" height="100%">
 				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Balance')}" dropShadowEnabled="false">
