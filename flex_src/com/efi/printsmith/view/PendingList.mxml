@@ -41,6 +41,7 @@
 	import com.efi.printsmith.data.Invoice;
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
+	import mx.rpc.Responder;
 	import mx.rpc.events.ResultEvent;                                 
 	import mx.rpc.events.FaultEvent;                          
 	import mx.events.ValidationResultEvent;                          
@@ -55,6 +56,7 @@
 	import com.efi.printsmith.pages.PendingLocation;
 	import com.efi.printsmith.pages.PendingChangeDueDate;
 	import com.efi.printsmith.pages.PendingNotify;
+	import com.efi.printsmith.events.commandEvents.PendingList.*;
 			                   
 	[Bindable]                                         
     private var enableSave:Boolean = true;
@@ -188,13 +190,22 @@
              return iconClass;
          } 
 	private function handleFault(ev:FaultEvent):void {  
-		var message:String;
-		              
-		message = "Error: "                          
-		+ ev.fault.faultCode + " - "                                  
-		+ ev.fault.faultDetail + " - "                                  
-		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null,4);                                 
+		var errorDetail:String="";
+		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+			errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+			Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+		}else{
+			var message:String;
+			              
+			message = "Error: "                          
+			+ ev.fault.faultCode + " - "                                  
+			+ ev.fault.faultDetail + " - "                                  
+			+ ev.fault.faultString;
+			Alert.show(message, "Error", 0, null, null, null,4);                                 
+		}
+	}
+
+	private function handleFaultNoMessage(ev:FaultEvent):void {  
 	}
 
 	private function messageHandler(message:IMessage):void
@@ -322,6 +333,36 @@
 		
 		return showItem;
 	}	
+
+	public function handleUIPickupEvent(evt:ResultEvent):void {
+		var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, false));
+		cashRegisterPopup.setStyle("borderAlpha", 0.9);
+	}
+
+	public function handleUIStatusEvent(evt:ResultEvent):void {
+		var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
+		pendingStatus.setStyle("borderAlpha", 0.9);
+	}
+	public function handleUILocationEvent(evt:ResultEvent):void {
+		var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
+		pendingLocation.setStyle("borderAlpha", 0.9);
+	}
+	public function handleUIOpenEvent(evt:ResultEvent):void {
+	}
+	public function handleUINotifyEvent(evt:ResultEvent):void {
+		var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
+		pendingNotify.setStyle("borderAlpha", 0.9);
+	}
+	public function handleUIDueDateEvent(evt:ResultEvent):void {
+		var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
+		pendingChangeDueDate.setStyle("borderAlpha", 0.9);
+	}
+	public function handleUIDeliverEvent(evt:ResultEvent):void {
+	}
+	public function handleUIScheduleEvent(evt:ResultEvent):void {
+	}
+	public function handleUITrackerEvent(evt:ResultEvent):void {
+	}
 	
 	private function treeSelect(event:Event):void {
 		
@@ -331,30 +372,47 @@
         switch (selectedname){
                 case "View":
                 case "Print":
+                case "Open":
                 default:
                 {
-					var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
-	    			pendingStatus.setStyle("borderAlpha", 0.9);
+               		var eventStatus:PendingListStatusEvent = new PendingListStatusEvent(new mx.rpc.Responder(handleUIStatusEvent, handleFaultNoMessage));
+					eventStatus.dispatch();
                 }
          }
          switch(selectedname){
                 case "View":
                 case "Print":
+                case "Open":
+               		var eventOpen:PendingListOpenEvent = new PendingListOpenEvent(new mx.rpc.Responder(handleUIOpenEvent, handleFault));
+					eventOpen.dispatch();
+					break;
+                case "Deliver":
+               		var eventDeliver:PendingListDeliverEvent = new PendingListDeliverEvent(new mx.rpc.Responder(handleUIDeliverEvent, handleFault));
+					eventDeliver.dispatch();
+					break;
+                case "Schedule":
+               		var eventSchedule:PendingListScheduleEvent = new PendingListScheduleEvent(new mx.rpc.Responder(handleUIScheduleEvent, handleFault));
+					eventSchedule.dispatch();
+					break;
+                case "Tracker":
+               		var eventTracker:PendingListTrackerEvent = new PendingListTrackerEvent(new mx.rpc.Responder(handleUITrackerEvent, handleFault));
+					eventTracker.dispatch();
+					break;
                 case "Notify":
-					var pendingNotify:PendingNotifiy = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
-					pendingNotify.setStyle("borderAlpha", 0.9);
+               		var eventNotify:PendingListNotifyEvent = new PendingListNotifyEvent(new mx.rpc.Responder(handleUINotifyEvent, handleFault));
+					eventNotify.dispatch();
 					break;
                 case "Due Date":
-					var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
-					pendingChangeDueDate.setStyle("borderAlpha", 0.9);
+               		var eventDueDate:PendingListDueDateEvent = new PendingListDueDateEvent(new mx.rpc.Responder(handleUIDueDateEvent, handleFault));
+					eventDueDate.dispatch();
 					break;
                 case "Location":
-					var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
-					pendingLocation.setStyle("borderAlpha", 0.9);
+               		var eventLocation:PendingListLocationEvent = new PendingListLocationEvent(new mx.rpc.Responder(handleUILocationEvent, handleFault));
+					eventLocation.dispatch();
 					break;
                 case "Pickup":
-					var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, false));
-					cashRegisterPopup.setStyle("borderAlpha", 0.9);
+               		var eventPickup:PendingListPickupEvent = new PendingListPickupEvent(new mx.rpc.Responder(handleUIPickupEvent, handleFault));
+					eventPickup.dispatch();
 					break;
 
          } 
