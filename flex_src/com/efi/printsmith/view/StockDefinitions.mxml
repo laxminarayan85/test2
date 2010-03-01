@@ -1254,7 +1254,7 @@
 				<mx:title>stockDefCmd.AdjustCopierDigitalM</mx:title>
 				<mx:Label x="82" y="5" text="B&amp;W:" textAlign="right"/>
 				<mx:Label x="24" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" textAlign="right" width="93"/>
-				<mx:Label x="31" y="56" text="Large Format:" textAlign="right"/>
+				<mx:Label x="31" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" textAlign="right"/>
 
 				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{stockDefinitions.copier1PricePerSheet}"/>
 				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{stockDefinitions.copier2PricePerSheet}"/>
