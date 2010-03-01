@@ -58,7 +58,7 @@
 			
 			private function handleFault(ev:FaultEvent):void
 			{
-
+				Alert.show("Error retrieving data from Server.", "Error");
 			}
 
 			private function init():void
@@ -80,7 +80,7 @@
 				var criteriaArray:ArrayCollection = new ArrayCollection();
 				criteriaArray.addItem(criterion);
 				
-				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadColorCopiers, handleFault));
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadColorCopiers , handleFault));
 			}
 			
 			private function loadBWCopiers():void {
@@ -192,18 +192,18 @@
 				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 				   width="75"/>
 		<mx:ComboBox x="167"
-					 y="70"
+					 y="10"
 					 id="defaultBW"
 					 dataProvider="{BWCopiers}"
 					 change="setDefaultCopiers()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="75"
+		<mx:Text x="27"
 				 y="12"
 				 text="B&amp;W:&#xd;"
-				 height="20" textAlign="right" width="84"/>
+				 height="20" textAlign="right" width="132"/>
 		<mx:ComboBox x="167"
-					 y="10"
+					 y="70"
 					 id="defaultLargeFormat"
 					 dataProvider="{largeFormatCopiers}"
 					 change="setDefaultCopiers()"
@@ -216,14 +216,14 @@
 					 change="setDefaultCopiers()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="75"
+		<mx:Text x="27"
 				 y="42"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"
-				 height="20" textAlign="right" width="84"/>
-		<mx:Text x="41"
+				 height="20" textAlign="right" width="132"/>
+		<mx:Text x="27"
 				 y="72"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"
-				 height="20" textAlign="right"/>
+				 height="20" textAlign="right" width="132"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>
 

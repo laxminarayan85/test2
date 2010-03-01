@@ -786,7 +786,7 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable( name = "copierdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	/**
