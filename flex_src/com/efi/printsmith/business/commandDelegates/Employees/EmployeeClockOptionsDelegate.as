@@ -1,8 +1,8 @@
-package com.efi.printsmith.business.commandDelegates.Contacts
+package com.efi.printsmith.business.commandDelegates.Employees
 {
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
-	import com.efi.printsmith.events.commandEvents.Contacts.ContactsCreditInfoPanelEvent;
+	import com.efi.printsmith.events.commandEvents.Invoice.EmployeeClockOptionsEvent;
 	
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
@@ -10,14 +10,14 @@ package com.efi.printsmith.business.commandDelegates.Contacts
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
-	public class ContactsCreditInfoPanelDelegate extends InterfaceCommandDelegate 
+	public class EmployeeClockOptionsDelegate extends InterfaceCommandDelegate 
 	{
-		public function ContactsCreditInfoPanelDelegate(responder:IResponder) {
+		public function EmployeeClockOptionsDelegate(responder:IResponder) {
 			super(responder);
 		}
 		
-		public function handleUIEvent(event:ContactsCreditInfoPanelEvent):void {
-			if (checkSecurity(ContactsCreditInfoPanelEvent.COMMANDID)) {
+		public function handleUIEvent(event:EmployeeClockOptionsEvent):void {
+			if (checkSecurity(EmployeeClockOptionsEvent.COMMANDID)) {
 				event.enabled = true;
 				var resEventEnable:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,event,null,null);
 				responder.result(resEventEnable);

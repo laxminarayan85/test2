@@ -3,7 +3,6 @@ package com.efi.printsmith.business.commandDelegates.Contacts
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
 	import com.efi.printsmith.events.commandEvents.Contacts.ContactsWebPanelEvent;
-	import com.efi.printsmith.view.EditContact;
 	
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
