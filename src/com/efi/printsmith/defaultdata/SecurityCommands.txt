@@ -36,13 +36,13 @@ rStandardMenuText.Invoice,rStandardMenuText.ReviewAnyDocument,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate,CMD_CreateEstimate
 rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate,CMD_EditEstimate
 rStandardMenuText.Invoice,rStandardMenuText.1,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,CMD_Invoice_AccountInfo
 rStandardMenuText.AccountInfo,rStandardMenuText.ReNumberDocuments,CMD_
-rStandardMenuText.Invoice,rAltMenuText.ChangeAccount,CMD_
+rStandardMenuText.Invoice,rAltMenuText.ChangeAccount,CMD_Invoice_ChangeAccounts
 rStandardMenuText.Invoice,	rAltMenuText.Canchangeholdstate,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.Jobs,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.Jobs,CMD_Invoice_Jobs
 rStandardMenuText.Invoice,	rStandardMenuText.JobProductionData,CMD_
-rStandardMenuText.Invoice,rStandardMenuText.Charges,CMD_
+rStandardMenuText.Invoice,rStandardMenuText.Charges,CMD_Invoice_Charges
 rStandardMenuText.Invoice,	rUserMenuText.PrePress,CMD_
 rStandardMenuText.Invoice,	rUserMenuText.Bindery,CMD_
 rStandardMenuText.Invoice,	rUserMenuText.Merchandise,CMD_

@@ -1,8 +1,8 @@
-package com.efi.printsmith.business.commandDelegates.StockDefinitions
+package com.efi.printsmith.business.commandDelegates.Invoice
 {
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
-	import com.efi.printsmith.events.commandEvents.StockDefinitions.DeleteStockDefinitionEvent;
+	import com.efi.printsmith.events.commandEvents.Invoice.InvoiceChargesEvent;
 	
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
@@ -10,14 +10,14 @@ package com.efi.printsmith.business.commandDelegates.StockDefinitions
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
-	public class DeleteStockDefinitionDelegate extends InterfaceCommandDelegate 
+	public class InvoiceChargesDelegate extends InterfaceCommandDelegate 
 	{
-		public function DeleteStockDefinitionDelegate(responder:IResponder) {
+		public function InvoiceChargesDelegate(responder:IResponder) {
 			super(responder);
 		}
 		
-		public function handleUIEvent(event:DeleteStockDefinitionEvent):void {
-			if (checkSecurity(DeleteStockDefinitionEvent.COMMANDID)) {
+		public function handleUIEvent(event:InvoiceChargesEvent):void {
+			if (checkSecurity(InvoiceChargesEvent.COMMANDID)) {
 				event.enabled = true;
 				var resEventEnable:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,event,null,null);
 				responder.result(resEventEnable);

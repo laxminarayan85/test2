@@ -268,8 +268,16 @@
 		doGet(); 
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
+		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		event.dispatch();
 		
 	}      
+
+	public function handleUIButtonEvent(evt:ResultEvent):void {
+		evt.result.button.enabled = evt.result.enabled;
+	}		
+	private function handleUIButtonFault(ev:FaultEvent):void {  
+	}
 
 	private function loadUnitsArray():void {
 		
@@ -512,16 +520,10 @@
   	    setStockDefinition(stockDefinitions);
   	    standardItemCheckEvent();
 	}       
-	public function handleUIEvent(evt:ResultEvent):void {
-		if (evt.result != null){
-			dataService.deleteItem("StockDefinition", evt.result.id);
-			doPrev();
-		}
-	}		
 
 	private function doDelete():void {
-		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(stockDefinitions, new mx.rpc.Responder(handleUIEvent, handleFault));
-		event.dispatch();
+		dataService.deleteItem("StockDefinition", stockDefinitions.id);
+		doPrev();
 	}
 
 	private function doRevert():void {
@@ -765,18 +767,13 @@
 	}
 	     
 	private function handleFault(ev:FaultEvent):void {  
-		var errorDetail:String="";
-		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
-			errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
-			Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
-		}else{
-			var message:String;              
-			message = "Error: "                          
-			+ ev.fault.faultCode + " - "                                  
-			+ ev.fault.faultDetail + " - "                                  
-			+ ev.fault.faultString;
-			Alert.show(message, "Error", 0, null, null, null,4);                                 
-		}
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
 	}
 
 	private function showMessage(message:String,title:String):void {  
@@ -1329,7 +1326,7 @@
 	<mx:Button x="263" y="5" width="38" height="38" click="doNew();">
 		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="370" y="5" width="38" height="38" click="doDelete();">
+	<mx:Button id="button_delete" x="370" y="5" width="38" height="38" click="doDelete();">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="360" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>

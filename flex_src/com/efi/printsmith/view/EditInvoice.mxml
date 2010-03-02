@@ -57,6 +57,8 @@
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.AccountPickerSelectEvent;
 
+			import com.efi.printsmith.events.commandEvents.Invoice.*;
+	
 			import com.efi.printsmith.data.HoldState;
 			import com.efi.printsmith.data.Invoice;
 			import com.efi.printsmith.data.Marketing;
@@ -79,6 +81,7 @@
 			import flash.geom.Matrix;
 			import com.efi.printsmith.data.Account;
 			import mx.controls.Alert;
+			import mx.rpc.Responder;
 			import mx.managers.PopUpManager;
 			import mx.containers.TitleWindow;
 			import mx.collections.ArrayCollection;
@@ -131,6 +134,19 @@
 				}				
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
+
+				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(new_job_button0,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+				eventJobs.dispatch();
+				var eventCharges:InvoiceChargesEvent = new InvoiceChargesEvent(new_job_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+				eventCharges.dispatch();
+				var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+				eventChangeAccounts.dispatch();
+			}
+
+			public function handleUIButtonEvent(evt:ResultEvent):void {
+				evt.result.button.enabled = evt.result.enabled;
+			}		
+			private function handleUIButtonFault(ev:FaultEvent):void {  
 			}
 
 			public function getEditorType():String
@@ -181,9 +197,14 @@
 
 			}
 
-			private function handleFault(event:Event):void
-			{
-
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error");                                 
 			}
 
 			private function validateForm(event:Event):void

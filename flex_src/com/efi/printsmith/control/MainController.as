@@ -21,6 +21,13 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.commands.commandCommands.EditForms.*;
 	import com.efi.printsmith.events.commandEvents.EditForms.*;
 
+	import com.efi.printsmith.commands.commandCommands.PendingList.*;
+	import com.efi.printsmith.events.commandEvents.PendingList.*;
+
+	import com.efi.printsmith.commands.commandCommands.Invoice.*;
+	import com.efi.printsmith.events.commandEvents.Invoice.*;
+
+
 
 	public class MainController extends FrontController
 	{
@@ -109,7 +116,18 @@ package com.efi.printsmith.control
 			this.addCommand(SystemPreferencesStockDefinitionsPanelEvent.COMMANDID, SystemPreferencesStockDefinitionsPanelCommand);
 			this.addCommand(SystemPreferencesStocksandSizesPanelEvent.COMMANDID, SystemPreferencesStocksandSizesPanelCommand);
 			
+			this.addCommand(PendingListDeliverEvent.COMMANDID, PendingListDeliverCommand);
+			this.addCommand(PendingListDueDateEvent.COMMANDID, PendingListDueDateCommand);
+			this.addCommand(PendingListLocationEvent.COMMANDID, PendingListLocationCommand);
+			this.addCommand(PendingListNotifyEvent.COMMANDID, PendingListNotifyCommand);
+			this.addCommand(PendingListOpenEvent.COMMANDID, PendingListOpenCommand);
+			this.addCommand(PendingListPickupEvent.COMMANDID, PendingListPickupCommand);
+			this.addCommand(PendingListScheduleEvent.COMMANDID, PendingListScheduleCommand);
+			this.addCommand(PendingListStatusEvent.COMMANDID, PendingListStatusCommand);
+			this.addCommand(PendingListTrackerEvent.COMMANDID, PendingListTrackerCommand);
 			
+			this.addCommand(InvoiceChargesEvent.COMMANDID, InvoiceChargesCommand);
+			this.addCommand(InvoiceJobsEvent.COMMANDID, InvoiceJobsCommand);
 						
 		}
 		

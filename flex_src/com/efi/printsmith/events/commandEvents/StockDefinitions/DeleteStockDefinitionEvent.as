@@ -1,24 +1,25 @@
 package com.efi.printsmith.events.commandEvents.StockDefinitions
 {
 	import flash.events.Event;
-	import mx.rpc.IResponder;
 	import com.efi.printsmith.events.commandEvents.*;
-	import com.efi.printsmith.data.ModelBase;
-	import com.efi.printsmith.data.StockDefinition;
+	import mx.controls.Button;
+	import mx.rpc.IResponder;
 
 	public class DeleteStockDefinitionEvent extends CommandEventBase
 	{
 		public static const COMMANDID:String = "CMD_StockDefinition_Delete";
-		public var stockdef:StockDefinition;
+
+		public var button:Button;
+		public var enabled:Boolean;
 		
-		public function DeleteStockDefinitionEvent(stockdef:StockDefinition, callbacks:IResponder=null)
+		public function DeleteStockDefinitionEvent(item:Button, callbacks:IResponder=null)
 		{
-			this.stockdef = stockdef;
+			this.button = item;
 			super(DeleteStockDefinitionEvent.COMMANDID, callbacks);
 		}
 		
 		override public function clone():Event {
-			return new DeleteStockDefinitionEvent(stockdef, callbacks);
+			return new DeleteStockDefinitionEvent(button, callbacks);
 		}
 	}
 }
