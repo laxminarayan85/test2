@@ -3,6 +3,7 @@ package com.efi.printsmith.migration;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -87,7 +88,8 @@ public class Utilities {
 	}
 	
 	static public Date tokenToDate(String token) throws ParseException {
-		DateFormat fmt = DateFormat.getDateInstance();
+		int dateShort = SimpleDateFormat.SHORT;
+		DateFormat fmt = DateFormat.getDateInstance(dateShort);
 		Date date = fmt.parse(token);
 
 		return date;
