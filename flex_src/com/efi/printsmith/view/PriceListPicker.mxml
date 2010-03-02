@@ -135,9 +135,9 @@
 	    case "PaperPrice":
 	    	newPriceList = new PaperPrice();
 	    	break;
-	    case "Matrix":
-	    	newPriceList = new com.efi.printsmith.data.Matrix();
-	    	break;
+//	    case "Matrix":
+//	    	newPriceList = new com.efi.printsmith.data.Matrix();
+//	    	break;
 	    }
 	    if (newPriceList == null) {
 	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);

@@ -301,10 +301,11 @@
 			priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
 			priceList = ev.result as PaperPrice;
-		} else if (itemType == "Matrix") {
-			priceList = ev.result as com.efi.printsmith.data.Matrix;
 		}
-
+//		 else if (itemType == "Matrix") {
+//			priceList = ev.result as com.efi.printsmith.data.Matrix;
+//		}
+//
 		var editPage:Container = parentContainer;
 	}
 		

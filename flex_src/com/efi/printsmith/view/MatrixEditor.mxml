@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="708" height="400" 
+	defaultButton="{select_button}" 
+	showCloseButton="false" 
+	creationComplete="init()"
+    close="PopUpManager.removePopUp(this);" 
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
+    xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
+    horizontalScrollPolicy="off" 
+    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
+    name="Price List"
+    verticalScrollPolicy="off" fontSize="9">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+</mx:RemoteObject>
+
+<mx:Producer id="producer" destination="pricelist"/>
+<mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+
+<mx:Script>
+                                   
+<![CDATA[
+	import com.efi.printsmith.events.SavePriceListElementEvent;
+
+	import com.efi.printsmith.view.*;
+	import com.efi.printsmith.data.*; 
+
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.*;                                 
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+    import mx.events.*;
+    
+    import com.efi.printsmith.events.*;
+    import com.efi.printsmith.components.*;
+	    
+	[Bindable]                                
+	public var matrix:com.efi.printsmith.data.Matrix;
+		
+	public var parentContainer:Container;
+   	
+	private function handleFault(ev:FaultEvent):void {                               
+		var message:String;
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+	                                                       
+	private function init():void {
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+	    PopUpManager.centerPopUp(this);
+
+		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+	}
+
+	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
+		if (matrix == null) return;
+		
+		this.matrix = matrix;
+	}   
+	                 
+	private function doSelect():void {	
+//
+//		maptoPricelist();
+////		var i:int;
+////		if (priceList.elements != null) {
+////			for (i = 0; i < priceList.elements.length; i++) {
+////				var priceListElement:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+////				priceListElement = dataService.addUpdate(priceListElement) as PriceListElement;
+////			}
+////		}
+		dataService.addUpdate(matrix);
+		PopUpManager.removePopUp(this);
+	}     
+	
+//	private function maptoPricelist():void {
+//		priceList.name = title_edit.text;
+//		priceList.interpolate = chkInterpolate.selected;
+//		priceList.isRate = chkUseAsRateList.selected;
+//		priceList.isDiscount = chkProductionDiscount.selected;
+//		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
+//	}
+	
+	
+	private function messageHandler(message:IMessage):void
+	{
+	}
+
+	private function doClear():void {
+		
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		matrix = ev.result as com.efi.printsmith.data.Matrix;
+
+		var editPage:Container = parentContainer;
+	}		
+]]>        
+</mx:Script>            
+	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
+		<mx:DataGrid id="dataGrid" width="674" dataProvider="{matrix.elements}"
+			showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
+			editable="true" enabled="true" 
+			bottom="48" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+			doubleClickEnabled="true">
+		<mx:columns>
+		     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price1" headerText="{matrix.headerValues[0]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price2" headerText="{matrix.headerValues[1]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price3" headerText="{matrix.headerValues[2]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price4" headerText="{matrix.headerValues[3]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price5" headerText="{matrix.headerValues[4]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price6" headerText="{matrix.headerValues[5]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price7" headerText="{matrix.headerValues[6]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price8" headerText="{matrix.headerValues[7]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price9" headerText="{matrix.headerValues[8]}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price10" headerText="{matrix.headerValues[9]}" editable="true" sortable="false" width="60"/>
+		</mx:columns>
+		</mx:DataGrid>
+
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="472" y="309"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="577" y="309"/>
+
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

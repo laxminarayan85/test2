@@ -40,6 +40,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.MatrixElement;
 	import com.efi.printsmith.data.Charge;
 	import com.efi.printsmith.pages.DefaultCopierPicker;
 	
@@ -104,9 +105,43 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		chargeDataService.getAll("Charge");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		
-	    copierDefinition = new CopierDefinition();
-	    copierDefinition.largeFormat = false; 
-	}      
+	    copierDefinition = initNewCopierDefinition();
+	}
+	
+	private function initNewCopierDefinition():CopierDefinition {
+		var localCopierDefinition:CopierDefinition = new CopierDefinition();
+		localCopierDefinition.largeFormat = false;
+		localCopierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix;
+		localCopierDefinition.copierMatrix.headerValues = new ArrayCollection();
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(1));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(5));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(10));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(20));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(50));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(100));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(250));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
+		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
+		
+	    localCopierDefinition.copierMatrix.elements = new ArrayCollection();
+	    var matrixElement:MatrixElement = new MatrixElement();
+	    matrixElement.qty = 1;
+	    matrixElement.price1 = .02;
+	    matrixElement.price2 = .019;
+	    matrixElement.price3 = .0183;
+	    matrixElement.price4 = .0179;
+	    matrixElement.price5 = .0175;
+	    matrixElement.price6 = .0165;
+	    matrixElement.price7 = .0150;
+	    matrixElement.price8 = .0145;
+	    matrixElement.price9 = .0140;
+	    matrixElement.price10 = .0135;
+	    
+	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+	    return localCopierDefinition;
+	}
+	
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
 		var getAllEvent:ModelGetAllEvent = new ModelGetAllEvent(modelType, callbacks);
 		getAllEvent.dispatch();			
@@ -235,7 +270,7 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}       
 
 	private function doNew():void {
-	    copierDefinition = new CopierDefinition();
+	    copierDefinition = this.initNewCopierDefinition();
 	 	
 	}       
 
@@ -327,13 +362,12 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doCopierMatrix():void {
 
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
-		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+//		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    if (copierDefinition.copierMatrix == null){
-	    	copierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix()
-	    }
-	    titleWindow.setPriceList(copierDefinition.copierMatrix as PriceListBase);
-		PopUpManager.removePopUp(this);
+	    titleWindow.setMatrix(copierDefinition.copierMatrix);
+//	    titleWindow.setPriceList(copierDefinition.copierMatrix as PriceListBase);
+//		PopUpManager.removePopUp(this);
 		
 	}      
 	                                  	
@@ -354,9 +388,11 @@ width="828" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var defaultCopierWindow:DefaultCopierPicker = DefaultCopierPicker(PopUpManager.createPopUp(this, DefaultCopierPicker, true));
 		defaultCopierWindow.setStyle("borderAlpha", 0.9);
 	}
+	
 	private function changePricingMethod(event:Event):void {
 		updateControlState();
 	}
+	
 	private function updateControlState():void {
 		
 		switch (pricing_method_combo.selectedItem) {
