@@ -28,11 +28,12 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 -->
-    <!-- Http Flex Session attribute and binding listener support -->
+	<!-- Http Flex Session attribute and binding listener support -->
+ <!--
     <listener>
         <listener-class>flex.messaging.HttpFlexSession</listener-class>
     </listener>
-
+-->
     <!-- MessageBroker Servlet -->
     <servlet>
         <servlet-name>MessageBrokerServlet</servlet-name>
