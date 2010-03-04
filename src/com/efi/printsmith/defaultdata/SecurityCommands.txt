@@ -254,10 +254,10 @@ rStandardMenuText.Admin,rStandardMenuText.SynchronizePortable,CMD_
 rStandardMenuText.Admin,	portableCmd.UpdateDataFolder,CMD_
 rStandardMenuText.Admin,rStandardMenuText.UpdatePricingFolder,CMD_
 rStandardMenuText.Admin,rStandardMenuText.SendFile,CMD_
-rStandardMenuText.Job,	rStandardMenuText.ChangePricingMethod,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangePricingMethod,CMD_Jobs_ChangePricingMethod
 rStandardMenuText.Job,	rStandardMenuText.1,CMD_
-rStandardMenuText.Job,	rStandardMenuText.ChangeStockSelection,CMD_
-rStandardMenuText.Job,	rStandardMenuText.ChangePressSelection,CMD_
+rStandardMenuText.Job,	rStandardMenuText.ChangeStockSelection,CMD_Jobs_ChangeStock
+rStandardMenuText.Job,	rStandardMenuText.ChangePressSelection,CMD_Jobs_ChangePress
 rStandardMenuText.Job,	rStandardMenuText.ChangeScheduleSelect,CMD_
 rStandardMenuText.Job,	rStandardMenuText.1,CMD_
 rStandardMenuText.Job,	rStandardMenuText.TrackerProduction,CMD_

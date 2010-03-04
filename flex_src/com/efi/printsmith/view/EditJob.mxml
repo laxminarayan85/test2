@@ -162,7 +162,8 @@
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
 			import mx.core.UIComponent;
-			
+		    import com.efi.printsmith.events.commandEvents.Jobs.*;
+		    
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
 		
@@ -252,6 +253,31 @@
 					job.pricingRecord = new PricingRecord;								
 				}				
 				this.copy_single_radio.selected = this.job.singleSided;
+
+				var eventPriceMethod:JobsChangePricingMethodEvent = new JobsChangePricingMethodEvent(job_type, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventPriceMethod.dispatch();
+		
+				var eventPricingCopier:JobsChangeCopierEvent = new JobsChangeCopierEvent(job_pricing_copier, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventPricingCopier.dispatch();
+				var eventCostingCopier:JobsChangeCopierEvent = new JobsChangeCopierEvent(job_costing_copier, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventCostingCopier.dispatch();
+		
+				var eventPricingPress:JobsChangePressEvent = new JobsChangePressEvent(job_pricing_press, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventPricingPress.dispatch();
+				var eventCostingPress:JobsChangePressEvent = new JobsChangePressEvent(job_costing_press, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventCostingPress.dispatch();
+		
+				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
+				eventStock.dispatch();
+
+			}
+
+
+			public function handleUIControlEvent(evt:ResultEvent):void {
+				evt.result.control.enabled = evt.result.enabled;
+			}		
+			private function handleUIControlFault(ev:FaultEvent):void {  
+			
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
