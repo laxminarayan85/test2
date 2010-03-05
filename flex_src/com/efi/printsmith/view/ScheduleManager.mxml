@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="376" height="642"  
+	layout="absolute" width="376" height="642" 
+	creationComplete="init()" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager')}">
 
@@ -9,51 +10,65 @@
 	import mx.containers.Panel;
 	import mx.managers.PopUpManager;
 	import flash.net.navigateToURL;
+	import mx.rpc.*;                                         
+	import mx.rpc.Responder;
+	import mx.rpc.events.*;                                         
+	import com.efi.printsmith.events.commandEvents.ScheduleBoard.*;
+	
+	public function init():void {
 
+		var eventEditCostCenters:ScheduleBoardEditCostCentersEvent = new ScheduleBoardEditCostCentersEvent(scheduleBoard_editcostcenter, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventEditCostCenters.dispatch();
 
-	private function doClockInOut():void {
-		var titleWindow:ClockInOut = ClockInOut(PopUpManager.createPopUp(this, ClockInOut, true));
-	     titleWindow.setStyle("borderAlpha", 0.9);
-	     			
+		var eventEditDepartments:ScheduleBoardEditDepartmentsEvent = new ScheduleBoardEditDepartmentsEvent(scheduleBoard_editdepartments, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventEditDepartments.dispatch();
+
+		var eventJobList:ScheduleBoardJobListEvent = new ScheduleBoardJobListEvent(scheduleBoard_joblist, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventJobList.dispatch();
+
+		var eventLateandCompleteTags:ScheduleBoardLateandCompleteTagsEvent = new ScheduleBoardLateandCompleteTagsEvent(scheduleBoard_lateandcompletetags, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventLateandCompleteTags.dispatch();
+
+		var eventMyWorkCenter:ScheduleBoardMyWorkCenterEvent = new ScheduleBoardMyWorkCenterEvent(scheduleBoard_myworkcenter, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventMyWorkCenter.dispatch();
+
+		var eventPreferences:ScheduleBoardPreferencesEvent = new ScheduleBoardPreferencesEvent(scheduleBoard_preferences, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventPreferences.dispatch();
+
+		var eventShowCostCenters:ScheduleBoardShowCostCentersEvent = new ScheduleBoardShowCostCentersEvent(scheduleBoard_showcostcenters, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventShowCostCenters.dispatch();
+
+		var eventShowDepartments:ScheduleBoardShowDepartmentsEvent = new ScheduleBoardShowDepartmentsEvent(scheduleBoard_showdepartments, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+		eventShowDepartments.dispatch();
+
 	}
-	private function doEmployee():void {
-		var titleWindow:EditEmployee = EditEmployee(PopUpManager.createPopUp(this, EditEmployee, true));
-	     titleWindow.setStyle("borderAlpha", 0.9);
-	     			
-	}		
 
-	private function doTimeCardView():void {
-		var titleWindow:TimeCardView = TimeCardView(PopUpManager.createPopUp(this, TimeCardView, true));
-	     titleWindow.setStyle("borderAlpha", 0.9);
-	     			
+	public function handleUIButtonEvent(evt:ResultEvent):void {
+		evt.result.button.enabled = evt.result.enabled;
 	}		
-	private function doTimePeriodView():void {
-		var titleWindow:TimePeriodView = TimePeriodView(PopUpManager.createPopUp(this, TimePeriodView, true));
-	     titleWindow.setStyle("borderAlpha", 0.9);
-	     			
-	}		
-
+	private function handleUIButtonFault(ev:FaultEvent):void {  
+	}
 
 ]]>
 </mx:Script>
-	<mx:Button x="45" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.JobListNewTags')}" icon="@Embed(source='../../../../assets/new_job.png')" width="255" height="40"/>
-	<mx:Button x="45" y="86" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.ShowDepartments')}" width="255" height="40">
+	<mx:Button id="scheduleBoard_joblist" x="45" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.JobListNewTags')}" icon="@Embed(source='../../../../assets/new_job.png')" width="255" height="40"/>
+	<mx:Button id="scheduleBoard_showdepartments" x="45" y="86" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.ShowDepartments')}" width="255" height="40">
 		<mx:icon>@Embed(source='../../../../assets/showdepartments.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="45" y="142" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.ShowCostCenter')}" height="40" width="255">
+	<mx:Button id="scheduleBoard_showcostcenters" x="45" y="142" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.ShowCostCenter')}" height="40" width="255">
 		<mx:icon>@Embed(source='../../../../assets/showCostCenter.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="44.5" y="197" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.LateandCompleteTags')}" width="255" height="40">
+	<mx:Button id="scheduleBoard_lateandcompletetags" x="44.5" y="197" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.LateandCompleteTags')}" width="255" height="40">
 		<mx:icon>@Embed(source='../../../../assets/showLateJobs.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="44.5" y="255" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.MyWorkCenter')}" height="40" width="255">
+	<mx:Button id="scheduleBoard_myworkcenter" x="44.5" y="255" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.MyWorkCenter')}" height="40" width="255">
 		<mx:icon>@Embed(source='../../../../assets/myCenter.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="44.5" y="401" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.EditCostCenters')}" height="40" width="255">
+	<mx:Button id="scheduleBoard_editcostcenter" x="44.5" y="401" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.EditCostCenters')}" height="40" width="255">
 		<mx:icon>@Embed(source='../../../../assets/editcostcenters.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="44.5" y="459" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.Preferences')}" icon="@Embed(source='../../../../assets/preferencesmall.png')" width="255" height="40"/>
-	<mx:Button x="44.5" y="341" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.EditDepartments')}" width="255" height="40">
+	<mx:Button id="scheduleBoard_preferences" x="44.5" y="459" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.Preferences')}" icon="@Embed(source='../../../../assets/preferencesmall.png')" width="255" height="40"/>
+	<mx:Button id="scheduleBoard_editdepartments" x="44.5" y="341" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.EditDepartments')}" width="255" height="40">
 		<mx:icon>@Embed(source='../../../../assets/editDepartments.png')</mx:icon>
 	</mx:Button>
 	<mx:Button x="44" y="531" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleBoardMgrCmd.Reports')}" width="255.5" height="40">
