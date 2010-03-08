@@ -6,8 +6,12 @@
 	<property name="pjxnamespace" value="com/efi/printsmith"/>
 	<property name="snowmassBuilddir" value="${checkoutpath}/${module2}/WebContent/WEB-INF/classes"/>
 	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module2}/WebContent/WEB-INF/lib"/>
-
+	<property name="snowmassPagesdir" value="${checkoutpath}/${module2}/flex_src"/>
+	<property name="snowmassWebInfdir" value="${checkoutpath}/${module2}/WebContent\WEB-INF"/>
 	<property name="snowmassRunTimedir" value="${checkoutpath}/${module2}/PrintSmith Server Runtime"/>
+
+	<property name="warfile" value="${checkoutpath}/dist/Snowmass.war"/>
+
 	<!-- Classpath for the project -->   
 	<path id="master-classpath"> 
 		<fileset dir="${snowmassBuildlibsdir}"> 
@@ -39,5 +43,14 @@
                 	<classpath refid="master-classpath"/> 
 		</javac> 
 		<record name="${checkoutpath}/${module2}/src/ant/javac_log.txt" action="stop"/> 
-	</target>
+
+		<record name="${checkoutpath}/${module2}/src/ant/war_log.txt" action="start"/> 
+		 <!-- the ant war task. with all resources in place, create the war file -->
+		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}">
+			<lib dir="${snowmassBuildlibsdir}" />
+			<classes dir="${snowmassBuilddir}" />
+		</war>
+		<record name="${checkoutpath}/${module2}/src/ant/war_log.txt" action="stop"/>
+ 	</target>
+
 </project>
