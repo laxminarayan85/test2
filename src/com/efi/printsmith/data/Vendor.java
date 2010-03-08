@@ -51,6 +51,7 @@ public class Vendor extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

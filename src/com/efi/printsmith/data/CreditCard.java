@@ -71,6 +71,7 @@ public class CreditCard extends ModelBase {
 	
  	@Basic
 	private String cardHolderName;
+	
 	/**
 	 * @generated
  	 */
@@ -88,6 +89,7 @@ public class CreditCard extends ModelBase {
 	
  	@Basic
 	private String cardNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -105,6 +107,7 @@ public class CreditCard extends ModelBase {
 	
  	@Basic
 	private Date expiresDate;
+	
 	/**
 	 * @generated
  	 */
@@ -122,6 +125,7 @@ public class CreditCard extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address address;
+	
 	/**
 	 * @generated
  	 */
@@ -139,6 +143,7 @@ public class CreditCard extends ModelBase {
 	
  	@Basic
 	private Integer creditCardID;
+	
 	/**
 	 * @generated
  	 */
@@ -156,6 +161,7 @@ public class CreditCard extends ModelBase {
 	
  	@Basic
 	private String type;
+	
 	/**
 	 * @generated
  	 */

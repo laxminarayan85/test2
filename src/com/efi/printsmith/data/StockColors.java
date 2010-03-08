@@ -51,6 +51,7 @@ public class StockColors extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

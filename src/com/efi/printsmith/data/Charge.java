@@ -107,6 +107,7 @@ public class Charge extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeDefinition chargeDefinition;
+	
 	/**
 	 * @generated
  	 */
@@ -124,6 +125,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private String description;
+	
 	/**
 	 * @generated
  	 */
@@ -141,6 +143,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private String notes;
+	
 	/**
 	 * @generated
  	 */
@@ -158,6 +161,7 @@ public class Charge extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location productionLocation;
+	
 	/**
 	 * @generated
  	 */
@@ -175,6 +179,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean showNotes;
+	
 	/**
 	 * @generated
  	 */
@@ -192,6 +197,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean finished;
+	
 	/**
 	 * @generated
  	 */
@@ -209,6 +215,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Integer attribute1;
+	
 	/**
 	 * @generated
  	 */
@@ -226,6 +233,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean taxable;
+	
 	/**
 	 * @generated
  	 */
@@ -243,6 +251,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Integer attribute2;
+	
 	/**
 	 * @generated
  	 */
@@ -260,6 +269,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean brokered;
+	
 	/**
 	 * @generated
  	 */
@@ -277,6 +287,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Integer attribute3;
+	
 	/**
 	 * @generated
  	 */
@@ -294,6 +305,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean displayQty;
+	
 	/**
 	 * @generated
  	 */
@@ -311,6 +323,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean hidden;
+	
 	/**
 	 * @generated
  	 */
@@ -328,6 +341,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Boolean hidePrice;
+	
 	/**
 	 * @generated
  	 */
@@ -345,6 +359,7 @@ public class Charge extends ModelBase {
 	
  	@Basic
 	private Double price;
+	
 	/**
 	 * @generated
  	 */

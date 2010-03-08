@@ -51,6 +51,7 @@ public class EstimatorTypes extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

@@ -51,6 +51,7 @@ public class CostCenter extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

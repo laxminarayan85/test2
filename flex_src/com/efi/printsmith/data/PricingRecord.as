@@ -23,6 +23,11 @@ package com.efi.printsmith.data
 		public var oversUnitPrice:Number = 0;
 		public var unitPriceOverride:Boolean = true;
 		public var totalPriceOverride:Boolean = true;
+		public var laborTotalPrice:Number = 0;
+		public var laborTotalPriceOverride:Boolean = true;
+		public var stockTotalPrice:Number = 0;
+		public var stockTotalPriceOverride:Boolean = true;
+		public var stockMarkup:Number = 0;
 	
 	}
 }

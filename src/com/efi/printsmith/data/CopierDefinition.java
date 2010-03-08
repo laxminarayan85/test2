@@ -214,6 +214,38 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPIERMATRIX = "CopierMatrix";
+	/**
+	 * @generated
+	 */
+	public static final String USECOPIERSTOCKMARKUP = "UseCopierStockMarkup";
+	/**
+	 * @generated
+	 */
+	public static final String MATRIXISCOPYCOST = "MatrixIsCopyCost";
+	/**
+	 * @generated
+	 */
+	public static final String MATRIXISDISCOUNTTABLE = "MatrixIsDiscountTable";
+	/**
+	 * @generated
+	 */
+	public static final String MATRIXISSTEPTABLE = "MatrixIsStepTable";
+	/**
+	 * @generated
+	 */
+	public static final String SQUAREAREAFROMRUNSIZE = "SquareAreaFromRunSize";
+	/**
+	 * @generated
+	 */
+	public static final String SQUAREAREAFROMFINISH = "SquareAreaFromFinish";
+	/**
+	 * @generated
+	 */
+	public static final String INTERPOLATEMATRIX = "InterpolateMatrix";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKMARKUP = "StockMarkup";
 
 	/**
 	 * @generated
@@ -227,6 +259,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -244,6 +277,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String machineName;
+	
 	/**
 	 * @generated
  	 */
@@ -261,6 +295,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String outputDescrip;
+	
 	/**
 	 * @generated
  	 */
@@ -278,6 +313,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String productionLocation;
+	
 	/**
 	 * @generated
  	 */
@@ -295,6 +331,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String costCenter;
+	
 	/**
 	 * @generated
  	 */
@@ -312,6 +349,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String oemDeviceID;
+	
 	/**
 	 * @generated
  	 */
@@ -329,6 +367,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean costingCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -346,6 +385,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean blackwhite;
+	
 	/**
 	 * @generated
  	 */
@@ -363,6 +403,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean color;
+	
 	/**
 	 * @generated
  	 */
@@ -380,6 +421,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean integratedDevice;
+	
 	/**
 	 * @generated
  	 */
@@ -397,6 +439,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String maxSize;
+	
 	/**
 	 * @generated
  	 */
@@ -414,6 +457,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String minSize;
+	
 	/**
 	 * @generated
  	 */
@@ -431,6 +475,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double monthlyLabor;
+	
 	/**
 	 * @generated
  	 */
@@ -448,6 +493,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double clickCost;
+	
 	/**
 	 * @generated
  	 */
@@ -465,6 +511,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double laborCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -482,6 +529,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean largeFormat;
+	
 	/**
 	 * @generated
  	 */
@@ -499,6 +547,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String maxWidth;
+	
 	/**
 	 * @generated
  	 */
@@ -516,6 +565,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String minWidth;
+	
 	/**
 	 * @generated
  	 */
@@ -533,6 +583,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Integer daysOpen;
+	
 	/**
 	 * @generated
  	 */
@@ -550,6 +601,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double monthlyPayment;
+	
 	/**
 	 * @generated
  	 */
@@ -567,6 +619,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double percentUsage;
+	
 	/**
 	 * @generated
  	 */
@@ -584,6 +637,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double hourCostRate;
+	
 	/**
 	 * @generated
  	 */
@@ -601,6 +655,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double tonerCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -618,6 +673,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double developerCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -635,6 +691,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double copyMarkup;
+	
 	/**
 	 * @generated
  	 */
@@ -652,6 +709,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Integer hoursOpen;
+	
 	/**
 	 * @generated
  	 */
@@ -669,6 +727,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double monthlyMaintenance;
+	
 	/**
 	 * @generated
  	 */
@@ -686,6 +745,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double machineCostPerCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -703,6 +763,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String method;
+	
 	/**
 	 * @generated
  	 */
@@ -720,6 +781,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String salesCat;
+	
 	/**
 	 * @generated
  	 */
@@ -737,6 +799,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Integer copyID;
+	
 	/**
 	 * @generated
  	 */
@@ -754,6 +817,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double monthlyBurdenRate;
+	
 	/**
 	 * @generated
  	 */
@@ -771,6 +835,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double copyMinutes;
+	
 	/**
 	 * @generated
  	 */
@@ -789,6 +854,7 @@ public class CopierDefinition extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "copierdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
+	
 	/**
 	 * @generated
  	 */
@@ -812,6 +878,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String copierId;
+	
 	/**
 	 * @generated
  	 */
@@ -829,6 +896,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double flateRate;
+	
 	/**
 	 * @generated
  	 */
@@ -846,6 +914,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double copyMarkup2;
+	
 	/**
 	 * @generated
  	 */
@@ -863,6 +932,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double flatRate;
+	
 	/**
 	 * @generated
  	 */
@@ -880,6 +950,7 @@ public class CopierDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
+	
 	/**
 	 * @generated
  	 */
@@ -897,6 +968,7 @@ public class CopierDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList stockPriceList;
+	
 	/**
 	 * @generated
  	 */
@@ -914,6 +986,7 @@ public class CopierDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList copierPriceList;
+	
 	/**
 	 * @generated
  	 */
@@ -931,6 +1004,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String priceTwoSide;
+	
 	/**
 	 * @generated
  	 */
@@ -948,6 +1022,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private String stockPriceMethod;
+	
 	/**
 	 * @generated
  	 */
@@ -965,6 +1040,7 @@ public class CopierDefinition extends ModelBase {
 	
  	@Basic
 	private Double sideTwoFactor;
+	
 	/**
 	 * @generated
  	 */
@@ -982,6 +1058,7 @@ public class CopierDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Matrix copierMatrix;
+	
 	/**
 	 * @generated
  	 */
@@ -994,6 +1071,150 @@ public class CopierDefinition extends ModelBase {
 	 */	
 	public void setCopierMatrix(Matrix newVal) {
 		this.copierMatrix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean useCopierStockMarkup;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseCopierStockMarkup(){
+		return useCopierStockMarkup; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setUseCopierStockMarkup(Boolean newVal) {
+		this.useCopierStockMarkup = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean matrixIsCopyCost;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getMatrixIsCopyCost(){
+		return matrixIsCopyCost; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMatrixIsCopyCost(Boolean newVal) {
+		this.matrixIsCopyCost = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean matrixIsDiscountTable;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getMatrixIsDiscountTable(){
+		return matrixIsDiscountTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMatrixIsDiscountTable(Boolean newVal) {
+		this.matrixIsDiscountTable = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean matrixIsStepTable;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getMatrixIsStepTable(){
+		return matrixIsStepTable; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMatrixIsStepTable(Boolean newVal) {
+		this.matrixIsStepTable = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean squareAreaFromRunSize;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSquareAreaFromRunSize(){
+		return squareAreaFromRunSize; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSquareAreaFromRunSize(Boolean newVal) {
+		this.squareAreaFromRunSize = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean squareAreaFromFinish;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getSquareAreaFromFinish(){
+		return squareAreaFromFinish; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setSquareAreaFromFinish(Boolean newVal) {
+		this.squareAreaFromFinish = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean interpolateMatrix;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getInterpolateMatrix(){
+		return interpolateMatrix; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInterpolateMatrix(Boolean newVal) {
+		this.interpolateMatrix = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double stockMarkup;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getStockMarkup(){
+		return stockMarkup; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockMarkup(Double newVal) {
+		this.stockMarkup = newVal;
 	}
 	/**
 	 * @generated
@@ -1046,6 +1267,14 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICEMETHOD.equals(propertyName)) return getStockPriceMethod();
 		if (SIDETWOFACTOR.equals(propertyName)) return getSideTwoFactor();
 		if (COPIERMATRIX.equals(propertyName)) return getCopierMatrix();
+		if (USECOPIERSTOCKMARKUP.equals(propertyName)) return getUseCopierStockMarkup();
+		if (MATRIXISCOPYCOST.equals(propertyName)) return getMatrixIsCopyCost();
+		if (MATRIXISDISCOUNTTABLE.equals(propertyName)) return getMatrixIsDiscountTable();
+		if (MATRIXISSTEPTABLE.equals(propertyName)) return getMatrixIsStepTable();
+		if (SQUAREAREAFROMRUNSIZE.equals(propertyName)) return getSquareAreaFromRunSize();
+		if (SQUAREAREAFROMFINISH.equals(propertyName)) return getSquareAreaFromFinish();
+		if (INTERPOLATEMATRIX.equals(propertyName)) return getInterpolateMatrix();
+		if (STOCKMARKUP.equals(propertyName)) return getStockMarkup();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1100,6 +1329,14 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICEMETHOD.equals(propertyName)) setStockPriceMethod((String)newValue); else
 		if (SIDETWOFACTOR.equals(propertyName)) setSideTwoFactor((Double)newValue); else
 		if (COPIERMATRIX.equals(propertyName)) setCopierMatrix((Matrix)newValue); else
+		if (USECOPIERSTOCKMARKUP.equals(propertyName)) setUseCopierStockMarkup((Boolean)newValue); else
+		if (MATRIXISCOPYCOST.equals(propertyName)) setMatrixIsCopyCost((Boolean)newValue); else
+		if (MATRIXISDISCOUNTTABLE.equals(propertyName)) setMatrixIsDiscountTable((Boolean)newValue); else
+		if (MATRIXISSTEPTABLE.equals(propertyName)) setMatrixIsStepTable((Boolean)newValue); else
+		if (SQUAREAREAFROMRUNSIZE.equals(propertyName)) setSquareAreaFromRunSize((Boolean)newValue); else
+		if (SQUAREAREAFROMFINISH.equals(propertyName)) setSquareAreaFromFinish((Boolean)newValue); else
+		if (INTERPOLATEMATRIX.equals(propertyName)) setInterpolateMatrix((Boolean)newValue); else
+		if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1199,6 +1436,22 @@ public class CopierDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (COPIERMATRIX.equals(propertyName)) 
 			return new Class<?>[] {Matrix.class};		
+		if (USECOPIERSTOCKMARKUP.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (MATRIXISCOPYCOST.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (MATRIXISDISCOUNTTABLE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (MATRIXISSTEPTABLE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SQUAREAREAFROMRUNSIZE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SQUAREAREAFROMFINISH.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (INTERPOLATEMATRIX.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (STOCKMARKUP.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1254,6 +1507,14 @@ public class CopierDefinition extends ModelBase {
 		if (STOCKPRICEMETHOD.equals(propertyName)) return CopierDefinition.class;
 		if (SIDETWOFACTOR.equals(propertyName)) return CopierDefinition.class;
 		if (COPIERMATRIX.equals(propertyName)) return CopierDefinition.class;
+		if (USECOPIERSTOCKMARKUP.equals(propertyName)) return CopierDefinition.class;
+		if (MATRIXISCOPYCOST.equals(propertyName)) return CopierDefinition.class;
+		if (MATRIXISDISCOUNTTABLE.equals(propertyName)) return CopierDefinition.class;
+		if (MATRIXISSTEPTABLE.equals(propertyName)) return CopierDefinition.class;
+		if (SQUAREAREAFROMRUNSIZE.equals(propertyName)) return CopierDefinition.class;
+		if (SQUAREAREAFROMFINISH.equals(propertyName)) return CopierDefinition.class;
+		if (INTERPOLATEMATRIX.equals(propertyName)) return CopierDefinition.class;
+		if (STOCKMARKUP.equals(propertyName)) return CopierDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1354,6 +1615,22 @@ public class CopierDefinition extends ModelBase {
 		if (! SmartEquals(getSideTwoFactor(), objT.getSideTwoFactor()))
 			return false;
 		if (! SmartEquals(getCopierMatrix(), objT.getCopierMatrix()))
+			return false;
+		if (! SmartEquals(getUseCopierStockMarkup(), objT.getUseCopierStockMarkup()))
+			return false;
+		if (! SmartEquals(getMatrixIsCopyCost(), objT.getMatrixIsCopyCost()))
+			return false;
+		if (! SmartEquals(getMatrixIsDiscountTable(), objT.getMatrixIsDiscountTable()))
+			return false;
+		if (! SmartEquals(getMatrixIsStepTable(), objT.getMatrixIsStepTable()))
+			return false;
+		if (! SmartEquals(getSquareAreaFromRunSize(), objT.getSquareAreaFromRunSize()))
+			return false;
+		if (! SmartEquals(getSquareAreaFromFinish(), objT.getSquareAreaFromFinish()))
+			return false;
+		if (! SmartEquals(getInterpolateMatrix(), objT.getInterpolateMatrix()))
+			return false;
+		if (! SmartEquals(getStockMarkup(), objT.getStockMarkup()))
 			return false;
 		return true;
 	}			

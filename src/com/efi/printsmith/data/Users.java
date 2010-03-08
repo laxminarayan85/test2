@@ -99,6 +99,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -116,6 +117,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private String password;
+	
 	/**
 	 * @generated
  	 */
@@ -133,6 +135,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean forcePasswordChange;
+	
 	/**
 	 * @generated
  	 */
@@ -150,6 +153,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean robustPassword;
+	
 	/**
 	 * @generated
  	 */
@@ -167,6 +171,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean noOverride;
+	
 	/**
 	 * @generated
  	 */
@@ -184,6 +189,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean overrideCredit;
+	
 	/**
 	 * @generated
  	 */
@@ -201,6 +207,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean lockSalesRep;
+	
 	/**
 	 * @generated
  	 */
@@ -218,6 +225,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean refundCreditCards;
+	
 	/**
 	 * @generated
  	 */
@@ -235,6 +243,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean noCashReturn;
+	
 	/**
 	 * @generated
  	 */
@@ -252,6 +261,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean showUserNameLog;
+	
 	/**
 	 * @generated
  	 */
@@ -269,6 +279,7 @@ public class Users extends ModelBase {
 	
  	@Basic
 	private Boolean quickAccess;
+	
 	/**
 	 * @generated
  	 */
@@ -286,6 +297,7 @@ public class Users extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessLevel accessLevel;
+	
 	/**
 	 * @generated
  	 */
@@ -303,6 +315,7 @@ public class Users extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessGroup accessGroup;
+	
 	/**
 	 * @generated
  	 */

@@ -51,6 +51,7 @@ public class DataManager extends ModelBase {
 	
  	@Basic
 	private Boolean dataloaded;
+	
 	/**
 	 * @generated
  	 */

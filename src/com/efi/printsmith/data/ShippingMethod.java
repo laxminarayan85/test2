@@ -51,6 +51,7 @@ public class ShippingMethod extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

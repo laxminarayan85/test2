@@ -67,6 +67,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultBWCopier;
+	
 	/**
 	 * @generated
  	 */
@@ -84,6 +85,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultColorCopier;
+	
 	/**
 	 * @generated
  	 */
@@ -101,6 +103,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultLargeFormat;
+	
 	/**
 	 * @generated
  	 */
@@ -118,6 +121,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition defaultRollFedPress;
+	
 	/**
 	 * @generated
  	 */
@@ -135,6 +139,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition defaultSheetFedPress;
+	
 	/**
 	 * @generated
  	 */

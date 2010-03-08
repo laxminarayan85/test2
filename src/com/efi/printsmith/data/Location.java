@@ -51,6 +51,7 @@ public class Location extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

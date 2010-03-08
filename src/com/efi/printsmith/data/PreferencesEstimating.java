@@ -259,6 +259,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean closeAfterCopy;
+	
 	/**
 	 * @generated
  	 */
@@ -276,6 +277,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean stockCostInEstimator;
+	
 	/**
 	 * @generated
  	 */
@@ -293,6 +295,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean canChangeAddress;
+	
 	/**
 	 * @generated
  	 */
@@ -310,6 +313,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean showPaperCalculator;
+	
 	/**
 	 * @generated
  	 */
@@ -327,6 +331,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useStockParentSize;
+	
 	/**
 	 * @generated
  	 */
@@ -344,6 +349,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean calculateReOrderDate;
+	
 	/**
 	 * @generated
  	 */
@@ -361,6 +367,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean validateSalesRep;
+	
 	/**
 	 * @generated
  	 */
@@ -378,6 +385,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean leaveFoldedSizeEmpty;
+	
 	/**
 	 * @generated
  	 */
@@ -395,6 +403,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean doNotCostDuringPost;
+	
 	/**
 	 * @generated
  	 */
@@ -412,6 +421,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean autoShowCharges;
+	
 	/**
 	 * @generated
  	 */
@@ -429,6 +439,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean neverUsePresetPressOnStockChanges;
+	
 	/**
 	 * @generated
  	 */
@@ -446,6 +457,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean addFixedWasteForEachPass;
+	
 	/**
 	 * @generated
  	 */
@@ -463,6 +475,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean addFixedWasteForEachColor;
+	
 	/**
 	 * @generated
  	 */
@@ -480,6 +493,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean calculateInkbyImpressions;
+	
 	/**
 	 * @generated
  	 */
@@ -497,6 +511,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useHistoryTitleforNewTitle;
+	
 	/**
 	 * @generated
  	 */
@@ -514,6 +529,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Integer normalDueDateDays;
+	
 	/**
 	 * @generated
  	 */
@@ -531,6 +547,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean closeInvoiceAfterPrintingTicket;
+	
 	/**
 	 * @generated
  	 */
@@ -548,6 +565,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean closeInvoicesAndEstimateAfterPrinting;
+	
 	/**
 	 * @generated
  	 */
@@ -565,6 +583,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Integer defaultInvoice;
+	
 	/**
 	 * @generated
  	 */
@@ -582,6 +601,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Integer defaultEstimate;
+	
 	/**
 	 * @generated
  	 */
@@ -599,6 +619,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Integer numberOfDaysBeforeDue;
+	
 	/**
 	 * @generated
  	 */
@@ -616,6 +637,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Integer dueFrom;
+	
 	/**
 	 * @generated
  	 */
@@ -633,6 +655,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useGripEdgeGap;
+	
 	/**
 	 * @generated
  	 */
@@ -650,6 +673,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double gripEdgeGap;
+	
 	/**
 	 * @generated
  	 */
@@ -667,6 +691,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useFolioEdge;
+	
 	/**
 	 * @generated
  	 */
@@ -684,6 +709,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double folioEdge;
+	
 	/**
 	 * @generated
  	 */
@@ -701,6 +727,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useColorBar;
+	
 	/**
 	 * @generated
  	 */
@@ -718,6 +745,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double colorBar;
+	
 	/**
 	 * @generated
  	 */
@@ -735,6 +763,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useWhiteSpace;
+	
 	/**
 	 * @generated
  	 */
@@ -752,6 +781,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double whiteSpace;
+	
 	/**
 	 * @generated
  	 */
@@ -769,6 +799,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double whiteSpaceTop;
+	
 	/**
 	 * @generated
  	 */
@@ -786,6 +817,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double whiteSpaceRight;
+	
 	/**
 	 * @generated
  	 */
@@ -803,6 +835,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double whiteSpaceBottom;
+	
 	/**
 	 * @generated
  	 */
@@ -820,6 +853,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useGutter;
+	
 	/**
 	 * @generated
  	 */
@@ -837,6 +871,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double gutter;
+	
 	/**
 	 * @generated
  	 */
@@ -854,6 +889,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double gutterHorizontal;
+	
 	/**
 	 * @generated
  	 */
@@ -871,6 +907,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean useBleed;
+	
 	/**
 	 * @generated
  	 */
@@ -888,6 +925,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double bleed;
+	
 	/**
 	 * @generated
  	 */
@@ -905,6 +943,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double bleedTop;
+	
 	/**
 	 * @generated
  	 */
@@ -922,6 +961,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double bleedRight;
+	
 	/**
 	 * @generated
  	 */
@@ -939,6 +979,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double bleedBottom;
+	
 	/**
 	 * @generated
  	 */
@@ -956,6 +997,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Double defaultPressCuttOff;
+	
 	/**
 	 * @generated
  	 */
@@ -973,6 +1015,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean backTrimParent;
+	
 	/**
 	 * @generated
  	 */
@@ -990,6 +1033,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean trimFourSides;
+	
 	/**
 	 * @generated
  	 */
@@ -1007,6 +1051,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean workandTumble;
+	
 	/**
 	 * @generated
  	 */
@@ -1024,6 +1069,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private String runToFinishGrain;
+	
 	/**
 	 * @generated
  	 */
@@ -1041,6 +1087,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean printParentToFinishSection;
+	
 	/**
 	 * @generated
  	 */
@@ -1058,6 +1105,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean printParentToRunSection;
+	
 	/**
 	 * @generated
  	 */
@@ -1075,6 +1123,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean printRunToFinishSection;
+	
 	/**
 	 * @generated
  	 */
@@ -1092,6 +1141,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private Boolean attachToJobTicket;
+	
 	/**
 	 * @generated
  	 */
@@ -1109,6 +1159,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private String jobTicketFormat;
+	
 	/**
 	 * @generated
  	 */
@@ -1126,6 +1177,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private String customJobTicket;
+	
 	/**
 	 * @generated
  	 */
@@ -1143,6 +1195,7 @@ public class PreferencesEstimating extends ModelBase {
 	
  	@Basic
 	private String chargeDescription;
+	
 	/**
 	 * @generated
  	 */

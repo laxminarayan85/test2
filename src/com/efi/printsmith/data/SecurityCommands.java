@@ -59,6 +59,7 @@ public class SecurityCommands extends ModelBase {
 	
  	@Basic
 	private String menu;
+	
 	/**
 	 * @generated
  	 */
@@ -76,6 +77,7 @@ public class SecurityCommands extends ModelBase {
 	
  	@Basic
 	private String commandName;
+	
 	/**
 	 * @generated
  	 */
@@ -93,6 +95,7 @@ public class SecurityCommands extends ModelBase {
 	
  	@Basic
 	private String commandId;
+	
 	/**
 	 * @generated
  	 */

@@ -51,6 +51,7 @@ public class Substrate extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

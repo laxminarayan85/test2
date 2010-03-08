@@ -51,6 +51,7 @@ public class ComLinkType extends ModelBase {
 	
  	@Basic
 	private String type;
+	
 	/**
 	 * @generated
  	 */

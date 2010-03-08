@@ -87,6 +87,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Double effectiveTaxRate;
+	
 	/**
 	 * @generated
  	 */
@@ -105,6 +106,7 @@ public class TaxTable extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "taxtable_taxelements")
 	private java.util.List<TaxElement> taxElements;
+	
 	/**
 	 * @generated
  	 */
@@ -128,6 +130,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean taxTableIsCurrent;
+	
 	/**
 	 * @generated
  	 */
@@ -145,6 +148,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean taxShipping;
+	
 	/**
 	 * @generated
  	 */
@@ -162,6 +166,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean taxOnTax;
+	
 	/**
 	 * @generated
  	 */
@@ -179,6 +184,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean roundTaxUp;
+	
 	/**
 	 * @generated
  	 */
@@ -196,6 +202,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean taxInPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -213,6 +220,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Boolean doDetail;
+	
 	/**
 	 * @generated
  	 */
@@ -230,6 +238,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private Integer dontRoundShownTaxElements;
+	
 	/**
 	 * @generated
  	 */
@@ -247,6 +256,7 @@ public class TaxTable extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

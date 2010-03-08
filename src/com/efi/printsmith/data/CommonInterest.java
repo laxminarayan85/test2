@@ -51,6 +51,7 @@ public class CommonInterest extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

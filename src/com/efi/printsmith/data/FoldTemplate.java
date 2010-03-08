@@ -51,6 +51,7 @@ public class FoldTemplate extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

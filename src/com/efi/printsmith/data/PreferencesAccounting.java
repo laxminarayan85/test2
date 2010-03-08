@@ -247,6 +247,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Double creditLimit;
+	
 	/**
 	 * @generated
  	 */
@@ -264,6 +265,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Double financeChange;
+	
 	/**
 	 * @generated
  	 */
@@ -281,6 +283,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Double inactivePeriod;
+	
 	/**
 	 * @generated
  	 */
@@ -298,6 +301,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean removeDraftsFromDeposit;
+	
 	/**
 	 * @generated
  	 */
@@ -315,6 +319,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String defaultSalesRep;
+	
 	/**
 	 * @generated
  	 */
@@ -332,6 +337,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String defaultShipping;
+	
 	/**
 	 * @generated
  	 */
@@ -349,6 +355,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Integer pastDue;
+	
 	/**
 	 * @generated
  	 */
@@ -366,6 +373,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String pastDueNote;
+	
 	/**
 	 * @generated
  	 */
@@ -383,6 +391,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Integer delinquent;
+	
 	/**
 	 * @generated
  	 */
@@ -400,6 +409,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String delinquentNote;
+	
 	/**
 	 * @generated
  	 */
@@ -417,6 +427,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Integer frozen;
+	
 	/**
 	 * @generated
  	 */
@@ -434,6 +445,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String frozenNote;
+	
 	/**
 	 * @generated
  	 */
@@ -451,6 +463,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean activateCreditCardApproval;
+	
 	/**
 	 * @generated
  	 */
@@ -468,6 +481,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String invoicePrefix;
+	
 	/**
 	 * @generated
  	 */
@@ -485,6 +499,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String invoiceDocument;
+	
 	/**
 	 * @generated
  	 */
@@ -502,6 +517,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String invoiceSuffix;
+	
 	/**
 	 * @generated
  	 */
@@ -519,6 +535,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean invoiceAllowPrefixMod;
+	
 	/**
 	 * @generated
  	 */
@@ -536,6 +553,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean invoiceAllowSuffixMod;
+	
 	/**
 	 * @generated
  	 */
@@ -553,6 +571,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String estimatePrefix;
+	
 	/**
 	 * @generated
  	 */
@@ -570,6 +589,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String estimateDocument;
+	
 	/**
 	 * @generated
  	 */
@@ -587,6 +607,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String estimateSuffix;
+	
 	/**
 	 * @generated
  	 */
@@ -604,6 +625,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean estimateAllowPrefixMod;
+	
 	/**
 	 * @generated
  	 */
@@ -621,6 +643,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean estimateAllowSuffixMod;
+	
 	/**
 	 * @generated
  	 */
@@ -638,6 +661,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean printDocument;
+	
 	/**
 	 * @generated
  	 */
@@ -655,6 +679,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String journalDocumentPreference;
+	
 	/**
 	 * @generated
  	 */
@@ -672,6 +697,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String accountingLinkTo;
+	
 	/**
 	 * @generated
  	 */
@@ -689,6 +715,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String shippingCollected;
+	
 	/**
 	 * @generated
  	 */
@@ -706,6 +733,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String actualBankDeposit;
+	
 	/**
 	 * @generated
  	 */
@@ -723,6 +751,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String undepositedReceipts;
+	
 	/**
 	 * @generated
  	 */
@@ -740,6 +769,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String discounts;
+	
 	/**
 	 * @generated
  	 */
@@ -757,6 +787,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String salesTax;
+	
 	/**
 	 * @generated
  	 */
@@ -774,6 +805,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String totalARReceipts;
+	
 	/**
 	 * @generated
  	 */
@@ -791,6 +823,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String depositsOnInvoices;
+	
 	/**
 	 * @generated
  	 */
@@ -808,6 +841,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String newChargesToAR;
+	
 	/**
 	 * @generated
  	 */
@@ -825,6 +859,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String cashOverShort;
+	
 	/**
 	 * @generated
  	 */
@@ -842,6 +877,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String paidOut;
+	
 	/**
 	 * @generated
  	 */
@@ -859,6 +895,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String refundChecks;
+	
 	/**
 	 * @generated
  	 */
@@ -876,6 +913,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean useObsoleteDropFolder;
+	
 	/**
 	 * @generated
  	 */
@@ -893,6 +931,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean useSkipJackProcessor;
+	
 	/**
 	 * @generated
  	 */
@@ -910,6 +949,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean useEfsProcessor;
+	
 	/**
 	 * @generated
  	 */
@@ -927,6 +967,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String creditCardDropFolder;
+	
 	/**
 	 * @generated
  	 */
@@ -944,6 +985,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Integer skipJackMode;
+	
 	/**
 	 * @generated
  	 */
@@ -961,6 +1003,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String internetURL;
+	
 	/**
 	 * @generated
  	 */
@@ -978,6 +1021,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String serialNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -995,6 +1039,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String developmentNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -1012,6 +1057,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String portNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -1029,6 +1075,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String merchantID;
+	
 	/**
 	 * @generated
  	 */
@@ -1046,6 +1093,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private String merchantKey;
+	
 	/**
 	 * @generated
  	 */
@@ -1063,6 +1111,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean useAddressValidation;
+	
 	/**
 	 * @generated
  	 */
@@ -1080,6 +1129,7 @@ public class PreferencesAccounting extends ModelBase {
 	
  	@Basic
 	private Boolean promptUserForValidationInfo;
+	
 	/**
 	 * @generated
  	 */

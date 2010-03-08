@@ -59,6 +59,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	
  	@Basic
 	private Integer quantity;
+	
 	/**
 	 * @generated
  	 */
@@ -76,6 +77,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	
  	@Basic
 	private Boolean qtyBreak;
+	
 	/**
 	 * @generated
  	 */
@@ -93,6 +95,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private JobMethod jobMethod;
+	
 	/**
 	 * @generated
  	 */

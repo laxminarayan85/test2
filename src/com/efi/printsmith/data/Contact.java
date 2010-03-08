@@ -103,6 +103,7 @@ public class Contact extends Party {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
+	
 	/**
 	 * @generated
  	 */
@@ -120,6 +121,7 @@ public class Contact extends Party {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Account parentAccount;
+	
 	/**
 	 * @generated
  	 */
@@ -137,6 +139,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean webAcctNameIncomplete;
+	
 	/**
 	 * @generated
  	 */
@@ -154,6 +157,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean webCatalogChange;
+	
 	/**
 	 * @generated
  	 */
@@ -171,6 +175,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean webStateChange;
+	
 	/**
 	 * @generated
  	 */
@@ -188,6 +193,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean transmitted;
+	
 	/**
 	 * @generated
  	 */
@@ -205,6 +211,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean useContactAddress;
+	
 	/**
 	 * @generated
  	 */
@@ -222,6 +229,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean isIndividual;
+	
 	/**
 	 * @generated
  	 */
@@ -239,6 +247,7 @@ public class Contact extends Party {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep defaultSalesRep;
+	
 	/**
 	 * @generated
  	 */
@@ -256,6 +265,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private Boolean mailerCampaigns;
+	
 	/**
 	 * @generated
  	 */
@@ -273,6 +283,7 @@ public class Contact extends Party {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CreditCard creditCard;
+	
 	/**
 	 * @generated
  	 */
@@ -290,6 +301,7 @@ public class Contact extends Party {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Marketing marketing;
+	
 	/**
 	 * @generated
  	 */
@@ -308,6 +320,7 @@ public class Contact extends Party {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
+	
 	/**
 	 * @generated
  	 */
@@ -331,6 +344,7 @@ public class Contact extends Party {
 	
  	@Basic
 	private String contactId;
+	
 	/**
 	 * @generated
  	 */

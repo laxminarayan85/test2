@@ -344,26 +344,26 @@
 			return (currentUser==null)?false:true;
 		}
 		
-		CONFIG::debugging
-		private function showDebugButton():Boolean {
-			return true;
-		}
-		
-		CONFIG::release
-		private function showDebugButton():Boolean {
-			return false;
-		}
-		
-		CONFIG::debugging
-		private function doDebug():void {
-			var debugPopup : Debug = Debug(PopUpManager.createPopUp(this, Debug, true));
-		//	this.mainContainer.visible=false;
-			PopUpManager.centerPopUp(debugPopup);
-		}
-		
-		CONFIG::release
-		private function doDebug():void {
-		}
+//		CONFIG::debugging
+//		private function showDebugButton():Boolean {
+//			return true;
+//		}
+//		
+//		CONFIG::release
+//		private function showDebugButton():Boolean {
+//			return false;
+//		}
+//		
+//		CONFIG::debugging
+//		private function doDebug():void {
+//			var debugPopup : Debug = Debug(PopUpManager.createPopUp(this, Debug, true));
+//		//	this.mainContainer.visible=false;
+//			PopUpManager.centerPopUp(debugPopup);
+//		}
+//		
+//		CONFIG::release
+//		private function doDebug():void {
+//		}
 
 		private function doDeliveryTicket():void{
 			var child:DeliveryTicket = new DeliveryTicket();
@@ -492,8 +492,8 @@
 	<business:Services id="services" />
 	<control:MainController id="controller" />
 	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
-	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
-	<mx:ComboBox x="475" y="4" id="languageComboBox" dataProvider="{locales}"				 
+<!--	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
+-->	<mx:ComboBox x="475" y="4" id="languageComboBox" dataProvider="{locales}"				 
 					labelFunction="languageComboBoxLabelFunction"
 					change="languageComboBox_changeHandler(event)"/>
 </mx:Application>

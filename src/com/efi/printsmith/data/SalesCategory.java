@@ -51,6 +51,7 @@ public class SalesCategory extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

@@ -83,6 +83,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private Boolean used;
+	
 	/**
 	 * @generated
  	 */
@@ -100,6 +101,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private String title;
+	
 	/**
 	 * @generated
  	 */
@@ -117,6 +119,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private String abbreviation;
+	
 	/**
 	 * @generated
  	 */
@@ -134,6 +137,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private Boolean brokered;
+	
 	/**
 	 * @generated
  	 */
@@ -151,6 +155,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private Boolean taxable;
+	
 	/**
 	 * @generated
  	 */
@@ -168,6 +173,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private Boolean finished;
+	
 	/**
 	 * @generated
  	 */
@@ -185,6 +191,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
  	@Basic
 	private Boolean showNotes;
+	
 	/**
 	 * @generated
  	 */
@@ -202,6 +209,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
+	
 	/**
 	 * @generated
  	 */
@@ -219,6 +227,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private EstimatorTypes estimator;
+	
 	/**
 	 * @generated
  	 */

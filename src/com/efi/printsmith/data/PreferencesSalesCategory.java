@@ -55,6 +55,7 @@ public class PreferencesSalesCategory extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
+	
 	/**
 	 * @generated
  	 */
@@ -72,6 +73,7 @@ public class PreferencesSalesCategory extends ModelBase {
 	
  	@Basic
 	private String accountNumber;
+	
 	/**
 	 * @generated
  	 */

@@ -207,6 +207,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -224,6 +225,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String machineName;
+	
 	/**
 	 * @generated
  	 */
@@ -241,6 +243,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String outputDescrip;
+	
 	/**
 	 * @generated
  	 */
@@ -258,6 +261,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String productionLocation;
+	
 	/**
 	 * @generated
  	 */
@@ -275,6 +279,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String costCenter;
+	
 	/**
 	 * @generated
  	 */
@@ -292,6 +297,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String oemDeviceID;
+	
 	/**
 	 * @generated
  	 */
@@ -309,6 +315,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long machineID;
+	
 	/**
 	 * @generated
  	 */
@@ -326,6 +333,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean costingPress;
+	
 	/**
 	 * @generated
  	 */
@@ -343,6 +351,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean integratedDevice;
+	
 	/**
 	 * @generated
  	 */
@@ -360,6 +369,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String maxPaperSize;
+	
 	/**
 	 * @generated
  	 */
@@ -377,6 +387,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String minPaperSize;
+	
 	/**
 	 * @generated
  	 */
@@ -394,6 +405,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double laborRate;
+	
 	/**
 	 * @generated
  	 */
@@ -411,6 +423,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double laborMarkup;
+	
 	/**
 	 * @generated
  	 */
@@ -428,6 +441,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double fixedWaste;
+	
 	/**
 	 * @generated
  	 */
@@ -445,6 +459,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double minLabor;
+	
 	/**
 	 * @generated
  	 */
@@ -462,6 +477,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double setupMin;
+	
 	/**
 	 * @generated
  	 */
@@ -479,6 +495,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long setupAddSig;
+	
 	/**
 	 * @generated
  	 */
@@ -496,6 +513,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double workTurnSetup;
+	
 	/**
 	 * @generated
  	 */
@@ -513,6 +531,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long setupAddHead;
+	
 	/**
 	 * @generated
  	 */
@@ -530,6 +549,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double washupFee;
+	
 	/**
 	 * @generated
  	 */
@@ -547,6 +567,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long addSigAddHead;
+	
 	/**
 	 * @generated
  	 */
@@ -564,6 +585,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long washupMin;
+	
 	/**
 	 * @generated
  	 */
@@ -581,6 +603,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double washupPerFountain;
+	
 	/**
 	 * @generated
  	 */
@@ -598,6 +621,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double gripEdge;
+	
 	/**
 	 * @generated
  	 */
@@ -615,6 +639,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean perfector;
+	
 	/**
 	 * @generated
  	 */
@@ -632,6 +657,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long avgImpressPerHour;
+	
 	/**
 	 * @generated
  	 */
@@ -649,6 +675,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long numberHeads;
+	
 	/**
 	 * @generated
  	 */
@@ -666,6 +693,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Long setupAddRun;
+	
 	/**
 	 * @generated
  	 */
@@ -683,6 +711,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean sheetFed;
+	
 	/**
 	 * @generated
  	 */
@@ -700,6 +729,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean rollFed;
+	
 	/**
 	 * @generated
  	 */
@@ -717,6 +747,7 @@ public class PressDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
+	
 	/**
 	 * @generated
  	 */
@@ -734,6 +765,7 @@ public class PressDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList pressPriceList;
+	
 	/**
 	 * @generated
  	 */
@@ -751,6 +783,7 @@ public class PressDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList stockPriceList;
+	
 	/**
 	 * @generated
  	 */
@@ -768,6 +801,7 @@ public class PressDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SpeedTable speedTable;
+	
 	/**
 	 * @generated
  	 */
@@ -785,6 +819,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private Double cutoffLength;
+	
 	/**
 	 * @generated
  	 */
@@ -802,6 +837,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String pressId;
+	
 	/**
 	 * @generated
  	 */
@@ -820,6 +856,7 @@ public class PressDefinition extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pressdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
+	
 	/**
 	 * @generated
  	 */
@@ -843,6 +880,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String maxRollWidth;
+	
 	/**
 	 * @generated
  	 */
@@ -860,6 +898,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String minRollWidth;
+	
 	/**
 	 * @generated
  	 */
@@ -877,6 +916,7 @@ public class PressDefinition extends ModelBase {
 	
  	@Basic
 	private String salesCat;
+	
 	/**
 	 * @generated
  	 */

@@ -63,6 +63,7 @@ public class PreferencesCreditCard extends ModelBase {
 	
  	@Basic
 	private Boolean used;
+	
 	/**
 	 * @generated
  	 */
@@ -80,6 +81,7 @@ public class PreferencesCreditCard extends ModelBase {
 	
  	@Basic
 	private String cardType;
+	
 	/**
 	 * @generated
  	 */
@@ -97,6 +99,7 @@ public class PreferencesCreditCard extends ModelBase {
 	
  	@Basic
 	private String abbreviation;
+	
 	/**
 	 * @generated
  	 */
@@ -114,6 +117,7 @@ public class PreferencesCreditCard extends ModelBase {
 	
  	@Basic
 	private String code;
+	
 	/**
 	 * @generated
  	 */

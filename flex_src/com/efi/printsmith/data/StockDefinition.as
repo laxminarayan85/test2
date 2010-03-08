@@ -20,7 +20,7 @@ package com.efi.printsmith.data
 		public var stktype:String = "";
 		public var isMetric:Boolean = true;
 		public var finish:StockFinish;
-		public var weight:int = 0;
+		public var weight:Number = 0;
 		public var color:StockColors;
 		public var grade:StockGrade;
 		public var coated:String = "";
@@ -29,7 +29,7 @@ package com.efi.printsmith.data
 		public var basicsize:String = "";
 		public var parentsize:String = "";
 		public var thickness:int = 0;
-		public var mweight:int = 0;
+		public var mweight:Number = 0;
 		public var sheetspercarton:int = 0;
 		public var minorder:int = 0;
 		public var comments:String = "";

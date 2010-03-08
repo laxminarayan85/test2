@@ -99,6 +99,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double setupCost;
+	
 	/**
 	 * @generated
  	 */
@@ -116,6 +117,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double unitCost;
+	
 	/**
 	 * @generated
  	 */
@@ -133,6 +135,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Integer attribute1;
+	
 	/**
 	 * @generated
  	 */
@@ -150,6 +153,7 @@ public class ChargeCost extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private RateTable rateTable;
+	
 	/**
 	 * @generated
  	 */
@@ -167,6 +171,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double fixedMaterials;
+	
 	/**
 	 * @generated
  	 */
@@ -184,6 +189,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double unitMaterials;
+	
 	/**
 	 * @generated
  	 */
@@ -201,6 +207,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double laborRate;
+	
 	/**
 	 * @generated
  	 */
@@ -218,6 +225,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Integer attribute2;
+	
 	/**
 	 * @generated
  	 */
@@ -235,6 +243,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double setupMinutes;
+	
 	/**
 	 * @generated
  	 */
@@ -252,6 +261,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double piecesPerHour;
+	
 	/**
 	 * @generated
  	 */
@@ -269,6 +279,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private Double totalUnitCost;
+	
 	/**
 	 * @generated
  	 */
@@ -286,6 +297,7 @@ public class ChargeCost extends ModelBase {
 	
  	@Basic
 	private String costingMethod;
+	
 	/**
 	 * @generated
  	 */
@@ -303,6 +315,7 @@ public class ChargeCost extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SpeedTable speedTable;
+	
 	/**
 	 * @generated
  	 */

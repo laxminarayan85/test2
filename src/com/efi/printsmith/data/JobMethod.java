@@ -51,6 +51,7 @@ public class JobMethod extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

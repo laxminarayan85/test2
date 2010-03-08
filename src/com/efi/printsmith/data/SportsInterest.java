@@ -51,6 +51,7 @@ public class SportsInterest extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

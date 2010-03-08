@@ -51,6 +51,7 @@ public class MarketingDateLabels extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

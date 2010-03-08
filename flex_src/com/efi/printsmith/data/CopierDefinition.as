@@ -58,6 +58,14 @@ package com.efi.printsmith.data
 		public var stockPriceMethod:String = "";
 		public var sideTwoFactor:Number = 0;
 		public var copierMatrix:Matrix;
+		public var useCopierStockMarkup:Boolean = true;
+		public var matrixIsCopyCost:Boolean = true;
+		public var matrixIsDiscountTable:Boolean = true;
+		public var matrixIsStepTable:Boolean = true;
+		public var squareAreaFromRunSize:Boolean = true;
+		public var squareAreaFromFinish:Boolean = true;
+		public var interpolateMatrix:Boolean = true;
+		public var stockMarkup:Number = 0;
 	
 	}
 }

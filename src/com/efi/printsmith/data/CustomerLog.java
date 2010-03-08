@@ -51,6 +51,7 @@ public class CustomerLog extends ModelBase {
 	
  	@Basic
 	private String logEntry;
+	
 	/**
 	 * @generated
  	 */

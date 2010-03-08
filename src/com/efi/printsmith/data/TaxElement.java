@@ -59,6 +59,7 @@ public class TaxElement extends ModelBase {
 	
  	@Basic
 	private Double rate;
+	
 	/**
 	 * @generated
  	 */
@@ -76,6 +77,7 @@ public class TaxElement extends ModelBase {
 	
  	@Basic
 	private Boolean showTax;
+	
 	/**
 	 * @generated
  	 */
@@ -93,6 +95,7 @@ public class TaxElement extends ModelBase {
 	
  	@Basic
 	private Boolean userForSeparateShippingTax;
+	
 	/**
 	 * @generated
  	 */

@@ -55,6 +55,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean visible;
+	
 	/**
 	 * @generated
  	 */
@@ -72,6 +73,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ColumnNames columns;
+	
 	/**
 	 * @generated
  	 */

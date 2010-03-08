@@ -51,6 +51,7 @@ public class PhoneTags extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

@@ -95,6 +95,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -112,6 +113,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean ignorePriceAdjustments;
+	
 	/**
 	 * @generated
  	 */
@@ -129,6 +131,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean isDiscount;
+	
 	/**
 	 * @generated
  	 */
@@ -146,6 +149,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean isRate;
+	
 	/**
 	 * @generated
  	 */
@@ -163,6 +167,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean interpolate;
+	
 	/**
 	 * @generated
  	 */
@@ -180,6 +185,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean isDollar;
+	
 	/**
 	 * @generated
  	 */
@@ -197,6 +203,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean fillAllValues;
+	
 	/**
 	 * @generated
  	 */
@@ -214,6 +221,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean sequence;
+	
 	/**
 	 * @generated
  	 */
@@ -231,6 +239,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean isPercentage;
+	
 	/**
 	 * @generated
  	 */
@@ -248,6 +257,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Boolean lastItemIsPriceAdditionalQty;
+	
 	/**
 	 * @generated
  	 */
@@ -266,6 +276,7 @@ public class PriceListBase extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pricelistbase_elements")
 	private java.util.List<PriceListElement> elements;
+	
 	/**
 	 * @generated
  	 */
@@ -289,6 +300,7 @@ public class PriceListBase extends ModelBase {
 	
  	@Basic
 	private Integer priceMethod;
+	
 	/**
 	 * @generated
  	 */

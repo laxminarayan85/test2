@@ -51,6 +51,7 @@ public class Broker extends Party {
 	
  	@Basic
 	private String brokerId;
+	
 	/**
 	 * @generated
  	 */

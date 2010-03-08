@@ -74,6 +74,26 @@ public class PricingRecord extends ModelBase {
 	 * @generated
 	 */
 	public static final String TOTALPRICEOVERRIDE = "TotalPriceOverride";
+	/**
+	 * @generated
+	 */
+	public static final String LABORTOTALPRICE = "LaborTotalPrice";
+	/**
+	 * @generated
+	 */
+	public static final String LABORTOTALPRICEOVERRIDE = "LaborTotalPriceOverride";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKTOTALPRICE = "StockTotalPrice";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKTOTALPRICEOVERRIDE = "StockTotalPriceOverride";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKMARKUP = "StockMarkup";
 
 	/**
 	 * @generated
@@ -87,6 +107,7 @@ public class PricingRecord extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceLogEntry priceLogEntry;
+	
 	/**
 	 * @generated
  	 */
@@ -104,6 +125,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double unitPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -121,6 +143,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double totalPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -138,6 +161,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double otherChargePrice;
+	
 	/**
 	 * @generated
  	 */
@@ -155,6 +179,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double prepPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -172,6 +197,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double oversTotalPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -189,6 +215,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double bindPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -206,6 +233,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Double oversUnitPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -223,6 +251,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Boolean unitPriceOverride;
+	
 	/**
 	 * @generated
  	 */
@@ -240,6 +269,7 @@ public class PricingRecord extends ModelBase {
 	
  	@Basic
 	private Boolean totalPriceOverride;
+	
 	/**
 	 * @generated
  	 */
@@ -252,6 +282,96 @@ public class PricingRecord extends ModelBase {
 	 */	
 	public void setTotalPriceOverride(Boolean newVal) {
 		this.totalPriceOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double laborTotalPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getLaborTotalPrice(){
+		return laborTotalPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLaborTotalPrice(Double newVal) {
+		this.laborTotalPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean laborTotalPriceOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getLaborTotalPriceOverride(){
+		return laborTotalPriceOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setLaborTotalPriceOverride(Boolean newVal) {
+		this.laborTotalPriceOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double stockTotalPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getStockTotalPrice(){
+		return stockTotalPrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockTotalPrice(Double newVal) {
+		this.stockTotalPrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean stockTotalPriceOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getStockTotalPriceOverride(){
+		return stockTotalPriceOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockTotalPriceOverride(Boolean newVal) {
+		this.stockTotalPriceOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double stockMarkup;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getStockMarkup(){
+		return stockMarkup; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockMarkup(Double newVal) {
+		this.stockMarkup = newVal;
 	}
 	/**
 	 * @generated
@@ -269,6 +389,11 @@ public class PricingRecord extends ModelBase {
 		if (OVERSUNITPRICE.equals(propertyName)) return getOversUnitPrice();
 		if (UNITPRICEOVERRIDE.equals(propertyName)) return getUnitPriceOverride();
 		if (TOTALPRICEOVERRIDE.equals(propertyName)) return getTotalPriceOverride();
+		if (LABORTOTALPRICE.equals(propertyName)) return getLaborTotalPrice();
+		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return getLaborTotalPriceOverride();
+		if (STOCKTOTALPRICE.equals(propertyName)) return getStockTotalPrice();
+		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return getStockTotalPriceOverride();
+		if (STOCKMARKUP.equals(propertyName)) return getStockMarkup();
 		return super.getProperty(propertyName);
 	}
 	
@@ -288,6 +413,11 @@ public class PricingRecord extends ModelBase {
 		if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
 		if (UNITPRICEOVERRIDE.equals(propertyName)) setUnitPriceOverride((Boolean)newValue); else
 		if (TOTALPRICEOVERRIDE.equals(propertyName)) setTotalPriceOverride((Boolean)newValue); else
+		if (LABORTOTALPRICE.equals(propertyName)) setLaborTotalPrice((Double)newValue); else
+		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) setLaborTotalPriceOverride((Boolean)newValue); else
+		if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((Double)newValue); else
+		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) setStockTotalPriceOverride((Boolean)newValue); else
+		if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -317,6 +447,16 @@ public class PricingRecord extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (TOTALPRICEOVERRIDE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (LABORTOTALPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (STOCKTOTALPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (STOCKMARKUP.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -337,6 +477,11 @@ public class PricingRecord extends ModelBase {
 		if (OVERSUNITPRICE.equals(propertyName)) return PricingRecord.class;
 		if (UNITPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
 		if (TOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+		if (LABORTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+		if (STOCKTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+		if (STOCKMARKUP.equals(propertyName)) return PricingRecord.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -367,6 +512,16 @@ public class PricingRecord extends ModelBase {
 		if (! SmartEquals(getUnitPriceOverride(), objT.getUnitPriceOverride()))
 			return false;
 		if (! SmartEquals(getTotalPriceOverride(), objT.getTotalPriceOverride()))
+			return false;
+		if (! SmartEquals(getLaborTotalPrice(), objT.getLaborTotalPrice()))
+			return false;
+		if (! SmartEquals(getLaborTotalPriceOverride(), objT.getLaborTotalPriceOverride()))
+			return false;
+		if (! SmartEquals(getStockTotalPrice(), objT.getStockTotalPrice()))
+			return false;
+		if (! SmartEquals(getStockTotalPriceOverride(), objT.getStockTotalPriceOverride()))
+			return false;
+		if (! SmartEquals(getStockMarkup(), objT.getStockMarkup()))
 			return false;
 		return true;
 	}			

@@ -51,6 +51,7 @@ public class ColumnNames extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

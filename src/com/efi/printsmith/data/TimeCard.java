@@ -75,6 +75,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private String period;
+	
 	/**
 	 * @generated
  	 */
@@ -92,6 +93,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private Date startDateTime;
+	
 	/**
 	 * @generated
  	 */
@@ -109,6 +111,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private Date endDateTime;
+	
 	/**
 	 * @generated
  	 */
@@ -126,6 +129,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private String billable;
+	
 	/**
 	 * @generated
  	 */
@@ -143,6 +147,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private Integer onClock;
+	
 	/**
 	 * @generated
  	 */
@@ -160,6 +165,7 @@ public class TimeCard extends ModelBase {
 	
  	@Basic
 	private Date breakTime;
+	
 	/**
 	 * @generated
  	 */
@@ -177,6 +183,7 @@ public class TimeCard extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Employee employee;
+	
 	/**
 	 * @generated
  	 */

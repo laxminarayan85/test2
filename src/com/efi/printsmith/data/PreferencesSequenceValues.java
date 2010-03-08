@@ -95,6 +95,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long invoice;
+	
 	/**
 	 * @generated
  	 */
@@ -112,6 +113,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long job;
+	
 	/**
 	 * @generated
  	 */
@@ -129,6 +131,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long pressDefinition;
+	
 	/**
 	 * @generated
  	 */
@@ -146,6 +149,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long chargeDefinition;
+	
 	/**
 	 * @generated
  	 */
@@ -163,6 +167,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long account;
+	
 	/**
 	 * @generated
  	 */
@@ -180,6 +185,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long contact;
+	
 	/**
 	 * @generated
  	 */
@@ -197,6 +203,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long stockDefinition;
+	
 	/**
 	 * @generated
  	 */
@@ -214,6 +221,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long employee;
+	
 	/**
 	 * @generated
  	 */
@@ -231,6 +239,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long broker;
+	
 	/**
 	 * @generated
  	 */
@@ -248,6 +257,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long copierDefinition;
+	
 	/**
 	 * @generated
  	 */
@@ -265,6 +275,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long campaign;
+	
 	/**
 	 * @generated
  	 */
@@ -282,6 +293,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	
  	@Basic
 	private Long grade;
+	
 	/**
 	 * @generated
  	 */

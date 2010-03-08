@@ -471,6 +471,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String method;
+	
 	/**
 	 * @generated
  	 */
@@ -488,6 +489,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String quantityType;
+	
 	/**
 	 * @generated
  	 */
@@ -505,6 +507,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String markupType;
+	
 	/**
 	 * @generated
  	 */
@@ -522,6 +525,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String jobQty;
+	
 	/**
 	 * @generated
  	 */
@@ -539,6 +543,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String priceMethod;
+	
 	/**
 	 * @generated
  	 */
@@ -556,6 +561,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String inkCoverage;
+	
 	/**
 	 * @generated
  	 */
@@ -573,6 +579,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useSides;
+	
 	/**
 	 * @generated
  	 */
@@ -590,6 +597,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean noDiscount;
+	
 	/**
 	 * @generated
  	 */
@@ -607,6 +615,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean noMaterialQuantity;
+	
 	/**
 	 * @generated
  	 */
@@ -624,6 +633,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean noOverrides;
+	
 	/**
 	 * @generated
  	 */
@@ -641,6 +651,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean adjustSets;
+	
 	/**
 	 * @generated
  	 */
@@ -658,6 +669,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean enterRate;
+	
 	/**
 	 * @generated
  	 */
@@ -675,6 +687,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean enterMaterial;
+	
 	/**
 	 * @generated
  	 */
@@ -692,6 +705,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useMaterial;
+	
 	/**
 	 * @generated
  	 */
@@ -709,6 +723,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useRate;
+	
 	/**
 	 * @generated
  	 */
@@ -726,6 +741,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useRateSets;
+	
 	/**
 	 * @generated
  	 */
@@ -743,6 +759,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useMerchandiseSets;
+	
 	/**
 	 * @generated
  	 */
@@ -760,6 +777,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useMinimumCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -777,6 +795,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useColors;
+	
 	/**
 	 * @generated
  	 */
@@ -794,6 +813,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useOriginals;
+	
 	/**
 	 * @generated
  	 */
@@ -811,6 +831,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double rateSetCount;
+	
 	/**
 	 * @generated
  	 */
@@ -828,6 +849,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double materialSetCount;
+	
 	/**
 	 * @generated
  	 */
@@ -845,6 +867,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double rate;
+	
 	/**
 	 * @generated
  	 */
@@ -862,6 +885,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double material;
+	
 	/**
 	 * @generated
  	 */
@@ -879,6 +903,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double minimum;
+	
 	/**
 	 * @generated
  	 */
@@ -896,6 +921,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup;
+	
 	/**
 	 * @generated
  	 */
@@ -913,6 +939,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList priceList;
+	
 	/**
 	 * @generated
  	 */
@@ -930,6 +957,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
+	
 	/**
 	 * @generated
  	 */
@@ -947,6 +975,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Long fixedWaste;
+	
 	/**
 	 * @generated
  	 */
@@ -964,6 +993,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double wastePercentage;
+	
 	/**
 	 * @generated
  	 */
@@ -981,6 +1011,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Long baseLinearNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -998,6 +1029,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
+	
 	/**
 	 * @generated
  	 */
@@ -1015,6 +1047,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CostCenter costCenter;
+	
 	/**
 	 * @generated
  	 */
@@ -1032,6 +1065,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Substrate substrate;
+	
 	/**
 	 * @generated
  	 */
@@ -1049,6 +1083,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Long minimumTime;
+	
 	/**
 	 * @generated
  	 */
@@ -1066,6 +1101,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double sizeX;
+	
 	/**
 	 * @generated
  	 */
@@ -1083,6 +1119,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double sizeY;
+	
 	/**
 	 * @generated
  	 */
@@ -1100,6 +1137,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double plateThickness;
+	
 	/**
 	 * @generated
  	 */
@@ -1117,6 +1155,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private FoldTemplate foldTemplate;
+	
 	/**
 	 * @generated
  	 */
@@ -1134,6 +1173,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean excludeFromProductionList;
+	
 	/**
 	 * @generated
  	 */
@@ -1151,6 +1191,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean preproduction;
+	
 	/**
 	 * @generated
  	 */
@@ -1168,6 +1209,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useMinimumTime;
+	
 	/**
 	 * @generated
  	 */
@@ -1185,6 +1227,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useDivideByUpCount;
+	
 	/**
 	 * @generated
  	 */
@@ -1202,6 +1245,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useMultiplyUpCount;
+	
 	/**
 	 * @generated
  	 */
@@ -1219,6 +1263,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean adjustUps;
+	
 	/**
 	 * @generated
  	 */
@@ -1236,6 +1281,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean cutsArePrePress;
+	
 	/**
 	 * @generated
  	 */
@@ -1253,6 +1299,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean integratedCTP;
+	
 	/**
 	 * @generated
  	 */
@@ -1270,6 +1317,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String sku;
+	
 	/**
 	 * @generated
  	 */
@@ -1287,6 +1335,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String category;
+	
 	/**
 	 * @generated
  	 */
@@ -1304,6 +1353,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean overrideRate;
+	
 	/**
 	 * @generated
  	 */
@@ -1321,6 +1371,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String title;
+	
 	/**
 	 * @generated
  	 */
@@ -1338,6 +1389,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String note;
+	
 	/**
 	 * @generated
  	 */
@@ -1355,6 +1407,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String chargeGroup;
+	
 	/**
 	 * @generated
  	 */
@@ -1372,6 +1425,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String salesCategory;
+	
 	/**
 	 * @generated
  	 */
@@ -1389,6 +1443,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
+	
 	/**
 	 * @generated
  	 */
@@ -1406,6 +1461,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double rateQty;
+	
 	/**
 	 * @generated
  	 */
@@ -1423,6 +1479,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double materialQty;
+	
 	/**
 	 * @generated
  	 */
@@ -1440,6 +1497,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double groupQty;
+	
 	/**
 	 * @generated
  	 */
@@ -1457,6 +1515,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double price;
+	
 	/**
 	 * @generated
  	 */
@@ -1474,6 +1533,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Date timeStart;
+	
 	/**
 	 * @generated
  	 */
@@ -1491,6 +1551,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Date timeEnd;
+	
 	/**
 	 * @generated
  	 */
@@ -1508,6 +1569,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean customerCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -1525,6 +1587,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean pressCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -1542,6 +1605,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean hidden;
+	
 	/**
 	 * @generated
  	 */
@@ -1559,6 +1623,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean deletedPreset;
+	
 	/**
 	 * @generated
  	 */
@@ -1576,6 +1641,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean ignoreCuts;
+	
 	/**
 	 * @generated
  	 */
@@ -1593,6 +1659,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useSignatures;
+	
 	/**
 	 * @generated
  	 */
@@ -1610,6 +1677,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean stockCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -1627,6 +1695,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean overrideNumberOfCuts;
+	
 	/**
 	 * @generated
  	 */
@@ -1644,6 +1713,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean showNotes;
+	
 	/**
 	 * @generated
  	 */
@@ -1661,6 +1731,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean finished;
+	
 	/**
 	 * @generated
  	 */
@@ -1678,6 +1749,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean brokered;
+	
 	/**
 	 * @generated
  	 */
@@ -1695,6 +1767,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean taxable;
+	
 	/**
 	 * @generated
  	 */
@@ -1712,6 +1785,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean displayQty;
+	
 	/**
 	 * @generated
  	 */
@@ -1729,6 +1803,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean overridePrice;
+	
 	/**
 	 * @generated
  	 */
@@ -1746,6 +1821,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean overrideRateQuantity;
+	
 	/**
 	 * @generated
  	 */
@@ -1763,6 +1839,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean overrideMaterialQty;
+	
 	/**
 	 * @generated
  	 */
@@ -1780,6 +1857,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Integer version;
+	
 	/**
 	 * @generated
  	 */
@@ -1797,6 +1875,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shipMode;
+	
 	/**
 	 * @generated
  	 */
@@ -1814,6 +1893,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Integer adjustUpsCount;
+	
 	/**
 	 * @generated
  	 */
@@ -1831,6 +1911,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean hasLinkPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -1848,6 +1929,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean needLinkPrice;
+	
 	/**
 	 * @generated
  	 */
@@ -1865,6 +1947,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean hasShipped;
+	
 	/**
 	 * @generated
  	 */
@@ -1882,6 +1965,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean shouldShip;
+	
 	/**
 	 * @generated
  	 */
@@ -1899,6 +1983,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean jobTaskList;
+	
 	/**
 	 * @generated
  	 */
@@ -1916,6 +2001,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean hidePrice;
+	
 	/**
 	 * @generated
  	 */
@@ -1933,6 +2019,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean ignorePriceAdjustment;
+	
 	/**
 	 * @generated
  	 */
@@ -1950,6 +2037,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean costingPressCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -1967,6 +2055,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean linearX1;
+	
 	/**
 	 * @generated
  	 */
@@ -1984,6 +2073,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean linearX2;
+	
 	/**
 	 * @generated
  	 */
@@ -2001,6 +2091,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean linearY1;
+	
 	/**
 	 * @generated
  	 */
@@ -2018,6 +2109,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean linearY2;
+	
 	/**
 	 * @generated
  	 */
@@ -2035,6 +2127,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String label;
+	
 	/**
 	 * @generated
  	 */
@@ -2052,6 +2145,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean binderyCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -2069,6 +2163,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -2086,6 +2181,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCategory parent;
+	
 	/**
 	 * @generated
  	 */
@@ -2103,6 +2199,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useArea;
+	
 	/**
 	 * @generated
  	 */
@@ -2120,6 +2217,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean useSetup;
+	
 	/**
 	 * @generated
  	 */
@@ -2137,6 +2235,7 @@ public class ChargeDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCost chargeCost;
+	
 	/**
 	 * @generated
  	 */
@@ -2154,6 +2253,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double area;
+	
 	/**
 	 * @generated
  	 */
@@ -2171,6 +2271,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean coverlb_check;
+	
 	/**
 	 * @generated
  	 */
@@ -2188,6 +2289,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean sheet_lift_check;
+	
 	/**
 	 * @generated
  	 */
@@ -2205,6 +2307,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean ship_markup_check;
+	
 	/**
 	 * @generated
  	 */
@@ -2222,6 +2325,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double coverlbInk;
+	
 	/**
 	 * @generated
  	 */
@@ -2239,6 +2343,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Integer sheetliftCut;
+	
 	/**
 	 * @generated
  	 */
@@ -2256,6 +2361,7 @@ public class ChargeDefinition extends ModelBase {
 	
  	@Basic
 	private Double shipMarkup;
+	
 	/**
 	 * @generated
  	 */

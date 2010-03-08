@@ -279,6 +279,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean eliminateWarningMessages;
+	
 	/**
 	 * @generated
  	 */
@@ -296,6 +297,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean onlyPostMarkedReadyInvoices;
+	
 	/**
 	 * @generated
  	 */
@@ -313,6 +315,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean enablePricingSystem;
+	
 	/**
 	 * @generated
  	 */
@@ -330,6 +333,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean activateUserEventLogging;
+	
 	/**
 	 * @generated
  	 */
@@ -347,6 +351,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean enableAutoLogOut;
+	
 	/**
 	 * @generated
  	 */
@@ -364,6 +369,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean secondsOfInactivity;
+	
 	/**
 	 * @generated
  	 */
@@ -381,6 +387,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Integer autoLogOutSeconds;
+	
 	/**
 	 * @generated
  	 */
@@ -398,6 +405,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean triggerAfterPosting;
+	
 	/**
 	 * @generated
  	 */
@@ -415,6 +423,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean showInvoicesWithToday;
+	
 	/**
 	 * @generated
  	 */
@@ -432,6 +441,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean lineItemTaxes;
+	
 	/**
 	 * @generated
  	 */
@@ -449,6 +459,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean automaticQuit;
+	
 	/**
 	 * @generated
  	 */
@@ -466,6 +477,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String quitTime;
+	
 	/**
 	 * @generated
  	 */
@@ -483,6 +495,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String shutdownMessage;
+	
 	/**
 	 * @generated
  	 */
@@ -500,6 +513,7 @@ public class PreferencesSystem extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address companyAddress;
+	
 	/**
 	 * @generated
  	 */
@@ -517,6 +531,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyPhone;
+	
 	/**
 	 * @generated
  	 */
@@ -534,6 +549,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyFax;
+	
 	/**
 	 * @generated
  	 */
@@ -551,6 +567,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyEmail;
+	
 	/**
 	 * @generated
  	 */
@@ -568,6 +585,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyOther1;
+	
 	/**
 	 * @generated
  	 */
@@ -585,6 +603,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyOther2;
+	
 	/**
 	 * @generated
  	 */
@@ -602,6 +621,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyIdLabel;
+	
 	/**
 	 * @generated
  	 */
@@ -619,6 +639,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyId;
+	
 	/**
 	 * @generated
  	 */
@@ -636,6 +657,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyStoreNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -653,6 +675,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String companyStoreLocationRef;
+	
 	/**
 	 * @generated
  	 */
@@ -670,6 +693,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String fiscalYearStartMonth;
+	
 	/**
 	 * @generated
  	 */
@@ -687,6 +711,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workSunday;
+	
 	/**
 	 * @generated
  	 */
@@ -704,6 +729,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workMonday;
+	
 	/**
 	 * @generated
  	 */
@@ -721,6 +747,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workTuesday;
+	
 	/**
 	 * @generated
  	 */
@@ -738,6 +765,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workWednesday;
+	
 	/**
 	 * @generated
  	 */
@@ -755,6 +783,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workThursday;
+	
 	/**
 	 * @generated
  	 */
@@ -772,6 +801,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workFriday;
+	
 	/**
 	 * @generated
  	 */
@@ -789,6 +819,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean workSaturday;
+	
 	/**
 	 * @generated
  	 */
@@ -806,6 +837,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Integer workFirstDayOfWeek;
+	
 	/**
 	 * @generated
  	 */
@@ -823,6 +855,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean futureDatesExcludeClosed;
+	
 	/**
 	 * @generated
  	 */
@@ -840,6 +873,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersIntegers;
+	
 	/**
 	 * @generated
  	 */
@@ -857,6 +891,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersPercentages;
+	
 	/**
 	 * @generated
  	 */
@@ -874,6 +909,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersAmount;
+	
 	/**
 	 * @generated
  	 */
@@ -891,6 +927,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersTaxRate;
+	
 	/**
 	 * @generated
  	 */
@@ -908,6 +945,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersRate;
+	
 	/**
 	 * @generated
  	 */
@@ -925,6 +963,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersFactor;
+	
 	/**
 	 * @generated
  	 */
@@ -942,6 +981,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersInvoice;
+	
 	/**
 	 * @generated
  	 */
@@ -959,6 +999,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String numbersShortPercent;
+	
 	/**
 	 * @generated
  	 */
@@ -976,6 +1017,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Integer numbersRoundto;
+	
 	/**
 	 * @generated
  	 */
@@ -993,6 +1035,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean alwaysRoundDown;
+	
 	/**
 	 * @generated
  	 */
@@ -1010,6 +1053,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean roundTaxUp;
+	
 	/**
 	 * @generated
  	 */
@@ -1027,6 +1071,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean useAlternateCurrency;
+	
 	/**
 	 * @generated
  	 */
@@ -1044,6 +1089,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String displayFormat;
+	
 	/**
 	 * @generated
  	 */
@@ -1061,6 +1107,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Double conversionFactor;
+	
 	/**
 	 * @generated
  	 */
@@ -1078,6 +1125,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Integer alternateRoundto;
+	
 	/**
 	 * @generated
  	 */
@@ -1095,6 +1143,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean alternateAlwaysRoundDown;
+	
 	/**
 	 * @generated
  	 */
@@ -1112,6 +1161,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean disableTextStyles;
+	
 	/**
 	 * @generated
  	 */
@@ -1129,6 +1179,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean austrailianInvoiceRounding;
+	
 	/**
 	 * @generated
  	 */
@@ -1146,6 +1197,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Boolean disableNonTaxableOptions;
+	
 	/**
 	 * @generated
  	 */
@@ -1163,6 +1215,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String inkWeightSingular;
+	
 	/**
 	 * @generated
  	 */
@@ -1180,6 +1233,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String inkWeightPlural;
+	
 	/**
 	 * @generated
  	 */
@@ -1197,6 +1251,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String authorizeDecrypt;
+	
 	/**
 	 * @generated
  	 */
@@ -1214,6 +1269,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String creditCardApproval;
+	
 	/**
 	 * @generated
  	 */
@@ -1231,6 +1287,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private String trackerDataCollection;
+	
 	/**
 	 * @generated
  	 */
@@ -1248,6 +1305,7 @@ public class PreferencesSystem extends ModelBase {
 	
  	@Basic
 	private Integer defaultCountry;
+	
 	/**
 	 * @generated
  	 */

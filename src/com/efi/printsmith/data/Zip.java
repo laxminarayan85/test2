@@ -51,6 +51,7 @@ public class Zip extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

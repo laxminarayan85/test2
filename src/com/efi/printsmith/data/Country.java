@@ -51,6 +51,7 @@ public class Country extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

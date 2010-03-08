@@ -51,6 +51,7 @@ public class AccessLevel extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

@@ -139,6 +139,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Integer marketID;
+	
 	/**
 	 * @generated
  	 */
@@ -156,6 +157,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Date followup;
+	
 	/**
 	 * @generated
  	 */
@@ -173,6 +175,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Date birthDate;
+	
 	/**
 	 * @generated
  	 */
@@ -190,6 +193,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Date user3;
+	
 	/**
 	 * @generated
  	 */
@@ -207,6 +211,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Date user4;
+	
 	/**
 	 * @generated
  	 */
@@ -224,6 +229,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Date user5;
+	
 	/**
 	 * @generated
  	 */
@@ -241,6 +247,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String leadSource;
+	
 	/**
 	 * @generated
  	 */
@@ -258,6 +265,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String leadSource2;
+	
 	/**
 	 * @generated
  	 */
@@ -275,6 +283,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String commonInterst;
+	
 	/**
 	 * @generated
  	 */
@@ -292,6 +301,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String sportsInterst;
+	
 	/**
 	 * @generated
  	 */
@@ -309,6 +319,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String user6;
+	
 	/**
 	 * @generated
  	 */
@@ -326,6 +337,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String user7;
+	
 	/**
 	 * @generated
  	 */
@@ -343,6 +355,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String user8;
+	
 	/**
 	 * @generated
  	 */
@@ -360,6 +373,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String user9;
+	
 	/**
 	 * @generated
  	 */
@@ -377,6 +391,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String typeWork;
+	
 	/**
 	 * @generated
  	 */
@@ -394,6 +409,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private String mailerType;
+	
 	/**
 	 * @generated
  	 */
@@ -411,6 +427,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Boolean customer;
+	
 	/**
 	 * @generated
  	 */
@@ -428,6 +445,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Boolean prospect;
+	
 	/**
 	 * @generated
  	 */
@@ -445,6 +463,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Boolean noMail;
+	
 	/**
 	 * @generated
  	 */
@@ -462,6 +481,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Boolean personalAcct;
+	
 	/**
 	 * @generated
  	 */
@@ -479,6 +499,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Integer numberofEmployees;
+	
 	/**
 	 * @generated
  	 */
@@ -496,6 +517,7 @@ public class Marketing extends ModelBase {
 	
  	@Basic
 	private Integer annualRev;
+	
 	/**
 	 * @generated
  	 */
@@ -513,6 +535,7 @@ public class Marketing extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private BusinessType businessType;
+	
 	/**
 	 * @generated
  	 */

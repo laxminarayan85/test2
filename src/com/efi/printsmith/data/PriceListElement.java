@@ -63,6 +63,7 @@ public class PriceListElement extends ModelBase {
 	
  	@Basic
 	private Long quantity;
+	
 	/**
 	 * @generated
  	 */
@@ -80,6 +81,7 @@ public class PriceListElement extends ModelBase {
 	
  	@Basic
 	private Double amount;
+	
 	/**
 	 * @generated
  	 */
@@ -97,6 +99,7 @@ public class PriceListElement extends ModelBase {
 	
  	@Basic
 	private Integer side;
+	
 	/**
 	 * @generated
  	 */
@@ -114,6 +117,7 @@ public class PriceListElement extends ModelBase {
 	
  	@Basic
 	private Integer color;
+	
 	/**
 	 * @generated
  	 */

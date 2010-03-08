@@ -40,6 +40,7 @@ public class PriceStockEngine {
 		if (stockDefinition == null || copierDefinition == null) return 0.0;
 		
 		double sheetPrice = 0.0;
+
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "priceCopierStock", "");
 		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.MarkedUpStockCost.name())) {
 			sheetPrice = getSheetPrice(job, priceLogEntry);
@@ -70,30 +71,39 @@ public class PriceStockEngine {
 		if (job == null) return 0.0;
 		
 		StockDefinition stockDefinition = job.getStock();
+		CopierDefinition copierDefinition = job.getPricingCopier();
 		if (stockDefinition == null) return 0.0;
 
 		if (stockDefinition.getCostunits() > 0) {
 			qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
 			
+			double markup = 0.0;
+			double stockCost = 0.0;
+			
 			if (qty <= stockDefinition.getQtybreak1()) {
-				retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup1();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost1() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup1());
+				markup = stockDefinition.getMarkup1();
+				stockCost = stockDefinition.getCost1();
 			} else if (qty <= stockDefinition.getQtybreak2()) {
-				retVal = stockDefinition.getCost2()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup2();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost2() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup2());
+				markup = stockDefinition.getMarkup2();
+				stockCost = stockDefinition.getCost2();
 			} else if (qty <= stockDefinition.getQtybreak3()) {
-				retVal = stockDefinition.getCost3()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup3();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost3() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup3());
+				markup = stockDefinition.getMarkup3();
+				stockCost = stockDefinition.getCost3();
 			} else if (qty <= stockDefinition.getQtybreak4()) {
-				retVal = stockDefinition.getCost4()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup4();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost4() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup4());
+				markup = stockDefinition.getMarkup4();
+				stockCost = stockDefinition.getCost4();
 			} else if (qty <= stockDefinition.getQtybreak5()) {
-				retVal = stockDefinition.getCost5()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup5();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost5() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup5());
+				markup = stockDefinition.getMarkup5();
+				stockCost = stockDefinition.getCost5();
 			} else if (qty <= stockDefinition.getQtybreak6()) {
-				retVal = stockDefinition.getCost6()/stockDefinition.getCostunits() * qty * stockDefinition.getMarkup6();
-				priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockDefinition.getCost6() + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + stockDefinition.getMarkup6());
+				markup = stockDefinition.getMarkup6();
+				stockCost = stockDefinition.getCost6();
 			}
+			if (copierDefinition.getUseCopierStockMarkup()) {
+				markup = copierDefinition.getStockMarkup();
+			}
+			retVal = stockCost/stockDefinition.getCostunits() * qty * markup;
+			priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockCost + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + markup);
 		}
 		return retVal;
 	}

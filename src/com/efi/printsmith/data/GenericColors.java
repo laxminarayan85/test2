@@ -51,6 +51,7 @@ public class GenericColors extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

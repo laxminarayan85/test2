@@ -53,8 +53,9 @@ public class Matrix extends ModelBase {
 
  	
 	
-    @CollectionOfElements
+	@CollectionOfElements
 	private java.util.List<Long> headerValues;
+	
 	/**
 	 * @generated
  	 */
@@ -79,6 +80,7 @@ public class Matrix extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
+	
 	/**
 	 * @generated
  	 */

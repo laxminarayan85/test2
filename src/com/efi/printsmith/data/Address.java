@@ -79,6 +79,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -96,6 +97,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String street1;
+	
 	/**
 	 * @generated
  	 */
@@ -113,6 +115,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String street2;
+	
 	/**
 	 * @generated
  	 */
@@ -130,6 +133,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String city;
+	
 	/**
 	 * @generated
  	 */
@@ -147,6 +151,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String state;
+	
 	/**
 	 * @generated
  	 */
@@ -164,6 +169,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String zip;
+	
 	/**
 	 * @generated
  	 */
@@ -181,6 +187,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String country;
+	
 	/**
 	 * @generated
  	 */
@@ -198,6 +205,7 @@ public class Address extends ModelBase {
 	
  	@Basic
 	private String zone;
+	
 	/**
 	 * @generated
  	 */

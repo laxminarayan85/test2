@@ -143,6 +143,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String receiptHeader;
+	
 	/**
 	 * @generated
  	 */
@@ -160,6 +161,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String receiptFooter;
+	
 	/**
 	 * @generated
  	 */
@@ -177,6 +179,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean receiptStartNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -194,6 +197,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Integer startingNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -211,6 +215,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean hideTaxLines;
+	
 	/**
 	 * @generated
  	 */
@@ -228,6 +233,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String receiptPrinterStatus;
+	
 	/**
 	 * @generated
  	 */
@@ -245,6 +251,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String defaultPrinter;
+	
 	/**
 	 * @generated
  	 */
@@ -262,6 +269,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean enableCashDrawer;
+	
 	/**
 	 * @generated
  	 */
@@ -279,6 +287,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean useMasterDrawer;
+	
 	/**
 	 * @generated
  	 */
@@ -296,6 +305,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean printReceipts;
+	
 	/**
 	 * @generated
  	 */
@@ -313,6 +323,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean print2forCreditCards;
+	
 	/**
 	 * @generated
  	 */
@@ -330,6 +341,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean print2forCash;
+	
 	/**
 	 * @generated
  	 */
@@ -347,6 +359,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean keepLocalSettings;
+	
 	/**
 	 * @generated
  	 */
@@ -364,6 +377,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean printInvoices;
+	
 	/**
 	 * @generated
  	 */
@@ -381,6 +395,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Boolean lockSettings;
+	
 	/**
 	 * @generated
  	 */
@@ -398,6 +413,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Integer asciiCodeOpenDrawer;
+	
 	/**
 	 * @generated
  	 */
@@ -415,6 +431,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Integer blankLinesBeforeReceipt;
+	
 	/**
 	 * @generated
  	 */
@@ -432,6 +449,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private Integer blankLinesAfterReceipt;
+	
 	/**
 	 * @generated
  	 */
@@ -449,6 +467,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String receiptStartCode;
+	
 	/**
 	 * @generated
  	 */
@@ -466,6 +485,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String receiptEndCode;
+	
 	/**
 	 * @generated
  	 */
@@ -483,6 +503,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String baudRate;
+	
 	/**
 	 * @generated
  	 */
@@ -500,6 +521,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String stopBits;
+	
 	/**
 	 * @generated
  	 */
@@ -517,6 +539,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String parity;
+	
 	/**
 	 * @generated
  	 */
@@ -534,6 +557,7 @@ public class PreferencesPOS extends ModelBase {
 	
  	@Basic
 	private String dataSize;
+	
 	/**
 	 * @generated
  	 */

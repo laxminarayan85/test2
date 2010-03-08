@@ -55,6 +55,7 @@ public class HoldState extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -72,6 +73,7 @@ public class HoldState extends ModelBase {
 	
  	@Basic
 	private String key;
+	
 	/**
 	 * @generated
  	 */

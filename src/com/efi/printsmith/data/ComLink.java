@@ -55,6 +55,7 @@ public class ComLink extends ModelBase {
 	
  	@Basic
 	private String type;
+	
 	/**
 	 * @generated
  	 */
@@ -72,6 +73,7 @@ public class ComLink extends ModelBase {
 	
  	@Basic
 	private String value;
+	
 	/**
 	 * @generated
  	 */

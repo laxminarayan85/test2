@@ -51,6 +51,7 @@ public class SpecialInstructions extends ModelBase {
 	
  	@Basic
 	private String instructions;
+	
 	/**
 	 * @generated
  	 */

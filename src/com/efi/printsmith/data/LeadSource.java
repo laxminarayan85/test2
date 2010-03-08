@@ -51,6 +51,7 @@ public class LeadSource extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

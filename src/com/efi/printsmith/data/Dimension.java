@@ -63,6 +63,7 @@ public class Dimension extends ModelBase {
 	
  	@Basic
 	private String type;
+	
 	/**
 	 * @generated
  	 */
@@ -80,6 +81,7 @@ public class Dimension extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -97,6 +99,7 @@ public class Dimension extends ModelBase {
 	
  	@Basic
 	private Float width;
+	
 	/**
 	 * @generated
  	 */
@@ -114,6 +117,7 @@ public class Dimension extends ModelBase {
 	
  	@Basic
 	private Float height;
+	
 	/**
 	 * @generated
  	 */

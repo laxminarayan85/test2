@@ -105,6 +105,10 @@ public class Job extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String INSETSOFOVERRIDE = "InSetsOfOverride";
+	/**
+	 * @generated
+	 */
 	public static final String SHEETS = "Sheets";
 	/**
 	 * @generated
@@ -125,7 +129,15 @@ public class Job extends ModelBase {
 	/**
 	 * @generated
 	 */
+	public static final String BINDERYWASTEOVERRIDE = "BinderyWasteOverride";
+	/**
+	 * @generated
+	 */
 	public static final String ESTWASTE = "EstWaste";
+	/**
+	 * @generated
+	 */
+	public static final String ESTWASTEOVERRIDE = "EstWasteOverride";
 	/**
 	 * @generated
 	 */
@@ -158,10 +170,6 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String FINISHSIZE = "FinishSize";
-	/**
-	 * @generated
-	 */
-	public static final String ATTRIBUTE1 = "Attribute1";
 	/**
 	 * @generated
 	 */
@@ -226,6 +234,30 @@ public class Job extends ModelBase {
 	 * @generated
 	 */
 	public static final String SINGLESIDED = "SingleSided";
+	/**
+	 * @generated
+	 */
+	public static final String COSTINGRECORD = "CostingRecord";
+	/**
+	 * @generated
+	 */
+	public static final String WEIGHT = "Weight";
+	/**
+	 * @generated
+	 */
+	public static final String TOTALCOPIES = "TotalCopies";
+	/**
+	 * @generated
+	 */
+	public static final String NUMCOPIES = "NumCopies";
+	/**
+	 * @generated
+	 */
+	public static final String NUMCOPIESOVERRIDE = "NumCopiesOverride";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKQTY = "StockQty";
 
 	/**
 	 * @generated
@@ -239,6 +271,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String jobNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -256,6 +289,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long jobIndex;
+	
 	/**
 	 * @generated
  	 */
@@ -273,6 +307,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory salesCategory;
+	
 	/**
 	 * @generated
  	 */
@@ -290,6 +325,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ProductCode productCode;
+	
 	/**
 	 * @generated
  	 */
@@ -308,6 +344,7 @@ public class Job extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_children")
 	private java.util.List<Job> children;
+	
 	/**
 	 * @generated
  	 */
@@ -332,6 +369,7 @@ public class Job extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_charges")
 	private java.util.List<Charge> charges;
+	
 	/**
 	 * @generated
  	 */
@@ -355,6 +393,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String jobNotes;
+	
 	/**
 	 * @generated
  	 */
@@ -372,6 +411,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean jobTicketNotes;
+	
 	/**
 	 * @generated
  	 */
@@ -389,6 +429,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean brokered;
+	
 	/**
 	 * @generated
  	 */
@@ -406,6 +447,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean taxable;
+	
 	/**
 	 * @generated
  	 */
@@ -423,6 +465,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean finished;
+	
 	/**
 	 * @generated
  	 */
@@ -440,6 +483,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
+	
 	/**
 	 * @generated
  	 */
@@ -457,6 +501,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String comment;
+	
 	/**
 	 * @generated
  	 */
@@ -474,6 +519,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String description;
+	
 	/**
 	 * @generated
  	 */
@@ -491,6 +537,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long qtyOrdered;
+	
 	/**
 	 * @generated
  	 */
@@ -508,6 +555,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long oversUnders;
+	
 	/**
 	 * @generated
  	 */
@@ -525,6 +573,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long inSetsOf;
+	
 	/**
 	 * @generated
  	 */
@@ -541,7 +590,26 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
+	private Boolean inSetsOfOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getInSetsOfOverride(){
+		return inSetsOfOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setInSetsOfOverride(Boolean newVal) {
+		this.inSetsOfOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Long sheets;
+	
 	/**
 	 * @generated
  	 */
@@ -559,6 +627,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long numUp;
+	
 	/**
 	 * @generated
  	 */
@@ -576,6 +645,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long numOn;
+	
 	/**
 	 * @generated
  	 */
@@ -593,6 +663,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition press;
+	
 	/**
 	 * @generated
  	 */
@@ -610,6 +681,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long binderyWaste;
+	
 	/**
 	 * @generated
  	 */
@@ -626,7 +698,26 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
+	private Boolean binderyWasteOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getBinderyWasteOverride(){
+		return binderyWasteOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setBinderyWasteOverride(Boolean newVal) {
+		this.binderyWasteOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Long estWaste;
+	
 	/**
 	 * @generated
  	 */
@@ -643,7 +734,26 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
+	private Boolean estWasteOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getEstWasteOverride(){
+		return estWasteOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setEstWasteOverride(Boolean newVal) {
+		this.estWasteOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
 	private Long signatures;
+	
 	/**
 	 * @generated
  	 */
@@ -661,6 +771,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition pricingPress;
+	
 	/**
 	 * @generated
  	 */
@@ -678,6 +789,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition costingPress;
+	
 	/**
 	 * @generated
  	 */
@@ -695,6 +807,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String runMethod;
+	
 	/**
 	 * @generated
  	 */
@@ -712,6 +825,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockDefinition stock;
+	
 	/**
 	 * @generated
  	 */
@@ -729,6 +843,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String parentSize;
+	
 	/**
 	 * @generated
  	 */
@@ -746,6 +861,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String runSize;
+	
 	/**
 	 * @generated
  	 */
@@ -763,6 +879,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private String finishSize;
+	
 	/**
 	 * @generated
  	 */
@@ -779,24 +896,8 @@ public class Job extends ModelBase {
  	
 	
  	@Basic
-	private Integer attribute1;
-	/**
-	 * @generated
- 	 */
-	public Integer getAttribute1(){
-		return attribute1; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAttribute1(Integer newVal) {
-		this.attribute1 = newVal;
-	}
- 	
-	
- 	@Basic
 	private String foldedSize;
+	
 	/**
 	 * @generated
  	 */
@@ -814,6 +915,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer frontColors;
+	
 	/**
 	 * @generated
  	 */
@@ -831,6 +933,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer backColors;
+	
 	/**
 	 * @generated
  	 */
@@ -848,6 +951,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer frontPasses;
+	
 	/**
 	 * @generated
  	 */
@@ -865,6 +969,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer backPasses;
+	
 	/**
 	 * @generated
  	 */
@@ -882,6 +987,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer frontWashes;
+	
 	/**
 	 * @generated
  	 */
@@ -899,6 +1005,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Integer backWashes;
+	
 	/**
 	 * @generated
  	 */
@@ -917,6 +1024,7 @@ public class Job extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_frontinks")
 	private java.util.List<InkColor> frontInks;
+	
 	/**
 	 * @generated
  	 */
@@ -940,6 +1048,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private InkColor backInks;
+	
 	/**
 	 * @generated
  	 */
@@ -957,6 +1066,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Long pressQty;
+	
 	/**
 	 * @generated
  	 */
@@ -974,6 +1084,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PricingRecord pricingRecord;
+	
 	/**
 	 * @generated
  	 */
@@ -991,6 +1102,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition pricingCopier;
+	
 	/**
 	 * @generated
  	 */
@@ -1008,6 +1120,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition costingCopier;
+	
 	/**
 	 * @generated
  	 */
@@ -1025,6 +1138,7 @@ public class Job extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PreferencesPricingMethod pricingMethod;
+	
 	/**
 	 * @generated
  	 */
@@ -1042,6 +1156,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean doubleSided;
+	
 	/**
 	 * @generated
  	 */
@@ -1059,6 +1174,7 @@ public class Job extends ModelBase {
 	
  	@Basic
 	private Boolean singleSided;
+	
 	/**
 	 * @generated
  	 */
@@ -1071,6 +1187,114 @@ public class Job extends ModelBase {
 	 */	
 	public void setSingleSided(Boolean newVal) {
 		this.singleSided = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CostingRecord costingRecord;
+	
+	/**
+	 * @generated
+ 	 */
+	public CostingRecord getCostingRecord(){
+		return costingRecord; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setCostingRecord(CostingRecord newVal) {
+		this.costingRecord = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double weight;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getWeight(){
+		return weight; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setWeight(Double newVal) {
+		this.weight = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long totalCopies;
+	
+	/**
+	 * @generated
+ 	 */
+	public Long getTotalCopies(){
+		return totalCopies; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setTotalCopies(Long newVal) {
+		this.totalCopies = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long numCopies;
+	
+	/**
+	 * @generated
+ 	 */
+	public Long getNumCopies(){
+		return numCopies; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumCopies(Long newVal) {
+		this.numCopies = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean numCopiesOverride;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getNumCopiesOverride(){
+		return numCopiesOverride; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNumCopiesOverride(Boolean newVal) {
+		this.numCopiesOverride = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Long stockQty;
+	
+	/**
+	 * @generated
+ 	 */
+	public Long getStockQty(){
+		return stockQty; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setStockQty(Long newVal) {
+		this.stockQty = newVal;
 	}
 	/**
 	 * @generated
@@ -1095,12 +1319,15 @@ public class Job extends ModelBase {
 		if (QTYORDERED.equals(propertyName)) return getQtyOrdered();
 		if (OVERSUNDERS.equals(propertyName)) return getOversUnders();
 		if (INSETSOF.equals(propertyName)) return getInSetsOf();
+		if (INSETSOFOVERRIDE.equals(propertyName)) return getInSetsOfOverride();
 		if (SHEETS.equals(propertyName)) return getSheets();
 		if (NUMUP.equals(propertyName)) return getNumUp();
 		if (NUMON.equals(propertyName)) return getNumOn();
 		if (PRESS.equals(propertyName)) return getPress();
 		if (BINDERYWASTE.equals(propertyName)) return getBinderyWaste();
+		if (BINDERYWASTEOVERRIDE.equals(propertyName)) return getBinderyWasteOverride();
 		if (ESTWASTE.equals(propertyName)) return getEstWaste();
+		if (ESTWASTEOVERRIDE.equals(propertyName)) return getEstWasteOverride();
 		if (SIGNATURES.equals(propertyName)) return getSignatures();
 		if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
 		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
@@ -1109,7 +1336,6 @@ public class Job extends ModelBase {
 		if (PARENTSIZE.equals(propertyName)) return getParentSize();
 		if (RUNSIZE.equals(propertyName)) return getRunSize();
 		if (FINISHSIZE.equals(propertyName)) return getFinishSize();
-		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
 		if (FOLDEDSIZE.equals(propertyName)) return getFoldedSize();
 		if (FRONTCOLORS.equals(propertyName)) return getFrontColors();
 		if (BACKCOLORS.equals(propertyName)) return getBackColors();
@@ -1126,6 +1352,12 @@ public class Job extends ModelBase {
 		if (PRICINGMETHOD.equals(propertyName)) return getPricingMethod();
 		if (DOUBLESIDED.equals(propertyName)) return getDoubleSided();
 		if (SINGLESIDED.equals(propertyName)) return getSingleSided();
+		if (COSTINGRECORD.equals(propertyName)) return getCostingRecord();
+		if (WEIGHT.equals(propertyName)) return getWeight();
+		if (TOTALCOPIES.equals(propertyName)) return getTotalCopies();
+		if (NUMCOPIES.equals(propertyName)) return getNumCopies();
+		if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
+		if (STOCKQTY.equals(propertyName)) return getStockQty();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1152,12 +1384,15 @@ public class Job extends ModelBase {
 		if (QTYORDERED.equals(propertyName)) setQtyOrdered((Long)newValue); else
 		if (OVERSUNDERS.equals(propertyName)) setOversUnders((Long)newValue); else
 		if (INSETSOF.equals(propertyName)) setInSetsOf((Long)newValue); else
+		if (INSETSOFOVERRIDE.equals(propertyName)) setInSetsOfOverride((Boolean)newValue); else
 		if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
 		if (NUMUP.equals(propertyName)) setNumUp((Long)newValue); else
 		if (NUMON.equals(propertyName)) setNumOn((Long)newValue); else
 		if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
 		if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
+		if (BINDERYWASTEOVERRIDE.equals(propertyName)) setBinderyWasteOverride((Boolean)newValue); else
 		if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
+		if (ESTWASTEOVERRIDE.equals(propertyName)) setEstWasteOverride((Boolean)newValue); else
 		if (SIGNATURES.equals(propertyName)) setSignatures((Long)newValue); else
 		if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
 		if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
@@ -1166,7 +1401,6 @@ public class Job extends ModelBase {
 		if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
 		if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
 		if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
-		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
 		if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((String)newValue); else
 		if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
 		if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
@@ -1183,6 +1417,12 @@ public class Job extends ModelBase {
 		if (PRICINGMETHOD.equals(propertyName)) setPricingMethod((PreferencesPricingMethod)newValue); else
 		if (DOUBLESIDED.equals(propertyName)) setDoubleSided((Boolean)newValue); else
 		if (SINGLESIDED.equals(propertyName)) setSingleSided((Boolean)newValue); else
+		if (COSTINGRECORD.equals(propertyName)) setCostingRecord((CostingRecord)newValue); else
+		if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
+		if (TOTALCOPIES.equals(propertyName)) setTotalCopies((Long)newValue); else
+		if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
+		if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
+		if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1226,6 +1466,8 @@ public class Job extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (INSETSOF.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (INSETSOFOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		if (SHEETS.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (NUMUP.equals(propertyName)) 
@@ -1236,8 +1478,12 @@ public class Job extends ModelBase {
 			return new Class<?>[] {PressDefinition.class};		
 		if (BINDERYWASTE.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (BINDERYWASTEOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		if (ESTWASTE.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (ESTWASTEOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		if (SIGNATURES.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
 		if (PRICINGPRESS.equals(propertyName)) 
@@ -1254,8 +1500,6 @@ public class Job extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (FINISHSIZE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (ATTRIBUTE1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (FOLDEDSIZE.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (FRONTCOLORS.equals(propertyName)) 
@@ -1288,6 +1532,18 @@ public class Job extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (SINGLESIDED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (COSTINGRECORD.equals(propertyName)) 
+			return new Class<?>[] {CostingRecord.class};		
+		if (WEIGHT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (TOTALCOPIES.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (NUMCOPIES.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
+		if (NUMCOPIESOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (STOCKQTY.equals(propertyName)) 
+			return new Class<?>[] {Long.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1315,12 +1571,15 @@ public class Job extends ModelBase {
 		if (QTYORDERED.equals(propertyName)) return Job.class;
 		if (OVERSUNDERS.equals(propertyName)) return Job.class;
 		if (INSETSOF.equals(propertyName)) return Job.class;
+		if (INSETSOFOVERRIDE.equals(propertyName)) return Job.class;
 		if (SHEETS.equals(propertyName)) return Job.class;
 		if (NUMUP.equals(propertyName)) return Job.class;
 		if (NUMON.equals(propertyName)) return Job.class;
 		if (PRESS.equals(propertyName)) return Job.class;
 		if (BINDERYWASTE.equals(propertyName)) return Job.class;
+		if (BINDERYWASTEOVERRIDE.equals(propertyName)) return Job.class;
 		if (ESTWASTE.equals(propertyName)) return Job.class;
+		if (ESTWASTEOVERRIDE.equals(propertyName)) return Job.class;
 		if (SIGNATURES.equals(propertyName)) return Job.class;
 		if (PRICINGPRESS.equals(propertyName)) return Job.class;
 		if (COSTINGPRESS.equals(propertyName)) return Job.class;
@@ -1329,7 +1588,6 @@ public class Job extends ModelBase {
 		if (PARENTSIZE.equals(propertyName)) return Job.class;
 		if (RUNSIZE.equals(propertyName)) return Job.class;
 		if (FINISHSIZE.equals(propertyName)) return Job.class;
-		if (ATTRIBUTE1.equals(propertyName)) return Job.class;
 		if (FOLDEDSIZE.equals(propertyName)) return Job.class;
 		if (FRONTCOLORS.equals(propertyName)) return Job.class;
 		if (BACKCOLORS.equals(propertyName)) return Job.class;
@@ -1346,6 +1604,12 @@ public class Job extends ModelBase {
 		if (PRICINGMETHOD.equals(propertyName)) return Job.class;
 		if (DOUBLESIDED.equals(propertyName)) return Job.class;
 		if (SINGLESIDED.equals(propertyName)) return Job.class;
+		if (COSTINGRECORD.equals(propertyName)) return Job.class;
+		if (WEIGHT.equals(propertyName)) return Job.class;
+		if (TOTALCOPIES.equals(propertyName)) return Job.class;
+		if (NUMCOPIES.equals(propertyName)) return Job.class;
+		if (NUMCOPIESOVERRIDE.equals(propertyName)) return Job.class;
+		if (STOCKQTY.equals(propertyName)) return Job.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1391,6 +1655,8 @@ public class Job extends ModelBase {
 			return false;
 		if (! SmartEquals(getInSetsOf(), objT.getInSetsOf()))
 			return false;
+		if (! SmartEquals(getInSetsOfOverride(), objT.getInSetsOfOverride()))
+			return false;
 		if (! SmartEquals(getSheets(), objT.getSheets()))
 			return false;
 		if (! SmartEquals(getNumUp(), objT.getNumUp()))
@@ -1401,7 +1667,11 @@ public class Job extends ModelBase {
 			return false;
 		if (! SmartEquals(getBinderyWaste(), objT.getBinderyWaste()))
 			return false;
+		if (! SmartEquals(getBinderyWasteOverride(), objT.getBinderyWasteOverride()))
+			return false;
 		if (! SmartEquals(getEstWaste(), objT.getEstWaste()))
+			return false;
+		if (! SmartEquals(getEstWasteOverride(), objT.getEstWasteOverride()))
 			return false;
 		if (! SmartEquals(getSignatures(), objT.getSignatures()))
 			return false;
@@ -1418,8 +1688,6 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getRunSize(), objT.getRunSize()))
 			return false;
 		if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
-			return false;
-		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
 			return false;
 		if (! SmartEquals(getFoldedSize(), objT.getFoldedSize()))
 			return false;
@@ -1452,6 +1720,18 @@ public class Job extends ModelBase {
 		if (! SmartEquals(getDoubleSided(), objT.getDoubleSided()))
 			return false;
 		if (! SmartEquals(getSingleSided(), objT.getSingleSided()))
+			return false;
+		if (! SmartEquals(getCostingRecord(), objT.getCostingRecord()))
+			return false;
+		if (! SmartEquals(getWeight(), objT.getWeight()))
+			return false;
+		if (! SmartEquals(getTotalCopies(), objT.getTotalCopies()))
+			return false;
+		if (! SmartEquals(getNumCopies(), objT.getNumCopies()))
+			return false;
+		if (! SmartEquals(getNumCopiesOverride(), objT.getNumCopiesOverride()))
+			return false;
+		if (! SmartEquals(getStockQty(), objT.getStockQty()))
 			return false;
 		return true;
 	}			

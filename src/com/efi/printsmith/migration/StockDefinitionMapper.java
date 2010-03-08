@@ -238,7 +238,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("min order".equals(currentFieldToken)) {
 				stockDefinition.setMinorder(Utilities.tokenToInt(currentImportToken));
 			}  else if ("weight".equals(currentFieldToken)) {
-				stockDefinition.setWeight(Utilities.tokenToInt(currentImportToken));
+				stockDefinition.setWeight(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("price expires".equals(currentFieldToken)) {
 				if (currentImportToken != null && currentImportToken.length() > 0) {
 					stockDefinition.setPriceExpires(Utilities.tokenToDate(currentImportToken));

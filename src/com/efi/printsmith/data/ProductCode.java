@@ -51,6 +51,7 @@ public class ProductCode extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

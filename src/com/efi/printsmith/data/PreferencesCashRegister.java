@@ -71,6 +71,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
  	@Basic
 	private Boolean tax;
+	
 	/**
 	 * @generated
  	 */
@@ -88,6 +89,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
  	@Basic
 	private String title;
+	
 	/**
 	 * @generated
  	 */
@@ -105,6 +107,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
+	
 	/**
 	 * @generated
  	 */
@@ -122,6 +125,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
  	@Basic
 	private Double rate;
+	
 	/**
 	 * @generated
  	 */
@@ -139,6 +143,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
+	
 	/**
 	 * @generated
  	 */
@@ -156,6 +161,7 @@ public class PreferencesCashRegister extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxCodes taxCodes;
+	
 	/**
 	 * @generated
  	 */

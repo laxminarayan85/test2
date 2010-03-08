@@ -51,6 +51,7 @@ public class SizeTable extends ModelBase {
 	
  	@Basic
 	private Integer name;
+	
 	/**
 	 * @generated
  	 */

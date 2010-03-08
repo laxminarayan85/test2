@@ -30,12 +30,15 @@ package com.efi.printsmith.data
 		public var qtyOrdered:Number = 0;
 		public var oversUnders:Number = 0;
 		public var inSetsOf:Number = 0;
+		public var inSetsOfOverride:Boolean = true;
 		public var sheets:Number = 0;
 		public var numUp:Number = 0;
 		public var numOn:Number = 0;
 		public var press:PressDefinition;
 		public var binderyWaste:Number = 0;
+		public var binderyWasteOverride:Boolean = true;
 		public var estWaste:Number = 0;
+		public var estWasteOverride:Boolean = true;
 		public var signatures:Number = 0;
 		public var pricingPress:PressDefinition;
 		public var costingPress:PressDefinition;
@@ -44,7 +47,6 @@ package com.efi.printsmith.data
 		public var parentSize:String = "";
 		public var runSize:String = "";
 		public var finishSize:String = "";
-		public var attribute1:int = 0;
 		public var foldedSize:String = "";
 		public var frontColors:int = 0;
 		public var backColors:int = 0;
@@ -61,6 +63,12 @@ package com.efi.printsmith.data
 		public var pricingMethod:PreferencesPricingMethod;
 		public var doubleSided:Boolean = true;
 		public var singleSided:Boolean = true;
+		public var costingRecord:CostingRecord;
+		public var weight:Number = 0;
+		public var totalCopies:Number = 0;
+		public var numCopies:Number = 0;
+		public var numCopiesOverride:Boolean = true;
+		public var stockQty:Number = 0;
 	
 	}
 }

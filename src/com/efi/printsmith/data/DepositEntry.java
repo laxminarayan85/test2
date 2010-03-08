@@ -67,6 +67,7 @@ public class DepositEntry extends ModelBase {
 	
  	@Basic
 	private String referenceNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -84,6 +85,7 @@ public class DepositEntry extends ModelBase {
 	
  	@Basic
 	private Date date;
+	
 	/**
 	 * @generated
  	 */
@@ -101,6 +103,7 @@ public class DepositEntry extends ModelBase {
 	
  	@Basic
 	private Double amount;
+	
 	/**
 	 * @generated
  	 */
@@ -118,6 +121,7 @@ public class DepositEntry extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private DepositType type;
+	
 	/**
 	 * @generated
  	 */
@@ -135,6 +139,7 @@ public class DepositEntry extends ModelBase {
 	
  	@Basic
 	private Integer creditCardType;
+	
 	/**
 	 * @generated
  	 */

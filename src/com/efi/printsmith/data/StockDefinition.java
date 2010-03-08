@@ -491,6 +491,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer stockunit;
+	
 	/**
 	 * @generated
  	 */
@@ -508,6 +509,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -525,6 +527,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockGroup stkgroup;
+	
 	/**
 	 * @generated
  	 */
@@ -542,6 +545,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String stkclass;
+	
 	/**
 	 * @generated
  	 */
@@ -559,6 +563,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String stktype;
+	
 	/**
 	 * @generated
  	 */
@@ -576,6 +581,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean isMetric;
+	
 	/**
 	 * @generated
  	 */
@@ -593,6 +599,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockFinish finish;
+	
 	/**
 	 * @generated
  	 */
@@ -609,24 +616,26 @@ public class StockDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer weight;
+	private Double weight;
+	
 	/**
 	 * @generated
  	 */
-	public Integer getWeight(){
+	public Double getWeight(){
 		return weight; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setWeight(Integer newVal) {
+	public void setWeight(Double newVal) {
 		this.weight = newVal;
 	}
  	
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockColors color;
+	
 	/**
 	 * @generated
  	 */
@@ -644,6 +653,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockGrade grade;
+	
 	/**
 	 * @generated
  	 */
@@ -661,6 +671,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String coated;
+	
 	/**
 	 * @generated
  	 */
@@ -678,6 +689,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String stocknumber;
+	
 	/**
 	 * @generated
  	 */
@@ -695,6 +707,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Vendor vendor;
+	
 	/**
 	 * @generated
  	 */
@@ -712,6 +725,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String basicsize;
+	
 	/**
 	 * @generated
  	 */
@@ -729,6 +743,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String parentsize;
+	
 	/**
 	 * @generated
  	 */
@@ -746,6 +761,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer thickness;
+	
 	/**
 	 * @generated
  	 */
@@ -762,24 +778,26 @@ public class StockDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer mweight;
+	private Double mweight;
+	
 	/**
 	 * @generated
  	 */
-	public Integer getMweight(){
+	public Double getMweight(){
 		return mweight; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setMweight(Integer newVal) {
+	public void setMweight(Double newVal) {
 		this.mweight = newVal;
 	}
  	
 	
  	@Basic
 	private Integer sheetspercarton;
+	
 	/**
 	 * @generated
  	 */
@@ -797,6 +815,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer minorder;
+	
 	/**
 	 * @generated
  	 */
@@ -814,6 +833,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String comments;
+	
 	/**
 	 * @generated
  	 */
@@ -831,6 +851,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String uom;
+	
 	/**
 	 * @generated
  	 */
@@ -848,6 +869,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer costunits;
+	
 	/**
 	 * @generated
  	 */
@@ -865,6 +887,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean entireOrderCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -882,6 +905,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer sheetsPerSet;
+	
 	/**
 	 * @generated
  	 */
@@ -899,6 +923,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean isCostInSets;
+	
 	/**
 	 * @generated
  	 */
@@ -916,6 +941,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Date priceExpires;
+	
 	/**
 	 * @generated
  	 */
@@ -933,6 +959,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak1;
+	
 	/**
 	 * @generated
  	 */
@@ -950,6 +977,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak2;
+	
 	/**
 	 * @generated
  	 */
@@ -967,6 +995,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak3;
+	
 	/**
 	 * @generated
  	 */
@@ -984,6 +1013,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak4;
+	
 	/**
 	 * @generated
  	 */
@@ -1001,6 +1031,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak5;
+	
 	/**
 	 * @generated
  	 */
@@ -1018,6 +1049,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer qtybreak6;
+	
 	/**
 	 * @generated
  	 */
@@ -1035,6 +1067,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost1;
+	
 	/**
 	 * @generated
  	 */
@@ -1052,6 +1085,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost2;
+	
 	/**
 	 * @generated
  	 */
@@ -1069,6 +1103,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost3;
+	
 	/**
 	 * @generated
  	 */
@@ -1086,6 +1121,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost4;
+	
 	/**
 	 * @generated
  	 */
@@ -1103,6 +1139,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost5;
+	
 	/**
 	 * @generated
  	 */
@@ -1120,6 +1157,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double cost6;
+	
 	/**
 	 * @generated
  	 */
@@ -1137,6 +1175,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt1;
+	
 	/**
 	 * @generated
  	 */
@@ -1154,6 +1193,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt2;
+	
 	/**
 	 * @generated
  	 */
@@ -1171,6 +1211,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt3;
+	
 	/**
 	 * @generated
  	 */
@@ -1188,6 +1229,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt4;
+	
 	/**
 	 * @generated
  	 */
@@ -1205,6 +1247,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt5;
+	
 	/**
 	 * @generated
  	 */
@@ -1222,6 +1265,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cwt6;
+	
 	/**
 	 * @generated
  	 */
@@ -1239,6 +1283,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup1;
+	
 	/**
 	 * @generated
  	 */
@@ -1256,6 +1301,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup2;
+	
 	/**
 	 * @generated
  	 */
@@ -1273,6 +1319,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup3;
+	
 	/**
 	 * @generated
  	 */
@@ -1290,6 +1337,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup4;
+	
 	/**
 	 * @generated
  	 */
@@ -1307,6 +1355,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup5;
+	
 	/**
 	 * @generated
  	 */
@@ -1324,6 +1373,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double markup6;
+	
 	/**
 	 * @generated
  	 */
@@ -1341,6 +1391,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM1;
+	
 	/**
 	 * @generated
  	 */
@@ -1358,6 +1409,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM2;
+	
 	/**
 	 * @generated
  	 */
@@ -1375,6 +1427,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM3;
+	
 	/**
 	 * @generated
  	 */
@@ -1392,6 +1445,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM4;
+	
 	/**
 	 * @generated
  	 */
@@ -1409,6 +1463,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM5;
+	
 	/**
 	 * @generated
  	 */
@@ -1426,6 +1481,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer listPerM6;
+	
 	/**
 	 * @generated
  	 */
@@ -1443,6 +1499,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String normalRunSize;
+	
 	/**
 	 * @generated
  	 */
@@ -1460,6 +1517,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer cutsPer100;
+	
 	/**
 	 * @generated
  	 */
@@ -1477,6 +1535,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double minCutCharge;
+	
 	/**
 	 * @generated
  	 */
@@ -1494,6 +1553,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition defaultPress;
+	
 	/**
 	 * @generated
  	 */
@@ -1511,6 +1571,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean autoCalculateBlank;
+	
 	/**
 	 * @generated
  	 */
@@ -1528,6 +1589,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty1;
+	
 	/**
 	 * @generated
  	 */
@@ -1545,6 +1607,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty2;
+	
 	/**
 	 * @generated
  	 */
@@ -1562,6 +1625,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty3;
+	
 	/**
 	 * @generated
  	 */
@@ -1579,6 +1643,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty4;
+	
 	/**
 	 * @generated
  	 */
@@ -1596,6 +1661,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty5;
+	
 	/**
 	 * @generated
  	 */
@@ -1613,6 +1679,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer blankSheetqty6;
+	
 	/**
 	 * @generated
  	 */
@@ -1630,6 +1697,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice1;
+	
 	/**
 	 * @generated
  	 */
@@ -1647,6 +1715,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice2;
+	
 	/**
 	 * @generated
  	 */
@@ -1664,6 +1733,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice3;
+	
 	/**
 	 * @generated
  	 */
@@ -1681,6 +1751,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice4;
+	
 	/**
 	 * @generated
  	 */
@@ -1698,6 +1769,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice5;
+	
 	/**
 	 * @generated
  	 */
@@ -1715,6 +1787,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double blankSheetPrice6;
+	
 	/**
 	 * @generated
  	 */
@@ -1732,6 +1805,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String defaultBW;
+	
 	/**
 	 * @generated
  	 */
@@ -1749,6 +1823,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String defaultColor;
+	
 	/**
 	 * @generated
  	 */
@@ -1766,6 +1841,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String defaultLargeFormat;
+	
 	/**
 	 * @generated
  	 */
@@ -1783,6 +1859,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional1;
+	
 	/**
 	 * @generated
  	 */
@@ -1800,6 +1877,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional2;
+	
 	/**
 	 * @generated
  	 */
@@ -1817,6 +1895,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional3;
+	
 	/**
 	 * @generated
  	 */
@@ -1834,6 +1913,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional4;
+	
 	/**
 	 * @generated
  	 */
@@ -1851,6 +1931,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional5;
+	
 	/**
 	 * @generated
  	 */
@@ -1868,6 +1949,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional6;
+	
 	/**
 	 * @generated
  	 */
@@ -1885,6 +1967,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional7;
+	
 	/**
 	 * @generated
  	 */
@@ -1902,6 +1985,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional8;
+	
 	/**
 	 * @generated
  	 */
@@ -1919,6 +2003,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional9;
+	
 	/**
 	 * @generated
  	 */
@@ -1936,6 +2021,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String additional10;
+	
 	/**
 	 * @generated
  	 */
@@ -1953,6 +2039,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean standardItem;
+	
 	/**
 	 * @generated
  	 */
@@ -1970,6 +2057,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer onHand;
+	
 	/**
 	 * @generated
  	 */
@@ -1987,6 +2075,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer committed;
+	
 	/**
 	 * @generated
  	 */
@@ -2004,6 +2093,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer available;
+	
 	/**
 	 * @generated
  	 */
@@ -2021,6 +2111,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer onOrder;
+	
 	/**
 	 * @generated
  	 */
@@ -2038,6 +2129,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer targetLevel;
+	
 	/**
 	 * @generated
  	 */
@@ -2055,6 +2147,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer reOrderPoint;
+	
 	/**
 	 * @generated
  	 */
@@ -2072,6 +2165,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Integer minOrderQty;
+	
 	/**
 	 * @generated
  	 */
@@ -2089,6 +2183,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean evenIncrements;
+	
 	/**
 	 * @generated
  	 */
@@ -2106,6 +2201,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Date expires;
+	
 	/**
 	 * @generated
  	 */
@@ -2123,6 +2219,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String binLocation;
+	
 	/**
 	 * @generated
  	 */
@@ -2140,6 +2237,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean shellItem;
+	
 	/**
 	 * @generated
  	 */
@@ -2157,6 +2255,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String forestManagement;
+	
 	/**
 	 * @generated
  	 */
@@ -2174,6 +2273,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double pcwRecycledPercent;
+	
 	/**
 	 * @generated
  	 */
@@ -2191,6 +2291,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean fscCertified;
+	
 	/**
 	 * @generated
  	 */
@@ -2208,6 +2309,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean sfiCertified;
+	
 	/**
 	 * @generated
  	 */
@@ -2225,6 +2327,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Boolean greenSealCertified;
+	
 	/**
 	 * @generated
  	 */
@@ -2242,6 +2345,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PaperPrice defaultPriceList;
+	
 	/**
 	 * @generated
  	 */
@@ -2259,6 +2363,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private GenericColors genericColor;
+	
 	/**
 	 * @generated
  	 */
@@ -2276,6 +2381,7 @@ public class StockDefinition extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Account account;
+	
 	/**
 	 * @generated
  	 */
@@ -2293,6 +2399,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private String stockId;
+	
 	/**
 	 * @generated
  	 */
@@ -2311,6 +2418,7 @@ public class StockDefinition extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "stockdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
+	
 	/**
 	 * @generated
  	 */
@@ -2334,6 +2442,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double copier1PricePerSheet;
+	
 	/**
 	 * @generated
  	 */
@@ -2351,6 +2460,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double copier2PricePerSheet;
+	
 	/**
 	 * @generated
  	 */
@@ -2368,6 +2478,7 @@ public class StockDefinition extends ModelBase {
 	
  	@Basic
 	private Double copier3PricePerSheet;
+	
 	/**
 	 * @generated
  	 */
@@ -2514,7 +2625,7 @@ public class StockDefinition extends ModelBase {
 		if (STKTYPE.equals(propertyName)) setStktype((String)newValue); else
 		if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
 		if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
-		if (WEIGHT.equals(propertyName)) setWeight((Integer)newValue); else
+		if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
 		if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
 		if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
 		if (COATED.equals(propertyName)) setCoated((String)newValue); else
@@ -2523,7 +2634,7 @@ public class StockDefinition extends ModelBase {
 		if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
 		if (PARENTSIZE.equals(propertyName)) setParentsize((String)newValue); else
 		if (THICKNESS.equals(propertyName)) setThickness((Integer)newValue); else
-		if (MWEIGHT.equals(propertyName)) setMweight((Integer)newValue); else
+		if (MWEIGHT.equals(propertyName)) setMweight((Double)newValue); else
 		if (SHEETSPERCARTON.equals(propertyName)) setSheetspercarton((Integer)newValue); else
 		if (MINORDER.equals(propertyName)) setMinorder((Integer)newValue); else
 		if (COMMENTS.equals(propertyName)) setComments((String)newValue); else
@@ -2642,7 +2753,7 @@ public class StockDefinition extends ModelBase {
 		if (FINISH.equals(propertyName)) 
 			return new Class<?>[] {StockFinish.class};		
 		if (WEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (COLOR.equals(propertyName)) 
 			return new Class<?>[] {StockColors.class};		
 		if (GRADE.equals(propertyName)) 
@@ -2660,7 +2771,7 @@ public class StockDefinition extends ModelBase {
 		if (THICKNESS.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MWEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (SHEETSPERCARTON.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MINORDER.equals(propertyName)) 

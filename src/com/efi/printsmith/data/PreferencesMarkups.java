@@ -59,6 +59,7 @@ public class PreferencesMarkups extends ModelBase {
 	
  	@Basic
 	private Double totalCost;
+	
 	/**
 	 * @generated
  	 */
@@ -76,6 +77,7 @@ public class PreferencesMarkups extends ModelBase {
 	
  	@Basic
 	private Double markup;
+	
 	/**
 	 * @generated
  	 */
@@ -93,6 +95,7 @@ public class PreferencesMarkups extends ModelBase {
 	
  	@Basic
 	private Boolean above;
+	
 	/**
 	 * @generated
  	 */

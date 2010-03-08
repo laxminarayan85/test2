@@ -83,6 +83,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String notesWho;
+	
 	/**
 	 * @generated
  	 */
@@ -100,6 +101,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String phoneNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -117,6 +119,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String notesWhat;
+	
 	/**
 	 * @generated
  	 */
@@ -134,6 +137,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String howMany;
+	
 	/**
 	 * @generated
  	 */
@@ -151,6 +155,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String whatSize;
+	
 	/**
 	 * @generated
  	 */
@@ -168,6 +173,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String paper;
+	
 	/**
 	 * @generated
  	 */
@@ -185,6 +191,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String notes;
+	
 	/**
 	 * @generated
  	 */
@@ -202,6 +209,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private String notesWhen;
+	
 	/**
 	 * @generated
  	 */
@@ -219,6 +227,7 @@ public class NotePad extends ModelBase {
 	
  	@Basic
 	private Boolean showOnOpen;
+	
 	/**
 	 * @generated
  	 */

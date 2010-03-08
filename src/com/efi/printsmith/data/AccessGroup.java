@@ -51,6 +51,7 @@ public class AccessGroup extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

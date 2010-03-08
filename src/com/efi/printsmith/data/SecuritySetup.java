@@ -67,6 +67,7 @@ public class SecuritySetup extends ModelBase {
 	
  	@Basic
 	private Boolean enable;
+	
 	/**
 	 * @generated
  	 */
@@ -84,6 +85,7 @@ public class SecuritySetup extends ModelBase {
 	
  	@Basic
 	private String menu;
+	
 	/**
 	 * @generated
  	 */
@@ -101,6 +103,7 @@ public class SecuritySetup extends ModelBase {
 	
  	@Basic
 	private String commandId;
+	
 	/**
 	 * @generated
  	 */
@@ -118,6 +121,7 @@ public class SecuritySetup extends ModelBase {
 	
  	@Basic
 	private String commandName;
+	
 	/**
 	 * @generated
  	 */
@@ -135,6 +139,7 @@ public class SecuritySetup extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessGroup accessGroup;
+	
 	/**
 	 * @generated
  	 */

@@ -11,72 +11,70 @@ import com.efi.printsmith.data.PriceLogEntry;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
+import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
 import com.efi.printsmith.service.PricingService;
 
-public class FlatRatePricingMethod implements CopierPricingMethod {
+public class FlatRatePricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(FlatRatePricingMethod.class);
 
 	public Job priceCopierJob(Job job) {
-		log.info("Start priceJob for job " + job.getId());
+		log.info("Start priceCopierJob for job " + job.getId());
+		super.priceCopierJob(job);
+
 		double price = 0.0;
-		PriceStockEngine priceStockEngine = new PriceStockEngine();
-		
-		CopierDefinition pricingCopier = job.getPricingCopier();
-		if (pricingCopier != null) {
-			double ratePerCopy = pricingCopier.getFlatRate();
-			PricingRecord pricingRecord = job.getPricingRecord();
-			if (pricingRecord == null) {
-				pricingRecord = new PricingRecord();
-				pricingRecord.setUnitPriceOverride(false);
-				pricingRecord.setTotalPriceOverride(false);
-			}
-			PriceLogEntry priceLogEntry = new PriceLogEntry();
-			pricingRecord.setPriceLogEntry(priceLogEntry);
-			PriceLogEntry detailLogEntry = new PriceLogEntry();
-			priceLogEntry.setDate(new Date());
-			priceLogEntry.setDescription("Price Flat Rate Copier Job");
-			priceLogEntry.setMethod("FlatRatePricingMethod");
-			priceLogEntry.setValue(price);
-			
-			price = ratePerCopy*job.getQtyOrdered()*job.getSheets();
-			detailLogEntry.setDate(priceLogEntry.getDate());
-			detailLogEntry.setDescription("Side One Price (Rate*Qty Ordered): " + ratePerCopy + "*" + job.getQtyOrdered() + "*" + job.getSheets());
-			detailLogEntry.setMethod("FlatRatePricingMethod");
-			detailLogEntry.setValue(price);
-			priceLogEntry.addChildren(detailLogEntry);
-			if (job.getDoubleSided()) {
-				double secondSidePrice = ratePerCopy*(pricingCopier.getSideTwoFactor()-1)*job.getQtyOrdered()*job.getSheets();
-				price += secondSidePrice;
-				
-				detailLogEntry = new PriceLogEntry();
-				detailLogEntry.setDate(priceLogEntry.getDate());
-				detailLogEntry.setDescription("Side Two Price (Rate*Side Two Factor*Qty Ordered*Sheets): " + ratePerCopy + "*" + (pricingCopier.getSideTwoFactor()-1) + "*" + job.getQtyOrdered() + "*" + job.getSheets());
-				detailLogEntry.setMethod("FlatRatePricingMethod");
-				detailLogEntry.setValue(secondSidePrice);
-				priceLogEntry.addChildren(detailLogEntry);
-			}
-			
-			if (job.getStock() != null) {
-				double stockPrice = priceStockEngine.priceStock(job);
-				
-				price += stockPrice;
-			}
-			pricingRecord.setTotalPrice(price);
-			
-			priceLogEntry.setValue(price);
-			job.setPricingRecord(pricingRecord);
-		} else {
-			log.error("No pricing copier found for job");
+		PricingRecord pricingRecord = job.getPricingRecord();
+		if (pricingRecord == null) {
+			pricingRecord = new PricingRecord();
+			pricingRecord.setUnitPriceOverride(false);
+			pricingRecord.setTotalPriceOverride(false);
 		}
+		PriceLogEntry priceLogEntry = PriceLogUtilities.createPriceLogEntry("FlatRatePricingMethod", "Price Flat Rate Copier Job");
+		pricingRecord.setPriceLogEntry(priceLogEntry);
+
+		calculateUnitPrice(job);
 		
+		price *= job.getQtyOrdered();
+		
+		priceLogEntry.setValue(price);
 		return job;
 	}
 	
 	private void calculateUnitPrice(Job job) {
+		PriceStockEngine priceStockEngine = new PriceStockEngine();
+		PricingRecord pricingRecord = job.getPricingRecord();
+		
+		double price = 0.0;
+		
 		if (job.getPricingRecord().getUnitPriceOverride()) {
 			return;
 		} else {
-			
+			CopierDefinition pricingCopier = job.getPricingCopier();
+			if (pricingCopier != null) {
+				double ratePerCopy = pricingCopier.getFlatRate();
+				PriceLogEntry parentLogEntry = job.getPricingRecord().getPriceLogEntry();
+				
+				price = ratePerCopy*job.getSheets();
+				PriceLogUtilities.createPriceLogEntry(parentLogEntry, "FlatRatePricingMethod", "Side One Unit Price (Rate*Qty Ordered): " + ratePerCopy + "*" + job.getSheets(), price);
+
+				if (job.getDoubleSided()) {
+					double secondSidePrice = ratePerCopy*(pricingCopier.getSideTwoFactor()-1)*job.getSheets();
+					price += secondSidePrice;
+					
+					PriceLogUtilities.createPriceLogEntry(parentLogEntry, "FlatRatePricingMethod", 
+							"Side Two Unit Price (Rate*Side Two Factor*Sheets): " + ratePerCopy + "*" + (pricingCopier.getSideTwoFactor()-1) + "*" + job.getSheets(), secondSidePrice);
+				}
+				
+				if (job.getStock() != null) {
+					double stockPrice = priceStockEngine.priceStock(job);
+					
+					price += stockPrice;
+				}
+				pricingRecord.setUnitPrice(price);
+				
+				job.setPricingRecord(pricingRecord);
+			} else {
+				log.error("No pricing copier found for job");
+			}			
 		}
 	}
 }

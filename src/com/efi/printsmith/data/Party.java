@@ -79,6 +79,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String prefix;
+	
 	/**
 	 * @generated
  	 */
@@ -96,6 +97,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String suffix;
+	
 	/**
 	 * @generated
  	 */
@@ -113,6 +115,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String salutation;
+	
 	/**
 	 * @generated
  	 */
@@ -130,6 +133,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String jobTitle;
+	
 	/**
 	 * @generated
  	 */
@@ -147,6 +151,7 @@ public class Party extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address address;
+	
 	/**
 	 * @generated
  	 */
@@ -164,6 +169,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String lastName;
+	
 	/**
 	 * @generated
  	 */
@@ -181,6 +187,7 @@ public class Party extends ModelBase {
 	
  	@Basic
 	private String firstName;
+	
 	/**
 	 * @generated
  	 */
@@ -199,6 +206,7 @@ public class Party extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
+	
 	/**
 	 * @generated
  	 */

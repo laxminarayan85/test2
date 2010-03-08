@@ -51,6 +51,7 @@ public class InkColor extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

@@ -51,6 +51,7 @@ public class TypeofWork extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

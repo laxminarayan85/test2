@@ -51,6 +51,7 @@ public class DepositType extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */

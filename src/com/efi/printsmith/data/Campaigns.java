@@ -63,6 +63,7 @@ public class Campaigns extends ModelBase {
 	
  	@Basic
 	private String name;
+	
 	/**
 	 * @generated
  	 */
@@ -80,6 +81,7 @@ public class Campaigns extends ModelBase {
 	
  	@Basic
 	private Boolean applied;
+	
 	/**
 	 * @generated
  	 */
@@ -97,6 +99,7 @@ public class Campaigns extends ModelBase {
 	
  	@Basic
 	private Boolean globalCampaign;
+	
 	/**
 	 * @generated
  	 */
@@ -114,6 +117,7 @@ public class Campaigns extends ModelBase {
 	
  	@Basic
 	private String campaignId;
+	
 	/**
 	 * @generated
  	 */

@@ -79,6 +79,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Date customtoDate;
+	
 	/**
 	 * @generated
  	 */
@@ -96,6 +97,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Date customfromDate;
+	
 	/**
 	 * @generated
  	 */
@@ -113,6 +115,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Date fromDate;
+	
 	/**
 	 * @generated
  	 */
@@ -130,6 +133,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Date toDate;
+	
 	/**
 	 * @generated
  	 */
@@ -147,6 +151,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private String day;
+	
 	/**
 	 * @generated
  	 */
@@ -164,6 +169,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private String type;
+	
 	/**
 	 * @generated
  	 */
@@ -181,6 +187,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Integer periodNumber;
+	
 	/**
 	 * @generated
  	 */
@@ -198,6 +205,7 @@ public class Period extends ModelBase {
 	
  	@Basic
 	private Boolean periodClosed;
+	
 	/**
 	 * @generated
  	 */

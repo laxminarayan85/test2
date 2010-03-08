@@ -75,6 +75,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private Long stockChangeID;
+	
 	/**
 	 * @generated
  	 */
@@ -92,6 +93,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private String user;
+	
 	/**
 	 * @generated
  	 */
@@ -109,6 +111,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private Date date;
+	
 	/**
 	 * @generated
  	 */
@@ -126,6 +129,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private String howChanged;
+	
 	/**
 	 * @generated
  	 */
@@ -143,6 +147,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private Integer quantity;
+	
 	/**
 	 * @generated
  	 */
@@ -160,6 +165,7 @@ public class StockChanges extends ModelBase {
 	
  	@Basic
 	private String reference;
+	
 	/**
 	 * @generated
  	 */
@@ -177,6 +183,7 @@ public class StockChanges extends ModelBase {
 	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockDefinition stockDefinition;
+	
 	/**
 	 * @generated
  	 */

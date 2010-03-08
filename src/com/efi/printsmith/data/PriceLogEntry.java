@@ -71,6 +71,7 @@ public class PriceLogEntry extends ModelBase {
 	
  	@Basic
 	private Integer version;
+	
 	/**
 	 * @generated
  	 */
@@ -88,6 +89,7 @@ public class PriceLogEntry extends ModelBase {
 	
  	@Basic
 	private String description;
+	
 	/**
 	 * @generated
  	 */
@@ -105,6 +107,7 @@ public class PriceLogEntry extends ModelBase {
 	
  	@Basic
 	private String method;
+	
 	/**
 	 * @generated
  	 */
@@ -122,6 +125,7 @@ public class PriceLogEntry extends ModelBase {
 	
  	@Basic
 	private Double value;
+	
 	/**
 	 * @generated
  	 */
@@ -139,6 +143,7 @@ public class PriceLogEntry extends ModelBase {
 	
  	@Basic
 	private Date date;
+	
 	/**
 	 * @generated
  	 */
@@ -157,6 +162,7 @@ public class PriceLogEntry extends ModelBase {
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pricelogentry_children")
 	private java.util.List<PriceLogEntry> children;
+	
 	/**
 	 * @generated
  	 */

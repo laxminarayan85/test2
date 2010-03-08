@@ -2,10 +2,11 @@ package com.efi.printsmith.pricing.copier;
 
 import com.efi.printsmith.data.Job;
 
-public class TotalAllCopiesPricingMethod implements CopierPricingMethod {
+public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 
 	public Job priceCopierJob(Job job) {
-		// TODO Auto-generated method stub
+		super.priceCopierJob(job);
+		
 		return null;
 	}
 
