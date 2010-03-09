@@ -14,6 +14,7 @@ import com.efi.printsmith.data.MarketingDateLabels;
 import com.efi.printsmith.data.MarketingMailers;
 import com.efi.printsmith.data.BusinessType;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.data.TaxTable;
 
 public class CustomerMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -132,7 +133,11 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("tax code".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("tax table".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("0") == false) {
+						TaxTable taxTable = (TaxTable)dataService.getByPrevId("TaxTable", currentImportToken);
+						if (taxTable != null)
+							customer.setTaxTable(taxTable);
+					}
 				} else if ("sales ranking".equals(currentFieldToken)) {
 					customer.setSalesRank(Utilities
 							.tokenToLong(currentImportToken));
@@ -469,7 +474,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[1]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -480,7 +485,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[2]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -491,7 +496,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[3]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -502,7 +507,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[4]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -513,7 +518,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[5]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -524,7 +529,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[6]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -535,7 +540,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[7]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -546,7 +551,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[8]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -557,7 +562,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[9]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -568,7 +573,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset job charges[10]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -579,7 +584,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[1]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -591,7 +596,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[2]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -603,7 +608,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[3]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -615,7 +620,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[4]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -627,7 +632,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[5]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -639,7 +644,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[6]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -651,7 +656,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[7]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -663,7 +668,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[8]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -675,7 +680,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[9]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService
@@ -687,7 +692,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("preset inv charges[10]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService
-								.getByPrevId(currentImportToken);
+								.getByPrevId("ChargeDefinition",currentImportToken);
 						if (modelBase != null) {
 							long id = modelBase.getId();
 							ChargeDefinition chargeDefinition = (ChargeDefinition) dataService

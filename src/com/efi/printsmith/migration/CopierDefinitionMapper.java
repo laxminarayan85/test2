@@ -87,7 +87,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				copierDefinition.setCopyMarkup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("charges[1]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -96,7 +96,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[2]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -105,7 +105,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[3]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -114,7 +114,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[4]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -123,7 +123,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[5]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -132,7 +132,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[6]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -141,7 +141,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[7]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -150,7 +150,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[8]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -159,7 +159,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[9]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -168,7 +168,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				}
 			} else if ("charges[10]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);

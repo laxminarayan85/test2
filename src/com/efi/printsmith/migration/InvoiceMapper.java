@@ -5,6 +5,14 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.Account;
+import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.data.SalesRep;
+import com.efi.printsmith.data.SpecialInstructions;
+import com.efi.printsmith.data.Contact;
+import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.Charge;
 
 public class InvoiceMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -12,6 +20,7 @@ public class InvoiceMapper extends ImportMapper {
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		Invoice invoice = new Invoice();
+		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -24,15 +33,27 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("doc type".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cust number".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					Account account = dataService.getByAccountId(currentImportToken);
+					if (account != null)
+						invoice.setAccount(account);
+				}
 			} else if ("doc number".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setInvoiceNumber(currentImportToken);
 			} else if ("name".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setName(currentImportToken);
 			} else if ("sale rep".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false) {
+					SalesRep salesRep = (SalesRep) dataService.getByName("SalesRep", currentImportToken);
+					if (salesRep == null) {
+						salesRep = new SalesRep();
+						salesRep.setName(currentImportToken);
+						dataService.addUpdate(salesRep);
+					}
+					invoice.setSalesRep(salesRep);
+				}
 			} else if ("PO number".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setCustomerPO(currentImportToken);
 			} else if ("addr1".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("addr2".equals(currentFieldToken)) {
@@ -56,11 +77,11 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("fax".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("taken by".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setTakenBy(currentImportToken);
 			} else if ("sales code".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setSalesCode(currentImportToken);
 			} else if ("resale number".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setResaleId(currentImportToken);
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table".equals(currentFieldToken)) {
@@ -68,27 +89,37 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("ship mode".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("print count".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setPrintCount(Utilities.tokenToLong(currentImportToken));
 			} else if ("special instructions".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false) {
+					SpecialInstructions specialInstructions = new SpecialInstructions();
+					specialInstructions.setInstructions(currentImportToken);
+					dataService.addUpdate(specialInstructions);
+					invoice.setSpecialInstructions(specialInstructions);
+				}
 			} else if ("old estimate number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("order date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false)
+					invoice.setOrderedDate(Utilities.tokenToDate(currentImportToken));
 			} else if ("due date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("proof date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false)
+					invoice.setProofDate(Utilities.tokenToDate(currentImportToken));
 			} else if ("old invoice number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("date completed".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false)
+					invoice.setCompletedDate(Utilities.tokenToDate(currentImportToken));
 			} else if ("date notified".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pickup date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false)
+					invoice.setPickupDate(Utilities.tokenToDate(currentImportToken));
 			} else if ("reorder date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false)
+					invoice.setReorderDate(Utilities.tokenToDate(currentImportToken));
 			} else if ("sales category[1]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales category[2]".equals(currentFieldToken)) {
@@ -142,45 +173,45 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("pickup time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("ship charges".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setShipCharges(Utilities.tokenToDouble(currentImportToken));
 			} else if ("discountFactor".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setDiscountFactor(Utilities.tokenToDouble(currentImportToken));
 			} else if ("discount".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setDiscount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("tax rate".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setTax(Utilities.tokenToDouble(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales tax".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("subtotal".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setSubTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("shipping".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setShipPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("amount due".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {
-				/* TODO */
+				/* TODO */invoice.setTotalCost(Utilities.tokenToDouble(currentImportToken));
 			} else if ("checkno".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("amount".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("type".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("costed".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setCosted(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("odiscount".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("completed".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setCompleted(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pends".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("locked".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setLocked(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("printed invoice".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("printed estimate".equals(currentFieldToken)) {
@@ -188,17 +219,17 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("obs_tax shipping".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("po required".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setPoRequired(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("file originals".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setFileOriginals(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("no tax".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setNotTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("expense code".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setExpenseCode(currentImportToken);
 			} else if ("addr".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("country".equals(currentFieldToken)) {
@@ -226,7 +257,11 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("ship taken by".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("contact".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false) {
+					Contact contact = (Contact) dataService.getByName("Contact", currentImportToken);
+					if (contact != null)
+						invoice.setContact(contact);
+				}
 			} else if ("first name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("salutation".equals(currentFieldToken)) {
@@ -260,11 +295,23 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("order display no".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job rec".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					Job job = (Job) dataService.getByPrevId("Job",currentImportToken);
+					if (job != null)
+						invoice.addJobs(job);
+				}
 			} else if ("charge rec".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					Charge charge = (Charge) dataService.getByPrevId("Charge", currentImportToken);
+					if (charge != null)
+						invoice.addCharges(charge);
+				}
 			} else if ("markup rec".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ChargeDefinition chargeDefinition = (ChargeDefinition) dataService.getByPrevId("ChargeDefinition", currentImportToken);
+					if (chargeDefinition != null)
+						invoice.addMarkupCharges(chargeDefinition);
+				}
 			} else if ("note pad rec".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("note pad PHONE".equals(currentFieldToken)) {

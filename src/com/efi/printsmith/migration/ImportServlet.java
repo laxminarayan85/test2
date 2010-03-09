@@ -175,7 +175,12 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				mapper = new StockDefinitionMapper();
 			} else if ("TaxTables".equals(importType)) {				
 				mapper = new TaxTableMapper();
-			} else {
+			} else if ("PriceSchedules".equals(importType)) {
+				mapper = new PriceScheduleMapper();
+			} else if ("Charge".equals(importType)) {
+				mapper = new ChargeMapper();
+			}
+				else {
 				throw(new ServletException("Unknown import type passed to ImportServlet"));
 			}
 		} else {

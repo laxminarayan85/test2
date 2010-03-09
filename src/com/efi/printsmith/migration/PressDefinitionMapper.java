@@ -65,70 +65,70 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("use waste".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("charges[1]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[2]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[3]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[4]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[5]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[6]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[7]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[8]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[9]".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[10]".equals(currentFieldToken)) {
-				/* TODO */ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+				/* TODO */ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);

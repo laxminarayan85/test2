@@ -4,9 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.Charge;
 
 public class JobMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -21,7 +25,7 @@ public class JobMapper extends ImportMapper {
 			String currentFieldToken = fieldTokens[i];
 			
 			if ("recno".equals(currentFieldToken)) {
-				/* TODO */
+				job.setPrevId(currentImportToken);
 			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rtype".equals(currentFieldToken)) {
@@ -37,7 +41,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("sales cat name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("press ID".equals(currentFieldToken)) {
-				PressDefinition pressDefinition = (PressDefinition) dataService.getById("PressDefinition", Utilities.tokenToLong(currentImportToken));
+				PressDefinition pressDefinition = (PressDefinition) dataService.getByPressId(currentImportToken);
 				if (pressDefinition != null)
 					job.setPress(pressDefinition);
 			} else if ("press name".equals(currentFieldToken)) {
@@ -63,31 +67,31 @@ public class JobMapper extends ImportMapper {
 			} else if ("originals".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("signatures".equals(currentFieldToken)) {
-				/* TODO */
+				job.setSignatures(Utilities.tokenToLong(currentImportToken));
 			} else if ("sets".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("up".equals(currentFieldToken)) {
-				/* TODO */
+				job.setNumUp(Utilities.tokenToLong(currentImportToken));
 			} else if ("on".equals(currentFieldToken)) {
-				/* TODO */
+				job.setNumOn(Utilities.tokenToLong(currentImportToken));
 			} else if ("runout".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pricing method".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("colors front".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFrontColors(Utilities.tokenToInt(currentImportToken));
 			} else if ("colors back".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBackColors(Utilities.tokenToInt(currentImportToken));
 			} else if ("passes front".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFrontPasses(Utilities.tokenToInt(currentImportToken));
 			} else if ("passes back".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBackPasses(Utilities.tokenToInt(currentImportToken));
 			} else if ("wash front".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFrontWashes(Utilities.tokenToInt(currentImportToken));
 			} else if ("wash back".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBackWashes(Utilities.tokenToInt(currentImportToken));
 			} else if ("sheets".equals(currentFieldToken)) {
-				/* TODO */
+				job.setSheets(Utilities.tokenToLong(currentImportToken));
 			} else if ("waste".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("impressions".equals(currentFieldToken)) {
@@ -95,23 +99,28 @@ public class JobMapper extends ImportMapper {
 			} else if ("total impressions".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stock id".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false && currentImportToken.equals("0") == false) {
+					StockDefinition stockDefinition = dataService.getByStockId(currentImportToken);
+					if (stockDefinition != null) {
+						job.setStock(stockDefinition);
+					}
+				}
 			} else if ("parent X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("parent size".equals(currentFieldToken)) {
-				/* TODO */
+				job.setParentSize(currentImportToken);
 			} else if ("parent Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run size".equals(currentFieldToken)) {
-				/* TODO */
+				job.setRunSize(currentImportToken);
 			} else if ("run Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("finish X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("finish size".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFinishSize(currentImportToken);
 			} else if ("finish Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stock cost".equals(currentFieldToken)) {
@@ -183,11 +192,11 @@ public class JobMapper extends ImportMapper {
 			} else if ("tickets printed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("finished".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFinished(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("brokered".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBrokered(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
-				/* TODO */
+				job.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o pass front".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o pass back".equals(currentFieldToken)) {
@@ -199,7 +208,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("hidden".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("overs".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOversUnders(Utilities.tokenToLong(currentImportToken));
 			} else if ("overs unit price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("overs price".equals(currentFieldToken)) {
@@ -223,7 +232,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("total price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("description".equals(currentFieldToken)) {
-				/* TODO */
+				job.setDescription(currentImportToken);
 			} else if ("stock name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stock color".equals(currentFieldToken)) {
@@ -233,9 +242,17 @@ public class JobMapper extends ImportMapper {
 			} else if ("ink back".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("notes".equals(currentFieldToken)) {
-				/* TODO */
+				job.setJobNotes(currentImportToken);
 			} else if ("location".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false) {
+					Location location = dataService
+							.getByLocationName(currentImportToken);
+					if (location == null) {
+						location = new Location();
+						location.setName(currentImportToken);
+					}
+					job.setLocation(location);
+				}
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("base sets".equals(currentFieldToken)) {
@@ -289,13 +306,17 @@ public class JobMapper extends ImportMapper {
 			} else if ("costing press id".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("costing press name".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					PressDefinition pressDefinition = dataService.getByPressId(currentImportToken);
+					if (pressDefinition != null)
+						job.setCostingPress(pressDefinition);
+				}
 			} else if ("ink front 1".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("digital que ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job comment".equals(currentFieldToken)) {
-				/* TODO */
+				job.setComment(currentImportToken);
 			} else if ("ink front 2".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("ink front 3".equals(currentFieldToken)) {
@@ -599,7 +620,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("quantity".equals(currentFieldToken)) {
-				/* TODO */
+				job.setQtyOrdered(Utilities.tokenToLong(currentImportToken));
 			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("accumulatedTaxes".equals(currentFieldToken)) {

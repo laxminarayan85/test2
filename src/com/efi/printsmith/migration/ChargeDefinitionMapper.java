@@ -42,6 +42,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 		String description = "";
 		String linkId = "";
 		String categoryId = "";
+		String method = "";
 		while ((importTokens = csvReader.readNext()) != null) {
 			if (importTokens.length != fieldTokens.length) {
 				throw new InvalidParameterException(
@@ -54,6 +55,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				description = "";
 				linkId = "";
 				categoryId = "";
+				method = "";
 				for (int i = 0; i < fieldTokens.length; i++) {
 					String currentImportToken = importTokens[i];
 					String currentFieldToken = fieldTokens[i];
@@ -156,6 +158,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						/* TODO */
 					} else if ("method".equals(currentFieldToken)) {
 						chargeDefinition.setMethod(currentImportToken);
+						method = currentImportToken;
 					} else if ("qty type".equals(currentFieldToken)) {
 						chargeDefinition.setQuantityType(currentImportToken);
 					} else if ("markup type".equals(currentFieldToken)) {
@@ -209,11 +212,53 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setUseSignatures(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("rate set count".equals(currentFieldToken)) {
-						chargeDefinition.setRateSetCount(Utilities
-								.tokenToDouble(currentImportToken));
+						if (method.equals("1")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("2")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("3")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("4")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("5")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("6")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("7")) {
+							chargeDefinition.setSheetliftCut(Utilities
+									.tokenToInt(currentImportToken));
+							chargeDefinition.setSheet_lift_check(true);
+						} else if (method.equals("8")) {
+							chargeDefinition.setCoverlbInk(Utilities
+									.tokenToDouble(currentImportToken));
+							chargeDefinition.setCoverlb_check(true);
+						} else if (method.equals("9")) {
+							chargeDefinition.setMarkup(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("10")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("11")) {
+							chargeDefinition.setRateSetCount(Utilities
+									.tokenToDouble(currentImportToken));
+						} else if (method.equals("12")) {
+							chargeDefinition.setArea(Utilities
+									.tokenToDouble(currentImportToken));
+						}
+						
 					} else if ("rate".equals(currentFieldToken)) {
-						chargeDefinition.setRate(Utilities
-								.tokenToDouble(currentImportToken));
+						if (method.equals("8")) {
+							chargeDefinition.setPrice(Utilities.tokenToDouble(currentImportToken));
+						} else {
+							chargeDefinition.setRate(Utilities
+									.tokenToDouble(currentImportToken));
+						}
 					} else if ("material rate".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("minimum".equals(currentFieldToken)) {
@@ -277,17 +322,13 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("not used byte".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("tax table ID".equals(currentFieldToken)) {
-						/* TODO */
-					} else if ("tax table".equals(currentFieldToken)) {
-						if (currentImportToken.equals("") == false) {
-							TaxTable taxTable = dataService
-									.getByTaxTableName(currentImportToken);
-							if (taxTable == null) {
-								taxTable = new TaxTable();
-								taxTable.setName(currentImportToken);
-							}
-							chargeDefinition.setTaxTable(taxTable);
+						if (currentImportToken.equals("0") == false) {
+							TaxTable taxTable = (TaxTable)dataService.getByPrevId("TaxTable", currentImportToken);
+							if (taxTable != null)
+								chargeDefinition.setTaxTable(taxTable);
 						}
+					} else if ("tax table".equals(currentFieldToken)) {
+						/* TODO */
 					} else if ("customer charge".equals(currentFieldToken)) {
 						chargeDefinition.setCustomerCharge(Utilities
 								.tokenToBooleanValue(currentImportToken));
