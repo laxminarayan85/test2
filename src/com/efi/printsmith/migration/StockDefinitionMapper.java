@@ -15,6 +15,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.StockChanges;
+import com.efi.printsmith.data.PaperPrice;
 import java.io.File;
 
 public class StockDefinitionMapper extends ImportMapper {
@@ -112,10 +113,17 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("blank cost[3]".equals(currentFieldToken)) {
 				stockDefinition.setBlankSheetPrice3(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("schedule".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					ModelBase modelBase = dataService.getByPrevId("PaperPrice",currentImportToken);
+					if (modelBase != null) {
+						long id = modelBase.getId();
+						PaperPrice paperPrice = (PaperPrice)dataService.getById("PaperPrice", id);
+						stockDefinition.setDefaultPriceList(paperPrice);
+					}
+				}
 			}  else if ("press id".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					PressDefinition pressDefinition = (PressDefinition) dataService.getByPrevId(currentImportToken);
+					PressDefinition pressDefinition = (PressDefinition) dataService.getByPrevId("PressDefinition",currentImportToken);
 					if (pressDefinition != null)
 						stockDefinition.setDefaultPress(pressDefinition);
 				}
@@ -135,7 +143,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				stockDefinition.setMinCutCharge(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("charges[1]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -144,7 +152,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[2]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -153,7 +161,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[3]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -162,7 +170,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[4]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -171,7 +179,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[5]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -180,7 +188,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[6]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -189,7 +197,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[7]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -198,7 +206,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[8]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -207,7 +215,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[9]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -216,7 +224,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				}
 			}  else if ("charges[10]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					ModelBase modelBase = dataService.getByPrevId(currentImportToken);
+					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
@@ -238,7 +246,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("min order".equals(currentFieldToken)) {
 				stockDefinition.setMinorder(Utilities.tokenToInt(currentImportToken));
 			}  else if ("weight".equals(currentFieldToken)) {
-				stockDefinition.setWeight(Utilities.tokenToDouble(currentImportToken));
+				stockDefinition.setWeight(Utilities.tokenToInt(currentImportToken));
 			}  else if ("price expires".equals(currentFieldToken)) {
 				if (currentImportToken != null && currentImportToken.length() > 0) {
 					stockDefinition.setPriceExpires(Utilities.tokenToDate(currentImportToken));

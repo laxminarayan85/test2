@@ -133,13 +133,55 @@ public class DataService {
 		return null;
 	}
 	
-	public ModelBase getByPrevId(String prevId) {
+	public ModelBase getByPrevId(String className, String prevId) {
 		try {
 			log.debug("** getByPrevId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from ModelBase where prevId = '" + prevId + "'";
+			String queryString = "from ModelBase inner join " + className + " on ModelBase.id = " + className + ".id where ModelBase.prevId = '" + prevId + "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public StockDefinition getByStockId(String stockId) {
+		try {
+			log.debug("** getByStockId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockDefinition where stockId = '" + stockId + "'";
+			Query query = em.createQuery(queryString);
+			StockDefinition object = (StockDefinition) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public PressDefinition getByPressId(String pressId) {
+		try {
+			log.debug("** getByPressId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from PressDefinition where pressId = '" + pressId + "'";
+			Query query = em.createQuery(queryString);
+			PressDefinition object = (PressDefinition) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	public Account getByAccountId(String accountId) {
+		try {
+			log.debug("** getByAccountId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from Account where pressId = '" + accountId + "'";
+			Query query = em.createQuery(queryString);
+			Account object = (Account) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
