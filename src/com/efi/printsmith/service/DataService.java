@@ -179,7 +179,7 @@ public class DataService {
 		try {
 			log.debug("** getByAccountId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from Account where pressId = '" + accountId + "'";
+			String queryString = "from Account where accountId = '" + accountId + "'";
 			Query query = em.createQuery(queryString);
 			Account object = (Account) query.getSingleResult();
 			return object;
