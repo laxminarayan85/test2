@@ -8,9 +8,10 @@
 	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module2}/WebContent/WEB-INF/lib"/>
 	<property name="snowmassPagesdir" value="${checkoutpath}/${module2}/flex_src"/>
 	<property name="snowmassWebInfdir" value="${checkoutpath}/${module2}/WebContent\WEB-INF"/>
-	<property name="snowmassRunTimedir" value="${checkoutpath}/${module2}/PrintSmith Server Runtime"/>
+	<property name="snowmassRunTimedir" value="${checkoutpath}/${module2}/PrintSmith Server Runtime/"/>
 
-	<property name="warfile" value="${checkoutpath}/dist/Snowmass.war"/>
+	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
+	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
 
 	<!-- Classpath for the project -->   
 	<path id="master-classpath"> 
@@ -51,6 +52,10 @@
 			<classes dir="${snowmassBuilddir}" />
 		</war>
 		<record name="${checkoutpath}/${module2}/src/ant/war_log.txt" action="stop"/>
+
+		<copy todir="${distpath}">
+			<fileset dir="${snowmassRunTimedir}"/>
+		</copy>
  	</target>
 
 </project>
