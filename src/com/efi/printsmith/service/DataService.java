@@ -137,7 +137,7 @@ public class DataService {
 		try {
 			log.debug("** getByPrevId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from ModelBase inner join " + className + " on ModelBase.id = " + className + ".id where ModelBase.prevId = '" + prevId + "'";
+			String queryString = "from " + className + " where prevId = '" + prevId + "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
