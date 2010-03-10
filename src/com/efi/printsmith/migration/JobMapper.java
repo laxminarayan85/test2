@@ -620,7 +620,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("quantity".equals(currentFieldToken)) {
-				job.setQtyOrdered(Utilities.tokenToLong(currentImportToken));
+				/* TODO */
 			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("accumulatedTaxes".equals(currentFieldToken)) {
