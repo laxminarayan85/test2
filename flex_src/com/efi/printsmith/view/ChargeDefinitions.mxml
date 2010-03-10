@@ -58,6 +58,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.events.ChargePresetInfoEvent;
+	
 	import com.efi.printsmith.pages.ChargeCosting;
 	import com.efi.printsmith.data.ShippingMethod;
     import com.efi.printsmith.data.PriceList;
@@ -554,17 +556,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.salesCategory = charge_sales_category_combo.selectedItem as String;
 
 		charge.noOverrides = no_overrides_check.selected;
-		charge.adjustSets = adjustable_sets_check.selected;
-		charge.enterRate = adjustable_rate_check.selected;
-		charge.enterMaterial = adjustable_material_check.selected;
+		charge.adjustableSets = adjustable_sets_check.selected;
+		charge.adjustableRate = adjustable_rate_check.selected;
+		charge.adjustableMaterial = adjustable_material_check.selected;
 		charge.adjustUps = adjustable_up_check.selected;
-		charge.noDiscount = do_not_discount_check.selected;
+		charge.doNotDiscount = do_not_discount_check.selected;
 		charge.hidePrice = hide_price_only_check.selected;
-		charge.hidden = hide_charge_in_printouts_check.selected;
+		charge.hideChargeInPrintouts = hide_charge_in_printouts_check.selected;
 		charge.binderyCharge = bindery_operation_check.selected;
-		charge.excludeFromProductionList = excluded_from_workflow_check.selected;
+		charge.excludedFromWorkflow = excluded_from_workflow_check.selected;
 		charge.preproduction = tracker_pre_production_check.selected;
-		charge.ignorePriceAdjustment = ignore_global_price_changes_check.selected;
+		charge.ignoreGlobalPriceChanges = ignore_global_price_changes_check.selected;
 		charge.integratedCTP = integrated_ctp_device_check.selected;
 		charge.fixedWaste = parseInt(fixed_spoilage_edit.text);
 		charge.baseLinearNumber = parseInt(base_linear_quantity_edit.text);
@@ -1222,6 +1224,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
 	}
 	
+	private function doPresetInfo():void {
+		this.mapToCharge();
+		var chargePresetInfoWindow:ChargePresetInfo = ChargePresetInfo(PopUpManager.createPopUp(this,ChargePresetInfo, true));
+	    chargePresetInfoWindow.setStyle("borderAlpha", 0.9);
+		chargePresetInfoWindow.setChargeDefinition(this.charge);
+		chargePresetInfoWindow.addEventListener(ChargePresetInfoEvent.CHARGEPRESETOK, handleChargePresetInfoOK);
+	}
+	
+	private function handleChargePresetInfoOK(evt:ChargePresetInfoEvent):void {
+		if (evt.chargeDefinition != null) {
+			charge = evt.chargeDefinition;
+		} else {
+			Alert.show("Charge Preset Info Window returned a null Charge - no changes saved", "Error");
+		}
+	}
+	
     private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			charge.wasteChart = evt.priceList as WasteChart;
@@ -1345,7 +1363,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			<mx:icon>@Embed(source='../../../../assets/find.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="645" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}" width="38" textAlign="center"/>
-		<mx:Button x="730" y="11" width="38" height="38" id="preset_info_button">
+		<mx:Button x="730" y="11" width="38" height="38" id="preset_info_button" click="doPresetInfo()">
 			<mx:icon>@Embed(source='../../../../assets/presets.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="712" y="47" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PresetInfo')}" width="68" textAlign="center"/>
@@ -1394,17 +1412,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:ComboBox x="76" y="102" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name" height="21"></mx:ComboBox>
 					<mx:ComboBox x="76" y="127" width="132" id="product_code_combo" dataProvider="{productCodes}" labelField="name" height="21"></mx:ComboBox>
 					<mx:CheckBox x="234" y="56" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Nooverrides')}" id="no_overrides_check" selected="{charge.noOverrides}"/>
-					<mx:CheckBox x="234" y="74" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustSets}"/>
-					<mx:CheckBox x="234" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.enterRate}"/>
-					<mx:CheckBox x="234" y="110" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.enterMaterial}"/>
+					<mx:CheckBox x="234" y="74" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}"/>
+					<mx:CheckBox x="234" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}"/>
+					<mx:CheckBox x="234" y="110" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}"/>
 					<mx:CheckBox x="234" y="128" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"/>
-					<mx:CheckBox x="234" y="146" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Donotdiscount')}" id="do_not_discount_check" selected="{charge.noDiscount}"/>
+					<mx:CheckBox x="234" y="146" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Donotdiscount')}" id="do_not_discount_check" selected="{charge.doNotDiscount}"/>
 					<mx:CheckBox x="375" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidepriceonly')}" id="hide_price_only_check" selected="{charge.hidePrice}"/>
-					<mx:CheckBox x="375" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidechargeinprintout')}" id="hide_charge_in_printouts_check" selected="{charge.hidden}"/>
+					<mx:CheckBox x="375" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidechargeinprintout')}" id="hide_charge_in_printouts_check" selected="{charge.hideChargeInPrintouts}"/>
 					<mx:CheckBox x="375" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.BinderyOperation')}" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
-					<mx:CheckBox x="375" y="112" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Excludedfromworkflow')}" id="excluded_from_workflow_check" selected="{charge.excludeFromProductionList}"/>
+					<mx:CheckBox x="375" y="112" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Excludedfromworkflow')}" id="excluded_from_workflow_check" selected="{charge.excludedFromWorkflow}"/>
 					<mx:CheckBox x="375" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.TrackerPreProduction')}" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
-					<mx:CheckBox x="375" y="148" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignorePriceAdjustment}"/>
+					<mx:CheckBox x="375" y="148" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignoreGlobalPriceChanges}"/>
 					<mx:CheckBox x="375" y="166" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}"/>
 					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
 					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
@@ -1415,8 +1433,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{charge.minimum}"/>
 					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
 					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}"/>
-					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio"/>
-					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio"/>
+					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112"/>
+					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112"/>
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93"/>
 					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93"/>
 					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}"/>
@@ -1480,13 +1498,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
 					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
 					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{rate_check.selected}" width="69"/>
 					<mx:TextInput x="397" y="352" width="124" enabled="{in_set_mat_check.selected}" text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="69"/>
 					<mx:TextInput x="397" y="329" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="69"/>
 					<mx:TextInput x="397" y="329" id="cover_ink_edit"  text="{charge.coverlbInk}" width="124" enabled="{cover_ink_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="69"/>
 					<mx:TextInput x="397" y="329" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}"/>
 				</mx:Canvas>
 			</mx:Canvas>

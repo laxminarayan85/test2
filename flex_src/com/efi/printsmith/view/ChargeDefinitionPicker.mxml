@@ -312,7 +312,7 @@
 					charge.taxable=chargeDefinition.taxable;
 					charge.brokered=chargeDefinition.brokered;
 					charge.displayQty=chargeDefinition.displayQty;
-					charge.hidden=chargeDefinition.hidden;
+					charge.hidden=chargeDefinition.hideChargeInPrintouts;
 					charge.hidePrice=chargeDefinition.hidePrice;
 					this.currentState = "New Charge";
 				}

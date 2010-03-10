@@ -61,23 +61,11 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ATTRIBUTE1 = "Attribute1";
-	/**
-	 * @generated
-	 */
 	public static final String TAXABLE = "Taxable";
 	/**
 	 * @generated
 	 */
-	public static final String ATTRIBUTE2 = "Attribute2";
-	/**
-	 * @generated
-	 */
 	public static final String BROKERED = "Brokered";
-	/**
-	 * @generated
-	 */
-	public static final String ATTRIBUTE3 = "Attribute3";
 	/**
 	 * @generated
 	 */
@@ -94,6 +82,34 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRICE = "Price";
+	/**
+	 * @generated
+	 */
+	public static final String OVERRIDEPRICE = "OverridePrice";
+	/**
+	 * @generated
+	 */
+	public static final String QUANTITY = "Quantity";
+	/**
+	 * @generated
+	 */
+	public static final String OVERRIDEQUANTITY = "OverrideQuantity";
+	/**
+	 * @generated
+	 */
+	public static final String MATERIALQTY = "MaterialQty";
+	/**
+	 * @generated
+	 */
+	public static final String OVERRIDEMATERIALQUANTITY = "OverrideMaterialQuantity";
+	/**
+	 * @generated
+	 */
+	public static final String RATE = "Rate";
+	/**
+	 * @generated
+	 */
+	public static final String OVERRIDERATE = "OverrideRate";
 
 	/**
 	 * @generated
@@ -214,24 +230,6 @@ public class Charge extends ModelBase {
  	
 	
  	@Basic
-	private Integer attribute1;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getAttribute1(){
-		return attribute1; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAttribute1(Integer newVal) {
-		this.attribute1 = newVal;
-	}
- 	
-	
- 	@Basic
 	private Boolean taxable;
 	
 	/**
@@ -250,24 +248,6 @@ public class Charge extends ModelBase {
  	
 	
  	@Basic
-	private Integer attribute2;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getAttribute2(){
-		return attribute2; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAttribute2(Integer newVal) {
-		this.attribute2 = newVal;
-	}
- 	
-	
- 	@Basic
 	private Boolean brokered;
 	
 	/**
@@ -282,24 +262,6 @@ public class Charge extends ModelBase {
 	 */	
 	public void setBrokered(Boolean newVal) {
 		this.brokered = newVal;
-	}
- 	
-	
- 	@Basic
-	private Integer attribute3;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getAttribute3(){
-		return attribute3; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setAttribute3(Integer newVal) {
-		this.attribute3 = newVal;
 	}
  	
 	
@@ -373,6 +335,132 @@ public class Charge extends ModelBase {
 	public void setPrice(Double newVal) {
 		this.price = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Boolean overridePrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverridePrice(){
+		return overridePrice; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOverridePrice(Boolean newVal) {
+		this.overridePrice = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double quantity;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getQuantity(){
+		return quantity; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setQuantity(Double newVal) {
+		this.quantity = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean overrideQuantity;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverrideQuantity(){
+		return overrideQuantity; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOverrideQuantity(Boolean newVal) {
+		this.overrideQuantity = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double materialQty;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getMaterialQty(){
+		return materialQty; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setMaterialQty(Double newVal) {
+		this.materialQty = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean overrideMaterialQuantity;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverrideMaterialQuantity(){
+		return overrideMaterialQuantity; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOverrideMaterialQuantity(Boolean newVal) {
+		this.overrideMaterialQuantity = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double rate;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getRate(){
+		return rate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRate(Double newVal) {
+		this.rate = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Boolean overrideRate;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverrideRate(){
+		return overrideRate; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setOverrideRate(Boolean newVal) {
+		this.overrideRate = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -385,15 +473,19 @@ public class Charge extends ModelBase {
 		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
 		if (SHOWNOTES.equals(propertyName)) return getShowNotes();
 		if (FINISHED.equals(propertyName)) return getFinished();
-		if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
 		if (TAXABLE.equals(propertyName)) return getTaxable();
-		if (ATTRIBUTE2.equals(propertyName)) return getAttribute2();
 		if (BROKERED.equals(propertyName)) return getBrokered();
-		if (ATTRIBUTE3.equals(propertyName)) return getAttribute3();
 		if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
 		if (HIDDEN.equals(propertyName)) return getHidden();
 		if (HIDEPRICE.equals(propertyName)) return getHidePrice();
 		if (PRICE.equals(propertyName)) return getPrice();
+		if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
+		if (QUANTITY.equals(propertyName)) return getQuantity();
+		if (OVERRIDEQUANTITY.equals(propertyName)) return getOverrideQuantity();
+		if (MATERIALQTY.equals(propertyName)) return getMaterialQty();
+		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return getOverrideMaterialQuantity();
+		if (RATE.equals(propertyName)) return getRate();
+		if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
 		return super.getProperty(propertyName);
 	}
 	
@@ -409,15 +501,19 @@ public class Charge extends ModelBase {
 		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((Location)newValue); else
 		if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
 		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-		if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
 		if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-		if (ATTRIBUTE2.equals(propertyName)) setAttribute2((Integer)newValue); else
 		if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-		if (ATTRIBUTE3.equals(propertyName)) setAttribute3((Integer)newValue); else
 		if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
 		if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
 		if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
 		if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+		if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
+		if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
+		if (OVERRIDEQUANTITY.equals(propertyName)) setOverrideQuantity((Boolean)newValue); else
+		if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
+		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) setOverrideMaterialQuantity((Boolean)newValue); else
+		if (RATE.equals(propertyName)) setRate((Double)newValue); else
+		if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -439,16 +535,10 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (FINISHED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ATTRIBUTE1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (TAXABLE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ATTRIBUTE2.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (BROKERED.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ATTRIBUTE3.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (DISPLAYQTY.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (HIDDEN.equals(propertyName)) 
@@ -457,6 +547,20 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (PRICE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (OVERRIDEPRICE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (QUANTITY.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OVERRIDEQUANTITY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (MATERIALQTY.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (RATE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (OVERRIDERATE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -473,15 +577,19 @@ public class Charge extends ModelBase {
 		if (PRODUCTIONLOCATION.equals(propertyName)) return Charge.class;
 		if (SHOWNOTES.equals(propertyName)) return Charge.class;
 		if (FINISHED.equals(propertyName)) return Charge.class;
-		if (ATTRIBUTE1.equals(propertyName)) return Charge.class;
 		if (TAXABLE.equals(propertyName)) return Charge.class;
-		if (ATTRIBUTE2.equals(propertyName)) return Charge.class;
 		if (BROKERED.equals(propertyName)) return Charge.class;
-		if (ATTRIBUTE3.equals(propertyName)) return Charge.class;
 		if (DISPLAYQTY.equals(propertyName)) return Charge.class;
 		if (HIDDEN.equals(propertyName)) return Charge.class;
 		if (HIDEPRICE.equals(propertyName)) return Charge.class;
 		if (PRICE.equals(propertyName)) return Charge.class;
+		if (OVERRIDEPRICE.equals(propertyName)) return Charge.class;
+		if (QUANTITY.equals(propertyName)) return Charge.class;
+		if (OVERRIDEQUANTITY.equals(propertyName)) return Charge.class;
+		if (MATERIALQTY.equals(propertyName)) return Charge.class;
+		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return Charge.class;
+		if (RATE.equals(propertyName)) return Charge.class;
+		if (OVERRIDERATE.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -505,15 +613,9 @@ public class Charge extends ModelBase {
 			return false;
 		if (! SmartEquals(getFinished(), objT.getFinished()))
 			return false;
-		if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
-			return false;
 		if (! SmartEquals(getTaxable(), objT.getTaxable()))
 			return false;
-		if (! SmartEquals(getAttribute2(), objT.getAttribute2()))
-			return false;
 		if (! SmartEquals(getBrokered(), objT.getBrokered()))
-			return false;
-		if (! SmartEquals(getAttribute3(), objT.getAttribute3()))
 			return false;
 		if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
 			return false;
@@ -522,6 +624,20 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
 			return false;
 		if (! SmartEquals(getPrice(), objT.getPrice()))
+			return false;
+		if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
+			return false;
+		if (! SmartEquals(getQuantity(), objT.getQuantity()))
+			return false;
+		if (! SmartEquals(getOverrideQuantity(), objT.getOverrideQuantity()))
+			return false;
+		if (! SmartEquals(getMaterialQty(), objT.getMaterialQty()))
+			return false;
+		if (! SmartEquals(getOverrideMaterialQuantity(), objT.getOverrideMaterialQuantity()))
+			return false;
+		if (! SmartEquals(getRate(), objT.getRate()))
+			return false;
+		if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
 			return false;
 		return true;
 	}			

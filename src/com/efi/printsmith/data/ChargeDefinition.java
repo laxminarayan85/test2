@@ -65,7 +65,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String NODISCOUNT = "NoDiscount";
+	public static final String DONOTDISCOUNT = "DoNotDiscount";
 	/**
 	 * @generated
 	 */
@@ -77,15 +77,15 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ADJUSTSETS = "AdjustSets";
+	public static final String ADJUSTABLESETS = "AdjustableSets";
 	/**
 	 * @generated
 	 */
-	public static final String ENTERRATE = "EnterRate";
+	public static final String ADJUSTABLERATE = "AdjustableRate";
 	/**
 	 * @generated
 	 */
-	public static final String ENTERMATERIAL = "EnterMaterial";
+	public static final String ADJUSTABLEMATERIAL = "AdjustableMaterial";
 	/**
 	 * @generated
 	 */
@@ -193,7 +193,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String EXCLUDEFROMPRODUCTIONLIST = "ExcludeFromProductionList";
+	public static final String EXCLUDEDFROMWORKFLOW = "ExcludedFromWorkflow";
 	/**
 	 * @generated
 	 */
@@ -289,7 +289,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String HIDDEN = "Hidden";
+	public static final String HIDECHARGEINPRINTOUTS = "HideChargeInPrintouts";
 	/**
 	 * @generated
 	 */
@@ -381,7 +381,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String IGNOREPRICEADJUSTMENT = "IgnorePriceAdjustment";
+	public static final String IGNOREGLOBALPRICECHANGES = "IgnoreGlobalPriceChanges";
 	/**
 	 * @generated
 	 */
@@ -458,6 +458,46 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String SHIPMARKUP = "ShipMarkup";
+	/**
+	 * @generated
+	 */
+	public static final String DESCRIPTIONLABEL = "DescriptionLabel";
+	/**
+	 * @generated
+	 */
+	public static final String NOTESLABEL = "NotesLabel";
+	/**
+	 * @generated
+	 */
+	public static final String DESCRIPTIONDEFAULT = "DescriptionDefault";
+	/**
+	 * @generated
+	 */
+	public static final String NOTESDEFAULT = "NotesDefault";
+	/**
+	 * @generated
+	 */
+	public static final String QUANTITYLABEL = "QuantityLabel";
+	/**
+	 * @generated
+	 */
+	public static final String QUANTITYDEFAULT = "QuantityDefault";
+	/**
+	 * @generated
+	 */
+	public static final String RATELABEL = "RateLabel";
+	/**
+	 * @generated
+	 */
+	public static final String RATEDEFAULT = "RateDefault";
+	/**
+	 * @generated
+	 */
+	public static final String PRICELABEL = "PriceLabel";
+	/**
+	 * @generated
+	 */
+	public static final String PRICEDEFAULT = "PriceDefault";
 
 	/**
 	 * @generated
@@ -596,20 +636,20 @@ public class ChargeDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean noDiscount;
+	private Boolean doNotDiscount;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getNoDiscount(){
-		return noDiscount; 
+	public Boolean getDoNotDiscount(){
+		return doNotDiscount; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setNoDiscount(Boolean newVal) {
-		this.noDiscount = newVal;
+	public void setDoNotDiscount(Boolean newVal) {
+		this.doNotDiscount = newVal;
 	}
  	
 	
@@ -650,56 +690,56 @@ public class ChargeDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean adjustSets;
+	private Boolean adjustableSets;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getAdjustSets(){
-		return adjustSets; 
+	public Boolean getAdjustableSets(){
+		return adjustableSets; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setAdjustSets(Boolean newVal) {
-		this.adjustSets = newVal;
+	public void setAdjustableSets(Boolean newVal) {
+		this.adjustableSets = newVal;
 	}
  	
 	
  	@Basic
-	private Boolean enterRate;
+	private Boolean adjustableRate;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getEnterRate(){
-		return enterRate; 
+	public Boolean getAdjustableRate(){
+		return adjustableRate; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setEnterRate(Boolean newVal) {
-		this.enterRate = newVal;
+	public void setAdjustableRate(Boolean newVal) {
+		this.adjustableRate = newVal;
 	}
  	
 	
  	@Basic
-	private Boolean enterMaterial;
+	private Boolean adjustableMaterial;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getEnterMaterial(){
-		return enterMaterial; 
+	public Boolean getAdjustableMaterial(){
+		return adjustableMaterial; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setEnterMaterial(Boolean newVal) {
-		this.enterMaterial = newVal;
+	public void setAdjustableMaterial(Boolean newVal) {
+		this.adjustableMaterial = newVal;
 	}
  	
 	
@@ -1172,20 +1212,20 @@ public class ChargeDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean excludeFromProductionList;
+	private Boolean excludedFromWorkflow;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getExcludeFromProductionList(){
-		return excludeFromProductionList; 
+	public Boolean getExcludedFromWorkflow(){
+		return excludedFromWorkflow; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setExcludeFromProductionList(Boolean newVal) {
-		this.excludeFromProductionList = newVal;
+	public void setExcludedFromWorkflow(Boolean newVal) {
+		this.excludedFromWorkflow = newVal;
 	}
  	
 	
@@ -1604,20 +1644,20 @@ public class ChargeDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean hidden;
+	private Boolean hideChargeInPrintouts;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getHidden(){
-		return hidden; 
+	public Boolean getHideChargeInPrintouts(){
+		return hideChargeInPrintouts; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setHidden(Boolean newVal) {
-		this.hidden = newVal;
+	public void setHideChargeInPrintouts(Boolean newVal) {
+		this.hideChargeInPrintouts = newVal;
 	}
  	
 	
@@ -2018,20 +2058,20 @@ public class ChargeDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Boolean ignorePriceAdjustment;
+	private Boolean ignoreGlobalPriceChanges;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getIgnorePriceAdjustment(){
-		return ignorePriceAdjustment; 
+	public Boolean getIgnoreGlobalPriceChanges(){
+		return ignoreGlobalPriceChanges; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setIgnorePriceAdjustment(Boolean newVal) {
-		this.ignorePriceAdjustment = newVal;
+	public void setIgnoreGlobalPriceChanges(Boolean newVal) {
+		this.ignoreGlobalPriceChanges = newVal;
 	}
  	
 	
@@ -2375,6 +2415,186 @@ public class ChargeDefinition extends ModelBase {
 	public void setShipMarkup(Double newVal) {
 		this.shipMarkup = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private String descriptionLabel;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getDescriptionLabel(){
+		return descriptionLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDescriptionLabel(String newVal) {
+		this.descriptionLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String notesLabel;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getNotesLabel(){
+		return notesLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNotesLabel(String newVal) {
+		this.notesLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String descriptionDefault;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getDescriptionDefault(){
+		return descriptionDefault; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDescriptionDefault(String newVal) {
+		this.descriptionDefault = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String notesDefault;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getNotesDefault(){
+		return notesDefault; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setNotesDefault(String newVal) {
+		this.notesDefault = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String quantityLabel;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getQuantityLabel(){
+		return quantityLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setQuantityLabel(String newVal) {
+		this.quantityLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double quantityDefault;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getQuantityDefault(){
+		return quantityDefault; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setQuantityDefault(Double newVal) {
+		this.quantityDefault = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String rateLabel;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getRateLabel(){
+		return rateLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRateLabel(String newVal) {
+		this.rateLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double rateDefault;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getRateDefault(){
+		return rateDefault; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRateDefault(Double newVal) {
+		this.rateDefault = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private String priceLabel;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getPriceLabel(){
+		return priceLabel; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceLabel(String newVal) {
+		this.priceLabel = newVal;
+	}
+ 	
+	
+ 	@Basic
+	private Double priceDefault;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getPriceDefault(){
+		return priceDefault; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setPriceDefault(Double newVal) {
+		this.priceDefault = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2388,12 +2608,12 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICEMETHOD.equals(propertyName)) return getPriceMethod();
 		if (INKCOVERAGE.equals(propertyName)) return getInkCoverage();
 		if (USESIDES.equals(propertyName)) return getUseSides();
-		if (NODISCOUNT.equals(propertyName)) return getNoDiscount();
+		if (DONOTDISCOUNT.equals(propertyName)) return getDoNotDiscount();
 		if (NOMATERIALQUANTITY.equals(propertyName)) return getNoMaterialQuantity();
 		if (NOOVERRIDES.equals(propertyName)) return getNoOverrides();
-		if (ADJUSTSETS.equals(propertyName)) return getAdjustSets();
-		if (ENTERRATE.equals(propertyName)) return getEnterRate();
-		if (ENTERMATERIAL.equals(propertyName)) return getEnterMaterial();
+		if (ADJUSTABLESETS.equals(propertyName)) return getAdjustableSets();
+		if (ADJUSTABLERATE.equals(propertyName)) return getAdjustableRate();
+		if (ADJUSTABLEMATERIAL.equals(propertyName)) return getAdjustableMaterial();
 		if (USEMATERIAL.equals(propertyName)) return getUseMaterial();
 		if (USERATE.equals(propertyName)) return getUseRate();
 		if (USERATESETS.equals(propertyName)) return getUseRateSets();
@@ -2420,7 +2640,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SIZEY.equals(propertyName)) return getSizeY();
 		if (PLATETHICKNESS.equals(propertyName)) return getPlateThickness();
 		if (FOLDTEMPLATE.equals(propertyName)) return getFoldTemplate();
-		if (EXCLUDEFROMPRODUCTIONLIST.equals(propertyName)) return getExcludeFromProductionList();
+		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return getExcludedFromWorkflow();
 		if (PREPRODUCTION.equals(propertyName)) return getPreproduction();
 		if (USEMINIMUMTIME.equals(propertyName)) return getUseMinimumTime();
 		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return getUseDivideByUpCount();
@@ -2444,7 +2664,7 @@ public class ChargeDefinition extends ModelBase {
 		if (TIMEEND.equals(propertyName)) return getTimeEnd();
 		if (CUSTOMERCHARGE.equals(propertyName)) return getCustomerCharge();
 		if (PRESSCHARGE.equals(propertyName)) return getPressCharge();
-		if (HIDDEN.equals(propertyName)) return getHidden();
+		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return getHideChargeInPrintouts();
 		if (DELETEDPRESET.equals(propertyName)) return getDeletedPreset();
 		if (IGNORECUTS.equals(propertyName)) return getIgnoreCuts();
 		if (USESIGNATURES.equals(propertyName)) return getUseSignatures();
@@ -2467,7 +2687,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SHOULDSHIP.equals(propertyName)) return getShouldShip();
 		if (JOBTASKLIST.equals(propertyName)) return getJobTaskList();
 		if (HIDEPRICE.equals(propertyName)) return getHidePrice();
-		if (IGNOREPRICEADJUSTMENT.equals(propertyName)) return getIgnorePriceAdjustment();
+		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return getIgnoreGlobalPriceChanges();
 		if (COSTINGPRESSCHARGE.equals(propertyName)) return getCostingPressCharge();
 		if (LINEARX1.equals(propertyName)) return getLinearX1();
 		if (LINEARX2.equals(propertyName)) return getLinearX2();
@@ -2487,6 +2707,16 @@ public class ChargeDefinition extends ModelBase {
 		if (COVERLBINK.equals(propertyName)) return getCoverlbInk();
 		if (SHEETLIFTCUT.equals(propertyName)) return getSheetliftCut();
 		if (SHIPMARKUP.equals(propertyName)) return getShipMarkup();
+		if (DESCRIPTIONLABEL.equals(propertyName)) return getDescriptionLabel();
+		if (NOTESLABEL.equals(propertyName)) return getNotesLabel();
+		if (DESCRIPTIONDEFAULT.equals(propertyName)) return getDescriptionDefault();
+		if (NOTESDEFAULT.equals(propertyName)) return getNotesDefault();
+		if (QUANTITYLABEL.equals(propertyName)) return getQuantityLabel();
+		if (QUANTITYDEFAULT.equals(propertyName)) return getQuantityDefault();
+		if (RATELABEL.equals(propertyName)) return getRateLabel();
+		if (RATEDEFAULT.equals(propertyName)) return getRateDefault();
+		if (PRICELABEL.equals(propertyName)) return getPriceLabel();
+		if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2503,12 +2733,12 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICEMETHOD.equals(propertyName)) setPriceMethod((String)newValue); else
 		if (INKCOVERAGE.equals(propertyName)) setInkCoverage((String)newValue); else
 		if (USESIDES.equals(propertyName)) setUseSides((Boolean)newValue); else
-		if (NODISCOUNT.equals(propertyName)) setNoDiscount((Boolean)newValue); else
+		if (DONOTDISCOUNT.equals(propertyName)) setDoNotDiscount((Boolean)newValue); else
 		if (NOMATERIALQUANTITY.equals(propertyName)) setNoMaterialQuantity((Boolean)newValue); else
 		if (NOOVERRIDES.equals(propertyName)) setNoOverrides((Boolean)newValue); else
-		if (ADJUSTSETS.equals(propertyName)) setAdjustSets((Boolean)newValue); else
-		if (ENTERRATE.equals(propertyName)) setEnterRate((Boolean)newValue); else
-		if (ENTERMATERIAL.equals(propertyName)) setEnterMaterial((Boolean)newValue); else
+		if (ADJUSTABLESETS.equals(propertyName)) setAdjustableSets((Boolean)newValue); else
+		if (ADJUSTABLERATE.equals(propertyName)) setAdjustableRate((Boolean)newValue); else
+		if (ADJUSTABLEMATERIAL.equals(propertyName)) setAdjustableMaterial((Boolean)newValue); else
 		if (USEMATERIAL.equals(propertyName)) setUseMaterial((Boolean)newValue); else
 		if (USERATE.equals(propertyName)) setUseRate((Boolean)newValue); else
 		if (USERATESETS.equals(propertyName)) setUseRateSets((Boolean)newValue); else
@@ -2535,7 +2765,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SIZEY.equals(propertyName)) setSizeY((Double)newValue); else
 		if (PLATETHICKNESS.equals(propertyName)) setPlateThickness((Double)newValue); else
 		if (FOLDTEMPLATE.equals(propertyName)) setFoldTemplate((FoldTemplate)newValue); else
-		if (EXCLUDEFROMPRODUCTIONLIST.equals(propertyName)) setExcludeFromProductionList((Boolean)newValue); else
+		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) setExcludedFromWorkflow((Boolean)newValue); else
 		if (PREPRODUCTION.equals(propertyName)) setPreproduction((Boolean)newValue); else
 		if (USEMINIMUMTIME.equals(propertyName)) setUseMinimumTime((Boolean)newValue); else
 		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) setUseDivideByUpCount((Boolean)newValue); else
@@ -2559,7 +2789,7 @@ public class ChargeDefinition extends ModelBase {
 		if (TIMEEND.equals(propertyName)) setTimeEnd((Date)newValue); else
 		if (CUSTOMERCHARGE.equals(propertyName)) setCustomerCharge((Boolean)newValue); else
 		if (PRESSCHARGE.equals(propertyName)) setPressCharge((Boolean)newValue); else
-		if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
+		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) setHideChargeInPrintouts((Boolean)newValue); else
 		if (DELETEDPRESET.equals(propertyName)) setDeletedPreset((Boolean)newValue); else
 		if (IGNORECUTS.equals(propertyName)) setIgnoreCuts((Boolean)newValue); else
 		if (USESIGNATURES.equals(propertyName)) setUseSignatures((Boolean)newValue); else
@@ -2582,7 +2812,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SHOULDSHIP.equals(propertyName)) setShouldShip((Boolean)newValue); else
 		if (JOBTASKLIST.equals(propertyName)) setJobTaskList((Boolean)newValue); else
 		if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
-		if (IGNOREPRICEADJUSTMENT.equals(propertyName)) setIgnorePriceAdjustment((Boolean)newValue); else
+		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) setIgnoreGlobalPriceChanges((Boolean)newValue); else
 		if (COSTINGPRESSCHARGE.equals(propertyName)) setCostingPressCharge((Boolean)newValue); else
 		if (LINEARX1.equals(propertyName)) setLinearX1((Boolean)newValue); else
 		if (LINEARX2.equals(propertyName)) setLinearX2((Boolean)newValue); else
@@ -2602,6 +2832,16 @@ public class ChargeDefinition extends ModelBase {
 		if (COVERLBINK.equals(propertyName)) setCoverlbInk((Double)newValue); else
 		if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Integer)newValue); else
 		if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
+		if (DESCRIPTIONLABEL.equals(propertyName)) setDescriptionLabel((String)newValue); else
+		if (NOTESLABEL.equals(propertyName)) setNotesLabel((String)newValue); else
+		if (DESCRIPTIONDEFAULT.equals(propertyName)) setDescriptionDefault((String)newValue); else
+		if (NOTESDEFAULT.equals(propertyName)) setNotesDefault((String)newValue); else
+		if (QUANTITYLABEL.equals(propertyName)) setQuantityLabel((String)newValue); else
+		if (QUANTITYDEFAULT.equals(propertyName)) setQuantityDefault((Double)newValue); else
+		if (RATELABEL.equals(propertyName)) setRateLabel((String)newValue); else
+		if (RATEDEFAULT.equals(propertyName)) setRateDefault((Double)newValue); else
+		if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
+		if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -2625,17 +2865,17 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (USESIDES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (NODISCOUNT.equals(propertyName)) 
+		if (DONOTDISCOUNT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (NOMATERIALQUANTITY.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (NOOVERRIDES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ADJUSTSETS.equals(propertyName)) 
+		if (ADJUSTABLESETS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ENTERRATE.equals(propertyName)) 
+		if (ADJUSTABLERATE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (ENTERMATERIAL.equals(propertyName)) 
+		if (ADJUSTABLEMATERIAL.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (USEMATERIAL.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -2689,7 +2929,7 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (FOLDTEMPLATE.equals(propertyName)) 
 			return new Class<?>[] {FoldTemplate.class};		
-		if (EXCLUDEFROMPRODUCTIONLIST.equals(propertyName)) 
+		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (PREPRODUCTION.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -2737,7 +2977,7 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (PRESSCHARGE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (HIDDEN.equals(propertyName)) 
+		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (DELETEDPRESET.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -2783,7 +3023,7 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (HIDEPRICE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (IGNOREPRICEADJUSTMENT.equals(propertyName)) 
+		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (COSTINGPRESSCHARGE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -2823,6 +3063,26 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Integer.class};		
 		if (SHIPMARKUP.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (DESCRIPTIONLABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NOTESLABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (DESCRIPTIONDEFAULT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (NOTESDEFAULT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (QUANTITYLABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (QUANTITYDEFAULT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (RATELABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (RATEDEFAULT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (PRICELABEL.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PRICEDEFAULT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -2840,12 +3100,12 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICEMETHOD.equals(propertyName)) return ChargeDefinition.class;
 		if (INKCOVERAGE.equals(propertyName)) return ChargeDefinition.class;
 		if (USESIDES.equals(propertyName)) return ChargeDefinition.class;
-		if (NODISCOUNT.equals(propertyName)) return ChargeDefinition.class;
+		if (DONOTDISCOUNT.equals(propertyName)) return ChargeDefinition.class;
 		if (NOMATERIALQUANTITY.equals(propertyName)) return ChargeDefinition.class;
 		if (NOOVERRIDES.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTSETS.equals(propertyName)) return ChargeDefinition.class;
-		if (ENTERRATE.equals(propertyName)) return ChargeDefinition.class;
-		if (ENTERMATERIAL.equals(propertyName)) return ChargeDefinition.class;
+		if (ADJUSTABLESETS.equals(propertyName)) return ChargeDefinition.class;
+		if (ADJUSTABLERATE.equals(propertyName)) return ChargeDefinition.class;
+		if (ADJUSTABLEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
 		if (USEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
 		if (USERATE.equals(propertyName)) return ChargeDefinition.class;
 		if (USERATESETS.equals(propertyName)) return ChargeDefinition.class;
@@ -2872,7 +3132,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SIZEY.equals(propertyName)) return ChargeDefinition.class;
 		if (PLATETHICKNESS.equals(propertyName)) return ChargeDefinition.class;
 		if (FOLDTEMPLATE.equals(propertyName)) return ChargeDefinition.class;
-		if (EXCLUDEFROMPRODUCTIONLIST.equals(propertyName)) return ChargeDefinition.class;
+		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return ChargeDefinition.class;
 		if (PREPRODUCTION.equals(propertyName)) return ChargeDefinition.class;
 		if (USEMINIMUMTIME.equals(propertyName)) return ChargeDefinition.class;
 		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return ChargeDefinition.class;
@@ -2896,7 +3156,7 @@ public class ChargeDefinition extends ModelBase {
 		if (TIMEEND.equals(propertyName)) return ChargeDefinition.class;
 		if (CUSTOMERCHARGE.equals(propertyName)) return ChargeDefinition.class;
 		if (PRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (HIDDEN.equals(propertyName)) return ChargeDefinition.class;
+		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return ChargeDefinition.class;
 		if (DELETEDPRESET.equals(propertyName)) return ChargeDefinition.class;
 		if (IGNORECUTS.equals(propertyName)) return ChargeDefinition.class;
 		if (USESIGNATURES.equals(propertyName)) return ChargeDefinition.class;
@@ -2919,7 +3179,7 @@ public class ChargeDefinition extends ModelBase {
 		if (SHOULDSHIP.equals(propertyName)) return ChargeDefinition.class;
 		if (JOBTASKLIST.equals(propertyName)) return ChargeDefinition.class;
 		if (HIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (IGNOREPRICEADJUSTMENT.equals(propertyName)) return ChargeDefinition.class;
+		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return ChargeDefinition.class;
 		if (COSTINGPRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
 		if (LINEARX1.equals(propertyName)) return ChargeDefinition.class;
 		if (LINEARX2.equals(propertyName)) return ChargeDefinition.class;
@@ -2939,6 +3199,16 @@ public class ChargeDefinition extends ModelBase {
 		if (COVERLBINK.equals(propertyName)) return ChargeDefinition.class;
 		if (SHEETLIFTCUT.equals(propertyName)) return ChargeDefinition.class;
 		if (SHIPMARKUP.equals(propertyName)) return ChargeDefinition.class;
+		if (DESCRIPTIONLABEL.equals(propertyName)) return ChargeDefinition.class;
+		if (NOTESLABEL.equals(propertyName)) return ChargeDefinition.class;
+		if (DESCRIPTIONDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+		if (NOTESDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+		if (QUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
+		if (QUANTITYDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+		if (RATELABEL.equals(propertyName)) return ChargeDefinition.class;
+		if (RATEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+		if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
+		if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -2964,17 +3234,17 @@ public class ChargeDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getUseSides(), objT.getUseSides()))
 			return false;
-		if (! SmartEquals(getNoDiscount(), objT.getNoDiscount()))
+		if (! SmartEquals(getDoNotDiscount(), objT.getDoNotDiscount()))
 			return false;
 		if (! SmartEquals(getNoMaterialQuantity(), objT.getNoMaterialQuantity()))
 			return false;
 		if (! SmartEquals(getNoOverrides(), objT.getNoOverrides()))
 			return false;
-		if (! SmartEquals(getAdjustSets(), objT.getAdjustSets()))
+		if (! SmartEquals(getAdjustableSets(), objT.getAdjustableSets()))
 			return false;
-		if (! SmartEquals(getEnterRate(), objT.getEnterRate()))
+		if (! SmartEquals(getAdjustableRate(), objT.getAdjustableRate()))
 			return false;
-		if (! SmartEquals(getEnterMaterial(), objT.getEnterMaterial()))
+		if (! SmartEquals(getAdjustableMaterial(), objT.getAdjustableMaterial()))
 			return false;
 		if (! SmartEquals(getUseMaterial(), objT.getUseMaterial()))
 			return false;
@@ -3028,7 +3298,7 @@ public class ChargeDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getFoldTemplate(), objT.getFoldTemplate()))
 			return false;
-		if (! SmartEquals(getExcludeFromProductionList(), objT.getExcludeFromProductionList()))
+		if (! SmartEquals(getExcludedFromWorkflow(), objT.getExcludedFromWorkflow()))
 			return false;
 		if (! SmartEquals(getPreproduction(), objT.getPreproduction()))
 			return false;
@@ -3076,7 +3346,7 @@ public class ChargeDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getPressCharge(), objT.getPressCharge()))
 			return false;
-		if (! SmartEquals(getHidden(), objT.getHidden()))
+		if (! SmartEquals(getHideChargeInPrintouts(), objT.getHideChargeInPrintouts()))
 			return false;
 		if (! SmartEquals(getDeletedPreset(), objT.getDeletedPreset()))
 			return false;
@@ -3122,7 +3392,7 @@ public class ChargeDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
 			return false;
-		if (! SmartEquals(getIgnorePriceAdjustment(), objT.getIgnorePriceAdjustment()))
+		if (! SmartEquals(getIgnoreGlobalPriceChanges(), objT.getIgnoreGlobalPriceChanges()))
 			return false;
 		if (! SmartEquals(getCostingPressCharge(), objT.getCostingPressCharge()))
 			return false;
@@ -3161,6 +3431,26 @@ public class ChargeDefinition extends ModelBase {
 		if (! SmartEquals(getSheetliftCut(), objT.getSheetliftCut()))
 			return false;
 		if (! SmartEquals(getShipMarkup(), objT.getShipMarkup()))
+			return false;
+		if (! SmartEquals(getDescriptionLabel(), objT.getDescriptionLabel()))
+			return false;
+		if (! SmartEquals(getNotesLabel(), objT.getNotesLabel()))
+			return false;
+		if (! SmartEquals(getDescriptionDefault(), objT.getDescriptionDefault()))
+			return false;
+		if (! SmartEquals(getNotesDefault(), objT.getNotesDefault()))
+			return false;
+		if (! SmartEquals(getQuantityLabel(), objT.getQuantityLabel()))
+			return false;
+		if (! SmartEquals(getQuantityDefault(), objT.getQuantityDefault()))
+			return false;
+		if (! SmartEquals(getRateLabel(), objT.getRateLabel()))
+			return false;
+		if (! SmartEquals(getRateDefault(), objT.getRateDefault()))
+			return false;
+		if (! SmartEquals(getPriceLabel(), objT.getPriceLabel()))
+			return false;
+		if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
 			return false;
 		return true;
 	}			

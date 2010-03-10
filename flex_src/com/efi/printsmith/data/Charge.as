@@ -19,15 +19,19 @@ package com.efi.printsmith.data
 		public var productionLocation:Location;
 		public var showNotes:Boolean = true;
 		public var finished:Boolean = true;
-		public var attribute1:int = 0;
 		public var taxable:Boolean = true;
-		public var attribute2:int = 0;
 		public var brokered:Boolean = true;
-		public var attribute3:int = 0;
 		public var displayQty:Boolean = true;
 		public var hidden:Boolean = true;
 		public var hidePrice:Boolean = true;
 		public var price:Number = 0;
+		public var overridePrice:Boolean = true;
+		public var quantity:Number = 0;
+		public var overrideQuantity:Boolean = true;
+		public var materialQty:Number = 0;
+		public var overrideMaterialQuantity:Boolean = true;
+		public var rate:Number = 0;
+		public var overrideRate:Boolean = true;
 	
 	}
 }

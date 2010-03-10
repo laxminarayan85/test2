@@ -20,12 +20,12 @@ package com.efi.printsmith.data
 		public var priceMethod:String = "";
 		public var inkCoverage:String = "";
 		public var useSides:Boolean = true;
-		public var noDiscount:Boolean = true;
+		public var doNotDiscount:Boolean = true;
 		public var noMaterialQuantity:Boolean = true;
 		public var noOverrides:Boolean = true;
-		public var adjustSets:Boolean = true;
-		public var enterRate:Boolean = true;
-		public var enterMaterial:Boolean = true;
+		public var adjustableSets:Boolean = true;
+		public var adjustableRate:Boolean = true;
+		public var adjustableMaterial:Boolean = true;
 		public var useMaterial:Boolean = true;
 		public var useRate:Boolean = true;
 		public var useRateSets:Boolean = true;
@@ -52,7 +52,7 @@ package com.efi.printsmith.data
 		public var sizeY:Number = 0;
 		public var plateThickness:Number = 0;
 		public var foldTemplate:FoldTemplate;
-		public var excludeFromProductionList:Boolean = true;
+		public var excludedFromWorkflow:Boolean = true;
 		public var preproduction:Boolean = true;
 		public var useMinimumTime:Boolean = true;
 		public var useDivideByUpCount:Boolean = true;
@@ -76,7 +76,7 @@ package com.efi.printsmith.data
 		public var timeEnd:Date = new Date();
 		public var customerCharge:Boolean = true;
 		public var pressCharge:Boolean = true;
-		public var hidden:Boolean = true;
+		public var hideChargeInPrintouts:Boolean = true;
 		public var deletedPreset:Boolean = true;
 		public var ignoreCuts:Boolean = true;
 		public var useSignatures:Boolean = true;
@@ -99,7 +99,7 @@ package com.efi.printsmith.data
 		public var shouldShip:Boolean = true;
 		public var jobTaskList:Boolean = true;
 		public var hidePrice:Boolean = true;
-		public var ignorePriceAdjustment:Boolean = true;
+		public var ignoreGlobalPriceChanges:Boolean = true;
 		public var costingPressCharge:Boolean = true;
 		public var linearX1:Boolean = true;
 		public var linearX2:Boolean = true;
@@ -119,6 +119,16 @@ package com.efi.printsmith.data
 		public var coverlbInk:Number = 0;
 		public var sheetliftCut:int = 0;
 		public var shipMarkup:Number = 0;
+		public var descriptionLabel:String = "";
+		public var notesLabel:String = "";
+		public var descriptionDefault:String = "";
+		public var notesDefault:String = "";
+		public var quantityLabel:String = "";
+		public var quantityDefault:Number = 0;
+		public var rateLabel:String = "";
+		public var rateDefault:Number = 0;
+		public var priceLabel:String = "";
+		public var priceDefault:Number = 0;
 	
 	}
 }

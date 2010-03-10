@@ -166,7 +166,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("job qty type".equals(currentFieldToken)) {
 						chargeDefinition.setJobQty(currentImportToken);
 					} else if ("hidden".equals(currentFieldToken)) {
-						chargeDefinition.setHidden(Utilities
+						chargeDefinition.setHidePrice(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setHidden(Utilities
 								.tokenToBooleanValue(currentImportToken));
@@ -174,13 +174,13 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setNoOverrides(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("adjust sets".equals(currentFieldToken)) {
-						chargeDefinition.setAdjustSets(Utilities
+						chargeDefinition.setAdjustableSets(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("enter rate".equals(currentFieldToken)) {
-						chargeDefinition.setEnterRate(Utilities
+						chargeDefinition.setAdjustableRate(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("enter material".equals(currentFieldToken)) {
-						chargeDefinition.setEnterMaterial(Utilities
+						chargeDefinition.setAdjustableMaterial(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("use material".equals(currentFieldToken)) {
 						chargeDefinition.setUseMaterial(Utilities
@@ -386,7 +386,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						charge.setHidePrice(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("ignore price adj".equals(currentFieldToken)) {
-						chargeDefinition.setIgnorePriceAdjustment(Utilities
+						chargeDefinition.setIgnoreGlobalPriceChanges(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("costing press charge".equals(currentFieldToken)) {
 						chargeDefinition.setCostingPressCharge(Utilities
@@ -414,7 +414,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setUseSides(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("noDiscount".equals(currentFieldToken)) {
-						chargeDefinition.setNoDiscount(Utilities
+						chargeDefinition.setDoNotDiscount(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("no m quant".equals(currentFieldToken)) {
 						chargeDefinition.setNoMaterialQuantity(Utilities
@@ -505,7 +505,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 								.tokenToDouble(currentImportToken));
 					} else if ("exclude from production"
 							.equals(currentFieldToken)) {
-						chargeDefinition.setExcludeFromProductionList(Utilities
+						chargeDefinition.setExcludedFromWorkflow(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("pre production".equals(currentFieldToken)) {
 						chargeDefinition.setPreproduction(Utilities
@@ -659,7 +659,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("job qty type".equals(currentFieldToken)) {
 				chargeDefinition.setJobQty(currentImportToken);
 			} else if ("hidden".equals(currentFieldToken)) {
-				chargeDefinition.setHidden(Utilities
+				chargeDefinition.setHidePrice(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setHidden(Utilities
 						.tokenToBooleanValue(currentImportToken));
@@ -667,13 +667,13 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setNoOverrides(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("adjust sets".equals(currentFieldToken)) {
-				chargeDefinition.setAdjustSets(Utilities
+				chargeDefinition.setAdjustableSets(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("enter rate".equals(currentFieldToken)) {
-				chargeDefinition.setEnterRate(Utilities
+				chargeDefinition.setAdjustableRate(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("enter material".equals(currentFieldToken)) {
-				chargeDefinition.setEnterMaterial(Utilities
+				chargeDefinition.setAdjustableMaterial(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("use material".equals(currentFieldToken)) {
 				chargeDefinition.setUseMaterial(Utilities
@@ -806,7 +806,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				charge.setHidePrice(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("ignore price adj".equals(currentFieldToken)) {
-				chargeDefinition.setIgnorePriceAdjustment(Utilities
+				chargeDefinition.setIgnoreGlobalPriceChanges(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("costing press charge".equals(currentFieldToken)) {
 				chargeDefinition.setCostingPressCharge(Utilities
@@ -834,7 +834,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setUseSides(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("noDiscount".equals(currentFieldToken)) {
-				chargeDefinition.setNoDiscount(Utilities
+				chargeDefinition.setDoNotDiscount(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("no m quant".equals(currentFieldToken)) {
 				chargeDefinition.setNoMaterialQuantity(Utilities
@@ -923,7 +923,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setPlateThickness(Utilities
 						.tokenToDouble(currentImportToken));
 			} else if ("exclude from production".equals(currentFieldToken)) {
-				chargeDefinition.setExcludeFromProductionList(Utilities
+				chargeDefinition.setExcludedFromWorkflow(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("pre production".equals(currentFieldToken)) {
 				chargeDefinition.setPreproduction(Utilities
