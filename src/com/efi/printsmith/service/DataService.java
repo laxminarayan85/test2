@@ -193,7 +193,7 @@ public class DataService {
 		try {
 			log.debug("** getByName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from" + className + " where name = '" + name + "'";
+			String queryString = "from " + className + " where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
@@ -247,6 +247,20 @@ public class DataService {
 			String queryString = "from StockFinish where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockFinish object = (StockFinish) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	public StockGroup getByStockGroupName(String name) throws Exception {
+		try {
+			log.debug("** getBySockGroupName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockGroup where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockGroup object = (StockGroup) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);

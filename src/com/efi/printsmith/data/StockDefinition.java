@@ -1174,109 +1174,109 @@ public class StockDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer cwt1;
+	private Double cwt1;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt1(){
+	public Double getCwt1(){
 		return cwt1; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt1(Integer newVal) {
+	public void setCwt1(Double newVal) {
 		this.cwt1 = newVal;
 	}
  	
 	
  	@Basic
-	private Integer cwt2;
+	private Double cwt2;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt2(){
+	public Double getCwt2(){
 		return cwt2; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt2(Integer newVal) {
+	public void setCwt2(Double newVal) {
 		this.cwt2 = newVal;
 	}
  	
 	
  	@Basic
-	private Integer cwt3;
+	private Double cwt3;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt3(){
+	public Double getCwt3(){
 		return cwt3; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt3(Integer newVal) {
+	public void setCwt3(Double newVal) {
 		this.cwt3 = newVal;
 	}
  	
 	
  	@Basic
-	private Integer cwt4;
+	private Double cwt4;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt4(){
+	public Double getCwt4(){
 		return cwt4; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt4(Integer newVal) {
+	public void setCwt4(Double newVal) {
 		this.cwt4 = newVal;
 	}
  	
 	
  	@Basic
-	private Integer cwt5;
+	private Double cwt5;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt5(){
+	public Double getCwt5(){
 		return cwt5; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt5(Integer newVal) {
+	public void setCwt5(Double newVal) {
 		this.cwt5 = newVal;
 	}
  	
 	
  	@Basic
-	private Integer cwt6;
+	private Double cwt6;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCwt6(){
+	public Double getCwt6(){
 		return cwt6; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setCwt6(Integer newVal) {
+	public void setCwt6(Double newVal) {
 		this.cwt6 = newVal;
 	}
  	
@@ -2656,12 +2656,12 @@ public class StockDefinition extends ModelBase {
 		if (COST4.equals(propertyName)) setCost4((Double)newValue); else
 		if (COST5.equals(propertyName)) setCost5((Double)newValue); else
 		if (COST6.equals(propertyName)) setCost6((Double)newValue); else
-		if (CWT1.equals(propertyName)) setCwt1((Integer)newValue); else
-		if (CWT2.equals(propertyName)) setCwt2((Integer)newValue); else
-		if (CWT3.equals(propertyName)) setCwt3((Integer)newValue); else
-		if (CWT4.equals(propertyName)) setCwt4((Integer)newValue); else
-		if (CWT5.equals(propertyName)) setCwt5((Integer)newValue); else
-		if (CWT6.equals(propertyName)) setCwt6((Integer)newValue); else
+		if (CWT1.equals(propertyName)) setCwt1((Double)newValue); else
+		if (CWT2.equals(propertyName)) setCwt2((Double)newValue); else
+		if (CWT3.equals(propertyName)) setCwt3((Double)newValue); else
+		if (CWT4.equals(propertyName)) setCwt4((Double)newValue); else
+		if (CWT5.equals(propertyName)) setCwt5((Double)newValue); else
+		if (CWT6.equals(propertyName)) setCwt6((Double)newValue); else
 		if (MARKUP1.equals(propertyName)) setMarkup1((Double)newValue); else
 		if (MARKUP2.equals(propertyName)) setMarkup2((Double)newValue); else
 		if (MARKUP3.equals(propertyName)) setMarkup3((Double)newValue); else
@@ -2815,17 +2815,17 @@ public class StockDefinition extends ModelBase {
 		if (COST6.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (CWT1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CWT2.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CWT3.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CWT4.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CWT5.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (CWT6.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {Double.class};		
 		if (MARKUP1.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (MARKUP2.equals(propertyName)) 
