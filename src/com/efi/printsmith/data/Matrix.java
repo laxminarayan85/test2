@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Matrix.findall", query = "from Matrix"),
@@ -53,6 +53,9 @@ public class Matrix extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
 	@CollectionOfElements
 	private java.util.List<Long> headerValues;
 	
@@ -63,12 +66,16 @@ public class Matrix extends ModelBase {
 		return headerValues; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addHeaderValues(Long obj) {
 		if (headerValues == null) {
 			headerValues = new java.util.ArrayList<Long>();
 		}
 		headerValues.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -77,6 +84,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
@@ -88,12 +98,16 @@ public class Matrix extends ModelBase {
 		return elements; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addElements(MatrixElement obj) {
 		if (elements == null) {
 			elements = new java.util.ArrayList<MatrixElement>();
 		}
 		elements.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	

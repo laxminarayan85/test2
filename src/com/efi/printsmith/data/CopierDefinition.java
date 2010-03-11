@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CopierDefinition.findall", query = "from CopierDefinition"),
@@ -257,6 +257,9 @@ public class CopierDefinition extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -267,6 +270,7 @@ public class CopierDefinition extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -275,6 +279,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String machineName;
 	
@@ -285,6 +292,7 @@ public class CopierDefinition extends ModelBase {
 		return machineName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -293,6 +301,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String outputDescrip;
 	
@@ -303,6 +314,7 @@ public class CopierDefinition extends ModelBase {
 		return outputDescrip; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -311,6 +323,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String productionLocation;
 	
@@ -321,6 +336,7 @@ public class CopierDefinition extends ModelBase {
 		return productionLocation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -329,6 +345,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String costCenter;
 	
@@ -339,6 +358,7 @@ public class CopierDefinition extends ModelBase {
 		return costCenter; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -347,6 +367,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String oemDeviceID;
 	
@@ -357,6 +380,7 @@ public class CopierDefinition extends ModelBase {
 		return oemDeviceID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -365,6 +389,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean costingCopy;
 	
@@ -375,6 +402,7 @@ public class CopierDefinition extends ModelBase {
 		return costingCopy; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -383,6 +411,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean blackwhite;
 	
@@ -393,6 +424,7 @@ public class CopierDefinition extends ModelBase {
 		return blackwhite; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -401,6 +433,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean color;
 	
@@ -411,6 +446,7 @@ public class CopierDefinition extends ModelBase {
 		return color; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -419,6 +455,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean integratedDevice;
 	
@@ -429,6 +468,7 @@ public class CopierDefinition extends ModelBase {
 		return integratedDevice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -437,6 +477,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String maxSize;
 	
@@ -447,6 +490,7 @@ public class CopierDefinition extends ModelBase {
 		return maxSize; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -455,6 +499,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String minSize;
 	
@@ -465,6 +512,7 @@ public class CopierDefinition extends ModelBase {
 		return minSize; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -473,6 +521,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double monthlyLabor;
 	
@@ -483,6 +534,7 @@ public class CopierDefinition extends ModelBase {
 		return monthlyLabor; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -491,6 +543,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double clickCost;
 	
@@ -501,6 +556,7 @@ public class CopierDefinition extends ModelBase {
 		return clickCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -509,6 +565,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double laborCopy;
 	
@@ -519,6 +578,7 @@ public class CopierDefinition extends ModelBase {
 		return laborCopy; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -527,6 +587,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean largeFormat;
 	
@@ -537,6 +600,7 @@ public class CopierDefinition extends ModelBase {
 		return largeFormat; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -545,6 +609,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String maxWidth;
 	
@@ -555,6 +622,7 @@ public class CopierDefinition extends ModelBase {
 		return maxWidth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -563,6 +631,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String minWidth;
 	
@@ -573,6 +644,7 @@ public class CopierDefinition extends ModelBase {
 		return minWidth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -581,6 +653,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer daysOpen;
 	
@@ -591,6 +666,7 @@ public class CopierDefinition extends ModelBase {
 		return daysOpen; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -599,6 +675,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double monthlyPayment;
 	
@@ -609,6 +688,7 @@ public class CopierDefinition extends ModelBase {
 		return monthlyPayment; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -617,6 +697,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double percentUsage;
 	
@@ -627,6 +710,7 @@ public class CopierDefinition extends ModelBase {
 		return percentUsage; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -635,6 +719,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double hourCostRate;
 	
@@ -645,6 +732,7 @@ public class CopierDefinition extends ModelBase {
 		return hourCostRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -653,6 +741,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double tonerCopy;
 	
@@ -663,6 +754,7 @@ public class CopierDefinition extends ModelBase {
 		return tonerCopy; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -671,6 +763,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double developerCopy;
 	
@@ -681,6 +776,7 @@ public class CopierDefinition extends ModelBase {
 		return developerCopy; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -689,6 +785,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double copyMarkup;
 	
@@ -699,6 +798,7 @@ public class CopierDefinition extends ModelBase {
 		return copyMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -707,6 +807,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer hoursOpen;
 	
@@ -717,6 +820,7 @@ public class CopierDefinition extends ModelBase {
 		return hoursOpen; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -725,6 +829,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double monthlyMaintenance;
 	
@@ -735,6 +842,7 @@ public class CopierDefinition extends ModelBase {
 		return monthlyMaintenance; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -743,6 +851,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double machineCostPerCopy;
 	
@@ -753,6 +864,7 @@ public class CopierDefinition extends ModelBase {
 		return machineCostPerCopy; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -761,6 +873,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String method;
 	
@@ -771,6 +886,7 @@ public class CopierDefinition extends ModelBase {
 		return method; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -779,6 +895,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String salesCat;
 	
@@ -789,6 +908,7 @@ public class CopierDefinition extends ModelBase {
 		return salesCat; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -797,6 +917,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer copyID;
 	
@@ -807,6 +930,7 @@ public class CopierDefinition extends ModelBase {
 		return copyID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -815,6 +939,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double monthlyBurdenRate;
 	
@@ -825,6 +952,7 @@ public class CopierDefinition extends ModelBase {
 		return monthlyBurdenRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -833,6 +961,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double copyMinutes;
 	
@@ -843,6 +974,7 @@ public class CopierDefinition extends ModelBase {
 		return copyMinutes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -851,6 +983,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "copierdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
@@ -862,12 +997,16 @@ public class CopierDefinition extends ModelBase {
 		return charges; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addCharges(ChargeDefinition obj) {
 		if (charges == null) {
 			charges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		charges.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -876,6 +1015,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String copierId;
 	
@@ -886,6 +1028,7 @@ public class CopierDefinition extends ModelBase {
 		return copierId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -894,6 +1037,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double flateRate;
 	
@@ -904,6 +1050,7 @@ public class CopierDefinition extends ModelBase {
 		return flateRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -912,6 +1059,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double copyMarkup2;
 	
@@ -922,6 +1072,7 @@ public class CopierDefinition extends ModelBase {
 		return copyMarkup2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -930,6 +1081,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double flatRate;
 	
@@ -940,6 +1094,7 @@ public class CopierDefinition extends ModelBase {
 		return flatRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -948,6 +1103,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
 	
@@ -958,6 +1116,7 @@ public class CopierDefinition extends ModelBase {
 		return wasteChart; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -966,6 +1125,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList stockPriceList;
 	
@@ -976,6 +1138,7 @@ public class CopierDefinition extends ModelBase {
 		return stockPriceList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -984,6 +1147,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList copierPriceList;
 	
@@ -994,6 +1160,7 @@ public class CopierDefinition extends ModelBase {
 		return copierPriceList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1002,6 +1169,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String priceTwoSide;
 	
@@ -1012,6 +1182,7 @@ public class CopierDefinition extends ModelBase {
 		return priceTwoSide; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1020,6 +1191,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String stockPriceMethod;
 	
@@ -1030,6 +1204,7 @@ public class CopierDefinition extends ModelBase {
 		return stockPriceMethod; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1038,6 +1213,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double sideTwoFactor;
 	
@@ -1048,6 +1226,7 @@ public class CopierDefinition extends ModelBase {
 		return sideTwoFactor; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1056,6 +1235,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Matrix copierMatrix;
 	
@@ -1066,6 +1248,7 @@ public class CopierDefinition extends ModelBase {
 		return copierMatrix; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1074,6 +1257,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useCopierStockMarkup;
 	
@@ -1084,6 +1270,7 @@ public class CopierDefinition extends ModelBase {
 		return useCopierStockMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1092,6 +1279,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean matrixIsCopyCost;
 	
@@ -1102,6 +1292,7 @@ public class CopierDefinition extends ModelBase {
 		return matrixIsCopyCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1110,6 +1301,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean matrixIsDiscountTable;
 	
@@ -1120,6 +1314,7 @@ public class CopierDefinition extends ModelBase {
 		return matrixIsDiscountTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1128,6 +1323,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean matrixIsStepTable;
 	
@@ -1138,6 +1336,7 @@ public class CopierDefinition extends ModelBase {
 		return matrixIsStepTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1146,6 +1345,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean squareAreaFromRunSize;
 	
@@ -1156,6 +1358,7 @@ public class CopierDefinition extends ModelBase {
 		return squareAreaFromRunSize; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1164,6 +1367,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean squareAreaFromFinish;
 	
@@ -1174,6 +1380,7 @@ public class CopierDefinition extends ModelBase {
 		return squareAreaFromFinish; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1182,6 +1389,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean interpolateMatrix;
 	
@@ -1192,6 +1402,7 @@ public class CopierDefinition extends ModelBase {
 		return interpolateMatrix; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1200,6 +1411,9 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stockMarkup;
 	
@@ -1210,6 +1424,7 @@ public class CopierDefinition extends ModelBase {
 		return stockMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

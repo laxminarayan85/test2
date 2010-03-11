@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesSequenceValues.findall", query = "from PreferencesSequenceValues"),
@@ -93,6 +93,9 @@ public class PreferencesSequenceValues extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long invoice;
 	
@@ -103,6 +106,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return invoice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -111,6 +115,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long job;
 	
@@ -121,6 +128,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return job; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -129,6 +137,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long pressDefinition;
 	
@@ -139,6 +150,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return pressDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -147,6 +159,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long chargeDefinition;
 	
@@ -157,6 +172,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return chargeDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -165,6 +181,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long account;
 	
@@ -175,6 +194,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return account; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -183,6 +203,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long contact;
 	
@@ -193,6 +216,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return contact; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -201,6 +225,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long stockDefinition;
 	
@@ -211,6 +238,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return stockDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -219,6 +247,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long employee;
 	
@@ -229,6 +260,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return employee; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -237,6 +269,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long broker;
 	
@@ -247,6 +282,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return broker; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -255,6 +291,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long copierDefinition;
 	
@@ -265,6 +304,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return copierDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -273,6 +313,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long campaign;
 	
@@ -283,6 +326,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return campaign; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -291,6 +335,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long grade;
 	
@@ -301,6 +348,7 @@ public class PreferencesSequenceValues extends ModelBase {
 		return grade; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

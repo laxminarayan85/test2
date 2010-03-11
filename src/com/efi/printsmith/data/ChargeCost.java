@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ChargeCost.findall", query = "from ChargeCost"),
@@ -97,6 +97,9 @@ public class ChargeCost extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double setupCost;
 	
@@ -107,6 +110,7 @@ public class ChargeCost extends ModelBase {
 		return setupCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -115,6 +119,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double unitCost;
 	
@@ -125,6 +132,7 @@ public class ChargeCost extends ModelBase {
 		return unitCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -133,6 +141,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer attribute1;
 	
@@ -143,6 +154,7 @@ public class ChargeCost extends ModelBase {
 		return attribute1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -151,6 +163,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private RateTable rateTable;
 	
@@ -161,6 +176,7 @@ public class ChargeCost extends ModelBase {
 		return rateTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -169,6 +185,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double fixedMaterials;
 	
@@ -179,6 +198,7 @@ public class ChargeCost extends ModelBase {
 		return fixedMaterials; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -187,6 +207,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double unitMaterials;
 	
@@ -197,6 +220,7 @@ public class ChargeCost extends ModelBase {
 		return unitMaterials; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -205,6 +229,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double laborRate;
 	
@@ -215,6 +242,7 @@ public class ChargeCost extends ModelBase {
 		return laborRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -223,6 +251,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer attribute2;
 	
@@ -233,6 +264,7 @@ public class ChargeCost extends ModelBase {
 		return attribute2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -241,6 +273,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double setupMinutes;
 	
@@ -251,6 +286,7 @@ public class ChargeCost extends ModelBase {
 		return setupMinutes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -259,6 +295,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double piecesPerHour;
 	
@@ -269,6 +308,7 @@ public class ChargeCost extends ModelBase {
 		return piecesPerHour; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -277,6 +317,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double totalUnitCost;
 	
@@ -287,6 +330,7 @@ public class ChargeCost extends ModelBase {
 		return totalUnitCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -295,6 +339,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String costingMethod;
 	
@@ -305,6 +352,7 @@ public class ChargeCost extends ModelBase {
 		return costingMethod; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -313,6 +361,9 @@ public class ChargeCost extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SpeedTable speedTable;
 	
@@ -323,6 +374,7 @@ public class ChargeCost extends ModelBase {
 		return speedTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

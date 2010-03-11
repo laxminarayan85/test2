@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesStockDefinition.findall", query = "from PreferencesStockDefinition"),
@@ -53,6 +53,9 @@ public class PreferencesStockDefinition extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean visible;
 	
@@ -63,6 +66,7 @@ public class PreferencesStockDefinition extends ModelBase {
 		return visible; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -71,6 +75,9 @@ public class PreferencesStockDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ColumnNames columns;
 	
@@ -81,6 +88,7 @@ public class PreferencesStockDefinition extends ModelBase {
 		return columns; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

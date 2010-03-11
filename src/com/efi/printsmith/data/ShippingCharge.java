@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ShippingCharge.findall", query = "from ShippingCharge"),
@@ -53,6 +53,9 @@ public class ShippingCharge extends Charge {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String shipVia;
 	
@@ -63,6 +66,7 @@ public class ShippingCharge extends Charge {
 		return shipVia; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -71,6 +75,9 @@ public class ShippingCharge extends Charge {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipTo;
 	
@@ -81,6 +88,7 @@ public class ShippingCharge extends Charge {
 		return shipTo; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

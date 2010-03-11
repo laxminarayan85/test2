@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CashRegister.findall", query = "from CashRegister"),
@@ -113,6 +113,9 @@ public class CashRegister extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Account customerAccount;
 	
@@ -123,6 +126,7 @@ public class CashRegister extends ModelBase {
 		return customerAccount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -131,6 +135,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	
@@ -141,6 +148,7 @@ public class CashRegister extends ModelBase {
 		return taxTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -149,6 +157,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxCodes taxCode;
 	
@@ -159,6 +170,7 @@ public class CashRegister extends ModelBase {
 		return taxCode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -167,6 +179,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double quantity;
 	
@@ -177,6 +192,7 @@ public class CashRegister extends ModelBase {
 		return quantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -185,6 +201,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double unitprice;
 	
@@ -195,6 +214,7 @@ public class CashRegister extends ModelBase {
 		return unitprice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -203,6 +223,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double totalprice;
 	
@@ -213,6 +236,7 @@ public class CashRegister extends ModelBase {
 		return totalprice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -221,6 +245,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String description;
 	
@@ -231,6 +258,7 @@ public class CashRegister extends ModelBase {
 		return description; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -239,6 +267,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String invoiceFormat;
 	
@@ -249,6 +280,7 @@ public class CashRegister extends ModelBase {
 		return invoiceFormat; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -257,6 +289,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String paymentMethod;
 	
@@ -267,6 +302,7 @@ public class CashRegister extends ModelBase {
 		return paymentMethod; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -275,6 +311,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double subtotal;
 	
@@ -285,6 +324,7 @@ public class CashRegister extends ModelBase {
 		return subtotal; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -293,6 +333,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double taxamount;
 	
@@ -303,6 +346,7 @@ public class CashRegister extends ModelBase {
 		return taxamount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -311,6 +355,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double tendered;
 	
@@ -321,6 +368,7 @@ public class CashRegister extends ModelBase {
 		return tendered; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -329,6 +377,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double change;
 	
@@ -339,6 +390,7 @@ public class CashRegister extends ModelBase {
 		return change; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -347,6 +399,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PreferencesCreditCard creditCard;
 	
@@ -357,6 +412,7 @@ public class CashRegister extends ModelBase {
 		return creditCard; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -365,6 +421,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String refNumber;
 	
@@ -375,6 +434,7 @@ public class CashRegister extends ModelBase {
 		return refNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -383,6 +443,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double paymentAmount;
 	
@@ -393,6 +456,7 @@ public class CashRegister extends ModelBase {
 		return paymentAmount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -401,6 +465,9 @@ public class CashRegister extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String checkNumber;
 	
@@ -411,6 +478,7 @@ public class CashRegister extends ModelBase {
 		return checkNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

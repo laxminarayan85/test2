@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesDefaultPresses.findall", query = "from PreferencesDefaultPresses"),
@@ -65,6 +65,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultBWCopier;
 	
@@ -75,6 +78,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 		return defaultBWCopier; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -83,6 +87,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultColorCopier;
 	
@@ -93,6 +100,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 		return defaultColorCopier; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -101,6 +109,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition defaultLargeFormat;
 	
@@ -111,6 +122,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 		return defaultLargeFormat; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -119,6 +131,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition defaultRollFedPress;
 	
@@ -129,6 +144,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 		return defaultRollFedPress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -137,6 +153,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition defaultSheetFedPress;
 	
@@ -147,6 +166,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 		return defaultSheetFedPress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

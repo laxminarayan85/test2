@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "TaxElement.findall", query = "from TaxElement"),
@@ -57,6 +57,9 @@ public class TaxElement extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rate;
 	
@@ -67,6 +70,7 @@ public class TaxElement extends ModelBase {
 		return rate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -75,6 +79,9 @@ public class TaxElement extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showTax;
 	
@@ -85,6 +92,7 @@ public class TaxElement extends ModelBase {
 		return showTax; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -93,6 +101,9 @@ public class TaxElement extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean userForSeparateShippingTax;
 	
@@ -103,6 +114,7 @@ public class TaxElement extends ModelBase {
 		return userForSeparateShippingTax; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PressDefinition.findall", query = "from PressDefinition"),
@@ -205,6 +205,9 @@ public class PressDefinition extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -215,6 +218,7 @@ public class PressDefinition extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -223,6 +227,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String machineName;
 	
@@ -233,6 +240,7 @@ public class PressDefinition extends ModelBase {
 		return machineName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -241,6 +249,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String outputDescrip;
 	
@@ -251,6 +262,7 @@ public class PressDefinition extends ModelBase {
 		return outputDescrip; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -259,6 +271,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String productionLocation;
 	
@@ -269,6 +284,7 @@ public class PressDefinition extends ModelBase {
 		return productionLocation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -277,6 +293,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String costCenter;
 	
@@ -287,6 +306,7 @@ public class PressDefinition extends ModelBase {
 		return costCenter; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -295,6 +315,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String oemDeviceID;
 	
@@ -305,6 +328,7 @@ public class PressDefinition extends ModelBase {
 		return oemDeviceID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -313,6 +337,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long machineID;
 	
@@ -323,6 +350,7 @@ public class PressDefinition extends ModelBase {
 		return machineID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -331,6 +359,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean costingPress;
 	
@@ -341,6 +372,7 @@ public class PressDefinition extends ModelBase {
 		return costingPress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -349,6 +381,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean integratedDevice;
 	
@@ -359,6 +394,7 @@ public class PressDefinition extends ModelBase {
 		return integratedDevice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -367,6 +403,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String maxPaperSize;
 	
@@ -377,6 +416,7 @@ public class PressDefinition extends ModelBase {
 		return maxPaperSize; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -385,6 +425,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String minPaperSize;
 	
@@ -395,6 +438,7 @@ public class PressDefinition extends ModelBase {
 		return minPaperSize; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -403,6 +447,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double laborRate;
 	
@@ -413,6 +460,7 @@ public class PressDefinition extends ModelBase {
 		return laborRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -421,6 +469,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double laborMarkup;
 	
@@ -431,6 +482,7 @@ public class PressDefinition extends ModelBase {
 		return laborMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -439,6 +491,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double fixedWaste;
 	
@@ -449,6 +504,7 @@ public class PressDefinition extends ModelBase {
 		return fixedWaste; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -457,6 +513,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double minLabor;
 	
@@ -467,6 +526,7 @@ public class PressDefinition extends ModelBase {
 		return minLabor; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -475,6 +535,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double setupMin;
 	
@@ -485,6 +548,7 @@ public class PressDefinition extends ModelBase {
 		return setupMin; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -493,6 +557,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long setupAddSig;
 	
@@ -503,6 +570,7 @@ public class PressDefinition extends ModelBase {
 		return setupAddSig; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -511,6 +579,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double workTurnSetup;
 	
@@ -521,6 +592,7 @@ public class PressDefinition extends ModelBase {
 		return workTurnSetup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -529,6 +601,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long setupAddHead;
 	
@@ -539,6 +614,7 @@ public class PressDefinition extends ModelBase {
 		return setupAddHead; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -547,6 +623,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double washupFee;
 	
@@ -557,6 +636,7 @@ public class PressDefinition extends ModelBase {
 		return washupFee; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -565,6 +645,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long addSigAddHead;
 	
@@ -575,6 +658,7 @@ public class PressDefinition extends ModelBase {
 		return addSigAddHead; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -583,6 +667,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long washupMin;
 	
@@ -593,6 +680,7 @@ public class PressDefinition extends ModelBase {
 		return washupMin; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -601,6 +689,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double washupPerFountain;
 	
@@ -611,6 +702,7 @@ public class PressDefinition extends ModelBase {
 		return washupPerFountain; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -619,6 +711,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double gripEdge;
 	
@@ -629,6 +724,7 @@ public class PressDefinition extends ModelBase {
 		return gripEdge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -637,6 +733,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean perfector;
 	
@@ -647,6 +746,7 @@ public class PressDefinition extends ModelBase {
 		return perfector; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -655,6 +755,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long avgImpressPerHour;
 	
@@ -665,6 +768,7 @@ public class PressDefinition extends ModelBase {
 		return avgImpressPerHour; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -673,6 +777,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long numberHeads;
 	
@@ -683,6 +790,7 @@ public class PressDefinition extends ModelBase {
 		return numberHeads; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -691,6 +799,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long setupAddRun;
 	
@@ -701,6 +812,7 @@ public class PressDefinition extends ModelBase {
 		return setupAddRun; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -709,6 +821,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean sheetFed;
 	
@@ -719,6 +834,7 @@ public class PressDefinition extends ModelBase {
 		return sheetFed; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -727,6 +843,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean rollFed;
 	
@@ -737,6 +856,7 @@ public class PressDefinition extends ModelBase {
 		return rollFed; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -745,6 +865,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
 	
@@ -755,6 +878,7 @@ public class PressDefinition extends ModelBase {
 		return wasteChart; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -763,6 +887,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList pressPriceList;
 	
@@ -773,6 +900,7 @@ public class PressDefinition extends ModelBase {
 		return pressPriceList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -781,6 +909,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList stockPriceList;
 	
@@ -791,6 +922,7 @@ public class PressDefinition extends ModelBase {
 		return stockPriceList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -799,6 +931,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SpeedTable speedTable;
 	
@@ -809,6 +944,7 @@ public class PressDefinition extends ModelBase {
 		return speedTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -817,6 +953,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double cutoffLength;
 	
@@ -827,6 +966,7 @@ public class PressDefinition extends ModelBase {
 		return cutoffLength; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -835,6 +975,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String pressId;
 	
@@ -845,6 +988,7 @@ public class PressDefinition extends ModelBase {
 		return pressId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -853,6 +997,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pressdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
@@ -864,12 +1011,16 @@ public class PressDefinition extends ModelBase {
 		return charges; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addCharges(ChargeDefinition obj) {
 		if (charges == null) {
 			charges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		charges.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -878,6 +1029,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String maxRollWidth;
 	
@@ -888,6 +1042,7 @@ public class PressDefinition extends ModelBase {
 		return maxRollWidth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -896,6 +1051,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String minRollWidth;
 	
@@ -906,6 +1064,7 @@ public class PressDefinition extends ModelBase {
 		return minRollWidth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -914,6 +1073,9 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String salesCat;
 	
@@ -924,6 +1086,7 @@ public class PressDefinition extends ModelBase {
 		return salesCat; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

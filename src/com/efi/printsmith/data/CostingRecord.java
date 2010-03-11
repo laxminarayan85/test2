@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CostingRecord.findall", query = "from CostingRecord"),
@@ -61,6 +61,9 @@ public class CostingRecord extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double unitCost;
 	
@@ -71,6 +74,7 @@ public class CostingRecord extends ModelBase {
 		return unitCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -79,6 +83,9 @@ public class CostingRecord extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double totalCost;
 	
@@ -89,6 +96,7 @@ public class CostingRecord extends ModelBase {
 		return totalCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -97,6 +105,9 @@ public class CostingRecord extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double laborCost;
 	
@@ -107,6 +118,7 @@ public class CostingRecord extends ModelBase {
 		return laborCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -115,6 +127,9 @@ public class CostingRecord extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stockCost;
 	
@@ -125,6 +140,7 @@ public class CostingRecord extends ModelBase {
 		return stockCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

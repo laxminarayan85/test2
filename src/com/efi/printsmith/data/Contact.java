@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Contact.findall", query = "from Contact"),
@@ -101,6 +101,9 @@ public class Contact extends Party {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
 	
@@ -111,6 +114,7 @@ public class Contact extends Party {
 		return shipToAddress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -119,6 +123,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Account parentAccount;
 	
@@ -129,6 +136,7 @@ public class Contact extends Party {
 		return parentAccount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -137,6 +145,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean webAcctNameIncomplete;
 	
@@ -147,6 +158,7 @@ public class Contact extends Party {
 		return webAcctNameIncomplete; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -155,6 +167,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean webCatalogChange;
 	
@@ -165,6 +180,7 @@ public class Contact extends Party {
 		return webCatalogChange; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -173,6 +189,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean webStateChange;
 	
@@ -183,6 +202,7 @@ public class Contact extends Party {
 		return webStateChange; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -191,6 +211,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean transmitted;
 	
@@ -201,6 +224,7 @@ public class Contact extends Party {
 		return transmitted; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -209,6 +233,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useContactAddress;
 	
@@ -219,6 +246,7 @@ public class Contact extends Party {
 		return useContactAddress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -227,6 +255,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean isIndividual;
 	
@@ -237,6 +268,7 @@ public class Contact extends Party {
 		return isIndividual; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -245,6 +277,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep defaultSalesRep;
 	
@@ -255,6 +290,7 @@ public class Contact extends Party {
 		return defaultSalesRep; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -263,6 +299,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean mailerCampaigns;
 	
@@ -273,6 +312,7 @@ public class Contact extends Party {
 		return mailerCampaigns; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -281,6 +321,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CreditCard creditCard;
 	
@@ -291,6 +334,7 @@ public class Contact extends Party {
 		return creditCard; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -299,6 +343,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Marketing marketing;
 	
@@ -309,6 +356,7 @@ public class Contact extends Party {
 		return marketing; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -317,6 +365,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
@@ -328,12 +379,16 @@ public class Contact extends Party {
 		return campaigns; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addCampaigns(Campaigns obj) {
 		if (campaigns == null) {
 			campaigns = new java.util.ArrayList<Campaigns>();
 		}
 		campaigns.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -342,6 +397,9 @@ public class Contact extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String contactId;
 	
@@ -352,6 +410,7 @@ public class Contact extends Party {
 		return contactId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

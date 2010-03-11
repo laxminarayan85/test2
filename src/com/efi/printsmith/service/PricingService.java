@@ -26,6 +26,7 @@ import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
 import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
+import com.efi.printsmith.pricing.job.PriceJobEngine;
 
 public class PricingService {
 
@@ -52,29 +53,6 @@ public class PricingService {
 		log.info("Completed priceCharge for charge " + charge.getId());
 		return charge;
 	}
-
-//	private double interpolatePriceFromPriceList(PriceList priceList, long qty) {
-//		double retVal = 0.0;
-//		if (priceList != null) {
-//			List <PriceListElement> priceListElements = priceList.getElements();
-//			PriceListElement elementToUse = null;
-//			if(priceListElements != null && priceListElements.size() > 0) {
-//				elementToUse = priceListElements.get(0);
-//				for (int i=1; i < priceListElements.size(); i++) {
-//					PriceListElement curElement = priceListElements.get(i);
-//					if (curElement.getQuantity() > qty) {
-//						elementToUse = priceListElements.get(i-1);
-//						break;
-//					}
-//				}
-//				if (elementToUse.getQuantity() > 0) {
-//					retVal = elementToUse.getAmount()/elementToUse.getQuantity()*qty;
-//				}
-//			}
-//		}
-//		return retVal;
-//		
-//	}
 	 
 	private double getTimePerSheetFromSpeedTable(SpeedTable speedTable, long qty) {
 		double retVal = 0.0;
@@ -99,52 +77,8 @@ public class PricingService {
 		return retVal;
 	}
 	
-	private double getStockPrice(StockDefinition stockDefinition, long qty) {
-		double retVal = 0.0;
-		if (stockDefinition != null) {
-			if (stockDefinition.getCostunits() > 0) {
-				if (qty <= stockDefinition.getQtybreak1()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;
-				} else if (qty <= stockDefinition.getQtybreak2()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;
-				} else if (qty <= stockDefinition.getQtybreak3()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;
-				} else if (qty <= stockDefinition.getQtybreak4()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;
-				} else if (qty <= stockDefinition.getQtybreak5()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;
-				} else if (qty <= stockDefinition.getQtybreak6()) {
-					retVal = stockDefinition.getCost1()/stockDefinition.getCostunits() * qty;				
-				}
-			}
-		}
-		return retVal;
-	}
-	
 	public Job priceJob(Job job) {
-		/* Currently assumes copier job - need to check job type */
-		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
-		CopierDefinition copierDefinition = job.getPricingCopier();
-		
-		String copierPricingMethodDesc = copierDefinition.getMethod();
-		com.efi.printsmith.pricing.copier.CopierPricingMethod copierPricingMethod = null;
-		
-		if (copierPricingMethodDesc.equals(CopierPricingMethod.FlatRate.name())) {
-			copierPricingMethod = new FlatRatePricingMethod();
-		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CopiesAndOriginals.name())) {
-			copierPricingMethod = new CopiesPlusOriginalsPricingMethod();
-		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CopiesPerOriginals.name())) {
-			copierPricingMethod = new CopiesPerOriginalPricingMethod();
-		} else if (copierPricingMethodDesc.equals(CopierPricingMethod.CostPlus.name())) {
-			copierPricingMethod = new CostPlusPricingMethod();			
-		}
-		
-		if (copierPricingMethod != null) {
-			return copierPricingMethod.priceCopierJob(job);
-		} else {
-			log.error("No pricing method found for CopierPricingMethod: " + copierPricingMethodDesc);
-		}
-		
+		PriceJobEngine.priceJob(job);
 		return job;
 	}
 	
