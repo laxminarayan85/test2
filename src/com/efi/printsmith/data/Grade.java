@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Grade.findall", query = "from Grade"),
@@ -57,9 +57,6 @@ public class Grade extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -70,7 +67,6 @@ public class Grade extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -79,9 +75,6 @@ public class Grade extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "grade_campaigns")
 	private java.util.List<Campaigns> campaigns;
@@ -93,16 +86,12 @@ public class Grade extends ModelBase {
 		return campaigns; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addCampaigns(Campaigns obj) {
 		if (campaigns == null) {
 			campaigns = new java.util.ArrayList<Campaigns>();
 		}
 		campaigns.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -111,9 +100,6 @@ public class Grade extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String gradeId;
 	
@@ -124,7 +110,6 @@ public class Grade extends ModelBase {
 		return gradeId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

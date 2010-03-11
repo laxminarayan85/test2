@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesSalesCategory.findall", query = "from PreferencesSalesCategory"),
@@ -53,9 +53,6 @@ public class PreferencesSalesCategory extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
 	
@@ -66,7 +63,6 @@ public class PreferencesSalesCategory extends ModelBase {
 		return category; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -75,9 +71,6 @@ public class PreferencesSalesCategory extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String accountNumber;
 	
@@ -88,7 +81,6 @@ public class PreferencesSalesCategory extends ModelBase {
 		return accountNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

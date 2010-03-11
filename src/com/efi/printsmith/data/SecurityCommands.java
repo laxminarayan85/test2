@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SecurityCommands.findall", query = "from SecurityCommands"),
@@ -57,9 +57,6 @@ public class SecurityCommands extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String menu;
 	
@@ -70,7 +67,6 @@ public class SecurityCommands extends ModelBase {
 		return menu; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -79,9 +75,6 @@ public class SecurityCommands extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String commandName;
 	
@@ -92,7 +85,6 @@ public class SecurityCommands extends ModelBase {
 		return commandName; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -101,9 +93,6 @@ public class SecurityCommands extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String commandId;
 	
@@ -114,7 +103,6 @@ public class SecurityCommands extends ModelBase {
 		return commandId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

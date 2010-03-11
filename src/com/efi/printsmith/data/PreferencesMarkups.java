@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesMarkups.findall", query = "from PreferencesMarkups"),
@@ -57,9 +57,6 @@ public class PreferencesMarkups extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double totalCost;
 	
@@ -70,7 +67,6 @@ public class PreferencesMarkups extends ModelBase {
 		return totalCost; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -79,9 +75,6 @@ public class PreferencesMarkups extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double markup;
 	
@@ -92,7 +85,6 @@ public class PreferencesMarkups extends ModelBase {
 		return markup; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -101,9 +93,6 @@ public class PreferencesMarkups extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean above;
 	
@@ -114,7 +103,6 @@ public class PreferencesMarkups extends ModelBase {
 		return above; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 		public var stockunit:int = 0;
 		public var name:String = "";
 		public var stkgroup:StockGroup;
-		public var stkclass:String = "";
+		public var stkclass:StockClass;
 		public var stktype:String = "";
 		public var isMetric:Boolean = true;
 		public var finish:StockFinish;
@@ -28,7 +28,7 @@ package com.efi.printsmith.data
 		public var vendor:Vendor;
 		public var basicsize:String = "";
 		public var parentsize:String = "";
-		public var thickness:int = 0;
+		public var thickness:Number = 0;
 		public var mweight:Number = 0;
 		public var sheetspercarton:int = 0;
 		public var minorder:int = 0;

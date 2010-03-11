@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesPricingMethod.findall", query = "from PreferencesPricingMethod"),
@@ -81,9 +81,6 @@ public class PreferencesPricingMethod extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean used;
 	
@@ -94,7 +91,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return used; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -103,9 +99,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String title;
 	
@@ -116,7 +109,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return title; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -125,9 +117,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String abbreviation;
 	
@@ -138,7 +127,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return abbreviation; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -147,9 +135,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean brokered;
 	
@@ -160,7 +145,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return brokered; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -169,9 +153,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxable;
 	
@@ -182,7 +163,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return taxable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -191,9 +171,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean finished;
 	
@@ -204,7 +181,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return finished; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -213,9 +189,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean showNotes;
 	
@@ -226,7 +199,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return showNotes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -235,9 +207,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
 	
@@ -248,7 +217,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return category; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -257,9 +225,6 @@ public class PreferencesPricingMethod extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private EstimatorTypes estimator;
 	
@@ -270,7 +235,6 @@ public class PreferencesPricingMethod extends ModelBase {
 		return estimator; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

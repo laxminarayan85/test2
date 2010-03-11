@@ -26,14 +26,14 @@ import org.hibernate.annotations.Type;
  * @!generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "AccessGroup.findall", query = "from AccessGroup"),
-	@NamedQuery(name = "AccessGroup.byId", query = "select a from AccessGroup a where a.id= :id")
+	@NamedQuery(name = "StockClass.findall", query = "from StockClass"),
+	@NamedQuery(name = "StockClass.byId", query = "select a from StockClass a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "accessgroup")
-public class AccessGroup extends ModelBase {
+@Table(name = "stockclass")
+public class StockClass extends ModelBase {
 	/**
 	 * @generated
 	 */
@@ -42,7 +42,7 @@ public class AccessGroup extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public AccessGroup() {
+	public StockClass() {
 		this.created = new Date();
 		this.modified = new Date();
 	}
@@ -103,7 +103,7 @@ public class AccessGroup extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return AccessGroup.class;
+		if (NAME.equals(propertyName)) return StockClass.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -114,7 +114,7 @@ public class AccessGroup extends ModelBase {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		AccessGroup objT = (AccessGroup)obj;
+		StockClass objT = (StockClass)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "InkCharge.findall", query = "from InkCharge"),
@@ -53,9 +53,6 @@ public class InkCharge extends Charge {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double coverage;
 	
@@ -66,7 +63,6 @@ public class InkCharge extends Charge {
 		return coverage; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -75,9 +71,6 @@ public class InkCharge extends Charge {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double inkWeight;
 	
@@ -88,7 +81,6 @@ public class InkCharge extends Charge {
 		return inkWeight; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "MatrixElement.findall", query = "from MatrixElement"),
@@ -129,9 +129,6 @@ public class MatrixElement extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer qty;
 	
@@ -142,7 +139,6 @@ public class MatrixElement extends ModelBase {
 		return qty; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -151,9 +147,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price1;
 	
@@ -164,7 +157,6 @@ public class MatrixElement extends ModelBase {
 		return price1; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -173,9 +165,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price12;
 	
@@ -186,7 +175,6 @@ public class MatrixElement extends ModelBase {
 		return price12; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -195,9 +183,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price2;
 	
@@ -208,7 +193,6 @@ public class MatrixElement extends ModelBase {
 		return price2; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -217,9 +201,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price13;
 	
@@ -230,7 +211,6 @@ public class MatrixElement extends ModelBase {
 		return price13; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -239,9 +219,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price3;
 	
@@ -252,7 +229,6 @@ public class MatrixElement extends ModelBase {
 		return price3; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -261,9 +237,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price14;
 	
@@ -274,7 +247,6 @@ public class MatrixElement extends ModelBase {
 		return price14; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -283,9 +255,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price4;
 	
@@ -296,7 +265,6 @@ public class MatrixElement extends ModelBase {
 		return price4; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -305,9 +273,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price15;
 	
@@ -318,7 +283,6 @@ public class MatrixElement extends ModelBase {
 		return price15; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -327,9 +291,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price5;
 	
@@ -340,7 +301,6 @@ public class MatrixElement extends ModelBase {
 		return price5; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -349,9 +309,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price16;
 	
@@ -362,7 +319,6 @@ public class MatrixElement extends ModelBase {
 		return price16; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -371,9 +327,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price6;
 	
@@ -384,7 +337,6 @@ public class MatrixElement extends ModelBase {
 		return price6; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -393,9 +345,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price17;
 	
@@ -406,7 +355,6 @@ public class MatrixElement extends ModelBase {
 		return price17; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -415,9 +363,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price7;
 	
@@ -428,7 +373,6 @@ public class MatrixElement extends ModelBase {
 		return price7; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -437,9 +381,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price18;
 	
@@ -450,7 +391,6 @@ public class MatrixElement extends ModelBase {
 		return price18; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -459,9 +399,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price8;
 	
@@ -472,7 +409,6 @@ public class MatrixElement extends ModelBase {
 		return price8; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -481,9 +417,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price19;
 	
@@ -494,7 +427,6 @@ public class MatrixElement extends ModelBase {
 		return price19; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -503,9 +435,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price9;
 	
@@ -516,7 +445,6 @@ public class MatrixElement extends ModelBase {
 		return price9; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -525,9 +453,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price20;
 	
@@ -538,7 +463,6 @@ public class MatrixElement extends ModelBase {
 		return price20; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -547,9 +471,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price10;
 	
@@ -560,7 +481,6 @@ public class MatrixElement extends ModelBase {
 		return price10; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -569,9 +489,6 @@ public class MatrixElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double price11;
 	
@@ -582,7 +499,6 @@ public class MatrixElement extends ModelBase {
 		return price11; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

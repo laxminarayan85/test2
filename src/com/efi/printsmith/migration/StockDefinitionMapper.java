@@ -11,6 +11,7 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.StockFinish;
 import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.StockGroup;
+import com.efi.printsmith.data.StockClass;
 import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
@@ -35,7 +36,17 @@ public class StockDefinitionMapper extends ImportMapper {
 			} else if ("group".equals(currentFieldToken)) {
 				
 			}  else if ("class".equals(currentFieldToken)) {
-				stockDefinition.setStkclass(currentImportToken);
+				if (currentImportToken != "")
+				{
+					StockClass stockClass = dataService.getByStockClassName(currentImportToken);
+					if (stockClass == null)
+					{
+						stockClass = new StockClass();
+						stockClass.setName(currentImportToken);
+					}
+					stockDefinition.setStkclass(stockClass);
+				}
+				
 			}  else if ("name".equals(currentFieldToken)) {
 				stockDefinition.setName(currentImportToken);
 			}  else if ("color".equals(currentFieldToken)) {
@@ -67,7 +78,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("id".equals(currentFieldToken)) {
 				stockDefinition.setStockId(currentImportToken);
 			}  else if ("unit".equals(currentFieldToken)) {
-				stockDefinition.setUom(currentImportToken);
+				/* TODO*/
 			}  else if ("parent size".equals(currentFieldToken)) {
 				stockDefinition.setParentsize(currentImportToken);
 			}  else if ("run size".equals(currentFieldToken)) {
@@ -324,7 +335,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("mWeight".equals(currentFieldToken)) {
 				stockDefinition.setMweight(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("caliper".equals(currentFieldToken)) {
-				
+				stockDefinition.setThickness(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("lot count".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("carton count".equals(currentFieldToken)) {
@@ -402,11 +413,24 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("measure".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("thickness type".equals(currentFieldToken)) {
-				stockDefinition.setThickness(Utilities.tokenToInt(currentImportToken));
+				if (currentImportToken.equals("0") == true)
+					stockDefinition.setUom("Caliper");
+				if (currentImportToken.equals("1") == true)
+					stockDefinition.setUom("Microns");
+				if (currentImportToken.equals("2") == true)
+					stockDefinition.setUom("Points");
+				if (currentImportToken.equals("3") == true)
+					stockDefinition.setUom("Mils");
+				if (currentImportToken.equals("4") == true)
+					stockDefinition.setUom("Thous");
+				if (currentImportToken.equals("5") == true)
+					stockDefinition.setUom("Plies");
+				if (currentImportToken.equals("6") == true)
+					stockDefinition.setUom("Millimeters");
 			}  else if ("markup flags".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("forest managment ID".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("coc expand 1".equals(currentFieldToken)) {
@@ -533,6 +557,9 @@ public class StockDefinitionMapper extends ImportMapper {
 			else if ("on hand".equals(currentFieldToken)) {
 				stockDefinition.setOnHand(Utilities.tokenToInt(currentImportToken));
 			}
+			else if ("committed".equals(currentFieldToken)) {
+				stockDefinition.setCommitted(Utilities.tokenToInt(currentImportToken));
+			}
 			else if ("target level".equals(currentFieldToken)) {
 				stockDefinition.setTargetLevel(Utilities.tokenToInt(currentImportToken));
 			}
@@ -552,7 +579,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			else if ("bin location".equals(currentFieldToken)) {
 				stockDefinition.setBinLocation(currentImportToken);
 			}
-			else if ("inhouse".equals(currentFieldToken)) {
+			else if ("inHouse".equals(currentFieldToken)) {
 				stockDefinition.setStandardItem(Utilities.tokenToBooleanValue(currentImportToken));
 			}
 			else if ("inventoryminNotEven".equals(currentFieldToken)) {
@@ -560,6 +587,8 @@ public class StockDefinitionMapper extends ImportMapper {
 			}
 			
 		}
+		stockDefinition.setAvailable(stockDefinition.getOnHand() - stockDefinition.getCommitted())  ;
+		
 		return stockDefinition;
 	}
 }

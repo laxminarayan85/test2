@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "StockColors.findall", query = "from StockColors"),
@@ -49,9 +49,6 @@ public class StockColors extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -62,7 +59,6 @@ public class StockColors extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

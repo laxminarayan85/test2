@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SizeMetricMM.findall", query = "from SizeMetricMM"),
@@ -53,9 +53,6 @@ public class SizeMetricMM extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -66,7 +63,6 @@ public class SizeMetricMM extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -75,9 +71,6 @@ public class SizeMetricMM extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String size;
 	
@@ -88,7 +81,6 @@ public class SizeMetricMM extends ModelBase {
 		return size; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

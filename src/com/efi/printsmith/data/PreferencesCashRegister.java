@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesCashRegister.findall", query = "from PreferencesCashRegister"),
@@ -69,9 +69,6 @@ public class PreferencesCashRegister extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean tax;
 	
@@ -82,7 +79,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return tax; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -91,9 +87,6 @@ public class PreferencesCashRegister extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String title;
 	
@@ -104,7 +97,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return title; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -113,9 +105,6 @@ public class PreferencesCashRegister extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory category;
 	
@@ -126,7 +115,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return category; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -135,9 +123,6 @@ public class PreferencesCashRegister extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double rate;
 	
@@ -148,7 +133,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return rate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -157,9 +141,6 @@ public class PreferencesCashRegister extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	
@@ -170,7 +151,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return taxTable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -179,9 +159,6 @@ public class PreferencesCashRegister extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxCodes taxCodes;
 	
@@ -192,7 +169,6 @@ public class PreferencesCashRegister extends ModelBase {
 		return taxCodes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

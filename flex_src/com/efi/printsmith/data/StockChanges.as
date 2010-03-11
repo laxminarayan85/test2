@@ -14,8 +14,8 @@ package com.efi.printsmith.data
 		}
 				
 		public var stockChangeID:Number = 0;
-		public var user:String = "";
-		public var date:Date = new Date();
+		public var pSUser:String = "";
+		public var stockChangeDate:Date = new Date();
 		public var howChanged:String = "";
 		public var quantity:int = 0;
 		public var reference:String = "";

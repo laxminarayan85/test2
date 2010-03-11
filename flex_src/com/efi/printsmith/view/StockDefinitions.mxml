@@ -118,6 +118,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGroupResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="stockClassDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockClass(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockClassResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="vendorDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadVendor(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveVendorResult(event)"/>
@@ -163,6 +167,7 @@
 	import com.efi.printsmith.data.StockGrade;
 	import com.efi.printsmith.data.StockColors;
 	import com.efi.printsmith.data.GenericColors;
+	import com.efi.printsmith.data.StockClass;
 	import com.efi.printsmith.data.StockFinish;
 	import com.efi.printsmith.data.StockForest;
 	import com.efi.printsmith.data.Vendor;
@@ -223,6 +228,8 @@
 
 	[Bindable]
     private var stockColor:ArrayCollection = new ArrayCollection();   
+    [Bindable]
+    private var stockClass:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
     private var stockGroup:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
@@ -258,6 +265,7 @@
 		loadStockDefinitions();
 		loadStockChanges();
 	    loadStockGroup();
+	    loadStockClass();
 	    loadStockVendor();
 	    loadStockGrade();
 	    loadStockColor();
@@ -407,6 +415,9 @@
 	public function loadStockGroup():void {   
 	    stockGroupDataService.getAll("StockGroup");
 	}
+	public function loadStockClass():void {   
+	    stockClassDataService.getAll("StockClass");
+	}
 
 	public function loadStockColor():void {   
 	    stockColorDataService.getAll("StockColors");
@@ -536,8 +547,8 @@
 		var group:StockGroup;
 		var result:Boolean;
 		
-		if (cboStockGroup.typedText != null && cboStockGroup.typedText != "" && cboStockGroup.selectedIndex == -1) {
-			var item:int = findItem(cboStockGroup.typedText, stockGroup);
+		if (cboStockGroup.text != null && cboStockGroup.text != "" && cboStockGroup.selectedIndex == -1) {
+			var item:int = findItem(cboStockGroup.text, stockGroup);
 			if (item == -1) {
 				group = new StockGroup();
 				group.name = cboStockGroup.text;
@@ -546,6 +557,23 @@
 			}
 			else {
 				cboStockGroup.selectedItem = item;
+			}
+		}
+	}
+	private function doStockClass() : void {
+		var stockclass:StockClass;
+		var result:Boolean;
+		
+		if (cbostockClass.text != null && cbostockClass.text != "" && cbostockClass.selectedIndex == -1) {
+			var item:int = findItem(cbostockClass.text, stockClass);
+			if (item == -1) {
+				stockclass = new StockClass();
+				stockclass.name = cbostockClass.text;
+				stockClassDataService.addUpdate(stockclass);
+				stockDefinitions.stkclass = stockclass;
+			}
+			else {
+				cbostockClass.selectedItem = item;
 			}
 		}
 	}
@@ -697,6 +725,9 @@
 	private function handleSaveStockGroupResult(ev:ResultEvent):void {
     	loadStockGroup();
 	}
+	private function handleSaveStockClassResult(ev:ResultEvent):void {
+    	loadStockClass();
+	}
 	private function handleSaveStockColorResult(ev:ResultEvent):void {
     	loadStockColor();
 	}
@@ -744,6 +775,9 @@
 	
 	private function handleLoadStockGroup(ev:ResultEvent):void {
 		 stockGroup = ev.result as ArrayCollection;
+	}
+	private function handleLoadStockClass(ev:ResultEvent):void {
+		stockClass = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadVendor(ev:ResultEvent):void {
@@ -836,6 +870,8 @@
 
 		if (stockDefinitions.stkgroup != null)
 			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
+		if (stockDefinitions.stkclass != null)
+			cbostockClass.selectedIndex = findItem(stockDefinitions.stkclass.name,stockClass);
 
 		if (stockDefinitions.color != null) 
 			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
@@ -875,6 +911,7 @@
 			chksfiCertified.selected = stockDefinitions.sfiCertified
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
 			this.charges = stockDefinitions.charges;
+			standardItemCheckEvent();
 	}
 
 	private function mapStockDefinitionData():void {
@@ -889,6 +926,10 @@
 
 	 if (cboStockGroup != null && cboStockGroup.selectedItem != null) 
 	 	stockDefinitions.stkgroup = cboStockGroup.selectedItem as StockGroup;
+	 	
+	  if (cbostockClass != null && cbostockClass.selectedItem != null) 
+	 	stockDefinitions.stkclass = cbostockClass.selectedItem as StockClass;
+
 
 	 if (cboFinish != null && cboFinish.selectedItem != null) 
 	 	stockDefinitions.finish = cboFinish.selectedItem as StockFinish;
@@ -921,14 +962,14 @@
 	 
 	 
 	 //text and textboxes
-	 stockDefinitions.stkclass = stockClass.text;
+	
 	 stockDefinitions.name = stockName.text;
 	 stockDefinitions.weight = parseInt(weight.text);
 	 stockDefinitions.coated = coated.text;
 	 stockDefinitions.stocknumber = stockNumber.text;
 	 stockDefinitions.basicsize = Basicsize.text;
 	 stockDefinitions.parentsize = parentSize.text;
-	 stockDefinitions.thickness = parseInt(thickNess.text);
+	 stockDefinitions.thickness = parseFloat(thickNess.text);
 	 stockDefinitions.mweight = parseInt(mWeight.text);
 	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text);
 	 stockDefinitions.minorder = parseInt(minOrder.text);
@@ -949,12 +990,12 @@
 	 stockDefinitions.cost4 = parseFloat(Cost4.text);
 	 stockDefinitions.cost5 = parseFloat(Cost5.text);
 	 stockDefinitions.cost6 = parseFloat(Cost6.text);
-	 stockDefinitions.cwt1 = parseInt(Cwt1.text);
-	 stockDefinitions.cwt2 = parseInt(Cwt2.text);
-	 stockDefinitions.cwt3 = parseInt(Cwt3.text);
-	 stockDefinitions.cwt4 = parseInt(Cwt4.text);
-	 stockDefinitions.cwt5 = parseInt(Cwt5.text);
-	 stockDefinitions.cwt6 = parseInt(Cwt6.text);
+	 stockDefinitions.cwt1 = parseFloat(Cwt1.text);
+	 stockDefinitions.cwt2 = parseFloat(Cwt2.text);
+	 stockDefinitions.cwt3 = parseFloat(Cwt3.text);
+	 stockDefinitions.cwt4 = parseFloat(Cwt4.text);
+	 stockDefinitions.cwt5 = parseFloat(Cwt5.text);
+	 stockDefinitions.cwt6 = parseFloat(Cwt6.text);
 	 stockDefinitions.markup1 = parseFloat(Markup1.text);
 	 stockDefinitions.markup2 = parseFloat(Markup2.text);
 	 stockDefinitions.markup3 = parseFloat(Markup3.text);
@@ -1075,6 +1116,9 @@
 		}
 		
 	}
+	private function UpdateAvailable():void {
+		stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
+	}
 
 ]]>
                              
@@ -1084,8 +1128,8 @@
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="250" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="86" textAlign="right"/>
-	<fc:AutoComplete id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" lookAhead="true" width="116"/>
-	<mx:TextInput x="344" y="61" width="105" id="stockClass" text="{stockDefinitions.stkclass}"/>
+	<mx:ComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
+	<mx:ComboBox x="344" y="61" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()"/>
 	<mx:CheckBox x="457" y="62" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="116"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
@@ -1282,8 +1326,8 @@
 				<mx:Button x="341" y="148" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AssignCustomerAccoun')}" enabled="false" id="btnAssignCustomerAccount" click="doAccount();"/>
 				<mx:CheckBox x="429" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Evenincrementslikere')}" enabled="false" id="chkEvenIncrements" width="203"/>
 
-				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false"/>
-				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false"/>
+				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false" focusOut="UpdateAvailable();"/>
+				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false" focusOut="UpdateAvailable();"/>
 				<mx:TextInput x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22" enabled="false"/>
 				<mx:TextInput x="337" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false"/>
 				<mx:TextInput x="337" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false"/>

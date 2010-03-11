@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Broker.findall", query = "from Broker"),
@@ -49,9 +49,6 @@ public class Broker extends Party {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String brokerId;
 	
@@ -62,7 +59,6 @@ public class Broker extends Party {
 		return brokerId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesSystem.findall", query = "from PreferencesSystem"),
@@ -277,9 +277,6 @@ public class PreferencesSystem extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean eliminateWarningMessages;
 	
@@ -290,7 +287,6 @@ public class PreferencesSystem extends ModelBase {
 		return eliminateWarningMessages; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -299,9 +295,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean onlyPostMarkedReadyInvoices;
 	
@@ -312,7 +305,6 @@ public class PreferencesSystem extends ModelBase {
 		return onlyPostMarkedReadyInvoices; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -321,9 +313,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean enablePricingSystem;
 	
@@ -334,7 +323,6 @@ public class PreferencesSystem extends ModelBase {
 		return enablePricingSystem; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -343,9 +331,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean activateUserEventLogging;
 	
@@ -356,7 +341,6 @@ public class PreferencesSystem extends ModelBase {
 		return activateUserEventLogging; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -365,9 +349,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean enableAutoLogOut;
 	
@@ -378,7 +359,6 @@ public class PreferencesSystem extends ModelBase {
 		return enableAutoLogOut; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -387,9 +367,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean secondsOfInactivity;
 	
@@ -400,7 +377,6 @@ public class PreferencesSystem extends ModelBase {
 		return secondsOfInactivity; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -409,9 +385,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer autoLogOutSeconds;
 	
@@ -422,7 +395,6 @@ public class PreferencesSystem extends ModelBase {
 		return autoLogOutSeconds; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -431,9 +403,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean triggerAfterPosting;
 	
@@ -444,7 +413,6 @@ public class PreferencesSystem extends ModelBase {
 		return triggerAfterPosting; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -453,9 +421,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean showInvoicesWithToday;
 	
@@ -466,7 +431,6 @@ public class PreferencesSystem extends ModelBase {
 		return showInvoicesWithToday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -475,9 +439,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean lineItemTaxes;
 	
@@ -488,7 +449,6 @@ public class PreferencesSystem extends ModelBase {
 		return lineItemTaxes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -497,9 +457,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean automaticQuit;
 	
@@ -510,7 +467,6 @@ public class PreferencesSystem extends ModelBase {
 		return automaticQuit; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -519,9 +475,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String quitTime;
 	
@@ -532,7 +485,6 @@ public class PreferencesSystem extends ModelBase {
 		return quitTime; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -541,9 +493,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String shutdownMessage;
 	
@@ -554,7 +503,6 @@ public class PreferencesSystem extends ModelBase {
 		return shutdownMessage; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -563,9 +511,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address companyAddress;
 	
@@ -576,7 +521,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyAddress; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -585,9 +529,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyPhone;
 	
@@ -598,7 +539,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyPhone; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -607,9 +547,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyFax;
 	
@@ -620,7 +557,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyFax; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -629,9 +565,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyEmail;
 	
@@ -642,7 +575,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyEmail; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -651,9 +583,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyOther1;
 	
@@ -664,7 +593,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyOther1; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -673,9 +601,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyOther2;
 	
@@ -686,7 +611,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyOther2; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -695,9 +619,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyIdLabel;
 	
@@ -708,7 +629,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyIdLabel; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -717,9 +637,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyId;
 	
@@ -730,7 +647,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -739,9 +655,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyStoreNumber;
 	
@@ -752,7 +665,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyStoreNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -761,9 +673,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String companyStoreLocationRef;
 	
@@ -774,7 +683,6 @@ public class PreferencesSystem extends ModelBase {
 		return companyStoreLocationRef; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -783,9 +691,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String fiscalYearStartMonth;
 	
@@ -796,7 +701,6 @@ public class PreferencesSystem extends ModelBase {
 		return fiscalYearStartMonth; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -805,9 +709,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workSunday;
 	
@@ -818,7 +719,6 @@ public class PreferencesSystem extends ModelBase {
 		return workSunday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -827,9 +727,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workMonday;
 	
@@ -840,7 +737,6 @@ public class PreferencesSystem extends ModelBase {
 		return workMonday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -849,9 +745,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workTuesday;
 	
@@ -862,7 +755,6 @@ public class PreferencesSystem extends ModelBase {
 		return workTuesday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -871,9 +763,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workWednesday;
 	
@@ -884,7 +773,6 @@ public class PreferencesSystem extends ModelBase {
 		return workWednesday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -893,9 +781,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workThursday;
 	
@@ -906,7 +791,6 @@ public class PreferencesSystem extends ModelBase {
 		return workThursday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -915,9 +799,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workFriday;
 	
@@ -928,7 +809,6 @@ public class PreferencesSystem extends ModelBase {
 		return workFriday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -937,9 +817,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean workSaturday;
 	
@@ -950,7 +827,6 @@ public class PreferencesSystem extends ModelBase {
 		return workSaturday; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -959,9 +835,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer workFirstDayOfWeek;
 	
@@ -972,7 +845,6 @@ public class PreferencesSystem extends ModelBase {
 		return workFirstDayOfWeek; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -981,9 +853,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean futureDatesExcludeClosed;
 	
@@ -994,7 +863,6 @@ public class PreferencesSystem extends ModelBase {
 		return futureDatesExcludeClosed; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1003,9 +871,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersIntegers;
 	
@@ -1016,7 +881,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersIntegers; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1025,9 +889,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersPercentages;
 	
@@ -1038,7 +899,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersPercentages; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1047,9 +907,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersAmount;
 	
@@ -1060,7 +917,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersAmount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1069,9 +925,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersTaxRate;
 	
@@ -1082,7 +935,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersTaxRate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1091,9 +943,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersRate;
 	
@@ -1104,7 +953,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersRate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1113,9 +961,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersFactor;
 	
@@ -1126,7 +971,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersFactor; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1135,9 +979,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersInvoice;
 	
@@ -1148,7 +989,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersInvoice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1157,9 +997,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String numbersShortPercent;
 	
@@ -1170,7 +1007,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersShortPercent; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1179,9 +1015,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer numbersRoundto;
 	
@@ -1192,7 +1025,6 @@ public class PreferencesSystem extends ModelBase {
 		return numbersRoundto; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1201,9 +1033,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean alwaysRoundDown;
 	
@@ -1214,7 +1043,6 @@ public class PreferencesSystem extends ModelBase {
 		return alwaysRoundDown; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1223,9 +1051,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean roundTaxUp;
 	
@@ -1236,7 +1061,6 @@ public class PreferencesSystem extends ModelBase {
 		return roundTaxUp; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1245,9 +1069,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean useAlternateCurrency;
 	
@@ -1258,7 +1079,6 @@ public class PreferencesSystem extends ModelBase {
 		return useAlternateCurrency; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1267,9 +1087,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String displayFormat;
 	
@@ -1280,7 +1097,6 @@ public class PreferencesSystem extends ModelBase {
 		return displayFormat; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1289,9 +1105,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double conversionFactor;
 	
@@ -1302,7 +1115,6 @@ public class PreferencesSystem extends ModelBase {
 		return conversionFactor; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1311,9 +1123,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer alternateRoundto;
 	
@@ -1324,7 +1133,6 @@ public class PreferencesSystem extends ModelBase {
 		return alternateRoundto; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1333,9 +1141,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean alternateAlwaysRoundDown;
 	
@@ -1346,7 +1151,6 @@ public class PreferencesSystem extends ModelBase {
 		return alternateAlwaysRoundDown; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1355,9 +1159,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean disableTextStyles;
 	
@@ -1368,7 +1169,6 @@ public class PreferencesSystem extends ModelBase {
 		return disableTextStyles; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1377,9 +1177,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean austrailianInvoiceRounding;
 	
@@ -1390,7 +1187,6 @@ public class PreferencesSystem extends ModelBase {
 		return austrailianInvoiceRounding; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1399,9 +1195,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean disableNonTaxableOptions;
 	
@@ -1412,7 +1205,6 @@ public class PreferencesSystem extends ModelBase {
 		return disableNonTaxableOptions; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1421,9 +1213,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String inkWeightSingular;
 	
@@ -1434,7 +1223,6 @@ public class PreferencesSystem extends ModelBase {
 		return inkWeightSingular; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1443,9 +1231,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String inkWeightPlural;
 	
@@ -1456,7 +1241,6 @@ public class PreferencesSystem extends ModelBase {
 		return inkWeightPlural; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1465,9 +1249,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String authorizeDecrypt;
 	
@@ -1478,7 +1259,6 @@ public class PreferencesSystem extends ModelBase {
 		return authorizeDecrypt; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1487,9 +1267,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String creditCardApproval;
 	
@@ -1500,7 +1277,6 @@ public class PreferencesSystem extends ModelBase {
 		return creditCardApproval; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1509,9 +1285,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String trackerDataCollection;
 	
@@ -1522,7 +1295,6 @@ public class PreferencesSystem extends ModelBase {
 		return trackerDataCollection; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1531,9 +1303,6 @@ public class PreferencesSystem extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer defaultCountry;
 	
@@ -1544,7 +1313,6 @@ public class PreferencesSystem extends ModelBase {
 		return defaultCountry; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

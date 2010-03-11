@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Users.findall", query = "from Users"),
@@ -97,9 +97,6 @@ public class Users extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -110,7 +107,6 @@ public class Users extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -119,9 +115,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String password;
 	
@@ -132,7 +125,6 @@ public class Users extends ModelBase {
 		return password; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -141,9 +133,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean forcePasswordChange;
 	
@@ -154,7 +143,6 @@ public class Users extends ModelBase {
 		return forcePasswordChange; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -163,9 +151,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean robustPassword;
 	
@@ -176,7 +161,6 @@ public class Users extends ModelBase {
 		return robustPassword; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -185,9 +169,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean noOverride;
 	
@@ -198,7 +179,6 @@ public class Users extends ModelBase {
 		return noOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -207,9 +187,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean overrideCredit;
 	
@@ -220,7 +197,6 @@ public class Users extends ModelBase {
 		return overrideCredit; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -229,9 +205,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean lockSalesRep;
 	
@@ -242,7 +215,6 @@ public class Users extends ModelBase {
 		return lockSalesRep; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -251,9 +223,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean refundCreditCards;
 	
@@ -264,7 +233,6 @@ public class Users extends ModelBase {
 		return refundCreditCards; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -273,9 +241,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean noCashReturn;
 	
@@ -286,7 +251,6 @@ public class Users extends ModelBase {
 		return noCashReturn; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -295,9 +259,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean showUserNameLog;
 	
@@ -308,7 +269,6 @@ public class Users extends ModelBase {
 		return showUserNameLog; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -317,9 +277,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean quickAccess;
 	
@@ -330,7 +287,6 @@ public class Users extends ModelBase {
 		return quickAccess; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -339,9 +295,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessLevel accessLevel;
 	
@@ -352,7 +305,6 @@ public class Users extends ModelBase {
 		return accessLevel; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -361,9 +313,6 @@ public class Users extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessGroup accessGroup;
 	
@@ -374,7 +323,6 @@ public class Users extends ModelBase {
 		return accessGroup; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ComLinkType.findall", query = "from ComLinkType"),
@@ -49,9 +49,6 @@ public class ComLinkType extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String type;
 	
@@ -62,7 +59,6 @@ public class ComLinkType extends ModelBase {
 		return type; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PriceListElement.findall", query = "from PriceListElement"),
@@ -61,9 +61,6 @@ public class PriceListElement extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long quantity;
 	
@@ -74,7 +71,6 @@ public class PriceListElement extends ModelBase {
 		return quantity; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -83,9 +79,6 @@ public class PriceListElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double amount;
 	
@@ -96,7 +89,6 @@ public class PriceListElement extends ModelBase {
 		return amount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -105,9 +97,6 @@ public class PriceListElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer side;
 	
@@ -118,7 +107,6 @@ public class PriceListElement extends ModelBase {
 		return side; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -127,9 +115,6 @@ public class PriceListElement extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer color;
 	
@@ -140,7 +125,6 @@ public class PriceListElement extends ModelBase {
 		return color; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

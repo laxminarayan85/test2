@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesPOS.findall", query = "from PreferencesPOS"),
@@ -141,9 +141,6 @@ public class PreferencesPOS extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String receiptHeader;
 	
@@ -154,7 +151,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptHeader; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -163,9 +159,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String receiptFooter;
 	
@@ -176,7 +169,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptFooter; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -185,9 +177,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean receiptStartNumber;
 	
@@ -198,7 +187,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptStartNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -207,9 +195,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer startingNumber;
 	
@@ -220,7 +205,6 @@ public class PreferencesPOS extends ModelBase {
 		return startingNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -229,9 +213,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean hideTaxLines;
 	
@@ -242,7 +223,6 @@ public class PreferencesPOS extends ModelBase {
 		return hideTaxLines; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -251,9 +231,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String receiptPrinterStatus;
 	
@@ -264,7 +241,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptPrinterStatus; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -273,9 +249,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String defaultPrinter;
 	
@@ -286,7 +259,6 @@ public class PreferencesPOS extends ModelBase {
 		return defaultPrinter; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -295,9 +267,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean enableCashDrawer;
 	
@@ -308,7 +277,6 @@ public class PreferencesPOS extends ModelBase {
 		return enableCashDrawer; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -317,9 +285,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean useMasterDrawer;
 	
@@ -330,7 +295,6 @@ public class PreferencesPOS extends ModelBase {
 		return useMasterDrawer; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -339,9 +303,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean printReceipts;
 	
@@ -352,7 +313,6 @@ public class PreferencesPOS extends ModelBase {
 		return printReceipts; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -361,9 +321,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean print2forCreditCards;
 	
@@ -374,7 +331,6 @@ public class PreferencesPOS extends ModelBase {
 		return print2forCreditCards; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -383,9 +339,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean print2forCash;
 	
@@ -396,7 +349,6 @@ public class PreferencesPOS extends ModelBase {
 		return print2forCash; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -405,9 +357,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean keepLocalSettings;
 	
@@ -418,7 +367,6 @@ public class PreferencesPOS extends ModelBase {
 		return keepLocalSettings; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -427,9 +375,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean printInvoices;
 	
@@ -440,7 +385,6 @@ public class PreferencesPOS extends ModelBase {
 		return printInvoices; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -449,9 +393,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean lockSettings;
 	
@@ -462,7 +403,6 @@ public class PreferencesPOS extends ModelBase {
 		return lockSettings; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -471,9 +411,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer asciiCodeOpenDrawer;
 	
@@ -484,7 +421,6 @@ public class PreferencesPOS extends ModelBase {
 		return asciiCodeOpenDrawer; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -493,9 +429,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer blankLinesBeforeReceipt;
 	
@@ -506,7 +439,6 @@ public class PreferencesPOS extends ModelBase {
 		return blankLinesBeforeReceipt; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -515,9 +447,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer blankLinesAfterReceipt;
 	
@@ -528,7 +457,6 @@ public class PreferencesPOS extends ModelBase {
 		return blankLinesAfterReceipt; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -537,9 +465,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String receiptStartCode;
 	
@@ -550,7 +475,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptStartCode; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -559,9 +483,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String receiptEndCode;
 	
@@ -572,7 +493,6 @@ public class PreferencesPOS extends ModelBase {
 		return receiptEndCode; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -581,9 +501,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String baudRate;
 	
@@ -594,7 +511,6 @@ public class PreferencesPOS extends ModelBase {
 		return baudRate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -603,9 +519,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String stopBits;
 	
@@ -616,7 +529,6 @@ public class PreferencesPOS extends ModelBase {
 		return stopBits; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -625,9 +537,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String parity;
 	
@@ -638,7 +547,6 @@ public class PreferencesPOS extends ModelBase {
 		return parity; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -647,9 +555,6 @@ public class PreferencesPOS extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String dataSize;
 	
@@ -660,7 +565,6 @@ public class PreferencesPOS extends ModelBase {
 		return dataSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

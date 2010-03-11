@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PriceLogEntry.findall", query = "from PriceLogEntry"),
@@ -69,9 +69,6 @@ public class PriceLogEntry extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer version;
 	
@@ -82,7 +79,6 @@ public class PriceLogEntry extends ModelBase {
 		return version; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -91,9 +87,6 @@ public class PriceLogEntry extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String description;
 	
@@ -104,7 +97,6 @@ public class PriceLogEntry extends ModelBase {
 		return description; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -113,9 +105,6 @@ public class PriceLogEntry extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String method;
 	
@@ -126,7 +115,6 @@ public class PriceLogEntry extends ModelBase {
 		return method; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -135,9 +123,6 @@ public class PriceLogEntry extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double value;
 	
@@ -148,7 +133,6 @@ public class PriceLogEntry extends ModelBase {
 		return value; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -157,9 +141,6 @@ public class PriceLogEntry extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date date;
 	
@@ -170,7 +151,6 @@ public class PriceLogEntry extends ModelBase {
 		return date; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -179,9 +159,6 @@ public class PriceLogEntry extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pricelogentry_children")
 	private java.util.List<PriceLogEntry> children;
@@ -193,16 +170,12 @@ public class PriceLogEntry extends ModelBase {
 		return children; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addChildren(PriceLogEntry obj) {
 		if (children == null) {
 			children = new java.util.ArrayList<PriceLogEntry>();
 		}
 		children.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	

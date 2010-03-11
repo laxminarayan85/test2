@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ChargeCommand.findall", query = "from ChargeCommand"),
@@ -53,9 +53,6 @@ public class ChargeCommand extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "chargecommand_children")
 	private java.util.List<ChargeCategory> children;
@@ -67,9 +64,6 @@ public class ChargeCommand extends ModelBase {
 		return children; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addChildren(ChargeCategory obj) {
 		obj.setParent(this);
 		if (children == null) {
@@ -77,7 +71,6 @@ public class ChargeCommand extends ModelBase {
 		}
 		children.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -86,9 +79,6 @@ public class ChargeCommand extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -99,7 +89,6 @@ public class ChargeCommand extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CustomerLog.findall", query = "from CustomerLog"),
@@ -49,9 +49,6 @@ public class CustomerLog extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String logEntry;
 	
@@ -62,7 +59,6 @@ public class CustomerLog extends ModelBase {
 		return logEntry; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

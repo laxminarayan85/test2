@@ -238,6 +238,20 @@ public class DataService {
 		}
 		return null;
 	}
+	public StockClass getByStockClassName(String name) throws Exception {
+		try {
+			log.debug("** getBySockClassName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockClass where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockClass object = (StockClass) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	
 	public StockFinish getByStockFinishName(String name) throws Exception {
 		try {

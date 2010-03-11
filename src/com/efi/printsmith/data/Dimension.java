@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Dimension.findall", query = "from Dimension"),
@@ -61,9 +61,6 @@ public class Dimension extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String type;
 	
@@ -74,7 +71,6 @@ public class Dimension extends ModelBase {
 		return type; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -83,9 +79,6 @@ public class Dimension extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -96,7 +89,6 @@ public class Dimension extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -105,9 +97,6 @@ public class Dimension extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Float width;
 	
@@ -118,7 +107,6 @@ public class Dimension extends ModelBase {
 		return width; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -127,9 +115,6 @@ public class Dimension extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Float height;
 	
@@ -140,7 +125,6 @@ public class Dimension extends ModelBase {
 		return height; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
