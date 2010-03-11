@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.StockClass;
 import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 
@@ -31,27 +33,36 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("heads".equals(currentFieldToken)) {
 				pressDefinition.setNumberHeads(Utilities.tokenToLong(currentImportToken));
 			} else if ("sales cat".equals(currentFieldToken)) {
-				/* TODO */
+//				if (currentImportToken != "")
+//				{
+//					SalesCategory salecat = dataService.getBySalesCategoryName(currentImportToken);
+//					if (salecat == null)
+//					{
+//						salecat = new SalesCategory();
+//						salecat.setName(currentImportToken);
+//					}
+//					pressDefinition.setSalesCat(salecat);
+//				}
 			} else if ("setup time".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setSetupMin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("addl head".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setSetupAddHead(Utilities.tokenToLong(currentImportToken));
 			} else if ("addl run".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setSetupAddRun(Utilities.tokenToLong(currentImportToken));
 			} else if ("press speed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("fixed spoilage".equals(currentFieldToken)) {
-				pressDefinition.setFixedWaste((double)Utilities.tokenMillisecondToMinutes(currentImportToken));
+				pressDefinition.setFixedWaste(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor rate".equals(currentFieldToken)) {
 				pressDefinition.setLaborRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor markup".equals(currentFieldToken)) {
 				pressDefinition.setLaborMarkup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minimum time".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setMinLabor(Utilities.tokenToDouble(currentImportToken));
 			} else if ("plate charge".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("wash rate".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setWashupFee(Utilities.tokenToDouble(currentImportToken));
 			} else if ("maxX".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("max stock size".equals(currentFieldToken)) {
@@ -173,17 +184,17 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("exp8".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("addl setup 1".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setWorkTurnSetup(Utilities.tokenToDouble(currentImportToken));
 			} else if ("addl setup 2".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("addl sigs".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setSetupAddSig(Utilities.tokenToLong(currentImportToken));
 			} else if ("addl sigs per head".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setAddSigAddHead(Utilities.tokenToLong(currentImportToken));
 			} else if ("sequence".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("gripper edge".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setGripEdge(Utilities.tokenToDouble(currentImportToken));
 			} else if ("production location ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production location".equals(currentFieldToken)) {
@@ -197,7 +208,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("machine name".equals(currentFieldToken)) {
 				pressDefinition.setMachineName(currentImportToken);
 			} else if ("wash minutes".equals(currentFieldToken)) {
-				pressDefinition.setWashupMin(Utilities.tokenMillisecondToMinutes(currentImportToken));
+				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));
 			} else if ("wash fountain".equals(currentFieldToken)) {
 				pressDefinition.setWashupPerFountain(Utilities.tokenToDouble(currentImportToken));
 			} else if ("minX".equals(currentFieldToken)) {
@@ -207,7 +218,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("rollFedCutoffLength".equals(currentFieldToken)) {
 				pressDefinition.setCutoffLength(Utilities.tokenToDouble(currentImportToken));
 			} else if ("defaultSheetFed".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setSheetFed(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("digital integration".equals(currentFieldToken)) {
 				pressDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("time in seconds".equals(currentFieldToken)) {
@@ -215,7 +226,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("perfector".equals(currentFieldToken)) {
 				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("defaultRollFed".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setRollFed(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("TargetPriceTableVersion".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("TPT_interpolate".equals(currentFieldToken)) {

@@ -779,20 +779,20 @@ public class CopierDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String salesCat;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private SalesCategory salesCat;
 	
 	/**
 	 * @generated
  	 */
-	public String getSalesCat(){
+	public SalesCategory getSalesCat(){
 		return salesCat; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setSalesCat(String newVal) {
+	public void setSalesCat(SalesCategory newVal) {
 		this.salesCat = newVal;
 	}
  	
@@ -1313,7 +1313,7 @@ public class CopierDefinition extends ModelBase {
 		if (MONTHLYMAINTENANCE.equals(propertyName)) setMonthlyMaintenance((Double)newValue); else
 		if (MACHINECOSTPERCOPY.equals(propertyName)) setMachineCostPerCopy((Double)newValue); else
 		if (METHOD.equals(propertyName)) setMethod((String)newValue); else
-		if (SALESCAT.equals(propertyName)) setSalesCat((String)newValue); else
+		if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
 		if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
 		if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Double)newValue); else
 		if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
@@ -1405,7 +1405,7 @@ public class CopierDefinition extends ModelBase {
 		if (METHOD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SALESCAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {SalesCategory.class};		
 		if (COPYID.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (MONTHLYBURDENRATE.equals(propertyName)) 

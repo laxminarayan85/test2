@@ -42,7 +42,7 @@ package com.efi.printsmith.data
 		public var monthlyMaintenance:Number = 0;
 		public var machineCostPerCopy:Number = 0;
 		public var method:String = "";
-		public var salesCat:String = "";
+		public var salesCat:SalesCategory;
 		public var copyID:int = 0;
 		public var monthlyBurdenRate:Number = 0;
 		public var copyMinutes:Number = 0;

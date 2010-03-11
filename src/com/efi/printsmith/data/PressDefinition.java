@@ -914,20 +914,20 @@ public class PressDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String salesCat;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private SalesCategory salesCat;
 	
 	/**
 	 * @generated
  	 */
-	public String getSalesCat(){
+	public SalesCategory getSalesCat(){
 		return salesCat; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setSalesCat(String newVal) {
+	public void setSalesCat(SalesCategory newVal) {
 		this.salesCat = newVal;
 	}
 	/**
@@ -1024,7 +1024,7 @@ public class PressDefinition extends ModelBase {
 		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
 		if (MAXROLLWIDTH.equals(propertyName)) setMaxRollWidth((String)newValue); else
 		if (MINROLLWIDTH.equals(propertyName)) setMinRollWidth((String)newValue); else
-		if (SALESCAT.equals(propertyName)) setSalesCat((String)newValue); else
+		if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1113,7 +1113,7 @@ public class PressDefinition extends ModelBase {
 		if (MINROLLWIDTH.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SALESCAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {SalesCategory.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

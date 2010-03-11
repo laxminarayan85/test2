@@ -33,6 +33,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.SalesCategory;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.data.SpeedTable;
 	import com.efi.printsmith.data.PressDefinition;
@@ -187,7 +188,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
-		charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat, salesCategories);
+		charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
 		this.charges = pressDefinition.charges;
 		updateControlState();
 	//	doPressType();
@@ -225,7 +226,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 pressDefinition.avgImpressPerHour = parseInt(AvgImpressPerhour.text);
 		 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 		 pressDefinition.numberHeads= parseInt(NumberHeads.text);
-		 pressDefinition.salesCat = charge_sales_category_combo.text;
+		 pressDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 		 if (sheetFedRadio.selected == true)
 		 {
 			 pressDefinition.sheetFed = sheetFedRadio.selected;

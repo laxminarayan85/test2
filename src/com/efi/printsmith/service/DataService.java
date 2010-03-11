@@ -252,7 +252,20 @@ public class DataService {
 		}
 		return null;
 	}
-	
+	public SalesCategory getBySalesCategoryName(String name) throws Exception {
+		try {
+			log.debug("** getBySalesCategoryName called.");
+			
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from SalesCategory where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			SalesCategory object = (SalesCategory) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	public StockFinish getByStockFinishName(String name) throws Exception {
 		try {
 			log.debug("** getBySockFinishName called.");

@@ -52,7 +52,7 @@ package com.efi.printsmith.data
 		public var charges:ArrayCollection;
 		public var maxRollWidth:String = "";
 		public var minRollWidth:String = "";
-		public var salesCat:String = "";
+		public var salesCat:SalesCategory;
 	
 	}
 }

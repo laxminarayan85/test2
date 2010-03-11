@@ -67,6 +67,7 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.rpc.IResponder;
+	import com.efi.printsmith.data.SalesCategory;
 	import com.efi.printsmith.events.ModelAddUpdateEvent;
 	import com.efi.printsmith.events.ModelGetAllEvent;
 	import com.efi.printsmith.events.ModelDeleteItemEvent;
@@ -195,7 +196,7 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
-		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat, salesCategories);
+		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat.name, salesCategories);
 		this.charges = copierDefinition.charges;
 		updateControlState()
 	}
@@ -247,7 +248,7 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		if (price_2_side.selectedItem != null)
 			copierDefinition.priceTwoSide = price_2_side.selectedItem.toString();	
 		 	
-		copierDefinition.salesCat = charge_sales_category_combo.text;
+		copierDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 		copierDefinition.percentUsage = parseFloat(percentageUse.text);
 		copierDefinition.monthlyMaintenance = parseFloat(monthlyMaintenance.text);
 		copierDefinition.copyMarkup = parseFloat(copyMarkup.text);

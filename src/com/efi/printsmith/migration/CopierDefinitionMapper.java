@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 
 public class CopierDefinitionMapper extends ImportMapper {
@@ -834,9 +835,18 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("second side".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales category".equals(currentFieldToken)) {
-				/* TODO */
+				
 			} else if ("sales cat name".equals(currentFieldToken)) {
-				/* TODO */
+//				if (currentImportToken != "")
+//				{
+//					SalesCategory salecat = dataService.getBySalesCategoryName(currentImportToken);
+//					if (salecat == null)
+//					{
+//						salecat = new SalesCategory();
+//						salecat.setName(currentImportToken);
+//					}
+//					copierDefinition.setSalesCat(salecat);
+//				}
 			} else if ("flat rate".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("flat markup".equals(currentFieldToken)) {
