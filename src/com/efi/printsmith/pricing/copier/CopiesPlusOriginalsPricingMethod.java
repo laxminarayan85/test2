@@ -35,12 +35,23 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				}
 				if (i > 0) i--; /* Use the price in the matrix prior to qty > qtyordered */
 				
-				int j;
-				for (j = 0; j < pricingMatrix.getHeaderValues().size(); j++) {
-					if (pricingMatrix.getHeaderValues().get(j) > job.getSheets()) break;
-				}
-				if (j > 0) j--;
+				int j = 0;
+//				for (j = 0; j < pricingMatrix.getHeaderValues().length; j++) {
+//					if (pricingMatrix.getHeaderValues()[j] > job.getSheets()) break;
+//				}
+//				if (j > 0) j--;
 				
+				if (pricingMatrix.getHeader1() > job.getSheets()) j = 0;
+				else if (pricingMatrix.getHeader2() > job.getSheets()) j = 1;
+				else if (pricingMatrix.getHeader3() > job.getSheets()) j = 2;
+				else if (pricingMatrix.getHeader4() > job.getSheets()) j = 3;
+				else if (pricingMatrix.getHeader5() > job.getSheets()) j = 4;
+				else if (pricingMatrix.getHeader6() > job.getSheets()) j = 5;
+				else if (pricingMatrix.getHeader7() > job.getSheets()) j = 6;
+				else if (pricingMatrix.getHeader8() > job.getSheets()) j = 7;
+				else if (pricingMatrix.getHeader9() > job.getSheets()) j = 8;
+				else if (pricingMatrix.getHeader10() > job.getSheets()) j = 9;
+
 				double unitPrice = 0.0;
 				switch (j) {
 				case (0):

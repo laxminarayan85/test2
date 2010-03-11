@@ -116,16 +116,16 @@
 			doubleClickEnabled="true">
 		<mx:columns>
 		     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price1" headerText="{matrix.headerValues.getItemAt(0)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price2" headerText="{matrix.headerValues.getItemAt(1)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price3" headerText="{matrix.headerValues.getItemAt(2)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price4" headerText="{matrix.headerValues.getItemAt(3)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price5" headerText="{matrix.headerValues.getItemAt(4)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price6" headerText="{matrix.headerValues.getItemAt(5)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price7" headerText="{matrix.headerValues.getItemAt(6)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price8" headerText="{matrix.headerValues.getItemAt(7)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price9" headerText="{matrix.headerValues.getItemAt(8)}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price10" headerText="{matrix.headerValues.getItemAt(9)}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price1" headerText="{matrix.header1}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price2" headerText="{matrix.header2}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price3" headerText="{matrix.header3}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price4" headerText="{matrix.header4}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price5" headerText="{matrix.header5}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price6" headerText="{matrix.header6}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price7" headerText="{matrix.header7}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price8" headerText="{matrix.header8}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price9" headerText="{matrix.header9}" editable="true" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="price10" headerText="{matrix.header10}" editable="true" sortable="false" width="60"/>
 		</mx:columns>
 		</mx:DataGrid>
 

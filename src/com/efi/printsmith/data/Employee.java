@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Employee.findall", query = "from Employee"),
@@ -209,6 +209,9 @@ public class Employee extends Party {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String sSN;
 	
@@ -219,6 +222,7 @@ public class Employee extends Party {
 		return sSN; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -227,6 +231,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer exportCode;
 	
@@ -237,6 +244,7 @@ public class Employee extends Party {
 		return exportCode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -245,6 +253,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean clockIn;
 	
@@ -255,6 +266,7 @@ public class Employee extends Party {
 		return clockIn; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -263,6 +275,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean clockOut;
 	
@@ -273,6 +288,7 @@ public class Employee extends Party {
 		return clockOut; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -281,6 +297,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean clockBreak;
 	
@@ -291,6 +310,7 @@ public class Employee extends Party {
 		return clockBreak; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -299,6 +319,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rate;
 	
@@ -309,6 +332,7 @@ public class Employee extends Party {
 		return rate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -317,6 +341,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean active;
 	
@@ -327,6 +354,7 @@ public class Employee extends Party {
 		return active; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -335,6 +363,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean pinRequired;
 	
@@ -345,6 +376,7 @@ public class Employee extends Party {
 		return pinRequired; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -353,6 +385,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String pin;
 	
@@ -363,6 +398,7 @@ public class Employee extends Party {
 		return pin; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -371,6 +407,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean allowOverrideCost;
 	
@@ -381,6 +420,7 @@ public class Employee extends Party {
 		return allowOverrideCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -389,6 +429,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean costingAmounts;
 	
@@ -399,6 +442,7 @@ public class Employee extends Party {
 		return costingAmounts; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -407,6 +451,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hideNonReleaseProduction;
 	
@@ -417,6 +464,7 @@ public class Employee extends Party {
 		return hideNonReleaseProduction; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -425,6 +473,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hideEstimateTimeTracker;
 	
@@ -435,6 +486,7 @@ public class Employee extends Party {
 		return hideEstimateTimeTracker; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -443,6 +495,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean productionSettings;
 	
@@ -453,6 +508,7 @@ public class Employee extends Party {
 		return productionSettings; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -461,6 +517,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean trackerNextLocation;
 	
@@ -471,6 +530,7 @@ public class Employee extends Party {
 		return trackerNextLocation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -479,6 +539,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean trackerClockIn;
 	
@@ -489,6 +552,7 @@ public class Employee extends Party {
 		return trackerClockIn; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -497,6 +561,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showWorkCenter;
 	
@@ -507,6 +574,7 @@ public class Employee extends Party {
 		return showWorkCenter; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -515,6 +583,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean magCardReader;
 	
@@ -525,6 +596,7 @@ public class Employee extends Party {
 		return magCardReader; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -533,6 +605,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean includeInvoice;
 	
@@ -543,6 +618,7 @@ public class Employee extends Party {
 		return includeInvoice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -551,6 +627,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean includeEstimate;
 	
@@ -561,6 +640,7 @@ public class Employee extends Party {
 		return includeEstimate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -569,6 +649,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean includeJobs;
 	
@@ -579,6 +662,7 @@ public class Employee extends Party {
 		return includeJobs; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -587,6 +671,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean includeJobCharges;
 	
@@ -597,6 +684,7 @@ public class Employee extends Party {
 		return includeJobCharges; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -605,6 +693,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean includeInvoiceCharges;
 	
@@ -615,6 +706,7 @@ public class Employee extends Party {
 		return includeInvoiceCharges; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -623,6 +715,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean allPricingMethods;
 	
@@ -633,6 +728,7 @@ public class Employee extends Party {
 		return allPricingMethods; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -641,6 +737,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean allPresses;
 	
@@ -651,6 +750,7 @@ public class Employee extends Party {
 		return allPresses; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -659,6 +759,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean allCopiers;
 	
@@ -669,6 +772,7 @@ public class Employee extends Party {
 		return allCopiers; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -677,6 +781,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean allChargeTypes;
 	
@@ -687,6 +794,7 @@ public class Employee extends Party {
 		return allChargeTypes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -695,6 +803,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean onlyShowProductionParents;
 	
@@ -705,6 +816,7 @@ public class Employee extends Party {
 		return onlyShowProductionParents; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -713,6 +825,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
@@ -724,12 +839,16 @@ public class Employee extends Party {
 		return employeePricings; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addEmployeePricings(PreferencesPricingMethod obj) {
 		if (employeePricings == null) {
 			employeePricings = new java.util.ArrayList<PreferencesPricingMethod>();
 		}
 		employeePricings.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -738,6 +857,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeDefinition> employeeCharges;
@@ -749,12 +871,16 @@ public class Employee extends Party {
 		return employeeCharges; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addEmployeeCharges(ChargeDefinition obj) {
 		if (employeeCharges == null) {
 			employeeCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		employeeCharges.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -763,6 +889,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "employee_employeepresses")
 	private java.util.List<PressDefinition> employeePresses;
@@ -774,12 +903,16 @@ public class Employee extends Party {
 		return employeePresses; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addEmployeePresses(PressDefinition obj) {
 		if (employeePresses == null) {
 			employeePresses = new java.util.ArrayList<PressDefinition>();
 		}
 		employeePresses.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -788,6 +921,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<CopierDefinition> employeeCopiers;
@@ -799,12 +935,16 @@ public class Employee extends Party {
 		return employeeCopiers; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addEmployeeCopiers(CopierDefinition obj) {
 		if (employeeCopiers == null) {
 			employeeCopiers = new java.util.ArrayList<CopierDefinition>();
 		}
 		employeeCopiers.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -813,6 +953,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean anyPastDue;
 	
@@ -823,6 +966,7 @@ public class Employee extends Party {
 		return anyPastDue; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -831,6 +975,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String customerWant;
 	
@@ -841,6 +988,7 @@ public class Employee extends Party {
 		return customerWant; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -849,6 +997,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
@@ -860,12 +1011,16 @@ public class Employee extends Party {
 		return productionParents; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addProductionParents(ProductionLocations obj) {
 		if (productionParents == null) {
 			productionParents = new java.util.ArrayList<ProductionLocations>();
 		}
 		productionParents.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -874,6 +1029,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer autoHour;
 	
@@ -884,6 +1042,7 @@ public class Employee extends Party {
 		return autoHour; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -892,6 +1051,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer autoMin;
 	
@@ -902,6 +1064,7 @@ public class Employee extends Party {
 		return autoMin; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -910,6 +1073,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String message;
 	
@@ -920,6 +1086,7 @@ public class Employee extends Party {
 		return message; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -928,6 +1095,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showMessageClockout;
 	
@@ -938,6 +1108,7 @@ public class Employee extends Party {
 		return showMessageClockout; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -946,6 +1117,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showMessageClockin;
 	
@@ -956,6 +1130,7 @@ public class Employee extends Party {
 		return showMessageClockin; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -964,6 +1139,9 @@ public class Employee extends Party {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String employeeId;
 	
@@ -974,6 +1152,7 @@ public class Employee extends Party {
 		return employeeId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

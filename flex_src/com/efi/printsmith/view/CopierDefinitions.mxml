@@ -113,17 +113,16 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var localCopierDefinition:CopierDefinition = new CopierDefinition();
 		localCopierDefinition.largeFormat = false;
 		localCopierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix;
-		localCopierDefinition.copierMatrix.headerValues = new ArrayCollection();
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(1));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(5));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(10));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(20));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(50));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(100));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(250));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
-		localCopierDefinition.copierMatrix.headerValues.addItem(new Number(0));
+		localCopierDefinition.copierMatrix.header1 = 1;
+		localCopierDefinition.copierMatrix.header2 = 5;
+		localCopierDefinition.copierMatrix.header3 = 10;
+		localCopierDefinition.copierMatrix.header4 = 20;
+		localCopierDefinition.copierMatrix.header5 = 50;
+		localCopierDefinition.copierMatrix.header6 = 100;
+		localCopierDefinition.copierMatrix.header7 = 250;
+		localCopierDefinition.copierMatrix.header8 = 0;
+		localCopierDefinition.copierMatrix.header9 = 0;
+		localCopierDefinition.copierMatrix.header10 = 0;
 		
 	    localCopierDefinition.copierMatrix.elements = new ArrayCollection();
 	    var matrixElement:MatrixElement = new MatrixElement();

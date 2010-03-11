@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Marketing.findall", query = "from Marketing"),
@@ -137,6 +137,9 @@ public class Marketing extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer marketID;
 	
@@ -147,6 +150,7 @@ public class Marketing extends ModelBase {
 		return marketID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -155,6 +159,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date followup;
 	
@@ -165,6 +172,7 @@ public class Marketing extends ModelBase {
 		return followup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -173,6 +181,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date birthDate;
 	
@@ -183,6 +194,7 @@ public class Marketing extends ModelBase {
 		return birthDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -191,6 +203,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date user3;
 	
@@ -201,6 +216,7 @@ public class Marketing extends ModelBase {
 		return user3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -209,6 +225,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date user4;
 	
@@ -219,6 +238,7 @@ public class Marketing extends ModelBase {
 		return user4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -227,6 +247,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date user5;
 	
@@ -237,6 +260,7 @@ public class Marketing extends ModelBase {
 		return user5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -245,6 +269,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String leadSource;
 	
@@ -255,6 +282,7 @@ public class Marketing extends ModelBase {
 		return leadSource; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -263,6 +291,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String leadSource2;
 	
@@ -273,6 +304,7 @@ public class Marketing extends ModelBase {
 		return leadSource2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -281,6 +313,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String commonInterst;
 	
@@ -291,6 +326,7 @@ public class Marketing extends ModelBase {
 		return commonInterst; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -299,6 +335,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String sportsInterst;
 	
@@ -309,6 +348,7 @@ public class Marketing extends ModelBase {
 		return sportsInterst; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -317,6 +357,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String user6;
 	
@@ -327,6 +370,7 @@ public class Marketing extends ModelBase {
 		return user6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -335,6 +379,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String user7;
 	
@@ -345,6 +392,7 @@ public class Marketing extends ModelBase {
 		return user7; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -353,6 +401,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String user8;
 	
@@ -363,6 +414,7 @@ public class Marketing extends ModelBase {
 		return user8; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -371,6 +423,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String user9;
 	
@@ -381,6 +436,7 @@ public class Marketing extends ModelBase {
 		return user9; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -389,6 +445,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String typeWork;
 	
@@ -399,6 +458,7 @@ public class Marketing extends ModelBase {
 		return typeWork; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -407,6 +467,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String mailerType;
 	
@@ -417,6 +480,7 @@ public class Marketing extends ModelBase {
 		return mailerType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -425,6 +489,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean customer;
 	
@@ -435,6 +502,7 @@ public class Marketing extends ModelBase {
 		return customer; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -443,6 +511,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean prospect;
 	
@@ -453,6 +524,7 @@ public class Marketing extends ModelBase {
 		return prospect; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -461,6 +533,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean noMail;
 	
@@ -471,6 +546,7 @@ public class Marketing extends ModelBase {
 		return noMail; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -479,6 +555,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean personalAcct;
 	
@@ -489,6 +568,7 @@ public class Marketing extends ModelBase {
 		return personalAcct; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -497,6 +577,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer numberofEmployees;
 	
@@ -507,6 +590,7 @@ public class Marketing extends ModelBase {
 		return numberofEmployees; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -515,6 +599,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer annualRev;
 	
@@ -525,6 +612,7 @@ public class Marketing extends ModelBase {
 		return annualRev; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -533,6 +621,9 @@ public class Marketing extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private BusinessType businessType;
 	
@@ -543,6 +634,7 @@ public class Marketing extends ModelBase {
 		return businessType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

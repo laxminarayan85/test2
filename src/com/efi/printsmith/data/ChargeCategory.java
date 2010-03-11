@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ChargeCategory.findall", query = "from ChargeCategory"),
@@ -57,6 +57,9 @@ public class ChargeCategory extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
@@ -68,6 +71,9 @@ public class ChargeCategory extends ModelBase {
 		return children; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addChildren(ChargeDefinition obj) {
 		obj.setParent(this);
 		if (children == null) {
@@ -75,6 +81,7 @@ public class ChargeCategory extends ModelBase {
 		}
 		children.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -83,6 +90,9 @@ public class ChargeCategory extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -93,6 +103,7 @@ public class ChargeCategory extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -101,6 +112,9 @@ public class ChargeCategory extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCommand parent;
 	
@@ -111,6 +125,7 @@ public class ChargeCategory extends ModelBase {
 		return parent; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

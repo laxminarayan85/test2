@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Charge.findall", query = "from Charge"),
@@ -121,6 +121,9 @@ public class Charge extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeDefinition chargeDefinition;
 	
@@ -131,6 +134,7 @@ public class Charge extends ModelBase {
 		return chargeDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -139,6 +143,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String description;
 	
@@ -149,6 +156,7 @@ public class Charge extends ModelBase {
 		return description; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -157,6 +165,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String notes;
 	
@@ -167,6 +178,7 @@ public class Charge extends ModelBase {
 		return notes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -175,6 +187,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location productionLocation;
 	
@@ -185,6 +200,7 @@ public class Charge extends ModelBase {
 		return productionLocation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -193,6 +209,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showNotes;
 	
@@ -203,6 +222,7 @@ public class Charge extends ModelBase {
 		return showNotes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -211,6 +231,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean finished;
 	
@@ -221,6 +244,7 @@ public class Charge extends ModelBase {
 		return finished; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -229,6 +253,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean taxable;
 	
@@ -239,6 +266,7 @@ public class Charge extends ModelBase {
 		return taxable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -247,6 +275,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean brokered;
 	
@@ -257,6 +288,7 @@ public class Charge extends ModelBase {
 		return brokered; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -265,6 +297,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean displayQty;
 	
@@ -275,6 +310,7 @@ public class Charge extends ModelBase {
 		return displayQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -283,6 +319,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hidden;
 	
@@ -293,6 +332,7 @@ public class Charge extends ModelBase {
 		return hidden; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -301,6 +341,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hidePrice;
 	
@@ -311,6 +354,7 @@ public class Charge extends ModelBase {
 		return hidePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -319,6 +363,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double price;
 	
@@ -329,6 +376,7 @@ public class Charge extends ModelBase {
 		return price; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -337,6 +385,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overridePrice;
 	
@@ -347,6 +398,7 @@ public class Charge extends ModelBase {
 		return overridePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -355,6 +407,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double quantity;
 	
@@ -365,6 +420,7 @@ public class Charge extends ModelBase {
 		return quantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -373,6 +429,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideQuantity;
 	
@@ -383,6 +442,7 @@ public class Charge extends ModelBase {
 		return overrideQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -391,6 +451,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double materialQty;
 	
@@ -401,6 +464,7 @@ public class Charge extends ModelBase {
 		return materialQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -409,6 +473,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideMaterialQuantity;
 	
@@ -419,6 +486,7 @@ public class Charge extends ModelBase {
 		return overrideMaterialQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -427,6 +495,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rate;
 	
@@ -437,6 +508,7 @@ public class Charge extends ModelBase {
 		return rate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -445,6 +517,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideRate;
 	
@@ -455,6 +530,7 @@ public class Charge extends ModelBase {
 		return overrideRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

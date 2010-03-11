@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesStocks.findall", query = "from PreferencesStocks"),
@@ -181,6 +181,9 @@ public class PreferencesStocks extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String weight;
 	
@@ -191,6 +194,7 @@ public class PreferencesStocks extends ModelBase {
 		return weight; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -199,6 +203,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String points;
 	
@@ -209,6 +216,7 @@ public class PreferencesStocks extends ModelBase {
 		return points; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -217,6 +225,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String microns;
 	
@@ -227,6 +238,7 @@ public class PreferencesStocks extends ModelBase {
 		return microns; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -235,6 +247,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String plies;
 	
@@ -245,6 +260,7 @@ public class PreferencesStocks extends ModelBase {
 		return plies; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -253,6 +269,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String millimeters;
 	
@@ -263,6 +282,7 @@ public class PreferencesStocks extends ModelBase {
 		return millimeters; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -271,6 +291,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double customerCost;
 	
@@ -281,6 +304,7 @@ public class PreferencesStocks extends ModelBase {
 		return customerCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -289,6 +313,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer customerQuantity;
 	
@@ -299,6 +326,7 @@ public class PreferencesStocks extends ModelBase {
 		return customerQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -307,6 +335,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double customerMarkup;
 	
@@ -317,6 +348,7 @@ public class PreferencesStocks extends ModelBase {
 		return customerMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -325,6 +357,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean markupOnly;
 	
@@ -335,6 +370,7 @@ public class PreferencesStocks extends ModelBase {
 		return markupOnly; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -343,6 +379,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty1;
 	
@@ -353,6 +392,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -361,6 +401,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty2;
 	
@@ -371,6 +414,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -379,6 +423,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty3;
 	
@@ -389,6 +436,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -397,6 +445,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty4;
 	
@@ -407,6 +458,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -415,6 +467,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty5;
 	
@@ -425,6 +480,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -433,6 +489,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer stdQty6;
 	
@@ -443,6 +502,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdQty6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -451,6 +511,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup1;
 	
@@ -461,6 +524,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -469,6 +533,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup2;
 	
@@ -479,6 +546,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -487,6 +555,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup3;
 	
@@ -497,6 +568,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -505,6 +577,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup4;
 	
@@ -515,6 +590,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -523,6 +599,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup5;
 	
@@ -533,6 +612,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -541,6 +621,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double stdMarkup6;
 	
@@ -551,6 +634,7 @@ public class PreferencesStocks extends ModelBase {
 		return stdMarkup6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -559,6 +643,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty1;
 	
@@ -569,6 +656,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -577,6 +665,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty2;
 	
@@ -587,6 +678,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -595,6 +687,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty3;
 	
@@ -605,6 +700,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -613,6 +709,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty4;
 	
@@ -623,6 +722,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -631,6 +731,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty5;
 	
@@ -641,6 +744,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -649,6 +753,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer blankQty6;
 	
@@ -659,6 +766,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankQty6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -667,6 +775,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup1;
 	
@@ -677,6 +788,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -685,6 +797,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup2;
 	
@@ -695,6 +810,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -703,6 +819,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup3;
 	
@@ -713,6 +832,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -721,6 +841,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup4;
 	
@@ -731,6 +854,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -739,6 +863,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup5;
 	
@@ -749,6 +876,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -757,6 +885,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double blankMarkup6;
 	
@@ -767,6 +898,7 @@ public class PreferencesStocks extends ModelBase {
 		return blankMarkup6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -775,6 +907,9 @@ public class PreferencesStocks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SizeTable sizeTable;
 	
@@ -785,6 +920,7 @@ public class PreferencesStocks extends ModelBase {
 		return sizeTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

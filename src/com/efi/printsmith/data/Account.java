@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Account.findall", query = "from Account"),
@@ -381,6 +381,9 @@ public class Account extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String status;
 	
@@ -391,6 +394,7 @@ public class Account extends ModelBase {
 		return status; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -399,6 +403,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long masterAcct;
 	
@@ -409,6 +416,7 @@ public class Account extends ModelBase {
 		return masterAcct; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -417,6 +425,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String resaleNumber;
 	
@@ -427,6 +438,7 @@ public class Account extends ModelBase {
 		return resaleNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -435,6 +447,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String title;
 	
@@ -445,6 +460,7 @@ public class Account extends ModelBase {
 		return title; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -453,6 +469,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String customerPO;
 	
@@ -463,6 +482,7 @@ public class Account extends ModelBase {
 		return customerPO; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -471,6 +491,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
 	
@@ -481,6 +504,7 @@ public class Account extends ModelBase {
 		return shipToAddress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -489,6 +513,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address billToAddress;
 	
@@ -499,6 +526,7 @@ public class Account extends ModelBase {
 		return billToAddress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -507,6 +535,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact contact;
 	
@@ -517,6 +548,7 @@ public class Account extends ModelBase {
 		return contact; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -525,6 +557,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact billToContact;
 	
@@ -535,6 +570,7 @@ public class Account extends ModelBase {
 		return billToContact; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -543,6 +579,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long salesRank;
 	
@@ -553,6 +592,7 @@ public class Account extends ModelBase {
 		return salesRank; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -561,6 +601,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String userAcctId;
 	
@@ -571,6 +614,7 @@ public class Account extends ModelBase {
 		return userAcctId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -579,6 +623,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String externalAcctId;
 	
@@ -589,6 +636,7 @@ public class Account extends ModelBase {
 		return externalAcctId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -597,6 +645,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean dollarDiscount;
 	
@@ -607,6 +658,7 @@ public class Account extends ModelBase {
 		return dollarDiscount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -615,6 +667,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean oneTimeDiscount;
 	
@@ -625,6 +680,7 @@ public class Account extends ModelBase {
 		return oneTimeDiscount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -633,6 +689,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean fileOriginals;
 	
@@ -643,6 +702,7 @@ public class Account extends ModelBase {
 		return fileOriginals; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -651,6 +711,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean webAccessEnabled;
 	
@@ -661,6 +724,7 @@ public class Account extends ModelBase {
 		return webAccessEnabled; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -669,6 +733,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean prospect;
 	
@@ -679,6 +746,7 @@ public class Account extends ModelBase {
 		return prospect; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -687,6 +755,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean autoPayEnabled;
 	
@@ -697,6 +768,7 @@ public class Account extends ModelBase {
 		return autoPayEnabled; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -705,6 +777,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean optOutMarketing;
 	
@@ -715,6 +790,7 @@ public class Account extends ModelBase {
 		return optOutMarketing; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -723,6 +799,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean acctIsIndividual;
 	
@@ -733,6 +812,7 @@ public class Account extends ModelBase {
 		return acctIsIndividual; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -741,6 +821,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean taxExempt;
 	
@@ -751,6 +834,7 @@ public class Account extends ModelBase {
 		return taxExempt; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -759,6 +843,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean payCommissions;
 	
@@ -769,6 +856,7 @@ public class Account extends ModelBase {
 		return payCommissions; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -777,6 +865,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean poRequired;
 	
@@ -787,6 +878,7 @@ public class Account extends ModelBase {
 		return poRequired; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -795,6 +887,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean applyFinanceCharges;
 	
@@ -805,6 +900,7 @@ public class Account extends ModelBase {
 		return applyFinanceCharges; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -813,6 +909,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean generateStatements;
 	
@@ -823,6 +922,7 @@ public class Account extends ModelBase {
 		return generateStatements; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -831,6 +931,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String externalRef;
 	
@@ -841,6 +944,7 @@ public class Account extends ModelBase {
 		return externalRef; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -849,6 +953,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep salesRep;
 	
@@ -859,6 +966,7 @@ public class Account extends ModelBase {
 		return salesRep; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -867,6 +975,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shippingMode;
 	
@@ -877,6 +988,7 @@ public class Account extends ModelBase {
 		return shippingMode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -885,6 +997,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastInvoiceDate;
 	
@@ -895,6 +1010,7 @@ public class Account extends ModelBase {
 		return lastInvoiceDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -903,6 +1019,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastEstimateDate;
 	
@@ -913,6 +1032,7 @@ public class Account extends ModelBase {
 		return lastEstimateDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -921,6 +1041,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date firstInvoiceDate;
 	
@@ -931,6 +1054,7 @@ public class Account extends ModelBase {
 		return firstInvoiceDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -939,6 +1063,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date firstEstimateDate;
 	
@@ -949,6 +1076,7 @@ public class Account extends ModelBase {
 		return firstEstimateDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -957,6 +1085,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastAgedDate;
 	
@@ -967,6 +1098,7 @@ public class Account extends ModelBase {
 		return lastAgedDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -975,6 +1107,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastBilledDate;
 	
@@ -985,6 +1120,7 @@ public class Account extends ModelBase {
 		return lastBilledDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -993,6 +1129,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Marketing marketing;
 	
@@ -1003,6 +1142,7 @@ public class Account extends ModelBase {
 		return marketing; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1011,6 +1151,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastPaymentDate;
 	
@@ -1021,6 +1164,7 @@ public class Account extends ModelBase {
 		return lastPaymentDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1029,6 +1173,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer lastPostingDate;
 	
@@ -1039,6 +1186,7 @@ public class Account extends ModelBase {
 		return lastPostingDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1047,6 +1195,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastRankingDate;
 	
@@ -1057,6 +1208,7 @@ public class Account extends ModelBase {
 		return lastRankingDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1065,6 +1217,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date creditCardExpiration;
 	
@@ -1075,6 +1230,7 @@ public class Account extends ModelBase {
 		return creditCardExpiration; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1083,6 +1239,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String creditCardInfo;
 	
@@ -1093,6 +1252,7 @@ public class Account extends ModelBase {
 		return creditCardInfo; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1101,6 +1261,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long autoPayMode;
 	
@@ -1111,6 +1274,7 @@ public class Account extends ModelBase {
 		return autoPayMode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1119,6 +1283,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long autoPayInterval;
 	
@@ -1129,6 +1296,7 @@ public class Account extends ModelBase {
 		return autoPayInterval; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1137,6 +1305,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String creditCardType;
 	
@@ -1147,6 +1318,7 @@ public class Account extends ModelBase {
 		return creditCardType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1155,6 +1327,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double autoPayMinimum;
 	
@@ -1165,6 +1340,7 @@ public class Account extends ModelBase {
 		return autoPayMinimum; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1173,6 +1349,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double autoPayMaximum;
 	
@@ -1183,6 +1362,7 @@ public class Account extends ModelBase {
 		return autoPayMaximum; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1191,6 +1371,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double autoPayTotal;
 	
@@ -1201,6 +1384,7 @@ public class Account extends ModelBase {
 		return autoPayTotal; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1209,6 +1393,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double autoPayAmount;
 	
@@ -1219,6 +1406,7 @@ public class Account extends ModelBase {
 		return autoPayAmount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1227,6 +1415,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date autoPayStop;
 	
@@ -1237,6 +1428,7 @@ public class Account extends ModelBase {
 		return autoPayStop; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1245,6 +1437,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date autoPayStart;
 	
@@ -1255,6 +1450,7 @@ public class Account extends ModelBase {
 		return autoPayStart; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1263,6 +1459,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date autoPayLastPosted;
 	
@@ -1273,6 +1472,7 @@ public class Account extends ModelBase {
 		return autoPayLastPosted; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1281,6 +1481,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long autoPayPaymentQty;
 	
@@ -1291,6 +1494,7 @@ public class Account extends ModelBase {
 		return autoPayPaymentQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1299,6 +1503,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date lastNotifiedDate;
 	
@@ -1309,6 +1516,7 @@ public class Account extends ModelBase {
 		return lastNotifiedDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1317,6 +1525,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date resaleCertExpirationDate;
 	
@@ -1327,6 +1538,7 @@ public class Account extends ModelBase {
 		return resaleCertExpirationDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1335,6 +1547,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double onAccount;
 	
@@ -1345,6 +1560,7 @@ public class Account extends ModelBase {
 		return onAccount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1353,6 +1569,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double balance;
 	
@@ -1363,6 +1582,7 @@ public class Account extends ModelBase {
 		return balance; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1371,6 +1591,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double salesMonth;
 	
@@ -1381,6 +1604,7 @@ public class Account extends ModelBase {
 		return salesMonth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1389,6 +1613,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long ordersMonth;
 	
@@ -1399,6 +1626,7 @@ public class Account extends ModelBase {
 		return ordersMonth; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1407,6 +1635,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double salesYear;
 	
@@ -1417,6 +1648,7 @@ public class Account extends ModelBase {
 		return salesYear; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1425,6 +1657,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double salesPriorYear;
 	
@@ -1435,6 +1670,7 @@ public class Account extends ModelBase {
 		return salesPriorYear; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1443,6 +1679,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long ordersYear;
 	
@@ -1453,6 +1692,7 @@ public class Account extends ModelBase {
 		return ordersYear; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1461,6 +1701,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long ordersTotal;
 	
@@ -1471,6 +1714,7 @@ public class Account extends ModelBase {
 		return ordersTotal; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1479,6 +1723,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long estimateCount;
 	
@@ -1489,6 +1736,7 @@ public class Account extends ModelBase {
 		return estimateCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1497,6 +1745,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double creditLimit;
 	
@@ -1507,6 +1758,7 @@ public class Account extends ModelBase {
 		return creditLimit; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1515,6 +1767,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double discount;
 	
@@ -1525,6 +1780,7 @@ public class Account extends ModelBase {
 		return discount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1533,6 +1789,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long termsNet;
 	
@@ -1543,6 +1802,7 @@ public class Account extends ModelBase {
 		return termsNet; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1551,6 +1811,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double termsDiscount;
 	
@@ -1561,6 +1824,7 @@ public class Account extends ModelBase {
 		return termsDiscount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1569,6 +1833,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double financeRate;
 	
@@ -1579,6 +1846,7 @@ public class Account extends ModelBase {
 		return financeRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1587,6 +1855,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double financeYear;
 	
@@ -1597,6 +1868,7 @@ public class Account extends ModelBase {
 		return financeYear; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1605,6 +1877,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long estimatesWon;
 	
@@ -1615,6 +1890,7 @@ public class Account extends ModelBase {
 		return estimatesWon; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1623,6 +1899,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long estimatesLost;
 	
@@ -1633,6 +1912,7 @@ public class Account extends ModelBase {
 		return estimatesLost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1641,6 +1921,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double discountDollarAmt;
 	
@@ -1651,6 +1934,7 @@ public class Account extends ModelBase {
 		return discountDollarAmt; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1659,6 +1943,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double balance30Day;
 	
@@ -1669,6 +1956,7 @@ public class Account extends ModelBase {
 		return balance30Day; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1677,6 +1965,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double balance60Day;
 	
@@ -1687,6 +1978,7 @@ public class Account extends ModelBase {
 		return balance60Day; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1695,6 +1987,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double balance90Day;
 	
@@ -1705,6 +2000,7 @@ public class Account extends ModelBase {
 		return balance90Day; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1713,6 +2009,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double balanceCurrent;
 	
@@ -1723,6 +2022,7 @@ public class Account extends ModelBase {
 		return balanceCurrent; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1731,6 +2031,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String type;
 	
@@ -1741,6 +2044,7 @@ public class Account extends ModelBase {
 		return type; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1749,6 +2053,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	
@@ -1759,6 +2066,7 @@ public class Account extends ModelBase {
 		return taxTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1767,6 +2075,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxCodes taxCode;
 	
@@ -1777,6 +2088,7 @@ public class Account extends ModelBase {
 		return taxCode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1785,6 +2097,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String statementNote;
 	
@@ -1795,6 +2110,7 @@ public class Account extends ModelBase {
 		return statementNote; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1803,6 +2119,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String jobNote;
 	
@@ -1813,6 +2132,7 @@ public class Account extends ModelBase {
 		return jobNote; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1821,6 +2141,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String accountNote;
 	
@@ -1831,6 +2154,7 @@ public class Account extends ModelBase {
 		return accountNote; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1839,6 +2163,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String accountId;
 	
@@ -1849,6 +2176,7 @@ public class Account extends ModelBase {
 		return accountId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1857,6 +2185,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "account_invoiceestimatecharges")
 	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
@@ -1868,12 +2199,16 @@ public class Account extends ModelBase {
 		return invoiceEstimateCharges; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addInvoiceEstimateCharges(ChargeDefinition obj) {
 		if (invoiceEstimateCharges == null) {
 			invoiceEstimateCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		invoiceEstimateCharges.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -1882,6 +2217,9 @@ public class Account extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "account_jobcharges")
 	private java.util.List<ChargeDefinition> jobCharges;
@@ -1893,12 +2231,16 @@ public class Account extends ModelBase {
 		return jobCharges; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addJobCharges(ChargeDefinition obj) {
 		if (jobCharges == null) {
 			jobCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		jobCharges.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	
