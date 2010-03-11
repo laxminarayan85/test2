@@ -32,7 +32,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			String currentFieldToken = fieldTokens[i];
 			System.out.println(currentFieldToken + ": " + currentImportToken);
 			if ("recno".equals(currentFieldToken)) {
-				stockDefinition.setPrevId(currentImportToken);
+				/* TODO */
 			} else if ("group".equals(currentFieldToken)) {
 				
 			}  else if ("class".equals(currentFieldToken)) {
@@ -77,6 +77,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				stockDefinition.setSheetsPerSet(Utilities.tokenToInt(currentImportToken));
 			}  else if ("id".equals(currentFieldToken)) {
 				stockDefinition.setStockId(currentImportToken);
+				stockDefinition.setPrevId(currentImportToken);
 			}  else if ("unit".equals(currentFieldToken)) {
 				/* TODO*/
 			}  else if ("parent size".equals(currentFieldToken)) {
@@ -481,73 +482,43 @@ public class StockDefinitionMapper extends ImportMapper {
 					
 			}  else if ("inventory change log[1]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[2]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[3]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[4]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[5]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[6]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[7]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[8]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[9]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory change log[10]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					StockChanges stockChanges = new StockChanges();
-					stockChanges.setHowChanged(currentImportToken);
-					stockChanges.setStockDefinition(stockDefinition);
-					dataService.addUpdate(stockChanges);
+					/* TODO */
 				}
 			}  else if ("inventory shell acct".equals(currentFieldToken)) {
 				/* TODO */
