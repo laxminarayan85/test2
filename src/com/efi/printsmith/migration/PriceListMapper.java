@@ -46,7 +46,7 @@ public class PriceListMapper extends ImportMapper {
 					}
 					rType = currentImportToken;
 				} else if ("title".equals(currentFieldToken) && x == 1) {
-					if (rType.equals("S"))
+					if (rType.equals("P"))
 						priceList.setName(currentImportToken);
 					else if (rType.equals("S"))
 						speedTable.setName(currentImportToken);
