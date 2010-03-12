@@ -29,9 +29,9 @@ public class PriceListMapper extends ImportMapper {
 			for (int i = 0; i < fieldTokens.length; i++) {
 				String currentImportToken = importTokens[i];
 				String currentFieldToken = fieldTokens[i];
-				if ("recno".equals(currentFieldToken)) {
+				if ("recno".equals(currentFieldToken) && x == 1) {
 					recNo = currentImportToken;
-				} else if ("rtype".equals(currentFieldToken)) {
+				} else if ("rtype".equals(currentFieldToken) && x == 1) {
 					if (currentImportToken.equals("S")) {
 						speedTable = new SpeedTable();
 						speedTable.setPrevId(recNo);
