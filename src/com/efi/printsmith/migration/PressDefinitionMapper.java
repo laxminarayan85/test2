@@ -10,6 +10,8 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.data.SpeedTable;
 
 public class PressDefinitionMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -66,7 +68,9 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("maxX".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("max stock size".equals(currentFieldToken)) {
-				pressDefinition.setMaxPaperSize(currentImportToken);
+				pressDefinition.setMaxRollWidth(currentImportToken);
+			} else if ("min stock size".equals(currentFieldToken)) {
+				pressDefinition.setMinRollWidth(currentImportToken);
 			} else if ("maxY".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentFieldToken)) {
@@ -148,9 +152,17 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("speed table ptr".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					SpeedTable speedTable = (SpeedTable)dataService.getByPrevId("SpeedTable", currentImportToken);
+					if (speedTable != null)
+						pressDefinition.setSpeedTable(speedTable);
+				}
 			} else if ("waste table ptr".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					WasteChart wasteChart = (WasteChart)dataService.getByPrevId("WasteChart", currentImportToken);
+					if (wasteChart != null)
+						pressDefinition.setWasteChart(wasteChart);
+				}
 			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rtype".equals(currentFieldToken)) {
