@@ -188,7 +188,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	private function doPressGridClick():void {
 		pressDefinition = dataGrid.selectedItem as PressDefinition;
-		charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
+		if (pressDefinition.salesCat != null)
+			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
 		this.charges = pressDefinition.charges;
 		updateControlState();
 	//	doPressType();

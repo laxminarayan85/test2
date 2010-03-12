@@ -950,6 +950,7 @@
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
 			this.charges = stockDefinitions.charges;
 			standardItemCheckEvent();
+			stockChanges = stockDefinitions.stockChanges;
 	}
 
 	private function mapStockDefinitionData():void {
