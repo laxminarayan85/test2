@@ -124,6 +124,7 @@ package com.efi.printsmith.data
 		public var copier1PricePerSheet:Number = 0;
 		public var copier2PricePerSheet:Number = 0;
 		public var copier3PricePerSheet:Number = 0;
+		public var stockChanges:ArrayCollection;
 	
 	}
 }

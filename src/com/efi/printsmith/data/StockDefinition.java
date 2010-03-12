@@ -478,6 +478,10 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COPIER3PRICEPERSHEET = "Copier3PricePerSheet";
+	/**
+	 * @generated
+	 */
+	public static final String STOCKCHANGES = "StockChanges";
 
 	/**
 	 * @generated
@@ -2939,6 +2943,31 @@ public class StockDefinition extends ModelBase {
 	public void setCopier3PricePerSheet(Double newVal) {
 		this.copier3PricePerSheet = newVal;
 	}
+ 	
+	
+    @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "stockdefinition_stockchanges")
+	private java.util.List<StockChanges> stockChanges;
+	
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<StockChanges> getStockChanges(){
+		return stockChanges; 
+	}
+
+	public void addStockChanges(StockChanges obj) {
+		if (stockChanges == null) {
+			stockChanges = new java.util.ArrayList<StockChanges>();
+		}
+		stockChanges.add(obj);
+	}
+	/**
+	 * @generated
+	 */	
+	public void setStockChanges(java.util.List<StockChanges> newVal) {
+		this.stockChanges = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -3056,6 +3085,7 @@ public class StockDefinition extends ModelBase {
 		if (COPIER1PRICEPERSHEET.equals(propertyName)) return getCopier1PricePerSheet();
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) return getCopier2PricePerSheet();
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) return getCopier3PricePerSheet();
+		if (STOCKCHANGES.equals(propertyName)) return getStockChanges();
 		return super.getProperty(propertyName);
 	}
 	
@@ -3176,6 +3206,7 @@ public class StockDefinition extends ModelBase {
 		if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((Double)newValue); else
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
+		if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3407,6 +3438,8 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (STOCKCHANGES.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, StockChanges.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3528,6 +3561,7 @@ public class StockDefinition extends ModelBase {
 		if (COPIER1PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+		if (STOCKCHANGES.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3760,6 +3794,8 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getCopier2PricePerSheet(), objT.getCopier2PricePerSheet()))
 			return false;
 		if (! SmartEquals(getCopier3PricePerSheet(), objT.getCopier3PricePerSheet()))
+			return false;
+		if (! SmartEquals(getStockChanges(), objT.getStockChanges()))
 			return false;
 		return true;
 	}			
