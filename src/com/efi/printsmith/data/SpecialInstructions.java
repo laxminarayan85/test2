@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SpecialInstructions.findall", query = "from SpecialInstructions"),
@@ -49,9 +49,6 @@ public class SpecialInstructions extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String instructions;
 	
@@ -62,7 +59,6 @@ public class SpecialInstructions extends ModelBase {
 		return instructions; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "TimeCard.findall", query = "from TimeCard"),
@@ -73,9 +73,6 @@ public class TimeCard extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String period;
 	
@@ -86,7 +83,6 @@ public class TimeCard extends ModelBase {
 		return period; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -95,9 +91,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date startDateTime;
 	
@@ -108,7 +101,6 @@ public class TimeCard extends ModelBase {
 		return startDateTime; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -117,9 +109,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date endDateTime;
 	
@@ -130,7 +119,6 @@ public class TimeCard extends ModelBase {
 		return endDateTime; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -139,9 +127,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String billable;
 	
@@ -152,7 +137,6 @@ public class TimeCard extends ModelBase {
 		return billable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -161,9 +145,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer onClock;
 	
@@ -174,7 +155,6 @@ public class TimeCard extends ModelBase {
 		return onClock; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -183,9 +163,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date breakTime;
 	
@@ -196,7 +173,6 @@ public class TimeCard extends ModelBase {
 		return breakTime; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -205,9 +181,6 @@ public class TimeCard extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Employee employee;
 	
@@ -218,7 +191,6 @@ public class TimeCard extends ModelBase {
 		return employee; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

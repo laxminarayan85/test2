@@ -79,7 +79,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				stockDefinition.setStockId(currentImportToken);
 				stockDefinition.setPrevId(currentImportToken);
 			}  else if ("unit".equals(currentFieldToken)) {
-				/* TODO*/
+				stockDefinition.setUnit(Utilities.tokenToInt(currentImportToken));
 			}  else if ("parent size".equals(currentFieldToken)) {
 				stockDefinition.setParentsize(currentImportToken);
 			}  else if ("run size".equals(currentFieldToken)) {
@@ -154,7 +154,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("copier[2]".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("press name".equals(currentFieldToken)) {
-				/* TODO */
+				/* Done above */
 			}  else if ("cut rate".equals(currentFieldToken)) {
 				stockDefinition.setCutsPer100(Utilities.tokenToInt(currentImportToken));
 			}  else if ("minimum cut".equals(currentFieldToken)) {
@@ -276,7 +276,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("not used byte".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("vendor id".equals(currentFieldToken)) {
-				/* TODO */
+				/* done */
 			}  else if ("group name".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
@@ -293,7 +293,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("type".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("generic color id".equals(currentFieldToken)) {
-				/* TODO */
+				/* done */
 			}  else if ("generic color name".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
@@ -306,7 +306,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					stockDefinition.setGenericColor(genericColors);
 				}
 			}  else if ("generic finish id".equals(currentFieldToken)) {
-				/* TODO */
+				/* done */
 			}  else if ("generic finish name".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
@@ -319,7 +319,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					stockDefinition.setFinish(stockFinish);
 				}
 			}  else if ("grade id".equals(currentFieldToken)) {
-				/* TODO */
+				/* done */
 			}  else if ("grade name".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
@@ -332,21 +332,21 @@ public class StockDefinitionMapper extends ImportMapper {
 					stockDefinition.setGrade(stockGrade);
 				}
 			}  else if ("mill".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setMill(Utilities.tokenToInt(currentImportToken));
 			}  else if ("mWeight".equals(currentFieldToken)) {
 				stockDefinition.setMweight(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("caliper".equals(currentFieldToken)) {
 				stockDefinition.setThickness(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("lot count".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setLotcount(Utilities.tokenToInt(currentImportToken));
 			}  else if ("carton count".equals(currentFieldToken)) {
 				stockDefinition.setSheetspercarton(Utilities.tokenToInt(currentImportToken));
 			}  else if ("carton weight".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setCartonWeight(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("sheets per skid".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setSheetperSkid(Utilities.tokenToInt(currentImportToken));
 			}  else if ("weight per skid".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setWeightperSkid(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("basic size x".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("basic size".equals(currentFieldToken)) {
@@ -412,7 +412,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("comment".equals(currentFieldToken)) {
 				stockDefinition.setComments(currentImportToken);
 			}  else if ("measure".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setMeasure(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("thickness type".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == true)
 					stockDefinition.setUom("Caliper");
@@ -433,7 +433,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
 				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("forest managment ID".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setForestManagement(currentImportToken);
 			}  else if ("coc expand 1".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("coc expand 2".equals(currentFieldToken)) {
@@ -457,20 +457,20 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("coc expand 9".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("priced in sets".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setPricedinSets(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("short grain".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setShortgain(Utilities.tokenToInt(currentImportToken));
 			}  else if ("no broken carton".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setNoBrokenCarton(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("envelope".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true)
 					stockDefinition.setStockunit(0);
 			}  else if ("imported".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setImported(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("is inventory shell".equals(currentFieldToken)) {
 				stockDefinition.setShellItem(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("allow negative inventory".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setAllownegative(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("isMetric".equals(currentFieldToken)) {
 				stockDefinition.setIsMetric(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("roll stock".equals(currentFieldToken)) {
@@ -482,43 +482,43 @@ public class StockDefinitionMapper extends ImportMapper {
 					
 			}  else if ("inventory change log[1]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[2]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[3]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[4]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[5]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[6]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[7]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[8]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[9]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory change log[10]".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					/* TODO */
+					/* done */
 				}
 			}  else if ("inventory shell acct".equals(currentFieldToken)) {
 				/* TODO */

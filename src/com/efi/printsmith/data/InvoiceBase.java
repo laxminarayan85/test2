@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "InvoiceBase.findall", query = "from InvoiceBase"),
@@ -285,9 +285,6 @@ public class InvoiceBase extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String invoiceNumber;
 	
@@ -298,7 +295,6 @@ public class InvoiceBase extends ModelBase {
 		return invoiceNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -307,9 +303,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long version;
 	
@@ -320,7 +313,6 @@ public class InvoiceBase extends ModelBase {
 		return version; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -329,9 +321,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -342,7 +331,6 @@ public class InvoiceBase extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -351,9 +339,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesRep salesRep;
 	
@@ -364,7 +349,6 @@ public class InvoiceBase extends ModelBase {
 		return salesRep; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -373,9 +357,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String customerPO;
 	
@@ -386,7 +367,6 @@ public class InvoiceBase extends ModelBase {
 		return customerPO; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -395,9 +375,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String expenseCode;
 	
@@ -408,7 +385,6 @@ public class InvoiceBase extends ModelBase {
 		return expenseCode; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -417,9 +393,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address billToAddress;
 	
@@ -430,7 +403,6 @@ public class InvoiceBase extends ModelBase {
 		return billToAddress; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -439,9 +411,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipToAddress;
 	
@@ -452,7 +421,6 @@ public class InvoiceBase extends ModelBase {
 		return shipToAddress; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -461,9 +429,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Contact contact;
 	
@@ -474,7 +439,6 @@ public class InvoiceBase extends ModelBase {
 		return contact; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -483,9 +447,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String salesCode;
 	
@@ -496,7 +457,6 @@ public class InvoiceBase extends ModelBase {
 		return salesCode; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -505,9 +465,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String resaleId;
 	
@@ -518,7 +475,6 @@ public class InvoiceBase extends ModelBase {
 		return resaleId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -527,9 +483,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shippingMethod;
 	
@@ -540,7 +493,6 @@ public class InvoiceBase extends ModelBase {
 		return shippingMethod; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -549,9 +501,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long printCount;
 	
@@ -562,7 +511,6 @@ public class InvoiceBase extends ModelBase {
 		return printCount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -571,9 +519,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Account account;
 	
@@ -584,7 +529,6 @@ public class InvoiceBase extends ModelBase {
 		return account; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -593,9 +537,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "invoicebase_jobs")
 	private java.util.List<Job> jobs;
@@ -607,16 +548,12 @@ public class InvoiceBase extends ModelBase {
 		return jobs; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addJobs(Job obj) {
 		if (jobs == null) {
 			jobs = new java.util.ArrayList<Job>();
 		}
 		jobs.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -625,9 +562,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
@@ -639,16 +573,12 @@ public class InvoiceBase extends ModelBase {
 		return charges; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addCharges(Charge obj) {
 		if (charges == null) {
 			charges = new java.util.ArrayList<Charge>();
 		}
 		charges.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -657,9 +587,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;
@@ -671,16 +598,12 @@ public class InvoiceBase extends ModelBase {
 		return markupCharges; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addMarkupCharges(ChargeDefinition obj) {
 		if (markupCharges == null) {
 			markupCharges = new java.util.ArrayList<ChargeDefinition>();
 		}
 		markupCharges.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -689,9 +612,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SpecialInstructions specialInstructions;
 	
@@ -702,7 +622,6 @@ public class InvoiceBase extends ModelBase {
 		return specialInstructions; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -711,9 +630,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private NotePad notes;
 	
@@ -724,7 +640,6 @@ public class InvoiceBase extends ModelBase {
 		return notes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -733,9 +648,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private HoldState holdState;
 	
@@ -746,7 +658,6 @@ public class InvoiceBase extends ModelBase {
 		return holdState; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -755,9 +666,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date orderedDate;
 	
@@ -768,7 +676,6 @@ public class InvoiceBase extends ModelBase {
 		return orderedDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -777,9 +684,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date wantedDate;
 	
@@ -790,7 +694,6 @@ public class InvoiceBase extends ModelBase {
 		return wantedDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -799,9 +702,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date proofDate;
 	
@@ -812,7 +712,6 @@ public class InvoiceBase extends ModelBase {
 		return proofDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -821,9 +720,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date completedDate;
 	
@@ -834,7 +730,6 @@ public class InvoiceBase extends ModelBase {
 		return completedDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -843,9 +738,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date customerNotificationDate;
 	
@@ -856,7 +748,6 @@ public class InvoiceBase extends ModelBase {
 		return customerNotificationDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -865,9 +756,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date pickupDate;
 	
@@ -878,7 +766,6 @@ public class InvoiceBase extends ModelBase {
 		return pickupDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -887,9 +774,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date reorderDate;
 	
@@ -900,7 +784,6 @@ public class InvoiceBase extends ModelBase {
 		return reorderDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -909,9 +792,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date locationChangeDate;
 	
@@ -922,7 +802,6 @@ public class InvoiceBase extends ModelBase {
 		return locationChangeDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -931,9 +810,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date deliveryIntentDate;
 	
@@ -944,7 +820,6 @@ public class InvoiceBase extends ModelBase {
 		return deliveryIntentDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -953,9 +828,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double shipCharges;
 	
@@ -966,7 +838,6 @@ public class InvoiceBase extends ModelBase {
 		return shipCharges; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -975,9 +846,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double markups;
 	
@@ -988,7 +856,6 @@ public class InvoiceBase extends ModelBase {
 		return markups; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -997,9 +864,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double discountFactor;
 	
@@ -1010,7 +874,6 @@ public class InvoiceBase extends ModelBase {
 		return discountFactor; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1019,9 +882,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double dollarDiscount;
 	
@@ -1032,7 +892,6 @@ public class InvoiceBase extends ModelBase {
 		return dollarDiscount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1041,9 +900,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double discount;
 	
@@ -1054,7 +910,6 @@ public class InvoiceBase extends ModelBase {
 		return discount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1063,9 +918,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	
@@ -1076,7 +928,6 @@ public class InvoiceBase extends ModelBase {
 		return taxTable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1085,9 +936,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double subTotal;
 	
@@ -1098,7 +946,6 @@ public class InvoiceBase extends ModelBase {
 		return subTotal; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1107,9 +954,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double grandTotal;
 	
@@ -1120,7 +964,6 @@ public class InvoiceBase extends ModelBase {
 		return grandTotal; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1129,9 +972,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double amountDue;
 	
@@ -1142,7 +982,6 @@ public class InvoiceBase extends ModelBase {
 		return amountDue; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1151,9 +990,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double totalCost;
 	
@@ -1164,7 +1000,6 @@ public class InvoiceBase extends ModelBase {
 		return totalCost; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1173,9 +1008,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean addressOverriden;
 	
@@ -1186,7 +1018,6 @@ public class InvoiceBase extends ModelBase {
 		return addressOverriden; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1195,9 +1026,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean costed;
 	
@@ -1208,7 +1036,6 @@ public class InvoiceBase extends ModelBase {
 		return costed; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1217,9 +1044,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer openNotesOnOpen;
 	
@@ -1230,7 +1054,6 @@ public class InvoiceBase extends ModelBase {
 		return openNotesOnOpen; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1239,9 +1062,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean completed;
 	
@@ -1252,7 +1072,6 @@ public class InvoiceBase extends ModelBase {
 		return completed; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1261,9 +1080,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean priceLocked;
 	
@@ -1274,7 +1090,6 @@ public class InvoiceBase extends ModelBase {
 		return priceLocked; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1283,9 +1098,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean onPendingList;
 	
@@ -1296,7 +1108,6 @@ public class InvoiceBase extends ModelBase {
 		return onPendingList; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1305,9 +1116,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean locked;
 	
@@ -1318,7 +1126,6 @@ public class InvoiceBase extends ModelBase {
 		return locked; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1327,9 +1134,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxShipping;
 	
@@ -1340,7 +1144,6 @@ public class InvoiceBase extends ModelBase {
 		return taxShipping; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1349,9 +1152,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean poRequired;
 	
@@ -1362,7 +1162,6 @@ public class InvoiceBase extends ModelBase {
 		return poRequired; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1371,9 +1170,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean fileOriginals;
 	
@@ -1384,7 +1180,6 @@ public class InvoiceBase extends ModelBase {
 		return fileOriginals; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1393,9 +1188,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean notTaxable;
 	
@@ -1406,7 +1198,6 @@ public class InvoiceBase extends ModelBase {
 		return notTaxable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1415,9 +1206,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean firmWantedByDate;
 	
@@ -1428,7 +1216,6 @@ public class InvoiceBase extends ModelBase {
 		return firmWantedByDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1437,9 +1224,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean releasedToProduction;
 	
@@ -1450,7 +1234,6 @@ public class InvoiceBase extends ModelBase {
 		return releasedToProduction; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1459,9 +1242,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double priceTotal;
 	
@@ -1472,7 +1252,6 @@ public class InvoiceBase extends ModelBase {
 		return priceTotal; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1481,9 +1260,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean containsInventoriedStock;
 	
@@ -1494,7 +1270,6 @@ public class InvoiceBase extends ModelBase {
 		return containsInventoriedStock; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1503,9 +1278,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean discountIsDollars;
 	
@@ -1516,7 +1288,6 @@ public class InvoiceBase extends ModelBase {
 		return discountIsDollars; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1525,9 +1296,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean discountIsOneTime;
 	
@@ -1538,7 +1306,6 @@ public class InvoiceBase extends ModelBase {
 		return discountIsOneTime; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1547,9 +1314,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String takenBy;
 	
@@ -1560,7 +1324,6 @@ public class InvoiceBase extends ModelBase {
 		return takenBy; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1569,9 +1332,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double priceSubTotal;
 	
@@ -1582,7 +1342,6 @@ public class InvoiceBase extends ModelBase {
 		return priceSubTotal; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1591,9 +1350,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double shipPrice;
 	
@@ -1604,7 +1360,6 @@ public class InvoiceBase extends ModelBase {
 		return shipPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1613,9 +1368,6 @@ public class InvoiceBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double tax;
 	
@@ -1626,7 +1378,6 @@ public class InvoiceBase extends ModelBase {
 		return tax; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

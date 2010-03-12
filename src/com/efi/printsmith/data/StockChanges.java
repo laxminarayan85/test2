@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "StockChanges.findall", query = "from StockChanges"),
@@ -73,9 +73,6 @@ public class StockChanges extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long stockChangeID;
 	
@@ -86,7 +83,6 @@ public class StockChanges extends ModelBase {
 		return stockChangeID; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -95,9 +91,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String pSUser;
 	
@@ -108,7 +101,6 @@ public class StockChanges extends ModelBase {
 		return pSUser; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -117,9 +109,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date stockChangeDate;
 	
@@ -130,7 +119,6 @@ public class StockChanges extends ModelBase {
 		return stockChangeDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -139,9 +127,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String howChanged;
 	
@@ -152,7 +137,6 @@ public class StockChanges extends ModelBase {
 		return howChanged; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -161,9 +145,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer quantity;
 	
@@ -174,7 +155,6 @@ public class StockChanges extends ModelBase {
 		return quantity; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -183,9 +163,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String reference;
 	
@@ -196,7 +173,6 @@ public class StockChanges extends ModelBase {
 		return reference; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -205,9 +181,6 @@ public class StockChanges extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockDefinition stockDefinition;
 	
@@ -218,7 +191,6 @@ public class StockChanges extends ModelBase {
 		return stockDefinition; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

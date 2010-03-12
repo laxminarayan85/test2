@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "DataManager.findall", query = "from DataManager"),
@@ -49,9 +49,6 @@ public class DataManager extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean dataloaded;
 	
@@ -62,7 +59,6 @@ public class DataManager extends ModelBase {
 		return dataloaded; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

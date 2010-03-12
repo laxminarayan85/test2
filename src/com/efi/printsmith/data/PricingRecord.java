@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PricingRecord.findall", query = "from PricingRecord"),
@@ -105,9 +105,6 @@ public class PricingRecord extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceLogEntry priceLogEntry;
 	
@@ -118,7 +115,6 @@ public class PricingRecord extends ModelBase {
 		return priceLogEntry; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -127,9 +123,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double unitPrice;
 	
@@ -140,7 +133,6 @@ public class PricingRecord extends ModelBase {
 		return unitPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -149,9 +141,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double totalPrice;
 	
@@ -162,7 +151,6 @@ public class PricingRecord extends ModelBase {
 		return totalPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -171,9 +159,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double otherChargePrice;
 	
@@ -184,7 +169,6 @@ public class PricingRecord extends ModelBase {
 		return otherChargePrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -193,9 +177,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double prepPrice;
 	
@@ -206,7 +187,6 @@ public class PricingRecord extends ModelBase {
 		return prepPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -215,9 +195,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double oversTotalPrice;
 	
@@ -228,7 +205,6 @@ public class PricingRecord extends ModelBase {
 		return oversTotalPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -237,9 +213,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double bindPrice;
 	
@@ -250,7 +223,6 @@ public class PricingRecord extends ModelBase {
 		return bindPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -259,9 +231,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double oversUnitPrice;
 	
@@ -272,7 +241,6 @@ public class PricingRecord extends ModelBase {
 		return oversUnitPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -281,9 +249,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean unitPriceOverride;
 	
@@ -294,7 +259,6 @@ public class PricingRecord extends ModelBase {
 		return unitPriceOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -303,9 +267,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean totalPriceOverride;
 	
@@ -316,7 +277,6 @@ public class PricingRecord extends ModelBase {
 		return totalPriceOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -325,9 +285,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double laborTotalPrice;
 	
@@ -338,7 +295,6 @@ public class PricingRecord extends ModelBase {
 		return laborTotalPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -347,9 +303,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean laborTotalPriceOverride;
 	
@@ -360,7 +313,6 @@ public class PricingRecord extends ModelBase {
 		return laborTotalPriceOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -369,9 +321,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double stockTotalPrice;
 	
@@ -382,7 +331,6 @@ public class PricingRecord extends ModelBase {
 		return stockTotalPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -391,9 +339,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean stockTotalPriceOverride;
 	
@@ -404,7 +349,6 @@ public class PricingRecord extends ModelBase {
 		return stockTotalPriceOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -413,9 +357,6 @@ public class PricingRecord extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double stockMarkup;
 	
@@ -426,7 +367,6 @@ public class PricingRecord extends ModelBase {
 		return stockMarkup; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

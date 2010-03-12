@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "TaxTable.findall", query = "from TaxTable"),
@@ -85,9 +85,6 @@ public class TaxTable extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double effectiveTaxRate;
 	
@@ -98,7 +95,6 @@ public class TaxTable extends ModelBase {
 		return effectiveTaxRate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -107,9 +103,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "taxtable_taxelements")
 	private java.util.List<TaxElement> taxElements;
@@ -121,16 +114,12 @@ public class TaxTable extends ModelBase {
 		return taxElements; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addTaxElements(TaxElement obj) {
 		if (taxElements == null) {
 			taxElements = new java.util.ArrayList<TaxElement>();
 		}
 		taxElements.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -139,9 +128,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxTableIsCurrent;
 	
@@ -152,7 +138,6 @@ public class TaxTable extends ModelBase {
 		return taxTableIsCurrent; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -161,9 +146,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxShipping;
 	
@@ -174,7 +156,6 @@ public class TaxTable extends ModelBase {
 		return taxShipping; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -183,9 +164,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxOnTax;
 	
@@ -196,7 +174,6 @@ public class TaxTable extends ModelBase {
 		return taxOnTax; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -205,9 +182,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean roundTaxUp;
 	
@@ -218,7 +192,6 @@ public class TaxTable extends ModelBase {
 		return roundTaxUp; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -227,9 +200,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxInPrice;
 	
@@ -240,7 +210,6 @@ public class TaxTable extends ModelBase {
 		return taxInPrice; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -249,9 +218,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean doDetail;
 	
@@ -262,7 +228,6 @@ public class TaxTable extends ModelBase {
 		return doDetail; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -271,9 +236,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer dontRoundShownTaxElements;
 	
@@ -284,7 +246,6 @@ public class TaxTable extends ModelBase {
 		return dontRoundShownTaxElements; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -293,9 +254,6 @@ public class TaxTable extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -306,7 +264,6 @@ public class TaxTable extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

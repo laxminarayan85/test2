@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesPendingList.findall", query = "from PreferencesPendingList"),
@@ -53,9 +53,6 @@ public class PreferencesPendingList extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean visible;
 	
@@ -66,7 +63,6 @@ public class PreferencesPendingList extends ModelBase {
 		return visible; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -75,9 +71,6 @@ public class PreferencesPendingList extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ColumnNames columns;
 	
@@ -88,7 +81,6 @@ public class PreferencesPendingList extends ModelBase {
 		return columns; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

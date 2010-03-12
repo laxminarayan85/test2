@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Period.findall", query = "from Period"),
@@ -77,9 +77,6 @@ public class Period extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date customtoDate;
 	
@@ -90,7 +87,6 @@ public class Period extends ModelBase {
 		return customtoDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -99,9 +95,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date customfromDate;
 	
@@ -112,7 +105,6 @@ public class Period extends ModelBase {
 		return customfromDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -121,9 +113,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date fromDate;
 	
@@ -134,7 +123,6 @@ public class Period extends ModelBase {
 		return fromDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -143,9 +131,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Date toDate;
 	
@@ -156,7 +141,6 @@ public class Period extends ModelBase {
 		return toDate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -165,9 +149,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String day;
 	
@@ -178,7 +159,6 @@ public class Period extends ModelBase {
 		return day; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -187,9 +167,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String type;
 	
@@ -200,7 +177,6 @@ public class Period extends ModelBase {
 		return type; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -209,9 +185,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer periodNumber;
 	
@@ -222,7 +195,6 @@ public class Period extends ModelBase {
 		return periodNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -231,9 +203,6 @@ public class Period extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean periodClosed;
 	
@@ -244,7 +213,6 @@ public class Period extends ModelBase {
 		return periodClosed; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

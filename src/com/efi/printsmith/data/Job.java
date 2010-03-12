@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Job.findall", query = "from Job"),
@@ -269,9 +269,6 @@ public class Job extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String jobNumber;
 	
@@ -282,7 +279,6 @@ public class Job extends ModelBase {
 		return jobNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -291,9 +287,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long jobIndex;
 	
@@ -304,7 +297,6 @@ public class Job extends ModelBase {
 		return jobIndex; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -313,9 +305,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory salesCategory;
 	
@@ -326,7 +315,6 @@ public class Job extends ModelBase {
 		return salesCategory; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -335,9 +323,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ProductCode productCode;
 	
@@ -348,7 +333,6 @@ public class Job extends ModelBase {
 		return productCode; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -357,9 +341,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_children")
 	private java.util.List<Job> children;
@@ -371,16 +352,12 @@ public class Job extends ModelBase {
 		return children; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addChildren(Job obj) {
 		if (children == null) {
 			children = new java.util.ArrayList<Job>();
 		}
 		children.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -389,9 +366,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_charges")
 	private java.util.List<Charge> charges;
@@ -403,16 +377,12 @@ public class Job extends ModelBase {
 		return charges; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addCharges(Charge obj) {
 		if (charges == null) {
 			charges = new java.util.ArrayList<Charge>();
 		}
 		charges.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -421,9 +391,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String jobNotes;
 	
@@ -434,7 +401,6 @@ public class Job extends ModelBase {
 		return jobNotes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -443,9 +409,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean jobTicketNotes;
 	
@@ -456,7 +419,6 @@ public class Job extends ModelBase {
 		return jobTicketNotes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -465,9 +427,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean brokered;
 	
@@ -478,7 +437,6 @@ public class Job extends ModelBase {
 		return brokered; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -487,9 +445,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean taxable;
 	
@@ -500,7 +455,6 @@ public class Job extends ModelBase {
 		return taxable; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -509,9 +463,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean finished;
 	
@@ -522,7 +473,6 @@ public class Job extends ModelBase {
 		return finished; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -531,9 +481,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
 	
@@ -544,7 +491,6 @@ public class Job extends ModelBase {
 		return location; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -553,9 +499,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String comment;
 	
@@ -566,7 +509,6 @@ public class Job extends ModelBase {
 		return comment; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -575,9 +517,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String description;
 	
@@ -588,7 +527,6 @@ public class Job extends ModelBase {
 		return description; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -597,9 +535,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long qtyOrdered;
 	
@@ -610,7 +545,6 @@ public class Job extends ModelBase {
 		return qtyOrdered; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -619,9 +553,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long oversUnders;
 	
@@ -632,7 +563,6 @@ public class Job extends ModelBase {
 		return oversUnders; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -641,9 +571,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long inSetsOf;
 	
@@ -654,7 +581,6 @@ public class Job extends ModelBase {
 		return inSetsOf; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -663,9 +589,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean inSetsOfOverride;
 	
@@ -676,7 +599,6 @@ public class Job extends ModelBase {
 		return inSetsOfOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -685,9 +607,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long sheets;
 	
@@ -698,7 +617,6 @@ public class Job extends ModelBase {
 		return sheets; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -707,9 +625,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long numUp;
 	
@@ -720,7 +635,6 @@ public class Job extends ModelBase {
 		return numUp; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -729,9 +643,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long numOn;
 	
@@ -742,7 +653,6 @@ public class Job extends ModelBase {
 		return numOn; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -751,9 +661,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition press;
 	
@@ -764,7 +671,6 @@ public class Job extends ModelBase {
 		return press; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -773,9 +679,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long binderyWaste;
 	
@@ -786,7 +689,6 @@ public class Job extends ModelBase {
 		return binderyWaste; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -795,9 +697,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean binderyWasteOverride;
 	
@@ -808,7 +707,6 @@ public class Job extends ModelBase {
 		return binderyWasteOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -817,9 +715,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long estWaste;
 	
@@ -830,7 +725,6 @@ public class Job extends ModelBase {
 		return estWaste; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -839,9 +733,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean estWasteOverride;
 	
@@ -852,7 +743,6 @@ public class Job extends ModelBase {
 		return estWasteOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -861,9 +751,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long signatures;
 	
@@ -874,7 +761,6 @@ public class Job extends ModelBase {
 		return signatures; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -883,9 +769,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition pricingPress;
 	
@@ -896,7 +779,6 @@ public class Job extends ModelBase {
 		return pricingPress; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -905,9 +787,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition costingPress;
 	
@@ -918,7 +797,6 @@ public class Job extends ModelBase {
 		return costingPress; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -927,9 +805,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String runMethod;
 	
@@ -940,7 +815,6 @@ public class Job extends ModelBase {
 		return runMethod; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -949,9 +823,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockDefinition stock;
 	
@@ -962,7 +833,6 @@ public class Job extends ModelBase {
 		return stock; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -971,9 +841,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String parentSize;
 	
@@ -984,7 +851,6 @@ public class Job extends ModelBase {
 		return parentSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -993,9 +859,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String runSize;
 	
@@ -1006,7 +869,6 @@ public class Job extends ModelBase {
 		return runSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1015,9 +877,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String finishSize;
 	
@@ -1028,7 +887,6 @@ public class Job extends ModelBase {
 		return finishSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1037,9 +895,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String foldedSize;
 	
@@ -1050,7 +905,6 @@ public class Job extends ModelBase {
 		return foldedSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1059,9 +913,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer frontColors;
 	
@@ -1072,7 +923,6 @@ public class Job extends ModelBase {
 		return frontColors; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1081,9 +931,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer backColors;
 	
@@ -1094,7 +941,6 @@ public class Job extends ModelBase {
 		return backColors; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1103,9 +949,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer frontPasses;
 	
@@ -1116,7 +959,6 @@ public class Job extends ModelBase {
 		return frontPasses; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1125,9 +967,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer backPasses;
 	
@@ -1138,7 +977,6 @@ public class Job extends ModelBase {
 		return backPasses; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1147,9 +985,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer frontWashes;
 	
@@ -1160,7 +995,6 @@ public class Job extends ModelBase {
 		return frontWashes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1169,9 +1003,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer backWashes;
 	
@@ -1182,7 +1013,6 @@ public class Job extends ModelBase {
 		return backWashes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1191,9 +1021,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "job_frontinks")
 	private java.util.List<InkColor> frontInks;
@@ -1205,16 +1032,12 @@ public class Job extends ModelBase {
 		return frontInks; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addFrontInks(InkColor obj) {
 		if (frontInks == null) {
 			frontInks = new java.util.ArrayList<InkColor>();
 		}
 		frontInks.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -1223,9 +1046,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private InkColor backInks;
 	
@@ -1236,7 +1056,6 @@ public class Job extends ModelBase {
 		return backInks; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1245,9 +1064,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long pressQty;
 	
@@ -1258,7 +1074,6 @@ public class Job extends ModelBase {
 		return pressQty; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1267,9 +1082,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PricingRecord pricingRecord;
 	
@@ -1280,7 +1092,6 @@ public class Job extends ModelBase {
 		return pricingRecord; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1289,9 +1100,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition pricingCopier;
 	
@@ -1302,7 +1110,6 @@ public class Job extends ModelBase {
 		return pricingCopier; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1311,9 +1118,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition costingCopier;
 	
@@ -1324,7 +1128,6 @@ public class Job extends ModelBase {
 		return costingCopier; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1333,9 +1136,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PreferencesPricingMethod pricingMethod;
 	
@@ -1346,7 +1146,6 @@ public class Job extends ModelBase {
 		return pricingMethod; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1355,9 +1154,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean doubleSided;
 	
@@ -1368,7 +1164,6 @@ public class Job extends ModelBase {
 		return doubleSided; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1377,9 +1172,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean singleSided;
 	
@@ -1390,7 +1182,6 @@ public class Job extends ModelBase {
 		return singleSided; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1399,9 +1190,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CostingRecord costingRecord;
 	
@@ -1412,7 +1200,6 @@ public class Job extends ModelBase {
 		return costingRecord; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1421,9 +1208,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Double weight;
 	
@@ -1434,7 +1218,6 @@ public class Job extends ModelBase {
 		return weight; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1443,9 +1226,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long totalCopies;
 	
@@ -1456,7 +1236,6 @@ public class Job extends ModelBase {
 		return totalCopies; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1465,9 +1244,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long numCopies;
 	
@@ -1478,7 +1254,6 @@ public class Job extends ModelBase {
 		return numCopies; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1487,9 +1262,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean numCopiesOverride;
 	
@@ -1500,7 +1272,6 @@ public class Job extends ModelBase {
 		return numCopiesOverride; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -1509,9 +1280,6 @@ public class Job extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long stockQty;
 	
@@ -1522,7 +1290,6 @@ public class Job extends ModelBase {
 		return stockQty; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

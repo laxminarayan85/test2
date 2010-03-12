@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PriceListBase.findall", query = "from PriceListBase"),
@@ -93,9 +93,6 @@ public class PriceListBase extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -106,7 +103,6 @@ public class PriceListBase extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -115,9 +111,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean ignorePriceAdjustments;
 	
@@ -128,7 +121,6 @@ public class PriceListBase extends ModelBase {
 		return ignorePriceAdjustments; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -137,9 +129,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean isDiscount;
 	
@@ -150,7 +139,6 @@ public class PriceListBase extends ModelBase {
 		return isDiscount; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -159,9 +147,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean isRate;
 	
@@ -172,7 +157,6 @@ public class PriceListBase extends ModelBase {
 		return isRate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -181,9 +165,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean interpolate;
 	
@@ -194,7 +175,6 @@ public class PriceListBase extends ModelBase {
 		return interpolate; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -203,9 +183,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean isDollar;
 	
@@ -216,7 +193,6 @@ public class PriceListBase extends ModelBase {
 		return isDollar; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -225,9 +201,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean fillAllValues;
 	
@@ -238,7 +211,6 @@ public class PriceListBase extends ModelBase {
 		return fillAllValues; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -247,9 +219,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean sequence;
 	
@@ -260,7 +229,6 @@ public class PriceListBase extends ModelBase {
 		return sequence; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -269,9 +237,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean isPercentage;
 	
@@ -282,7 +247,6 @@ public class PriceListBase extends ModelBase {
 		return isPercentage; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -291,9 +255,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean lastItemIsPriceAdditionalQty;
 	
@@ -304,7 +265,6 @@ public class PriceListBase extends ModelBase {
 		return lastItemIsPriceAdditionalQty; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -313,9 +273,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "pricelistbase_elements")
 	private java.util.List<PriceListElement> elements;
@@ -327,16 +284,12 @@ public class PriceListBase extends ModelBase {
 		return elements; 
 	}
 
-	/**
-	 * @generated
-	 */	
 	public void addElements(PriceListElement obj) {
 		if (elements == null) {
 			elements = new java.util.ArrayList<PriceListElement>();
 		}
 		elements.add(obj);
 	}
-	
 	/**
 	 * @generated
 	 */	
@@ -345,9 +298,6 @@ public class PriceListBase extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer priceMethod;
 	
@@ -358,7 +308,6 @@ public class PriceListBase extends ModelBase {
 		return priceMethod; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

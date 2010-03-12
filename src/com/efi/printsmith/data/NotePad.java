@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "NotePad.findall", query = "from NotePad"),
@@ -81,9 +81,6 @@ public class NotePad extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String notesWho;
 	
@@ -94,7 +91,6 @@ public class NotePad extends ModelBase {
 		return notesWho; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -103,9 +99,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String phoneNumber;
 	
@@ -116,7 +109,6 @@ public class NotePad extends ModelBase {
 		return phoneNumber; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -125,9 +117,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String notesWhat;
 	
@@ -138,7 +127,6 @@ public class NotePad extends ModelBase {
 		return notesWhat; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -147,9 +135,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String howMany;
 	
@@ -160,7 +145,6 @@ public class NotePad extends ModelBase {
 		return howMany; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -169,9 +153,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String whatSize;
 	
@@ -182,7 +163,6 @@ public class NotePad extends ModelBase {
 		return whatSize; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -191,9 +171,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String paper;
 	
@@ -204,7 +181,6 @@ public class NotePad extends ModelBase {
 		return paper; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -213,9 +189,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String notes;
 	
@@ -226,7 +199,6 @@ public class NotePad extends ModelBase {
 		return notes; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -235,9 +207,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String notesWhen;
 	
@@ -248,7 +217,6 @@ public class NotePad extends ModelBase {
 		return notesWhen; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -257,9 +225,6 @@ public class NotePad extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean showOnOpen;
 	
@@ -270,7 +235,6 @@ public class NotePad extends ModelBase {
 		return showOnOpen; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

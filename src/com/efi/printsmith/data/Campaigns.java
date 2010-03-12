@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Campaigns.findall", query = "from Campaigns"),
@@ -61,9 +61,6 @@ public class Campaigns extends ModelBase {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -74,7 +71,6 @@ public class Campaigns extends ModelBase {
 		return name; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -83,9 +79,6 @@ public class Campaigns extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean applied;
 	
@@ -96,7 +89,6 @@ public class Campaigns extends ModelBase {
 		return applied; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -105,9 +97,6 @@ public class Campaigns extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean globalCampaign;
 	
@@ -118,7 +107,6 @@ public class Campaigns extends ModelBase {
 		return globalCampaign; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
@@ -127,9 +115,6 @@ public class Campaigns extends ModelBase {
 	}
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String campaignId;
 	
@@ -140,7 +125,6 @@ public class Campaigns extends ModelBase {
 		return campaignId; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	

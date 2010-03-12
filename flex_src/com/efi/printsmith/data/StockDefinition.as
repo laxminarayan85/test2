@@ -125,6 +125,18 @@ package com.efi.printsmith.data
 		public var copier2PricePerSheet:Number = 0;
 		public var copier3PricePerSheet:Number = 0;
 		public var stockChanges:ArrayCollection;
+		public var unit:int = 0;
+		public var mill:int = 0;
+		public var lotcount:int = 0;
+		public var cartonWeight:Number = 0;
+		public var sheetperSkid:int = 0;
+		public var weightperSkid:Number = 0;
+		public var shortgain:int = 0;
+		public var noBrokenCarton:Boolean = true;
+		public var pricedinSets:Boolean = true;
+		public var imported:Boolean = true;
+		public var measure:Boolean = true;
+		public var allownegative:Boolean = true;
 	
 	}
 }

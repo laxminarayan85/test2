@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
-
+ 
  
 /**
- * @generated
+ * @!generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CuttingCharge.findall", query = "from CuttingCharge"),
@@ -49,9 +49,6 @@ public class CuttingCharge extends Charge {
 
  	
 	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer cuts;
 	
@@ -62,7 +59,6 @@ public class CuttingCharge extends Charge {
 		return cuts; 
 	}
 
-	
 	/**
 	 * @generated
 	 */	
