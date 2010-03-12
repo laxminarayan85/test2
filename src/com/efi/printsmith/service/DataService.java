@@ -161,6 +161,22 @@ public class DataService {
 		return null;
 	}
 	
+	
+	public StockType getByStockTypeID(String stocktypeId) {
+		try {
+			log.debug("** getByStocktypeId called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from StockType where viewableID = '" + stocktypeId + "'";
+			Query query = em.createQuery(queryString);
+			StockType object = (StockType) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	
 	public PressDefinition getByPressId(String pressId) {
 		try {
 			log.debug("** getByPressId called.");

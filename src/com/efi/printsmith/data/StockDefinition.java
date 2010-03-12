@@ -485,10 +485,6 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String UNIT = "Unit";
-	/**
-	 * @generated
-	 */
 	public static final String MILL = "Mill";
 	/**
 	 * @generated
@@ -530,6 +526,10 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String ALLOWNEGATIVE = "Allownegative";
+	/**
+	 * @generated
+	 */
+	public static final String ROLLWEIGHT = "RollWeight";
 
 	/**
 	 * @generated
@@ -613,20 +613,20 @@ public class StockDefinition extends ModelBase {
 	}
  	
 	
- 	@Basic
-	private String stktype;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private StockType stktype;
 	
 	/**
 	 * @generated
  	 */
-	public String getStktype(){
+	public StockType getStktype(){
 		return stktype; 
 	}
 
 	/**
 	 * @generated
 	 */	
-	public void setStktype(String newVal) {
+	public void setStktype(StockType newVal) {
 		this.stktype = newVal;
 	}
  	
@@ -2572,24 +2572,6 @@ public class StockDefinition extends ModelBase {
  	
 	
  	@Basic
-	private Integer unit;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getUnit(){
-		return unit; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void setUnit(Integer newVal) {
-		this.unit = newVal;
-	}
- 	
-	
- 	@Basic
 	private Integer mill;
 	
 	/**
@@ -2785,6 +2767,24 @@ public class StockDefinition extends ModelBase {
 	public void setAllownegative(Boolean newVal) {
 		this.allownegative = newVal;
 	}
+ 	
+	
+ 	@Basic
+	private Double rollWeight;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getRollWeight(){
+		return rollWeight; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setRollWeight(Double newVal) {
+		this.rollWeight = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2903,7 +2903,6 @@ public class StockDefinition extends ModelBase {
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) return getCopier2PricePerSheet();
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) return getCopier3PricePerSheet();
 		if (STOCKCHANGES.equals(propertyName)) return getStockChanges();
-		if (UNIT.equals(propertyName)) return getUnit();
 		if (MILL.equals(propertyName)) return getMill();
 		if (LOTCOUNT.equals(propertyName)) return getLotcount();
 		if (CARTONWEIGHT.equals(propertyName)) return getCartonWeight();
@@ -2915,6 +2914,7 @@ public class StockDefinition extends ModelBase {
 		if (IMPORTED.equals(propertyName)) return getImported();
 		if (MEASURE.equals(propertyName)) return getMeasure();
 		if (ALLOWNEGATIVE.equals(propertyName)) return getAllownegative();
+		if (ROLLWEIGHT.equals(propertyName)) return getRollWeight();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2928,7 +2928,7 @@ public class StockDefinition extends ModelBase {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (STKGROUP.equals(propertyName)) setStkgroup((StockGroup)newValue); else
 		if (STKCLASS.equals(propertyName)) setStkclass((StockClass)newValue); else
-		if (STKTYPE.equals(propertyName)) setStktype((String)newValue); else
+		if (STKTYPE.equals(propertyName)) setStktype((StockType)newValue); else
 		if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
 		if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
 		if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
@@ -3036,7 +3036,6 @@ public class StockDefinition extends ModelBase {
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
 		if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
-		if (UNIT.equals(propertyName)) setUnit((Integer)newValue); else
 		if (MILL.equals(propertyName)) setMill((Integer)newValue); else
 		if (LOTCOUNT.equals(propertyName)) setLotcount((Integer)newValue); else
 		if (CARTONWEIGHT.equals(propertyName)) setCartonWeight((Double)newValue); else
@@ -3048,6 +3047,7 @@ public class StockDefinition extends ModelBase {
 		if (IMPORTED.equals(propertyName)) setImported((Boolean)newValue); else
 		if (MEASURE.equals(propertyName)) setMeasure((Boolean)newValue); else
 		if (ALLOWNEGATIVE.equals(propertyName)) setAllownegative((Boolean)newValue); else
+		if (ROLLWEIGHT.equals(propertyName)) setRollWeight((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3066,7 +3066,7 @@ public class StockDefinition extends ModelBase {
 		if (STKCLASS.equals(propertyName)) 
 			return new Class<?>[] {StockClass.class};		
 		if (STKTYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {StockType.class};		
 		if (ISMETRIC.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (FINISH.equals(propertyName)) 
@@ -3281,8 +3281,6 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (STOCKCHANGES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, StockChanges.class};		
-		if (UNIT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
 		if (MILL.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (LOTCOUNT.equals(propertyName)) 
@@ -3305,6 +3303,8 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (ALLOWNEGATIVE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (ROLLWEIGHT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3427,7 +3427,6 @@ public class StockDefinition extends ModelBase {
 		if (COPIER2PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
 		if (COPIER3PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
 		if (STOCKCHANGES.equals(propertyName)) return StockDefinition.class;
-		if (UNIT.equals(propertyName)) return StockDefinition.class;
 		if (MILL.equals(propertyName)) return StockDefinition.class;
 		if (LOTCOUNT.equals(propertyName)) return StockDefinition.class;
 		if (CARTONWEIGHT.equals(propertyName)) return StockDefinition.class;
@@ -3439,6 +3438,7 @@ public class StockDefinition extends ModelBase {
 		if (IMPORTED.equals(propertyName)) return StockDefinition.class;
 		if (MEASURE.equals(propertyName)) return StockDefinition.class;
 		if (ALLOWNEGATIVE.equals(propertyName)) return StockDefinition.class;
+		if (ROLLWEIGHT.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3674,8 +3674,6 @@ public class StockDefinition extends ModelBase {
 			return false;
 		if (! SmartEquals(getStockChanges(), objT.getStockChanges()))
 			return false;
-		if (! SmartEquals(getUnit(), objT.getUnit()))
-			return false;
 		if (! SmartEquals(getMill(), objT.getMill()))
 			return false;
 		if (! SmartEquals(getLotcount(), objT.getLotcount()))
@@ -3697,6 +3695,8 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getMeasure(), objT.getMeasure()))
 			return false;
 		if (! SmartEquals(getAllownegative(), objT.getAllownegative()))
+			return false;
+		if (! SmartEquals(getRollWeight(), objT.getRollWeight()))
 			return false;
 		return true;
 	}			

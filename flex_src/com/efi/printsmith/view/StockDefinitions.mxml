@@ -18,8 +18,6 @@
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
 			<mx:RemoveChild target="{label4}"/>
 			<mx:RemoveChild target="{textinput1}"/>
-			<mx:SetProperty target="{mWeight}" name="x" value="326.5"/>
-			<mx:SetProperty target="{mWeight}" name="y" value="116"/>
 			<mx:SetProperty target="{label1}" name="x" value="233"/>
 			<mx:SetProperty target="{label1}" name="y" value="118"/>
 			<mx:SetProperty target="{label7}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinOrderweight')}"/>
@@ -48,12 +46,15 @@
 			<mx:SetProperty target="{textinput4}" name="enabled" value="false"/>
 			<mx:SetProperty target="{DefaultLargeFormat}" name="enabled" value="false"/>
 			<mx:SetProperty target="{chkAutocalcblankstock}" name="enabled" value="false"/>
+			<mx:RemoveChild target="{mWeight}"/>
+			<mx:SetProperty target="{rollweight}" name="y" value="114"/>
 		</mx:State>
 		<mx:State name="SheetStock">
 			<mx:SetProperty target="{mWeight}" name="enabled" value="false"/>
 			<mx:SetProperty target="{textinput1}" name="enabled" value="false"/>
 			<mx:SetProperty target="{pcwRecycled}" name="x" value="64"/>
 			<mx:SetProperty target="{pcwRecycled}" name="y" value="47"/>
+			<mx:RemoveChild target="{rollweight}"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -108,11 +109,11 @@
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:RemoteObject id="stockChangesDataService" destination="dataService">
+	<!--<mx:RemoteObject id="stockChangesDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockChangesResult(event)"/>
 	</mx:RemoteObject>
-	
+	-->
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
 	</mx:RemoteObject>
@@ -135,6 +136,10 @@
 	<mx:RemoteObject id="stockColorDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockColor(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockColorResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockTypeDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockType(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockTypeResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGenericColorDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGenericColor(event)"/>
@@ -168,6 +173,7 @@
 	import com.efi.printsmith.data.StockGroup;
 	import com.efi.printsmith.data.StockGrade;
 	import com.efi.printsmith.data.StockColors;
+	import com.efi.printsmith.data.StockType;
 	import com.efi.printsmith.data.GenericColors;
 	import com.efi.printsmith.data.StockClass;
 	import com.efi.printsmith.data.StockFinish;
@@ -215,8 +221,8 @@
 	[Bindable]                                         
 	private var stockDefinitions:StockDefinition;
 	
-	[Bindable]                                         
-	private var stockChange:StockChanges;
+	/* [Bindable]                                         
+	private var stockChange:StockChanges; */
 	[Bindable]                                         
 	private var account:Account;
 	[Bindable]
@@ -229,7 +235,9 @@
     private var stockChanges:ArrayCollection = new ArrayCollection();   
 
 	[Bindable]
-    private var stockColor:ArrayCollection = new ArrayCollection();   
+    private var stockColor:ArrayCollection = new ArrayCollection(); 
+    [Bindable]
+    private var stockType:ArrayCollection = new ArrayCollection();     
     [Bindable]
     private var stockClass:ArrayCollection = new ArrayCollection();   
 	[Bindable]      
@@ -265,12 +273,14 @@
 	    loadUomArray();
 	    loadUnitsArray();
 		loadStockDefinitions();
-		loadStockChanges();
+	/* 	loadStockChanges(); */
 	    loadStockGroup();
 	    loadStockClass();
 	    loadStockVendor();
 	    loadStockGrade();
 	    loadStockColor();
+	    loadStockType();
+	    
 	    loadStockGenericColor();
 	    loadStockFinish();
 	    loadPressDefinition();
@@ -380,9 +390,9 @@
 	    	mapFromStockDefinitionData();
 		}
 		
-	    stockChange = new StockChanges();
+	   stockChanges = new ArrayCollection(); 
 	    
-	     loadStockChanges();
+	    stockChanges = stockDefinitions.stockChanges;
 	  /*  loadStockGroup();
 	    loadStockVendor();
 	    loadStockGrade();
@@ -398,8 +408,11 @@
 		dataService.getAll("StockDefinition");
 	}
 	
-	public function loadStockChanges():void {
+/* 	public function loadStockChanges():void {
 		stockChangesDataService.getAll("StockChanges");
+	} */
+	public function loadStockType():void {
+		stockTypeDataService.getAll("StockType");
 	}
 	
 	public function loadDimensions():void {
@@ -520,7 +533,7 @@
 		{
 			mapStockDefinitionData();
 			dataService.addUpdate(stockDefinitions);
-			stockChangesDataService.addUpdate(stockChange);
+		//	stockChangesDataService.addUpdate(stockChange);
 			standardItemCheckEvent();
 		}else {
 			showMessage("Cannot save Stock Definition with an empty name.","Cannot Save");
@@ -559,6 +572,23 @@
 			}
 			else {
 				cboStockGroup.selectedItem = item;
+			}
+		}
+	}
+	private function doStockType() : void {
+		var type:StockType;
+		var result:Boolean;
+		
+		if (stkType.text != null && stkType.text != "" && stkType.selectedIndex == -1) {
+			var item:int = findItem(stkType.text, stockGroup);
+			if (item == -1) {
+				type = new StockType();
+				type.name = stkType.text;
+				stockTypeDataService.addUpdate(type);
+				stockDefinitions.stktype = type;
+			}
+			else {
+				stkType.selectedItem = item;
 			}
 		}
 	}
@@ -717,12 +747,15 @@
     	loadStockDefinitions();
 	}
 	
-	private function handleSaveStockChangesResult(ev:ResultEvent):void {
+	/* private function handleSaveStockChangesResult(ev:ResultEvent):void {
     	loadStockChanges();
-	}
+	} */
 	
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
     	loadStockGrade();
+	}
+	private function handleSaveStockTypeResult(ev:ResultEvent):void {
+    	loadStockType();
 	}
 	private function handleSaveStockGroupResult(ev:ResultEvent):void {
     	loadStockGroup();
@@ -767,9 +800,9 @@
 		dimensions=ev.result as ArrayCollection;
 	}
 
-	private function handleLoadStockChangesResult(ev:ResultEvent):void {
+	/* private function handleLoadStockChangesResult(ev:ResultEvent):void {
 		 stockChanges = ev.result as ArrayCollection;
-	}
+	} */
 	
 	private function handleLoadPressDefinition(ev:ResultEvent):void {
 		 pressDefinitions = ev.result as ArrayCollection;
@@ -788,6 +821,9 @@
 
 	private function handleLoadStockGrade(ev:ResultEvent):void {
 		 stockGrade = ev.result as ArrayCollection;
+	}
+	private function handleLoadStockType(ev:ResultEvent):void {
+		 stockType = ev.result as ArrayCollection;
 	}
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
@@ -879,8 +915,8 @@
 			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
 		if (stockDefinitions.genericColor != null)
 				cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
-		
-		
+		if (stockDefinitions.stktype != null)
+			stkType.selectedIndex = findItem(stockDefinitions.stktype.name, stockType);
 		if (stockDefinitions.vendor != null)
 			cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
 		
@@ -973,6 +1009,7 @@
 	 stockDefinitions.parentsize = parentSize.text;
 	 stockDefinitions.thickness = parseFloat(thickNess.text);
 	 stockDefinitions.mweight = parseInt(mWeight.text);
+	 stockDefinitions.rollWeight = parseInt(rollweight.text);
 	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text);
 	 stockDefinitions.minorder = parseInt(minOrder.text);
 	 stockDefinitions.comments = Comments.text;
@@ -1173,7 +1210,7 @@
 				<mx:CheckBox x="248.5" y="144" id="chkcharge4entiteorder" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChargeCustomerforEnt')}" width="214"/>
 
 				<fc:AutoComplete x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" lookAhead="true" labelField="name" focusOut="doStockVendor()"/>
-				<mx:TextInput x="106.5" y="33" id="stkType" width="128" text="{stockDefinitions.stktype}"/>
+				<mx:ComboBox x="106.5" y="33" id="stkType" width="128" dataProvider="{stockType}" labelField="name" focusOut="doStockType()" />
 				<mx:TextInput x="323" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
 				<fc:AutoComplete x="106.5" y="60" width="132" 
 					  id="parentSize"
@@ -1185,6 +1222,7 @@
 				<mx:TextInput x="323" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
 				<mx:TextInput x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
 				<mx:TextInput x="323" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
+				<mx:TextInput x="323" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
 				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
 				<mx:TextInput x="323" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
 				<mx:Text x="323" y="33" id="Basicsize" text="{stockDefinitions.basicsize}" width="103" height="22"/>
@@ -1293,8 +1331,7 @@
 				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AutoCalculateBlankSt')}" width="295"/>
 
 			</mx:Panel>
-			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute" dropShadowEnabled="false">
-				<mx:title>stockDefCmd.AdjustCopierDigitalM</mx:title>
+			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute" dropShadowEnabled="false" title ="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AdjustCopierDigitalM')}">
 				<mx:Label x="82" y="5" text="B&amp;W:" textAlign="right"/>
 				<mx:Label x="24" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" textAlign="right" width="93"/>
 				<mx:Label x="31" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" textAlign="right"/>

@@ -12,6 +12,7 @@ import com.efi.printsmith.data.StockFinish;
 import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.StockGroup;
 import com.efi.printsmith.data.StockClass;
+import com.efi.printsmith.data.StockType;
 import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
@@ -26,7 +27,7 @@ public class StockDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		StockDefinition stockDefinition = new StockDefinition();
 		DataService dataService = new DataService();
-		
+		double weight = 0;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -79,7 +80,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				stockDefinition.setStockId(currentImportToken);
 				stockDefinition.setPrevId(currentImportToken);
 			}  else if ("unit".equals(currentFieldToken)) {
-				stockDefinition.setUnit(Utilities.tokenToInt(currentImportToken));
+				stockDefinition.setCostunits(Utilities.tokenToInt(currentImportToken));
 			}  else if ("parent size".equals(currentFieldToken)) {
 				stockDefinition.setParentsize(currentImportToken);
 			}  else if ("run size".equals(currentFieldToken)) {
@@ -291,7 +292,16 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("coat".equals(currentFieldToken)) {
 				stockDefinition.setCoated(currentImportToken);
 			}  else if ("type".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken != "")
+				{
+					StockType stocktype = dataService.getByStockTypeID(currentImportToken);
+					if (stocktype == null)
+					{
+						stocktype = new StockType();
+						stocktype.setName(currentImportToken);
+					}
+					stockDefinition.setStktype(stocktype);
+				}
 			}  else if ("generic color id".equals(currentFieldToken)) {
 				/* done */
 			}  else if ("generic color name".equals(currentFieldToken)) {
@@ -334,7 +344,8 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("mill".equals(currentFieldToken)) {
 				stockDefinition.setMill(Utilities.tokenToInt(currentImportToken));
 			}  else if ("mWeight".equals(currentFieldToken)) {
-				stockDefinition.setMweight(Utilities.tokenToDouble(currentImportToken));
+				weight = Utilities.tokenToDouble(currentImportToken);
+				
 			}  else if ("caliper".equals(currentFieldToken)) {
 				stockDefinition.setThickness(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("lot count".equals(currentFieldToken)) {
@@ -521,7 +532,11 @@ public class StockDefinitionMapper extends ImportMapper {
 					/* done */
 				}
 			}  else if ("inventory shell acct".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					Account account = (Account) dataService.getByAccountId(currentImportToken);
+					if (account != null)
+						stockDefinition.setAccount(account);
+				}
 			}  else if ("inventory shell acct title".equals(currentFieldToken)) {
 				/* TODO */
 			}
@@ -559,7 +574,10 @@ public class StockDefinitionMapper extends ImportMapper {
 			
 		}
 		stockDefinition.setAvailable(stockDefinition.getOnHand() - stockDefinition.getCommitted())  ;
-		
+		if (stockDefinition.getStockunit() == 2)
+			stockDefinition.setRollWeight(weight);
+		else
+			stockDefinition.setMweight(weight);
 		return stockDefinition;
 	}
 }

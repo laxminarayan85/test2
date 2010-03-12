@@ -17,7 +17,7 @@ package com.efi.printsmith.data
 		public var name:String = "";
 		public var stkgroup:StockGroup;
 		public var stkclass:StockClass;
-		public var stktype:String = "";
+		public var stktype:StockType;
 		public var isMetric:Boolean = true;
 		public var finish:StockFinish;
 		public var weight:Number = 0;
@@ -125,7 +125,6 @@ package com.efi.printsmith.data
 		public var copier2PricePerSheet:Number = 0;
 		public var copier3PricePerSheet:Number = 0;
 		public var stockChanges:ArrayCollection;
-		public var unit:int = 0;
 		public var mill:int = 0;
 		public var lotcount:int = 0;
 		public var cartonWeight:Number = 0;
@@ -137,6 +136,7 @@ package com.efi.printsmith.data
 		public var imported:Boolean = true;
 		public var measure:Boolean = true;
 		public var allownegative:Boolean = true;
+		public var rollWeight:Number = 0;
 	
 	}
 }

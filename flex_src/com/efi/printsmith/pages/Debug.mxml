@@ -28,6 +28,7 @@
 			import com.efi.printsmith.data.ChargeCost;
 			import com.efi.printsmith.data.enums.ChargeCostMethod;
 			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.StockType;
 			import com.efi.printsmith.data.City;
 			import mx.managers.PopUpManager;
 			import mx.controls.Alert;
@@ -58,6 +59,11 @@
 												"17.5 x 23","17 x 28","19 x 25","23 x 29","23 x 35","24 x 38","25 x 38","35 x 45","A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","A10",
 												"BO","B1","B2","B3","B4","B5","B6","B7","C4","C5","C6","DL","#10 Envelope","#9 Envelope","Small Poster","Large Poster"];
 
+
+			private var stocktypeNames= ["Business Papers","Book Papers","Cover Papers","Index","Tagboard","Blanks","Vellum Bristol","Blotter","Label","Newsprint"];
+
+			private var stocktypesizes= ["17 x 22","25 x 38","20 x 26","5.5 x 30.5","24 x3 6","22 x 38","2.5 x 28.5","19 x 24","25 x 38","24 x 36"];
+	
 			private function handleFault(ev:FaultEvent):void
 			{
 				
@@ -109,6 +115,19 @@
 					salesCategory.name = salesCategoryNames[i];
 					salesCategory.id = 0;
 					dataService.addUpdate(salesCategory);
+				}				
+			}
+			private function doPopulateStockType():void {
+				var stockType:StockType;
+				var i:int;
+				
+				for (i=0; i<stocktypeNames.length; i++) {
+					stockType = new StockType();
+					stockType.name = stocktypeNames[i];
+					stockType.size = stocktypesizes[i]
+					stockType.id = 0;
+					stockType.viewableID = i+1;
+					dataService.addUpdate(stockType);
 				}				
 			}
 			
@@ -187,6 +206,7 @@
 				   y="190"
 				   label="DB Query"
 				   click="doDBQuery();" width="188"/>
+		<mx:Button x="10" y="229" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
