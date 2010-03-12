@@ -16,7 +16,7 @@ public class StockChangeMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		StockChanges stockChanges = new StockChanges();
 		DataService dataService = new DataService();
-		
+		StockDefinition stockDefinition = null;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -29,9 +29,7 @@ public class StockChangeMapper extends ImportMapper {
 			} else if (currentFieldToken.equals("date stamp") == true) {
 				stockChanges.setStockChangeDate(Utilities.tokenToDate(currentImportToken));
 			} else if (currentFieldToken.equals("stock id") == true) {
-				StockDefinition stockDefinition = (StockDefinition)dataService.getByPrevId("StockDefinition", currentImportToken);
-				if (stockDefinition != null)
-					stockChanges.setStockDefinition(stockDefinition);
+				stockDefinition = (StockDefinition)dataService.getByPrevId("StockDefinition", currentImportToken);
 			} else if (currentFieldToken.equals("reason code") == true) {
 				if (currentImportToken.equals("1") == true)
 					stockChanges.setHowChanged("Consumed");
@@ -77,7 +75,12 @@ public class StockChangeMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
-		
-		return stockChanges;
+		dataService.addUpdate(stockChanges);
+		stockChanges.setId(stockChanges.getId());
+		if (stockDefinition != null) {
+			stockDefinition.addStockChanges(stockChanges);
+			dataService.addUpdate(stockDefinition);
+		}
+		return null;
 	}
 }
