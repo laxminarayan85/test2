@@ -39,11 +39,11 @@
 			<mx:SetProperty target="{BlankSheetPrice5}" name="enabled" value="false"/>
 			<mx:SetProperty target="{BlankSheetPrice6}" name="enabled" value="false"/>
 			<mx:SetProperty target="{BlankSheetqty6}" name="enabled" value="false"/>
-			<mx:SetProperty target="{textinput2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{defaultBWCopier}" name="enabled" value="false"/>
 			<mx:SetProperty target="{DefaultBW}" name="enabled" value="false"/>
 			<mx:SetProperty target="{DefaultColor}" name="enabled" value="false"/>
-			<mx:SetProperty target="{textinput3}" name="enabled" value="false"/>
-			<mx:SetProperty target="{textinput4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{defaultColorCopier}" name="enabled" value="false"/>
+			<mx:SetProperty target="{defaultLargeCopier}" name="enabled" value="false"/>
 			<mx:SetProperty target="{DefaultLargeFormat}" name="enabled" value="false"/>
 			<mx:SetProperty target="{chkAutocalcblankstock}" name="enabled" value="false"/>
 			<mx:RemoveChild target="{mWeight}"/>
@@ -117,6 +117,9 @@
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="copierDefinitionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopierDefinition(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockGroupResult(event)"/>
@@ -166,6 +169,7 @@
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.DeleteStockDefinitionEvent;
 	import com.efi.printsmith.data.PressDefinition;
 	import com.efi.printsmith.data.StockDefinition;
+	import com.efi.printsmith.data.CopierDefinition;
 	import com.efi.printsmith.data.StockChanges;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.PreferencesSystem;
@@ -262,6 +266,9 @@
 	[Bindable]
 	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
 	
+	[Bindable]
+	private var copierDefinitions:ArrayCollection = new ArrayCollection();   
+	
     private var formIsValid:Boolean = false;
     
     private var focussedFormControl:DisplayObject;
@@ -284,6 +291,7 @@
 	    loadStockGenericColor();
 	    loadStockFinish();
 	    loadPressDefinition();
+	    loadCopierDefinition();
 		loadDimensions();
 		doGet(); 
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
@@ -422,7 +430,9 @@
 	public function loadPressDefinition():void {   
 	    pressDefinitionDataService.getAll("PressDefinition");
 	}
-
+	public function loadCopierDefinition():void {   
+	    copierDefinitionDataService.getAll("CopierDefinition");
+	}
 	public function loadStockGrade():void {   
 	    stockGradeDataService.getAll("StockGrade");
 	}
@@ -720,7 +730,48 @@
 			}
 		}
 	}
+	private function doCopierDefinitionBW() : void {
+		var copydef:CopierDefinition;
+		var result:Boolean;
 		
+		if (defaultBWCopier.text != null && defaultBWCopier.text != "" && defaultBWCopier.selectedIndex == -1) {
+			var item:int = findItem(defaultBWCopier.text, copierDefinitions);
+			if (item == -1) {
+				defaultBWCopier.selectedItem = null;
+			}
+			else {
+				defaultBWCopier.selectedItem = item;
+			}
+		}
+	}	
+	private function doCopierDefinitionColor() : void {
+		var copydef:CopierDefinition;
+		var result:Boolean;
+		
+		if (defaultColorCopier.text != null && defaultColorCopier.text != "" && defaultColorCopier.selectedIndex == -1) {
+			var item:int = findItem(defaultColorCopier.text, copierDefinitions);
+			if (item == -1) {
+				defaultColorCopier.selectedItem = null;
+			}
+			else {
+				defaultColorCopier.selectedItem = item;
+			}
+		}
+	}
+	private function doCopierDefinitionLarge() : void {
+		var copydef:CopierDefinition;
+		var result:Boolean;
+		
+		if (defaultLargeCopier.text != null && defaultLargeCopier.text != "" && defaultLargeCopier.selectedIndex == -1) {
+			var item:int = findItem(defaultLargeCopier.text, copierDefinitions);
+			if (item == -1) {
+				defaultLargeCopier.selectedItem = null;
+			}
+			else {
+				defaultLargeCopier.selectedItem = item;
+			}
+		}
+	}	
 	private function doAddCharges():void {
 		
 		var chargePicker:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
@@ -807,7 +858,9 @@
 	private function handleLoadPressDefinition(ev:ResultEvent):void {
 		 pressDefinitions = ev.result as ArrayCollection;
 	}
-	
+	private function handleLoadCopierDefinition(ev:ResultEvent):void {
+		 copierDefinitions = ev.result as ArrayCollection;
+	}
 	private function handleLoadStockGroup(ev:ResultEvent):void {
 		 stockGroup = ev.result as ArrayCollection;
 	}
@@ -905,7 +958,17 @@
 		
 		if (stockDefinitions.defaultPress != null)
 	 		cboDefaultPress.selectedIndex = findItem(stockDefinitions.defaultPress.name, pressDefinitions);
+		
+		if (stockDefinitions.defaultBWCopier != null)
+	 		defaultBWCopier.selectedIndex = findItem(stockDefinitions.defaultBWCopier.name, copierDefinitions);
 
+		if (stockDefinitions.defaultColorCopier != null)
+	 		defaultColorCopier.selectedIndex = findItem(stockDefinitions.defaultColorCopier.name, copierDefinitions);
+
+		if (stockDefinitions.defaultLargeCopier != null)
+	 		defaultLargeCopier.selectedIndex = findItem(stockDefinitions.defaultLargeCopier.name, copierDefinitions);
+
+		
 		if (stockDefinitions.stkgroup != null)
 			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
 		if (stockDefinitions.stkclass != null)
@@ -987,6 +1050,16 @@
 	 
 	 if (cboDefaultPress != null && cboDefaultPress.selectedItem != null) 
 	 	stockDefinitions.defaultPress = cboDefaultPress.selectedItem as PressDefinition;
+	 	
+	 if (defaultBWCopier != null && defaultBWCopier.selectedItem != null) 
+	 	stockDefinitions.defaultBWCopier = defaultBWCopier.selectedItem as CopierDefinition;
+	 	
+	 if (defaultColorCopier != null && defaultColorCopier.selectedItem != null) 
+	 	stockDefinitions.defaultColorCopier = cboDefaultPress.selectedItem as CopierDefinition;
+	 	
+	 if (defaultLargeCopier != null && defaultLargeCopier.selectedItem != null) 
+	 	stockDefinitions.defaultLargeCopier = cboDefaultPress.selectedItem as CopierDefinition;	
+	 	
 	 	
 	 //check boxes
 	 stockDefinitions.standardItem = chkstandardItem.selected;
@@ -1340,9 +1413,9 @@
 				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{stockDefinitions.copier1PricePerSheet}"/>
 				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{stockDefinitions.copier2PricePerSheet}"/>
 				<mx:TextInput x="125" y="53" width="90" id="DefaultLargeFormat" text="{stockDefinitions.copier3PricePerSheet}"/>
-				<mx:TextInput x="223" y="3" width="201" id="textinput2"/>
-				<mx:TextInput x="223" y="28" width="201" id="textinput3"/>
-				<mx:TextInput x="223" y="53" width="201" id="textinput4"/>
+				<mx:ComboBox x="223" y="3" width="201" id="defaultBWCopier" focusOut="doCopierDefinitionBW();" dataProvider="{copierDefinitions}" labelField="name"/>
+				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
+				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PresetuptoCharges')}" dropShadowEnabled="false">
 				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>

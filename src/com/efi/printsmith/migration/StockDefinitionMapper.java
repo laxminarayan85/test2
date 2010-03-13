@@ -17,6 +17,7 @@ import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.StockChanges;
 import com.efi.printsmith.data.PaperPrice;
 import java.io.File;
@@ -147,13 +148,21 @@ public class StockDefinitionMapper extends ImportMapper {
 						stockDefinition.setDefaultPress(pressDefinition);
 				}
 			}  else if ("copyID".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					CopierDefinition copyDefinition = (CopierDefinition) dataService.getByPrevId("CopierDefinition",currentImportToken);
+					if (copyDefinition != null)
+						stockDefinition.setDefaultBWCopier(copyDefinition);
+				}
 			}  else if ("copyID2".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					CopierDefinition copyDefinition = (CopierDefinition) dataService.getByPrevId("CopierDefinition",currentImportToken);
+					if (copyDefinition != null)
+						stockDefinition.setDefaultColorCopier(copyDefinition);
+				}
 			}  else if ("copier[1]".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setCopier1PricePerSheet(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("copier[2]".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setCopier2PricePerSheet(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("press name".equals(currentFieldToken)) {
 				/* Done above */
 			}  else if ("cut rate".equals(currentFieldToken)) {
@@ -413,9 +422,13 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("blank cost[6]".equals(currentFieldToken)) {
 				stockDefinition.setBlankSheetPrice6(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("copyID3".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					CopierDefinition copyDefinition = (CopierDefinition) dataService.getByPrevId("CopierDefinition",currentImportToken);
+					if (copyDefinition != null)
+						stockDefinition.setDefaultLargeCopier(copyDefinition);
+				}
 			}  else if ("copier[3]".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setCopier3PricePerSheet(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("price changed date".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("last modification date".equals(currentFieldToken)) {

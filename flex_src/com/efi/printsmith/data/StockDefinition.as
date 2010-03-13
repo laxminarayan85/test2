@@ -137,6 +137,9 @@ package com.efi.printsmith.data
 		public var measure:Boolean = true;
 		public var allownegative:Boolean = true;
 		public var rollWeight:Number = 0;
+		public var defaultBWCopier:CopierDefinition;
+		public var defaultColorCopier:CopierDefinition;
+		public var defaultLargeCopier:CopierDefinition;
 	
 	}
 }

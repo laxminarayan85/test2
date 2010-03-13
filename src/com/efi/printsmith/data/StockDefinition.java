@@ -530,6 +530,18 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String ROLLWEIGHT = "RollWeight";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTBWCOPIER = "DefaultBWCopier";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTCOLORCOPIER = "DefaultColorCopier";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTLARGECOPIER = "DefaultLargeCopier";
 
 	/**
 	 * @generated
@@ -2785,6 +2797,60 @@ public class StockDefinition extends ModelBase {
 	public void setRollWeight(Double newVal) {
 		this.rollWeight = newVal;
 	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultBWCopier;
+	
+	/**
+	 * @generated
+ 	 */
+	public CopierDefinition getDefaultBWCopier(){
+		return defaultBWCopier; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultBWCopier(CopierDefinition newVal) {
+		this.defaultBWCopier = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultColorCopier;
+	
+	/**
+	 * @generated
+ 	 */
+	public CopierDefinition getDefaultColorCopier(){
+		return defaultColorCopier; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultColorCopier(CopierDefinition newVal) {
+		this.defaultColorCopier = newVal;
+	}
+ 	
+	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private CopierDefinition defaultLargeCopier;
+	
+	/**
+	 * @generated
+ 	 */
+	public CopierDefinition getDefaultLargeCopier(){
+		return defaultLargeCopier; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void setDefaultLargeCopier(CopierDefinition newVal) {
+		this.defaultLargeCopier = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -2915,6 +2981,9 @@ public class StockDefinition extends ModelBase {
 		if (MEASURE.equals(propertyName)) return getMeasure();
 		if (ALLOWNEGATIVE.equals(propertyName)) return getAllownegative();
 		if (ROLLWEIGHT.equals(propertyName)) return getRollWeight();
+		if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
+		if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
+		if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
 		return super.getProperty(propertyName);
 	}
 	
@@ -3048,6 +3117,9 @@ public class StockDefinition extends ModelBase {
 		if (MEASURE.equals(propertyName)) setMeasure((Boolean)newValue); else
 		if (ALLOWNEGATIVE.equals(propertyName)) setAllownegative((Boolean)newValue); else
 		if (ROLLWEIGHT.equals(propertyName)) setRollWeight((Double)newValue); else
+		if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
+		if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
+		if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3305,6 +3377,12 @@ public class StockDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (ROLLWEIGHT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (DEFAULTBWCOPIER.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (DEFAULTCOLORCOPIER.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
+		if (DEFAULTLARGECOPIER.equals(propertyName)) 
+			return new Class<?>[] {CopierDefinition.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3439,6 +3517,9 @@ public class StockDefinition extends ModelBase {
 		if (MEASURE.equals(propertyName)) return StockDefinition.class;
 		if (ALLOWNEGATIVE.equals(propertyName)) return StockDefinition.class;
 		if (ROLLWEIGHT.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTBWCOPIER.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTCOLORCOPIER.equals(propertyName)) return StockDefinition.class;
+		if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3697,6 +3778,12 @@ public class StockDefinition extends ModelBase {
 		if (! SmartEquals(getAllownegative(), objT.getAllownegative()))
 			return false;
 		if (! SmartEquals(getRollWeight(), objT.getRollWeight()))
+			return false;
+		if (! SmartEquals(getDefaultBWCopier(), objT.getDefaultBWCopier()))
+			return false;
+		if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
+			return false;
+		if (! SmartEquals(getDefaultLargeCopier(), objT.getDefaultLargeCopier()))
 			return false;
 		return true;
 	}			
