@@ -157,8 +157,48 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("omqty".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("method".equals(currentFieldToken)) {
-						chargeDefinition.setMethod(currentImportToken);
+						
 						method = currentImportToken;
+						if (method.equals("0")) {
+							chargeDefinition.setMethod("None");
+							
+						} else if (method.equals("1")) {
+							chargeDefinition.setMethod("JobAware");
+							
+						} else if (method.equals("2")) {
+							chargeDefinition.setMethod("Markup");
+							
+						} else if (method.equals("3")) {
+							chargeDefinition.setMethod("FlatRate");
+							
+						}else if (method.equals("4")) {
+								chargeDefinition.setMethod("Ask");
+						} else if (method.equals("5")) {
+							chargeDefinition.setMethod("PriceList");
+							
+						} else if (method.equals("6")) {
+							chargeDefinition.setMethod("RateList");
+							
+						} else if (method.equals("7")) {
+							chargeDefinition.setMethod("Cut");
+							
+						} else if (method.equals("8")){
+							chargeDefinition.setMethod("Ink");
+						} else if (method.equals("9")) {
+							chargeDefinition.setMethod("Shipping");
+						} else if (method.equals("10")) {
+							chargeDefinition.setMethod("Fold");
+						} else if (method.equals("11")) {
+							chargeDefinition.setMethod("Linear");
+						} else if (method.equals("12")) {
+							chargeDefinition.setMethod("SquareArea");
+						}
+						
+						
+						
+						
+						
+						
 					} else if ("qty type".equals(currentFieldToken)) {
 						chargeDefinition.setQuantityType(currentImportToken);
 					} else if ("markup type".equals(currentFieldToken)) {
