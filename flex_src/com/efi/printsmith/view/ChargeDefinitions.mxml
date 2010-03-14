@@ -547,9 +547,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	}
 	private function MapfromChargeData():void{
-		if( charge != null)
+		if( charge != null){
+	
 			if (charge.method.length > 0)
 				charge_method_combo.selectedIndex = findItem(charge.method,ChargeMethod.toArray());
+			cut_prepress_radio.selected = charge.cutsArePrePress;
+			Ignorecuts_radio.selected = charge.ignoreCuts;
+		}
+		
 			
 		
 	}
