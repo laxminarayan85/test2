@@ -221,7 +221,7 @@
 		this.import_price_schedules.enabled = true;
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
-		this.import_stock_definitions.enabled = true;
+		this.import_stock_definitions.enabled = false;
 		this.import_press_definitions.enabled = true;
 		this.import_copier_definitions.enabled = true;
 		this.import_jobs.enabled = false;
@@ -237,7 +237,7 @@
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
 		this.import_stock_definitions.enabled = false;
-		this.import_press_definitions.enabled = false;
+		this.import_press_definitions.enabled = true;
 		this.import_copier_definitions.enabled = false;
 		this.import_jobs.enabled = false;
 		this.import_invoices.enabled = false;
@@ -260,17 +260,6 @@
 
 	private function doImportStockDefinitions():void {
 		doImport(handleSelectStockDefinitionsFile);
-		this.import_charge.enabled = true;
-		this.import_tax_tables.enabled = true;
-		this.import_price_lists.enabled = true;
-		this.import_price_schedules.enabled = true;
-		this.import_customers.enabled = true;
-		this.import_contacts.enabled = true;
-		this.import_stock_definitions.enabled = true;
-		this.import_press_definitions.enabled = true;
-		this.import_copier_definitions.enabled = false;
-		this.import_jobs.enabled = false;
-		this.import_invoices.enabled = false;
 		this.import_stock_changes.enabled = true;
 	}
 	
@@ -286,7 +275,7 @@
 		this.import_price_schedules.enabled = true;
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
-		this.import_stock_definitions.enabled = true;
+		this.import_stock_definitions.enabled = false;
 		this.import_press_definitions.enabled = false;
 		this.import_copier_definitions.enabled = false;
 		this.import_jobs.enabled = false;
@@ -325,12 +314,12 @@
 		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="274" y="160"/>
 		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="274" y="130"/>
 		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="274" y="100"/>
-		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="274" y="40"/>
-		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="10" y="220"/>
+		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="220"/>
+		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
 		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="100"/>
 		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="130"/>
-		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="70"/>
-		<mx:Button label="Import Stock Changes" id="import_stock_changes" enabled="true" click="doImportStockChanges();"  width="256" x="276" y="10"/>
+		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="10"/>
+		<mx:Button label="Import Stock Changes" id="import_stock_changes" enabled="true" click="doImportStockChanges();"  width="256" x="276" y="70"/>
 		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="10" y="70"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
