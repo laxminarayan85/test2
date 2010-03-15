@@ -1,7 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.CustomerLog;
 import com.efi.printsmith.data.ModelBase;

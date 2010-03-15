@@ -1,7 +1,5 @@
 package com.efi.printsmith.migration;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.StockDefinition;

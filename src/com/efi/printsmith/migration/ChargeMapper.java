@@ -1,12 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;

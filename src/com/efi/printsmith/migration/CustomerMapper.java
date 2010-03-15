@@ -1,7 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Address;
@@ -10,8 +9,6 @@ import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.SalesRep;
 import com.efi.printsmith.data.Marketing;
-import com.efi.printsmith.data.MarketingDateLabels;
-import com.efi.printsmith.data.MarketingMailers;
 import com.efi.printsmith.data.BusinessType;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.TaxTable;

@@ -1,12 +1,9 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PressDefinition;
-import com.efi.printsmith.data.StockClass;
-import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
@@ -35,16 +32,11 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("heads".equals(currentFieldToken)) {
 				pressDefinition.setNumberHeads(Utilities.tokenToLong(currentImportToken));
 			} else if ("sales cat".equals(currentFieldToken)) {
-//				if (currentImportToken != "")
-//				{
-//					SalesCategory salecat = dataService.getBySalesCategoryName(currentImportToken);
-//					if (salecat == null)
-//					{
-//						salecat = new SalesCategory();
-//						salecat.setName(currentImportToken);
-//					}
-//					pressDefinition.setSalesCat(salecat);
-//				}
+				if (currentImportToken.equals("0") == false) {
+					SalesCategory salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
+					if (salesCategory != null)
+						pressDefinition.setSalesCat(salesCategory);
+				}	
 			} else if ("setup time".equals(currentFieldToken)) {
 				pressDefinition.setSetupMin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("addl head".equals(currentFieldToken)) {
@@ -230,7 +222,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("rollFedCutoffLength".equals(currentFieldToken)) {
 				pressDefinition.setCutoffLength(Utilities.tokenToDouble(currentImportToken));
 			} else if ("defaultSheetFed".equals(currentFieldToken)) {
-				pressDefinition.setSheetFed(Utilities.tokenToBooleanValue(currentImportToken));
+				/* TODO */
 			} else if ("digital integration".equals(currentFieldToken)) {
 				pressDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("time in seconds".equals(currentFieldToken)) {

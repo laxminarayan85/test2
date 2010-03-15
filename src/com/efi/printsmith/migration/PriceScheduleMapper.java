@@ -1,7 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PaperPrice;
@@ -11,7 +10,6 @@ public class PriceScheduleMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
-	@SuppressWarnings("null")
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
 		PaperPrice paperPrice = new PaperPrice();

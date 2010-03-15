@@ -1,7 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.ModelBase;
@@ -10,6 +9,7 @@ import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
+import com.efi.printsmith.service.CopierService;
 
 public class CopierDefinitionMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -20,9 +20,12 @@ public class CopierDefinitionMapper extends ImportMapper {
 			throws Exception {
 		CopierDefinition copierDefinition = new CopierDefinition();
 		DataService dataService = new DataService();
+		CopierService copierService = new CopierService();
+		SalesCategory salesCategory = null;
 		Matrix matrix = new Matrix();
 		for (int x = 1; x <= 15; x++) {
 			MatrixElement matrixElement = new MatrixElement();
+			boolean addSalesCategory = false;
 			for (int i = 0; i < fieldTokens.length; i++) {
 				String currentImportToken = importTokens[i];
 				String currentFieldToken = fieldTokens[i];
@@ -929,19 +932,23 @@ public class CopierDefinitionMapper extends ImportMapper {
 					else if (currentImportToken.equals("5") == true)
 						copierDefinition.setPriceTwoSide("UsingSide2Factor");
 				} else if ("sales category".equals(currentFieldToken)) {
-
+					if (currentImportToken.equals("0") == false) {
+						salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
+						if (salesCategory != null)
+							copierDefinition.setSalesCat(salesCategory);
+						else {
+							salesCategory = new SalesCategory();
+							salesCategory.setPrevId(currentImportToken);
+							addSalesCategory = true;
+						}
+					}	
 				} else if ("sales cat name".equals(currentFieldToken)) {
-					// if (currentImportToken != "")
-					// {
-					// SalesCategory salecat =
-					// dataService.getBySalesCategoryName(currentImportToken);
-					// if (salecat == null)
-					// {
-					// salecat = new SalesCategory();
-					// salecat.setName(currentImportToken);
-					// }
-					// copierDefinition.setSalesCat(salecat);
-					// }
+					if (addSalesCategory == true) {
+						salesCategory.setName(currentImportToken);
+						dataService.addUpdate(salesCategory);
+						salesCategory.setId(salesCategory.getId());
+						copierDefinition.setSalesCat(salesCategory);
+					}
 				} else if ("flat rate".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("flat markup".equals(currentFieldToken)) {
@@ -1084,6 +1091,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 		dataService.addUpdate(matrix);
 		matrix.setId(matrix.getId());
 		copierDefinition.setCopierMatrix(matrix);
+		double machineCostPerCopy = copierService.calculateMachineCostPerCopy(copierDefinition);
+		copierDefinition.setMachineCostPerCopy(machineCostPerCopy);
 		return copierDefinition;
 	}
 }

@@ -1,8 +1,5 @@
 package com.efi.printsmith.migration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.GenericColors;
 import com.efi.printsmith.data.ModelBase;
@@ -18,7 +15,6 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.CopierDefinition;
-import com.efi.printsmith.data.StockChanges;
 import com.efi.printsmith.data.PaperPrice;
 import java.io.File;
 

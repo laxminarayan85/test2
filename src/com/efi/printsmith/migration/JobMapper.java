@@ -1,16 +1,14 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.service.DataService;
-import com.efi.printsmith.data.TaxTable;
-import com.efi.printsmith.data.Charge;
 
 public class JobMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -19,7 +17,8 @@ public class JobMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		DataService dataService = new DataService();
 		Job job = new Job();
-		
+		SalesCategory salesCategory = null;
+		boolean addSalesCategory = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -37,9 +36,23 @@ public class JobMapper extends ImportMapper {
 			} else if ("job number".equals(currentFieldToken)) {
 				job.setJobNumber(currentImportToken);
 			} else if ("sales category".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
+					if (salesCategory != null)
+						job.setSalesCategory(salesCategory);
+					else {
+						salesCategory = new SalesCategory();
+						salesCategory.setPrevId(currentImportToken);
+						addSalesCategory = true;
+					}
+				}	
 			} else if ("sales cat name".equals(currentFieldToken)) {
-				/* TODO */
+				if (addSalesCategory == true) {
+					salesCategory.setName(currentImportToken);
+					dataService.addUpdate(salesCategory);
+					salesCategory.setId(salesCategory.getId());
+					job.setSalesCategory(salesCategory);
+				}
 			} else if ("press ID".equals(currentFieldToken)) {
 				PressDefinition pressDefinition = (PressDefinition) dataService.getByPressId(currentImportToken);
 				if (pressDefinition != null)

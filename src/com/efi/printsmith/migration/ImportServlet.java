@@ -1,29 +1,20 @@
 package com.efi.printsmith.migration;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -34,32 +25,7 @@ import org.apache.log4j.Logger;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.service.DataService;
-import com.efi.printsmith.data.Account;
-import com.efi.printsmith.data.Address;
-import com.efi.printsmith.data.Charge;
-import com.efi.printsmith.data.ChargeCategory;
-import com.efi.printsmith.data.ChargeCommand;
-import com.efi.printsmith.data.ChargeCost;
-import com.efi.printsmith.data.ChargeDefinition;
-import com.efi.printsmith.data.City;
-import com.efi.printsmith.data.ComLink;
-import com.efi.printsmith.data.Contact;
-import com.efi.printsmith.data.CostCenter;
-import com.efi.printsmith.data.Country;
-import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
-import com.efi.printsmith.data.PressDefinition;
-import com.efi.printsmith.data.PriceList;
-import com.efi.printsmith.data.SalesRep;
-import com.efi.printsmith.data.ShippingMethod;
-import com.efi.printsmith.data.State;
-import com.efi.printsmith.data.StockDefinition;
-import com.efi.printsmith.data.Substrate;
-import com.efi.printsmith.data.TaxTable;
-import com.efi.printsmith.data.WasteChart;
-import com.efi.printsmith.data.Zip;
-
-import com.efi.printsmith.migration.Utilities;
 
 public class ImportServlet extends HttpServlet implements Servlet {
 	/**
