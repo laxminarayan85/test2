@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "OutsideService.findall", query = "from OutsideService"),

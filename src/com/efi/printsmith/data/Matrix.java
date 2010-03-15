@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Matrix.findall", query = "from Matrix"),
@@ -89,6 +89,9 @@ public class Matrix extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header1;
 	
@@ -99,6 +102,7 @@ public class Matrix extends ModelBase {
 		return header1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -107,6 +111,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header2;
 	
@@ -117,6 +124,7 @@ public class Matrix extends ModelBase {
 		return header2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -125,6 +133,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header3;
 	
@@ -135,6 +146,7 @@ public class Matrix extends ModelBase {
 		return header3; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -143,6 +155,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header4;
 	
@@ -153,6 +168,7 @@ public class Matrix extends ModelBase {
 		return header4; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -161,6 +177,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header5;
 	
@@ -171,6 +190,7 @@ public class Matrix extends ModelBase {
 		return header5; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -179,6 +199,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header6;
 	
@@ -189,6 +212,7 @@ public class Matrix extends ModelBase {
 		return header6; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -197,6 +221,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header7;
 	
@@ -207,6 +234,7 @@ public class Matrix extends ModelBase {
 		return header7; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -215,6 +243,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header8;
 	
@@ -225,6 +256,7 @@ public class Matrix extends ModelBase {
 		return header8; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -233,6 +265,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header9;
 	
@@ -243,6 +278,7 @@ public class Matrix extends ModelBase {
 		return header9; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -251,6 +287,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long header10;
 	
@@ -261,6 +300,7 @@ public class Matrix extends ModelBase {
 		return header10; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -269,6 +309,9 @@ public class Matrix extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
@@ -280,12 +323,16 @@ public class Matrix extends ModelBase {
 		return elements; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addElements(MatrixElement obj) {
 		if (elements == null) {
 			elements = new java.util.ArrayList<MatrixElement>();
 		}
 		elements.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	

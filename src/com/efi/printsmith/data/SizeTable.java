@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SizeTable.findall", query = "from SizeTable"),
@@ -49,6 +49,9 @@ public class SizeTable extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer name;
 	
@@ -59,6 +62,7 @@ public class SizeTable extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

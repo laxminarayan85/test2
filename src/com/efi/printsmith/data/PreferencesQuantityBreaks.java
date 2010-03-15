@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesQuantityBreaks.findall", query = "from PreferencesQuantityBreaks"),
@@ -57,6 +57,9 @@ public class PreferencesQuantityBreaks extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer quantity;
 	
@@ -67,6 +70,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 		return quantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -75,6 +79,9 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean qtyBreak;
 	
@@ -85,6 +92,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 		return qtyBreak; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -93,6 +101,9 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private JobMethod jobMethod;
 	
@@ -103,6 +114,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 		return jobMethod; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

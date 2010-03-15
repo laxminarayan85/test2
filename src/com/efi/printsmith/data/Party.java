@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Party.findall", query = "from Party"),
@@ -77,6 +77,9 @@ public class Party extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String prefix;
 	
@@ -87,6 +90,7 @@ public class Party extends ModelBase {
 		return prefix; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -95,6 +99,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String suffix;
 	
@@ -105,6 +112,7 @@ public class Party extends ModelBase {
 		return suffix; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -113,6 +121,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String salutation;
 	
@@ -123,6 +134,7 @@ public class Party extends ModelBase {
 		return salutation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -131,6 +143,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String jobTitle;
 	
@@ -141,6 +156,7 @@ public class Party extends ModelBase {
 		return jobTitle; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -149,6 +165,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address address;
 	
@@ -159,6 +178,7 @@ public class Party extends ModelBase {
 		return address; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -167,6 +187,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String lastName;
 	
@@ -177,6 +200,7 @@ public class Party extends ModelBase {
 		return lastName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -185,6 +209,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String firstName;
 	
@@ -195,6 +222,7 @@ public class Party extends ModelBase {
 		return firstName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -203,6 +231,9 @@ public class Party extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
@@ -214,12 +245,16 @@ public class Party extends ModelBase {
 		return comLinks; 
 	}
 
+	/**
+	 * @generated
+	 */	
 	public void addComLinks(ComLink obj) {
 		if (comLinks == null) {
 			comLinks = new java.util.ArrayList<ComLink>();
 		}
 		comLinks.add(obj);
 	}
+	
 	/**
 	 * @generated
 	 */	

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "City.findall", query = "from City"),
@@ -49,6 +49,9 @@ public class City extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -59,6 +62,7 @@ public class City extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

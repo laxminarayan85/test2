@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "DepositEntry.findall", query = "from DepositEntry"),
@@ -65,6 +65,9 @@ public class DepositEntry extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String referenceNumber;
 	
@@ -75,6 +78,7 @@ public class DepositEntry extends ModelBase {
 		return referenceNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -83,6 +87,9 @@ public class DepositEntry extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date date;
 	
@@ -93,6 +100,7 @@ public class DepositEntry extends ModelBase {
 		return date; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -101,6 +109,9 @@ public class DepositEntry extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double amount;
 	
@@ -111,6 +122,7 @@ public class DepositEntry extends ModelBase {
 		return amount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -119,6 +131,9 @@ public class DepositEntry extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private DepositType type;
 	
@@ -129,6 +144,7 @@ public class DepositEntry extends ModelBase {
 		return type; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -137,6 +153,9 @@ public class DepositEntry extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer creditCardType;
 	
@@ -147,6 +166,7 @@ public class DepositEntry extends ModelBase {
 		return creditCardType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

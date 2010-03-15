@@ -32,6 +32,10 @@ package com.efi.printsmith.data
 		public var overrideMaterialQuantity:Boolean = true;
 		public var rate:Number = 0;
 		public var overrideRate:Boolean = true;
+		public var up:int = 0;
+		public var overrideUp:Boolean = true;
+		public var parentJob:Job;
+		public var parentInvoice:Invoice;
 	
 	}
 }

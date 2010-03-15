@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SquareAreaCharge.findall", query = "from SquareAreaCharge"),
@@ -53,6 +53,9 @@ public class SquareAreaCharge extends Charge {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideArea;
 	
@@ -63,6 +66,7 @@ public class SquareAreaCharge extends Charge {
 		return overrideArea; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -71,6 +75,9 @@ public class SquareAreaCharge extends Charge {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double area;
 	
@@ -81,6 +88,7 @@ public class SquareAreaCharge extends Charge {
 		return area; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

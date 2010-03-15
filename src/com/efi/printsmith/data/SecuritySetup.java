@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "SecuritySetup.findall", query = "from SecuritySetup"),
@@ -65,6 +65,9 @@ public class SecuritySetup extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean enable;
 	
@@ -75,6 +78,7 @@ public class SecuritySetup extends ModelBase {
 		return enable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -83,6 +87,9 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String menu;
 	
@@ -93,6 +100,7 @@ public class SecuritySetup extends ModelBase {
 		return menu; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -101,6 +109,9 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String commandId;
 	
@@ -111,6 +122,7 @@ public class SecuritySetup extends ModelBase {
 		return commandId; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -119,6 +131,9 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String commandName;
 	
@@ -129,6 +144,7 @@ public class SecuritySetup extends ModelBase {
 		return commandName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -137,6 +153,9 @@ public class SecuritySetup extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private AccessGroup accessGroup;
 	
@@ -147,6 +166,7 @@ public class SecuritySetup extends ModelBase {
 		return accessGroup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

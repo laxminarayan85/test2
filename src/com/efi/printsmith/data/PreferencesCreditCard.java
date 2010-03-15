@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "PreferencesCreditCard.findall", query = "from PreferencesCreditCard"),
@@ -61,6 +61,9 @@ public class PreferencesCreditCard extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean used;
 	
@@ -71,6 +74,7 @@ public class PreferencesCreditCard extends ModelBase {
 		return used; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -79,6 +83,9 @@ public class PreferencesCreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String cardType;
 	
@@ -89,6 +96,7 @@ public class PreferencesCreditCard extends ModelBase {
 		return cardType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -97,6 +105,9 @@ public class PreferencesCreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String abbreviation;
 	
@@ -107,6 +118,7 @@ public class PreferencesCreditCard extends ModelBase {
 		return abbreviation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -115,6 +127,9 @@ public class PreferencesCreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String code;
 	
@@ -125,6 +140,7 @@ public class PreferencesCreditCard extends ModelBase {
 		return code; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

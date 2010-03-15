@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "CreditCard.findall", query = "from CreditCard"),
@@ -69,6 +69,9 @@ public class CreditCard extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String cardHolderName;
 	
@@ -79,6 +82,7 @@ public class CreditCard extends ModelBase {
 		return cardHolderName; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -87,6 +91,9 @@ public class CreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String cardNumber;
 	
@@ -97,6 +104,7 @@ public class CreditCard extends ModelBase {
 		return cardNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -105,6 +113,9 @@ public class CreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date expiresDate;
 	
@@ -115,6 +126,7 @@ public class CreditCard extends ModelBase {
 		return expiresDate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -123,6 +135,9 @@ public class CreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address address;
 	
@@ -133,6 +148,7 @@ public class CreditCard extends ModelBase {
 		return address; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -141,6 +157,9 @@ public class CreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer creditCardID;
 	
@@ -151,6 +170,7 @@ public class CreditCard extends ModelBase {
 		return creditCardID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -159,6 +179,9 @@ public class CreditCard extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String type;
 	
@@ -169,6 +192,7 @@ public class CreditCard extends ModelBase {
 		return type; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

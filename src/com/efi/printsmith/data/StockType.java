@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "StockType.findall", query = "from StockType"),
@@ -57,6 +57,9 @@ public class StockType extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String size;
 	
@@ -67,6 +70,7 @@ public class StockType extends ModelBase {
 		return size; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -75,6 +79,9 @@ public class StockType extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -85,6 +92,7 @@ public class StockType extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -93,6 +101,9 @@ public class StockType extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer viewableID;
 	
@@ -103,6 +114,7 @@ public class StockType extends ModelBase {
 		return viewableID; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

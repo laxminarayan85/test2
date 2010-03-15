@@ -129,6 +129,7 @@ package com.efi.printsmith.data
 		public var rateDefault:Number = 0;
 		public var priceLabel:String = "";
 		public var priceDefault:Number = 0;
+		public var useRunArea:Boolean = true;
 	
 	}
 }

@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ShippingCharge.findall", query = "from ShippingCharge"),
@@ -42,6 +42,10 @@ public class ShippingCharge extends Charge {
 	 * @generated
 	 */
 	public static final String SHIPTO = "ShipTo";
+	/**
+	 * @generated
+	 */
+	public static final String TOTALWEIGHT = "TotalWeight";
 
 	/**
 	 * @generated
@@ -53,6 +57,9 @@ public class ShippingCharge extends Charge {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String shipVia;
 	
@@ -63,6 +70,7 @@ public class ShippingCharge extends Charge {
 		return shipVia; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -71,6 +79,9 @@ public class ShippingCharge extends Charge {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Address shipTo;
 	
@@ -81,11 +92,34 @@ public class ShippingCharge extends Charge {
 		return shipTo; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
 	public void setShipTo(Address newVal) {
 		this.shipTo = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double totalWeight;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getTotalWeight(){
+		return totalWeight; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setTotalWeight(Double newVal) {
+		this.totalWeight = newVal;
 	}
 	/**
 	 * @generated
@@ -95,6 +129,7 @@ public class ShippingCharge extends Charge {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (SHIPVIA.equals(propertyName)) return getShipVia();
 		if (SHIPTO.equals(propertyName)) return getShipTo();
+		if (TOTALWEIGHT.equals(propertyName)) return getTotalWeight();
 		return super.getProperty(propertyName);
 	}
 	
@@ -106,6 +141,7 @@ public class ShippingCharge extends Charge {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (SHIPVIA.equals(propertyName)) setShipVia((String)newValue); else
 		if (SHIPTO.equals(propertyName)) setShipTo((Address)newValue); else
+		if (TOTALWEIGHT.equals(propertyName)) setTotalWeight((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -119,6 +155,8 @@ public class ShippingCharge extends Charge {
 			return new Class<?>[] {String.class};		
 		if (SHIPTO.equals(propertyName)) 
 			return new Class<?>[] {Address.class};		
+		if (TOTALWEIGHT.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -131,6 +169,7 @@ public class ShippingCharge extends Charge {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (SHIPVIA.equals(propertyName)) return ShippingCharge.class;
 		if (SHIPTO.equals(propertyName)) return ShippingCharge.class;
+		if (TOTALWEIGHT.equals(propertyName)) return ShippingCharge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -145,6 +184,8 @@ public class ShippingCharge extends Charge {
 		if (! SmartEquals(getShipVia(), objT.getShipVia()))
 			return false;
 		if (! SmartEquals(getShipTo(), objT.getShipTo()))
+			return false;
+		if (! SmartEquals(getTotalWeight(), objT.getTotalWeight()))
 			return false;
 		return true;
 	}			

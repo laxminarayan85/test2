@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Address.findall", query = "from Address"),
@@ -77,6 +77,9 @@ public class Address extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -87,6 +90,7 @@ public class Address extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -95,6 +99,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String street1;
 	
@@ -105,6 +112,7 @@ public class Address extends ModelBase {
 		return street1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -113,6 +121,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String street2;
 	
@@ -123,6 +134,7 @@ public class Address extends ModelBase {
 		return street2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -131,6 +143,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String city;
 	
@@ -141,6 +156,7 @@ public class Address extends ModelBase {
 		return city; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -149,6 +165,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String state;
 	
@@ -159,6 +178,7 @@ public class Address extends ModelBase {
 		return state; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -167,6 +187,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String zip;
 	
@@ -177,6 +200,7 @@ public class Address extends ModelBase {
 		return zip; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -185,6 +209,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String country;
 	
@@ -195,6 +222,7 @@ public class Address extends ModelBase {
 		return country; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -203,6 +231,9 @@ public class Address extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String zone;
 	
@@ -213,6 +244,7 @@ public class Address extends ModelBase {
 		return zone; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	

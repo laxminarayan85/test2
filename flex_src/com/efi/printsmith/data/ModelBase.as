@@ -6,7 +6,8 @@ package com.efi.printsmith.data
 		public var id:Number;
 		public var created:Date;
 		public var modified:Date;
-
+		public var prevId:String="";
+		
 		public function ModelBase()
 		{
 		}

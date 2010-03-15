@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "Charge.findall", query = "from Charge"),
@@ -110,6 +110,22 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String OVERRIDERATE = "OverrideRate";
+	/**
+	 * @generated
+	 */
+	public static final String UP = "Up";
+	/**
+	 * @generated
+	 */
+	public static final String OVERRIDEUP = "OverrideUp";
+	/**
+	 * @generated
+	 */
+	public static final String PARENTJOB = "ParentJob";
+	/**
+	 * @generated
+	 */
+	public static final String PARENTINVOICE = "ParentInvoice";
 
 	/**
 	 * @generated
@@ -121,6 +137,9 @@ public class Charge extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeDefinition chargeDefinition;
 	
@@ -131,6 +150,7 @@ public class Charge extends ModelBase {
 		return chargeDefinition; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -139,6 +159,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String description;
 	
@@ -149,6 +172,7 @@ public class Charge extends ModelBase {
 		return description; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -157,6 +181,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String notes;
 	
@@ -167,6 +194,7 @@ public class Charge extends ModelBase {
 		return notes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -175,6 +203,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location productionLocation;
 	
@@ -185,6 +216,7 @@ public class Charge extends ModelBase {
 		return productionLocation; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -193,6 +225,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showNotes;
 	
@@ -203,6 +238,7 @@ public class Charge extends ModelBase {
 		return showNotes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -211,6 +247,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean finished;
 	
@@ -221,6 +260,7 @@ public class Charge extends ModelBase {
 		return finished; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -229,6 +269,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean taxable;
 	
@@ -239,6 +282,7 @@ public class Charge extends ModelBase {
 		return taxable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -247,6 +291,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean brokered;
 	
@@ -257,6 +304,7 @@ public class Charge extends ModelBase {
 		return brokered; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -265,6 +313,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean displayQty;
 	
@@ -275,6 +326,7 @@ public class Charge extends ModelBase {
 		return displayQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -283,6 +335,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hidden;
 	
@@ -293,6 +348,7 @@ public class Charge extends ModelBase {
 		return hidden; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -301,6 +357,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hidePrice;
 	
@@ -311,6 +370,7 @@ public class Charge extends ModelBase {
 		return hidePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -319,6 +379,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double price;
 	
@@ -329,6 +392,7 @@ public class Charge extends ModelBase {
 		return price; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -337,6 +401,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overridePrice;
 	
@@ -347,6 +414,7 @@ public class Charge extends ModelBase {
 		return overridePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -355,6 +423,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double quantity;
 	
@@ -365,6 +436,7 @@ public class Charge extends ModelBase {
 		return quantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -373,6 +445,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideQuantity;
 	
@@ -383,6 +458,7 @@ public class Charge extends ModelBase {
 		return overrideQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -391,6 +467,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double materialQty;
 	
@@ -401,6 +480,7 @@ public class Charge extends ModelBase {
 		return materialQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -409,6 +489,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideMaterialQuantity;
 	
@@ -419,6 +502,7 @@ public class Charge extends ModelBase {
 		return overrideMaterialQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -427,6 +511,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rate;
 	
@@ -437,6 +524,7 @@ public class Charge extends ModelBase {
 		return rate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -445,6 +533,9 @@ public class Charge extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideRate;
 	
@@ -455,11 +546,100 @@ public class Charge extends ModelBase {
 		return overrideRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideRate(Boolean newVal) {
 		this.overrideRate = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Integer up;
+	
+	/**
+	 * @generated
+ 	 */
+	public Integer getUp(){
+		return up; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setUp(Integer newVal) {
+		this.up = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean overrideUp;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverrideUp(){
+		return overrideUp; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setOverrideUp(Boolean newVal) {
+		this.overrideUp = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Job parentJob;
+	
+	/**
+	 * @generated
+ 	 */
+	public Job getParentJob(){
+		return parentJob; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setParentJob(Job newVal) {
+		this.parentJob = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private Invoice parentInvoice;
+	
+	/**
+	 * @generated
+ 	 */
+	public Invoice getParentInvoice(){
+		return parentInvoice; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setParentInvoice(Invoice newVal) {
+		this.parentInvoice = newVal;
 	}
 	/**
 	 * @generated
@@ -486,6 +666,10 @@ public class Charge extends ModelBase {
 		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return getOverrideMaterialQuantity();
 		if (RATE.equals(propertyName)) return getRate();
 		if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
+		if (UP.equals(propertyName)) return getUp();
+		if (OVERRIDEUP.equals(propertyName)) return getOverrideUp();
+		if (PARENTJOB.equals(propertyName)) return getParentJob();
+		if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
 		return super.getProperty(propertyName);
 	}
 	
@@ -514,6 +698,10 @@ public class Charge extends ModelBase {
 		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) setOverrideMaterialQuantity((Boolean)newValue); else
 		if (RATE.equals(propertyName)) setRate((Double)newValue); else
 		if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
+		if (UP.equals(propertyName)) setUp((Integer)newValue); else
+		if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
+		if (PARENTJOB.equals(propertyName)) setParentJob((Job)newValue); else
+		if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -561,6 +749,14 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (OVERRIDERATE.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (UP.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (OVERRIDEUP.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (PARENTJOB.equals(propertyName)) 
+			return new Class<?>[] {Job.class};		
+		if (PARENTINVOICE.equals(propertyName)) 
+			return new Class<?>[] {Invoice.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -590,6 +786,10 @@ public class Charge extends ModelBase {
 		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return Charge.class;
 		if (RATE.equals(propertyName)) return Charge.class;
 		if (OVERRIDERATE.equals(propertyName)) return Charge.class;
+		if (UP.equals(propertyName)) return Charge.class;
+		if (OVERRIDEUP.equals(propertyName)) return Charge.class;
+		if (PARENTJOB.equals(propertyName)) return Charge.class;
+		if (PARENTINVOICE.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -638,6 +838,14 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getRate(), objT.getRate()))
 			return false;
 		if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
+			return false;
+		if (! SmartEquals(getUp(), objT.getUp()))
+			return false;
+		if (! SmartEquals(getOverrideUp(), objT.getOverrideUp()))
+			return false;
+		if (! SmartEquals(getParentJob(), objT.getParentJob()))
+			return false;
+		if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
 			return false;
 		return true;
 	}			

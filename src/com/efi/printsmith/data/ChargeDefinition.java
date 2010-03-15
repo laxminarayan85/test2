@@ -20,10 +20,10 @@ import org.hibernate.annotations.Type;
 /**
  * @generated
  */
- 
+
  
 /**
- * @!generated
+ * @generated
  */	
 @NamedQueries({
 	@NamedQuery(name = "ChargeDefinition.findall", query = "from ChargeDefinition"),
@@ -498,6 +498,10 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRICEDEFAULT = "PriceDefault";
+	/**
+	 * @generated
+	 */
+	public static final String USERUNAREA = "UseRunArea";
 
 	/**
 	 * @generated
@@ -509,6 +513,9 @@ public class ChargeDefinition extends ModelBase {
 
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String method;
 	
@@ -519,6 +526,7 @@ public class ChargeDefinition extends ModelBase {
 		return method; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -527,6 +535,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String quantityType;
 	
@@ -537,6 +548,7 @@ public class ChargeDefinition extends ModelBase {
 		return quantityType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -545,6 +557,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String markupType;
 	
@@ -555,6 +570,7 @@ public class ChargeDefinition extends ModelBase {
 		return markupType; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -563,6 +579,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String jobQty;
 	
@@ -573,6 +592,7 @@ public class ChargeDefinition extends ModelBase {
 		return jobQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -581,6 +601,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String priceMethod;
 	
@@ -591,6 +614,7 @@ public class ChargeDefinition extends ModelBase {
 		return priceMethod; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -599,6 +623,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String inkCoverage;
 	
@@ -609,6 +636,7 @@ public class ChargeDefinition extends ModelBase {
 		return inkCoverage; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -617,6 +645,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useSides;
 	
@@ -627,6 +658,7 @@ public class ChargeDefinition extends ModelBase {
 		return useSides; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -635,6 +667,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean doNotDiscount;
 	
@@ -645,6 +680,7 @@ public class ChargeDefinition extends ModelBase {
 		return doNotDiscount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -653,6 +689,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean noMaterialQuantity;
 	
@@ -663,6 +702,7 @@ public class ChargeDefinition extends ModelBase {
 		return noMaterialQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -671,6 +711,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean noOverrides;
 	
@@ -681,6 +724,7 @@ public class ChargeDefinition extends ModelBase {
 		return noOverrides; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -689,6 +733,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean adjustableSets;
 	
@@ -699,6 +746,7 @@ public class ChargeDefinition extends ModelBase {
 		return adjustableSets; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -707,6 +755,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean adjustableRate;
 	
@@ -717,6 +768,7 @@ public class ChargeDefinition extends ModelBase {
 		return adjustableRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -725,6 +777,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean adjustableMaterial;
 	
@@ -735,6 +790,7 @@ public class ChargeDefinition extends ModelBase {
 		return adjustableMaterial; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -743,6 +799,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useMaterial;
 	
@@ -753,6 +812,7 @@ public class ChargeDefinition extends ModelBase {
 		return useMaterial; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -761,6 +821,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useRate;
 	
@@ -771,6 +834,7 @@ public class ChargeDefinition extends ModelBase {
 		return useRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -779,6 +843,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useRateSets;
 	
@@ -789,6 +856,7 @@ public class ChargeDefinition extends ModelBase {
 		return useRateSets; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -797,6 +865,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useMerchandiseSets;
 	
@@ -807,6 +878,7 @@ public class ChargeDefinition extends ModelBase {
 		return useMerchandiseSets; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -815,6 +887,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useMinimumCharge;
 	
@@ -825,6 +900,7 @@ public class ChargeDefinition extends ModelBase {
 		return useMinimumCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -833,6 +909,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useColors;
 	
@@ -843,6 +922,7 @@ public class ChargeDefinition extends ModelBase {
 		return useColors; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -851,6 +931,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useOriginals;
 	
@@ -861,6 +944,7 @@ public class ChargeDefinition extends ModelBase {
 		return useOriginals; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -869,6 +953,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rateSetCount;
 	
@@ -879,6 +966,7 @@ public class ChargeDefinition extends ModelBase {
 		return rateSetCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -887,6 +975,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double materialSetCount;
 	
@@ -897,6 +988,7 @@ public class ChargeDefinition extends ModelBase {
 		return materialSetCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -905,6 +997,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rate;
 	
@@ -915,6 +1010,7 @@ public class ChargeDefinition extends ModelBase {
 		return rate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -923,6 +1019,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double material;
 	
@@ -933,6 +1032,7 @@ public class ChargeDefinition extends ModelBase {
 		return material; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -941,6 +1041,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double minimum;
 	
@@ -951,6 +1054,7 @@ public class ChargeDefinition extends ModelBase {
 		return minimum; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -959,6 +1063,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double markup;
 	
@@ -969,6 +1076,7 @@ public class ChargeDefinition extends ModelBase {
 		return markup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -977,6 +1085,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PriceList priceList;
 	
@@ -987,6 +1098,7 @@ public class ChargeDefinition extends ModelBase {
 		return priceList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -995,6 +1107,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WasteChart wasteChart;
 	
@@ -1005,6 +1120,7 @@ public class ChargeDefinition extends ModelBase {
 		return wasteChart; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1013,6 +1129,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long fixedWaste;
 	
@@ -1023,6 +1142,7 @@ public class ChargeDefinition extends ModelBase {
 		return fixedWaste; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1031,6 +1151,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double wastePercentage;
 	
@@ -1041,6 +1164,7 @@ public class ChargeDefinition extends ModelBase {
 		return wastePercentage; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1049,6 +1173,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long baseLinearNumber;
 	
@@ -1059,6 +1186,7 @@ public class ChargeDefinition extends ModelBase {
 		return baseLinearNumber; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1067,6 +1195,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
 	
@@ -1077,6 +1208,7 @@ public class ChargeDefinition extends ModelBase {
 		return location; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1085,6 +1217,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CostCenter costCenter;
 	
@@ -1095,6 +1230,7 @@ public class ChargeDefinition extends ModelBase {
 		return costCenter; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1103,6 +1239,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Substrate substrate;
 	
@@ -1113,6 +1252,7 @@ public class ChargeDefinition extends ModelBase {
 		return substrate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1121,6 +1261,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Long minimumTime;
 	
@@ -1131,6 +1274,7 @@ public class ChargeDefinition extends ModelBase {
 		return minimumTime; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1139,6 +1283,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double sizeX;
 	
@@ -1149,6 +1296,7 @@ public class ChargeDefinition extends ModelBase {
 		return sizeX; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1157,6 +1305,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double sizeY;
 	
@@ -1167,6 +1318,7 @@ public class ChargeDefinition extends ModelBase {
 		return sizeY; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1175,6 +1327,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double plateThickness;
 	
@@ -1185,6 +1340,7 @@ public class ChargeDefinition extends ModelBase {
 		return plateThickness; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1193,6 +1349,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private FoldTemplate foldTemplate;
 	
@@ -1203,6 +1362,7 @@ public class ChargeDefinition extends ModelBase {
 		return foldTemplate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1211,6 +1371,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean excludedFromWorkflow;
 	
@@ -1221,6 +1384,7 @@ public class ChargeDefinition extends ModelBase {
 		return excludedFromWorkflow; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1229,6 +1393,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean preproduction;
 	
@@ -1239,6 +1406,7 @@ public class ChargeDefinition extends ModelBase {
 		return preproduction; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1247,6 +1415,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useMinimumTime;
 	
@@ -1257,6 +1428,7 @@ public class ChargeDefinition extends ModelBase {
 		return useMinimumTime; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1265,6 +1437,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useDivideByUpCount;
 	
@@ -1275,6 +1450,7 @@ public class ChargeDefinition extends ModelBase {
 		return useDivideByUpCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1283,6 +1459,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useMultiplyUpCount;
 	
@@ -1293,6 +1472,7 @@ public class ChargeDefinition extends ModelBase {
 		return useMultiplyUpCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1301,6 +1481,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean adjustUps;
 	
@@ -1311,6 +1494,7 @@ public class ChargeDefinition extends ModelBase {
 		return adjustUps; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1319,6 +1503,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean cutsArePrePress;
 	
@@ -1329,6 +1516,7 @@ public class ChargeDefinition extends ModelBase {
 		return cutsArePrePress; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1337,6 +1525,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean integratedCTP;
 	
@@ -1347,6 +1538,7 @@ public class ChargeDefinition extends ModelBase {
 		return integratedCTP; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1355,6 +1547,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String sku;
 	
@@ -1365,6 +1560,7 @@ public class ChargeDefinition extends ModelBase {
 		return sku; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1373,6 +1569,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String category;
 	
@@ -1383,6 +1582,7 @@ public class ChargeDefinition extends ModelBase {
 		return category; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1391,6 +1591,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideRate;
 	
@@ -1401,6 +1604,7 @@ public class ChargeDefinition extends ModelBase {
 		return overrideRate; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1409,6 +1613,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String title;
 	
@@ -1419,6 +1626,7 @@ public class ChargeDefinition extends ModelBase {
 		return title; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1427,6 +1635,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String note;
 	
@@ -1437,6 +1648,7 @@ public class ChargeDefinition extends ModelBase {
 		return note; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1445,6 +1657,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String chargeGroup;
 	
@@ -1455,6 +1670,7 @@ public class ChargeDefinition extends ModelBase {
 		return chargeGroup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1463,6 +1679,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String salesCategory;
 	
@@ -1473,6 +1692,7 @@ public class ChargeDefinition extends ModelBase {
 		return salesCategory; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1481,6 +1701,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private TaxTable taxTable;
 	
@@ -1491,6 +1714,7 @@ public class ChargeDefinition extends ModelBase {
 		return taxTable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1499,6 +1723,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rateQty;
 	
@@ -1509,6 +1736,7 @@ public class ChargeDefinition extends ModelBase {
 		return rateQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1517,6 +1745,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double materialQty;
 	
@@ -1527,6 +1758,7 @@ public class ChargeDefinition extends ModelBase {
 		return materialQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1535,6 +1767,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double groupQty;
 	
@@ -1545,6 +1780,7 @@ public class ChargeDefinition extends ModelBase {
 		return groupQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1553,6 +1789,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double price;
 	
@@ -1563,6 +1802,7 @@ public class ChargeDefinition extends ModelBase {
 		return price; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1571,6 +1811,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date timeStart;
 	
@@ -1581,6 +1824,7 @@ public class ChargeDefinition extends ModelBase {
 		return timeStart; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1589,6 +1833,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Date timeEnd;
 	
@@ -1599,6 +1846,7 @@ public class ChargeDefinition extends ModelBase {
 		return timeEnd; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1607,6 +1855,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean customerCharge;
 	
@@ -1617,6 +1868,7 @@ public class ChargeDefinition extends ModelBase {
 		return customerCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1625,6 +1877,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean pressCharge;
 	
@@ -1635,6 +1890,7 @@ public class ChargeDefinition extends ModelBase {
 		return pressCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1643,6 +1899,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hideChargeInPrintouts;
 	
@@ -1653,6 +1912,7 @@ public class ChargeDefinition extends ModelBase {
 		return hideChargeInPrintouts; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1661,6 +1921,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean deletedPreset;
 	
@@ -1671,6 +1934,7 @@ public class ChargeDefinition extends ModelBase {
 		return deletedPreset; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1679,6 +1943,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean ignoreCuts;
 	
@@ -1689,6 +1956,7 @@ public class ChargeDefinition extends ModelBase {
 		return ignoreCuts; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1697,6 +1965,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useSignatures;
 	
@@ -1707,6 +1978,7 @@ public class ChargeDefinition extends ModelBase {
 		return useSignatures; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1715,6 +1987,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean stockCharge;
 	
@@ -1725,6 +2000,7 @@ public class ChargeDefinition extends ModelBase {
 		return stockCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1733,6 +2009,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideNumberOfCuts;
 	
@@ -1743,6 +2022,7 @@ public class ChargeDefinition extends ModelBase {
 		return overrideNumberOfCuts; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1751,6 +2031,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean showNotes;
 	
@@ -1761,6 +2044,7 @@ public class ChargeDefinition extends ModelBase {
 		return showNotes; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1769,6 +2053,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean finished;
 	
@@ -1779,6 +2066,7 @@ public class ChargeDefinition extends ModelBase {
 		return finished; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1787,6 +2075,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean brokered;
 	
@@ -1797,6 +2088,7 @@ public class ChargeDefinition extends ModelBase {
 		return brokered; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1805,6 +2097,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean taxable;
 	
@@ -1815,6 +2110,7 @@ public class ChargeDefinition extends ModelBase {
 		return taxable; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1823,6 +2119,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean displayQty;
 	
@@ -1833,6 +2132,7 @@ public class ChargeDefinition extends ModelBase {
 		return displayQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1841,6 +2141,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overridePrice;
 	
@@ -1851,6 +2154,7 @@ public class ChargeDefinition extends ModelBase {
 		return overridePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1859,6 +2163,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideRateQuantity;
 	
@@ -1869,6 +2176,7 @@ public class ChargeDefinition extends ModelBase {
 		return overrideRateQuantity; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1877,6 +2185,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean overrideMaterialQty;
 	
@@ -1887,6 +2198,7 @@ public class ChargeDefinition extends ModelBase {
 		return overrideMaterialQty; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1895,6 +2207,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer version;
 	
@@ -1905,6 +2220,7 @@ public class ChargeDefinition extends ModelBase {
 		return version; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1913,6 +2229,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ShippingMethod shipMode;
 	
@@ -1923,6 +2242,7 @@ public class ChargeDefinition extends ModelBase {
 		return shipMode; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1931,6 +2251,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer adjustUpsCount;
 	
@@ -1941,6 +2264,7 @@ public class ChargeDefinition extends ModelBase {
 		return adjustUpsCount; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1949,6 +2273,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hasLinkPrice;
 	
@@ -1959,6 +2286,7 @@ public class ChargeDefinition extends ModelBase {
 		return hasLinkPrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1967,6 +2295,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean needLinkPrice;
 	
@@ -1977,6 +2308,7 @@ public class ChargeDefinition extends ModelBase {
 		return needLinkPrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -1985,6 +2317,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hasShipped;
 	
@@ -1995,6 +2330,7 @@ public class ChargeDefinition extends ModelBase {
 		return hasShipped; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2003,6 +2339,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean shouldShip;
 	
@@ -2013,6 +2352,7 @@ public class ChargeDefinition extends ModelBase {
 		return shouldShip; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2021,6 +2361,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean jobTaskList;
 	
@@ -2031,6 +2374,7 @@ public class ChargeDefinition extends ModelBase {
 		return jobTaskList; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2039,6 +2383,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean hidePrice;
 	
@@ -2049,6 +2396,7 @@ public class ChargeDefinition extends ModelBase {
 		return hidePrice; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2057,6 +2405,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean ignoreGlobalPriceChanges;
 	
@@ -2067,6 +2418,7 @@ public class ChargeDefinition extends ModelBase {
 		return ignoreGlobalPriceChanges; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2075,6 +2427,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean costingPressCharge;
 	
@@ -2085,6 +2440,7 @@ public class ChargeDefinition extends ModelBase {
 		return costingPressCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2093,6 +2449,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean linearX1;
 	
@@ -2103,6 +2462,7 @@ public class ChargeDefinition extends ModelBase {
 		return linearX1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2111,6 +2471,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean linearX2;
 	
@@ -2121,6 +2484,7 @@ public class ChargeDefinition extends ModelBase {
 		return linearX2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2129,6 +2493,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean linearY1;
 	
@@ -2139,6 +2506,7 @@ public class ChargeDefinition extends ModelBase {
 		return linearY1; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2147,6 +2515,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean linearY2;
 	
@@ -2157,6 +2528,7 @@ public class ChargeDefinition extends ModelBase {
 		return linearY2; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2165,6 +2537,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String label;
 	
@@ -2175,6 +2550,7 @@ public class ChargeDefinition extends ModelBase {
 		return label; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2183,6 +2559,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean binderyCharge;
 	
@@ -2193,6 +2572,7 @@ public class ChargeDefinition extends ModelBase {
 		return binderyCharge; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2201,6 +2581,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String name;
 	
@@ -2211,6 +2594,7 @@ public class ChargeDefinition extends ModelBase {
 		return name; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2219,6 +2603,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCategory parent;
 	
@@ -2229,6 +2616,7 @@ public class ChargeDefinition extends ModelBase {
 		return parent; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2237,6 +2625,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useArea;
 	
@@ -2247,6 +2638,7 @@ public class ChargeDefinition extends ModelBase {
 		return useArea; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2255,6 +2647,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean useSetup;
 	
@@ -2265,6 +2660,7 @@ public class ChargeDefinition extends ModelBase {
 		return useSetup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2273,6 +2669,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ChargeCost chargeCost;
 	
@@ -2283,6 +2682,7 @@ public class ChargeDefinition extends ModelBase {
 		return chargeCost; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2291,6 +2691,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double area;
 	
@@ -2301,6 +2704,7 @@ public class ChargeDefinition extends ModelBase {
 		return area; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2309,6 +2713,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean coverlb_check;
 	
@@ -2319,6 +2726,7 @@ public class ChargeDefinition extends ModelBase {
 		return coverlb_check; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2327,6 +2735,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean sheet_lift_check;
 	
@@ -2337,6 +2748,7 @@ public class ChargeDefinition extends ModelBase {
 		return sheet_lift_check; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2345,6 +2757,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Boolean ship_markup_check;
 	
@@ -2355,6 +2770,7 @@ public class ChargeDefinition extends ModelBase {
 		return ship_markup_check; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2363,6 +2779,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double coverlbInk;
 	
@@ -2373,6 +2792,7 @@ public class ChargeDefinition extends ModelBase {
 		return coverlbInk; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2381,6 +2801,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Integer sheetliftCut;
 	
@@ -2391,6 +2814,7 @@ public class ChargeDefinition extends ModelBase {
 		return sheetliftCut; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2399,6 +2823,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double shipMarkup;
 	
@@ -2409,6 +2836,7 @@ public class ChargeDefinition extends ModelBase {
 		return shipMarkup; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2417,6 +2845,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String descriptionLabel;
 	
@@ -2427,6 +2858,7 @@ public class ChargeDefinition extends ModelBase {
 		return descriptionLabel; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2435,6 +2867,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String notesLabel;
 	
@@ -2445,6 +2880,7 @@ public class ChargeDefinition extends ModelBase {
 		return notesLabel; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2453,6 +2889,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String descriptionDefault;
 	
@@ -2463,6 +2902,7 @@ public class ChargeDefinition extends ModelBase {
 		return descriptionDefault; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2471,6 +2911,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String notesDefault;
 	
@@ -2481,6 +2924,7 @@ public class ChargeDefinition extends ModelBase {
 		return notesDefault; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2489,6 +2933,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String quantityLabel;
 	
@@ -2499,6 +2946,7 @@ public class ChargeDefinition extends ModelBase {
 		return quantityLabel; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2507,6 +2955,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double quantityDefault;
 	
@@ -2517,6 +2968,7 @@ public class ChargeDefinition extends ModelBase {
 		return quantityDefault; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2525,6 +2977,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String rateLabel;
 	
@@ -2535,6 +2990,7 @@ public class ChargeDefinition extends ModelBase {
 		return rateLabel; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2543,6 +2999,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double rateDefault;
 	
@@ -2553,6 +3012,7 @@ public class ChargeDefinition extends ModelBase {
 		return rateDefault; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2561,6 +3021,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private String priceLabel;
 	
@@ -2571,6 +3034,7 @@ public class ChargeDefinition extends ModelBase {
 		return priceLabel; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
@@ -2579,6 +3043,9 @@ public class ChargeDefinition extends ModelBase {
 	}
  	
 	
+	/**
+	 * @generated
+	 */	
  	@Basic
 	private Double priceDefault;
 	
@@ -2589,11 +3056,34 @@ public class ChargeDefinition extends ModelBase {
 		return priceDefault; 
 	}
 
+	
 	/**
 	 * @generated
 	 */	
 	public void setPriceDefault(Double newVal) {
 		this.priceDefault = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean useRunArea;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getUseRunArea(){
+		return useRunArea; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setUseRunArea(Boolean newVal) {
+		this.useRunArea = newVal;
 	}
 	/**
 	 * @generated
@@ -2717,6 +3207,7 @@ public class ChargeDefinition extends ModelBase {
 		if (RATEDEFAULT.equals(propertyName)) return getRateDefault();
 		if (PRICELABEL.equals(propertyName)) return getPriceLabel();
 		if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
+		if (USERUNAREA.equals(propertyName)) return getUseRunArea();
 		return super.getProperty(propertyName);
 	}
 	
@@ -2842,6 +3333,7 @@ public class ChargeDefinition extends ModelBase {
 		if (RATEDEFAULT.equals(propertyName)) setRateDefault((Double)newValue); else
 		if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
 		if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
+		if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3083,6 +3575,8 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (PRICEDEFAULT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (USERUNAREA.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3209,6 +3703,7 @@ public class ChargeDefinition extends ModelBase {
 		if (RATEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
 		if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
 		if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+		if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3451,6 +3946,8 @@ public class ChargeDefinition extends ModelBase {
 		if (! SmartEquals(getPriceLabel(), objT.getPriceLabel()))
 			return false;
 		if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
+			return false;
+		if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
 			return false;
 		return true;
 	}			
