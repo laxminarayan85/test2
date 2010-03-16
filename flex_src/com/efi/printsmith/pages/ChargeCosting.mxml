@@ -57,11 +57,33 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		+ "Message: " + ev.fault.faultString;                                    
 	}
 	                     
-	public function saveUser():void {                                    
+	public function saveUser():void {   
+		MaptoChargeCost()                                 
 		dataService.addUpdate(chargeCost);                                        
 	}
-                                  
-	private function creationCompleteHandler():void {   
+    private function MaptoChargeCost():void{
+    	chargeCost.costingMethod = costing_method_combo.selectedItem as String
+    	chargeCost.created = createDate.text as Date;
+    	chargeCost.fixedMaterials = parseFloat(fixed_materials_edit.text);
+    	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
+    	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
+    //	chargeCost.rateTable
+    	chargeCost.setupCost = parseFloat(setup_cost_edit.text);
+    	chargeCost.setupMinutes = parseFloat(setup_minutes_edit.text);
+  //  	chargeCost.speedTable
+    	chargeCost.totalUnitCost= parseFloat(total_cost_text.text);
+    	chargeCost.unitCost = parseFloat(unit_cost_edit.text);
+    	chargeCost.unitMaterials = parseFloat(unit_materials_edit.text);
+    	chargeCost.modified = lastChangeDate.text as Date;
+    
+    
+    
+    }                              
+	private function creationCompleteHandler():void { 
+		
+		costing_method_combo.selectedItem = chargeCost.costingMethod as String;
+		UpdateControlState();
+		
 	}
 	                                
 	private function resetFocus():void {                           
@@ -96,10 +118,49 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		ValidationResultEvent.VALID);
 		                                         
 		formIsValid = formIsValid && currentControlIsValid;
-		                               
+		UpdateControlState();                              
 		return currentControlIsValid;	                                         
 	}
-	                                 
+	private function UpdateControlState():void{
+		var temp:String	
+		temp = costing_method_combo.selectedItem as String;
+		switch (temp) {
+			
+			case ChargeCostMethod.HUNDREDPERCENT:
+			case ChargeCostMethod.NOCOST:
+				setup_cost_edit.enabled = false;
+				unit_cost_edit.enabled = false;
+				fixed_materials_edit.enabled = false;
+				unit_materials_edit.enabled = false;
+				labor_rate_edit.enabled = false;
+				setup_minutes_edit.enabled = false;
+				pieces_per_hour_edit.enabled = false;
+			
+			break;
+			
+			case ChargeCostMethod.TIMEANDMATERIAL:
+				setup_cost_edit.enabled = false;
+				unit_cost_edit.enabled = false;
+				fixed_materials_edit.enabled = true;
+				unit_materials_edit.enabled = true;
+				labor_rate_edit.enabled = true;
+				setup_minutes_edit.enabled = true;
+				pieces_per_hour_edit.enabled = true;
+			break;
+			
+			case ChargeCostMethod.UNITCOST:
+				setup_cost_edit.enabled = true;
+				unit_cost_edit.enabled = true;
+				fixed_materials_edit.enabled = false;
+				unit_materials_edit.enabled = false;
+				labor_rate_edit.enabled = false;
+				setup_minutes_edit.enabled = false;
+				pieces_per_hour_edit.enabled = false;
+			break;
+		}
+	
+	
+	}                                
 	private function clearFormHandler():void {
 		// Clear all input fields.
 		setup_cost_edit.text = "";
@@ -154,9 +215,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:HRule x="0" y="347" width="339" height="9"/>
 		<mx:Text x="144" y="291" text="{totalCost}" width="186" id="total_cost_text" textAlign="right"/>
 		<mx:Label x="15" y="364" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Created')}" textAlign="right"/>
-		<mx:Text x="144" y="364" text="{chargeCost.created}" width="186"/>
+		<mx:Text x="144" y="364" text="{chargeCost.created}" width="186" id="createDate"/>
 		<mx:Label x="11" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LastChange')}" textAlign="right"/>
-		<mx:Text x="144" y="384" text="{chargeCost.modified}" width="186"/>
+		<mx:Text x="144" y="384" text="{chargeCost.modified}" width="186" id="lastChangeDate"/>
 	</mx:Canvas>
 
 <mx:ControlBar horizontalAlign="center">                                   
