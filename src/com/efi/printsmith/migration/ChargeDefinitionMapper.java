@@ -44,6 +44,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 		String linkId = "";
 		String categoryId = "";
 		String method = "";
+		String setuptemp ="";
 		while ((importTokens = csvReader.readNext()) != null) {
 			if (importTokens.length != fieldTokens.length) {
 				throw new InvalidParameterException(
@@ -204,13 +205,45 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						}
 								
 					} else if ("qty type".equals(currentFieldToken)) {
-						chargeDefinition.setQuantityType(currentImportToken);
+						if (currentImportToken.equals("0")) {
+							chargeDefinition.setQuantityType("Sets");
+						} else if (currentImportToken.equals("1")) {
+							chargeDefinition.setQuantityType("Quantity");
+						} else if (currentImportToken.equals("2")) {
+							chargeDefinition.setQuantityType("Time");
+						} else if (currentImportToken.equals("3")) {
+							chargeDefinition.setQuantityType("None");
+						} else if (currentImportToken.equals("4")) {
+						chargeDefinition.setQuantityType("SetupSets");
+						} else if (currentImportToken.equals("5")) {
+							chargeDefinition.setQuantityType("TotalWeight");
+						} else if (currentImportToken.equals("6")) {
+						chargeDefinition.setQuantityType("ShippingQty");
+						}
+						
 					} else if ("markup type".equals(currentFieldToken)) {
-						chargeDefinition.setMarkupType(currentImportToken);
+						if (currentImportToken.equals("1")) {
+							chargeDefinition.setMarkupType("JobPrice");
+						} else if (currentImportToken.equals("2")) {
+							chargeDefinition.setMarkupType("Charges");
+						} else if (currentImportToken.equals("3")) {
+							chargeDefinition.setMarkupType("EntireJob");
+						} else if (currentImportToken.equals("4")) {
+							chargeDefinition.setMarkupType("Invoice");
+						}
+						
+						
 					} else if ("job qty type".equals(currentFieldToken)) {
-						chargeDefinition.setJobQty(currentImportToken);
+						if (currentImportToken.equals("0")) {
+							chargeDefinition.setJobQty("None");
+						} else if (currentImportToken.equals("1")) {
+							chargeDefinition.setJobQty("Press");
+						} else if (currentImportToken.equals("2")) {
+							chargeDefinition.setJobQty("Ordered");
+						}
+					
 					} else if ("hidden".equals(currentFieldToken)) {
-						chargeDefinition.setHidePrice(Utilities
+						chargeDefinition.setHideChargeInPrintouts(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setHidden(Utilities
 								.tokenToBooleanValue(currentImportToken));
@@ -284,6 +317,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("use setup".equals(currentFieldToken)) {
 						chargeDefinition.setUseSetup(Utilities
 								.tokenToBooleanValue(currentImportToken));
+						setuptemp = currentImportToken;
 					} else if ("use minimum".equals(currentFieldToken)) {
 						chargeDefinition.setUseMinimumCharge(Utilities
 								.tokenToBooleanValue(currentImportToken));
@@ -348,7 +382,10 @@ public class ChargeDefinitionMapper extends ImportMapper {
 									.tokenToDouble(currentImportToken));
 						}
 					} else if ("material rate".equals(currentFieldToken)) {
-						chargeDefinition.setMaterial(Utilities.tokenToDouble(currentImportToken));
+						if (setuptemp.equals("1"))
+							chargeDefinition.setSetupPrice(Utilities.tokenToDouble(currentImportToken));
+						else
+							chargeDefinition.setMaterial(Utilities.tokenToDouble(currentImportToken));
 					} else if ("minimum".equals(currentFieldToken)) {
 						chargeDefinition.setMinimum(Utilities
 								.tokenToDouble(currentImportToken));
@@ -503,7 +540,15 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						
 						
 					} else if ("ink coverage type".equals(currentFieldToken)) {
-						chargeDefinition.setInkCoverage(currentImportToken);
+						if (method.equals("12")){
+							if (currentImportToken.equals("2"))
+								chargeDefinition.setUseRunArea(false);
+							else
+								chargeDefinition.setUseRunArea(true);
+									
+						}
+						else
+							chargeDefinition.setInkCoverage(currentImportToken);
 					} else if ("use sides".equals(currentFieldToken)) {
 						chargeDefinition.setUseSides(Utilities
 								.tokenToBooleanValue(currentImportToken));

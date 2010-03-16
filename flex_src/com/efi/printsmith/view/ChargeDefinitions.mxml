@@ -136,19 +136,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 	
-	[Bindable]
-	private var selected_charge_group_1:String;
-	
-	
-	[Bindable]
-	private var selected_charge_group_2:String;
-	
-	[Bindable]
-	private var selected_charge_group_3:String;
-	
-	[Bindable]
-	private var selected_charge_group_4:String;
-	
+		
 	[Bindable]
 	private var selected_area_group:String;
 	
@@ -280,13 +268,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
     private function charge_group_1_change(evt:Event):void {
-		if (charge_group_1.selectedValue == "Ordered") {
+		/* if (charge_group_1.selectedValue == "Ordered") {
 			charge.jobQty = ChargeJobQuantity.PRESS;
 		} else if (charge_group_1.selectedValue == "Press") {
 			charge.quantityType = ChargeJobQuantity.FINISH;
 		} else {
 			charge.quantityType = ChargeJobQuantity.NONE;
-		}
+		} */
+		charge.jobQty = charge_group_1.selectedValue as String;
     }
 
     private function charge_group_2_change(evt:Event):void {
@@ -329,11 +318,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     }
 	
 	private function markup_type_group_change(evt:Event):void {
-		
+		charge.markupType = markup_type_group.selectedValue as String;
 	}
 	
 	private function area_group_change(evt:Event):void {
-		
+		if (area_group.selectedValue =="RunArea")
+			charge.useRunArea = true;
+		else
+			charge.useRunArea = false;
 	}
 	
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
@@ -561,6 +553,39 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Ignorecuts_radio.selected = charge.ignoreCuts;
 			pricingMethodRadioValue = charge.priceMethod;
 			UpdatePriceMethod();
+			markup_type_group.selectedValue = charge.markupType;
+			if(charge.useArea){
+				if(charge.useRunArea)
+					area_group.selectedValue = "RunArea";
+				else
+					area_group.selectedValue = "FinishArea";
+			}
+			
+			charge_quantity_combo.text = charge.quantityType;
+			charge_group_1.selectedValue = charge.jobQty;
+			if(charge.useColors)
+				charge_group_2.selectedValue = "Colors";
+			else if (charge.useSides)
+				charge_group_2.selectedValue = "Sides";
+			else
+				charge_group_2.selectedValue = "NA";
+			
+			if(charge.useSignatures)
+				charge_group_3.selectedValue = "Signatures";
+			else if(charge.useOriginals)
+				charge_group_3.selectedValue = "Sheets";
+			else
+				charge_group_3.selectedValue = "NA";
+				
+			if (charge.useMultiplyUpCount)
+				charge_group_4.selectedValue = "xUp";
+			else if (charge.useDivideByUpCount)
+				charge_group_4.selectedValue = "/Up";
+			else
+				charge_group_4.selectedValue = "NA";
+				
+		UpdateAdjset();
+		UpdateAdj();	
 		}
 		
 			
@@ -612,7 +637,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		// Note: Radio buttons are updated dynamically via change events (see charge_group_1_change, etc.)
 		charge.markup = parseFloat(markup_edit.text);
 		charge.useSetup = setup_check.selected;
-		charge.material = setup_edit.text as Number;
+		
+		
+		charge.setupPrice = setup_edit.text as Number;
 		charge.useRate = rate_check.selected;
 		charge.rate = parseFloat(rate_edit.text);
 		charge.useMaterial = material_check.selected;
@@ -680,10 +707,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		switch (charge_method_combo.selectedItem) {
 		case ChargeMethod.ASK:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -723,16 +746,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			
 		case ChargeMethod.CUT:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -763,10 +782,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.FLATRATE:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -803,10 +818,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.FOLD:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = true;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -843,10 +854,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.INK:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = true;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -883,10 +890,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.JOBAWARE:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -923,10 +926,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.LINEAR:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = true;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -963,10 +962,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.MARKUP:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -1003,10 +998,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.PRICELIST:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = false;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -1043,10 +1034,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.RATELIST:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = false;
-			adjustable_rate_check.enabled = false;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -1083,10 +1070,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.SHIPPING:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = true;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -1123,10 +1106,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			break;
 		case ChargeMethod.SQUAREAREA:
 			no_overrides_check.enabled = true;
-			adjustable_sets_check.enabled = true;
-			adjustable_rate_check.enabled = true;
-			adjustable_material_check.enabled = false;
-			adjustable_up_check.enabled = false;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
 			hide_charge_in_printouts_check.enabled = true;
@@ -1473,6 +1452,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 			
 	}
+	private function UpdateAdj():void{
+	 	if (rate_check.selected)
+	 		adjustable_rate_check.enabled= true;
+	 	else
+	 		adjustable_rate_check.enabled = false;
+	}
+	private function UpdateAdjset():void{
+		
+	 	if (ship_markup_check.selected ||cover_ink_check.selected || sheet_lift_check.selected || in_set_mat_check.selected || in_sets_check.selected)
+	 		adjustable_sets_check.enabled= true;
+	 	else
+	 		adjustable_sets_check.enabled = false;
+	}
 	private function UpdatePriceMethod(): void{
 		if (pricing_method.selectedValue == "CostPlus") {
 			markup_edit.text = charge.markup.toString();
@@ -1495,7 +1487,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cover_ink_check.enabled= true;
 			ship_markup_check.enabled= true;
 			area_check.enabled= true;
-			material_check.enabled = true;
+			in_set_mat_check.enabled = true;
 		
 		}
 		else
@@ -1628,10 +1620,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
 					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}" enabled="{minimum_time_check.selected}"/>
 					
-					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112"/>
+					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112" value="RunArea"/>
 					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112"/>
 					
-					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112"/>
+					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112" value="FinishArea"/>
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112"/>
 					
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus" />
@@ -1639,12 +1631,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}"/>
 					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
 					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
-					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text=""/>
-					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}"/>
+					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{charge.setupPrice}"/>
+					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}" change="UpdateAdj();"/>
 					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{charge.rate}"/>
 					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice2();"/>
 					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}" text="{charge.material}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="69" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="69" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
 					<mx:TextInput x="397" y="329" width="124" id="area_edit" enabled="{area_check.selected}" text="{charge.area}"/>
 					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="69" enabled="{rate_check.selected}"/>
 					<mx:TextInput x="397" y="329" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}"/>
@@ -1653,32 +1645,32 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="713" height="132" creationPolicy="all">
 						<mx:Canvas width="100%" height="100%" id="job_aware_canvas" label="job_aware" showEffect="dissolveIn" hideEffect="dissolveOut">
 							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectvaluesinjobtob')}" width="291" height="17" fontWeight="bold" id="text2"/>
-							<mx:RadioButtonGroup id="charge_group_1" selectedValue="{selected_charge_group_1}" change="charge_group_1_change(event)"/>
-							<mx:RadioButtonGroup id="charge_group_2" selectedValue="{selected_charge_group_2}" change="charge_group_2_change(event)"/>
-							<mx:RadioButtonGroup id="charge_group_3" selectedValue="{selected_charge_group_3}" change="charge_group_3_change(event)"/>
-							<mx:RadioButtonGroup id="charge_group_4" selectedValue="{selected_charge_group_4}" change="charge_group_4_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_1"  change="charge_group_1_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_2"  change="charge_group_2_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_3"  change="charge_group_3_change(event)"/>
+							<mx:RadioButtonGroup id="charge_group_4"  change="charge_group_4_change(event)"/>
 							<mx:Text x="123" y="70" text="x" id="multiplier_1_txt"/>
 							<mx:Text x="389" y="70" text="x" id="multiplier_2_txt"/>
 							<mx:Text x="256" y="70" text="x" id="multiplier_3_txt"/>
 							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
-								<mx:RadioButton x="8" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85"/>
-								<mx:RadioButton x="8" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85"/>
-								<mx:RadioButton x="8" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85"/>
+								<mx:RadioButton x="8" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None"/>
+								<mx:RadioButton x="8" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered"/>
+								<mx:RadioButton x="8" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press"/>
 							</mx:Canvas>
 							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides"/>
 							</mx:Canvas>
 							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures"/>
 							</mx:Canvas>
 							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up"/>
 							</mx:Canvas>
 							<mx:CheckBox x="547" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected} "/>
 						</mx:Canvas>
@@ -1686,10 +1678,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 						</mx:Canvas>
 						<mx:Canvas label="markup_canvas" width="100%" height="100%" id="markup_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 							<mx:RadioButtonGroup id="markup_type_group" selectedValue="{selected_markup_type_group}" change="markup_type_group_change(event)"/>
-							<mx:RadioButton x="10" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.JobPrice')}" groupName="markup_type_group" width="138"/>
-							<mx:RadioButton x="10" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" groupName="markup_type_group" width="138"/>
-							<mx:RadioButton x="156" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.EntireJob')}" groupName="markup_type_group" width="138"/>
-							<mx:RadioButton x="156" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Invoice')}" groupName="markup_type_group" width="138"/>
+							<mx:RadioButton x="10" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.JobPrice')}" groupName="markup_type_group" width="138" value="JobPrice"/>
+							<mx:RadioButton x="10" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" groupName="markup_type_group" width="138" value="Charges"/>
+							<mx:RadioButton x="156" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.EntireJob')}" groupName="markup_type_group" width="138" value="EntireJob"/>
+							<mx:RadioButton x="156" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Invoice')}" groupName="markup_type_group" width="138" value="Invoice"/>
 							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectthetypeofmarku')}" width="291" height="17" fontWeight="bold"/>
 						</mx:Canvas>
 					</mx:ViewStack>
@@ -1698,16 +1690,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
 					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
 					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="69"/>
+					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="69" change="UpdateAdjset();"/>
 					<mx:TextInput x="397" y="352" width="124" enabled="{in_set_mat_check.selected}" text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="69"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="69" change="UpdateAdjset();"/>
 					<mx:TextInput x="397" y="329" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="69"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="69" change="UpdateAdjset();"/>
 					<mx:TextInput x="397" y="329" id="cover_ink_edit"  text="{charge.coverlbInk}" width="124" enabled="{cover_ink_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="69"/>
+					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="69" change="UpdateAdjset();"/>
 					<mx:TextInput x="397" y="329" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}"/>
-					<mx:CheckBox x="544" y="322" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" enabled="{in_set_mat_check.selected || in_sets_check.selected}"/>
-					<mx:CheckBox x="544" y="340" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}" enabled="{rate_check.selected}"/>
+					<mx:CheckBox x="544" y="322" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" />
+					<mx:CheckBox x="544" y="340" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}"/>
 					<mx:CheckBox x="544" y="358" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}"/>
 				</mx:Canvas>
 			</mx:Canvas>
