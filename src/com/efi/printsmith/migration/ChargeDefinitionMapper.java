@@ -54,6 +54,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				SalesCategory salesCategory = null;
 				newCommand = false;
 				newCategory = false;
+				boolean addSalesCategory = false;
 				description = "";
 				linkId = "";
 				categoryId = "";
@@ -104,13 +105,23 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setChargeCost(chargeCost);
 						chargeDefinition.setPrevId(currentImportToken);
 					} else if ("sales cat".equals(currentFieldToken)) {
-						/*if (currentImportToken.equals("0") == false) {
+						if (currentImportToken.equals("0") == false) {
 							salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
 							if (salesCategory != null)
 								chargeDefinition.setSalesCategory(salesCategory);
-						}*/
+							else {
+								salesCategory = new SalesCategory();
+								salesCategory.setPrevId(currentImportToken);
+								addSalesCategory = true;
+							}
+						}
 					} else if ("sales cat name".equals(currentFieldToken)) {
-						
+						if (addSalesCategory == true) {
+							salesCategory.setName(currentImportToken);
+							dataService.addUpdate(salesCategory);
+							salesCategory.setId(salesCategory.getId());
+							chargeDefinition.setSalesCategory(salesCategory);
+						}
 					} else if ("rate qty".equals(currentFieldToken)) {
 						chargeDefinition.setRateQty(Utilities
 								.tokenToDouble(currentImportToken));
