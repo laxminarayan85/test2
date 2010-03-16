@@ -32,7 +32,9 @@
 	import mx.core.Application;
 	import mx.collections.ArrayCollection;
 	import flash.net.FileReference;
-	
+	import mx.rpc.Responder;
+	import com.efi.printsmith.events.commandEvents.EditForms.EditWebAdminEvent;
+		
 	private var fileReference:FileReference;
 	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
 	private var loader:Loader;
@@ -302,6 +304,45 @@
 		doImport(handleSelectStockChangesFile);
 	}
 
+	private function doWebAdministration():void {
+		var event:EditWebAdminEvent = new EditWebAdminEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+		event.dispatch();
+
+	}
+
+	private function handleFault(ev:FaultEvent):void {
+		var errorDetail:String="";
+		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+			errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+		}else{
+			errorDetail = ev.fault.faultDetail;
+		}
+		Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+	}
+
+	public function handleUIEvent(evt:ResultEvent):void {
+		var child:DisplayObject = evt.result as DisplayObject;
+		addUniqueTab(child);
+	}		
+
+	private function addUniqueTab(tab:DisplayObject):void {
+			var tabFound:Boolean = false;
+			
+			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+			{
+				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+				{
+					Snowmass.getInstance().mainNavigator.selectedIndex = i;
+					tabFound = true;
+					break;
+				}
+			}
+			if (!tabFound) {
+				Snowmass.getInstance().mainNavigator.addChild(tab);
+				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+			}
+		}
+
 ]]>        
 </mx:Script>
                              
@@ -313,6 +354,7 @@
 		<mx:Button label="Import Charges" id="import_charge" enabled="true" click="doImportCharge();"  width="256" x="10" y="40"/>
 		<mx:Button label="Import Standalone Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="256" x="10" y="190"/>
 		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="274" y="160"/>
+		<mx:Button label="Web Administration" id="printsmith_site_webadmin" enabled="true" click="doWebAdministration();"  width="256" x="274" y="220"/>
 		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="274" y="130"/>
 		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="274" y="100"/>
 		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="220"/>
