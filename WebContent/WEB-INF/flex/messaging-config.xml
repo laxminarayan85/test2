@@ -36,6 +36,7 @@
 	<destination id="invoicebase"/>
 	<destination id="pricelist"/>
 	<destination id="accessgroup"/>
+	<destination id="webadmin"/>
 	<destination id="notifications">
 		<channels>
 			<channel ref="my-streaming-amf"/>

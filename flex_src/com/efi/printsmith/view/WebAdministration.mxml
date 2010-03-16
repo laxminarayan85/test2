@@ -139,7 +139,7 @@
 				<mx:Button x="342" y="10" width="38" height="38" id="btnTransmit" enabled="false" click="doTransmit();">
 					<mx:icon>@Embed(source='../../../../assets/transmit.png')</mx:icon>
 				</mx:Button>
-				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Transmit')}" width="58" textAlign="center"/>
+				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" width="58" textAlign="center"/>
 				<mx:Button x="399" y="10" width="38" height="38" click="doRevert();">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
@@ -161,7 +161,7 @@
 				<mx:Button x="342" y="10" width="38" height="38" id="btnTransmit0" enabled="false" click="doTransmit();">
 					<mx:icon>@Embed(source='../../../../assets/transmit.png')</mx:icon>
 				</mx:Button>
-				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Transmit')}" width="58" textAlign="center"/>
+				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" width="58" textAlign="center"/>
 				<mx:Button x="399" y="10" width="38" height="38" click="doRevert();">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
@@ -183,7 +183,7 @@
 				<mx:Button x="342" y="10" width="38" height="38" id="btnTransmit1" enabled="false" click="doTransmit();">
 					<mx:icon>@Embed(source='../../../../assets/transmit.png')</mx:icon>
 				</mx:Button>
-				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Transmit')}" width="58" textAlign="center"/>
+				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" width="58" textAlign="center"/>
 				<mx:Button x="399" y="10" width="38" height="38" click="doRevert();">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
@@ -205,7 +205,7 @@
 				<mx:Button x="342" y="10" width="38" height="38" id="btnTransmit2" enabled="false" click="doTransmit();">
 					<mx:icon>@Embed(source='../../../../assets/transmit.png')</mx:icon>
 				</mx:Button>
-				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Transmit')}" width="58" textAlign="center"/>
+				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" width="58" textAlign="center"/>
 				<mx:Button x="399" y="10" width="38" height="38" click="doRevert();">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
@@ -227,7 +227,7 @@
 				<mx:Button x="342" y="10" width="38" height="38" id="btnTransmit3" enabled="false" click="doTransmit();">
 					<mx:icon>@Embed(source='../../../../assets/transmit.png')</mx:icon>
 				</mx:Button>
-				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Transmit')}" width="58" textAlign="center"/>
+				<mx:Label x="332" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" width="58" textAlign="center"/>
 				<mx:Button x="399" y="10" width="38" height="38" click="doRevert();">
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
