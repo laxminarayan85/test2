@@ -917,7 +917,6 @@
 		Expires.enabled = checked;
 		BinLocation.enabled = checked;
 		ShellItem.enabled = checked;
-		btnAssignCustomerAccount.enabled = checked;
 		chkEvenIncrements.enabled = checked;
 	}
 	
@@ -1454,11 +1453,11 @@
 				<mx:Button x="10" y="204" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kInventoryHistoryCmd.ShowEntireHistory')}" click="doShowHistory();"/>
 				<mx:DataGrid dataProvider="{stockChanges}" left="5" right="5" top="5" bottom="30" id="stockchangeGrid">
 					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.User')}" dataField="psUser"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Date')}" dataField="stockchangedate"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.HowChanged')}" dataField="HowChanged"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Quantity')}" dataField="Quantity"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Reference')}" dataField="Reference"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.User')}" dataField="PSUser"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Date')}" dataField="stockChangeDate"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.HowChanged')}" dataField="howChanged"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Quantity')}" dataField="quantity"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Reference')}" dataField="reference"/>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:Panel>
