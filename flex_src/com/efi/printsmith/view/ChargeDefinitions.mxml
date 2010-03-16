@@ -56,6 +56,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.SalesCategory;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargePresetInfoEvent;
 	
@@ -580,7 +581,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.costCenter = cost_center_combo.selectedItem as CostCenter;
 		charge.method = charge_method_combo.selectedItem as String;
 		charge.quantityType = charge_quantity_combo.selectedItem as String;
-		charge.salesCategory = charge_sales_category_combo.selectedItem as String;
+		charge.salesCategory = charge_sales_category_combo.selectedItem as SalesCategory;
 		charge.ignoreCuts = Ignorecuts_radio.selected;
 		charge.cutsArePrePress = cut_prepress_radio.selected;
 		

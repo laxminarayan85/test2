@@ -15,6 +15,9 @@ package com.efi.printsmith.data
 				
 		public var coverage:Number = 0;
 		public var inkWeight:Number = 0;
+		public var coverPerPound:Number = 0;
+		public var pricePerPound:Number = 0;
+		public var poundsOfInk:Number = 0;
 	
 	}
 }

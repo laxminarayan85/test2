@@ -66,7 +66,7 @@ package com.efi.printsmith.data
 		public var title:String = "";
 		public var note:String = "";
 		public var chargeGroup:String = "";
-		public var salesCategory:String = "";
+		public var salesCategory:SalesCategory;
 		public var taxTable:TaxTable;
 		public var rateQty:Number = 0;
 		public var materialQty:Number = 0;

@@ -126,6 +126,30 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String PARENTINVOICE = "ParentInvoice";
+	/**
+	 * @generated
+	 */
+	public static final String MINIMUMCHARGE = "MinimumCharge";
+	/**
+	 * @generated
+	 */
+	public static final String SETS = "Sets";
+	/**
+	 * @generated
+	 */
+	public static final String MATERIALSETS = "MaterialSets";
+	/**
+	 * @generated
+	 */
+	public static final String QTYPERSET = "QtyPerSet";
+	/**
+	 * @generated
+	 */
+	public static final String STARTTIME = "StartTime";
+	/**
+	 * @generated
+	 */
+	public static final String ENDTIME = "EndTime";
 
 	/**
 	 * @generated
@@ -641,6 +665,138 @@ public class Charge extends ModelBase {
 	public void setParentInvoice(Invoice newVal) {
 		this.parentInvoice = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double minimumCharge;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getMinimumCharge(){
+		return minimumCharge; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setMinimumCharge(Double newVal) {
+		this.minimumCharge = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double sets;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getSets(){
+		return sets; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setSets(Double newVal) {
+		this.sets = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double materialSets;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getMaterialSets(){
+		return materialSets; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setMaterialSets(Double newVal) {
+		this.materialSets = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double qtyPerSet;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getQtyPerSet(){
+		return qtyPerSet; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setQtyPerSet(Double newVal) {
+		this.qtyPerSet = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Date startTime;
+	
+	/**
+	 * @generated
+ 	 */
+	public Date getStartTime(){
+		return startTime; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setStartTime(Date newVal) {
+		this.startTime = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Date endTime;
+	
+	/**
+	 * @generated
+ 	 */
+	public Date getEndTime(){
+		return endTime; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setEndTime(Date newVal) {
+		this.endTime = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -670,6 +826,12 @@ public class Charge extends ModelBase {
 		if (OVERRIDEUP.equals(propertyName)) return getOverrideUp();
 		if (PARENTJOB.equals(propertyName)) return getParentJob();
 		if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
+		if (MINIMUMCHARGE.equals(propertyName)) return getMinimumCharge();
+		if (SETS.equals(propertyName)) return getSets();
+		if (MATERIALSETS.equals(propertyName)) return getMaterialSets();
+		if (QTYPERSET.equals(propertyName)) return getQtyPerSet();
+		if (STARTTIME.equals(propertyName)) return getStartTime();
+		if (ENDTIME.equals(propertyName)) return getEndTime();
 		return super.getProperty(propertyName);
 	}
 	
@@ -702,6 +864,12 @@ public class Charge extends ModelBase {
 		if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
 		if (PARENTJOB.equals(propertyName)) setParentJob((Job)newValue); else
 		if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
+		if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((Double)newValue); else
+		if (SETS.equals(propertyName)) setSets((Double)newValue); else
+		if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
+		if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
+		if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
+		if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -757,6 +925,18 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Job.class};		
 		if (PARENTINVOICE.equals(propertyName)) 
 			return new Class<?>[] {Invoice.class};		
+		if (MINIMUMCHARGE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (SETS.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (MATERIALSETS.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (QTYPERSET.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (STARTTIME.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (ENDTIME.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -790,6 +970,12 @@ public class Charge extends ModelBase {
 		if (OVERRIDEUP.equals(propertyName)) return Charge.class;
 		if (PARENTJOB.equals(propertyName)) return Charge.class;
 		if (PARENTINVOICE.equals(propertyName)) return Charge.class;
+		if (MINIMUMCHARGE.equals(propertyName)) return Charge.class;
+		if (SETS.equals(propertyName)) return Charge.class;
+		if (MATERIALSETS.equals(propertyName)) return Charge.class;
+		if (QTYPERSET.equals(propertyName)) return Charge.class;
+		if (STARTTIME.equals(propertyName)) return Charge.class;
+		if (ENDTIME.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -846,6 +1032,18 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getParentJob(), objT.getParentJob()))
 			return false;
 		if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
+			return false;
+		if (! SmartEquals(getMinimumCharge(), objT.getMinimumCharge()))
+			return false;
+		if (! SmartEquals(getSets(), objT.getSets()))
+			return false;
+		if (! SmartEquals(getMaterialSets(), objT.getMaterialSets()))
+			return false;
+		if (! SmartEquals(getQtyPerSet(), objT.getQtyPerSet()))
+			return false;
+		if (! SmartEquals(getStartTime(), objT.getStartTime()))
+			return false;
+		if (! SmartEquals(getEndTime(), objT.getEndTime()))
 			return false;
 		return true;
 	}			

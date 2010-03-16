@@ -682,9 +682,9 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setChargeCost(chargeCost);
 				chargeDefinition.setPrevId(currentImportToken);
 			} else if ("sales cat".equals(currentFieldToken)) {
-				chargeDefinition.setSalesCategory(currentImportToken);
+			//	chargeDefinition.setSalesCategory(currentImportToken);
 			} else if ("sales cat name".equals(currentFieldToken)) {
-				chargeDefinition.setSalesCategory(currentImportToken);
+		//		chargeDefinition.setSalesCategory(currentImportToken);
 			} else if ("rate qty".equals(currentFieldToken)) {
 				chargeDefinition.setRateQty(Utilities
 						.tokenToDouble(currentImportToken));

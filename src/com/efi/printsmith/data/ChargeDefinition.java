@@ -1714,13 +1714,13 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String salesCategory;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private SalesCategory salesCategory;
 	
 	/**
 	 * @generated
  	 */
-	public String getSalesCategory(){
+	public SalesCategory getSalesCategory(){
 		return salesCategory; 
 	}
 
@@ -1728,7 +1728,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setSalesCategory(String newVal) {
+	public void setSalesCategory(SalesCategory newVal) {
 		this.salesCategory = newVal;
 	}
  	
@@ -3486,7 +3486,7 @@ public class ChargeDefinition extends ModelBase {
 		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
 		if (NOTE.equals(propertyName)) setNote((String)newValue); else
 		if (CHARGEGROUP.equals(propertyName)) setChargeGroup((String)newValue); else
-		if (SALESCATEGORY.equals(propertyName)) setSalesCategory((String)newValue); else
+		if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
 		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
 		if (RATEQTY.equals(propertyName)) setRateQty((Double)newValue); else
 		if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
@@ -3674,7 +3674,7 @@ public class ChargeDefinition extends ModelBase {
 		if (CHARGEGROUP.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (SALESCATEGORY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {SalesCategory.class};		
 		if (TAXTABLE.equals(propertyName)) 
 			return new Class<?>[] {TaxTable.class};		
 		if (RATEQTY.equals(propertyName)) 

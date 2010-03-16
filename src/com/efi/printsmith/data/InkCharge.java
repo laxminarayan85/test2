@@ -42,6 +42,18 @@ public class InkCharge extends Charge {
 	 * @generated
 	 */
 	public static final String INKWEIGHT = "InkWeight";
+	/**
+	 * @generated
+	 */
+	public static final String COVERPERPOUND = "CoverPerPound";
+	/**
+	 * @generated
+	 */
+	public static final String PRICEPERPOUND = "PricePerPound";
+	/**
+	 * @generated
+	 */
+	public static final String POUNDSOFINK = "PoundsOfInk";
 
 	/**
 	 * @generated
@@ -95,6 +107,72 @@ public class InkCharge extends Charge {
 	public void setInkWeight(Double newVal) {
 		this.inkWeight = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double coverPerPound;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getCoverPerPound(){
+		return coverPerPound; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setCoverPerPound(Double newVal) {
+		this.coverPerPound = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double pricePerPound;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getPricePerPound(){
+		return pricePerPound; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setPricePerPound(Double newVal) {
+		this.pricePerPound = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double poundsOfInk;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getPoundsOfInk(){
+		return poundsOfInk; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setPoundsOfInk(Double newVal) {
+		this.poundsOfInk = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -103,6 +181,9 @@ public class InkCharge extends Charge {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (COVERAGE.equals(propertyName)) return getCoverage();
 		if (INKWEIGHT.equals(propertyName)) return getInkWeight();
+		if (COVERPERPOUND.equals(propertyName)) return getCoverPerPound();
+		if (PRICEPERPOUND.equals(propertyName)) return getPricePerPound();
+		if (POUNDSOFINK.equals(propertyName)) return getPoundsOfInk();
 		return super.getProperty(propertyName);
 	}
 	
@@ -114,6 +195,9 @@ public class InkCharge extends Charge {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (COVERAGE.equals(propertyName)) setCoverage((Double)newValue); else
 		if (INKWEIGHT.equals(propertyName)) setInkWeight((Double)newValue); else
+		if (COVERPERPOUND.equals(propertyName)) setCoverPerPound((Double)newValue); else
+		if (PRICEPERPOUND.equals(propertyName)) setPricePerPound((Double)newValue); else
+		if (POUNDSOFINK.equals(propertyName)) setPoundsOfInk((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -127,6 +211,12 @@ public class InkCharge extends Charge {
 			return new Class<?>[] {Double.class};		
 		if (INKWEIGHT.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
+		if (COVERPERPOUND.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (PRICEPERPOUND.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
+		if (POUNDSOFINK.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -139,6 +229,9 @@ public class InkCharge extends Charge {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (COVERAGE.equals(propertyName)) return InkCharge.class;
 		if (INKWEIGHT.equals(propertyName)) return InkCharge.class;
+		if (COVERPERPOUND.equals(propertyName)) return InkCharge.class;
+		if (PRICEPERPOUND.equals(propertyName)) return InkCharge.class;
+		if (POUNDSOFINK.equals(propertyName)) return InkCharge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -153,6 +246,12 @@ public class InkCharge extends Charge {
 		if (! SmartEquals(getCoverage(), objT.getCoverage()))
 			return false;
 		if (! SmartEquals(getInkWeight(), objT.getInkWeight()))
+			return false;
+		if (! SmartEquals(getCoverPerPound(), objT.getCoverPerPound()))
+			return false;
+		if (! SmartEquals(getPricePerPound(), objT.getPricePerPound()))
+			return false;
+		if (! SmartEquals(getPoundsOfInk(), objT.getPoundsOfInk()))
 			return false;
 		return true;
 	}			

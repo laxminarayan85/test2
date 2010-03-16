@@ -36,6 +36,12 @@ package com.efi.printsmith.data
 		public var overrideUp:Boolean = true;
 		public var parentJob:Job;
 		public var parentInvoice:Invoice;
+		public var minimumCharge:Number = 0;
+		public var sets:Number = 0;
+		public var materialSets:Number = 0;
+		public var qtyPerSet:Number = 0;
+		public var startTime:Date = new Date();
+		public var endTime:Date = new Date();
 	
 	}
 }
