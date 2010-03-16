@@ -163,15 +163,15 @@ rStandardMenuText.Admin,rStandardMenuText.1,CMD_
 rStandardMenuText.Admin,rStandardMenuText.UserDefinitions,CMD_Users
 rStandardMenuText.Admin,rStandardMenuText.SecuritySetup,CMD_Security
 rStandardMenuText.Admin,rStandardMenuText.KeyboardShortcuts,CMD_
-rStandardMenuText.Admin,rStandardMenuText.WebAdministration,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Site,CMD_
+rStandardMenuText.Admin,rStandardMenuText.WebAdministration,CMD_Web_Administration
+rStandardMenuText.Admin,	kWebAdminCmd.Site,CMD_WebSite_Panel
 rStandardMenuText.Admin,	kWebAdminCmd.Branding,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Catalogs,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Categories,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Products,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Questions,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Graphics,CMD_
-rStandardMenuText.Admin,	kWebAdminCmd.Admin,CMD_
+rStandardMenuText.Admin,	kWebAdminCmd.Catalogs,CMD_WebCatalogs_Panel
+rStandardMenuText.Admin,	kWebAdminCmd.Categories,CMD_WebCatagories_Panel
+rStandardMenuText.Admin,	kWebAdminCmd.Products,CMD_WebProducts_Panel
+rStandardMenuText.Admin,	kWebAdminCmd.Questions,CMD_WebQuestions_Panel
+rStandardMenuText.Admin,	kWebAdminCmd.Graphics,CMD_WebGraphics_Panel
+rStandardMenuText.Admin,	kWebAdminCmd.Admin,CMD_WebAdmin_Panel
 rStandardMenuText.Admin,	consoleCmd.WebConnection,CMD_
 rStandardMenuText.Admin,	webDataCmd.WebDataConsole,CMD_
 rStandardMenuText.Admin,rStandardMenuText.TrackerConsole,CMD_Tracker
