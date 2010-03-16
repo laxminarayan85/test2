@@ -627,12 +627,12 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private Job parentJob;
+	private JobBase parentJob;
 	
 	/**
 	 * @generated
  	 */
-	public Job getParentJob(){
+	public JobBase getParentJob(){
 		return parentJob; 
 	}
 
@@ -640,7 +640,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setParentJob(Job newVal) {
+	public void setParentJob(JobBase newVal) {
 		this.parentJob = newVal;
 	}
  	
@@ -862,7 +862,7 @@ public class Charge extends ModelBase {
 		if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
 		if (UP.equals(propertyName)) setUp((Integer)newValue); else
 		if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
-		if (PARENTJOB.equals(propertyName)) setParentJob((Job)newValue); else
+		if (PARENTJOB.equals(propertyName)) setParentJob((JobBase)newValue); else
 		if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
 		if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((Double)newValue); else
 		if (SETS.equals(propertyName)) setSets((Double)newValue); else
@@ -922,7 +922,7 @@ public class Charge extends ModelBase {
 		if (OVERRIDEUP.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (PARENTJOB.equals(propertyName)) 
-			return new Class<?>[] {Job.class};		
+			return new Class<?>[] {JobBase.class};		
 		if (PARENTINVOICE.equals(propertyName)) 
 			return new Class<?>[] {Invoice.class};		
 		if (MINIMUMCHARGE.equals(propertyName)) 

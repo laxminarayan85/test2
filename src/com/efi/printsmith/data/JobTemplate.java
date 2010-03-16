@@ -26,19 +26,19 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Job.findall", query = "from Job"),
-	@NamedQuery(name = "Job.byId", query = "select a from Job a where a.id= :id")
+	@NamedQuery(name = "JobTemplate.findall", query = "from JobTemplate"),
+	@NamedQuery(name = "JobTemplate.byId", query = "select a from JobTemplate a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "job")
-public class Job extends JobBase {
+@Table(name = "jobtemplate")
+public class JobTemplate extends JobBase {
 
 	/**
 	 * @generated
 	 */
-	public Job() {
+	public JobTemplate() {
 		this.created = new Date();
 		this.modified = new Date();
 	}

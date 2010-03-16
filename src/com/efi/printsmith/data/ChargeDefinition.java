@@ -534,6 +534,10 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String QTYINCLUDESDIVUP = "QtyIncludesDivUp";
+	/**
+	 * @generated
+	 */
+	public static final String SETUPPRICE = "SetupPrice";
 
 	/**
 	 * @generated
@@ -3293,6 +3297,28 @@ public class ChargeDefinition extends ModelBase {
 	public void setQtyIncludesDivUp(Boolean newVal) {
 		this.qtyIncludesDivUp = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double setupPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getSetupPrice(){
+		return setupPrice; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setSetupPrice(Double newVal) {
+		this.setupPrice = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -3424,6 +3450,7 @@ public class ChargeDefinition extends ModelBase {
 		if (QTYINCLUDESSIGNATURES.equals(propertyName)) return getQtyIncludesSignatures();
 		if (QTYINCLUDESXUP.equals(propertyName)) return getQtyIncludesXUp();
 		if (QTYINCLUDESDIVUP.equals(propertyName)) return getQtyIncludesDivUp();
+		if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
 		return super.getProperty(propertyName);
 	}
 	
@@ -3558,6 +3585,7 @@ public class ChargeDefinition extends ModelBase {
 		if (QTYINCLUDESSIGNATURES.equals(propertyName)) setQtyIncludesSignatures((Boolean)newValue); else
 		if (QTYINCLUDESXUP.equals(propertyName)) setQtyIncludesXUp((Boolean)newValue); else
 		if (QTYINCLUDESDIVUP.equals(propertyName)) setQtyIncludesDivUp((Boolean)newValue); else
+		if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3817,6 +3845,8 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (QTYINCLUDESDIVUP.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
+		if (SETUPPRICE.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3952,6 +3982,7 @@ public class ChargeDefinition extends ModelBase {
 		if (QTYINCLUDESSIGNATURES.equals(propertyName)) return ChargeDefinition.class;
 		if (QTYINCLUDESXUP.equals(propertyName)) return ChargeDefinition.class;
 		if (QTYINCLUDESDIVUP.equals(propertyName)) return ChargeDefinition.class;
+		if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -4212,6 +4243,8 @@ public class ChargeDefinition extends ModelBase {
 		if (! SmartEquals(getQtyIncludesXUp(), objT.getQtyIncludesXUp()))
 			return false;
 		if (! SmartEquals(getQtyIncludesDivUp(), objT.getQtyIncludesDivUp()))
+			return false;
+		if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
 			return false;
 		return true;
 	}			
