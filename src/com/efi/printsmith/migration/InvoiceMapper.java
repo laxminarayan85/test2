@@ -28,7 +28,7 @@ public class InvoiceMapper extends ImportMapper {
 			}
 		}
 		ModelBase modelBase = null;
-		if (type == "I") {
+		if (type.equals("I") == true) {
 			modelBase = this.createInvoice(fieldTokens, importTokens);
 		}
 		else {
