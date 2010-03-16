@@ -1,12 +1,11 @@
 package com.efi.printsmith.control
 {
 	import com.adobe.cairngorm.control.FrontController;
-	import com.efi.printsmith.events.*;
 	import com.efi.printsmith.commands.*;
 	import com.efi.printsmith.commands.commandCommands.*;
-	import com.efi.printsmith.events.commandEvents.*;
-
 	import com.efi.printsmith.commands.commandCommands.EditForms.*;
+	import com.efi.printsmith.events.*;
+	import com.efi.printsmith.events.commandEvents.*;
 	import com.efi.printsmith.events.commandEvents.EditForms.*;
 
 	public class MainController extends FrontController
@@ -50,6 +49,8 @@ package com.efi.printsmith.control
 			this.addCommand(EditEditEstimateEvent.COMMANDID, EditEditEstimateCommand);
 			this.addCommand(EditCreateInvoiceEvent.COMMANDID, EditCreateInvoiceCommand);
 			this.addCommand(EditEditInvoiceEvent.COMMANDID, EditEditInvoiceCommand);
+
+			this.addCommand(EditWebAdminEvent.COMMANDID, EditWebAdminCommand);
 
 		}
 		

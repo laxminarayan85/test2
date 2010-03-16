@@ -11,7 +11,7 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
-	public class EditContactDelegate extends InterfaceCommandDelegate 
+	public class EditWebAdminDelegate extends InterfaceCommandDelegate 
 	{
 		public function EditWebAdminDelegate(responder:IResponder) {
 			super(responder);

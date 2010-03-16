@@ -13,7 +13,6 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
  
 <mx:Producer id="producer" destination="webadmin"/>
@@ -47,7 +46,7 @@
 		notification_consumer.subscribe();     
 		
 		var eventSite:WebAdminSitePanelEvent = new WebAdminSitePanelEvent(canvasSite, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
-		eventAddress.dispatch();
+		eventSite.dispatch();
 
 		var eventCatalogs:WebAdminCatalogsPanelEvent = new WebAdminCatalogsPanelEvent(canvasCatalogs, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventCatalogs.dispatch();
@@ -112,6 +111,12 @@
 		Alert.show(message, "Error");                                 
 	}
 	    
+   private function doTransmit():void {
+	   	
+   }
+   private function doRevert():void {
+   	
+   }
 	
 ]]>	
 
