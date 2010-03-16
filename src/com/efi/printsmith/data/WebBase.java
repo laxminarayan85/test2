@@ -65,7 +65,7 @@ public class WebBase extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String FTPMODEIS = "FtpModeIs";
+	public static final String FTPMODE = "FtpMode";
 	/**
 	 * @generated
 	 */
@@ -287,21 +287,21 @@ public class WebBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer ftpModeIs;
+	private Integer ftpMode;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getFtpModeIs(){
-		return ftpModeIs; 
+	public Integer getFtpMode(){
+		return ftpMode; 
 	}
 
 	
 	/**
 	 * @generated
 	 */	
-	public void setFtpModeIs(Integer newVal) {
-		this.ftpModeIs = newVal;
+	public void setFtpMode(Integer newVal) {
+		this.ftpMode = newVal;
 	}
  	
 	
@@ -602,7 +602,7 @@ public class WebBase extends ModelBase {
 		if (FTPURL.equals(propertyName)) return getFtpUrl();
 		if (FTPUSERNAME.equals(propertyName)) return getFtpUserName();
 		if (FTPPASSWORD.equals(propertyName)) return getFtpPassword();
-		if (FTPMODEIS.equals(propertyName)) return getFtpModeIs();
+		if (FTPMODE.equals(propertyName)) return getFtpMode();
 		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return getIgnoreLocalCurrencyFormat();
 		if (RETRYINTERVAL.equals(propertyName)) return getRetryInterval();
 		if (MAXRETRIES.equals(propertyName)) return getMaxRetries();
@@ -632,7 +632,7 @@ public class WebBase extends ModelBase {
 		if (FTPURL.equals(propertyName)) setFtpUrl((String)newValue); else
 		if (FTPUSERNAME.equals(propertyName)) setFtpUserName((String)newValue); else
 		if (FTPPASSWORD.equals(propertyName)) setFtpPassword((String)newValue); else
-		if (FTPMODEIS.equals(propertyName)) setFtpModeIs((Integer)newValue); else
+		if (FTPMODE.equals(propertyName)) setFtpMode((Integer)newValue); else
 		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) setIgnoreLocalCurrencyFormat((Boolean)newValue); else
 		if (RETRYINTERVAL.equals(propertyName)) setRetryInterval((Integer)newValue); else
 		if (MAXRETRIES.equals(propertyName)) setMaxRetries((Integer)newValue); else
@@ -669,7 +669,7 @@ public class WebBase extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (FTPPASSWORD.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (FTPMODEIS.equals(propertyName)) 
+		if (FTPMODE.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
@@ -714,7 +714,7 @@ public class WebBase extends ModelBase {
 		if (FTPURL.equals(propertyName)) return WebBase.class;
 		if (FTPUSERNAME.equals(propertyName)) return WebBase.class;
 		if (FTPPASSWORD.equals(propertyName)) return WebBase.class;
-		if (FTPMODEIS.equals(propertyName)) return WebBase.class;
+		if (FTPMODE.equals(propertyName)) return WebBase.class;
 		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return WebBase.class;
 		if (RETRYINTERVAL.equals(propertyName)) return WebBase.class;
 		if (MAXRETRIES.equals(propertyName)) return WebBase.class;
@@ -753,7 +753,7 @@ public class WebBase extends ModelBase {
 			return false;
 		if (! SmartEquals(getFtpPassword(), objT.getFtpPassword()))
 			return false;
-		if (! SmartEquals(getFtpModeIs(), objT.getFtpModeIs()))
+		if (! SmartEquals(getFtpMode(), objT.getFtpMode()))
 			return false;
 		if (! SmartEquals(getIgnoreLocalCurrencyFormat(), objT.getIgnoreLocalCurrencyFormat()))
 			return false;

@@ -20,7 +20,7 @@ package com.efi.printsmith.data
 		public var ftpUrl:String = "";
 		public var ftpUserName:String = "";
 		public var ftpPassword:String = "";
-		public var ftpModeIs:int = 0;
+		public var ftpMode:int = 0;
 		public var ignoreLocalCurrencyFormat:Boolean = true;
 		public var retryInterval:int = 0;
 		public var maxRetries:int = 0;

@@ -13,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.WebChoices";
 		}
 				
-		public var name:String = "";
+		public var name:int = 0;
 	
 	}
 }

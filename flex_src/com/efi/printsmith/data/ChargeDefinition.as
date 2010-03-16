@@ -130,14 +130,6 @@ package com.efi.printsmith.data
 		public var priceLabel:String = "";
 		public var priceDefault:Number = 0;
 		public var useRunArea:Boolean = true;
-		public var qtyIncludesOrdered:Boolean = true;
-		public var qtyIncludesPress:Boolean = true;
-		public var qtyIncludesColors:Boolean = true;
-		public var qtyIncludesSides:Boolean = true;
-		public var qtyIncludesSheets:Boolean = true;
-		public var qtyIncludesSignatures:Boolean = true;
-		public var qtyIncludesXUp:Boolean = true;
-		public var qtyIncludesDivUp:Boolean = true;
 		public var setupPrice:Number = 0;
 	
 	}

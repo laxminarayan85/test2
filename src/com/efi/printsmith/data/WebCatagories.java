@@ -50,6 +50,10 @@ public class WebCatagories extends ModelBase {
 	 * @generated
 	 */
 	public static final String PARENT = "Parent";
+	/**
+	 * @generated
+	 */
+	public static final String NAME = "Name";
 
 	/**
 	 * @generated
@@ -157,6 +161,28 @@ public class WebCatagories extends ModelBase {
 	public void setParent(WebCatagories newVal) {
 		this.parent = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private String name;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getName(){
+		return name; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setName(String newVal) {
+		this.name = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -167,6 +193,7 @@ public class WebCatagories extends ModelBase {
 		if (IMAGE.equals(propertyName)) return getImage();
 		if (PRODUCTS.equals(propertyName)) return getProducts();
 		if (PARENT.equals(propertyName)) return getParent();
+		if (NAME.equals(propertyName)) return getName();
 		return super.getProperty(propertyName);
 	}
 	
@@ -180,6 +207,7 @@ public class WebCatagories extends ModelBase {
 		if (IMAGE.equals(propertyName)) setImage((WebGraphics)newValue); else
 		if (PRODUCTS.equals(propertyName)) setProducts((java.util.List<WebProducts>)newValue); else
 		if (PARENT.equals(propertyName)) setParent((WebCatagories)newValue); else
+		if (NAME.equals(propertyName)) setName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -197,6 +225,8 @@ public class WebCatagories extends ModelBase {
 			return new Class<?>[] {java.util.List.class, WebProducts.class};		
 		if (PARENT.equals(propertyName)) 
 			return new Class<?>[] {WebCatagories.class};		
+		if (NAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -211,6 +241,7 @@ public class WebCatagories extends ModelBase {
 		if (IMAGE.equals(propertyName)) return WebCatagories.class;
 		if (PRODUCTS.equals(propertyName)) return WebCatagories.class;
 		if (PARENT.equals(propertyName)) return WebCatagories.class;
+		if (NAME.equals(propertyName)) return WebCatagories.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -229,6 +260,8 @@ public class WebCatagories extends ModelBase {
 		if (! SmartEquals(getProducts(), objT.getProducts()))
 			return false;
 		if (! SmartEquals(getParent(), objT.getParent()))
+			return false;
+		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;
 	}			

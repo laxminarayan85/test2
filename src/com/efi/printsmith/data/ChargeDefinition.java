@@ -505,38 +505,6 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String QTYINCLUDESORDERED = "QtyIncludesOrdered";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESPRESS = "QtyIncludesPress";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESCOLORS = "QtyIncludesColors";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESSIDES = "QtyIncludesSides";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESSHEETS = "QtyIncludesSheets";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESSIGNATURES = "QtyIncludesSignatures";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESXUP = "QtyIncludesXUp";
-	/**
-	 * @generated
-	 */
-	public static final String QTYINCLUDESDIVUP = "QtyIncludesDivUp";
-	/**
-	 * @generated
-	 */
 	public static final String SETUPPRICE = "SetupPrice";
 
 	/**
@@ -3127,182 +3095,6 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Boolean qtyIncludesOrdered;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesOrdered(){
-		return qtyIncludesOrdered; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesOrdered(Boolean newVal) {
-		this.qtyIncludesOrdered = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesPress;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesPress(){
-		return qtyIncludesPress; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesPress(Boolean newVal) {
-		this.qtyIncludesPress = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesColors;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesColors(){
-		return qtyIncludesColors; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesColors(Boolean newVal) {
-		this.qtyIncludesColors = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesSides;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesSides(){
-		return qtyIncludesSides; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesSides(Boolean newVal) {
-		this.qtyIncludesSides = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesSheets;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesSheets(){
-		return qtyIncludesSheets; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesSheets(Boolean newVal) {
-		this.qtyIncludesSheets = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesSignatures;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesSignatures(){
-		return qtyIncludesSignatures; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesSignatures(Boolean newVal) {
-		this.qtyIncludesSignatures = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesXUp;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesXUp(){
-		return qtyIncludesXUp; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesXUp(Boolean newVal) {
-		this.qtyIncludesXUp = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean qtyIncludesDivUp;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getQtyIncludesDivUp(){
-		return qtyIncludesDivUp; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQtyIncludesDivUp(Boolean newVal) {
-		this.qtyIncludesDivUp = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
 	private Double setupPrice;
 	
 	/**
@@ -3442,14 +3234,6 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICELABEL.equals(propertyName)) return getPriceLabel();
 		if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
 		if (USERUNAREA.equals(propertyName)) return getUseRunArea();
-		if (QTYINCLUDESORDERED.equals(propertyName)) return getQtyIncludesOrdered();
-		if (QTYINCLUDESPRESS.equals(propertyName)) return getQtyIncludesPress();
-		if (QTYINCLUDESCOLORS.equals(propertyName)) return getQtyIncludesColors();
-		if (QTYINCLUDESSIDES.equals(propertyName)) return getQtyIncludesSides();
-		if (QTYINCLUDESSHEETS.equals(propertyName)) return getQtyIncludesSheets();
-		if (QTYINCLUDESSIGNATURES.equals(propertyName)) return getQtyIncludesSignatures();
-		if (QTYINCLUDESXUP.equals(propertyName)) return getQtyIncludesXUp();
-		if (QTYINCLUDESDIVUP.equals(propertyName)) return getQtyIncludesDivUp();
 		if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
 		return super.getProperty(propertyName);
 	}
@@ -3577,14 +3361,6 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
 		if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
 		if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
-		if (QTYINCLUDESORDERED.equals(propertyName)) setQtyIncludesOrdered((Boolean)newValue); else
-		if (QTYINCLUDESPRESS.equals(propertyName)) setQtyIncludesPress((Boolean)newValue); else
-		if (QTYINCLUDESCOLORS.equals(propertyName)) setQtyIncludesColors((Boolean)newValue); else
-		if (QTYINCLUDESSIDES.equals(propertyName)) setQtyIncludesSides((Boolean)newValue); else
-		if (QTYINCLUDESSHEETS.equals(propertyName)) setQtyIncludesSheets((Boolean)newValue); else
-		if (QTYINCLUDESSIGNATURES.equals(propertyName)) setQtyIncludesSignatures((Boolean)newValue); else
-		if (QTYINCLUDESXUP.equals(propertyName)) setQtyIncludesXUp((Boolean)newValue); else
-		if (QTYINCLUDESDIVUP.equals(propertyName)) setQtyIncludesDivUp((Boolean)newValue); else
 		if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -3829,22 +3605,6 @@ public class ChargeDefinition extends ModelBase {
 			return new Class<?>[] {Double.class};		
 		if (USERUNAREA.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESORDERED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESPRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESCOLORS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESSIDES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESSHEETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESSIGNATURES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESXUP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QTYINCLUDESDIVUP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
 		if (SETUPPRICE.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
@@ -3974,14 +3734,6 @@ public class ChargeDefinition extends ModelBase {
 		if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
 		if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
 		if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESORDERED.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESPRESS.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESCOLORS.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESSIDES.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESSHEETS.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESSIGNATURES.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESXUP.equals(propertyName)) return ChargeDefinition.class;
-		if (QTYINCLUDESDIVUP.equals(propertyName)) return ChargeDefinition.class;
 		if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -4227,22 +3979,6 @@ public class ChargeDefinition extends ModelBase {
 		if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
 			return false;
 		if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
-			return false;
-		if (! SmartEquals(getQtyIncludesOrdered(), objT.getQtyIncludesOrdered()))
-			return false;
-		if (! SmartEquals(getQtyIncludesPress(), objT.getQtyIncludesPress()))
-			return false;
-		if (! SmartEquals(getQtyIncludesColors(), objT.getQtyIncludesColors()))
-			return false;
-		if (! SmartEquals(getQtyIncludesSides(), objT.getQtyIncludesSides()))
-			return false;
-		if (! SmartEquals(getQtyIncludesSheets(), objT.getQtyIncludesSheets()))
-			return false;
-		if (! SmartEquals(getQtyIncludesSignatures(), objT.getQtyIncludesSignatures()))
-			return false;
-		if (! SmartEquals(getQtyIncludesXUp(), objT.getQtyIncludesXUp()))
-			return false;
-		if (! SmartEquals(getQtyIncludesDivUp(), objT.getQtyIncludesDivUp()))
 			return false;
 		if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
 			return false;

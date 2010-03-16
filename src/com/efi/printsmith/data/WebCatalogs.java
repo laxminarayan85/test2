@@ -37,7 +37,7 @@ public class WebCatalogs extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ROLEID = "RoleId";
+	public static final String ROLLID = "RollId";
 	/**
 	 * @generated
 	 */
@@ -73,21 +73,21 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer roleId;
+	private Integer rollId;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getRoleId(){
-		return roleId; 
+	public Integer getRollId(){
+		return rollId; 
 	}
 
 	
 	/**
 	 * @generated
 	 */	
-	public void setRoleId(Integer newVal) {
-		this.roleId = newVal;
+	public void setRollId(Integer newVal) {
+		this.rollId = newVal;
 	}
  	
 	
@@ -215,7 +215,7 @@ public class WebCatalogs extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (ROLEID.equals(propertyName)) return getRoleId();
+		if (ROLLID.equals(propertyName)) return getRollId();
 		if (STATUS.equals(propertyName)) return getStatus();
 		if (NAME.equals(propertyName)) return getName();
 		if (DESCRIPTION.equals(propertyName)) return getDescription();
@@ -230,7 +230,7 @@ public class WebCatalogs extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (ROLEID.equals(propertyName)) setRoleId((Integer)newValue); else
+		if (ROLLID.equals(propertyName)) setRollId((Integer)newValue); else
 		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
@@ -245,7 +245,7 @@ public class WebCatalogs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (ROLEID.equals(propertyName)) 
+		if (ROLLID.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (STATUS.equals(propertyName)) 
 			return new Class<?>[] {WebStatus.class};		
@@ -267,7 +267,7 @@ public class WebCatalogs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (ROLEID.equals(propertyName)) return WebCatalogs.class;
+		if (ROLLID.equals(propertyName)) return WebCatalogs.class;
 		if (STATUS.equals(propertyName)) return WebCatalogs.class;
 		if (NAME.equals(propertyName)) return WebCatalogs.class;
 		if (DESCRIPTION.equals(propertyName)) return WebCatalogs.class;
@@ -284,7 +284,7 @@ public class WebCatalogs extends ModelBase {
 		if (! super.deepEquals(obj))
 			return false;
 		WebCatalogs objT = (WebCatalogs)obj;
-		if (! SmartEquals(getRoleId(), objT.getRoleId()))
+		if (! SmartEquals(getRollId(), objT.getRollId()))
 			return false;
 		if (! SmartEquals(getStatus(), objT.getStatus()))
 			return false;

@@ -41,11 +41,11 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PROMPT = "Prompt";
+	public static final String STATUS = "Status";
 	/**
 	 * @generated
 	 */
-	public static final String STATUS = "Status";
+	public static final String PROMPT = "Prompt";
 	/**
 	 * @generated
 	 */
@@ -86,28 +86,6 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String prompt;
-	
-	/**
-	 * @generated
- 	 */
-	public String getPrompt(){
-		return prompt; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPrompt(String newVal) {
-		this.prompt = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
     @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private WebStatus status;
 	
@@ -124,6 +102,28 @@ public class WebQuestions extends ModelBase {
 	 */	
 	public void setStatus(WebStatus newVal) {
 		this.status = newVal;
+	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private String prompt;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getPrompt(){
+		return prompt; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setPrompt(String newVal) {
+		this.prompt = newVal;
 	}
  	
 	
@@ -154,8 +154,8 @@ public class WebQuestions extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
-		if (PROMPT.equals(propertyName)) return getPrompt();
 		if (STATUS.equals(propertyName)) return getStatus();
+		if (PROMPT.equals(propertyName)) return getPrompt();
 		if (QUESTIONTYPE.equals(propertyName)) return getQuestionType();
 		return super.getProperty(propertyName);
 	}
@@ -167,8 +167,8 @@ public class WebQuestions extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
 		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
+		if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
 		if (QUESTIONTYPE.equals(propertyName)) setQuestionType((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -181,10 +181,10 @@ public class WebQuestions extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
-		if (PROMPT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
 		if (STATUS.equals(propertyName)) 
 			return new Class<?>[] {WebStatus.class};		
+		if (PROMPT.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
 		if (QUESTIONTYPE.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
@@ -198,8 +198,8 @@ public class WebQuestions extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return WebQuestions.class;
-		if (PROMPT.equals(propertyName)) return WebQuestions.class;
 		if (STATUS.equals(propertyName)) return WebQuestions.class;
+		if (PROMPT.equals(propertyName)) return WebQuestions.class;
 		if (QUESTIONTYPE.equals(propertyName)) return WebQuestions.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -214,9 +214,9 @@ public class WebQuestions extends ModelBase {
 		WebQuestions objT = (WebQuestions)obj;
 		if (! SmartEquals(getName(), objT.getName()))
 			return false;
-		if (! SmartEquals(getPrompt(), objT.getPrompt()))
-			return false;
 		if (! SmartEquals(getStatus(), objT.getStatus()))
+			return false;
+		if (! SmartEquals(getPrompt(), objT.getPrompt()))
 			return false;
 		if (! SmartEquals(getQuestionType(), objT.getQuestionType()))
 			return false;
