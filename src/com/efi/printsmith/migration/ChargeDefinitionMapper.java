@@ -22,6 +22,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeCommand;
 import com.efi.printsmith.data.ChargeCategory;
+import com.efi.printsmith.data.SalesCategory;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -50,6 +51,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else {
 				Charge charge = new Charge();
 				ChargeDefinition chargeDefinition = new ChargeDefinition();
+				SalesCategory salesCategory = null;
 				newCommand = false;
 				newCategory = false;
 				description = "";
@@ -102,9 +104,13 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setChargeCost(chargeCost);
 						chargeDefinition.setPrevId(currentImportToken);
 					} else if ("sales cat".equals(currentFieldToken)) {
-						chargeDefinition.setSalesCategory(currentImportToken);
+						/*if (currentImportToken.equals("0") == false) {
+							salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
+							if (salesCategory != null)
+								chargeDefinition.setSalesCategory(salesCategory);
+						}*/
 					} else if ("sales cat name".equals(currentFieldToken)) {
-						chargeDefinition.setSalesCategory(currentImportToken);
+						
 					} else if ("rate qty".equals(currentFieldToken)) {
 						chargeDefinition.setRateQty(Utilities
 								.tokenToDouble(currentImportToken));
