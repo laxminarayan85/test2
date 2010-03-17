@@ -310,7 +310,6 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		ProcessPreferencePendingList(columnnames, false);
-		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
 		columnnames.setName("Document Title");
@@ -374,27 +373,20 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		ProcessPreferencePendingList(columnnames, false);
-
+//stock columns
 		columnnames = new ColumnNames();
-		columnnames.setName("Name");
-		try {
-			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}
-
-		ProcessPreferencesStockDefinition(columnnames, true);
-		columnnames = new ColumnNames();
-		columnnames.setName("Weight");
+		columnnames.setInternalName("name");
+		columnnames.setName("stockPickerCmd.Name");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		ProcessPreferencesStockDefinition(columnnames, true);
-
+		
 		columnnames = new ColumnNames();
-		columnnames.setName("Size");
+		columnnames.setInternalName("weight");
+		columnnames.setName("stockPickerCmd.Weight");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -403,7 +395,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Color");
+		columnnames.setInternalName("parentsize");
+		columnnames.setName("stockPickerCmd.Size");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -412,7 +405,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Generic Color");
+		columnnames.setInternalName("color");
+		columnnames.setName("stockPickerCmd.Color");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -421,7 +415,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Finish");
+		columnnames.setInternalName("genericcolor");
+		columnnames.setName("stockPickerCmd.GenericColor");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -430,7 +425,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Thickness");
+		columnnames.setInternalName("finish");
+		columnnames.setName("stockPickerCmd.Finish");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -439,7 +435,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Grade");
+		columnnames.setInternalName("thickness");
+		columnnames.setName("stockPickerCmd.Thickness");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -448,7 +445,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("CWT");
+		columnnames.setInternalName("grade");
+		columnnames.setName("stockPickerCmd.Grade");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -457,7 +455,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Vendor");
+		columnnames.setInternalName("Cwt1");
+		columnnames.setName("stockPickerCmd.CWT");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -466,7 +465,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Stock Number");
+		columnnames.setInternalName("vendor");
+		columnnames.setName("stockPickerCmd.Vendor");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -475,7 +475,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Product ID");
+		columnnames.setInternalName("stocknumber");
+		columnnames.setName("stockPickerCmd.StockNumber");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -484,7 +485,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Quantity On Hand");
+		columnnames.setInternalName("id");
+		columnnames.setName("stockPickerCmd.ProductID");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -493,7 +495,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Committed");
+		columnnames.setInternalName("onhand");
+		columnnames.setName("stockPickerCmd.QtyOnHand");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -502,7 +505,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Ordered");
+		columnnames.setInternalName("committed");
+		columnnames.setName("stockPickerCmd.Committed");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -511,7 +515,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Shell");
+		columnnames.setInternalName("Ordered");
+		columnnames.setName("stockPickerCmd.Ordered");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -520,7 +525,18 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Run Size");
+		columnnames.setInternalName("shellItem");
+		columnnames.setName("stockPickerCmd.Shell");
+		try {
+			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		ProcessPreferencesStockDefinition(columnnames, true);
+
+		columnnames = new ColumnNames();
+		columnnames.setInternalName("normalrunsize");
+		columnnames.setName("stockPickerCmd.RunSize");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -529,7 +545,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Basic Size");
+		columnnames.setInternalName("basicsize");
+		columnnames.setName("stockPickerCmd.BasicSize");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -538,7 +555,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Group");
+		columnnames.setInternalName("stkgroup");
+		columnnames.setName("stockPickerCmd.Group");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -547,7 +565,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Coated Sides");
+		columnnames.setInternalName("coated");
+		columnnames.setName("stockPickerCmd.CoatedSides");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -556,7 +575,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Minimum Order");
+		columnnames.setInternalName("minorder");
+		columnnames.setName("stockPickerCmd.MinimumOrder");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -565,7 +585,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Price");
+		columnnames.setInternalName("cost1");
+		columnnames.setName("stockPickerCmd.Price");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -574,7 +595,18 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Price Expires");
+		columnnames.setInternalName("priceexpires");
+		columnnames.setName("stockPickerCmd.PriceExpires");
+		try {
+			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		ProcessPreferencesStockDefinition(columnnames, false);
+		
+		columnnames = new ColumnNames();
+		columnnames.setInternalName("forestmanagement");
+		columnnames.setName("stockPickerCmd.ForestMgmt");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -583,7 +615,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Forest Management");
+		columnnames.setInternalName("pcwrecycledpercent");
+		columnnames.setName("stockPickerCmd.Recycle");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -592,7 +625,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Recycle");
+		columnnames.setInternalName("fsccertified");
+		columnnames.setName("stockPickerCmd.FSC");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -601,7 +635,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("FSC");
+		columnnames.setInternalName("sficertified");
+		columnnames.setName("stockPickerCmd.SFI");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -610,16 +645,8 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("SFI");
-		try {
-			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}
-		ProcessPreferencesStockDefinition(columnnames, false);
-
-		columnnames = new ColumnNames();
-		columnnames.setName("GreenSeal");
+		columnnames.setInternalName("greensealcertified");
+		columnnames.setName("stockPickerCmd.GreenSeal");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {

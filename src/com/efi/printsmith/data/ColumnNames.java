@@ -38,6 +38,10 @@ public class ColumnNames extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
+	/**
+	 * @generated
+	 */
+	public static final String INTERNALNAME = "InternalName";
 
 	/**
 	 * @generated
@@ -69,6 +73,28 @@ public class ColumnNames extends ModelBase {
 	public void setName(String newVal) {
 		this.name = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private String internalName;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getInternalName(){
+		return internalName; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setInternalName(String newVal) {
+		this.internalName = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -76,6 +102,7 @@ public class ColumnNames extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (NAME.equals(propertyName)) return getName();
+		if (INTERNALNAME.equals(propertyName)) return getInternalName();
 		return super.getProperty(propertyName);
 	}
 	
@@ -86,6 +113,7 @@ public class ColumnNames extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (INTERNALNAME.equals(propertyName)) setInternalName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -96,6 +124,8 @@ public class ColumnNames extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (INTERNALNAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
@@ -108,6 +138,7 @@ public class ColumnNames extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) return ColumnNames.class;
+		if (INTERNALNAME.equals(propertyName)) return ColumnNames.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -120,6 +151,8 @@ public class ColumnNames extends ModelBase {
 			return false;
 		ColumnNames objT = (ColumnNames)obj;
 		if (! SmartEquals(getName(), objT.getName()))
+			return false;
+		if (! SmartEquals(getInternalName(), objT.getInternalName()))
 			return false;
 		return true;
 	}			

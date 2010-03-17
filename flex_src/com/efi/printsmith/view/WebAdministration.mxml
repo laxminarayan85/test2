@@ -8,9 +8,41 @@
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}" 
 	name="Web Administrator">
 
-<mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+<mx:RemoteObject id="dsBase" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBaseResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBaseResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsCatagories" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatagoriesResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatagoriesResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsCatalogs" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatalogsResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatalogsResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsCheckoutTypes" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCheckoutTypesResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCheckoutTypesResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsChoices" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChoicesResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveChoicesResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsGraphics" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGraphicsResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGraphicsResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsProducts" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductsResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveProductsResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsQuestions" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuestionsResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveQuestionsResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dsStatus" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStatusResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStatusResult(event)"/>
 </mx:RemoteObject>
  
 <mx:Producer id="producer" destination="webadmin"/>
@@ -54,17 +86,58 @@
     private var enableSave:Boolean = true;
     
 	[Bindable]
+	private var webbaseArray:ArrayCollection;
+	[Bindable]
 	private var webcatalogsArray:ArrayCollection;
 	[Bindable]
 	private var webcatagoriesArray:ArrayCollection;
 	[Bindable]
 	private var webproductsArray:ArrayCollection;
+	[Bindable]
+	private var webcheckouttypesArray:ArrayCollection;
+	[Bindable]
+	private var webchoicesArray:ArrayCollection;
+	[Bindable]
+	private var webgraphicsArray:ArrayCollection;
+	[Bindable]
+	private var webquestionsArray:ArrayCollection;
+	[Bindable]
+	private var webstatusArray:ArrayCollection;
+
+	[Bindable]
+	private var webbase:WebBase;
+	[Bindable]
+	private var webcatalogs:WebCatalogs;
+	[Bindable]
+	private var webcatagories:WebCatagories;
+	[Bindable]
+	private var webproducts:WebProducts;
+	[Bindable]
+	private var webcheckouttypes:WebCheckoutTypes;
+	[Bindable]
+	private var webchoices:WebChoices;
+	[Bindable]
+	private var webgraphics:WebGraphics;
+	[Bindable]
+	private var webquestions:WebQuestions;
+	[Bindable]
+	private var webstatus:WebStatus;
 
 
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		
+		dsBase.getAll("WebBase");
+		dsBase.getAll("WebCatalogs");
+		dsBase.getAll("WebCatagories");
+		dsBase.getAll("WebProducts");
+		dsBase.getAll("WebCheckoutTypes");
+		dsBase.getAll("WebChoices");
+		dsBase.getAll("WebGraphics");
+		dsBase.getAll("WebQuestions");
+		dsBase.getAll("WebStatus");
+
 		var eventSite:WebAdminSitePanelEvent = new WebAdminSitePanelEvent(canvasSite, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventSite.dispatch();
 
@@ -111,16 +184,62 @@
 		                                    		
 	}   
 
-	
-	private function handleSaveResult(ev:ResultEvent):void {
-//		this.contact = ev.result as Contact;
+	private function handleLoadBaseResult(ev:ResultEvent):void {
+		webbaseArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCatalogsResult(ev:ResultEvent):void {
+		webcatalogsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCatagoriesResult(ev:ResultEvent):void {
+		webcatagoriesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCheckoutTypesResult(ev:ResultEvent):void {
+		webcheckouttypesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadChoicesResult(ev:ResultEvent):void {
+		webchoicesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadGraphicsResult(ev:ResultEvent):void {
+		webgraphicsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadProductsResult(ev:ResultEvent):void {
+		webproductsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadQuestionsResult(ev:ResultEvent):void {
+		webquestionsArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadStatusResult(ev:ResultEvent):void {
+		webstatusArray = ev.result as ArrayCollection;
 	}
 
-	
-	private function handleLoadResult(ev:ResultEvent):void {
-//		contacts = ev.result as ArrayCollection;
+	private function handleSaveBaseResult(ev:ResultEvent):void {
+		webbase = ev.result as WebBase;
 	}
-	
+	private function handleSaveCatalogsResult(ev:ResultEvent):void {
+		webcatalogs = ev.result as WebCatalogs;
+	}
+	private function handleSaveCatagoriesResult(ev:ResultEvent):void {
+		webcatagories = ev.result as WebCatagories;
+	}
+	private function handleSaveCheckoutTypesResult(ev:ResultEvent):void {
+		webcheckouttypes = ev.result as WebCheckoutTypes;
+	}
+	private function handleSaveChoicesResult(ev:ResultEvent):void {
+		webchoices = ev.result as WebChoices;
+	}
+	private function handleSaveGraphicsResult(ev:ResultEvent):void {
+		webgraphics = ev.result as WebGraphics;
+	}
+	private function handleSaveProductsResult(ev:ResultEvent):void {
+		webproducts = ev.result as WebProducts;
+	}
+	private function handleSaveQuestionsResult(ev:ResultEvent):void {
+		webquestions = ev.result as WebQuestions;
+	}
+	private function handleSaveStatusResult(ev:ResultEvent):void {
+		webstatus = ev.result as WebStatus;
+	}
+
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              

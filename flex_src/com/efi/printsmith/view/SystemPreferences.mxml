@@ -2052,7 +2052,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
 		
 		if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
-			var retVal:String = tmpName.columns.name;
+			var retVal:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpName.columns.name);
 			
 			if (retVal != "") {
 				return retVal;
