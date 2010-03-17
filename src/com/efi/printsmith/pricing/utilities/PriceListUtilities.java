@@ -5,6 +5,7 @@ import java.util.List;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.PriceListElement;
+import com.efi.printsmith.data.SpeedTable;
 
 public class PriceListUtilities {
 	static public double calculatePriceListPrice(long qty, PriceList priceList, double chargePrice, Job job) {
@@ -26,7 +27,6 @@ public class PriceListUtilities {
 		} else {
 			retVal = rate;
 		}
-		
 		return retVal;
 	}
 	
@@ -118,6 +118,29 @@ public class PriceListUtilities {
 				}
 			} else {
 				retVal = elements.get(last).getAmount();
+			}
+		}
+		return retVal;
+	}
+
+	static public double getTimePerSheetFromSpeedTable(SpeedTable speedTable, long qty) {
+		double retVal = 0.0;
+		
+		if (speedTable != null) {
+			List <PriceListElement> speedTableElements = speedTable.getElements();
+			PriceListElement elementToUse = null;
+			if(speedTableElements != null && speedTableElements.size() > 0) {
+				elementToUse = speedTableElements.get(0);
+				for (int i=1; i < speedTableElements.size(); i++) {
+					PriceListElement curElement = speedTableElements.get(i);
+					if (curElement.getQuantity() > qty) {
+						elementToUse = speedTableElements.get(i-1);
+						break;
+					}
+				}
+				if (elementToUse.getQuantity() > 0) {
+					retVal = 3600/elementToUse.getAmount();
+				}
 			}
 		}
 		return retVal;
