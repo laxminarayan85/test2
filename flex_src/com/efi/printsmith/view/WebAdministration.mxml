@@ -2,13 +2,11 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" 
 	xmlns:vo="com.efi.printsmith.data.*" 
 	xmlns:fc="http://www.adobe.com/2006/fc" 
-	xmlns:hc="com.hillelcoren.components.*"
 	width="100%" height="620" 
-	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}"
 	creationComplete="init()" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}" 
-	name="Web Administrator" 
-	xmlns:ns1="com.efi.printsmith.components.*">
+	name="Web Administrator">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -25,8 +23,23 @@
 <![CDATA[
 	import mx.collections.ArrayCollection;
 
+	import com.efi.printsmith.data.WebBase;
+	import com.efi.printsmith.data.WebCatagories;
+	import com.efi.printsmith.data.WebCatalogs;
+	import com.efi.printsmith.data.WebCheckoutTypes;
+	import com.efi.printsmith.data.WebChoices;
+	import com.efi.printsmith.data.WebGraphics;
+	import com.efi.printsmith.data.WebProducts;
+	import com.efi.printsmith.data.WebQuestions;
+	import com.efi.printsmith.data.WebStatus;
+
+	import com.efi.printsmith.data.JobBase;
+		
 	import mx.rpc.Responder;
-	import mx.controls.Alert;                                         
+	import mx.controls.Alert;   
+	import mx.controls.DataGrid;
+	import mx.events.DataGridEvent;                                      
+    import mx.events.DataGridEventReason;
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection;                                         
@@ -40,7 +53,14 @@
     [Bindable]
     private var enableSave:Boolean = true;
     
-   
+	[Bindable]
+	private var webcatalogsArray:ArrayCollection;
+	[Bindable]
+	private var webcatagoriesArray:ArrayCollection;
+	[Bindable]
+	private var webproductsArray:ArrayCollection;
+
+
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
@@ -111,12 +131,34 @@
 		Alert.show(message, "Error");                                 
 	}
 	    
-   private function doTransmit():void {
-	   	
-   }
-   private function doRevert():void {
-   	
-   }
+	private function doTransmit():void {
+   	   	
+	}
+	
+	private function doRevert():void {
+
+	}
+
+	private function processCatalogsGridData(event:DataGridEvent):void {
+		if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+	}
+	
+	private function processCatagoriesGridData(event:DataGridEvent):void {
+		if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+	}
+
+	private function processProductsGridData(event:DataGridEvent):void {
+		if (event.reason == DataGridEventReason.CANCELLED){
+            // Do not update cell.
+            return;
+        }           
+	}
 	
 ]]>	
 
@@ -127,6 +169,39 @@
 	<mx:Canvas width="100%" height="100%">
 		<mx:TabNavigator x="0" y="0" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasSite" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Site')}" width="100%" height="100%">
+				<mx:Label x="35" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactName')}" textAlign="right" width="137"/>
+				<mx:Label x="35" y="53" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactPhone')}" textAlign="right" width="137"/>
+				<mx:Label x="35" y="79" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactEmail')}" textAlign="right" width="137"/>
+				<mx:Label x="35" y="105" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Site')}" textAlign="right" width="137"/>
+				<mx:Label x="61" y="167" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPURL')}" textAlign="right" width="140"/>
+				<mx:Label x="61" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPUserName')}" textAlign="right" width="140"/>
+				<mx:Label x="61" y="219" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPPassword')}" textAlign="right" width="140"/>
+				<mx:Label x="35" y="270" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RetryInterval')}" textAlign="right" width="149"/>
+				<mx:Label x="35" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.MaxRetries')}" textAlign="right" width="149"/>
+				<mx:Label x="35" y="322" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Takenby')}" textAlign="right" width="149"/>
+				<mx:Label x="35" y="348" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ComposerURL')}" textAlign="right" width="149"/>
+				<mx:Label x="35" y="374" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ComposerDelay')}" textAlign="right" width="149"/>
+				<mx:Label x="360" y="167" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPmodeis')}" textAlign="right"/>
+				<mx:Label x="261" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ResponseDelay')}" textAlign="right"/>
+				<mx:TextInput x="170" y="27" width="209"/>
+				<mx:TextInput x="170" y="53" width="209"/>
+				<mx:TextInput x="170" y="79" width="209"/>
+				<mx:RadioButtonGroup id="radiogroup1"/>
+				<mx:RadioButton x="180" y="109" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UsePrintNetIntegrato')}" groupName="radiogroup1" textAlign="right"/>
+				<mx:RadioButton x="180" y="135" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UseFTPServer')}" groupName="radiogroup1" textAlign="right"/>
+				<mx:TextInput x="199" y="165"/>
+				<mx:TextInput x="199" y="191"/>
+				<mx:TextInput x="199" y="217"/>
+				<mx:ComboBox x="487" y="165" width="117"></mx:ComboBox>
+				<mx:CheckBox x="108" y="247" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Ignorelocalcurrencyf')}" textAlign="right"/>
+				<mx:TextInput x="182" y="270" width="50"/>
+				<mx:TextInput x="382" y="272" width="50"/>
+				<mx:TextInput x="182" y="296" width="50"/>
+				<mx:TextInput x="182" y="322" width="100"/>
+				<mx:TextInput x="182" y="348" width="250"/>
+				<mx:TextInput x="182" y="374" width="50"/>
+				<mx:Button x="387" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" height="50" width="101" enabled="false"/>
+				<mx:Label x="182" y="404" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.required')}" textAlign="left"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCatalogs" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Catalogs')}" width="100%" height="100%">
 				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
@@ -149,6 +224,29 @@
 				</mx:Button>
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+
+				<mx:DataGrid width="250" id="webcatalogsGrid" 
+					dataProvider="{webcatalogsArray}" 
+					editable="true" 
+					itemEditEnd="processCatalogsGridData(event);" height="100%" x="0" y="0">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ECommerceCatalogs')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+
+				<mx:Label x="274" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RoleID')}" textAlign="right" width="157"/>
+				<mx:Label x="274" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
+				<mx:Label x="274" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.CatalogName')}" textAlign="right" width="157"/>
+				<mx:Label x="274" y="150" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Desc')}" textAlign="right" width="157"/>
+				<mx:Label x="274" y="213" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Path')}" textAlign="right" width="157"/>
+				<mx:TextInput x="439" y="72"/>
+				<mx:TextInput x="439" y="98"/>
+				<mx:TextInput x="439" y="124"/>
+				<mx:TextArea x="439" y="151"/>
+				<mx:TextArea x="439" y="214"/>
+
 			</mx:Canvas>
 			<mx:Canvas id="canvasCatagories" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Categories')}" width="100%" height="100%">
 				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
@@ -171,6 +269,44 @@
 				</mx:Button>
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+
+
+				<mx:DataGrid width="250" id="webcatagoriesGrid" 
+					dataProvider="{webcatagoriesArray}" 
+					editable="true" 
+					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="0" x="0">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid id="webcatagoryproductsGrid" 
+					dataProvider="{webproductsArray}" 
+					editable="true" 
+					itemEditEnd="processProductsGridData(event);" bottom="22" top="212" left="275" right="25">
+					<mx:columns>
+						<mx:DataGridColumn width="40" headerText="" dataField="" editorDataField="">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox selected="{data}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
+						</mx:DataGridColumn>
+
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+
+				<mx:Label x="275" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Category')}" textAlign="right" width="158"/>
+				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="158"/>
+				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Image')}" textAlign="right" width="158"/>
+				<mx:TextInput x="441" y="72"/>
+				<mx:TextInput x="441" y="98"/>
+				<mx:ComboBox x="441" y="124" width="275"/>
+
 			</mx:Canvas>
 			<mx:Canvas id="canvasProducts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Products')}" width="100%" height="100%">
 				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
@@ -193,6 +329,61 @@
 				</mx:Button>
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+
+				<mx:Label x="275" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Catalog')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Name')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="150" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SKU')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="176" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Thumbnail')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="202" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Detail')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="234" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Checkouttype')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="290" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Calculatepricesusing')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="316" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Description')}" textAlign="right" width="157"/>
+
+				<mx:CheckBox x="608" y="72" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.GlobalProduct')}"/>
+				<mx:TextInput x="440" y="72"/>
+				<mx:TextInput x="440" y="98"/>
+				<mx:TextInput x="440" y="124"/>
+				<mx:TextInput x="440" y="150" width="248"/>
+				<mx:Button x="696" y="150" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ChangeTemplate')}" width="116"/>
+				<mx:Button x="696" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DeleteTemplate')}" width="116"/>
+				<mx:TextInput x="440" y="176" width="248"/>
+				<mx:TextInput x="440" y="202" width="248"/>
+				<mx:ComboBox x="440" y="232"/>
+				<mx:CheckBox x="286" y="260" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Allowuserenteredquan')}" width="268"/>
+				<mx:ComboBox x="440" y="290"/>
+				<mx:TextArea x="275" y="335" width="570"/>
+				<mx:DataGrid width="250" id="webcatagoriesGrid0" 
+					dataProvider="{webcatagoriesArray}" 
+					editable="true" 
+					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="0" x="0">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid id="webcatagoryproductsGrid0" 
+					dataProvider="{webproductsArray}" 
+					editable="true" 
+					itemEditEnd="processProductsGridData(event);" bottom="0" top="404" left="275" right="25">
+					<mx:columns>
+						<mx:DataGridColumn width="40" headerText="" dataField="" editorDataField="">
+						   <mx:itemRenderer>
+						      <mx:Component>
+						         <mx:CheckBox selected="{data}"/>
+						      </mx:Component>
+						   </mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				
+
+
 			</mx:Canvas>
 			<mx:Canvas id="canvasQuestions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Questions')}" width="100%" height="100%">
 				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
@@ -215,6 +406,38 @@
 				</mx:Button>
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+
+				<mx:Label x="275" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Name')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Prompt')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="150" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Type')}" textAlign="right" width="157"/>
+
+				<mx:TextInput x="440" y="72"/>
+				<mx:TextInput x="440" y="98"/>
+				<mx:TextInput x="440" y="124"/>
+				<mx:ComboBox x="440" y="150"/>
+
+
+				<mx:DataGrid width="250" id="webcatagoriesGrid1" 
+					dataProvider="{webcatagoriesArray}" 
+					editable="true" 
+					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="0" x="0">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid id="webcatagoryproductsGrid1" 
+					dataProvider="{webproductsArray}" 
+					editable="true" 
+					itemEditEnd="processProductsGridData(event);" bottom="0" top="195" left="275" right="300">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas id="canvasGraphics" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Graphics')}" width="100%" height="100%">
 				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
@@ -237,8 +460,48 @@
 				</mx:Button>
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+
+				<mx:Label x="275" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Name')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Desc')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Path')}" textAlign="right" width="157"/>
+
+				<mx:TextInput x="440" y="72"/>
+				<mx:TextInput x="440" y="98"/>
+
+				<mx:DataGrid width="250" id="webcatagoriesGrid2" 
+					dataProvider="{webcatagoriesArray}" 
+					editable="true" 
+					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="0" x="0">
+					<mx:columns>
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+							itemEditor="mx.controls.TextInput" editable="true">
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Image bottom="0" top="244" right="213" left="275"/>
+				<mx:TextArea x="440" y="128" height="56" width="217"/>
+				<mx:TextArea x="440" y="192" width="217"/>
+				<mx:Button x="660" y="98" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Needsupdate')}" width="131"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasAdmin" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Admin')}" width="100%" height="100%">
+				<mx:CheckBox x="65" y="135" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallystartWe')}" width="275"/>
+				<mx:CheckBox x="104" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ashiddenbackgroundta')}" width="236"/>
+				<mx:CheckBox x="65" y="195" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallyopenWeb')}" width="275"/>
+				<mx:CheckBox x="65" y="225" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Sendoutgoingdataimme')}" width="275"/>
+				<mx:ComboBox x="469" y="135" width="154"></mx:ComboBox>
+				<mx:ComboBox x="467" y="165" width="156"></mx:ComboBox>
+				<mx:Label x="348" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ReceiveState')}"/>
+				<mx:Label x="348" y="165" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RejectState')}"/>
+				<mx:Button x="65" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ShowWebConnection')}" width="275" height="50"/>
+				<mx:Button x="65" y="77" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.OpenWebConsole')}" width="275" height="50"/>
+				<mx:Button x="348" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SendShippingList')}" width="275" height="50"/>
+				<mx:Button x="348" y="77" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SendCreditCardList')}" width="275" height="50"/>
+				<mx:Button x="65" y="268" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RecalculatePricing')}" width="275" height="50"/>
+				<mx:Button x="65" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.TransmitPricing')}" width="275" height="50"/>
+				<mx:Button x="65" y="384" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.WebLocations')}" width="275" height="50"/>
+				<mx:Button x="348" y="268" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DisableSelfRegistrat')}" width="275" height="50"/>
+				<mx:Button x="348" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DisableWalkInOrders')}" width="275" height="50"/>
 			</mx:Canvas>
 		</mx:TabNavigator>
 	</mx:Canvas>
