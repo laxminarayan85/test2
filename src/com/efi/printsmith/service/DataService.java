@@ -9,8 +9,10 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.lang.String;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -140,7 +142,40 @@ public class DataService {
 		}
 		return null;
 	}
-	
+	public List<?> getStockPicker(String className, List<PreferencesStockDefinition> Columns)
+	throws Exception {
+		List<?> resultList = new ArrayList<Object>();
+		String columnstring = new String();
+		PreferencesStockDefinition temp;
+		ColumnNames tempcolumn;
+		columnstring = "a.id";
+		try {
+			for (int i = 0; i < Columns.size(); i++){
+				temp = Columns.get(i);
+				if (temp.getVisible()){
+					tempcolumn = temp.getColumns();
+					columnstring += ", a.";
+					columnstring += tempcolumn.getInternalName();
+					
+				}
+				
+			}
+					
+			log.debug("** getAllNameIDOnly .");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+			Query query = em.createQuery(queryString);
+			
+			resultList = query.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	public ModelBase getSingle(String className) {
 		try {
 			log.debug("** getSingle called.");

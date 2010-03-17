@@ -104,12 +104,16 @@
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<!--<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		-->
+		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
-
+	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
 	<!--<mx:RemoteObject id="stockChangesDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockChangesResult(event)"/>
@@ -266,7 +270,9 @@
 	
 	[Bindable]
 	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
-	
+	[Bindable]
+    private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
+    
 	[Bindable]
 	private var copierDefinitions:ArrayCollection = new ArrayCollection();   
 	private var first:Boolean
@@ -278,12 +284,12 @@
 		first = true;
 		consumer.subscribe();
 		notification_consumer.subscribe();
+		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		stockDefinitions = new StockDefinition;
 	    loadUomArray();
 	    loadUnitsArray();
 	    
-		loadStockDefinitions();
-	/* 	loadStockChanges(); */
 	    loadStockGroup();
 	    loadStockClass();
 	    loadStockVendor();
@@ -297,7 +303,6 @@
 	    loadCopierDefinition();
 		loadDimensions();
 		
-		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event.dispatch();
@@ -416,7 +421,7 @@
 	}			
 	                                                   	
 	public function loadStockDefinitions():void {  //cej 
-		dataService.getAllNameIDOnly("StockDefinition");
+		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
 	}
 	
 /* 	public function loadStockChanges():void {
@@ -498,6 +503,7 @@
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
+	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);		
@@ -861,6 +867,12 @@
 		this.mapFromStockDefinitionData();
 	     
 	}
+	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
+		preferencesStockDefinitions = event.result as ArrayCollection;
+	loadStockDefinitions();
+		
+		}
+
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
 		if (systemPreferencesArray.length > 0)
