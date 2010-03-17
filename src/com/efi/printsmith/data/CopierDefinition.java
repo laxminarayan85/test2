@@ -255,7 +255,10 @@ public class CopierDefinition extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
+	public CopierDefinition(long id, String Name) {
+		this.id = id;
+		this.name = Name;
+	}
 	
 	/**
 	 * @generated

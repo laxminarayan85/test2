@@ -7,7 +7,8 @@
     xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
           
 	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
     <mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
@@ -87,7 +88,14 @@
 		+ "Detail: " + ev.fault.faultDetail + " \n "                              
 		+ "Message: " + ev.fault.faultString;                                    
 	}
-
+	private function handleGetResult(ev:ResultEvent):void {
+		var stockDef:StockDefinition;
+		stockDef = ev.result as StockDefinition;
+		var selectEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.SELECTSTOCK, stockDef);
+		dispatchEvent(selectEvent);
+		PopUpManager.removePopUp(this);
+	     
+	}
   	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:Object = message.body;// as com.efi.printsmith.messaging.MessageBody;
@@ -106,7 +114,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
-		dataService.getAll("StockDefinition");
+	//	dataService.getAllNameIDOnly("StockDefinition");
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
 	                                
@@ -116,9 +124,11 @@
 	}   
 
 	private function selectStockDefinition():void {	
-		var selectEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.SELECTSTOCK, dataGrid.selectedItem as StockDefinition);
-		dispatchEvent(selectEvent);
-		PopUpManager.removePopUp(this);
+		
+		var temp:StockDefinition
+		temp = dataGrid.selectedItem as StockDefinition;
+		dataService.getById("StockDefinition", temp.id );
+		
 	}     
 	
 	private function newStockDefinition():void {
@@ -145,7 +155,9 @@
 		txtRollWidthMin.enabled = chkShowRollStock.selected;
 		txtRollWidthMax.enabled = chkShowRollStock.selected;
 	}
-
+	public function setStockArray(temp:ArrayCollection):void{
+		stockDefinitions = temp;
+	}
 	public function getColorLabel(item:Object, column:DataGridColumn):String{
 		var tmpItem:StockColors ;
 		tmpItem = item.color as StockColors;
@@ -210,7 +222,7 @@
 		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
 		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
+		     <mx:DataGridColumn  dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
 		     <mx:DataGridColumn dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
 		     <mx:DataGridColumn dataField="parentsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
 		     <mx:DataGridColumn labelFunction="getColorLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>

@@ -120,6 +120,27 @@ public class DataService {
 		return resultList;
 	}
 
+	
+	public List<?> getAllNameIDOnly(String className)
+	throws Exception {
+		List<?> resultList = new ArrayList<Object>();
+		try {
+			log.debug("** getAllNameIDOnly .");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		
+			String queryString = "select new " + className+ "( a.id, a.name) from " + className + " a";
+			Query query = em.createQuery(queryString);
+			
+			resultList = query.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
 	public ModelBase getSingle(String className) {
 		try {
 			log.debug("** getSingle called.");
@@ -825,7 +846,10 @@ public class DataService {
 		}
 		return null;
 	}
-
+	
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByAccountId(String className, Long id)
 			throws Exception {

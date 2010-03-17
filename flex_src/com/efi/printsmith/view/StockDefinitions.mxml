@@ -104,9 +104,10 @@
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
 
 	<!--<mx:RemoteObject id="stockChangesDataService" destination="dataService">
@@ -115,10 +116,10 @@
 	</mx:RemoteObject>
 	-->
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
+		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="copierDefinitionDataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopierDefinition(event)"/>
+		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadCopierDefinition(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
@@ -268,17 +269,19 @@
 	
 	[Bindable]
 	private var copierDefinitions:ArrayCollection = new ArrayCollection();   
-	
+	private var first:Boolean
     private var formIsValid:Boolean = false;
     
     private var focussedFormControl:DisplayObject;
                                                                          
 	public function init():void {
+		first = true;
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		stockDefinitions = new StockDefinition;
 	    loadUomArray();
 	    loadUnitsArray();
+	    
 		loadStockDefinitions();
 	/* 	loadStockChanges(); */
 	    loadStockGroup();
@@ -293,7 +296,7 @@
 	    loadPressDefinition();
 	    loadCopierDefinition();
 		loadDimensions();
-		doGet(); 
+		
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
@@ -412,8 +415,8 @@
 		standardItemCheckEvent();
 	}			
 	                                                   	
-	public function loadStockDefinitions():void {   
-		dataService.getAll("StockDefinition");
+	public function loadStockDefinitions():void {  //cej 
+		dataService.getAllNameIDOnly("StockDefinition");
 	}
 	
 /* 	public function loadStockChanges():void {
@@ -428,10 +431,10 @@
 	}
 	
 	public function loadPressDefinition():void {   
-	    pressDefinitionDataService.getAll("PressDefinition");
+	    pressDefinitionDataService.getAllNameIDOnly("PressDefinition");
 	}
 	public function loadCopierDefinition():void {   
-	    copierDefinitionDataService.getAll("CopierDefinition");
+	    copierDefinitionDataService.getAllNameIDOnly("CopierDefinition");
 	}
 	public function loadStockGrade():void {   
 	    stockGradeDataService.getAll("StockGrade");
@@ -472,7 +475,14 @@
 		}
 		return -1;
 	}
-
+	private function findItemID(id:int, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (id == element.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 
 	private function findItemById(name:int, array:ArrayCollection):String {
 		var retVal:String;
@@ -487,6 +497,7 @@
 		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
+	   	stockPickerWindow.setStockArray(StockDefinitionArray);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);		
@@ -500,8 +511,9 @@
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
 		if (evt.stockDefinition != null) {
-			this.stockDefinitions = evt.stockDefinition;
+			this.stockDefinitions = evt.stockDefinition ;
 			this.mapFromStockDefinitionData();
+	     
 		} else {
 			this.stockDefinitions = new StockDefinition();
 			Alert.show("Stock Picker returned a null stock", "Error");
@@ -514,24 +526,30 @@
 	
 	private function doNext():void {  
 		var itemp:int;
-		itemp = StockDefinitionArray.getItemIndex(stockDefinitions); 
+		  var tempStock:StockDefinition;
+		itemp =	findItemID(stockDefinitions.id, StockDefinitionArray);
+		//itemp = StockDefinitionArray.getItemAt(stockDefinitions); 
 		itemp++;
 		if (itemp == StockDefinitionArray.length){
 			itemp = StockDefinitionArray.length - 1;
 		}
-		stockDefinitions = StockDefinitionArray.getItemAt(itemp,0) as StockDefinition;   
-	    mapFromStockDefinitionData();                         
+		tempStock = StockDefinitionArray.getItemAt(itemp) as StockDefinition;
+		dataService.getById("StockDefinition", tempStock.id );               
 	}
 	
 	private function doPrev():void {              
 	    var itemp:int;
-		itemp = StockDefinitionArray.getItemIndex(stockDefinitions); 
+	    var tempStock:StockDefinition;
+	           
+	   	itemp =	findItemID(stockDefinitions.id, StockDefinitionArray);
+		//itemp = StockDefinitionArray.getItemIndex(stockDefinitions); 
 		itemp--;
 		if (itemp < 0){
 			itemp = 0; 
 		}
-		stockDefinitions = StockDefinitionArray.getItemAt(itemp,0) as StockDefinition;   
-	    mapFromStockDefinitionData();                                           
+		tempStock = StockDefinitionArray.getItemAt(itemp) as StockDefinition;
+		dataService.getById("StockDefinition", tempStock.id );
+		                                       
 	}                                           
 
 	private function doSave():void {
@@ -830,6 +848,18 @@
 
 	private function handleLoadResult(ev:ResultEvent):void {
 	     StockDefinitionArray = ev.result as ArrayCollection;
+	     if (first){
+	     	first = false;
+	     	doGet(); 
+	     	
+	     }
+	}
+	
+	//cej
+	private function handleGetResult(ev:ResultEvent):void {
+		this.stockDefinitions = ev.result as StockDefinition;
+		this.mapFromStockDefinitionData();
+	     
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;

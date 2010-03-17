@@ -551,7 +551,10 @@ public class StockDefinition extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
+	public StockDefinition(long id, String Name) {
+		this.id = id;
+		this.name = Name;
+	}
 	
 	/**
 	 * @generated

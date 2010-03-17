@@ -203,7 +203,10 @@ public class PressDefinition extends ModelBase {
 		this.modified = new Date();
 	}
 
- 	
+	public PressDefinition(long id, String Name) {
+		this.id = id;
+		this.name = Name;
+	}
 	
 	/**
 	 * @generated
