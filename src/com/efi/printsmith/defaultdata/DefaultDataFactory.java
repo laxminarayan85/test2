@@ -455,7 +455,7 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("Cwt1");
+		columnnames.setInternalName("cwt1");
 		columnnames.setName("stockPickerCmd.CWT");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
@@ -515,7 +515,7 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("Ordered");
+		columnnames.setInternalName("ordered");
 		columnnames.setName("stockPickerCmd.Ordered");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
@@ -525,7 +525,7 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("shellItem");
+		columnnames.setInternalName("shellitem");
 		columnnames.setName("stockPickerCmd.Shell");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
