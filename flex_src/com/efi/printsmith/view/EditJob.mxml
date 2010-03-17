@@ -10,7 +10,7 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="off"
 				showCloseButton="true"
-				close="doDelete()" width="950" height="680" xmlns:ns1="com.efi.printsmith.components.*">
+				close="doDelete()" width="966" height="640" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
 		</mx:State>
@@ -44,7 +44,7 @@
 			<mx:AddChild relativeTo="{label7}" position="before">
 				<mx:Label x="385"
 						  y="281"
-						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label0"/>
+						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label0"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{copy_single_radio}" name="width" value="230"/>
 			<mx:SetProperty target="{copy_double_radio}" name="width" value="230"/>
@@ -293,8 +293,11 @@
 					job.numUp = 1;	
 					job.singleSided = true;
 					job.doubleSided = false;	
-					job.pricingRecord = new PricingRecord;								
-				}				
+					job.pricingRecord = new PricingRecord;			
+					job.pricingRecord.unitPriceOverride = false;
+					job.pricingRecord.totalPriceOverride = false;	
+				}
+				
 				this.copy_single_radio.selected = this.job.singleSided;
 
 				var eventPriceMethod:JobsChangePricingMethodEvent = new JobsChangePricingMethodEvent(job_type, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
@@ -781,7 +784,7 @@
 	<mx:VBox width="100%"
 			 height="631"
 			 creationPolicy="all" id="vbox1">
-		<mx:Canvas width="923"
+		<mx:Canvas width="936"
 				   height="631"
 				   verticalScrollPolicy="auto"
 				   fontSize="9" id="canvas1">
@@ -911,11 +914,11 @@
 							 height="20"/>
 			<mx:TextInput
 						  y="94"
-						  width="797"
+						  width="785"
 						  id="job_comment"
 						  text="{job.comment}"
 						  height="20"
-						  right="10"/>
+						  right="22"/>
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
@@ -941,12 +944,12 @@
 						 dataProvider="{pricingMethods}"
 						 change="updatePricingMethod();"
 						 labelField="title"
-						 right="10"
+						 right="22"
 						 left="710">
 			</mx:ComboBox>
-			<mx:Canvas x="0" y="121" width="100%" height="512" verticalScrollPolicy="auto" id="canvas2">
+			<mx:Canvas x="0" y="121" width="914" height="512" verticalScrollPolicy="auto" id="canvas2">
 				<mx:HDividedBox x="0"
-								width="900"
+								width="913"
 								height="512" verticalScrollPolicy="off" id="hdividedbox1" bottom="0">
 					<!--			<mx:Tree width="200"
 						 height="100%">
@@ -1538,7 +1541,7 @@
 										 left="0"
 										 bottom="25"
 										 top="0"
-										 right="0"
+										 right="-10"
 										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
 								<mx:columns>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"

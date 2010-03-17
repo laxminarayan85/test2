@@ -22,6 +22,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
+import com.efi.printsmith.pricing.charge.PriceChargeEngine;
 import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
 import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
@@ -49,7 +50,7 @@ public class PricingService {
 	
 	public Charge priceCharge(Charge charge) {
 		log.info("Start priceCharge for charge " + charge.getId());
-		
+		PriceChargeEngine.priceCharge(charge);
 		log.info("Completed priceCharge for charge " + charge.getId());
 		return charge;
 	}

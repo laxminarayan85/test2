@@ -139,6 +139,68 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	    matrixElement.price10 = .0135;
 	    
 	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+	   	
+	   	matrixElement = new MatrixElement();
+	   	
+	    matrixElement.qty = 10;
+	    matrixElement.price1 = .02;
+	    matrixElement.price2 = .019;
+	    matrixElement.price3 = .0183;
+	    matrixElement.price4 = .0179;
+	    matrixElement.price5 = .0175;
+	    matrixElement.price6 = .0165;
+	    matrixElement.price7 = .0150;
+	    matrixElement.price8 = .0145;
+	    matrixElement.price9 = .0140;
+	    matrixElement.price10 = .0135;
+	    
+	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+	   	
+	   	matrixElement = new MatrixElement();
+	    matrixElement.qty = 100;
+	    matrixElement.price1 = .02;
+	    matrixElement.price2 = .019;
+	    matrixElement.price3 = .0183;
+	    matrixElement.price4 = .0179;
+	    matrixElement.price5 = .0175;
+	    matrixElement.price6 = .0165;
+	    matrixElement.price7 = .0150;
+	    matrixElement.price8 = .0145;
+	    matrixElement.price9 = .0140;
+	    matrixElement.price10 = .0135;
+	    
+	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+	   	
+	   	matrixElement = new MatrixElement();
+	    matrixElement.qty = 1000;
+	    matrixElement.price1 = .02;
+	    matrixElement.price2 = .019;
+	    matrixElement.price3 = .0183;
+	    matrixElement.price4 = .0179;
+	    matrixElement.price5 = .0175;
+	    matrixElement.price6 = .0165;
+	    matrixElement.price7 = .0150;
+	    matrixElement.price8 = .0145;
+	    matrixElement.price9 = .0140;
+	    matrixElement.price10 = .0135;
+	    
+	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+
+	   	matrixElement = new MatrixElement();
+	    matrixElement.qty = 5000;
+	    matrixElement.price1 = .02;
+	    matrixElement.price2 = .019;
+	    matrixElement.price3 = .0183;
+	    matrixElement.price4 = .0179;
+	    matrixElement.price5 = .0175;
+	    matrixElement.price6 = .0165;
+	    matrixElement.price7 = .0150;
+	    matrixElement.price8 = .0145;
+	    matrixElement.price9 = .0140;
+	    matrixElement.price10 = .0135;
+	    
+	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
+	   	
 	    return localCopierDefinition;
 	}
 	
@@ -195,7 +257,11 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
-		charge_sales_category_combo.selectedIndex = findItem(copierDefinition.salesCat.name, salesCategories);
+		var salesCatName = "";
+		if (copierDefinition.salesCat != null) {
+			salesCatName = copierDefinition.salesCat.name;
+		}
+		charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
 		this.charges = copierDefinition.charges;
 		updateControlState()
 	}

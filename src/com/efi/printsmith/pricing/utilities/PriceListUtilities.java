@@ -1,0 +1,125 @@
+package com.efi.printsmith.pricing.utilities;
+
+import java.util.List;
+
+import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.PriceList;
+import com.efi.printsmith.data.PriceListElement;
+
+public class PriceListUtilities {
+	static public double calculatePriceListPrice(long qty, PriceList priceList, double chargePrice, Job job) {
+		double retVal = 0.0;
+		double rate = 0.0;
+		
+		rate = PriceListUtilities.lookupPrice(priceList, qty);
+		
+		if (priceList.getIsRate() && priceList.getIsPercentage()) {
+			retVal = chargePrice * rate;
+		} else if (priceList.getIsRate()) {
+			retVal = qty * rate;
+		} else if (priceList.getIsPercentage()) {
+			retVal = chargePrice * rate;
+		} else if (priceList.getIsDiscount()) {
+			if (job != null) {
+				retVal = job.getPricingRecord().getTotalPrice() * rate;
+			}
+		} else {
+			retVal = rate;
+		}
+		
+		return retVal;
+	}
+	
+	static public double lookupPrice(PriceList priceList, long qty) {
+		double retVal = 0.0;
+		long lookupQty = qty;
+		int i = 0;
+		int base = 0;
+		int last = 0;
+		
+		boolean doAdditional = priceList.getLastItemIsPriceAdditionalQty();
+		
+		if (priceList == null) return retVal;
+		
+		if (priceList.getIsRate()) {
+			doAdditional = false;
+		}
+
+		List<PriceListElement> elements = priceList.getElements();
+
+		if (lookupQty <= elements.get(0).getQuantity()) {
+			retVal = elements.get(0).getAmount();
+		} else {
+			int lastElementIndex = 0;
+			for (i = 0; i < elements.size(); i++) {
+				// Find the actual last element
+				if (elements.get(i).getQuantity() == 0) {
+					lastElementIndex = i-1;
+					break;
+				}
+			}
+			
+			for (i = lastElementIndex; i >= 0; i--) {
+				// Search backwards for matching element
+				if (elements.get(i).getQuantity() <= lookupQty) {
+					base = i;
+					break;
+				}
+			}
+			
+			if (base < lastElementIndex) {
+				if (elements.get(base).getQuantity() == lookupQty) {
+					// Found exact item
+					last = base;
+				} else {
+					last = base + 1;
+				}
+			} else {
+				last = base;
+			}
+			
+			if (doAdditional && elements.get(elements.size()-1).getQuantity()==0) {
+				doAdditional = false; // There's no additional value
+			} else if (doAdditional) {
+				if (elements.get(last).getQuantity() >= lookupQty) {
+					doAdditional = false;
+				}
+			}
+			
+			if (doAdditional) {
+				retVal = elements.get(base).getAmount();
+				lookupQty = lookupQty - elements.get(base).getQuantity();
+				
+				if (priceList.getIsRate()) {
+					// Rates treat last element as the actual rate
+					retVal = elements.get(elements.size()-1).getQuantity();
+				} else {
+					qty = lookupQty;
+					
+					if (priceList.getInterpolate()) {
+						retVal += (elements.get(elements.size()).getAmount() / elements.get(elements.size()).getQuantity()) * qty;
+					} else {
+						if ((lookupQty%elements.get(elements.size()).getQuantity()) != 0) {
+							lookupQty = lookupQty + (elements.get(elements.size()).getQuantity() - (lookupQty&elements.get(elements.size()).getQuantity()));
+						}
+						retVal = retVal + ((lookupQty / elements.get(elements.size()).getQuantity()) * elements.get(elements.size()).getAmount());
+					}
+				}
+			} else if (priceList.getInterpolate()) {
+				retVal = elements.get(base).getAmount();
+				qty = lookupQty - elements.get(base).getQuantity();
+				
+				if (qty!= 0) {
+					long qtyRange = elements.get(last).getQuantity() - elements.get(base).getQuantity();
+					double priceRange = elements.get(last).getAmount() - retVal;
+					
+					qty = ((qtyRange != 0) ? (qty/qtyRange):0);
+					retVal = retVal + (priceRange * qty);
+				}
+			} else {
+				retVal = elements.get(last).getAmount();
+			}
+		}
+		return retVal;
+	}
+}
