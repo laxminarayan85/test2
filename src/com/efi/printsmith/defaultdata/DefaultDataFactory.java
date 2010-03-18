@@ -545,7 +545,7 @@ public class DefaultDataFactory {
 		ProcessPreferencesStockDefinition(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("basicsize");
+		columnnames.setInternalName("stktype");
 		columnnames.setName("stockPickerCmd.BasicSize");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
@@ -652,6 +652,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+		ProcessPreferencesStockDefinition(columnnames, false);
 	}
 
 	private void ProcessPreferencePendingList(ColumnNames columnname,
