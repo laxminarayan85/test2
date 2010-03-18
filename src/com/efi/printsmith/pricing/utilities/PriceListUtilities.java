@@ -1,11 +1,14 @@
 package com.efi.printsmith.pricing.utilities;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.PriceListElement;
 import com.efi.printsmith.data.SpeedTable;
+import com.efi.printsmith.migration.Utilities;
 
 public class PriceListUtilities {
 	static public double calculatePriceListPrice(long qty, PriceList priceList, double chargePrice, Job job) {
@@ -143,6 +146,21 @@ public class PriceListUtilities {
 				}
 			}
 		}
+		return retVal;
+	}
+	
+	static public double getAreaFromSizeString(String size) throws NumberFormatException, ParseException {
+		double retVal = 0.0;
+		
+		int i = size.indexOf("x");
+		if (i > -1) {
+			String lengthString = size.substring(0, i - 2);
+			String widthString = size.substring(i + 2);
+			double length = Utilities.tokenToDouble(lengthString);
+			double width = Utilities.tokenToDouble(widthString);
+			retVal = length * width;
+		}
+		
 		return retVal;
 	}
 }
