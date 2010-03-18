@@ -869,9 +869,9 @@
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
-	loadStockDefinitions();
+		loadStockDefinitions();
 		
-		}
+	}
 
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;

@@ -52,12 +52,7 @@
 				   fault="handleFault(event)"
 				   result="handleLoadProductResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="chargeDataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadChargeResult(event)"/>
-	</mx:RemoteObject>
+
 	<mx:RemoteObject id="chargeCommandDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -1062,16 +1057,13 @@
 			public var charge:Charge;
 
 			[Bindable]
-			private var chargeCommands:ArrayCollection=new ArrayCollection();
+			public var chargeCommands:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
 			public var tempOpen:Object=new Object();
 
 			[Bindable]
 			public var refreshSO:Boolean=false;
-
-			[Bindable]
-			private var chargeDefinitions:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
 			private var chargeDefinition:ChargeDefinition = new ChargeDefinition;
@@ -1093,11 +1085,11 @@
 			public function init():void
 			{
 				PopUpManager.centerPopUp(this);
-				pressDataService.getAll("PressDefinition");
-				locationDataService.getAll("Location");
-				productDataService.getAll("ProductCode");
-				chargeDataService.getAll("Charge");
-				chargeCommandDataService.getAll("ChargeCommand");
+//				pressDataService.getAll("PressDefinition");
+//				locationDataService.getAll("Location");
+//				productDataService.getAll("ProductCode");
+//				chargeDataService.getAll("Charge");
+//				chargeCommandDataService.getAll("ChargeCommand");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");
 			
 			}
@@ -1131,11 +1123,6 @@
 
 			private function handleDeleteResult(ev:ResultEvent):void
 			{
-			}
-
-			private function handleLoadChargeResult(ev:ResultEvent):void
-			{
-				chargeDefinitions=ev.result as ArrayCollection;
 			}
 
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
@@ -1314,13 +1301,23 @@
 			}
 			private function handleNewChargeResult(event:ResultEvent):void
 			{
-				charge = event.result as Charge;
-				if (chargeDefinition.descriptionDefault != "") {
+				if (chargeDefinition.method == ChargeMethod.SQUAREAREA) {
+					charge = event.result as SquareAreaCharge;
+				} else if (chargeDefinition.method == ChargeMethod.CUT) {
+					charge = event.result as CuttingCharge;
+				} else if (chargeDefinition.method == ChargeMethod.INK) {
+					charge = event.result as InkCharge;
+				} else if (chargeDefinition.method == ChargeMethod.SHIPPING) {
+					charge = event.result as ShippingCharge;
+				} else {
+					charge = event.result as Charge;
+				}
+				if (chargeDefinition.descriptionDefault != null && chargeDefinition.descriptionDefault != "") {
 					charge.description = chargeDefinition.descriptionDefault;
 				} else {
 					charge.description = chargeDefinition.name;
 				}
-				if (chargeDefinition.notesDefault != "") {
+				if (chargeDefinition.notesDefault != null && chargeDefinition.notesDefault != "") {
 					charge.notes = chargeDefinition.notesDefault;
 				}
 				charge.chargeDefinition=chargeDefinition;
@@ -1375,10 +1372,6 @@
 
 			private function doAdd():void
 			{
-				if (chargeDefinitions == null)
-				{
-					chargeDefinitions=new ArrayCollection;
-				}
 				mapToChargeData();
 				
 				if (charges == null)

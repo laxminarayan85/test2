@@ -61,7 +61,7 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-				//dataService.getAll("PreferencesPricingMethod");  // Now passed in from parent window.
+//				dataService.getAll("PreferencesPricingMethod");  // Now passed in from parent window.
 			}
 
 			public function setPricingMethods(pricingMethods:ArrayCollection):void {

@@ -156,6 +156,15 @@
 				   fault="handleFault(event)"
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="stockDataService" destination="dataService">
+		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleStockLoadResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
@@ -252,6 +261,11 @@
 			[Bindable]
 			private var pricingMethods:ArrayCollection=new ArrayCollection();
 
+			[Bindable]
+			private var stocks:ArrayCollection=new ArrayCollection();
+			
+    		private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
+
 			private var focussedFormControl:DisplayObject;
 
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
@@ -270,15 +284,9 @@
 			{
 				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
-				pressDataService.getAll("PressDefinition");
-				copierDataService.getAll("CopierDefinition");
-				locationDataService.getAll("Location");
-				productDataService.getAll("ProductCode");
-				chargeDataService.getAll("Charge");
-				chargeCommandDataService.getAll("ChargeCommand");
+				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
-				dimensionDataService.getAll("Dimension");
-				dataServiceSystemPreferences.getAll("PreferencesSystem");
+
 				if (job == null) {
 					job=new Job();
 					job.parentSize = "";
@@ -315,10 +323,7 @@
 		
 				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
 				eventStock.dispatch();
-
 			}
-
-
 			public function handleUIControlEvent(evt:ResultEvent):void {
 				evt.result.control.enabled = evt.result.enabled;
 			}		
@@ -326,13 +331,25 @@
 			
 			}
 			
+			private function loadData():void {
+				pressDataService.getAll("PressDefinition");
+				copierDataService.getAll("CopierDefinition");
+				locationDataService.getAll("Location");
+				productDataService.getAll("ProductCode");
+//				chargeDataService.getAll("Charge");
+				dimensionDataService.getAll("Dimension");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");				
+				dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+			}
+			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
 				if (evt.pricingMethod != null) {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 				} else {
-					Alert.show("Job Method Picker returned a null account", "Error");
+					Alert.show("Job Method Picker returned a null array", "Error");
 				}
 			}
+			
 			private function handleJobMethodPickerCancel(evt:JobMethodSelectEvent):void {
 				// Currently no need to do anything on cancel.
 			}
@@ -486,6 +503,12 @@
 			private function handleLoadPressResult(ev:ResultEvent):void
 			{
 				presses=ev.result as ArrayCollection;
+				chargeCommandDataService.getAll("ChargeCommand");
+			}
+		
+			private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
+				preferencesStockDefinitions = event.result as ArrayCollection;
+				stockDataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
 			}
 
 			private function handleLoadLocationResult(ev:ResultEvent):void
@@ -507,6 +530,10 @@
 				charges=ev.result as ArrayCollection;
 			}
 
+			private function handleStockLoadResult(ev:ResultEvent):void {
+			     stocks = ev.result as ArrayCollection;
+			}
+			
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
 			{
 				chargeCommands=ev.result as ArrayCollection;
@@ -515,12 +542,12 @@
 			private function handleLoadPricingMethodResult(ev:ResultEvent):void
 			{
 				pricingMethods=ev.result as ArrayCollection;
-				
 				var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
-				jobMethodPicker.setPricingMethods(this.pricingMethods);
 				jobMethodPicker.setStyle("borderAlpha", 0.9);
+				jobMethodPicker.pricingMethods = this.pricingMethods;
 			    jobMethodPicker.addEventListener(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, handleJobMethodPickerCancel);
  			   	jobMethodPicker.addEventListener(JobMethodSelectEvent.SELECTJOBMETHOD, handleJobMethodPickerSelect);
+				loadData();
 			}
 
 			private function handleSaveResult(ev:ResultEvent):void
@@ -564,6 +591,7 @@
 			{
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
 				chargePicker.charges = this.job.charges;
+				chargePicker.chargeCommands = chargeCommands;
 				chargePicker.setStyle("borderAlpha", 0.9);
 				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
 			}
@@ -587,6 +615,7 @@
 			{
 				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 				stockPickerWindow.setStyle("borderAlpha", 0.9);
+			   	stockPickerWindow.setStockArray(stocks);
 				stockPickerWindow.formIsEmpty=true;
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
