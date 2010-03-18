@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
-width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
+width="896" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" fontSize="9">
 	<mx:states>
 		<mx:State name="Large Format">
@@ -626,10 +626,10 @@ width="804" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
                              
 </mx:Script>	
 	<mx:RadioButtonGroup id="PaperStyle"/>
-	<mx:Canvas x="0" y="0" width="781" height="100%" horizontalScrollPolicy="off">
+	<mx:Canvas x="0" y="0" width="824" height="100%" horizontalScrollPolicy="off">
 		<mx:Label x="73" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Name')}" width="45" textAlign="right"/>
 		<mx:Label x="10" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineName')}" textAlign="right" width="108"/>
-	 	<mx:DataGrid y="0" id="dataGrid" verticalScrollPolicy="on"  horizontalScrollPolicy="on" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="0">
+	 	<mx:DataGrid y="0" id="dataGrid" verticalScrollPolicy="on"  horizontalScrollPolicy="on" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="21">
 			<mx:columns>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="blackwhite" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>

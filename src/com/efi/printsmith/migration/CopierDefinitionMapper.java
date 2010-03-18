@@ -865,7 +865,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 					/* TODO */
 				} else if ("chart factor2[150]".equals(currentFieldToken)) {
 					/* TODO */
-				} else if ("pricing method".equals(currentFieldToken)) {
+				} else if ("method".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0"))
 						copierDefinition.setMethod("none");
 					else if (currentImportToken.equals("1"))
@@ -881,11 +881,12 @@ public class CopierDefinitionMapper extends ImportMapper {
 					else if (currentImportToken.equals("6"))
 						copierDefinition.setMethod("SquareAreaAndOriginals");
 					else if (currentImportToken.equals("7"))
-						copierDefinition.setMethod("TotalOfSquareArea");
+						copierDefinition.setMethod("TotalSquareArea");
 					else if (currentImportToken.equals("8"))
 						copierDefinition.setMethod("SquareAreaAndCopies");
 					else if (currentImportToken.equals("9"))
 						copierDefinition.setMethod("SquareAreaPerCopy");
+				
 				} else if ("schedule type".equals(currentFieldToken)) {
 					if (currentImportToken.equals("1") == true)
 						copierDefinition.setMatrixIsCopyCost(true);
