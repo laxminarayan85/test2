@@ -551,9 +551,40 @@ public class StockDefinition extends ModelBase {
 		this.modified = new Date();
 	}
 
-	public StockDefinition(long id, String Name) {
+	public StockDefinition(long id, String Name, double weight,String parentsize,StockColors color, GenericColors genericcolor,
+			StockFinish finish, double thickness, StockGrade grade, double cwt1, Vendor vendor, String stocknumber, int onhand,
+			int committed, int ordered, boolean shellitem, String normalrunsize, StockType stocktype,
+			StockGroup stkgroup, String coated, int minorder, double cost1, Date priceexpire, String forestmanagement,
+			double pcwrecycledpercent, boolean fsccertified, boolean sficertified, boolean greensealcertified) {
 		this.id = id;
 		this.name = Name;
+		this.weight = weight;
+		this.parentsize= parentsize;
+		this.color =color;
+		this.genericColor =genericcolor;
+		this.finish =finish;
+		this.thickness =thickness;
+		this.grade = grade;
+		this.cwt1 = cwt1;
+		this.vendor =vendor;
+		this.stocknumber =stocknumber;
+		this.onHand= onhand;
+		this.committed =committed;
+		this.onOrder = ordered;
+		this.shellItem =shellitem;
+		this.normalRunSize =normalrunsize;
+		this.stktype =stocktype;
+		this.stkgroup =stkgroup;
+		this.coated =coated;
+		this.minorder =minorder;
+		this.cost1 =cost1;
+		this.priceExpires =priceexpire;
+		this.forestManagement =forestmanagement;
+		this.pcwRecycledPercent =pcwrecycledpercent;
+		this.fscCertified =fsccertified;
+		this.sfiCertified =sficertified;
+		this.greenSealCertified = greensealcertified;
+		
 	}
 	
 	/**

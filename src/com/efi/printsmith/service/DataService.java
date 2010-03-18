@@ -148,18 +148,21 @@ public class DataService {
 		String columnstring = new String();
 		PreferencesStockDefinition temp;
 		ColumnNames tempcolumn;
-		columnstring = "a.id";
+		columnstring = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, " +
+				"a.cwt1, a.vendor, a.stocknumber, a.onHand, a.committed, a.onOrder, a.shellItem, a.normalRunSize, " +
+				"a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, " +
+				"a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified";
 		try {
-			for (int i = 0; i < Columns.size(); i++){
-				temp = Columns.get(i);
-				if (temp.getVisible()){
-					tempcolumn = temp.getColumns();
-					columnstring += ", a.";
-					columnstring += tempcolumn.getInternalName();
-					
-				}
+//			for (int i = 0; i < Columns.size(); i++){
+//				temp = Columns.get(i);
+//				if (temp.getVisible()){
+//					tempcolumn = temp.getColumns();
+//					columnstring += ", a.";
+//					columnstring += tempcolumn.getInternalName();
+//					
+//				}
 				
-			}
+		//	}
 					
 			log.debug("** getAllNameIDOnly .");
 			EntityManager em = entityManagerFactory.createEntityManager();
