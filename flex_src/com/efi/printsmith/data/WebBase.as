@@ -32,8 +32,8 @@ package com.efi.printsmith.data
 		public var hiddenBackgroundTask:Boolean = true;
 		public var autoOenWebConsole:Boolean = true;
 		public var sendOutgoingDataImmediately:Boolean = true;
-		public var receiveState:WebStatus;
-		public var rejectState:WebStatus;
+		public var receiveState:String = "";
+		public var rejectState:String = "";
 	
 	}
 }

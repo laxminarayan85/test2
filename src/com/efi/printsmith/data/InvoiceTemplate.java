@@ -34,6 +34,10 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "invoicetemplate")
 public class InvoiceTemplate extends InvoiceBase {
+	/**
+	 * @generated
+	 */
+	public static final String TEMPLATENAME = "TemplateName";
 
 	/**
 	 * @generated
@@ -43,4 +47,80 @@ public class InvoiceTemplate extends InvoiceBase {
 		this.modified = new Date();
 	}
 
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private String templateName;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getTemplateName(){
+		return templateName; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setTemplateName(String newVal) {
+		this.templateName = newVal;
+	}
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
+		if (TEMPLATENAME.equals(propertyName)) return getTemplateName();
+		return super.getProperty(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+		if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
+	
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+		if (TEMPLATENAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		return super.getPropertyClass(propertyName);
+	}
+	
+
+	/**
+	 * @generated
+	 */		
+	@Transient
+	@Override
+	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+		if (TEMPLATENAME.equals(propertyName)) return InvoiceTemplate.class;
+		return super.getPropertyOwner(propertyName);
+	}
+	
+	/**
+	 * @generated
+	 */			
+	@Override
+	public boolean deepEquals(Object obj) {
+		if (! super.deepEquals(obj))
+			return false;
+		InvoiceTemplate objT = (InvoiceTemplate)obj;
+		if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
+			return false;
+		return true;
+	}			
 }

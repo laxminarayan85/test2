@@ -26,14 +26,14 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "JobTemplate.findall", query = "from JobTemplate"),
-	@NamedQuery(name = "JobTemplate.byId", query = "select a from JobTemplate a where a.id= :id")
+	@NamedQuery(name = "EstimateTemplate.findall", query = "from EstimateTemplate"),
+	@NamedQuery(name = "EstimateTemplate.byId", query = "select a from EstimateTemplate a where a.id= :id")
 })
 
 
 @Entity
-@Table(name = "jobtemplate")
-public class JobTemplate extends Job {
+@Table(name = "estimatetemplate")
+public class EstimateTemplate extends Estimate {
 	/**
 	 * @generated
 	 */
@@ -42,7 +42,7 @@ public class JobTemplate extends Job {
 	/**
 	 * @generated
 	 */
-	public JobTemplate() {
+	public EstimateTemplate() {
 		this.created = new Date();
 		this.modified = new Date();
 	}
@@ -53,12 +53,12 @@ public class JobTemplate extends Job {
 	 * @generated
 	 */	
  	@Basic
-	private Integer templateName;
+	private String templateName;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getTemplateName(){
+	public String getTemplateName(){
 		return templateName; 
 	}
 
@@ -66,7 +66,7 @@ public class JobTemplate extends Job {
 	/**
 	 * @generated
 	 */	
-	public void setTemplateName(Integer newVal) {
+	public void setTemplateName(String newVal) {
 		this.templateName = newVal;
 	}
 	/**
@@ -85,7 +85,7 @@ public class JobTemplate extends Job {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TEMPLATENAME.equals(propertyName)) setTemplateName((Integer)newValue); else
+		if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -96,7 +96,7 @@ public class JobTemplate extends Job {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (TEMPLATENAME.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -107,7 +107,7 @@ public class JobTemplate extends Job {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TEMPLATENAME.equals(propertyName)) return JobTemplate.class;
+		if (TEMPLATENAME.equals(propertyName)) return EstimateTemplate.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -118,7 +118,7 @@ public class JobTemplate extends Job {
 	public boolean deepEquals(Object obj) {
 		if (! super.deepEquals(obj))
 			return false;
-		JobTemplate objT = (JobTemplate)obj;
+		EstimateTemplate objT = (EstimateTemplate)obj;
 		if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
 			return false;
 		return true;

@@ -550,13 +550,13 @@ public class WebBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus receiveState;
+ 	@Basic
+	private String receiveState;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getReceiveState(){
+	public String getReceiveState(){
 		return receiveState; 
 	}
 
@@ -564,7 +564,7 @@ public class WebBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setReceiveState(WebStatus newVal) {
+	public void setReceiveState(String newVal) {
 		this.receiveState = newVal;
 	}
  	
@@ -572,13 +572,13 @@ public class WebBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus rejectState;
+ 	@Basic
+	private String rejectState;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getRejectState(){
+	public String getRejectState(){
 		return rejectState; 
 	}
 
@@ -586,7 +586,7 @@ public class WebBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setRejectState(WebStatus newVal) {
+	public void setRejectState(String newVal) {
 		this.rejectState = newVal;
 	}
 	/**
@@ -644,8 +644,8 @@ public class WebBase extends ModelBase {
 		if (HIDDENBACKGROUNDTASK.equals(propertyName)) setHiddenBackgroundTask((Boolean)newValue); else
 		if (AUTOOENWEBCONSOLE.equals(propertyName)) setAutoOenWebConsole((Boolean)newValue); else
 		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) setSendOutgoingDataImmediately((Boolean)newValue); else
-		if (RECEIVESTATE.equals(propertyName)) setReceiveState((WebStatus)newValue); else
-		if (REJECTSTATE.equals(propertyName)) setRejectState((WebStatus)newValue); else
+		if (RECEIVESTATE.equals(propertyName)) setReceiveState((String)newValue); else
+		if (REJECTSTATE.equals(propertyName)) setRejectState((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -694,9 +694,9 @@ public class WebBase extends ModelBase {
 		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (RECEIVESTATE.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		if (REJECTSTATE.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

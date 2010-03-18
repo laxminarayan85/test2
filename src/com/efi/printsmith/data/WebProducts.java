@@ -176,13 +176,13 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String details;
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private WebGraphics details;
 	
 	/**
 	 * @generated
  	 */
-	public String getDetails(){
+	public WebGraphics getDetails(){
 		return details; 
 	}
 
@@ -190,7 +190,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setDetails(String newVal) {
+	public void setDetails(WebGraphics newVal) {
 		this.details = newVal;
 	}
  	
@@ -332,7 +332,7 @@ public class WebProducts extends ModelBase {
 		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
 		if (SKU.equals(propertyName)) setSku((JobBase)newValue); else
 		if (THUMBNAIL.equals(propertyName)) setThumbnail((WebGraphics)newValue); else
-		if (DETAILS.equals(propertyName)) setDetails((String)newValue); else
+		if (DETAILS.equals(propertyName)) setDetails((WebGraphics)newValue); else
 		if (GLOBALPRODUCT.equals(propertyName)) setGlobalProduct((Boolean)newValue); else
 		if (CHECKOUTTYPE.equals(propertyName)) setCheckoutType((WebCheckoutTypes)newValue); else
 		if (ALLOWUSERENTEREDQTY.equals(propertyName)) setAllowUserEnteredQty((Boolean)newValue); else
@@ -356,7 +356,7 @@ public class WebProducts extends ModelBase {
 		if (THUMBNAIL.equals(propertyName)) 
 			return new Class<?>[] {WebGraphics.class};		
 		if (DETAILS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
+			return new Class<?>[] {WebGraphics.class};		
 		if (GLOBALPRODUCT.equals(propertyName)) 
 			return new Class<?>[] {Boolean.class};		
 		if (CHECKOUTTYPE.equals(propertyName)) 

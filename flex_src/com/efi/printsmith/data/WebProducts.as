@@ -17,7 +17,7 @@ package com.efi.printsmith.data
 		public var status:WebStatus;
 		public var sku:JobBase;
 		public var thumbnail:WebGraphics;
-		public var details:String = "";
+		public var details:WebGraphics;
 		public var globalProduct:Boolean = true;
 		public var checkoutType:WebCheckoutTypes;
 		public var allowUserEnteredQty:Boolean = true;
