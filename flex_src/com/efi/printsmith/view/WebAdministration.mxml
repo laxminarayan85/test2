@@ -3,7 +3,7 @@
 	xmlns:vo="com.efi.printsmith.data.*" 
 	xmlns:fc="http://www.adobe.com/2006/fc" 
 	width="100%" height="620" 
-	creationComplete="init()" 
+	creationComplete="init()"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}" 
 	name="Web Administrator">
@@ -104,7 +104,7 @@
 	[Bindable]
 	private var webstatusArray:ArrayCollection;
 	[Bindable]
-	private var webstateArray:ArrayCollection;
+	private var webstateArray:ArrayCollection = new ArrayCollection();
 	
 	[Bindable]
 	private var webbase:WebBase;
@@ -132,14 +132,14 @@
 		fillwebstateArray();
 			
 		dsBase.getAll("WebBase");
-		dsBase.getAll("WebCatalogs");
-		dsBase.getAll("WebCatagories");
-		dsBase.getAll("WebProducts");
-		dsBase.getAll("WebCheckoutTypes");
-		dsBase.getAll("WebChoices");
-		dsBase.getAll("WebGraphics");
-		dsBase.getAll("WebQuestions");
-		dsBase.getAll("WebStatus");
+		dsCatalogs.getAll("WebCatalogs");
+		dsCatagories.getAll("WebCatagories");
+		dsProducts.getAll("WebProducts");
+		dsCheckoutTypes.getAll("WebCheckoutTypes");
+		dsChoices.getAll("WebChoices");
+		dsGraphics.getAll("WebGraphics");
+		dsQuestions.getAll("WebQuestions");
+		dsStatus.getAll("WebStatus");
 
 		var eventSite:WebAdminSitePanelEvent = new WebAdminSitePanelEvent(canvasSite, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventSite.dispatch();
@@ -171,8 +171,10 @@
 		object = new Object();
 		object.name = "Customer Hold";
 		webstateArray.addItem(object);
+		object = new Object();
 		object.name = "Hold";
 		webstateArray.addItem(object);
+		object = new Object();
 		object.name = "In Storage";
 		webstateArray.addItem(object);
 	}
@@ -197,11 +199,109 @@
 
 	
 	private function doSave():void {
-		                                    		
+		mapFromWebBaseData();
+		
+		dsGraphics.addUpdate(webgraphics);
+		dsQuestions.addUpdate(webquestions);
+		dsProducts.addUpdate(webproducts);
+		dsChoices.addUpdate(webchoices);
+		dsCatagories.addUpdate(webcatagories);
+		dsCatalogs.addUpdate(webcatalogs);
+		dsBase.addUpdate(webbase);
 	}   
 
+	private function mapFromWebBaseData():void {
+		if (webbase!= null){
+			//check boxes
+			webbase.ignoreLocalCurrencyFormat = this.chkIgnorelocalcurrency.selected;
+			webbase.autoStartConnection = this.chkAutomaticallystartWe.selected;
+			webbase.hiddenBackgroundTask = this.chkashiddenbackgroundta.selected;
+			webbase.autoOenWebConsole = this.chkAutomaticallyopenWeb.selected;
+			webbase.sendOutgoingDataImmediately = this.chkSendoutgoingdataimme.selected;
+			 
+			//comboboxs
+			if (webbase.receiveState == "" || webbase.receiveState != cboReceiveState.selectedItem.name)
+			{
+				webbase.receiveState = cboReceiveState.selectedItem.name;
+			}
+			if (webbase.rejectState == "" || webbase.rejectState != cboRejectState.selectedItem.name)
+			{
+				webbase.rejectState = cboRejectState.selectedItem.name;
+			}
+
+			//radiobutton
+			webbase.transferMethod = parseInt(rgtransfermethod.selectedValue.toString());
+			
+			//textboxes
+			webbase.contactName = txtcontactname.text;
+			webbase.contactPhone = txtcontactphone.text;
+			webbase.contactEmail = txtcontactemail.text;
+			webbase.ftpUrl = txtftpUserName.text;
+			webbase.ftpUserName = txtftpUrl.text;
+			webbase.ftpPassword = txtftpPassword.text;
+			webbase.retryInterval = parseInt(txtretryInterval.text);
+			webbase.responseDelay = parseInt(txtresponseDelay.text);
+			webbase.maxRetries = parseInt(txtmaxRetries.text);
+			webbase.takenBy = txttakenBy.text;
+			webbase.composerDelay = parseInt(txtcomposerDelay.text);
+			webbase.composerUrl = txtcomposerUrl.text;
+			
+		}
+	}
+	private function mapToWebBaseData():void {
+			//check boxes
+			this.chkIgnorelocalcurrency.selected = webbase.ignoreLocalCurrencyFormat;
+			this.chkAutomaticallystartWe.selected = webbase.autoStartConnection;
+			this.chkashiddenbackgroundta.selected = webbase.hiddenBackgroundTask;
+			this.chkAutomaticallyopenWeb.selected = webbase.autoOenWebConsole;
+			this.chkSendoutgoingdataimme.selected = webbase.sendOutgoingDataImmediately;
+
+			//comboboxs
+			if (webbase.receiveState != "")
+			{
+				cboReceiveState.selectedIndex = findItem(webbase.receiveState,webstateArray);
+			}else{
+				cboReceiveState.selectedIndex = 0;
+			}
+			
+			if (webbase.rejectState != "")
+			{
+				cboRejectState.selectedIndex = findItem(webbase.rejectState,webstateArray)
+			}else{
+				cboRejectState.selectedIndex = 0;
+			}
+			
+			//radiogroup
+			if (webbase.transferMethod > 0){
+				rgtransfermethod.selectedValue = webbase.transferMethod.toString() as Object;
+			}else{
+				rgtransfermethod.selectedValue = "1";
+			}
+			
+		
+			//textboxes
+			txtcontactname.text = webbase.contactName;
+			txtcontactphone.text = webbase.contactPhone;
+			txtcontactemail.text = webbase.contactEmail;
+			txtftpUserName.text = webbase.ftpUrl;
+			txtftpUrl.text = webbase.ftpUserName;
+			txtftpPassword.text = webbase.ftpPassword;
+			txtretryInterval.text = webbase.retryInterval.toString();
+			txtresponseDelay.text = webbase.responseDelay.toString();
+			txtmaxRetries.text = webbase.maxRetries.toString();
+			txttakenBy.text = webbase.takenBy;
+			txtcomposerDelay.text = webbase.composerDelay.toString();
+			txtcomposerUrl.text = webbase.composerUrl;
+	}
+	
 	private function handleLoadBaseResult(ev:ResultEvent):void {
 		webbaseArray = ev.result as ArrayCollection;
+		if (webbaseArray.length==0){
+			webbase = new WebBase();
+		}else{
+			webbase = webbaseArray.getItemAt(0,0) as WebBase;
+		}
+		mapToWebBaseData();
 	}
 	private function handleLoadCatalogsResult(ev:ResultEvent):void {
 		webcatalogsArray = ev.result as ArrayCollection;
@@ -339,12 +439,21 @@
 
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="100%" height="100%">
-		<mx:TabNavigator x="0" y="0" width="100%" height="100%" creationPolicy="all">
+
+		<mx:Button x="10" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+
+
+		<mx:TabNavigator x="0" y="58" width="100%" height="524" creationPolicy="all">
 			<mx:Canvas id="canvasSite" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Site')}" width="100%" height="100%">
 				<mx:Label x="35" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactName')}" textAlign="right" width="137"/>
 				<mx:Label x="35" y="53" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactPhone')}" textAlign="right" width="137"/>
 				<mx:Label x="35" y="79" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactEmail')}" textAlign="right" width="137"/>
-				<mx:Label x="35" y="105" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Site')}" textAlign="right" width="137"/>
+				<mx:Label x="35" y="105" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FileTransferMethod')}" textAlign="right" width="137"/>
 				<mx:Label x="61" y="167" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPURL')}" textAlign="right" width="140"/>
 				<mx:Label x="61" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPUserName')}" textAlign="right" width="140"/>
 				<mx:Label x="61" y="219" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPPassword')}" textAlign="right" width="140"/>
@@ -355,23 +464,23 @@
 				<mx:Label x="35" y="374" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ComposerDelay')}" textAlign="right" width="149"/>
 				<mx:Label x="360" y="167" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FTPmodeis')}" textAlign="right"/>
 				<mx:Label x="261" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ResponseDelay')}" textAlign="right"/>
-				<mx:TextInput x="170" y="27" width="209" text="{webbase.contactName}"/>
-				<mx:TextInput x="170" y="53" width="209" text="{webbase.contactPhone}"/>
-				<mx:TextInput x="170" y="79" width="209" text="{webbase.contactEmail}"/>
-				<mx:RadioButtonGroup id="radiogroup1" selectedValue="{webbase.transferMethod}"/>
-				<mx:RadioButton x="180" y="109" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UsePrintNetIntegrato')}" groupName="radiogroup1" textAlign="right"/>
-				<mx:RadioButton x="180" y="135" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UseFTPServer')}" groupName="radiogroup1" textAlign="right"/>
-				<mx:TextInput x="199" y="165" text="{webbase.ftpUrl}"/>
-				<mx:TextInput x="199" y="191" text="{webbase.ftpUserName}"/>
-				<mx:TextInput x="199" y="217" text="{webbase.ftpPassword}"/>
+				<mx:TextInput id="txtcontactname" x="170" y="27" width="209" text="{webbase.contactName}"/>
+				<mx:TextInput id="txtcontactphone" x="170" y="53" width="209" text="{webbase.contactPhone}"/>
+				<mx:TextInput id="txtcontactemail" x="170" y="79" width="209" text="{webbase.contactEmail}"/>
+				<mx:RadioButtonGroup id="rgtransfermethod" selectedValue="{webbase.transferMethod}"/>
+				<mx:RadioButton x="180" y="109" value="1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UsePrintNetIntegrato')}" groupName="rgtransfermethod" textAlign="right"/>
+				<mx:RadioButton x="180" y="135" value="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UseFTPServer')}" groupName="rgtransfermethod" textAlign="right"/>
+				<mx:TextInput id="txtftpUrl" x="199" y="165" text="{webbase.ftpUrl}"/>
+				<mx:TextInput id="txtftpUserName" x="199" y="191" text="{webbase.ftpUserName}"/>
+				<mx:TextInput id="txtftpPassword" x="199" y="217" text="{webbase.ftpPassword}"/>
 				<mx:ComboBox x="487" y="165" width="117"></mx:ComboBox>
-				<mx:CheckBox x="108" y="247" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Ignorelocalcurrencyf')}" textAlign="right"/>
-				<mx:TextInput x="182" y="270" width="50" text="{webbase.retryInterval}"/>
-				<mx:TextInput x="382" y="272" width="50" text="{webbase.responseDelay}"/>
-				<mx:TextInput x="182" y="296" width="50" text="{webbase.maxRetries}"/>
-				<mx:TextInput x="182" y="322" width="100" text="{webbase.takenBy}"/>
-				<mx:TextInput x="182" y="348" width="250" text="{webbase.composerDelay}"/>
-				<mx:TextInput x="182" y="374" width="50" text="{webbase.composerUrl}"/>
+				<mx:CheckBox id="chkIgnorelocalcurrency" x="108" y="247" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Ignorelocalcurrencyf')}" textAlign="right"/>
+				<mx:TextInput id="txtretryInterval" x="182" y="270" width="50" text="{webbase.retryInterval}"/>
+				<mx:TextInput id="txtresponseDelay" x="382" y="272" width="50" text="{webbase.responseDelay}"/>
+				<mx:TextInput id="txtmaxRetries" x="182" y="296" width="50" text="{webbase.maxRetries}"/>
+				<mx:TextInput id="txttakenBy" x="182" y="322" width="100" text="{webbase.takenBy}"/>
+				<mx:TextInput id="txtcomposerDelay" x="182" y="348" width="250" text="{webbase.composerDelay}"/>
+				<mx:TextInput id="txtcomposerUrl" x="182" y="374" width="50" text="{webbase.composerUrl}"/>
 				<mx:Button x="387" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" height="50" width="101" enabled="false"/>
 				<mx:Label x="182" y="404" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.required')}" textAlign="left"/>
 			</mx:Canvas>
@@ -658,12 +767,12 @@
 				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas id="canvasAdmin" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Admin')}" width="100%" height="100%">
-				<mx:CheckBox x="65" y="135" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallystartWe')}" width="275"/>
-				<mx:CheckBox x="104" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ashiddenbackgroundta')}" width="236"/>
-				<mx:CheckBox x="65" y="195" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallyopenWeb')}" width="275"/>
-				<mx:CheckBox x="65" y="225" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Sendoutgoingdataimme')}" width="275"/>
-				<mx:ComboBox x="469" y="135" width="154" dataProvider="{webstateArray}" selectedIndex="{findItem(webbase.receiveState,webstateArray)}"></mx:ComboBox>
-				<mx:ComboBox x="467" y="165" width="156" dataProvider="{webstateArray}" selectedIndex="{findItem(webbase.rejectState,webstateArray)}"></mx:ComboBox>
+				<mx:CheckBox id="chkAutomaticallystartWe" x="65" y="135" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallystartWe')}" width="275"/>
+				<mx:CheckBox id="chkashiddenbackgroundta" x="104" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ashiddenbackgroundta')}" width="236"/>
+				<mx:CheckBox id="chkAutomaticallyopenWeb" x="65" y="195" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.AutomaticallyopenWeb')}" width="275"/>
+				<mx:CheckBox id="chkSendoutgoingdataimme" x="65" y="225" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Sendoutgoingdataimme')}" width="275"/>
+				<mx:ComboBox id="cboReceiveState" x="469" y="135" width="154" dataProvider="{webstateArray}" labelField="name"></mx:ComboBox>
+				<mx:ComboBox id="cboRejectState" x="467" y="165" width="156" dataProvider="{webstateArray}" labelField="name"></mx:ComboBox>
 				<mx:Label x="348" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ReceiveState')}"/>
 				<mx:Label x="348" y="165" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RejectState')}"/>
 				<mx:Button x="65" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ShowWebConnection')}" width="275" height="50"/>
