@@ -1,6 +1,6 @@
 package com.efi.printsmith.pricing.largeformat;
 
-public class SquareAreaAndOriginalsPricingMethod implements
+public class SquareAreaAndOriginalsPricingMethod extends
 		LargeFormatPricingMethod {
 
 }

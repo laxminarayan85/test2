@@ -6,6 +6,8 @@ import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
 import com.efi.printsmith.pricing.print.PrintPricingMethod;
 import com.efi.printsmith.pricing.print.PrintPricingMethodFactory;
+import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethod;
+import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
 
 public class PriceJobEngine {
 	static public Job priceJob(Job job) {
@@ -43,7 +45,7 @@ public class PriceJobEngine {
 		} else if (pricingMethod.getTitle().equals("Roll-Fed")) {
 			
 		} else if (pricingMethod.getTitle().equals("Large Format")) {
-//			LargeFormatPricingMethod largeFromatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
+			LargeFormatPricingMethod largeFromatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
 		} else if (pricingMethod.getTitle().equals("Blank")) {
 			
 		} else if (pricingMethod.getTitle().equals("List")) {
