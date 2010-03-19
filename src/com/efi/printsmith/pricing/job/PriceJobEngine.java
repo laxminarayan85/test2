@@ -46,7 +46,8 @@ public class PriceJobEngine {
 			
 		} else if (pricingMethod.getTitle().equals("Large Format")) {
 			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
-			largeFormatPricingMethod.priceLargeFormatJob(job);
+			if (largeFormatPricingMethod != null)
+				largeFormatPricingMethod.priceLargeFormatJob(job);
 		} else if (pricingMethod.getTitle().equals("Blank")) {
 			
 		} else if (pricingMethod.getTitle().equals("List")) {
