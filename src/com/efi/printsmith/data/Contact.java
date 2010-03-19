@@ -101,8 +101,8 @@ public class Contact extends Party {
 
 	public Contact(long id, String firstName, String lastName, String accountID) {
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName =lastName;
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
 		this.contactId = accountID;
 	
 	}
