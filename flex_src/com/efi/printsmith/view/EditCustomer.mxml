@@ -9,6 +9,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="contactdataService" destination="dataService">
 		<mx:method name="getContactsByAccountId" fault="handleFault(event)"  result="handleLoadContacts(event)"/>
@@ -212,7 +213,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.account = new Account();
 		setMarketing();
 	}
-	
+	private function handleGetResult(ev:ResultEvent):void {
+		this.setAccount(ev.result as Account);
+		contactdataService.getContactsByAccountId("Contact", account.id);
+		setMarketing();
+		this.JobCharges = ev.result.jobCharges;
+		this.EstInvCharges = ev.result.invoiceEstimateCharges;
+	     
+	}
 	private function doNew():void {
 	    account = new Account();
 	    setMarketing();
@@ -232,24 +240,36 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function doNext():void {  
 		var itemp:int;
-		itemp = accounts.getItemIndex(account); 
+		var temp: Account;
+		//itemp = accounts.getItemIndex(account);
+		 itemp =	findItemID(account.id, accounts); 
 		itemp++;
 		if (itemp == accounts.length){
 			itemp = accounts.length - 1;
 		}
-		account = accounts.getItemAt(itemp,0) as Account;   
-	    setAccount(account);                         
+		temp = accounts.getItemAt(itemp,0) as Account;   
+	   dataService.getById("Account", temp.id );                            
 	}
 	private function doPrev():void {              
 	    var itemp:int;
-		itemp = accounts.getItemIndex(account); 
+	    var temp: Account;
+	//	itemp = accounts.getItemIndex(account); 
+		 itemp =	findItemID(account.id, accounts);
 		itemp--;
 		if (itemp < 0){
 			itemp = 0; 
 		}
-		account = accounts.getItemAt(itemp,0) as Account;   
-	    setAccount(account);                                           
-	}                                                	
+		temp = accounts.getItemAt(itemp,0) as Account;   
+	    dataService.getById("Account", temp.id );                                           
+	} 
+	private function findItemID(id:int, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (id == element.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}                                               	
 	private function send():void
 	{
 		var message:IMessage = new AsyncMessage();

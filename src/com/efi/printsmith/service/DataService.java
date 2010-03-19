@@ -176,7 +176,30 @@ public class DataService {
 		columnstring = "a.id, a.title, a.accountId, a.externalRef, a. masterAcct";
 		try {
 				
-			log.debug("** getAllNameIDOnly .");
+			log.debug("** getAccountPicker .");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+			Query query = em.createQuery(queryString);
+			
+			resultList = query.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	public List<?> getContactPicker(String className)
+	throws Exception {
+		List<?> resultList = new ArrayList<Object>();
+		String columnstring = new String();
+		
+		columnstring = "a.id, a.firstName, a.lastName, a.contactId";
+		try {
+				
+			log.debug("** getContactPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
 		
 			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";

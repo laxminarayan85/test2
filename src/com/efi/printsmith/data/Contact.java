@@ -99,7 +99,13 @@ public class Contact extends Party {
 		this.modified = new Date();
 	}
 
- 	
+	public Contact(long id, String firstName, String lastName, String accountID) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName =lastName;
+		this.contactId = accountID;
+	
+	}
 	
 	/**
 	 * @generated

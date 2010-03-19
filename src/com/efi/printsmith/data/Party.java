@@ -191,7 +191,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private String lastName;
+ 	protected  String lastName;
 	
 	/**
 	 * @generated
@@ -213,7 +213,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private String firstName;
+ 	protected  String firstName;
 	
 	/**
 	 * @generated
