@@ -50,6 +50,8 @@ public class PriceListUtilities {
 
 		List<PriceListElement> elements = priceList.getElements();
 
+		if (elements.size() <= 0) return retVal;
+		
 		if (lookupQty <= elements.get(0).getQuantity()) {
 			retVal = elements.get(0).getAmount();
 		} else {

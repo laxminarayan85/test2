@@ -429,7 +429,7 @@
 		stockChangesDataService.getAll("StockChanges");
 	} */
 	public function loadStockType():void {
-		stockTypeDataService.getAll("StockType");
+		stockTypeDataService.getAllNameIDOnly("StockType");
 	}
 	
 	public function loadDimensions():void {
