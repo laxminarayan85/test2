@@ -94,13 +94,13 @@ public class WebCatalogs extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus status;
+ 	@Basic
+	private String status;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getStatus(){
+	public String getStatus(){
 		return status; 
 	}
 
@@ -108,7 +108,7 @@ public class WebCatalogs extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setStatus(WebStatus newVal) {
+	public void setStatus(String newVal) {
 		this.status = newVal;
 	}
  	
@@ -231,7 +231,7 @@ public class WebCatalogs extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (ROLLID.equals(propertyName)) setRollId((Integer)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
+		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
 		if (PATH.equals(propertyName)) setPath((String)newValue); else
@@ -248,7 +248,7 @@ public class WebCatalogs extends ModelBase {
 		if (ROLLID.equals(propertyName)) 
 			return new Class<?>[] {Integer.class};		
 		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (DESCRIPTION.equals(propertyName)) 

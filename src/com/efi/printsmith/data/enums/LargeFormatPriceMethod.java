@@ -9,7 +9,7 @@ public enum LargeFormatPriceMethod {
 	 SquareAreaAndCopies,
 	 SquareAreaAndOriginals,
 	 SquareAreaPerCopy,
-	 TotalOfSquareArea;
+	 TotalSquareArea;
 	public String getLocalizedValue(java.util.Locale locale) {
 		String retVal = toString();
 		return retVal;

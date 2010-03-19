@@ -13,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.WebCatagories";
 		}
 				
-		public var status:WebStatus;
+		public var status:String = "";
 		public var image:WebGraphics;
 		public var products:ArrayCollection;
 		public var parent:WebCatagories;

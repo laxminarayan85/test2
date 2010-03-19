@@ -90,13 +90,13 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus status;
+ 	@Basic
+	private String status;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getStatus(){
+	public String getStatus(){
 		return status; 
 	}
 
@@ -104,7 +104,7 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setStatus(WebStatus newVal) {
+	public void setStatus(String newVal) {
 		this.status = newVal;
 	}
  	
@@ -204,7 +204,7 @@ public class WebQuestions extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
+		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
 		if (QUESTIONTYPE.equals(propertyName)) setQuestionType((Integer)newValue); else
 		if (CHOICES.equals(propertyName)) setChoices((java.util.List<WebChoices>)newValue); else
@@ -220,7 +220,7 @@ public class WebQuestions extends ModelBase {
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		if (PROMPT.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (QUESTIONTYPE.equals(propertyName)) 

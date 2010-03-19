@@ -68,13 +68,13 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus status;
+ 	@Basic
+	private String status;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getStatus(){
+	public String getStatus(){
 		return status; 
 	}
 
@@ -82,7 +82,7 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setStatus(WebStatus newVal) {
+	public void setStatus(String newVal) {
 		this.status = newVal;
 	}
  	
@@ -203,7 +203,7 @@ public class WebCatagories extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
+		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (IMAGE.equals(propertyName)) setImage((WebGraphics)newValue); else
 		if (PRODUCTS.equals(propertyName)) setProducts((java.util.List<WebProducts>)newValue); else
 		if (PARENT.equals(propertyName)) setParent((WebCatagories)newValue); else
@@ -218,7 +218,7 @@ public class WebCatagories extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		if (IMAGE.equals(propertyName)) 
 			return new Class<?>[] {WebGraphics.class};		
 		if (PRODUCTS.equals(propertyName)) 

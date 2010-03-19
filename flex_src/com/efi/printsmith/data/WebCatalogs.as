@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 				
 		public var rollId:int = 0;
-		public var status:WebStatus;
+		public var status:String = "";
 		public var name:String = "";
 		public var description:String = "";
 		public var path:String = "";

@@ -110,13 +110,13 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebStatus status;
+ 	@Basic
+	private String status;
 	
 	/**
 	 * @generated
  	 */
-	public WebStatus getStatus(){
+	public String getStatus(){
 		return status; 
 	}
 
@@ -124,7 +124,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setStatus(WebStatus newVal) {
+	public void setStatus(String newVal) {
 		this.status = newVal;
 	}
  	
@@ -329,7 +329,7 @@ public class WebProducts extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((WebStatus)newValue); else
+		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (SKU.equals(propertyName)) setSku((JobBase)newValue); else
 		if (THUMBNAIL.equals(propertyName)) setThumbnail((WebGraphics)newValue); else
 		if (DETAILS.equals(propertyName)) setDetails((WebGraphics)newValue); else
@@ -350,7 +350,7 @@ public class WebProducts extends ModelBase {
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {WebStatus.class};		
+			return new Class<?>[] {String.class};		
 		if (SKU.equals(propertyName)) 
 			return new Class<?>[] {JobBase.class};		
 		if (THUMBNAIL.equals(propertyName)) 

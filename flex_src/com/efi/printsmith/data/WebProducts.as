@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 				
 		public var name:String = "";
-		public var status:WebStatus;
+		public var status:String = "";
 		public var sku:JobBase;
 		public var thumbnail:WebGraphics;
 		public var details:WebGraphics;
