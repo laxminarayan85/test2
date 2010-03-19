@@ -18,7 +18,7 @@ public class LargeFormatPricingMethodFactory {
 		} else if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
 			log.info("Creating SquareAreaAndOriginalsPricingMethod");
 			return new SquareAreaAndOriginalsPricingMethod();
-		} else if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalOfSquareArea.name())) {
+		} else if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
 			log.info("Creating TotalOfSquareAreaPricingMethod");
 			return new TotalOfSquareAreaPricingMethod();
 		} else {
