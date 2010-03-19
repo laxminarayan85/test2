@@ -484,9 +484,10 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("no broken carton".equals(currentFieldToken)) {
 				stockDefinition.setNoBrokenCarton(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("envelope".equals(currentFieldToken)) {
-				if (currentImportToken.equals("1") == true)
+				if (currentImportToken.equals("1") == true){
 					stockDefinition.setStockunit(0);
 					envelope = true;
+				}
 			}  else if ("imported".equals(currentFieldToken)) {
 				stockDefinition.setImported(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("is inventory shell".equals(currentFieldToken)) {
