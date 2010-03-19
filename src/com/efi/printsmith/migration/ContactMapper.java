@@ -6,6 +6,9 @@ import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.State;
+import com.efi.printsmith.data.Zip;
+import com.efi.printsmith.service.DataService;
 
 public class ContactMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -16,6 +19,7 @@ public class ContactMapper extends ImportMapper {
 		Address address = new Address();
 		Marketing marketing = new Marketing();
 		String custAcct = "";
+		DataService dataService = new DataService();
 		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -51,8 +55,24 @@ public class ContactMapper extends ImportMapper {
 				address.setCity(currentImportToken);
 			} else if ("state".equals(currentFieldToken)) {
 				address.setState(currentImportToken);
+				if (currentImportToken.equals("") == false) {
+					State state = (State)dataService.getByName("State", currentImportToken);
+					if (state == null) {
+						state = new State();
+						state.setName(currentImportToken);
+						dataService.addUpdate(state);
+					}
+				}
 			} else if ("zip".equals(currentFieldToken)) {
 				address.setZip(currentImportToken);
+				if (currentImportToken.equals("") == false) {
+					Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+					if (zip == null) {
+						zip = new Zip();
+						zip.setName(currentImportToken);
+						dataService.addUpdate(zip);
+					}
+				}
 			} else if ("country".equals(currentFieldToken)) {
 				address.setCountry(currentImportToken);
 			} else if ("contact".equals(currentFieldToken)) {

@@ -12,6 +12,8 @@ import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.BusinessType;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.State;
+import com.efi.printsmith.data.Zip;
 
 public class CustomerMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -87,6 +89,14 @@ public class CustomerMapper extends ImportMapper {
 					shipToAddress.setCity(currentImportToken);
 				} else if ("inv zip".equals(currentFieldToken)) {
 					shipToAddress.setZip(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+						if (zip == null) {
+							zip = new Zip();
+							zip.setName(currentImportToken);
+							dataService.addUpdate(zip);
+						}
+					}
 				} else if ("inv first name".equals(currentFieldToken)) {
 					shipToContact.setFirstName(currentImportToken);
 				} else if ("inv last name".equals(currentFieldToken)) {
@@ -97,6 +107,14 @@ public class CustomerMapper extends ImportMapper {
 					shipToAddress.setStreet2(currentImportToken);
 				} else if ("inv state".equals(currentFieldToken)) {
 					shipToAddress.setState(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						State state = (State)dataService.getByName("State", currentImportToken);
+						if (state == null) {
+							state = new State();
+							state.setName(currentImportToken);
+							dataService.addUpdate(state);
+						}
+					}
 				} else if ("inv refno".equals(currentFieldToken)) {
 					customer.setExternalRef(currentImportToken);
 				} else if ("bill name".equals(currentFieldToken)) {
@@ -109,8 +127,24 @@ public class CustomerMapper extends ImportMapper {
 					billToAddress.setCity(currentImportToken);
 				} else if ("bill state".equals(currentFieldToken)) {
 					billToAddress.setState(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						State state = (State)dataService.getByName("State", currentImportToken);
+						if (state == null) {
+							state = new State();
+							state.setName(currentImportToken);
+							dataService.addUpdate(state);
+						}
+					}
 				} else if ("bill zip".equals(currentFieldToken)) {
 					billToAddress.setZip(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+						if (zip == null) {
+							zip = new Zip();
+							zip.setName(currentImportToken);
+							dataService.addUpdate(zip);
+						}
+					}
 				} else if ("bill phone".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
