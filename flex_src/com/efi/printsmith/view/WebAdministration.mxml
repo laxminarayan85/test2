@@ -207,8 +207,9 @@
 	}  
 	
 	private function doNewCatalog():void {
-		webcatalogs = new WebCatalogs();
-		dsCatalogs.addUpdate(webcatalogs);
+		var newItem:WebCatalogs = new WebCatalogs();
+		webcatalogsArray.addItem(newItem);
+		
 	}
 	
 	private function doDelete():void {
@@ -219,12 +220,25 @@
 	private function doSave():void {
 		mapFromWebBaseData();
 		
-		dsGraphics.addUpdate(webgraphics);
-		dsQuestions.addUpdate(webquestions);
-		dsProducts.addUpdate(webproducts);
-		dsChoices.addUpdate(webchoices);
-		dsCatagories.addUpdate(webcatagories);
-		dsCatalogs.addUpdate(webcatalogs);
+		for each(var graphicsitem:WebGraphics in webgraphicsArray) {
+			dsGraphics.addUpdate(graphicsitem);
+		}
+		for each(var questionsitem:WebQuestions in webquestionsArray) {
+			dsQuestions.addUpdate(questionsitem);
+		}
+		for each(var productsitem:WebProducts in webproductsArray) {
+			dsProducts.addUpdate(productsitem);
+		}
+		for each(var choicesitem:WebChoices in webchoicesArray) {
+			dsChoices.addUpdate(choicesitem);
+		}
+		for each(var catagoriesitem:WebCatagories in webcatagoriesArray) {
+			dsCatagories.addUpdate(catagoriesitem);
+		}
+		for each(var catalogsitem:WebCatalogs in webcatalogsArray) {
+			dsCatalogs.addUpdate(catalogsitem);
+		}
+
 		dsBase.addUpdate(webbase);
 	}   
 
@@ -259,8 +273,8 @@
 			webbase.contactName = txtcontactname.text;
 			webbase.contactPhone = txtcontactphone.text;
 			webbase.contactEmail = txtcontactemail.text;
-			webbase.ftpUrl = txtftpUserName.text;
-			webbase.ftpUserName = txtftpUrl.text;
+			webbase.ftpUrl = txtftpUrl.text;
+			webbase.ftpUserName = txtftpUserName.text;
 			webbase.ftpPassword = txtftpPassword.text;
 			webbase.retryInterval = parseInt(txtretryInterval.text);
 			webbase.responseDelay = parseInt(txtresponseDelay.text);
@@ -313,8 +327,8 @@
 			txtcontactname.text = webbase.contactName;
 			txtcontactphone.text = webbase.contactPhone;
 			txtcontactemail.text = webbase.contactEmail;
-			txtftpUserName.text = webbase.ftpUrl;
-			txtftpUrl.text = webbase.ftpUserName;
+			txtftpUserName.text = webbase.ftpUserName;
+			txtftpUrl.text = webbase.ftpUrl;
 			txtftpPassword.text = webbase.ftpPassword;
 			txtretryInterval.text = webbase.retryInterval.toString();
 			txtresponseDelay.text = webbase.responseDelay.toString();
@@ -381,6 +395,7 @@
 	}
 	private function handleSaveCatalogsResult(ev:ResultEvent):void {
 		webcatalogs = ev.result as WebCatalogs;
+		dsCatalogs.getAll(webcatalogs);
 	}
 	private function handleSaveCatagoriesResult(ev:ResultEvent):void {
 		webcatagories = ev.result as WebCatagories;
@@ -539,8 +554,8 @@
 				<mx:TextInput id="txtresponseDelay" x="382" y="272" width="50" text="{webbase.responseDelay}"/>
 				<mx:TextInput id="txtmaxRetries" x="182" y="296" width="50" text="{webbase.maxRetries}"/>
 				<mx:TextInput id="txttakenBy" x="182" y="322" width="100" text="{webbase.takenBy}"/>
-				<mx:TextInput id="txtcomposerDelay" x="182" y="348" width="250" text="{webbase.composerDelay}"/>
-				<mx:TextInput id="txtcomposerUrl" x="182" y="374" width="50" text="{webbase.composerUrl}"/>
+				<mx:TextInput id="txtcomposerUrl" x="182" y="348" width="250" text="{webbase.composerUrl}"/>
+				<mx:TextInput id="txtcomposerDelay" x="182" y="374" width="50" text="{webbase.composerDelay}"/>
 				<mx:Button x="387" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Transmit')}" height="50" width="101" enabled="false"/>
 				<mx:Label x="182" y="404" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.required')}" textAlign="left"/>
 			</mx:Canvas>
