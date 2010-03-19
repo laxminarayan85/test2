@@ -35,17 +35,17 @@ public class PricingService {
 
 	protected static Logger log = Logger.getLogger(PricingService.class);
 	
-	protected static EntityManagerFactory entityManagerFactory = null;
+//	protected static EntityManagerFactory entityManagerFactory = null;
 	
 	public PricingService() {
 		super();
-		try {
-			if (entityManagerFactory == null) {
-				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-			}
-		} catch (RuntimeException e) {
-			log.error(e);
-		}	
+//		try {
+//			if (entityManagerFactory == null) {
+//				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+//			}
+//		} catch (RuntimeException e) {
+//			log.error(e);
+//		}	
 	}
 	
 	public Charge priceCharge(Charge charge) {
