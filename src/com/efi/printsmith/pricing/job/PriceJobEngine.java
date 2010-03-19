@@ -45,7 +45,8 @@ public class PriceJobEngine {
 		} else if (pricingMethod.getTitle().equals("Roll-Fed")) {
 			
 		} else if (pricingMethod.getTitle().equals("Large Format")) {
-			LargeFormatPricingMethod largeFromatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
+			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
+			largeFormatPricingMethod.priceLargeFormatJob(job);
 		} else if (pricingMethod.getTitle().equals("Blank")) {
 			
 		} else if (pricingMethod.getTitle().equals("List")) {
