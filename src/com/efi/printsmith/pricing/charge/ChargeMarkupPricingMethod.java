@@ -26,16 +26,16 @@ public class ChargeMarkupPricingMethod extends ChargePricingMethod {
 			rate = 0;
 		}
 		
-		if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.OnlyJob)) {
+//		if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.OnlyJob)) {
 			lookupQty = job.getPricingRecord().getTotalPrice();
 			price = lookupQty * rate;
-		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.EntireJob)) {
-			// TODO
-		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.Charges)) {
-			// TODO
-		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.Invoice)) {
-			// TODO
-		}
+//		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.EntireJob)) {
+//			// TODO
+//		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.Charges)) {
+//			// TODO
+//		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.Invoice)) {
+//			// TODO
+//		}
 		
 		PriceList priceList = chargeDefinition.getPriceList();
 		if (priceList != null) {
