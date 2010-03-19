@@ -51,5 +51,19 @@
 			</source>
 		</properties>
 	</destination>
+	<destination id="invoiceService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.InvoiceService
+			</source>
+		</properties>
+	</destination>
+	<destination id="jobService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.JobService
+			</source>
+		</properties>
+	</destination>
 
 </service>
