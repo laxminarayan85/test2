@@ -20,6 +20,7 @@
                                    
 <![CDATA[
 	import com.efi.printsmith.data.StockGrade;
+	import com.efi.printsmith.data.StockGroup;
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.StockFinish;
 	import com.efi.printsmith.data.GenericColors;
@@ -198,7 +199,18 @@
 			return "None";
 		}
 	}   
-
+	
+public function getGroupLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:StockGroup;
+		tmpItem = item.stkgroup as StockGroup;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+	
 	public function getVendorLabel(item:Object, column:DataGridColumn):String{
 		var tmpItem:Vendor ;
 		tmpItem = item.vendor as Vendor;
@@ -237,7 +249,7 @@
 		     <mx:DataGridColumn dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}"/>
 		     <mx:DataGridColumn dataField="normalRunSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
 		     <mx:DataGridColumn dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
-		     <mx:DataGridColumn dataField="stkgroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
+		     <mx:DataGridColumn  labelFunction="getGroupLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
 		     <mx:DataGridColumn dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
 		     <mx:DataGridColumn dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
 		     <mx:DataGridColumn dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>

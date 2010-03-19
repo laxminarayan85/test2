@@ -418,6 +418,7 @@
 	    loadPressDefinition(); */
 	    
 		standardItemCheckEvent();
+		doStockUnitChange(stockDefinitions.stockunit.toString());
 	}			
 	                                                   	
 	public function loadStockDefinitions():void {  //cej 
@@ -1036,6 +1037,7 @@
 		if (stockDefinitions.stockunit != -1){
 			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
 			doStockUnitChange(stockDefinitions.stockunit.toString())
+			
 		}
 		if (stockDefinitions.priceExpires != null)
 			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
@@ -1235,18 +1237,23 @@
 		
 		if (item == "0"){
 			this.currentState="Envelope"
+			stockUnit.selectedValue="Envelope";
 		}
 		if (item == "1"){
 			this.currentState="SheetStock"
+			stockUnit.selectedValue="SheetStock";
 		}
 		if (item == "2"){
 			this.currentState="RollStock"
+			stockUnit.selectedValue="RollStock";
 		}
 		if (item == "3"){
-			this.currentState="LargeFormat"			
+			this.currentState="LargeFormat"	
+			stockUnit.selectedValue="LargeFormat";			
 		}
 		if (item == "4"){
-			this.currentState="RigidSubstrate"			
+			this.currentState="RigidSubstrate"	
+			stockUnit.selectedValue="RigidSubstrate";		
 		}
 		
 	}
@@ -1255,18 +1262,23 @@
 		
 		if (item == "0"){
 			this.currentState="Envelope"
+			
 		}
 		if (item == "1"){
 			this.currentState="SheetStock"
+			
 		}
 		if (item == "2"){
 			this.currentState="RollStock"
+			
 		}
 		if (item == "3"){
-			this.currentState="LargeFormat"			
+			this.currentState="LargeFormat"	
+				
 		}
 		if (item == "4"){
-			this.currentState="RigidSubstrate"			
+			this.currentState="RigidSubstrate"	
+					
 		}
 		
 	}
@@ -1303,11 +1315,11 @@
 	<mx:TextInput x="513.5" y="109" width="55" id="coated" text="{stockDefinitions.coated}"/>
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
-	<mx:RadioButton x="581" y="62" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138"/>
-	<mx:RadioButton x="581" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138"/>
-	<mx:RadioButton x="581" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"/>
-	<mx:RadioButton x="581" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit"/>
-	<mx:RadioButton x="581" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138"/>
+	<mx:RadioButton x="581" y="62" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="Envelope"/>
+	<mx:RadioButton x="581" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="SheetStock"/>
+	<mx:RadioButton x="581" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="RollStock"/>
+	<mx:RadioButton x="581" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="LargeFormat"/>
+	<mx:RadioButton x="581" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="RigidSubstrate"/>
 
 	<mx:TabNavigator x="10" y="166" width="712" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SpecificationandPric')}" id="page_specification_and_pricing" width="100%" height="100%">

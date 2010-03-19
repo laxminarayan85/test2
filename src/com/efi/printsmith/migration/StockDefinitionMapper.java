@@ -25,6 +25,7 @@ public class StockDefinitionMapper extends ImportMapper {
 		StockDefinition stockDefinition = new StockDefinition();
 		DataService dataService = new DataService();
 		double weight = 0;
+		boolean envelope = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -485,6 +486,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("envelope".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true)
 					stockDefinition.setStockunit(0);
+					envelope = true;
 			}  else if ("imported".equals(currentFieldToken)) {
 				stockDefinition.setImported(Utilities.tokenToBooleanValue(currentImportToken));
 			}  else if ("is inventory shell".equals(currentFieldToken)) {
@@ -496,7 +498,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("roll stock".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true)
 					stockDefinition.setStockunit(2);
-				else
+				else if (!envelope)
 					stockDefinition.setStockunit(1);
 				
 					
