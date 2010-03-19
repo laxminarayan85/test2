@@ -34,7 +34,7 @@ public class SquareAreaAndCopiesPricingMethod extends
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixIsCopyCost()) {
-				pricePerCopy = matrixElement.getPrice1() * area * job.getPressQty();
+				pricePerCopy = matrixElement.getPrice1();
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				pricingRecord.setUnitPrice(pricePerCopy);
 				if (job.getDoubleSided()) {
