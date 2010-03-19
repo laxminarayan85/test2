@@ -23,6 +23,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
 
@@ -35,6 +36,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
@@ -797,6 +799,12 @@ public class DataService {
 				while (sqle != null) {
 					sqle = sqle.getNextException();
 				}
+			} catch (PersistenceException e) {
+				log.error("** Error: " + e.getMessage());
+				GenericJDBCException jdbcEx = (GenericJDBCException) e.getCause();
+				System.out.println(jdbcEx.getSQL());
+				tx.rollback();
+				throw new Exception(e.getMessage());
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();

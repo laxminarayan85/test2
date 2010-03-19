@@ -291,6 +291,7 @@
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild" target="{time_start_edit}"/>
 			<mx:SetProperty target="{time_stop_edit}" name="y" value="246"/>
 			<mx:SetProperty target="{in_sets_of_edit}" name="text" value="{charge.sets}"/>
+			<mx:SetProperty target="{time_start_edit}" name="x" value="134"/>
 		</mx:State>
 		<mx:State name="AlwaysAsk4" basedOn="">
 			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
@@ -1336,23 +1337,9 @@
 				} else {
 					charge = event.result as Charge;
 				}
-//				if (chargeDefinition.descriptionDefault != null && chargeDefinition.descriptionDefault != "") {
-//					charge.description = chargeDefinition.descriptionDefault;
-//				} else {
-//					charge.description = chargeDefinition.name;
-//				}
-//				if (chargeDefinition.notesDefault != null && chargeDefinition.notesDefault != "") {
-//					charge.notes = chargeDefinition.notesDefault;
-//				}
-//				charge.chargeDefinition=chargeDefinition;
-//				charge.finished=chargeDefinition.finished;
-//				charge.taxable=chargeDefinition.taxable;
-//				charge.brokered=chargeDefinition.brokered;
-//				charge.displayQty=chargeDefinition.displayQty;
-//				charge.hidden=chargeDefinition.hideChargeInPrintouts;
-//				charge.hidePrice=chargeDefinition.hidePrice;
 				charge.parentJob = job;
 				updateCurrentState();
+				updatePrice();
 			}
 			
 			private function treeSelectionChanged(event:Event):void
@@ -1372,7 +1359,7 @@
 			private function gridSelectionChanged():void
 			{
 				charge = invoice_charge_datagrid.selectedItem as Charge;
-//				this.currentState = "Edit Charge";
+				updateCurrentState();
 			}
 			
 			private function getSelectedTreeChargeDefinition():ChargeDefinition
@@ -1540,7 +1527,8 @@
 													   dataField="description"/>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Price')}"
 													   width="90"
-													   dataField="chargeDefinition.price"/>
+													   dataField="price"
+													   textAlign="right"/>
 								</mx:columns>
 							</mx:DataGrid>
 						</mx:Canvas>

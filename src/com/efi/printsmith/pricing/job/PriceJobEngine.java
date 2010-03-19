@@ -61,7 +61,7 @@ public class PriceJobEngine {
 			
 		} else if (pricingMethod.getTitle().equals("Mailing")) {
 			
-		}
+		}	
 		return job;
 	}
 }

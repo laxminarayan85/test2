@@ -57,6 +57,13 @@ public class PricingService {
 	
 	public Job priceJob(Job job) {
 		PriceJobEngine.priceJob(job);
+
+		for (int i=0; i < job.getCharges().size(); i++) {
+			priceCharge(job.getCharges().get(i));
+			
+			job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+		}
+
 		return job;
 	}
 	
@@ -68,6 +75,12 @@ public class PricingService {
 		for (Job job : invoice.getJobs()) {
 			priceJob(job);
 		}
+		
+		invoice.setPriceTotal(0.0);
+		for (int i=0; i < invoice.getJobs().size(); i++) {
+			invoice.setPriceTotal(invoice.getPriceTotal()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice());
+		}
+		
 		log.info("Completed priceInvoice for invoice " + invoice.getId());
 		return invoice;
 	}

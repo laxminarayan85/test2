@@ -169,6 +169,11 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:RemoteObject id="jobService" destination="jobService">
+		<mx:method name="assignPricingCopierToJob" fault="handleFault(event)" result="handleAssignPricingCopierResult(event)"/>
+		<mx:method name="assignStockToJob" fault="handleFault(event)" result="handleAssignStockResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PricingRecord;
@@ -482,6 +487,18 @@
 				PopUpManager.removePopUp(this);
 			}
 
+			private function handleAssignPricingCopierResult(ev:ResultEvent):void
+			{
+				this.job = ev.result as Job;
+				updatePrice();
+			}
+			
+			private function handleAssignStockResult(ev:ResultEvent):void
+			{
+				this.job = ev.result as Job;
+				updatePrice();
+			}
+			
 			private function handleLoadResult(ev:ResultEvent):void
 			{
 				//jobs = ev.result as ArrayCollection;
@@ -607,6 +624,7 @@
 			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
 			{
 				this.job.charges=evt.chargeArray;
+				this.updatePrice();
 			}
 
 			private function doDeleteCharge():void
@@ -642,17 +660,18 @@
 			{
 				if (evt.stockDefinition != null)
 				{
-					this.job.stock=evt.stockDefinition;
-					this.job.parentSize = this.job.stock.normalRunSize;
-					this.job.runSize = this.job.stock.normalRunSize;
-					this.job.finishSize = this.job.stock.normalRunSize;
-					var i:int;
-					for(i = 0; i < this.job.stock.charges.length; i++) {
-						if (this.job.charges == null) this.job.charges = new ArrayCollection();
-//						this.job.charges.addItem(this.job.stock.charges.getItemAt(i));
-						
-					}
-					updatePrice();
+//					this.job.stock=evt.stockDefinition;
+					this.job.parentSize = evt.stockDefinition.normalRunSize;
+					this.job.runSize = evt.stockDefinition.normalRunSize;
+					this.job.finishSize = evt.stockDefinition.normalRunSize;
+					jobService.assignStockToJob(this.job, evt.stockDefinition);
+//					var i:int;
+//					if (this.job.charges == null) this.job.charges = new ArrayCollection();
+//					for(i = 0; i < this.job.stock.charges.length; i++) {
+////						this.job.charges.addItem(this.job.stock.charges.getItemAt(i));
+//						
+//					}
+//					updatePrice();
 				}
 				else
 				{
@@ -683,13 +702,8 @@
 			private function changePricingCopier():void
 			{
 				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
-				
-				var i:int;
-				for(i = 0; i < copierDefinition.charges.length; i++) {
-					if (this.job.charges == null) this.job.charges = new ArrayCollection();
-//					this.job.charges.addItem(this.job.charges.getItemAt(i));
-					
-				}				
+				jobService.assignPricingCopierToJob(this.job, copierDefinition);
+								
 			}
 			
 			private function updatePrice():void
@@ -1606,7 +1620,8 @@
 													   dataField="description"/>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
 													   width="90"
-													   dataField="chargeDefinition.price"/>
+													   dataField="price"
+													    textAlign="right"/>
 								</mx:columns>
 							</mx:DataGrid>
 						</mx:Canvas>
