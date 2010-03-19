@@ -323,6 +323,8 @@
 		
 				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
 				eventStock.dispatch();
+				
+				this.enabled=false;
 			}
 			public function handleUIControlEvent(evt:ResultEvent):void {
 				evt.result.control.enabled = evt.result.enabled;
@@ -503,7 +505,6 @@
 			private function handleLoadPressResult(ev:ResultEvent):void
 			{
 				presses=ev.result as ArrayCollection;
-				chargeCommandDataService.getAll("ChargeCommand");
 			}
 		
 			private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
@@ -531,12 +532,18 @@
 			}
 
 			private function handleStockLoadResult(ev:ResultEvent):void {
-			     stocks = ev.result as ArrayCollection;
+		    	stocks = ev.result as ArrayCollection;
+		    	
+				this.enabled=true;
+
+				chargeCommandDataService.getAll("ChargeCommand");				
+				changeStockDefinition();
 			}
 			
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
 			{
 				chargeCommands=ev.result as ArrayCollection;
+				add_charge_button.enabled=true;
 			}
 
 			private function handleLoadPricingMethodResult(ev:ResultEvent):void
@@ -592,6 +599,7 @@
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
 				chargePicker.charges = this.job.charges;
 				chargePicker.chargeCommands = chargeCommands;
+				chargePicker.job = this.job;
 				chargePicker.setStyle("borderAlpha", 0.9);
 				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
 			}
@@ -638,6 +646,12 @@
 					this.job.parentSize = this.job.stock.normalRunSize;
 					this.job.runSize = this.job.stock.normalRunSize;
 					this.job.finishSize = this.job.stock.normalRunSize;
+					var i:int;
+					for(i = 0; i < this.job.stock.charges.length; i++) {
+						if (this.job.charges == null) this.job.charges = new ArrayCollection();
+//						this.job.charges.addItem(this.job.stock.charges.getItemAt(i));
+						
+					}
 					updatePrice();
 				}
 				else
@@ -665,6 +679,19 @@
 				}
 				super.focusOutHandler(evt);
 			}
+			
+			private function changePricingCopier():void
+			{
+				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
+				
+				var i:int;
+				for(i = 0; i < copierDefinition.charges.length; i++) {
+					if (this.job.charges == null) this.job.charges = new ArrayCollection();
+//					this.job.charges.addItem(this.job.charges.getItemAt(i));
+					
+				}				
+			}
+			
 			private function updatePrice():void
 			{
 				mapToJobData();
@@ -1509,6 +1536,7 @@
 													 id="job_pricing_copier"
 													 dataProvider="{copiers}"
 													 labelField="name"
+													 change="updatePrice()"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="7"
@@ -1521,6 +1549,7 @@
 													 id="job_costing_copier"
 													 dataProvider="{copiers}"
 													 labelField="name"
+													 change="changePricingCopier()"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="30"
@@ -1563,7 +1592,7 @@
 										   click="doAddCharge()"
 										   icon="@Embed(source='../../../../assets/add16.png')"
 										   width="24"
-										   bottom="0"/>
+										   bottom="0" enabled="false"/>
 							<mx:DataGrid
 										 id="invoice_charge_datagrid"
 										 dataProvider="{job.charges}"

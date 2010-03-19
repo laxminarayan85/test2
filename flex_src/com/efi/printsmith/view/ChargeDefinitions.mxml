@@ -22,6 +22,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	</mx:State>
 	<mx:State name="Always Ask">
+		<mx:SetProperty target="{integrated_ctp_device_check}" name="y" value="139"/>
+		<mx:SetProperty target="{tracker_pre_production_check}" name="y" value="118"/>
+		<mx:SetProperty target="{excluded_from_workflow_check}" name="y" value="97"/>
+		<mx:SetProperty target="{hide_charge_in_printouts_check}" name="width" value="146"/>
+		<mx:SetProperty target="{bindery_operation_check}" name="y" value="97"/>
+		<mx:SetProperty target="{ignore_global_price_changes_check}" name="y" value="118"/>
+		<mx:SetProperty target="{hide_price_only_check}" name="width" value="146"/>
+		<mx:SetProperty target="{bindery_operation_check}" name="width" value="146"/>
+		<mx:SetProperty target="{ignore_global_price_changes_check}" name="width" value="146"/>
+		<mx:SetProperty target="{hide_price_only_check}" name="x" value="384"/>
+		<mx:SetProperty target="{hide_charge_in_printouts_check}" name="x" value="384"/>
+		<mx:SetProperty target="{bindery_operation_check}" name="x" value="384"/>
+		<mx:SetProperty target="{ignore_global_price_changes_check}" name="x" value="384"/>
 	</mx:State>
 	<mx:State name="Price List">
 	</mx:State>
@@ -563,8 +576,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				else
 					area_group.selectedValue = "FinishArea";
 			}
-			
-			charge_quantity_combo.text = charge.quantityType;
+			updateQtyComboBox(charge.method);
+			charge_quantity_combo.selectedIndex = findItem(charge.quantityType,qtyTypes.toArray());
 			charge_group_1.selectedValue = charge.jobQty;
 			if(charge.useColors)
 				charge_group_2.selectedValue = "Colors";
@@ -635,22 +648,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.useMinimumCharge = minimum_charge_check.selected;
 		charge.minimum = parseFloat(minimum_charge_edit.text);
 		charge.useMinimumTime = minimum_time_check.selected;
-		charge.minimum = parseFloat(minimum_time_edit.text);
+		charge.minimumTime = parseFloat(minimum_time_edit.text);
 
 		// Note: Radio buttons are updated dynamically via change events (see charge_group_1_change, etc.)
 		charge.markup = parseFloat(markup_edit.text);
 		charge.useSetup = setup_check.selected;
 		
 		
-		charge.setupPrice = setup_edit.text as Number;
+		charge.setupPrice = parseFloat(setup_edit.text);
 		charge.useRate = rate_check.selected;
 		charge.rate = parseFloat(rate_edit.text);
 		charge.useMaterial = material_check.selected;
-		charge.material = material_edit.text as Number;
+		charge.material = parseFloat(material_edit.text);
 
 		//TOOD: Area/In Sets, etc...
 		charge.useRateSets = in_sets_check.selected;
-		charge.rateSetCount = in_sets_edit.text as Number;
+		charge.rateSetCount = parseInt(in_sets_edit.text);
 		charge.useArea =  area_check.selected;
 		charge.area= parseFloat(area_edit.text);
 		charge.sheet_lift_check = sheet_lift_check.selected;

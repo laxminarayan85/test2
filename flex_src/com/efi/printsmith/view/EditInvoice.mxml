@@ -121,6 +121,7 @@
 				vbox.getDividerAt(1).visible=false;
 				if (invoice == null) {
 					invoice=new Invoice();
+					invoice.takenBy=Snowmass.getInstance().currentUser.name;
 				} else {
 					this.bill_to_address_editor.setAddress(invoice.billToAddress);
 					if (invoice != null && invoice.account != null) 
@@ -141,6 +142,7 @@
 				eventCharges.dispatch();
 				var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventChangeAccounts.dispatch();
+				doAccountPicker();
 			}
 
 			public function handleUIButtonEvent(evt:ResultEvent):void {
@@ -163,11 +165,13 @@
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					} else if (editorType == EDITESTIMATE) {
 						this.invoice = new Estimate();
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
+						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					}
 				}
 			}

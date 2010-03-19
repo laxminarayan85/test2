@@ -48,6 +48,8 @@ public class ChargeService {
 		charge.setHidden(chargeDefinition.getHideChargeInPrintouts());
 		charge.setHidePrice(chargeDefinition.getHidePrice());
 		charge.setPrice(0.0);
+		charge.setSets(chargeDefinition.getRateSetCount());
+		charge.setMaterialSets(chargeDefinition.getMaterialSetCount());
 		charge.setOverridePrice(false);
 		charge.setOverrideQuantity(false);
 		charge.setOverrideMaterialQuantity(false);
