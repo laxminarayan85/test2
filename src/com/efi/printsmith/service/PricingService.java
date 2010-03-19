@@ -58,29 +58,33 @@ public class PricingService {
 	public Job priceJob(Job job) {
 		PriceJobEngine.priceJob(job);
 
-		for (int i=0; i < job.getCharges().size(); i++) {
-			priceCharge(job.getCharges().get(i));
-			
-			job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+		if (job.getCharges() != null) {
+			for (int i=0; i < job.getCharges().size(); i++) {
+				priceCharge(job.getCharges().get(i));
+				
+				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+			}
 		}
-
 		return job;
 	}
 	
 	public Invoice priceInvoice(Invoice invoice) {
 		log.info("Start priceInvoice for invoice " + invoice.getId());
-		for (Charge charge : invoice.getCharges()) {
-			priceCharge(charge);
+		if (invoice.getCharges() != null) {
+			for (Charge charge : invoice.getCharges()) {
+				priceCharge(charge);
+			}
 		}
-		for (Job job : invoice.getJobs()) {
-			priceJob(job);
+		if (invoice.getJobs() != null) {
+			for (Job job : invoice.getJobs()) {
+				priceJob(job);
+			}
+			
+			invoice.setPriceTotal(0.0);
+			for (int i=0; i < invoice.getJobs().size(); i++) {
+				invoice.setPriceTotal(invoice.getPriceTotal()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice());
+			}
 		}
-		
-		invoice.setPriceTotal(0.0);
-		for (int i=0; i < invoice.getJobs().size(); i++) {
-			invoice.setPriceTotal(invoice.getPriceTotal()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice());
-		}
-		
 		log.info("Completed priceInvoice for invoice " + invoice.getId());
 		return invoice;
 	}
