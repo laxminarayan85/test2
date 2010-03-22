@@ -403,18 +403,32 @@
 	}
 	private function handleLoadCatalogsResult(ev:ResultEvent):void {
 		webcatalogsArray = ev.result as ArrayCollection;
-		if (webcatalogsArray.length>0){
+		if (webcatalogsArray.length > 0){
 			webcatalogs = webcatalogsArray.getItemAt(0,0) as WebCatalogs;
 			webcatagoriesArray = webcatalogs.catagories as ArrayCollection;
-			if (webcatagoriesArray.length>0){
+			if (webcatagoriesArray.length > 0){
 				webcatagories = webcatagoriesArray.getItemAt(0,0) as WebCatagories;
 				webproductsArray = webcatagories.products as ArrayCollection;
 				if (webproductsArray.length > 0){
 					webproducts = webproductsArray.getItemAt(0,0) as WebProducts; 
-				}  
+					webquestionsArray = webproducts.questions as ArrayCollection;
+					if  (webquestionsArray.length > 0){
+						webquestions = webquestionsArray.getItemAt(0,0) as WebQuestions;
+						webchoicesArray = webquestions.choices as ArrayCollection;
+						if (webchoicesArray.length > 0){
+							webchoices = webchoicesArray.getItemAt(0,0) as WebChoices;
+						}
+					}else{
+						webchoicesArray = new WebChoices() as ArrayCollection;
+					}   
+				}else{
+					webquestionsArray = new WebQuestions() as ArrayCollection;
+				}
 			}else{
 				webproductsArray = new WebProducts() as ArrayCollection;
 			}
+		}else{
+			webcatagoriesArray = new WebCatagories() as ArrayCollection;
 		}
 	}
 	private function handleLoadCatagoriesResult(ev:ResultEvent):void {
