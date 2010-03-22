@@ -259,7 +259,13 @@ public class CopierDefinition extends ModelBase {
 		this.id = id;
 		this.name = Name;
 	}
-	
+	public CopierDefinition(long id, String name, String oemID, String machineName) {
+		this.id = id;
+		this.name =name;
+		this.oemDeviceID= oemID;
+		this.machineName = machineName;
+		
+	}
 	/**
 	 * @generated
 	 */	

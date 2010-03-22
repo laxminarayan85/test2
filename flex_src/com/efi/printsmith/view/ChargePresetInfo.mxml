@@ -75,8 +75,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
                              
 </mx:Script>
 	<mx:Canvas width="617" height="324">
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="77" id="ok_button" click="doOK()" x="445" y="302"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()" width="77" x="530" y="302"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="77" id="ok_button" click="doOK()" x="421" y="292"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()" width="77" x="506" y="292"/>
 		<mx:CheckBox x="20"
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
 					 id="finished_check"

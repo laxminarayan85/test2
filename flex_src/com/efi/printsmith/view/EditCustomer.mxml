@@ -6,7 +6,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>                            
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
@@ -145,7 +145,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		notification_consumer.subscribe();     
 		this.doGet();
 		setSettings();
-		dataService.getAll("Account");
+		dataService.getAccountPicker("Account");
 
 		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAddress.dispatch();
@@ -549,7 +549,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.account = ev.result as Account;
-		dataService.getAll("Account")
+		dataService.getAccountPicker("Account")
 	}
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -606,7 +606,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("Account")
+		dataService.getAccountPicker("Account")
 		doNew();
 	}
 		
@@ -1109,7 +1109,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		<mx:Button x="56" y="10" width="38" height="38" click="doNext();">
 			<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center"/>
+		<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="47" textAlign="center"/>
 		<mx:Label x="56" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center"/>
 		<mx:Button x="171" y="10" width="38" height="38" click="doSave();">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>

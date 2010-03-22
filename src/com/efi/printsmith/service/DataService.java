@@ -239,6 +239,29 @@ public class DataService {
 		}
 		return null;
 	}
+	public List<?> getCopierPicker(String className)
+	throws Exception {
+		List<?> resultList = new ArrayList<Object>();
+		String columnstring = new String();
+		
+		columnstring = "a.id, a.name, a.oemDeviceID, a.machineName";
+		try {
+				
+			log.debug("** getPressPicker .");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+			Query query = em.createQuery(queryString);
+			
+			resultList = query.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	public ModelBase getSingle(String className) {
 		try {
 			log.debug("** getSingle called.");

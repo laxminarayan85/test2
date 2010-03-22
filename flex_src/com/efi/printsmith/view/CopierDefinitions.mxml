@@ -20,9 +20,10 @@ width="896" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	</mx:states>
  
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getCopierPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
@@ -102,7 +103,7 @@ width="896" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		consumer.subscribe();
 		notification_consumer.subscribe();   
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
-		dataService.getAll("CopierDefinition");
+		dataService.getCopierPicker("CopierDefinition");
 		chargeDataService.getAll("Charge");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		
@@ -253,17 +254,24 @@ width="896" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 
 	private function doCopierGridClick():void {
-		copierDefinition = dataGrid.selectedItem as CopierDefinition;
+		var  tempCopy : CopierDefinition;	
+		tempCopy=dataGrid.selectedItem as CopierDefinition;
+		dataService.getById("CopierDefinition", tempCopy.id );   
+	}
+	
+	private function handleGetResult(ev:ResultEvent):void {
+		copierDefinition = ev.result as CopierDefinition;
 		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
-		var salesCatName = "";
+		var salesCatName:String = "";
 		if (copierDefinition.salesCat != null) {
 			salesCatName = copierDefinition.salesCat.name;
 		}
 		charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
 		this.charges = copierDefinition.charges;
 		updateControlState()
+	     
 	}
 	private function findItemArray(name:String, array:Array):int {
 		for each(var element:Object in array) {
@@ -354,7 +362,7 @@ width="896" height="755" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		dataService.getAll("CopierDefinition");
+		dataService.getCopierPicker("CopierDefinition");
 	}
 
 	private function handleLoadChargeResult(ev:ResultEvent):void
