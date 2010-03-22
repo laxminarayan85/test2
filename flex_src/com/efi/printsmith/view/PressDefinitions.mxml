@@ -20,9 +20,11 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		</mx:State>
 	</mx:states>-->
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<!--<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>-->
+	<mx:method name="getPressPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
@@ -86,7 +88,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-		dataService.getAll("PressDefinition");
+		loadPressDefinitions();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
 	    pressDefinition = new PressDefinition();
@@ -98,7 +100,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		getAllEvent.dispatch();			
 	}                                                                  	
 	public function loadPressDefinitions():void {   
-		dataService.getAll("PressDefinition");
+		dataService.getPressPicker("PressDefinition");
 	}
 					
 	private function messageHandler(message:IMessage):void
@@ -187,11 +189,14 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 
 	private function doPressGridClick():void {
-		pressDefinition = dataGrid.selectedItem as PressDefinition;
+	 	var  tempPress : PressDefinition;	
+		tempPress=dataGrid.selectedItem as PressDefinition;
+		dataService.getById("PressDefinition", tempPress.id );   
+		/* pressDefinition = dataGrid.selectedItem as PressDefinition;
 		if (pressDefinition.salesCat != null)
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
 		this.charges = pressDefinition.charges;
-		updateControlState();
+		updateControlState(); */
 	//	doPressType();
 	}
 	private function mapAccountData():void {
@@ -271,7 +276,15 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadResult(ev:ResultEvent):void {
 	     pressDefinitionArray = ev.result as ArrayCollection;
 	}
-
+	private function handleGetResult(ev:ResultEvent):void {
+		pressDefinition = ev.result as PressDefinition;
+		
+		if (pressDefinition.salesCat != null)
+			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
+		this.charges = pressDefinition.charges;
+		updateControlState();
+	     
+	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
 		if (systemPreferencesArray.length > 0)
