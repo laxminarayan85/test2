@@ -74,6 +74,10 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */
 	public static final String CALCULATEPRICES = "CalculatePrices";
+	/**
+	 * @generated
+	 */
+	public static final String QUESTIONS = "Questions";
 
 	/**
 	 * @generated
@@ -303,6 +307,28 @@ public class WebProducts extends ModelBase {
 	public void setCalculatePrices(PreferencesPricingMethod newVal) {
 		this.calculatePrices = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	private WebQuestions questions;
+	
+	/**
+	 * @generated
+ 	 */
+	public WebQuestions getQuestions(){
+		return questions; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setQuestions(WebQuestions newVal) {
+		this.questions = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -319,6 +345,7 @@ public class WebProducts extends ModelBase {
 		if (ALLOWUSERENTEREDQTY.equals(propertyName)) return getAllowUserEnteredQty();
 		if (DESCRIPTION.equals(propertyName)) return getDescription();
 		if (CALCULATEPRICES.equals(propertyName)) return getCalculatePrices();
+		if (QUESTIONS.equals(propertyName)) return getQuestions();
 		return super.getProperty(propertyName);
 	}
 	
@@ -338,6 +365,7 @@ public class WebProducts extends ModelBase {
 		if (ALLOWUSERENTEREDQTY.equals(propertyName)) setAllowUserEnteredQty((Boolean)newValue); else
 		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
 		if (CALCULATEPRICES.equals(propertyName)) setCalculatePrices((PreferencesPricingMethod)newValue); else
+		if (QUESTIONS.equals(propertyName)) setQuestions((WebQuestions)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -367,6 +395,8 @@ public class WebProducts extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (CALCULATEPRICES.equals(propertyName)) 
 			return new Class<?>[] {PreferencesPricingMethod.class};		
+		if (QUESTIONS.equals(propertyName)) 
+			return new Class<?>[] {WebQuestions.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -387,6 +417,7 @@ public class WebProducts extends ModelBase {
 		if (ALLOWUSERENTEREDQTY.equals(propertyName)) return WebProducts.class;
 		if (DESCRIPTION.equals(propertyName)) return WebProducts.class;
 		if (CALCULATEPRICES.equals(propertyName)) return WebProducts.class;
+		if (QUESTIONS.equals(propertyName)) return WebProducts.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -417,6 +448,8 @@ public class WebProducts extends ModelBase {
 		if (! SmartEquals(getDescription(), objT.getDescription()))
 			return false;
 		if (! SmartEquals(getCalculatePrices(), objT.getCalculatePrices()))
+			return false;
+		if (! SmartEquals(getQuestions(), objT.getQuestions()))
 			return false;
 		return true;
 	}			

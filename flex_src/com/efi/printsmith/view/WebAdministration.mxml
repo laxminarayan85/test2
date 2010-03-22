@@ -8,46 +8,48 @@
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebAdministration')}" 
 	name="Web Administrator">
 
+<mx:RemoteObject id="dsUpdateItem" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveItemsResult(event);"/>
+</mx:RemoteObject>
+
 <mx:RemoteObject id="dsBase" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBaseResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBaseResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBaseResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBaseResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsCatagories" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatagoriesResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatagoriesResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatagoriesResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatagoriesResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsCatalogs" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatalogsResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatalogsResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatalogsResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatalogsResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsCheckoutTypes" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCheckoutTypesResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCheckoutTypesResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCheckoutTypesResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsChoices" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChoicesResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveChoicesResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadChoicesResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveChoicesResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsGraphics" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGraphicsResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGraphicsResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGraphicsResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGraphicsResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsProducts" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductsResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveProductsResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductsResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveProductsResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsQuestions" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuestionsResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveQuestionsResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuestionsResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveQuestionsResult(event);"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dsStatus" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStatusResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStatusResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStatusResult(event);"/>
 </mx:RemoteObject>
  
 <mx:Producer id="producer" destination="webadmin"/>
-<mx:Consumer id="consumer" destination="webadmin"  message="messageHandler(event.message)"/>
-<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Consumer id="consumer" destination="webadmin"  message="messageHandler(event.message);"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message);"/>
 
 
 <mx:Script> 
@@ -108,6 +110,8 @@
 	private var webstateArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var ftpModeArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var questionTypeArray:ArrayCollection = new ArrayCollection();
 	
 	[Bindable]
 	private var webbase:WebBase;
@@ -134,16 +138,9 @@
 		
 		fillwebstateArray();
 		fillftpModeArray();
-			
-		dsBase.getAll("WebBase");
-		dsCatalogs.getAll("WebCatalogs");
-		dsCatagories.getAll("WebCatagories");
-		dsProducts.getAll("WebProducts");
-		dsCheckoutTypes.getAll("WebCheckoutTypes");
-		dsChoices.getAll("WebChoices");
-		dsGraphics.getAll("WebGraphics");
-		dsQuestions.getAll("WebQuestions");
-		dsStatus.getAll("WebStatus");
+		fillquestionTypeArray();
+		
+		loaddata();
 
 		var eventSite:WebAdminSitePanelEvent = new WebAdminSitePanelEvent(canvasSite, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventSite.dispatch();
@@ -168,6 +165,15 @@
 		    
 	}      
 
+	private function loaddata():void {
+		dsBase.getAll("WebBase");
+		dsCatalogs.getAll("WebCatalogs");
+		dsQuestions.getAll("WebQuestions");
+		dsGraphics.getAll("WebGraphics");
+		dsCheckoutTypes.getAll("WebCheckoutTypes");
+		dsStatus.getAll("WebStatus");
+	}
+	
 	private function fillwebstateArray():void {
 		var object:Object = new Object()
 		object.name = "Credit Hold";
@@ -190,6 +196,23 @@
 		object = new Object();
 		object.name = "Active";
 		ftpModeArray.addItem(object);
+	}
+	private function fillquestionTypeArray():void{
+		var object:Object = new Object()
+		object.name = "Pop Menu";
+		questionTypeArray.addItem(object);
+		object = new Object();
+		object.name = "Radio Button";
+		questionTypeArray.addItem(object);
+		object = new Object();
+		object.name = "Check Box";
+		questionTypeArray.addItem(object);
+		object = new Object();
+		object.name = "Text";
+		questionTypeArray.addItem(object);
+		object = new Object();
+		object.name = "Number";
+		questionTypeArray.addItem(object);
 	}	
 	public function handleUIPanelEvent(evt:ResultEvent):void {
 		evt.result.panel.enabled = evt.result.enabled;
@@ -209,7 +232,19 @@
 	private function doNewCatalog():void {
 		var newItem:WebCatalogs = new WebCatalogs();
 		webcatalogsArray.addItem(newItem);
-		
+		webcatalogs = newItem;
+	}
+	private function doNewCatagory():void {
+		var newItem:WebCatagories = new WebCatagories();
+		webcatagoriesArray.addItem(newItem);
+		webcatagories = newItem;
+			
+	}
+
+	private function doNewGraphic():void {
+		var newItem:WebGraphics = new WebGraphics();
+		webgraphicsArray.addItem(newItem);
+		webgraphics = newItem;
 	}
 	
 	private function doDelete():void {
@@ -221,25 +256,26 @@
 		mapFromWebBaseData();
 		
 		for each(var graphicsitem:WebGraphics in webgraphicsArray) {
-			dsGraphics.addUpdate(graphicsitem);
+			dsUpdateItem.addUpdate(graphicsitem);
 		}
 		for each(var questionsitem:WebQuestions in webquestionsArray) {
-			dsQuestions.addUpdate(questionsitem);
+			dsUpdateItem.addUpdate(questionsitem);
 		}
 		for each(var productsitem:WebProducts in webproductsArray) {
-			dsProducts.addUpdate(productsitem);
+			dsUpdateItem.addUpdate(productsitem);
 		}
 		for each(var choicesitem:WebChoices in webchoicesArray) {
-			dsChoices.addUpdate(choicesitem);
+			dsUpdateItem.addUpdate(choicesitem);
 		}
 		for each(var catagoriesitem:WebCatagories in webcatagoriesArray) {
-			dsCatagories.addUpdate(catagoriesitem);
+			dsUpdateItem.addUpdate(catagoriesitem);
 		}
 		for each(var catalogsitem:WebCatalogs in webcatalogsArray) {
-			dsCatalogs.addUpdate(catalogsitem);
+			dsUpdateItem.addUpdate(catalogsitem);
 		}
 
-		dsBase.addUpdate(webbase);
+		dsUpdateItem.addUpdate(webbase);
+//		loaddata();
 	}   
 
 	private function mapFromWebBaseData():void {
@@ -353,6 +389,9 @@
 		txtcatalogspath.text = webcatalogs.path;
 	}	
 
+	private function handleSaveItemsResult(ev:ResultEvent):void {
+		
+	}
 	private function handleLoadBaseResult(ev:ResultEvent):void {
 		webbaseArray = ev.result as ArrayCollection;
 		if (webbaseArray.length==0){
@@ -365,7 +404,17 @@
 	private function handleLoadCatalogsResult(ev:ResultEvent):void {
 		webcatalogsArray = ev.result as ArrayCollection;
 		if (webcatalogsArray.length>0){
-			webcatalogs =webcatalogsArray .getItemAt(0,0) as WebCatalogs;
+			webcatalogs = webcatalogsArray.getItemAt(0,0) as WebCatalogs;
+			webcatagoriesArray = webcatalogs.catagories as ArrayCollection;
+			if (webcatagoriesArray.length>0){
+				webcatagories = webcatagoriesArray.getItemAt(0,0) as WebCatagories;
+				webproductsArray = webcatagories.products as ArrayCollection;
+				if (webproductsArray.length > 0){
+					webproducts = webproductsArray.getItemAt(0,0) as WebProducts; 
+				}  
+			}else{
+				webproductsArray = new WebProducts() as ArrayCollection;
+			}
 		}
 	}
 	private function handleLoadCatagoriesResult(ev:ResultEvent):void {
@@ -394,29 +443,22 @@
 		webbase = ev.result as WebBase;
 	}
 	private function handleSaveCatalogsResult(ev:ResultEvent):void {
-		webcatalogs = ev.result as WebCatalogs;
 		dsCatalogs.getAll(webcatalogs);
 	}
 	private function handleSaveCatagoriesResult(ev:ResultEvent):void {
-		webcatagories = ev.result as WebCatagories;
-	}
-	private function handleSaveCheckoutTypesResult(ev:ResultEvent):void {
-		webcheckouttypes = ev.result as WebCheckoutTypes;
+		dsCatagories.getAll("WebCatagories");
 	}
 	private function handleSaveChoicesResult(ev:ResultEvent):void {
-		webchoices = ev.result as WebChoices;
+		dsChoices.getAll("WebChoices");
 	}
 	private function handleSaveGraphicsResult(ev:ResultEvent):void {
-		webgraphics = ev.result as WebGraphics;
+		dsGraphics.getAll("WebGraphics");
 	}
 	private function handleSaveProductsResult(ev:ResultEvent):void {
-		webproducts = ev.result as WebProducts;
+		dsProducts.getAll("WebProducts");
 	}
 	private function handleSaveQuestionsResult(ev:ResultEvent):void {
-		webquestions = ev.result as WebQuestions;
-	}
-	private function handleSaveStatusResult(ev:ResultEvent):void {
-		webstatus = ev.result as WebStatus;
+		dsQuestions.getAll("WebQuestions");
 	}
 
 	private function handleFault(ev:FaultEvent):void {  
@@ -504,8 +546,39 @@
 		return retVal;
 	}
 
-	private function catalogsClickHandler(event:ListEvent):void {	
-		webcatalogs = webcatalogsGrid.selectedItem as WebCatalogs;
+	private function catalogsClickHandler(event:ListEvent):void {
+		if (webcatalogs != null && webcatalogsGrid.selectedItem != null){
+			webcatalogs = webcatalogsGrid.selectedItem as WebCatalogs;
+		}
+	}
+	private function catagoriesComboChangeHandler(event:ListEvent):void {
+		webcatagoriesArray = cboSelectedCatalog.selectedItem.catagories as ArrayCollection;
+	}
+	
+	private function updateCatalogArray():void {
+		if (webcatalogsGrid.selectedIndex >-1){
+			webcatalogsArray[webcatalogsGrid.selectedIndex].description = txtcatalogsdescription.text;
+		}else{
+			webcatalogs.description = txtcatalogsdescription.text;
+		}
+	}
+	private function updateCatagoriesArray():void {
+		if (webcatagoriesGrid.selectedIndex > -1){
+			webcatagoriesArray[webcatagoriesGrid.selectedIndex].image = cboCatagoryImage.selectedItem as WebGraphics;
+		}
+	}
+
+	private function updateQuestionsArray():void {
+		if (webquestionsGrid.selectedIndex >- 1){
+			webquestionsArray[webquestionsGrid.selectedIndex].prompt=txtquestionsprompt.text;
+		}
+	}
+	
+	private function updateGraphicsArray():void {
+		if (webgraphicsGrid.selectedIndex > -1){
+			webgraphicsArray[webgraphicsGrid.selectedIndex].pathUrl = txtGraphicsPathUrl.text;
+			webgraphicsArray[webgraphicsGrid.selectedIndex].description = txtGraphicsDescription.text;
+		}
 	}
 ]]>	
 
@@ -600,16 +673,16 @@
 				<mx:TextInput id="txtcatalogsrollId" x="439" y="72" text="{webcatalogs.rollId}" editable="false" borderStyle="none"/>
 				<mx:TextInput id="txtcatalogsstatusstatus" x="439" y="98" text="{webcatalogs.status}" editable="false" borderStyle="none"/>
 				<mx:TextInput id="txtcatalogsname" x="439" y="124" text="{webcatalogs.name}" editable="false" borderStyle="none"/>
-				<mx:TextArea id="txtcatalogsdescription" x="439" y="151" text="{webcatalogs.description}"/>
+				<mx:TextArea id="txtcatalogsdescription" x="439" y="151" text="{webcatalogs.description}" change="updateCatalogArray();"/>
 				<mx:TextArea id="txtcatalogspath" x="439" y="214" text="{webcatalogs.path}" editable="false"/>
 
 			</mx:Canvas>
 			<mx:Canvas id="canvasCatagories" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Categories')}" width="100%" height="100%">
 
-				<mx:ComboBox id="cboSelectedCatalog" x="139" y="10" width="111"></mx:ComboBox>
+				<mx:ComboBox id="cboSelectedCatalog" x="139" y="10" width="111" dataProvider="{webcatalogsArray}" labelField="name" change="catagoriesComboChangeHandler(event);"></mx:ComboBox>
 				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SelectedCatalog')}" width="130" textAlign="right"/>
 
-				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
+				<mx:Button x="286" y="10" width="38" height="38" click="doNewCatagory();">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
 				<mx:Button id="button_delete0" x="506" y="10" width="38" height="38" click="doDelete();">
@@ -646,7 +719,7 @@
 					editable="true" 
 					itemEditEnd="processCatagoryProductsGridData(event);" bottom="22" top="212" left="275" right="25">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="" dataField="" editorDataField="">
+						<mx:DataGridColumn width="40" headerText=" " dataField="" editorDataField="">
 						   <mx:itemRenderer>
 						      <mx:Component>
 						         <mx:CheckBox selected="{data}"/>
@@ -654,7 +727,7 @@
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+						<mx:DataGridColumn width="140" headerText="" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
 						</mx:DataGridColumn>
 					</mx:columns>
@@ -665,7 +738,7 @@
 				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Image')}" textAlign="right" width="158"/>
 				<mx:TextInput x="441" y="72" text="{webcatagories.parent}" editable="false" borderStyle="none"/>
 				<mx:TextInput x="441" y="98" text="{webcatagories.status}" editable="false" borderStyle="none"/>
-				<mx:ComboBox id="cboCatagoryImage" x="441" y="124" width="275"/>
+				<mx:ComboBox id="cboCatagoryImage" x="441" y="124" width="275" dataProvider="{webgraphicsArray}" labelField="name" change="updateCatagoriesArray();"/>
 
 			</mx:Canvas>
 			<mx:Canvas id="canvasProducts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Products')}" width="100%" height="100%">
@@ -707,8 +780,8 @@
 				<mx:TextInput x="440" y="150" width="248" text="{webproducts.sku.description}"/>
 				<mx:Button x="696" y="150" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ChangeTemplate')}" width="116"/>
 				<mx:Button x="696" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DeleteTemplate')}" width="116"/>
-				<mx:ComboBox x="440" y="176" width="248"/>
-				<mx:ComboBox x="440" y="202" width="248"/>
+				<mx:ComboBox x="440" y="176" width="248" dataProvider="{webgraphicsArray}" labelField="name"/>
+				<mx:ComboBox x="440" y="202" width="248" dataProvider="{webgraphicsArray}" labelField="name"/>
 				<mx:ComboBox x="440" y="232" enabled="false"/>
 				<mx:CheckBox x="286" y="260" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Allowuserenteredquan')}" width="268" enabled="false"/>
 				<mx:ComboBox x="440" y="290" enabled="false"/>
@@ -728,7 +801,7 @@
 					editable="true" 
 					itemEditEnd="processProductsQuestionsGridData(event);" bottom="0" top="404" left="275" right="25">
 					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Questions')}" dataField="" editorDataField="">
+						<mx:DataGridColumn width="40" headerText="" dataField="" editorDataField="">
 						   <mx:itemRenderer>
 						      <mx:Component>
 						         <mx:CheckBox selected="{data}"/>
@@ -736,7 +809,7 @@
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
+						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Questions')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
 						</mx:DataGridColumn>
 					</mx:columns>
@@ -772,10 +845,10 @@
 				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
 				<mx:Label x="275" y="150" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Type')}" textAlign="right" width="157"/>
 
-				<mx:TextInput x="440" y="72" text="{webquestions.name}" borderStyle="none"/>
-				<mx:TextInput x="440" y="98" text="{webquestions.prompt}"/>
-				<mx:TextInput x="440" y="124" text="{webquestions.status}" borderStyle="none"/>
-				<mx:ComboBox x="440" y="150"/>
+				<mx:TextInput x="440" y="72" text="{webquestions.name}" borderStyle="none" editable="false"/>
+				<mx:TextInput id="txtquestionsprompt" x="440" y="98" text="{webquestions.prompt}" change="updateQuestionsArray();"/>
+				<mx:TextInput x="440" y="124" text="{webquestions.status}" borderStyle="none" editable="false"/>
+				<mx:ComboBox id="cboQuestionType" x="440" y="150" dataProvider="questionTypeArray" labelField="name"/>
 
 				<mx:DataGrid width="250" id="webquestionsGrid" 
 					dataProvider="{webquestionsArray}" 
@@ -799,7 +872,7 @@
 				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas id="canvasGraphics" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Graphics')}" width="100%" height="100%">
-				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
+				<mx:Button x="286" y="10" width="38" height="38" click="doNewGraphic();">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
 				<mx:Button id="button_delete3" x="506" y="10" width="38" height="38" click="doDelete();">
@@ -824,15 +897,17 @@
 				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="157"/>
 				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Desc')}" textAlign="right" width="157"/>
 				<mx:Label x="275" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Path')}" textAlign="right" width="157"/>
+				<mx:Label x="275" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.FileSize')}" textAlign="right" width="157"/>
 
-				<mx:TextInput x="440" y="72" text="{webgraphics.name}" borderStyle="none"/>
-				<mx:TextInput x="440" y="98" text="{webgraphics.status}" borderStyle="none"/>
-				<mx:TextArea x="440" y="128" height="56" width="217" text="{webgraphics.description}"/>
-				<mx:TextArea x="440" y="192" width="217" text="{webgraphics.pathUrl}"/>
+				<mx:TextInput x="440" y="72" text="{webgraphics.name}" borderStyle="none" editable="false"/>
+				<mx:TextInput x="440" y="98" text="{webgraphics.status}" borderStyle="none" editable="false"/>
+				<mx:TextInput id="txtGraphicsFileSize" x="440" y="246" text="" borderStyle="none" enabled="false" editable="false"/>
+				<mx:TextArea id="txtGraphicsDescription" x="440" y="128" height="56" width="217" text="{webgraphics.description}" change="updateGraphicsArray();"/>
+				<mx:TextArea id="txtGraphicsPathUrl" x="440" y="192" width="217" text="{webgraphics.pathUrl}" change="updateGraphicsArray();"/>
 
-				<mx:Image bottom="0" top="244" right="213" left="275"/>
+				<mx:Image bottom="0" top="274" right="213" left="275"/>
 
-				<mx:Button x="526" y="244" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Needsupdate')}" width="131" enabled="false"/>
+				<mx:Button x="641" y="244" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Needsupdate')}" width="131" enabled="false"/>
 
 				<mx:DataGrid width="250" id="webgraphicsGrid" 
 					dataProvider="{webgraphicsArray}" 
