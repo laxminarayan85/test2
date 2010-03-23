@@ -946,7 +946,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("sales cat name".equals(currentFieldToken)) {
 					if (addSalesCategory == true) {
 						salesCategory.setName(currentImportToken);
-						dataService.addUpdate(salesCategory);
+						salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 						salesCategory.setId(salesCategory.getId());
 						copierDefinition.setSalesCat(salesCategory);
 					}

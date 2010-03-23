@@ -207,7 +207,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("shipping".equals(currentFieldToken)) {
 				invoice.setShipPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setGrandTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("amount due".equals(currentFieldToken)) {
 				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {
@@ -944,7 +944,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("shipping".equals(currentFieldToken)) {
 				invoice.setShipPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setGrandTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("amount due".equals(currentFieldToken)) {
 				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {

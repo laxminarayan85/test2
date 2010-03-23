@@ -49,7 +49,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("sales cat name".equals(currentFieldToken)) {
 				if (addSalesCategory == true) {
 					salesCategory.setName(currentImportToken);
-					dataService.addUpdate(salesCategory);
+					salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 					salesCategory.setId(salesCategory.getId());
 					job.setSalesCategory(salesCategory);
 				}
@@ -263,6 +263,8 @@ public class JobMapper extends ImportMapper {
 					if (location == null) {
 						location = new Location();
 						location.setName(currentImportToken);
+						location = (Location)dataService.addUpdate(location);
+						location.setId(location.getId());
 					}
 					job.setLocation(location);
 				}

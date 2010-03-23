@@ -119,7 +119,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("sales cat name".equals(currentFieldToken)) {
 						if (addSalesCategory == true) {
 							salesCategory.setName(currentImportToken);
-							dataService.addUpdate(salesCategory);
+							salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 							salesCategory.setId(salesCategory.getId());
 							chargeDefinition.setSalesCategory(salesCategory);
 						}
