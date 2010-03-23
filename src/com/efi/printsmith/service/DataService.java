@@ -114,7 +114,7 @@ public class DataService {
 		try {
 			log.debug("** getAll called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			Query findAllQuery = em.createQuery("from " + className);
+			Query findAllQuery = em.createQuery("from " + className + " fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -175,7 +175,7 @@ public class DataService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 		
-		columnstring = "a.id, a.title, a.accountId, a.externalRef, a. masterAcct";
+		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct";
 		try {
 				
 			log.debug("** getAccountPicker .");
@@ -837,8 +837,8 @@ public class DataService {
 			try {
 				object = em.merge(object);
 				tx.commit();
-				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
-						object.getClass().getSimpleName(), object.getId());
+//				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
+//						object.getClass().getSimpleName(), object.getId());
 			} catch (RollbackException e) {
 				ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
 				SQLException sqle = cve.getSQLException().getNextException();

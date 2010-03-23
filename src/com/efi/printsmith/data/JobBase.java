@@ -394,7 +394,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
