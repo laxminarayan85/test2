@@ -228,11 +228,6 @@
 	private function messageHandler(message:IMessage):void
 	{
 	}
-                                  
-	
-	private function doNew():void {
-	 	
-	}  
 	
 	private function doNewCatalog():void {
 		var newItem:WebCatalogs = new WebCatalogs();
@@ -241,14 +236,30 @@
 		webcatalogs = newItem;
 	}
 	private function doNewCatagory():void {
+		if (webcatalogs==null){ 
+			if (webcatalogsArray != null && webcatalogsArray.length>0){
+				webcatalogs = webcatalogsArray.getItemAt(0,0) as WebCatalogs;
+			}else{
+				return;
+			}
+		}
+		
 		var newItem:WebCatagories = new WebCatagories();
 		if (webcatagoriesArray==null){
 			webcatagoriesArray = new ArrayCollection();
-		} 
+		}
+		if (webcatagories != null && webcatagories.parent == null){
+			newItem.parent = webcatagories as ArrayCollection;
+		}
 		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
 		webcatagoriesArray.addItem(newItem);
 		webcatagories = newItem;
-			
+
+		if (webcatalogs.catagories == null){
+			webcatalogs.catagories = webcatagoriesArray;
+		} else{
+			webcatalogs.catagories.addItem(webcatagories);
+		}
 	}
 
 	private function doNewGraphic():void {
@@ -262,36 +273,57 @@
 	}
 
 	private function doNewProduct():void {
-		var newItem:WebProducts = new WebProducts();
-		if (webproductsArray == null){
-			webproductsArray = new ArrayCollection();
-		}
-		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
-		//txtProductsSku.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.EmptySKU');
-		webproductsArray.addItem(newItem);
-		webproducts = newItem;		
+		if (webcatagories != null){
+			var newItem:WebProducts = new WebProducts();
+			if (webproductsArray == null){
+				webproductsArray = new ArrayCollection();
+			}
+			newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
+			//txtProductsSku.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.EmptySKU');
+			webproductsArray.addItem(newItem);
+			webproducts = newItem;
+			if (webcatagories.products==null){
+				webcatagories.products = webproductsArray;
+			}else{
+				webcatagories.products.addItem(newItem);
+			}
+		}		
 	}
 
 	private function doNewQuestion():void {
-		var newItem:WebQuestions = new WebQuestions();
-		if (webquestionsArray == null){
-			webquestionsArray = new ArrayCollection();
+		if (webproducts != null){ 
+			var newItem:WebQuestions = new WebQuestions();
+			if (webquestionsArray == null){
+				webquestionsArray = new ArrayCollection();
+			}
+			newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
+			newItem.questionType = questionTypeArray.getItemAt(0,0).name;
+			webquestionsArray.addItem(newItem);
+			webquestions = newItem;
+			if (webproducts.questions==null){
+				webproducts.questions = webquestionsArray;
+			}else{
+				webproducts.questions.addItem(webquestions)
+			}
 		}
-		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
-		newItem.questionType = questionTypeArray.getItemAt(0,0).name;
-		webquestionsArray.addItem(newItem);
-		webquestions = newItem;
 		
 	}
 
 	private function doNewChoice():void {
-		var newItem:WebChoices = new WebChoices();
-		if (webchoicesArray == null){
-			webchoicesArray = new ArrayCollection();
+		if (webquestions != null){
+			var newItem:WebChoices = new WebChoices();
+			if (webchoicesArray == null){
+				webchoicesArray = new ArrayCollection();
+			}
+			newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.NewChoice');
+			webchoicesArray.addItem(newItem);
+			webchoices = newItem;
+			if (webquestions.choices == null){
+				webquestions.choices = webchoicesArray;
+			}else{
+				webquestions.choices.addItem(webchoices);
+			}
 		}
-		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.NewChoice');
-		webchoicesArray.addItem(newItem);
-		webchoices = newItem;
 	}
 	
 	private function doDelete():void {
@@ -304,18 +336,6 @@
 		
 		for each(var graphicsitem:WebGraphics in webgraphicsArray) {
 			dsUpdateItem.addUpdate(graphicsitem);
-		}
-		for each(var choicesitem:WebChoices in webchoicesArray) {
-			dsUpdateItem.addUpdate(choicesitem);
-		}
-		for each(var questionsitem:WebQuestions in webquestionsArray) {
-			dsUpdateItem.addUpdate(questionsitem);
-		}
-		for each(var productsitem:WebProducts in webproductsArray) {
-			dsUpdateItem.addUpdate(productsitem);
-		}
-		for each(var catagoriesitem:WebCatagories in webcatagoriesArray) {
-			dsUpdateItem.addUpdate(catagoriesitem);
 		}
 		for each(var catalogsitem:WebCatalogs in webcatalogsArray) {
 			dsUpdateItem.addUpdate(catalogsitem);
