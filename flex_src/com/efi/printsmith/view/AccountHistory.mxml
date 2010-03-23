@@ -88,7 +88,7 @@ width="786" height="479"  creationComplete="init()"
 	private function setAccount(account2:Account):void
 	{
 		this.account = account2;
-		dataService.getByAccountId("Invoice", this.account.id);
+		dataService.getInvoiceByAccountId("Invoice", this.account.id);
 	}			
 	
 	private function handleLoadResult(event:ResultEvent):void {

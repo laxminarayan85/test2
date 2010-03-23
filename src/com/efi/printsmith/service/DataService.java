@@ -973,7 +973,32 @@ public class DataService {
 		}
 		return null;
 	}
-	
+	@SuppressWarnings("unchecked")
+	public List<Invoice> getInvoiceByAccountId(String className, Long id)
+	throws Exception {
+		String columnstring = new String();
+
+		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal, a.customerPO";
+
+		try {
+			log.debug("** getByaccountid Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		//cej	
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a where a.account.id = :id";
+		//	String queryString = "select a.id, a.name, a.invoiceName from " + className
+			//		+ " a where a.account.id = :id";
+		
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", id);
+			List<Invoice> invoicelist = query.getResultList();
+			if (invoicelist != null)
+				log.debug("** Found " + invoicelist.size() + "records:");
+			return invoicelist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	
 	
 	

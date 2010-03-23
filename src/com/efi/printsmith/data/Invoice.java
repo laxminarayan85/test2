@@ -42,5 +42,13 @@ public class Invoice extends InvoiceBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
+	public Invoice(long id, String Name, String invoiceNumber, double grandTotal, String customerPO) {
+		this.id = id;
+		this.setName(Name);
+		this.setInvoiceNumber(invoiceNumber);
+		this.setGrandTotal(grandTotal);
+		this.setCustomerPO(customerPO);
+		
+	}
 
 }
