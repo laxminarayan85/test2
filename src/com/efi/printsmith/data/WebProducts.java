@@ -312,21 +312,31 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private WebQuestions questions;
+    @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "webproducts_questions")
+	private java.util.List<WebQuestions> questions;
 	
 	/**
 	 * @generated
  	 */
-	public WebQuestions getQuestions(){
+	public java.util.List<WebQuestions> getQuestions(){
 		return questions; 
 	}
 
+	/**
+	 * @generated
+	 */	
+	public void addQuestions(WebQuestions obj) {
+		if (questions == null) {
+			questions = new java.util.ArrayList<WebQuestions>();
+		}
+		questions.add(obj);
+	}
 	
 	/**
 	 * @generated
 	 */	
-	public void setQuestions(WebQuestions newVal) {
+	public void setQuestions(java.util.List<WebQuestions> newVal) {
 		this.questions = newVal;
 	}
 	/**
@@ -365,7 +375,7 @@ public class WebProducts extends ModelBase {
 		if (ALLOWUSERENTEREDQTY.equals(propertyName)) setAllowUserEnteredQty((Boolean)newValue); else
 		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
 		if (CALCULATEPRICES.equals(propertyName)) setCalculatePrices((PreferencesPricingMethod)newValue); else
-		if (QUESTIONS.equals(propertyName)) setQuestions((WebQuestions)newValue); else
+		if (QUESTIONS.equals(propertyName)) setQuestions((java.util.List<WebQuestions>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -396,7 +406,7 @@ public class WebProducts extends ModelBase {
 		if (CALCULATEPRICES.equals(propertyName)) 
 			return new Class<?>[] {PreferencesPricingMethod.class};		
 		if (QUESTIONS.equals(propertyName)) 
-			return new Class<?>[] {WebQuestions.class};		
+			return new Class<?>[] {java.util.List.class, WebQuestions.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

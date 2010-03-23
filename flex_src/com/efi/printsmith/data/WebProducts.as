@@ -23,7 +23,7 @@ package com.efi.printsmith.data
 		public var allowUserEnteredQty:Boolean = true;
 		public var description:String = "";
 		public var calculatePrices:PreferencesPricingMethod;
-		public var questions:WebQuestions;
+		public var questions:ArrayCollection;
 	
 	}
 }

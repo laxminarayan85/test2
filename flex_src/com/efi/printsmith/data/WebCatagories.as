@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 		public var status:String = "";
 		public var image:WebGraphics;
 		public var products:ArrayCollection;
-		public var parent:WebCatagories;
+		public var parent:ArrayCollection;
 		public var name:String = "";
 	
 	}
