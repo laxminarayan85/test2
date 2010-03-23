@@ -53,12 +53,12 @@ public class WebChoices extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer name;
+	private String name;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getName(){
+	public String getName(){
 		return name; 
 	}
 
@@ -66,7 +66,7 @@ public class WebChoices extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setName(Integer newVal) {
+	public void setName(String newVal) {
 		this.name = newVal;
 	}
 	/**
@@ -85,7 +85,7 @@ public class WebChoices extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((Integer)newValue); else
+		if (NAME.equals(propertyName)) setName((String)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -96,7 +96,7 @@ public class WebChoices extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
 		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {String.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	

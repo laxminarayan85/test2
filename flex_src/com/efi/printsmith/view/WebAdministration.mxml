@@ -236,6 +236,9 @@
 	}
 	private function doNewCatagory():void {
 		var newItem:WebCatagories = new WebCatagories();
+		if (webcatagoriesArray==null){
+			webcatagoriesArray = new ArrayCollection();
+		} 
 		webcatagoriesArray.addItem(newItem);
 		webcatagories = newItem;
 			
@@ -243,8 +246,29 @@
 
 	private function doNewGraphic():void {
 		var newItem:WebGraphics = new WebGraphics();
+		if (webgraphicsArray == null){
+			webgraphicsArray = new ArrayCollection();
+		} 
 		webgraphicsArray.addItem(newItem);
 		webgraphics = newItem;
+	}
+	private function doNewProduct():void {
+		var newItem:WebProducts = new WebProducts();
+		if (webproductsArray == null){
+			webproductsArray = new ArrayCollection();
+		} 
+		webproductsArray.addItem(newItem);
+		webproducts = newItem;		
+	}
+
+	private function doNewChoice():void {
+		var newItem:WebChoices = new WebChoices();
+		if (webchoicesArray == null){
+			webchoicesArray = new ArrayCollection();
+		}
+		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.NewChoice')
+		webchoicesArray.addItem(newItem);
+		webchoices = newItem;
 	}
 	
 	private function doDelete():void {
@@ -756,7 +780,7 @@
 
 			</mx:Canvas>
 			<mx:Canvas id="canvasProducts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Products')}" width="100%" height="100%">
-				<mx:Button x="286" y="10" width="38" height="38" click="doNew();">
+				<mx:Button x="286" y="10" width="38" height="38" click="doNewProduct();">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
 				<mx:Button id="button_delete1" x="506" y="10" width="38" height="38" click="doDelete();">
@@ -864,6 +888,8 @@
 				<mx:TextInput x="440" y="124" text="{webquestions.status}" borderStyle="none" editable="false"/>
 				<mx:ComboBox id="cboQuestionType" x="440" y="150" dataProvider="questionTypeArray" labelField="name"/>
 
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Add')}" bottom="3" top="466" left="275" right="337" click="doNewChoice();"/>
+
 				<mx:DataGrid width="250" id="webquestionsGrid" 
 					dataProvider="{webquestionsArray}" 
 					editable="true" 
@@ -877,7 +903,7 @@
 				<mx:DataGrid id="webchoicesGrid" 
 					dataProvider="{webchoicesArray}" 
 					editable="true" 
-					itemEditEnd="processChoicesGridData(event);" bottom="0" top="195" left="275" right="155">
+					itemEditEnd="processChoicesGridData(event);" bottom="28" top="195" left="275" right="155">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Choices')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">

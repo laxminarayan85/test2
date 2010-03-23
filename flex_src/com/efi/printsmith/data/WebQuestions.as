@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 		public var name:String = "";
 		public var status:String = "";
 		public var prompt:String = "";
-		public var questionType:int = 0;
+		public var questionType:String = "";
 		public var choices:ArrayCollection;
 	
 	}

@@ -135,12 +135,12 @@ public class WebQuestions extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer questionType;
+	private String questionType;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getQuestionType(){
+	public String getQuestionType(){
 		return questionType; 
 	}
 
@@ -148,7 +148,7 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setQuestionType(Integer newVal) {
+	public void setQuestionType(String newVal) {
 		this.questionType = newVal;
 	}
  	
@@ -206,7 +206,7 @@ public class WebQuestions extends ModelBase {
 		if (NAME.equals(propertyName)) setName((String)newValue); else
 		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
-		if (QUESTIONTYPE.equals(propertyName)) setQuestionType((Integer)newValue); else
+		if (QUESTIONTYPE.equals(propertyName)) setQuestionType((String)newValue); else
 		if (CHOICES.equals(propertyName)) setChoices((java.util.List<WebChoices>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
@@ -224,7 +224,7 @@ public class WebQuestions extends ModelBase {
 		if (PROMPT.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
 		if (QUESTIONTYPE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
+			return new Class<?>[] {String.class};		
 		if (CHOICES.equals(propertyName)) 
 			return new Class<?>[] {java.util.List.class, WebChoices.class};		
 		return super.getPropertyClass(propertyName);
