@@ -42,5 +42,12 @@ public class Estimate extends InvoiceBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
-
+	public Estimate(long id, String Name, String invoiceNumber, double grandTotal) {
+		this.id = id;
+		this.setName(Name);
+		this.setInvoiceNumber(invoiceNumber);
+		this.setGrandTotal(grandTotal);
+	
+		
+	}
 }

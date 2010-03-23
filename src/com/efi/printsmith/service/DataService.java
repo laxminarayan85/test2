@@ -193,6 +193,29 @@ public class DataService {
 		}
 		return null;
 	}
+	public List<?> getPending(String className)
+	throws Exception {
+		List<?> resultList = new ArrayList<Object>();
+		String columnstring = new String();
+		
+		columnstring = "a.id, a.invoiceNumber a.account_id, a.contact_id";
+		try {
+				
+			log.debug("** getPending .");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+			Query query = em.createQuery(queryString);
+			
+			resultList = query.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	public List<?> getContactPicker(String className)
 	throws Exception {
 		List<?> resultList = new ArrayList<Object>();
@@ -999,7 +1022,32 @@ public class DataService {
 		}
 		return null;
 	}
-	
+	@SuppressWarnings("unchecked")
+	public List<Invoice> getEstimateByAccountId(String className, Long id)
+	throws Exception {
+		String columnstring = new String();
+
+		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal";
+
+		try {
+			log.debug("** getEstimateByAccountId Id called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+		//cej	
+			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a where a.account.id = :id";
+		//	String queryString = "select a.id, a.name, a.invoiceName from " + className
+			//		+ " a where a.account.id = :id";
+		
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", id);
+			List<Invoice> invoicelist = query.getResultList();
+			if (invoicelist != null)
+				log.debug("** Found " + invoicelist.size() + "records:");
+			return invoicelist;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	
 	
 	@SuppressWarnings("unchecked")

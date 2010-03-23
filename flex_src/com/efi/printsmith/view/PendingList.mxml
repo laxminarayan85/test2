@@ -26,6 +26,7 @@
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
@@ -166,7 +167,7 @@
 		this.throbber.visible = true;
 		this.throbber.play();
 		
-		dataService.getAll("InvoiceBase");
+		dataService.getPending("InvoiceBase");
 
 		fillDocumentArray(DocumentArray);
 		fillFilterArray(FilterArray);
@@ -217,7 +218,7 @@
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
 			if (payloadType == "Invoice" || payloadType == "InvoiceBase" || payloadType =="Estmate") {
-		  		dataService.getAll("InvoiceBase");
+		  		dataService.getPending("InvoiceBase");
 			}
 		}
 	}
