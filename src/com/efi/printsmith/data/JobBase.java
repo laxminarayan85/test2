@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "jobbase")
+@org.hibernate.annotations.Table( appliesTo = "jobbase", fetch = FetchMode.SELECT, optional=false )
 public class JobBase extends ModelBase {
 	/**
 	 * @generated
@@ -316,7 +318,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SalesCategory salesCategory;
 	
 	/**
@@ -338,7 +340,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private ProductCode productCode;
 	
 	/**
@@ -360,7 +362,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany ( cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
@@ -392,7 +394,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany
     @JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -534,7 +536,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Location location;
 	
 	/**
@@ -754,7 +756,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PressDefinition press;
 	
 	/**
@@ -886,7 +888,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PressDefinition pricingPress;
 	
 	/**
@@ -908,7 +910,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PressDefinition costingPress;
 	
 	/**
@@ -952,7 +954,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private StockDefinition stock;
 	
 	/**
@@ -1194,7 +1196,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany
     @JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	
@@ -1226,7 +1228,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private InkColor backInks;
 	
 	/**
@@ -1270,7 +1272,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private PricingRecord pricingRecord;
 	
 	/**
@@ -1292,7 +1294,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1314,7 +1316,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -1336,7 +1338,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PreferencesPricingMethod pricingMethod;
 	
 	/**
@@ -1402,7 +1404,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private CostingRecord costingRecord;
 	
 	/**
