@@ -60,18 +60,19 @@ public class StockDefinitionMapper extends ImportMapper {
 					stockDefinition.setColor(stockColor);
 				}
 			}  else if ("vendor".equals(currentFieldToken)) {
-				if (currentImportToken.equals("") == false) {
-					Vendor vendor = (Vendor) dataService.getByName("Vendor", currentImportToken);
-					if (vendor != null) {
-						vendor.setName(currentImportToken);
-						
-					}
-					else{
-						 vendor = new  Vendor();
-						 vendor.setName(currentImportToken);
-					}
-					stockDefinition.setVendor(vendor);	 
+				if (currentImportToken.equals("") == true) {
+					currentImportToken = "none";
 				}
+				Vendor vendor = (Vendor) dataService.getByName("Vendor", currentImportToken);
+				if (vendor != null) {
+					vendor.setName(currentImportToken);
+					
+				}
+				else{
+					 vendor = new  Vendor();
+					 vendor.setName(currentImportToken);
+				}
+				stockDefinition.setVendor(vendor);	 
 			}  else if ("sets".equals(currentFieldToken)) {
 				stockDefinition.setSheetsPerSet(Utilities.tokenToInt(currentImportToken));
 			}  else if ("id".equals(currentFieldToken)) {
