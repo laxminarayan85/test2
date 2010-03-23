@@ -60,9 +60,9 @@
 												"BO","B1","B2","B3","B4","B5","B6","B7","C4","C5","C6","DL","#10 Envelope","#9 Envelope","Small Poster","Large Poster"];
 
 
-			private var stocktypeNames= ["Business Papers","Book Papers","Cover Papers","Index","Tagboard","Blanks","Vellum Bristol","Blotter","Label","Newsprint"];
+			private var stocktypeNames:Array= ["Business Papers","Book Papers","Cover Papers","Index","Tagboard","Blanks","Vellum Bristol","Blotter","Label","Newsprint"];
 
-			private var stocktypesizes= ["17 x 22","25 x 38","20 x 26","5.5 x 30.5","24 x3 6","22 x 38","2.5 x 28.5","19 x 24","25 x 38","24 x 36"];
+			private var stocktypesizes:Array= ["17 x 22","25 x 38","20 x 26","5.5 x 30.5","24 x3 6","22 x 38","2.5 x 28.5","19 x 24","25 x 38","24 x 36"];
 	
 			private function handleFault(ev:FaultEvent):void
 			{

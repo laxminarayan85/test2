@@ -61,27 +61,30 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.events.ValidationResultEvent;    
     import com.efi.printsmith.events.commandEvents.Employees.*;
     
-   
+    [Bindable]
     private var enableSave:Boolean = true;
+    
    	[Bindable]
-    	private var employees:ArrayCollection = new ArrayCollection();
-
-  
+    private var employees:ArrayCollection = new ArrayCollection();
+ 
     [Bindable]                                         
-		private var employee:Employee;
+	private var employee:Employee;
 	
 	[Bindable] 
-		 private var presses:ArrayCollection = new ArrayCollection(); 
-	[Bindable] 
-		 private var copiers:ArrayCollection = new ArrayCollection(); 
+	private var presses:ArrayCollection = new ArrayCollection(); 
 	
 	[Bindable] 
-		 private var pricemethods:ArrayCollection = new ArrayCollection();
-	 [Bindable] 
-		 private var charges:ArrayCollection = new ArrayCollection();   
+	private var copiers:ArrayCollection = new ArrayCollection(); 
+	
+	[Bindable] 
+	private var pricemethods:ArrayCollection = new ArrayCollection();
+		 
+	[Bindable] 
+	private var charges:ArrayCollection = new ArrayCollection();   
                     
     [Bindable]
-    	private var formIsValid:Boolean = false;
+    private var formIsValid:Boolean = false;
+    
     [Bindable]
 	private var customerWantType:String = "Due_Today";
 	
