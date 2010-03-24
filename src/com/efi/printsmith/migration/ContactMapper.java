@@ -3,6 +3,7 @@ package com.efi.printsmith.migration;
 import java.io.File;
 
 import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.City;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
@@ -53,6 +54,14 @@ public class ContactMapper extends ImportMapper {
 				/* TODO */
 			} else if ("city".equals(currentFieldToken)) {
 				address.setCity(currentImportToken);
+				if (currentImportToken.equals("") == false) {
+					City city = (City)dataService.getByName("City", currentImportToken);
+					if (city == null) {
+						city = new City();
+						city.setName(currentImportToken);
+						dataService.addUpdate(city);
+					}
+				}
 			} else if ("state".equals(currentFieldToken)) {
 				address.setState(currentImportToken);
 				if (currentImportToken.equals("") == false) {

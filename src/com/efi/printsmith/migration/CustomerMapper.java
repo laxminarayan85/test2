@@ -14,6 +14,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.State;
 import com.efi.printsmith.data.Zip;
+import com.efi.printsmith.data.City;
 
 public class CustomerMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -87,6 +88,14 @@ public class CustomerMapper extends ImportMapper {
 					}
 				} else if ("inv city".equals(currentFieldToken)) {
 					shipToAddress.setCity(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						City city = (City)dataService.getByName("City", currentImportToken);
+						if (city == null) {
+							city = new City();
+							city.setName(currentImportToken);
+							dataService.addUpdate(city);
+						}
+					}
 				} else if ("inv zip".equals(currentFieldToken)) {
 					shipToAddress.setZip(currentImportToken);
 					if (currentImportToken.equals("") == false) {
@@ -125,6 +134,14 @@ public class CustomerMapper extends ImportMapper {
 					billToAddress.setStreet2(currentImportToken);
 				} else if ("bill city".equals(currentFieldToken)) {
 					billToAddress.setCity(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						City city = (City)dataService.getByName("City", currentImportToken);
+						if (city == null) {
+							city = new City();
+							city.setName(currentImportToken);
+							dataService.addUpdate(city);
+						}
+					}
 				} else if ("bill state".equals(currentFieldToken)) {
 					billToAddress.setState(currentImportToken);
 					if (currentImportToken.equals("") == false) {
