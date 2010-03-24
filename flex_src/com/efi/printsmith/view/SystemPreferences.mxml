@@ -2083,7 +2083,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 
-	<mx:VBox id="vbox2" left="200" top="50" height="100%" width="100%" creationPolicy="all">
+	<mx:VBox id="vbox2" left="190" top="72" height="566" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
 			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Behavior')}" textAlign="center"/>
@@ -2941,4 +2941,6 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			</mx:Canvas>
 		</mx:ViewStack>					
 	</mx:VBox>
+	<mx:Label x="228" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
+	<mx:Label x="277" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}"/>
 </mx:Panel>
