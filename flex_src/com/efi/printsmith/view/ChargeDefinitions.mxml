@@ -98,7 +98,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.enums.ChargeMarkupType;
 	import com.efi.printsmith.data.enums.ChargePriceMethod;
 	import com.efi.printsmith.data.enums.JobQuantity;
-	import com.efi.printsmith.data.enums.ChargeInkCoverage;
 	import com.efi.printsmith.data.enums.ChargeJobQuantity;
 	
 	import com.efi.printsmith.events.ModelAddUpdateEvent;
