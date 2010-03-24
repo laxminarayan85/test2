@@ -703,7 +703,7 @@
 			{
 				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
 				jobService.assignPricingCopierToJob(this.job, copierDefinition);
-								
+				this.updatePrice();			
 			}
 			
 			private function updatePrice():void
@@ -1550,7 +1550,7 @@
 													 id="job_pricing_copier"
 													 dataProvider="{copiers}"
 													 labelField="name"
-													 change="updatePrice()"
+													 change="changePricingCopier()"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="7"
@@ -1563,7 +1563,6 @@
 													 id="job_costing_copier"
 													 dataProvider="{copiers}"
 													 labelField="name"
-													 change="changePricingCopier()"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="30"
