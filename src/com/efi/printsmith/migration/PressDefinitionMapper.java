@@ -17,7 +17,8 @@ public class PressDefinitionMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		PressDefinition pressDefinition = new PressDefinition();
 		DataService dataService = new DataService();
-		
+		String minSize = "";
+		String maxSize = "";
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -60,9 +61,9 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("maxX".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("max stock size".equals(currentFieldToken)) {
-				pressDefinition.setMaxRollWidth(currentImportToken);
+				maxSize = currentImportToken;
 			} else if ("min stock size".equals(currentFieldToken)) {
-				pressDefinition.setMinRollWidth(currentImportToken);
+				minSize = currentImportToken;
 			} else if ("maxY".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentFieldToken)) {
@@ -2140,6 +2141,14 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("TPT_ColumnData5_Cell_avgMargin".equals(currentFieldToken)) {
 				/* TODO */
 			}
+		}
+		if (pressDefinition.getSheetFed() == true) {
+			pressDefinition.setMaxPaperSize(maxSize);
+			pressDefinition.setMinPaperSize(minSize);
+		}
+		else {
+			pressDefinition.setMaxRollWidth(maxSize);
+			pressDefinition.setMinRollWidth(minSize);
 		}
 		return pressDefinition;
 	}
