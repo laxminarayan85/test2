@@ -489,8 +489,8 @@
 
 	}
 	private function refreshData():void{
-		invoiceBaseArray.refresh();
 		dgView.invalidateList();
+		invoiceBaseArray.refresh();
 	}
 ]]>        
 </mx:Script>
