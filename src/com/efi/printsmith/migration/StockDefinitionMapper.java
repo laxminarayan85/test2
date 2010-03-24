@@ -29,7 +29,6 @@ public class StockDefinitionMapper extends ImportMapper {
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
-			System.out.println(currentFieldToken + ": " + currentImportToken);
 			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("group".equals(currentFieldToken)) {
