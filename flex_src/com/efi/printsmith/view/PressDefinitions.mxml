@@ -170,7 +170,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	   if (pressDefinition.sheetFed ) {
 	   		pressDefinition.sheetFed = false;
 			pressDefinition.rollFed = true;
-			this.currentState = "";
+			//this.currentState = "";
 	   }
 	   else {
 	   		pressDefinition.sheetFed = true;
@@ -197,7 +197,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
 		this.charges = pressDefinition.charges;
 		updateControlState(); */
-	//	doPressType();
+		doPressType();
 	}
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
