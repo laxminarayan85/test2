@@ -13,6 +13,7 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Estimate;
+import com.efi.printsmith.data.NotePad;
 
 public class InvoiceMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -40,6 +41,7 @@ public class InvoiceMapper extends ImportMapper {
 	
 	private ModelBase createEstimate(String[] fieldTokens, String[] importTokens) throws Exception {
 		Estimate invoice = new Estimate();
+		NotePad notePad = new NotePad();
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -179,7 +181,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("sales category[20]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("note pad WHO".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWho(currentImportToken);
 			} else if ("order time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("due time".equals(currentFieldToken)) {
@@ -331,21 +333,21 @@ public class InvoiceMapper extends ImportMapper {
 						invoice.addMarkupCharges(chargeDefinition);
 				}
 			} else if ("note pad rec".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPrevId(currentImportToken);
 			} else if ("note pad PHONE".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPhoneNumber(currentImportToken);
 			} else if ("note pad WHAT".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWhat(currentImportToken);
 			} else if ("note pad HOW MANY".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setHowMany(currentImportToken);
 			} else if ("note pad WHAT SIZE".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setWhatSize(currentImportToken);
 			} else if ("note pad PAPER".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPaper(currentImportToken);
 			} else if ("note pad NOTES".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotes(currentImportToken);
 			} else if ("note pad WHEN".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWhen(currentImportToken);
 			} else if ("remarks  rec".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cost rec".equals(currentFieldToken)) {
@@ -772,11 +774,15 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
+		notePad = (NotePad)dataService.addUpdate(notePad);
+		notePad.setId(notePad.getId());
+		invoice.setNotes(notePad);
 		return invoice;
 	}
 	
 	private ModelBase createInvoice(String[] fieldTokens, String[] importTokens) throws Exception {
 		Invoice invoice = new Invoice();
+		NotePad notePad = new NotePad();
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -916,7 +922,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("sales category[20]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("note pad WHO".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWho(currentImportToken);
 			} else if ("order time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("due time".equals(currentFieldToken)) {
@@ -1068,21 +1074,21 @@ public class InvoiceMapper extends ImportMapper {
 						invoice.addMarkupCharges(chargeDefinition);
 				}
 			} else if ("note pad rec".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPrevId(currentImportToken);
 			} else if ("note pad PHONE".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPhoneNumber(currentImportToken);
 			} else if ("note pad WHAT".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWhat(currentImportToken);
 			} else if ("note pad HOW MANY".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setHowMany(currentImportToken);
 			} else if ("note pad WHAT SIZE".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setWhatSize(currentImportToken);
 			} else if ("note pad PAPER".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setPaper(currentImportToken);
 			} else if ("note pad NOTES".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotes(currentImportToken);
 			} else if ("note pad WHEN".equals(currentFieldToken)) {
-				/* TODO */
+				notePad.setNotesWhen(currentImportToken);
 			} else if ("remarks  rec".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cost rec".equals(currentFieldToken)) {
@@ -1509,6 +1515,9 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
+		notePad = (NotePad)dataService.addUpdate(notePad);
+		notePad.setId(notePad.getId());
+		invoice.setNotes(notePad);
 		return invoice;
 	}
 }
