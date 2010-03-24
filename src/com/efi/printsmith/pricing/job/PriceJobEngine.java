@@ -61,7 +61,7 @@ public class PriceJobEngine {
 			if (largeFormatPricingMethod == null) {
 				log.error("No pricing Method found for Copier");
 			} else {
-				largeFormatPricingMethod.priceCopierJob(job);
+				largeFormatPricingMethod.priceLargeFormatJob(job);
 			}
 		} else if (pricingMethod.getTitle().equals("Blank")) {
 			
