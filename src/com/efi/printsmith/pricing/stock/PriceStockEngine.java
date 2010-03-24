@@ -119,8 +119,8 @@ public class PriceStockEngine {
 				markup = stockDefinition.getMarkup6();
 				stockCost = stockDefinition.getCost6();
 			} else {
-				markup = stockDefinition.getMarkup1();
-				stockCost = stockDefinition.getCost1();
+				markup = 0.0;
+				stockCost = 0.0;
 			}
 			if (copierDefinition.getUseCopierStockMarkup()) {
 				markup = copierDefinition.getStockMarkup();
