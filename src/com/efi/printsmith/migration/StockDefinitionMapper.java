@@ -300,7 +300,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("type".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
-					StockType stocktype = dataService.getByStockTypeID(currentImportToken);
+					StockType stocktype = (StockType)dataService.getByName("StockType",currentImportToken);
 					if (stocktype == null)
 					{
 						stocktype = new StockType();
