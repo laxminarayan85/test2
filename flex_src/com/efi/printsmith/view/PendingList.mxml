@@ -218,7 +218,7 @@
 		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "Invoice" || payloadType == "InvoiceBase" || payloadType =="Estmate") {
+			if (payloadType == "Invoice" || payloadType == "InvoiceBase" || payloadType =="Estimate") {
 		  		dataService.getPending("InvoiceBase");
 			}
 		}
