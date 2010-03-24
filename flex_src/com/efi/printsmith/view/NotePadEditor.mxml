@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="327" height="421" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NotePad')}"
+width="327" height="403" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NotePad')}"
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NotePad')}" name="Customer Editor" horizontalScrollPolicy="off" verticalScrollPolicy="off">
                              
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -99,27 +99,27 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
                              
 </mx:Script>
 
-<mx:VBox width="301" height="372">
-	<mx:Canvas width="300" height="371">
+<mx:VBox width="301" height="359">
+	<mx:Canvas width="300" height="360">
 		<mx:TextInput x="83" y="10" width="204" id="who_edit"  />
 		<mx:TextInput x="83" y="38" width="204" id="phone_edit"/>
 		<mx:TextInput x="83" y="68" width="204" id="what_edit"/>
 		<mx:TextInput x="83" y="96" width="64" id="how_many_edit"/>
 		<mx:TextInput x="83" y="298" width="204" id="when_edit"/>
-		<mx:Label x="33" y="300" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.When')}"/>
-		<mx:Label x="10" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Howmany')}"/>
-		<mx:Label x="33" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Paper')}"/>
-		<mx:Label x="34" y="229" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Notes')}"/>
+		<mx:Label x="10" y="300" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.When')}" width="65" textAlign="right"/>
+		<mx:Label x="10" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Howmany')}" width="65" textAlign="right"/>
+		<mx:Label x="10" y="125" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Paper')}" width="65" textAlign="right"/>
+		<mx:Label x="10" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Notes')}" width="65" textAlign="right"/>
 		<mx:TextArea x="83" y="124" width="204" height="64" id="paper_edit"/>
 		<mx:TextInput x="225" y="96" width="62" id="what_size_edit"/>
-		<mx:Label x="155" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.WhatSize')}"/>
-		<mx:Label x="36" y="70" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.What')}"/>
-		<mx:Label x="30" y="42" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Phone')}"/>
-		<mx:Label x="40" y="14" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Who')}"/>
-		<mx:CheckBox x="51" y="196" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.ShowNotePadwhendocum')}"/>
+		<mx:Label x="155" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.WhatSize')}" width="62" textAlign="right"/>
+		<mx:Label x="10" y="70" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.What')}" width="65" textAlign="right"/>
+		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Phone')}" width="65" textAlign="right"/>
+		<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Who')}" width="65" textAlign="right"/>
+		<mx:CheckBox x="34" y="196" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.ShowNotePadwhendocum')}" width="253"/>
 		<mx:TextArea x="83" y="226" width="204" height="64" id="notes_edit"/>
-		<mx:Button x="224" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="63" id="ok_button" click="doOK()"/>
-		<mx:Button x="153" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()"/>
+		<mx:Button x="221" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="66" id="ok_button" click="doOK()"/>
+		<mx:Button x="147" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()" width="66"/>
 	</mx:Canvas>
 </mx:VBox>
 </mx:TitleWindow>

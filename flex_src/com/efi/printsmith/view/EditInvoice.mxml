@@ -51,6 +51,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.dataGridClasses.DataGridColumn;
 			import com.efi.printsmith.data.Estimate;
 			import com.efi.printsmith.data.InvoiceBase;
 			import mx.events.CloseEvent;
@@ -142,6 +143,7 @@
 				eventCharges.dispatch();
 				var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventChangeAccounts.dispatch();
+				doChangeAcct();
 				doAccountPicker();
 			}
 
@@ -202,13 +204,14 @@
 			}
 
 			private function handleFault(ev:FaultEvent):void {  
-				var message:String;
-				              
-				message = "Error: "                          
-				+ ev.fault.faultCode + " - "                                  
-				+ ev.fault.faultDetail + " - "                                  
-				+ ev.fault.faultString;
-				Alert.show(message, "Error");                                 
+				// TODO: This needs to be restored once the hibernate issues are figured out 3/23/2010
+//				var message:String;
+//				
+//				message = "Error: "                          
+//				+ ev.fault.faultCode + " - "                                  
+//				+ ev.fault.faultDetail + " - "                                  
+//				+ ev.fault.faultString;
+//				Alert.show(message, "Error");                                 
 			}
 
 			private function validateForm(event:Event):void
@@ -304,6 +307,7 @@
 			private function doChangeAcct():void
 			{
 				job_costing_stack.selectedChild=account_info_canvas;
+				viewstack3.selectedChild=this.account_total_canvas;
 			}
 			
 			private function showCosting():void
@@ -314,6 +318,7 @@
 			private function showJobs():void
 			{
 				job_costing_stack.selectedChild=this.invoice_job_canvas;
+				viewstack3.selectedChild=this.invoice_total_canvas;
 			}
 
 			public function setAccount(accountItem:Account):void
@@ -465,6 +470,15 @@
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
 			}
 
+			private function gridJobPrice(item:Object, column:DataGridColumn):String {
+				var localJob:Job = item as Job;
+				
+				if (localJob != null && localJob.pricingRecord != null) {
+					return localJob.pricingRecord.totalPrice.toString();
+				} else {
+					return "";
+				}
+			}
 		]]>
 
 	</mx:Script>
@@ -479,7 +493,7 @@
 		<mx:VDividedBox x="0"
 						y="0"
 						width="100%"
-						height="100%"
+						height="585"
 						id="vbox">
 			<mx:VBox height="65"
 					 id="vbox1"
@@ -647,15 +661,15 @@
 							   id="account_info_canvas"
 							   hideEffect="effect"
 							   showEffect="effect">
-						<mx:TextInput x="96"
+						<mx:TextInput x="115"
 									  y="10"
-									  width="245"
+									  width="226"
 									  text="{invoice.name}"
 									  id="name_edit"
 									  height="20"/>
 						<mx:Label x="10"
 								  y="12"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'cartonLabelCmd.InvoiceTitle')}"/>
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'cartonLabelCmd.InvoiceTitle')}" textAlign="right"/>
 						<mx:TextInput x="454"
 									  y="10"
 									  width="195"
@@ -664,12 +678,12 @@
 									  height="20"/>
 						<mx:Label x="349"
 								  y="12"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.InvoiceNumber')}"/>
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.InvoiceNumber')}" width="97" textAlign="right"/>
 						<ns1:AddressEditor x="16"
-										   y="60"
+										   y="61"
 										   id="bill_to_address_editor"
 										   address="{invoice.billToAddress}"
-										   height="157"
+										   height="156"
 										   width="325"/>
 
 						<mx:Panel x="349"
@@ -691,7 +705,7 @@
 											label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
 											groupName="delivery_intent_radio_group"/>
 							<mx:RadioButton x="10"
-											y="77"
+											y="74"
 											label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
 											groupName="delivery_intent_radio_group"/>
 							<mx:ComboBox x="31"
@@ -699,60 +713,60 @@
 										 width="239">
 							</mx:ComboBox>
 							<mx:TextArea x="10"
-										 y="101"
+										 y="99"
 										 text="&#xd;"
 										 height="61"
 										 width="260"/>
 						</mx:Panel>
 						<mx:Label x="349"
-								  y="249"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountStatus')}" textAlign="right"/>
-						<mx:Label x="355"
-								  y="270"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountType')}" textAlign="right"/>
-						<mx:Label x="23"
+								  y="252"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountStatus')}" textAlign="right" width="132"/>
+						<mx:Label x="349"
+								  y="273"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountType')}" textAlign="right" width="132"/>
+						<mx:Label x="16"
 								  y="253"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Takenby')}"/>
-						<mx:Label x="19"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Takenby')}" width="100" textAlign="right"/>
+						<mx:Label x="16"
 								  y="277"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.SalesRep')}"/>
-						<mx:Label x="30"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.SalesRep')}" width="100" textAlign="right"/>
+						<mx:Label x="16"
 								  y="299"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}"/>
-						<mx:Label x="355"
-								  y="292"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.Hold')}" textAlign="right"/>
-						<mx:Label x="379"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" width="100" textAlign="right"/>
+						<mx:Label x="349"
+								  y="294"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.Hold')}" textAlign="right" width="132"/>
+						<mx:Label x="349"
 								  y="314"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.PO')}" textAlign="right"/>
-						<mx:Text x="425"
-								 y="249"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.PO')}" textAlign="right" width="132"/>
+						<mx:Text x="489"
+								 y="252"
 								 width="146"
 								 textAlign="right"
 								 id="cust_discount_text4"
 								 text="{invoice.account.status}"/>
-						<mx:Text x="425"
-								 y="270"
-								 width="133"
+						<mx:Text x="489"
+								 y="273"
+								 width="146"
 								 textAlign="right"
 								 id="cust_discount_text5"
 								 text="{invoice.account.type}"/>
-						<mx:Label x="10"
+						<mx:Label x="16"
 								  y="227"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
-						<mx:ComboBox x="93"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}" width="100" textAlign="right"/>
+						<mx:ComboBox x="124"
 									 y="225"
 									 width="217"
 									 dataProvider="{accountcontacts}"
 									 id="contact_list" labelField="lastName">
 						</mx:ComboBox>
-						<mx:TextInput x="93"
-									  y="253"
+						<mx:TextInput x="124"
+									  y="255"
 									  id="taken_by"
 									  height="20" text="{invoice.takenBy}"/>
 						<fc:AutoComplete id="inv_sales_rep"
-										 x="93"
-										 y="275"
+										 x="124"
+										 y="277"
 										 width="160"
 										 dataProvider="{salesReps}"
 										 labelField="name"
@@ -760,32 +774,32 @@
 										 lookAhead="true"
 										 height="20"/>
 						<fc:AutoComplete id="ship_via_combo"
-										 x="93"
-										 y="297"
+										 x="124"
+										 y="299"
 										 width="160"
 										 dataProvider="{shippingMethods}"
 										 labelField="name"
 										 focusOut="doShipVia()"
 										 lookAhead="true"
 										 height="20"/>
-						<mx:TextInput x="425"
-									  y="290"
+						<mx:TextInput x="489"
+									  y="293"
 									  id="inv_hold_state"
 									  text="{invoice.holdState}"
 									  height="20"/>
-						<mx:TextInput x="425"
-									  y="312"
+						<mx:TextInput x="489"
+									  y="314"
 									  id="inv_po_number"
 									  text="{invoice.customerPO}"
 									  height="20"/>
-						<mx:Label x="16"
+						<mx:Label x="10"
 								  y="36"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCmd.Account')}"/>
-						<mx:Text x="76"
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCmd.Account')}" textAlign="right" width="75"/>
+						<mx:Text x="93"
 								 y="36"
 								 text="{invoice.account.title}"
 								 id="account_text"
-								 width="160"/>
+								 width="143"/>
 						<mx:Button x="245"
 								   y="34"
 								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Assignto')}"
@@ -806,17 +820,13 @@
 									 doubleClick="doDoubleclickInvoiceItem()"
 								  	 doubleClickEnabled="true">
 							<mx:columns>
-								<mx:DataGridColumn headerText=""
-												   width="30"
-												   dataField="col1"/>
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
 												   width="50"
 												   dataField="qtyOrdered"/>
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
 												   dataField="description"/>
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
-												   dataField="price"
-												   width="80"/>
+												   labelFunction="gridJobPrice" textAlign="right" width="80"/>
 
 							</mx:columns>
 						</mx:DataGrid>
@@ -860,7 +870,7 @@
 			</mx:VBox>
 			<mx:VBox height="204"
 					 verticalScrollPolicy="off"
-					 horizontalScrollPolicy="off">
+					 horizontalScrollPolicy="off" width="100%">
 				<mx:Canvas height="156"
 						   width="100%"
 						   verticalScrollPolicy="off"
@@ -883,14 +893,14 @@
 								   width="100%"
 								   height="100%"
 								   id="job_info_canvas">
-							<mx:ComboBox x="67"
+							<mx:ComboBox x="84"
 										 y="10"
-										 width="147"
+										 width="130"
 										 id="format_combo">
 							</mx:ComboBox>
 							<mx:Label x="10"
 									  y="12"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}" width="66" textAlign="right"/>
 							<mx:Text x="10"
 									 y="38"
 									 width="204"
@@ -960,7 +970,7 @@
 					<mx:ViewStack x="611"
 								  y="10"
 								  id="viewstack3"
-								  width="223"
+								  width="100%"
 								  height="144"
 								  verticalScrollPolicy="off"
 								  horizontalScrollPolicy="off">
@@ -971,75 +981,75 @@
 								   horizontalScrollPolicy="off">
 							<mx:Label x="3"
 									  y="10"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.CustDiscount')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.CustDiscount')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="10"
 									 width="117"
 									 textAlign="right"
 									 id="cust_discount_text"
 									 text="{invoice.discount}"
-									 height="20"/>
-							<mx:Label x="11"
+									 height="20" right="5"/>
+							<mx:Label x="3"
 									  y="32"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NetSub')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NetSub')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="32"
 									 width="117"
 									 textAlign="right"
 									 id="net_subtotal_text"
 									 text="{invoice.subTotal}"
-									 height="20"/>
-							<mx:Label x="24"
+									 height="20" right="5"/>
+							<mx:Label x="3"
 									  y="54"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.SalesTax')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.SalesTax')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="54"
 									 width="117"
 									 textAlign="right"
 									 id="sales_tax_text"
-									 height="20"/>
-							<mx:Label x="31"
+									 height="20" right="5"/>
+							<mx:Label x="3"
 									  y="76"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipping')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipping')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="76"
 									 width="117"
 									 textAlign="right"
 									 id="shipping_text"
 									 text="{invoice.shipCharges}"
-									 height="20"/>
-							<mx:Label x="51"
+									 height="20" right="5"/>
+							<mx:Label x="3"
 									  y="98"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Total')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Total')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="98"
 									 width="117"
 									 textAlign="right"
 									 id="total_text"
 									 text="{invoice.grandTotal}"
-									 height="20"/>
-							<mx:Label x="10"
+									 height="20" right="5"/>
+							<mx:Label x="3"
 									  y="120"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.AmtDue')}" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.AmtDue')}" textAlign="right" width="86" right="135"/>
 							<mx:Text x="97"
 									 y="120"
 									 width="117"
 									 textAlign="right"
 									 id="amt_due_text"
 									 text="{invoice.amountDue}"
-									 height="20"/>
+									 height="20" right="5"/>
 						</mx:Canvas>
 						<mx:Canvas label="costing_total_canvas"
 								   width="100%"
 								   height="100%"
 								   verticalScrollPolicy="off"
 								   horizontalScrollPolicy="off">
-							<mx:Label x="23"
+							<mx:Label x="0"
 									  y="10"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}"/>
-							<mx:Label x="19"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}" width="66"/>
+							<mx:Label x="0"
 									  y="54"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}" width="66"/>
 							<mx:Text x="74"
 									 y="54"
 									 width="140"
@@ -1055,9 +1065,9 @@
 									 width="140"
 									 textAlign="right"
 									 id="cust_discount_text0"/>
-							<mx:Label x="30"
+							<mx:Label x="0"
 									  y="32"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}" width="66"/>
 							<mx:Text x="74"
 									 y="32"
 									 width="140"
