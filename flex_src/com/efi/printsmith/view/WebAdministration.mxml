@@ -754,7 +754,7 @@
 				<mx:DataGrid width="250" id="webcatalogsGrid" 
 					dataProvider="{webcatalogsArray}" 
 					editable="true" itemClick="catalogsClickHandler(event);" 
-					itemEditEnd="processCatalogsGridData(event);" height="100%" x="0" y="0">
+					itemEditEnd="processCatalogsGridData(event);" height="100%" x="0" bottom="0">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ECommerceCatalogs')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
@@ -804,7 +804,7 @@
 				<mx:DataGrid width="250" id="webcatagoriesGrid" 
 					dataProvider="{webcatagoriesArray}" 
 					editable="true" 
-					itemEditEnd="processCatagoriesGridData(event);" height="445" y="46" x="0">
+					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="46" x="0">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
@@ -875,12 +875,12 @@
 				<mx:ComboBox id="cboProductsCheckoutTypes" x="440" y="232" enabled="false" dataProvider="{webcheckouttypesArray}" labelField="name" width="160" change="updateProductsArray();"/>
 				<mx:CheckBox id="chkAllowuserenteredquan" x="286" y="260" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Allowuserenteredquan')}" width="268" enabled="false" change="updateProductsArray();"/>
 				<mx:ComboBox id="cboCalculatePriceUsing" x="440" y="290" enabled="false" dataProvider="{}" change="updateProductsArray();" width="160"/>
-				<mx:TextArea id="txtProductsDescription" x="275" y="335" width="570" enabled="false" text="{webproducts.description}" change="updateProductsArray();"/>
+				<mx:TextArea id="txtProductsDescription" y="335" width="570" enabled="false" text="{webproducts.description}" change="updateProductsArray();" right="-64"/>
 
 				<mx:DataGrid width="250" id="webproductsGrid" 
 					dataProvider="{webproductsArray}" 
 					editable="true" 
-					itemEditEnd="processProductsGridData(event);" height="100%" y="0" x="0">
+					itemEditEnd="processProductsGridData(event);" height="100%" x="0" bottom="0">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Products')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
@@ -935,7 +935,7 @@
 				<mx:DataGrid width="250" id="webquestionsGrid" 
 					dataProvider="{webquestionsArray}" 
 					editable="true" 
-					itemEditEnd="processQuestionsGridData(event);" height="100%" y="0" x="0">
+					itemEditEnd="processQuestionsGridData(event);" height="100%" x="0" bottom="0">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Questions')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
@@ -994,7 +994,7 @@
 				<mx:DataGrid width="250" id="webgraphicsGrid" 
 					dataProvider="{webgraphicsArray}" 
 					editable="true" 
-					itemEditEnd="processGraphicsGridData(event);" height="100%" y="0" x="0">
+					itemEditEnd="processGraphicsGridData(event);" height="100%" x="0" bottom="0">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Graphics')}" dataField="name"
 							itemEditor="mx.controls.TextInput" editable="true">
