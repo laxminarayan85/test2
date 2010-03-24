@@ -282,16 +282,25 @@ public class InvoiceBase extends ModelBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
+	
 	public InvoiceBase(long id,  String invoiceNumber, Account account, Contact contact) {
 		this.id = id;
 		this.setInvoiceNumber(invoiceNumber);
 	
 		this.setAccount(account);
 		this.setContact(contact);
+	}	
+	
+	public InvoiceBase(long id,  String invoiceNumber) {
+		this.id = id;
+		this.setInvoiceNumber(invoiceNumber);
+	
+//		this.setAccount(account);
+//		this.setContact(contact);
 	
 		
 	}	
-	
+
 	/**
 	 * @generated
 	 */	
