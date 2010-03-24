@@ -12,6 +12,7 @@ import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
 import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
+import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
 
 public class PriceStockEngine {
@@ -69,14 +70,27 @@ public class PriceStockEngine {
 		long qty = 0;
 		
 		if (job == null) return 0.0;
-		
+		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 		StockDefinition stockDefinition = job.getStock();
 		CopierDefinition copierDefinition = job.getPricingCopier();
 		if (stockDefinition == null) return 0.0;
 
 		if (stockDefinition.getCostunits() > 0) {
-			qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
-			
+			if (pricingMethod.getTitle().equals("Large Format")) {
+				try {
+					if (copierDefinition.getSquareAreaFromFinish())
+						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
+					else
+						qty = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+				}
+				catch (Exception e) {
+					
+				}
+				qty = qty * job.getQtyOrdered();
+			}
+			else {
+				qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
+			}
 			double markup = 0.0;
 			double stockCost = 0.0;
 			
@@ -98,6 +112,9 @@ public class PriceStockEngine {
 			} else if (qty <= stockDefinition.getQtybreak6()) {
 				markup = stockDefinition.getMarkup6();
 				stockCost = stockDefinition.getCost6();
+			} else {
+				markup = stockDefinition.getMarkup1();
+				stockCost = stockDefinition.getQtybreak1();
 			}
 			if (copierDefinition.getUseCopierStockMarkup()) {
 				markup = copierDefinition.getStockMarkup();
