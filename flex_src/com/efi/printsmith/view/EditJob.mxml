@@ -329,7 +329,9 @@
 				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
 				eventStock.dispatch();
 				
-				this.enabled=false;
+				if (isNaN(job.id)) {
+					this.enabled=false;
+				}
 			}
 			public function handleUIControlEvent(evt:ResultEvent):void {
 				evt.result.control.enabled = evt.result.enabled;
@@ -518,10 +520,18 @@
 			private function handleLoadCopierResult(ev:ResultEvent):void
 			{
 				copiers=ev.result as ArrayCollection;
+				if (!isNaN(job.id)) {
+					this.job_pricing_copier.selectedItem = job.pricingCopier;
+					this.job_costing_copier.selectedItem = job.costingCopier;
+				}
 			}
 			private function handleLoadPressResult(ev:ResultEvent):void
 			{
 				presses=ev.result as ArrayCollection;
+				if (!isNaN(job.id)) {
+					this.job_pricing_press.selectedItem = job.pricingPress;
+					this.job_costing_press.selectedItem = job.costingPress;
+				}
 			}
 		
 			private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
@@ -566,11 +576,25 @@
 			private function handleLoadPricingMethodResult(ev:ResultEvent):void
 			{
 				pricingMethods=ev.result as ArrayCollection;
-				var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
-				jobMethodPicker.setStyle("borderAlpha", 0.9);
-				jobMethodPicker.pricingMethods = this.pricingMethods;
-			    jobMethodPicker.addEventListener(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, handleJobMethodPickerCancel);
- 			   	jobMethodPicker.addEventListener(JobMethodSelectEvent.SELECTJOBMETHOD, handleJobMethodPickerSelect);
+				if (isNaN (job.id)) {
+					var jobMethodPicker:JobMethodPicker=JobMethodPicker(PopUpManager.createPopUp(this, JobMethodPicker, true));
+					jobMethodPicker.setStyle("borderAlpha", 0.9);
+					jobMethodPicker.pricingMethods = this.pricingMethods;
+				    jobMethodPicker.addEventListener(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, handleJobMethodPickerCancel);
+	 			   	jobMethodPicker.addEventListener(JobMethodSelectEvent.SELECTJOBMETHOD, handleJobMethodPickerSelect);
+	 			} else {
+	 				if (job.pricingMethod != null) {
+						var i:int = 0;
+						for (i=0; i< this.pricingMethods.length; i++) {
+							var tmpPricingMethod:PreferencesPricingMethod = pricingMethods.getItemAt(i) as PreferencesPricingMethod;
+							
+							if (tmpPricingMethod.id == job.pricingMethod.id) {
+								this.setPricingMethod(tmpPricingMethod);
+								break;
+							}
+						}
+		 			}
+	 			}
 				loadData();
 			}
 
@@ -639,13 +663,15 @@
 
 			private function changeStockDefinition():void
 			{
-				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
-				stockPickerWindow.setStyle("borderAlpha", 0.9);
-			   	stockPickerWindow.setStockArray(stocks);
-				stockPickerWindow.formIsEmpty=true;
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
+				if (isNaN (job.id)) {
+					var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+					stockPickerWindow.setStyle("borderAlpha", 0.9);
+				   	stockPickerWindow.setStockArray(stocks);
+					stockPickerWindow.formIsEmpty=true;
+					stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+					stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+					stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
+				}
 			}
 
 			private function handleStockPickerCancel(evt:StockPickerSelectEvent):void

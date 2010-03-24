@@ -1359,6 +1359,7 @@
 			private function gridSelectionChanged():void
 			{
 				charge = invoice_charge_datagrid.selectedItem as Charge;
+				chargeDefinition = charge.chargeDefinition;
 				updateCurrentState();
 			}
 			

@@ -48,7 +48,18 @@ public class Invoice extends InvoiceBase {
 		this.setInvoiceNumber(invoiceNumber);
 		this.setGrandTotal(grandTotal);
 		this.setCustomerPO(customerPO);
-		
 	}
+	
+	public Invoice(long id,  String invoiceNumber, Account account, Contact contact) {
+		this.id = id;
+		this.setInvoiceNumber(invoiceNumber);
+	
+		this.setAccount(account);
+		this.setContact(contact);
+	}	
+	public Invoice(long id,  String invoiceNumber) {
+		this.id = id;
+		this.setInvoiceNumber(invoiceNumber);
+	}	
 
 }

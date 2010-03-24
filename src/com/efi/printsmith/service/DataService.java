@@ -114,7 +114,8 @@ public class DataService {
 		try {
 			log.debug("** getAll called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			Query findAllQuery = em.createQuery("from " + className + " fetch all properties order by id");
+			Query findAllQuery = em.createQuery("from " + className
+					+ " fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -124,17 +125,16 @@ public class DataService {
 		return resultList;
 	}
 
-	
-	public List<?> getAllNameIDOnly(String className)
-	throws Exception {
+	public List<?> getAllNameIDOnly(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		try {
 			log.debug("** getAllNameIDOnly .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( a.id, a.name) from " + className + " a";
+
+			String queryString = "select new " + className
+					+ "( a.id, a.name) from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -144,23 +144,25 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getStockPicker(String className, List<PreferencesStockDefinition> Columns)
-	throws Exception {
+
+	public List<?> getStockPicker(String className,
+			List<PreferencesStockDefinition> Columns) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
-		
-		columnstring = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, " +
-				"a.cwt1, a.vendor, a.stocknumber, a.onHand, a.committed, a.onOrder, a.shellItem, a.normalRunSize, " +
-				"a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, " +
-				"a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified";
+
+		columnstring = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, "
+				+ "a.cwt1, a.vendor, a.stocknumber, a.onHand, a.committed, a.onOrder, a.shellItem, a.normalRunSize, "
+				+ "a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, "
+				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified";
 		try {
-				
+
 			log.debug("** getAllNameIDOnly .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -170,20 +172,21 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getAccountPicker(String className)
-	throws Exception {
+
+	public List<?> getAccountPicker(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
-		
+
 		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct";
 		try {
-				
+
 			log.debug("** getAccountPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -193,26 +196,75 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getPending(String className)
-	throws Exception {
+
+	public List<?> getPending(String className) throws Exception {
 		List<ModelBase> resultList = new ArrayList<ModelBase>();
 		String columnstring = new String();
-		
+
 		columnstring = "a.id, a.invoiceNumber";
 		try {
-				
-			log.debug("** getPending .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new Invoice" + "( "
+					+ columnstring + ") from Invoice a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
-			for (int i = 0; i<resultList.size(); i++) {
-				InvoiceBase invoice = (InvoiceBase)this.getById("InvoiceBase", ((ModelBase)resultList.get(i)).getId());
-				InvoiceBase resultInvoice = new InvoiceBase(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(), invoice.getContact());
+			for (int i = 0; i < resultList.size(); i++) {
+				Invoice listItem = (Invoice)resultList.get(i);
+				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
+				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact());
 				resultList.set(i, resultInvoice);
 			}
+			
+			List<ModelBase> estimateResultList = new ArrayList<ModelBase>();
+			
+			queryString = "select new Estimate" + "( "+ columnstring + ") from Estimate a";							
+			
+			query = em.createQuery(queryString);
+			estimateResultList = query.getResultList();
+			
+			for (int i = 0; i < estimateResultList.size(); i++) {
+				Estimate listItem = (Estimate)estimateResultList.get(i);
+				Estimate invoice = (Estimate) this.getById("Estimate", ((ModelBase) listItem).getId());
+				Estimate resultInvoice = new Estimate(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact());
+				resultList.add(resultInvoice);
+			}
+			
+			
+//			log.debug("** getPending .");
+//			EntityManager em = entityManagerFactory.createEntityManager();
+//
+//			String queryString = "select new " + className + "( "
+//					+ columnstring + ") from " + className + " a";
+//			Query query = em.createQuery(queryString);
+//
+//			resultList = query.getResultList();
+//			for (int i = 0; i < resultList.size(); i++) {
+//				Object listItem = resultList.get(i);
+//				if (listItem instanceof Invoice) {
+//					Invoice invoice = (Invoice) this.getById("Invoice",
+//							((ModelBase) listItem).getId());
+//					Invoice resultInvoice = new Invoice(invoice.getId(),
+//							invoice.getInvoiceNumber(), invoice.getAccount(),
+//							invoice.getContact());
+//					resultList.set(i, resultInvoice);
+//				} else if (listItem instanceof Estimate) {
+//					Estimate invoice = (Estimate) this.getById("Estimate",
+//							((ModelBase) listItem).getId());
+//					Estimate resultInvoice = new Estimate(invoice.getId(),
+//							invoice.getInvoiceNumber(), invoice.getAccount(),
+//							invoice.getContact());
+//					resultList.set(i, resultInvoice);
+//				} else {
+//					InvoiceBase invoice = (InvoiceBase) this.getById(
+//							"InvoiceBase", ((ModelBase) listItem).getId());
+//					InvoiceBase resultInvoice = new InvoiceBase(
+//							invoice.getId(), invoice.getInvoiceNumber(),
+//							invoice.getAccount(), invoice.getContact());
+//					resultList.set(i, resultInvoice);
+//				}
+//			}
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
@@ -221,20 +273,21 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getContactPicker(String className)
-	throws Exception {
+
+	public List<?> getContactPicker(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
-		
+
 		columnstring = "a.id, a.firstName, a.lastName, a.contactId";
 		try {
-				
+
 			log.debug("** getContactPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -244,20 +297,21 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getPressPicker(String className)
-	throws Exception {
+
+	public List<?> getPressPicker(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
-		
+
 		columnstring = "a.id, a.name, a.machineID, a.machineName";
 		try {
-				
+
 			log.debug("** getPressPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -267,20 +321,21 @@ public class DataService {
 		}
 		return null;
 	}
-	public List<?> getCopierPicker(String className)
-	throws Exception {
+
+	public List<?> getCopierPicker(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
-		
+
 		columnstring = "a.id, a.name, a.oemDeviceID, a.machineName";
 		try {
-				
+
 			log.debug("** getPressPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a";
+
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
-			
+
 			resultList = query.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -290,6 +345,7 @@ public class DataService {
 		}
 		return null;
 	}
+
 	public ModelBase getSingle(String className) {
 		try {
 			log.debug("** getSingle called.");
@@ -302,12 +358,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getByPrevId(String className, String prevId) {
 		try {
 			log.debug("** getByPrevId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from " + className + " where prevId = '" + prevId + "'";
+			String queryString = "from " + className + " where prevId = '"
+					+ prevId + "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
@@ -316,12 +373,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public StockDefinition getByStockId(String stockId) {
 		try {
 			log.debug("** getByStockId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from StockDefinition where stockId = '" + stockId + "'";
+			String queryString = "from StockDefinition where stockId = '"
+					+ stockId + "'";
 			Query query = em.createQuery(queryString);
 			StockDefinition object = (StockDefinition) query.getSingleResult();
 			return object;
@@ -330,13 +388,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
-	
+
 	public StockType getByStockTypeID(String stocktypeId) {
 		try {
 			log.debug("** getByStocktypeId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from StockType where viewableID = '" + stocktypeId + "'";
+			String queryString = "from StockType where viewableID = '"
+					+ stocktypeId + "'";
 			Query query = em.createQuery(queryString);
 			StockType object = (StockType) query.getSingleResult();
 			return object;
@@ -345,13 +403,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
-	
+
 	public PressDefinition getByPressId(String pressId) {
 		try {
 			log.debug("** getByPressId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from PressDefinition where pressId = '" + pressId + "'";
+			String queryString = "from PressDefinition where pressId = '"
+					+ pressId + "'";
 			Query query = em.createQuery(queryString);
 			PressDefinition object = (PressDefinition) query.getSingleResult();
 			return object;
@@ -360,12 +418,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public Account getByAccountId(String accountId) {
 		try {
 			log.debug("** getByAccountId called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from Account where accountId = '" + accountId + "'";
+			String queryString = "from Account where accountId = '" + accountId
+					+ "'";
 			Query query = em.createQuery(queryString);
 			Account object = (Account) query.getSingleResult();
 			return object;
@@ -374,12 +433,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getByName(String className, String name) {
 		try {
 			log.debug("** getByName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from " + className + " where name = '" + name + "'";
+			String queryString = "from " + className + " where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
@@ -409,11 +469,11 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public StockColors getByStockColorName(String name) throws Exception {
 		try {
 			log.debug("** getBySockColorName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockColors where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
@@ -424,10 +484,11 @@ public class DataService {
 		}
 		return null;
 	}
+
 	public StockClass getByStockClassName(String name) throws Exception {
 		try {
 			log.debug("** getBySockClassName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockClass where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
@@ -438,12 +499,14 @@ public class DataService {
 		}
 		return null;
 	}
+
 	public SalesCategory getBySalesCategoryName(String name) throws Exception {
 		try {
 			log.debug("** getBySalesCategoryName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from SalesCategory where name = '" + name + "'";
+			String queryString = "from SalesCategory where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			SalesCategory object = (SalesCategory) query.getSingleResult();
 			return object;
@@ -452,10 +515,11 @@ public class DataService {
 		}
 		return null;
 	}
+
 	public StockFinish getByStockFinishName(String name) throws Exception {
 		try {
 			log.debug("** getBySockFinishName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockFinish where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
@@ -466,10 +530,11 @@ public class DataService {
 		}
 		return null;
 	}
+
 	public StockGroup getByStockGroupName(String name) throws Exception {
 		try {
 			log.debug("** getBySockGroupName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockGroup where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
@@ -480,13 +545,14 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public GenericColors getByGenericColorsName(String name) throws Exception {
 		try {
 			log.debug("** getByGenericColorsName called.");
-			
+
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from GenericColors where name = '" + name + "'";
+			String queryString = "from GenericColors where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			GenericColors object = (GenericColors) query.getSingleResult();
 			return object;
@@ -495,7 +561,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public StockGrade getByStockGradeName(String name) throws Exception {
 		try {
 			log.debug("** getByStockGradeName called.");
@@ -509,7 +575,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public CostCenter getByCostCenterName(String name) throws Exception {
 		try {
 			log.debug("** getByCostCenterName called.");
@@ -523,7 +589,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public Location getByLocationName(String name) throws Exception {
 		try {
 			log.debug("** getByLocationName called.");
@@ -537,7 +603,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public PriceList getByPirceListName(String name) throws Exception {
 		try {
 			log.debug("** getByPriceListName called.");
@@ -551,12 +617,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public ShippingMethod getByShippingMethodName(String name) throws Exception {
 		try {
 			log.debug("** getByShippingMethodName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from ShippingMethod where name = '" + name + "'";
+			String queryString = "from ShippingMethod where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			ShippingMethod object = (ShippingMethod) query.getSingleResult();
 			return object;
@@ -565,7 +632,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public Substrate getBySubstrateName(String name) throws Exception {
 		try {
 			log.debug("** getBySubstrateName called.");
@@ -579,7 +646,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public TaxTable getByTaxTableName(String name) throws Exception {
 		try {
 			log.debug("** getByTaxTableName called.");
@@ -593,7 +660,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public WasteChart getByWasteChartName(String name) throws Exception {
 		try {
 			log.debug("** getByWasteChartName called.");
@@ -607,12 +674,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public ChargeCommand getByChargeCommandName(String name) throws Exception {
 		try {
 			log.debug("** getByChargeCommandName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from ChargeCommand where name = '" + name + "'";
+			String queryString = "from ChargeCommand where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			ChargeCommand object = (ChargeCommand) query.getSingleResult();
 			return object;
@@ -621,12 +689,13 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	public ChargeCategory getByChargeCategoryName(String name) throws Exception {
 		try {
 			log.debug("** getByChargeCategoryName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-			String queryString = "from ChargeCategory where name = '" + name + "'";
+			String queryString = "from ChargeCategory where name = '" + name
+					+ "'";
 			Query query = em.createQuery(queryString);
 			ChargeCategory object = (ChargeCategory) query.getSingleResult();
 			return object;
@@ -635,7 +704,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
 		try {
@@ -705,11 +774,13 @@ public class DataService {
 		return new ArrayList<Contact>();
 	}
 
-	// The following Id generation code is a temporary placeholder for the real handlers, but should work for a few days in 
+	// The following Id generation code is a temporary placeholder for the real
+	// handlers, but should work for a few days in
 	// a single user environment. And yes it's ugly as snot...
-	
+
 	private PreferencesSequenceValues getSequenceValues() throws Exception {
-		PreferencesSequenceValues sequenceValues = (PreferencesSequenceValues) this.getSingle("PreferencesSequenceValues");
+		PreferencesSequenceValues sequenceValues = (PreferencesSequenceValues) this
+				.getSingle("PreferencesSequenceValues");
 		if (sequenceValues == null) {
 			sequenceValues = new PreferencesSequenceValues();
 			sequenceValues.setAccount(new Long(0));
@@ -727,103 +798,128 @@ public class DataService {
 		}
 		return sequenceValues;
 	}
+
 	private void setAccountId(Account account) throws Exception {
-		if (account.getAccountId() != null && account.getAccountId().length() > 0) return;
+		if (account.getAccountId() != null
+				&& account.getAccountId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getAccount()+1;
+		Long value = sequenceValues.getAccount() + 1;
 		account.setAccountId(value.toString());
 		sequenceValues.setAccount(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setEmployeeId(Employee employee) throws Exception {
-		if (employee.getEmployeeId() != null && employee.getEmployeeId().length() > 0) return;
+		if (employee.getEmployeeId() != null
+				&& employee.getEmployeeId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getEmployee()+1;
+		Long value = sequenceValues.getEmployee() + 1;
 		employee.setEmployeeId(value.toString());
 		sequenceValues.setEmployee(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setContactId(Contact contact) throws Exception {
-		if (contact.getContactId() != null && contact.getContactId().length() > 0) return;
+		if (contact.getContactId() != null
+				&& contact.getContactId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getContact()+1;
+		Long value = sequenceValues.getContact() + 1;
 		contact.setContactId(value.toString());
 		sequenceValues.setContact(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setBrokerId(Broker broker) throws Exception {
-		if (broker.getBrokerId() != null && broker.getBrokerId().length() > 0) return;
+		if (broker.getBrokerId() != null && broker.getBrokerId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getBroker()+1;
+		Long value = sequenceValues.getBroker() + 1;
 		broker.setBrokerId(value.toString());
 		sequenceValues.setBroker(value);
 		this.addUpdate(sequenceValues);
 	}
 
-	private void setStockDefinitionId(StockDefinition stockDefinition) throws Exception {
-		if (stockDefinition.getStockId() != null && stockDefinition.getStockId().length() > 0) return;
+	private void setStockDefinitionId(StockDefinition stockDefinition)
+			throws Exception {
+		if (stockDefinition.getStockId() != null
+				&& stockDefinition.getStockId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getStockDefinition()+1;
+		Long value = sequenceValues.getStockDefinition() + 1;
 		stockDefinition.setStockId(value.toString());
 		sequenceValues.setStockDefinition(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setInvoiceId(Invoice invoice) throws Exception {
-		if (invoice.getInvoiceNumber() != null && invoice.getInvoiceNumber().length() > 0) return;
+		if (invoice.getInvoiceNumber() != null
+				&& invoice.getInvoiceNumber().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getInvoice()+1;
+		Long value = sequenceValues.getInvoice() + 1;
 		invoice.setInvoiceNumber(value.toString());
 		sequenceValues.setInvoice(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setJobId(Job job) throws Exception {
-		if (job.getJobNumber() != null && job.getJobNumber().length() > 0) return;
+		if (job.getJobNumber() != null && job.getJobNumber().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getJob()+1;
+		Long value = sequenceValues.getJob() + 1;
 		job.setJobNumber(value.toString());
 		sequenceValues.setJob(value);
 		this.addUpdate(sequenceValues);
 	}
-	
-	private void setPressDefinitionId(PressDefinition pressDefinition) throws Exception {
-		if (pressDefinition.getPressId() != null && pressDefinition.getPressId().length() > 0) return;
+
+	private void setPressDefinitionId(PressDefinition pressDefinition)
+			throws Exception {
+		if (pressDefinition.getPressId() != null
+				&& pressDefinition.getPressId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getPressDefinition()+1;
+		Long value = sequenceValues.getPressDefinition() + 1;
 		pressDefinition.setPressId(value.toString());
 		sequenceValues.setPressDefinition(value);
 		this.addUpdate(sequenceValues);
 	}
-	
-	private void setCopierDefinitionId(CopierDefinition copierDefinition) throws Exception {
-		if (copierDefinition.getCopierId() != null && copierDefinition.getCopierId().length() > 0) return;
+
+	private void setCopierDefinitionId(CopierDefinition copierDefinition)
+			throws Exception {
+		if (copierDefinition.getCopierId() != null
+				&& copierDefinition.getCopierId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getCopierDefinition()+1;
+		Long value = sequenceValues.getCopierDefinition() + 1;
 		copierDefinition.setCopierId(value.toString());
 		sequenceValues.setCopierDefinition(value);
 		this.addUpdate(sequenceValues);
 	}
+
 	private void setCampaignId(Campaigns campaign) throws Exception {
-		if (campaign.getCampaignId() != null && campaign.getCampaignId().length() > 0) return;
+		if (campaign.getCampaignId() != null
+				&& campaign.getCampaignId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getCampaign()+1;
+		Long value = sequenceValues.getCampaign() + 1;
 		campaign.setCampaignId(value.toString());
 		sequenceValues.setCampaign(value);
 		this.addUpdate(sequenceValues);
 	}
+
 	private void setGradeId(Grade grade) throws Exception {
-		if (grade.getGradeId() != null && grade.getGradeId().length() > 0) return;
+		if (grade.getGradeId() != null && grade.getGradeId().length() > 0)
+			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getGrade()+1;
+		Long value = sequenceValues.getGrade() + 1;
 		grade.setGradeId(value.toString());
 		sequenceValues.setGrade(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
 		try {
@@ -837,45 +933,47 @@ public class DataService {
 				// Existing object is updated - do nothing.
 			}
 			if (object instanceof Account) {
-				this.setAccountId((Account)object);
+				this.setAccountId((Account) object);
 			} else if (object instanceof Employee) {
-				this.setEmployeeId((Employee)object);
+				this.setEmployeeId((Employee) object);
 			} else if (object instanceof Contact) {
-				this.setContactId((Contact)object);
+				this.setContactId((Contact) object);
 			} else if (object instanceof Broker) {
-				this.setBrokerId((Broker)object);
+				this.setBrokerId((Broker) object);
 			} else if (object instanceof StockDefinition) {
-				this.setStockDefinitionId((StockDefinition)object);
+				this.setStockDefinitionId((StockDefinition) object);
 			} else if (object instanceof Invoice) {
-				this.setInvoiceId((Invoice)object);
+				this.setInvoiceId((Invoice) object);
 			} else if (object instanceof Job) {
-				this.setJobId((Job)object);			
+				this.setJobId((Job) object);
 			} else if (object instanceof PressDefinition) {
-				this.setPressDefinitionId((PressDefinition)object);
+				this.setPressDefinitionId((PressDefinition) object);
 			} else if (object instanceof CopierDefinition) {
-				this.setCopierDefinitionId((CopierDefinition)object);
-			}else if (object instanceof Campaigns) {
-				this.setCampaignId((Campaigns)object);
-			}else if (object instanceof Grade) {
-				this.setGradeId((Grade)object);			
+				this.setCopierDefinitionId((CopierDefinition) object);
+			} else if (object instanceof Campaigns) {
+				this.setCampaignId((Campaigns) object);
+			} else if (object instanceof Grade) {
+				this.setGradeId((Grade) object);
 			}
-			
+
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			try {
 				object = em.merge(object);
 				tx.commit();
-//				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
-//						object.getClass().getSimpleName(), object.getId());
+				 MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
+				 object.getClass().getSimpleName(), object.getId());
 			} catch (RollbackException e) {
-				ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
+				ConstraintViolationException cve = (ConstraintViolationException) e
+						.getCause();
 				SQLException sqle = cve.getSQLException().getNextException();
 				while (sqle != null) {
 					sqle = sqle.getNextException();
 				}
 			} catch (PersistenceException e) {
 				log.error("** Error: " + e.getMessage());
-				GenericJDBCException jdbcEx = (GenericJDBCException) e.getCause();
+				GenericJDBCException jdbcEx = (GenericJDBCException) e
+						.getCause();
 				System.out.println(jdbcEx.getSQL());
 				tx.rollback();
 				throw new Exception(e.getMessage());
@@ -910,7 +1008,8 @@ public class DataService {
 				try {
 					command.addChildren(category);
 					command = em.merge(command);
-					category = command.getChildren().get(command.getChildren().size()-1);
+					category = command.getChildren().get(
+							command.getChildren().size() - 1);
 					tx.commit();
 					return category;
 				} catch (Exception e) {
@@ -946,7 +1045,8 @@ public class DataService {
 				try {
 					category.addChildren(charge);
 					category = em.merge(category);
-					charge = category.getChildren().get(category.getChildren().size()-1);
+					charge = category.getChildren().get(
+							category.getChildren().size() - 1);
 					tx.commit();
 					// MessageServiceAdapter.sendNotification("Object Created");
 					return charge;
@@ -1001,9 +1101,10 @@ public class DataService {
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getInvoiceByAccountId(String className, Long id)
-	throws Exception {
+			throws Exception {
 		String columnstring = new String();
 
 		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal, a.customerPO";
@@ -1011,11 +1112,14 @@ public class DataService {
 		try {
 			log.debug("** getByaccountid Id called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		//cej	
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a where a.account.id = :id";
-		//	String queryString = "select a.id, a.name, a.invoiceName from " + className
-			//		+ " a where a.account.id = :id";
-		
+			// cej
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className
+					+ " a where a.account.id = :id";
+			// String queryString = "select a.id, a.name, a.invoiceName from " +
+			// className
+			// + " a where a.account.id = :id";
+
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);
 			List<Invoice> invoicelist = query.getResultList();
@@ -1027,9 +1131,10 @@ public class DataService {
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getEstimateByAccountId(String className, Long id)
-	throws Exception {
+			throws Exception {
 		String columnstring = new String();
 
 		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal";
@@ -1037,11 +1142,14 @@ public class DataService {
 		try {
 			log.debug("** getEstimateByAccountId Id called.");
 			EntityManager em = entityManagerFactory.createEntityManager();
-		//cej	
-			String queryString = "select new " + className+ "( "+columnstring+") from " + className + " a where a.account.id = :id";
-		//	String queryString = "select a.id, a.name, a.invoiceName from " + className
-			//		+ " a where a.account.id = :id";
-		
+			// cej
+			String queryString = "select new " + className + "( "
+					+ columnstring + ") from " + className
+					+ " a where a.account.id = :id";
+			// String queryString = "select a.id, a.name, a.invoiceName from " +
+			// className
+			// + " a where a.account.id = :id";
+
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);
 			List<Invoice> invoicelist = query.getResultList();
@@ -1053,8 +1161,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByAccountId(String className, Long id)
 			throws Exception {
@@ -1076,7 +1183,7 @@ public class DataService {
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByClockInOut(String className, Employee employee)
 			throws Exception {
@@ -1267,8 +1374,7 @@ public class DataService {
 							.createEntityManager();
 					Session session = (Session) em.getDelegate();
 					Transaction tx = session.beginTransaction();
-					resultList = query.getExecutableCriteria(session)
-							.list();
+					resultList = query.getExecutableCriteria(session).list();
 					tx.commit();
 					session.close();
 

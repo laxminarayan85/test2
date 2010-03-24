@@ -195,7 +195,12 @@
 
 			private function handleSaveResult(ev:ResultEvent):void
 			{
-				this.invoice = ev.result as InvoiceBase;
+				//this.invoice = ev.result as InvoiceBase;
+				if (editorType == EDITESTIMATE) {
+					this.invoice = new Estimate();
+				} else {
+					this.invoice = new Invoice();
+				}
 			}
 
 			private function handleDeleteResult(event:Event):void
