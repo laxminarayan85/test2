@@ -1109,6 +1109,7 @@
 
 			public function init():void
 			{
+				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
 //				pressDataService.getAll("PressDefinition");
 //				locationDataService.getAll("Location");
