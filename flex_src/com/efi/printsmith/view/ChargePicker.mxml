@@ -12,7 +12,7 @@
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				name="Job Charges"
 				horizontalScrollPolicy="off"
-				verticalScrollPolicy="off"
+				verticalScrollPolicy="auto"
 				xmlns:ns1="com.adobe.flex.extras.controls.*"
 				fontSize="9"
 				titleIcon="@Embed(source='../../../../assets/new_job.png')"
