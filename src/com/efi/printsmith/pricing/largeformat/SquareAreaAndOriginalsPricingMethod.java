@@ -28,7 +28,7 @@ public class SquareAreaAndOriginalsPricingMethod extends
 		catch (Exception e) {
 			
 		}
-		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), area * job.getQtyOrdered());
+		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), area);
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;
 		double unitPrice = 0.0;
@@ -40,11 +40,11 @@ public class SquareAreaAndOriginalsPricingMethod extends
 				pricingRecord.setUnitPrice(pricePerCopy);
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * area * job.getPressQty()) + stockPrice*job.getQtyOrdered());
+						pricingRecord.setTotalPrice((pricePerCopy * area * job.getQtyOrdered()) + stockPrice*job.getQtyOrdered());
 						unitPrice = pricingRecord.getTotalPrice() / job.getQtyOrdered();
 						pricingRecord.setUnitPrice(unitPrice);
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * area * job.getPressQty()*2) + stockPrice*job.getQtyOrdered());					
+						pricingRecord.setTotalPrice((pricePerCopy * area * job.getQtyOrdered()*2) + stockPrice*job.getQtyOrdered());					
 						unitPrice = pricingRecord.getTotalPrice() / (job.getQtyOrdered() * 2);
 						pricingRecord.setUnitPrice(unitPrice);
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
