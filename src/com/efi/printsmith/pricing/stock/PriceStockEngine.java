@@ -86,7 +86,13 @@ public class PriceStockEngine {
 				catch (Exception e) {
 					
 				}
-				qty = qty * job.getQtyOrdered();
+				if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
+					qty = qty * job.getTotalCopies();
+				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
+					qty = qty * job.getQtyOrdered();
+				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
+					qty = qty * job.getQtyOrdered();
+				}
 			}
 			else {
 				qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
