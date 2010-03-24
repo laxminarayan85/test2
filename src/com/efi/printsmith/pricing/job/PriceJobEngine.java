@@ -1,5 +1,7 @@
 package com.efi.printsmith.pricing.job;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
@@ -8,8 +10,10 @@ import com.efi.printsmith.pricing.print.PrintPricingMethod;
 import com.efi.printsmith.pricing.print.PrintPricingMethodFactory;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethod;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
+import com.efi.printsmith.service.PricingService;
 
 public class PriceJobEngine {
+	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
 	static public Job priceJob(Job job) {
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 		
@@ -36,18 +40,29 @@ public class PriceJobEngine {
 //		}
 		if (pricingMethod.getTitle().equals("B&W")) {
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory.createCopierPricingMethod(job.getPricingCopier().getMethod());
-			copierPricingMethod.priceCopierJob(job);			
+			if (copierPricingMethod == null) {
+				log.error("No pricing Method found for Copier");
+			} else {
+				copierPricingMethod.priceCopierJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Color")) {
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory.createCopierPricingMethod(job.getPricingCopier().getMethod());
-			copierPricingMethod.priceCopierJob(job);						
+			if (copierPricingMethod == null) {
+				log.error("No pricing Method found for Copier");
+			} else {
+				copierPricingMethod.priceCopierJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Printing")) {
 //			PrintPricingMethod printPricingMethod = PrintPricingMethodFactory.createPrintPricingMethod(job.getPricingPress());
 		} else if (pricingMethod.getTitle().equals("Roll-Fed")) {
 			
 		} else if (pricingMethod.getTitle().equals("Large Format")) {
 			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory.createLargeFormatPricingMethod(job.getPricingCopier().getMethod());			
-			if (largeFormatPricingMethod != null)
-				largeFormatPricingMethod.priceLargeFormatJob(job);
+			if (largeFormatPricingMethod == null) {
+				log.error("No pricing Method found for Copier");
+			} else {
+				largeFormatPricingMethod.priceCopierJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Blank")) {
 			
 		} else if (pricingMethod.getTitle().equals("List")) {
