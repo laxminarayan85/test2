@@ -1541,21 +1541,21 @@
 										 id="finished_check"
 										 fontSize="9"
 										 y="4"
-										 change="this.updatePrice()"
+										 focusOut="this.updatePrice()"
 										 selected="{charge.finished}" width="75"/>
 							<mx:CheckBox x="103"
 										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
 										 id="taxable_check"
 										 fontSize="9"
 										 y="4"
-										 change="this.updatePrice()"
+										 focusOut="this.updatePrice()"
 										 selected="{charge.taxable}" width="65"/>
 							<mx:CheckBox x="176"
 										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
 										 id="brokered_check"
 										 fontSize="9"
 										 y="4"
-										 change="this.updatePrice()"
+										 focusOut="this.updatePrice()"
 										 selected="{charge.brokered}" width="70"/>
 							<mx:CheckBox x="254"
 										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
@@ -1658,14 +1658,14 @@
 										  y="191"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="in_sets_of_edit" visible="false"/>
 							<mx:TextInput x="134"
 										  y="163"
 										  width="100"
 										  height="20"
 										  id="minimum_edit" visible="false"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  text="{charge.minimumCharge}"/>
 							<mx:Text x="10"
 									 y="193"
@@ -1675,14 +1675,14 @@
 										  width="100"
 										  height="20"
 										  id="material_quantity_edit" visible="false"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  text="{charge.materialQty}"/>
 							<mx:TextInput x="134"
 										  y="233"
 										  width="100"
 										  height="20"
 										  id="material_edit" visible="false"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  text="{charge.chargeDefinition.minimum}"/>
 <!--							<mx:TextInput x="134"
 										  y="254"
@@ -1692,19 +1692,19 @@
 -->							
 			                <ns2:TimeEntry id="time_start_edit" showSeconds="false" is24Hour="true" x="81" y="283"
 			                          backgroundColor="#000000" backgroundAlpha="0.05"
-			                          borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"  visible="false"/> 
+			                          borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"  visible="false" dataChange="updatePrice()"/> 
 			                          
 							<mx:TextInput x="134"
 										  y="275"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="quantity_edit" visible="false"/>
 							<mx:TextInput x="366"
 										  y="270"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="up_edit" visible="false"/>
 							<mx:Text x="10"
 									 y="256"
@@ -1736,7 +1736,7 @@
 										  width="100"
 										  height="20"
 										  text="{charge.rate}"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="rate_edit" visible="false"/>
 							<mx:Text x="242"
 									 y="188"
@@ -1746,13 +1746,13 @@
 										  width="100"
 										  height="20"
 										  id="material_in_sets_of_edit" visible="false"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  text="{charge.materialSets}"/>
 							<mx:TextInput x="366"
 										  y="228"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="quantity_per_set_edit" visible="false"/>
 							<mx:Text x="242"
 									 y="231"
@@ -1770,7 +1770,7 @@
 										  y="296"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="cuts_edit" visible="false"/>
 							<mx:Text x="10"
 									 y="298"
@@ -1779,7 +1779,7 @@
 										  y="317"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="percent_coverage_edit" visible="false"/>
 							<mx:Text x="10"
 									 y="319"
@@ -1788,13 +1788,13 @@
 										  y="312"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="total_weight_edit" visible="false"/>
 							<mx:TextInput x="134"
 										  y="391"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="cover_lb_edit" visible="false"/>
 							<mx:Text x="10"
 									 y="393"
@@ -1803,7 +1803,7 @@
 										  y="384"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="price_lb_edit" visible="false"/>
 							<mx:Text x="10"
 									 y="386"
@@ -1818,7 +1818,7 @@
 										  y="291"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="lbs_of_ink_edit" visible="false"/>
 							<mx:Text x="242"
 									 y="293"
@@ -1827,13 +1827,13 @@
 										  y="165"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="number_of_colors_edit" visible="false"/>
 							<mx:TextInput x="366"
 										  y="333"
 										  width="100"
 										  height="20"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										  id="area_edit" visible="false"/>
 							<mx:Text x="242"
 									 y="167"
@@ -1843,19 +1843,19 @@
 									 text="Area:&#xd;" width="116" textAlign="right" height="18" id="area_label" visible="false"/>
 							<mx:CheckBox x="517"
 										 y="212"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										 id="linear_charge_location_top_check0" visible="false"/>
 							<mx:CheckBox x="542"
 										 y="243"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										 id="linear_charge_location_right_check0" visible="false"/>
 							<mx:CheckBox x="493"
 										 y="243"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()"
 										 id="linear_charge_location_left_check0" visible="false"/>
 							<mx:CheckBox x="517"
 										 y="273"
- 										  change="this.updatePrice()"
+ 										  focusOut="this.updatePrice()" 
 										 id="linear_charge_location_bottom_check0" visible="false"/>
 							<mx:Panel x="515" y="238" width="19" height="27" layout="absolute" borderThicknessBottom="2" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessTop="2" headerHeight="0" dropShadowEnabled="false" borderColor="#000000" id="panel1" visible="false">
 							</mx:Panel>
