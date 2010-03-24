@@ -1,10 +1,10 @@
-package com.efi.printsmith.commands.commandCommands.Employee
+package com.efi.printsmith.commands.commandCommands.Employees
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
 	import com.efi.printsmith.events.ModelGetAllEvent;
-	import com.efi.printsmith.events.commandEvents.Invoice.EmployeeClockInOutEvent;
-	import com.efi.printsmith.business.commandDelegates.Invoice.EmployeeClockInOutDelegate;
+	import com.efi.printsmith.events.commandEvents.Employees.EmployeeClockInOutEvent;
+	import com.efi.printsmith.business.commandDelegates.Employees.EmployeeClockInOutDelegate;
 	
 	public class EmployeeClockInOutCommand implements ICommand
 	{

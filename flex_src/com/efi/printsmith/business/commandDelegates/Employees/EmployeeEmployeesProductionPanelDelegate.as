@@ -2,7 +2,7 @@ package com.efi.printsmith.business.commandDelegates.Employees
 {
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
-	import com.efi.printsmith.events.commandEvents.Invoice.EmployeeEmployeesProductionPanelEvent;
+	import com.efi.printsmith.events.commandEvents.Employees.EmployeeEmployeesProductionPanelEvent;
 	
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
