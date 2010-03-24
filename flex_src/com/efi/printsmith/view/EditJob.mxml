@@ -168,6 +168,10 @@
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceEstimatingPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadEstimatingPreferencesResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:RemoteObject id="jobService" destination="jobService">
 		<mx:method name="assignPricingCopierToJob" fault="handleFault(event)" result="handleAssignPricingCopierResult(event)"/>
@@ -192,6 +196,7 @@
 			import com.efi.printsmith.data.ChargeCommand;
 			import com.efi.printsmith.data.StockDefinition;
 			import com.efi.printsmith.data.PreferencesSystem;
+			import com.efi.printsmith.data.PreferencesEstimating;
 
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -223,9 +228,15 @@
 		    
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
+		    
+		    [Bindable]                                         
+		    private var estimatingPreferences:PreferencesEstimating;
 		
 			[Bindable]                                
 			private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]                                
+			private var estimatingPreferencesArray:ArrayCollection = new ArrayCollection();
 
 			[Bindable]
 			private var dimensions:ArrayCollection=new ArrayCollection();
@@ -283,7 +294,14 @@
 					check_taxtable.visible = true;
 				}
 		
-			}	                                 
+			}
+			
+			private function handleLoadEstimatingPreferencesResult(ev:ResultEvent):void {
+				estimatingPreferencesArray = ev.result as ArrayCollection;
+				if (estimatingPreferencesArray.length > 0) {
+					estimatingPreferences = estimatingPreferencesArray.getItemAt(0) as PreferencesEstimating;
+				}
+			}	                                  
 
 			public function init():void
 			{
@@ -291,7 +309,8 @@
 				PopUpManager.centerPopUp(this);
 				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
-
+				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
+				
 				if (job == null) {
 					job=new Job();
 					job.parentSize = "";
@@ -349,6 +368,7 @@
 				dimensionDataService.getAll("Dimension");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");				
 				dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
@@ -687,9 +707,18 @@
 				if (evt.stockDefinition != null)
 				{
 //					this.job.stock=evt.stockDefinition;
-					this.job.parentSize = evt.stockDefinition.normalRunSize;
-					this.job.runSize = evt.stockDefinition.normalRunSize;
-					this.job.finishSize = evt.stockDefinition.normalRunSize;
+					if (this.job_type.text == "Large Format") {
+						var cutoff:String;
+						cutoff = estimatingPreferences.defaultPressCuttOff.toString();
+						this.job.parentSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						this.job.runSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff;
+					}
+					else {
+						this.job.parentSize = evt.stockDefinition.normalRunSize;
+						this.job.runSize = evt.stockDefinition.normalRunSize;
+						this.job.finishSize = evt.stockDefinition.normalRunSize;
+					}
 					jobService.assignStockToJob(this.job, evt.stockDefinition);
 //					var i:int;
 //					if (this.job.charges == null) this.job.charges = new ArrayCollection();
