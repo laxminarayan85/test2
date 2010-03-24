@@ -195,10 +195,10 @@ public class DataService {
 	}
 	public List<?> getPending(String className)
 	throws Exception {
-		List<?> resultList = new ArrayList<Object>();
+		List<ModelBase> resultList = new ArrayList<ModelBase>();
 		String columnstring = new String();
 		
-		columnstring = "a.id, a.invoiceNumber a.account_id, a.contact_id";
+		columnstring = "a.id, a.invoiceNumber";
 		try {
 				
 			log.debug("** getPending .");
@@ -208,6 +208,11 @@ public class DataService {
 			Query query = em.createQuery(queryString);
 			
 			resultList = query.getResultList();
+			for (int i = 0; i<resultList.size(); i++) {
+				InvoiceBase invoice = (InvoiceBase)this.getById("InvoiceBase", ((ModelBase)resultList.get(i)).getId());
+				InvoiceBase resultInvoice = new InvoiceBase(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(), invoice.getContact());
+				resultList.set(i, resultInvoice);
+			}
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
