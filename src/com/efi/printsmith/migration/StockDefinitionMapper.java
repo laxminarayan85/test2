@@ -300,11 +300,12 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("type".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
-					StockType stocktype = (StockType)dataService.getByName("StockType",currentImportToken);
+					StockType stocktype = dataService.getByStockTypeID(currentImportToken);
 					if (stocktype == null)
 					{
 						stocktype = new StockType();
 						stocktype.setName(currentImportToken);
+						stocktype.setViewableID(Utilities.tokenToInt(currentImportToken));
 					}
 					stockDefinition.setStktype(stocktype);
 				}
