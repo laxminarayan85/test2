@@ -5,7 +5,7 @@
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:hc="com.hillelcoren.components.*"
 				xmlns:ns2="com.efi.printsmith.components.*"
-				width="862"
+				width="886"
 				height="693"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				creationComplete="init()"
@@ -1405,7 +1405,11 @@
 				}
 				if (!this.editingCharge) {
 					charges.addItem(this.charge);
-				}
+				} 
+//				else {
+//					var index:int = invoice_charge_datagrid.selectedIndex;
+//					charges.setItemAt(charge, index);
+//				}
 				
 				chargeTree.selectedItem = null;
 				invoice_charge_datagrid.selectedItem = null;
@@ -1459,7 +1463,13 @@
 				var localCharge:Charge = ev.result as Charge;
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
-				charge = localCharge;
+				charge.price = localCharge.price;
+				charge.quantity = localCharge.quantity;
+				charge.materialQty = localCharge.materialQty;
+				charge.rate = localCharge.rate;
+				charge.sets = localCharge.sets;
+				charge.materialSets = localCharge.materialSets;
+//				charge = localCharge;
 //				job.pricingRecord.totalPrice = localCharge.pricingRecord.totalPrice;	
 //				job.pricingRecord = localCharge.pricingRecord;
 			}
@@ -1525,7 +1535,7 @@
 
 	<mx:VBox width="100%"
 			 height="100%"
-			 creationPolicy="all">
+			 creationPolicy="all" horizontalScrollPolicy="off">
 		<mx:Canvas width="100%"
 				   height="100%"
 				   verticalScrollPolicy="off"
@@ -1569,7 +1579,7 @@
 							 fontWeight="bold"/>
 				</mx:Canvas>
 				<mx:Canvas width="100%"
-						   height="100%">
+						   height="100%" horizontalScrollPolicy="off">
 					<mx:VDividedBox width="100%"
 									right="6"
 									bottom="0"
