@@ -584,7 +584,7 @@
 				this.enabled=true;
 
 				chargeCommandDataService.getAll("ChargeCommand");				
-				changeStockDefinition();
+				initialStockPicker();
 			}
 			
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
@@ -681,17 +681,21 @@
 				}
 			}
 
+			private function initialStockPicker():void {
+				if (isNaN (job.id)) {
+					changeStockDefinition();
+				}
+			}
+			
 			private function changeStockDefinition():void
 			{
-				if (isNaN (job.id)) {
-					var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
-					stockPickerWindow.setStyle("borderAlpha", 0.9);
-				   	stockPickerWindow.setStockArray(stocks);
-					stockPickerWindow.formIsEmpty=true;
-					stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
-					stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
-					stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
-				}
+				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+				stockPickerWindow.setStyle("borderAlpha", 0.9);
+			   	stockPickerWindow.setStockArray(stocks);
+				stockPickerWindow.formIsEmpty=true;
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
 			}
 
 			private function handleStockPickerCancel(evt:StockPickerSelectEvent):void
