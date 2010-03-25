@@ -135,7 +135,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 				}
 				lookupQty = rateQty;
 				charge.setQuantity(rateQty);
-				ratePrice = rateQty * chargeDefinition.getRate();
+				ratePrice = rateQty * charge.getRate();
 //				TODO: additional booklet stuff here
 //				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets) ||
 //						chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {
