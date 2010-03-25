@@ -28,6 +28,8 @@ public class StockChangeMapper extends ImportMapper {
 				stockChanges.setStockChangeDate(Utilities.tokenToDate(currentImportToken));
 			} else if (currentFieldToken.equals("stock id") == true) {
 				stockDefinition = (StockDefinition)dataService.getByPrevId("StockDefinition", currentImportToken);
+				if (stockDefinition != null)
+					stockChanges.setStockDefinition(stockDefinition);
 			} else if (currentFieldToken.equals("reason code") == true) {
 				if (currentImportToken.equals("1") == true)
 					stockChanges.setHowChanged("Consumed");
@@ -73,7 +75,7 @@ public class StockChangeMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
-		dataService.addUpdate(stockChanges);
+		stockChanges = (StockChanges)dataService.addUpdate(stockChanges);
 		stockChanges.setId(stockChanges.getId());
 		if (stockDefinition != null) {
 			stockDefinition.addStockChanges(stockChanges);
