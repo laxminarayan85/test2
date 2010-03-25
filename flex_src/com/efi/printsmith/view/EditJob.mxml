@@ -733,6 +733,7 @@
 						this.job.runSize = evt.stockDefinition.normalRunSize;
 						this.job.finishSize = evt.stockDefinition.normalRunSize;
 					}
+					this.mapToJobData();
 					jobService.assignStockToJob(this.job, evt.stockDefinition);
 //					var i:int;
 //					if (this.job.charges == null) this.job.charges = new ArrayCollection();
@@ -1053,11 +1054,11 @@
 							 height="20"/>
 			<mx:TextInput
 						  y="94"
-						  width="785"
+						  width="797"
 						  id="job_comment"
 						  text="{job.comment}"
 						  height="20"
-						  right="22"/>
+						  right="10"/>
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
@@ -1083,7 +1084,7 @@
 						 dataProvider="{pricingMethods}"
 						 change="updatePricingMethod();"
 						 labelField="title"
-						 right="22"
+						 right="10"
 						 left="710">
 			</mx:ComboBox>
 			<mx:Canvas x="0" y="121" width="914" height="512" verticalScrollPolicy="auto" id="canvas2">
@@ -1681,7 +1682,7 @@
 										 left="0"
 										 bottom="25"
 										 top="0"
-										 right="-10"
+										 right="0"
 										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
 								<mx:columns>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
