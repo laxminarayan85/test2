@@ -335,6 +335,7 @@
 			{
 				var titleWindow:NotePadEditor=NotePadEditor(PopUpManager.createPopUp(this, NotePadEditor, true));
 				titleWindow.setStyle("borderAlpha", 0.9);
+				titleWindow.SetNote(invoice.notes.id)
 			}
 
 			private function doTickets():void

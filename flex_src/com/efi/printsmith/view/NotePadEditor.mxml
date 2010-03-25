@@ -7,6 +7,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Script>                                   
@@ -44,7 +45,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
 	}      
-	
+	public function SetNote( tempID:Number ):void{
+		dataService.getById("NotePad",tempID);
+	}
 	private function handleFault(event:Event):void {
 		
 	}
@@ -54,17 +57,34 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleSaveResult(event:Event):void {
+		PopUpManager.removePopUp(this);
+	}
+	private function handleGetResult(ev:ResultEvent):void {
+		notePad = ev.result as NotePad;
 		
 	}
-	
 	private function handleDeleteResult(event:Event):void {
 		
 	}
 	
 	private function doOK():void {
-		PopUpManager.removePopUp(this);
+		MaptonotePad();
+		
 	} 
-	
+	private function MaptonotePad():void{
+		notePad.howMany= how_many_edit.text;
+		notePad.notes=notes_edit.text;
+		notePad.notesWhat=what_edit.text;
+		notePad.notesWhen= when_edit.text;
+		notePad.notesWho = who_edit.text;
+		notePad.paper = paper_edit.text;
+		notePad.phoneNumber= phone_edit.text;
+		notePad.showOnOpen = show_check.selected;
+		notePad.whatSize= what_size_edit.text;
+		
+		
+		dataService.addUpdate(notePad);
+	}
 	private function doCancel():void {
 		PopUpManager.removePopUp(this);
 	} 
@@ -101,23 +121,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:VBox width="301" height="359">
 	<mx:Canvas width="300" height="360">
-		<mx:TextInput x="83" y="10" width="204" id="who_edit"  />
-		<mx:TextInput x="83" y="38" width="204" id="phone_edit"/>
-		<mx:TextInput x="83" y="68" width="204" id="what_edit"/>
-		<mx:TextInput x="83" y="96" width="64" id="how_many_edit"/>
-		<mx:TextInput x="83" y="298" width="204" id="when_edit"/>
+		<mx:TextInput x="83" y="10" width="204" id="who_edit"  text="{notePad.notesWho}" />
+		<mx:TextInput x="83" y="38" width="204" id="phone_edit" text="{notePad.phoneNumber}"/>
+		<mx:TextInput x="83" y="68" width="204" id="what_edit" text="{notePad.notesWhat}"/>
+		<mx:TextInput x="83" y="96" width="64" id="how_many_edit" text="{notePad.howMany}"/>
+		<mx:TextInput x="83" y="298" width="204" id="when_edit" text="{notePad.notesWhen}"/>
 		<mx:Label x="10" y="300" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.When')}" width="65" textAlign="right"/>
 		<mx:Label x="10" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Howmany')}" width="65" textAlign="right"/>
 		<mx:Label x="10" y="125" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Paper')}" width="65" textAlign="right"/>
 		<mx:Label x="10" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Notes')}" width="65" textAlign="right"/>
-		<mx:TextArea x="83" y="124" width="204" height="64" id="paper_edit"/>
-		<mx:TextInput x="225" y="96" width="62" id="what_size_edit"/>
+		<mx:TextArea x="86" y="124" width="204" height="64" id="paper_edit" text="{notePad.paper}"/>
+		<mx:TextInput x="225" y="96" width="62" id="what_size_edit" text="{notePad.whatSize}"/>
 		<mx:Label x="155" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.WhatSize')}" width="62" textAlign="right"/>
 		<mx:Label x="10" y="70" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.What')}" width="65" textAlign="right"/>
 		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Phone')}" width="65" textAlign="right"/>
 		<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.Who')}" width="65" textAlign="right"/>
-		<mx:CheckBox x="34" y="196" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.ShowNotePadwhendocum')}" width="253"/>
-		<mx:TextArea x="83" y="226" width="204" height="64" id="notes_edit"/>
+		<mx:CheckBox x="34" y="196" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'notePadCmd.ShowNotePadwhendocum')}" width="253" selected="{notePad.showOnOpen}" id="show_check"/>
+		<mx:TextArea x="83" y="226" width="204" height="64" id="notes_edit" text="{notePad.notes}"/>
 		<mx:Button x="221" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="66" id="ok_button" click="doOK()"/>
 		<mx:Button x="147" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()" width="66"/>
 	</mx:Canvas>
