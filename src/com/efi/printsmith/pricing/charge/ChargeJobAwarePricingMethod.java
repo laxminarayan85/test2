@@ -152,6 +152,8 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 
 			price += PriceListUtilities.calculatePriceListPrice((long)lookupQty, chargeDefinition.getPriceList(), price, (Job)job);
 			
+			charge.setPrice(price);
+			
 		}
 		return charge;
 	}
