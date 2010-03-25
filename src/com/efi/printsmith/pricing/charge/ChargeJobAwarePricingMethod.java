@@ -122,7 +122,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 				materialPrice = materialQty * chargeDefinition.getMaterial();
 			}
 			
-			if (chargeDefinition.getUseRate()) {
+			if (chargeDefinition.getUseRate() || true) { // TODO: remove the || true when cost plus is entered!!!
 				if (chargeDefinition.getUseRateSets()) {
 					setCount = chargeDefinition.getRateSetCount();
 				} else {
@@ -144,6 +144,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 			} else if (!chargeDefinition.getUseMaterial() && chargeDefinition.getPriceList() != null) {
 				// TODO: Additional booklet code here
 				lookupQty = charge.getQuantity();
+				ratePrice = PriceListUtilities.lookupPrice(chargeDefinition.getPriceList(), (long)lookupQty);
 			}
 			// TODO Cost Plus code here
 			

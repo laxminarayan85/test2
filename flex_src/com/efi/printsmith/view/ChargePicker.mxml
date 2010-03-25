@@ -6,7 +6,7 @@
 				xmlns:hc="com.hillelcoren.components.*"
 				xmlns:ns2="com.efi.printsmith.components.*"
 				width="862"
-				height="679"
+				height="693"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				creationComplete="init()"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
@@ -953,6 +953,10 @@
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
 			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
+			<mx:SetProperty name="height" value="689"/>
+			<mx:SetProperty target="{refresh_price_btn}" name="x" value="560"/>
+			<mx:SetProperty target="{done_button}" name="x" value="516"/>
+			<mx:SetProperty target="{add_button}" name="x" value="439"/>
 		</mx:State>
 		<mx:State name="SquareArea" basedOn="">
 			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
@@ -1094,6 +1098,8 @@
 			
 			private var focussedFormControl:DisplayObject;
 			public var job:Job;
+			
+			var editingCharge:Boolean = false;
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -1350,6 +1356,9 @@
 				if (chargeDefinition != null)
 				{
 					chargeService.createChargeFromChargeDefinition(chargeDefinition);
+					// TODO: Following 2 lines are a hack and need to be fixed/localized
+					this.editingCharge = false;
+					this.add_button.label = "Add";
 				}
 				else
 				{
@@ -1361,6 +1370,9 @@
 			{
 				charge = invoice_charge_datagrid.selectedItem as Charge;
 				chargeDefinition = charge.chargeDefinition;
+				this.editingCharge = true;
+				this.add_button.label = "Save";
+
 				updateCurrentState();
 			}
 			
@@ -1391,11 +1403,14 @@
 				{
 					charges = new ArrayCollection;
 				}
-//				if (this.currentState == "New Charge") {
+				if (!this.editingCharge) {
 					charges.addItem(this.charge);
-//				}
+				}
+				
 				chargeTree.selectedItem = null;
 				invoice_charge_datagrid.selectedItem = null;
+				invoice_charge_datagrid.invalidateList();
+				
 				this.charge = new Charge();
 			}
 
@@ -1410,7 +1425,7 @@
 				this.charge.notes=charge_notes_edit.text;
 				this.charge.showNotes=showNotes_check.selected;
 				this.charge.rate=parseFloat(rate_edit.text);
-				
+				this.charge.price=parseFloat(price_edit.text);
 				if (this.chargeDefinition.quantityType == ChargeQtyType.TIME) {
 					var startDate:Date = new Date();
 					var endDate:Date = new Date();
@@ -1459,6 +1474,51 @@
 					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
 				}
 			}
+
+			private function updateQty():void {
+	    		if (quantity_edit.text == "") {
+	    			this.charge.overrideQuantity = false;
+	    			this.charge.quantity = 0;
+	    		} else {
+	    			this.charge.overrideQuantity = true;
+	    			this.charge.quantity = parseFloat(quantity_edit.text); 
+	    		}
+	    		updatePrice();
+	  		}	
+	  		
+	  		private function updateMaterialQty():void {
+	  			if (material_quantity_edit.text == "") {
+	    			this.charge.overrideMaterialQuantity = false;
+	    			this.charge.materialQty = 0;
+	    		} else {
+	    			this.charge.overrideMaterialQuantity = true;
+	    			this.charge.materialQty = parseFloat(material_quantity_edit.text); 
+	    		}
+	    		updatePrice();
+	  		}	
+	  		
+	  		private function updateRate():void {
+	  			if (this.rate_edit.text == "") {
+	    			this.charge.overrideRate = false;
+	    			this.charge.rate = 0;
+	    		} else {
+	    			this.charge.overrideRate = true;
+	    			this.charge.rate = parseFloat(rate_edit.text); 
+	    		}
+	    		updatePrice();
+	  		}	
+
+			private function updatePriceEdit():void {
+	  			if (this.price_edit.text == "") {
+	    			this.charge.overridePrice = false;
+	    			this.charge.rate = 0;
+	    		} else {
+	    			this.charge.overridePrice = true;
+	    			this.charge.price = parseFloat(price_edit.text); 
+	    		}
+	    		updatePrice();				
+			}
+
 		]]>
 
 	</mx:Script>
@@ -1635,7 +1695,8 @@
 										  width="100"
 										  height="20"
 										  text="{charge.price}"
-										  id="price_edit" visible="false"/>
+										  id="price_edit" visible="false"
+										  focusOut="this.updatePriceEdit()"/>
 							<mx:Text x="339"
 									 y="367"
 									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price')}" width="109" height="17" textAlign="right" id="text1" visible="false"/>
@@ -1643,14 +1704,14 @@
 							<mx:LinkButton x="564" y="364" width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
 								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
 							</mx:LinkButton>
-							<mx:Button x="519"
-									   y="392"
+							<mx:Button x="509"
+									   y="396"
 									   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Done')}"
 									   click="doDone()"
 									   width="65"
 									   id="done_button"/>
-							<mx:Button x="442"
-									   y="392"
+							<mx:Button x="432"
+									   y="396"
 									   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Add')}"
 									   click="doAdd()"
 									   width="65"
@@ -1677,7 +1738,7 @@
 										  width="100"
 										  height="20"
 										  id="material_quantity_edit" visible="false"
- 										  focusOut="this.updatePrice()"
+ 										  focusOut="this.updateMaterialQty()"
 										  text="{charge.materialQty}"/>
 							<mx:TextInput x="134"
 										  y="233"
@@ -1738,7 +1799,7 @@
 										  width="100"
 										  height="20"
 										  text="{charge.rate}"
- 										  focusOut="this.updatePrice()"
+ 										  focusOut="this.updateRate()"
 										  id="rate_edit" visible="false"/>
 							<mx:Text x="242"
 									 y="188"

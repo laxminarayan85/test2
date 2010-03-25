@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PriceList;
+import com.efi.printsmith.data.PriceListBase;
 import com.efi.printsmith.data.PriceListElement;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.migration.Utilities;
@@ -33,7 +34,7 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
-	static public double lookupPrice(PriceList priceList, long qty) {
+	static public double lookupPrice(PriceListBase priceList, long qty) {
 		double retVal = 0.0;
 		long lookupQty = qty;
 		int i = 0;
