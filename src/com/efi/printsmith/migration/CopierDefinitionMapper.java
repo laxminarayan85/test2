@@ -10,6 +10,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.service.CopierService;
+import com.efi.printsmith.data.PreferencesDefaultPresses;
 
 public class CopierDefinitionMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -23,6 +24,9 @@ public class CopierDefinitionMapper extends ImportMapper {
 		CopierService copierService = new CopierService();
 		SalesCategory salesCategory = null;
 		Matrix matrix = new Matrix();
+		boolean defaultBW = false;
+		boolean defaultColor = false;
+		boolean defaultLF = false;
 		for (int x = 1; x <= 15; x++) {
 			MatrixElement matrixElement = new MatrixElement();
 			boolean addSalesCategory = false;
@@ -1060,11 +1064,17 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("extra[3]".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("default BW".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("1") == true) {
+						defaultBW = true;
+					}
 				} else if ("default Color".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("1") == true) {
+						defaultColor = true;
+					}
 				} else if ("default LF".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("1") == true) {
+						defaultLF = true;
+					}
 				} else if ("capable BW".equals(currentFieldToken)) {
 					copierDefinition.setBlackwhite(Utilities
 							.tokenToBooleanValue(currentImportToken));
@@ -1094,6 +1104,32 @@ public class CopierDefinitionMapper extends ImportMapper {
 		copierDefinition.setCopierMatrix(matrix);
 		double machineCostPerCopy = copierService.calculateMachineCostPerCopy(copierDefinition);
 		copierDefinition.setMachineCostPerCopy(machineCostPerCopy);
-		return copierDefinition;
+		copierDefinition = (CopierDefinition)dataService.addUpdate(copierDefinition);
+		copierDefinition.setId(copierDefinition.getId());
+		if (defaultBW == true) {
+			PreferencesDefaultPresses defaultCopier = (PreferencesDefaultPresses)dataService.getSingle("PreferencesDefaultPresses");
+			if (defaultCopier == null) {
+				defaultCopier = new PreferencesDefaultPresses();
+			}
+			defaultCopier.setDefaultBWCopier(copierDefinition);
+			dataService.addUpdate(defaultCopier);
+		}
+		if (defaultColor == true) {
+			PreferencesDefaultPresses defaultCopier = (PreferencesDefaultPresses)dataService.getSingle("PreferencesDefaultPresses");
+			if (defaultCopier == null) {
+				defaultCopier = new PreferencesDefaultPresses();
+			}
+			defaultCopier.setDefaultColorCopier(copierDefinition);
+			dataService.addUpdate(defaultCopier);
+		}
+		if (defaultLF == true) {
+			PreferencesDefaultPresses defaultCopier = (PreferencesDefaultPresses)dataService.getSingle("PreferencesDefaultPresses");
+			if (defaultCopier == null) {
+				defaultCopier = new PreferencesDefaultPresses();
+			}
+			defaultCopier.setDefaultLargeFormat(copierDefinition);
+			dataService.addUpdate(defaultCopier);
+		}
+		return null;
 	}
 }

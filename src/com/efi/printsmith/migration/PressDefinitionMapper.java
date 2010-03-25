@@ -9,6 +9,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
+import com.efi.printsmith.data.PreferencesDefaultPresses;
 
 public class PressDefinitionMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -19,6 +20,8 @@ public class PressDefinitionMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		String minSize = "";
 		String maxSize = "";
+		boolean defaultSheetfed = false;
+		boolean defaultRollfed = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -223,7 +226,9 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("rollFedCutoffLength".equals(currentFieldToken)) {
 				pressDefinition.setCutoffLength(Utilities.tokenToDouble(currentImportToken));
 			} else if ("defaultSheetFed".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true) {
+					defaultSheetfed = true;
+				}
 			} else if ("digital integration".equals(currentFieldToken)) {
 				pressDefinition.setIntegratedDevice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("time in seconds".equals(currentFieldToken)) {
@@ -231,7 +236,9 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("perfector".equals(currentFieldToken)) {
 				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("defaultRollFed".equals(currentFieldToken)) {
-				pressDefinition.setRollFed(Utilities.tokenToBooleanValue(currentImportToken));
+				if (currentImportToken.equals("1") == true) {
+					defaultRollfed = true;
+				}
 			} else if ("TargetPriceTableVersion".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("TPT_interpolate".equals(currentFieldToken)) {
@@ -2149,6 +2156,24 @@ public class PressDefinitionMapper extends ImportMapper {
 		else {
 			pressDefinition.setMaxRollWidth(maxSize);
 			pressDefinition.setMinRollWidth(minSize);
+		}
+		pressDefinition = (PressDefinition)dataService.addUpdate(pressDefinition);
+		pressDefinition.setId(pressDefinition.getId());
+		if (defaultSheetfed == true) {
+			PreferencesDefaultPresses defaultCopier = (PreferencesDefaultPresses)dataService.getSingle("PreferencesDefaultPresses");
+			if (defaultCopier == null) {
+				defaultCopier = new PreferencesDefaultPresses();
+			}
+			defaultCopier.setDefaultSheetFedPress(pressDefinition);
+			dataService.addUpdate(defaultCopier);
+		}
+		if (defaultRollfed == true) {
+			PreferencesDefaultPresses defaultCopier = (PreferencesDefaultPresses)dataService.getSingle("PreferencesDefaultPresses");
+			if (defaultCopier == null) {
+				defaultCopier = new PreferencesDefaultPresses();
+			}
+			defaultCopier.setDefaultRollFedPress(pressDefinition);
+			dataService.addUpdate(defaultCopier);
 		}
 		return pressDefinition;
 	}
