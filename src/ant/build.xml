@@ -48,6 +48,16 @@
 		</javac> 
 		<record name="${checkoutpath}/${module1}/src/ant/javac_log.txt" action="stop"/> 
 
+		<mkdir dir="${snowmassBuilddir}/META-INF" />
+		<mkdir dir="${snowmassWebFlexdir}/history" />
+
+		<copy todir="${snowmassBuilddir}/META-INF">
+			<fileset dir="${snowmassAppMetaInfdir}"/>
+		</copy>
+		<copy todir="${snowmassWebFlexdir}/history">
+			<fileset dir="${snowmassHistorydir}"/>
+		</copy>
+
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="start"/> 
 		 <!-- the ant war task. with all resources in place, create the war file -->
 		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}">
@@ -55,10 +65,8 @@
 			<classes dir="${snowmassBuilddir}" >
 				<exclude name="build.xml"/>
 			</classes>
-			<metainf dir="${snowmassAppMetaInfdir}" />
 			<webinf dir="${snowmassWebInfdir}" />
 			<fileset dir="${snowmassWebFlexdir}"/>
-			<fileset dir="${snowmassHistorydir}" />
 		</war>
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="stop"/>
 
