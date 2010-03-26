@@ -4,11 +4,11 @@
 	</target>
 
 	<property name="pjxnamespace" value="com/efi/printsmith"/>
-	<property name="snowmassBuilddir" value="${checkoutpath}/${module2}/WebContent/WEB-INF/classes"/>
-	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module2}/WebContent/WEB-INF/lib"/>
-	<property name="snowmassPagesdir" value="${checkoutpath}/${module2}/flex_src"/>
-	<property name="snowmassWebInfdir" value="${checkoutpath}/${module2}/WebContent\WEB-INF"/>
-	<property name="snowmassRunTimedir" value="${checkoutpath}/${module2}/PrintSmith Server Runtime/"/>
+	<property name="snowmassBuilddir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/classes"/>
+	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/lib"/>
+	<property name="snowmassPagesdir" value="${checkoutpath}/${module1}/flex_src"/>
+	<property name="snowmassWebInfdir" value="${checkoutpath}/${module1}/WebContent\WEB-INF"/>
+	<property name="snowmassRunTimedir" value="${checkoutpath}/${module1}/PrintSmith Server Runtime/"/>
 
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
@@ -29,9 +29,9 @@
 
 		<mkdir dir="${snowmassBuilddir}/${pjxnamespace}/"/>
 
-		<record name="${checkoutpath}/${module2}/src/ant/javac_log.txt" action="start"/> 
+		<record name="${checkoutpath}/${module1}/src/ant/javac_log.txt" action="start"/> 
  
-		<javac srcdir="${checkoutpath}/${module2}/src/${pjxnamespace}" 
+		<javac srcdir="${checkoutpath}/${module1}/src/${pjxnamespace}" 
 			destdir="${snowmassBuilddir}/${pjxnamespace}" 
 			debug="${debug}" 
 			deprecation="${deprecation}" 
@@ -43,15 +43,15 @@
 			<compilerarg value="-Xlint" />
                 	<classpath refid="master-classpath"/> 
 		</javac> 
-		<record name="${checkoutpath}/${module2}/src/ant/javac_log.txt" action="stop"/> 
+		<record name="${checkoutpath}/${module1}/src/ant/javac_log.txt" action="stop"/> 
 
-		<record name="${checkoutpath}/${module2}/src/ant/war_log.txt" action="start"/> 
+		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="start"/> 
 		 <!-- the ant war task. with all resources in place, create the war file -->
 		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}">
 			<lib dir="${snowmassBuildlibsdir}" />
 			<classes dir="${snowmassBuilddir}" />
 		</war>
-		<record name="${checkoutpath}/${module2}/src/ant/war_log.txt" action="stop"/>
+		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="stop"/>
 
 		<copy todir="${distpath}">
 			<fileset dir="${snowmassRunTimedir}"/>
