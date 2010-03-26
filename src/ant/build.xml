@@ -3,6 +3,10 @@
 	<target name="clean">
 	</target>
 
+	<taskdef name="mxmlc" classpath="${ant_root}/lib/flexTasks.jar" classname="flex.ant.MxmlcTask"/> 
+	<taskdef name="compc" classpath="${ant_root}/lib/flexTasks.jar" classname="flex.ant.CompcTask"/> 
+	<taskdef name="html-wrapper" classpath="${ant_root}/lib/flexTasks.jar" classname="flex.ant.HtmlWrapperTask"/> 
+
 	<property name="APP_TITLE" value="PrintSmith - Snowmass" /> 
 	<property name="APP_WIDTH" value="100%" /> 
 	<property name="APP_HEIGHT" value="100%" /> 
