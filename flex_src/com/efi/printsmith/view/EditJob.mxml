@@ -796,6 +796,7 @@
 				refresh_price_btn.enabled = true;		
 				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;	
 				job.pricingRecord = localJob.pricingRecord;
+				charges = localJob.charges;
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
