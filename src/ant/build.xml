@@ -9,8 +9,9 @@
 	<property name="snowmassPagesdir" value="${checkoutpath}/${module1}/flex_src"/>
 	<property name="snowmassWebInfdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF"/>
 	<property name="snowmassRunTimedir" value="${checkoutpath}/${module1}/PrintSmith Server Runtime/"/>
-	<property name="snowmassMetaInfdir" value="${checkoutpath}/${module1}/WebContent/META-INF"/>
+	<property name="snowmassAppMetaInfdir" value="${checkoutpath}/${module1}/src/META-INF"/>
 	<property name="snowmassWebFlexdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/flex/"/>
+	<property name="snowmassHistorydir" value="${checkoutpath}/${module1}/html-template/history"/>
 
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
@@ -51,10 +52,13 @@
 		 <!-- the ant war task. with all resources in place, create the war file -->
 		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}">
 			<lib dir="${snowmassBuildlibsdir}" />
-			<classes dir="${snowmassBuilddir}" />
-			<metainf dir="${snowmassMetaInfdir}" />
+			<classes dir="${snowmassBuilddir}" >
+				<exclude name="build.xml"/>
+			</classes>
+			<metainf dir="${snowmassAppMetaInfdir}" />
 			<webinf dir="${snowmassWebInfdir}" />
 			<fileset dir="${snowmassWebFlexdir}"/>
+			<fileset dir="${snowmassHistorydir}" />
 		</war>
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="stop"/>
 
