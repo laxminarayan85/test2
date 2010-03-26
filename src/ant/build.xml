@@ -3,6 +3,10 @@
 	<target name="clean">
 	</target>
 
+	<property name="APP_TITLE" value="PrintSmith - Snowmass" /> 
+	<property name="APP_WIDTH" value="100%" /> 
+	<property name="APP_HEIGHT" value="100%" /> 
+
 	<property name="pjxnamespace" value="com/efi/printsmith"/>
 	<property name="snowmassBuilddir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/classes"/>
 	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/lib"/>
@@ -12,6 +16,10 @@
 	<property name="snowmassAppMetaInfdir" value="${checkoutpath}/${module1}/src/META-INF"/>
 	<property name="snowmassWebFlexdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/flex/"/>
 	<property name="snowmassHistorydir" value="${checkoutpath}/${module1}/html-template/history"/>
+
+	<property name="version.major" value="2011" /> 
+	<property name="version.minor" value="1" /> 
+	<property name="version.revision" value="1" /> 
 
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
@@ -31,6 +39,18 @@
 		<!-- . is used for pointing to the current directory -->
 
 		<mkdir dir="${snowmassBuilddir}/${pjxnamespace}/"/>
+
+	        <mxmlc file="${snowmassPagesdir}/SnowMass.mxml" 
+	            output="${snowmassPagesdir}/Snowmass.swf"> 
+	        </mxmlc> 
+
+	       	<html-wrapper title="${APP_TITLE}" file="index.html" 
+	            application="app" swf="Snowmass" width="${APP_WIDTH}" 
+	            height="${APP_HEIGHT}" version-major="${version.major}" 
+	            version-minor="${version.minor}" version-revision="${version.revision}" 
+	            template="express-installation" 
+	            output="${snowmassPagesdir}" /> 
+
 
 		<record name="${checkoutpath}/${module1}/src/ant/javac_log.txt" action="start"/> 
  
