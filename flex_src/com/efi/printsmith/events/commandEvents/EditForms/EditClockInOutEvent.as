@@ -7,7 +7,7 @@ package com.efi.printsmith.events.commandEvents.EditForms
 
 	public class EditClockInOutEvent extends CommandEventBase
 	{
-		public static const COMMANDID:String = "CMD_ClockInOut";
+		public static const COMMANDID:String = "CMD_Employee_ClockInOut";
 		public var object:TimeCard;
 		
 		public function EditClockInOutEvent(object:TimeCard, callbacks:IResponder=null)
