@@ -43,6 +43,9 @@ public class InvoiceMapper extends ImportMapper {
 		Estimate invoice = new Estimate();
 		NotePad notePad = new NotePad();
 		DataService dataService = new DataService();
+		String last = new String();
+		String first = new String();
+		Account account= new Account();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -54,7 +57,7 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("cust number".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					Account account = dataService.getByAccountId(currentImportToken);
+					account = dataService.getByAccountId(currentImportToken);
 					if (account != null)
 						invoice.setAccount(account);
 				}
@@ -93,7 +96,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("phone".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("last name".equals(currentFieldToken)) {
-				/* TODO */
+				last = currentImportToken;
 			} else if ("fax".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("taken by".equals(currentFieldToken)) {
@@ -278,12 +281,11 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("contact".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					Contact contact = (Contact) dataService.getByName("Contact", currentImportToken);
-					if (contact != null)
-						invoice.setContact(contact);
+					
+					
 				}
 			} else if ("first name".equals(currentFieldToken)) {
-				/* TODO */
+				first = currentImportToken;
 			} else if ("salutation".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job title".equals(currentFieldToken)) {
@@ -777,12 +779,18 @@ public class InvoiceMapper extends ImportMapper {
 		notePad = (NotePad)dataService.addUpdate(notePad);
 		notePad.setId(notePad.getId());
 		invoice.setNotes(notePad);
+		Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
+		if (contact != null)
+			invoice.setContact(contact);
 		return invoice;
 	}
 	
 	private ModelBase createInvoice(String[] fieldTokens, String[] importTokens) throws Exception {
 		Invoice invoice = new Invoice();
 		NotePad notePad = new NotePad();
+		String last = new String();
+		String first = new String();
+		Account account = new Account();
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -795,7 +803,7 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("cust number".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
-					Account account = dataService.getByAccountId(currentImportToken);
+					account = dataService.getByAccountId(currentImportToken);
 					if (account != null)
 						invoice.setAccount(account);
 				}
@@ -834,7 +842,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("phone".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("last name".equals(currentFieldToken)) {
-				/* TODO */
+				last = currentFieldToken;
 			} else if ("fax".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("taken by".equals(currentFieldToken)) {
@@ -1019,12 +1027,10 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("contact".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					Contact contact = (Contact) dataService.getByName("Contact", currentImportToken);
-					if (contact != null)
-						invoice.setContact(contact);
+				
 				}
 			} else if ("first name".equals(currentFieldToken)) {
-				/* TODO */
+				first = currentFieldToken;
 			} else if ("salutation".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job title".equals(currentFieldToken)) {
@@ -1518,6 +1524,9 @@ public class InvoiceMapper extends ImportMapper {
 		notePad = (NotePad)dataService.addUpdate(notePad);
 		notePad.setId(notePad.getId());
 		invoice.setNotes(notePad);
+		Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
+		if (contact != null)
+			invoice.setContact(contact);
 		return invoice;
 	}
 }

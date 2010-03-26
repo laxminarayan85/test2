@@ -448,7 +448,20 @@ public class DataService {
 		}
 		return null;
 	}
-
+	public ModelBase getByLastFirstName(String className, String namelast, String namefirst, long id) {
+		try {
+			log.debug("** getByName called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			String queryString = "from " + className + " where lastName = '" + namelast
+					+ "' and " + "firstName = '" + namefirst + "' and " + "parentaccount_id = '" + id + "'";
+			Query query = em.createQuery(queryString);
+			ModelBase object = (ModelBase) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	public List<?> getFromParent(String className, String parentName, Long id)
 			throws Exception {
 		try {
