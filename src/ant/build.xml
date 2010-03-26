@@ -7,8 +7,10 @@
 	<property name="snowmassBuilddir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/classes"/>
 	<property name="snowmassBuildlibsdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/lib"/>
 	<property name="snowmassPagesdir" value="${checkoutpath}/${module1}/flex_src"/>
-	<property name="snowmassWebInfdir" value="${checkoutpath}/${module1}/WebContent\WEB-INF"/>
+	<property name="snowmassWebInfdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF"/>
 	<property name="snowmassRunTimedir" value="${checkoutpath}/${module1}/PrintSmith Server Runtime/"/>
+	<property name="snowmassMetaInfdir" value="${checkoutpath}/${module1}/WebContent/META-INF"/>
+	<property name="snowmassWebFlexdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/flex/"/>
 
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
@@ -32,7 +34,7 @@
 		<record name="${checkoutpath}/${module1}/src/ant/javac_log.txt" action="start"/> 
  
 		<javac srcdir="${checkoutpath}/${module1}/src/${pjxnamespace}" 
-			destdir="${snowmassBuilddir}/${pjxnamespace}" 
+			destdir="${snowmassBuilddir}/" 
 			debug="${debug}" 
 			deprecation="${deprecation}" 
 			nowarn="${nowarn}" 
@@ -50,6 +52,9 @@
 		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}">
 			<lib dir="${snowmassBuildlibsdir}" />
 			<classes dir="${snowmassBuilddir}" />
+			<metainf dir="${snowmassMetaInfdir}" />
+			<webinf dir="${snowmassWebInfdir}" />
+			<fileset dir="${snowmassWebFlexdir}"/>
 		</war>
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="stop"/>
 
