@@ -45,8 +45,13 @@
 
 		<mkdir dir="${snowmassBuilddir}/${pjxnamespace}/"/>
 
-	        <mxmlc file="${snowmassPagesdir}/SnowMass.mxml" 
+	        <mxmlc 
+			context-root="/"
+			file="${snowmassPagesdir}/SnowMass.mxml" services="${snowmassWebInfdir}/flex/services-config.xml"
+			resource-bundle-list="bundles.txt"
 	        	output="${snowmassPagesdir}/Snowmass.swf"> 
+			<define name="CONFIG::debugging" value="false"/>
+			<define name="CONFIG::release" value="true"/>
 			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/> 
         		<source-path path-element="${FLEX_HOME}/frameworks"/> 
 	        </mxmlc> 
