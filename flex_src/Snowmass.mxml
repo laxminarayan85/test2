@@ -2,8 +2,8 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
 		width="100%" height="100%" 
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
- 		xmlns:flexlib="http://code.google.com/p/flexlib/" 
  		xmlns:ns2="flexlib.controls.*"
+ 		xmlns:flexlib="flexlib.containers.*"
  		xmlns:business="com.efi.printsmith.business.*"
  		xmlns:control="com.efi.printsmith.control.*">
  		<mx:Metadata>
