@@ -53,7 +53,10 @@
 			<define name="CONFIG::debugging" value="false"/>
 			<define name="CONFIG::release" value="true"/>
 			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/> 
-        		<source-path path-element="${FLEX_HOME}/frameworks"/> 
+        		<source-path path-element="${FLEX_HOME}/frameworks"/>
+ 			<compiler.library-path dir="${lib.dir}" append="true">
+				<include name="Cairngorm.swc" />
+ 			</compiler.library-path>
 	        </mxmlc> 
 
 	       	<html-wrapper title="${APP_TITLE}" file="index.html" 
