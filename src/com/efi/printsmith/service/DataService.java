@@ -358,6 +358,19 @@ public class DataService {
 		}
 		return null;
 	}
+	
+	public ModelBase getQuery(String className, String where) {
+		try {
+			log.debug("** getQuery called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query findQuery = em.createQuery("from " + className + where);
+			ModelBase result = (ModelBase) findQuery.getSingleResult();
+			return result;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 
 	public ModelBase getByPrevId(String className, String prevId) {
 		try {
@@ -817,7 +830,14 @@ public class DataService {
 				&& account.getAccountId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getAccount() + 1;
+		Long value = sequenceValues.getAccount();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Account", " where accountId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		account.setAccountId(value.toString());
 		sequenceValues.setAccount(value);
 		this.addUpdate(sequenceValues);
@@ -828,7 +848,14 @@ public class DataService {
 				&& employee.getEmployeeId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getEmployee() + 1;
+		Long value = sequenceValues.getEmployee();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Employee", " where employeeId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		employee.setEmployeeId(value.toString());
 		sequenceValues.setEmployee(value);
 		this.addUpdate(sequenceValues);
@@ -839,7 +866,14 @@ public class DataService {
 				&& contact.getContactId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getContact() + 1;
+		Long value = sequenceValues.getContact();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Contact", " where contactId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		contact.setContactId(value.toString());
 		sequenceValues.setContact(value);
 		this.addUpdate(sequenceValues);
@@ -849,7 +883,14 @@ public class DataService {
 		if (broker.getBrokerId() != null && broker.getBrokerId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getBroker() + 1;
+		Long value = sequenceValues.getBroker();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Broker", " where brokerId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		broker.setBrokerId(value.toString());
 		sequenceValues.setBroker(value);
 		this.addUpdate(sequenceValues);
@@ -861,7 +902,14 @@ public class DataService {
 				&& stockDefinition.getStockId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getStockDefinition() + 1;
+		Long value = sequenceValues.getStockDefinition();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("StockDefinition", " where stockId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		stockDefinition.setStockId(value.toString());
 		sequenceValues.setStockDefinition(value);
 		this.addUpdate(sequenceValues);
@@ -872,7 +920,14 @@ public class DataService {
 				&& invoice.getInvoiceNumber().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getInvoice() + 1;
+		Long value = sequenceValues.getInvoice();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Invoice", " where invoiceNumber = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		invoice.setInvoiceNumber(value.toString());
 		sequenceValues.setInvoice(value);
 		this.addUpdate(sequenceValues);
@@ -882,7 +937,14 @@ public class DataService {
 		if (job.getJobNumber() != null && job.getJobNumber().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getJob() + 1;
+		Long value = sequenceValues.getJob();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Job", " where jobNumber = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		job.setJobNumber(value.toString());
 		sequenceValues.setJob(value);
 		this.addUpdate(sequenceValues);
@@ -894,7 +956,14 @@ public class DataService {
 				&& pressDefinition.getPressId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getPressDefinition() + 1;
+		Long value = sequenceValues.getPressDefinition();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("PressDefinition", " where pressId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		pressDefinition.setPressId(value.toString());
 		sequenceValues.setPressDefinition(value);
 		this.addUpdate(sequenceValues);
@@ -906,7 +975,14 @@ public class DataService {
 				&& copierDefinition.getCopierId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getCopierDefinition() + 1;
+		Long value = sequenceValues.getCopierDefinition();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("CopierDefinition", " where copierId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		copierDefinition.setCopierId(value.toString());
 		sequenceValues.setCopierDefinition(value);
 		this.addUpdate(sequenceValues);
@@ -917,7 +993,14 @@ public class DataService {
 				&& campaign.getCampaignId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getCampaign() + 1;
+		Long value = sequenceValues.getCampaign();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Campaigns", " where campaignId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		campaign.setCampaignId(value.toString());
 		sequenceValues.setCampaign(value);
 		this.addUpdate(sequenceValues);
@@ -927,7 +1010,14 @@ public class DataService {
 		if (grade.getGradeId() != null && grade.getGradeId().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
-		Long value = sequenceValues.getGrade() + 1;
+		Long value = sequenceValues.getGrade();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Grade", " where gradeId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
 		grade.setGradeId(value.toString());
 		sequenceValues.setGrade(value);
 		this.addUpdate(sequenceValues);
