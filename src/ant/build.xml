@@ -96,12 +96,19 @@
 		<record name="${checkoutpath}/${module1}/src/ant/mxmlc_log.txt" action="stop"/> 
 
 		<record name="${checkoutpath}/${module1}/src/ant/html-wrapper_log.txt" action="start"/> 
-	       	<html-wrapper title="${APP_TITLE}" file="Snowmass.html" 
-	            application="app" swf="Snowmass" width="${APP_WIDTH}" 
-	            height="${APP_HEIGHT}" version-major="${version.major}" 
-	            version-minor="${version.minor}" version-revision="${version.revision}" 
-	            template="express-installation" 
-	            output="${snowmassPagesdir}" /> 
+
+		<html-wrapper title="${APP_TITLE}" 
+			height="100%" width="100%" 
+			bgcolor="#FFFFFF" file="Snowmass.html"
+			application="Snowmass" 
+			swf="Snowmass" 
+			version-major="${version.major}" 
+			version-minor="${version.minor}" 
+			version-revision="${version.revision}" 
+			history="true" 
+			template="express-installation" 
+			output="${snowmassPagesdir}" />
+
 		<record name="${checkoutpath}/${module1}/src/ant/html-wrapper_log.txt" action="stop"/> 
 
 		<mkdir dir="${snowmassBuilddir}/META-INF" />
