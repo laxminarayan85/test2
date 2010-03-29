@@ -94,6 +94,30 @@
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108"/>
 			</mx:AddChild>
 		</mx:State>
+		<mx:State name="LargeFormat">
+			<mx:RemoveChild target="{runsize_label}"/>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:Label x="14" y="83" width="86" id="rollWidth_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{label13}"/>
+			<mx:RemoveChild target="{label14}"/>
+			<mx:RemoveChild target="{number_lines}"/>
+			<mx:RemoveChild target="{job_unit_price}"/>
+			<mx:RemoveChild target="{label15}"/>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:Label x="10" y="111" width="91" id="cutoff_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:TextInput x="107" y="109" width="100" height="20" id="cutOff_edit"  text="{job.cutOff}"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{job_fold_size}" name="y" value="162"/>
+			<mx:SetProperty target="{job_finish_size}" name="y" value="137"/>
+			<mx:SetProperty target="{label16}" name="x" value="5"/>
+			<mx:SetProperty target="{label16}" name="y" value="164"/>
+			<mx:SetProperty target="{label17}" name="x" value="5"/>
+			<mx:SetProperty target="{label17}" name="y" value="139"/>
+			<mx:RemoveChild target="{job_size}"/>
+		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -346,7 +370,7 @@
 				eventCostingPress.dispatch();
 		
 				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
-				eventStock.dispatch();
+				eventStock.dispatch(); 
 				
 				if (isNaN(job.id)) {
 					this.enabled=false;
@@ -367,13 +391,15 @@
 //				chargeDataService.getAll("Charge");
 				dimensionDataService.getAll("Dimension");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");				
-				dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+				//dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
 				if (evt.pricingMethod != null) {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
+					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+					
 				} else {
 					Alert.show("Job Method Picker returned a null array", "Error");
 				}
@@ -482,6 +508,9 @@
 				job.runSize = job_size.text;
 				job.foldedSize = job_fold_size.text;
 				job.finishSize = job_finish_size.text;
+				if (cutOff_edit != null)
+					job.cutOff= parseInt(cutOff_edit.text);
+				
 			}
 
 			private function mapFromJobData():void
@@ -722,11 +751,17 @@
 				{
 //					this.job.stock=evt.stockDefinition;
 					if (this.job_type.text == "Large Format") {
-						var cutoff:String;
-						cutoff = estimatingPreferences.defaultPressCuttOff.toString();
-						this.job.parentSize = evt.stockDefinition.parentsize + " x " + cutoff;
-						this.job.runSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						var cutoff:Number;
+						if (estimatingPreferences != null)
+							cutoff = estimatingPreferences.defaultPressCuttOff;
+						else
+							cutoff = 0;
+						this.job.parentSize = evt.stockDefinition.parentsize;
+						/*this.job.runSize = evt.stockDefinition.parentsize + " x " + cutoff; */
+						this.job.cutOff = cutoff;
 						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						this.job.foldedSize = "";
+						job_fold_size.text = "";
 					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
@@ -879,7 +914,7 @@
 					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;					
 				} else if (pricingMethod.title == "Large Format") {
-					this.currentState = "CopyMethod";
+					this.currentState = "LargeFormat";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;					
 				} else if (pricingMethod.title == "Charges Only") {
 					
@@ -1305,7 +1340,7 @@
 										  height="218">
 								<mx:Canvas label="View 1"
 										   width="100%"
-										   height="100%">
+										   height="100%" id="canvas3">
 									<mx:Text x="107"
 											 y="57"
 											 width="247"
@@ -1366,15 +1401,15 @@
 									<mx:Label x="6"
 											  y="147"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.FoldedSize')}"
-											  fontSize="9" textAlign="right" width="94"/>
+											  fontSize="9" textAlign="right" width="94" id="label16"/>
 									<mx:Label x="6"
 											  y="125"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Finish')}"
-											  fontSize="9" textAlign="right" width="94"/>
+											  fontSize="9" textAlign="right" width="94" id="label17"/>
 									<mx:Label x="6"
 											  y="190"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}"
-											  fontSize="9" textAlign="right" width="94"/>
+											  fontSize="9" textAlign="right" width="94" id="label15"/>
 									<mx:TextInput x="107"
 												  y="189"
 												  width="100"
@@ -1384,15 +1419,15 @@
 									<mx:Label x="6"
 											  y="103"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunSize')}"
-											  fontSize="9" textAlign="right" width="94"/>
+											  fontSize="9" textAlign="right" width="94" id="runsize_label"/>
 									<mx:Label x="11"
 											  y="81"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Parent')}"
-											  fontSize="9" textAlign="right" width="89"/>
+											  fontSize="9" textAlign="right" width="89" id="label13"/>
 									<mx:Label x="6"
 											  y="169"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NumberofLines')}"
-											  fontSize="9" textAlign="right" width="94"/>
+											  fontSize="9" textAlign="right" width="94" id="label14"/>
 									<mx:TextInput x="107"
 												  y="35"
 												  width="171"

@@ -11,7 +11,6 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -34,7 +33,6 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "jobbase")
-@org.hibernate.annotations.Table( appliesTo = "jobbase", fetch = FetchMode.SELECT, optional=false )
 public class JobBase extends ModelBase {
 	/**
 	 * @generated
@@ -260,6 +258,10 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */
 	public static final String STOCKQTY = "StockQty";
+	/**
+	 * @generated
+	 */
+	public static final String CUTOFF = "CutOff";
 
 	/**
 	 * @generated
@@ -318,7 +320,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private SalesCategory salesCategory;
 	
 	/**
@@ -340,7 +342,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private ProductCode productCode;
 	
 	/**
@@ -362,7 +364,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany ( cascade = {CascadeType.ALL})
+    @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
@@ -394,7 +396,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -536,7 +538,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Location location;
 	
 	/**
@@ -756,7 +758,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition press;
 	
 	/**
@@ -888,7 +890,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition pricingPress;
 	
 	/**
@@ -910,7 +912,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PressDefinition costingPress;
 	
 	/**
@@ -954,7 +956,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private StockDefinition stock;
 	
 	/**
@@ -1196,7 +1198,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany( cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	
@@ -1228,7 +1230,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private InkColor backInks;
 	
 	/**
@@ -1272,7 +1274,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PricingRecord pricingRecord;
 	
 	/**
@@ -1294,7 +1296,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1316,7 +1318,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -1338,7 +1340,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private PreferencesPricingMethod pricingMethod;
 	
 	/**
@@ -1404,7 +1406,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private CostingRecord costingRecord;
 	
 	/**
@@ -1531,6 +1533,28 @@ public class JobBase extends ModelBase {
 	public void setStockQty(Long newVal) {
 		this.stockQty = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Double cutOff;
+	
+	/**
+	 * @generated
+ 	 */
+	public Double getCutOff(){
+		return cutOff; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setCutOff(Double newVal) {
+		this.cutOff = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -1593,6 +1617,7 @@ public class JobBase extends ModelBase {
 		if (NUMCOPIES.equals(propertyName)) return getNumCopies();
 		if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
 		if (STOCKQTY.equals(propertyName)) return getStockQty();
+		if (CUTOFF.equals(propertyName)) return getCutOff();
 		return super.getProperty(propertyName);
 	}
 	
@@ -1658,6 +1683,7 @@ public class JobBase extends ModelBase {
 		if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
 		if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
 		if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
+		if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -1779,6 +1805,8 @@ public class JobBase extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (STOCKQTY.equals(propertyName)) 
 			return new Class<?>[] {Long.class};		
+		if (CUTOFF.equals(propertyName)) 
+			return new Class<?>[] {Double.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -1845,6 +1873,7 @@ public class JobBase extends ModelBase {
 		if (NUMCOPIES.equals(propertyName)) return JobBase.class;
 		if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
 		if (STOCKQTY.equals(propertyName)) return JobBase.class;
+		if (CUTOFF.equals(propertyName)) return JobBase.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1967,6 +1996,8 @@ public class JobBase extends ModelBase {
 		if (! SmartEquals(getNumCopiesOverride(), objT.getNumCopiesOverride()))
 			return false;
 		if (! SmartEquals(getStockQty(), objT.getStockQty()))
+			return false;
+		if (! SmartEquals(getCutOff(), objT.getCutOff()))
 			return false;
 		return true;
 	}			
