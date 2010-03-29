@@ -48,7 +48,7 @@
 				<mx:Button x="508" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DeliveryTicketManage')}" width="158" height="86" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();"/>
 				<mx:Button x="508" y="480" label="Utilities" width="158" height="86" id="utilities" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" click="doUtilities();"/>
 				<mx:Button x="674" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" width="158" height="86" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();"/>
-				<mx:Button x="176" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>
+				<!--<mx:Button x="176" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" width="158" height="86" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>-->
 				<mx:Button x="10" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateInvoice')}" width="158" height="86" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();"/>
 				<mx:Button x="10" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PendingDocumentWindo')}" width="158" height="86" id="pending_documents" labelPlacement="bottom" icon="@Embed(source='assets/pendingList.png')" click="doPendingList();"/>
 				<mx:Button x="10" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Pricing')}" width="158" height="86" id="pricing" labelPlacement="bottom" click="doPricing();"/>
@@ -254,8 +254,8 @@
 		}
 
 		private function doClockInOut():void {
-			var event:EditClockInOutEvent = new EditClockInOutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
-			event.dispatch();
+//			var event:EditClockInOutEvent = new EditClockInOutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+//			event.dispatch();
 		}
 		private function doCreateEstimate():void {
 			var event:EditCreateEstimateEvent = new EditCreateEstimateEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));

@@ -60,7 +60,7 @@ package com.efi.printsmith.control
 			this.addCommand(EditSecurityEvent.COMMANDID, EditSecurityCommand);
 			this.addCommand(EditTrackerEvent.COMMANDID, EditTrackerCommand);
 			this.addCommand(EditPricingEvent.COMMANDID, EditPricingCommand);
-			this.addCommand(EditClockInOutEvent.COMMANDID, EditClockInOutCommand);
+			//this.addCommand(EditClockInOutEvent.COMMANDID, EditClockInOutCommand);
 			this.addCommand(EditCreateEstimateEvent.COMMANDID, EditCreateEstimateCommand);
 			this.addCommand(EditEditEstimateEvent.COMMANDID, EditEditEstimateCommand);
 			this.addCommand(EditCreateInvoiceEvent.COMMANDID, EditCreateInvoiceCommand);
