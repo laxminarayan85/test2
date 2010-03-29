@@ -26,9 +26,9 @@
 	<property name="snowmassWebFlexdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/flex/"/>
 	<property name="snowmassHistorydir" value="${checkoutpath}/${module1}/html-template/history"/>
 
-	<property name="version.major" value="2011" /> 
-	<property name="version.minor" value="1" /> 
-	<property name="version.revision" value="1" /> 
+	<property name="version.major" value="10" /> 
+	<property name="version.minor" value="0" /> 
+	<property name="version.revision" value="0" /> 
 
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
@@ -97,9 +97,9 @@
 
 		<record name="${checkoutpath}/${module1}/src/ant/html-wrapper_log.txt" action="start"/> 
 
-		<html-wrapper title="${APP_TITLE}" 
+		<html-wrapper title="" 
 			height="100%" width="100%" 
-			bgcolor="#FFFFFF" file="Snowmass.html"
+			bgcolor="#869ca7" file="Snowmass.html"
 			application="Snowmass" 
 			swf="Snowmass" 
 			version-major="${version.major}" 
