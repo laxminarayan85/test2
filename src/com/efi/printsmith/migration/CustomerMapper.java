@@ -7,6 +7,7 @@ import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.SalesRep;
 import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.BusinessType;
@@ -819,6 +820,13 @@ public class CustomerMapper extends ImportMapper {
 		shipToContact.setParentAccount(customer);
 		billToContact.setParentAccount(customer);
 
+		if (customer.getAccountId() != null
+				&& customer.getAccountId().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setAccount(Long.parseLong(customer.getAccountId()));
+			dataService.addUpdate(sequenceValues);
+		}
+		
 		return customer;
 	}
 }

@@ -7,6 +7,7 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
@@ -2174,6 +2175,12 @@ public class PressDefinitionMapper extends ImportMapper {
 			}
 			defaultCopier.setDefaultRollFedPress(pressDefinition);
 			dataService.addUpdate(defaultCopier);
+		}
+		if (pressDefinition.getPressId() != null
+				&& pressDefinition.getPressId().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setPressDefinition(Long.parseLong(pressDefinition.getPressId()));
+			dataService.addUpdate(sequenceValues);
 		}
 		return pressDefinition;
 	}

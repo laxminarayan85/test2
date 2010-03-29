@@ -7,6 +7,7 @@ import com.efi.printsmith.data.City;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.State;
 import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.service.DataService;
@@ -228,6 +229,12 @@ public class ContactMapper extends ImportMapper {
 		if (!custAcct.equals("") && !custAcct.equals("0"))
 		{
 			contact = null;
+		}
+		if (contact.getContactId() != null
+				&& contact.getContactId().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setContact(Long.parseLong(contact.getContactId()));
+			dataService.addUpdate(sequenceValues);
 		}
 		return contact;
 	}

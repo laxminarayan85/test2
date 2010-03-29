@@ -791,7 +791,7 @@ public class DataService {
 	// handlers, but should work for a few days in
 	// a single user environment. And yes it's ugly as snot...
 
-	private PreferencesSequenceValues getSequenceValues() throws Exception {
+	public PreferencesSequenceValues getSequenceValues() throws Exception {
 		PreferencesSequenceValues sequenceValues = (PreferencesSequenceValues) this
 				.getSingle("PreferencesSequenceValues");
 		if (sequenceValues == null) {

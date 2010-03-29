@@ -3,6 +3,7 @@ package com.efi.printsmith.migration;
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.GenericColors;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.StockColors;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.StockFinish;
@@ -591,6 +592,12 @@ public class StockDefinitionMapper extends ImportMapper {
 			stockDefinition.setRollWeight(weight);
 		else
 			stockDefinition.setMweight(weight);
+		if (stockDefinition.getStockId() != null
+				&& stockDefinition.getStockId().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setStockDefinition(Long.parseLong(stockDefinition.getStockId()));
+			dataService.addUpdate(sequenceValues);
+		}
 		return stockDefinition;
 	}
 }

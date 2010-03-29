@@ -5,6 +5,7 @@ import java.io.File;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.StockDefinition;
@@ -911,6 +912,12 @@ public class JobMapper extends ImportMapper {
 			} else if ("tax".equals(currentFieldToken)) {
 				/* TODO */
 			}
+		}
+		if (job.getJobNumber() != null
+				&& job.getJobNumber().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setJob(Long.parseLong(job.getJobNumber()));
+			dataService.addUpdate(sequenceValues);
 		}
 		return job;
 	}

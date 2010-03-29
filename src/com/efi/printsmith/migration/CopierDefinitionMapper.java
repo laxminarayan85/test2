@@ -5,6 +5,7 @@ import java.io.File;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Matrix;
@@ -1129,6 +1130,12 @@ public class CopierDefinitionMapper extends ImportMapper {
 			}
 			defaultCopier.setDefaultLargeFormat(copierDefinition);
 			dataService.addUpdate(defaultCopier);
+		}
+		if (copierDefinition.getCopierId() != null
+				&& copierDefinition.getCopierId().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setCopierDefinition(Long.parseLong(copierDefinition.getCopierId()));
+			dataService.addUpdate(sequenceValues);
 		}
 		return null;
 	}

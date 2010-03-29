@@ -14,6 +14,7 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Estimate;
 import com.efi.printsmith.data.NotePad;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 
 public class InvoiceMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
@@ -1527,6 +1528,12 @@ public class InvoiceMapper extends ImportMapper {
 		Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
 		if (contact != null)
 			invoice.setContact(contact);
+		if (invoice.getInvoiceNumber() != null
+				&& invoice.getInvoiceNumber().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setInvoice(Long.parseLong(invoice.getInvoiceNumber()));
+			dataService.addUpdate(sequenceValues);
+		}
 		return invoice;
 	}
 }
