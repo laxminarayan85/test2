@@ -27,7 +27,9 @@ public class StockDefinitionMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		double weight = 0;
 		boolean envelope = false;
+		boolean largeformat = false;
 		for (int i=0; i < fieldTokens.length; i++) {
+			
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
 			if ("recno".equals(currentFieldToken)) {
@@ -501,7 +503,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("roll stock".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true)
 					stockDefinition.setStockunit(2);
-				else if (!envelope)
+				else if (!envelope && !largeformat)
 					stockDefinition.setStockunit(1);
 				
 					
@@ -572,8 +574,11 @@ public class StockDefinitionMapper extends ImportMapper {
 
 			}
 			else if ("large format".equals(currentFieldToken)) {
-				if (currentImportToken.equals("1") == true)
+				if (currentImportToken.equals("1") == true){
 					stockDefinition.setStockunit(3);
+					largeformat = true;
+				}
+					
 
 			}
 			else if ("bin location".equals(currentFieldToken)) {
