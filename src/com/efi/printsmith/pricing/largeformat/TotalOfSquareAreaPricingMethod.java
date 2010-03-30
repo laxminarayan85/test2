@@ -25,7 +25,7 @@ public class TotalOfSquareAreaPricingMethod extends
 			if (copierDefinition.getSquareAreaFromFinish())
 				area = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 			else
-				area = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+				area = new Double(Double.parseDouble(job.getParentSize()) * job.getCutOff()).longValue();
 		}
 		catch (Exception e) {
 			

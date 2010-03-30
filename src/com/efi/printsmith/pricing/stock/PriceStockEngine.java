@@ -81,7 +81,7 @@ public class PriceStockEngine {
 					if (copierDefinition.getSquareAreaFromFinish())
 						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 					else
-						qty = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+						qty = new Double(Double.parseDouble(job.getParentSize()) * job.getCutOff()).longValue();
 				}
 				catch (Exception e) {
 					
