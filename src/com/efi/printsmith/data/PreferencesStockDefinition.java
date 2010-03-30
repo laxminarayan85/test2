@@ -42,6 +42,10 @@ public class PreferencesStockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String COLUMNS = "Columns";
+	/**
+	 * @generated
+	 */
+	public static final String COLUMNORDER = "ColumnOrder";
 
 	/**
 	 * @generated
@@ -95,6 +99,28 @@ public class PreferencesStockDefinition extends ModelBase {
 	public void setColumns(ColumnNames newVal) {
 		this.columns = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Integer columnOrder;
+	
+	/**
+	 * @generated
+ 	 */
+	public Integer getColumnOrder(){
+		return columnOrder; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setColumnOrder(Integer newVal) {
+		this.columnOrder = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -103,6 +129,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (VISIBLE.equals(propertyName)) return getVisible();
 		if (COLUMNS.equals(propertyName)) return getColumns();
+		if (COLUMNORDER.equals(propertyName)) return getColumnOrder();
 		return super.getProperty(propertyName);
 	}
 	
@@ -114,6 +141,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (VISIBLE.equals(propertyName)) setVisible((Boolean)newValue); else
 		if (COLUMNS.equals(propertyName)) setColumns((ColumnNames)newValue); else
+		if (COLUMNORDER.equals(propertyName)) setColumnOrder((Integer)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -127,6 +155,8 @@ public class PreferencesStockDefinition extends ModelBase {
 			return new Class<?>[] {Boolean.class};		
 		if (COLUMNS.equals(propertyName)) 
 			return new Class<?>[] {ColumnNames.class};		
+		if (COLUMNORDER.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -139,6 +169,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (VISIBLE.equals(propertyName)) return PreferencesStockDefinition.class;
 		if (COLUMNS.equals(propertyName)) return PreferencesStockDefinition.class;
+		if (COLUMNORDER.equals(propertyName)) return PreferencesStockDefinition.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -153,6 +184,8 @@ public class PreferencesStockDefinition extends ModelBase {
 		if (! SmartEquals(getVisible(), objT.getVisible()))
 			return false;
 		if (! SmartEquals(getColumns(), objT.getColumns()))
+			return false;
+		if (! SmartEquals(getColumnOrder(), objT.getColumnOrder()))
 			return false;
 		return true;
 	}			

@@ -15,6 +15,7 @@ package com.efi.printsmith.data
 				
 		public var visible:Boolean = true;
 		public var columns:ColumnNames;
+		public var columnOrder:int = 0;
 	
 	}
 }
