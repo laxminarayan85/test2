@@ -297,10 +297,10 @@ public class CustomerMapper extends ImportMapper {
 					customer.setTaxExempt(Utilities
 							.tokenToBooleanValue(currentImportToken));
 				} else if ("rtype".equals(currentFieldToken)) {
-					/* TODO *//*
-							 * Note: determines whether this is customer or
-							 * prospect
-							 */
+					 if (currentImportToken.equals("0") == false)
+						customer.setProspect(true);
+					 else
+						 customer.setProspect(false);
 				} else if ("inv addr".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("inv country".equals(currentFieldToken)) {
