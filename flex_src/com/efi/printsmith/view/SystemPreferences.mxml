@@ -121,7 +121,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteMarkupsMerchandiseResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
+		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePricingMethod" destination="dataService">
@@ -139,7 +139,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteSalesCategoryResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStockDefinition" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
+		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockDefinitionResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStocks" destination="dataService">
@@ -703,11 +703,11 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceCreditCard.getAll("PreferencesCreditCard");
 		dataServiceMarkups.getAll("OutsideServices");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
-		dataServicePendingList.getAll("PreferencesPendingList");
+		dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 		dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
-		dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+		dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 		dataServiceStocks.getAll("PreferencesStocks");
 
 	}
@@ -750,11 +750,18 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		PreferencesQuantityBreaksDeleteArray.removeAll();
 
 		// commit changes add or updates to table
+		var counter:int = 1;
+
 		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {
 			dataServiceCashRegister.addUpdate(item1);
 		}
+		counter = 1;
 		for each(var item2:PreferencesPendingList in PreferencesPendingListArray) {
+			if (item2.columnOrder != counter){
+				item2.columnOrder = counter;
+			}
 			dataServicePendingList.addUpdate(item2);
+			counter = counter + 1;
 		}
 		for each(var item3:OutsideService in PreferencesMarkupsArray) {
 			dataServiceMarkups.addUpdate(item3);
@@ -762,8 +769,13 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		for each(var item4:Merchandise in PreferencesMarkupsMerchandiseArray) {
 			dataServiceMarkupsMerchandise.addUpdate(item4);
 		}
+		counter = 1;
 		for each(var item5:PreferencesStockDefinition in PreferencesStockDefinitionArray) {
+			if (item5.columnOrder != counter){
+				item5.columnOrder = counter;
+			}
 			dataServiceStockDefinition.addUpdate(item5);
+			counter = counter + 1;
 		}
 		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
 			dataServicePricingMethod.addUpdate(item6);
@@ -2376,7 +2388,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 				<mx:DataGrid x="50" y="27" width="442" height="230" id="PendingListGrid" 
 					dataProvider="{PreferencesPendingListArray}" 
-					editable="true">
+					editable="true" allowMultipleSelection="true" 
+        	        dragEnabled="true" 
+    	            dropEnabled="true" 
+	                dragMoveEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2667,7 +2682,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 				<mx:DataGrid x="50" width="442" id="StockDefinitionGrid"
 					dataProvider="{PreferencesStockDefinitionArray}" 
-					editable="true" bottom="80" top="27">
+					editable="true" bottom="80" top="27" allowMultipleSelection="true" 
+	                dragEnabled="true" 
+    	            dropEnabled="true" 
+        	        dragMoveEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">

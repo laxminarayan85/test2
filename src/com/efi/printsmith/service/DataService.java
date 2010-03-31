@@ -125,6 +125,22 @@ public class DataService {
 		return resultList;
 	}
 
+	public List<?> getAllOrdeBy(String className, String orderBy) {
+		List<?> resultList = new ArrayList<Object>();
+		try {
+			log.debug("** getAll called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query findAllQuery = em.createQuery("from " + className
+					+ " fetch all properties order by "+ orderBy);
+			resultList = findAllQuery.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return resultList;
+	}
+
 	public List<?> getAllNameIDOnly(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		try {
