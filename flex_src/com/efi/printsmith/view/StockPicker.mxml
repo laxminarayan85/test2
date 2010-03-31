@@ -19,6 +19,10 @@
 <mx:Script>
                                    
 <![CDATA[
+
+	import mx.collections.SortField;
+	import mx.collections.Sort;
+	
 	import com.efi.printsmith.data.StockGrade;
 	import com.efi.printsmith.data.StockGroup;
 	import com.efi.printsmith.data.Vendor;
@@ -144,6 +148,22 @@
 	public function setStockPref(temp:ArrayCollection):void{
 		
 		preferencesStockDefinitions = temp;
+		var columnArray:Array = dataGrid.columns;
+
+		var dataSortField:SortField = new SortField();
+		dataSortField.name = "columnOrder";
+		dataSortField.numeric = true;
+
+		/* Create the Sort object and add the SortField object created earlier to the array of fields to sort on. */
+		var numericDataSort:Sort = new Sort();
+		numericDataSort.fields = [dataSortField];
+
+		/* Set the ArrayCollection object's sort property to our custom sort, and refresh the ArrayCollection. */
+		preferencesStockDefinitions.sort = numericDataSort;
+		preferencesStockDefinitions.refresh();
+
+		var dgColumns:ArrayCollection = new ArrayCollection();
+		
 		for each(var element:PreferencesStockDefinition in preferencesStockDefinitions)
 		{
 			for each(var column:DataGridColumn in dataGrid.columns)
@@ -151,10 +171,22 @@
 				if (column.headerText== resourceManager.getString(Snowmass.RESOURCE_BUNDLE, element.columns.name))
 				{
 					column.visible = element.visible;
+					dgColumns.addItem(column);
 					break;
 				}
 			}
-		} 
+		}
+		dataGrid.invalidateList();
+
+		var newCols:Array = new Array()
+		for each(var newcolumns:DataGridColumn in dgColumns)
+		{
+			newCols.push(newcolumns)
+		}
+		dataGrid.columns = newCols;
+		dataGrid.invalidateDisplayList();
+		dataGrid.invalidateList();
+
 	}
 	public function getColorLabel(item:Object, column:DataGridColumn):String{
 		var tmpItem:StockColors ;
@@ -231,7 +263,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
 		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
 		<mx:columns>
-		     <mx:DataGridColumn  dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
+		     <mx:DataGridColumn dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
 		     <mx:DataGridColumn dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
 		     <mx:DataGridColumn dataField="parentsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
 		     <mx:DataGridColumn labelFunction="getColorLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>
@@ -249,7 +281,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		     <mx:DataGridColumn dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}"/>
 		     <mx:DataGridColumn dataField="normalRunSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
 		     <mx:DataGridColumn dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
-		     <mx:DataGridColumn  labelFunction="getGroupLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
+		     <mx:DataGridColumn labelFunction="getGroupLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
 		     <mx:DataGridColumn dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
 		     <mx:DataGridColumn dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
 		     <mx:DataGridColumn dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>
