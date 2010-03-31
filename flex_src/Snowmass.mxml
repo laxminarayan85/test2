@@ -167,7 +167,7 @@
 		}
 
 		public function handleUIEvent(evt:ResultEvent):void {
-			var child:DisplayObject = evt.result as DisplayObject;
+			var child:Panel = evt.result as Panel;
 			addUniqueTab(child);
 		}		
 
@@ -281,7 +281,7 @@
 			this.currentUser = null;
 			this.showLogin();
 		}
-		private function addUniqueTab(tab:DisplayObject):void {
+		private function addUniqueTab(tab:Panel):void {
 			var tabFound:Boolean = false;
 			
 			for (var i:int = 0; i < mainNavigator.numChildren; i++)
@@ -294,8 +294,12 @@
 				}
 			}
 			if (!tabFound) {
+				var tmpTitle:String = tab.name;
 				mainNavigator.addChild(tab);
+				tab.title = tmpTitle;
 				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
+				mainNavigator.getTabAt(mainNavigator.selectedIndex).name = tmpTitle;
+				mainNavigator.getTabAt(mainNavigator.selectedIndex).label = tmpTitle;				
 			}
 		}
 		private function init() : void {
