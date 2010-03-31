@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 				
 		public var setupCost:Number = 0;
 		public var unitCost:Number = 0;
-		public var rateTable:RateTable;
+		public var rateTable:PriceList;
 		public var fixedMaterials:Number = 0;
 		public var unitMaterials:Number = 0;
 		public var laborRate:Number = 0;

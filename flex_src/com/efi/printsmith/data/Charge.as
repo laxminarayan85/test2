@@ -42,6 +42,7 @@ package com.efi.printsmith.data
 		public var qtyPerSet:Number = 0;
 		public var startTime:Date = new Date();
 		public var endTime:Date = new Date();
+		public var chargeCostingRecord:ChargeCostingRecord;
 	
 	}
 }
