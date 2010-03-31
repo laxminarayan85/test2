@@ -248,8 +248,8 @@
 		if (webcatagoriesArray==null){
 			webcatagoriesArray = new ArrayCollection();
 		}
-		if (webcatagories != null && webcatagories.parent == null){
-			newItem.parent = webcatagories as ArrayCollection;
+		if (webcatagories != null && webcatagories.children == null){
+			newItem.children = webcatagories as ArrayCollection;
 		}
 		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
 		webcatagoriesArray.addItem(newItem);
@@ -825,7 +825,7 @@
 				<mx:Label x="275" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Category')}" textAlign="right" width="158"/>
 				<mx:Label x="275" y="98" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Status')}" textAlign="right" width="158"/>
 				<mx:Label x="275" y="124" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Image')}" textAlign="right" width="158"/>
-				<mx:TextInput x="441" y="72" text="{webcatagories.parent}" editable="false" borderStyle="none"/>
+				<mx:TextInput x="441" y="72" text="{webcatagories.children}" editable="false" borderStyle="none"/>
 				<mx:TextInput x="441" y="98" text="{webcatagories.status}" editable="false" borderStyle="none"/>
 				<mx:ComboBox id="cboCatagoryImage" x="441" y="124" width="275" dataProvider="{webgraphicsArray}" labelField="name" change="updateCatagoriesArray();"/>
 			</mx:Canvas>
