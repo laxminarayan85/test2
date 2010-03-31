@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "charge")
+//@org.hibernate.annotations.Table( appliesTo = "charge", fetch = FetchMode.SELECT, optional=false )
 public class Charge extends ModelBase {
 	/**
 	 * @generated
@@ -150,6 +152,10 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String ENDTIME = "EndTime";
+	/**
+	 * @generated
+	 */
+	public static final String CHARGECOSTINGRECORD = "ChargeCostingRecord";
 
 	/**
 	 * @generated
@@ -164,7 +170,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private ChargeDefinition chargeDefinition;
 	
 	/**
@@ -230,7 +236,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Location productionLocation;
 	
 	/**
@@ -626,7 +632,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private JobBase parentJob;
 	
 	/**
@@ -648,7 +654,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Invoice parentInvoice;
 	
 	/**
@@ -797,6 +803,28 @@ public class Charge extends ModelBase {
 	public void setEndTime(Date newVal) {
 		this.endTime = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne
+	private ChargeCostingRecord chargeCostingRecord;
+	
+	/**
+	 * @generated
+ 	 */
+	public ChargeCostingRecord getChargeCostingRecord(){
+		return chargeCostingRecord; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setChargeCostingRecord(ChargeCostingRecord newVal) {
+		this.chargeCostingRecord = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -832,6 +860,7 @@ public class Charge extends ModelBase {
 		if (QTYPERSET.equals(propertyName)) return getQtyPerSet();
 		if (STARTTIME.equals(propertyName)) return getStartTime();
 		if (ENDTIME.equals(propertyName)) return getEndTime();
+		if (CHARGECOSTINGRECORD.equals(propertyName)) return getChargeCostingRecord();
 		return super.getProperty(propertyName);
 	}
 	
@@ -870,6 +899,7 @@ public class Charge extends ModelBase {
 		if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
 		if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
 		if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
+		if (CHARGECOSTINGRECORD.equals(propertyName)) setChargeCostingRecord((ChargeCostingRecord)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -937,6 +967,8 @@ public class Charge extends ModelBase {
 			return new Class<?>[] {Date.class};		
 		if (ENDTIME.equals(propertyName)) 
 			return new Class<?>[] {Date.class};		
+		if (CHARGECOSTINGRECORD.equals(propertyName)) 
+			return new Class<?>[] {ChargeCostingRecord.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -976,6 +1008,7 @@ public class Charge extends ModelBase {
 		if (QTYPERSET.equals(propertyName)) return Charge.class;
 		if (STARTTIME.equals(propertyName)) return Charge.class;
 		if (ENDTIME.equals(propertyName)) return Charge.class;
+		if (CHARGECOSTINGRECORD.equals(propertyName)) return Charge.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -1044,6 +1077,8 @@ public class Charge extends ModelBase {
 		if (! SmartEquals(getStartTime(), objT.getStartTime()))
 			return false;
 		if (! SmartEquals(getEndTime(), objT.getEndTime()))
+			return false;
+		if (! SmartEquals(getChargeCostingRecord(), objT.getChargeCostingRecord()))
 			return false;
 		return true;
 	}			

@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "chargecost")
+//@org.hibernate.annotations.Table( appliesTo = "chargecost", fetch = FetchMode.SELECT, optional=false )
 public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
@@ -136,13 +138,13 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	private RateTable rateTable;
+    @ManyToOne
+	private PriceList rateTable;
 	
 	/**
 	 * @generated
  	 */
-	public RateTable getRateTable(){
+	public PriceList getRateTable(){
 		return rateTable; 
 	}
 
@@ -150,7 +152,7 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setRateTable(RateTable newVal) {
+	public void setRateTable(PriceList newVal) {
 		this.rateTable = newVal;
 	}
  	
@@ -312,7 +314,7 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SpeedTable speedTable;
 	
 	/**
@@ -357,7 +359,7 @@ public class ChargeCost extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (SETUPCOST.equals(propertyName)) setSetupCost((Double)newValue); else
 		if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
-		if (RATETABLE.equals(propertyName)) setRateTable((RateTable)newValue); else
+		if (RATETABLE.equals(propertyName)) setRateTable((PriceList)newValue); else
 		if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((Double)newValue); else
 		if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((Double)newValue); else
 		if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
@@ -380,7 +382,7 @@ public class ChargeCost extends ModelBase {
 		if (UNITCOST.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (RATETABLE.equals(propertyName)) 
-			return new Class<?>[] {RateTable.class};		
+			return new Class<?>[] {PriceList.class};		
 		if (FIXEDMATERIALS.equals(propertyName)) 
 			return new Class<?>[] {Double.class};		
 		if (UNITMATERIALS.equals(propertyName)) 
