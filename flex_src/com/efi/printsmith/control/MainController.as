@@ -65,7 +65,7 @@ package com.efi.printsmith.control
 			this.addCommand(EditEditEstimateEvent.COMMANDID, EditEditEstimateCommand);
 			this.addCommand(EditCreateInvoiceEvent.COMMANDID, EditCreateInvoiceCommand);
 			this.addCommand(EditEditInvoiceEvent.COMMANDID, EditEditInvoiceCommand);
-
+			this.addCommand(EditWorkInProgressEvent.COMMANDID, EditWorkInProgressCommand);
 			this.addCommand(EditWebAdminEvent.COMMANDID, EditWebAdminCommand);
 
 			//form level items

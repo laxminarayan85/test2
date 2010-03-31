@@ -55,7 +55,7 @@
 				<mx:Button x="10" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.AccountHistory')}" width="158" height="86" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();"/>
 				<mx:Button x="10" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" width="158" height="86" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();"/>
 				<mx:Button x="674" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.OpenCashRegister')}" width="158" height="86" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();"/>
-				<mx:Button x="508" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')"/>
+				<mx:Button x="508" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" width="158" height="86" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')" click="doWorkInProgress();"/>
 				<mx:Button x="342" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" width="158" height="86" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()"/>
 				<mx:Button x="342" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PressDefinitions')}" width="158" height="86" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()"/>
 				<mx:Button x="342" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CopierDigitalDefinit')}" width="158" height="86" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()"/>
@@ -193,7 +193,12 @@
 			var event:EditCopierDefinitionEvent = new EditCopierDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-
+		private function doWorkInProgress():void{
+			var event:EditWorkInProgressEvent = new EditWorkInProgressEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+			
+		}
+		
 		private function doChargeDefinitions():void {
 			var event:EditChargeDefinitionEvent = new EditChargeDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();

@@ -135,7 +135,7 @@ rStandardMenuText.Pricing,rStandardMenuText.ChangePrices,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.ImportStockCatalog,CMD_
 rStandardMenuText.Reports,rStandardMenuText.AccountHistory,CMD_AccountHistory
 rStandardMenuText.Reports,rStandardMenuText.EstimateHistory,CMD_EstimateHistory
-rStandardMenuText.Reports,rStandardMenuText.WorkinProgress,CMD_
+rStandardMenuText.Reports,rStandardMenuText.WorkinProgress,CMD_WorkInProgress
 rStandardMenuText.Reports,rStandardMenuText.MailingLabels,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.CustomerList,CMD_
