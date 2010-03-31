@@ -378,12 +378,13 @@ public class Account extends ModelBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
-	public Account(long id, String Name, String accountID,String externalID, long masterID) {
+	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect) {
 		this.id = id;
 		this.title = Name;
 		this.accountId = accountID;
 		this.externalRef = externalID;
 		this.masterAcct = masterID;
+		this.prospect = prospect;
 	}
  	
 	

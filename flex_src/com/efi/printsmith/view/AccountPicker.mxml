@@ -53,6 +53,8 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		accounts = event.result as ArrayCollection;
+		accounts.filterFunction = accountFilter;
+		refreshData();
 	}
 	
 	private function handleFault(ev:FaultEvent):void {                               
@@ -77,8 +79,9 @@
 		                                                       
 	private function init():void {   
 		consumer.subscribe();
-		notification_consumer.subscribe();     
-
+		notification_consumer.subscribe();   
+		accountTypeRadio.selectedValue = "Customer";  
+		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
 		dataService.getAccountPicker("Account");
@@ -87,7 +90,31 @@
 			new_button.visible = false;
 		}
 	}
-	                                
+	private function accountFilter(item:Object):Boolean {
+		var tempaccount:Account = item as Account;
+		var showItem:Boolean = false;
+		
+		/* First make sure we have the right document type */
+		switch (accountTypeRadio.selectedValue) {
+		case "Customer":
+			if (! tempaccount.prospect)
+				showItem = true;
+			break;
+		case "Prospects":
+			if (tempaccount.prospect)
+				showItem = true;
+			break;
+		}
+		
+		return showItem
+	}
+	private function accountTypeChange():void {
+		refreshData();	
+	}  
+	private function refreshData():void{
+		dataGrid.invalidateList();
+		accounts.refresh();
+	}                              
 	private function resetFocus():void {                           
 	     focusManager.setFocus(filter_field);                                    
 	}    
@@ -132,15 +159,15 @@
 
                              
 	<mx:Canvas width="100%" height="100%">
-		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{accounts}"
-		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
+		<mx:DataGrid id="dataGrid" width="457" height="420" dataProvider="{accounts}"
+		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="65">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="title" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Name')}" />                         
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="465" y="10"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="465" y="40"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="471" y="65"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="471" y="95"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="471" y="150"/>
 		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
@@ -152,6 +179,9 @@
 			</mx:ArrayCollection>
 		</mx:ComboBox>
 		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}"/>
+		<mx:RadioButtonGroup id="accountTypeRadio" change="accountTypeChange()"/>
+		<mx:RadioButton x="49" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Customers')}" groupName="accountTypeRadio" value="Customer" id="customer_radio"/>
+		<mx:RadioButton x="190" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Prospects')}" groupName="accountTypeRadio" value="Prospects" id="prospect_radio"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

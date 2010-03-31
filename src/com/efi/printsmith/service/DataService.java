@@ -193,7 +193,7 @@ public class DataService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
-		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct";
+		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect";
 		try {
 
 			log.debug("** getAccountPicker .");
