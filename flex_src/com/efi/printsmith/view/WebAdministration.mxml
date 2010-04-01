@@ -73,7 +73,6 @@
 	import com.efi.printsmith.data.WebStatus;
 
 	import com.efi.printsmith.data.JobBase;
-	import com.efi.printsmith.components.EditCatagoriesInfo;
 	
 	import mx.rpc.Responder;
 	import mx.controls.Alert;   
