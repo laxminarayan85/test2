@@ -265,13 +265,13 @@
 		}
 	}
 	private function doNewSubCatagory():void {
-		var newItem:WebCatagories = new WebCatagories();
+		var newItem:WebSubCatagories = new WebSubCatagories();
 		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
 		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledcategory');
 		newItem.children = new ArrayCollection();
 		newItem.children.addItem(webcatagories);
 		
-		webcatagoriesArray = webcatalogs.catagories;
+		webcatagories.children.addItem(newItem);
 		refeshCatagoriesTree();
 	}
 
@@ -303,23 +303,10 @@
 			webcatalogs.catagories.addItem(webcatagories);
 		}
 	}
+
 	private function refeshCatagoriesTree():void {
 		webcatagoriesGrid.invalidateList()
 		webcatagoriesArray.refresh();
-	}
-
-	private function webcatagoriesGridLabelEdit(event:ListEvent):void {
-		// Disable copying data back to the control.
-		event.preventDefault();
-
-		// Get new label from editor.
-		webcatagoriesGrid.editedItemRenderer.data.name = EditCatagoriesInfo(event.currentTarget.itemEditorInstance).treeLabel.text;
-
-		// Close the cell editor.
-		webcatagoriesGrid.destroyItemEditor(); 
-                    
-		// Notify the list control to update its display.
-		webcatagoriesGrid.dataProvider.notifyItemUpdate(webcatagoriesGrid.editedItemRenderer);
 	}
 
 	private function doNewGraphic():void {
@@ -562,6 +549,7 @@
 	}
 	private function handleLoadCatagoriesResult(ev:ResultEvent):void {
 		webcatagoriesArray = ev.result as ArrayCollection;
+		websubcatagoriesArray = webcatagoriesArray
 	}
 	private function handleLoadSubCatagoriesResult(ev:ResultEvent):void {
 		websubcatagoriesArray = ev.result as ArrayCollection;
@@ -595,7 +583,6 @@
 		dsCatagories.getAll("WebCatagories");
 	}
 	private function handleSaveSubCatagoriesResult(ev:ResultEvent):void {
-		dsSubCatagories.getAll("WebSubCatagories");
 	}
 	private function handleSaveChoicesResult(ev:ResultEvent):void {
 		dsChoices.getAll("WebChoices");
@@ -901,8 +888,6 @@
 					dataProvider="{webcatagoriesArray}" 
 					visible="true" 
 					enabled="true" 
-					itemEditor="com.efi.printsmith.components.EditCatagoriesInfo"
-					itemEditEnd="webcatagoriesGridLabelEdit(event);"
 					labelFunction="catagoriesLabel"
 					click="catagoriesClickHandler(event);" editable="true"
 					width="250" x="0" height="100%" y="38">
