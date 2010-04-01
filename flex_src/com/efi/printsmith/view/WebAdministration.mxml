@@ -20,6 +20,10 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatagoriesResult(event);"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatagoriesResult(event);"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dsSubCatagories" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSubCatagoriesResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSubCatagoriesResult(event);"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="dsCatalogs" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCatalogsResult(event);"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCatalogsResult(event);"/>
@@ -58,8 +62,9 @@
 	import mx.collections.ArrayCollection;
 
 	import com.efi.printsmith.data.WebBase;
-	import com.efi.printsmith.data.WebCatagories;
 	import com.efi.printsmith.data.WebCatalogs;
+	import com.efi.printsmith.data.WebCatagories;
+	import com.efi.printsmith.data.WebSubCatagories;
 	import com.efi.printsmith.data.WebCheckoutTypes;
 	import com.efi.printsmith.data.WebChoices;
 	import com.efi.printsmith.data.WebGraphics;
@@ -68,7 +73,8 @@
 	import com.efi.printsmith.data.WebStatus;
 
 	import com.efi.printsmith.data.JobBase;
-		
+	import com.efi.printsmith.components.EditCatagoriesInfo;
+	
 	import mx.rpc.Responder;
 	import mx.controls.Alert;   
 	import mx.controls.DataGrid;
@@ -94,6 +100,8 @@
 	private var webcatalogsArray:ArrayCollection;
 	[Bindable]
 	private var webcatagoriesArray:ArrayCollection;
+	[Bindable]
+	private var websubcatagoriesArray:ArrayCollection;
 	[Bindable]
 	private var webproductsArray:ArrayCollection;
 	[Bindable]
@@ -124,6 +132,8 @@
 	private var webcatalogs:WebCatalogs;
 	[Bindable]
 	private var webcatagories:WebCatagories;
+	[Bindable]
+	private var websubcatagories:WebSubCatagories;
 	[Bindable]
 	private var webproducts:WebProducts;
 	[Bindable]
@@ -232,9 +242,39 @@
 	private function doNewCatalog():void {
 		var newItem:WebCatalogs = new WebCatalogs();
 		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
+		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledcatalog');
 		webcatalogsArray.addItem(newItem);
 		webcatalogs = newItem;
 	}
+
+	private function alertListener(eventObj:CloseEvent):void {
+	// Check to see if the OK button was pressed.
+		if (eventObj.detail==Alert.YES) {
+			doNewSubCatagory();
+		}else{
+			if (eventObj.detail==Alert.NO) {
+				doNewCatagory();
+			}
+		}
+	}
+	private function doNewCatagoryQuestion():void {
+		if (webcatagories != null){
+			Alert.show("Do you want to Create a SubCatagory, select No will create a Main Catagory?", "Sub Catagory Confirmation", mx.controls.Alert.YES | mx.controls.Alert.NO | mx.controls.Alert.CANCEL, this, alertListener, null, Alert.OK);
+		}else{
+			doNewCatagory();
+		}
+	}
+	private function doNewSubCatagory():void {
+		var newItem:WebCatagories = new WebCatagories();
+		newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
+		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledcategory');
+		newItem.children = new ArrayCollection();
+		newItem.children.addItem(webcatagories);
+		
+		webcatagoriesArray = webcatalogs.catagories;
+		refeshCatagoriesTree();
+	}
+
 	private function doNewCatagory():void {
 		if (webcatalogs==null){ 
 			if (webcatalogsArray != null && webcatalogsArray.length>0){
@@ -245,6 +285,8 @@
 		}
 		
 		var newItem:WebCatagories = new WebCatagories();
+		newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledcategory');
+
 		if (webcatagoriesArray==null){
 			webcatagoriesArray = new ArrayCollection();
 		}
@@ -261,6 +303,24 @@
 			webcatalogs.catagories.addItem(webcatagories);
 		}
 	}
+	private function refeshCatagoriesTree():void {
+		webcatagoriesGrid.invalidateList()
+		webcatagoriesArray.refresh();
+	}
+
+	private function webcatagoriesGridLabelEdit(event:ListEvent):void {
+		// Disable copying data back to the control.
+		event.preventDefault();
+
+		// Get new label from editor.
+		webcatagoriesGrid.editedItemRenderer.data.name = EditCatagoriesInfo(event.currentTarget.itemEditorInstance).treeLabel.text;
+
+		// Close the cell editor.
+		webcatagoriesGrid.destroyItemEditor(); 
+                    
+		// Notify the list control to update its display.
+		webcatagoriesGrid.dataProvider.notifyItemUpdate(webcatagoriesGrid.editedItemRenderer);
+	}
 
 	private function doNewGraphic():void {
 		var newItem:WebGraphics = new WebGraphics();
@@ -273,19 +333,20 @@
 	}
 
 	private function doNewProduct():void {
-		if (webcatagories != null){
+		if (websubcatagories != null){
 			var newItem:WebProducts = new WebProducts();
 			if (webproductsArray == null){
 				webproductsArray = new ArrayCollection();
 			}
 			newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
+			newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledproduct');
 			//txtProductsSku.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.EmptySKU');
 			webproductsArray.addItem(newItem);
 			webproducts = newItem;
-			if (webcatagories.products==null){
-				webcatagories.products = webproductsArray;
+			if (websubcatagories.products==null){
+				websubcatagories.products = webproductsArray;
 			}else{
-				webcatagories.products.addItem(newItem);
+				websubcatagories.products.addItem(newItem);
 			}
 		}		
 	}
@@ -298,6 +359,7 @@
 			}
 			newItem.status = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.NEW');
 			newItem.questionType = questionTypeArray.getItemAt(0,0).name;
+			newItem.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.untitledquestion');
 			webquestionsArray.addItem(newItem);
 			webquestions = newItem;
 			if (webproducts.questions==null){
@@ -475,7 +537,7 @@
 			webcatagoriesArray = webcatalogs.catagories as ArrayCollection;
 			if (webcatagoriesArray.length > 0){
 				webcatagories = webcatagoriesArray.getItemAt(0,0) as WebCatagories;
-				webproductsArray = webcatagories.products as ArrayCollection;
+				webproductsArray = websubcatagories.products as ArrayCollection;
 				if (webproductsArray.length > 0){
 					webproducts = webproductsArray.getItemAt(0,0) as WebProducts; 
 					webquestionsArray = webproducts.questions as ArrayCollection;
@@ -500,6 +562,9 @@
 	}
 	private function handleLoadCatagoriesResult(ev:ResultEvent):void {
 		webcatagoriesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadSubCatagoriesResult(ev:ResultEvent):void {
+		websubcatagoriesArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadCheckoutTypesResult(ev:ResultEvent):void {
 		webcheckouttypesArray = ev.result as ArrayCollection;
@@ -528,6 +593,9 @@
 	}
 	private function handleSaveCatagoriesResult(ev:ResultEvent):void {
 		dsCatagories.getAll("WebCatagories");
+	}
+	private function handleSaveSubCatagoriesResult(ev:ResultEvent):void {
+		dsSubCatagories.getAll("WebSubCatagories");
 	}
 	private function handleSaveChoicesResult(ev:ResultEvent):void {
 		dsChoices.getAll("WebChoices");
@@ -632,12 +700,33 @@
 	}
 
 	private function catalogsClickHandler(event:ListEvent):void {
-		if (webcatalogs != null && webcatalogsGrid.selectedItem != null){
 			webcatalogs = webcatalogsGrid.selectedItem as WebCatalogs;
+		if (webcatalogs.catagories != null){
+			webcatagoriesArray = webcatalogs.catagories as ArrayCollection;
+			webcatagories = webcatagoriesArray.getItemAt(0,0) as WebCatagories;
+		}else{
+			webcatagoriesArray = new WebCatagories() as ArrayCollection;
 		}
 	}
+	
+	private function catagoriesClickHandler(evt:Event):void { 
+		if (evt.currentTarget.selectedItem!=null){ 
+			webcatagories = evt.currentTarget.selectedItem;
+			if (websubcatagories.products != null && websubcatagories.products.length > 0){
+				webproductsArray = websubcatagories.products;
+				webproducts = webproductsArray.getItemAt(0,0) as WebProducts;
+			}else{
+				webproductsArray = new ArrayCollection();
+			}
+		}
+	}
+	
 	private function catagoriesComboChangeHandler(event:ListEvent):void {
+		if (cboSelectedCatalog.selectedItem.catagories != null){
 		webcatagoriesArray = cboSelectedCatalog.selectedItem.catagories as ArrayCollection;
+		}else{
+			webcatagoriesArray = new WebCatagories() as ArrayCollection;
+		}
 	}
 	
 	private function updateCatalogArray():void {
@@ -677,6 +766,10 @@
 			webproductsArray[webproductsGrid.selectedIndex].description = txtProductsDescription.text;
 		}
 	}
+
+	private function catagoriesLabel(item:Object):String {
+		return item.name;
+	}
 ]]>	
 
                              
@@ -693,7 +786,7 @@
 		</mx:Button>
 
 
-		<mx:TabNavigator x="0" y="58" width="100%" height="100%" creationPolicy="all">
+		<mx:TabNavigator id="canvasStack" x="0" y="58" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasSite" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.Site')}" width="100%" height="100%">
 				<mx:Label x="35" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactName')}" textAlign="right" width="137"/>
 				<mx:Label x="35" y="53" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ContactPhone')}" textAlign="right" width="137"/>
@@ -779,7 +872,7 @@
 				<mx:ComboBox id="cboSelectedCatalog" x="139" y="10" width="111" dataProvider="{webcatalogsArray}" labelField="name" change="catagoriesComboChangeHandler(event);"></mx:ComboBox>
 				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SelectedCatalog')}" width="130" textAlign="right"/>
 
-				<mx:Button x="286" y="10" width="38" height="38" click="doNewCatagory();">
+				<mx:Button x="286" y="10" width="38" height="38" click="doNewCatagoryQuestion();">
 					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 				</mx:Button>
 				<mx:Button x="506" y="10" width="38" height="38" click="doDelete();">
@@ -800,17 +893,21 @@
 				<mx:Label x="440" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="58" textAlign="center"/>
 				<mx:Label x="286" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
 
-
-				<mx:DataGrid width="250" id="webcatagoriesGrid" 
+				<mx:Tree 
+					folderClosedIcon="{null}" 
+					folderOpenIcon="{null}" 
+					defaultLeafIcon="{null}" 
+					id="webcatagoriesGrid" 
 					dataProvider="{webcatagoriesArray}" 
-					editable="true" 
-					itemEditEnd="processCatagoriesGridData(event);" height="100%" y="46" x="0">
-					<mx:columns>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.StandardCatalog')}" dataField="name"
-							itemEditor="mx.controls.TextInput" editable="true">
-						</mx:DataGridColumn>
-					</mx:columns>
-				</mx:DataGrid>
+					visible="true" 
+					enabled="true" 
+					itemEditor="com.efi.printsmith.components.EditCatagoriesInfo"
+					itemEditEnd="webcatagoriesGridLabelEdit(event);"
+					labelFunction="catagoriesLabel"
+					click="catagoriesClickHandler(event);" editable="true"
+					width="250" x="0" height="100%" y="38">
+				</mx:Tree>
+
 				<mx:DataGrid id="webcatagoryproductsGrid" 
 					dataProvider="{webproductsArray}" 
 					editable="true" 
