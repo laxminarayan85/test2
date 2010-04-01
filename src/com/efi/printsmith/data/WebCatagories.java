@@ -45,15 +45,11 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PRODUCTS = "Products";
+	public static final String NAME = "Name";
 	/**
 	 * @generated
 	 */
 	public static final String CHILDREN = "Children";
-	/**
-	 * @generated
-	 */
-	public static final String NAME = "Name";
 
 	/**
 	 * @generated
@@ -112,70 +108,6 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
-    @JoinTable( name = "webcatagories_products")
-	private java.util.List<WebProducts> products;
-	
-	/**
-	 * @generated
- 	 */
-	public java.util.List<WebProducts> getProducts(){
-		return products; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void addProducts(WebProducts obj) {
-		if (products == null) {
-			products = new java.util.ArrayList<WebProducts>();
-		}
-		products.add(obj);
-	}
-	
-	/**
-	 * @generated
-	 */	
-	public void setProducts(java.util.List<WebProducts> newVal) {
-		this.products = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
-    @JoinTable( name = "webcatagories_children")
-	private java.util.List<WebCatagories> children;
-	
-	/**
-	 * @generated
- 	 */
-	public java.util.List<WebCatagories> getChildren(){
-		return children; 
-	}
-
-	/**
-	 * @generated
-	 */	
-	public void addChildren(WebCatagories obj) {
-		if (children == null) {
-			children = new java.util.ArrayList<WebCatagories>();
-		}
-		children.add(obj);
-	}
-	
-	/**
-	 * @generated
-	 */	
-	public void setChildren(java.util.List<WebCatagories> newVal) {
-		this.children = newVal;
-	}
- 	
-	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private String name;
 	
@@ -193,6 +125,38 @@ public class WebCatagories extends ModelBase {
 	public void setName(String newVal) {
 		this.name = newVal;
 	}
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @OneToMany( cascade = {CascadeType.ALL})
+    @JoinTable( name = "webcatagories_children")
+	private java.util.List<WebSubCatagories> children;
+	
+	/**
+	 * @generated
+ 	 */
+	public java.util.List<WebSubCatagories> getChildren(){
+		return children; 
+	}
+
+	/**
+	 * @generated
+	 */	
+	public void addChildren(WebSubCatagories obj) {
+		if (children == null) {
+			children = new java.util.ArrayList<WebSubCatagories>();
+		}
+		children.add(obj);
+	}
+	
+	/**
+	 * @generated
+	 */	
+	public void setChildren(java.util.List<WebSubCatagories> newVal) {
+		this.children = newVal;
+	}
 	/**
 	 * @generated
 	 */		
@@ -201,9 +165,8 @@ public class WebCatagories extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
 		if (STATUS.equals(propertyName)) return getStatus();
 		if (IMAGE.equals(propertyName)) return getImage();
-		if (PRODUCTS.equals(propertyName)) return getProducts();
-		if (CHILDREN.equals(propertyName)) return getChildren();
 		if (NAME.equals(propertyName)) return getName();
+		if (CHILDREN.equals(propertyName)) return getChildren();
 		return super.getProperty(propertyName);
 	}
 	
@@ -215,9 +178,8 @@ public class WebCatagories extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
 		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
 		if (IMAGE.equals(propertyName)) setImage((WebGraphics)newValue); else
-		if (PRODUCTS.equals(propertyName)) setProducts((java.util.List<WebProducts>)newValue); else
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<WebCatagories>)newValue); else
 		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<WebSubCatagories>)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -231,12 +193,10 @@ public class WebCatagories extends ModelBase {
 			return new Class<?>[] {String.class};		
 		if (IMAGE.equals(propertyName)) 
 			return new Class<?>[] {WebGraphics.class};		
-		if (PRODUCTS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebProducts.class};		
-		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebCatagories.class};		
 		if (NAME.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (CHILDREN.equals(propertyName)) 
+			return new Class<?>[] {java.util.List.class, WebSubCatagories.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -249,9 +209,8 @@ public class WebCatagories extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
 		if (STATUS.equals(propertyName)) return WebCatagories.class;
 		if (IMAGE.equals(propertyName)) return WebCatagories.class;
-		if (PRODUCTS.equals(propertyName)) return WebCatagories.class;
-		if (CHILDREN.equals(propertyName)) return WebCatagories.class;
 		if (NAME.equals(propertyName)) return WebCatagories.class;
+		if (CHILDREN.equals(propertyName)) return WebCatagories.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -267,11 +226,9 @@ public class WebCatagories extends ModelBase {
 			return false;
 		if (! SmartEquals(getImage(), objT.getImage()))
 			return false;
-		if (! SmartEquals(getProducts(), objT.getProducts()))
+		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
 			return false;
 		return true;
 	}			
