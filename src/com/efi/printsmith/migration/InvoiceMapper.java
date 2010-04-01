@@ -233,7 +233,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("completed".equals(currentFieldToken)) {
 				invoice.setCompleted(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pends".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setOnPendingList(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("locked".equals(currentFieldToken)) {
 				invoice.setLocked(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("printed invoice".equals(currentFieldToken)) {
@@ -979,7 +979,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("completed".equals(currentFieldToken)) {
 				invoice.setCompleted(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pends".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setOnPendingList(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("locked".equals(currentFieldToken)) {
 				invoice.setLocked(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("printed invoice".equals(currentFieldToken)) {

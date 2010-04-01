@@ -212,7 +212,7 @@ public class DataService {
 		}
 		return null;
 	}
-
+	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
 		List<ModelBase> resultList = new ArrayList<ModelBase>();
 		String columnstring = new String();
@@ -222,20 +222,21 @@ public class DataService {
 			EntityManager em = entityManagerFactory.createEntityManager();
 
 			String queryString = "select new Invoice" + "( "
-					+ columnstring + ") from Invoice a";
+					+ columnstring + ") from Invoice a where a.onPendingList = 'TRUE'";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
 			for (int i = 0; i < resultList.size(); i++) {
 				Invoice listItem = (Invoice)resultList.get(i);
 				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
-				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact());
+				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
+						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
 				resultList.set(i, resultInvoice);
 			}
 			
 			List<ModelBase> estimateResultList = new ArrayList<ModelBase>();
 			
-			queryString = "select new Estimate" + "( "+ columnstring + ") from Estimate a";							
+			queryString = "select new Estimate" + "( "+ columnstring + ") from Estimate a where a.onPendingList = 'TRUE'";							
 			
 			query = em.createQuery(queryString);
 			estimateResultList = query.getResultList();
@@ -243,7 +244,8 @@ public class DataService {
 			for (int i = 0; i < estimateResultList.size(); i++) {
 				Estimate listItem = (Estimate)estimateResultList.get(i);
 				Estimate invoice = (Estimate) this.getById("Estimate", ((ModelBase) listItem).getId());
-				Estimate resultInvoice = new Estimate(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact());
+				Estimate resultInvoice = new Estimate(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
+						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
 				resultList.add(resultInvoice);
 			}
 			

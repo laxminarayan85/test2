@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}"
 width="786" height="531"  creationComplete="init()"  
-     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" xmlns:text="flash.text.*">
+     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="invoicebase"/>
@@ -31,6 +31,8 @@ width="786" height="531"  creationComplete="init()"
     import mx.events.ValidationResultEvent;    
 	import com.efi.printsmith.data.Account; 
 	import com.efi.printsmith.data.Invoice;  
+	import com.efi.printsmith.data.Estimate;
+	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;	       
 	
 	[Bindable]                                         
@@ -38,20 +40,124 @@ width="786" height="531"  creationComplete="init()"
 	
 	[Bindable]
     private var invoicebases:ArrayCollection = new ArrayCollection(); 
+    [Bindable]
+    private var reportArray:ArrayCollection = new ArrayCollection(); 
+    [Bindable]
+    private var sortArray:ArrayCollection = new ArrayCollection(); 
 	
 	public function init():void {
 		consumer.subscribe();
+		invoice_check.selected = true;
+		fillReportArray(reportArray);
+		fillSortArray(sortArray);
 		notification_consumer.subscribe();
-		dataService.getAll("InvoiceBase");
-		
-	}  
+		dataService.getPending("InvoiceBase");
+		invoicebases.filterFunction = invoiceEsimtateFilter;
 	
-
-	private function handleLoadResult(event:ResultEvent):void {
-		invoicebases = event.result as ArrayCollection;
+	} 
+	
+	private function fillReportArray(fillArray:ArrayCollection):void {
+		var array:Object=new Object();
+		array.name= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kAcctRankings.Standard');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.DateandTime');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Press');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Integration');
+		fillArray.addItem(array);
+	}
+	private function fillSortArray(fillArray:ArrayCollection):void {
+		var array:Object=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Customer');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleReportsCmd.DueDate');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.InvoiceNumber');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'ReOrderInvCmd.OrderDate');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ProofDate');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.TakenBy');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Title');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'specialMenu.pressname');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ink');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID');
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID');
+		fillArray.addItem(array);
 	}
 	
 	
+	
+	 
+	private function refreshData():void{
+		invoice_list.invalidateList();
+		invoicebases.refresh();
+	}
+
+	private function DoCheck():void{
+		refreshData();
+	}
+	private function handleLoadResult(event:ResultEvent):void {
+		invoicebases = event.result as ArrayCollection;
+		invoicebases.filterFunction = invoiceEsimtateFilter;
+		refreshData();
+	}
+	public function getAccountLabel(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:InvoiceBase = item as InvoiceBase;
+		
+		if (tmpInvoice != null && tmpInvoice.account != null && tmpInvoice.account.title != null && tmpInvoice.account.title != "") {
+			return tmpInvoice.account.title;
+		} else {
+			return "None";
+		}
+	}
+	private function invoiceEsimtateFilter(item:Object):Boolean {
+		var showItem:Boolean = false;
+		
+		/* First make sure we have the right document type */
+		if (item is Invoice) {
+			if ( invoice_check.selected)
+				showItem = true;
+		}	
+		if (item is Estimate) {
+			if( estimate_check.selected)
+				showItem = true;
+		}	
+		
+		return showItem
+	}
 	
 	
 	private function handleFault(event:FaultEvent):void {
@@ -81,10 +187,10 @@ width="786" height="531"  creationComplete="init()"
 </mx:Script>
 
 <mx:Canvas width="100%" height="100%">
-	<mx:DataGrid x="10" y="256"  height="216" id="invoice_list" dataProvider="{invoicebases}">
+	<mx:DataGrid x="10" y="219" height="253" id="invoice_list" dataProvider="{invoicebases}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoice')}" dataField="invoiceNumber" />
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" dataField="account.name"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Title')}" dataField="name"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
@@ -95,9 +201,9 @@ width="786" height="531"  creationComplete="init()"
 	</mx:DataGrid>
 	<mx:Label x="23" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ReportType')}" textAlign="right" width="83"/>
 	<mx:Label x="33" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
-	<mx:ComboBox x="114" y="67" id="sortBy_combo" editable="false"></mx:ComboBox>
-	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false"></mx:ComboBox>
-	<mx:Panel x="10" y="143" width="583" height="105" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}">
+	<mx:ComboBox x="114" y="67" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name"></mx:ComboBox>
+	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name"></mx:ComboBox>
+	<mx:Panel x="10" y="97" width="583" height="105" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}">
 		<mx:CheckBox x="25" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check"/>
 		<mx:CheckBox x="25" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check"/>
 		<mx:CheckBox x="152" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check"/>
@@ -106,9 +212,9 @@ width="786" height="531"  creationComplete="init()"
 		<mx:CheckBox x="380" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
 		<mx:CheckBox x="231" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check"/>
 	</mx:Panel>
-	<mx:Panel x="327" y="10" width="160" height="79" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}">
-		<mx:CheckBox x="10" y="0" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check"/>
-		<mx:CheckBox x="10" y="17" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check"/>
+	<mx:Panel x="327" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}">
+		<mx:CheckBox x="10" y="0" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()"/>
+		<mx:CheckBox x="10" y="17" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()"/>
 	</mx:Panel>
 
 </mx:Canvas>

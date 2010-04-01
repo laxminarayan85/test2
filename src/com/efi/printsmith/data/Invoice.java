@@ -50,10 +50,14 @@ public class Invoice extends InvoiceBase {
 		this.setCustomerPO(customerPO);
 	}
 	
-	public Invoice(long id,  String invoiceNumber, Account account, Contact contact) {
+	public Invoice(long id,  String invoiceNumber, Account account, Contact contact,String name, Double grandTotal, Date orderDate, Date wantDate, Date proofDate) {
 		this.id = id;
 		this.setInvoiceNumber(invoiceNumber);
-	
+		this.setName(name);
+		this.setGrandTotal(grandTotal);
+		this.setOrderedDate(orderDate);
+		this.setWantedDate(wantDate);
+		this.setProofDate(proofDate);
 		this.setAccount(account);
 		this.setContact(contact);
 	}	
