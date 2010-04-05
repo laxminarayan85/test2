@@ -26,6 +26,9 @@
 	<property name="snowmassWebFlexdir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/flex/"/>
 	<property name="snowmassHistorydir" value="${checkoutpath}/${module1}/html-template/history"/>
 
+	<property name="snowmassDefaultDatadir" value="${checkoutpath}/${module1}/src/com/efi/printsmith/defaultdata/"/>
+	<property name="snowmassDistDefaultDatadir" value="${checkoutpath}/${module1}/WebContent/WEB-INF/classes/com/efi/printsmith/defaultdata/"/>
+
 	<property name="version.major" value="10" /> 
 	<property name="version.minor" value="0" /> 
 	<property name="version.revision" value="0" /> 
@@ -119,6 +122,10 @@
 		</copy>
 		<copy todir="${snowmassWebFlexdir}/history">
 			<fileset dir="${snowmassHistorydir}"/>
+		</copy>
+
+		<copy todir="${snowmassDistDefaultDatadir">
+			<fileset dir="${snowmassDefaultDatadir}*.txt"/>
 		</copy>
 
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="start"/> 
