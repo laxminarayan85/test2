@@ -148,7 +148,6 @@
 	public function setStockPref(temp:ArrayCollection):void{
 		
 		preferencesStockDefinitions = temp;
-		var columnArray:Array = dataGrid.columns;
 
 		var dataSortField:SortField = new SortField();
 		dataSortField.name = "columnOrder";

@@ -249,7 +249,7 @@ public class DefaultDataFactory {
 			return;
 
 		ColumnNames columnnames = new ColumnNames();
-		columnnames.setName("Account");
+		columnnames.setName("posPendCmd.Account");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -258,7 +258,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Document Number");
+		columnnames.setName("posPendCmd.Document");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -267,7 +267,16 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, true);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Phone");
+		columnnames.setName("ReOrderInvCmd.Contact");
+		try {
+			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		ProcessPreferencePendingList(columnnames, false);
+		
+		columnnames = new ColumnNames();
+		columnnames.setName("posPendCmd.Phone");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -276,7 +285,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Location");
+		columnnames.setName("posPendCmd.Location");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -285,7 +294,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Wanted Date");
+		columnnames.setName("posPendCmd.WantedDate");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -294,7 +303,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Hold State");
+		columnnames.setName("scheduleLateAndCompletedCmd.Hold");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -303,7 +312,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Type");
+		columnnames.setName("posPendCmd.Type");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -312,7 +321,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Document Title");
+		columnnames.setName("posPendCmd.DocumentTitle");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -321,7 +330,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Job Comment");
+		columnnames.setName("posPendCmd.JobComment");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -330,7 +339,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Proof Date");
+		columnnames.setName("posPendCmd.ProofDate");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -339,7 +348,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Taken By");
+		columnnames.setName("posPendCmd.TakenBy");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -348,7 +357,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Sales Rep");
+		columnnames.setName("posPendCmd.SalesRep");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -357,7 +366,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Web Reference");
+		columnnames.setName("posPendCmd.WebReference");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -366,7 +375,7 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, false);
 
 		columnnames = new ColumnNames();
-		columnnames.setName("Job Count");
+		columnnames.setName("posPendCmd.JobCount");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {

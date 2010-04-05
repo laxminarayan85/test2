@@ -31,6 +31,9 @@
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
+ 	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="invoicebase"/>
 	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
@@ -38,8 +41,14 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.data.Party;
+
+	import mx.collections.SortField;
+	import mx.collections.Sort;
+
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.printsmith.data.Estimate;
+	import com.efi.printsmith.data.PreferencesPendingList;
 	import com.efi.printsmith.data.Invoice;
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -71,6 +80,8 @@
 	private var FilterArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var FindArray:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var preferencesPendingList:ArrayCollection = new ArrayCollection();
     
     [Embed("../../../../assets/file.png")]
     private var FileIcon:Class;
@@ -173,8 +184,37 @@
 		fillDocumentArray(DocumentArray);
 		fillFilterArray(FilterArray);
 		fillFindArray(FindArray);
+		dataServicePendingList.getAll("PreferencesPendingList");
 	}
 
+	private function setgridcolumns():void{
+
+		var dgColumns:ArrayCollection = new ArrayCollection();
+		
+		for each(var element:PreferencesPendingList in preferencesPendingList)
+		{
+			for each(var column:DataGridColumn in dgView.columns)
+			{
+				if (column.headerText== resourceManager.getString(Snowmass.RESOURCE_BUNDLE, element.columns.name))
+				{
+					column.visible = element.visible;
+					dgColumns.addItem(column);
+					break;
+				}
+			}
+		}
+		dgView.invalidateList();
+
+		var newCols:Array = new Array()
+		for each(var newcolumns:DataGridColumn in dgColumns)
+		{
+			newCols.push(newcolumns)
+		}
+		dgView.columns = newCols;
+		dgView.invalidateDisplayList();
+		dgView.invalidateList();
+
+	}
     private function setIcons(item:Object):Class {
         var iconClass:Class;
         var classType:String = XML(item).attribute("tag");
@@ -230,7 +270,25 @@
 		invoiceBaseArray = ev.result as ArrayCollection;
 		invoiceBaseArray.filterFunction = invoiceFilter;
 	}
+	
+	private function handleLoadPendingListResult(ev:ResultEvent):void {
+		preferencesPendingList = ev.result as ArrayCollection;
 
+		var dataSortField:SortField = new SortField();
+		dataSortField.name = "columnOrder";
+		dataSortField.numeric = true;
+
+		/* Create the Sort object and add the SortField object created earlier to the array of fields to sort on. */
+		var numericDataSort:Sort = new Sort();
+		numericDataSort.fields = [dataSortField];
+
+		/* Set the ArrayCollection object's sort property to our custom sort, and refresh the ArrayCollection. */
+		preferencesPendingList.sort = numericDataSort;
+		preferencesPendingList.refresh();
+
+		setgridcolumns();
+	}
+	
    	private function handleSaveResult(ev:ResultEvent):void {
 	}
 
@@ -488,6 +546,59 @@
 		}
 
 	}
+
+	public function getContactPhone(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:InvoiceBase = item as InvoiceBase;
+		if (tmpInvoice != null && tmpInvoice.contact != null && tmpInvoice.contact.comLinks != null) {
+			var tmpParty:ArrayCollection = tmpInvoice.contact.comLinks;
+			if (tmpParty.length > 0){
+				var retVal:String = tmpParty.getItemAt(0,0).toString();
+				if (retVal != "") {
+					return retVal;
+				} else {
+					return "None";
+				}
+			}else{
+				return "None";
+			}
+		}else{
+			return "None";
+		}
+	}
+	public function getLocationLabel(item:Object, column:DataGridColumn):String{
+		var retVal:String = "";
+		if (retVal != "") {
+			return retVal;
+		} else {
+			return "None";
+		}
+	}
+	public function getTypeLabel(item:Object, column:DataGridColumn):String{
+		var retVal:String = "";
+		if (retVal != "") {
+			return retVal;
+		} else {
+			return "None";
+		}
+	}
+	public function getWebReferenceLabel(item:Object, column:DataGridColumn):String{
+		var retVal:String = "";
+		if (retVal != "") {
+			return retVal;
+		} else {
+			return "None";
+		}
+	}
+	public function getJobCountLabel(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:InvoiceBase = item as InvoiceBase;
+		var retVal:String = tmpInvoice.jobs.length.toString();
+		if (retVal != "0") {
+			return retVal;
+		} else {
+			return "None";
+		}
+	}
+
 	private function refreshData():void{
 		dgView.invalidateList();
 		invoiceBaseArray.refresh();
@@ -510,6 +621,16 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'ReOrderInvCmd.Contact')}" labelFunction="getContactLabel"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WantedDate')}" dataField="wantedDate"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState.name"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" labelFunction="getContactPhone"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" labelFunction="getLocationLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" labelFunction="getTypeLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.DocumentTitle')}" dataField="name"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="notes"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ProofDate')}" dataField="proofDate"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.TakenBy')}" dataField="takenBy"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" dataField="salesCode"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" labelFunction="getWebReferenceLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel"/>
 				</mx:columns>
 			</mx:DataGrid>
 			<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
