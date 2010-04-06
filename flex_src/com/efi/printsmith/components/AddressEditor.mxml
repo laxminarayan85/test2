@@ -67,7 +67,10 @@
 				this.address=addr;
 				updateDisplayAddress();
 			}
-
+			public function setLabel(labeltemp:String):void
+			{
+				addressLabel = labeltemp;
+			}
 			private function updateDisplayAddress():void
 			{
 				displayAddress="";

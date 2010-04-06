@@ -127,6 +127,7 @@ width="786" height="531"  creationComplete="init()"
 	}
 
 	private function DoCheck():void{
+		
 		refreshData();
 	}
 	private function handleLoadResult(event:ResultEvent):void {
@@ -158,7 +159,41 @@ width="786" height="531"  creationComplete="init()"
 		
 		return showItem
 	}
+	private function DoComboReportChange():void{
+		refreshData();
+		var temp:String = reportType_comob.selectedItem.name as String;
+		
+		switch (temp){
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kAcctRankings.Standard'):
+				total_column.visible = false;
+				location_column.visible = true;
+				break;
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleReportsCmd.DueDate'):
+				total_column.visible = false;
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location'):
+				total_column.visible = false;
+				location_column.visible = true;
+				break;
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly'):
+				total_column.visible = false;
+				location_column.visible = false;
+				break;
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Press'):
+				total_column.visible = false;
+				location_column.visible = false;
+				break;
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Integration'):
+				total_column.visible = false;
+				location_column.visible = false;
+				break;
+				
+		
+		}
+		
 	
+			
+		
+	}
 	
 	private function handleFault(event:FaultEvent):void {
 		var message:String;
@@ -195,14 +230,15 @@ width="786" height="531"  creationComplete="init()"
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Proofby')}" dataField="proofDate" />
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="grandTotal"/>
+			<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="grandTotal"/>
+			<mx:DataGridColumn  id="location_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Location')}" dataField="location"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="23" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ReportType')}" textAlign="right" width="83"/>
 	<mx:Label x="33" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
 	<mx:ComboBox x="114" y="67" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name"></mx:ComboBox>
-	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name"></mx:ComboBox>
+	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()" ></mx:ComboBox>
 	<mx:Panel x="10" y="97" width="583" height="105" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}">
 		<mx:CheckBox x="25" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check"/>
 		<mx:CheckBox x="25" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check"/>
