@@ -26,7 +26,7 @@ import org.hibernate.annotations.Type;
  
 /**
  * @generated
- */	 
+ */	
 @NamedQueries({
   @NamedQuery(name = "CopierDefinition.findall", query = "from CopierDefinition"),
   @NamedQuery(name = "CopierDefinition.byId", query = "select a from CopierDefinition a where a.id= :id")

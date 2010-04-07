@@ -116,7 +116,7 @@ public class TaxTable extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @IndexColumn(name="taxelementstaxtable")
     @JoinTable( name = "taxtable_taxelements")
 	private java.util.List<TaxElement> taxElements;

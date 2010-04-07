@@ -322,7 +322,7 @@ public class PriceListBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @IndexColumn(name="elementspricelistbase")
     @JoinTable( name = "pricelistbase_elements")
 	private java.util.List<PriceListElement> elements;
