@@ -125,7 +125,9 @@
 		</copy>
 
 		<copy todir="${snowmassDistDefaultDatadir}">
-			<fileset dir="${snowmassDefaultDatadir}*.txt"/>
+			<fileset dir="${snowmassDefaultDatadir}">
+				<include name="*.txt"/> 
+			</fileset>
 		</copy>
 
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="start"/> 
