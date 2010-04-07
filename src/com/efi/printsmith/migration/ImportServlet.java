@@ -91,14 +91,17 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		boolean writeToFile = true;
 				
 		if (writeToFile) {
-			File uploadedFile = File.createTempFile("PSImport", ".tmp");
-			if (!uploadedFile.exists()) {
-				uploadedFile.createNewFile();
+			try {
+				File uploadedFile = File.createTempFile("PSImport", ".tmp");
+				if (!uploadedFile.exists()) {
+					uploadedFile.createNewFile();
+				}
+				item.write(uploadedFile);
+				importData(uploadedFile, importType);
+				uploadedFile.delete();
+			} catch (Exception e) {
+				log.error("Exception: " + e);
 			}
-			item.write(uploadedFile);
-			
-			importData(uploadedFile, importType);
-			uploadedFile.delete();
 		} else {
 			
 		}
