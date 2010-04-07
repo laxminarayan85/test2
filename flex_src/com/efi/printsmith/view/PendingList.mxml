@@ -96,17 +96,17 @@
     [Bindable]
 	private var treeData:XML =
     	<root>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.PickUp')} isBranch="false" tag="0"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Status')} isBranch="false" tag="1"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')} isBranch="false" tag="2"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Open')} isBranch="false" tag="3"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Notify')} isBranch="false" tag="4"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.DueDate')} isBranch="false" tag="5"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Deliver')} isBranch="false" tag="6"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Schedule')} isBranch="false" tag="7"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Tracker')} isBranch="false" tag="8"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.View')} isBranch="false" tag="9"/>
-			<node label={resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}isBranch="false" tag="10"/>
+			<node label="posPendCmd.PickUp" isBranch="false" tag="0"/>
+			<node label="posPendCmd.Status" isBranch="false" tag="1"/>
+			<node label="posPendCmd.Location" isBranch="false" tag="2"/>
+			<node label="posPendCmd.Open" isBranch="false" tag="3"/>
+			<node label="posPendCmd.Notify" isBranch="false" tag="4"/>
+			<node label="posPendCmd.DueDate" isBranch="false" tag="5"/>
+			<node label="posPendCmd.Deliver" isBranch="false" tag="6"/>
+			<node label="posPendCmd.Schedule" isBranch="false" tag="7"/>
+			<node label="posPendCmd.Tracker" isBranch="false" tag="8"/>
+			<node label="rButtonLabel.View" isBranch="false" tag="9"/>
+			<node label="rButtonLabel.Print" isBranch="false" tag="10"/>
 		</root>;
 
 	private function fillDocumentArray(fillArray:ArrayCollection):void {
@@ -603,12 +603,16 @@
 		dgView.invalidateList();
 		invoiceBaseArray.refresh();
 	}
+
+	private function TreeDisplayLabel(item:XML):String {
+		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
+	}        
 ]]>        
 </mx:Script>
 	<mx:Tree width="140"
 		id="tvItems" 
 		dataProvider="{treeData.node}"
-		labelField="@label"
+		labelFunction="TreeDisplayLabel"
 		iconFunction="setIcons"
 		change="treeSelect(event);" left="0" top="0" bottom="50"/>
 
