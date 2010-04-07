@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "pressdefinition")
 public class PressDefinition extends ModelBase {
@@ -207,6 +213,7 @@ public class PressDefinition extends ModelBase {
 		this.id = id;
 		this.name = Name;
 	}
+	
 	public PressDefinition(long id, String name, long MachineID, String machineName) {
 		this.id = id;
 		this.name =name;
@@ -878,7 +885,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private WasteChart wasteChart;
 	
 	/**
@@ -900,7 +907,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PriceList pressPriceList;
 	
 	/**
@@ -922,7 +929,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PriceList stockPriceList;
 	
 	/**
@@ -944,7 +951,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SpeedTable speedTable;
 	
 	/**
@@ -1010,7 +1017,8 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="chargespressdefinition")
     @JoinTable( name = "pressdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -1086,7 +1094,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SalesCategory salesCat;
 	
 	/**

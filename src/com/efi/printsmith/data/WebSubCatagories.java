@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "websubcatagories")
 public class WebSubCatagories extends WebCatagories {
@@ -52,7 +58,8 @@ public class WebSubCatagories extends WebCatagories {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="productswebsubcatagories")
     @JoinTable( name = "websubcatagories_products")
 	private java.util.List<WebProducts> products;
 	

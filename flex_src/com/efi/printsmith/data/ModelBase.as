@@ -1,6 +1,7 @@
 package com.efi.printsmith.data
 {
-	public class ModelBase
+	import net.digitalprimates.persistence.hibernate.HibernateBean;
+	public class ModelBase extends HibernateBean
 	{
 		public static var remoteObjectName:String;
 		public var id:Number;

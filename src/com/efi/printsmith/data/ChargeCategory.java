@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "chargecategory")
 public class ChargeCategory extends ModelBase {
@@ -60,7 +66,8 @@ public class ChargeCategory extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @IndexColumn(name="childrenchargecategory")
     @JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
 	
@@ -115,7 +122,7 @@ public class ChargeCategory extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private ChargeCommand parent;
 	
 	/**

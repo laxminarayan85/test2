@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "party")
 public class Party extends ModelBase {
@@ -168,7 +174,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Address address;
 	
 	/**
@@ -191,7 +197,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
- 	private  String lastName;
+	private String lastName;
 	
 	/**
 	 * @generated
@@ -213,7 +219,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
- 	private  String firstName;
+	private String firstName;
 	
 	/**
 	 * @generated
@@ -234,7 +240,8 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="comlinksparty")
     @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
 	

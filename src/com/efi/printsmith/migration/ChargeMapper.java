@@ -62,6 +62,7 @@ public class ChargeMapper extends ImportMapper {
 					if (location == null) {
 						location = new Location();
 						location.setName(currentImportToken);
+						location = (Location)dataService.addUpdate(location);
 					}
 					charge.setProductionLocation(location);
 				}

@@ -44,6 +44,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockClass = new StockClass();
 						stockClass.setName(currentImportToken);
+						stockClass = (StockClass)dataService.addUpdate(stockClass);
 					}
 					stockDefinition.setStkclass(stockClass);
 				}
@@ -58,6 +59,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockColor = new StockColors();
 						stockColor.setName(currentImportToken);
+						stockColor = (StockColors)dataService.addUpdate(stockColor);
 					}
 					stockDefinition.setColor(stockColor);
 				}
@@ -69,10 +71,10 @@ public class StockDefinitionMapper extends ImportMapper {
 				if (vendor != null) {
 					vendor.setName(currentImportToken);
 					
-				}
-				else{
+				} else{
 					 vendor = new  Vendor();
 					 vendor.setName(currentImportToken);
+					 vendor = (Vendor)dataService.addUpdate(vendor);
 				}
 				stockDefinition.setVendor(vendor);	 
 			}  else if ("sets".equals(currentFieldToken)) {
@@ -309,6 +311,7 @@ public class StockDefinitionMapper extends ImportMapper {
 						stocktype = new StockType();
 						stocktype.setName(currentImportToken);
 						stocktype.setViewableID(Utilities.tokenToInt(currentImportToken));
+						stocktype = (StockType) dataService.addUpdate(stocktype);
 					}
 					stockDefinition.setStktype(stocktype);
 				}
@@ -322,6 +325,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						genericColors = new GenericColors();
 						genericColors.setName(currentImportToken);
+						genericColors = (GenericColors)dataService.addUpdate(genericColors);
 					}
 					stockDefinition.setGenericColor(genericColors);
 				}
@@ -335,6 +339,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockFinish = new StockFinish();
 						stockFinish.setName(currentImportToken);
+						stockFinish = (StockFinish)dataService.addUpdate(stockFinish);
 					}
 					stockDefinition.setFinish(stockFinish);
 				}
@@ -348,6 +353,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockGrade = new StockGrade();
 						stockGrade.setName(currentImportToken);
+						stockGrade = (StockGrade)dataService.addUpdate(stockGrade);
 					}
 					stockDefinition.setGrade(stockGrade);
 				}

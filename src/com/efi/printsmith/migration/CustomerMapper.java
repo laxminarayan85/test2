@@ -5,6 +5,7 @@ import java.io.File;
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.ComLink;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -78,14 +79,18 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("inv phone".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						shipToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						shipToContact.addComLinks(comlink);
 					}
 				} else if ("inv fax".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						shipToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Fax");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						shipToContact.addComLinks(comlink);
 					}
 				} else if ("inv city".equals(currentFieldToken)) {
 					shipToAddress.setCity(currentImportToken);
@@ -94,7 +99,7 @@ public class CustomerMapper extends ImportMapper {
 						if (city == null) {
 							city = new City();
 							city.setName(currentImportToken);
-							dataService.addUpdate(city);
+							city = (City)dataService.addUpdate(city);
 						}
 					}
 				} else if ("inv zip".equals(currentFieldToken)) {
@@ -104,7 +109,7 @@ public class CustomerMapper extends ImportMapper {
 						if (zip == null) {
 							zip = new Zip();
 							zip.setName(currentImportToken);
-							dataService.addUpdate(zip);
+							zip = (Zip)dataService.addUpdate(zip);
 						}
 					}
 				} else if ("inv first name".equals(currentFieldToken)) {
@@ -122,7 +127,7 @@ public class CustomerMapper extends ImportMapper {
 						if (state == null) {
 							state = new State();
 							state.setName(currentImportToken);
-							dataService.addUpdate(state);
+							state = (State)dataService.addUpdate(state);
 						}
 					}
 				} else if ("inv refno".equals(currentFieldToken)) {
@@ -140,7 +145,7 @@ public class CustomerMapper extends ImportMapper {
 						if (city == null) {
 							city = new City();
 							city.setName(currentImportToken);
-							dataService.addUpdate(city);
+							city = (City)dataService.addUpdate(city);
 						}
 					}
 				} else if ("bill state".equals(currentFieldToken)) {
@@ -150,7 +155,7 @@ public class CustomerMapper extends ImportMapper {
 						if (state == null) {
 							state = new State();
 							state.setName(currentImportToken);
-							dataService.addUpdate(state);
+							state = (State)dataService.addUpdate(state);
 						}
 					}
 				} else if ("bill zip".equals(currentFieldToken)) {
@@ -160,22 +165,26 @@ public class CustomerMapper extends ImportMapper {
 						if (zip == null) {
 							zip = new Zip();
 							zip.setName(currentImportToken);
-							dataService.addUpdate(zip);
+							zip = (Zip)dataService.addUpdate(zip);
 						}
 					}
 				} else if ("bill phone".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						billToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						billToContact.addComLinks(comlink);
 					}
 				} else if ("bill last name".equals(currentFieldToken)) {
 					billToContact.setLastName(currentImportToken);
 				} else if ("bill fax".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						billToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Fax"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Fax");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						billToContact.addComLinks(comlink);
 					}
 				} else if ("bill refno".equals(currentFieldToken)) {
 					/* TODO */
@@ -204,16 +213,12 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("sales rep".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						SalesRep salesRep = new SalesRep(); /*
-															 * TODO - this needs
-															 * to use existing
-															 * state if it
-															 * exists. Don't
-															 * always create
-															 * one.
-															 */
-
-						salesRep.setName(currentImportToken);
+						SalesRep salesRep = (SalesRep) dataService.getByName("SalesRep", currentImportToken);
+						if (salesRep == null) {
+							salesRep = new SalesRep();
+							salesRep.setName(currentImportToken);
+							salesRep = (SalesRep)dataService.addUpdate(salesRep);
+						}
 						customer.setSalesRep(salesRep);
 					}
 				} else if ("on account".equals(currentFieldToken)) {
@@ -318,14 +323,18 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("inv phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						shipToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						shipToContact.addComLinks(comlink);
 					}
 				} else if ("inv phone 3".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						shipToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						shipToContact.addComLinks(comlink);
 					}
 				} else if ("inv prefix".equals(currentFieldToken)) {
 					shipToContact.setPrefix(currentImportToken);
@@ -342,14 +351,18 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("bill phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						billToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						billToContact.addComLinks(comlink);
 					}
 				} else if ("bill phone 3".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
-						billToContact.addComLinks(Utilities.tokenToComLink(
-								currentImportToken, "Telephone"));
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "Telephone");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						billToContact.addComLinks(comlink);
 					}
 				} else if ("bill prefix".equals(currentFieldToken)) {
 					billToContact.setPrefix(currentImportToken);

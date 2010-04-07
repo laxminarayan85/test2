@@ -5,7 +5,7 @@ package com.efi.printsmith.data
 	
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.EstimatorTypes")]
-
+	[Managed]
 	public class EstimatorTypes extends ModelBase
 	{
 

@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "copierdefinition")
 public class CopierDefinition extends ModelBase {
@@ -259,13 +265,14 @@ public class CopierDefinition extends ModelBase {
 		this.id = id;
 		this.name = Name;
 	}
+	
 	public CopierDefinition(long id, String name, String oemID, String machineName) {
 		this.id = id;
 		this.name =name;
 		this.oemDeviceID= oemID;
 		this.machineName = machineName;
-		
 	}
+	
 	/**
 	 * @generated
 	 */	
@@ -907,7 +914,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SalesCategory salesCat;
 	
 	/**
@@ -995,7 +1002,8 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="chargescopierdefinition")
     @JoinTable( name = "copierdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -1115,7 +1123,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private WasteChart wasteChart;
 	
 	/**
@@ -1137,7 +1145,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PriceList stockPriceList;
 	
 	/**
@@ -1159,7 +1167,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private PriceList copierPriceList;
 	
 	/**
@@ -1247,7 +1255,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Matrix copierMatrix;
 	
 	/**

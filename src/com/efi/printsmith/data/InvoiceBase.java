@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "invoicebase")
 public class InvoiceBase extends ModelBase {
@@ -282,7 +288,7 @@ public class InvoiceBase extends ModelBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
-	
+
 	public InvoiceBase(long id,  String invoiceNumber, Account account, Contact contact) {
 		this.id = id;
 		this.setInvoiceNumber(invoiceNumber);
@@ -294,11 +300,6 @@ public class InvoiceBase extends ModelBase {
 	public InvoiceBase(long id,  String invoiceNumber) {
 		this.id = id;
 		this.setInvoiceNumber(invoiceNumber);
-	
-//		this.setAccount(account);
-//		this.setContact(contact);
-	
-		
 	}	
 
 	/**
@@ -370,7 +371,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SalesRep salesRep;
 	
 	/**
@@ -436,7 +437,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private Address billToAddress;
 	
 	/**
@@ -458,7 +459,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private Address shipToAddress;
 	
 	/**
@@ -480,7 +481,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Contact contact;
 	
 	/**
@@ -546,7 +547,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private ShippingMethod shippingMethod;
 	
 	/**
@@ -590,7 +591,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private Account account;
 	
 	/**
@@ -612,7 +613,8 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @IndexColumn(name="jobsinvoicebase")
     @JoinTable( name = "invoicebase_jobs")
 	private java.util.List<Job> jobs;
 	
@@ -644,7 +646,8 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @IndexColumn(name="chargesinvoicebase")
     @JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -676,7 +679,8 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @IndexColumn(name="markupchargesinvoicebase")
     @JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;
 	
@@ -708,7 +712,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private SpecialInstructions specialInstructions;
 	
 	/**
@@ -730,7 +734,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private NotePad notes;
 	
 	/**
@@ -752,7 +756,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private HoldState holdState;
 	
 	/**
@@ -1082,7 +1086,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne
 	private TaxTable taxTable;
 	
 	/**

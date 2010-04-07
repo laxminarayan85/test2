@@ -113,6 +113,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							else {
 								salesCategory = new SalesCategory();
 								salesCategory.setPrevId(currentImportToken);
+								salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 								addSalesCategory = true;
 							}
 						}
@@ -483,6 +484,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (shippingMethod == null) {
 								shippingMethod = new ShippingMethod();
 								shippingMethod.setName(currentImportToken);
+								shippingMethod = (ShippingMethod)dataService.addUpdate(shippingMethod);
 							}
 							chargeDefinition.setShipMode(shippingMethod);
 						}
@@ -567,10 +569,11 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("price list".equals(currentFieldToken)) {
 						if (currentImportToken.equals("") == false) {
 							PriceList priceList = dataService
-									.getByPirceListName(currentImportToken);
+									.getByPriceListName(currentImportToken);
 							if (priceList == null) {
 								priceList = new PriceList();
 								priceList.setName(currentImportToken);
+								priceList = (PriceList)dataService.addUpdate(priceList);
 							}
 							chargeDefinition.setPriceList(priceList);
 						}
@@ -581,6 +584,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (wasteChart == null) {
 								wasteChart = new WasteChart();
 								wasteChart.setName(currentImportToken);
+								wasteChart = (WasteChart)dataService.addUpdate(wasteChart);
 							}
 							chargeDefinition.setWasteChart(wasteChart);
 						}
@@ -602,6 +606,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (location == null) {
 								location = new Location();
 								location.setName(currentImportToken);
+								location = (Location)dataService.addUpdate(location);
 							}
 							chargeDefinition.setLocation(location);
 							charge.setProductionLocation(location);
@@ -615,6 +620,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (costCenter == null) {
 								costCenter = new CostCenter();
 								costCenter.setName(currentImportToken);
+								costCenter = (CostCenter)dataService.addUpdate(costCenter);
 							}
 							chargeDefinition.setCostCenter(costCenter);
 						}
@@ -627,6 +633,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (substrate == null) {
 								substrate = new Substrate();
 								substrate.setName(currentImportToken);
+								substrate = (Substrate)dataService.addUpdate(substrate);
 							}
 							chargeDefinition.setSubstrate(substrate);
 						}
@@ -888,6 +895,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (taxTable == null) {
 						taxTable = new TaxTable();
 						taxTable.setName(currentImportToken);
+						taxTable = (TaxTable)dataService.addUpdate(taxTable);
 					}
 					chargeDefinition.setTaxTable(taxTable);
 				}
@@ -920,6 +928,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (shippingMethod == null) {
 						shippingMethod = new ShippingMethod();
 						shippingMethod.setName(currentImportToken);
+						shippingMethod = (ShippingMethod)dataService.addUpdate(shippingMethod);
 					}
 					chargeDefinition.setShipMode(shippingMethod);
 				}
@@ -989,10 +998,11 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("price list".equals(currentFieldToken)) {
 				if (currentImportToken != "") {
 					PriceList priceList = dataService
-							.getByPirceListName(currentImportToken);
+							.getByPriceListName(currentImportToken);
 					if (priceList == null) {
 						priceList = new PriceList();
 						priceList.setName(currentImportToken);
+						priceList = (PriceList)dataService.addUpdate(priceList);
 					}
 					chargeDefinition.setPriceList(priceList);
 				}
@@ -1003,6 +1013,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (wasteChart == null) {
 						wasteChart = new WasteChart();
 						wasteChart.setName(currentImportToken);
+						wasteChart = (WasteChart)dataService.addUpdate(wasteChart);
 					}
 					chargeDefinition.setWasteChart(wasteChart);
 				}
@@ -1023,6 +1034,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (location == null) {
 						location = new Location();
 						location.setName(currentImportToken);
+						location = (Location)dataService.addUpdate(location);
 					}
 					chargeDefinition.setLocation(location);
 					charge.setProductionLocation(location);
@@ -1036,6 +1048,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (costCenter == null) {
 						costCenter = new CostCenter();
 						costCenter.setName(currentImportToken);
+						costCenter = (CostCenter)dataService.addUpdate(costCenter);
 					}
 					chargeDefinition.setCostCenter(costCenter);
 				}
@@ -1048,6 +1061,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					if (substrate == null) {
 						substrate = new Substrate();
 						substrate.setName(currentImportToken);
+						substrate = (Substrate)dataService.addUpdate(substrate);
 					}
 					chargeDefinition.setSubstrate(substrate);
 				}

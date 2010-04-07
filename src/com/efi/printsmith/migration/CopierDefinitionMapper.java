@@ -945,6 +945,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 						else {
 							salesCategory = new SalesCategory();
 							salesCategory.setPrevId(currentImportToken);
+							salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 							addSalesCategory = true;
 						}
 					}	

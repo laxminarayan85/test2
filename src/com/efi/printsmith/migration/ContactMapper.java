@@ -60,7 +60,7 @@ public class ContactMapper extends ImportMapper {
 					if (city == null) {
 						city = new City();
 						city.setName(currentImportToken);
-						dataService.addUpdate(city);
+						city = (City)dataService.addUpdate(city);
 					}
 				}
 			} else if ("state".equals(currentFieldToken)) {
@@ -70,7 +70,7 @@ public class ContactMapper extends ImportMapper {
 					if (state == null) {
 						state = new State();
 						state.setName(currentImportToken);
-						dataService.addUpdate(state);
+						state = (State)dataService.addUpdate(state);
 					}
 				}
 			} else if ("zip".equals(currentFieldToken)) {
@@ -80,7 +80,7 @@ public class ContactMapper extends ImportMapper {
 					if (zip == null) {
 						zip = new Zip();
 						zip.setName(currentImportToken);
-						dataService.addUpdate(zip);
+						zip = (Zip)dataService.addUpdate(zip);
 					}
 				}
 			} else if ("country".equals(currentFieldToken)) {

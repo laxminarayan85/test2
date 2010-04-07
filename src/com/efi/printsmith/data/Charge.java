@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -32,9 +33,12 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "charge")
-//@org.hibernate.annotations.Table( appliesTo = "charge", fetch = FetchMode.SELECT, optional=false )
 public class Charge extends ModelBase {
 	/**
 	 * @generated
@@ -808,7 +812,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.ALL})
 	private ChargeCostingRecord chargeCostingRecord;
 	
 	/**

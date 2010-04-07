@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "estimate")
 public class Estimate extends InvoiceBase {
@@ -42,6 +48,7 @@ public class Estimate extends InvoiceBase {
 		this.created = new Date();
 		this.modified = new Date();
 	}
+	
 	public Estimate(long id, String Name, String invoiceNumber, double grandTotal) {
 		this.id = id;
 		this.setName(Name);
@@ -64,8 +71,5 @@ public class Estimate extends InvoiceBase {
 	public Estimate(long id,  String invoiceNumber) {
 		this.id = id;
 		this.setInvoiceNumber(invoiceNumber);
-	}	
-	
-
-
+	}
 }

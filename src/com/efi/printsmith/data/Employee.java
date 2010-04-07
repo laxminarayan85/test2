@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
@@ -31,6 +33,10 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "employee")
 public class Employee extends Party {
@@ -828,7 +834,8 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="employeepricingsemployee")
     @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	
@@ -860,7 +867,8 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="employeechargesemployee")
     @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeDefinition> employeeCharges;
 	
@@ -892,7 +900,8 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="employeepressesemployee")
     @JoinTable( name = "employee_employeepresses")
 	private java.util.List<PressDefinition> employeePresses;
 	
@@ -924,7 +933,8 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="employeecopiersemployee")
     @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<CopierDefinition> employeeCopiers;
 	
@@ -1000,7 +1010,8 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( cascade = {CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="productionparentsemployee")
     @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	

@@ -670,7 +670,7 @@
 									  height="20"/>
 						<mx:Label x="10"
 								  y="12"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'cartonLabelCmd.InvoiceTitle')}" textAlign="right"/>
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Title')}" textAlign="right" width="97"/>
 						<mx:TextInput x="454"
 									  y="10"
 									  width="195"
@@ -679,7 +679,7 @@
 									  height="20"/>
 						<mx:Label x="349"
 								  y="12"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.InvoiceNumber')}" width="97" textAlign="right"/>
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" width="97" textAlign="right"/>
 						<ns1:AddressEditor x="16"
 										   y="61"
 										   id="bill_to_address_editor"

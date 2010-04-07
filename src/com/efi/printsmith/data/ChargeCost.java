@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.util.Date;
@@ -32,9 +33,12 @@ import org.hibernate.annotations.Type;
 })
 
 
+
+/**
+ * @generated
+ */	
 @Entity
 @Table(name = "chargecost")
-//@org.hibernate.annotations.Table( appliesTo = "chargecost", fetch = FetchMode.SELECT, optional=false )
 public class ChargeCost extends ModelBase {
 	/**
 	 * @generated

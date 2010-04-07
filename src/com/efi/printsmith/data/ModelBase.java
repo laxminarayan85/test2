@@ -2,6 +2,7 @@ package com.efi.printsmith.data;
 
 import com.efi.printsmith.exceptions.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ListIterator;
 
@@ -15,17 +16,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import net.digitalprimates.persistence.hibernate.proxy.HibernateProxy;
+
 import org.hibernate.annotations.Index;
 
-@Entity
+@MappedSuperclass
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="modelbase")
-abstract public class ModelBase {
+abstract public class ModelBase extends HibernateProxy implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)

@@ -5,7 +5,7 @@ package com.efi.printsmith.data
 	
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Marketing")]
-
+	[Managed]
 	public class Marketing extends ModelBase
 	{
 

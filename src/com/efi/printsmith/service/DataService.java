@@ -648,7 +648,7 @@ public class DataService {
 		return null;
 	}
 
-	public PriceList getByPirceListName(String name) throws Exception {
+	public PriceList getByPriceListName(String name) throws Exception {
 		try {
 			log.debug("** getByPriceListName called.");
 			EntityManager em = entityManagerFactory.createEntityManager();

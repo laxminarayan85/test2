@@ -13,6 +13,7 @@ import com.efi.printsmith.messaging.MessageBody;
 public class MessageServiceAdapter extends ServiceAdapter {
 	static public void sendNotification(String messageType, String payloadType, Object body) {
 		MessageBroker messageBroker = MessageBroker.getMessageBroker(null);
+		if (messageBroker == null) return;
 		AsyncMessage msg = new AsyncMessage();
 		msg.setDestination("notifications");
 		msg.setClientId(UUIDUtils.createUUID());

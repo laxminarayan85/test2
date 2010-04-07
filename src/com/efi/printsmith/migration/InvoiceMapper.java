@@ -72,7 +72,7 @@ public class InvoiceMapper extends ImportMapper {
 					if (salesRep == null) {
 						salesRep = new SalesRep();
 						salesRep.setName(currentImportToken);
-						dataService.addUpdate(salesRep);
+						salesRep = (SalesRep)dataService.addUpdate(salesRep);
 					}
 					invoice.setSalesRep(salesRep);
 				}
@@ -818,7 +818,7 @@ public class InvoiceMapper extends ImportMapper {
 					if (salesRep == null) {
 						salesRep = new SalesRep();
 						salesRep.setName(currentImportToken);
-						dataService.addUpdate(salesRep);
+						salesRep = (SalesRep)dataService.addUpdate(salesRep);
 					}
 					invoice.setSalesRep(salesRep);
 				}
