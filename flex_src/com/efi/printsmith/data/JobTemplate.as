@@ -14,6 +14,9 @@ package com.efi.printsmith.data
 		}
 				
 		public var templateName:int = 0;
+		public var user:Users;
+		public var shared:Boolean = true;
+		public var account:Account;
 	
 	}
 }
