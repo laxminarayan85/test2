@@ -1095,9 +1095,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 			}
 			matrix.addElements(matrixElement);
 		}
-		dataService.addUpdate(matrix);
-		matrix.setId(matrix.getId());
-		copierDefinition.setCopierMatrix(matrix);
+		matrix = (Matrix)dataService.addUpdate(matrix);
+//		copierDefinition.setCopierMatrix(matrix);
 		double machineCostPerCopy = copierService.calculateMachineCostPerCopy(copierDefinition);
 		copierDefinition.setMachineCostPerCopy(machineCostPerCopy);
 		copierDefinition = (CopierDefinition)dataService.addUpdate(copierDefinition);

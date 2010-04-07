@@ -297,6 +297,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockGroup = new StockGroup();
 						stockGroup.setName(currentImportToken);
+						stockGroup = (StockGroup)dataService.addUpdate(stockGroup);
 					}
 					stockDefinition.setStkgroup(stockGroup);
 				}
