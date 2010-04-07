@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PriceListElement.findall", query = "from PriceListElement"),
-	@NamedQuery(name = "PriceListElement.byId", query = "select a from PriceListElement a where a.id= :id")
+  @NamedQuery(name = "PriceListElement.findall", query = "from PriceListElement"),
+  @NamedQuery(name = "PriceListElement.byId", query = "select a from PriceListElement a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class PriceListElement extends ModelBase {
 	 * @generated
 	 */
 	public PriceListElement() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class PriceListElement extends ModelBase {
 	 * @generated
  	 */
 	public Long getQuantity(){
-		return quantity; 
-	}
+    return quantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantity(Long newVal) {
-		this.quantity = newVal;
-	}
+    this.quantity = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class PriceListElement extends ModelBase {
 	 * @generated
  	 */
 	public Double getAmount(){
-		return amount; 
-	}
+    return amount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAmount(Double newVal) {
-		this.amount = newVal;
-	}
+    this.amount = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class PriceListElement extends ModelBase {
 	 * @generated
  	 */
 	public Integer getSide(){
-		return side; 
-	}
+    return side; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSide(Integer newVal) {
-		this.side = newVal;
-	}
+    this.side = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class PriceListElement extends ModelBase {
 	 * @generated
  	 */
 	public Integer getColor(){
-		return color; 
-	}
+    return color; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setColor(Integer newVal) {
-		this.color = newVal;
-	}
+    this.color = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (AMOUNT.equals(propertyName)) return getAmount();
-		if (SIDE.equals(propertyName)) return getSide();
-		if (COLOR.equals(propertyName)) return getColor();
-		return super.getProperty(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) return getQuantity();
+    if (AMOUNT.equals(propertyName)) return getAmount();
+    if (SIDE.equals(propertyName)) return getSide();
+    if (COLOR.equals(propertyName)) return getColor();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class PriceListElement extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
-		if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
-		if (SIDE.equals(propertyName)) setSide((Integer)newValue); else
-		if (COLOR.equals(propertyName)) setColor((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
+    if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
+    if (SIDE.equals(propertyName)) setSide((Integer)newValue); else
+    if (COLOR.equals(propertyName)) setColor((Integer)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class PriceListElement extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (AMOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SIDE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (COLOR.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (AMOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SIDE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COLOR.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class PriceListElement extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (QUANTITY.equals(propertyName)) return PriceListElement.class;
-		if (AMOUNT.equals(propertyName)) return PriceListElement.class;
-		if (SIDE.equals(propertyName)) return PriceListElement.class;
-		if (COLOR.equals(propertyName)) return PriceListElement.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) return PriceListElement.class;
+    if (AMOUNT.equals(propertyName)) return PriceListElement.class;
+    if (SIDE.equals(propertyName)) return PriceListElement.class;
+    if (COLOR.equals(propertyName)) return PriceListElement.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PriceListElement objT = (PriceListElement)obj;
-		if (! SmartEquals(getQuantity(), objT.getQuantity()))
-			return false;
-		if (! SmartEquals(getAmount(), objT.getAmount()))
-			return false;
-		if (! SmartEquals(getSide(), objT.getSide()))
-			return false;
-		if (! SmartEquals(getColor(), objT.getColor()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PriceListElement objT = (PriceListElement)obj;
+    if (! SmartEquals(getQuantity(), objT.getQuantity()))
+      return false;
+    if (! SmartEquals(getAmount(), objT.getAmount()))
+      return false;
+    if (! SmartEquals(getSide(), objT.getSide()))
+      return false;
+    if (! SmartEquals(getColor(), objT.getColor()))
+      return false;
+    return true;
+  }			
 }

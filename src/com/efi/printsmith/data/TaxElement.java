@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TaxElement.findall", query = "from TaxElement"),
-	@NamedQuery(name = "TaxElement.byId", query = "select a from TaxElement a where a.id= :id")
+  @NamedQuery(name = "TaxElement.findall", query = "from TaxElement"),
+  @NamedQuery(name = "TaxElement.byId", query = "select a from TaxElement a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class TaxElement extends ModelBase {
 	 * @generated
 	 */
 	public TaxElement() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class TaxElement extends ModelBase {
 	 * @generated
  	 */
 	public Double getRate(){
-		return rate; 
-	}
+    return rate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRate(Double newVal) {
-		this.rate = newVal;
-	}
+    this.rate = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class TaxElement extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowTax(){
-		return showTax; 
-	}
+    return showTax; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowTax(Boolean newVal) {
-		this.showTax = newVal;
-	}
+    this.showTax = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class TaxElement extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUserForSeparateShippingTax(){
-		return userForSeparateShippingTax; 
-	}
+    return userForSeparateShippingTax; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUserForSeparateShippingTax(Boolean newVal) {
-		this.userForSeparateShippingTax = newVal;
-	}
+    this.userForSeparateShippingTax = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (RATE.equals(propertyName)) return getRate();
-		if (SHOWTAX.equals(propertyName)) return getShowTax();
-		if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) return getUserForSeparateShippingTax();
-		return super.getProperty(propertyName);
-	}
+    if (RATE.equals(propertyName)) return getRate();
+    if (SHOWTAX.equals(propertyName)) return getShowTax();
+    if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) return getUserForSeparateShippingTax();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class TaxElement extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (RATE.equals(propertyName)) setRate((Double)newValue); else
-		if (SHOWTAX.equals(propertyName)) setShowTax((Boolean)newValue); else
-		if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) setUserForSeparateShippingTax((Boolean)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (SHOWTAX.equals(propertyName)) setShowTax((Boolean)newValue); else
+    if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) setUserForSeparateShippingTax((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class TaxElement extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (RATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SHOWTAX.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (RATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHOWTAX.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class TaxElement extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (RATE.equals(propertyName)) return TaxElement.class;
-		if (SHOWTAX.equals(propertyName)) return TaxElement.class;
-		if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) return TaxElement.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (RATE.equals(propertyName)) return TaxElement.class;
+    if (SHOWTAX.equals(propertyName)) return TaxElement.class;
+    if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) return TaxElement.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		TaxElement objT = (TaxElement)obj;
-		if (! SmartEquals(getRate(), objT.getRate()))
-			return false;
-		if (! SmartEquals(getShowTax(), objT.getShowTax()))
-			return false;
-		if (! SmartEquals(getUserForSeparateShippingTax(), objT.getUserForSeparateShippingTax()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    TaxElement objT = (TaxElement)obj;
+    if (! SmartEquals(getRate(), objT.getRate()))
+      return false;
+    if (! SmartEquals(getShowTax(), objT.getShowTax()))
+      return false;
+    if (! SmartEquals(getUserForSeparateShippingTax(), objT.getUserForSeparateShippingTax()))
+      return false;
+    return true;
+  }			
 }

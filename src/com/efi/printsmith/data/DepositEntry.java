@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "DepositEntry.findall", query = "from DepositEntry"),
-	@NamedQuery(name = "DepositEntry.byId", query = "select a from DepositEntry a where a.id= :id")
+  @NamedQuery(name = "DepositEntry.findall", query = "from DepositEntry"),
+  @NamedQuery(name = "DepositEntry.byId", query = "select a from DepositEntry a where a.id= :id")
 })
 
 
@@ -65,9 +65,9 @@ public class DepositEntry extends ModelBase {
 	 * @generated
 	 */
 	public DepositEntry() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -81,16 +81,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public String getReferenceNumber(){
-		return referenceNumber; 
-	}
+    return referenceNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setReferenceNumber(String newVal) {
-		this.referenceNumber = newVal;
-	}
+    this.referenceNumber = newVal;
+  }
  	
 	
 	/**
@@ -103,16 +103,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public Date getDate(){
-		return date; 
-	}
+    return date; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDate(Date newVal) {
-		this.date = newVal;
-	}
+    this.date = newVal;
+  }
  	
 	
 	/**
@@ -125,16 +125,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public Double getAmount(){
-		return amount; 
-	}
+    return amount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAmount(Double newVal) {
-		this.amount = newVal;
-	}
+    this.amount = newVal;
+  }
  	
 	
 	/**
@@ -147,16 +147,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public DepositType getType(){
-		return type; 
-	}
+    return type; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setType(DepositType newVal) {
-		this.type = newVal;
-	}
+    this.type = newVal;
+  }
  	
 	
 	/**
@@ -169,29 +169,29 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCreditCardType(){
-		return creditCardType; 
-	}
+    return creditCardType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCreditCardType(Integer newVal) {
-		this.creditCardType = newVal;
-	}
+    this.creditCardType = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
-		if (DATE.equals(propertyName)) return getDate();
-		if (AMOUNT.equals(propertyName)) return getAmount();
-		if (TYPE.equals(propertyName)) return getType();
-		if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
-		return super.getProperty(propertyName);
-	}
+    if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
+    if (DATE.equals(propertyName)) return getDate();
+    if (AMOUNT.equals(propertyName)) return getAmount();
+    if (TYPE.equals(propertyName)) return getType();
+    if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -199,13 +199,13 @@ public class DepositEntry extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
-		if (DATE.equals(propertyName)) setDate((Date)newValue); else
-		if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
-		if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
-		if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
+    if (DATE.equals(propertyName)) setDate((Date)newValue); else
+    if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
+    if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
+    if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -213,18 +213,18 @@ public class DepositEntry extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (REFERENCENUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (AMOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TYPE.equals(propertyName)) 
-			return new Class<?>[] {DepositType.class};		
-		if (CREDITCARDTYPE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (REFERENCENUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (AMOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TYPE.equals(propertyName)) 
+      return new Class<?>[] {DepositType.class};		
+    if (CREDITCARDTYPE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -233,32 +233,32 @@ public class DepositEntry extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (REFERENCENUMBER.equals(propertyName)) return DepositEntry.class;
-		if (DATE.equals(propertyName)) return DepositEntry.class;
-		if (AMOUNT.equals(propertyName)) return DepositEntry.class;
-		if (TYPE.equals(propertyName)) return DepositEntry.class;
-		if (CREDITCARDTYPE.equals(propertyName)) return DepositEntry.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (REFERENCENUMBER.equals(propertyName)) return DepositEntry.class;
+    if (DATE.equals(propertyName)) return DepositEntry.class;
+    if (AMOUNT.equals(propertyName)) return DepositEntry.class;
+    if (TYPE.equals(propertyName)) return DepositEntry.class;
+    if (CREDITCARDTYPE.equals(propertyName)) return DepositEntry.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		DepositEntry objT = (DepositEntry)obj;
-		if (! SmartEquals(getReferenceNumber(), objT.getReferenceNumber()))
-			return false;
-		if (! SmartEquals(getDate(), objT.getDate()))
-			return false;
-		if (! SmartEquals(getAmount(), objT.getAmount()))
-			return false;
-		if (! SmartEquals(getType(), objT.getType()))
-			return false;
-		if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    DepositEntry objT = (DepositEntry)obj;
+    if (! SmartEquals(getReferenceNumber(), objT.getReferenceNumber()))
+      return false;
+    if (! SmartEquals(getDate(), objT.getDate()))
+      return false;
+    if (! SmartEquals(getAmount(), objT.getAmount()))
+      return false;
+    if (! SmartEquals(getType(), objT.getType()))
+      return false;
+    if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
+      return false;
+    return true;
+  }			
 }

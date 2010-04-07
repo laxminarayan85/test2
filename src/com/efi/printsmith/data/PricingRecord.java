@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PricingRecord.findall", query = "from PricingRecord"),
-	@NamedQuery(name = "PricingRecord.byId", query = "select a from PricingRecord a where a.id= :id")
+  @NamedQuery(name = "PricingRecord.findall", query = "from PricingRecord"),
+  @NamedQuery(name = "PricingRecord.byId", query = "select a from PricingRecord a where a.id= :id")
 })
 
 
@@ -105,9 +105,9 @@ public class PricingRecord extends ModelBase {
 	 * @generated
 	 */
 	public PricingRecord() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -121,16 +121,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public PriceLogEntry getPriceLogEntry(){
-		return priceLogEntry; 
-	}
+    return priceLogEntry; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceLogEntry(PriceLogEntry newVal) {
-		this.priceLogEntry = newVal;
-	}
+    this.priceLogEntry = newVal;
+  }
  	
 	
 	/**
@@ -143,16 +143,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getUnitPrice(){
-		return unitPrice; 
-	}
+    return unitPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitPrice(Double newVal) {
-		this.unitPrice = newVal;
-	}
+    this.unitPrice = newVal;
+  }
  	
 	
 	/**
@@ -165,16 +165,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getTotalPrice(){
-		return totalPrice; 
-	}
+    return totalPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalPrice(Double newVal) {
-		this.totalPrice = newVal;
-	}
+    this.totalPrice = newVal;
+  }
  	
 	
 	/**
@@ -187,16 +187,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getOtherChargePrice(){
-		return otherChargePrice; 
-	}
+    return otherChargePrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOtherChargePrice(Double newVal) {
-		this.otherChargePrice = newVal;
-	}
+    this.otherChargePrice = newVal;
+  }
  	
 	
 	/**
@@ -209,16 +209,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getPrepPrice(){
-		return prepPrice; 
-	}
+    return prepPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrepPrice(Double newVal) {
-		this.prepPrice = newVal;
-	}
+    this.prepPrice = newVal;
+  }
  	
 	
 	/**
@@ -231,16 +231,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getOversTotalPrice(){
-		return oversTotalPrice; 
-	}
+    return oversTotalPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOversTotalPrice(Double newVal) {
-		this.oversTotalPrice = newVal;
-	}
+    this.oversTotalPrice = newVal;
+  }
  	
 	
 	/**
@@ -253,16 +253,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getBindPrice(){
-		return bindPrice; 
-	}
+    return bindPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBindPrice(Double newVal) {
-		this.bindPrice = newVal;
-	}
+    this.bindPrice = newVal;
+  }
  	
 	
 	/**
@@ -275,16 +275,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getOversUnitPrice(){
-		return oversUnitPrice; 
-	}
+    return oversUnitPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOversUnitPrice(Double newVal) {
-		this.oversUnitPrice = newVal;
-	}
+    this.oversUnitPrice = newVal;
+  }
  	
 	
 	/**
@@ -297,16 +297,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUnitPriceOverride(){
-		return unitPriceOverride; 
-	}
+    return unitPriceOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitPriceOverride(Boolean newVal) {
-		this.unitPriceOverride = newVal;
-	}
+    this.unitPriceOverride = newVal;
+  }
  	
 	
 	/**
@@ -319,16 +319,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTotalPriceOverride(){
-		return totalPriceOverride; 
-	}
+    return totalPriceOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalPriceOverride(Boolean newVal) {
-		this.totalPriceOverride = newVal;
-	}
+    this.totalPriceOverride = newVal;
+  }
  	
 	
 	/**
@@ -341,16 +341,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getLaborTotalPrice(){
-		return laborTotalPrice; 
-	}
+    return laborTotalPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborTotalPrice(Double newVal) {
-		this.laborTotalPrice = newVal;
-	}
+    this.laborTotalPrice = newVal;
+  }
  	
 	
 	/**
@@ -363,16 +363,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLaborTotalPriceOverride(){
-		return laborTotalPriceOverride; 
-	}
+    return laborTotalPriceOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborTotalPriceOverride(Boolean newVal) {
-		this.laborTotalPriceOverride = newVal;
-	}
+    this.laborTotalPriceOverride = newVal;
+  }
  	
 	
 	/**
@@ -385,16 +385,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getStockTotalPrice(){
-		return stockTotalPrice; 
-	}
+    return stockTotalPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockTotalPrice(Double newVal) {
-		this.stockTotalPrice = newVal;
-	}
+    this.stockTotalPrice = newVal;
+  }
  	
 	
 	/**
@@ -407,16 +407,16 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getStockTotalPriceOverride(){
-		return stockTotalPriceOverride; 
-	}
+    return stockTotalPriceOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockTotalPriceOverride(Boolean newVal) {
-		this.stockTotalPriceOverride = newVal;
-	}
+    this.stockTotalPriceOverride = newVal;
+  }
  	
 	
 	/**
@@ -429,39 +429,39 @@ public class PricingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getStockMarkup(){
-		return stockMarkup; 
-	}
+    return stockMarkup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockMarkup(Double newVal) {
-		this.stockMarkup = newVal;
-	}
+    this.stockMarkup = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (PRICELOGENTRY.equals(propertyName)) return getPriceLogEntry();
-		if (UNITPRICE.equals(propertyName)) return getUnitPrice();
-		if (TOTALPRICE.equals(propertyName)) return getTotalPrice();
-		if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
-		if (PREPPRICE.equals(propertyName)) return getPrepPrice();
-		if (OVERSTOTALPRICE.equals(propertyName)) return getOversTotalPrice();
-		if (BINDPRICE.equals(propertyName)) return getBindPrice();
-		if (OVERSUNITPRICE.equals(propertyName)) return getOversUnitPrice();
-		if (UNITPRICEOVERRIDE.equals(propertyName)) return getUnitPriceOverride();
-		if (TOTALPRICEOVERRIDE.equals(propertyName)) return getTotalPriceOverride();
-		if (LABORTOTALPRICE.equals(propertyName)) return getLaborTotalPrice();
-		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return getLaborTotalPriceOverride();
-		if (STOCKTOTALPRICE.equals(propertyName)) return getStockTotalPrice();
-		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return getStockTotalPriceOverride();
-		if (STOCKMARKUP.equals(propertyName)) return getStockMarkup();
-		return super.getProperty(propertyName);
-	}
+    if (PRICELOGENTRY.equals(propertyName)) return getPriceLogEntry();
+    if (UNITPRICE.equals(propertyName)) return getUnitPrice();
+    if (TOTALPRICE.equals(propertyName)) return getTotalPrice();
+    if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
+    if (PREPPRICE.equals(propertyName)) return getPrepPrice();
+    if (OVERSTOTALPRICE.equals(propertyName)) return getOversTotalPrice();
+    if (BINDPRICE.equals(propertyName)) return getBindPrice();
+    if (OVERSUNITPRICE.equals(propertyName)) return getOversUnitPrice();
+    if (UNITPRICEOVERRIDE.equals(propertyName)) return getUnitPriceOverride();
+    if (TOTALPRICEOVERRIDE.equals(propertyName)) return getTotalPriceOverride();
+    if (LABORTOTALPRICE.equals(propertyName)) return getLaborTotalPrice();
+    if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return getLaborTotalPriceOverride();
+    if (STOCKTOTALPRICE.equals(propertyName)) return getStockTotalPrice();
+    if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return getStockTotalPriceOverride();
+    if (STOCKMARKUP.equals(propertyName)) return getStockMarkup();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -469,23 +469,23 @@ public class PricingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PRICELOGENTRY.equals(propertyName)) setPriceLogEntry((PriceLogEntry)newValue); else
-		if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
-		if (TOTALPRICE.equals(propertyName)) setTotalPrice((Double)newValue); else
-		if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
-		if (PREPPRICE.equals(propertyName)) setPrepPrice((Double)newValue); else
-		if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((Double)newValue); else
-		if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
-		if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
-		if (UNITPRICEOVERRIDE.equals(propertyName)) setUnitPriceOverride((Boolean)newValue); else
-		if (TOTALPRICEOVERRIDE.equals(propertyName)) setTotalPriceOverride((Boolean)newValue); else
-		if (LABORTOTALPRICE.equals(propertyName)) setLaborTotalPrice((Double)newValue); else
-		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) setLaborTotalPriceOverride((Boolean)newValue); else
-		if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((Double)newValue); else
-		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) setStockTotalPriceOverride((Boolean)newValue); else
-		if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (PRICELOGENTRY.equals(propertyName)) setPriceLogEntry((PriceLogEntry)newValue); else
+    if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
+    if (TOTALPRICE.equals(propertyName)) setTotalPrice((Double)newValue); else
+    if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
+    if (PREPPRICE.equals(propertyName)) setPrepPrice((Double)newValue); else
+    if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((Double)newValue); else
+    if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
+    if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
+    if (UNITPRICEOVERRIDE.equals(propertyName)) setUnitPriceOverride((Boolean)newValue); else
+    if (TOTALPRICEOVERRIDE.equals(propertyName)) setTotalPriceOverride((Boolean)newValue); else
+    if (LABORTOTALPRICE.equals(propertyName)) setLaborTotalPrice((Double)newValue); else
+    if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) setLaborTotalPriceOverride((Boolean)newValue); else
+    if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((Double)newValue); else
+    if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) setStockTotalPriceOverride((Boolean)newValue); else
+    if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -493,38 +493,38 @@ public class PricingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (PRICELOGENTRY.equals(propertyName)) 
-			return new Class<?>[] {PriceLogEntry.class};		
-		if (UNITPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOTALPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OTHERCHARGEPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PREPPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERSTOTALPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BINDPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERSUNITPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (UNITPRICEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TOTALPRICEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LABORTOTALPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (STOCKTOTALPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (STOCKMARKUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (PRICELOGENTRY.equals(propertyName)) 
+      return new Class<?>[] {PriceLogEntry.class};		
+    if (UNITPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OTHERCHARGEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PREPPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERSTOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BINDPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERSUNITPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITPRICEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TOTALPRICEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LABORTOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (STOCKTOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (STOCKMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -533,62 +533,62 @@ public class PricingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PRICELOGENTRY.equals(propertyName)) return PricingRecord.class;
-		if (UNITPRICE.equals(propertyName)) return PricingRecord.class;
-		if (TOTALPRICE.equals(propertyName)) return PricingRecord.class;
-		if (OTHERCHARGEPRICE.equals(propertyName)) return PricingRecord.class;
-		if (PREPPRICE.equals(propertyName)) return PricingRecord.class;
-		if (OVERSTOTALPRICE.equals(propertyName)) return PricingRecord.class;
-		if (BINDPRICE.equals(propertyName)) return PricingRecord.class;
-		if (OVERSUNITPRICE.equals(propertyName)) return PricingRecord.class;
-		if (UNITPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
-		if (TOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
-		if (LABORTOTALPRICE.equals(propertyName)) return PricingRecord.class;
-		if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
-		if (STOCKTOTALPRICE.equals(propertyName)) return PricingRecord.class;
-		if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
-		if (STOCKMARKUP.equals(propertyName)) return PricingRecord.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (PRICELOGENTRY.equals(propertyName)) return PricingRecord.class;
+    if (UNITPRICE.equals(propertyName)) return PricingRecord.class;
+    if (TOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (OTHERCHARGEPRICE.equals(propertyName)) return PricingRecord.class;
+    if (PREPPRICE.equals(propertyName)) return PricingRecord.class;
+    if (OVERSTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (BINDPRICE.equals(propertyName)) return PricingRecord.class;
+    if (OVERSUNITPRICE.equals(propertyName)) return PricingRecord.class;
+    if (UNITPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (TOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (LABORTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (STOCKTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (STOCKMARKUP.equals(propertyName)) return PricingRecord.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PricingRecord objT = (PricingRecord)obj;
-		if (! SmartEquals(getPriceLogEntry(), objT.getPriceLogEntry()))
-			return false;
-		if (! SmartEquals(getUnitPrice(), objT.getUnitPrice()))
-			return false;
-		if (! SmartEquals(getTotalPrice(), objT.getTotalPrice()))
-			return false;
-		if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
-			return false;
-		if (! SmartEquals(getPrepPrice(), objT.getPrepPrice()))
-			return false;
-		if (! SmartEquals(getOversTotalPrice(), objT.getOversTotalPrice()))
-			return false;
-		if (! SmartEquals(getBindPrice(), objT.getBindPrice()))
-			return false;
-		if (! SmartEquals(getOversUnitPrice(), objT.getOversUnitPrice()))
-			return false;
-		if (! SmartEquals(getUnitPriceOverride(), objT.getUnitPriceOverride()))
-			return false;
-		if (! SmartEquals(getTotalPriceOverride(), objT.getTotalPriceOverride()))
-			return false;
-		if (! SmartEquals(getLaborTotalPrice(), objT.getLaborTotalPrice()))
-			return false;
-		if (! SmartEquals(getLaborTotalPriceOverride(), objT.getLaborTotalPriceOverride()))
-			return false;
-		if (! SmartEquals(getStockTotalPrice(), objT.getStockTotalPrice()))
-			return false;
-		if (! SmartEquals(getStockTotalPriceOverride(), objT.getStockTotalPriceOverride()))
-			return false;
-		if (! SmartEquals(getStockMarkup(), objT.getStockMarkup()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PricingRecord objT = (PricingRecord)obj;
+    if (! SmartEquals(getPriceLogEntry(), objT.getPriceLogEntry()))
+      return false;
+    if (! SmartEquals(getUnitPrice(), objT.getUnitPrice()))
+      return false;
+    if (! SmartEquals(getTotalPrice(), objT.getTotalPrice()))
+      return false;
+    if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
+      return false;
+    if (! SmartEquals(getPrepPrice(), objT.getPrepPrice()))
+      return false;
+    if (! SmartEquals(getOversTotalPrice(), objT.getOversTotalPrice()))
+      return false;
+    if (! SmartEquals(getBindPrice(), objT.getBindPrice()))
+      return false;
+    if (! SmartEquals(getOversUnitPrice(), objT.getOversUnitPrice()))
+      return false;
+    if (! SmartEquals(getUnitPriceOverride(), objT.getUnitPriceOverride()))
+      return false;
+    if (! SmartEquals(getTotalPriceOverride(), objT.getTotalPriceOverride()))
+      return false;
+    if (! SmartEquals(getLaborTotalPrice(), objT.getLaborTotalPrice()))
+      return false;
+    if (! SmartEquals(getLaborTotalPriceOverride(), objT.getLaborTotalPriceOverride()))
+      return false;
+    if (! SmartEquals(getStockTotalPrice(), objT.getStockTotalPrice()))
+      return false;
+    if (! SmartEquals(getStockTotalPriceOverride(), objT.getStockTotalPriceOverride()))
+      return false;
+    if (! SmartEquals(getStockMarkup(), objT.getStockMarkup()))
+      return false;
+    return true;
+  }			
 }

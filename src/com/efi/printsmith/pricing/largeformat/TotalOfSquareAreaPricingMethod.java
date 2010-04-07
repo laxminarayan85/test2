@@ -22,7 +22,7 @@ public class TotalOfSquareAreaPricingMethod extends
 		double stockPrice = priceStockEngine.priceStock(job);
 		long area = 0;
 		try {
-			if (copierDefinition.getSquareAreaFromFinish())
+			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
 				area = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 			else
 				area = new Double(Double.parseDouble(job.getParentSize()) * job.getCutOff()).longValue();
@@ -37,7 +37,7 @@ public class TotalOfSquareAreaPricingMethod extends
 		double unitPrice = 0.0;
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
-			if (copierDefinition.getMatrixIsCopyCost()) {
+			if (copierDefinition.getMatrixType() == "CopyCost") {
 				pricePerCopy = matrixElement.getPrice1();
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				pricingRecord.setUnitPrice(pricePerCopy);
@@ -66,9 +66,9 @@ public class TotalOfSquareAreaPricingMethod extends
 					unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
 					pricingRecord.setUnitPrice(unitPrice);
 				}
-			} else if (copierDefinition.getMatrixIsDiscountTable()) {
+			} else if (copierDefinition.getMatrixType() == "DiscountTable") {
 				
-			} else if (copierDefinition.getMatrixIsStepTable()) {
+			} else if (copierDefinition.getMatrixType() == "StepTable") {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), area * 2);
 				} else {

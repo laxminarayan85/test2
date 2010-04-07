@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SpecialInstructions.findall", query = "from SpecialInstructions"),
-	@NamedQuery(name = "SpecialInstructions.byId", query = "select a from SpecialInstructions a where a.id= :id")
+  @NamedQuery(name = "SpecialInstructions.findall", query = "from SpecialInstructions"),
+  @NamedQuery(name = "SpecialInstructions.byId", query = "select a from SpecialInstructions a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class SpecialInstructions extends ModelBase {
 	 * @generated
 	 */
 	public SpecialInstructions() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class SpecialInstructions extends ModelBase {
 	 * @generated
  	 */
 	public String getInstructions(){
-		return instructions; 
-	}
+    return instructions; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInstructions(String newVal) {
-		this.instructions = newVal;
-	}
+    this.instructions = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (INSTRUCTIONS.equals(propertyName)) return getInstructions();
-		return super.getProperty(propertyName);
-	}
+    if (INSTRUCTIONS.equals(propertyName)) return getInstructions();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class SpecialInstructions extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (INSTRUCTIONS.equals(propertyName)) setInstructions((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (INSTRUCTIONS.equals(propertyName)) setInstructions((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class SpecialInstructions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (INSTRUCTIONS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (INSTRUCTIONS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class SpecialInstructions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (INSTRUCTIONS.equals(propertyName)) return SpecialInstructions.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (INSTRUCTIONS.equals(propertyName)) return SpecialInstructions.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SpecialInstructions objT = (SpecialInstructions)obj;
-		if (! SmartEquals(getInstructions(), objT.getInstructions()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    SpecialInstructions objT = (SpecialInstructions)obj;
+    if (! SmartEquals(getInstructions(), objT.getInstructions()))
+      return false;
+    return true;
+  }			
 }

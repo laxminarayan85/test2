@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ChargeDefinition.findall", query = "from ChargeDefinition"),
-	@NamedQuery(name = "ChargeDefinition.byId", query = "select a from ChargeDefinition a where a.id= :id")
+  @NamedQuery(name = "ChargeDefinition.findall", query = "from ChargeDefinition"),
+  @NamedQuery(name = "ChargeDefinition.byId", query = "select a from ChargeDefinition a where a.id= :id")
 })
 
 
@@ -517,9 +517,9 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public ChargeDefinition() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -533,16 +533,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMethod(){
-		return method; 
-	}
+    return method; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMethod(String newVal) {
-		this.method = newVal;
-	}
+    this.method = newVal;
+  }
  	
 	
 	/**
@@ -555,16 +555,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getQuantityType(){
-		return quantityType; 
-	}
+    return quantityType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantityType(String newVal) {
-		this.quantityType = newVal;
-	}
+    this.quantityType = newVal;
+  }
  	
 	
 	/**
@@ -577,16 +577,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMarkupType(){
-		return markupType; 
-	}
+    return markupType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkupType(String newVal) {
-		this.markupType = newVal;
-	}
+    this.markupType = newVal;
+  }
  	
 	
 	/**
@@ -599,16 +599,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getJobQty(){
-		return jobQty; 
-	}
+    return jobQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobQty(String newVal) {
-		this.jobQty = newVal;
-	}
+    this.jobQty = newVal;
+  }
  	
 	
 	/**
@@ -621,16 +621,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getPriceMethod(){
-		return priceMethod; 
-	}
+    return priceMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceMethod(String newVal) {
-		this.priceMethod = newVal;
-	}
+    this.priceMethod = newVal;
+  }
  	
 	
 	/**
@@ -643,16 +643,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getInkCoverage(){
-		return inkCoverage; 
-	}
+    return inkCoverage; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInkCoverage(String newVal) {
-		this.inkCoverage = newVal;
-	}
+    this.inkCoverage = newVal;
+  }
  	
 	
 	/**
@@ -665,16 +665,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseSides(){
-		return useSides; 
-	}
+    return useSides; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseSides(Boolean newVal) {
-		this.useSides = newVal;
-	}
+    this.useSides = newVal;
+  }
  	
 	
 	/**
@@ -687,16 +687,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDoNotDiscount(){
-		return doNotDiscount; 
-	}
+    return doNotDiscount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDoNotDiscount(Boolean newVal) {
-		this.doNotDiscount = newVal;
-	}
+    this.doNotDiscount = newVal;
+  }
  	
 	
 	/**
@@ -709,16 +709,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNoMaterialQuantity(){
-		return noMaterialQuantity; 
-	}
+    return noMaterialQuantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoMaterialQuantity(Boolean newVal) {
-		this.noMaterialQuantity = newVal;
-	}
+    this.noMaterialQuantity = newVal;
+  }
  	
 	
 	/**
@@ -731,16 +731,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNoOverrides(){
-		return noOverrides; 
-	}
+    return noOverrides; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoOverrides(Boolean newVal) {
-		this.noOverrides = newVal;
-	}
+    this.noOverrides = newVal;
+  }
  	
 	
 	/**
@@ -753,16 +753,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAdjustableSets(){
-		return adjustableSets; 
-	}
+    return adjustableSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdjustableSets(Boolean newVal) {
-		this.adjustableSets = newVal;
-	}
+    this.adjustableSets = newVal;
+  }
  	
 	
 	/**
@@ -775,16 +775,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAdjustableRate(){
-		return adjustableRate; 
-	}
+    return adjustableRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdjustableRate(Boolean newVal) {
-		this.adjustableRate = newVal;
-	}
+    this.adjustableRate = newVal;
+  }
  	
 	
 	/**
@@ -797,16 +797,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAdjustableMaterial(){
-		return adjustableMaterial; 
-	}
+    return adjustableMaterial; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdjustableMaterial(Boolean newVal) {
-		this.adjustableMaterial = newVal;
-	}
+    this.adjustableMaterial = newVal;
+  }
  	
 	
 	/**
@@ -819,16 +819,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseMaterial(){
-		return useMaterial; 
-	}
+    return useMaterial; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseMaterial(Boolean newVal) {
-		this.useMaterial = newVal;
-	}
+    this.useMaterial = newVal;
+  }
  	
 	
 	/**
@@ -841,16 +841,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseRate(){
-		return useRate; 
-	}
+    return useRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseRate(Boolean newVal) {
-		this.useRate = newVal;
-	}
+    this.useRate = newVal;
+  }
  	
 	
 	/**
@@ -863,16 +863,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseRateSets(){
-		return useRateSets; 
-	}
+    return useRateSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseRateSets(Boolean newVal) {
-		this.useRateSets = newVal;
-	}
+    this.useRateSets = newVal;
+  }
  	
 	
 	/**
@@ -885,16 +885,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseMerchandiseSets(){
-		return useMerchandiseSets; 
-	}
+    return useMerchandiseSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseMerchandiseSets(Boolean newVal) {
-		this.useMerchandiseSets = newVal;
-	}
+    this.useMerchandiseSets = newVal;
+  }
  	
 	
 	/**
@@ -907,16 +907,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseMinimumCharge(){
-		return useMinimumCharge; 
-	}
+    return useMinimumCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseMinimumCharge(Boolean newVal) {
-		this.useMinimumCharge = newVal;
-	}
+    this.useMinimumCharge = newVal;
+  }
  	
 	
 	/**
@@ -929,16 +929,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseColors(){
-		return useColors; 
-	}
+    return useColors; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseColors(Boolean newVal) {
-		this.useColors = newVal;
-	}
+    this.useColors = newVal;
+  }
  	
 	
 	/**
@@ -951,16 +951,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseOriginals(){
-		return useOriginals; 
-	}
+    return useOriginals; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseOriginals(Boolean newVal) {
-		this.useOriginals = newVal;
-	}
+    this.useOriginals = newVal;
+  }
  	
 	
 	/**
@@ -973,16 +973,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getRateSetCount(){
-		return rateSetCount; 
-	}
+    return rateSetCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRateSetCount(Double newVal) {
-		this.rateSetCount = newVal;
-	}
+    this.rateSetCount = newVal;
+  }
  	
 	
 	/**
@@ -995,16 +995,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMaterialSetCount(){
-		return materialSetCount; 
-	}
+    return materialSetCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaterialSetCount(Double newVal) {
-		this.materialSetCount = newVal;
-	}
+    this.materialSetCount = newVal;
+  }
  	
 	
 	/**
@@ -1017,16 +1017,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getRate(){
-		return rate; 
-	}
+    return rate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRate(Double newVal) {
-		this.rate = newVal;
-	}
+    this.rate = newVal;
+  }
  	
 	
 	/**
@@ -1039,16 +1039,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMaterial(){
-		return material; 
-	}
+    return material; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaterial(Double newVal) {
-		this.material = newVal;
-	}
+    this.material = newVal;
+  }
  	
 	
 	/**
@@ -1061,16 +1061,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMinimum(){
-		return minimum; 
-	}
+    return minimum; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinimum(Double newVal) {
-		this.minimum = newVal;
-	}
+    this.minimum = newVal;
+  }
  	
 	
 	/**
@@ -1083,16 +1083,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup(){
-		return markup; 
-	}
+    return markup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup(Double newVal) {
-		this.markup = newVal;
-	}
+    this.markup = newVal;
+  }
  	
 	
 	/**
@@ -1105,16 +1105,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public PriceList getPriceList(){
-		return priceList; 
-	}
+    return priceList; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceList(PriceList newVal) {
-		this.priceList = newVal;
-	}
+    this.priceList = newVal;
+  }
  	
 	
 	/**
@@ -1127,16 +1127,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public WasteChart getWasteChart(){
-		return wasteChart; 
-	}
+    return wasteChart; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWasteChart(WasteChart newVal) {
-		this.wasteChart = newVal;
-	}
+    this.wasteChart = newVal;
+  }
  	
 	
 	/**
@@ -1149,16 +1149,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getFixedWaste(){
-		return fixedWaste; 
-	}
+    return fixedWaste; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFixedWaste(Long newVal) {
-		this.fixedWaste = newVal;
-	}
+    this.fixedWaste = newVal;
+  }
  	
 	
 	/**
@@ -1171,16 +1171,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWastePercentage(){
-		return wastePercentage; 
-	}
+    return wastePercentage; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWastePercentage(Double newVal) {
-		this.wastePercentage = newVal;
-	}
+    this.wastePercentage = newVal;
+  }
  	
 	
 	/**
@@ -1193,16 +1193,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getBaseLinearNumber(){
-		return baseLinearNumber; 
-	}
+    return baseLinearNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBaseLinearNumber(Long newVal) {
-		this.baseLinearNumber = newVal;
-	}
+    this.baseLinearNumber = newVal;
+  }
  	
 	
 	/**
@@ -1215,16 +1215,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Location getLocation(){
-		return location; 
-	}
+    return location; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLocation(Location newVal) {
-		this.location = newVal;
-	}
+    this.location = newVal;
+  }
  	
 	
 	/**
@@ -1237,16 +1237,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public CostCenter getCostCenter(){
-		return costCenter; 
-	}
+    return costCenter; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostCenter(CostCenter newVal) {
-		this.costCenter = newVal;
-	}
+    this.costCenter = newVal;
+  }
  	
 	
 	/**
@@ -1259,16 +1259,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Substrate getSubstrate(){
-		return substrate; 
-	}
+    return substrate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSubstrate(Substrate newVal) {
-		this.substrate = newVal;
-	}
+    this.substrate = newVal;
+  }
  	
 	
 	/**
@@ -1281,16 +1281,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getMinimumTime(){
-		return minimumTime; 
-	}
+    return minimumTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinimumTime(Long newVal) {
-		this.minimumTime = newVal;
-	}
+    this.minimumTime = newVal;
+  }
  	
 	
 	/**
@@ -1303,16 +1303,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getSizeX(){
-		return sizeX; 
-	}
+    return sizeX; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSizeX(Double newVal) {
-		this.sizeX = newVal;
-	}
+    this.sizeX = newVal;
+  }
  	
 	
 	/**
@@ -1325,16 +1325,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getSizeY(){
-		return sizeY; 
-	}
+    return sizeY; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSizeY(Double newVal) {
-		this.sizeY = newVal;
-	}
+    this.sizeY = newVal;
+  }
  	
 	
 	/**
@@ -1347,16 +1347,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getPlateThickness(){
-		return plateThickness; 
-	}
+    return plateThickness; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPlateThickness(Double newVal) {
-		this.plateThickness = newVal;
-	}
+    this.plateThickness = newVal;
+  }
  	
 	
 	/**
@@ -1369,16 +1369,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public FoldTemplate getFoldTemplate(){
-		return foldTemplate; 
-	}
+    return foldTemplate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFoldTemplate(FoldTemplate newVal) {
-		this.foldTemplate = newVal;
-	}
+    this.foldTemplate = newVal;
+  }
  	
 	
 	/**
@@ -1391,16 +1391,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getExcludedFromWorkflow(){
-		return excludedFromWorkflow; 
-	}
+    return excludedFromWorkflow; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setExcludedFromWorkflow(Boolean newVal) {
-		this.excludedFromWorkflow = newVal;
-	}
+    this.excludedFromWorkflow = newVal;
+  }
  	
 	
 	/**
@@ -1413,16 +1413,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getPreproduction(){
-		return preproduction; 
-	}
+    return preproduction; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPreproduction(Boolean newVal) {
-		this.preproduction = newVal;
-	}
+    this.preproduction = newVal;
+  }
  	
 	
 	/**
@@ -1435,16 +1435,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseMinimumTime(){
-		return useMinimumTime; 
-	}
+    return useMinimumTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseMinimumTime(Boolean newVal) {
-		this.useMinimumTime = newVal;
-	}
+    this.useMinimumTime = newVal;
+  }
  	
 	
 	/**
@@ -1457,16 +1457,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseDivideByUpCount(){
-		return useDivideByUpCount; 
-	}
+    return useDivideByUpCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseDivideByUpCount(Boolean newVal) {
-		this.useDivideByUpCount = newVal;
-	}
+    this.useDivideByUpCount = newVal;
+  }
  	
 	
 	/**
@@ -1479,16 +1479,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseMultiplyUpCount(){
-		return useMultiplyUpCount; 
-	}
+    return useMultiplyUpCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseMultiplyUpCount(Boolean newVal) {
-		this.useMultiplyUpCount = newVal;
-	}
+    this.useMultiplyUpCount = newVal;
+  }
  	
 	
 	/**
@@ -1501,16 +1501,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAdjustUps(){
-		return adjustUps; 
-	}
+    return adjustUps; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdjustUps(Boolean newVal) {
-		this.adjustUps = newVal;
-	}
+    this.adjustUps = newVal;
+  }
  	
 	
 	/**
@@ -1523,16 +1523,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCutsArePrePress(){
-		return cutsArePrePress; 
-	}
+    return cutsArePrePress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCutsArePrePress(Boolean newVal) {
-		this.cutsArePrePress = newVal;
-	}
+    this.cutsArePrePress = newVal;
+  }
  	
 	
 	/**
@@ -1545,16 +1545,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIntegratedCTP(){
-		return integratedCTP; 
-	}
+    return integratedCTP; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIntegratedCTP(Boolean newVal) {
-		this.integratedCTP = newVal;
-	}
+    this.integratedCTP = newVal;
+  }
  	
 	
 	/**
@@ -1567,16 +1567,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getSku(){
-		return sku; 
-	}
+    return sku; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSku(String newVal) {
-		this.sku = newVal;
-	}
+    this.sku = newVal;
+  }
  	
 	
 	/**
@@ -1589,16 +1589,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getCategory(){
-		return category; 
-	}
+    return category; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCategory(String newVal) {
-		this.category = newVal;
-	}
+    this.category = newVal;
+  }
  	
 	
 	/**
@@ -1611,16 +1611,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideRate(){
-		return overrideRate; 
-	}
+    return overrideRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideRate(Boolean newVal) {
-		this.overrideRate = newVal;
-	}
+    this.overrideRate = newVal;
+  }
  	
 	
 	/**
@@ -1633,16 +1633,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getTitle(){
-		return title; 
-	}
+    return title; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTitle(String newVal) {
-		this.title = newVal;
-	}
+    this.title = newVal;
+  }
  	
 	
 	/**
@@ -1655,16 +1655,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getNote(){
-		return note; 
-	}
+    return note; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNote(String newVal) {
-		this.note = newVal;
-	}
+    this.note = newVal;
+  }
  	
 	
 	/**
@@ -1677,16 +1677,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getChargeGroup(){
-		return chargeGroup; 
-	}
+    return chargeGroup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChargeGroup(String newVal) {
-		this.chargeGroup = newVal;
-	}
+    this.chargeGroup = newVal;
+  }
  	
 	
 	/**
@@ -1699,16 +1699,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getSalesCategory(){
-		return salesCategory; 
-	}
+    return salesCategory; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSalesCategory(SalesCategory newVal) {
-		this.salesCategory = newVal;
-	}
+    this.salesCategory = newVal;
+  }
  	
 	
 	/**
@@ -1721,16 +1721,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public TaxTable getTaxTable(){
-		return taxTable; 
-	}
+    return taxTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxTable(TaxTable newVal) {
-		this.taxTable = newVal;
-	}
+    this.taxTable = newVal;
+  }
  	
 	
 	/**
@@ -1743,16 +1743,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getRateQty(){
-		return rateQty; 
-	}
+    return rateQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRateQty(Double newVal) {
-		this.rateQty = newVal;
-	}
+    this.rateQty = newVal;
+  }
  	
 	
 	/**
@@ -1765,16 +1765,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMaterialQty(){
-		return materialQty; 
-	}
+    return materialQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaterialQty(Double newVal) {
-		this.materialQty = newVal;
-	}
+    this.materialQty = newVal;
+  }
  	
 	
 	/**
@@ -1787,16 +1787,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getGroupQty(){
-		return groupQty; 
-	}
+    return groupQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGroupQty(Double newVal) {
-		this.groupQty = newVal;
-	}
+    this.groupQty = newVal;
+  }
  	
 	
 	/**
@@ -1809,16 +1809,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getPrice(){
-		return price; 
-	}
+    return price; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrice(Double newVal) {
-		this.price = newVal;
-	}
+    this.price = newVal;
+  }
  	
 	
 	/**
@@ -1831,16 +1831,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Date getTimeStart(){
-		return timeStart; 
-	}
+    return timeStart; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTimeStart(Date newVal) {
-		this.timeStart = newVal;
-	}
+    this.timeStart = newVal;
+  }
  	
 	
 	/**
@@ -1853,16 +1853,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Date getTimeEnd(){
-		return timeEnd; 
-	}
+    return timeEnd; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTimeEnd(Date newVal) {
-		this.timeEnd = newVal;
-	}
+    this.timeEnd = newVal;
+  }
  	
 	
 	/**
@@ -1875,16 +1875,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCustomerCharge(){
-		return customerCharge; 
-	}
+    return customerCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCustomerCharge(Boolean newVal) {
-		this.customerCharge = newVal;
-	}
+    this.customerCharge = newVal;
+  }
  	
 	
 	/**
@@ -1897,16 +1897,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getPressCharge(){
-		return pressCharge; 
-	}
+    return pressCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPressCharge(Boolean newVal) {
-		this.pressCharge = newVal;
-	}
+    this.pressCharge = newVal;
+  }
  	
 	
 	/**
@@ -1919,16 +1919,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHideChargeInPrintouts(){
-		return hideChargeInPrintouts; 
-	}
+    return hideChargeInPrintouts; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHideChargeInPrintouts(Boolean newVal) {
-		this.hideChargeInPrintouts = newVal;
-	}
+    this.hideChargeInPrintouts = newVal;
+  }
  	
 	
 	/**
@@ -1941,16 +1941,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDeletedPreset(){
-		return deletedPreset; 
-	}
+    return deletedPreset; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDeletedPreset(Boolean newVal) {
-		this.deletedPreset = newVal;
-	}
+    this.deletedPreset = newVal;
+  }
  	
 	
 	/**
@@ -1963,16 +1963,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIgnoreCuts(){
-		return ignoreCuts; 
-	}
+    return ignoreCuts; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIgnoreCuts(Boolean newVal) {
-		this.ignoreCuts = newVal;
-	}
+    this.ignoreCuts = newVal;
+  }
  	
 	
 	/**
@@ -1985,16 +1985,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseSignatures(){
-		return useSignatures; 
-	}
+    return useSignatures; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseSignatures(Boolean newVal) {
-		this.useSignatures = newVal;
-	}
+    this.useSignatures = newVal;
+  }
  	
 	
 	/**
@@ -2007,16 +2007,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getStockCharge(){
-		return stockCharge; 
-	}
+    return stockCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockCharge(Boolean newVal) {
-		this.stockCharge = newVal;
-	}
+    this.stockCharge = newVal;
+  }
  	
 	
 	/**
@@ -2029,16 +2029,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideNumberOfCuts(){
-		return overrideNumberOfCuts; 
-	}
+    return overrideNumberOfCuts; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideNumberOfCuts(Boolean newVal) {
-		this.overrideNumberOfCuts = newVal;
-	}
+    this.overrideNumberOfCuts = newVal;
+  }
  	
 	
 	/**
@@ -2051,16 +2051,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowNotes(){
-		return showNotes; 
-	}
+    return showNotes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowNotes(Boolean newVal) {
-		this.showNotes = newVal;
-	}
+    this.showNotes = newVal;
+  }
  	
 	
 	/**
@@ -2073,16 +2073,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getFinished(){
-		return finished; 
-	}
+    return finished; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFinished(Boolean newVal) {
-		this.finished = newVal;
-	}
+    this.finished = newVal;
+  }
  	
 	
 	/**
@@ -2095,16 +2095,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBrokered(){
-		return brokered; 
-	}
+    return brokered; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBrokered(Boolean newVal) {
-		this.brokered = newVal;
-	}
+    this.brokered = newVal;
+  }
  	
 	
 	/**
@@ -2117,16 +2117,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxable(){
-		return taxable; 
-	}
+    return taxable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxable(Boolean newVal) {
-		this.taxable = newVal;
-	}
+    this.taxable = newVal;
+  }
  	
 	
 	/**
@@ -2139,16 +2139,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDisplayQty(){
-		return displayQty; 
-	}
+    return displayQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDisplayQty(Boolean newVal) {
-		this.displayQty = newVal;
-	}
+    this.displayQty = newVal;
+  }
  	
 	
 	/**
@@ -2161,16 +2161,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverridePrice(){
-		return overridePrice; 
-	}
+    return overridePrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverridePrice(Boolean newVal) {
-		this.overridePrice = newVal;
-	}
+    this.overridePrice = newVal;
+  }
  	
 	
 	/**
@@ -2183,16 +2183,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideRateQuantity(){
-		return overrideRateQuantity; 
-	}
+    return overrideRateQuantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideRateQuantity(Boolean newVal) {
-		this.overrideRateQuantity = newVal;
-	}
+    this.overrideRateQuantity = newVal;
+  }
  	
 	
 	/**
@@ -2205,16 +2205,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideMaterialQty(){
-		return overrideMaterialQty; 
-	}
+    return overrideMaterialQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideMaterialQty(Boolean newVal) {
-		this.overrideMaterialQty = newVal;
-	}
+    this.overrideMaterialQty = newVal;
+  }
  	
 	
 	/**
@@ -2227,16 +2227,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getVersion(){
-		return version; 
-	}
+    return version; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setVersion(Integer newVal) {
-		this.version = newVal;
-	}
+    this.version = newVal;
+  }
  	
 	
 	/**
@@ -2249,16 +2249,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public ShippingMethod getShipMode(){
-		return shipMode; 
-	}
+    return shipMode; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShipMode(ShippingMethod newVal) {
-		this.shipMode = newVal;
-	}
+    this.shipMode = newVal;
+  }
  	
 	
 	/**
@@ -2271,16 +2271,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getAdjustUpsCount(){
-		return adjustUpsCount; 
-	}
+    return adjustUpsCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdjustUpsCount(Integer newVal) {
-		this.adjustUpsCount = newVal;
-	}
+    this.adjustUpsCount = newVal;
+  }
  	
 	
 	/**
@@ -2293,16 +2293,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHasLinkPrice(){
-		return hasLinkPrice; 
-	}
+    return hasLinkPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHasLinkPrice(Boolean newVal) {
-		this.hasLinkPrice = newVal;
-	}
+    this.hasLinkPrice = newVal;
+  }
  	
 	
 	/**
@@ -2315,16 +2315,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNeedLinkPrice(){
-		return needLinkPrice; 
-	}
+    return needLinkPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNeedLinkPrice(Boolean newVal) {
-		this.needLinkPrice = newVal;
-	}
+    this.needLinkPrice = newVal;
+  }
  	
 	
 	/**
@@ -2337,16 +2337,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHasShipped(){
-		return hasShipped; 
-	}
+    return hasShipped; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHasShipped(Boolean newVal) {
-		this.hasShipped = newVal;
-	}
+    this.hasShipped = newVal;
+  }
  	
 	
 	/**
@@ -2359,16 +2359,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShouldShip(){
-		return shouldShip; 
-	}
+    return shouldShip; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShouldShip(Boolean newVal) {
-		this.shouldShip = newVal;
-	}
+    this.shouldShip = newVal;
+  }
  	
 	
 	/**
@@ -2381,16 +2381,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getJobTaskList(){
-		return jobTaskList; 
-	}
+    return jobTaskList; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobTaskList(Boolean newVal) {
-		this.jobTaskList = newVal;
-	}
+    this.jobTaskList = newVal;
+  }
  	
 	
 	/**
@@ -2403,16 +2403,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHidePrice(){
-		return hidePrice; 
-	}
+    return hidePrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHidePrice(Boolean newVal) {
-		this.hidePrice = newVal;
-	}
+    this.hidePrice = newVal;
+  }
  	
 	
 	/**
@@ -2425,16 +2425,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIgnoreGlobalPriceChanges(){
-		return ignoreGlobalPriceChanges; 
-	}
+    return ignoreGlobalPriceChanges; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIgnoreGlobalPriceChanges(Boolean newVal) {
-		this.ignoreGlobalPriceChanges = newVal;
-	}
+    this.ignoreGlobalPriceChanges = newVal;
+  }
  	
 	
 	/**
@@ -2447,16 +2447,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCostingPressCharge(){
-		return costingPressCharge; 
-	}
+    return costingPressCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingPressCharge(Boolean newVal) {
-		this.costingPressCharge = newVal;
-	}
+    this.costingPressCharge = newVal;
+  }
  	
 	
 	/**
@@ -2469,16 +2469,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLinearX1(){
-		return linearX1; 
-	}
+    return linearX1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLinearX1(Boolean newVal) {
-		this.linearX1 = newVal;
-	}
+    this.linearX1 = newVal;
+  }
  	
 	
 	/**
@@ -2491,16 +2491,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLinearX2(){
-		return linearX2; 
-	}
+    return linearX2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLinearX2(Boolean newVal) {
-		this.linearX2 = newVal;
-	}
+    this.linearX2 = newVal;
+  }
  	
 	
 	/**
@@ -2513,16 +2513,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLinearY1(){
-		return linearY1; 
-	}
+    return linearY1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLinearY1(Boolean newVal) {
-		this.linearY1 = newVal;
-	}
+    this.linearY1 = newVal;
+  }
  	
 	
 	/**
@@ -2535,16 +2535,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLinearY2(){
-		return linearY2; 
-	}
+    return linearY2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLinearY2(Boolean newVal) {
-		this.linearY2 = newVal;
-	}
+    this.linearY2 = newVal;
+  }
  	
 	
 	/**
@@ -2557,16 +2557,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getLabel(){
-		return label; 
-	}
+    return label; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLabel(String newVal) {
-		this.label = newVal;
-	}
+    this.label = newVal;
+  }
  	
 	
 	/**
@@ -2579,16 +2579,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBinderyCharge(){
-		return binderyCharge; 
-	}
+    return binderyCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBinderyCharge(Boolean newVal) {
-		this.binderyCharge = newVal;
-	}
+    this.binderyCharge = newVal;
+  }
  	
 	
 	/**
@@ -2601,16 +2601,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -2623,16 +2623,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public ChargeCategory getParent(){
-		return parent; 
-	}
+    return parent; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParent(ChargeCategory newVal) {
-		this.parent = newVal;
-	}
+    this.parent = newVal;
+  }
  	
 	
 	/**
@@ -2645,16 +2645,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseArea(){
-		return useArea; 
-	}
+    return useArea; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseArea(Boolean newVal) {
-		this.useArea = newVal;
-	}
+    this.useArea = newVal;
+  }
  	
 	
 	/**
@@ -2667,38 +2667,38 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseSetup(){
-		return useSetup; 
-	}
+    return useSetup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseSetup(Boolean newVal) {
-		this.useSetup = newVal;
-	}
+    this.useSetup = newVal;
+  }
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne (cascade = {CascadeType.ALL})
+    @ManyToOne
 	private ChargeCost chargeCost;
 	
 	/**
 	 * @generated
  	 */
 	public ChargeCost getChargeCost(){
-		return chargeCost; 
-	}
+    return chargeCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChargeCost(ChargeCost newVal) {
-		this.chargeCost = newVal;
-	}
+    this.chargeCost = newVal;
+  }
  	
 	
 	/**
@@ -2711,16 +2711,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getArea(){
-		return area; 
-	}
+    return area; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setArea(Double newVal) {
-		this.area = newVal;
-	}
+    this.area = newVal;
+  }
  	
 	
 	/**
@@ -2733,16 +2733,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCoverlb_check(){
-		return coverlb_check; 
-	}
+    return coverlb_check; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCoverlb_check(Boolean newVal) {
-		this.coverlb_check = newVal;
-	}
+    this.coverlb_check = newVal;
+  }
  	
 	
 	/**
@@ -2755,16 +2755,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSheet_lift_check(){
-		return sheet_lift_check; 
-	}
+    return sheet_lift_check; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheet_lift_check(Boolean newVal) {
-		this.sheet_lift_check = newVal;
-	}
+    this.sheet_lift_check = newVal;
+  }
  	
 	
 	/**
@@ -2777,16 +2777,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShip_markup_check(){
-		return ship_markup_check; 
-	}
+    return ship_markup_check; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShip_markup_check(Boolean newVal) {
-		this.ship_markup_check = newVal;
-	}
+    this.ship_markup_check = newVal;
+  }
  	
 	
 	/**
@@ -2799,16 +2799,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCoverlbInk(){
-		return coverlbInk; 
-	}
+    return coverlbInk; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCoverlbInk(Double newVal) {
-		this.coverlbInk = newVal;
-	}
+    this.coverlbInk = newVal;
+  }
  	
 	
 	/**
@@ -2821,16 +2821,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getSheetliftCut(){
-		return sheetliftCut; 
-	}
+    return sheetliftCut; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheetliftCut(Integer newVal) {
-		this.sheetliftCut = newVal;
-	}
+    this.sheetliftCut = newVal;
+  }
  	
 	
 	/**
@@ -2843,16 +2843,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getShipMarkup(){
-		return shipMarkup; 
-	}
+    return shipMarkup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShipMarkup(Double newVal) {
-		this.shipMarkup = newVal;
-	}
+    this.shipMarkup = newVal;
+  }
  	
 	
 	/**
@@ -2865,16 +2865,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getDescriptionLabel(){
-		return descriptionLabel; 
-	}
+    return descriptionLabel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescriptionLabel(String newVal) {
-		this.descriptionLabel = newVal;
-	}
+    this.descriptionLabel = newVal;
+  }
  	
 	
 	/**
@@ -2887,16 +2887,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getNotesLabel(){
-		return notesLabel; 
-	}
+    return notesLabel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotesLabel(String newVal) {
-		this.notesLabel = newVal;
-	}
+    this.notesLabel = newVal;
+  }
  	
 	
 	/**
@@ -2909,16 +2909,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getDescriptionDefault(){
-		return descriptionDefault; 
-	}
+    return descriptionDefault; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescriptionDefault(String newVal) {
-		this.descriptionDefault = newVal;
-	}
+    this.descriptionDefault = newVal;
+  }
  	
 	
 	/**
@@ -2931,16 +2931,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getNotesDefault(){
-		return notesDefault; 
-	}
+    return notesDefault; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotesDefault(String newVal) {
-		this.notesDefault = newVal;
-	}
+    this.notesDefault = newVal;
+  }
  	
 	
 	/**
@@ -2953,16 +2953,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getQuantityLabel(){
-		return quantityLabel; 
-	}
+    return quantityLabel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantityLabel(String newVal) {
-		this.quantityLabel = newVal;
-	}
+    this.quantityLabel = newVal;
+  }
  	
 	
 	/**
@@ -2975,16 +2975,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getQuantityDefault(){
-		return quantityDefault; 
-	}
+    return quantityDefault; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantityDefault(Double newVal) {
-		this.quantityDefault = newVal;
-	}
+    this.quantityDefault = newVal;
+  }
  	
 	
 	/**
@@ -2997,16 +2997,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getRateLabel(){
-		return rateLabel; 
-	}
+    return rateLabel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRateLabel(String newVal) {
-		this.rateLabel = newVal;
-	}
+    this.rateLabel = newVal;
+  }
  	
 	
 	/**
@@ -3019,16 +3019,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getRateDefault(){
-		return rateDefault; 
-	}
+    return rateDefault; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRateDefault(Double newVal) {
-		this.rateDefault = newVal;
-	}
+    this.rateDefault = newVal;
+  }
  	
 	
 	/**
@@ -3041,16 +3041,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getPriceLabel(){
-		return priceLabel; 
-	}
+    return priceLabel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceLabel(String newVal) {
-		this.priceLabel = newVal;
-	}
+    this.priceLabel = newVal;
+  }
  	
 	
 	/**
@@ -3063,16 +3063,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getPriceDefault(){
-		return priceDefault; 
-	}
+    return priceDefault; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceDefault(Double newVal) {
-		this.priceDefault = newVal;
-	}
+    this.priceDefault = newVal;
+  }
  	
 	
 	/**
@@ -3085,16 +3085,16 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUseRunArea(){
-		return useRunArea; 
-	}
+    return useRunArea; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUseRunArea(Boolean newVal) {
-		this.useRunArea = newVal;
-	}
+    this.useRunArea = newVal;
+  }
  	
 	
 	/**
@@ -3107,142 +3107,142 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getSetupPrice(){
-		return setupPrice; 
-	}
+    return setupPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupPrice(Double newVal) {
-		this.setupPrice = newVal;
-	}
+    this.setupPrice = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (METHOD.equals(propertyName)) return getMethod();
-		if (QUANTITYTYPE.equals(propertyName)) return getQuantityType();
-		if (MARKUPTYPE.equals(propertyName)) return getMarkupType();
-		if (JOBQTY.equals(propertyName)) return getJobQty();
-		if (PRICEMETHOD.equals(propertyName)) return getPriceMethod();
-		if (INKCOVERAGE.equals(propertyName)) return getInkCoverage();
-		if (USESIDES.equals(propertyName)) return getUseSides();
-		if (DONOTDISCOUNT.equals(propertyName)) return getDoNotDiscount();
-		if (NOMATERIALQUANTITY.equals(propertyName)) return getNoMaterialQuantity();
-		if (NOOVERRIDES.equals(propertyName)) return getNoOverrides();
-		if (ADJUSTABLESETS.equals(propertyName)) return getAdjustableSets();
-		if (ADJUSTABLERATE.equals(propertyName)) return getAdjustableRate();
-		if (ADJUSTABLEMATERIAL.equals(propertyName)) return getAdjustableMaterial();
-		if (USEMATERIAL.equals(propertyName)) return getUseMaterial();
-		if (USERATE.equals(propertyName)) return getUseRate();
-		if (USERATESETS.equals(propertyName)) return getUseRateSets();
-		if (USEMERCHANDISESETS.equals(propertyName)) return getUseMerchandiseSets();
-		if (USEMINIMUMCHARGE.equals(propertyName)) return getUseMinimumCharge();
-		if (USECOLORS.equals(propertyName)) return getUseColors();
-		if (USEORIGINALS.equals(propertyName)) return getUseOriginals();
-		if (RATESETCOUNT.equals(propertyName)) return getRateSetCount();
-		if (MATERIALSETCOUNT.equals(propertyName)) return getMaterialSetCount();
-		if (RATE.equals(propertyName)) return getRate();
-		if (MATERIAL.equals(propertyName)) return getMaterial();
-		if (MINIMUM.equals(propertyName)) return getMinimum();
-		if (MARKUP.equals(propertyName)) return getMarkup();
-		if (PRICELIST.equals(propertyName)) return getPriceList();
-		if (WASTECHART.equals(propertyName)) return getWasteChart();
-		if (FIXEDWASTE.equals(propertyName)) return getFixedWaste();
-		if (WASTEPERCENTAGE.equals(propertyName)) return getWastePercentage();
-		if (BASELINEARNUMBER.equals(propertyName)) return getBaseLinearNumber();
-		if (LOCATION.equals(propertyName)) return getLocation();
-		if (COSTCENTER.equals(propertyName)) return getCostCenter();
-		if (SUBSTRATE.equals(propertyName)) return getSubstrate();
-		if (MINIMUMTIME.equals(propertyName)) return getMinimumTime();
-		if (SIZEX.equals(propertyName)) return getSizeX();
-		if (SIZEY.equals(propertyName)) return getSizeY();
-		if (PLATETHICKNESS.equals(propertyName)) return getPlateThickness();
-		if (FOLDTEMPLATE.equals(propertyName)) return getFoldTemplate();
-		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return getExcludedFromWorkflow();
-		if (PREPRODUCTION.equals(propertyName)) return getPreproduction();
-		if (USEMINIMUMTIME.equals(propertyName)) return getUseMinimumTime();
-		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return getUseDivideByUpCount();
-		if (USEMULTIPLYUPCOUNT.equals(propertyName)) return getUseMultiplyUpCount();
-		if (ADJUSTUPS.equals(propertyName)) return getAdjustUps();
-		if (CUTSAREPREPRESS.equals(propertyName)) return getCutsArePrePress();
-		if (INTEGRATEDCTP.equals(propertyName)) return getIntegratedCTP();
-		if (SKU.equals(propertyName)) return getSku();
-		if (CATEGORY.equals(propertyName)) return getCategory();
-		if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
-		if (TITLE.equals(propertyName)) return getTitle();
-		if (NOTE.equals(propertyName)) return getNote();
-		if (CHARGEGROUP.equals(propertyName)) return getChargeGroup();
-		if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
-		if (TAXTABLE.equals(propertyName)) return getTaxTable();
-		if (RATEQTY.equals(propertyName)) return getRateQty();
-		if (MATERIALQTY.equals(propertyName)) return getMaterialQty();
-		if (GROUPQTY.equals(propertyName)) return getGroupQty();
-		if (PRICE.equals(propertyName)) return getPrice();
-		if (TIMESTART.equals(propertyName)) return getTimeStart();
-		if (TIMEEND.equals(propertyName)) return getTimeEnd();
-		if (CUSTOMERCHARGE.equals(propertyName)) return getCustomerCharge();
-		if (PRESSCHARGE.equals(propertyName)) return getPressCharge();
-		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return getHideChargeInPrintouts();
-		if (DELETEDPRESET.equals(propertyName)) return getDeletedPreset();
-		if (IGNORECUTS.equals(propertyName)) return getIgnoreCuts();
-		if (USESIGNATURES.equals(propertyName)) return getUseSignatures();
-		if (STOCKCHARGE.equals(propertyName)) return getStockCharge();
-		if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return getOverrideNumberOfCuts();
-		if (SHOWNOTES.equals(propertyName)) return getShowNotes();
-		if (FINISHED.equals(propertyName)) return getFinished();
-		if (BROKERED.equals(propertyName)) return getBrokered();
-		if (TAXABLE.equals(propertyName)) return getTaxable();
-		if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
-		if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
-		if (OVERRIDERATEQUANTITY.equals(propertyName)) return getOverrideRateQuantity();
-		if (OVERRIDEMATERIALQTY.equals(propertyName)) return getOverrideMaterialQty();
-		if (VERSION.equals(propertyName)) return getVersion();
-		if (SHIPMODE.equals(propertyName)) return getShipMode();
-		if (ADJUSTUPSCOUNT.equals(propertyName)) return getAdjustUpsCount();
-		if (HASLINKPRICE.equals(propertyName)) return getHasLinkPrice();
-		if (NEEDLINKPRICE.equals(propertyName)) return getNeedLinkPrice();
-		if (HASSHIPPED.equals(propertyName)) return getHasShipped();
-		if (SHOULDSHIP.equals(propertyName)) return getShouldShip();
-		if (JOBTASKLIST.equals(propertyName)) return getJobTaskList();
-		if (HIDEPRICE.equals(propertyName)) return getHidePrice();
-		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return getIgnoreGlobalPriceChanges();
-		if (COSTINGPRESSCHARGE.equals(propertyName)) return getCostingPressCharge();
-		if (LINEARX1.equals(propertyName)) return getLinearX1();
-		if (LINEARX2.equals(propertyName)) return getLinearX2();
-		if (LINEARY1.equals(propertyName)) return getLinearY1();
-		if (LINEARY2.equals(propertyName)) return getLinearY2();
-		if (LABEL.equals(propertyName)) return getLabel();
-		if (BINDERYCHARGE.equals(propertyName)) return getBinderyCharge();
-		if (NAME.equals(propertyName)) return getName();
-		if (PARENT.equals(propertyName)) return getParent();
-		if (USEAREA.equals(propertyName)) return getUseArea();
-		if (USESETUP.equals(propertyName)) return getUseSetup();
-		if (CHARGECOST.equals(propertyName)) return getChargeCost();
-		if (AREA.equals(propertyName)) return getArea();
-		if (COVERLB_CHECK.equals(propertyName)) return getCoverlb_check();
-		if (SHEET_LIFT_CHECK.equals(propertyName)) return getSheet_lift_check();
-		if (SHIP_MARKUP_CHECK.equals(propertyName)) return getShip_markup_check();
-		if (COVERLBINK.equals(propertyName)) return getCoverlbInk();
-		if (SHEETLIFTCUT.equals(propertyName)) return getSheetliftCut();
-		if (SHIPMARKUP.equals(propertyName)) return getShipMarkup();
-		if (DESCRIPTIONLABEL.equals(propertyName)) return getDescriptionLabel();
-		if (NOTESLABEL.equals(propertyName)) return getNotesLabel();
-		if (DESCRIPTIONDEFAULT.equals(propertyName)) return getDescriptionDefault();
-		if (NOTESDEFAULT.equals(propertyName)) return getNotesDefault();
-		if (QUANTITYLABEL.equals(propertyName)) return getQuantityLabel();
-		if (QUANTITYDEFAULT.equals(propertyName)) return getQuantityDefault();
-		if (RATELABEL.equals(propertyName)) return getRateLabel();
-		if (RATEDEFAULT.equals(propertyName)) return getRateDefault();
-		if (PRICELABEL.equals(propertyName)) return getPriceLabel();
-		if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
-		if (USERUNAREA.equals(propertyName)) return getUseRunArea();
-		if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
-		return super.getProperty(propertyName);
-	}
+    if (METHOD.equals(propertyName)) return getMethod();
+    if (QUANTITYTYPE.equals(propertyName)) return getQuantityType();
+    if (MARKUPTYPE.equals(propertyName)) return getMarkupType();
+    if (JOBQTY.equals(propertyName)) return getJobQty();
+    if (PRICEMETHOD.equals(propertyName)) return getPriceMethod();
+    if (INKCOVERAGE.equals(propertyName)) return getInkCoverage();
+    if (USESIDES.equals(propertyName)) return getUseSides();
+    if (DONOTDISCOUNT.equals(propertyName)) return getDoNotDiscount();
+    if (NOMATERIALQUANTITY.equals(propertyName)) return getNoMaterialQuantity();
+    if (NOOVERRIDES.equals(propertyName)) return getNoOverrides();
+    if (ADJUSTABLESETS.equals(propertyName)) return getAdjustableSets();
+    if (ADJUSTABLERATE.equals(propertyName)) return getAdjustableRate();
+    if (ADJUSTABLEMATERIAL.equals(propertyName)) return getAdjustableMaterial();
+    if (USEMATERIAL.equals(propertyName)) return getUseMaterial();
+    if (USERATE.equals(propertyName)) return getUseRate();
+    if (USERATESETS.equals(propertyName)) return getUseRateSets();
+    if (USEMERCHANDISESETS.equals(propertyName)) return getUseMerchandiseSets();
+    if (USEMINIMUMCHARGE.equals(propertyName)) return getUseMinimumCharge();
+    if (USECOLORS.equals(propertyName)) return getUseColors();
+    if (USEORIGINALS.equals(propertyName)) return getUseOriginals();
+    if (RATESETCOUNT.equals(propertyName)) return getRateSetCount();
+    if (MATERIALSETCOUNT.equals(propertyName)) return getMaterialSetCount();
+    if (RATE.equals(propertyName)) return getRate();
+    if (MATERIAL.equals(propertyName)) return getMaterial();
+    if (MINIMUM.equals(propertyName)) return getMinimum();
+    if (MARKUP.equals(propertyName)) return getMarkup();
+    if (PRICELIST.equals(propertyName)) return getPriceList();
+    if (WASTECHART.equals(propertyName)) return getWasteChart();
+    if (FIXEDWASTE.equals(propertyName)) return getFixedWaste();
+    if (WASTEPERCENTAGE.equals(propertyName)) return getWastePercentage();
+    if (BASELINEARNUMBER.equals(propertyName)) return getBaseLinearNumber();
+    if (LOCATION.equals(propertyName)) return getLocation();
+    if (COSTCENTER.equals(propertyName)) return getCostCenter();
+    if (SUBSTRATE.equals(propertyName)) return getSubstrate();
+    if (MINIMUMTIME.equals(propertyName)) return getMinimumTime();
+    if (SIZEX.equals(propertyName)) return getSizeX();
+    if (SIZEY.equals(propertyName)) return getSizeY();
+    if (PLATETHICKNESS.equals(propertyName)) return getPlateThickness();
+    if (FOLDTEMPLATE.equals(propertyName)) return getFoldTemplate();
+    if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return getExcludedFromWorkflow();
+    if (PREPRODUCTION.equals(propertyName)) return getPreproduction();
+    if (USEMINIMUMTIME.equals(propertyName)) return getUseMinimumTime();
+    if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return getUseDivideByUpCount();
+    if (USEMULTIPLYUPCOUNT.equals(propertyName)) return getUseMultiplyUpCount();
+    if (ADJUSTUPS.equals(propertyName)) return getAdjustUps();
+    if (CUTSAREPREPRESS.equals(propertyName)) return getCutsArePrePress();
+    if (INTEGRATEDCTP.equals(propertyName)) return getIntegratedCTP();
+    if (SKU.equals(propertyName)) return getSku();
+    if (CATEGORY.equals(propertyName)) return getCategory();
+    if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
+    if (TITLE.equals(propertyName)) return getTitle();
+    if (NOTE.equals(propertyName)) return getNote();
+    if (CHARGEGROUP.equals(propertyName)) return getChargeGroup();
+    if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
+    if (TAXTABLE.equals(propertyName)) return getTaxTable();
+    if (RATEQTY.equals(propertyName)) return getRateQty();
+    if (MATERIALQTY.equals(propertyName)) return getMaterialQty();
+    if (GROUPQTY.equals(propertyName)) return getGroupQty();
+    if (PRICE.equals(propertyName)) return getPrice();
+    if (TIMESTART.equals(propertyName)) return getTimeStart();
+    if (TIMEEND.equals(propertyName)) return getTimeEnd();
+    if (CUSTOMERCHARGE.equals(propertyName)) return getCustomerCharge();
+    if (PRESSCHARGE.equals(propertyName)) return getPressCharge();
+    if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return getHideChargeInPrintouts();
+    if (DELETEDPRESET.equals(propertyName)) return getDeletedPreset();
+    if (IGNORECUTS.equals(propertyName)) return getIgnoreCuts();
+    if (USESIGNATURES.equals(propertyName)) return getUseSignatures();
+    if (STOCKCHARGE.equals(propertyName)) return getStockCharge();
+    if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return getOverrideNumberOfCuts();
+    if (SHOWNOTES.equals(propertyName)) return getShowNotes();
+    if (FINISHED.equals(propertyName)) return getFinished();
+    if (BROKERED.equals(propertyName)) return getBrokered();
+    if (TAXABLE.equals(propertyName)) return getTaxable();
+    if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
+    if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
+    if (OVERRIDERATEQUANTITY.equals(propertyName)) return getOverrideRateQuantity();
+    if (OVERRIDEMATERIALQTY.equals(propertyName)) return getOverrideMaterialQty();
+    if (VERSION.equals(propertyName)) return getVersion();
+    if (SHIPMODE.equals(propertyName)) return getShipMode();
+    if (ADJUSTUPSCOUNT.equals(propertyName)) return getAdjustUpsCount();
+    if (HASLINKPRICE.equals(propertyName)) return getHasLinkPrice();
+    if (NEEDLINKPRICE.equals(propertyName)) return getNeedLinkPrice();
+    if (HASSHIPPED.equals(propertyName)) return getHasShipped();
+    if (SHOULDSHIP.equals(propertyName)) return getShouldShip();
+    if (JOBTASKLIST.equals(propertyName)) return getJobTaskList();
+    if (HIDEPRICE.equals(propertyName)) return getHidePrice();
+    if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return getIgnoreGlobalPriceChanges();
+    if (COSTINGPRESSCHARGE.equals(propertyName)) return getCostingPressCharge();
+    if (LINEARX1.equals(propertyName)) return getLinearX1();
+    if (LINEARX2.equals(propertyName)) return getLinearX2();
+    if (LINEARY1.equals(propertyName)) return getLinearY1();
+    if (LINEARY2.equals(propertyName)) return getLinearY2();
+    if (LABEL.equals(propertyName)) return getLabel();
+    if (BINDERYCHARGE.equals(propertyName)) return getBinderyCharge();
+    if (NAME.equals(propertyName)) return getName();
+    if (PARENT.equals(propertyName)) return getParent();
+    if (USEAREA.equals(propertyName)) return getUseArea();
+    if (USESETUP.equals(propertyName)) return getUseSetup();
+    if (CHARGECOST.equals(propertyName)) return getChargeCost();
+    if (AREA.equals(propertyName)) return getArea();
+    if (COVERLB_CHECK.equals(propertyName)) return getCoverlb_check();
+    if (SHEET_LIFT_CHECK.equals(propertyName)) return getSheet_lift_check();
+    if (SHIP_MARKUP_CHECK.equals(propertyName)) return getShip_markup_check();
+    if (COVERLBINK.equals(propertyName)) return getCoverlbInk();
+    if (SHEETLIFTCUT.equals(propertyName)) return getSheetliftCut();
+    if (SHIPMARKUP.equals(propertyName)) return getShipMarkup();
+    if (DESCRIPTIONLABEL.equals(propertyName)) return getDescriptionLabel();
+    if (NOTESLABEL.equals(propertyName)) return getNotesLabel();
+    if (DESCRIPTIONDEFAULT.equals(propertyName)) return getDescriptionDefault();
+    if (NOTESDEFAULT.equals(propertyName)) return getNotesDefault();
+    if (QUANTITYLABEL.equals(propertyName)) return getQuantityLabel();
+    if (QUANTITYDEFAULT.equals(propertyName)) return getQuantityDefault();
+    if (RATELABEL.equals(propertyName)) return getRateLabel();
+    if (RATEDEFAULT.equals(propertyName)) return getRateDefault();
+    if (PRICELABEL.equals(propertyName)) return getPriceLabel();
+    if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
+    if (USERUNAREA.equals(propertyName)) return getUseRunArea();
+    if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -3250,126 +3250,126 @@ public class ChargeDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (METHOD.equals(propertyName)) setMethod((String)newValue); else
-		if (QUANTITYTYPE.equals(propertyName)) setQuantityType((String)newValue); else
-		if (MARKUPTYPE.equals(propertyName)) setMarkupType((String)newValue); else
-		if (JOBQTY.equals(propertyName)) setJobQty((String)newValue); else
-		if (PRICEMETHOD.equals(propertyName)) setPriceMethod((String)newValue); else
-		if (INKCOVERAGE.equals(propertyName)) setInkCoverage((String)newValue); else
-		if (USESIDES.equals(propertyName)) setUseSides((Boolean)newValue); else
-		if (DONOTDISCOUNT.equals(propertyName)) setDoNotDiscount((Boolean)newValue); else
-		if (NOMATERIALQUANTITY.equals(propertyName)) setNoMaterialQuantity((Boolean)newValue); else
-		if (NOOVERRIDES.equals(propertyName)) setNoOverrides((Boolean)newValue); else
-		if (ADJUSTABLESETS.equals(propertyName)) setAdjustableSets((Boolean)newValue); else
-		if (ADJUSTABLERATE.equals(propertyName)) setAdjustableRate((Boolean)newValue); else
-		if (ADJUSTABLEMATERIAL.equals(propertyName)) setAdjustableMaterial((Boolean)newValue); else
-		if (USEMATERIAL.equals(propertyName)) setUseMaterial((Boolean)newValue); else
-		if (USERATE.equals(propertyName)) setUseRate((Boolean)newValue); else
-		if (USERATESETS.equals(propertyName)) setUseRateSets((Boolean)newValue); else
-		if (USEMERCHANDISESETS.equals(propertyName)) setUseMerchandiseSets((Boolean)newValue); else
-		if (USEMINIMUMCHARGE.equals(propertyName)) setUseMinimumCharge((Boolean)newValue); else
-		if (USECOLORS.equals(propertyName)) setUseColors((Boolean)newValue); else
-		if (USEORIGINALS.equals(propertyName)) setUseOriginals((Boolean)newValue); else
-		if (RATESETCOUNT.equals(propertyName)) setRateSetCount((Double)newValue); else
-		if (MATERIALSETCOUNT.equals(propertyName)) setMaterialSetCount((Double)newValue); else
-		if (RATE.equals(propertyName)) setRate((Double)newValue); else
-		if (MATERIAL.equals(propertyName)) setMaterial((Double)newValue); else
-		if (MINIMUM.equals(propertyName)) setMinimum((Double)newValue); else
-		if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
-		if (PRICELIST.equals(propertyName)) setPriceList((PriceList)newValue); else
-		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
-		if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Long)newValue); else
-		if (WASTEPERCENTAGE.equals(propertyName)) setWastePercentage((Double)newValue); else
-		if (BASELINEARNUMBER.equals(propertyName)) setBaseLinearNumber((Long)newValue); else
-		if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
-		if (COSTCENTER.equals(propertyName)) setCostCenter((CostCenter)newValue); else
-		if (SUBSTRATE.equals(propertyName)) setSubstrate((Substrate)newValue); else
-		if (MINIMUMTIME.equals(propertyName)) setMinimumTime((Long)newValue); else
-		if (SIZEX.equals(propertyName)) setSizeX((Double)newValue); else
-		if (SIZEY.equals(propertyName)) setSizeY((Double)newValue); else
-		if (PLATETHICKNESS.equals(propertyName)) setPlateThickness((Double)newValue); else
-		if (FOLDTEMPLATE.equals(propertyName)) setFoldTemplate((FoldTemplate)newValue); else
-		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) setExcludedFromWorkflow((Boolean)newValue); else
-		if (PREPRODUCTION.equals(propertyName)) setPreproduction((Boolean)newValue); else
-		if (USEMINIMUMTIME.equals(propertyName)) setUseMinimumTime((Boolean)newValue); else
-		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) setUseDivideByUpCount((Boolean)newValue); else
-		if (USEMULTIPLYUPCOUNT.equals(propertyName)) setUseMultiplyUpCount((Boolean)newValue); else
-		if (ADJUSTUPS.equals(propertyName)) setAdjustUps((Boolean)newValue); else
-		if (CUTSAREPREPRESS.equals(propertyName)) setCutsArePrePress((Boolean)newValue); else
-		if (INTEGRATEDCTP.equals(propertyName)) setIntegratedCTP((Boolean)newValue); else
-		if (SKU.equals(propertyName)) setSku((String)newValue); else
-		if (CATEGORY.equals(propertyName)) setCategory((String)newValue); else
-		if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
-		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
-		if (NOTE.equals(propertyName)) setNote((String)newValue); else
-		if (CHARGEGROUP.equals(propertyName)) setChargeGroup((String)newValue); else
-		if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
-		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-		if (RATEQTY.equals(propertyName)) setRateQty((Double)newValue); else
-		if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
-		if (GROUPQTY.equals(propertyName)) setGroupQty((Double)newValue); else
-		if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
-		if (TIMESTART.equals(propertyName)) setTimeStart((Date)newValue); else
-		if (TIMEEND.equals(propertyName)) setTimeEnd((Date)newValue); else
-		if (CUSTOMERCHARGE.equals(propertyName)) setCustomerCharge((Boolean)newValue); else
-		if (PRESSCHARGE.equals(propertyName)) setPressCharge((Boolean)newValue); else
-		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) setHideChargeInPrintouts((Boolean)newValue); else
-		if (DELETEDPRESET.equals(propertyName)) setDeletedPreset((Boolean)newValue); else
-		if (IGNORECUTS.equals(propertyName)) setIgnoreCuts((Boolean)newValue); else
-		if (USESIGNATURES.equals(propertyName)) setUseSignatures((Boolean)newValue); else
-		if (STOCKCHARGE.equals(propertyName)) setStockCharge((Boolean)newValue); else
-		if (OVERRIDENUMBEROFCUTS.equals(propertyName)) setOverrideNumberOfCuts((Boolean)newValue); else
-		if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
-		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-		if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-		if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-		if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
-		if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
-		if (OVERRIDERATEQUANTITY.equals(propertyName)) setOverrideRateQuantity((Boolean)newValue); else
-		if (OVERRIDEMATERIALQTY.equals(propertyName)) setOverrideMaterialQty((Boolean)newValue); else
-		if (VERSION.equals(propertyName)) setVersion((Integer)newValue); else
-		if (SHIPMODE.equals(propertyName)) setShipMode((ShippingMethod)newValue); else
-		if (ADJUSTUPSCOUNT.equals(propertyName)) setAdjustUpsCount((Integer)newValue); else
-		if (HASLINKPRICE.equals(propertyName)) setHasLinkPrice((Boolean)newValue); else
-		if (NEEDLINKPRICE.equals(propertyName)) setNeedLinkPrice((Boolean)newValue); else
-		if (HASSHIPPED.equals(propertyName)) setHasShipped((Boolean)newValue); else
-		if (SHOULDSHIP.equals(propertyName)) setShouldShip((Boolean)newValue); else
-		if (JOBTASKLIST.equals(propertyName)) setJobTaskList((Boolean)newValue); else
-		if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
-		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) setIgnoreGlobalPriceChanges((Boolean)newValue); else
-		if (COSTINGPRESSCHARGE.equals(propertyName)) setCostingPressCharge((Boolean)newValue); else
-		if (LINEARX1.equals(propertyName)) setLinearX1((Boolean)newValue); else
-		if (LINEARX2.equals(propertyName)) setLinearX2((Boolean)newValue); else
-		if (LINEARY1.equals(propertyName)) setLinearY1((Boolean)newValue); else
-		if (LINEARY2.equals(propertyName)) setLinearY2((Boolean)newValue); else
-		if (LABEL.equals(propertyName)) setLabel((String)newValue); else
-		if (BINDERYCHARGE.equals(propertyName)) setBinderyCharge((Boolean)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (PARENT.equals(propertyName)) setParent((ChargeCategory)newValue); else
-		if (USEAREA.equals(propertyName)) setUseArea((Boolean)newValue); else
-		if (USESETUP.equals(propertyName)) setUseSetup((Boolean)newValue); else
-		if (CHARGECOST.equals(propertyName)) setChargeCost((ChargeCost)newValue); else
-		if (AREA.equals(propertyName)) setArea((Double)newValue); else
-		if (COVERLB_CHECK.equals(propertyName)) setCoverlb_check((Boolean)newValue); else
-		if (SHEET_LIFT_CHECK.equals(propertyName)) setSheet_lift_check((Boolean)newValue); else
-		if (SHIP_MARKUP_CHECK.equals(propertyName)) setShip_markup_check((Boolean)newValue); else
-		if (COVERLBINK.equals(propertyName)) setCoverlbInk((Double)newValue); else
-		if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Integer)newValue); else
-		if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
-		if (DESCRIPTIONLABEL.equals(propertyName)) setDescriptionLabel((String)newValue); else
-		if (NOTESLABEL.equals(propertyName)) setNotesLabel((String)newValue); else
-		if (DESCRIPTIONDEFAULT.equals(propertyName)) setDescriptionDefault((String)newValue); else
-		if (NOTESDEFAULT.equals(propertyName)) setNotesDefault((String)newValue); else
-		if (QUANTITYLABEL.equals(propertyName)) setQuantityLabel((String)newValue); else
-		if (QUANTITYDEFAULT.equals(propertyName)) setQuantityDefault((Double)newValue); else
-		if (RATELABEL.equals(propertyName)) setRateLabel((String)newValue); else
-		if (RATEDEFAULT.equals(propertyName)) setRateDefault((Double)newValue); else
-		if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
-		if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
-		if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
-		if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (METHOD.equals(propertyName)) setMethod((String)newValue); else
+    if (QUANTITYTYPE.equals(propertyName)) setQuantityType((String)newValue); else
+    if (MARKUPTYPE.equals(propertyName)) setMarkupType((String)newValue); else
+    if (JOBQTY.equals(propertyName)) setJobQty((String)newValue); else
+    if (PRICEMETHOD.equals(propertyName)) setPriceMethod((String)newValue); else
+    if (INKCOVERAGE.equals(propertyName)) setInkCoverage((String)newValue); else
+    if (USESIDES.equals(propertyName)) setUseSides((Boolean)newValue); else
+    if (DONOTDISCOUNT.equals(propertyName)) setDoNotDiscount((Boolean)newValue); else
+    if (NOMATERIALQUANTITY.equals(propertyName)) setNoMaterialQuantity((Boolean)newValue); else
+    if (NOOVERRIDES.equals(propertyName)) setNoOverrides((Boolean)newValue); else
+    if (ADJUSTABLESETS.equals(propertyName)) setAdjustableSets((Boolean)newValue); else
+    if (ADJUSTABLERATE.equals(propertyName)) setAdjustableRate((Boolean)newValue); else
+    if (ADJUSTABLEMATERIAL.equals(propertyName)) setAdjustableMaterial((Boolean)newValue); else
+    if (USEMATERIAL.equals(propertyName)) setUseMaterial((Boolean)newValue); else
+    if (USERATE.equals(propertyName)) setUseRate((Boolean)newValue); else
+    if (USERATESETS.equals(propertyName)) setUseRateSets((Boolean)newValue); else
+    if (USEMERCHANDISESETS.equals(propertyName)) setUseMerchandiseSets((Boolean)newValue); else
+    if (USEMINIMUMCHARGE.equals(propertyName)) setUseMinimumCharge((Boolean)newValue); else
+    if (USECOLORS.equals(propertyName)) setUseColors((Boolean)newValue); else
+    if (USEORIGINALS.equals(propertyName)) setUseOriginals((Boolean)newValue); else
+    if (RATESETCOUNT.equals(propertyName)) setRateSetCount((Double)newValue); else
+    if (MATERIALSETCOUNT.equals(propertyName)) setMaterialSetCount((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (MATERIAL.equals(propertyName)) setMaterial((Double)newValue); else
+    if (MINIMUM.equals(propertyName)) setMinimum((Double)newValue); else
+    if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
+    if (PRICELIST.equals(propertyName)) setPriceList((PriceList)newValue); else
+    if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
+    if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Long)newValue); else
+    if (WASTEPERCENTAGE.equals(propertyName)) setWastePercentage((Double)newValue); else
+    if (BASELINEARNUMBER.equals(propertyName)) setBaseLinearNumber((Long)newValue); else
+    if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
+    if (COSTCENTER.equals(propertyName)) setCostCenter((CostCenter)newValue); else
+    if (SUBSTRATE.equals(propertyName)) setSubstrate((Substrate)newValue); else
+    if (MINIMUMTIME.equals(propertyName)) setMinimumTime((Long)newValue); else
+    if (SIZEX.equals(propertyName)) setSizeX((Double)newValue); else
+    if (SIZEY.equals(propertyName)) setSizeY((Double)newValue); else
+    if (PLATETHICKNESS.equals(propertyName)) setPlateThickness((Double)newValue); else
+    if (FOLDTEMPLATE.equals(propertyName)) setFoldTemplate((FoldTemplate)newValue); else
+    if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) setExcludedFromWorkflow((Boolean)newValue); else
+    if (PREPRODUCTION.equals(propertyName)) setPreproduction((Boolean)newValue); else
+    if (USEMINIMUMTIME.equals(propertyName)) setUseMinimumTime((Boolean)newValue); else
+    if (USEDIVIDEBYUPCOUNT.equals(propertyName)) setUseDivideByUpCount((Boolean)newValue); else
+    if (USEMULTIPLYUPCOUNT.equals(propertyName)) setUseMultiplyUpCount((Boolean)newValue); else
+    if (ADJUSTUPS.equals(propertyName)) setAdjustUps((Boolean)newValue); else
+    if (CUTSAREPREPRESS.equals(propertyName)) setCutsArePrePress((Boolean)newValue); else
+    if (INTEGRATEDCTP.equals(propertyName)) setIntegratedCTP((Boolean)newValue); else
+    if (SKU.equals(propertyName)) setSku((String)newValue); else
+    if (CATEGORY.equals(propertyName)) setCategory((String)newValue); else
+    if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
+    if (TITLE.equals(propertyName)) setTitle((String)newValue); else
+    if (NOTE.equals(propertyName)) setNote((String)newValue); else
+    if (CHARGEGROUP.equals(propertyName)) setChargeGroup((String)newValue); else
+    if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
+    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+    if (RATEQTY.equals(propertyName)) setRateQty((Double)newValue); else
+    if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
+    if (GROUPQTY.equals(propertyName)) setGroupQty((Double)newValue); else
+    if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+    if (TIMESTART.equals(propertyName)) setTimeStart((Date)newValue); else
+    if (TIMEEND.equals(propertyName)) setTimeEnd((Date)newValue); else
+    if (CUSTOMERCHARGE.equals(propertyName)) setCustomerCharge((Boolean)newValue); else
+    if (PRESSCHARGE.equals(propertyName)) setPressCharge((Boolean)newValue); else
+    if (HIDECHARGEINPRINTOUTS.equals(propertyName)) setHideChargeInPrintouts((Boolean)newValue); else
+    if (DELETEDPRESET.equals(propertyName)) setDeletedPreset((Boolean)newValue); else
+    if (IGNORECUTS.equals(propertyName)) setIgnoreCuts((Boolean)newValue); else
+    if (USESIGNATURES.equals(propertyName)) setUseSignatures((Boolean)newValue); else
+    if (STOCKCHARGE.equals(propertyName)) setStockCharge((Boolean)newValue); else
+    if (OVERRIDENUMBEROFCUTS.equals(propertyName)) setOverrideNumberOfCuts((Boolean)newValue); else
+    if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
+    if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
+    if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
+    if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
+    if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
+    if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
+    if (OVERRIDERATEQUANTITY.equals(propertyName)) setOverrideRateQuantity((Boolean)newValue); else
+    if (OVERRIDEMATERIALQTY.equals(propertyName)) setOverrideMaterialQty((Boolean)newValue); else
+    if (VERSION.equals(propertyName)) setVersion((Integer)newValue); else
+    if (SHIPMODE.equals(propertyName)) setShipMode((ShippingMethod)newValue); else
+    if (ADJUSTUPSCOUNT.equals(propertyName)) setAdjustUpsCount((Integer)newValue); else
+    if (HASLINKPRICE.equals(propertyName)) setHasLinkPrice((Boolean)newValue); else
+    if (NEEDLINKPRICE.equals(propertyName)) setNeedLinkPrice((Boolean)newValue); else
+    if (HASSHIPPED.equals(propertyName)) setHasShipped((Boolean)newValue); else
+    if (SHOULDSHIP.equals(propertyName)) setShouldShip((Boolean)newValue); else
+    if (JOBTASKLIST.equals(propertyName)) setJobTaskList((Boolean)newValue); else
+    if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
+    if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) setIgnoreGlobalPriceChanges((Boolean)newValue); else
+    if (COSTINGPRESSCHARGE.equals(propertyName)) setCostingPressCharge((Boolean)newValue); else
+    if (LINEARX1.equals(propertyName)) setLinearX1((Boolean)newValue); else
+    if (LINEARX2.equals(propertyName)) setLinearX2((Boolean)newValue); else
+    if (LINEARY1.equals(propertyName)) setLinearY1((Boolean)newValue); else
+    if (LINEARY2.equals(propertyName)) setLinearY2((Boolean)newValue); else
+    if (LABEL.equals(propertyName)) setLabel((String)newValue); else
+    if (BINDERYCHARGE.equals(propertyName)) setBinderyCharge((Boolean)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (PARENT.equals(propertyName)) setParent((ChargeCategory)newValue); else
+    if (USEAREA.equals(propertyName)) setUseArea((Boolean)newValue); else
+    if (USESETUP.equals(propertyName)) setUseSetup((Boolean)newValue); else
+    if (CHARGECOST.equals(propertyName)) setChargeCost((ChargeCost)newValue); else
+    if (AREA.equals(propertyName)) setArea((Double)newValue); else
+    if (COVERLB_CHECK.equals(propertyName)) setCoverlb_check((Boolean)newValue); else
+    if (SHEET_LIFT_CHECK.equals(propertyName)) setSheet_lift_check((Boolean)newValue); else
+    if (SHIP_MARKUP_CHECK.equals(propertyName)) setShip_markup_check((Boolean)newValue); else
+    if (COVERLBINK.equals(propertyName)) setCoverlbInk((Double)newValue); else
+    if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Integer)newValue); else
+    if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
+    if (DESCRIPTIONLABEL.equals(propertyName)) setDescriptionLabel((String)newValue); else
+    if (NOTESLABEL.equals(propertyName)) setNotesLabel((String)newValue); else
+    if (DESCRIPTIONDEFAULT.equals(propertyName)) setDescriptionDefault((String)newValue); else
+    if (NOTESDEFAULT.equals(propertyName)) setNotesDefault((String)newValue); else
+    if (QUANTITYLABEL.equals(propertyName)) setQuantityLabel((String)newValue); else
+    if (QUANTITYDEFAULT.equals(propertyName)) setQuantityDefault((Double)newValue); else
+    if (RATELABEL.equals(propertyName)) setRateLabel((String)newValue); else
+    if (RATEDEFAULT.equals(propertyName)) setRateDefault((Double)newValue); else
+    if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
+    if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
+    if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
+    if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -3377,244 +3377,244 @@ public class ChargeDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (METHOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QUANTITYTYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (MARKUPTYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (JOBQTY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PRICEMETHOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (INKCOVERAGE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (USESIDES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DONOTDISCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (NOMATERIALQUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (NOOVERRIDES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ADJUSTABLESETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ADJUSTABLERATE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ADJUSTABLEMATERIAL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEMATERIAL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USERATE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USERATESETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEMERCHANDISESETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEMINIMUMCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USECOLORS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEORIGINALS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (RATESETCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MATERIALSETCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (RATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MATERIAL.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MINIMUM.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (WASTECHART.equals(propertyName)) 
-			return new Class<?>[] {WasteChart.class};		
-		if (FIXEDWASTE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WASTEPERCENTAGE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BASELINEARNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LOCATION.equals(propertyName)) 
-			return new Class<?>[] {Location.class};		
-		if (COSTCENTER.equals(propertyName)) 
-			return new Class<?>[] {CostCenter.class};		
-		if (SUBSTRATE.equals(propertyName)) 
-			return new Class<?>[] {Substrate.class};		
-		if (MINIMUMTIME.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SIZEX.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SIZEY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PLATETHICKNESS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (FOLDTEMPLATE.equals(propertyName)) 
-			return new Class<?>[] {FoldTemplate.class};		
-		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PREPRODUCTION.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEMINIMUMTIME.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USEMULTIPLYUPCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ADJUSTUPS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CUTSAREPREPRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (INTEGRATEDCTP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SKU.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CATEGORY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (OVERRIDERATE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CHARGEGROUP.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SALESCATEGORY.equals(propertyName)) 
-			return new Class<?>[] {SalesCategory.class};		
-		if (TAXTABLE.equals(propertyName)) 
-			return new Class<?>[] {TaxTable.class};		
-		if (RATEQTY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MATERIALQTY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (GROUPQTY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TIMESTART.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (TIMEEND.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (CUSTOMERCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PRESSCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DELETEDPRESET.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (IGNORECUTS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USESIGNATURES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (STOCKCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (OVERRIDENUMBEROFCUTS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWNOTES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (FINISHED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (BROKERED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXABLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DISPLAYQTY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (OVERRIDEPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (OVERRIDERATEQUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (OVERRIDEMATERIALQTY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (VERSION.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (SHIPMODE.equals(propertyName)) 
-			return new Class<?>[] {ShippingMethod.class};		
-		if (ADJUSTUPSCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (HASLINKPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (NEEDLINKPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HASSHIPPED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOULDSHIP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (JOBTASKLIST.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HIDEPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (COSTINGPRESSCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LINEARX1.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LINEARX2.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LINEARY1.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LINEARY2.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (BINDERYCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PARENT.equals(propertyName)) 
-			return new Class<?>[] {ChargeCategory.class};		
-		if (USEAREA.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (USESETUP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CHARGECOST.equals(propertyName)) 
-			return new Class<?>[] {ChargeCost.class};		
-		if (AREA.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COVERLB_CHECK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHEET_LIFT_CHECK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHIP_MARKUP_CHECK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (COVERLBINK.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SHEETLIFTCUT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (SHIPMARKUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (DESCRIPTIONLABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTESLABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DESCRIPTIONDEFAULT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTESDEFAULT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QUANTITYLABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QUANTITYDEFAULT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (RATELABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (RATEDEFAULT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PRICELABEL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PRICEDEFAULT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (USERUNAREA.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SETUPPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (METHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QUANTITYTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MARKUPTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBQTY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRICEMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INKCOVERAGE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (USESIDES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DONOTDISCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (NOMATERIALQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (NOOVERRIDES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADJUSTABLESETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADJUSTABLERATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADJUSTABLEMATERIAL.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEMATERIAL.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USERATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USERATESETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEMERCHANDISESETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEMINIMUMCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USECOLORS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEORIGINALS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RATESETCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MATERIALSETCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (RATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MATERIAL.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MINIMUM.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRICELIST.equals(propertyName)) 
+      return new Class<?>[] {PriceList.class};		
+    if (WASTECHART.equals(propertyName)) 
+      return new Class<?>[] {WasteChart.class};		
+    if (FIXEDWASTE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (WASTEPERCENTAGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BASELINEARNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (LOCATION.equals(propertyName)) 
+      return new Class<?>[] {Location.class};		
+    if (COSTCENTER.equals(propertyName)) 
+      return new Class<?>[] {CostCenter.class};		
+    if (SUBSTRATE.equals(propertyName)) 
+      return new Class<?>[] {Substrate.class};		
+    if (MINIMUMTIME.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (SIZEX.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SIZEY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PLATETHICKNESS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FOLDTEMPLATE.equals(propertyName)) 
+      return new Class<?>[] {FoldTemplate.class};		
+    if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PREPRODUCTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEMINIMUMTIME.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEDIVIDEBYUPCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEMULTIPLYUPCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADJUSTUPS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CUTSAREPREPRESS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (INTEGRATEDCTP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SKU.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CATEGORY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OVERRIDERATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TITLE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CHARGEGROUP.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SALESCATEGORY.equals(propertyName)) 
+      return new Class<?>[] {SalesCategory.class};		
+    if (TAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (RATEQTY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MATERIALQTY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (GROUPQTY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TIMESTART.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (TIMEEND.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CUSTOMERCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESSCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HIDECHARGEINPRINTOUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DELETEDPRESET.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (IGNORECUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USESIGNATURES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (STOCKCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (OVERRIDENUMBEROFCUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWNOTES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FINISHED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BROKERED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DISPLAYQTY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (OVERRIDEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (OVERRIDERATEQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (OVERRIDEMATERIALQTY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (VERSION.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (SHIPMODE.equals(propertyName)) 
+      return new Class<?>[] {ShippingMethod.class};		
+    if (ADJUSTUPSCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (HASLINKPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (NEEDLINKPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HASSHIPPED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOULDSHIP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (JOBTASKLIST.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HIDEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COSTINGPRESSCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARX1.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARX2.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARY1.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARY2.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (BINDERYCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARENT.equals(propertyName)) 
+      return new Class<?>[] {ChargeCategory.class};		
+    if (USEAREA.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USESETUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CHARGECOST.equals(propertyName)) 
+      return new Class<?>[] {ChargeCost.class};		
+    if (AREA.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COVERLB_CHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHEET_LIFT_CHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHIP_MARKUP_CHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COVERLBINK.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHEETLIFTCUT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (SHIPMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTIONLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTESLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DESCRIPTIONDEFAULT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTESDEFAULT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QUANTITYLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QUANTITYDEFAULT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (RATELABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (RATEDEFAULT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRICELABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRICEDEFAULT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USERUNAREA.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SETUPPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -3623,371 +3623,371 @@ public class ChargeDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (METHOD.equals(propertyName)) return ChargeDefinition.class;
-		if (QUANTITYTYPE.equals(propertyName)) return ChargeDefinition.class;
-		if (MARKUPTYPE.equals(propertyName)) return ChargeDefinition.class;
-		if (JOBQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (PRICEMETHOD.equals(propertyName)) return ChargeDefinition.class;
-		if (INKCOVERAGE.equals(propertyName)) return ChargeDefinition.class;
-		if (USESIDES.equals(propertyName)) return ChargeDefinition.class;
-		if (DONOTDISCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (NOMATERIALQUANTITY.equals(propertyName)) return ChargeDefinition.class;
-		if (NOOVERRIDES.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTABLESETS.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTABLERATE.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTABLEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
-		if (USEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
-		if (USERATE.equals(propertyName)) return ChargeDefinition.class;
-		if (USERATESETS.equals(propertyName)) return ChargeDefinition.class;
-		if (USEMERCHANDISESETS.equals(propertyName)) return ChargeDefinition.class;
-		if (USEMINIMUMCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (USECOLORS.equals(propertyName)) return ChargeDefinition.class;
-		if (USEORIGINALS.equals(propertyName)) return ChargeDefinition.class;
-		if (RATESETCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (MATERIALSETCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (RATE.equals(propertyName)) return ChargeDefinition.class;
-		if (MATERIAL.equals(propertyName)) return ChargeDefinition.class;
-		if (MINIMUM.equals(propertyName)) return ChargeDefinition.class;
-		if (MARKUP.equals(propertyName)) return ChargeDefinition.class;
-		if (PRICELIST.equals(propertyName)) return ChargeDefinition.class;
-		if (WASTECHART.equals(propertyName)) return ChargeDefinition.class;
-		if (FIXEDWASTE.equals(propertyName)) return ChargeDefinition.class;
-		if (WASTEPERCENTAGE.equals(propertyName)) return ChargeDefinition.class;
-		if (BASELINEARNUMBER.equals(propertyName)) return ChargeDefinition.class;
-		if (LOCATION.equals(propertyName)) return ChargeDefinition.class;
-		if (COSTCENTER.equals(propertyName)) return ChargeDefinition.class;
-		if (SUBSTRATE.equals(propertyName)) return ChargeDefinition.class;
-		if (MINIMUMTIME.equals(propertyName)) return ChargeDefinition.class;
-		if (SIZEX.equals(propertyName)) return ChargeDefinition.class;
-		if (SIZEY.equals(propertyName)) return ChargeDefinition.class;
-		if (PLATETHICKNESS.equals(propertyName)) return ChargeDefinition.class;
-		if (FOLDTEMPLATE.equals(propertyName)) return ChargeDefinition.class;
-		if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return ChargeDefinition.class;
-		if (PREPRODUCTION.equals(propertyName)) return ChargeDefinition.class;
-		if (USEMINIMUMTIME.equals(propertyName)) return ChargeDefinition.class;
-		if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (USEMULTIPLYUPCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTUPS.equals(propertyName)) return ChargeDefinition.class;
-		if (CUTSAREPREPRESS.equals(propertyName)) return ChargeDefinition.class;
-		if (INTEGRATEDCTP.equals(propertyName)) return ChargeDefinition.class;
-		if (SKU.equals(propertyName)) return ChargeDefinition.class;
-		if (CATEGORY.equals(propertyName)) return ChargeDefinition.class;
-		if (OVERRIDERATE.equals(propertyName)) return ChargeDefinition.class;
-		if (TITLE.equals(propertyName)) return ChargeDefinition.class;
-		if (NOTE.equals(propertyName)) return ChargeDefinition.class;
-		if (CHARGEGROUP.equals(propertyName)) return ChargeDefinition.class;
-		if (SALESCATEGORY.equals(propertyName)) return ChargeDefinition.class;
-		if (TAXTABLE.equals(propertyName)) return ChargeDefinition.class;
-		if (RATEQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (MATERIALQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (GROUPQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (PRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (TIMESTART.equals(propertyName)) return ChargeDefinition.class;
-		if (TIMEEND.equals(propertyName)) return ChargeDefinition.class;
-		if (CUSTOMERCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (PRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return ChargeDefinition.class;
-		if (DELETEDPRESET.equals(propertyName)) return ChargeDefinition.class;
-		if (IGNORECUTS.equals(propertyName)) return ChargeDefinition.class;
-		if (USESIGNATURES.equals(propertyName)) return ChargeDefinition.class;
-		if (STOCKCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return ChargeDefinition.class;
-		if (SHOWNOTES.equals(propertyName)) return ChargeDefinition.class;
-		if (FINISHED.equals(propertyName)) return ChargeDefinition.class;
-		if (BROKERED.equals(propertyName)) return ChargeDefinition.class;
-		if (TAXABLE.equals(propertyName)) return ChargeDefinition.class;
-		if (DISPLAYQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (OVERRIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (OVERRIDERATEQUANTITY.equals(propertyName)) return ChargeDefinition.class;
-		if (OVERRIDEMATERIALQTY.equals(propertyName)) return ChargeDefinition.class;
-		if (VERSION.equals(propertyName)) return ChargeDefinition.class;
-		if (SHIPMODE.equals(propertyName)) return ChargeDefinition.class;
-		if (ADJUSTUPSCOUNT.equals(propertyName)) return ChargeDefinition.class;
-		if (HASLINKPRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (NEEDLINKPRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (HASSHIPPED.equals(propertyName)) return ChargeDefinition.class;
-		if (SHOULDSHIP.equals(propertyName)) return ChargeDefinition.class;
-		if (JOBTASKLIST.equals(propertyName)) return ChargeDefinition.class;
-		if (HIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
-		if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return ChargeDefinition.class;
-		if (COSTINGPRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (LINEARX1.equals(propertyName)) return ChargeDefinition.class;
-		if (LINEARX2.equals(propertyName)) return ChargeDefinition.class;
-		if (LINEARY1.equals(propertyName)) return ChargeDefinition.class;
-		if (LINEARY2.equals(propertyName)) return ChargeDefinition.class;
-		if (LABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (BINDERYCHARGE.equals(propertyName)) return ChargeDefinition.class;
-		if (NAME.equals(propertyName)) return ChargeDefinition.class;
-		if (PARENT.equals(propertyName)) return ChargeDefinition.class;
-		if (USEAREA.equals(propertyName)) return ChargeDefinition.class;
-		if (USESETUP.equals(propertyName)) return ChargeDefinition.class;
-		if (CHARGECOST.equals(propertyName)) return ChargeDefinition.class;
-		if (AREA.equals(propertyName)) return ChargeDefinition.class;
-		if (COVERLB_CHECK.equals(propertyName)) return ChargeDefinition.class;
-		if (SHEET_LIFT_CHECK.equals(propertyName)) return ChargeDefinition.class;
-		if (SHIP_MARKUP_CHECK.equals(propertyName)) return ChargeDefinition.class;
-		if (COVERLBINK.equals(propertyName)) return ChargeDefinition.class;
-		if (SHEETLIFTCUT.equals(propertyName)) return ChargeDefinition.class;
-		if (SHIPMARKUP.equals(propertyName)) return ChargeDefinition.class;
-		if (DESCRIPTIONLABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (NOTESLABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (DESCRIPTIONDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-		if (NOTESDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-		if (QUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (QUANTITYDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-		if (RATELABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (RATEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-		if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
-		if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-		if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
-		if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (METHOD.equals(propertyName)) return ChargeDefinition.class;
+    if (QUANTITYTYPE.equals(propertyName)) return ChargeDefinition.class;
+    if (MARKUPTYPE.equals(propertyName)) return ChargeDefinition.class;
+    if (JOBQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (PRICEMETHOD.equals(propertyName)) return ChargeDefinition.class;
+    if (INKCOVERAGE.equals(propertyName)) return ChargeDefinition.class;
+    if (USESIDES.equals(propertyName)) return ChargeDefinition.class;
+    if (DONOTDISCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (NOMATERIALQUANTITY.equals(propertyName)) return ChargeDefinition.class;
+    if (NOOVERRIDES.equals(propertyName)) return ChargeDefinition.class;
+    if (ADJUSTABLESETS.equals(propertyName)) return ChargeDefinition.class;
+    if (ADJUSTABLERATE.equals(propertyName)) return ChargeDefinition.class;
+    if (ADJUSTABLEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
+    if (USEMATERIAL.equals(propertyName)) return ChargeDefinition.class;
+    if (USERATE.equals(propertyName)) return ChargeDefinition.class;
+    if (USERATESETS.equals(propertyName)) return ChargeDefinition.class;
+    if (USEMERCHANDISESETS.equals(propertyName)) return ChargeDefinition.class;
+    if (USEMINIMUMCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (USECOLORS.equals(propertyName)) return ChargeDefinition.class;
+    if (USEORIGINALS.equals(propertyName)) return ChargeDefinition.class;
+    if (RATESETCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (MATERIALSETCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (RATE.equals(propertyName)) return ChargeDefinition.class;
+    if (MATERIAL.equals(propertyName)) return ChargeDefinition.class;
+    if (MINIMUM.equals(propertyName)) return ChargeDefinition.class;
+    if (MARKUP.equals(propertyName)) return ChargeDefinition.class;
+    if (PRICELIST.equals(propertyName)) return ChargeDefinition.class;
+    if (WASTECHART.equals(propertyName)) return ChargeDefinition.class;
+    if (FIXEDWASTE.equals(propertyName)) return ChargeDefinition.class;
+    if (WASTEPERCENTAGE.equals(propertyName)) return ChargeDefinition.class;
+    if (BASELINEARNUMBER.equals(propertyName)) return ChargeDefinition.class;
+    if (LOCATION.equals(propertyName)) return ChargeDefinition.class;
+    if (COSTCENTER.equals(propertyName)) return ChargeDefinition.class;
+    if (SUBSTRATE.equals(propertyName)) return ChargeDefinition.class;
+    if (MINIMUMTIME.equals(propertyName)) return ChargeDefinition.class;
+    if (SIZEX.equals(propertyName)) return ChargeDefinition.class;
+    if (SIZEY.equals(propertyName)) return ChargeDefinition.class;
+    if (PLATETHICKNESS.equals(propertyName)) return ChargeDefinition.class;
+    if (FOLDTEMPLATE.equals(propertyName)) return ChargeDefinition.class;
+    if (EXCLUDEDFROMWORKFLOW.equals(propertyName)) return ChargeDefinition.class;
+    if (PREPRODUCTION.equals(propertyName)) return ChargeDefinition.class;
+    if (USEMINIMUMTIME.equals(propertyName)) return ChargeDefinition.class;
+    if (USEDIVIDEBYUPCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (USEMULTIPLYUPCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (ADJUSTUPS.equals(propertyName)) return ChargeDefinition.class;
+    if (CUTSAREPREPRESS.equals(propertyName)) return ChargeDefinition.class;
+    if (INTEGRATEDCTP.equals(propertyName)) return ChargeDefinition.class;
+    if (SKU.equals(propertyName)) return ChargeDefinition.class;
+    if (CATEGORY.equals(propertyName)) return ChargeDefinition.class;
+    if (OVERRIDERATE.equals(propertyName)) return ChargeDefinition.class;
+    if (TITLE.equals(propertyName)) return ChargeDefinition.class;
+    if (NOTE.equals(propertyName)) return ChargeDefinition.class;
+    if (CHARGEGROUP.equals(propertyName)) return ChargeDefinition.class;
+    if (SALESCATEGORY.equals(propertyName)) return ChargeDefinition.class;
+    if (TAXTABLE.equals(propertyName)) return ChargeDefinition.class;
+    if (RATEQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (MATERIALQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (GROUPQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (PRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (TIMESTART.equals(propertyName)) return ChargeDefinition.class;
+    if (TIMEEND.equals(propertyName)) return ChargeDefinition.class;
+    if (CUSTOMERCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (HIDECHARGEINPRINTOUTS.equals(propertyName)) return ChargeDefinition.class;
+    if (DELETEDPRESET.equals(propertyName)) return ChargeDefinition.class;
+    if (IGNORECUTS.equals(propertyName)) return ChargeDefinition.class;
+    if (USESIGNATURES.equals(propertyName)) return ChargeDefinition.class;
+    if (STOCKCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return ChargeDefinition.class;
+    if (SHOWNOTES.equals(propertyName)) return ChargeDefinition.class;
+    if (FINISHED.equals(propertyName)) return ChargeDefinition.class;
+    if (BROKERED.equals(propertyName)) return ChargeDefinition.class;
+    if (TAXABLE.equals(propertyName)) return ChargeDefinition.class;
+    if (DISPLAYQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (OVERRIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (OVERRIDERATEQUANTITY.equals(propertyName)) return ChargeDefinition.class;
+    if (OVERRIDEMATERIALQTY.equals(propertyName)) return ChargeDefinition.class;
+    if (VERSION.equals(propertyName)) return ChargeDefinition.class;
+    if (SHIPMODE.equals(propertyName)) return ChargeDefinition.class;
+    if (ADJUSTUPSCOUNT.equals(propertyName)) return ChargeDefinition.class;
+    if (HASLINKPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (NEEDLINKPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (HASSHIPPED.equals(propertyName)) return ChargeDefinition.class;
+    if (SHOULDSHIP.equals(propertyName)) return ChargeDefinition.class;
+    if (JOBTASKLIST.equals(propertyName)) return ChargeDefinition.class;
+    if (HIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (IGNOREGLOBALPRICECHANGES.equals(propertyName)) return ChargeDefinition.class;
+    if (COSTINGPRESSCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (LINEARX1.equals(propertyName)) return ChargeDefinition.class;
+    if (LINEARX2.equals(propertyName)) return ChargeDefinition.class;
+    if (LINEARY1.equals(propertyName)) return ChargeDefinition.class;
+    if (LINEARY2.equals(propertyName)) return ChargeDefinition.class;
+    if (LABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (BINDERYCHARGE.equals(propertyName)) return ChargeDefinition.class;
+    if (NAME.equals(propertyName)) return ChargeDefinition.class;
+    if (PARENT.equals(propertyName)) return ChargeDefinition.class;
+    if (USEAREA.equals(propertyName)) return ChargeDefinition.class;
+    if (USESETUP.equals(propertyName)) return ChargeDefinition.class;
+    if (CHARGECOST.equals(propertyName)) return ChargeDefinition.class;
+    if (AREA.equals(propertyName)) return ChargeDefinition.class;
+    if (COVERLB_CHECK.equals(propertyName)) return ChargeDefinition.class;
+    if (SHEET_LIFT_CHECK.equals(propertyName)) return ChargeDefinition.class;
+    if (SHIP_MARKUP_CHECK.equals(propertyName)) return ChargeDefinition.class;
+    if (COVERLBINK.equals(propertyName)) return ChargeDefinition.class;
+    if (SHEETLIFTCUT.equals(propertyName)) return ChargeDefinition.class;
+    if (SHIPMARKUP.equals(propertyName)) return ChargeDefinition.class;
+    if (DESCRIPTIONLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (NOTESLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (DESCRIPTIONDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+    if (NOTESDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+    if (QUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (QUANTITYDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+    if (RATELABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (RATEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+    if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
+    if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
+    if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ChargeDefinition objT = (ChargeDefinition)obj;
-		if (! SmartEquals(getMethod(), objT.getMethod()))
-			return false;
-		if (! SmartEquals(getQuantityType(), objT.getQuantityType()))
-			return false;
-		if (! SmartEquals(getMarkupType(), objT.getMarkupType()))
-			return false;
-		if (! SmartEquals(getJobQty(), objT.getJobQty()))
-			return false;
-		if (! SmartEquals(getPriceMethod(), objT.getPriceMethod()))
-			return false;
-		if (! SmartEquals(getInkCoverage(), objT.getInkCoverage()))
-			return false;
-		if (! SmartEquals(getUseSides(), objT.getUseSides()))
-			return false;
-		if (! SmartEquals(getDoNotDiscount(), objT.getDoNotDiscount()))
-			return false;
-		if (! SmartEquals(getNoMaterialQuantity(), objT.getNoMaterialQuantity()))
-			return false;
-		if (! SmartEquals(getNoOverrides(), objT.getNoOverrides()))
-			return false;
-		if (! SmartEquals(getAdjustableSets(), objT.getAdjustableSets()))
-			return false;
-		if (! SmartEquals(getAdjustableRate(), objT.getAdjustableRate()))
-			return false;
-		if (! SmartEquals(getAdjustableMaterial(), objT.getAdjustableMaterial()))
-			return false;
-		if (! SmartEquals(getUseMaterial(), objT.getUseMaterial()))
-			return false;
-		if (! SmartEquals(getUseRate(), objT.getUseRate()))
-			return false;
-		if (! SmartEquals(getUseRateSets(), objT.getUseRateSets()))
-			return false;
-		if (! SmartEquals(getUseMerchandiseSets(), objT.getUseMerchandiseSets()))
-			return false;
-		if (! SmartEquals(getUseMinimumCharge(), objT.getUseMinimumCharge()))
-			return false;
-		if (! SmartEquals(getUseColors(), objT.getUseColors()))
-			return false;
-		if (! SmartEquals(getUseOriginals(), objT.getUseOriginals()))
-			return false;
-		if (! SmartEquals(getRateSetCount(), objT.getRateSetCount()))
-			return false;
-		if (! SmartEquals(getMaterialSetCount(), objT.getMaterialSetCount()))
-			return false;
-		if (! SmartEquals(getRate(), objT.getRate()))
-			return false;
-		if (! SmartEquals(getMaterial(), objT.getMaterial()))
-			return false;
-		if (! SmartEquals(getMinimum(), objT.getMinimum()))
-			return false;
-		if (! SmartEquals(getMarkup(), objT.getMarkup()))
-			return false;
-		if (! SmartEquals(getPriceList(), objT.getPriceList()))
-			return false;
-		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
-			return false;
-		if (! SmartEquals(getFixedWaste(), objT.getFixedWaste()))
-			return false;
-		if (! SmartEquals(getWastePercentage(), objT.getWastePercentage()))
-			return false;
-		if (! SmartEquals(getBaseLinearNumber(), objT.getBaseLinearNumber()))
-			return false;
-		if (! SmartEquals(getLocation(), objT.getLocation()))
-			return false;
-		if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
-			return false;
-		if (! SmartEquals(getSubstrate(), objT.getSubstrate()))
-			return false;
-		if (! SmartEquals(getMinimumTime(), objT.getMinimumTime()))
-			return false;
-		if (! SmartEquals(getSizeX(), objT.getSizeX()))
-			return false;
-		if (! SmartEquals(getSizeY(), objT.getSizeY()))
-			return false;
-		if (! SmartEquals(getPlateThickness(), objT.getPlateThickness()))
-			return false;
-		if (! SmartEquals(getFoldTemplate(), objT.getFoldTemplate()))
-			return false;
-		if (! SmartEquals(getExcludedFromWorkflow(), objT.getExcludedFromWorkflow()))
-			return false;
-		if (! SmartEquals(getPreproduction(), objT.getPreproduction()))
-			return false;
-		if (! SmartEquals(getUseMinimumTime(), objT.getUseMinimumTime()))
-			return false;
-		if (! SmartEquals(getUseDivideByUpCount(), objT.getUseDivideByUpCount()))
-			return false;
-		if (! SmartEquals(getUseMultiplyUpCount(), objT.getUseMultiplyUpCount()))
-			return false;
-		if (! SmartEquals(getAdjustUps(), objT.getAdjustUps()))
-			return false;
-		if (! SmartEquals(getCutsArePrePress(), objT.getCutsArePrePress()))
-			return false;
-		if (! SmartEquals(getIntegratedCTP(), objT.getIntegratedCTP()))
-			return false;
-		if (! SmartEquals(getSku(), objT.getSku()))
-			return false;
-		if (! SmartEquals(getCategory(), objT.getCategory()))
-			return false;
-		if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
-			return false;
-		if (! SmartEquals(getTitle(), objT.getTitle()))
-			return false;
-		if (! SmartEquals(getNote(), objT.getNote()))
-			return false;
-		if (! SmartEquals(getChargeGroup(), objT.getChargeGroup()))
-			return false;
-		if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
-			return false;
-		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-			return false;
-		if (! SmartEquals(getRateQty(), objT.getRateQty()))
-			return false;
-		if (! SmartEquals(getMaterialQty(), objT.getMaterialQty()))
-			return false;
-		if (! SmartEquals(getGroupQty(), objT.getGroupQty()))
-			return false;
-		if (! SmartEquals(getPrice(), objT.getPrice()))
-			return false;
-		if (! SmartEquals(getTimeStart(), objT.getTimeStart()))
-			return false;
-		if (! SmartEquals(getTimeEnd(), objT.getTimeEnd()))
-			return false;
-		if (! SmartEquals(getCustomerCharge(), objT.getCustomerCharge()))
-			return false;
-		if (! SmartEquals(getPressCharge(), objT.getPressCharge()))
-			return false;
-		if (! SmartEquals(getHideChargeInPrintouts(), objT.getHideChargeInPrintouts()))
-			return false;
-		if (! SmartEquals(getDeletedPreset(), objT.getDeletedPreset()))
-			return false;
-		if (! SmartEquals(getIgnoreCuts(), objT.getIgnoreCuts()))
-			return false;
-		if (! SmartEquals(getUseSignatures(), objT.getUseSignatures()))
-			return false;
-		if (! SmartEquals(getStockCharge(), objT.getStockCharge()))
-			return false;
-		if (! SmartEquals(getOverrideNumberOfCuts(), objT.getOverrideNumberOfCuts()))
-			return false;
-		if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
-			return false;
-		if (! SmartEquals(getFinished(), objT.getFinished()))
-			return false;
-		if (! SmartEquals(getBrokered(), objT.getBrokered()))
-			return false;
-		if (! SmartEquals(getTaxable(), objT.getTaxable()))
-			return false;
-		if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
-			return false;
-		if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
-			return false;
-		if (! SmartEquals(getOverrideRateQuantity(), objT.getOverrideRateQuantity()))
-			return false;
-		if (! SmartEquals(getOverrideMaterialQty(), objT.getOverrideMaterialQty()))
-			return false;
-		if (! SmartEquals(getVersion(), objT.getVersion()))
-			return false;
-		if (! SmartEquals(getShipMode(), objT.getShipMode()))
-			return false;
-		if (! SmartEquals(getAdjustUpsCount(), objT.getAdjustUpsCount()))
-			return false;
-		if (! SmartEquals(getHasLinkPrice(), objT.getHasLinkPrice()))
-			return false;
-		if (! SmartEquals(getNeedLinkPrice(), objT.getNeedLinkPrice()))
-			return false;
-		if (! SmartEquals(getHasShipped(), objT.getHasShipped()))
-			return false;
-		if (! SmartEquals(getShouldShip(), objT.getShouldShip()))
-			return false;
-		if (! SmartEquals(getJobTaskList(), objT.getJobTaskList()))
-			return false;
-		if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
-			return false;
-		if (! SmartEquals(getIgnoreGlobalPriceChanges(), objT.getIgnoreGlobalPriceChanges()))
-			return false;
-		if (! SmartEquals(getCostingPressCharge(), objT.getCostingPressCharge()))
-			return false;
-		if (! SmartEquals(getLinearX1(), objT.getLinearX1()))
-			return false;
-		if (! SmartEquals(getLinearX2(), objT.getLinearX2()))
-			return false;
-		if (! SmartEquals(getLinearY1(), objT.getLinearY1()))
-			return false;
-		if (! SmartEquals(getLinearY2(), objT.getLinearY2()))
-			return false;
-		if (! SmartEquals(getLabel(), objT.getLabel()))
-			return false;
-		if (! SmartEquals(getBinderyCharge(), objT.getBinderyCharge()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getParent(), objT.getParent()))
-			return false;
-		if (! SmartEquals(getUseArea(), objT.getUseArea()))
-			return false;
-		if (! SmartEquals(getUseSetup(), objT.getUseSetup()))
-			return false;
-		if (! SmartEquals(getChargeCost(), objT.getChargeCost()))
-			return false;
-		if (! SmartEquals(getArea(), objT.getArea()))
-			return false;
-		if (! SmartEquals(getCoverlb_check(), objT.getCoverlb_check()))
-			return false;
-		if (! SmartEquals(getSheet_lift_check(), objT.getSheet_lift_check()))
-			return false;
-		if (! SmartEquals(getShip_markup_check(), objT.getShip_markup_check()))
-			return false;
-		if (! SmartEquals(getCoverlbInk(), objT.getCoverlbInk()))
-			return false;
-		if (! SmartEquals(getSheetliftCut(), objT.getSheetliftCut()))
-			return false;
-		if (! SmartEquals(getShipMarkup(), objT.getShipMarkup()))
-			return false;
-		if (! SmartEquals(getDescriptionLabel(), objT.getDescriptionLabel()))
-			return false;
-		if (! SmartEquals(getNotesLabel(), objT.getNotesLabel()))
-			return false;
-		if (! SmartEquals(getDescriptionDefault(), objT.getDescriptionDefault()))
-			return false;
-		if (! SmartEquals(getNotesDefault(), objT.getNotesDefault()))
-			return false;
-		if (! SmartEquals(getQuantityLabel(), objT.getQuantityLabel()))
-			return false;
-		if (! SmartEquals(getQuantityDefault(), objT.getQuantityDefault()))
-			return false;
-		if (! SmartEquals(getRateLabel(), objT.getRateLabel()))
-			return false;
-		if (! SmartEquals(getRateDefault(), objT.getRateDefault()))
-			return false;
-		if (! SmartEquals(getPriceLabel(), objT.getPriceLabel()))
-			return false;
-		if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
-			return false;
-		if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
-			return false;
-		if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ChargeDefinition objT = (ChargeDefinition)obj;
+    if (! SmartEquals(getMethod(), objT.getMethod()))
+      return false;
+    if (! SmartEquals(getQuantityType(), objT.getQuantityType()))
+      return false;
+    if (! SmartEquals(getMarkupType(), objT.getMarkupType()))
+      return false;
+    if (! SmartEquals(getJobQty(), objT.getJobQty()))
+      return false;
+    if (! SmartEquals(getPriceMethod(), objT.getPriceMethod()))
+      return false;
+    if (! SmartEquals(getInkCoverage(), objT.getInkCoverage()))
+      return false;
+    if (! SmartEquals(getUseSides(), objT.getUseSides()))
+      return false;
+    if (! SmartEquals(getDoNotDiscount(), objT.getDoNotDiscount()))
+      return false;
+    if (! SmartEquals(getNoMaterialQuantity(), objT.getNoMaterialQuantity()))
+      return false;
+    if (! SmartEquals(getNoOverrides(), objT.getNoOverrides()))
+      return false;
+    if (! SmartEquals(getAdjustableSets(), objT.getAdjustableSets()))
+      return false;
+    if (! SmartEquals(getAdjustableRate(), objT.getAdjustableRate()))
+      return false;
+    if (! SmartEquals(getAdjustableMaterial(), objT.getAdjustableMaterial()))
+      return false;
+    if (! SmartEquals(getUseMaterial(), objT.getUseMaterial()))
+      return false;
+    if (! SmartEquals(getUseRate(), objT.getUseRate()))
+      return false;
+    if (! SmartEquals(getUseRateSets(), objT.getUseRateSets()))
+      return false;
+    if (! SmartEquals(getUseMerchandiseSets(), objT.getUseMerchandiseSets()))
+      return false;
+    if (! SmartEquals(getUseMinimumCharge(), objT.getUseMinimumCharge()))
+      return false;
+    if (! SmartEquals(getUseColors(), objT.getUseColors()))
+      return false;
+    if (! SmartEquals(getUseOriginals(), objT.getUseOriginals()))
+      return false;
+    if (! SmartEquals(getRateSetCount(), objT.getRateSetCount()))
+      return false;
+    if (! SmartEquals(getMaterialSetCount(), objT.getMaterialSetCount()))
+      return false;
+    if (! SmartEquals(getRate(), objT.getRate()))
+      return false;
+    if (! SmartEquals(getMaterial(), objT.getMaterial()))
+      return false;
+    if (! SmartEquals(getMinimum(), objT.getMinimum()))
+      return false;
+    if (! SmartEquals(getMarkup(), objT.getMarkup()))
+      return false;
+    if (! SmartEquals(getPriceList(), objT.getPriceList()))
+      return false;
+    if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
+      return false;
+    if (! SmartEquals(getFixedWaste(), objT.getFixedWaste()))
+      return false;
+    if (! SmartEquals(getWastePercentage(), objT.getWastePercentage()))
+      return false;
+    if (! SmartEquals(getBaseLinearNumber(), objT.getBaseLinearNumber()))
+      return false;
+    if (! SmartEquals(getLocation(), objT.getLocation()))
+      return false;
+    if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
+      return false;
+    if (! SmartEquals(getSubstrate(), objT.getSubstrate()))
+      return false;
+    if (! SmartEquals(getMinimumTime(), objT.getMinimumTime()))
+      return false;
+    if (! SmartEquals(getSizeX(), objT.getSizeX()))
+      return false;
+    if (! SmartEquals(getSizeY(), objT.getSizeY()))
+      return false;
+    if (! SmartEquals(getPlateThickness(), objT.getPlateThickness()))
+      return false;
+    if (! SmartEquals(getFoldTemplate(), objT.getFoldTemplate()))
+      return false;
+    if (! SmartEquals(getExcludedFromWorkflow(), objT.getExcludedFromWorkflow()))
+      return false;
+    if (! SmartEquals(getPreproduction(), objT.getPreproduction()))
+      return false;
+    if (! SmartEquals(getUseMinimumTime(), objT.getUseMinimumTime()))
+      return false;
+    if (! SmartEquals(getUseDivideByUpCount(), objT.getUseDivideByUpCount()))
+      return false;
+    if (! SmartEquals(getUseMultiplyUpCount(), objT.getUseMultiplyUpCount()))
+      return false;
+    if (! SmartEquals(getAdjustUps(), objT.getAdjustUps()))
+      return false;
+    if (! SmartEquals(getCutsArePrePress(), objT.getCutsArePrePress()))
+      return false;
+    if (! SmartEquals(getIntegratedCTP(), objT.getIntegratedCTP()))
+      return false;
+    if (! SmartEquals(getSku(), objT.getSku()))
+      return false;
+    if (! SmartEquals(getCategory(), objT.getCategory()))
+      return false;
+    if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
+      return false;
+    if (! SmartEquals(getTitle(), objT.getTitle()))
+      return false;
+    if (! SmartEquals(getNote(), objT.getNote()))
+      return false;
+    if (! SmartEquals(getChargeGroup(), objT.getChargeGroup()))
+      return false;
+    if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
+      return false;
+    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+      return false;
+    if (! SmartEquals(getRateQty(), objT.getRateQty()))
+      return false;
+    if (! SmartEquals(getMaterialQty(), objT.getMaterialQty()))
+      return false;
+    if (! SmartEquals(getGroupQty(), objT.getGroupQty()))
+      return false;
+    if (! SmartEquals(getPrice(), objT.getPrice()))
+      return false;
+    if (! SmartEquals(getTimeStart(), objT.getTimeStart()))
+      return false;
+    if (! SmartEquals(getTimeEnd(), objT.getTimeEnd()))
+      return false;
+    if (! SmartEquals(getCustomerCharge(), objT.getCustomerCharge()))
+      return false;
+    if (! SmartEquals(getPressCharge(), objT.getPressCharge()))
+      return false;
+    if (! SmartEquals(getHideChargeInPrintouts(), objT.getHideChargeInPrintouts()))
+      return false;
+    if (! SmartEquals(getDeletedPreset(), objT.getDeletedPreset()))
+      return false;
+    if (! SmartEquals(getIgnoreCuts(), objT.getIgnoreCuts()))
+      return false;
+    if (! SmartEquals(getUseSignatures(), objT.getUseSignatures()))
+      return false;
+    if (! SmartEquals(getStockCharge(), objT.getStockCharge()))
+      return false;
+    if (! SmartEquals(getOverrideNumberOfCuts(), objT.getOverrideNumberOfCuts()))
+      return false;
+    if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
+      return false;
+    if (! SmartEquals(getFinished(), objT.getFinished()))
+      return false;
+    if (! SmartEquals(getBrokered(), objT.getBrokered()))
+      return false;
+    if (! SmartEquals(getTaxable(), objT.getTaxable()))
+      return false;
+    if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
+      return false;
+    if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
+      return false;
+    if (! SmartEquals(getOverrideRateQuantity(), objT.getOverrideRateQuantity()))
+      return false;
+    if (! SmartEquals(getOverrideMaterialQty(), objT.getOverrideMaterialQty()))
+      return false;
+    if (! SmartEquals(getVersion(), objT.getVersion()))
+      return false;
+    if (! SmartEquals(getShipMode(), objT.getShipMode()))
+      return false;
+    if (! SmartEquals(getAdjustUpsCount(), objT.getAdjustUpsCount()))
+      return false;
+    if (! SmartEquals(getHasLinkPrice(), objT.getHasLinkPrice()))
+      return false;
+    if (! SmartEquals(getNeedLinkPrice(), objT.getNeedLinkPrice()))
+      return false;
+    if (! SmartEquals(getHasShipped(), objT.getHasShipped()))
+      return false;
+    if (! SmartEquals(getShouldShip(), objT.getShouldShip()))
+      return false;
+    if (! SmartEquals(getJobTaskList(), objT.getJobTaskList()))
+      return false;
+    if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
+      return false;
+    if (! SmartEquals(getIgnoreGlobalPriceChanges(), objT.getIgnoreGlobalPriceChanges()))
+      return false;
+    if (! SmartEquals(getCostingPressCharge(), objT.getCostingPressCharge()))
+      return false;
+    if (! SmartEquals(getLinearX1(), objT.getLinearX1()))
+      return false;
+    if (! SmartEquals(getLinearX2(), objT.getLinearX2()))
+      return false;
+    if (! SmartEquals(getLinearY1(), objT.getLinearY1()))
+      return false;
+    if (! SmartEquals(getLinearY2(), objT.getLinearY2()))
+      return false;
+    if (! SmartEquals(getLabel(), objT.getLabel()))
+      return false;
+    if (! SmartEquals(getBinderyCharge(), objT.getBinderyCharge()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getParent(), objT.getParent()))
+      return false;
+    if (! SmartEquals(getUseArea(), objT.getUseArea()))
+      return false;
+    if (! SmartEquals(getUseSetup(), objT.getUseSetup()))
+      return false;
+    if (! SmartEquals(getChargeCost(), objT.getChargeCost()))
+      return false;
+    if (! SmartEquals(getArea(), objT.getArea()))
+      return false;
+    if (! SmartEquals(getCoverlb_check(), objT.getCoverlb_check()))
+      return false;
+    if (! SmartEquals(getSheet_lift_check(), objT.getSheet_lift_check()))
+      return false;
+    if (! SmartEquals(getShip_markup_check(), objT.getShip_markup_check()))
+      return false;
+    if (! SmartEquals(getCoverlbInk(), objT.getCoverlbInk()))
+      return false;
+    if (! SmartEquals(getSheetliftCut(), objT.getSheetliftCut()))
+      return false;
+    if (! SmartEquals(getShipMarkup(), objT.getShipMarkup()))
+      return false;
+    if (! SmartEquals(getDescriptionLabel(), objT.getDescriptionLabel()))
+      return false;
+    if (! SmartEquals(getNotesLabel(), objT.getNotesLabel()))
+      return false;
+    if (! SmartEquals(getDescriptionDefault(), objT.getDescriptionDefault()))
+      return false;
+    if (! SmartEquals(getNotesDefault(), objT.getNotesDefault()))
+      return false;
+    if (! SmartEquals(getQuantityLabel(), objT.getQuantityLabel()))
+      return false;
+    if (! SmartEquals(getQuantityDefault(), objT.getQuantityDefault()))
+      return false;
+    if (! SmartEquals(getRateLabel(), objT.getRateLabel()))
+      return false;
+    if (! SmartEquals(getRateDefault(), objT.getRateDefault()))
+      return false;
+    if (! SmartEquals(getPriceLabel(), objT.getPriceLabel()))
+      return false;
+    if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
+      return false;
+    if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
+      return false;
+    if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
+      return false;
+    return true;
+  }			
 }

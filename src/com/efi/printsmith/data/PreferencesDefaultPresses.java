@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesDefaultPresses.findall", query = "from PreferencesDefaultPresses"),
-	@NamedQuery(name = "PreferencesDefaultPresses.byId", query = "select a from PreferencesDefaultPresses a where a.id= :id")
+  @NamedQuery(name = "PreferencesDefaultPresses.findall", query = "from PreferencesDefaultPresses"),
+  @NamedQuery(name = "PreferencesDefaultPresses.byId", query = "select a from PreferencesDefaultPresses a where a.id= :id")
 })
 
 
@@ -65,9 +65,9 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesDefaultPresses() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -81,16 +81,16 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultBWCopier(){
-		return defaultBWCopier; 
-	}
+    return defaultBWCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultBWCopier(CopierDefinition newVal) {
-		this.defaultBWCopier = newVal;
-	}
+    this.defaultBWCopier = newVal;
+  }
  	
 	
 	/**
@@ -103,16 +103,16 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultColorCopier(){
-		return defaultColorCopier; 
-	}
+    return defaultColorCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultColorCopier(CopierDefinition newVal) {
-		this.defaultColorCopier = newVal;
-	}
+    this.defaultColorCopier = newVal;
+  }
  	
 	
 	/**
@@ -125,16 +125,16 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultLargeFormat(){
-		return defaultLargeFormat; 
-	}
+    return defaultLargeFormat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultLargeFormat(CopierDefinition newVal) {
-		this.defaultLargeFormat = newVal;
-	}
+    this.defaultLargeFormat = newVal;
+  }
  	
 	
 	/**
@@ -147,16 +147,16 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getDefaultRollFedPress(){
-		return defaultRollFedPress; 
-	}
+    return defaultRollFedPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultRollFedPress(PressDefinition newVal) {
-		this.defaultRollFedPress = newVal;
-	}
+    this.defaultRollFedPress = newVal;
+  }
  	
 	
 	/**
@@ -169,29 +169,29 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getDefaultSheetFedPress(){
-		return defaultSheetFedPress; 
-	}
+    return defaultSheetFedPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultSheetFedPress(PressDefinition newVal) {
-		this.defaultSheetFedPress = newVal;
-	}
+    this.defaultSheetFedPress = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultLargeFormat();
-		if (DEFAULTROLLFEDPRESS.equals(propertyName)) return getDefaultRollFedPress();
-		if (DEFAULTSHEETFEDPRESS.equals(propertyName)) return getDefaultSheetFedPress();
-		return super.getProperty(propertyName);
-	}
+    if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultLargeFormat();
+    if (DEFAULTROLLFEDPRESS.equals(propertyName)) return getDefaultRollFedPress();
+    if (DEFAULTSHEETFEDPRESS.equals(propertyName)) return getDefaultSheetFedPress();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -199,13 +199,13 @@ public class PreferencesDefaultPresses extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultLargeFormat((CopierDefinition)newValue); else
-		if (DEFAULTROLLFEDPRESS.equals(propertyName)) setDefaultRollFedPress((PressDefinition)newValue); else
-		if (DEFAULTSHEETFEDPRESS.equals(propertyName)) setDefaultSheetFedPress((PressDefinition)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultLargeFormat((CopierDefinition)newValue); else
+    if (DEFAULTROLLFEDPRESS.equals(propertyName)) setDefaultRollFedPress((PressDefinition)newValue); else
+    if (DEFAULTSHEETFEDPRESS.equals(propertyName)) setDefaultSheetFedPress((PressDefinition)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -213,18 +213,18 @@ public class PreferencesDefaultPresses extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (DEFAULTBWCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (DEFAULTROLLFEDPRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		if (DEFAULTSHEETFEDPRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (DEFAULTBWCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (DEFAULTROLLFEDPRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    if (DEFAULTSHEETFEDPRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -233,32 +233,32 @@ public class PreferencesDefaultPresses extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (DEFAULTBWCOPIER.equals(propertyName)) return PreferencesDefaultPresses.class;
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) return PreferencesDefaultPresses.class;
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return PreferencesDefaultPresses.class;
-		if (DEFAULTROLLFEDPRESS.equals(propertyName)) return PreferencesDefaultPresses.class;
-		if (DEFAULTSHEETFEDPRESS.equals(propertyName)) return PreferencesDefaultPresses.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (DEFAULTBWCOPIER.equals(propertyName)) return PreferencesDefaultPresses.class;
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) return PreferencesDefaultPresses.class;
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) return PreferencesDefaultPresses.class;
+    if (DEFAULTROLLFEDPRESS.equals(propertyName)) return PreferencesDefaultPresses.class;
+    if (DEFAULTSHEETFEDPRESS.equals(propertyName)) return PreferencesDefaultPresses.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesDefaultPresses objT = (PreferencesDefaultPresses)obj;
-		if (! SmartEquals(getDefaultBWCopier(), objT.getDefaultBWCopier()))
-			return false;
-		if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
-			return false;
-		if (! SmartEquals(getDefaultLargeFormat(), objT.getDefaultLargeFormat()))
-			return false;
-		if (! SmartEquals(getDefaultRollFedPress(), objT.getDefaultRollFedPress()))
-			return false;
-		if (! SmartEquals(getDefaultSheetFedPress(), objT.getDefaultSheetFedPress()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesDefaultPresses objT = (PreferencesDefaultPresses)obj;
+    if (! SmartEquals(getDefaultBWCopier(), objT.getDefaultBWCopier()))
+      return false;
+    if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
+      return false;
+    if (! SmartEquals(getDefaultLargeFormat(), objT.getDefaultLargeFormat()))
+      return false;
+    if (! SmartEquals(getDefaultRollFedPress(), objT.getDefaultRollFedPress()))
+      return false;
+    if (! SmartEquals(getDefaultSheetFedPress(), objT.getDefaultSheetFedPress()))
+      return false;
+    return true;
+  }			
 }

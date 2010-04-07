@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "QuantityDiscount.findall", query = "from QuantityDiscount"),
-	@NamedQuery(name = "QuantityDiscount.byId", query = "select a from QuantityDiscount a where a.id= :id")
+  @NamedQuery(name = "QuantityDiscount.findall", query = "from QuantityDiscount"),
+  @NamedQuery(name = "QuantityDiscount.byId", query = "select a from QuantityDiscount a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class QuantityDiscount extends PriceListBase {
 	 * @generated
 	 */
 	public QuantityDiscount() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

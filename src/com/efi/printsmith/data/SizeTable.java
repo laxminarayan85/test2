@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SizeTable.findall", query = "from SizeTable"),
-	@NamedQuery(name = "SizeTable.byId", query = "select a from SizeTable a where a.id= :id")
+  @NamedQuery(name = "SizeTable.findall", query = "from SizeTable"),
+  @NamedQuery(name = "SizeTable.byId", query = "select a from SizeTable a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class SizeTable extends ModelBase {
 	 * @generated
 	 */
 	public SizeTable() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class SizeTable extends ModelBase {
 	 * @generated
  	 */
 	public Integer getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(Integer newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class SizeTable extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((Integer)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class SizeTable extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class SizeTable extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return SizeTable.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return SizeTable.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SizeTable objT = (SizeTable)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    SizeTable objT = (SizeTable)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    return true;
+  }			
 }

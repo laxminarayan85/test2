@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "StockType.findall", query = "from StockType"),
-	@NamedQuery(name = "StockType.byId", query = "select a from StockType a where a.id= :id")
+  @NamedQuery(name = "StockType.findall", query = "from StockType"),
+  @NamedQuery(name = "StockType.byId", query = "select a from StockType a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class StockType extends ModelBase {
 	 * @generated
 	 */
 	public StockType() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class StockType extends ModelBase {
 	 * @generated
  	 */
 	public String getSize(){
-		return size; 
-	}
+    return size; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSize(String newVal) {
-		this.size = newVal;
-	}
+    this.size = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class StockType extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class StockType extends ModelBase {
 	 * @generated
  	 */
 	public Integer getViewableID(){
-		return viewableID; 
-	}
+    return viewableID; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setViewableID(Integer newVal) {
-		this.viewableID = newVal;
-	}
+    this.viewableID = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (SIZE.equals(propertyName)) return getSize();
-		if (NAME.equals(propertyName)) return getName();
-		if (VIEWABLEID.equals(propertyName)) return getViewableID();
-		return super.getProperty(propertyName);
-	}
+    if (SIZE.equals(propertyName)) return getSize();
+    if (NAME.equals(propertyName)) return getName();
+    if (VIEWABLEID.equals(propertyName)) return getViewableID();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class StockType extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (SIZE.equals(propertyName)) setSize((String)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (VIEWABLEID.equals(propertyName)) setViewableID((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (SIZE.equals(propertyName)) setSize((String)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (VIEWABLEID.equals(propertyName)) setViewableID((Integer)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class StockType extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (SIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (VIEWABLEID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (SIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (VIEWABLEID.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class StockType extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (SIZE.equals(propertyName)) return StockType.class;
-		if (NAME.equals(propertyName)) return StockType.class;
-		if (VIEWABLEID.equals(propertyName)) return StockType.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (SIZE.equals(propertyName)) return StockType.class;
+    if (NAME.equals(propertyName)) return StockType.class;
+    if (VIEWABLEID.equals(propertyName)) return StockType.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		StockType objT = (StockType)obj;
-		if (! SmartEquals(getSize(), objT.getSize()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getViewableID(), objT.getViewableID()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    StockType objT = (StockType)obj;
+    if (! SmartEquals(getSize(), objT.getSize()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getViewableID(), objT.getViewableID()))
+      return false;
+    return true;
+  }			
 }

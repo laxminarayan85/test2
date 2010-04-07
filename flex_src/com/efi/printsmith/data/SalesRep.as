@@ -5,7 +5,7 @@ package com.efi.printsmith.data
 	
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.SalesRep")]
-	[Managed]
+
 	public class SalesRep extends ModelBase
 	{
 

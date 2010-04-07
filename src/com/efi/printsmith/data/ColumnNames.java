@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ColumnNames.findall", query = "from ColumnNames"),
-	@NamedQuery(name = "ColumnNames.byId", query = "select a from ColumnNames a where a.id= :id")
+  @NamedQuery(name = "ColumnNames.findall", query = "from ColumnNames"),
+  @NamedQuery(name = "ColumnNames.byId", query = "select a from ColumnNames a where a.id= :id")
 })
 
 
@@ -53,9 +53,9 @@ public class ColumnNames extends ModelBase {
 	 * @generated
 	 */
 	public ColumnNames() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -69,16 +69,16 @@ public class ColumnNames extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -91,26 +91,26 @@ public class ColumnNames extends ModelBase {
 	 * @generated
  	 */
 	public String getInternalName(){
-		return internalName; 
-	}
+    return internalName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInternalName(String newVal) {
-		this.internalName = newVal;
-	}
+    this.internalName = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (INTERNALNAME.equals(propertyName)) return getInternalName();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (INTERNALNAME.equals(propertyName)) return getInternalName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -118,10 +118,10 @@ public class ColumnNames extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (INTERNALNAME.equals(propertyName)) setInternalName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (INTERNALNAME.equals(propertyName)) setInternalName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -129,12 +129,12 @@ public class ColumnNames extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (INTERNALNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INTERNALNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -143,23 +143,23 @@ public class ColumnNames extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return ColumnNames.class;
-		if (INTERNALNAME.equals(propertyName)) return ColumnNames.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return ColumnNames.class;
+    if (INTERNALNAME.equals(propertyName)) return ColumnNames.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ColumnNames objT = (ColumnNames)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getInternalName(), objT.getInternalName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ColumnNames objT = (ColumnNames)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getInternalName(), objT.getInternalName()))
+      return false;
+    return true;
+  }			
 }

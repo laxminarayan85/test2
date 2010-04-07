@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebCatagories.findall", query = "from WebCatagories"),
-	@NamedQuery(name = "WebCatagories.byId", query = "select a from WebCatagories a where a.id= :id")
+  @NamedQuery(name = "WebCatagories.findall", query = "from WebCatagories"),
+  @NamedQuery(name = "WebCatagories.byId", query = "select a from WebCatagories a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class WebCatagories extends ModelBase {
 	 * @generated
 	 */
 	public WebCatagories() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class WebCatagories extends ModelBase {
 	 * @generated
  	 */
 	public String getStatus(){
-		return status; 
-	}
+    return status; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStatus(String newVal) {
-		this.status = newVal;
-	}
+    this.status = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class WebCatagories extends ModelBase {
 	 * @generated
  	 */
 	public WebGraphics getImage(){
-		return image; 
-	}
+    return image; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setImage(WebGraphics newVal) {
-		this.image = newVal;
-	}
+    this.image = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class WebCatagories extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -145,37 +145,37 @@ public class WebCatagories extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<WebSubCatagories> getChildren(){
-		return children; 
-	}
+    return children; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addChildren(WebSubCatagories obj) {
-		if (children == null) {
-			children = new java.util.ArrayList<WebSubCatagories>();
-		}
-		children.add(obj);
-	}
+    if (children == null) {
+      children = new java.util.ArrayList<WebSubCatagories>();
+    }
+    children.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setChildren(java.util.List<WebSubCatagories> newVal) {
-		this.children = newVal;
-	}
+    this.children = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (STATUS.equals(propertyName)) return getStatus();
-		if (IMAGE.equals(propertyName)) return getImage();
-		if (NAME.equals(propertyName)) return getName();
-		if (CHILDREN.equals(propertyName)) return getChildren();
-		return super.getProperty(propertyName);
-	}
+    if (STATUS.equals(propertyName)) return getStatus();
+    if (IMAGE.equals(propertyName)) return getImage();
+    if (NAME.equals(propertyName)) return getName();
+    if (CHILDREN.equals(propertyName)) return getChildren();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -183,12 +183,12 @@ public class WebCatagories extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-		if (IMAGE.equals(propertyName)) setImage((WebGraphics)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<WebSubCatagories>)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (IMAGE.equals(propertyName)) setImage((WebGraphics)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (CHILDREN.equals(propertyName)) setChildren((java.util.List<WebSubCatagories>)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -196,16 +196,16 @@ public class WebCatagories extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (IMAGE.equals(propertyName)) 
-			return new Class<?>[] {WebGraphics.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebSubCatagories.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (STATUS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (IMAGE.equals(propertyName)) 
+      return new Class<?>[] {WebGraphics.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CHILDREN.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, WebSubCatagories.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -214,29 +214,29 @@ public class WebCatagories extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (STATUS.equals(propertyName)) return WebCatagories.class;
-		if (IMAGE.equals(propertyName)) return WebCatagories.class;
-		if (NAME.equals(propertyName)) return WebCatagories.class;
-		if (CHILDREN.equals(propertyName)) return WebCatagories.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (STATUS.equals(propertyName)) return WebCatagories.class;
+    if (IMAGE.equals(propertyName)) return WebCatagories.class;
+    if (NAME.equals(propertyName)) return WebCatagories.class;
+    if (CHILDREN.equals(propertyName)) return WebCatagories.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebCatagories objT = (WebCatagories)obj;
-		if (! SmartEquals(getStatus(), objT.getStatus()))
-			return false;
-		if (! SmartEquals(getImage(), objT.getImage()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebCatagories objT = (WebCatagories)obj;
+    if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getImage(), objT.getImage()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getChildren(), objT.getChildren()))
+      return false;
+    return true;
+  }			
 }

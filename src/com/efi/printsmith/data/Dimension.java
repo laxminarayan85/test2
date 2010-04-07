@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Dimension.findall", query = "from Dimension"),
-	@NamedQuery(name = "Dimension.byId", query = "select a from Dimension a where a.id= :id")
+  @NamedQuery(name = "Dimension.findall", query = "from Dimension"),
+  @NamedQuery(name = "Dimension.byId", query = "select a from Dimension a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class Dimension extends ModelBase {
 	 * @generated
 	 */
 	public Dimension() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class Dimension extends ModelBase {
 	 * @generated
  	 */
 	public String getType(){
-		return type; 
-	}
+    return type; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setType(String newVal) {
-		this.type = newVal;
-	}
+    this.type = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class Dimension extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class Dimension extends ModelBase {
 	 * @generated
  	 */
 	public Float getWidth(){
-		return width; 
-	}
+    return width; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWidth(Float newVal) {
-		this.width = newVal;
-	}
+    this.width = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class Dimension extends ModelBase {
 	 * @generated
  	 */
 	public Float getHeight(){
-		return height; 
-	}
+    return height; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHeight(Float newVal) {
-		this.height = newVal;
-	}
+    this.height = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TYPE.equals(propertyName)) return getType();
-		if (NAME.equals(propertyName)) return getName();
-		if (WIDTH.equals(propertyName)) return getWidth();
-		if (HEIGHT.equals(propertyName)) return getHeight();
-		return super.getProperty(propertyName);
-	}
+    if (TYPE.equals(propertyName)) return getType();
+    if (NAME.equals(propertyName)) return getName();
+    if (WIDTH.equals(propertyName)) return getWidth();
+    if (HEIGHT.equals(propertyName)) return getHeight();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class Dimension extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TYPE.equals(propertyName)) setType((String)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (WIDTH.equals(propertyName)) setWidth((Float)newValue); else
-		if (HEIGHT.equals(propertyName)) setHeight((Float)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TYPE.equals(propertyName)) setType((String)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (WIDTH.equals(propertyName)) setWidth((Float)newValue); else
+    if (HEIGHT.equals(propertyName)) setHeight((Float)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class Dimension extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (WIDTH.equals(propertyName)) 
-			return new Class<?>[] {Float.class};		
-		if (HEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Float.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WIDTH.equals(propertyName)) 
+      return new Class<?>[] {Float.class};		
+    if (HEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Float.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class Dimension extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TYPE.equals(propertyName)) return Dimension.class;
-		if (NAME.equals(propertyName)) return Dimension.class;
-		if (WIDTH.equals(propertyName)) return Dimension.class;
-		if (HEIGHT.equals(propertyName)) return Dimension.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TYPE.equals(propertyName)) return Dimension.class;
+    if (NAME.equals(propertyName)) return Dimension.class;
+    if (WIDTH.equals(propertyName)) return Dimension.class;
+    if (HEIGHT.equals(propertyName)) return Dimension.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Dimension objT = (Dimension)obj;
-		if (! SmartEquals(getType(), objT.getType()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getWidth(), objT.getWidth()))
-			return false;
-		if (! SmartEquals(getHeight(), objT.getHeight()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Dimension objT = (Dimension)obj;
+    if (! SmartEquals(getType(), objT.getType()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getWidth(), objT.getWidth()))
+      return false;
+    if (! SmartEquals(getHeight(), objT.getHeight()))
+      return false;
+    return true;
+  }			
 }

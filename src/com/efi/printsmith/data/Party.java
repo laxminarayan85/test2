@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Party.findall", query = "from Party"),
-	@NamedQuery(name = "Party.byId", query = "select a from Party a where a.id= :id")
+  @NamedQuery(name = "Party.findall", query = "from Party"),
+  @NamedQuery(name = "Party.byId", query = "select a from Party a where a.id= :id")
 })
 
 
@@ -77,9 +77,9 @@ public class Party extends ModelBase {
 	 * @generated
 	 */
 	public Party() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -93,16 +93,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getPrefix(){
-		return prefix; 
-	}
+    return prefix; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrefix(String newVal) {
-		this.prefix = newVal;
-	}
+    this.prefix = newVal;
+  }
  	
 	
 	/**
@@ -115,16 +115,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getSuffix(){
-		return suffix; 
-	}
+    return suffix; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSuffix(String newVal) {
-		this.suffix = newVal;
-	}
+    this.suffix = newVal;
+  }
  	
 	
 	/**
@@ -137,16 +137,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getSalutation(){
-		return salutation; 
-	}
+    return salutation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSalutation(String newVal) {
-		this.salutation = newVal;
-	}
+    this.salutation = newVal;
+  }
  	
 	
 	/**
@@ -159,16 +159,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getJobTitle(){
-		return jobTitle; 
-	}
+    return jobTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobTitle(String newVal) {
-		this.jobTitle = newVal;
-	}
+    this.jobTitle = newVal;
+  }
  	
 	
 	/**
@@ -181,16 +181,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public Address getAddress(){
-		return address; 
-	}
+    return address; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAddress(Address newVal) {
-		this.address = newVal;
-	}
+    this.address = newVal;
+  }
  	
 	
 	/**
@@ -203,16 +203,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getLastName(){
-		return lastName; 
-	}
+    return lastName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLastName(String newVal) {
-		this.lastName = newVal;
-	}
+    this.lastName = newVal;
+  }
  	
 	
 	/**
@@ -225,16 +225,16 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public String getFirstName(){
-		return firstName; 
-	}
+    return firstName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFirstName(String newVal) {
-		this.firstName = newVal;
-	}
+    this.firstName = newVal;
+  }
  	
 	
 	/**
@@ -249,41 +249,41 @@ public class Party extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<ComLink> getComLinks(){
-		return comLinks; 
-	}
+    return comLinks; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addComLinks(ComLink obj) {
-		if (comLinks == null) {
-			comLinks = new java.util.ArrayList<ComLink>();
-		}
-		comLinks.add(obj);
-	}
+    if (comLinks == null) {
+      comLinks = new java.util.ArrayList<ComLink>();
+    }
+    comLinks.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setComLinks(java.util.List<ComLink> newVal) {
-		this.comLinks = newVal;
-	}
+    this.comLinks = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (PREFIX.equals(propertyName)) return getPrefix();
-		if (SUFFIX.equals(propertyName)) return getSuffix();
-		if (SALUTATION.equals(propertyName)) return getSalutation();
-		if (JOBTITLE.equals(propertyName)) return getJobTitle();
-		if (ADDRESS.equals(propertyName)) return getAddress();
-		if (LASTNAME.equals(propertyName)) return getLastName();
-		if (FIRSTNAME.equals(propertyName)) return getFirstName();
-		if (COMLINKS.equals(propertyName)) return getComLinks();
-		return super.getProperty(propertyName);
-	}
+    if (PREFIX.equals(propertyName)) return getPrefix();
+    if (SUFFIX.equals(propertyName)) return getSuffix();
+    if (SALUTATION.equals(propertyName)) return getSalutation();
+    if (JOBTITLE.equals(propertyName)) return getJobTitle();
+    if (ADDRESS.equals(propertyName)) return getAddress();
+    if (LASTNAME.equals(propertyName)) return getLastName();
+    if (FIRSTNAME.equals(propertyName)) return getFirstName();
+    if (COMLINKS.equals(propertyName)) return getComLinks();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -291,16 +291,16 @@ public class Party extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
-		if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
-		if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
-		if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
-		if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-		if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
-		if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
-		if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
+    if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
+    if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
+    if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
+    if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
+    if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
+    if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
+    if (COMLINKS.equals(propertyName)) setComLinks((java.util.List<ComLink>)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -308,24 +308,24 @@ public class Party extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (PREFIX.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SUFFIX.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SALUTATION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (JOBTITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDRESS.equals(propertyName)) 
-			return new Class<?>[] {Address.class};		
-		if (LASTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FIRSTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMLINKS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ComLink.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (PREFIX.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SUFFIX.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SALUTATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBTITLE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDRESS.equals(propertyName)) 
+      return new Class<?>[] {Address.class};		
+    if (LASTNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FIRSTNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMLINKS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, ComLink.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -334,41 +334,41 @@ public class Party extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PREFIX.equals(propertyName)) return Party.class;
-		if (SUFFIX.equals(propertyName)) return Party.class;
-		if (SALUTATION.equals(propertyName)) return Party.class;
-		if (JOBTITLE.equals(propertyName)) return Party.class;
-		if (ADDRESS.equals(propertyName)) return Party.class;
-		if (LASTNAME.equals(propertyName)) return Party.class;
-		if (FIRSTNAME.equals(propertyName)) return Party.class;
-		if (COMLINKS.equals(propertyName)) return Party.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (PREFIX.equals(propertyName)) return Party.class;
+    if (SUFFIX.equals(propertyName)) return Party.class;
+    if (SALUTATION.equals(propertyName)) return Party.class;
+    if (JOBTITLE.equals(propertyName)) return Party.class;
+    if (ADDRESS.equals(propertyName)) return Party.class;
+    if (LASTNAME.equals(propertyName)) return Party.class;
+    if (FIRSTNAME.equals(propertyName)) return Party.class;
+    if (COMLINKS.equals(propertyName)) return Party.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Party objT = (Party)obj;
-		if (! SmartEquals(getPrefix(), objT.getPrefix()))
-			return false;
-		if (! SmartEquals(getSuffix(), objT.getSuffix()))
-			return false;
-		if (! SmartEquals(getSalutation(), objT.getSalutation()))
-			return false;
-		if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
-			return false;
-		if (! SmartEquals(getAddress(), objT.getAddress()))
-			return false;
-		if (! SmartEquals(getLastName(), objT.getLastName()))
-			return false;
-		if (! SmartEquals(getFirstName(), objT.getFirstName()))
-			return false;
-		if (! SmartEquals(getComLinks(), objT.getComLinks()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Party objT = (Party)obj;
+    if (! SmartEquals(getPrefix(), objT.getPrefix()))
+      return false;
+    if (! SmartEquals(getSuffix(), objT.getSuffix()))
+      return false;
+    if (! SmartEquals(getSalutation(), objT.getSalutation()))
+      return false;
+    if (! SmartEquals(getJobTitle(), objT.getJobTitle()))
+      return false;
+    if (! SmartEquals(getAddress(), objT.getAddress()))
+      return false;
+    if (! SmartEquals(getLastName(), objT.getLastName()))
+      return false;
+    if (! SmartEquals(getFirstName(), objT.getFirstName()))
+      return false;
+    if (! SmartEquals(getComLinks(), objT.getComLinks()))
+      return false;
+    return true;
+  }			
 }

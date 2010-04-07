@@ -894,15 +894,13 @@ public class CopierDefinitionMapper extends ImportMapper {
 				
 				} else if ("schedule type".equals(currentFieldToken)) {
 					if (currentImportToken.equals("1") == true)
-						copierDefinition.setMatrixIsCopyCost(true);
+						copierDefinition.setMatrixType("CopyCost");
 					else if (currentImportToken.equals("2") == true)
-						copierDefinition.setMatrixIsDiscountTable(true);
+						copierDefinition.setMatrixType("DiscountTable");
 					else if (currentImportToken.equals("3") == true)
-						copierDefinition.setMatrixIsStepTable(true);
+						copierDefinition.setMatrixType("StepTable");
 					else if (currentImportToken.equals("4") == true)
-						copierDefinition.setSquareAreaFromRunSize(true);
-					else if (currentImportToken.equals("5") == true)
-						copierDefinition.setSquareAreaFromFinish(true);
+						copierDefinition.setSquareAreaType("MarkupTable" );
 				} else if ("stock price".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == true)
 						copierDefinition.setStockPriceMethod("none");
@@ -910,31 +908,24 @@ public class CopierDefinitionMapper extends ImportMapper {
 						copierDefinition
 								.setStockPriceMethod("IncludedInRate");
 					else if (currentImportToken.equals("2") == true)
-						copierDefinition
-								.setStockPriceMethod("MarkedUpStockCost");
+						copierDefinition.setStockPriceMethod("MarkedUpStockCost");
 					else if (currentImportToken.equals("3") == true)
-						copierDefinition
-								.setStockPriceMethod("FromCopier1InStockDefinition");
+						copierDefinition.setStockPriceMethod("FromCopier1InStockDefinition");
 					else if (currentImportToken.equals("4") == true)
-						copierDefinition
-								.setStockPriceMethod("FromCopier2InStockDefinition");
+						copierDefinition.setStockPriceMethod("FromCopier2InStockDefinition");
 					else if (currentImportToken.equals("5") == true)
-						copierDefinition
-								.setStockPriceMethod("FromCopier3InStockDefinition");
+						copierDefinition.setStockPriceMethod("FromCopier3InStockDefinition");
 				} else if ("second side".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == true)
 						copierDefinition.setPriceTwoSide("none");
 					else if (currentImportToken.equals("1") == true)
 						copierDefinition.setPriceTwoSide("NotChangingPrice");
 					else if (currentImportToken.equals("2") == true)
-						copierDefinition
-								.setPriceTwoSide("UsingFirstSideRate");
+						copierDefinition.setPriceTwoSide("UsingFirstSideRate");
 					else if (currentImportToken.equals("3") == true)
-						copierDefinition
-								.setPriceTwoSide("UsingSecondSideRate");
+						copierDefinition.setPriceTwoSide("UsingSecondSideRate");
 					else if (currentImportToken.equals("4") == true)
-						copierDefinition
-								.setPriceTwoSide("CountingAsMoreOrininals");
+						copierDefinition.setPriceTwoSide("CountingAsMoreOrininals");
 					else if (currentImportToken.equals("5") == true)
 						copierDefinition.setPriceTwoSide("UsingSide2Factor");
 				} else if ("sales category".equals(currentFieldToken)) {
@@ -1030,8 +1021,11 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("minimum".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("sheet area type[1]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("sheet area type[2]".equals(currentFieldToken)) {
+					if (currentImportToken.equals("0") == true)
+						copierDefinition.setSquareAreaType("AreaRunSize");
+					else if (currentImportToken.equals("64") == true)
+						copierDefinition.setSquareAreaType("AreaFinishSize");
+				} else if ("sheet area type[2]".equals(currentFieldToken)){
 					/* TODO */
 				} else if ("waste chart".equals(currentFieldToken)) {
 					/* TODO */

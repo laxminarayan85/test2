@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ChargeCategory.findall", query = "from ChargeCategory"),
-	@NamedQuery(name = "ChargeCategory.byId", query = "select a from ChargeCategory a where a.id= :id")
+  @NamedQuery(name = "ChargeCategory.findall", query = "from ChargeCategory"),
+  @NamedQuery(name = "ChargeCategory.byId", query = "select a from ChargeCategory a where a.id= :id")
 })
 
 
@@ -57,16 +57,16 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
 	 */
 	public ChargeCategory() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany( fetch=FetchType.EAGER)
     @IndexColumn(name="childrenchargecategory")
     @JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
@@ -75,26 +75,26 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<ChargeDefinition> getChildren(){
-		return children; 
-	}
+    return children; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addChildren(ChargeDefinition obj) {
-		obj.setParent(this);
-		if (children == null) {
-			children = new java.util.ArrayList<ChargeDefinition>();
-		}
-		children.add(obj);
-	}
+    obj.setParent(this);
+    if (children == null) {
+      children = new java.util.ArrayList<ChargeDefinition>();
+    }
+    children.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setChildren(java.util.List<ChargeDefinition> newVal) {
-		this.children = newVal;
-	}
+    this.children = newVal;
+  }
  	
 	
 	/**
@@ -107,16 +107,16 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -129,27 +129,27 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
  	 */
 	public ChargeCommand getParent(){
-		return parent; 
-	}
+    return parent; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParent(ChargeCommand newVal) {
-		this.parent = newVal;
-	}
+    this.parent = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CHILDREN.equals(propertyName)) return getChildren();
-		if (NAME.equals(propertyName)) return getName();
-		if (PARENT.equals(propertyName)) return getParent();
-		return super.getProperty(propertyName);
-	}
+    if (CHILDREN.equals(propertyName)) return getChildren();
+    if (NAME.equals(propertyName)) return getName();
+    if (PARENT.equals(propertyName)) return getParent();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -157,11 +157,11 @@ public class ChargeCategory extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<ChargeDefinition>)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (PARENT.equals(propertyName)) setParent((ChargeCommand)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CHILDREN.equals(propertyName)) setChildren((java.util.List<ChargeDefinition>)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (PARENT.equals(propertyName)) setParent((ChargeCommand)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -169,14 +169,14 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PARENT.equals(propertyName)) 
-			return new Class<?>[] {ChargeCommand.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CHILDREN.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARENT.equals(propertyName)) 
+      return new Class<?>[] {ChargeCommand.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -185,26 +185,26 @@ public class ChargeCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CHILDREN.equals(propertyName)) return ChargeCategory.class;
-		if (NAME.equals(propertyName)) return ChargeCategory.class;
-		if (PARENT.equals(propertyName)) return ChargeCategory.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CHILDREN.equals(propertyName)) return ChargeCategory.class;
+    if (NAME.equals(propertyName)) return ChargeCategory.class;
+    if (PARENT.equals(propertyName)) return ChargeCategory.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ChargeCategory objT = (ChargeCategory)obj;
-		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getParent(), objT.getParent()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ChargeCategory objT = (ChargeCategory)obj;
+    if (! SmartEquals(getChildren(), objT.getChildren()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getParent(), objT.getParent()))
+      return false;
+    return true;
+  }			
 }

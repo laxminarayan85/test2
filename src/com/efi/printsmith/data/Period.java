@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Period.findall", query = "from Period"),
-	@NamedQuery(name = "Period.byId", query = "select a from Period a where a.id= :id")
+  @NamedQuery(name = "Period.findall", query = "from Period"),
+  @NamedQuery(name = "Period.byId", query = "select a from Period a where a.id= :id")
 })
 
 
@@ -77,9 +77,9 @@ public class Period extends ModelBase {
 	 * @generated
 	 */
 	public Period() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -93,16 +93,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Date getCustomtoDate(){
-		return customtoDate; 
-	}
+    return customtoDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCustomtoDate(Date newVal) {
-		this.customtoDate = newVal;
-	}
+    this.customtoDate = newVal;
+  }
  	
 	
 	/**
@@ -115,16 +115,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Date getCustomfromDate(){
-		return customfromDate; 
-	}
+    return customfromDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCustomfromDate(Date newVal) {
-		this.customfromDate = newVal;
-	}
+    this.customfromDate = newVal;
+  }
  	
 	
 	/**
@@ -137,16 +137,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Date getFromDate(){
-		return fromDate; 
-	}
+    return fromDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFromDate(Date newVal) {
-		this.fromDate = newVal;
-	}
+    this.fromDate = newVal;
+  }
  	
 	
 	/**
@@ -159,16 +159,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Date getToDate(){
-		return toDate; 
-	}
+    return toDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setToDate(Date newVal) {
-		this.toDate = newVal;
-	}
+    this.toDate = newVal;
+  }
  	
 	
 	/**
@@ -181,16 +181,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public String getDay(){
-		return day; 
-	}
+    return day; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDay(String newVal) {
-		this.day = newVal;
-	}
+    this.day = newVal;
+  }
  	
 	
 	/**
@@ -203,16 +203,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public String getType(){
-		return type; 
-	}
+    return type; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setType(String newVal) {
-		this.type = newVal;
-	}
+    this.type = newVal;
+  }
  	
 	
 	/**
@@ -225,16 +225,16 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Integer getPeriodNumber(){
-		return periodNumber; 
-	}
+    return periodNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPeriodNumber(Integer newVal) {
-		this.periodNumber = newVal;
-	}
+    this.periodNumber = newVal;
+  }
  	
 	
 	/**
@@ -247,32 +247,32 @@ public class Period extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getPeriodClosed(){
-		return periodClosed; 
-	}
+    return periodClosed; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPeriodClosed(Boolean newVal) {
-		this.periodClosed = newVal;
-	}
+    this.periodClosed = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CUSTOMTODATE.equals(propertyName)) return getCustomtoDate();
-		if (CUSTOMFROMDATE.equals(propertyName)) return getCustomfromDate();
-		if (FROMDATE.equals(propertyName)) return getFromDate();
-		if (TODATE.equals(propertyName)) return getToDate();
-		if (DAY.equals(propertyName)) return getDay();
-		if (TYPE.equals(propertyName)) return getType();
-		if (PERIODNUMBER.equals(propertyName)) return getPeriodNumber();
-		if (PERIODCLOSED.equals(propertyName)) return getPeriodClosed();
-		return super.getProperty(propertyName);
-	}
+    if (CUSTOMTODATE.equals(propertyName)) return getCustomtoDate();
+    if (CUSTOMFROMDATE.equals(propertyName)) return getCustomfromDate();
+    if (FROMDATE.equals(propertyName)) return getFromDate();
+    if (TODATE.equals(propertyName)) return getToDate();
+    if (DAY.equals(propertyName)) return getDay();
+    if (TYPE.equals(propertyName)) return getType();
+    if (PERIODNUMBER.equals(propertyName)) return getPeriodNumber();
+    if (PERIODCLOSED.equals(propertyName)) return getPeriodClosed();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -280,16 +280,16 @@ public class Period extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CUSTOMTODATE.equals(propertyName)) setCustomtoDate((Date)newValue); else
-		if (CUSTOMFROMDATE.equals(propertyName)) setCustomfromDate((Date)newValue); else
-		if (FROMDATE.equals(propertyName)) setFromDate((Date)newValue); else
-		if (TODATE.equals(propertyName)) setToDate((Date)newValue); else
-		if (DAY.equals(propertyName)) setDay((String)newValue); else
-		if (TYPE.equals(propertyName)) setType((String)newValue); else
-		if (PERIODNUMBER.equals(propertyName)) setPeriodNumber((Integer)newValue); else
-		if (PERIODCLOSED.equals(propertyName)) setPeriodClosed((Boolean)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CUSTOMTODATE.equals(propertyName)) setCustomtoDate((Date)newValue); else
+    if (CUSTOMFROMDATE.equals(propertyName)) setCustomfromDate((Date)newValue); else
+    if (FROMDATE.equals(propertyName)) setFromDate((Date)newValue); else
+    if (TODATE.equals(propertyName)) setToDate((Date)newValue); else
+    if (DAY.equals(propertyName)) setDay((String)newValue); else
+    if (TYPE.equals(propertyName)) setType((String)newValue); else
+    if (PERIODNUMBER.equals(propertyName)) setPeriodNumber((Integer)newValue); else
+    if (PERIODCLOSED.equals(propertyName)) setPeriodClosed((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -297,24 +297,24 @@ public class Period extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CUSTOMTODATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (CUSTOMFROMDATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (FROMDATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (TODATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (DAY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (TYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PERIODNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (PERIODCLOSED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CUSTOMTODATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CUSTOMFROMDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (FROMDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (TODATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (DAY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (TYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PERIODNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PERIODCLOSED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -323,41 +323,41 @@ public class Period extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CUSTOMTODATE.equals(propertyName)) return Period.class;
-		if (CUSTOMFROMDATE.equals(propertyName)) return Period.class;
-		if (FROMDATE.equals(propertyName)) return Period.class;
-		if (TODATE.equals(propertyName)) return Period.class;
-		if (DAY.equals(propertyName)) return Period.class;
-		if (TYPE.equals(propertyName)) return Period.class;
-		if (PERIODNUMBER.equals(propertyName)) return Period.class;
-		if (PERIODCLOSED.equals(propertyName)) return Period.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CUSTOMTODATE.equals(propertyName)) return Period.class;
+    if (CUSTOMFROMDATE.equals(propertyName)) return Period.class;
+    if (FROMDATE.equals(propertyName)) return Period.class;
+    if (TODATE.equals(propertyName)) return Period.class;
+    if (DAY.equals(propertyName)) return Period.class;
+    if (TYPE.equals(propertyName)) return Period.class;
+    if (PERIODNUMBER.equals(propertyName)) return Period.class;
+    if (PERIODCLOSED.equals(propertyName)) return Period.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Period objT = (Period)obj;
-		if (! SmartEquals(getCustomtoDate(), objT.getCustomtoDate()))
-			return false;
-		if (! SmartEquals(getCustomfromDate(), objT.getCustomfromDate()))
-			return false;
-		if (! SmartEquals(getFromDate(), objT.getFromDate()))
-			return false;
-		if (! SmartEquals(getToDate(), objT.getToDate()))
-			return false;
-		if (! SmartEquals(getDay(), objT.getDay()))
-			return false;
-		if (! SmartEquals(getType(), objT.getType()))
-			return false;
-		if (! SmartEquals(getPeriodNumber(), objT.getPeriodNumber()))
-			return false;
-		if (! SmartEquals(getPeriodClosed(), objT.getPeriodClosed()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Period objT = (Period)obj;
+    if (! SmartEquals(getCustomtoDate(), objT.getCustomtoDate()))
+      return false;
+    if (! SmartEquals(getCustomfromDate(), objT.getCustomfromDate()))
+      return false;
+    if (! SmartEquals(getFromDate(), objT.getFromDate()))
+      return false;
+    if (! SmartEquals(getToDate(), objT.getToDate()))
+      return false;
+    if (! SmartEquals(getDay(), objT.getDay()))
+      return false;
+    if (! SmartEquals(getType(), objT.getType()))
+      return false;
+    if (! SmartEquals(getPeriodNumber(), objT.getPeriodNumber()))
+      return false;
+    if (! SmartEquals(getPeriodClosed(), objT.getPeriodClosed()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TaxTable.findall", query = "from TaxTable"),
-	@NamedQuery(name = "TaxTable.byId", query = "select a from TaxTable a where a.id= :id")
+  @NamedQuery(name = "TaxTable.findall", query = "from TaxTable"),
+  @NamedQuery(name = "TaxTable.byId", query = "select a from TaxTable a where a.id= :id")
 })
 
 
@@ -85,9 +85,9 @@ public class TaxTable extends ModelBase {
 	 * @generated
 	 */
 	public TaxTable() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -101,22 +101,22 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Double getEffectiveTaxRate(){
-		return effectiveTaxRate; 
-	}
+    return effectiveTaxRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEffectiveTaxRate(Double newVal) {
-		this.effectiveTaxRate = newVal;
-	}
+    this.effectiveTaxRate = newVal;
+  }
  	
 	
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER, cascade={CascadeType.ALL})
+    @OneToMany( fetch=FetchType.EAGER)
     @IndexColumn(name="taxelementstaxtable")
     @JoinTable( name = "taxtable_taxelements")
 	private java.util.List<TaxElement> taxElements;
@@ -125,25 +125,25 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<TaxElement> getTaxElements(){
-		return taxElements; 
-	}
+    return taxElements; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addTaxElements(TaxElement obj) {
-		if (taxElements == null) {
-			taxElements = new java.util.ArrayList<TaxElement>();
-		}
-		taxElements.add(obj);
-	}
+    if (taxElements == null) {
+      taxElements = new java.util.ArrayList<TaxElement>();
+    }
+    taxElements.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxElements(java.util.List<TaxElement> newVal) {
-		this.taxElements = newVal;
-	}
+    this.taxElements = newVal;
+  }
  	
 	
 	/**
@@ -156,16 +156,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxTableIsCurrent(){
-		return taxTableIsCurrent; 
-	}
+    return taxTableIsCurrent; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxTableIsCurrent(Boolean newVal) {
-		this.taxTableIsCurrent = newVal;
-	}
+    this.taxTableIsCurrent = newVal;
+  }
  	
 	
 	/**
@@ -178,16 +178,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxShipping(){
-		return taxShipping; 
-	}
+    return taxShipping; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxShipping(Boolean newVal) {
-		this.taxShipping = newVal;
-	}
+    this.taxShipping = newVal;
+  }
  	
 	
 	/**
@@ -200,16 +200,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxOnTax(){
-		return taxOnTax; 
-	}
+    return taxOnTax; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxOnTax(Boolean newVal) {
-		this.taxOnTax = newVal;
-	}
+    this.taxOnTax = newVal;
+  }
  	
 	
 	/**
@@ -222,16 +222,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getRoundTaxUp(){
-		return roundTaxUp; 
-	}
+    return roundTaxUp; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRoundTaxUp(Boolean newVal) {
-		this.roundTaxUp = newVal;
-	}
+    this.roundTaxUp = newVal;
+  }
  	
 	
 	/**
@@ -244,16 +244,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxInPrice(){
-		return taxInPrice; 
-	}
+    return taxInPrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxInPrice(Boolean newVal) {
-		this.taxInPrice = newVal;
-	}
+    this.taxInPrice = newVal;
+  }
  	
 	
 	/**
@@ -266,16 +266,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDoDetail(){
-		return doDetail; 
-	}
+    return doDetail; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDoDetail(Boolean newVal) {
-		this.doDetail = newVal;
-	}
+    this.doDetail = newVal;
+  }
  	
 	
 	/**
@@ -288,16 +288,16 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public Integer getDontRoundShownTaxElements(){
-		return dontRoundShownTaxElements; 
-	}
+    return dontRoundShownTaxElements; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDontRoundShownTaxElements(Integer newVal) {
-		this.dontRoundShownTaxElements = newVal;
-	}
+    this.dontRoundShownTaxElements = newVal;
+  }
  	
 	
 	/**
@@ -310,34 +310,34 @@ public class TaxTable extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (EFFECTIVETAXRATE.equals(propertyName)) return getEffectiveTaxRate();
-		if (TAXELEMENTS.equals(propertyName)) return getTaxElements();
-		if (TAXTABLEISCURRENT.equals(propertyName)) return getTaxTableIsCurrent();
-		if (TAXSHIPPING.equals(propertyName)) return getTaxShipping();
-		if (TAXONTAX.equals(propertyName)) return getTaxOnTax();
-		if (ROUNDTAXUP.equals(propertyName)) return getRoundTaxUp();
-		if (TAXINPRICE.equals(propertyName)) return getTaxInPrice();
-		if (DODETAIL.equals(propertyName)) return getDoDetail();
-		if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return getDontRoundShownTaxElements();
-		if (NAME.equals(propertyName)) return getName();
-		return super.getProperty(propertyName);
-	}
+    if (EFFECTIVETAXRATE.equals(propertyName)) return getEffectiveTaxRate();
+    if (TAXELEMENTS.equals(propertyName)) return getTaxElements();
+    if (TAXTABLEISCURRENT.equals(propertyName)) return getTaxTableIsCurrent();
+    if (TAXSHIPPING.equals(propertyName)) return getTaxShipping();
+    if (TAXONTAX.equals(propertyName)) return getTaxOnTax();
+    if (ROUNDTAXUP.equals(propertyName)) return getRoundTaxUp();
+    if (TAXINPRICE.equals(propertyName)) return getTaxInPrice();
+    if (DODETAIL.equals(propertyName)) return getDoDetail();
+    if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return getDontRoundShownTaxElements();
+    if (NAME.equals(propertyName)) return getName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -345,18 +345,18 @@ public class TaxTable extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (EFFECTIVETAXRATE.equals(propertyName)) setEffectiveTaxRate((Double)newValue); else
-		if (TAXELEMENTS.equals(propertyName)) setTaxElements((java.util.List<TaxElement>)newValue); else
-		if (TAXTABLEISCURRENT.equals(propertyName)) setTaxTableIsCurrent((Boolean)newValue); else
-		if (TAXSHIPPING.equals(propertyName)) setTaxShipping((Boolean)newValue); else
-		if (TAXONTAX.equals(propertyName)) setTaxOnTax((Boolean)newValue); else
-		if (ROUNDTAXUP.equals(propertyName)) setRoundTaxUp((Boolean)newValue); else
-		if (TAXINPRICE.equals(propertyName)) setTaxInPrice((Boolean)newValue); else
-		if (DODETAIL.equals(propertyName)) setDoDetail((Boolean)newValue); else
-		if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) setDontRoundShownTaxElements((Integer)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (EFFECTIVETAXRATE.equals(propertyName)) setEffectiveTaxRate((Double)newValue); else
+    if (TAXELEMENTS.equals(propertyName)) setTaxElements((java.util.List<TaxElement>)newValue); else
+    if (TAXTABLEISCURRENT.equals(propertyName)) setTaxTableIsCurrent((Boolean)newValue); else
+    if (TAXSHIPPING.equals(propertyName)) setTaxShipping((Boolean)newValue); else
+    if (TAXONTAX.equals(propertyName)) setTaxOnTax((Boolean)newValue); else
+    if (ROUNDTAXUP.equals(propertyName)) setRoundTaxUp((Boolean)newValue); else
+    if (TAXINPRICE.equals(propertyName)) setTaxInPrice((Boolean)newValue); else
+    if (DODETAIL.equals(propertyName)) setDoDetail((Boolean)newValue); else
+    if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) setDontRoundShownTaxElements((Integer)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -364,28 +364,28 @@ public class TaxTable extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (EFFECTIVETAXRATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TAXELEMENTS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, TaxElement.class};		
-		if (TAXTABLEISCURRENT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXSHIPPING.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXONTAX.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ROUNDTAXUP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXINPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DODETAIL.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (EFFECTIVETAXRATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TAXELEMENTS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, TaxElement.class};		
+    if (TAXTABLEISCURRENT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXSHIPPING.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXONTAX.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ROUNDTAXUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXINPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DODETAIL.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -394,47 +394,47 @@ public class TaxTable extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (EFFECTIVETAXRATE.equals(propertyName)) return TaxTable.class;
-		if (TAXELEMENTS.equals(propertyName)) return TaxTable.class;
-		if (TAXTABLEISCURRENT.equals(propertyName)) return TaxTable.class;
-		if (TAXSHIPPING.equals(propertyName)) return TaxTable.class;
-		if (TAXONTAX.equals(propertyName)) return TaxTable.class;
-		if (ROUNDTAXUP.equals(propertyName)) return TaxTable.class;
-		if (TAXINPRICE.equals(propertyName)) return TaxTable.class;
-		if (DODETAIL.equals(propertyName)) return TaxTable.class;
-		if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return TaxTable.class;
-		if (NAME.equals(propertyName)) return TaxTable.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (EFFECTIVETAXRATE.equals(propertyName)) return TaxTable.class;
+    if (TAXELEMENTS.equals(propertyName)) return TaxTable.class;
+    if (TAXTABLEISCURRENT.equals(propertyName)) return TaxTable.class;
+    if (TAXSHIPPING.equals(propertyName)) return TaxTable.class;
+    if (TAXONTAX.equals(propertyName)) return TaxTable.class;
+    if (ROUNDTAXUP.equals(propertyName)) return TaxTable.class;
+    if (TAXINPRICE.equals(propertyName)) return TaxTable.class;
+    if (DODETAIL.equals(propertyName)) return TaxTable.class;
+    if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return TaxTable.class;
+    if (NAME.equals(propertyName)) return TaxTable.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		TaxTable objT = (TaxTable)obj;
-		if (! SmartEquals(getEffectiveTaxRate(), objT.getEffectiveTaxRate()))
-			return false;
-		if (! SmartEquals(getTaxElements(), objT.getTaxElements()))
-			return false;
-		if (! SmartEquals(getTaxTableIsCurrent(), objT.getTaxTableIsCurrent()))
-			return false;
-		if (! SmartEquals(getTaxShipping(), objT.getTaxShipping()))
-			return false;
-		if (! SmartEquals(getTaxOnTax(), objT.getTaxOnTax()))
-			return false;
-		if (! SmartEquals(getRoundTaxUp(), objT.getRoundTaxUp()))
-			return false;
-		if (! SmartEquals(getTaxInPrice(), objT.getTaxInPrice()))
-			return false;
-		if (! SmartEquals(getDoDetail(), objT.getDoDetail()))
-			return false;
-		if (! SmartEquals(getDontRoundShownTaxElements(), objT.getDontRoundShownTaxElements()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    TaxTable objT = (TaxTable)obj;
+    if (! SmartEquals(getEffectiveTaxRate(), objT.getEffectiveTaxRate()))
+      return false;
+    if (! SmartEquals(getTaxElements(), objT.getTaxElements()))
+      return false;
+    if (! SmartEquals(getTaxTableIsCurrent(), objT.getTaxTableIsCurrent()))
+      return false;
+    if (! SmartEquals(getTaxShipping(), objT.getTaxShipping()))
+      return false;
+    if (! SmartEquals(getTaxOnTax(), objT.getTaxOnTax()))
+      return false;
+    if (! SmartEquals(getRoundTaxUp(), objT.getRoundTaxUp()))
+      return false;
+    if (! SmartEquals(getTaxInPrice(), objT.getTaxInPrice()))
+      return false;
+    if (! SmartEquals(getDoDetail(), objT.getDoDetail()))
+      return false;
+    if (! SmartEquals(getDontRoundShownTaxElements(), objT.getDontRoundShownTaxElements()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    return true;
+  }			
 }

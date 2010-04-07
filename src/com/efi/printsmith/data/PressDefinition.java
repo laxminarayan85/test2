@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PressDefinition.findall", query = "from PressDefinition"),
-	@NamedQuery(name = "PressDefinition.byId", query = "select a from PressDefinition a where a.id= :id")
+  @NamedQuery(name = "PressDefinition.findall", query = "from PressDefinition"),
+  @NamedQuery(name = "PressDefinition.byId", query = "select a from PressDefinition a where a.id= :id")
 })
 
 
@@ -205,9 +205,9 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */
 	public PressDefinition() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 	public PressDefinition(long id, String Name) {
 		this.id = id;
@@ -232,16 +232,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -254,16 +254,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMachineName(){
-		return machineName; 
-	}
+    return machineName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMachineName(String newVal) {
-		this.machineName = newVal;
-	}
+    this.machineName = newVal;
+  }
  	
 	
 	/**
@@ -276,16 +276,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getOutputDescrip(){
-		return outputDescrip; 
-	}
+    return outputDescrip; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOutputDescrip(String newVal) {
-		this.outputDescrip = newVal;
-	}
+    this.outputDescrip = newVal;
+  }
  	
 	
 	/**
@@ -298,16 +298,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getProductionLocation(){
-		return productionLocation; 
-	}
+    return productionLocation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setProductionLocation(String newVal) {
-		this.productionLocation = newVal;
-	}
+    this.productionLocation = newVal;
+  }
  	
 	
 	/**
@@ -320,16 +320,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getCostCenter(){
-		return costCenter; 
-	}
+    return costCenter; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostCenter(String newVal) {
-		this.costCenter = newVal;
-	}
+    this.costCenter = newVal;
+  }
  	
 	
 	/**
@@ -342,16 +342,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getOemDeviceID(){
-		return oemDeviceID; 
-	}
+    return oemDeviceID; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOemDeviceID(String newVal) {
-		this.oemDeviceID = newVal;
-	}
+    this.oemDeviceID = newVal;
+  }
  	
 	
 	/**
@@ -364,16 +364,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getMachineID(){
-		return machineID; 
-	}
+    return machineID; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMachineID(Long newVal) {
-		this.machineID = newVal;
-	}
+    this.machineID = newVal;
+  }
  	
 	
 	/**
@@ -386,16 +386,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCostingPress(){
-		return costingPress; 
-	}
+    return costingPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingPress(Boolean newVal) {
-		this.costingPress = newVal;
-	}
+    this.costingPress = newVal;
+  }
  	
 	
 	/**
@@ -408,16 +408,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIntegratedDevice(){
-		return integratedDevice; 
-	}
+    return integratedDevice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIntegratedDevice(Boolean newVal) {
-		this.integratedDevice = newVal;
-	}
+    this.integratedDevice = newVal;
+  }
  	
 	
 	/**
@@ -430,16 +430,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMaxPaperSize(){
-		return maxPaperSize; 
-	}
+    return maxPaperSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaxPaperSize(String newVal) {
-		this.maxPaperSize = newVal;
-	}
+    this.maxPaperSize = newVal;
+  }
  	
 	
 	/**
@@ -452,16 +452,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMinPaperSize(){
-		return minPaperSize; 
-	}
+    return minPaperSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinPaperSize(String newVal) {
-		this.minPaperSize = newVal;
-	}
+    this.minPaperSize = newVal;
+  }
  	
 	
 	/**
@@ -474,16 +474,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getLaborRate(){
-		return laborRate; 
-	}
+    return laborRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborRate(Double newVal) {
-		this.laborRate = newVal;
-	}
+    this.laborRate = newVal;
+  }
  	
 	
 	/**
@@ -496,16 +496,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getLaborMarkup(){
-		return laborMarkup; 
-	}
+    return laborMarkup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborMarkup(Double newVal) {
-		this.laborMarkup = newVal;
-	}
+    this.laborMarkup = newVal;
+  }
  	
 	
 	/**
@@ -518,16 +518,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getFixedWaste(){
-		return fixedWaste; 
-	}
+    return fixedWaste; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFixedWaste(Double newVal) {
-		this.fixedWaste = newVal;
-	}
+    this.fixedWaste = newVal;
+  }
  	
 	
 	/**
@@ -540,16 +540,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMinLabor(){
-		return minLabor; 
-	}
+    return minLabor; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinLabor(Double newVal) {
-		this.minLabor = newVal;
-	}
+    this.minLabor = newVal;
+  }
  	
 	
 	/**
@@ -562,16 +562,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getSetupMin(){
-		return setupMin; 
-	}
+    return setupMin; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupMin(Double newVal) {
-		this.setupMin = newVal;
-	}
+    this.setupMin = newVal;
+  }
  	
 	
 	/**
@@ -584,16 +584,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getSetupAddSig(){
-		return setupAddSig; 
-	}
+    return setupAddSig; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupAddSig(Long newVal) {
-		this.setupAddSig = newVal;
-	}
+    this.setupAddSig = newVal;
+  }
  	
 	
 	/**
@@ -606,16 +606,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWorkTurnSetup(){
-		return workTurnSetup; 
-	}
+    return workTurnSetup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWorkTurnSetup(Double newVal) {
-		this.workTurnSetup = newVal;
-	}
+    this.workTurnSetup = newVal;
+  }
  	
 	
 	/**
@@ -628,16 +628,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getSetupAddHead(){
-		return setupAddHead; 
-	}
+    return setupAddHead; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupAddHead(Long newVal) {
-		this.setupAddHead = newVal;
-	}
+    this.setupAddHead = newVal;
+  }
  	
 	
 	/**
@@ -650,16 +650,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWashupFee(){
-		return washupFee; 
-	}
+    return washupFee; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWashupFee(Double newVal) {
-		this.washupFee = newVal;
-	}
+    this.washupFee = newVal;
+  }
  	
 	
 	/**
@@ -672,16 +672,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getAddSigAddHead(){
-		return addSigAddHead; 
-	}
+    return addSigAddHead; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAddSigAddHead(Long newVal) {
-		this.addSigAddHead = newVal;
-	}
+    this.addSigAddHead = newVal;
+  }
  	
 	
 	/**
@@ -694,16 +694,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getWashupMin(){
-		return washupMin; 
-	}
+    return washupMin; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWashupMin(Long newVal) {
-		this.washupMin = newVal;
-	}
+    this.washupMin = newVal;
+  }
  	
 	
 	/**
@@ -716,16 +716,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWashupPerFountain(){
-		return washupPerFountain; 
-	}
+    return washupPerFountain; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWashupPerFountain(Double newVal) {
-		this.washupPerFountain = newVal;
-	}
+    this.washupPerFountain = newVal;
+  }
  	
 	
 	/**
@@ -738,16 +738,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getGripEdge(){
-		return gripEdge; 
-	}
+    return gripEdge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGripEdge(Double newVal) {
-		this.gripEdge = newVal;
-	}
+    this.gripEdge = newVal;
+  }
  	
 	
 	/**
@@ -760,16 +760,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getPerfector(){
-		return perfector; 
-	}
+    return perfector; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPerfector(Boolean newVal) {
-		this.perfector = newVal;
-	}
+    this.perfector = newVal;
+  }
  	
 	
 	/**
@@ -782,16 +782,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getAvgImpressPerHour(){
-		return avgImpressPerHour; 
-	}
+    return avgImpressPerHour; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAvgImpressPerHour(Long newVal) {
-		this.avgImpressPerHour = newVal;
-	}
+    this.avgImpressPerHour = newVal;
+  }
  	
 	
 	/**
@@ -804,16 +804,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumberHeads(){
-		return numberHeads; 
-	}
+    return numberHeads; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNumberHeads(Long newVal) {
-		this.numberHeads = newVal;
-	}
+    this.numberHeads = newVal;
+  }
  	
 	
 	/**
@@ -826,16 +826,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Long getSetupAddRun(){
-		return setupAddRun; 
-	}
+    return setupAddRun; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupAddRun(Long newVal) {
-		this.setupAddRun = newVal;
-	}
+    this.setupAddRun = newVal;
+  }
  	
 	
 	/**
@@ -848,16 +848,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSheetFed(){
-		return sheetFed; 
-	}
+    return sheetFed; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheetFed(Boolean newVal) {
-		this.sheetFed = newVal;
-	}
+    this.sheetFed = newVal;
+  }
  	
 	
 	/**
@@ -870,16 +870,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getRollFed(){
-		return rollFed; 
-	}
+    return rollFed; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRollFed(Boolean newVal) {
-		this.rollFed = newVal;
-	}
+    this.rollFed = newVal;
+  }
  	
 	
 	/**
@@ -892,16 +892,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public WasteChart getWasteChart(){
-		return wasteChart; 
-	}
+    return wasteChart; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWasteChart(WasteChart newVal) {
-		this.wasteChart = newVal;
-	}
+    this.wasteChart = newVal;
+  }
  	
 	
 	/**
@@ -914,16 +914,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public PriceList getPressPriceList(){
-		return pressPriceList; 
-	}
+    return pressPriceList; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPressPriceList(PriceList newVal) {
-		this.pressPriceList = newVal;
-	}
+    this.pressPriceList = newVal;
+  }
  	
 	
 	/**
@@ -936,16 +936,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public PriceList getStockPriceList(){
-		return stockPriceList; 
-	}
+    return stockPriceList; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockPriceList(PriceList newVal) {
-		this.stockPriceList = newVal;
-	}
+    this.stockPriceList = newVal;
+  }
  	
 	
 	/**
@@ -958,16 +958,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public SpeedTable getSpeedTable(){
-		return speedTable; 
-	}
+    return speedTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSpeedTable(SpeedTable newVal) {
-		this.speedTable = newVal;
-	}
+    this.speedTable = newVal;
+  }
  	
 	
 	/**
@@ -980,16 +980,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCutoffLength(){
-		return cutoffLength; 
-	}
+    return cutoffLength; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCutoffLength(Double newVal) {
-		this.cutoffLength = newVal;
-	}
+    this.cutoffLength = newVal;
+  }
  	
 	
 	/**
@@ -1002,16 +1002,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getPressId(){
-		return pressId; 
-	}
+    return pressId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPressId(String newVal) {
-		this.pressId = newVal;
-	}
+    this.pressId = newVal;
+  }
  	
 	
 	/**
@@ -1026,25 +1026,25 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<ChargeDefinition> getCharges(){
-		return charges; 
-	}
+    return charges; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addCharges(ChargeDefinition obj) {
-		if (charges == null) {
-			charges = new java.util.ArrayList<ChargeDefinition>();
-		}
-		charges.add(obj);
-	}
+    if (charges == null) {
+      charges = new java.util.ArrayList<ChargeDefinition>();
+    }
+    charges.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
-		this.charges = newVal;
-	}
+    this.charges = newVal;
+  }
  	
 	
 	/**
@@ -1057,16 +1057,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMaxRollWidth(){
-		return maxRollWidth; 
-	}
+    return maxRollWidth; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaxRollWidth(String newVal) {
-		this.maxRollWidth = newVal;
-	}
+    this.maxRollWidth = newVal;
+  }
  	
 	
 	/**
@@ -1079,16 +1079,16 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getMinRollWidth(){
-		return minRollWidth; 
-	}
+    return minRollWidth; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinRollWidth(String newVal) {
-		this.minRollWidth = newVal;
-	}
+    this.minRollWidth = newVal;
+  }
  	
 	
 	/**
@@ -1101,64 +1101,64 @@ public class PressDefinition extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getSalesCat(){
-		return salesCat; 
-	}
+    return salesCat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSalesCat(SalesCategory newVal) {
-		this.salesCat = newVal;
-	}
+    this.salesCat = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (MACHINENAME.equals(propertyName)) return getMachineName();
-		if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
-		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
-		if (COSTCENTER.equals(propertyName)) return getCostCenter();
-		if (OEMDEVICEID.equals(propertyName)) return getOemDeviceID();
-		if (MACHINEID.equals(propertyName)) return getMachineID();
-		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
-		if (INTEGRATEDDEVICE.equals(propertyName)) return getIntegratedDevice();
-		if (MAXPAPERSIZE.equals(propertyName)) return getMaxPaperSize();
-		if (MINPAPERSIZE.equals(propertyName)) return getMinPaperSize();
-		if (LABORRATE.equals(propertyName)) return getLaborRate();
-		if (LABORMARKUP.equals(propertyName)) return getLaborMarkup();
-		if (FIXEDWASTE.equals(propertyName)) return getFixedWaste();
-		if (MINLABOR.equals(propertyName)) return getMinLabor();
-		if (SETUPMIN.equals(propertyName)) return getSetupMin();
-		if (SETUPADDSIG.equals(propertyName)) return getSetupAddSig();
-		if (WORKTURNSETUP.equals(propertyName)) return getWorkTurnSetup();
-		if (SETUPADDHEAD.equals(propertyName)) return getSetupAddHead();
-		if (WASHUPFEE.equals(propertyName)) return getWashupFee();
-		if (ADDSIGADDHEAD.equals(propertyName)) return getAddSigAddHead();
-		if (WASHUPMIN.equals(propertyName)) return getWashupMin();
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) return getWashupPerFountain();
-		if (GRIPEDGE.equals(propertyName)) return getGripEdge();
-		if (PERFECTOR.equals(propertyName)) return getPerfector();
-		if (AVGIMPRESSPERHOUR.equals(propertyName)) return getAvgImpressPerHour();
-		if (NUMBERHEADS.equals(propertyName)) return getNumberHeads();
-		if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
-		if (SHEETFED.equals(propertyName)) return getSheetFed();
-		if (ROLLFED.equals(propertyName)) return getRollFed();
-		if (WASTECHART.equals(propertyName)) return getWasteChart();
-		if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
-		if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
-		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
-		if (CUTOFFLENGTH.equals(propertyName)) return getCutoffLength();
-		if (PRESSID.equals(propertyName)) return getPressId();
-		if (CHARGES.equals(propertyName)) return getCharges();
-		if (MAXROLLWIDTH.equals(propertyName)) return getMaxRollWidth();
-		if (MINROLLWIDTH.equals(propertyName)) return getMinRollWidth();
-		if (SALESCAT.equals(propertyName)) return getSalesCat();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (MACHINENAME.equals(propertyName)) return getMachineName();
+    if (OUTPUTDESCRIP.equals(propertyName)) return getOutputDescrip();
+    if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
+    if (COSTCENTER.equals(propertyName)) return getCostCenter();
+    if (OEMDEVICEID.equals(propertyName)) return getOemDeviceID();
+    if (MACHINEID.equals(propertyName)) return getMachineID();
+    if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
+    if (INTEGRATEDDEVICE.equals(propertyName)) return getIntegratedDevice();
+    if (MAXPAPERSIZE.equals(propertyName)) return getMaxPaperSize();
+    if (MINPAPERSIZE.equals(propertyName)) return getMinPaperSize();
+    if (LABORRATE.equals(propertyName)) return getLaborRate();
+    if (LABORMARKUP.equals(propertyName)) return getLaborMarkup();
+    if (FIXEDWASTE.equals(propertyName)) return getFixedWaste();
+    if (MINLABOR.equals(propertyName)) return getMinLabor();
+    if (SETUPMIN.equals(propertyName)) return getSetupMin();
+    if (SETUPADDSIG.equals(propertyName)) return getSetupAddSig();
+    if (WORKTURNSETUP.equals(propertyName)) return getWorkTurnSetup();
+    if (SETUPADDHEAD.equals(propertyName)) return getSetupAddHead();
+    if (WASHUPFEE.equals(propertyName)) return getWashupFee();
+    if (ADDSIGADDHEAD.equals(propertyName)) return getAddSigAddHead();
+    if (WASHUPMIN.equals(propertyName)) return getWashupMin();
+    if (WASHUPPERFOUNTAIN.equals(propertyName)) return getWashupPerFountain();
+    if (GRIPEDGE.equals(propertyName)) return getGripEdge();
+    if (PERFECTOR.equals(propertyName)) return getPerfector();
+    if (AVGIMPRESSPERHOUR.equals(propertyName)) return getAvgImpressPerHour();
+    if (NUMBERHEADS.equals(propertyName)) return getNumberHeads();
+    if (SETUPADDRUN.equals(propertyName)) return getSetupAddRun();
+    if (SHEETFED.equals(propertyName)) return getSheetFed();
+    if (ROLLFED.equals(propertyName)) return getRollFed();
+    if (WASTECHART.equals(propertyName)) return getWasteChart();
+    if (PRESSPRICELIST.equals(propertyName)) return getPressPriceList();
+    if (STOCKPRICELIST.equals(propertyName)) return getStockPriceList();
+    if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
+    if (CUTOFFLENGTH.equals(propertyName)) return getCutoffLength();
+    if (PRESSID.equals(propertyName)) return getPressId();
+    if (CHARGES.equals(propertyName)) return getCharges();
+    if (MAXROLLWIDTH.equals(propertyName)) return getMaxRollWidth();
+    if (MINROLLWIDTH.equals(propertyName)) return getMinRollWidth();
+    if (SALESCAT.equals(propertyName)) return getSalesCat();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -1166,48 +1166,48 @@ public class PressDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (MACHINENAME.equals(propertyName)) setMachineName((String)newValue); else
-		if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
-		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
-		if (COSTCENTER.equals(propertyName)) setCostCenter((String)newValue); else
-		if (OEMDEVICEID.equals(propertyName)) setOemDeviceID((String)newValue); else
-		if (MACHINEID.equals(propertyName)) setMachineID((Long)newValue); else
-		if (COSTINGPRESS.equals(propertyName)) setCostingPress((Boolean)newValue); else
-		if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
-		if (MAXPAPERSIZE.equals(propertyName)) setMaxPaperSize((String)newValue); else
-		if (MINPAPERSIZE.equals(propertyName)) setMinPaperSize((String)newValue); else
-		if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
-		if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Double)newValue); else
-		if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Double)newValue); else
-		if (MINLABOR.equals(propertyName)) setMinLabor((Double)newValue); else
-		if (SETUPMIN.equals(propertyName)) setSetupMin((Double)newValue); else
-		if (SETUPADDSIG.equals(propertyName)) setSetupAddSig((Long)newValue); else
-		if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((Double)newValue); else
-		if (SETUPADDHEAD.equals(propertyName)) setSetupAddHead((Long)newValue); else
-		if (WASHUPFEE.equals(propertyName)) setWashupFee((Double)newValue); else
-		if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Long)newValue); else
-		if (WASHUPMIN.equals(propertyName)) setWashupMin((Long)newValue); else
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Double)newValue); else
-		if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
-		if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
-		if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
-		if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
-		if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
-		if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
-		if (ROLLFED.equals(propertyName)) setRollFed((Boolean)newValue); else
-		if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
-		if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
-		if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
-		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
-		if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Double)newValue); else
-		if (PRESSID.equals(propertyName)) setPressId((String)newValue); else
-		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
-		if (MAXROLLWIDTH.equals(propertyName)) setMaxRollWidth((String)newValue); else
-		if (MINROLLWIDTH.equals(propertyName)) setMinRollWidth((String)newValue); else
-		if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (MACHINENAME.equals(propertyName)) setMachineName((String)newValue); else
+    if (OUTPUTDESCRIP.equals(propertyName)) setOutputDescrip((String)newValue); else
+    if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((String)newValue); else
+    if (COSTCENTER.equals(propertyName)) setCostCenter((String)newValue); else
+    if (OEMDEVICEID.equals(propertyName)) setOemDeviceID((String)newValue); else
+    if (MACHINEID.equals(propertyName)) setMachineID((Long)newValue); else
+    if (COSTINGPRESS.equals(propertyName)) setCostingPress((Boolean)newValue); else
+    if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
+    if (MAXPAPERSIZE.equals(propertyName)) setMaxPaperSize((String)newValue); else
+    if (MINPAPERSIZE.equals(propertyName)) setMinPaperSize((String)newValue); else
+    if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+    if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Double)newValue); else
+    if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Double)newValue); else
+    if (MINLABOR.equals(propertyName)) setMinLabor((Double)newValue); else
+    if (SETUPMIN.equals(propertyName)) setSetupMin((Double)newValue); else
+    if (SETUPADDSIG.equals(propertyName)) setSetupAddSig((Long)newValue); else
+    if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((Double)newValue); else
+    if (SETUPADDHEAD.equals(propertyName)) setSetupAddHead((Long)newValue); else
+    if (WASHUPFEE.equals(propertyName)) setWashupFee((Double)newValue); else
+    if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Long)newValue); else
+    if (WASHUPMIN.equals(propertyName)) setWashupMin((Long)newValue); else
+    if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Double)newValue); else
+    if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
+    if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
+    if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
+    if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
+    if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
+    if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
+    if (ROLLFED.equals(propertyName)) setRollFed((Boolean)newValue); else
+    if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
+    if (PRESSPRICELIST.equals(propertyName)) setPressPriceList((PriceList)newValue); else
+    if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
+    if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
+    if (CUTOFFLENGTH.equals(propertyName)) setCutoffLength((Double)newValue); else
+    if (PRESSID.equals(propertyName)) setPressId((String)newValue); else
+    if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
+    if (MAXROLLWIDTH.equals(propertyName)) setMaxRollWidth((String)newValue); else
+    if (MINROLLWIDTH.equals(propertyName)) setMinRollWidth((String)newValue); else
+    if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -1215,88 +1215,88 @@ public class PressDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (MACHINENAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (OUTPUTDESCRIP.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PRODUCTIONLOCATION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COSTCENTER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (OEMDEVICEID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (MACHINEID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COSTINGPRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (INTEGRATEDDEVICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (MAXPAPERSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (MINPAPERSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (LABORRATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABORMARKUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (FIXEDWASTE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MINLABOR.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SETUPMIN.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SETUPADDSIG.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WORKTURNSETUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SETUPADDHEAD.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WASHUPFEE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (ADDSIGADDHEAD.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WASHUPMIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (GRIPEDGE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PERFECTOR.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (AVGIMPRESSPERHOUR.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (NUMBERHEADS.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SETUPADDRUN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHEETFED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ROLLFED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (WASTECHART.equals(propertyName)) 
-			return new Class<?>[] {WasteChart.class};		
-		if (PRESSPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (STOCKPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (SPEEDTABLE.equals(propertyName)) 
-			return new Class<?>[] {SpeedTable.class};		
-		if (CUTOFFLENGTH.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PRESSID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
-		if (MAXROLLWIDTH.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (MINROLLWIDTH.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SALESCAT.equals(propertyName)) 
-			return new Class<?>[] {SalesCategory.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MACHINENAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OUTPUTDESCRIP.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRODUCTIONLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COSTCENTER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OEMDEVICEID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MACHINEID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (COSTINGPRESS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (INTEGRATEDDEVICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MAXPAPERSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MINPAPERSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (LABORRATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABORMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FIXEDWASTE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MINLABOR.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SETUPMIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SETUPADDSIG.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (WORKTURNSETUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SETUPADDHEAD.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (WASHUPFEE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ADDSIGADDHEAD.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (WASHUPMIN.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (WASHUPPERFOUNTAIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (GRIPEDGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PERFECTOR.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (AVGIMPRESSPERHOUR.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMBERHEADS.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (SETUPADDRUN.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (SHEETFED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ROLLFED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (WASTECHART.equals(propertyName)) 
+      return new Class<?>[] {WasteChart.class};		
+    if (PRESSPRICELIST.equals(propertyName)) 
+      return new Class<?>[] {PriceList.class};		
+    if (STOCKPRICELIST.equals(propertyName)) 
+      return new Class<?>[] {PriceList.class};		
+    if (SPEEDTABLE.equals(propertyName)) 
+      return new Class<?>[] {SpeedTable.class};		
+    if (CUTOFFLENGTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRESSID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CHARGES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+    if (MAXROLLWIDTH.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MINROLLWIDTH.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SALESCAT.equals(propertyName)) 
+      return new Class<?>[] {SalesCategory.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -1305,137 +1305,137 @@ public class PressDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return PressDefinition.class;
-		if (MACHINENAME.equals(propertyName)) return PressDefinition.class;
-		if (OUTPUTDESCRIP.equals(propertyName)) return PressDefinition.class;
-		if (PRODUCTIONLOCATION.equals(propertyName)) return PressDefinition.class;
-		if (COSTCENTER.equals(propertyName)) return PressDefinition.class;
-		if (OEMDEVICEID.equals(propertyName)) return PressDefinition.class;
-		if (MACHINEID.equals(propertyName)) return PressDefinition.class;
-		if (COSTINGPRESS.equals(propertyName)) return PressDefinition.class;
-		if (INTEGRATEDDEVICE.equals(propertyName)) return PressDefinition.class;
-		if (MAXPAPERSIZE.equals(propertyName)) return PressDefinition.class;
-		if (MINPAPERSIZE.equals(propertyName)) return PressDefinition.class;
-		if (LABORRATE.equals(propertyName)) return PressDefinition.class;
-		if (LABORMARKUP.equals(propertyName)) return PressDefinition.class;
-		if (FIXEDWASTE.equals(propertyName)) return PressDefinition.class;
-		if (MINLABOR.equals(propertyName)) return PressDefinition.class;
-		if (SETUPMIN.equals(propertyName)) return PressDefinition.class;
-		if (SETUPADDSIG.equals(propertyName)) return PressDefinition.class;
-		if (WORKTURNSETUP.equals(propertyName)) return PressDefinition.class;
-		if (SETUPADDHEAD.equals(propertyName)) return PressDefinition.class;
-		if (WASHUPFEE.equals(propertyName)) return PressDefinition.class;
-		if (ADDSIGADDHEAD.equals(propertyName)) return PressDefinition.class;
-		if (WASHUPMIN.equals(propertyName)) return PressDefinition.class;
-		if (WASHUPPERFOUNTAIN.equals(propertyName)) return PressDefinition.class;
-		if (GRIPEDGE.equals(propertyName)) return PressDefinition.class;
-		if (PERFECTOR.equals(propertyName)) return PressDefinition.class;
-		if (AVGIMPRESSPERHOUR.equals(propertyName)) return PressDefinition.class;
-		if (NUMBERHEADS.equals(propertyName)) return PressDefinition.class;
-		if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
-		if (SHEETFED.equals(propertyName)) return PressDefinition.class;
-		if (ROLLFED.equals(propertyName)) return PressDefinition.class;
-		if (WASTECHART.equals(propertyName)) return PressDefinition.class;
-		if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
-		if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
-		if (SPEEDTABLE.equals(propertyName)) return PressDefinition.class;
-		if (CUTOFFLENGTH.equals(propertyName)) return PressDefinition.class;
-		if (PRESSID.equals(propertyName)) return PressDefinition.class;
-		if (CHARGES.equals(propertyName)) return PressDefinition.class;
-		if (MAXROLLWIDTH.equals(propertyName)) return PressDefinition.class;
-		if (MINROLLWIDTH.equals(propertyName)) return PressDefinition.class;
-		if (SALESCAT.equals(propertyName)) return PressDefinition.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return PressDefinition.class;
+    if (MACHINENAME.equals(propertyName)) return PressDefinition.class;
+    if (OUTPUTDESCRIP.equals(propertyName)) return PressDefinition.class;
+    if (PRODUCTIONLOCATION.equals(propertyName)) return PressDefinition.class;
+    if (COSTCENTER.equals(propertyName)) return PressDefinition.class;
+    if (OEMDEVICEID.equals(propertyName)) return PressDefinition.class;
+    if (MACHINEID.equals(propertyName)) return PressDefinition.class;
+    if (COSTINGPRESS.equals(propertyName)) return PressDefinition.class;
+    if (INTEGRATEDDEVICE.equals(propertyName)) return PressDefinition.class;
+    if (MAXPAPERSIZE.equals(propertyName)) return PressDefinition.class;
+    if (MINPAPERSIZE.equals(propertyName)) return PressDefinition.class;
+    if (LABORRATE.equals(propertyName)) return PressDefinition.class;
+    if (LABORMARKUP.equals(propertyName)) return PressDefinition.class;
+    if (FIXEDWASTE.equals(propertyName)) return PressDefinition.class;
+    if (MINLABOR.equals(propertyName)) return PressDefinition.class;
+    if (SETUPMIN.equals(propertyName)) return PressDefinition.class;
+    if (SETUPADDSIG.equals(propertyName)) return PressDefinition.class;
+    if (WORKTURNSETUP.equals(propertyName)) return PressDefinition.class;
+    if (SETUPADDHEAD.equals(propertyName)) return PressDefinition.class;
+    if (WASHUPFEE.equals(propertyName)) return PressDefinition.class;
+    if (ADDSIGADDHEAD.equals(propertyName)) return PressDefinition.class;
+    if (WASHUPMIN.equals(propertyName)) return PressDefinition.class;
+    if (WASHUPPERFOUNTAIN.equals(propertyName)) return PressDefinition.class;
+    if (GRIPEDGE.equals(propertyName)) return PressDefinition.class;
+    if (PERFECTOR.equals(propertyName)) return PressDefinition.class;
+    if (AVGIMPRESSPERHOUR.equals(propertyName)) return PressDefinition.class;
+    if (NUMBERHEADS.equals(propertyName)) return PressDefinition.class;
+    if (SETUPADDRUN.equals(propertyName)) return PressDefinition.class;
+    if (SHEETFED.equals(propertyName)) return PressDefinition.class;
+    if (ROLLFED.equals(propertyName)) return PressDefinition.class;
+    if (WASTECHART.equals(propertyName)) return PressDefinition.class;
+    if (PRESSPRICELIST.equals(propertyName)) return PressDefinition.class;
+    if (STOCKPRICELIST.equals(propertyName)) return PressDefinition.class;
+    if (SPEEDTABLE.equals(propertyName)) return PressDefinition.class;
+    if (CUTOFFLENGTH.equals(propertyName)) return PressDefinition.class;
+    if (PRESSID.equals(propertyName)) return PressDefinition.class;
+    if (CHARGES.equals(propertyName)) return PressDefinition.class;
+    if (MAXROLLWIDTH.equals(propertyName)) return PressDefinition.class;
+    if (MINROLLWIDTH.equals(propertyName)) return PressDefinition.class;
+    if (SALESCAT.equals(propertyName)) return PressDefinition.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PressDefinition objT = (PressDefinition)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getMachineName(), objT.getMachineName()))
-			return false;
-		if (! SmartEquals(getOutputDescrip(), objT.getOutputDescrip()))
-			return false;
-		if (! SmartEquals(getProductionLocation(), objT.getProductionLocation()))
-			return false;
-		if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
-			return false;
-		if (! SmartEquals(getOemDeviceID(), objT.getOemDeviceID()))
-			return false;
-		if (! SmartEquals(getMachineID(), objT.getMachineID()))
-			return false;
-		if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
-			return false;
-		if (! SmartEquals(getIntegratedDevice(), objT.getIntegratedDevice()))
-			return false;
-		if (! SmartEquals(getMaxPaperSize(), objT.getMaxPaperSize()))
-			return false;
-		if (! SmartEquals(getMinPaperSize(), objT.getMinPaperSize()))
-			return false;
-		if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
-			return false;
-		if (! SmartEquals(getLaborMarkup(), objT.getLaborMarkup()))
-			return false;
-		if (! SmartEquals(getFixedWaste(), objT.getFixedWaste()))
-			return false;
-		if (! SmartEquals(getMinLabor(), objT.getMinLabor()))
-			return false;
-		if (! SmartEquals(getSetupMin(), objT.getSetupMin()))
-			return false;
-		if (! SmartEquals(getSetupAddSig(), objT.getSetupAddSig()))
-			return false;
-		if (! SmartEquals(getWorkTurnSetup(), objT.getWorkTurnSetup()))
-			return false;
-		if (! SmartEquals(getSetupAddHead(), objT.getSetupAddHead()))
-			return false;
-		if (! SmartEquals(getWashupFee(), objT.getWashupFee()))
-			return false;
-		if (! SmartEquals(getAddSigAddHead(), objT.getAddSigAddHead()))
-			return false;
-		if (! SmartEquals(getWashupMin(), objT.getWashupMin()))
-			return false;
-		if (! SmartEquals(getWashupPerFountain(), objT.getWashupPerFountain()))
-			return false;
-		if (! SmartEquals(getGripEdge(), objT.getGripEdge()))
-			return false;
-		if (! SmartEquals(getPerfector(), objT.getPerfector()))
-			return false;
-		if (! SmartEquals(getAvgImpressPerHour(), objT.getAvgImpressPerHour()))
-			return false;
-		if (! SmartEquals(getNumberHeads(), objT.getNumberHeads()))
-			return false;
-		if (! SmartEquals(getSetupAddRun(), objT.getSetupAddRun()))
-			return false;
-		if (! SmartEquals(getSheetFed(), objT.getSheetFed()))
-			return false;
-		if (! SmartEquals(getRollFed(), objT.getRollFed()))
-			return false;
-		if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
-			return false;
-		if (! SmartEquals(getPressPriceList(), objT.getPressPriceList()))
-			return false;
-		if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
-			return false;
-		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
-			return false;
-		if (! SmartEquals(getCutoffLength(), objT.getCutoffLength()))
-			return false;
-		if (! SmartEquals(getPressId(), objT.getPressId()))
-			return false;
-		if (! SmartEquals(getCharges(), objT.getCharges()))
-			return false;
-		if (! SmartEquals(getMaxRollWidth(), objT.getMaxRollWidth()))
-			return false;
-		if (! SmartEquals(getMinRollWidth(), objT.getMinRollWidth()))
-			return false;
-		if (! SmartEquals(getSalesCat(), objT.getSalesCat()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PressDefinition objT = (PressDefinition)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getMachineName(), objT.getMachineName()))
+      return false;
+    if (! SmartEquals(getOutputDescrip(), objT.getOutputDescrip()))
+      return false;
+    if (! SmartEquals(getProductionLocation(), objT.getProductionLocation()))
+      return false;
+    if (! SmartEquals(getCostCenter(), objT.getCostCenter()))
+      return false;
+    if (! SmartEquals(getOemDeviceID(), objT.getOemDeviceID()))
+      return false;
+    if (! SmartEquals(getMachineID(), objT.getMachineID()))
+      return false;
+    if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
+      return false;
+    if (! SmartEquals(getIntegratedDevice(), objT.getIntegratedDevice()))
+      return false;
+    if (! SmartEquals(getMaxPaperSize(), objT.getMaxPaperSize()))
+      return false;
+    if (! SmartEquals(getMinPaperSize(), objT.getMinPaperSize()))
+      return false;
+    if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
+      return false;
+    if (! SmartEquals(getLaborMarkup(), objT.getLaborMarkup()))
+      return false;
+    if (! SmartEquals(getFixedWaste(), objT.getFixedWaste()))
+      return false;
+    if (! SmartEquals(getMinLabor(), objT.getMinLabor()))
+      return false;
+    if (! SmartEquals(getSetupMin(), objT.getSetupMin()))
+      return false;
+    if (! SmartEquals(getSetupAddSig(), objT.getSetupAddSig()))
+      return false;
+    if (! SmartEquals(getWorkTurnSetup(), objT.getWorkTurnSetup()))
+      return false;
+    if (! SmartEquals(getSetupAddHead(), objT.getSetupAddHead()))
+      return false;
+    if (! SmartEquals(getWashupFee(), objT.getWashupFee()))
+      return false;
+    if (! SmartEquals(getAddSigAddHead(), objT.getAddSigAddHead()))
+      return false;
+    if (! SmartEquals(getWashupMin(), objT.getWashupMin()))
+      return false;
+    if (! SmartEquals(getWashupPerFountain(), objT.getWashupPerFountain()))
+      return false;
+    if (! SmartEquals(getGripEdge(), objT.getGripEdge()))
+      return false;
+    if (! SmartEquals(getPerfector(), objT.getPerfector()))
+      return false;
+    if (! SmartEquals(getAvgImpressPerHour(), objT.getAvgImpressPerHour()))
+      return false;
+    if (! SmartEquals(getNumberHeads(), objT.getNumberHeads()))
+      return false;
+    if (! SmartEquals(getSetupAddRun(), objT.getSetupAddRun()))
+      return false;
+    if (! SmartEquals(getSheetFed(), objT.getSheetFed()))
+      return false;
+    if (! SmartEquals(getRollFed(), objT.getRollFed()))
+      return false;
+    if (! SmartEquals(getWasteChart(), objT.getWasteChart()))
+      return false;
+    if (! SmartEquals(getPressPriceList(), objT.getPressPriceList()))
+      return false;
+    if (! SmartEquals(getStockPriceList(), objT.getStockPriceList()))
+      return false;
+    if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
+      return false;
+    if (! SmartEquals(getCutoffLength(), objT.getCutoffLength()))
+      return false;
+    if (! SmartEquals(getPressId(), objT.getPressId()))
+      return false;
+    if (! SmartEquals(getCharges(), objT.getCharges()))
+      return false;
+    if (! SmartEquals(getMaxRollWidth(), objT.getMaxRollWidth()))
+      return false;
+    if (! SmartEquals(getMinRollWidth(), objT.getMinRollWidth()))
+      return false;
+    if (! SmartEquals(getSalesCat(), objT.getSalesCat()))
+      return false;
+    return true;
+  }			
 }

@@ -5,7 +5,7 @@ package com.efi.printsmith.data
 	
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Matrix")]
-	[Managed]
+
 	public class Matrix extends ModelBase
 	{
 

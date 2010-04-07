@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SquareAreaCharge.findall", query = "from SquareAreaCharge"),
-	@NamedQuery(name = "SquareAreaCharge.byId", query = "select a from SquareAreaCharge a where a.id= :id")
+  @NamedQuery(name = "SquareAreaCharge.findall", query = "from SquareAreaCharge"),
+  @NamedQuery(name = "SquareAreaCharge.byId", query = "select a from SquareAreaCharge a where a.id= :id")
 })
 
 
@@ -53,9 +53,9 @@ public class SquareAreaCharge extends Charge {
 	 * @generated
 	 */
 	public SquareAreaCharge() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -69,16 +69,16 @@ public class SquareAreaCharge extends Charge {
 	 * @generated
  	 */
 	public Boolean getOverrideArea(){
-		return overrideArea; 
-	}
+    return overrideArea; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideArea(Boolean newVal) {
-		this.overrideArea = newVal;
-	}
+    this.overrideArea = newVal;
+  }
  	
 	
 	/**
@@ -91,26 +91,26 @@ public class SquareAreaCharge extends Charge {
 	 * @generated
  	 */
 	public Double getArea(){
-		return area; 
-	}
+    return area; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setArea(Double newVal) {
-		this.area = newVal;
-	}
+    this.area = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (OVERRIDEAREA.equals(propertyName)) return getOverrideArea();
-		if (AREA.equals(propertyName)) return getArea();
-		return super.getProperty(propertyName);
-	}
+    if (OVERRIDEAREA.equals(propertyName)) return getOverrideArea();
+    if (AREA.equals(propertyName)) return getArea();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -118,10 +118,10 @@ public class SquareAreaCharge extends Charge {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (OVERRIDEAREA.equals(propertyName)) setOverrideArea((Boolean)newValue); else
-		if (AREA.equals(propertyName)) setArea((Double)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (OVERRIDEAREA.equals(propertyName)) setOverrideArea((Boolean)newValue); else
+    if (AREA.equals(propertyName)) setArea((Double)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -129,12 +129,12 @@ public class SquareAreaCharge extends Charge {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (OVERRIDEAREA.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (AREA.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (OVERRIDEAREA.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (AREA.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -143,23 +143,23 @@ public class SquareAreaCharge extends Charge {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (OVERRIDEAREA.equals(propertyName)) return SquareAreaCharge.class;
-		if (AREA.equals(propertyName)) return SquareAreaCharge.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (OVERRIDEAREA.equals(propertyName)) return SquareAreaCharge.class;
+    if (AREA.equals(propertyName)) return SquareAreaCharge.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SquareAreaCharge objT = (SquareAreaCharge)obj;
-		if (! SmartEquals(getOverrideArea(), objT.getOverrideArea()))
-			return false;
-		if (! SmartEquals(getArea(), objT.getArea()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    SquareAreaCharge objT = (SquareAreaCharge)obj;
+    if (! SmartEquals(getOverrideArea(), objT.getOverrideArea()))
+      return false;
+    if (! SmartEquals(getArea(), objT.getArea()))
+      return false;
+    return true;
+  }			
 }

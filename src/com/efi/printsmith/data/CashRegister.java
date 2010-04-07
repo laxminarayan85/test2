@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "CashRegister.findall", query = "from CashRegister"),
-	@NamedQuery(name = "CashRegister.byId", query = "select a from CashRegister a where a.id= :id")
+  @NamedQuery(name = "CashRegister.findall", query = "from CashRegister"),
+  @NamedQuery(name = "CashRegister.byId", query = "select a from CashRegister a where a.id= :id")
 })
 
 
@@ -113,9 +113,9 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */
 	public CashRegister() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -129,16 +129,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Account getCustomerAccount(){
-		return customerAccount; 
-	}
+    return customerAccount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCustomerAccount(Account newVal) {
-		this.customerAccount = newVal;
-	}
+    this.customerAccount = newVal;
+  }
  	
 	
 	/**
@@ -151,16 +151,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public TaxTable getTaxTable(){
-		return taxTable; 
-	}
+    return taxTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxTable(TaxTable newVal) {
-		this.taxTable = newVal;
-	}
+    this.taxTable = newVal;
+  }
  	
 	
 	/**
@@ -173,16 +173,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public TaxCodes getTaxCode(){
-		return taxCode; 
-	}
+    return taxCode; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxCode(TaxCodes newVal) {
-		this.taxCode = newVal;
-	}
+    this.taxCode = newVal;
+  }
  	
 	
 	/**
@@ -195,16 +195,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getQuantity(){
-		return quantity; 
-	}
+    return quantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantity(Double newVal) {
-		this.quantity = newVal;
-	}
+    this.quantity = newVal;
+  }
  	
 	
 	/**
@@ -217,16 +217,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getUnitprice(){
-		return unitprice; 
-	}
+    return unitprice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitprice(Double newVal) {
-		this.unitprice = newVal;
-	}
+    this.unitprice = newVal;
+  }
  	
 	
 	/**
@@ -239,16 +239,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getTotalprice(){
-		return totalprice; 
-	}
+    return totalprice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalprice(Double newVal) {
-		this.totalprice = newVal;
-	}
+    this.totalprice = newVal;
+  }
  	
 	
 	/**
@@ -261,16 +261,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -283,16 +283,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getInvoiceFormat(){
-		return invoiceFormat; 
-	}
+    return invoiceFormat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInvoiceFormat(String newVal) {
-		this.invoiceFormat = newVal;
-	}
+    this.invoiceFormat = newVal;
+  }
  	
 	
 	/**
@@ -305,16 +305,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getPaymentMethod(){
-		return paymentMethod; 
-	}
+    return paymentMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPaymentMethod(String newVal) {
-		this.paymentMethod = newVal;
-	}
+    this.paymentMethod = newVal;
+  }
  	
 	
 	/**
@@ -327,16 +327,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getSubtotal(){
-		return subtotal; 
-	}
+    return subtotal; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSubtotal(Double newVal) {
-		this.subtotal = newVal;
-	}
+    this.subtotal = newVal;
+  }
  	
 	
 	/**
@@ -349,16 +349,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getTaxamount(){
-		return taxamount; 
-	}
+    return taxamount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxamount(Double newVal) {
-		this.taxamount = newVal;
-	}
+    this.taxamount = newVal;
+  }
  	
 	
 	/**
@@ -371,16 +371,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getTendered(){
-		return tendered; 
-	}
+    return tendered; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTendered(Double newVal) {
-		this.tendered = newVal;
-	}
+    this.tendered = newVal;
+  }
  	
 	
 	/**
@@ -393,16 +393,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getChange(){
-		return change; 
-	}
+    return change; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChange(Double newVal) {
-		this.change = newVal;
-	}
+    this.change = newVal;
+  }
  	
 	
 	/**
@@ -415,16 +415,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public PreferencesCreditCard getCreditCard(){
-		return creditCard; 
-	}
+    return creditCard; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCreditCard(PreferencesCreditCard newVal) {
-		this.creditCard = newVal;
-	}
+    this.creditCard = newVal;
+  }
  	
 	
 	/**
@@ -437,16 +437,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getRefNumber(){
-		return refNumber; 
-	}
+    return refNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRefNumber(String newVal) {
-		this.refNumber = newVal;
-	}
+    this.refNumber = newVal;
+  }
  	
 	
 	/**
@@ -459,16 +459,16 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getPaymentAmount(){
-		return paymentAmount; 
-	}
+    return paymentAmount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPaymentAmount(Double newVal) {
-		this.paymentAmount = newVal;
-	}
+    this.paymentAmount = newVal;
+  }
  	
 	
 	/**
@@ -481,41 +481,41 @@ public class CashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getCheckNumber(){
-		return checkNumber; 
-	}
+    return checkNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCheckNumber(String newVal) {
-		this.checkNumber = newVal;
-	}
+    this.checkNumber = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CUSTOMERACCOUNT.equals(propertyName)) return getCustomerAccount();
-		if (TAXTABLE.equals(propertyName)) return getTaxTable();
-		if (TAXCODE.equals(propertyName)) return getTaxCode();
-		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (UNITPRICE.equals(propertyName)) return getUnitprice();
-		if (TOTALPRICE.equals(propertyName)) return getTotalprice();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (INVOICEFORMAT.equals(propertyName)) return getInvoiceFormat();
-		if (PAYMENTMETHOD.equals(propertyName)) return getPaymentMethod();
-		if (SUBTOTAL.equals(propertyName)) return getSubtotal();
-		if (TAXAMOUNT.equals(propertyName)) return getTaxamount();
-		if (TENDERED.equals(propertyName)) return getTendered();
-		if (CHANGE.equals(propertyName)) return getChange();
-		if (CREDITCARD.equals(propertyName)) return getCreditCard();
-		if (REFNUMBER.equals(propertyName)) return getRefNumber();
-		if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
-		if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
-		return super.getProperty(propertyName);
-	}
+    if (CUSTOMERACCOUNT.equals(propertyName)) return getCustomerAccount();
+    if (TAXTABLE.equals(propertyName)) return getTaxTable();
+    if (TAXCODE.equals(propertyName)) return getTaxCode();
+    if (QUANTITY.equals(propertyName)) return getQuantity();
+    if (UNITPRICE.equals(propertyName)) return getUnitprice();
+    if (TOTALPRICE.equals(propertyName)) return getTotalprice();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (INVOICEFORMAT.equals(propertyName)) return getInvoiceFormat();
+    if (PAYMENTMETHOD.equals(propertyName)) return getPaymentMethod();
+    if (SUBTOTAL.equals(propertyName)) return getSubtotal();
+    if (TAXAMOUNT.equals(propertyName)) return getTaxamount();
+    if (TENDERED.equals(propertyName)) return getTendered();
+    if (CHANGE.equals(propertyName)) return getChange();
+    if (CREDITCARD.equals(propertyName)) return getCreditCard();
+    if (REFNUMBER.equals(propertyName)) return getRefNumber();
+    if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
+    if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -523,25 +523,25 @@ public class CashRegister extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CUSTOMERACCOUNT.equals(propertyName)) setCustomerAccount((Account)newValue); else
-		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-		if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
-		if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
-		if (UNITPRICE.equals(propertyName)) setUnitprice((Double)newValue); else
-		if (TOTALPRICE.equals(propertyName)) setTotalprice((Double)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (INVOICEFORMAT.equals(propertyName)) setInvoiceFormat((String)newValue); else
-		if (PAYMENTMETHOD.equals(propertyName)) setPaymentMethod((String)newValue); else
-		if (SUBTOTAL.equals(propertyName)) setSubtotal((Double)newValue); else
-		if (TAXAMOUNT.equals(propertyName)) setTaxamount((Double)newValue); else
-		if (TENDERED.equals(propertyName)) setTendered((Double)newValue); else
-		if (CHANGE.equals(propertyName)) setChange((Double)newValue); else
-		if (CREDITCARD.equals(propertyName)) setCreditCard((PreferencesCreditCard)newValue); else
-		if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
-		if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((Double)newValue); else
-		if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CUSTOMERACCOUNT.equals(propertyName)) setCustomerAccount((Account)newValue); else
+    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
+    if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
+    if (UNITPRICE.equals(propertyName)) setUnitprice((Double)newValue); else
+    if (TOTALPRICE.equals(propertyName)) setTotalprice((Double)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (INVOICEFORMAT.equals(propertyName)) setInvoiceFormat((String)newValue); else
+    if (PAYMENTMETHOD.equals(propertyName)) setPaymentMethod((String)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubtotal((Double)newValue); else
+    if (TAXAMOUNT.equals(propertyName)) setTaxamount((Double)newValue); else
+    if (TENDERED.equals(propertyName)) setTendered((Double)newValue); else
+    if (CHANGE.equals(propertyName)) setChange((Double)newValue); else
+    if (CREDITCARD.equals(propertyName)) setCreditCard((PreferencesCreditCard)newValue); else
+    if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
+    if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((Double)newValue); else
+    if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -549,42 +549,42 @@ public class CashRegister extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CUSTOMERACCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Account.class};		
-		if (TAXTABLE.equals(propertyName)) 
-			return new Class<?>[] {TaxTable.class};		
-		if (TAXCODE.equals(propertyName)) 
-			return new Class<?>[] {TaxCodes.class};		
-		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (UNITPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOTALPRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (INVOICEFORMAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PAYMENTMETHOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SUBTOTAL.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TAXAMOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TENDERED.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CHANGE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CREDITCARD.equals(propertyName)) 
-			return new Class<?>[] {PreferencesCreditCard.class};		
-		if (REFNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PAYMENTAMOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CHECKNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CUSTOMERACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
+    if (TAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (TAXCODE.equals(propertyName)) 
+      return new Class<?>[] {TaxCodes.class};		
+    if (QUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INVOICEFORMAT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PAYMENTMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TAXAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TENDERED.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CHANGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CREDITCARD.equals(propertyName)) 
+      return new Class<?>[] {PreferencesCreditCard.class};		
+    if (REFNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PAYMENTAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CHECKNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -593,68 +593,68 @@ public class CashRegister extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CUSTOMERACCOUNT.equals(propertyName)) return CashRegister.class;
-		if (TAXTABLE.equals(propertyName)) return CashRegister.class;
-		if (TAXCODE.equals(propertyName)) return CashRegister.class;
-		if (QUANTITY.equals(propertyName)) return CashRegister.class;
-		if (UNITPRICE.equals(propertyName)) return CashRegister.class;
-		if (TOTALPRICE.equals(propertyName)) return CashRegister.class;
-		if (DESCRIPTION.equals(propertyName)) return CashRegister.class;
-		if (INVOICEFORMAT.equals(propertyName)) return CashRegister.class;
-		if (PAYMENTMETHOD.equals(propertyName)) return CashRegister.class;
-		if (SUBTOTAL.equals(propertyName)) return CashRegister.class;
-		if (TAXAMOUNT.equals(propertyName)) return CashRegister.class;
-		if (TENDERED.equals(propertyName)) return CashRegister.class;
-		if (CHANGE.equals(propertyName)) return CashRegister.class;
-		if (CREDITCARD.equals(propertyName)) return CashRegister.class;
-		if (REFNUMBER.equals(propertyName)) return CashRegister.class;
-		if (PAYMENTAMOUNT.equals(propertyName)) return CashRegister.class;
-		if (CHECKNUMBER.equals(propertyName)) return CashRegister.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CUSTOMERACCOUNT.equals(propertyName)) return CashRegister.class;
+    if (TAXTABLE.equals(propertyName)) return CashRegister.class;
+    if (TAXCODE.equals(propertyName)) return CashRegister.class;
+    if (QUANTITY.equals(propertyName)) return CashRegister.class;
+    if (UNITPRICE.equals(propertyName)) return CashRegister.class;
+    if (TOTALPRICE.equals(propertyName)) return CashRegister.class;
+    if (DESCRIPTION.equals(propertyName)) return CashRegister.class;
+    if (INVOICEFORMAT.equals(propertyName)) return CashRegister.class;
+    if (PAYMENTMETHOD.equals(propertyName)) return CashRegister.class;
+    if (SUBTOTAL.equals(propertyName)) return CashRegister.class;
+    if (TAXAMOUNT.equals(propertyName)) return CashRegister.class;
+    if (TENDERED.equals(propertyName)) return CashRegister.class;
+    if (CHANGE.equals(propertyName)) return CashRegister.class;
+    if (CREDITCARD.equals(propertyName)) return CashRegister.class;
+    if (REFNUMBER.equals(propertyName)) return CashRegister.class;
+    if (PAYMENTAMOUNT.equals(propertyName)) return CashRegister.class;
+    if (CHECKNUMBER.equals(propertyName)) return CashRegister.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		CashRegister objT = (CashRegister)obj;
-		if (! SmartEquals(getCustomerAccount(), objT.getCustomerAccount()))
-			return false;
-		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-			return false;
-		if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
-			return false;
-		if (! SmartEquals(getQuantity(), objT.getQuantity()))
-			return false;
-		if (! SmartEquals(getUnitprice(), objT.getUnitprice()))
-			return false;
-		if (! SmartEquals(getTotalprice(), objT.getTotalprice()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getInvoiceFormat(), objT.getInvoiceFormat()))
-			return false;
-		if (! SmartEquals(getPaymentMethod(), objT.getPaymentMethod()))
-			return false;
-		if (! SmartEquals(getSubtotal(), objT.getSubtotal()))
-			return false;
-		if (! SmartEquals(getTaxamount(), objT.getTaxamount()))
-			return false;
-		if (! SmartEquals(getTendered(), objT.getTendered()))
-			return false;
-		if (! SmartEquals(getChange(), objT.getChange()))
-			return false;
-		if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
-			return false;
-		if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
-			return false;
-		if (! SmartEquals(getPaymentAmount(), objT.getPaymentAmount()))
-			return false;
-		if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    CashRegister objT = (CashRegister)obj;
+    if (! SmartEquals(getCustomerAccount(), objT.getCustomerAccount()))
+      return false;
+    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+      return false;
+    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
+      return false;
+    if (! SmartEquals(getQuantity(), objT.getQuantity()))
+      return false;
+    if (! SmartEquals(getUnitprice(), objT.getUnitprice()))
+      return false;
+    if (! SmartEquals(getTotalprice(), objT.getTotalprice()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getInvoiceFormat(), objT.getInvoiceFormat()))
+      return false;
+    if (! SmartEquals(getPaymentMethod(), objT.getPaymentMethod()))
+      return false;
+    if (! SmartEquals(getSubtotal(), objT.getSubtotal()))
+      return false;
+    if (! SmartEquals(getTaxamount(), objT.getTaxamount()))
+      return false;
+    if (! SmartEquals(getTendered(), objT.getTendered()))
+      return false;
+    if (! SmartEquals(getChange(), objT.getChange()))
+      return false;
+    if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
+      return false;
+    if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
+      return false;
+    if (! SmartEquals(getPaymentAmount(), objT.getPaymentAmount()))
+      return false;
+    if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
+      return false;
+    return true;
+  }			
 }

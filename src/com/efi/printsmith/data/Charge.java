@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Charge.findall", query = "from Charge"),
-	@NamedQuery(name = "Charge.byId", query = "select a from Charge a where a.id= :id")
+  @NamedQuery(name = "Charge.findall", query = "from Charge"),
+  @NamedQuery(name = "Charge.byId", query = "select a from Charge a where a.id= :id")
 })
 
 
@@ -165,9 +165,9 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public Charge() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -181,16 +181,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public ChargeDefinition getChargeDefinition(){
-		return chargeDefinition; 
-	}
+    return chargeDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChargeDefinition(ChargeDefinition newVal) {
-		this.chargeDefinition = newVal;
-	}
+    this.chargeDefinition = newVal;
+  }
  	
 	
 	/**
@@ -203,16 +203,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -225,16 +225,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public String getNotes(){
-		return notes; 
-	}
+    return notes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotes(String newVal) {
-		this.notes = newVal;
-	}
+    this.notes = newVal;
+  }
  	
 	
 	/**
@@ -247,16 +247,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Location getProductionLocation(){
-		return productionLocation; 
-	}
+    return productionLocation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setProductionLocation(Location newVal) {
-		this.productionLocation = newVal;
-	}
+    this.productionLocation = newVal;
+  }
  	
 	
 	/**
@@ -269,16 +269,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowNotes(){
-		return showNotes; 
-	}
+    return showNotes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowNotes(Boolean newVal) {
-		this.showNotes = newVal;
-	}
+    this.showNotes = newVal;
+  }
  	
 	
 	/**
@@ -291,16 +291,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getFinished(){
-		return finished; 
-	}
+    return finished; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFinished(Boolean newVal) {
-		this.finished = newVal;
-	}
+    this.finished = newVal;
+  }
  	
 	
 	/**
@@ -313,16 +313,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxable(){
-		return taxable; 
-	}
+    return taxable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxable(Boolean newVal) {
-		this.taxable = newVal;
-	}
+    this.taxable = newVal;
+  }
  	
 	
 	/**
@@ -335,16 +335,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBrokered(){
-		return brokered; 
-	}
+    return brokered; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBrokered(Boolean newVal) {
-		this.brokered = newVal;
-	}
+    this.brokered = newVal;
+  }
  	
 	
 	/**
@@ -357,16 +357,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDisplayQty(){
-		return displayQty; 
-	}
+    return displayQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDisplayQty(Boolean newVal) {
-		this.displayQty = newVal;
-	}
+    this.displayQty = newVal;
+  }
  	
 	
 	/**
@@ -379,16 +379,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHidden(){
-		return hidden; 
-	}
+    return hidden; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHidden(Boolean newVal) {
-		this.hidden = newVal;
-	}
+    this.hidden = newVal;
+  }
  	
 	
 	/**
@@ -401,16 +401,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHidePrice(){
-		return hidePrice; 
-	}
+    return hidePrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHidePrice(Boolean newVal) {
-		this.hidePrice = newVal;
-	}
+    this.hidePrice = newVal;
+  }
  	
 	
 	/**
@@ -423,16 +423,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getPrice(){
-		return price; 
-	}
+    return price; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrice(Double newVal) {
-		this.price = newVal;
-	}
+    this.price = newVal;
+  }
  	
 	
 	/**
@@ -445,16 +445,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverridePrice(){
-		return overridePrice; 
-	}
+    return overridePrice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverridePrice(Boolean newVal) {
-		this.overridePrice = newVal;
-	}
+    this.overridePrice = newVal;
+  }
  	
 	
 	/**
@@ -467,16 +467,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getQuantity(){
-		return quantity; 
-	}
+    return quantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantity(Double newVal) {
-		this.quantity = newVal;
-	}
+    this.quantity = newVal;
+  }
  	
 	
 	/**
@@ -489,16 +489,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideQuantity(){
-		return overrideQuantity; 
-	}
+    return overrideQuantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideQuantity(Boolean newVal) {
-		this.overrideQuantity = newVal;
-	}
+    this.overrideQuantity = newVal;
+  }
  	
 	
 	/**
@@ -511,16 +511,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getMaterialQty(){
-		return materialQty; 
-	}
+    return materialQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaterialQty(Double newVal) {
-		this.materialQty = newVal;
-	}
+    this.materialQty = newVal;
+  }
  	
 	
 	/**
@@ -533,16 +533,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideMaterialQuantity(){
-		return overrideMaterialQuantity; 
-	}
+    return overrideMaterialQuantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideMaterialQuantity(Boolean newVal) {
-		this.overrideMaterialQuantity = newVal;
-	}
+    this.overrideMaterialQuantity = newVal;
+  }
  	
 	
 	/**
@@ -555,16 +555,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getRate(){
-		return rate; 
-	}
+    return rate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRate(Double newVal) {
-		this.rate = newVal;
-	}
+    this.rate = newVal;
+  }
  	
 	
 	/**
@@ -577,16 +577,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideRate(){
-		return overrideRate; 
-	}
+    return overrideRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideRate(Boolean newVal) {
-		this.overrideRate = newVal;
-	}
+    this.overrideRate = newVal;
+  }
  	
 	
 	/**
@@ -599,16 +599,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Integer getUp(){
-		return up; 
-	}
+    return up; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUp(Integer newVal) {
-		this.up = newVal;
-	}
+    this.up = newVal;
+  }
  	
 	
 	/**
@@ -621,16 +621,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideUp(){
-		return overrideUp; 
-	}
+    return overrideUp; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideUp(Boolean newVal) {
-		this.overrideUp = newVal;
-	}
+    this.overrideUp = newVal;
+  }
  	
 	
 	/**
@@ -643,16 +643,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public JobBase getParentJob(){
-		return parentJob; 
-	}
+    return parentJob; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParentJob(JobBase newVal) {
-		this.parentJob = newVal;
-	}
+    this.parentJob = newVal;
+  }
  	
 	
 	/**
@@ -665,16 +665,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Invoice getParentInvoice(){
-		return parentInvoice; 
-	}
+    return parentInvoice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParentInvoice(Invoice newVal) {
-		this.parentInvoice = newVal;
-	}
+    this.parentInvoice = newVal;
+  }
  	
 	
 	/**
@@ -687,16 +687,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getMinimumCharge(){
-		return minimumCharge; 
-	}
+    return minimumCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinimumCharge(Double newVal) {
-		this.minimumCharge = newVal;
-	}
+    this.minimumCharge = newVal;
+  }
  	
 	
 	/**
@@ -709,16 +709,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getSets(){
-		return sets; 
-	}
+    return sets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSets(Double newVal) {
-		this.sets = newVal;
-	}
+    this.sets = newVal;
+  }
  	
 	
 	/**
@@ -731,16 +731,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getMaterialSets(){
-		return materialSets; 
-	}
+    return materialSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaterialSets(Double newVal) {
-		this.materialSets = newVal;
-	}
+    this.materialSets = newVal;
+  }
  	
 	
 	/**
@@ -753,16 +753,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Double getQtyPerSet(){
-		return qtyPerSet; 
-	}
+    return qtyPerSet; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtyPerSet(Double newVal) {
-		this.qtyPerSet = newVal;
-	}
+    this.qtyPerSet = newVal;
+  }
  	
 	
 	/**
@@ -775,16 +775,16 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Date getStartTime(){
-		return startTime; 
-	}
+    return startTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStartTime(Date newVal) {
-		this.startTime = newVal;
-	}
+    this.startTime = newVal;
+  }
  	
 	
 	/**
@@ -797,76 +797,76 @@ public class Charge extends ModelBase {
 	 * @generated
  	 */
 	public Date getEndTime(){
-		return endTime; 
-	}
+    return endTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEndTime(Date newVal) {
-		this.endTime = newVal;
-	}
+    this.endTime = newVal;
+  }
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne (cascade = {CascadeType.ALL})
+    @ManyToOne
 	private ChargeCostingRecord chargeCostingRecord;
 	
 	/**
 	 * @generated
  	 */
 	public ChargeCostingRecord getChargeCostingRecord(){
-		return chargeCostingRecord; 
-	}
+    return chargeCostingRecord; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChargeCostingRecord(ChargeCostingRecord newVal) {
-		this.chargeCostingRecord = newVal;
-	}
+    this.chargeCostingRecord = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CHARGEDEFINITION.equals(propertyName)) return getChargeDefinition();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (NOTES.equals(propertyName)) return getNotes();
-		if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
-		if (SHOWNOTES.equals(propertyName)) return getShowNotes();
-		if (FINISHED.equals(propertyName)) return getFinished();
-		if (TAXABLE.equals(propertyName)) return getTaxable();
-		if (BROKERED.equals(propertyName)) return getBrokered();
-		if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
-		if (HIDDEN.equals(propertyName)) return getHidden();
-		if (HIDEPRICE.equals(propertyName)) return getHidePrice();
-		if (PRICE.equals(propertyName)) return getPrice();
-		if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
-		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (OVERRIDEQUANTITY.equals(propertyName)) return getOverrideQuantity();
-		if (MATERIALQTY.equals(propertyName)) return getMaterialQty();
-		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return getOverrideMaterialQuantity();
-		if (RATE.equals(propertyName)) return getRate();
-		if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
-		if (UP.equals(propertyName)) return getUp();
-		if (OVERRIDEUP.equals(propertyName)) return getOverrideUp();
-		if (PARENTJOB.equals(propertyName)) return getParentJob();
-		if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
-		if (MINIMUMCHARGE.equals(propertyName)) return getMinimumCharge();
-		if (SETS.equals(propertyName)) return getSets();
-		if (MATERIALSETS.equals(propertyName)) return getMaterialSets();
-		if (QTYPERSET.equals(propertyName)) return getQtyPerSet();
-		if (STARTTIME.equals(propertyName)) return getStartTime();
-		if (ENDTIME.equals(propertyName)) return getEndTime();
-		if (CHARGECOSTINGRECORD.equals(propertyName)) return getChargeCostingRecord();
-		return super.getProperty(propertyName);
-	}
+    if (CHARGEDEFINITION.equals(propertyName)) return getChargeDefinition();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (NOTES.equals(propertyName)) return getNotes();
+    if (PRODUCTIONLOCATION.equals(propertyName)) return getProductionLocation();
+    if (SHOWNOTES.equals(propertyName)) return getShowNotes();
+    if (FINISHED.equals(propertyName)) return getFinished();
+    if (TAXABLE.equals(propertyName)) return getTaxable();
+    if (BROKERED.equals(propertyName)) return getBrokered();
+    if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
+    if (HIDDEN.equals(propertyName)) return getHidden();
+    if (HIDEPRICE.equals(propertyName)) return getHidePrice();
+    if (PRICE.equals(propertyName)) return getPrice();
+    if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
+    if (QUANTITY.equals(propertyName)) return getQuantity();
+    if (OVERRIDEQUANTITY.equals(propertyName)) return getOverrideQuantity();
+    if (MATERIALQTY.equals(propertyName)) return getMaterialQty();
+    if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return getOverrideMaterialQuantity();
+    if (RATE.equals(propertyName)) return getRate();
+    if (OVERRIDERATE.equals(propertyName)) return getOverrideRate();
+    if (UP.equals(propertyName)) return getUp();
+    if (OVERRIDEUP.equals(propertyName)) return getOverrideUp();
+    if (PARENTJOB.equals(propertyName)) return getParentJob();
+    if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
+    if (MINIMUMCHARGE.equals(propertyName)) return getMinimumCharge();
+    if (SETS.equals(propertyName)) return getSets();
+    if (MATERIALSETS.equals(propertyName)) return getMaterialSets();
+    if (QTYPERSET.equals(propertyName)) return getQtyPerSet();
+    if (STARTTIME.equals(propertyName)) return getStartTime();
+    if (ENDTIME.equals(propertyName)) return getEndTime();
+    if (CHARGECOSTINGRECORD.equals(propertyName)) return getChargeCostingRecord();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -874,38 +874,38 @@ public class Charge extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CHARGEDEFINITION.equals(propertyName)) setChargeDefinition((ChargeDefinition)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (NOTES.equals(propertyName)) setNotes((String)newValue); else
-		if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((Location)newValue); else
-		if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
-		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-		if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-		if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-		if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
-		if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
-		if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
-		if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
-		if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
-		if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
-		if (OVERRIDEQUANTITY.equals(propertyName)) setOverrideQuantity((Boolean)newValue); else
-		if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
-		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) setOverrideMaterialQuantity((Boolean)newValue); else
-		if (RATE.equals(propertyName)) setRate((Double)newValue); else
-		if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
-		if (UP.equals(propertyName)) setUp((Integer)newValue); else
-		if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
-		if (PARENTJOB.equals(propertyName)) setParentJob((JobBase)newValue); else
-		if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
-		if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((Double)newValue); else
-		if (SETS.equals(propertyName)) setSets((Double)newValue); else
-		if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
-		if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
-		if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
-		if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
-		if (CHARGECOSTINGRECORD.equals(propertyName)) setChargeCostingRecord((ChargeCostingRecord)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CHARGEDEFINITION.equals(propertyName)) setChargeDefinition((ChargeDefinition)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (NOTES.equals(propertyName)) setNotes((String)newValue); else
+    if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((Location)newValue); else
+    if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
+    if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
+    if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
+    if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
+    if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
+    if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
+    if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
+    if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+    if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
+    if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
+    if (OVERRIDEQUANTITY.equals(propertyName)) setOverrideQuantity((Boolean)newValue); else
+    if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
+    if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) setOverrideMaterialQuantity((Boolean)newValue); else
+    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
+    if (UP.equals(propertyName)) setUp((Integer)newValue); else
+    if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
+    if (PARENTJOB.equals(propertyName)) setParentJob((JobBase)newValue); else
+    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
+    if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((Double)newValue); else
+    if (SETS.equals(propertyName)) setSets((Double)newValue); else
+    if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
+    if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
+    if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
+    if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
+    if (CHARGECOSTINGRECORD.equals(propertyName)) setChargeCostingRecord((ChargeCostingRecord)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -913,68 +913,68 @@ public class Charge extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CHARGEDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {ChargeDefinition.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTES.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PRODUCTIONLOCATION.equals(propertyName)) 
-			return new Class<?>[] {Location.class};		
-		if (SHOWNOTES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (FINISHED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXABLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (BROKERED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DISPLAYQTY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HIDDEN.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HIDEPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PRICE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERRIDEPRICE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERRIDEQUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (MATERIALQTY.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (RATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (OVERRIDERATE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (UP.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (OVERRIDEUP.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PARENTJOB.equals(propertyName)) 
-			return new Class<?>[] {JobBase.class};		
-		if (PARENTINVOICE.equals(propertyName)) 
-			return new Class<?>[] {Invoice.class};		
-		if (MINIMUMCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SETS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MATERIALSETS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (QTYPERSET.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (STARTTIME.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (ENDTIME.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (CHARGECOSTINGRECORD.equals(propertyName)) 
-			return new Class<?>[] {ChargeCostingRecord.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CHARGEDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {ChargeDefinition.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTES.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRODUCTIONLOCATION.equals(propertyName)) 
+      return new Class<?>[] {Location.class};		
+    if (SHOWNOTES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FINISHED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BROKERED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DISPLAYQTY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HIDDEN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HIDEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERRIDEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (QUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERRIDEQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MATERIALQTY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OVERRIDERATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (UP.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (OVERRIDEUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PARENTJOB.equals(propertyName)) 
+      return new Class<?>[] {JobBase.class};		
+    if (PARENTINVOICE.equals(propertyName)) 
+      return new Class<?>[] {Invoice.class};		
+    if (MINIMUMCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SETS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MATERIALSETS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (QTYPERSET.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (STARTTIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (ENDTIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CHARGECOSTINGRECORD.equals(propertyName)) 
+      return new Class<?>[] {ChargeCostingRecord.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -983,107 +983,107 @@ public class Charge extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CHARGEDEFINITION.equals(propertyName)) return Charge.class;
-		if (DESCRIPTION.equals(propertyName)) return Charge.class;
-		if (NOTES.equals(propertyName)) return Charge.class;
-		if (PRODUCTIONLOCATION.equals(propertyName)) return Charge.class;
-		if (SHOWNOTES.equals(propertyName)) return Charge.class;
-		if (FINISHED.equals(propertyName)) return Charge.class;
-		if (TAXABLE.equals(propertyName)) return Charge.class;
-		if (BROKERED.equals(propertyName)) return Charge.class;
-		if (DISPLAYQTY.equals(propertyName)) return Charge.class;
-		if (HIDDEN.equals(propertyName)) return Charge.class;
-		if (HIDEPRICE.equals(propertyName)) return Charge.class;
-		if (PRICE.equals(propertyName)) return Charge.class;
-		if (OVERRIDEPRICE.equals(propertyName)) return Charge.class;
-		if (QUANTITY.equals(propertyName)) return Charge.class;
-		if (OVERRIDEQUANTITY.equals(propertyName)) return Charge.class;
-		if (MATERIALQTY.equals(propertyName)) return Charge.class;
-		if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return Charge.class;
-		if (RATE.equals(propertyName)) return Charge.class;
-		if (OVERRIDERATE.equals(propertyName)) return Charge.class;
-		if (UP.equals(propertyName)) return Charge.class;
-		if (OVERRIDEUP.equals(propertyName)) return Charge.class;
-		if (PARENTJOB.equals(propertyName)) return Charge.class;
-		if (PARENTINVOICE.equals(propertyName)) return Charge.class;
-		if (MINIMUMCHARGE.equals(propertyName)) return Charge.class;
-		if (SETS.equals(propertyName)) return Charge.class;
-		if (MATERIALSETS.equals(propertyName)) return Charge.class;
-		if (QTYPERSET.equals(propertyName)) return Charge.class;
-		if (STARTTIME.equals(propertyName)) return Charge.class;
-		if (ENDTIME.equals(propertyName)) return Charge.class;
-		if (CHARGECOSTINGRECORD.equals(propertyName)) return Charge.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CHARGEDEFINITION.equals(propertyName)) return Charge.class;
+    if (DESCRIPTION.equals(propertyName)) return Charge.class;
+    if (NOTES.equals(propertyName)) return Charge.class;
+    if (PRODUCTIONLOCATION.equals(propertyName)) return Charge.class;
+    if (SHOWNOTES.equals(propertyName)) return Charge.class;
+    if (FINISHED.equals(propertyName)) return Charge.class;
+    if (TAXABLE.equals(propertyName)) return Charge.class;
+    if (BROKERED.equals(propertyName)) return Charge.class;
+    if (DISPLAYQTY.equals(propertyName)) return Charge.class;
+    if (HIDDEN.equals(propertyName)) return Charge.class;
+    if (HIDEPRICE.equals(propertyName)) return Charge.class;
+    if (PRICE.equals(propertyName)) return Charge.class;
+    if (OVERRIDEPRICE.equals(propertyName)) return Charge.class;
+    if (QUANTITY.equals(propertyName)) return Charge.class;
+    if (OVERRIDEQUANTITY.equals(propertyName)) return Charge.class;
+    if (MATERIALQTY.equals(propertyName)) return Charge.class;
+    if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) return Charge.class;
+    if (RATE.equals(propertyName)) return Charge.class;
+    if (OVERRIDERATE.equals(propertyName)) return Charge.class;
+    if (UP.equals(propertyName)) return Charge.class;
+    if (OVERRIDEUP.equals(propertyName)) return Charge.class;
+    if (PARENTJOB.equals(propertyName)) return Charge.class;
+    if (PARENTINVOICE.equals(propertyName)) return Charge.class;
+    if (MINIMUMCHARGE.equals(propertyName)) return Charge.class;
+    if (SETS.equals(propertyName)) return Charge.class;
+    if (MATERIALSETS.equals(propertyName)) return Charge.class;
+    if (QTYPERSET.equals(propertyName)) return Charge.class;
+    if (STARTTIME.equals(propertyName)) return Charge.class;
+    if (ENDTIME.equals(propertyName)) return Charge.class;
+    if (CHARGECOSTINGRECORD.equals(propertyName)) return Charge.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Charge objT = (Charge)obj;
-		if (! SmartEquals(getChargeDefinition(), objT.getChargeDefinition()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getNotes(), objT.getNotes()))
-			return false;
-		if (! SmartEquals(getProductionLocation(), objT.getProductionLocation()))
-			return false;
-		if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
-			return false;
-		if (! SmartEquals(getFinished(), objT.getFinished()))
-			return false;
-		if (! SmartEquals(getTaxable(), objT.getTaxable()))
-			return false;
-		if (! SmartEquals(getBrokered(), objT.getBrokered()))
-			return false;
-		if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
-			return false;
-		if (! SmartEquals(getHidden(), objT.getHidden()))
-			return false;
-		if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
-			return false;
-		if (! SmartEquals(getPrice(), objT.getPrice()))
-			return false;
-		if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
-			return false;
-		if (! SmartEquals(getQuantity(), objT.getQuantity()))
-			return false;
-		if (! SmartEquals(getOverrideQuantity(), objT.getOverrideQuantity()))
-			return false;
-		if (! SmartEquals(getMaterialQty(), objT.getMaterialQty()))
-			return false;
-		if (! SmartEquals(getOverrideMaterialQuantity(), objT.getOverrideMaterialQuantity()))
-			return false;
-		if (! SmartEquals(getRate(), objT.getRate()))
-			return false;
-		if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
-			return false;
-		if (! SmartEquals(getUp(), objT.getUp()))
-			return false;
-		if (! SmartEquals(getOverrideUp(), objT.getOverrideUp()))
-			return false;
-		if (! SmartEquals(getParentJob(), objT.getParentJob()))
-			return false;
-		if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
-			return false;
-		if (! SmartEquals(getMinimumCharge(), objT.getMinimumCharge()))
-			return false;
-		if (! SmartEquals(getSets(), objT.getSets()))
-			return false;
-		if (! SmartEquals(getMaterialSets(), objT.getMaterialSets()))
-			return false;
-		if (! SmartEquals(getQtyPerSet(), objT.getQtyPerSet()))
-			return false;
-		if (! SmartEquals(getStartTime(), objT.getStartTime()))
-			return false;
-		if (! SmartEquals(getEndTime(), objT.getEndTime()))
-			return false;
-		if (! SmartEquals(getChargeCostingRecord(), objT.getChargeCostingRecord()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Charge objT = (Charge)obj;
+    if (! SmartEquals(getChargeDefinition(), objT.getChargeDefinition()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getNotes(), objT.getNotes()))
+      return false;
+    if (! SmartEquals(getProductionLocation(), objT.getProductionLocation()))
+      return false;
+    if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
+      return false;
+    if (! SmartEquals(getFinished(), objT.getFinished()))
+      return false;
+    if (! SmartEquals(getTaxable(), objT.getTaxable()))
+      return false;
+    if (! SmartEquals(getBrokered(), objT.getBrokered()))
+      return false;
+    if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
+      return false;
+    if (! SmartEquals(getHidden(), objT.getHidden()))
+      return false;
+    if (! SmartEquals(getHidePrice(), objT.getHidePrice()))
+      return false;
+    if (! SmartEquals(getPrice(), objT.getPrice()))
+      return false;
+    if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
+      return false;
+    if (! SmartEquals(getQuantity(), objT.getQuantity()))
+      return false;
+    if (! SmartEquals(getOverrideQuantity(), objT.getOverrideQuantity()))
+      return false;
+    if (! SmartEquals(getMaterialQty(), objT.getMaterialQty()))
+      return false;
+    if (! SmartEquals(getOverrideMaterialQuantity(), objT.getOverrideMaterialQuantity()))
+      return false;
+    if (! SmartEquals(getRate(), objT.getRate()))
+      return false;
+    if (! SmartEquals(getOverrideRate(), objT.getOverrideRate()))
+      return false;
+    if (! SmartEquals(getUp(), objT.getUp()))
+      return false;
+    if (! SmartEquals(getOverrideUp(), objT.getOverrideUp()))
+      return false;
+    if (! SmartEquals(getParentJob(), objT.getParentJob()))
+      return false;
+    if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
+      return false;
+    if (! SmartEquals(getMinimumCharge(), objT.getMinimumCharge()))
+      return false;
+    if (! SmartEquals(getSets(), objT.getSets()))
+      return false;
+    if (! SmartEquals(getMaterialSets(), objT.getMaterialSets()))
+      return false;
+    if (! SmartEquals(getQtyPerSet(), objT.getQtyPerSet()))
+      return false;
+    if (! SmartEquals(getStartTime(), objT.getStartTime()))
+      return false;
+    if (! SmartEquals(getEndTime(), objT.getEndTime()))
+      return false;
+    if (! SmartEquals(getChargeCostingRecord(), objT.getChargeCostingRecord()))
+      return false;
+    return true;
+  }			
 }

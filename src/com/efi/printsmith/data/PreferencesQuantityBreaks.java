@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesQuantityBreaks.findall", query = "from PreferencesQuantityBreaks"),
-	@NamedQuery(name = "PreferencesQuantityBreaks.byId", query = "select a from PreferencesQuantityBreaks a where a.id= :id")
+  @NamedQuery(name = "PreferencesQuantityBreaks.findall", query = "from PreferencesQuantityBreaks"),
+  @NamedQuery(name = "PreferencesQuantityBreaks.byId", query = "select a from PreferencesQuantityBreaks a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesQuantityBreaks() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQuantity(){
-		return quantity; 
-	}
+    return quantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantity(Integer newVal) {
-		this.quantity = newVal;
-	}
+    this.quantity = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getQtyBreak(){
-		return qtyBreak; 
-	}
+    return qtyBreak; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtyBreak(Boolean newVal) {
-		this.qtyBreak = newVal;
-	}
+    this.qtyBreak = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	 * @generated
  	 */
 	public JobMethod getJobMethod(){
-		return jobMethod; 
-	}
+    return jobMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobMethod(JobMethod newVal) {
-		this.jobMethod = newVal;
-	}
+    this.jobMethod = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (QTYBREAK.equals(propertyName)) return getQtyBreak();
-		if (JOBMETHOD.equals(propertyName)) return getJobMethod();
-		return super.getProperty(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) return getQuantity();
+    if (QTYBREAK.equals(propertyName)) return getQtyBreak();
+    if (JOBMETHOD.equals(propertyName)) return getJobMethod();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
-		if (QTYBREAK.equals(propertyName)) setQtyBreak((Boolean)newValue); else
-		if (JOBMETHOD.equals(propertyName)) setJobMethod((JobMethod)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
+    if (QTYBREAK.equals(propertyName)) setQtyBreak((Boolean)newValue); else
+    if (JOBMETHOD.equals(propertyName)) setJobMethod((JobMethod)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (JOBMETHOD.equals(propertyName)) 
-			return new Class<?>[] {JobMethod.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (JOBMETHOD.equals(propertyName)) 
+      return new Class<?>[] {JobMethod.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (QUANTITY.equals(propertyName)) return PreferencesQuantityBreaks.class;
-		if (QTYBREAK.equals(propertyName)) return PreferencesQuantityBreaks.class;
-		if (JOBMETHOD.equals(propertyName)) return PreferencesQuantityBreaks.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (QUANTITY.equals(propertyName)) return PreferencesQuantityBreaks.class;
+    if (QTYBREAK.equals(propertyName)) return PreferencesQuantityBreaks.class;
+    if (JOBMETHOD.equals(propertyName)) return PreferencesQuantityBreaks.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesQuantityBreaks objT = (PreferencesQuantityBreaks)obj;
-		if (! SmartEquals(getQuantity(), objT.getQuantity()))
-			return false;
-		if (! SmartEquals(getQtyBreak(), objT.getQtyBreak()))
-			return false;
-		if (! SmartEquals(getJobMethod(), objT.getJobMethod()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesQuantityBreaks objT = (PreferencesQuantityBreaks)obj;
+    if (! SmartEquals(getQuantity(), objT.getQuantity()))
+      return false;
+    if (! SmartEquals(getQtyBreak(), objT.getQtyBreak()))
+      return false;
+    if (! SmartEquals(getJobMethod(), objT.getJobMethod()))
+      return false;
+    return true;
+  }			
 }

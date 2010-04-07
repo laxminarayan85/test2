@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "NotePad.findall", query = "from NotePad"),
-	@NamedQuery(name = "NotePad.byId", query = "select a from NotePad a where a.id= :id")
+  @NamedQuery(name = "NotePad.findall", query = "from NotePad"),
+  @NamedQuery(name = "NotePad.byId", query = "select a from NotePad a where a.id= :id")
 })
 
 
@@ -81,9 +81,9 @@ public class NotePad extends ModelBase {
 	 * @generated
 	 */
 	public NotePad() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -97,16 +97,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getNotesWho(){
-		return notesWho; 
-	}
+    return notesWho; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotesWho(String newVal) {
-		this.notesWho = newVal;
-	}
+    this.notesWho = newVal;
+  }
  	
 	
 	/**
@@ -119,16 +119,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getPhoneNumber(){
-		return phoneNumber; 
-	}
+    return phoneNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPhoneNumber(String newVal) {
-		this.phoneNumber = newVal;
-	}
+    this.phoneNumber = newVal;
+  }
  	
 	
 	/**
@@ -141,16 +141,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getNotesWhat(){
-		return notesWhat; 
-	}
+    return notesWhat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotesWhat(String newVal) {
-		this.notesWhat = newVal;
-	}
+    this.notesWhat = newVal;
+  }
  	
 	
 	/**
@@ -163,16 +163,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getHowMany(){
-		return howMany; 
-	}
+    return howMany; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHowMany(String newVal) {
-		this.howMany = newVal;
-	}
+    this.howMany = newVal;
+  }
  	
 	
 	/**
@@ -185,16 +185,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getWhatSize(){
-		return whatSize; 
-	}
+    return whatSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWhatSize(String newVal) {
-		this.whatSize = newVal;
-	}
+    this.whatSize = newVal;
+  }
  	
 	
 	/**
@@ -207,16 +207,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getPaper(){
-		return paper; 
-	}
+    return paper; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPaper(String newVal) {
-		this.paper = newVal;
-	}
+    this.paper = newVal;
+  }
  	
 	
 	/**
@@ -229,16 +229,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getNotes(){
-		return notes; 
-	}
+    return notes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotes(String newVal) {
-		this.notes = newVal;
-	}
+    this.notes = newVal;
+  }
  	
 	
 	/**
@@ -251,16 +251,16 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public String getNotesWhen(){
-		return notesWhen; 
-	}
+    return notesWhen; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNotesWhen(String newVal) {
-		this.notesWhen = newVal;
-	}
+    this.notesWhen = newVal;
+  }
  	
 	
 	/**
@@ -273,33 +273,33 @@ public class NotePad extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowOnOpen(){
-		return showOnOpen; 
-	}
+    return showOnOpen; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowOnOpen(Boolean newVal) {
-		this.showOnOpen = newVal;
-	}
+    this.showOnOpen = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NOTESWHO.equals(propertyName)) return getNotesWho();
-		if (PHONENUMBER.equals(propertyName)) return getPhoneNumber();
-		if (NOTESWHAT.equals(propertyName)) return getNotesWhat();
-		if (HOWMANY.equals(propertyName)) return getHowMany();
-		if (WHATSIZE.equals(propertyName)) return getWhatSize();
-		if (PAPER.equals(propertyName)) return getPaper();
-		if (NOTES.equals(propertyName)) return getNotes();
-		if (NOTESWHEN.equals(propertyName)) return getNotesWhen();
-		if (SHOWONOPEN.equals(propertyName)) return getShowOnOpen();
-		return super.getProperty(propertyName);
-	}
+    if (NOTESWHO.equals(propertyName)) return getNotesWho();
+    if (PHONENUMBER.equals(propertyName)) return getPhoneNumber();
+    if (NOTESWHAT.equals(propertyName)) return getNotesWhat();
+    if (HOWMANY.equals(propertyName)) return getHowMany();
+    if (WHATSIZE.equals(propertyName)) return getWhatSize();
+    if (PAPER.equals(propertyName)) return getPaper();
+    if (NOTES.equals(propertyName)) return getNotes();
+    if (NOTESWHEN.equals(propertyName)) return getNotesWhen();
+    if (SHOWONOPEN.equals(propertyName)) return getShowOnOpen();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -307,17 +307,17 @@ public class NotePad extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NOTESWHO.equals(propertyName)) setNotesWho((String)newValue); else
-		if (PHONENUMBER.equals(propertyName)) setPhoneNumber((String)newValue); else
-		if (NOTESWHAT.equals(propertyName)) setNotesWhat((String)newValue); else
-		if (HOWMANY.equals(propertyName)) setHowMany((String)newValue); else
-		if (WHATSIZE.equals(propertyName)) setWhatSize((String)newValue); else
-		if (PAPER.equals(propertyName)) setPaper((String)newValue); else
-		if (NOTES.equals(propertyName)) setNotes((String)newValue); else
-		if (NOTESWHEN.equals(propertyName)) setNotesWhen((String)newValue); else
-		if (SHOWONOPEN.equals(propertyName)) setShowOnOpen((Boolean)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NOTESWHO.equals(propertyName)) setNotesWho((String)newValue); else
+    if (PHONENUMBER.equals(propertyName)) setPhoneNumber((String)newValue); else
+    if (NOTESWHAT.equals(propertyName)) setNotesWhat((String)newValue); else
+    if (HOWMANY.equals(propertyName)) setHowMany((String)newValue); else
+    if (WHATSIZE.equals(propertyName)) setWhatSize((String)newValue); else
+    if (PAPER.equals(propertyName)) setPaper((String)newValue); else
+    if (NOTES.equals(propertyName)) setNotes((String)newValue); else
+    if (NOTESWHEN.equals(propertyName)) setNotesWhen((String)newValue); else
+    if (SHOWONOPEN.equals(propertyName)) setShowOnOpen((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -325,26 +325,26 @@ public class NotePad extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NOTESWHO.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PHONENUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTESWHAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (HOWMANY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (WHATSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PAPER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTES.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NOTESWHEN.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SHOWONOPEN.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NOTESWHO.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PHONENUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTESWHAT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (HOWMANY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WHATSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PAPER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTES.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NOTESWHEN.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SHOWONOPEN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -353,44 +353,44 @@ public class NotePad extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NOTESWHO.equals(propertyName)) return NotePad.class;
-		if (PHONENUMBER.equals(propertyName)) return NotePad.class;
-		if (NOTESWHAT.equals(propertyName)) return NotePad.class;
-		if (HOWMANY.equals(propertyName)) return NotePad.class;
-		if (WHATSIZE.equals(propertyName)) return NotePad.class;
-		if (PAPER.equals(propertyName)) return NotePad.class;
-		if (NOTES.equals(propertyName)) return NotePad.class;
-		if (NOTESWHEN.equals(propertyName)) return NotePad.class;
-		if (SHOWONOPEN.equals(propertyName)) return NotePad.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NOTESWHO.equals(propertyName)) return NotePad.class;
+    if (PHONENUMBER.equals(propertyName)) return NotePad.class;
+    if (NOTESWHAT.equals(propertyName)) return NotePad.class;
+    if (HOWMANY.equals(propertyName)) return NotePad.class;
+    if (WHATSIZE.equals(propertyName)) return NotePad.class;
+    if (PAPER.equals(propertyName)) return NotePad.class;
+    if (NOTES.equals(propertyName)) return NotePad.class;
+    if (NOTESWHEN.equals(propertyName)) return NotePad.class;
+    if (SHOWONOPEN.equals(propertyName)) return NotePad.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		NotePad objT = (NotePad)obj;
-		if (! SmartEquals(getNotesWho(), objT.getNotesWho()))
-			return false;
-		if (! SmartEquals(getPhoneNumber(), objT.getPhoneNumber()))
-			return false;
-		if (! SmartEquals(getNotesWhat(), objT.getNotesWhat()))
-			return false;
-		if (! SmartEquals(getHowMany(), objT.getHowMany()))
-			return false;
-		if (! SmartEquals(getWhatSize(), objT.getWhatSize()))
-			return false;
-		if (! SmartEquals(getPaper(), objT.getPaper()))
-			return false;
-		if (! SmartEquals(getNotes(), objT.getNotes()))
-			return false;
-		if (! SmartEquals(getNotesWhen(), objT.getNotesWhen()))
-			return false;
-		if (! SmartEquals(getShowOnOpen(), objT.getShowOnOpen()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    NotePad objT = (NotePad)obj;
+    if (! SmartEquals(getNotesWho(), objT.getNotesWho()))
+      return false;
+    if (! SmartEquals(getPhoneNumber(), objT.getPhoneNumber()))
+      return false;
+    if (! SmartEquals(getNotesWhat(), objT.getNotesWhat()))
+      return false;
+    if (! SmartEquals(getHowMany(), objT.getHowMany()))
+      return false;
+    if (! SmartEquals(getWhatSize(), objT.getWhatSize()))
+      return false;
+    if (! SmartEquals(getPaper(), objT.getPaper()))
+      return false;
+    if (! SmartEquals(getNotes(), objT.getNotes()))
+      return false;
+    if (! SmartEquals(getNotesWhen(), objT.getNotesWhen()))
+      return false;
+    if (! SmartEquals(getShowOnOpen(), objT.getShowOnOpen()))
+      return false;
+    return true;
+  }			
 }

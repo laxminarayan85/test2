@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ChargeCost.findall", query = "from ChargeCost"),
-	@NamedQuery(name = "ChargeCost.byId", query = "select a from ChargeCost a where a.id= :id")
+  @NamedQuery(name = "ChargeCost.findall", query = "from ChargeCost"),
+  @NamedQuery(name = "ChargeCost.byId", query = "select a from ChargeCost a where a.id= :id")
 })
 
 
@@ -89,9 +89,9 @@ public class ChargeCost extends ModelBase {
 	 * @generated
 	 */
 	public ChargeCost() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -105,16 +105,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getSetupCost(){
-		return setupCost; 
-	}
+    return setupCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupCost(Double newVal) {
-		this.setupCost = newVal;
-	}
+    this.setupCost = newVal;
+  }
  	
 	
 	/**
@@ -127,16 +127,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getUnitCost(){
-		return unitCost; 
-	}
+    return unitCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitCost(Double newVal) {
-		this.unitCost = newVal;
-	}
+    this.unitCost = newVal;
+  }
  	
 	
 	/**
@@ -149,16 +149,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public PriceList getRateTable(){
-		return rateTable; 
-	}
+    return rateTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRateTable(PriceList newVal) {
-		this.rateTable = newVal;
-	}
+    this.rateTable = newVal;
+  }
  	
 	
 	/**
@@ -171,16 +171,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getFixedMaterials(){
-		return fixedMaterials; 
-	}
+    return fixedMaterials; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFixedMaterials(Double newVal) {
-		this.fixedMaterials = newVal;
-	}
+    this.fixedMaterials = newVal;
+  }
  	
 	
 	/**
@@ -193,16 +193,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getUnitMaterials(){
-		return unitMaterials; 
-	}
+    return unitMaterials; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitMaterials(Double newVal) {
-		this.unitMaterials = newVal;
-	}
+    this.unitMaterials = newVal;
+  }
  	
 	
 	/**
@@ -215,16 +215,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getLaborRate(){
-		return laborRate; 
-	}
+    return laborRate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborRate(Double newVal) {
-		this.laborRate = newVal;
-	}
+    this.laborRate = newVal;
+  }
  	
 	
 	/**
@@ -237,16 +237,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getSetupMinutes(){
-		return setupMinutes; 
-	}
+    return setupMinutes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSetupMinutes(Double newVal) {
-		this.setupMinutes = newVal;
-	}
+    this.setupMinutes = newVal;
+  }
  	
 	
 	/**
@@ -259,16 +259,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getPiecesPerHour(){
-		return piecesPerHour; 
-	}
+    return piecesPerHour; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPiecesPerHour(Double newVal) {
-		this.piecesPerHour = newVal;
-	}
+    this.piecesPerHour = newVal;
+  }
  	
 	
 	/**
@@ -281,16 +281,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public Double getTotalUnitCost(){
-		return totalUnitCost; 
-	}
+    return totalUnitCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalUnitCost(Double newVal) {
-		this.totalUnitCost = newVal;
-	}
+    this.totalUnitCost = newVal;
+  }
  	
 	
 	/**
@@ -303,16 +303,16 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public String getCostingMethod(){
-		return costingMethod; 
-	}
+    return costingMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingMethod(String newVal) {
-		this.costingMethod = newVal;
-	}
+    this.costingMethod = newVal;
+  }
  	
 	
 	/**
@@ -325,35 +325,35 @@ public class ChargeCost extends ModelBase {
 	 * @generated
  	 */
 	public SpeedTable getSpeedTable(){
-		return speedTable; 
-	}
+    return speedTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSpeedTable(SpeedTable newVal) {
-		this.speedTable = newVal;
-	}
+    this.speedTable = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (SETUPCOST.equals(propertyName)) return getSetupCost();
-		if (UNITCOST.equals(propertyName)) return getUnitCost();
-		if (RATETABLE.equals(propertyName)) return getRateTable();
-		if (FIXEDMATERIALS.equals(propertyName)) return getFixedMaterials();
-		if (UNITMATERIALS.equals(propertyName)) return getUnitMaterials();
-		if (LABORRATE.equals(propertyName)) return getLaborRate();
-		if (SETUPMINUTES.equals(propertyName)) return getSetupMinutes();
-		if (PIECESPERHOUR.equals(propertyName)) return getPiecesPerHour();
-		if (TOTALUNITCOST.equals(propertyName)) return getTotalUnitCost();
-		if (COSTINGMETHOD.equals(propertyName)) return getCostingMethod();
-		if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
-		return super.getProperty(propertyName);
-	}
+    if (SETUPCOST.equals(propertyName)) return getSetupCost();
+    if (UNITCOST.equals(propertyName)) return getUnitCost();
+    if (RATETABLE.equals(propertyName)) return getRateTable();
+    if (FIXEDMATERIALS.equals(propertyName)) return getFixedMaterials();
+    if (UNITMATERIALS.equals(propertyName)) return getUnitMaterials();
+    if (LABORRATE.equals(propertyName)) return getLaborRate();
+    if (SETUPMINUTES.equals(propertyName)) return getSetupMinutes();
+    if (PIECESPERHOUR.equals(propertyName)) return getPiecesPerHour();
+    if (TOTALUNITCOST.equals(propertyName)) return getTotalUnitCost();
+    if (COSTINGMETHOD.equals(propertyName)) return getCostingMethod();
+    if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -361,19 +361,19 @@ public class ChargeCost extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (SETUPCOST.equals(propertyName)) setSetupCost((Double)newValue); else
-		if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
-		if (RATETABLE.equals(propertyName)) setRateTable((PriceList)newValue); else
-		if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((Double)newValue); else
-		if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((Double)newValue); else
-		if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
-		if (SETUPMINUTES.equals(propertyName)) setSetupMinutes((Double)newValue); else
-		if (PIECESPERHOUR.equals(propertyName)) setPiecesPerHour((Double)newValue); else
-		if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((Double)newValue); else
-		if (COSTINGMETHOD.equals(propertyName)) setCostingMethod((String)newValue); else
-		if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (SETUPCOST.equals(propertyName)) setSetupCost((Double)newValue); else
+    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+    if (RATETABLE.equals(propertyName)) setRateTable((PriceList)newValue); else
+    if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((Double)newValue); else
+    if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((Double)newValue); else
+    if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+    if (SETUPMINUTES.equals(propertyName)) setSetupMinutes((Double)newValue); else
+    if (PIECESPERHOUR.equals(propertyName)) setPiecesPerHour((Double)newValue); else
+    if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((Double)newValue); else
+    if (COSTINGMETHOD.equals(propertyName)) setCostingMethod((String)newValue); else
+    if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -381,30 +381,30 @@ public class ChargeCost extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (SETUPCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (UNITCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (RATETABLE.equals(propertyName)) 
-			return new Class<?>[] {PriceList.class};		
-		if (FIXEDMATERIALS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (UNITMATERIALS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABORRATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SETUPMINUTES.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (PIECESPERHOUR.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOTALUNITCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COSTINGMETHOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SPEEDTABLE.equals(propertyName)) 
-			return new Class<?>[] {SpeedTable.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (SETUPCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (RATETABLE.equals(propertyName)) 
+      return new Class<?>[] {PriceList.class};		
+    if (FIXEDMATERIALS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITMATERIALS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABORRATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SETUPMINUTES.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PIECESPERHOUR.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALUNITCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COSTINGMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SPEEDTABLE.equals(propertyName)) 
+      return new Class<?>[] {SpeedTable.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -413,50 +413,50 @@ public class ChargeCost extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (SETUPCOST.equals(propertyName)) return ChargeCost.class;
-		if (UNITCOST.equals(propertyName)) return ChargeCost.class;
-		if (RATETABLE.equals(propertyName)) return ChargeCost.class;
-		if (FIXEDMATERIALS.equals(propertyName)) return ChargeCost.class;
-		if (UNITMATERIALS.equals(propertyName)) return ChargeCost.class;
-		if (LABORRATE.equals(propertyName)) return ChargeCost.class;
-		if (SETUPMINUTES.equals(propertyName)) return ChargeCost.class;
-		if (PIECESPERHOUR.equals(propertyName)) return ChargeCost.class;
-		if (TOTALUNITCOST.equals(propertyName)) return ChargeCost.class;
-		if (COSTINGMETHOD.equals(propertyName)) return ChargeCost.class;
-		if (SPEEDTABLE.equals(propertyName)) return ChargeCost.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (SETUPCOST.equals(propertyName)) return ChargeCost.class;
+    if (UNITCOST.equals(propertyName)) return ChargeCost.class;
+    if (RATETABLE.equals(propertyName)) return ChargeCost.class;
+    if (FIXEDMATERIALS.equals(propertyName)) return ChargeCost.class;
+    if (UNITMATERIALS.equals(propertyName)) return ChargeCost.class;
+    if (LABORRATE.equals(propertyName)) return ChargeCost.class;
+    if (SETUPMINUTES.equals(propertyName)) return ChargeCost.class;
+    if (PIECESPERHOUR.equals(propertyName)) return ChargeCost.class;
+    if (TOTALUNITCOST.equals(propertyName)) return ChargeCost.class;
+    if (COSTINGMETHOD.equals(propertyName)) return ChargeCost.class;
+    if (SPEEDTABLE.equals(propertyName)) return ChargeCost.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ChargeCost objT = (ChargeCost)obj;
-		if (! SmartEquals(getSetupCost(), objT.getSetupCost()))
-			return false;
-		if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
-			return false;
-		if (! SmartEquals(getRateTable(), objT.getRateTable()))
-			return false;
-		if (! SmartEquals(getFixedMaterials(), objT.getFixedMaterials()))
-			return false;
-		if (! SmartEquals(getUnitMaterials(), objT.getUnitMaterials()))
-			return false;
-		if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
-			return false;
-		if (! SmartEquals(getSetupMinutes(), objT.getSetupMinutes()))
-			return false;
-		if (! SmartEquals(getPiecesPerHour(), objT.getPiecesPerHour()))
-			return false;
-		if (! SmartEquals(getTotalUnitCost(), objT.getTotalUnitCost()))
-			return false;
-		if (! SmartEquals(getCostingMethod(), objT.getCostingMethod()))
-			return false;
-		if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ChargeCost objT = (ChargeCost)obj;
+    if (! SmartEquals(getSetupCost(), objT.getSetupCost()))
+      return false;
+    if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
+      return false;
+    if (! SmartEquals(getRateTable(), objT.getRateTable()))
+      return false;
+    if (! SmartEquals(getFixedMaterials(), objT.getFixedMaterials()))
+      return false;
+    if (! SmartEquals(getUnitMaterials(), objT.getUnitMaterials()))
+      return false;
+    if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
+      return false;
+    if (! SmartEquals(getSetupMinutes(), objT.getSetupMinutes()))
+      return false;
+    if (! SmartEquals(getPiecesPerHour(), objT.getPiecesPerHour()))
+      return false;
+    if (! SmartEquals(getTotalUnitCost(), objT.getTotalUnitCost()))
+      return false;
+    if (! SmartEquals(getCostingMethod(), objT.getCostingMethod()))
+      return false;
+    if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
+      return false;
+    return true;
+  }			
 }

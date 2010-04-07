@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesCreditCard.findall", query = "from PreferencesCreditCard"),
-	@NamedQuery(name = "PreferencesCreditCard.byId", query = "select a from PreferencesCreditCard a where a.id= :id")
+  @NamedQuery(name = "PreferencesCreditCard.findall", query = "from PreferencesCreditCard"),
+  @NamedQuery(name = "PreferencesCreditCard.byId", query = "select a from PreferencesCreditCard a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class PreferencesCreditCard extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesCreditCard() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class PreferencesCreditCard extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUsed(){
-		return used; 
-	}
+    return used; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUsed(Boolean newVal) {
-		this.used = newVal;
-	}
+    this.used = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class PreferencesCreditCard extends ModelBase {
 	 * @generated
  	 */
 	public String getCardType(){
-		return cardType; 
-	}
+    return cardType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCardType(String newVal) {
-		this.cardType = newVal;
-	}
+    this.cardType = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class PreferencesCreditCard extends ModelBase {
 	 * @generated
  	 */
 	public String getAbbreviation(){
-		return abbreviation; 
-	}
+    return abbreviation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAbbreviation(String newVal) {
-		this.abbreviation = newVal;
-	}
+    this.abbreviation = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class PreferencesCreditCard extends ModelBase {
 	 * @generated
  	 */
 	public String getCode(){
-		return code; 
-	}
+    return code; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCode(String newVal) {
-		this.code = newVal;
-	}
+    this.code = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (USED.equals(propertyName)) return getUsed();
-		if (CARDTYPE.equals(propertyName)) return getCardType();
-		if (ABBREVIATION.equals(propertyName)) return getAbbreviation();
-		if (CODE.equals(propertyName)) return getCode();
-		return super.getProperty(propertyName);
-	}
+    if (USED.equals(propertyName)) return getUsed();
+    if (CARDTYPE.equals(propertyName)) return getCardType();
+    if (ABBREVIATION.equals(propertyName)) return getAbbreviation();
+    if (CODE.equals(propertyName)) return getCode();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class PreferencesCreditCard extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (USED.equals(propertyName)) setUsed((Boolean)newValue); else
-		if (CARDTYPE.equals(propertyName)) setCardType((String)newValue); else
-		if (ABBREVIATION.equals(propertyName)) setAbbreviation((String)newValue); else
-		if (CODE.equals(propertyName)) setCode((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (USED.equals(propertyName)) setUsed((Boolean)newValue); else
+    if (CARDTYPE.equals(propertyName)) setCardType((String)newValue); else
+    if (ABBREVIATION.equals(propertyName)) setAbbreviation((String)newValue); else
+    if (CODE.equals(propertyName)) setCode((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class PreferencesCreditCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (USED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CARDTYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ABBREVIATION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CODE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (USED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CARDTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ABBREVIATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CODE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class PreferencesCreditCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (USED.equals(propertyName)) return PreferencesCreditCard.class;
-		if (CARDTYPE.equals(propertyName)) return PreferencesCreditCard.class;
-		if (ABBREVIATION.equals(propertyName)) return PreferencesCreditCard.class;
-		if (CODE.equals(propertyName)) return PreferencesCreditCard.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (USED.equals(propertyName)) return PreferencesCreditCard.class;
+    if (CARDTYPE.equals(propertyName)) return PreferencesCreditCard.class;
+    if (ABBREVIATION.equals(propertyName)) return PreferencesCreditCard.class;
+    if (CODE.equals(propertyName)) return PreferencesCreditCard.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesCreditCard objT = (PreferencesCreditCard)obj;
-		if (! SmartEquals(getUsed(), objT.getUsed()))
-			return false;
-		if (! SmartEquals(getCardType(), objT.getCardType()))
-			return false;
-		if (! SmartEquals(getAbbreviation(), objT.getAbbreviation()))
-			return false;
-		if (! SmartEquals(getCode(), objT.getCode()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesCreditCard objT = (PreferencesCreditCard)obj;
+    if (! SmartEquals(getUsed(), objT.getUsed()))
+      return false;
+    if (! SmartEquals(getCardType(), objT.getCardType()))
+      return false;
+    if (! SmartEquals(getAbbreviation(), objT.getAbbreviation()))
+      return false;
+    if (! SmartEquals(getCode(), objT.getCode()))
+      return false;
+    return true;
+  }			
 }

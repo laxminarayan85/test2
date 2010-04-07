@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TimeCard.findall", query = "from TimeCard"),
-	@NamedQuery(name = "TimeCard.byId", query = "select a from TimeCard a where a.id= :id")
+  @NamedQuery(name = "TimeCard.findall", query = "from TimeCard"),
+  @NamedQuery(name = "TimeCard.byId", query = "select a from TimeCard a where a.id= :id")
 })
 
 
@@ -73,9 +73,9 @@ public class TimeCard extends ModelBase {
 	 * @generated
 	 */
 	public TimeCard() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -89,16 +89,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public String getPeriod(){
-		return period; 
-	}
+    return period; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPeriod(String newVal) {
-		this.period = newVal;
-	}
+    this.period = newVal;
+  }
  	
 	
 	/**
@@ -111,16 +111,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public Date getStartDateTime(){
-		return startDateTime; 
-	}
+    return startDateTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStartDateTime(Date newVal) {
-		this.startDateTime = newVal;
-	}
+    this.startDateTime = newVal;
+  }
  	
 	
 	/**
@@ -133,16 +133,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public Date getEndDateTime(){
-		return endDateTime; 
-	}
+    return endDateTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEndDateTime(Date newVal) {
-		this.endDateTime = newVal;
-	}
+    this.endDateTime = newVal;
+  }
  	
 	
 	/**
@@ -155,16 +155,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public String getBillable(){
-		return billable; 
-	}
+    return billable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBillable(String newVal) {
-		this.billable = newVal;
-	}
+    this.billable = newVal;
+  }
  	
 	
 	/**
@@ -177,16 +177,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public Integer getOnClock(){
-		return onClock; 
-	}
+    return onClock; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOnClock(Integer newVal) {
-		this.onClock = newVal;
-	}
+    this.onClock = newVal;
+  }
  	
 	
 	/**
@@ -199,16 +199,16 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public Date getBreakTime(){
-		return breakTime; 
-	}
+    return breakTime; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBreakTime(Date newVal) {
-		this.breakTime = newVal;
-	}
+    this.breakTime = newVal;
+  }
  	
 	
 	/**
@@ -221,31 +221,31 @@ public class TimeCard extends ModelBase {
 	 * @generated
  	 */
 	public Employee getEmployee(){
-		return employee; 
-	}
+    return employee; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEmployee(Employee newVal) {
-		this.employee = newVal;
-	}
+    this.employee = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (PERIOD.equals(propertyName)) return getPeriod();
-		if (STARTDATETIME.equals(propertyName)) return getStartDateTime();
-		if (ENDDATETIME.equals(propertyName)) return getEndDateTime();
-		if (BILLABLE.equals(propertyName)) return getBillable();
-		if (ONCLOCK.equals(propertyName)) return getOnClock();
-		if (BREAKTIME.equals(propertyName)) return getBreakTime();
-		if (EMPLOYEE.equals(propertyName)) return getEmployee();
-		return super.getProperty(propertyName);
-	}
+    if (PERIOD.equals(propertyName)) return getPeriod();
+    if (STARTDATETIME.equals(propertyName)) return getStartDateTime();
+    if (ENDDATETIME.equals(propertyName)) return getEndDateTime();
+    if (BILLABLE.equals(propertyName)) return getBillable();
+    if (ONCLOCK.equals(propertyName)) return getOnClock();
+    if (BREAKTIME.equals(propertyName)) return getBreakTime();
+    if (EMPLOYEE.equals(propertyName)) return getEmployee();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -253,15 +253,15 @@ public class TimeCard extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PERIOD.equals(propertyName)) setPeriod((String)newValue); else
-		if (STARTDATETIME.equals(propertyName)) setStartDateTime((Date)newValue); else
-		if (ENDDATETIME.equals(propertyName)) setEndDateTime((Date)newValue); else
-		if (BILLABLE.equals(propertyName)) setBillable((String)newValue); else
-		if (ONCLOCK.equals(propertyName)) setOnClock((Integer)newValue); else
-		if (BREAKTIME.equals(propertyName)) setBreakTime((Date)newValue); else
-		if (EMPLOYEE.equals(propertyName)) setEmployee((Employee)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (PERIOD.equals(propertyName)) setPeriod((String)newValue); else
+    if (STARTDATETIME.equals(propertyName)) setStartDateTime((Date)newValue); else
+    if (ENDDATETIME.equals(propertyName)) setEndDateTime((Date)newValue); else
+    if (BILLABLE.equals(propertyName)) setBillable((String)newValue); else
+    if (ONCLOCK.equals(propertyName)) setOnClock((Integer)newValue); else
+    if (BREAKTIME.equals(propertyName)) setBreakTime((Date)newValue); else
+    if (EMPLOYEE.equals(propertyName)) setEmployee((Employee)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -269,22 +269,22 @@ public class TimeCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (PERIOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STARTDATETIME.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (ENDDATETIME.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (BILLABLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ONCLOCK.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BREAKTIME.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (EMPLOYEE.equals(propertyName)) 
-			return new Class<?>[] {Employee.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (PERIOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STARTDATETIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (ENDDATETIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (BILLABLE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ONCLOCK.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BREAKTIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (EMPLOYEE.equals(propertyName)) 
+      return new Class<?>[] {Employee.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -293,38 +293,38 @@ public class TimeCard extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PERIOD.equals(propertyName)) return TimeCard.class;
-		if (STARTDATETIME.equals(propertyName)) return TimeCard.class;
-		if (ENDDATETIME.equals(propertyName)) return TimeCard.class;
-		if (BILLABLE.equals(propertyName)) return TimeCard.class;
-		if (ONCLOCK.equals(propertyName)) return TimeCard.class;
-		if (BREAKTIME.equals(propertyName)) return TimeCard.class;
-		if (EMPLOYEE.equals(propertyName)) return TimeCard.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (PERIOD.equals(propertyName)) return TimeCard.class;
+    if (STARTDATETIME.equals(propertyName)) return TimeCard.class;
+    if (ENDDATETIME.equals(propertyName)) return TimeCard.class;
+    if (BILLABLE.equals(propertyName)) return TimeCard.class;
+    if (ONCLOCK.equals(propertyName)) return TimeCard.class;
+    if (BREAKTIME.equals(propertyName)) return TimeCard.class;
+    if (EMPLOYEE.equals(propertyName)) return TimeCard.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		TimeCard objT = (TimeCard)obj;
-		if (! SmartEquals(getPeriod(), objT.getPeriod()))
-			return false;
-		if (! SmartEquals(getStartDateTime(), objT.getStartDateTime()))
-			return false;
-		if (! SmartEquals(getEndDateTime(), objT.getEndDateTime()))
-			return false;
-		if (! SmartEquals(getBillable(), objT.getBillable()))
-			return false;
-		if (! SmartEquals(getOnClock(), objT.getOnClock()))
-			return false;
-		if (! SmartEquals(getBreakTime(), objT.getBreakTime()))
-			return false;
-		if (! SmartEquals(getEmployee(), objT.getEmployee()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    TimeCard objT = (TimeCard)obj;
+    if (! SmartEquals(getPeriod(), objT.getPeriod()))
+      return false;
+    if (! SmartEquals(getStartDateTime(), objT.getStartDateTime()))
+      return false;
+    if (! SmartEquals(getEndDateTime(), objT.getEndDateTime()))
+      return false;
+    if (! SmartEquals(getBillable(), objT.getBillable()))
+      return false;
+    if (! SmartEquals(getOnClock(), objT.getOnClock()))
+      return false;
+    if (! SmartEquals(getBreakTime(), objT.getBreakTime()))
+      return false;
+    if (! SmartEquals(getEmployee(), objT.getEmployee()))
+      return false;
+    return true;
+  }			
 }

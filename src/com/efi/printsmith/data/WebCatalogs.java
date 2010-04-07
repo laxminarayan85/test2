@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebCatalogs.findall", query = "from WebCatalogs"),
-	@NamedQuery(name = "WebCatalogs.byId", query = "select a from WebCatalogs a where a.id= :id")
+  @NamedQuery(name = "WebCatalogs.findall", query = "from WebCatalogs"),
+  @NamedQuery(name = "WebCatalogs.byId", query = "select a from WebCatalogs a where a.id= :id")
 })
 
 
@@ -69,9 +69,9 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
 	 */
 	public WebCatalogs() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -85,16 +85,16 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public Integer getRollId(){
-		return rollId; 
-	}
+    return rollId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRollId(Integer newVal) {
-		this.rollId = newVal;
-	}
+    this.rollId = newVal;
+  }
  	
 	
 	/**
@@ -107,16 +107,16 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public String getStatus(){
-		return status; 
-	}
+    return status; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStatus(String newVal) {
-		this.status = newVal;
-	}
+    this.status = newVal;
+  }
  	
 	
 	/**
@@ -129,16 +129,16 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -151,16 +151,16 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -173,16 +173,16 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public String getPath(){
-		return path; 
-	}
+    return path; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPath(String newVal) {
-		this.path = newVal;
-	}
+    this.path = newVal;
+  }
  	
 	
 	/**
@@ -197,39 +197,39 @@ public class WebCatalogs extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<WebCatagories> getCatagories(){
-		return catagories; 
-	}
+    return catagories; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addCatagories(WebCatagories obj) {
-		if (catagories == null) {
-			catagories = new java.util.ArrayList<WebCatagories>();
-		}
-		catagories.add(obj);
-	}
+    if (catagories == null) {
+      catagories = new java.util.ArrayList<WebCatagories>();
+    }
+    catagories.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCatagories(java.util.List<WebCatagories> newVal) {
-		this.catagories = newVal;
-	}
+    this.catagories = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (ROLLID.equals(propertyName)) return getRollId();
-		if (STATUS.equals(propertyName)) return getStatus();
-		if (NAME.equals(propertyName)) return getName();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (PATH.equals(propertyName)) return getPath();
-		if (CATAGORIES.equals(propertyName)) return getCatagories();
-		return super.getProperty(propertyName);
-	}
+    if (ROLLID.equals(propertyName)) return getRollId();
+    if (STATUS.equals(propertyName)) return getStatus();
+    if (NAME.equals(propertyName)) return getName();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (PATH.equals(propertyName)) return getPath();
+    if (CATAGORIES.equals(propertyName)) return getCatagories();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -237,14 +237,14 @@ public class WebCatalogs extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (ROLLID.equals(propertyName)) setRollId((Integer)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (PATH.equals(propertyName)) setPath((String)newValue); else
-		if (CATAGORIES.equals(propertyName)) setCatagories((java.util.List<WebCatagories>)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (ROLLID.equals(propertyName)) setRollId((Integer)newValue); else
+    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (PATH.equals(propertyName)) setPath((String)newValue); else
+    if (CATAGORIES.equals(propertyName)) setCatagories((java.util.List<WebCatagories>)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -252,20 +252,20 @@ public class WebCatalogs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (ROLLID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PATH.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CATAGORIES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebCatagories.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (ROLLID.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (STATUS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PATH.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CATAGORIES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, WebCatagories.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -274,35 +274,35 @@ public class WebCatalogs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (ROLLID.equals(propertyName)) return WebCatalogs.class;
-		if (STATUS.equals(propertyName)) return WebCatalogs.class;
-		if (NAME.equals(propertyName)) return WebCatalogs.class;
-		if (DESCRIPTION.equals(propertyName)) return WebCatalogs.class;
-		if (PATH.equals(propertyName)) return WebCatalogs.class;
-		if (CATAGORIES.equals(propertyName)) return WebCatalogs.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (ROLLID.equals(propertyName)) return WebCatalogs.class;
+    if (STATUS.equals(propertyName)) return WebCatalogs.class;
+    if (NAME.equals(propertyName)) return WebCatalogs.class;
+    if (DESCRIPTION.equals(propertyName)) return WebCatalogs.class;
+    if (PATH.equals(propertyName)) return WebCatalogs.class;
+    if (CATAGORIES.equals(propertyName)) return WebCatalogs.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebCatalogs objT = (WebCatalogs)obj;
-		if (! SmartEquals(getRollId(), objT.getRollId()))
-			return false;
-		if (! SmartEquals(getStatus(), objT.getStatus()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getPath(), objT.getPath()))
-			return false;
-		if (! SmartEquals(getCatagories(), objT.getCatagories()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebCatalogs objT = (WebCatalogs)obj;
+    if (! SmartEquals(getRollId(), objT.getRollId()))
+      return false;
+    if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getPath(), objT.getPath()))
+      return false;
+    if (! SmartEquals(getCatagories(), objT.getCatagories()))
+      return false;
+    return true;
+  }			
 }

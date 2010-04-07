@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ComLinkType.findall", query = "from ComLinkType"),
-	@NamedQuery(name = "ComLinkType.byId", query = "select a from ComLinkType a where a.id= :id")
+  @NamedQuery(name = "ComLinkType.findall", query = "from ComLinkType"),
+  @NamedQuery(name = "ComLinkType.byId", query = "select a from ComLinkType a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class ComLinkType extends ModelBase {
 	 * @generated
 	 */
 	public ComLinkType() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class ComLinkType extends ModelBase {
 	 * @generated
  	 */
 	public String getType(){
-		return type; 
-	}
+    return type; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setType(String newVal) {
-		this.type = newVal;
-	}
+    this.type = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TYPE.equals(propertyName)) return getType();
-		return super.getProperty(propertyName);
-	}
+    if (TYPE.equals(propertyName)) return getType();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class ComLinkType extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TYPE.equals(propertyName)) setType((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TYPE.equals(propertyName)) setType((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class ComLinkType extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class ComLinkType extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TYPE.equals(propertyName)) return ComLinkType.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TYPE.equals(propertyName)) return ComLinkType.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ComLinkType objT = (ComLinkType)obj;
-		if (! SmartEquals(getType(), objT.getType()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ComLinkType objT = (ComLinkType)obj;
+    if (! SmartEquals(getType(), objT.getType()))
+      return false;
+    return true;
+  }			
 }

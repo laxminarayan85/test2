@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "CostingRecord.findall", query = "from CostingRecord"),
-	@NamedQuery(name = "CostingRecord.byId", query = "select a from CostingRecord a where a.id= :id")
+  @NamedQuery(name = "CostingRecord.findall", query = "from CostingRecord"),
+  @NamedQuery(name = "CostingRecord.byId", query = "select a from CostingRecord a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class CostingRecord extends ModelBase {
 	 * @generated
 	 */
 	public CostingRecord() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class CostingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getUnitCost(){
-		return unitCost; 
-	}
+    return unitCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitCost(Double newVal) {
-		this.unitCost = newVal;
-	}
+    this.unitCost = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class CostingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getTotalCost(){
-		return totalCost; 
-	}
+    return totalCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalCost(Double newVal) {
-		this.totalCost = newVal;
-	}
+    this.totalCost = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class CostingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getLaborCost(){
-		return laborCost; 
-	}
+    return laborCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLaborCost(Double newVal) {
-		this.laborCost = newVal;
-	}
+    this.laborCost = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class CostingRecord extends ModelBase {
 	 * @generated
  	 */
 	public Double getStockCost(){
-		return stockCost; 
-	}
+    return stockCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockCost(Double newVal) {
-		this.stockCost = newVal;
-	}
+    this.stockCost = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (UNITCOST.equals(propertyName)) return getUnitCost();
-		if (TOTALCOST.equals(propertyName)) return getTotalCost();
-		if (LABORCOST.equals(propertyName)) return getLaborCost();
-		if (STOCKCOST.equals(propertyName)) return getStockCost();
-		return super.getProperty(propertyName);
-	}
+    if (UNITCOST.equals(propertyName)) return getUnitCost();
+    if (TOTALCOST.equals(propertyName)) return getTotalCost();
+    if (LABORCOST.equals(propertyName)) return getLaborCost();
+    if (STOCKCOST.equals(propertyName)) return getStockCost();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class CostingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
-		if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
-		if (LABORCOST.equals(propertyName)) setLaborCost((Double)newValue); else
-		if (STOCKCOST.equals(propertyName)) setStockCost((Double)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+    if (LABORCOST.equals(propertyName)) setLaborCost((Double)newValue); else
+    if (STOCKCOST.equals(propertyName)) setStockCost((Double)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class CostingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (UNITCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOTALCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABORCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (STOCKCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (UNITCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABORCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (STOCKCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class CostingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (UNITCOST.equals(propertyName)) return CostingRecord.class;
-		if (TOTALCOST.equals(propertyName)) return CostingRecord.class;
-		if (LABORCOST.equals(propertyName)) return CostingRecord.class;
-		if (STOCKCOST.equals(propertyName)) return CostingRecord.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (UNITCOST.equals(propertyName)) return CostingRecord.class;
+    if (TOTALCOST.equals(propertyName)) return CostingRecord.class;
+    if (LABORCOST.equals(propertyName)) return CostingRecord.class;
+    if (STOCKCOST.equals(propertyName)) return CostingRecord.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		CostingRecord objT = (CostingRecord)obj;
-		if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
-			return false;
-		if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
-			return false;
-		if (! SmartEquals(getLaborCost(), objT.getLaborCost()))
-			return false;
-		if (! SmartEquals(getStockCost(), objT.getStockCost()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    CostingRecord objT = (CostingRecord)obj;
+    if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
+      return false;
+    if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
+      return false;
+    if (! SmartEquals(getLaborCost(), objT.getLaborCost()))
+      return false;
+    if (! SmartEquals(getStockCost(), objT.getStockCost()))
+      return false;
+    return true;
+  }			
 }

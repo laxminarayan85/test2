@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "InvoiceTemplate.findall", query = "from InvoiceTemplate"),
-	@NamedQuery(name = "InvoiceTemplate.byId", query = "select a from InvoiceTemplate a where a.id= :id")
+  @NamedQuery(name = "InvoiceTemplate.findall", query = "from InvoiceTemplate"),
+  @NamedQuery(name = "InvoiceTemplate.byId", query = "select a from InvoiceTemplate a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class InvoiceTemplate extends InvoiceBase {
 	 * @generated
 	 */
 	public InvoiceTemplate() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class InvoiceTemplate extends InvoiceBase {
 	 * @generated
  	 */
 	public String getTemplateName(){
-		return templateName; 
-	}
+    return templateName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTemplateName(String newVal) {
-		this.templateName = newVal;
-	}
+    this.templateName = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TEMPLATENAME.equals(propertyName)) return getTemplateName();
-		return super.getProperty(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) return getTemplateName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class InvoiceTemplate extends InvoiceBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class InvoiceTemplate extends InvoiceBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TEMPLATENAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class InvoiceTemplate extends InvoiceBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TEMPLATENAME.equals(propertyName)) return InvoiceTemplate.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) return InvoiceTemplate.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		InvoiceTemplate objT = (InvoiceTemplate)obj;
-		if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    InvoiceTemplate objT = (InvoiceTemplate)obj;
+    if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
+      return false;
+    return true;
+  }			
 }

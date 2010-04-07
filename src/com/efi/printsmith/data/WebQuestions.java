@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebQuestions.findall", query = "from WebQuestions"),
-	@NamedQuery(name = "WebQuestions.byId", query = "select a from WebQuestions a where a.id= :id")
+  @NamedQuery(name = "WebQuestions.findall", query = "from WebQuestions"),
+  @NamedQuery(name = "WebQuestions.byId", query = "select a from WebQuestions a where a.id= :id")
 })
 
 
@@ -65,9 +65,9 @@ public class WebQuestions extends ModelBase {
 	 * @generated
 	 */
 	public WebQuestions() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -81,16 +81,16 @@ public class WebQuestions extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -103,16 +103,16 @@ public class WebQuestions extends ModelBase {
 	 * @generated
  	 */
 	public String getStatus(){
-		return status; 
-	}
+    return status; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStatus(String newVal) {
-		this.status = newVal;
-	}
+    this.status = newVal;
+  }
  	
 	
 	/**
@@ -125,16 +125,16 @@ public class WebQuestions extends ModelBase {
 	 * @generated
  	 */
 	public String getPrompt(){
-		return prompt; 
-	}
+    return prompt; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrompt(String newVal) {
-		this.prompt = newVal;
-	}
+    this.prompt = newVal;
+  }
  	
 	
 	/**
@@ -147,16 +147,16 @@ public class WebQuestions extends ModelBase {
 	 * @generated
  	 */
 	public String getQuestionType(){
-		return questionType; 
-	}
+    return questionType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuestionType(String newVal) {
-		this.questionType = newVal;
-	}
+    this.questionType = newVal;
+  }
  	
 	
 	/**
@@ -171,38 +171,38 @@ public class WebQuestions extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<WebChoices> getChoices(){
-		return choices; 
-	}
+    return choices; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addChoices(WebChoices obj) {
-		if (choices == null) {
-			choices = new java.util.ArrayList<WebChoices>();
-		}
-		choices.add(obj);
-	}
+    if (choices == null) {
+      choices = new java.util.ArrayList<WebChoices>();
+    }
+    choices.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setChoices(java.util.List<WebChoices> newVal) {
-		this.choices = newVal;
-	}
+    this.choices = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (STATUS.equals(propertyName)) return getStatus();
-		if (PROMPT.equals(propertyName)) return getPrompt();
-		if (QUESTIONTYPE.equals(propertyName)) return getQuestionType();
-		if (CHOICES.equals(propertyName)) return getChoices();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (STATUS.equals(propertyName)) return getStatus();
+    if (PROMPT.equals(propertyName)) return getPrompt();
+    if (QUESTIONTYPE.equals(propertyName)) return getQuestionType();
+    if (CHOICES.equals(propertyName)) return getChoices();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -210,13 +210,13 @@ public class WebQuestions extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-		if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
-		if (QUESTIONTYPE.equals(propertyName)) setQuestionType((String)newValue); else
-		if (CHOICES.equals(propertyName)) setChoices((java.util.List<WebChoices>)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (PROMPT.equals(propertyName)) setPrompt((String)newValue); else
+    if (QUESTIONTYPE.equals(propertyName)) setQuestionType((String)newValue); else
+    if (CHOICES.equals(propertyName)) setChoices((java.util.List<WebChoices>)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -224,18 +224,18 @@ public class WebQuestions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PROMPT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QUESTIONTYPE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CHOICES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebChoices.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STATUS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PROMPT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QUESTIONTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CHOICES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, WebChoices.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -244,32 +244,32 @@ public class WebQuestions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return WebQuestions.class;
-		if (STATUS.equals(propertyName)) return WebQuestions.class;
-		if (PROMPT.equals(propertyName)) return WebQuestions.class;
-		if (QUESTIONTYPE.equals(propertyName)) return WebQuestions.class;
-		if (CHOICES.equals(propertyName)) return WebQuestions.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return WebQuestions.class;
+    if (STATUS.equals(propertyName)) return WebQuestions.class;
+    if (PROMPT.equals(propertyName)) return WebQuestions.class;
+    if (QUESTIONTYPE.equals(propertyName)) return WebQuestions.class;
+    if (CHOICES.equals(propertyName)) return WebQuestions.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebQuestions objT = (WebQuestions)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getStatus(), objT.getStatus()))
-			return false;
-		if (! SmartEquals(getPrompt(), objT.getPrompt()))
-			return false;
-		if (! SmartEquals(getQuestionType(), objT.getQuestionType()))
-			return false;
-		if (! SmartEquals(getChoices(), objT.getChoices()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebQuestions objT = (WebQuestions)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getPrompt(), objT.getPrompt()))
+      return false;
+    if (! SmartEquals(getQuestionType(), objT.getQuestionType()))
+      return false;
+    if (! SmartEquals(getChoices(), objT.getChoices()))
+      return false;
+    return true;
+  }			
 }

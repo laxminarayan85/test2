@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SecurityCommands.findall", query = "from SecurityCommands"),
-	@NamedQuery(name = "SecurityCommands.byId", query = "select a from SecurityCommands a where a.id= :id")
+  @NamedQuery(name = "SecurityCommands.findall", query = "from SecurityCommands"),
+  @NamedQuery(name = "SecurityCommands.byId", query = "select a from SecurityCommands a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class SecurityCommands extends ModelBase {
 	 * @generated
 	 */
 	public SecurityCommands() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class SecurityCommands extends ModelBase {
 	 * @generated
  	 */
 	public String getMenu(){
-		return menu; 
-	}
+    return menu; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMenu(String newVal) {
-		this.menu = newVal;
-	}
+    this.menu = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class SecurityCommands extends ModelBase {
 	 * @generated
  	 */
 	public String getCommandName(){
-		return commandName; 
-	}
+    return commandName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCommandName(String newVal) {
-		this.commandName = newVal;
-	}
+    this.commandName = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class SecurityCommands extends ModelBase {
 	 * @generated
  	 */
 	public String getCommandId(){
-		return commandId; 
-	}
+    return commandId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCommandId(String newVal) {
-		this.commandId = newVal;
-	}
+    this.commandId = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (MENU.equals(propertyName)) return getMenu();
-		if (COMMANDNAME.equals(propertyName)) return getCommandName();
-		if (COMMANDID.equals(propertyName)) return getCommandId();
-		return super.getProperty(propertyName);
-	}
+    if (MENU.equals(propertyName)) return getMenu();
+    if (COMMANDNAME.equals(propertyName)) return getCommandName();
+    if (COMMANDID.equals(propertyName)) return getCommandId();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class SecurityCommands extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (MENU.equals(propertyName)) setMenu((String)newValue); else
-		if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
-		if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (MENU.equals(propertyName)) setMenu((String)newValue); else
+    if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
+    if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class SecurityCommands extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (MENU.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMMANDNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMMANDID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (MENU.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMMANDNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMMANDID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class SecurityCommands extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (MENU.equals(propertyName)) return SecurityCommands.class;
-		if (COMMANDNAME.equals(propertyName)) return SecurityCommands.class;
-		if (COMMANDID.equals(propertyName)) return SecurityCommands.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (MENU.equals(propertyName)) return SecurityCommands.class;
+    if (COMMANDNAME.equals(propertyName)) return SecurityCommands.class;
+    if (COMMANDID.equals(propertyName)) return SecurityCommands.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SecurityCommands objT = (SecurityCommands)obj;
-		if (! SmartEquals(getMenu(), objT.getMenu()))
-			return false;
-		if (! SmartEquals(getCommandName(), objT.getCommandName()))
-			return false;
-		if (! SmartEquals(getCommandId(), objT.getCommandId()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    SecurityCommands objT = (SecurityCommands)obj;
+    if (! SmartEquals(getMenu(), objT.getMenu()))
+      return false;
+    if (! SmartEquals(getCommandName(), objT.getCommandName()))
+      return false;
+    if (! SmartEquals(getCommandId(), objT.getCommandId()))
+      return false;
+    return true;
+  }			
 }

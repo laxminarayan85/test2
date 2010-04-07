@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Grade.findall", query = "from Grade"),
-	@NamedQuery(name = "Grade.byId", query = "select a from Grade a where a.id= :id")
+  @NamedQuery(name = "Grade.findall", query = "from Grade"),
+  @NamedQuery(name = "Grade.byId", query = "select a from Grade a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class Grade extends ModelBase {
 	 * @generated
 	 */
 	public Grade() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class Grade extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -97,25 +97,25 @@ public class Grade extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<Campaigns> getCampaigns(){
-		return campaigns; 
-	}
+    return campaigns; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addCampaigns(Campaigns obj) {
-		if (campaigns == null) {
-			campaigns = new java.util.ArrayList<Campaigns>();
-		}
-		campaigns.add(obj);
-	}
+    if (campaigns == null) {
+      campaigns = new java.util.ArrayList<Campaigns>();
+    }
+    campaigns.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
-		this.campaigns = newVal;
-	}
+    this.campaigns = newVal;
+  }
  	
 	
 	/**
@@ -128,27 +128,27 @@ public class Grade extends ModelBase {
 	 * @generated
  	 */
 	public String getGradeId(){
-		return gradeId; 
-	}
+    return gradeId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGradeId(String newVal) {
-		this.gradeId = newVal;
-	}
+    this.gradeId = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
-		if (GRADEID.equals(propertyName)) return getGradeId();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (CAMPAIGNS.equals(propertyName)) return getCampaigns();
+    if (GRADEID.equals(propertyName)) return getGradeId();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -156,11 +156,11 @@ public class Grade extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
-		if (GRADEID.equals(propertyName)) setGradeId((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (CAMPAIGNS.equals(propertyName)) setCampaigns((java.util.List<Campaigns>)newValue); else
+    if (GRADEID.equals(propertyName)) setGradeId((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -168,14 +168,14 @@ public class Grade extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CAMPAIGNS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Campaigns.class};		
-		if (GRADEID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CAMPAIGNS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, Campaigns.class};		
+    if (GRADEID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -184,26 +184,26 @@ public class Grade extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return Grade.class;
-		if (CAMPAIGNS.equals(propertyName)) return Grade.class;
-		if (GRADEID.equals(propertyName)) return Grade.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return Grade.class;
+    if (CAMPAIGNS.equals(propertyName)) return Grade.class;
+    if (GRADEID.equals(propertyName)) return Grade.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Grade objT = (Grade)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
-			return false;
-		if (! SmartEquals(getGradeId(), objT.getGradeId()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Grade objT = (Grade)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getCampaigns(), objT.getCampaigns()))
+      return false;
+    if (! SmartEquals(getGradeId(), objT.getGradeId()))
+      return false;
+    return true;
+  }			
 }

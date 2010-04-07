@@ -33,7 +33,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 		double pricePerSecondSide = 0.0;
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
-			if (copierDefinition.getMatrixIsCopyCost()) {
+			if (copierDefinition.getMatrixType() == "CopyCost") {
 				pricePerCopy = matrixElement.getPrice1();
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				
@@ -53,9 +53,9 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				} else {
 					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
 				}
-			} else if (copierDefinition.getMatrixIsDiscountTable()) {
+			} else if (copierDefinition.getMatrixType() == "DiscountTable") {
 				
-			} else if (copierDefinition.getMatrixIsStepTable()) {
+			} else if (copierDefinition.getMatrixType() == "StepTable") {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getTotalCopies()*2);
 				} else {

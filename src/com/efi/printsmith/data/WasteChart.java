@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WasteChart.findall", query = "from WasteChart"),
-	@NamedQuery(name = "WasteChart.byId", query = "select a from WasteChart a where a.id= :id")
+  @NamedQuery(name = "WasteChart.findall", query = "from WasteChart"),
+  @NamedQuery(name = "WasteChart.byId", query = "select a from WasteChart a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class WasteChart extends PriceListBase {
 	 * @generated
 	 */
 	public WasteChart() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

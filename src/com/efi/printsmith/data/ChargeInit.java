@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ChargeInit.findall", query = "from ChargeInit"),
-	@NamedQuery(name = "ChargeInit.byId", query = "select a from ChargeInit a where a.id= :id")
+  @NamedQuery(name = "ChargeInit.findall", query = "from ChargeInit"),
+  @NamedQuery(name = "ChargeInit.byId", query = "select a from ChargeInit a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class ChargeInit extends ModelBase {
 	 * @generated
 	 */
 	public ChargeInit() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

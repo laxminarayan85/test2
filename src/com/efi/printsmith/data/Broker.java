@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Broker.findall", query = "from Broker"),
-	@NamedQuery(name = "Broker.byId", query = "select a from Broker a where a.id= :id")
+  @NamedQuery(name = "Broker.findall", query = "from Broker"),
+  @NamedQuery(name = "Broker.byId", query = "select a from Broker a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class Broker extends Party {
 	 * @generated
 	 */
 	public Broker() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class Broker extends Party {
 	 * @generated
  	 */
 	public String getBrokerId(){
-		return brokerId; 
-	}
+    return brokerId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBrokerId(String newVal) {
-		this.brokerId = newVal;
-	}
+    this.brokerId = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (BROKERID.equals(propertyName)) return getBrokerId();
-		return super.getProperty(propertyName);
-	}
+    if (BROKERID.equals(propertyName)) return getBrokerId();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class Broker extends Party {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (BROKERID.equals(propertyName)) setBrokerId((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (BROKERID.equals(propertyName)) setBrokerId((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class Broker extends Party {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (BROKERID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (BROKERID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class Broker extends Party {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (BROKERID.equals(propertyName)) return Broker.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (BROKERID.equals(propertyName)) return Broker.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Broker objT = (Broker)obj;
-		if (! SmartEquals(getBrokerId(), objT.getBrokerId()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Broker objT = (Broker)obj;
+    if (! SmartEquals(getBrokerId(), objT.getBrokerId()))
+      return false;
+    return true;
+  }			
 }

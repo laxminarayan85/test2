@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "JobBase.findall", query = "from JobBase"),
-	@NamedQuery(name = "JobBase.byId", query = "select a from JobBase a where a.id= :id")
+  @NamedQuery(name = "JobBase.findall", query = "from JobBase"),
+  @NamedQuery(name = "JobBase.byId", query = "select a from JobBase a where a.id= :id")
 })
 
 
@@ -273,9 +273,9 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */
 	public JobBase() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -289,16 +289,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getJobNumber(){
-		return jobNumber; 
-	}
+    return jobNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobNumber(String newVal) {
-		this.jobNumber = newVal;
-	}
+    this.jobNumber = newVal;
+  }
  	
 	
 	/**
@@ -311,16 +311,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getJobIndex(){
-		return jobIndex; 
-	}
+    return jobIndex; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobIndex(Long newVal) {
-		this.jobIndex = newVal;
-	}
+    this.jobIndex = newVal;
+  }
  	
 	
 	/**
@@ -333,16 +333,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getSalesCategory(){
-		return salesCategory; 
-	}
+    return salesCategory; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSalesCategory(SalesCategory newVal) {
-		this.salesCategory = newVal;
-	}
+    this.salesCategory = newVal;
+  }
  	
 	
 	/**
@@ -355,16 +355,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public ProductCode getProductCode(){
-		return productCode; 
-	}
+    return productCode; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setProductCode(ProductCode newVal) {
-		this.productCode = newVal;
-	}
+    this.productCode = newVal;
+  }
  	
 	
 	/**
@@ -379,25 +379,25 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<JobBase> getChildren(){
-		return children; 
-	}
+    return children; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addChildren(JobBase obj) {
-		if (children == null) {
-			children = new java.util.ArrayList<JobBase>();
-		}
-		children.add(obj);
-	}
+    if (children == null) {
+      children = new java.util.ArrayList<JobBase>();
+    }
+    children.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setChildren(java.util.List<JobBase> newVal) {
-		this.children = newVal;
-	}
+    this.children = newVal;
+  }
  	
 	
 	/**
@@ -412,25 +412,25 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<Charge> getCharges(){
-		return charges; 
-	}
+    return charges; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addCharges(Charge obj) {
-		if (charges == null) {
-			charges = new java.util.ArrayList<Charge>();
-		}
-		charges.add(obj);
-	}
+    if (charges == null) {
+      charges = new java.util.ArrayList<Charge>();
+    }
+    charges.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCharges(java.util.List<Charge> newVal) {
-		this.charges = newVal;
-	}
+    this.charges = newVal;
+  }
  	
 	
 	/**
@@ -443,16 +443,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getJobNotes(){
-		return jobNotes; 
-	}
+    return jobNotes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobNotes(String newVal) {
-		this.jobNotes = newVal;
-	}
+    this.jobNotes = newVal;
+  }
  	
 	
 	/**
@@ -465,16 +465,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getJobTicketNotes(){
-		return jobTicketNotes; 
-	}
+    return jobTicketNotes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJobTicketNotes(Boolean newVal) {
-		this.jobTicketNotes = newVal;
-	}
+    this.jobTicketNotes = newVal;
+  }
  	
 	
 	/**
@@ -487,16 +487,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBrokered(){
-		return brokered; 
-	}
+    return brokered; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBrokered(Boolean newVal) {
-		this.brokered = newVal;
-	}
+    this.brokered = newVal;
+  }
  	
 	
 	/**
@@ -509,16 +509,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxable(){
-		return taxable; 
-	}
+    return taxable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxable(Boolean newVal) {
-		this.taxable = newVal;
-	}
+    this.taxable = newVal;
+  }
  	
 	
 	/**
@@ -531,16 +531,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getFinished(){
-		return finished; 
-	}
+    return finished; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFinished(Boolean newVal) {
-		this.finished = newVal;
-	}
+    this.finished = newVal;
+  }
  	
 	
 	/**
@@ -553,16 +553,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Location getLocation(){
-		return location; 
-	}
+    return location; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLocation(Location newVal) {
-		this.location = newVal;
-	}
+    this.location = newVal;
+  }
  	
 	
 	/**
@@ -575,16 +575,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getComment(){
-		return comment; 
-	}
+    return comment; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setComment(String newVal) {
-		this.comment = newVal;
-	}
+    this.comment = newVal;
+  }
  	
 	
 	/**
@@ -597,16 +597,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -619,16 +619,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getQtyOrdered(){
-		return qtyOrdered; 
-	}
+    return qtyOrdered; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtyOrdered(Long newVal) {
-		this.qtyOrdered = newVal;
-	}
+    this.qtyOrdered = newVal;
+  }
  	
 	
 	/**
@@ -641,16 +641,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getOversUnders(){
-		return oversUnders; 
-	}
+    return oversUnders; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOversUnders(Long newVal) {
-		this.oversUnders = newVal;
-	}
+    this.oversUnders = newVal;
+  }
  	
 	
 	/**
@@ -663,16 +663,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getInSetsOf(){
-		return inSetsOf; 
-	}
+    return inSetsOf; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInSetsOf(Long newVal) {
-		this.inSetsOf = newVal;
-	}
+    this.inSetsOf = newVal;
+  }
  	
 	
 	/**
@@ -685,16 +685,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getInSetsOfOverride(){
-		return inSetsOfOverride; 
-	}
+    return inSetsOfOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInSetsOfOverride(Boolean newVal) {
-		this.inSetsOfOverride = newVal;
-	}
+    this.inSetsOfOverride = newVal;
+  }
  	
 	
 	/**
@@ -707,16 +707,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getSheets(){
-		return sheets; 
-	}
+    return sheets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheets(Long newVal) {
-		this.sheets = newVal;
-	}
+    this.sheets = newVal;
+  }
  	
 	
 	/**
@@ -729,16 +729,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumUp(){
-		return numUp; 
-	}
+    return numUp; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNumUp(Long newVal) {
-		this.numUp = newVal;
-	}
+    this.numUp = newVal;
+  }
  	
 	
 	/**
@@ -751,16 +751,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumOn(){
-		return numOn; 
-	}
+    return numOn; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNumOn(Long newVal) {
-		this.numOn = newVal;
-	}
+    this.numOn = newVal;
+  }
  	
 	
 	/**
@@ -773,16 +773,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getPress(){
-		return press; 
-	}
+    return press; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPress(PressDefinition newVal) {
-		this.press = newVal;
-	}
+    this.press = newVal;
+  }
  	
 	
 	/**
@@ -795,16 +795,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getBinderyWaste(){
-		return binderyWaste; 
-	}
+    return binderyWaste; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBinderyWaste(Long newVal) {
-		this.binderyWaste = newVal;
-	}
+    this.binderyWaste = newVal;
+  }
  	
 	
 	/**
@@ -817,16 +817,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBinderyWasteOverride(){
-		return binderyWasteOverride; 
-	}
+    return binderyWasteOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBinderyWasteOverride(Boolean newVal) {
-		this.binderyWasteOverride = newVal;
-	}
+    this.binderyWasteOverride = newVal;
+  }
  	
 	
 	/**
@@ -839,16 +839,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getEstWaste(){
-		return estWaste; 
-	}
+    return estWaste; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEstWaste(Long newVal) {
-		this.estWaste = newVal;
-	}
+    this.estWaste = newVal;
+  }
  	
 	
 	/**
@@ -861,16 +861,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getEstWasteOverride(){
-		return estWasteOverride; 
-	}
+    return estWasteOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEstWasteOverride(Boolean newVal) {
-		this.estWasteOverride = newVal;
-	}
+    this.estWasteOverride = newVal;
+  }
  	
 	
 	/**
@@ -883,16 +883,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getSignatures(){
-		return signatures; 
-	}
+    return signatures; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSignatures(Long newVal) {
-		this.signatures = newVal;
-	}
+    this.signatures = newVal;
+  }
  	
 	
 	/**
@@ -905,16 +905,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getPricingPress(){
-		return pricingPress; 
-	}
+    return pricingPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPricingPress(PressDefinition newVal) {
-		this.pricingPress = newVal;
-	}
+    this.pricingPress = newVal;
+  }
  	
 	
 	/**
@@ -927,16 +927,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getCostingPress(){
-		return costingPress; 
-	}
+    return costingPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingPress(PressDefinition newVal) {
-		this.costingPress = newVal;
-	}
+    this.costingPress = newVal;
+  }
  	
 	
 	/**
@@ -949,16 +949,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getRunMethod(){
-		return runMethod; 
-	}
+    return runMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRunMethod(String newVal) {
-		this.runMethod = newVal;
-	}
+    this.runMethod = newVal;
+  }
  	
 	
 	/**
@@ -971,16 +971,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public StockDefinition getStock(){
-		return stock; 
-	}
+    return stock; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStock(StockDefinition newVal) {
-		this.stock = newVal;
-	}
+    this.stock = newVal;
+  }
  	
 	
 	/**
@@ -993,16 +993,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getParentSize(){
-		return parentSize; 
-	}
+    return parentSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParentSize(String newVal) {
-		this.parentSize = newVal;
-	}
+    this.parentSize = newVal;
+  }
  	
 	
 	/**
@@ -1015,16 +1015,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getRunSize(){
-		return runSize; 
-	}
+    return runSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRunSize(String newVal) {
-		this.runSize = newVal;
-	}
+    this.runSize = newVal;
+  }
  	
 	
 	/**
@@ -1037,16 +1037,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFinishSize(){
-		return finishSize; 
-	}
+    return finishSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFinishSize(String newVal) {
-		this.finishSize = newVal;
-	}
+    this.finishSize = newVal;
+  }
  	
 	
 	/**
@@ -1059,16 +1059,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFoldedSize(){
-		return foldedSize; 
-	}
+    return foldedSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFoldedSize(String newVal) {
-		this.foldedSize = newVal;
-	}
+    this.foldedSize = newVal;
+  }
  	
 	
 	/**
@@ -1081,16 +1081,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontColors(){
-		return frontColors; 
-	}
+    return frontColors; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFrontColors(Integer newVal) {
-		this.frontColors = newVal;
-	}
+    this.frontColors = newVal;
+  }
  	
 	
 	/**
@@ -1103,16 +1103,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackColors(){
-		return backColors; 
-	}
+    return backColors; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBackColors(Integer newVal) {
-		this.backColors = newVal;
-	}
+    this.backColors = newVal;
+  }
  	
 	
 	/**
@@ -1125,16 +1125,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontPasses(){
-		return frontPasses; 
-	}
+    return frontPasses; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFrontPasses(Integer newVal) {
-		this.frontPasses = newVal;
-	}
+    this.frontPasses = newVal;
+  }
  	
 	
 	/**
@@ -1147,16 +1147,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackPasses(){
-		return backPasses; 
-	}
+    return backPasses; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBackPasses(Integer newVal) {
-		this.backPasses = newVal;
-	}
+    this.backPasses = newVal;
+  }
  	
 	
 	/**
@@ -1169,16 +1169,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontWashes(){
-		return frontWashes; 
-	}
+    return frontWashes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFrontWashes(Integer newVal) {
-		this.frontWashes = newVal;
-	}
+    this.frontWashes = newVal;
+  }
  	
 	
 	/**
@@ -1191,16 +1191,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackWashes(){
-		return backWashes; 
-	}
+    return backWashes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBackWashes(Integer newVal) {
-		this.backWashes = newVal;
-	}
+    this.backWashes = newVal;
+  }
  	
 	
 	/**
@@ -1215,25 +1215,25 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<InkColor> getFrontInks(){
-		return frontInks; 
-	}
+    return frontInks; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addFrontInks(InkColor obj) {
-		if (frontInks == null) {
-			frontInks = new java.util.ArrayList<InkColor>();
-		}
-		frontInks.add(obj);
-	}
+    if (frontInks == null) {
+      frontInks = new java.util.ArrayList<InkColor>();
+    }
+    frontInks.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setFrontInks(java.util.List<InkColor> newVal) {
-		this.frontInks = newVal;
-	}
+    this.frontInks = newVal;
+  }
  	
 	
 	/**
@@ -1246,16 +1246,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public InkColor getBackInks(){
-		return backInks; 
-	}
+    return backInks; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBackInks(InkColor newVal) {
-		this.backInks = newVal;
-	}
+    this.backInks = newVal;
+  }
  	
 	
 	/**
@@ -1268,16 +1268,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getPressQty(){
-		return pressQty; 
-	}
+    return pressQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPressQty(Long newVal) {
-		this.pressQty = newVal;
-	}
+    this.pressQty = newVal;
+  }
  	
 	
 	/**
@@ -1290,16 +1290,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PricingRecord getPricingRecord(){
-		return pricingRecord; 
-	}
+    return pricingRecord; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPricingRecord(PricingRecord newVal) {
-		this.pricingRecord = newVal;
-	}
+    this.pricingRecord = newVal;
+  }
  	
 	
 	/**
@@ -1312,16 +1312,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getPricingCopier(){
-		return pricingCopier; 
-	}
+    return pricingCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPricingCopier(CopierDefinition newVal) {
-		this.pricingCopier = newVal;
-	}
+    this.pricingCopier = newVal;
+  }
  	
 	
 	/**
@@ -1334,16 +1334,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getCostingCopier(){
-		return costingCopier; 
-	}
+    return costingCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingCopier(CopierDefinition newVal) {
-		this.costingCopier = newVal;
-	}
+    this.costingCopier = newVal;
+  }
  	
 	
 	/**
@@ -1356,16 +1356,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PreferencesPricingMethod getPricingMethod(){
-		return pricingMethod; 
-	}
+    return pricingMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPricingMethod(PreferencesPricingMethod newVal) {
-		this.pricingMethod = newVal;
-	}
+    this.pricingMethod = newVal;
+  }
  	
 	
 	/**
@@ -1378,16 +1378,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDoubleSided(){
-		return doubleSided; 
-	}
+    return doubleSided; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDoubleSided(Boolean newVal) {
-		this.doubleSided = newVal;
-	}
+    this.doubleSided = newVal;
+  }
  	
 	
 	/**
@@ -1400,16 +1400,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSingleSided(){
-		return singleSided; 
-	}
+    return singleSided; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSingleSided(Boolean newVal) {
-		this.singleSided = newVal;
-	}
+    this.singleSided = newVal;
+  }
  	
 	
 	/**
@@ -1422,16 +1422,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CostingRecord getCostingRecord(){
-		return costingRecord; 
-	}
+    return costingRecord; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostingRecord(CostingRecord newVal) {
-		this.costingRecord = newVal;
-	}
+    this.costingRecord = newVal;
+  }
  	
 	
 	/**
@@ -1444,16 +1444,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getWeight(){
-		return weight; 
-	}
+    return weight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWeight(Double newVal) {
-		this.weight = newVal;
-	}
+    this.weight = newVal;
+  }
  	
 	
 	/**
@@ -1466,16 +1466,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getTotalCopies(){
-		return totalCopies; 
-	}
+    return totalCopies; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalCopies(Long newVal) {
-		this.totalCopies = newVal;
-	}
+    this.totalCopies = newVal;
+  }
  	
 	
 	/**
@@ -1488,16 +1488,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumCopies(){
-		return numCopies; 
-	}
+    return numCopies; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNumCopies(Long newVal) {
-		this.numCopies = newVal;
-	}
+    this.numCopies = newVal;
+  }
  	
 	
 	/**
@@ -1510,16 +1510,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNumCopiesOverride(){
-		return numCopiesOverride; 
-	}
+    return numCopiesOverride; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNumCopiesOverride(Boolean newVal) {
-		this.numCopiesOverride = newVal;
-	}
+    this.numCopiesOverride = newVal;
+  }
  	
 	
 	/**
@@ -1532,16 +1532,16 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getStockQty(){
-		return stockQty; 
-	}
+    return stockQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockQty(Long newVal) {
-		this.stockQty = newVal;
-	}
+    this.stockQty = newVal;
+  }
  	
 	
 	/**
@@ -1554,81 +1554,81 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getCutOff(){
-		return cutOff; 
-	}
+    return cutOff; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCutOff(Double newVal) {
-		this.cutOff = newVal;
-	}
+    this.cutOff = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (JOBNUMBER.equals(propertyName)) return getJobNumber();
-		if (JOBINDEX.equals(propertyName)) return getJobIndex();
-		if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
-		if (PRODUCTCODE.equals(propertyName)) return getProductCode();
-		if (CHILDREN.equals(propertyName)) return getChildren();
-		if (CHARGES.equals(propertyName)) return getCharges();
-		if (JOBNOTES.equals(propertyName)) return getJobNotes();
-		if (JOBTICKETNOTES.equals(propertyName)) return getJobTicketNotes();
-		if (BROKERED.equals(propertyName)) return getBrokered();
-		if (TAXABLE.equals(propertyName)) return getTaxable();
-		if (FINISHED.equals(propertyName)) return getFinished();
-		if (LOCATION.equals(propertyName)) return getLocation();
-		if (COMMENT.equals(propertyName)) return getComment();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (QTYORDERED.equals(propertyName)) return getQtyOrdered();
-		if (OVERSUNDERS.equals(propertyName)) return getOversUnders();
-		if (INSETSOF.equals(propertyName)) return getInSetsOf();
-		if (INSETSOFOVERRIDE.equals(propertyName)) return getInSetsOfOverride();
-		if (SHEETS.equals(propertyName)) return getSheets();
-		if (NUMUP.equals(propertyName)) return getNumUp();
-		if (NUMON.equals(propertyName)) return getNumOn();
-		if (PRESS.equals(propertyName)) return getPress();
-		if (BINDERYWASTE.equals(propertyName)) return getBinderyWaste();
-		if (BINDERYWASTEOVERRIDE.equals(propertyName)) return getBinderyWasteOverride();
-		if (ESTWASTE.equals(propertyName)) return getEstWaste();
-		if (ESTWASTEOVERRIDE.equals(propertyName)) return getEstWasteOverride();
-		if (SIGNATURES.equals(propertyName)) return getSignatures();
-		if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
-		if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
-		if (RUNMETHOD.equals(propertyName)) return getRunMethod();
-		if (STOCK.equals(propertyName)) return getStock();
-		if (PARENTSIZE.equals(propertyName)) return getParentSize();
-		if (RUNSIZE.equals(propertyName)) return getRunSize();
-		if (FINISHSIZE.equals(propertyName)) return getFinishSize();
-		if (FOLDEDSIZE.equals(propertyName)) return getFoldedSize();
-		if (FRONTCOLORS.equals(propertyName)) return getFrontColors();
-		if (BACKCOLORS.equals(propertyName)) return getBackColors();
-		if (FRONTPASSES.equals(propertyName)) return getFrontPasses();
-		if (BACKPASSES.equals(propertyName)) return getBackPasses();
-		if (FRONTWASHES.equals(propertyName)) return getFrontWashes();
-		if (BACKWASHES.equals(propertyName)) return getBackWashes();
-		if (FRONTINKS.equals(propertyName)) return getFrontInks();
-		if (BACKINKS.equals(propertyName)) return getBackInks();
-		if (PRESSQTY.equals(propertyName)) return getPressQty();
-		if (PRICINGRECORD.equals(propertyName)) return getPricingRecord();
-		if (PRICINGCOPIER.equals(propertyName)) return getPricingCopier();
-		if (COSTINGCOPIER.equals(propertyName)) return getCostingCopier();
-		if (PRICINGMETHOD.equals(propertyName)) return getPricingMethod();
-		if (DOUBLESIDED.equals(propertyName)) return getDoubleSided();
-		if (SINGLESIDED.equals(propertyName)) return getSingleSided();
-		if (COSTINGRECORD.equals(propertyName)) return getCostingRecord();
-		if (WEIGHT.equals(propertyName)) return getWeight();
-		if (TOTALCOPIES.equals(propertyName)) return getTotalCopies();
-		if (NUMCOPIES.equals(propertyName)) return getNumCopies();
-		if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
-		if (STOCKQTY.equals(propertyName)) return getStockQty();
-		if (CUTOFF.equals(propertyName)) return getCutOff();
-		return super.getProperty(propertyName);
-	}
+    if (JOBNUMBER.equals(propertyName)) return getJobNumber();
+    if (JOBINDEX.equals(propertyName)) return getJobIndex();
+    if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
+    if (PRODUCTCODE.equals(propertyName)) return getProductCode();
+    if (CHILDREN.equals(propertyName)) return getChildren();
+    if (CHARGES.equals(propertyName)) return getCharges();
+    if (JOBNOTES.equals(propertyName)) return getJobNotes();
+    if (JOBTICKETNOTES.equals(propertyName)) return getJobTicketNotes();
+    if (BROKERED.equals(propertyName)) return getBrokered();
+    if (TAXABLE.equals(propertyName)) return getTaxable();
+    if (FINISHED.equals(propertyName)) return getFinished();
+    if (LOCATION.equals(propertyName)) return getLocation();
+    if (COMMENT.equals(propertyName)) return getComment();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (QTYORDERED.equals(propertyName)) return getQtyOrdered();
+    if (OVERSUNDERS.equals(propertyName)) return getOversUnders();
+    if (INSETSOF.equals(propertyName)) return getInSetsOf();
+    if (INSETSOFOVERRIDE.equals(propertyName)) return getInSetsOfOverride();
+    if (SHEETS.equals(propertyName)) return getSheets();
+    if (NUMUP.equals(propertyName)) return getNumUp();
+    if (NUMON.equals(propertyName)) return getNumOn();
+    if (PRESS.equals(propertyName)) return getPress();
+    if (BINDERYWASTE.equals(propertyName)) return getBinderyWaste();
+    if (BINDERYWASTEOVERRIDE.equals(propertyName)) return getBinderyWasteOverride();
+    if (ESTWASTE.equals(propertyName)) return getEstWaste();
+    if (ESTWASTEOVERRIDE.equals(propertyName)) return getEstWasteOverride();
+    if (SIGNATURES.equals(propertyName)) return getSignatures();
+    if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
+    if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
+    if (RUNMETHOD.equals(propertyName)) return getRunMethod();
+    if (STOCK.equals(propertyName)) return getStock();
+    if (PARENTSIZE.equals(propertyName)) return getParentSize();
+    if (RUNSIZE.equals(propertyName)) return getRunSize();
+    if (FINISHSIZE.equals(propertyName)) return getFinishSize();
+    if (FOLDEDSIZE.equals(propertyName)) return getFoldedSize();
+    if (FRONTCOLORS.equals(propertyName)) return getFrontColors();
+    if (BACKCOLORS.equals(propertyName)) return getBackColors();
+    if (FRONTPASSES.equals(propertyName)) return getFrontPasses();
+    if (BACKPASSES.equals(propertyName)) return getBackPasses();
+    if (FRONTWASHES.equals(propertyName)) return getFrontWashes();
+    if (BACKWASHES.equals(propertyName)) return getBackWashes();
+    if (FRONTINKS.equals(propertyName)) return getFrontInks();
+    if (BACKINKS.equals(propertyName)) return getBackInks();
+    if (PRESSQTY.equals(propertyName)) return getPressQty();
+    if (PRICINGRECORD.equals(propertyName)) return getPricingRecord();
+    if (PRICINGCOPIER.equals(propertyName)) return getPricingCopier();
+    if (COSTINGCOPIER.equals(propertyName)) return getCostingCopier();
+    if (PRICINGMETHOD.equals(propertyName)) return getPricingMethod();
+    if (DOUBLESIDED.equals(propertyName)) return getDoubleSided();
+    if (SINGLESIDED.equals(propertyName)) return getSingleSided();
+    if (COSTINGRECORD.equals(propertyName)) return getCostingRecord();
+    if (WEIGHT.equals(propertyName)) return getWeight();
+    if (TOTALCOPIES.equals(propertyName)) return getTotalCopies();
+    if (NUMCOPIES.equals(propertyName)) return getNumCopies();
+    if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
+    if (STOCKQTY.equals(propertyName)) return getStockQty();
+    if (CUTOFF.equals(propertyName)) return getCutOff();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -1636,65 +1636,65 @@ public class JobBase extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (JOBNUMBER.equals(propertyName)) setJobNumber((String)newValue); else
-		if (JOBINDEX.equals(propertyName)) setJobIndex((Long)newValue); else
-		if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
-		if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
-		if (CHILDREN.equals(propertyName)) setChildren((java.util.List<JobBase>)newValue); else
-		if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
-		if (JOBNOTES.equals(propertyName)) setJobNotes((String)newValue); else
-		if (JOBTICKETNOTES.equals(propertyName)) setJobTicketNotes((Boolean)newValue); else
-		if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-		if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-		if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-		if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
-		if (COMMENT.equals(propertyName)) setComment((String)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (QTYORDERED.equals(propertyName)) setQtyOrdered((Long)newValue); else
-		if (OVERSUNDERS.equals(propertyName)) setOversUnders((Long)newValue); else
-		if (INSETSOF.equals(propertyName)) setInSetsOf((Long)newValue); else
-		if (INSETSOFOVERRIDE.equals(propertyName)) setInSetsOfOverride((Boolean)newValue); else
-		if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
-		if (NUMUP.equals(propertyName)) setNumUp((Long)newValue); else
-		if (NUMON.equals(propertyName)) setNumOn((Long)newValue); else
-		if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
-		if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
-		if (BINDERYWASTEOVERRIDE.equals(propertyName)) setBinderyWasteOverride((Boolean)newValue); else
-		if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
-		if (ESTWASTEOVERRIDE.equals(propertyName)) setEstWasteOverride((Boolean)newValue); else
-		if (SIGNATURES.equals(propertyName)) setSignatures((Long)newValue); else
-		if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
-		if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
-		if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
-		if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
-		if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
-		if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
-		if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
-		if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((String)newValue); else
-		if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
-		if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
-		if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
-		if (BACKPASSES.equals(propertyName)) setBackPasses((Integer)newValue); else
-		if (FRONTWASHES.equals(propertyName)) setFrontWashes((Integer)newValue); else
-		if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
-		if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
-		if (BACKINKS.equals(propertyName)) setBackInks((InkColor)newValue); else
-		if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
-		if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
-		if (PRICINGCOPIER.equals(propertyName)) setPricingCopier((CopierDefinition)newValue); else
-		if (COSTINGCOPIER.equals(propertyName)) setCostingCopier((CopierDefinition)newValue); else
-		if (PRICINGMETHOD.equals(propertyName)) setPricingMethod((PreferencesPricingMethod)newValue); else
-		if (DOUBLESIDED.equals(propertyName)) setDoubleSided((Boolean)newValue); else
-		if (SINGLESIDED.equals(propertyName)) setSingleSided((Boolean)newValue); else
-		if (COSTINGRECORD.equals(propertyName)) setCostingRecord((CostingRecord)newValue); else
-		if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
-		if (TOTALCOPIES.equals(propertyName)) setTotalCopies((Long)newValue); else
-		if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
-		if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
-		if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
-		if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (JOBNUMBER.equals(propertyName)) setJobNumber((String)newValue); else
+    if (JOBINDEX.equals(propertyName)) setJobIndex((Long)newValue); else
+    if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
+    if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
+    if (CHILDREN.equals(propertyName)) setChildren((java.util.List<JobBase>)newValue); else
+    if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
+    if (JOBNOTES.equals(propertyName)) setJobNotes((String)newValue); else
+    if (JOBTICKETNOTES.equals(propertyName)) setJobTicketNotes((Boolean)newValue); else
+    if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
+    if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
+    if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
+    if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
+    if (COMMENT.equals(propertyName)) setComment((String)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (QTYORDERED.equals(propertyName)) setQtyOrdered((Long)newValue); else
+    if (OVERSUNDERS.equals(propertyName)) setOversUnders((Long)newValue); else
+    if (INSETSOF.equals(propertyName)) setInSetsOf((Long)newValue); else
+    if (INSETSOFOVERRIDE.equals(propertyName)) setInSetsOfOverride((Boolean)newValue); else
+    if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
+    if (NUMUP.equals(propertyName)) setNumUp((Long)newValue); else
+    if (NUMON.equals(propertyName)) setNumOn((Long)newValue); else
+    if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
+    if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
+    if (BINDERYWASTEOVERRIDE.equals(propertyName)) setBinderyWasteOverride((Boolean)newValue); else
+    if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
+    if (ESTWASTEOVERRIDE.equals(propertyName)) setEstWasteOverride((Boolean)newValue); else
+    if (SIGNATURES.equals(propertyName)) setSignatures((Long)newValue); else
+    if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
+    if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
+    if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
+    if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
+    if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
+    if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
+    if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((String)newValue); else
+    if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
+    if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
+    if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
+    if (BACKPASSES.equals(propertyName)) setBackPasses((Integer)newValue); else
+    if (FRONTWASHES.equals(propertyName)) setFrontWashes((Integer)newValue); else
+    if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
+    if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
+    if (BACKINKS.equals(propertyName)) setBackInks((InkColor)newValue); else
+    if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
+    if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
+    if (PRICINGCOPIER.equals(propertyName)) setPricingCopier((CopierDefinition)newValue); else
+    if (COSTINGCOPIER.equals(propertyName)) setCostingCopier((CopierDefinition)newValue); else
+    if (PRICINGMETHOD.equals(propertyName)) setPricingMethod((PreferencesPricingMethod)newValue); else
+    if (DOUBLESIDED.equals(propertyName)) setDoubleSided((Boolean)newValue); else
+    if (SINGLESIDED.equals(propertyName)) setSingleSided((Boolean)newValue); else
+    if (COSTINGRECORD.equals(propertyName)) setCostingRecord((CostingRecord)newValue); else
+    if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
+    if (TOTALCOPIES.equals(propertyName)) setTotalCopies((Long)newValue); else
+    if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
+    if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
+    if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
+    if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -1702,122 +1702,122 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (JOBNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (JOBINDEX.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SALESCATEGORY.equals(propertyName)) 
-			return new Class<?>[] {SalesCategory.class};		
-		if (PRODUCTCODE.equals(propertyName)) 
-			return new Class<?>[] {ProductCode.class};		
-		if (CHILDREN.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, JobBase.class};		
-		if (CHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, Charge.class};		
-		if (JOBNOTES.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (JOBTICKETNOTES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (BROKERED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXABLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (FINISHED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LOCATION.equals(propertyName)) 
-			return new Class<?>[] {Location.class};		
-		if (COMMENT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QTYORDERED.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (OVERSUNDERS.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (INSETSOF.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (INSETSOFOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHEETS.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (NUMUP.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (NUMON.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		if (BINDERYWASTE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (BINDERYWASTEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ESTWASTE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ESTWASTEOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SIGNATURES.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PRICINGPRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		if (COSTINGPRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		if (RUNMETHOD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STOCK.equals(propertyName)) 
-			return new Class<?>[] {StockDefinition.class};		
-		if (PARENTSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (RUNSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FINISHSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FOLDEDSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FRONTCOLORS.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BACKCOLORS.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (FRONTPASSES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BACKPASSES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (FRONTWASHES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BACKWASHES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (FRONTINKS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, InkColor.class};		
-		if (BACKINKS.equals(propertyName)) 
-			return new Class<?>[] {InkColor.class};		
-		if (PRESSQTY.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PRICINGRECORD.equals(propertyName)) 
-			return new Class<?>[] {PricingRecord.class};		
-		if (PRICINGCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (COSTINGCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (PRICINGMETHOD.equals(propertyName)) 
-			return new Class<?>[] {PreferencesPricingMethod.class};		
-		if (DOUBLESIDED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SINGLESIDED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (COSTINGRECORD.equals(propertyName)) 
-			return new Class<?>[] {CostingRecord.class};		
-		if (WEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOTALCOPIES.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (NUMCOPIES.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (NUMCOPIESOVERRIDE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (STOCKQTY.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CUTOFF.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (JOBNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBINDEX.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (SALESCATEGORY.equals(propertyName)) 
+      return new Class<?>[] {SalesCategory.class};		
+    if (PRODUCTCODE.equals(propertyName)) 
+      return new Class<?>[] {ProductCode.class};		
+    if (CHILDREN.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, JobBase.class};		
+    if (CHARGES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, Charge.class};		
+    if (JOBNOTES.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBTICKETNOTES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BROKERED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FINISHED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LOCATION.equals(propertyName)) 
+      return new Class<?>[] {Location.class};		
+    if (COMMENT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QTYORDERED.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (OVERSUNDERS.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (INSETSOF.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (INSETSOFOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHEETS.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMUP.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMON.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    if (BINDERYWASTE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (BINDERYWASTEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ESTWASTE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (ESTWASTEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SIGNATURES.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRICINGPRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    if (COSTINGPRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    if (RUNMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STOCK.equals(propertyName)) 
+      return new Class<?>[] {StockDefinition.class};		
+    if (PARENTSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (RUNSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FINISHSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FOLDEDSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FRONTCOLORS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BACKCOLORS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (FRONTPASSES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BACKPASSES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (FRONTWASHES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BACKWASHES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (FRONTINKS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, InkColor.class};		
+    if (BACKINKS.equals(propertyName)) 
+      return new Class<?>[] {InkColor.class};		
+    if (PRESSQTY.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRICINGRECORD.equals(propertyName)) 
+      return new Class<?>[] {PricingRecord.class};		
+    if (PRICINGCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (COSTINGCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (PRICINGMETHOD.equals(propertyName)) 
+      return new Class<?>[] {PreferencesPricingMethod.class};		
+    if (DOUBLESIDED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SINGLESIDED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COSTINGRECORD.equals(propertyName)) 
+      return new Class<?>[] {CostingRecord.class};		
+    if (WEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALCOPIES.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMCOPIES.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMCOPIESOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (STOCKQTY.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (CUTOFF.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -1826,188 +1826,188 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (JOBNUMBER.equals(propertyName)) return JobBase.class;
-		if (JOBINDEX.equals(propertyName)) return JobBase.class;
-		if (SALESCATEGORY.equals(propertyName)) return JobBase.class;
-		if (PRODUCTCODE.equals(propertyName)) return JobBase.class;
-		if (CHILDREN.equals(propertyName)) return JobBase.class;
-		if (CHARGES.equals(propertyName)) return JobBase.class;
-		if (JOBNOTES.equals(propertyName)) return JobBase.class;
-		if (JOBTICKETNOTES.equals(propertyName)) return JobBase.class;
-		if (BROKERED.equals(propertyName)) return JobBase.class;
-		if (TAXABLE.equals(propertyName)) return JobBase.class;
-		if (FINISHED.equals(propertyName)) return JobBase.class;
-		if (LOCATION.equals(propertyName)) return JobBase.class;
-		if (COMMENT.equals(propertyName)) return JobBase.class;
-		if (DESCRIPTION.equals(propertyName)) return JobBase.class;
-		if (QTYORDERED.equals(propertyName)) return JobBase.class;
-		if (OVERSUNDERS.equals(propertyName)) return JobBase.class;
-		if (INSETSOF.equals(propertyName)) return JobBase.class;
-		if (INSETSOFOVERRIDE.equals(propertyName)) return JobBase.class;
-		if (SHEETS.equals(propertyName)) return JobBase.class;
-		if (NUMUP.equals(propertyName)) return JobBase.class;
-		if (NUMON.equals(propertyName)) return JobBase.class;
-		if (PRESS.equals(propertyName)) return JobBase.class;
-		if (BINDERYWASTE.equals(propertyName)) return JobBase.class;
-		if (BINDERYWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
-		if (ESTWASTE.equals(propertyName)) return JobBase.class;
-		if (ESTWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
-		if (SIGNATURES.equals(propertyName)) return JobBase.class;
-		if (PRICINGPRESS.equals(propertyName)) return JobBase.class;
-		if (COSTINGPRESS.equals(propertyName)) return JobBase.class;
-		if (RUNMETHOD.equals(propertyName)) return JobBase.class;
-		if (STOCK.equals(propertyName)) return JobBase.class;
-		if (PARENTSIZE.equals(propertyName)) return JobBase.class;
-		if (RUNSIZE.equals(propertyName)) return JobBase.class;
-		if (FINISHSIZE.equals(propertyName)) return JobBase.class;
-		if (FOLDEDSIZE.equals(propertyName)) return JobBase.class;
-		if (FRONTCOLORS.equals(propertyName)) return JobBase.class;
-		if (BACKCOLORS.equals(propertyName)) return JobBase.class;
-		if (FRONTPASSES.equals(propertyName)) return JobBase.class;
-		if (BACKPASSES.equals(propertyName)) return JobBase.class;
-		if (FRONTWASHES.equals(propertyName)) return JobBase.class;
-		if (BACKWASHES.equals(propertyName)) return JobBase.class;
-		if (FRONTINKS.equals(propertyName)) return JobBase.class;
-		if (BACKINKS.equals(propertyName)) return JobBase.class;
-		if (PRESSQTY.equals(propertyName)) return JobBase.class;
-		if (PRICINGRECORD.equals(propertyName)) return JobBase.class;
-		if (PRICINGCOPIER.equals(propertyName)) return JobBase.class;
-		if (COSTINGCOPIER.equals(propertyName)) return JobBase.class;
-		if (PRICINGMETHOD.equals(propertyName)) return JobBase.class;
-		if (DOUBLESIDED.equals(propertyName)) return JobBase.class;
-		if (SINGLESIDED.equals(propertyName)) return JobBase.class;
-		if (COSTINGRECORD.equals(propertyName)) return JobBase.class;
-		if (WEIGHT.equals(propertyName)) return JobBase.class;
-		if (TOTALCOPIES.equals(propertyName)) return JobBase.class;
-		if (NUMCOPIES.equals(propertyName)) return JobBase.class;
-		if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
-		if (STOCKQTY.equals(propertyName)) return JobBase.class;
-		if (CUTOFF.equals(propertyName)) return JobBase.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (JOBNUMBER.equals(propertyName)) return JobBase.class;
+    if (JOBINDEX.equals(propertyName)) return JobBase.class;
+    if (SALESCATEGORY.equals(propertyName)) return JobBase.class;
+    if (PRODUCTCODE.equals(propertyName)) return JobBase.class;
+    if (CHILDREN.equals(propertyName)) return JobBase.class;
+    if (CHARGES.equals(propertyName)) return JobBase.class;
+    if (JOBNOTES.equals(propertyName)) return JobBase.class;
+    if (JOBTICKETNOTES.equals(propertyName)) return JobBase.class;
+    if (BROKERED.equals(propertyName)) return JobBase.class;
+    if (TAXABLE.equals(propertyName)) return JobBase.class;
+    if (FINISHED.equals(propertyName)) return JobBase.class;
+    if (LOCATION.equals(propertyName)) return JobBase.class;
+    if (COMMENT.equals(propertyName)) return JobBase.class;
+    if (DESCRIPTION.equals(propertyName)) return JobBase.class;
+    if (QTYORDERED.equals(propertyName)) return JobBase.class;
+    if (OVERSUNDERS.equals(propertyName)) return JobBase.class;
+    if (INSETSOF.equals(propertyName)) return JobBase.class;
+    if (INSETSOFOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (SHEETS.equals(propertyName)) return JobBase.class;
+    if (NUMUP.equals(propertyName)) return JobBase.class;
+    if (NUMON.equals(propertyName)) return JobBase.class;
+    if (PRESS.equals(propertyName)) return JobBase.class;
+    if (BINDERYWASTE.equals(propertyName)) return JobBase.class;
+    if (BINDERYWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (ESTWASTE.equals(propertyName)) return JobBase.class;
+    if (ESTWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (SIGNATURES.equals(propertyName)) return JobBase.class;
+    if (PRICINGPRESS.equals(propertyName)) return JobBase.class;
+    if (COSTINGPRESS.equals(propertyName)) return JobBase.class;
+    if (RUNMETHOD.equals(propertyName)) return JobBase.class;
+    if (STOCK.equals(propertyName)) return JobBase.class;
+    if (PARENTSIZE.equals(propertyName)) return JobBase.class;
+    if (RUNSIZE.equals(propertyName)) return JobBase.class;
+    if (FINISHSIZE.equals(propertyName)) return JobBase.class;
+    if (FOLDEDSIZE.equals(propertyName)) return JobBase.class;
+    if (FRONTCOLORS.equals(propertyName)) return JobBase.class;
+    if (BACKCOLORS.equals(propertyName)) return JobBase.class;
+    if (FRONTPASSES.equals(propertyName)) return JobBase.class;
+    if (BACKPASSES.equals(propertyName)) return JobBase.class;
+    if (FRONTWASHES.equals(propertyName)) return JobBase.class;
+    if (BACKWASHES.equals(propertyName)) return JobBase.class;
+    if (FRONTINKS.equals(propertyName)) return JobBase.class;
+    if (BACKINKS.equals(propertyName)) return JobBase.class;
+    if (PRESSQTY.equals(propertyName)) return JobBase.class;
+    if (PRICINGRECORD.equals(propertyName)) return JobBase.class;
+    if (PRICINGCOPIER.equals(propertyName)) return JobBase.class;
+    if (COSTINGCOPIER.equals(propertyName)) return JobBase.class;
+    if (PRICINGMETHOD.equals(propertyName)) return JobBase.class;
+    if (DOUBLESIDED.equals(propertyName)) return JobBase.class;
+    if (SINGLESIDED.equals(propertyName)) return JobBase.class;
+    if (COSTINGRECORD.equals(propertyName)) return JobBase.class;
+    if (WEIGHT.equals(propertyName)) return JobBase.class;
+    if (TOTALCOPIES.equals(propertyName)) return JobBase.class;
+    if (NUMCOPIES.equals(propertyName)) return JobBase.class;
+    if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (STOCKQTY.equals(propertyName)) return JobBase.class;
+    if (CUTOFF.equals(propertyName)) return JobBase.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		JobBase objT = (JobBase)obj;
-		if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
-			return false;
-		if (! SmartEquals(getJobIndex(), objT.getJobIndex()))
-			return false;
-		if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
-			return false;
-		if (! SmartEquals(getProductCode(), objT.getProductCode()))
-			return false;
-		if (! SmartEquals(getChildren(), objT.getChildren()))
-			return false;
-		if (! SmartEquals(getCharges(), objT.getCharges()))
-			return false;
-		if (! SmartEquals(getJobNotes(), objT.getJobNotes()))
-			return false;
-		if (! SmartEquals(getJobTicketNotes(), objT.getJobTicketNotes()))
-			return false;
-		if (! SmartEquals(getBrokered(), objT.getBrokered()))
-			return false;
-		if (! SmartEquals(getTaxable(), objT.getTaxable()))
-			return false;
-		if (! SmartEquals(getFinished(), objT.getFinished()))
-			return false;
-		if (! SmartEquals(getLocation(), objT.getLocation()))
-			return false;
-		if (! SmartEquals(getComment(), objT.getComment()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getQtyOrdered(), objT.getQtyOrdered()))
-			return false;
-		if (! SmartEquals(getOversUnders(), objT.getOversUnders()))
-			return false;
-		if (! SmartEquals(getInSetsOf(), objT.getInSetsOf()))
-			return false;
-		if (! SmartEquals(getInSetsOfOverride(), objT.getInSetsOfOverride()))
-			return false;
-		if (! SmartEquals(getSheets(), objT.getSheets()))
-			return false;
-		if (! SmartEquals(getNumUp(), objT.getNumUp()))
-			return false;
-		if (! SmartEquals(getNumOn(), objT.getNumOn()))
-			return false;
-		if (! SmartEquals(getPress(), objT.getPress()))
-			return false;
-		if (! SmartEquals(getBinderyWaste(), objT.getBinderyWaste()))
-			return false;
-		if (! SmartEquals(getBinderyWasteOverride(), objT.getBinderyWasteOverride()))
-			return false;
-		if (! SmartEquals(getEstWaste(), objT.getEstWaste()))
-			return false;
-		if (! SmartEquals(getEstWasteOverride(), objT.getEstWasteOverride()))
-			return false;
-		if (! SmartEquals(getSignatures(), objT.getSignatures()))
-			return false;
-		if (! SmartEquals(getPricingPress(), objT.getPricingPress()))
-			return false;
-		if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
-			return false;
-		if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
-			return false;
-		if (! SmartEquals(getStock(), objT.getStock()))
-			return false;
-		if (! SmartEquals(getParentSize(), objT.getParentSize()))
-			return false;
-		if (! SmartEquals(getRunSize(), objT.getRunSize()))
-			return false;
-		if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
-			return false;
-		if (! SmartEquals(getFoldedSize(), objT.getFoldedSize()))
-			return false;
-		if (! SmartEquals(getFrontColors(), objT.getFrontColors()))
-			return false;
-		if (! SmartEquals(getBackColors(), objT.getBackColors()))
-			return false;
-		if (! SmartEquals(getFrontPasses(), objT.getFrontPasses()))
-			return false;
-		if (! SmartEquals(getBackPasses(), objT.getBackPasses()))
-			return false;
-		if (! SmartEquals(getFrontWashes(), objT.getFrontWashes()))
-			return false;
-		if (! SmartEquals(getBackWashes(), objT.getBackWashes()))
-			return false;
-		if (! SmartEquals(getFrontInks(), objT.getFrontInks()))
-			return false;
-		if (! SmartEquals(getBackInks(), objT.getBackInks()))
-			return false;
-		if (! SmartEquals(getPressQty(), objT.getPressQty()))
-			return false;
-		if (! SmartEquals(getPricingRecord(), objT.getPricingRecord()))
-			return false;
-		if (! SmartEquals(getPricingCopier(), objT.getPricingCopier()))
-			return false;
-		if (! SmartEquals(getCostingCopier(), objT.getCostingCopier()))
-			return false;
-		if (! SmartEquals(getPricingMethod(), objT.getPricingMethod()))
-			return false;
-		if (! SmartEquals(getDoubleSided(), objT.getDoubleSided()))
-			return false;
-		if (! SmartEquals(getSingleSided(), objT.getSingleSided()))
-			return false;
-		if (! SmartEquals(getCostingRecord(), objT.getCostingRecord()))
-			return false;
-		if (! SmartEquals(getWeight(), objT.getWeight()))
-			return false;
-		if (! SmartEquals(getTotalCopies(), objT.getTotalCopies()))
-			return false;
-		if (! SmartEquals(getNumCopies(), objT.getNumCopies()))
-			return false;
-		if (! SmartEquals(getNumCopiesOverride(), objT.getNumCopiesOverride()))
-			return false;
-		if (! SmartEquals(getStockQty(), objT.getStockQty()))
-			return false;
-		if (! SmartEquals(getCutOff(), objT.getCutOff()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    JobBase objT = (JobBase)obj;
+    if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
+      return false;
+    if (! SmartEquals(getJobIndex(), objT.getJobIndex()))
+      return false;
+    if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
+      return false;
+    if (! SmartEquals(getProductCode(), objT.getProductCode()))
+      return false;
+    if (! SmartEquals(getChildren(), objT.getChildren()))
+      return false;
+    if (! SmartEquals(getCharges(), objT.getCharges()))
+      return false;
+    if (! SmartEquals(getJobNotes(), objT.getJobNotes()))
+      return false;
+    if (! SmartEquals(getJobTicketNotes(), objT.getJobTicketNotes()))
+      return false;
+    if (! SmartEquals(getBrokered(), objT.getBrokered()))
+      return false;
+    if (! SmartEquals(getTaxable(), objT.getTaxable()))
+      return false;
+    if (! SmartEquals(getFinished(), objT.getFinished()))
+      return false;
+    if (! SmartEquals(getLocation(), objT.getLocation()))
+      return false;
+    if (! SmartEquals(getComment(), objT.getComment()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getQtyOrdered(), objT.getQtyOrdered()))
+      return false;
+    if (! SmartEquals(getOversUnders(), objT.getOversUnders()))
+      return false;
+    if (! SmartEquals(getInSetsOf(), objT.getInSetsOf()))
+      return false;
+    if (! SmartEquals(getInSetsOfOverride(), objT.getInSetsOfOverride()))
+      return false;
+    if (! SmartEquals(getSheets(), objT.getSheets()))
+      return false;
+    if (! SmartEquals(getNumUp(), objT.getNumUp()))
+      return false;
+    if (! SmartEquals(getNumOn(), objT.getNumOn()))
+      return false;
+    if (! SmartEquals(getPress(), objT.getPress()))
+      return false;
+    if (! SmartEquals(getBinderyWaste(), objT.getBinderyWaste()))
+      return false;
+    if (! SmartEquals(getBinderyWasteOverride(), objT.getBinderyWasteOverride()))
+      return false;
+    if (! SmartEquals(getEstWaste(), objT.getEstWaste()))
+      return false;
+    if (! SmartEquals(getEstWasteOverride(), objT.getEstWasteOverride()))
+      return false;
+    if (! SmartEquals(getSignatures(), objT.getSignatures()))
+      return false;
+    if (! SmartEquals(getPricingPress(), objT.getPricingPress()))
+      return false;
+    if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
+      return false;
+    if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
+      return false;
+    if (! SmartEquals(getStock(), objT.getStock()))
+      return false;
+    if (! SmartEquals(getParentSize(), objT.getParentSize()))
+      return false;
+    if (! SmartEquals(getRunSize(), objT.getRunSize()))
+      return false;
+    if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
+      return false;
+    if (! SmartEquals(getFoldedSize(), objT.getFoldedSize()))
+      return false;
+    if (! SmartEquals(getFrontColors(), objT.getFrontColors()))
+      return false;
+    if (! SmartEquals(getBackColors(), objT.getBackColors()))
+      return false;
+    if (! SmartEquals(getFrontPasses(), objT.getFrontPasses()))
+      return false;
+    if (! SmartEquals(getBackPasses(), objT.getBackPasses()))
+      return false;
+    if (! SmartEquals(getFrontWashes(), objT.getFrontWashes()))
+      return false;
+    if (! SmartEquals(getBackWashes(), objT.getBackWashes()))
+      return false;
+    if (! SmartEquals(getFrontInks(), objT.getFrontInks()))
+      return false;
+    if (! SmartEquals(getBackInks(), objT.getBackInks()))
+      return false;
+    if (! SmartEquals(getPressQty(), objT.getPressQty()))
+      return false;
+    if (! SmartEquals(getPricingRecord(), objT.getPricingRecord()))
+      return false;
+    if (! SmartEquals(getPricingCopier(), objT.getPricingCopier()))
+      return false;
+    if (! SmartEquals(getCostingCopier(), objT.getCostingCopier()))
+      return false;
+    if (! SmartEquals(getPricingMethod(), objT.getPricingMethod()))
+      return false;
+    if (! SmartEquals(getDoubleSided(), objT.getDoubleSided()))
+      return false;
+    if (! SmartEquals(getSingleSided(), objT.getSingleSided()))
+      return false;
+    if (! SmartEquals(getCostingRecord(), objT.getCostingRecord()))
+      return false;
+    if (! SmartEquals(getWeight(), objT.getWeight()))
+      return false;
+    if (! SmartEquals(getTotalCopies(), objT.getTotalCopies()))
+      return false;
+    if (! SmartEquals(getNumCopies(), objT.getNumCopies()))
+      return false;
+    if (! SmartEquals(getNumCopiesOverride(), objT.getNumCopiesOverride()))
+      return false;
+    if (! SmartEquals(getStockQty(), objT.getStockQty()))
+      return false;
+    if (! SmartEquals(getCutOff(), objT.getCutOff()))
+      return false;
+    return true;
+  }			
 }

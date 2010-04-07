@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SpeedTable.findall", query = "from SpeedTable"),
-	@NamedQuery(name = "SpeedTable.byId", query = "select a from SpeedTable a where a.id= :id")
+  @NamedQuery(name = "SpeedTable.findall", query = "from SpeedTable"),
+  @NamedQuery(name = "SpeedTable.byId", query = "select a from SpeedTable a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class SpeedTable extends PriceListBase {
 	 * @generated
 	 */
 	public SpeedTable() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

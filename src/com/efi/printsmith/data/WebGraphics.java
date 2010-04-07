@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebGraphics.findall", query = "from WebGraphics"),
-	@NamedQuery(name = "WebGraphics.byId", query = "select a from WebGraphics a where a.id= :id")
+  @NamedQuery(name = "WebGraphics.findall", query = "from WebGraphics"),
+  @NamedQuery(name = "WebGraphics.byId", query = "select a from WebGraphics a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class WebGraphics extends ModelBase {
 	 * @generated
 	 */
 	public WebGraphics() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class WebGraphics extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class WebGraphics extends ModelBase {
 	 * @generated
  	 */
 	public String getStatus(){
-		return status; 
-	}
+    return status; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStatus(String newVal) {
-		this.status = newVal;
-	}
+    this.status = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class WebGraphics extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class WebGraphics extends ModelBase {
 	 * @generated
  	 */
 	public String getPathUrl(){
-		return pathUrl; 
-	}
+    return pathUrl; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPathUrl(String newVal) {
-		this.pathUrl = newVal;
-	}
+    this.pathUrl = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (STATUS.equals(propertyName)) return getStatus();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (PATHURL.equals(propertyName)) return getPathUrl();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (STATUS.equals(propertyName)) return getStatus();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (PATHURL.equals(propertyName)) return getPathUrl();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class WebGraphics extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (PATHURL.equals(propertyName)) setPathUrl((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (PATHURL.equals(propertyName)) setPathUrl((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class WebGraphics extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PATHURL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STATUS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PATHURL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class WebGraphics extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return WebGraphics.class;
-		if (STATUS.equals(propertyName)) return WebGraphics.class;
-		if (DESCRIPTION.equals(propertyName)) return WebGraphics.class;
-		if (PATHURL.equals(propertyName)) return WebGraphics.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return WebGraphics.class;
+    if (STATUS.equals(propertyName)) return WebGraphics.class;
+    if (DESCRIPTION.equals(propertyName)) return WebGraphics.class;
+    if (PATHURL.equals(propertyName)) return WebGraphics.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebGraphics objT = (WebGraphics)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getStatus(), objT.getStatus()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getPathUrl(), objT.getPathUrl()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebGraphics objT = (WebGraphics)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getPathUrl(), objT.getPathUrl()))
+      return false;
+    return true;
+  }			
 }

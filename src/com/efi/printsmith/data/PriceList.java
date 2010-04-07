@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PriceList.findall", query = "from PriceList"),
-	@NamedQuery(name = "PriceList.byId", query = "select a from PriceList a where a.id= :id")
+  @NamedQuery(name = "PriceList.findall", query = "from PriceList"),
+  @NamedQuery(name = "PriceList.byId", query = "select a from PriceList a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class PriceList extends PriceListBase {
 	 * @generated
 	 */
 	public PriceList() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

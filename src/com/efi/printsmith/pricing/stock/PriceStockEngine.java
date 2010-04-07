@@ -78,7 +78,7 @@ public class PriceStockEngine {
 		if (stockDefinition.getCostunits() > 0) {
 			if (pricingMethod.getTitle().equals("Large Format")) {
 				try {
-					if (copierDefinition.getSquareAreaFromFinish())
+					if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
 						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 					else
 						qty = new Double(Double.parseDouble(job.getParentSize()) * job.getCutOff()).longValue();

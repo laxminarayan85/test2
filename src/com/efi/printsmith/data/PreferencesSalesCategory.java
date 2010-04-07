@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesSalesCategory.findall", query = "from PreferencesSalesCategory"),
-	@NamedQuery(name = "PreferencesSalesCategory.byId", query = "select a from PreferencesSalesCategory a where a.id= :id")
+  @NamedQuery(name = "PreferencesSalesCategory.findall", query = "from PreferencesSalesCategory"),
+  @NamedQuery(name = "PreferencesSalesCategory.byId", query = "select a from PreferencesSalesCategory a where a.id= :id")
 })
 
 
@@ -53,9 +53,9 @@ public class PreferencesSalesCategory extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesSalesCategory() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -69,16 +69,16 @@ public class PreferencesSalesCategory extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getCategory(){
-		return category; 
-	}
+    return category; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCategory(SalesCategory newVal) {
-		this.category = newVal;
-	}
+    this.category = newVal;
+  }
  	
 	
 	/**
@@ -91,26 +91,26 @@ public class PreferencesSalesCategory extends ModelBase {
 	 * @generated
  	 */
 	public String getAccountNumber(){
-		return accountNumber; 
-	}
+    return accountNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAccountNumber(String newVal) {
-		this.accountNumber = newVal;
-	}
+    this.accountNumber = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CATEGORY.equals(propertyName)) return getCategory();
-		if (ACCOUNTNUMBER.equals(propertyName)) return getAccountNumber();
-		return super.getProperty(propertyName);
-	}
+    if (CATEGORY.equals(propertyName)) return getCategory();
+    if (ACCOUNTNUMBER.equals(propertyName)) return getAccountNumber();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -118,10 +118,10 @@ public class PreferencesSalesCategory extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
-		if (ACCOUNTNUMBER.equals(propertyName)) setAccountNumber((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
+    if (ACCOUNTNUMBER.equals(propertyName)) setAccountNumber((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -129,12 +129,12 @@ public class PreferencesSalesCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CATEGORY.equals(propertyName)) 
-			return new Class<?>[] {SalesCategory.class};		
-		if (ACCOUNTNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CATEGORY.equals(propertyName)) 
+      return new Class<?>[] {SalesCategory.class};		
+    if (ACCOUNTNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -143,23 +143,23 @@ public class PreferencesSalesCategory extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CATEGORY.equals(propertyName)) return PreferencesSalesCategory.class;
-		if (ACCOUNTNUMBER.equals(propertyName)) return PreferencesSalesCategory.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CATEGORY.equals(propertyName)) return PreferencesSalesCategory.class;
+    if (ACCOUNTNUMBER.equals(propertyName)) return PreferencesSalesCategory.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesSalesCategory objT = (PreferencesSalesCategory)obj;
-		if (! SmartEquals(getCategory(), objT.getCategory()))
-			return false;
-		if (! SmartEquals(getAccountNumber(), objT.getAccountNumber()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesSalesCategory objT = (PreferencesSalesCategory)obj;
+    if (! SmartEquals(getCategory(), objT.getCategory()))
+      return false;
+    if (! SmartEquals(getAccountNumber(), objT.getAccountNumber()))
+      return false;
+    return true;
+  }			
 }

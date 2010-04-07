@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesMarkups.findall", query = "from PreferencesMarkups"),
-	@NamedQuery(name = "PreferencesMarkups.byId", query = "select a from PreferencesMarkups a where a.id= :id")
+  @NamedQuery(name = "PreferencesMarkups.findall", query = "from PreferencesMarkups"),
+  @NamedQuery(name = "PreferencesMarkups.byId", query = "select a from PreferencesMarkups a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesMarkups() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
  	 */
 	public Double getTotalCost(){
-		return totalCost; 
-	}
+    return totalCost; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalCost(Double newVal) {
-		this.totalCost = newVal;
-	}
+    this.totalCost = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup(){
-		return markup; 
-	}
+    return markup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup(Double newVal) {
-		this.markup = newVal;
-	}
+    this.markup = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAbove(){
-		return above; 
-	}
+    return above; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAbove(Boolean newVal) {
-		this.above = newVal;
-	}
+    this.above = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TOTALCOST.equals(propertyName)) return getTotalCost();
-		if (MARKUP.equals(propertyName)) return getMarkup();
-		if (ABOVE.equals(propertyName)) return getAbove();
-		return super.getProperty(propertyName);
-	}
+    if (TOTALCOST.equals(propertyName)) return getTotalCost();
+    if (MARKUP.equals(propertyName)) return getMarkup();
+    if (ABOVE.equals(propertyName)) return getAbove();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class PreferencesMarkups extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
-		if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
-		if (ABOVE.equals(propertyName)) setAbove((Boolean)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+    if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
+    if (ABOVE.equals(propertyName)) setAbove((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class PreferencesMarkups extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TOTALCOST.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (ABOVE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TOTALCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ABOVE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class PreferencesMarkups extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TOTALCOST.equals(propertyName)) return PreferencesMarkups.class;
-		if (MARKUP.equals(propertyName)) return PreferencesMarkups.class;
-		if (ABOVE.equals(propertyName)) return PreferencesMarkups.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TOTALCOST.equals(propertyName)) return PreferencesMarkups.class;
+    if (MARKUP.equals(propertyName)) return PreferencesMarkups.class;
+    if (ABOVE.equals(propertyName)) return PreferencesMarkups.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesMarkups objT = (PreferencesMarkups)obj;
-		if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
-			return false;
-		if (! SmartEquals(getMarkup(), objT.getMarkup()))
-			return false;
-		if (! SmartEquals(getAbove(), objT.getAbove()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesMarkups objT = (PreferencesMarkups)obj;
+    if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
+      return false;
+    if (! SmartEquals(getMarkup(), objT.getMarkup()))
+      return false;
+    if (! SmartEquals(getAbove(), objT.getAbove()))
+      return false;
+    return true;
+  }			
 }

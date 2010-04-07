@@ -5,7 +5,7 @@ package com.efi.printsmith.data
 	
 	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.StockClass")]
-	[Managed]
+
 	public class StockClass extends ModelBase
 	{
 

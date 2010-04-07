@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesPendingList.findall", query = "from PreferencesPendingList"),
-	@NamedQuery(name = "PreferencesPendingList.byId", query = "select a from PreferencesPendingList a where a.id= :id")
+  @NamedQuery(name = "PreferencesPendingList.findall", query = "from PreferencesPendingList"),
+  @NamedQuery(name = "PreferencesPendingList.byId", query = "select a from PreferencesPendingList a where a.id= :id")
 })
 
 
@@ -57,9 +57,9 @@ public class PreferencesPendingList extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesPendingList() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -73,16 +73,16 @@ public class PreferencesPendingList extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getVisible(){
-		return visible; 
-	}
+    return visible; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setVisible(Boolean newVal) {
-		this.visible = newVal;
-	}
+    this.visible = newVal;
+  }
  	
 	
 	/**
@@ -95,16 +95,16 @@ public class PreferencesPendingList extends ModelBase {
 	 * @generated
  	 */
 	public ColumnNames getColumns(){
-		return columns; 
-	}
+    return columns; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setColumns(ColumnNames newVal) {
-		this.columns = newVal;
-	}
+    this.columns = newVal;
+  }
  	
 	
 	/**
@@ -117,27 +117,27 @@ public class PreferencesPendingList extends ModelBase {
 	 * @generated
  	 */
 	public Integer getColumnOrder(){
-		return columnOrder; 
-	}
+    return columnOrder; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setColumnOrder(Integer newVal) {
-		this.columnOrder = newVal;
-	}
+    this.columnOrder = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (VISIBLE.equals(propertyName)) return getVisible();
-		if (COLUMNS.equals(propertyName)) return getColumns();
-		if (COLUMNORDER.equals(propertyName)) return getColumnOrder();
-		return super.getProperty(propertyName);
-	}
+    if (VISIBLE.equals(propertyName)) return getVisible();
+    if (COLUMNS.equals(propertyName)) return getColumns();
+    if (COLUMNORDER.equals(propertyName)) return getColumnOrder();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -145,11 +145,11 @@ public class PreferencesPendingList extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (VISIBLE.equals(propertyName)) setVisible((Boolean)newValue); else
-		if (COLUMNS.equals(propertyName)) setColumns((ColumnNames)newValue); else
-		if (COLUMNORDER.equals(propertyName)) setColumnOrder((Integer)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (VISIBLE.equals(propertyName)) setVisible((Boolean)newValue); else
+    if (COLUMNS.equals(propertyName)) setColumns((ColumnNames)newValue); else
+    if (COLUMNORDER.equals(propertyName)) setColumnOrder((Integer)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -157,14 +157,14 @@ public class PreferencesPendingList extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (VISIBLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (COLUMNS.equals(propertyName)) 
-			return new Class<?>[] {ColumnNames.class};		
-		if (COLUMNORDER.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (VISIBLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COLUMNS.equals(propertyName)) 
+      return new Class<?>[] {ColumnNames.class};		
+    if (COLUMNORDER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -173,26 +173,26 @@ public class PreferencesPendingList extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (VISIBLE.equals(propertyName)) return PreferencesPendingList.class;
-		if (COLUMNS.equals(propertyName)) return PreferencesPendingList.class;
-		if (COLUMNORDER.equals(propertyName)) return PreferencesPendingList.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (VISIBLE.equals(propertyName)) return PreferencesPendingList.class;
+    if (COLUMNS.equals(propertyName)) return PreferencesPendingList.class;
+    if (COLUMNORDER.equals(propertyName)) return PreferencesPendingList.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesPendingList objT = (PreferencesPendingList)obj;
-		if (! SmartEquals(getVisible(), objT.getVisible()))
-			return false;
-		if (! SmartEquals(getColumns(), objT.getColumns()))
-			return false;
-		if (! SmartEquals(getColumnOrder(), objT.getColumnOrder()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesPendingList objT = (PreferencesPendingList)obj;
+    if (! SmartEquals(getVisible(), objT.getVisible()))
+      return false;
+    if (! SmartEquals(getColumns(), objT.getColumns()))
+      return false;
+    if (! SmartEquals(getColumnOrder(), objT.getColumnOrder()))
+      return false;
+    return true;
+  }			
 }

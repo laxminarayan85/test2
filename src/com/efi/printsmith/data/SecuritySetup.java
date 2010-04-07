@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "SecuritySetup.findall", query = "from SecuritySetup"),
-	@NamedQuery(name = "SecuritySetup.byId", query = "select a from SecuritySetup a where a.id= :id")
+  @NamedQuery(name = "SecuritySetup.findall", query = "from SecuritySetup"),
+  @NamedQuery(name = "SecuritySetup.byId", query = "select a from SecuritySetup a where a.id= :id")
 })
 
 
@@ -65,9 +65,9 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
 	 */
 	public SecuritySetup() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -81,16 +81,16 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getEnable(){
-		return enable; 
-	}
+    return enable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEnable(Boolean newVal) {
-		this.enable = newVal;
-	}
+    this.enable = newVal;
+  }
  	
 	
 	/**
@@ -103,16 +103,16 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
  	 */
 	public String getMenu(){
-		return menu; 
-	}
+    return menu; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMenu(String newVal) {
-		this.menu = newVal;
-	}
+    this.menu = newVal;
+  }
  	
 	
 	/**
@@ -125,16 +125,16 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
  	 */
 	public String getCommandId(){
-		return commandId; 
-	}
+    return commandId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCommandId(String newVal) {
-		this.commandId = newVal;
-	}
+    this.commandId = newVal;
+  }
  	
 	
 	/**
@@ -147,16 +147,16 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
  	 */
 	public String getCommandName(){
-		return commandName; 
-	}
+    return commandName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCommandName(String newVal) {
-		this.commandName = newVal;
-	}
+    this.commandName = newVal;
+  }
  	
 	
 	/**
@@ -169,29 +169,29 @@ public class SecuritySetup extends ModelBase {
 	 * @generated
  	 */
 	public AccessGroup getAccessGroup(){
-		return accessGroup; 
-	}
+    return accessGroup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAccessGroup(AccessGroup newVal) {
-		this.accessGroup = newVal;
-	}
+    this.accessGroup = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (ENABLE.equals(propertyName)) return getEnable();
-		if (MENU.equals(propertyName)) return getMenu();
-		if (COMMANDID.equals(propertyName)) return getCommandId();
-		if (COMMANDNAME.equals(propertyName)) return getCommandName();
-		if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
-		return super.getProperty(propertyName);
-	}
+    if (ENABLE.equals(propertyName)) return getEnable();
+    if (MENU.equals(propertyName)) return getMenu();
+    if (COMMANDID.equals(propertyName)) return getCommandId();
+    if (COMMANDNAME.equals(propertyName)) return getCommandName();
+    if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -199,13 +199,13 @@ public class SecuritySetup extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (ENABLE.equals(propertyName)) setEnable((Boolean)newValue); else
-		if (MENU.equals(propertyName)) setMenu((String)newValue); else
-		if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
-		if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
-		if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (ENABLE.equals(propertyName)) setEnable((Boolean)newValue); else
+    if (MENU.equals(propertyName)) setMenu((String)newValue); else
+    if (COMMANDID.equals(propertyName)) setCommandId((String)newValue); else
+    if (COMMANDNAME.equals(propertyName)) setCommandName((String)newValue); else
+    if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -213,18 +213,18 @@ public class SecuritySetup extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (ENABLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (MENU.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMMANDID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMMANDNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ACCESSGROUP.equals(propertyName)) 
-			return new Class<?>[] {AccessGroup.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (ENABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MENU.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMMANDID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMMANDNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ACCESSGROUP.equals(propertyName)) 
+      return new Class<?>[] {AccessGroup.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -233,32 +233,32 @@ public class SecuritySetup extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (ENABLE.equals(propertyName)) return SecuritySetup.class;
-		if (MENU.equals(propertyName)) return SecuritySetup.class;
-		if (COMMANDID.equals(propertyName)) return SecuritySetup.class;
-		if (COMMANDNAME.equals(propertyName)) return SecuritySetup.class;
-		if (ACCESSGROUP.equals(propertyName)) return SecuritySetup.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (ENABLE.equals(propertyName)) return SecuritySetup.class;
+    if (MENU.equals(propertyName)) return SecuritySetup.class;
+    if (COMMANDID.equals(propertyName)) return SecuritySetup.class;
+    if (COMMANDNAME.equals(propertyName)) return SecuritySetup.class;
+    if (ACCESSGROUP.equals(propertyName)) return SecuritySetup.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		SecuritySetup objT = (SecuritySetup)obj;
-		if (! SmartEquals(getEnable(), objT.getEnable()))
-			return false;
-		if (! SmartEquals(getMenu(), objT.getMenu()))
-			return false;
-		if (! SmartEquals(getCommandId(), objT.getCommandId()))
-			return false;
-		if (! SmartEquals(getCommandName(), objT.getCommandName()))
-			return false;
-		if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    SecuritySetup objT = (SecuritySetup)obj;
+    if (! SmartEquals(getEnable(), objT.getEnable()))
+      return false;
+    if (! SmartEquals(getMenu(), objT.getMenu()))
+      return false;
+    if (! SmartEquals(getCommandId(), objT.getCommandId()))
+      return false;
+    if (! SmartEquals(getCommandName(), objT.getCommandName()))
+      return false;
+    if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
+      return false;
+    return true;
+  }			
 }

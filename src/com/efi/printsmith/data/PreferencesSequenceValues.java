@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesSequenceValues.findall", query = "from PreferencesSequenceValues"),
-	@NamedQuery(name = "PreferencesSequenceValues.byId", query = "select a from PreferencesSequenceValues a where a.id= :id")
+  @NamedQuery(name = "PreferencesSequenceValues.findall", query = "from PreferencesSequenceValues"),
+  @NamedQuery(name = "PreferencesSequenceValues.byId", query = "select a from PreferencesSequenceValues a where a.id= :id")
 })
 
 
@@ -93,9 +93,9 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesSequenceValues() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -109,16 +109,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getInvoice(){
-		return invoice; 
-	}
+    return invoice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInvoice(Long newVal) {
-		this.invoice = newVal;
-	}
+    this.invoice = newVal;
+  }
  	
 	
 	/**
@@ -131,16 +131,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getJob(){
-		return job; 
-	}
+    return job; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setJob(Long newVal) {
-		this.job = newVal;
-	}
+    this.job = newVal;
+  }
  	
 	
 	/**
@@ -153,16 +153,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getPressDefinition(){
-		return pressDefinition; 
-	}
+    return pressDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPressDefinition(Long newVal) {
-		this.pressDefinition = newVal;
-	}
+    this.pressDefinition = newVal;
+  }
  	
 	
 	/**
@@ -175,16 +175,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getChargeDefinition(){
-		return chargeDefinition; 
-	}
+    return chargeDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setChargeDefinition(Long newVal) {
-		this.chargeDefinition = newVal;
-	}
+    this.chargeDefinition = newVal;
+  }
  	
 	
 	/**
@@ -197,16 +197,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getAccount(){
-		return account; 
-	}
+    return account; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAccount(Long newVal) {
-		this.account = newVal;
-	}
+    this.account = newVal;
+  }
  	
 	
 	/**
@@ -219,16 +219,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getContact(){
-		return contact; 
-	}
+    return contact; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setContact(Long newVal) {
-		this.contact = newVal;
-	}
+    this.contact = newVal;
+  }
  	
 	
 	/**
@@ -241,16 +241,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getStockDefinition(){
-		return stockDefinition; 
-	}
+    return stockDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockDefinition(Long newVal) {
-		this.stockDefinition = newVal;
-	}
+    this.stockDefinition = newVal;
+  }
  	
 	
 	/**
@@ -263,16 +263,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getEmployee(){
-		return employee; 
-	}
+    return employee; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEmployee(Long newVal) {
-		this.employee = newVal;
-	}
+    this.employee = newVal;
+  }
  	
 	
 	/**
@@ -285,16 +285,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getBroker(){
-		return broker; 
-	}
+    return broker; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBroker(Long newVal) {
-		this.broker = newVal;
-	}
+    this.broker = newVal;
+  }
  	
 	
 	/**
@@ -307,16 +307,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getCopierDefinition(){
-		return copierDefinition; 
-	}
+    return copierDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCopierDefinition(Long newVal) {
-		this.copierDefinition = newVal;
-	}
+    this.copierDefinition = newVal;
+  }
  	
 	
 	/**
@@ -329,16 +329,16 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getCampaign(){
-		return campaign; 
-	}
+    return campaign; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCampaign(Long newVal) {
-		this.campaign = newVal;
-	}
+    this.campaign = newVal;
+  }
  	
 	
 	/**
@@ -351,36 +351,36 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
  	 */
 	public Long getGrade(){
-		return grade; 
-	}
+    return grade; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGrade(Long newVal) {
-		this.grade = newVal;
-	}
+    this.grade = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (INVOICE.equals(propertyName)) return getInvoice();
-		if (JOB.equals(propertyName)) return getJob();
-		if (PRESSDEFINITION.equals(propertyName)) return getPressDefinition();
-		if (CHARGEDEFINITION.equals(propertyName)) return getChargeDefinition();
-		if (ACCOUNT.equals(propertyName)) return getAccount();
-		if (CONTACT.equals(propertyName)) return getContact();
-		if (STOCKDEFINITION.equals(propertyName)) return getStockDefinition();
-		if (EMPLOYEE.equals(propertyName)) return getEmployee();
-		if (BROKER.equals(propertyName)) return getBroker();
-		if (COPIERDEFINITION.equals(propertyName)) return getCopierDefinition();
-		if (CAMPAIGN.equals(propertyName)) return getCampaign();
-		if (GRADE.equals(propertyName)) return getGrade();
-		return super.getProperty(propertyName);
-	}
+    if (INVOICE.equals(propertyName)) return getInvoice();
+    if (JOB.equals(propertyName)) return getJob();
+    if (PRESSDEFINITION.equals(propertyName)) return getPressDefinition();
+    if (CHARGEDEFINITION.equals(propertyName)) return getChargeDefinition();
+    if (ACCOUNT.equals(propertyName)) return getAccount();
+    if (CONTACT.equals(propertyName)) return getContact();
+    if (STOCKDEFINITION.equals(propertyName)) return getStockDefinition();
+    if (EMPLOYEE.equals(propertyName)) return getEmployee();
+    if (BROKER.equals(propertyName)) return getBroker();
+    if (COPIERDEFINITION.equals(propertyName)) return getCopierDefinition();
+    if (CAMPAIGN.equals(propertyName)) return getCampaign();
+    if (GRADE.equals(propertyName)) return getGrade();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -388,20 +388,20 @@ public class PreferencesSequenceValues extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (INVOICE.equals(propertyName)) setInvoice((Long)newValue); else
-		if (JOB.equals(propertyName)) setJob((Long)newValue); else
-		if (PRESSDEFINITION.equals(propertyName)) setPressDefinition((Long)newValue); else
-		if (CHARGEDEFINITION.equals(propertyName)) setChargeDefinition((Long)newValue); else
-		if (ACCOUNT.equals(propertyName)) setAccount((Long)newValue); else
-		if (CONTACT.equals(propertyName)) setContact((Long)newValue); else
-		if (STOCKDEFINITION.equals(propertyName)) setStockDefinition((Long)newValue); else
-		if (EMPLOYEE.equals(propertyName)) setEmployee((Long)newValue); else
-		if (BROKER.equals(propertyName)) setBroker((Long)newValue); else
-		if (COPIERDEFINITION.equals(propertyName)) setCopierDefinition((Long)newValue); else
-		if (CAMPAIGN.equals(propertyName)) setCampaign((Long)newValue); else
-		if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (INVOICE.equals(propertyName)) setInvoice((Long)newValue); else
+    if (JOB.equals(propertyName)) setJob((Long)newValue); else
+    if (PRESSDEFINITION.equals(propertyName)) setPressDefinition((Long)newValue); else
+    if (CHARGEDEFINITION.equals(propertyName)) setChargeDefinition((Long)newValue); else
+    if (ACCOUNT.equals(propertyName)) setAccount((Long)newValue); else
+    if (CONTACT.equals(propertyName)) setContact((Long)newValue); else
+    if (STOCKDEFINITION.equals(propertyName)) setStockDefinition((Long)newValue); else
+    if (EMPLOYEE.equals(propertyName)) setEmployee((Long)newValue); else
+    if (BROKER.equals(propertyName)) setBroker((Long)newValue); else
+    if (COPIERDEFINITION.equals(propertyName)) setCopierDefinition((Long)newValue); else
+    if (CAMPAIGN.equals(propertyName)) setCampaign((Long)newValue); else
+    if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -409,32 +409,32 @@ public class PreferencesSequenceValues extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (INVOICE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (JOB.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PRESSDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CHARGEDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ACCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CONTACT.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (STOCKDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (EMPLOYEE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (BROKER.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COPIERDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CAMPAIGN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (GRADE.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (INVOICE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (JOB.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRESSDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (CHARGEDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (CONTACT.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (STOCKDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (EMPLOYEE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (BROKER.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (COPIERDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (CAMPAIGN.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (GRADE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -443,53 +443,53 @@ public class PreferencesSequenceValues extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (INVOICE.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (JOB.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (PRESSDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (CHARGEDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (ACCOUNT.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (CONTACT.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (STOCKDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (EMPLOYEE.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (BROKER.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (COPIERDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (CAMPAIGN.equals(propertyName)) return PreferencesSequenceValues.class;
-		if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (INVOICE.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (JOB.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (PRESSDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (CHARGEDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (ACCOUNT.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (CONTACT.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (STOCKDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (EMPLOYEE.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (BROKER.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (COPIERDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (CAMPAIGN.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesSequenceValues objT = (PreferencesSequenceValues)obj;
-		if (! SmartEquals(getInvoice(), objT.getInvoice()))
-			return false;
-		if (! SmartEquals(getJob(), objT.getJob()))
-			return false;
-		if (! SmartEquals(getPressDefinition(), objT.getPressDefinition()))
-			return false;
-		if (! SmartEquals(getChargeDefinition(), objT.getChargeDefinition()))
-			return false;
-		if (! SmartEquals(getAccount(), objT.getAccount()))
-			return false;
-		if (! SmartEquals(getContact(), objT.getContact()))
-			return false;
-		if (! SmartEquals(getStockDefinition(), objT.getStockDefinition()))
-			return false;
-		if (! SmartEquals(getEmployee(), objT.getEmployee()))
-			return false;
-		if (! SmartEquals(getBroker(), objT.getBroker()))
-			return false;
-		if (! SmartEquals(getCopierDefinition(), objT.getCopierDefinition()))
-			return false;
-		if (! SmartEquals(getCampaign(), objT.getCampaign()))
-			return false;
-		if (! SmartEquals(getGrade(), objT.getGrade()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesSequenceValues objT = (PreferencesSequenceValues)obj;
+    if (! SmartEquals(getInvoice(), objT.getInvoice()))
+      return false;
+    if (! SmartEquals(getJob(), objT.getJob()))
+      return false;
+    if (! SmartEquals(getPressDefinition(), objT.getPressDefinition()))
+      return false;
+    if (! SmartEquals(getChargeDefinition(), objT.getChargeDefinition()))
+      return false;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
+      return false;
+    if (! SmartEquals(getContact(), objT.getContact()))
+      return false;
+    if (! SmartEquals(getStockDefinition(), objT.getStockDefinition()))
+      return false;
+    if (! SmartEquals(getEmployee(), objT.getEmployee()))
+      return false;
+    if (! SmartEquals(getBroker(), objT.getBroker()))
+      return false;
+    if (! SmartEquals(getCopierDefinition(), objT.getCopierDefinition()))
+      return false;
+    if (! SmartEquals(getCampaign(), objT.getCampaign()))
+      return false;
+    if (! SmartEquals(getGrade(), objT.getGrade()))
+      return false;
+    return true;
+  }			
 }

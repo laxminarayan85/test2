@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Job.findall", query = "from Job"),
-	@NamedQuery(name = "Job.byId", query = "select a from Job a where a.id= :id")
+  @NamedQuery(name = "Job.findall", query = "from Job"),
+  @NamedQuery(name = "Job.byId", query = "select a from Job a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class Job extends JobBase {
 	 * @generated
 	 */
 	public Job() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "PreferencesCashRegister.findall", query = "from PreferencesCashRegister"),
-	@NamedQuery(name = "PreferencesCashRegister.byId", query = "select a from PreferencesCashRegister a where a.id= :id")
+  @NamedQuery(name = "PreferencesCashRegister.findall", query = "from PreferencesCashRegister"),
+  @NamedQuery(name = "PreferencesCashRegister.byId", query = "select a from PreferencesCashRegister a where a.id= :id")
 })
 
 
@@ -69,9 +69,9 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
 	 */
 	public PreferencesCashRegister() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -85,16 +85,16 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTax(){
-		return tax; 
-	}
+    return tax; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTax(Boolean newVal) {
-		this.tax = newVal;
-	}
+    this.tax = newVal;
+  }
  	
 	
 	/**
@@ -107,16 +107,16 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public String getTitle(){
-		return title; 
-	}
+    return title; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTitle(String newVal) {
-		this.title = newVal;
-	}
+    this.title = newVal;
+  }
  	
 	
 	/**
@@ -129,16 +129,16 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getCategory(){
-		return category; 
-	}
+    return category; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCategory(SalesCategory newVal) {
-		this.category = newVal;
-	}
+    this.category = newVal;
+  }
  	
 	
 	/**
@@ -151,16 +151,16 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public Double getRate(){
-		return rate; 
-	}
+    return rate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRate(Double newVal) {
-		this.rate = newVal;
-	}
+    this.rate = newVal;
+  }
  	
 	
 	/**
@@ -173,16 +173,16 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public TaxTable getTaxTable(){
-		return taxTable; 
-	}
+    return taxTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxTable(TaxTable newVal) {
-		this.taxTable = newVal;
-	}
+    this.taxTable = newVal;
+  }
  	
 	
 	/**
@@ -195,30 +195,30 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
  	 */
 	public TaxCodes getTaxCodes(){
-		return taxCodes; 
-	}
+    return taxCodes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxCodes(TaxCodes newVal) {
-		this.taxCodes = newVal;
-	}
+    this.taxCodes = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TAX.equals(propertyName)) return getTax();
-		if (TITLE.equals(propertyName)) return getTitle();
-		if (CATEGORY.equals(propertyName)) return getCategory();
-		if (RATE.equals(propertyName)) return getRate();
-		if (TAXTABLE.equals(propertyName)) return getTaxTable();
-		if (TAXCODES.equals(propertyName)) return getTaxCodes();
-		return super.getProperty(propertyName);
-	}
+    if (TAX.equals(propertyName)) return getTax();
+    if (TITLE.equals(propertyName)) return getTitle();
+    if (CATEGORY.equals(propertyName)) return getCategory();
+    if (RATE.equals(propertyName)) return getRate();
+    if (TAXTABLE.equals(propertyName)) return getTaxTable();
+    if (TAXCODES.equals(propertyName)) return getTaxCodes();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -226,14 +226,14 @@ public class PreferencesCashRegister extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TAX.equals(propertyName)) setTax((Boolean)newValue); else
-		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
-		if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
-		if (RATE.equals(propertyName)) setRate((Double)newValue); else
-		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-		if (TAXCODES.equals(propertyName)) setTaxCodes((TaxCodes)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TAX.equals(propertyName)) setTax((Boolean)newValue); else
+    if (TITLE.equals(propertyName)) setTitle((String)newValue); else
+    if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
+    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+    if (TAXCODES.equals(propertyName)) setTaxCodes((TaxCodes)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -241,20 +241,20 @@ public class PreferencesCashRegister extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TAX.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CATEGORY.equals(propertyName)) 
-			return new Class<?>[] {SalesCategory.class};		
-		if (RATE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TAXTABLE.equals(propertyName)) 
-			return new Class<?>[] {TaxTable.class};		
-		if (TAXCODES.equals(propertyName)) 
-			return new Class<?>[] {TaxCodes.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TAX.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TITLE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CATEGORY.equals(propertyName)) 
+      return new Class<?>[] {SalesCategory.class};		
+    if (RATE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (TAXCODES.equals(propertyName)) 
+      return new Class<?>[] {TaxCodes.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -263,35 +263,35 @@ public class PreferencesCashRegister extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TAX.equals(propertyName)) return PreferencesCashRegister.class;
-		if (TITLE.equals(propertyName)) return PreferencesCashRegister.class;
-		if (CATEGORY.equals(propertyName)) return PreferencesCashRegister.class;
-		if (RATE.equals(propertyName)) return PreferencesCashRegister.class;
-		if (TAXTABLE.equals(propertyName)) return PreferencesCashRegister.class;
-		if (TAXCODES.equals(propertyName)) return PreferencesCashRegister.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TAX.equals(propertyName)) return PreferencesCashRegister.class;
+    if (TITLE.equals(propertyName)) return PreferencesCashRegister.class;
+    if (CATEGORY.equals(propertyName)) return PreferencesCashRegister.class;
+    if (RATE.equals(propertyName)) return PreferencesCashRegister.class;
+    if (TAXTABLE.equals(propertyName)) return PreferencesCashRegister.class;
+    if (TAXCODES.equals(propertyName)) return PreferencesCashRegister.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		PreferencesCashRegister objT = (PreferencesCashRegister)obj;
-		if (! SmartEquals(getTax(), objT.getTax()))
-			return false;
-		if (! SmartEquals(getTitle(), objT.getTitle()))
-			return false;
-		if (! SmartEquals(getCategory(), objT.getCategory()))
-			return false;
-		if (! SmartEquals(getRate(), objT.getRate()))
-			return false;
-		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-			return false;
-		if (! SmartEquals(getTaxCodes(), objT.getTaxCodes()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    PreferencesCashRegister objT = (PreferencesCashRegister)obj;
+    if (! SmartEquals(getTax(), objT.getTax()))
+      return false;
+    if (! SmartEquals(getTitle(), objT.getTitle()))
+      return false;
+    if (! SmartEquals(getCategory(), objT.getCategory()))
+      return false;
+    if (! SmartEquals(getRate(), objT.getRate()))
+      return false;
+    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+      return false;
+    if (! SmartEquals(getTaxCodes(), objT.getTaxCodes()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebProducts.findall", query = "from WebProducts"),
-	@NamedQuery(name = "WebProducts.byId", query = "select a from WebProducts a where a.id= :id")
+  @NamedQuery(name = "WebProducts.findall", query = "from WebProducts"),
+  @NamedQuery(name = "WebProducts.byId", query = "select a from WebProducts a where a.id= :id")
 })
 
 
@@ -89,9 +89,9 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */
 	public WebProducts() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -105,16 +105,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -127,16 +127,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public String getStatus(){
-		return status; 
-	}
+    return status; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStatus(String newVal) {
-		this.status = newVal;
-	}
+    this.status = newVal;
+  }
  	
 	
 	/**
@@ -149,16 +149,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public JobBase getSku(){
-		return sku; 
-	}
+    return sku; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSku(JobBase newVal) {
-		this.sku = newVal;
-	}
+    this.sku = newVal;
+  }
  	
 	
 	/**
@@ -171,16 +171,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public WebGraphics getThumbnail(){
-		return thumbnail; 
-	}
+    return thumbnail; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setThumbnail(WebGraphics newVal) {
-		this.thumbnail = newVal;
-	}
+    this.thumbnail = newVal;
+  }
  	
 	
 	/**
@@ -193,16 +193,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public WebGraphics getDetails(){
-		return details; 
-	}
+    return details; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDetails(WebGraphics newVal) {
-		this.details = newVal;
-	}
+    this.details = newVal;
+  }
  	
 	
 	/**
@@ -215,16 +215,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getGlobalProduct(){
-		return globalProduct; 
-	}
+    return globalProduct; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGlobalProduct(Boolean newVal) {
-		this.globalProduct = newVal;
-	}
+    this.globalProduct = newVal;
+  }
  	
 	
 	/**
@@ -237,16 +237,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public WebCheckoutTypes getCheckoutType(){
-		return checkoutType; 
-	}
+    return checkoutType; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCheckoutType(WebCheckoutTypes newVal) {
-		this.checkoutType = newVal;
-	}
+    this.checkoutType = newVal;
+  }
  	
 	
 	/**
@@ -259,16 +259,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAllowUserEnteredQty(){
-		return allowUserEnteredQty; 
-	}
+    return allowUserEnteredQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAllowUserEnteredQty(Boolean newVal) {
-		this.allowUserEnteredQty = newVal;
-	}
+    this.allowUserEnteredQty = newVal;
+  }
  	
 	
 	/**
@@ -281,16 +281,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-		return description; 
-	}
+    return description; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-		this.description = newVal;
-	}
+    this.description = newVal;
+  }
  	
 	
 	/**
@@ -303,16 +303,16 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public PreferencesPricingMethod getCalculatePrices(){
-		return calculatePrices; 
-	}
+    return calculatePrices; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCalculatePrices(PreferencesPricingMethod newVal) {
-		this.calculatePrices = newVal;
-	}
+    this.calculatePrices = newVal;
+  }
  	
 	
 	/**
@@ -327,44 +327,44 @@ public class WebProducts extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<WebQuestions> getQuestions(){
-		return questions; 
-	}
+    return questions; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addQuestions(WebQuestions obj) {
-		if (questions == null) {
-			questions = new java.util.ArrayList<WebQuestions>();
-		}
-		questions.add(obj);
-	}
+    if (questions == null) {
+      questions = new java.util.ArrayList<WebQuestions>();
+    }
+    questions.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuestions(java.util.List<WebQuestions> newVal) {
-		this.questions = newVal;
-	}
+    this.questions = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (STATUS.equals(propertyName)) return getStatus();
-		if (SKU.equals(propertyName)) return getSku();
-		if (THUMBNAIL.equals(propertyName)) return getThumbnail();
-		if (DETAILS.equals(propertyName)) return getDetails();
-		if (GLOBALPRODUCT.equals(propertyName)) return getGlobalProduct();
-		if (CHECKOUTTYPE.equals(propertyName)) return getCheckoutType();
-		if (ALLOWUSERENTEREDQTY.equals(propertyName)) return getAllowUserEnteredQty();
-		if (DESCRIPTION.equals(propertyName)) return getDescription();
-		if (CALCULATEPRICES.equals(propertyName)) return getCalculatePrices();
-		if (QUESTIONS.equals(propertyName)) return getQuestions();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (STATUS.equals(propertyName)) return getStatus();
+    if (SKU.equals(propertyName)) return getSku();
+    if (THUMBNAIL.equals(propertyName)) return getThumbnail();
+    if (DETAILS.equals(propertyName)) return getDetails();
+    if (GLOBALPRODUCT.equals(propertyName)) return getGlobalProduct();
+    if (CHECKOUTTYPE.equals(propertyName)) return getCheckoutType();
+    if (ALLOWUSERENTEREDQTY.equals(propertyName)) return getAllowUserEnteredQty();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (CALCULATEPRICES.equals(propertyName)) return getCalculatePrices();
+    if (QUESTIONS.equals(propertyName)) return getQuestions();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -372,19 +372,19 @@ public class WebProducts extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-		if (SKU.equals(propertyName)) setSku((JobBase)newValue); else
-		if (THUMBNAIL.equals(propertyName)) setThumbnail((WebGraphics)newValue); else
-		if (DETAILS.equals(propertyName)) setDetails((WebGraphics)newValue); else
-		if (GLOBALPRODUCT.equals(propertyName)) setGlobalProduct((Boolean)newValue); else
-		if (CHECKOUTTYPE.equals(propertyName)) setCheckoutType((WebCheckoutTypes)newValue); else
-		if (ALLOWUSERENTEREDQTY.equals(propertyName)) setAllowUserEnteredQty((Boolean)newValue); else
-		if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-		if (CALCULATEPRICES.equals(propertyName)) setCalculatePrices((PreferencesPricingMethod)newValue); else
-		if (QUESTIONS.equals(propertyName)) setQuestions((java.util.List<WebQuestions>)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (SKU.equals(propertyName)) setSku((JobBase)newValue); else
+    if (THUMBNAIL.equals(propertyName)) setThumbnail((WebGraphics)newValue); else
+    if (DETAILS.equals(propertyName)) setDetails((WebGraphics)newValue); else
+    if (GLOBALPRODUCT.equals(propertyName)) setGlobalProduct((Boolean)newValue); else
+    if (CHECKOUTTYPE.equals(propertyName)) setCheckoutType((WebCheckoutTypes)newValue); else
+    if (ALLOWUSERENTEREDQTY.equals(propertyName)) setAllowUserEnteredQty((Boolean)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (CALCULATEPRICES.equals(propertyName)) setCalculatePrices((PreferencesPricingMethod)newValue); else
+    if (QUESTIONS.equals(propertyName)) setQuestions((java.util.List<WebQuestions>)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -392,30 +392,30 @@ public class WebProducts extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STATUS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SKU.equals(propertyName)) 
-			return new Class<?>[] {JobBase.class};		
-		if (THUMBNAIL.equals(propertyName)) 
-			return new Class<?>[] {WebGraphics.class};		
-		if (DETAILS.equals(propertyName)) 
-			return new Class<?>[] {WebGraphics.class};		
-		if (GLOBALPRODUCT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CHECKOUTTYPE.equals(propertyName)) 
-			return new Class<?>[] {WebCheckoutTypes.class};		
-		if (ALLOWUSERENTEREDQTY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CALCULATEPRICES.equals(propertyName)) 
-			return new Class<?>[] {PreferencesPricingMethod.class};		
-		if (QUESTIONS.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, WebQuestions.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STATUS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SKU.equals(propertyName)) 
+      return new Class<?>[] {JobBase.class};		
+    if (THUMBNAIL.equals(propertyName)) 
+      return new Class<?>[] {WebGraphics.class};		
+    if (DETAILS.equals(propertyName)) 
+      return new Class<?>[] {WebGraphics.class};		
+    if (GLOBALPRODUCT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CHECKOUTTYPE.equals(propertyName)) 
+      return new Class<?>[] {WebCheckoutTypes.class};		
+    if (ALLOWUSERENTEREDQTY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CALCULATEPRICES.equals(propertyName)) 
+      return new Class<?>[] {PreferencesPricingMethod.class};		
+    if (QUESTIONS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, WebQuestions.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -424,50 +424,50 @@ public class WebProducts extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return WebProducts.class;
-		if (STATUS.equals(propertyName)) return WebProducts.class;
-		if (SKU.equals(propertyName)) return WebProducts.class;
-		if (THUMBNAIL.equals(propertyName)) return WebProducts.class;
-		if (DETAILS.equals(propertyName)) return WebProducts.class;
-		if (GLOBALPRODUCT.equals(propertyName)) return WebProducts.class;
-		if (CHECKOUTTYPE.equals(propertyName)) return WebProducts.class;
-		if (ALLOWUSERENTEREDQTY.equals(propertyName)) return WebProducts.class;
-		if (DESCRIPTION.equals(propertyName)) return WebProducts.class;
-		if (CALCULATEPRICES.equals(propertyName)) return WebProducts.class;
-		if (QUESTIONS.equals(propertyName)) return WebProducts.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return WebProducts.class;
+    if (STATUS.equals(propertyName)) return WebProducts.class;
+    if (SKU.equals(propertyName)) return WebProducts.class;
+    if (THUMBNAIL.equals(propertyName)) return WebProducts.class;
+    if (DETAILS.equals(propertyName)) return WebProducts.class;
+    if (GLOBALPRODUCT.equals(propertyName)) return WebProducts.class;
+    if (CHECKOUTTYPE.equals(propertyName)) return WebProducts.class;
+    if (ALLOWUSERENTEREDQTY.equals(propertyName)) return WebProducts.class;
+    if (DESCRIPTION.equals(propertyName)) return WebProducts.class;
+    if (CALCULATEPRICES.equals(propertyName)) return WebProducts.class;
+    if (QUESTIONS.equals(propertyName)) return WebProducts.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebProducts objT = (WebProducts)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getStatus(), objT.getStatus()))
-			return false;
-		if (! SmartEquals(getSku(), objT.getSku()))
-			return false;
-		if (! SmartEquals(getThumbnail(), objT.getThumbnail()))
-			return false;
-		if (! SmartEquals(getDetails(), objT.getDetails()))
-			return false;
-		if (! SmartEquals(getGlobalProduct(), objT.getGlobalProduct()))
-			return false;
-		if (! SmartEquals(getCheckoutType(), objT.getCheckoutType()))
-			return false;
-		if (! SmartEquals(getAllowUserEnteredQty(), objT.getAllowUserEnteredQty()))
-			return false;
-		if (! SmartEquals(getDescription(), objT.getDescription()))
-			return false;
-		if (! SmartEquals(getCalculatePrices(), objT.getCalculatePrices()))
-			return false;
-		if (! SmartEquals(getQuestions(), objT.getQuestions()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebProducts objT = (WebProducts)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getSku(), objT.getSku()))
+      return false;
+    if (! SmartEquals(getThumbnail(), objT.getThumbnail()))
+      return false;
+    if (! SmartEquals(getDetails(), objT.getDetails()))
+      return false;
+    if (! SmartEquals(getGlobalProduct(), objT.getGlobalProduct()))
+      return false;
+    if (! SmartEquals(getCheckoutType(), objT.getCheckoutType()))
+      return false;
+    if (! SmartEquals(getAllowUserEnteredQty(), objT.getAllowUserEnteredQty()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getCalculatePrices(), objT.getCalculatePrices()))
+      return false;
+    if (! SmartEquals(getQuestions(), objT.getQuestions()))
+      return false;
+    return true;
+  }			
 }

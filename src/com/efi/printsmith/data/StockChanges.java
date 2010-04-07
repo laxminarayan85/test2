@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "StockChanges.findall", query = "from StockChanges"),
-	@NamedQuery(name = "StockChanges.byId", query = "select a from StockChanges a where a.id= :id")
+  @NamedQuery(name = "StockChanges.findall", query = "from StockChanges"),
+  @NamedQuery(name = "StockChanges.byId", query = "select a from StockChanges a where a.id= :id")
 })
 
 
@@ -73,9 +73,9 @@ public class StockChanges extends ModelBase {
 	 * @generated
 	 */
 	public StockChanges() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -89,16 +89,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public Long getStockChangeID(){
-		return stockChangeID; 
-	}
+    return stockChangeID; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockChangeID(Long newVal) {
-		this.stockChangeID = newVal;
-	}
+    this.stockChangeID = newVal;
+  }
  	
 	
 	/**
@@ -111,16 +111,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public String getPSUser(){
-		return pSUser; 
-	}
+    return pSUser; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPSUser(String newVal) {
-		this.pSUser = newVal;
-	}
+    this.pSUser = newVal;
+  }
  	
 	
 	/**
@@ -133,16 +133,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public Date getStockChangeDate(){
-		return stockChangeDate; 
-	}
+    return stockChangeDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockChangeDate(Date newVal) {
-		this.stockChangeDate = newVal;
-	}
+    this.stockChangeDate = newVal;
+  }
  	
 	
 	/**
@@ -155,16 +155,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public String getHowChanged(){
-		return howChanged; 
-	}
+    return howChanged; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHowChanged(String newVal) {
-		this.howChanged = newVal;
-	}
+    this.howChanged = newVal;
+  }
  	
 	
 	/**
@@ -177,16 +177,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQuantity(){
-		return quantity; 
-	}
+    return quantity; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuantity(Integer newVal) {
-		this.quantity = newVal;
-	}
+    this.quantity = newVal;
+  }
  	
 	
 	/**
@@ -199,16 +199,16 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public String getReference(){
-		return reference; 
-	}
+    return reference; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setReference(String newVal) {
-		this.reference = newVal;
-	}
+    this.reference = newVal;
+  }
  	
 	
 	/**
@@ -221,31 +221,31 @@ public class StockChanges extends ModelBase {
 	 * @generated
  	 */
 	public StockDefinition getStockDefinition(){
-		return stockDefinition; 
-	}
+    return stockDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockDefinition(StockDefinition newVal) {
-		this.stockDefinition = newVal;
-	}
+    this.stockDefinition = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (STOCKCHANGEID.equals(propertyName)) return getStockChangeID();
-		if (PSUSER.equals(propertyName)) return getPSUser();
-		if (STOCKCHANGEDATE.equals(propertyName)) return getStockChangeDate();
-		if (HOWCHANGED.equals(propertyName)) return getHowChanged();
-		if (QUANTITY.equals(propertyName)) return getQuantity();
-		if (REFERENCE.equals(propertyName)) return getReference();
-		if (STOCKDEFINITION.equals(propertyName)) return getStockDefinition();
-		return super.getProperty(propertyName);
-	}
+    if (STOCKCHANGEID.equals(propertyName)) return getStockChangeID();
+    if (PSUSER.equals(propertyName)) return getPSUser();
+    if (STOCKCHANGEDATE.equals(propertyName)) return getStockChangeDate();
+    if (HOWCHANGED.equals(propertyName)) return getHowChanged();
+    if (QUANTITY.equals(propertyName)) return getQuantity();
+    if (REFERENCE.equals(propertyName)) return getReference();
+    if (STOCKDEFINITION.equals(propertyName)) return getStockDefinition();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -253,15 +253,15 @@ public class StockChanges extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (STOCKCHANGEID.equals(propertyName)) setStockChangeID((Long)newValue); else
-		if (PSUSER.equals(propertyName)) setPSUser((String)newValue); else
-		if (STOCKCHANGEDATE.equals(propertyName)) setStockChangeDate((Date)newValue); else
-		if (HOWCHANGED.equals(propertyName)) setHowChanged((String)newValue); else
-		if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
-		if (REFERENCE.equals(propertyName)) setReference((String)newValue); else
-		if (STOCKDEFINITION.equals(propertyName)) setStockDefinition((StockDefinition)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (STOCKCHANGEID.equals(propertyName)) setStockChangeID((Long)newValue); else
+    if (PSUSER.equals(propertyName)) setPSUser((String)newValue); else
+    if (STOCKCHANGEDATE.equals(propertyName)) setStockChangeDate((Date)newValue); else
+    if (HOWCHANGED.equals(propertyName)) setHowChanged((String)newValue); else
+    if (QUANTITY.equals(propertyName)) setQuantity((Integer)newValue); else
+    if (REFERENCE.equals(propertyName)) setReference((String)newValue); else
+    if (STOCKDEFINITION.equals(propertyName)) setStockDefinition((StockDefinition)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -269,22 +269,22 @@ public class StockChanges extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (STOCKCHANGEID.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PSUSER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STOCKCHANGEDATE.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (HOWCHANGED.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (QUANTITY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (REFERENCE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STOCKDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {StockDefinition.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (STOCKCHANGEID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PSUSER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STOCKCHANGEDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (HOWCHANGED.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (QUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (REFERENCE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STOCKDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {StockDefinition.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -293,38 +293,38 @@ public class StockChanges extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (STOCKCHANGEID.equals(propertyName)) return StockChanges.class;
-		if (PSUSER.equals(propertyName)) return StockChanges.class;
-		if (STOCKCHANGEDATE.equals(propertyName)) return StockChanges.class;
-		if (HOWCHANGED.equals(propertyName)) return StockChanges.class;
-		if (QUANTITY.equals(propertyName)) return StockChanges.class;
-		if (REFERENCE.equals(propertyName)) return StockChanges.class;
-		if (STOCKDEFINITION.equals(propertyName)) return StockChanges.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (STOCKCHANGEID.equals(propertyName)) return StockChanges.class;
+    if (PSUSER.equals(propertyName)) return StockChanges.class;
+    if (STOCKCHANGEDATE.equals(propertyName)) return StockChanges.class;
+    if (HOWCHANGED.equals(propertyName)) return StockChanges.class;
+    if (QUANTITY.equals(propertyName)) return StockChanges.class;
+    if (REFERENCE.equals(propertyName)) return StockChanges.class;
+    if (STOCKDEFINITION.equals(propertyName)) return StockChanges.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		StockChanges objT = (StockChanges)obj;
-		if (! SmartEquals(getStockChangeID(), objT.getStockChangeID()))
-			return false;
-		if (! SmartEquals(getPSUser(), objT.getPSUser()))
-			return false;
-		if (! SmartEquals(getStockChangeDate(), objT.getStockChangeDate()))
-			return false;
-		if (! SmartEquals(getHowChanged(), objT.getHowChanged()))
-			return false;
-		if (! SmartEquals(getQuantity(), objT.getQuantity()))
-			return false;
-		if (! SmartEquals(getReference(), objT.getReference()))
-			return false;
-		if (! SmartEquals(getStockDefinition(), objT.getStockDefinition()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    StockChanges objT = (StockChanges)obj;
+    if (! SmartEquals(getStockChangeID(), objT.getStockChangeID()))
+      return false;
+    if (! SmartEquals(getPSUser(), objT.getPSUser()))
+      return false;
+    if (! SmartEquals(getStockChangeDate(), objT.getStockChangeDate()))
+      return false;
+    if (! SmartEquals(getHowChanged(), objT.getHowChanged()))
+      return false;
+    if (! SmartEquals(getQuantity(), objT.getQuantity()))
+      return false;
+    if (! SmartEquals(getReference(), objT.getReference()))
+      return false;
+    if (! SmartEquals(getStockDefinition(), objT.getStockDefinition()))
+      return false;
+    return true;
+  }			
 }

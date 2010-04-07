@@ -86,12 +86,12 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 		double pricePerSecondSide = 0.0;
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
-			if (copierDefinition.getMatrixIsCopyCost()) {
+			if (copierDefinition.getMatrixType() == "CopyCost") {
 				pricePerCopy = matrixElement.getPrice1();
 				pricePerCopy *= copierDefinition.getCopyMarkup();
-			} else if (copierDefinition.getMatrixIsDiscountTable()) {
+			} else if (copierDefinition.getMatrixType() == "DiscountTable") {
 				
-			} else if (copierDefinition.getMatrixIsStepTable()) {
+			} else if (copierDefinition.getMatrixType() == "StepTable") {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getSheets()*job.getInSetsOf()*2);
 				} else {

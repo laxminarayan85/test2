@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "StockDefinition.findall", query = "from StockDefinition"),
-	@NamedQuery(name = "StockDefinition.byId", query = "select a from StockDefinition a where a.id= :id")
+  @NamedQuery(name = "StockDefinition.findall", query = "from StockDefinition"),
+  @NamedQuery(name = "StockDefinition.byId", query = "select a from StockDefinition a where a.id= :id")
 })
 
 
@@ -553,9 +553,9 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public StockDefinition() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 	public StockDefinition(long id, String Name, double weight,String parentsize,StockColors color, GenericColors genericcolor,
 			StockFinish finish, double thickness, StockGrade grade, double cwt1, Vendor vendor, String stocknumber, int onhand,
@@ -603,16 +603,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getStockunit(){
-		return stockunit; 
-	}
+    return stockunit; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockunit(Integer newVal) {
-		this.stockunit = newVal;
-	}
+    this.stockunit = newVal;
+  }
  	
 	
 	/**
@@ -625,16 +625,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -647,16 +647,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockGroup getStkgroup(){
-		return stkgroup; 
-	}
+    return stkgroup; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStkgroup(StockGroup newVal) {
-		this.stkgroup = newVal;
-	}
+    this.stkgroup = newVal;
+  }
  	
 	
 	/**
@@ -669,16 +669,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockClass getStkclass(){
-		return stkclass; 
-	}
+    return stkclass; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStkclass(StockClass newVal) {
-		this.stkclass = newVal;
-	}
+    this.stkclass = newVal;
+  }
  	
 	
 	/**
@@ -691,16 +691,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockType getStktype(){
-		return stktype; 
-	}
+    return stktype; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStktype(StockType newVal) {
-		this.stktype = newVal;
-	}
+    this.stktype = newVal;
+  }
  	
 	
 	/**
@@ -713,16 +713,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIsMetric(){
-		return isMetric; 
-	}
+    return isMetric; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIsMetric(Boolean newVal) {
-		this.isMetric = newVal;
-	}
+    this.isMetric = newVal;
+  }
  	
 	
 	/**
@@ -735,16 +735,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockFinish getFinish(){
-		return finish; 
-	}
+    return finish; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFinish(StockFinish newVal) {
-		this.finish = newVal;
-	}
+    this.finish = newVal;
+  }
  	
 	
 	/**
@@ -757,16 +757,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWeight(){
-		return weight; 
-	}
+    return weight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWeight(Double newVal) {
-		this.weight = newVal;
-	}
+    this.weight = newVal;
+  }
  	
 	
 	/**
@@ -779,16 +779,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockColors getColor(){
-		return color; 
-	}
+    return color; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setColor(StockColors newVal) {
-		this.color = newVal;
-	}
+    this.color = newVal;
+  }
  	
 	
 	/**
@@ -801,16 +801,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public StockGrade getGrade(){
-		return grade; 
-	}
+    return grade; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGrade(StockGrade newVal) {
-		this.grade = newVal;
-	}
+    this.grade = newVal;
+  }
  	
 	
 	/**
@@ -823,16 +823,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getCoated(){
-		return coated; 
-	}
+    return coated; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCoated(String newVal) {
-		this.coated = newVal;
-	}
+    this.coated = newVal;
+  }
  	
 	
 	/**
@@ -845,16 +845,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getStocknumber(){
-		return stocknumber; 
-	}
+    return stocknumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStocknumber(String newVal) {
-		this.stocknumber = newVal;
-	}
+    this.stocknumber = newVal;
+  }
  	
 	
 	/**
@@ -867,16 +867,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Vendor getVendor(){
-		return vendor; 
-	}
+    return vendor; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setVendor(Vendor newVal) {
-		this.vendor = newVal;
-	}
+    this.vendor = newVal;
+  }
  	
 	
 	/**
@@ -889,16 +889,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getBasicsize(){
-		return basicsize; 
-	}
+    return basicsize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBasicsize(String newVal) {
-		this.basicsize = newVal;
-	}
+    this.basicsize = newVal;
+  }
  	
 	
 	/**
@@ -911,16 +911,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getParentsize(){
-		return parentsize; 
-	}
+    return parentsize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setParentsize(String newVal) {
-		this.parentsize = newVal;
-	}
+    this.parentsize = newVal;
+  }
  	
 	
 	/**
@@ -933,16 +933,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getThickness(){
-		return thickness; 
-	}
+    return thickness; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setThickness(Double newVal) {
-		this.thickness = newVal;
-	}
+    this.thickness = newVal;
+  }
  	
 	
 	/**
@@ -955,16 +955,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMweight(){
-		return mweight; 
-	}
+    return mweight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMweight(Double newVal) {
-		this.mweight = newVal;
-	}
+    this.mweight = newVal;
+  }
  	
 	
 	/**
@@ -977,16 +977,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getSheetspercarton(){
-		return sheetspercarton; 
-	}
+    return sheetspercarton; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheetspercarton(Integer newVal) {
-		this.sheetspercarton = newVal;
-	}
+    this.sheetspercarton = newVal;
+  }
  	
 	
 	/**
@@ -999,16 +999,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getMinorder(){
-		return minorder; 
-	}
+    return minorder; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinorder(Integer newVal) {
-		this.minorder = newVal;
-	}
+    this.minorder = newVal;
+  }
  	
 	
 	/**
@@ -1021,16 +1021,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getComments(){
-		return comments; 
-	}
+    return comments; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setComments(String newVal) {
-		this.comments = newVal;
-	}
+    this.comments = newVal;
+  }
  	
 	
 	/**
@@ -1043,16 +1043,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getUom(){
-		return uom; 
-	}
+    return uom; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUom(String newVal) {
-		this.uom = newVal;
-	}
+    this.uom = newVal;
+  }
  	
 	
 	/**
@@ -1065,16 +1065,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCostunits(){
-		return costunits; 
-	}
+    return costunits; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCostunits(Integer newVal) {
-		this.costunits = newVal;
-	}
+    this.costunits = newVal;
+  }
  	
 	
 	/**
@@ -1087,16 +1087,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getEntireOrderCharge(){
-		return entireOrderCharge; 
-	}
+    return entireOrderCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEntireOrderCharge(Boolean newVal) {
-		this.entireOrderCharge = newVal;
-	}
+    this.entireOrderCharge = newVal;
+  }
  	
 	
 	/**
@@ -1109,16 +1109,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getSheetsPerSet(){
-		return sheetsPerSet; 
-	}
+    return sheetsPerSet; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheetsPerSet(Integer newVal) {
-		this.sheetsPerSet = newVal;
-	}
+    this.sheetsPerSet = newVal;
+  }
  	
 	
 	/**
@@ -1131,16 +1131,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIsCostInSets(){
-		return isCostInSets; 
-	}
+    return isCostInSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIsCostInSets(Boolean newVal) {
-		this.isCostInSets = newVal;
-	}
+    this.isCostInSets = newVal;
+  }
  	
 	
 	/**
@@ -1153,16 +1153,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Date getPriceExpires(){
-		return priceExpires; 
-	}
+    return priceExpires; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPriceExpires(Date newVal) {
-		this.priceExpires = newVal;
-	}
+    this.priceExpires = newVal;
+  }
  	
 	
 	/**
@@ -1175,16 +1175,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak1(){
-		return qtybreak1; 
-	}
+    return qtybreak1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak1(Integer newVal) {
-		this.qtybreak1 = newVal;
-	}
+    this.qtybreak1 = newVal;
+  }
  	
 	
 	/**
@@ -1197,16 +1197,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak2(){
-		return qtybreak2; 
-	}
+    return qtybreak2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak2(Integer newVal) {
-		this.qtybreak2 = newVal;
-	}
+    this.qtybreak2 = newVal;
+  }
  	
 	
 	/**
@@ -1219,16 +1219,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak3(){
-		return qtybreak3; 
-	}
+    return qtybreak3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak3(Integer newVal) {
-		this.qtybreak3 = newVal;
-	}
+    this.qtybreak3 = newVal;
+  }
  	
 	
 	/**
@@ -1241,16 +1241,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak4(){
-		return qtybreak4; 
-	}
+    return qtybreak4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak4(Integer newVal) {
-		this.qtybreak4 = newVal;
-	}
+    this.qtybreak4 = newVal;
+  }
  	
 	
 	/**
@@ -1263,16 +1263,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak5(){
-		return qtybreak5; 
-	}
+    return qtybreak5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak5(Integer newVal) {
-		this.qtybreak5 = newVal;
-	}
+    this.qtybreak5 = newVal;
+  }
  	
 	
 	/**
@@ -1285,16 +1285,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtybreak6(){
-		return qtybreak6; 
-	}
+    return qtybreak6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQtybreak6(Integer newVal) {
-		this.qtybreak6 = newVal;
-	}
+    this.qtybreak6 = newVal;
+  }
  	
 	
 	/**
@@ -1307,16 +1307,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost1(){
-		return cost1; 
-	}
+    return cost1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost1(Double newVal) {
-		this.cost1 = newVal;
-	}
+    this.cost1 = newVal;
+  }
  	
 	
 	/**
@@ -1329,16 +1329,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost2(){
-		return cost2; 
-	}
+    return cost2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost2(Double newVal) {
-		this.cost2 = newVal;
-	}
+    this.cost2 = newVal;
+  }
  	
 	
 	/**
@@ -1351,16 +1351,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost3(){
-		return cost3; 
-	}
+    return cost3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost3(Double newVal) {
-		this.cost3 = newVal;
-	}
+    this.cost3 = newVal;
+  }
  	
 	
 	/**
@@ -1373,16 +1373,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost4(){
-		return cost4; 
-	}
+    return cost4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost4(Double newVal) {
-		this.cost4 = newVal;
-	}
+    this.cost4 = newVal;
+  }
  	
 	
 	/**
@@ -1395,16 +1395,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost5(){
-		return cost5; 
-	}
+    return cost5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost5(Double newVal) {
-		this.cost5 = newVal;
-	}
+    this.cost5 = newVal;
+  }
  	
 	
 	/**
@@ -1417,16 +1417,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCost6(){
-		return cost6; 
-	}
+    return cost6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCost6(Double newVal) {
-		this.cost6 = newVal;
-	}
+    this.cost6 = newVal;
+  }
  	
 	
 	/**
@@ -1439,16 +1439,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt1(){
-		return cwt1; 
-	}
+    return cwt1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt1(Double newVal) {
-		this.cwt1 = newVal;
-	}
+    this.cwt1 = newVal;
+  }
  	
 	
 	/**
@@ -1461,16 +1461,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt2(){
-		return cwt2; 
-	}
+    return cwt2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt2(Double newVal) {
-		this.cwt2 = newVal;
-	}
+    this.cwt2 = newVal;
+  }
  	
 	
 	/**
@@ -1483,16 +1483,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt3(){
-		return cwt3; 
-	}
+    return cwt3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt3(Double newVal) {
-		this.cwt3 = newVal;
-	}
+    this.cwt3 = newVal;
+  }
  	
 	
 	/**
@@ -1505,16 +1505,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt4(){
-		return cwt4; 
-	}
+    return cwt4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt4(Double newVal) {
-		this.cwt4 = newVal;
-	}
+    this.cwt4 = newVal;
+  }
  	
 	
 	/**
@@ -1527,16 +1527,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt5(){
-		return cwt5; 
-	}
+    return cwt5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt5(Double newVal) {
-		this.cwt5 = newVal;
-	}
+    this.cwt5 = newVal;
+  }
  	
 	
 	/**
@@ -1549,16 +1549,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCwt6(){
-		return cwt6; 
-	}
+    return cwt6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCwt6(Double newVal) {
-		this.cwt6 = newVal;
-	}
+    this.cwt6 = newVal;
+  }
  	
 	
 	/**
@@ -1571,16 +1571,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup1(){
-		return markup1; 
-	}
+    return markup1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup1(Double newVal) {
-		this.markup1 = newVal;
-	}
+    this.markup1 = newVal;
+  }
  	
 	
 	/**
@@ -1593,16 +1593,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup2(){
-		return markup2; 
-	}
+    return markup2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup2(Double newVal) {
-		this.markup2 = newVal;
-	}
+    this.markup2 = newVal;
+  }
  	
 	
 	/**
@@ -1615,16 +1615,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup3(){
-		return markup3; 
-	}
+    return markup3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup3(Double newVal) {
-		this.markup3 = newVal;
-	}
+    this.markup3 = newVal;
+  }
  	
 	
 	/**
@@ -1637,16 +1637,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup4(){
-		return markup4; 
-	}
+    return markup4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup4(Double newVal) {
-		this.markup4 = newVal;
-	}
+    this.markup4 = newVal;
+  }
  	
 	
 	/**
@@ -1659,16 +1659,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup5(){
-		return markup5; 
-	}
+    return markup5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup5(Double newVal) {
-		this.markup5 = newVal;
-	}
+    this.markup5 = newVal;
+  }
  	
 	
 	/**
@@ -1681,16 +1681,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup6(){
-		return markup6; 
-	}
+    return markup6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMarkup6(Double newVal) {
-		this.markup6 = newVal;
-	}
+    this.markup6 = newVal;
+  }
  	
 	
 	/**
@@ -1703,16 +1703,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM1(){
-		return listPerM1; 
-	}
+    return listPerM1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM1(Integer newVal) {
-		this.listPerM1 = newVal;
-	}
+    this.listPerM1 = newVal;
+  }
  	
 	
 	/**
@@ -1725,16 +1725,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM2(){
-		return listPerM2; 
-	}
+    return listPerM2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM2(Integer newVal) {
-		this.listPerM2 = newVal;
-	}
+    this.listPerM2 = newVal;
+  }
  	
 	
 	/**
@@ -1747,16 +1747,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM3(){
-		return listPerM3; 
-	}
+    return listPerM3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM3(Integer newVal) {
-		this.listPerM3 = newVal;
-	}
+    this.listPerM3 = newVal;
+  }
  	
 	
 	/**
@@ -1769,16 +1769,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM4(){
-		return listPerM4; 
-	}
+    return listPerM4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM4(Integer newVal) {
-		this.listPerM4 = newVal;
-	}
+    this.listPerM4 = newVal;
+  }
  	
 	
 	/**
@@ -1791,16 +1791,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM5(){
-		return listPerM5; 
-	}
+    return listPerM5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM5(Integer newVal) {
-		this.listPerM5 = newVal;
-	}
+    this.listPerM5 = newVal;
+  }
  	
 	
 	/**
@@ -1813,16 +1813,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getListPerM6(){
-		return listPerM6; 
-	}
+    return listPerM6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setListPerM6(Integer newVal) {
-		this.listPerM6 = newVal;
-	}
+    this.listPerM6 = newVal;
+  }
  	
 	
 	/**
@@ -1835,16 +1835,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getNormalRunSize(){
-		return normalRunSize; 
-	}
+    return normalRunSize; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNormalRunSize(String newVal) {
-		this.normalRunSize = newVal;
-	}
+    this.normalRunSize = newVal;
+  }
  	
 	
 	/**
@@ -1857,16 +1857,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCutsPer100(){
-		return cutsPer100; 
-	}
+    return cutsPer100; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCutsPer100(Integer newVal) {
-		this.cutsPer100 = newVal;
-	}
+    this.cutsPer100 = newVal;
+  }
  	
 	
 	/**
@@ -1879,16 +1879,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getMinCutCharge(){
-		return minCutCharge; 
-	}
+    return minCutCharge; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinCutCharge(Double newVal) {
-		this.minCutCharge = newVal;
-	}
+    this.minCutCharge = newVal;
+  }
  	
 	
 	/**
@@ -1901,16 +1901,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getDefaultPress(){
-		return defaultPress; 
-	}
+    return defaultPress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultPress(PressDefinition newVal) {
-		this.defaultPress = newVal;
-	}
+    this.defaultPress = newVal;
+  }
  	
 	
 	/**
@@ -1923,16 +1923,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAutoCalculateBlank(){
-		return autoCalculateBlank; 
-	}
+    return autoCalculateBlank; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAutoCalculateBlank(Boolean newVal) {
-		this.autoCalculateBlank = newVal;
-	}
+    this.autoCalculateBlank = newVal;
+  }
  	
 	
 	/**
@@ -1945,16 +1945,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty1(){
-		return blankSheetqty1; 
-	}
+    return blankSheetqty1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty1(Integer newVal) {
-		this.blankSheetqty1 = newVal;
-	}
+    this.blankSheetqty1 = newVal;
+  }
  	
 	
 	/**
@@ -1967,16 +1967,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty2(){
-		return blankSheetqty2; 
-	}
+    return blankSheetqty2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty2(Integer newVal) {
-		this.blankSheetqty2 = newVal;
-	}
+    this.blankSheetqty2 = newVal;
+  }
  	
 	
 	/**
@@ -1989,16 +1989,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty3(){
-		return blankSheetqty3; 
-	}
+    return blankSheetqty3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty3(Integer newVal) {
-		this.blankSheetqty3 = newVal;
-	}
+    this.blankSheetqty3 = newVal;
+  }
  	
 	
 	/**
@@ -2011,16 +2011,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty4(){
-		return blankSheetqty4; 
-	}
+    return blankSheetqty4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty4(Integer newVal) {
-		this.blankSheetqty4 = newVal;
-	}
+    this.blankSheetqty4 = newVal;
+  }
  	
 	
 	/**
@@ -2033,16 +2033,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty5(){
-		return blankSheetqty5; 
-	}
+    return blankSheetqty5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty5(Integer newVal) {
-		this.blankSheetqty5 = newVal;
-	}
+    this.blankSheetqty5 = newVal;
+  }
  	
 	
 	/**
@@ -2055,16 +2055,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBlankSheetqty6(){
-		return blankSheetqty6; 
-	}
+    return blankSheetqty6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetqty6(Integer newVal) {
-		this.blankSheetqty6 = newVal;
-	}
+    this.blankSheetqty6 = newVal;
+  }
  	
 	
 	/**
@@ -2077,16 +2077,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice1(){
-		return blankSheetPrice1; 
-	}
+    return blankSheetPrice1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice1(Double newVal) {
-		this.blankSheetPrice1 = newVal;
-	}
+    this.blankSheetPrice1 = newVal;
+  }
  	
 	
 	/**
@@ -2099,16 +2099,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice2(){
-		return blankSheetPrice2; 
-	}
+    return blankSheetPrice2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice2(Double newVal) {
-		this.blankSheetPrice2 = newVal;
-	}
+    this.blankSheetPrice2 = newVal;
+  }
  	
 	
 	/**
@@ -2121,16 +2121,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice3(){
-		return blankSheetPrice3; 
-	}
+    return blankSheetPrice3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice3(Double newVal) {
-		this.blankSheetPrice3 = newVal;
-	}
+    this.blankSheetPrice3 = newVal;
+  }
  	
 	
 	/**
@@ -2143,16 +2143,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice4(){
-		return blankSheetPrice4; 
-	}
+    return blankSheetPrice4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice4(Double newVal) {
-		this.blankSheetPrice4 = newVal;
-	}
+    this.blankSheetPrice4 = newVal;
+  }
  	
 	
 	/**
@@ -2165,16 +2165,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice5(){
-		return blankSheetPrice5; 
-	}
+    return blankSheetPrice5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice5(Double newVal) {
-		this.blankSheetPrice5 = newVal;
-	}
+    this.blankSheetPrice5 = newVal;
+  }
  	
 	
 	/**
@@ -2187,16 +2187,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getBlankSheetPrice6(){
-		return blankSheetPrice6; 
-	}
+    return blankSheetPrice6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBlankSheetPrice6(Double newVal) {
-		this.blankSheetPrice6 = newVal;
-	}
+    this.blankSheetPrice6 = newVal;
+  }
  	
 	
 	/**
@@ -2209,16 +2209,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getDefaultBW(){
-		return defaultBW; 
-	}
+    return defaultBW; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultBW(String newVal) {
-		this.defaultBW = newVal;
-	}
+    this.defaultBW = newVal;
+  }
  	
 	
 	/**
@@ -2231,16 +2231,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getDefaultColor(){
-		return defaultColor; 
-	}
+    return defaultColor; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultColor(String newVal) {
-		this.defaultColor = newVal;
-	}
+    this.defaultColor = newVal;
+  }
  	
 	
 	/**
@@ -2253,16 +2253,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getDefaultLargeFormat(){
-		return defaultLargeFormat; 
-	}
+    return defaultLargeFormat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultLargeFormat(String newVal) {
-		this.defaultLargeFormat = newVal;
-	}
+    this.defaultLargeFormat = newVal;
+  }
  	
 	
 	/**
@@ -2275,16 +2275,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional1(){
-		return additional1; 
-	}
+    return additional1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional1(String newVal) {
-		this.additional1 = newVal;
-	}
+    this.additional1 = newVal;
+  }
  	
 	
 	/**
@@ -2297,16 +2297,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional2(){
-		return additional2; 
-	}
+    return additional2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional2(String newVal) {
-		this.additional2 = newVal;
-	}
+    this.additional2 = newVal;
+  }
  	
 	
 	/**
@@ -2319,16 +2319,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional3(){
-		return additional3; 
-	}
+    return additional3; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional3(String newVal) {
-		this.additional3 = newVal;
-	}
+    this.additional3 = newVal;
+  }
  	
 	
 	/**
@@ -2341,16 +2341,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional4(){
-		return additional4; 
-	}
+    return additional4; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional4(String newVal) {
-		this.additional4 = newVal;
-	}
+    this.additional4 = newVal;
+  }
  	
 	
 	/**
@@ -2363,16 +2363,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional5(){
-		return additional5; 
-	}
+    return additional5; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional5(String newVal) {
-		this.additional5 = newVal;
-	}
+    this.additional5 = newVal;
+  }
  	
 	
 	/**
@@ -2385,16 +2385,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional6(){
-		return additional6; 
-	}
+    return additional6; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional6(String newVal) {
-		this.additional6 = newVal;
-	}
+    this.additional6 = newVal;
+  }
  	
 	
 	/**
@@ -2407,16 +2407,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional7(){
-		return additional7; 
-	}
+    return additional7; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional7(String newVal) {
-		this.additional7 = newVal;
-	}
+    this.additional7 = newVal;
+  }
  	
 	
 	/**
@@ -2429,16 +2429,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional8(){
-		return additional8; 
-	}
+    return additional8; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional8(String newVal) {
-		this.additional8 = newVal;
-	}
+    this.additional8 = newVal;
+  }
  	
 	
 	/**
@@ -2451,16 +2451,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional9(){
-		return additional9; 
-	}
+    return additional9; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional9(String newVal) {
-		this.additional9 = newVal;
-	}
+    this.additional9 = newVal;
+  }
  	
 	
 	/**
@@ -2473,16 +2473,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getAdditional10(){
-		return additional10; 
-	}
+    return additional10; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAdditional10(String newVal) {
-		this.additional10 = newVal;
-	}
+    this.additional10 = newVal;
+  }
  	
 	
 	/**
@@ -2495,16 +2495,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getStandardItem(){
-		return standardItem; 
-	}
+    return standardItem; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStandardItem(Boolean newVal) {
-		this.standardItem = newVal;
-	}
+    this.standardItem = newVal;
+  }
  	
 	
 	/**
@@ -2517,16 +2517,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getOnHand(){
-		return onHand; 
-	}
+    return onHand; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOnHand(Integer newVal) {
-		this.onHand = newVal;
-	}
+    this.onHand = newVal;
+  }
  	
 	
 	/**
@@ -2539,16 +2539,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCommitted(){
-		return committed; 
-	}
+    return committed; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCommitted(Integer newVal) {
-		this.committed = newVal;
-	}
+    this.committed = newVal;
+  }
  	
 	
 	/**
@@ -2561,16 +2561,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getAvailable(){
-		return available; 
-	}
+    return available; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAvailable(Integer newVal) {
-		this.available = newVal;
-	}
+    this.available = newVal;
+  }
  	
 	
 	/**
@@ -2583,16 +2583,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getOnOrder(){
-		return onOrder; 
-	}
+    return onOrder; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOnOrder(Integer newVal) {
-		this.onOrder = newVal;
-	}
+    this.onOrder = newVal;
+  }
  	
 	
 	/**
@@ -2605,16 +2605,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getTargetLevel(){
-		return targetLevel; 
-	}
+    return targetLevel; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTargetLevel(Integer newVal) {
-		this.targetLevel = newVal;
-	}
+    this.targetLevel = newVal;
+  }
  	
 	
 	/**
@@ -2627,16 +2627,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getReOrderPoint(){
-		return reOrderPoint; 
-	}
+    return reOrderPoint; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setReOrderPoint(Integer newVal) {
-		this.reOrderPoint = newVal;
-	}
+    this.reOrderPoint = newVal;
+  }
  	
 	
 	/**
@@ -2649,16 +2649,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getMinOrderQty(){
-		return minOrderQty; 
-	}
+    return minOrderQty; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMinOrderQty(Integer newVal) {
-		this.minOrderQty = newVal;
-	}
+    this.minOrderQty = newVal;
+  }
  	
 	
 	/**
@@ -2671,16 +2671,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getEvenIncrements(){
-		return evenIncrements; 
-	}
+    return evenIncrements; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setEvenIncrements(Boolean newVal) {
-		this.evenIncrements = newVal;
-	}
+    this.evenIncrements = newVal;
+  }
  	
 	
 	/**
@@ -2693,16 +2693,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Date getExpires(){
-		return expires; 
-	}
+    return expires; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setExpires(Date newVal) {
-		this.expires = newVal;
-	}
+    this.expires = newVal;
+  }
  	
 	
 	/**
@@ -2715,16 +2715,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getBinLocation(){
-		return binLocation; 
-	}
+    return binLocation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBinLocation(String newVal) {
-		this.binLocation = newVal;
-	}
+    this.binLocation = newVal;
+  }
  	
 	
 	/**
@@ -2737,16 +2737,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShellItem(){
-		return shellItem; 
-	}
+    return shellItem; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShellItem(Boolean newVal) {
-		this.shellItem = newVal;
-	}
+    this.shellItem = newVal;
+  }
  	
 	
 	/**
@@ -2759,16 +2759,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getForestManagement(){
-		return forestManagement; 
-	}
+    return forestManagement; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setForestManagement(String newVal) {
-		this.forestManagement = newVal;
-	}
+    this.forestManagement = newVal;
+  }
  	
 	
 	/**
@@ -2781,16 +2781,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getPcwRecycledPercent(){
-		return pcwRecycledPercent; 
-	}
+    return pcwRecycledPercent; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPcwRecycledPercent(Double newVal) {
-		this.pcwRecycledPercent = newVal;
-	}
+    this.pcwRecycledPercent = newVal;
+  }
  	
 	
 	/**
@@ -2803,16 +2803,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getFscCertified(){
-		return fscCertified; 
-	}
+    return fscCertified; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFscCertified(Boolean newVal) {
-		this.fscCertified = newVal;
-	}
+    this.fscCertified = newVal;
+  }
  	
 	
 	/**
@@ -2825,16 +2825,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSfiCertified(){
-		return sfiCertified; 
-	}
+    return sfiCertified; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSfiCertified(Boolean newVal) {
-		this.sfiCertified = newVal;
-	}
+    this.sfiCertified = newVal;
+  }
  	
 	
 	/**
@@ -2847,16 +2847,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getGreenSealCertified(){
-		return greenSealCertified; 
-	}
+    return greenSealCertified; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGreenSealCertified(Boolean newVal) {
-		this.greenSealCertified = newVal;
-	}
+    this.greenSealCertified = newVal;
+  }
  	
 	
 	/**
@@ -2869,16 +2869,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public PaperPrice getDefaultPriceList(){
-		return defaultPriceList; 
-	}
+    return defaultPriceList; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultPriceList(PaperPrice newVal) {
-		this.defaultPriceList = newVal;
-	}
+    this.defaultPriceList = newVal;
+  }
  	
 	
 	/**
@@ -2891,16 +2891,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public GenericColors getGenericColor(){
-		return genericColor; 
-	}
+    return genericColor; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGenericColor(GenericColors newVal) {
-		this.genericColor = newVal;
-	}
+    this.genericColor = newVal;
+  }
  	
 	
 	/**
@@ -2913,16 +2913,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Account getAccount(){
-		return account; 
-	}
+    return account; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAccount(Account newVal) {
-		this.account = newVal;
-	}
+    this.account = newVal;
+  }
  	
 	
 	/**
@@ -2935,16 +2935,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public String getStockId(){
-		return stockId; 
-	}
+    return stockId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockId(String newVal) {
-		this.stockId = newVal;
-	}
+    this.stockId = newVal;
+  }
  	
 	
 	/**
@@ -2959,25 +2959,25 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<ChargeDefinition> getCharges(){
-		return charges; 
-	}
+    return charges; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addCharges(ChargeDefinition obj) {
-		if (charges == null) {
-			charges = new java.util.ArrayList<ChargeDefinition>();
-		}
-		charges.add(obj);
-	}
+    if (charges == null) {
+      charges = new java.util.ArrayList<ChargeDefinition>();
+    }
+    charges.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
-		this.charges = newVal;
-	}
+    this.charges = newVal;
+  }
  	
 	
 	/**
@@ -2990,16 +2990,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCopier1PricePerSheet(){
-		return copier1PricePerSheet; 
-	}
+    return copier1PricePerSheet; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCopier1PricePerSheet(Double newVal) {
-		this.copier1PricePerSheet = newVal;
-	}
+    this.copier1PricePerSheet = newVal;
+  }
  	
 	
 	/**
@@ -3012,16 +3012,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCopier2PricePerSheet(){
-		return copier2PricePerSheet; 
-	}
+    return copier2PricePerSheet; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCopier2PricePerSheet(Double newVal) {
-		this.copier2PricePerSheet = newVal;
-	}
+    this.copier2PricePerSheet = newVal;
+  }
  	
 	
 	/**
@@ -3034,16 +3034,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCopier3PricePerSheet(){
-		return copier3PricePerSheet; 
-	}
+    return copier3PricePerSheet; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCopier3PricePerSheet(Double newVal) {
-		this.copier3PricePerSheet = newVal;
-	}
+    this.copier3PricePerSheet = newVal;
+  }
  	
 	
 	/**
@@ -3058,25 +3058,25 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<StockChanges> getStockChanges(){
-		return stockChanges; 
-	}
+    return stockChanges; 
+  }
 
 	/**
 	 * @generated
 	 */	
 	public void addStockChanges(StockChanges obj) {
-		if (stockChanges == null) {
-			stockChanges = new java.util.ArrayList<StockChanges>();
-		}
-		stockChanges.add(obj);
-	}
+    if (stockChanges == null) {
+      stockChanges = new java.util.ArrayList<StockChanges>();
+    }
+    stockChanges.add(obj);
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setStockChanges(java.util.List<StockChanges> newVal) {
-		this.stockChanges = newVal;
-	}
+    this.stockChanges = newVal;
+  }
  	
 	
 	/**
@@ -3089,16 +3089,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getMill(){
-		return mill; 
-	}
+    return mill; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMill(Integer newVal) {
-		this.mill = newVal;
-	}
+    this.mill = newVal;
+  }
  	
 	
 	/**
@@ -3111,16 +3111,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getLotcount(){
-		return lotcount; 
-	}
+    return lotcount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLotcount(Integer newVal) {
-		this.lotcount = newVal;
-	}
+    this.lotcount = newVal;
+  }
  	
 	
 	/**
@@ -3133,16 +3133,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getCartonWeight(){
-		return cartonWeight; 
-	}
+    return cartonWeight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCartonWeight(Double newVal) {
-		this.cartonWeight = newVal;
-	}
+    this.cartonWeight = newVal;
+  }
  	
 	
 	/**
@@ -3155,16 +3155,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getSheetperSkid(){
-		return sheetperSkid; 
-	}
+    return sheetperSkid; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSheetperSkid(Integer newVal) {
-		this.sheetperSkid = newVal;
-	}
+    this.sheetperSkid = newVal;
+  }
  	
 	
 	/**
@@ -3177,16 +3177,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getWeightperSkid(){
-		return weightperSkid; 
-	}
+    return weightperSkid; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWeightperSkid(Double newVal) {
-		this.weightperSkid = newVal;
-	}
+    this.weightperSkid = newVal;
+  }
  	
 	
 	/**
@@ -3199,16 +3199,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Integer getShortgain(){
-		return shortgain; 
-	}
+    return shortgain; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShortgain(Integer newVal) {
-		this.shortgain = newVal;
-	}
+    this.shortgain = newVal;
+  }
  	
 	
 	/**
@@ -3221,16 +3221,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNoBrokenCarton(){
-		return noBrokenCarton; 
-	}
+    return noBrokenCarton; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoBrokenCarton(Boolean newVal) {
-		this.noBrokenCarton = newVal;
-	}
+    this.noBrokenCarton = newVal;
+  }
  	
 	
 	/**
@@ -3243,16 +3243,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getPricedinSets(){
-		return pricedinSets; 
-	}
+    return pricedinSets; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPricedinSets(Boolean newVal) {
-		this.pricedinSets = newVal;
-	}
+    this.pricedinSets = newVal;
+  }
  	
 	
 	/**
@@ -3265,16 +3265,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getImported(){
-		return imported; 
-	}
+    return imported; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setImported(Boolean newVal) {
-		this.imported = newVal;
-	}
+    this.imported = newVal;
+  }
  	
 	
 	/**
@@ -3287,16 +3287,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getMeasure(){
-		return measure; 
-	}
+    return measure; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMeasure(Boolean newVal) {
-		this.measure = newVal;
-	}
+    this.measure = newVal;
+  }
  	
 	
 	/**
@@ -3309,16 +3309,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAllownegative(){
-		return allownegative; 
-	}
+    return allownegative; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAllownegative(Boolean newVal) {
-		this.allownegative = newVal;
-	}
+    this.allownegative = newVal;
+  }
  	
 	
 	/**
@@ -3331,16 +3331,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public Double getRollWeight(){
-		return rollWeight; 
-	}
+    return rollWeight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRollWeight(Double newVal) {
-		this.rollWeight = newVal;
-	}
+    this.rollWeight = newVal;
+  }
  	
 	
 	/**
@@ -3353,16 +3353,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultBWCopier(){
-		return defaultBWCopier; 
-	}
+    return defaultBWCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultBWCopier(CopierDefinition newVal) {
-		this.defaultBWCopier = newVal;
-	}
+    this.defaultBWCopier = newVal;
+  }
  	
 	
 	/**
@@ -3375,16 +3375,16 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultColorCopier(){
-		return defaultColorCopier; 
-	}
+    return defaultColorCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultColorCopier(CopierDefinition newVal) {
-		this.defaultColorCopier = newVal;
-	}
+    this.defaultColorCopier = newVal;
+  }
  	
 	
 	/**
@@ -3397,151 +3397,151 @@ public class StockDefinition extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getDefaultLargeCopier(){
-		return defaultLargeCopier; 
-	}
+    return defaultLargeCopier; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultLargeCopier(CopierDefinition newVal) {
-		this.defaultLargeCopier = newVal;
-	}
+    this.defaultLargeCopier = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (STOCKUNIT.equals(propertyName)) return getStockunit();
-		if (NAME.equals(propertyName)) return getName();
-		if (STKGROUP.equals(propertyName)) return getStkgroup();
-		if (STKCLASS.equals(propertyName)) return getStkclass();
-		if (STKTYPE.equals(propertyName)) return getStktype();
-		if (ISMETRIC.equals(propertyName)) return getIsMetric();
-		if (FINISH.equals(propertyName)) return getFinish();
-		if (WEIGHT.equals(propertyName)) return getWeight();
-		if (COLOR.equals(propertyName)) return getColor();
-		if (GRADE.equals(propertyName)) return getGrade();
-		if (COATED.equals(propertyName)) return getCoated();
-		if (STOCKNUMBER.equals(propertyName)) return getStocknumber();
-		if (VENDOR.equals(propertyName)) return getVendor();
-		if (BASICSIZE.equals(propertyName)) return getBasicsize();
-		if (PARENTSIZE.equals(propertyName)) return getParentsize();
-		if (THICKNESS.equals(propertyName)) return getThickness();
-		if (MWEIGHT.equals(propertyName)) return getMweight();
-		if (SHEETSPERCARTON.equals(propertyName)) return getSheetspercarton();
-		if (MINORDER.equals(propertyName)) return getMinorder();
-		if (COMMENTS.equals(propertyName)) return getComments();
-		if (UOM.equals(propertyName)) return getUom();
-		if (COSTUNITS.equals(propertyName)) return getCostunits();
-		if (ENTIREORDERCHARGE.equals(propertyName)) return getEntireOrderCharge();
-		if (SHEETSPERSET.equals(propertyName)) return getSheetsPerSet();
-		if (ISCOSTINSETS.equals(propertyName)) return getIsCostInSets();
-		if (PRICEEXPIRES.equals(propertyName)) return getPriceExpires();
-		if (QTYBREAK1.equals(propertyName)) return getQtybreak1();
-		if (QTYBREAK2.equals(propertyName)) return getQtybreak2();
-		if (QTYBREAK3.equals(propertyName)) return getQtybreak3();
-		if (QTYBREAK4.equals(propertyName)) return getQtybreak4();
-		if (QTYBREAK5.equals(propertyName)) return getQtybreak5();
-		if (QTYBREAK6.equals(propertyName)) return getQtybreak6();
-		if (COST1.equals(propertyName)) return getCost1();
-		if (COST2.equals(propertyName)) return getCost2();
-		if (COST3.equals(propertyName)) return getCost3();
-		if (COST4.equals(propertyName)) return getCost4();
-		if (COST5.equals(propertyName)) return getCost5();
-		if (COST6.equals(propertyName)) return getCost6();
-		if (CWT1.equals(propertyName)) return getCwt1();
-		if (CWT2.equals(propertyName)) return getCwt2();
-		if (CWT3.equals(propertyName)) return getCwt3();
-		if (CWT4.equals(propertyName)) return getCwt4();
-		if (CWT5.equals(propertyName)) return getCwt5();
-		if (CWT6.equals(propertyName)) return getCwt6();
-		if (MARKUP1.equals(propertyName)) return getMarkup1();
-		if (MARKUP2.equals(propertyName)) return getMarkup2();
-		if (MARKUP3.equals(propertyName)) return getMarkup3();
-		if (MARKUP4.equals(propertyName)) return getMarkup4();
-		if (MARKUP5.equals(propertyName)) return getMarkup5();
-		if (MARKUP6.equals(propertyName)) return getMarkup6();
-		if (LISTPERM1.equals(propertyName)) return getListPerM1();
-		if (LISTPERM2.equals(propertyName)) return getListPerM2();
-		if (LISTPERM3.equals(propertyName)) return getListPerM3();
-		if (LISTPERM4.equals(propertyName)) return getListPerM4();
-		if (LISTPERM5.equals(propertyName)) return getListPerM5();
-		if (LISTPERM6.equals(propertyName)) return getListPerM6();
-		if (NORMALRUNSIZE.equals(propertyName)) return getNormalRunSize();
-		if (CUTSPER100.equals(propertyName)) return getCutsPer100();
-		if (MINCUTCHARGE.equals(propertyName)) return getMinCutCharge();
-		if (DEFAULTPRESS.equals(propertyName)) return getDefaultPress();
-		if (AUTOCALCULATEBLANK.equals(propertyName)) return getAutoCalculateBlank();
-		if (BLANKSHEETQTY1.equals(propertyName)) return getBlankSheetqty1();
-		if (BLANKSHEETQTY2.equals(propertyName)) return getBlankSheetqty2();
-		if (BLANKSHEETQTY3.equals(propertyName)) return getBlankSheetqty3();
-		if (BLANKSHEETQTY4.equals(propertyName)) return getBlankSheetqty4();
-		if (BLANKSHEETQTY5.equals(propertyName)) return getBlankSheetqty5();
-		if (BLANKSHEETQTY6.equals(propertyName)) return getBlankSheetqty6();
-		if (BLANKSHEETPRICE1.equals(propertyName)) return getBlankSheetPrice1();
-		if (BLANKSHEETPRICE2.equals(propertyName)) return getBlankSheetPrice2();
-		if (BLANKSHEETPRICE3.equals(propertyName)) return getBlankSheetPrice3();
-		if (BLANKSHEETPRICE4.equals(propertyName)) return getBlankSheetPrice4();
-		if (BLANKSHEETPRICE5.equals(propertyName)) return getBlankSheetPrice5();
-		if (BLANKSHEETPRICE6.equals(propertyName)) return getBlankSheetPrice6();
-		if (DEFAULTBW.equals(propertyName)) return getDefaultBW();
-		if (DEFAULTCOLOR.equals(propertyName)) return getDefaultColor();
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultLargeFormat();
-		if (ADDITIONAL1.equals(propertyName)) return getAdditional1();
-		if (ADDITIONAL2.equals(propertyName)) return getAdditional2();
-		if (ADDITIONAL3.equals(propertyName)) return getAdditional3();
-		if (ADDITIONAL4.equals(propertyName)) return getAdditional4();
-		if (ADDITIONAL5.equals(propertyName)) return getAdditional5();
-		if (ADDITIONAL6.equals(propertyName)) return getAdditional6();
-		if (ADDITIONAL7.equals(propertyName)) return getAdditional7();
-		if (ADDITIONAL8.equals(propertyName)) return getAdditional8();
-		if (ADDITIONAL9.equals(propertyName)) return getAdditional9();
-		if (ADDITIONAL10.equals(propertyName)) return getAdditional10();
-		if (STANDARDITEM.equals(propertyName)) return getStandardItem();
-		if (ONHAND.equals(propertyName)) return getOnHand();
-		if (COMMITTED.equals(propertyName)) return getCommitted();
-		if (AVAILABLE.equals(propertyName)) return getAvailable();
-		if (ONORDER.equals(propertyName)) return getOnOrder();
-		if (TARGETLEVEL.equals(propertyName)) return getTargetLevel();
-		if (REORDERPOINT.equals(propertyName)) return getReOrderPoint();
-		if (MINORDERQTY.equals(propertyName)) return getMinOrderQty();
-		if (EVENINCREMENTS.equals(propertyName)) return getEvenIncrements();
-		if (EXPIRES.equals(propertyName)) return getExpires();
-		if (BINLOCATION.equals(propertyName)) return getBinLocation();
-		if (SHELLITEM.equals(propertyName)) return getShellItem();
-		if (FORESTMANAGEMENT.equals(propertyName)) return getForestManagement();
-		if (PCWRECYCLEDPERCENT.equals(propertyName)) return getPcwRecycledPercent();
-		if (FSCCERTIFIED.equals(propertyName)) return getFscCertified();
-		if (SFICERTIFIED.equals(propertyName)) return getSfiCertified();
-		if (GREENSEALCERTIFIED.equals(propertyName)) return getGreenSealCertified();
-		if (DEFAULTPRICELIST.equals(propertyName)) return getDefaultPriceList();
-		if (GENERICCOLOR.equals(propertyName)) return getGenericColor();
-		if (ACCOUNT.equals(propertyName)) return getAccount();
-		if (STOCKID.equals(propertyName)) return getStockId();
-		if (CHARGES.equals(propertyName)) return getCharges();
-		if (COPIER1PRICEPERSHEET.equals(propertyName)) return getCopier1PricePerSheet();
-		if (COPIER2PRICEPERSHEET.equals(propertyName)) return getCopier2PricePerSheet();
-		if (COPIER3PRICEPERSHEET.equals(propertyName)) return getCopier3PricePerSheet();
-		if (STOCKCHANGES.equals(propertyName)) return getStockChanges();
-		if (MILL.equals(propertyName)) return getMill();
-		if (LOTCOUNT.equals(propertyName)) return getLotcount();
-		if (CARTONWEIGHT.equals(propertyName)) return getCartonWeight();
-		if (SHEETPERSKID.equals(propertyName)) return getSheetperSkid();
-		if (WEIGHTPERSKID.equals(propertyName)) return getWeightperSkid();
-		if (SHORTGAIN.equals(propertyName)) return getShortgain();
-		if (NOBROKENCARTON.equals(propertyName)) return getNoBrokenCarton();
-		if (PRICEDINSETS.equals(propertyName)) return getPricedinSets();
-		if (IMPORTED.equals(propertyName)) return getImported();
-		if (MEASURE.equals(propertyName)) return getMeasure();
-		if (ALLOWNEGATIVE.equals(propertyName)) return getAllownegative();
-		if (ROLLWEIGHT.equals(propertyName)) return getRollWeight();
-		if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
-		if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
-		return super.getProperty(propertyName);
-	}
+    if (STOCKUNIT.equals(propertyName)) return getStockunit();
+    if (NAME.equals(propertyName)) return getName();
+    if (STKGROUP.equals(propertyName)) return getStkgroup();
+    if (STKCLASS.equals(propertyName)) return getStkclass();
+    if (STKTYPE.equals(propertyName)) return getStktype();
+    if (ISMETRIC.equals(propertyName)) return getIsMetric();
+    if (FINISH.equals(propertyName)) return getFinish();
+    if (WEIGHT.equals(propertyName)) return getWeight();
+    if (COLOR.equals(propertyName)) return getColor();
+    if (GRADE.equals(propertyName)) return getGrade();
+    if (COATED.equals(propertyName)) return getCoated();
+    if (STOCKNUMBER.equals(propertyName)) return getStocknumber();
+    if (VENDOR.equals(propertyName)) return getVendor();
+    if (BASICSIZE.equals(propertyName)) return getBasicsize();
+    if (PARENTSIZE.equals(propertyName)) return getParentsize();
+    if (THICKNESS.equals(propertyName)) return getThickness();
+    if (MWEIGHT.equals(propertyName)) return getMweight();
+    if (SHEETSPERCARTON.equals(propertyName)) return getSheetspercarton();
+    if (MINORDER.equals(propertyName)) return getMinorder();
+    if (COMMENTS.equals(propertyName)) return getComments();
+    if (UOM.equals(propertyName)) return getUom();
+    if (COSTUNITS.equals(propertyName)) return getCostunits();
+    if (ENTIREORDERCHARGE.equals(propertyName)) return getEntireOrderCharge();
+    if (SHEETSPERSET.equals(propertyName)) return getSheetsPerSet();
+    if (ISCOSTINSETS.equals(propertyName)) return getIsCostInSets();
+    if (PRICEEXPIRES.equals(propertyName)) return getPriceExpires();
+    if (QTYBREAK1.equals(propertyName)) return getQtybreak1();
+    if (QTYBREAK2.equals(propertyName)) return getQtybreak2();
+    if (QTYBREAK3.equals(propertyName)) return getQtybreak3();
+    if (QTYBREAK4.equals(propertyName)) return getQtybreak4();
+    if (QTYBREAK5.equals(propertyName)) return getQtybreak5();
+    if (QTYBREAK6.equals(propertyName)) return getQtybreak6();
+    if (COST1.equals(propertyName)) return getCost1();
+    if (COST2.equals(propertyName)) return getCost2();
+    if (COST3.equals(propertyName)) return getCost3();
+    if (COST4.equals(propertyName)) return getCost4();
+    if (COST5.equals(propertyName)) return getCost5();
+    if (COST6.equals(propertyName)) return getCost6();
+    if (CWT1.equals(propertyName)) return getCwt1();
+    if (CWT2.equals(propertyName)) return getCwt2();
+    if (CWT3.equals(propertyName)) return getCwt3();
+    if (CWT4.equals(propertyName)) return getCwt4();
+    if (CWT5.equals(propertyName)) return getCwt5();
+    if (CWT6.equals(propertyName)) return getCwt6();
+    if (MARKUP1.equals(propertyName)) return getMarkup1();
+    if (MARKUP2.equals(propertyName)) return getMarkup2();
+    if (MARKUP3.equals(propertyName)) return getMarkup3();
+    if (MARKUP4.equals(propertyName)) return getMarkup4();
+    if (MARKUP5.equals(propertyName)) return getMarkup5();
+    if (MARKUP6.equals(propertyName)) return getMarkup6();
+    if (LISTPERM1.equals(propertyName)) return getListPerM1();
+    if (LISTPERM2.equals(propertyName)) return getListPerM2();
+    if (LISTPERM3.equals(propertyName)) return getListPerM3();
+    if (LISTPERM4.equals(propertyName)) return getListPerM4();
+    if (LISTPERM5.equals(propertyName)) return getListPerM5();
+    if (LISTPERM6.equals(propertyName)) return getListPerM6();
+    if (NORMALRUNSIZE.equals(propertyName)) return getNormalRunSize();
+    if (CUTSPER100.equals(propertyName)) return getCutsPer100();
+    if (MINCUTCHARGE.equals(propertyName)) return getMinCutCharge();
+    if (DEFAULTPRESS.equals(propertyName)) return getDefaultPress();
+    if (AUTOCALCULATEBLANK.equals(propertyName)) return getAutoCalculateBlank();
+    if (BLANKSHEETQTY1.equals(propertyName)) return getBlankSheetqty1();
+    if (BLANKSHEETQTY2.equals(propertyName)) return getBlankSheetqty2();
+    if (BLANKSHEETQTY3.equals(propertyName)) return getBlankSheetqty3();
+    if (BLANKSHEETQTY4.equals(propertyName)) return getBlankSheetqty4();
+    if (BLANKSHEETQTY5.equals(propertyName)) return getBlankSheetqty5();
+    if (BLANKSHEETQTY6.equals(propertyName)) return getBlankSheetqty6();
+    if (BLANKSHEETPRICE1.equals(propertyName)) return getBlankSheetPrice1();
+    if (BLANKSHEETPRICE2.equals(propertyName)) return getBlankSheetPrice2();
+    if (BLANKSHEETPRICE3.equals(propertyName)) return getBlankSheetPrice3();
+    if (BLANKSHEETPRICE4.equals(propertyName)) return getBlankSheetPrice4();
+    if (BLANKSHEETPRICE5.equals(propertyName)) return getBlankSheetPrice5();
+    if (BLANKSHEETPRICE6.equals(propertyName)) return getBlankSheetPrice6();
+    if (DEFAULTBW.equals(propertyName)) return getDefaultBW();
+    if (DEFAULTCOLOR.equals(propertyName)) return getDefaultColor();
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) return getDefaultLargeFormat();
+    if (ADDITIONAL1.equals(propertyName)) return getAdditional1();
+    if (ADDITIONAL2.equals(propertyName)) return getAdditional2();
+    if (ADDITIONAL3.equals(propertyName)) return getAdditional3();
+    if (ADDITIONAL4.equals(propertyName)) return getAdditional4();
+    if (ADDITIONAL5.equals(propertyName)) return getAdditional5();
+    if (ADDITIONAL6.equals(propertyName)) return getAdditional6();
+    if (ADDITIONAL7.equals(propertyName)) return getAdditional7();
+    if (ADDITIONAL8.equals(propertyName)) return getAdditional8();
+    if (ADDITIONAL9.equals(propertyName)) return getAdditional9();
+    if (ADDITIONAL10.equals(propertyName)) return getAdditional10();
+    if (STANDARDITEM.equals(propertyName)) return getStandardItem();
+    if (ONHAND.equals(propertyName)) return getOnHand();
+    if (COMMITTED.equals(propertyName)) return getCommitted();
+    if (AVAILABLE.equals(propertyName)) return getAvailable();
+    if (ONORDER.equals(propertyName)) return getOnOrder();
+    if (TARGETLEVEL.equals(propertyName)) return getTargetLevel();
+    if (REORDERPOINT.equals(propertyName)) return getReOrderPoint();
+    if (MINORDERQTY.equals(propertyName)) return getMinOrderQty();
+    if (EVENINCREMENTS.equals(propertyName)) return getEvenIncrements();
+    if (EXPIRES.equals(propertyName)) return getExpires();
+    if (BINLOCATION.equals(propertyName)) return getBinLocation();
+    if (SHELLITEM.equals(propertyName)) return getShellItem();
+    if (FORESTMANAGEMENT.equals(propertyName)) return getForestManagement();
+    if (PCWRECYCLEDPERCENT.equals(propertyName)) return getPcwRecycledPercent();
+    if (FSCCERTIFIED.equals(propertyName)) return getFscCertified();
+    if (SFICERTIFIED.equals(propertyName)) return getSfiCertified();
+    if (GREENSEALCERTIFIED.equals(propertyName)) return getGreenSealCertified();
+    if (DEFAULTPRICELIST.equals(propertyName)) return getDefaultPriceList();
+    if (GENERICCOLOR.equals(propertyName)) return getGenericColor();
+    if (ACCOUNT.equals(propertyName)) return getAccount();
+    if (STOCKID.equals(propertyName)) return getStockId();
+    if (CHARGES.equals(propertyName)) return getCharges();
+    if (COPIER1PRICEPERSHEET.equals(propertyName)) return getCopier1PricePerSheet();
+    if (COPIER2PRICEPERSHEET.equals(propertyName)) return getCopier2PricePerSheet();
+    if (COPIER3PRICEPERSHEET.equals(propertyName)) return getCopier3PricePerSheet();
+    if (STOCKCHANGES.equals(propertyName)) return getStockChanges();
+    if (MILL.equals(propertyName)) return getMill();
+    if (LOTCOUNT.equals(propertyName)) return getLotcount();
+    if (CARTONWEIGHT.equals(propertyName)) return getCartonWeight();
+    if (SHEETPERSKID.equals(propertyName)) return getSheetperSkid();
+    if (WEIGHTPERSKID.equals(propertyName)) return getWeightperSkid();
+    if (SHORTGAIN.equals(propertyName)) return getShortgain();
+    if (NOBROKENCARTON.equals(propertyName)) return getNoBrokenCarton();
+    if (PRICEDINSETS.equals(propertyName)) return getPricedinSets();
+    if (IMPORTED.equals(propertyName)) return getImported();
+    if (MEASURE.equals(propertyName)) return getMeasure();
+    if (ALLOWNEGATIVE.equals(propertyName)) return getAllownegative();
+    if (ROLLWEIGHT.equals(propertyName)) return getRollWeight();
+    if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
+    if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -3549,135 +3549,135 @@ public class StockDefinition extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (STOCKUNIT.equals(propertyName)) setStockunit((Integer)newValue); else
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STKGROUP.equals(propertyName)) setStkgroup((StockGroup)newValue); else
-		if (STKCLASS.equals(propertyName)) setStkclass((StockClass)newValue); else
-		if (STKTYPE.equals(propertyName)) setStktype((StockType)newValue); else
-		if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
-		if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
-		if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
-		if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
-		if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
-		if (COATED.equals(propertyName)) setCoated((String)newValue); else
-		if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
-		if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
-		if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
-		if (PARENTSIZE.equals(propertyName)) setParentsize((String)newValue); else
-		if (THICKNESS.equals(propertyName)) setThickness((Double)newValue); else
-		if (MWEIGHT.equals(propertyName)) setMweight((Double)newValue); else
-		if (SHEETSPERCARTON.equals(propertyName)) setSheetspercarton((Integer)newValue); else
-		if (MINORDER.equals(propertyName)) setMinorder((Integer)newValue); else
-		if (COMMENTS.equals(propertyName)) setComments((String)newValue); else
-		if (UOM.equals(propertyName)) setUom((String)newValue); else
-		if (COSTUNITS.equals(propertyName)) setCostunits((Integer)newValue); else
-		if (ENTIREORDERCHARGE.equals(propertyName)) setEntireOrderCharge((Boolean)newValue); else
-		if (SHEETSPERSET.equals(propertyName)) setSheetsPerSet((Integer)newValue); else
-		if (ISCOSTINSETS.equals(propertyName)) setIsCostInSets((Boolean)newValue); else
-		if (PRICEEXPIRES.equals(propertyName)) setPriceExpires((Date)newValue); else
-		if (QTYBREAK1.equals(propertyName)) setQtybreak1((Integer)newValue); else
-		if (QTYBREAK2.equals(propertyName)) setQtybreak2((Integer)newValue); else
-		if (QTYBREAK3.equals(propertyName)) setQtybreak3((Integer)newValue); else
-		if (QTYBREAK4.equals(propertyName)) setQtybreak4((Integer)newValue); else
-		if (QTYBREAK5.equals(propertyName)) setQtybreak5((Integer)newValue); else
-		if (QTYBREAK6.equals(propertyName)) setQtybreak6((Integer)newValue); else
-		if (COST1.equals(propertyName)) setCost1((Double)newValue); else
-		if (COST2.equals(propertyName)) setCost2((Double)newValue); else
-		if (COST3.equals(propertyName)) setCost3((Double)newValue); else
-		if (COST4.equals(propertyName)) setCost4((Double)newValue); else
-		if (COST5.equals(propertyName)) setCost5((Double)newValue); else
-		if (COST6.equals(propertyName)) setCost6((Double)newValue); else
-		if (CWT1.equals(propertyName)) setCwt1((Double)newValue); else
-		if (CWT2.equals(propertyName)) setCwt2((Double)newValue); else
-		if (CWT3.equals(propertyName)) setCwt3((Double)newValue); else
-		if (CWT4.equals(propertyName)) setCwt4((Double)newValue); else
-		if (CWT5.equals(propertyName)) setCwt5((Double)newValue); else
-		if (CWT6.equals(propertyName)) setCwt6((Double)newValue); else
-		if (MARKUP1.equals(propertyName)) setMarkup1((Double)newValue); else
-		if (MARKUP2.equals(propertyName)) setMarkup2((Double)newValue); else
-		if (MARKUP3.equals(propertyName)) setMarkup3((Double)newValue); else
-		if (MARKUP4.equals(propertyName)) setMarkup4((Double)newValue); else
-		if (MARKUP5.equals(propertyName)) setMarkup5((Double)newValue); else
-		if (MARKUP6.equals(propertyName)) setMarkup6((Double)newValue); else
-		if (LISTPERM1.equals(propertyName)) setListPerM1((Integer)newValue); else
-		if (LISTPERM2.equals(propertyName)) setListPerM2((Integer)newValue); else
-		if (LISTPERM3.equals(propertyName)) setListPerM3((Integer)newValue); else
-		if (LISTPERM4.equals(propertyName)) setListPerM4((Integer)newValue); else
-		if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
-		if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
-		if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((String)newValue); else
-		if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
-		if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
-		if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
-		if (AUTOCALCULATEBLANK.equals(propertyName)) setAutoCalculateBlank((Boolean)newValue); else
-		if (BLANKSHEETQTY1.equals(propertyName)) setBlankSheetqty1((Integer)newValue); else
-		if (BLANKSHEETQTY2.equals(propertyName)) setBlankSheetqty2((Integer)newValue); else
-		if (BLANKSHEETQTY3.equals(propertyName)) setBlankSheetqty3((Integer)newValue); else
-		if (BLANKSHEETQTY4.equals(propertyName)) setBlankSheetqty4((Integer)newValue); else
-		if (BLANKSHEETQTY5.equals(propertyName)) setBlankSheetqty5((Integer)newValue); else
-		if (BLANKSHEETQTY6.equals(propertyName)) setBlankSheetqty6((Integer)newValue); else
-		if (BLANKSHEETPRICE1.equals(propertyName)) setBlankSheetPrice1((Double)newValue); else
-		if (BLANKSHEETPRICE2.equals(propertyName)) setBlankSheetPrice2((Double)newValue); else
-		if (BLANKSHEETPRICE3.equals(propertyName)) setBlankSheetPrice3((Double)newValue); else
-		if (BLANKSHEETPRICE4.equals(propertyName)) setBlankSheetPrice4((Double)newValue); else
-		if (BLANKSHEETPRICE5.equals(propertyName)) setBlankSheetPrice5((Double)newValue); else
-		if (BLANKSHEETPRICE6.equals(propertyName)) setBlankSheetPrice6((Double)newValue); else
-		if (DEFAULTBW.equals(propertyName)) setDefaultBW((String)newValue); else
-		if (DEFAULTCOLOR.equals(propertyName)) setDefaultColor((String)newValue); else
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultLargeFormat((String)newValue); else
-		if (ADDITIONAL1.equals(propertyName)) setAdditional1((String)newValue); else
-		if (ADDITIONAL2.equals(propertyName)) setAdditional2((String)newValue); else
-		if (ADDITIONAL3.equals(propertyName)) setAdditional3((String)newValue); else
-		if (ADDITIONAL4.equals(propertyName)) setAdditional4((String)newValue); else
-		if (ADDITIONAL5.equals(propertyName)) setAdditional5((String)newValue); else
-		if (ADDITIONAL6.equals(propertyName)) setAdditional6((String)newValue); else
-		if (ADDITIONAL7.equals(propertyName)) setAdditional7((String)newValue); else
-		if (ADDITIONAL8.equals(propertyName)) setAdditional8((String)newValue); else
-		if (ADDITIONAL9.equals(propertyName)) setAdditional9((String)newValue); else
-		if (ADDITIONAL10.equals(propertyName)) setAdditional10((String)newValue); else
-		if (STANDARDITEM.equals(propertyName)) setStandardItem((Boolean)newValue); else
-		if (ONHAND.equals(propertyName)) setOnHand((Integer)newValue); else
-		if (COMMITTED.equals(propertyName)) setCommitted((Integer)newValue); else
-		if (AVAILABLE.equals(propertyName)) setAvailable((Integer)newValue); else
-		if (ONORDER.equals(propertyName)) setOnOrder((Integer)newValue); else
-		if (TARGETLEVEL.equals(propertyName)) setTargetLevel((Integer)newValue); else
-		if (REORDERPOINT.equals(propertyName)) setReOrderPoint((Integer)newValue); else
-		if (MINORDERQTY.equals(propertyName)) setMinOrderQty((Integer)newValue); else
-		if (EVENINCREMENTS.equals(propertyName)) setEvenIncrements((Boolean)newValue); else
-		if (EXPIRES.equals(propertyName)) setExpires((Date)newValue); else
-		if (BINLOCATION.equals(propertyName)) setBinLocation((String)newValue); else
-		if (SHELLITEM.equals(propertyName)) setShellItem((Boolean)newValue); else
-		if (FORESTMANAGEMENT.equals(propertyName)) setForestManagement((String)newValue); else
-		if (PCWRECYCLEDPERCENT.equals(propertyName)) setPcwRecycledPercent((Double)newValue); else
-		if (FSCCERTIFIED.equals(propertyName)) setFscCertified((Boolean)newValue); else
-		if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
-		if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
-		if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PaperPrice)newValue); else
-		if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
-		if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-		if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
-		if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
-		if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((Double)newValue); else
-		if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
-		if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
-		if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
-		if (MILL.equals(propertyName)) setMill((Integer)newValue); else
-		if (LOTCOUNT.equals(propertyName)) setLotcount((Integer)newValue); else
-		if (CARTONWEIGHT.equals(propertyName)) setCartonWeight((Double)newValue); else
-		if (SHEETPERSKID.equals(propertyName)) setSheetperSkid((Integer)newValue); else
-		if (WEIGHTPERSKID.equals(propertyName)) setWeightperSkid((Double)newValue); else
-		if (SHORTGAIN.equals(propertyName)) setShortgain((Integer)newValue); else
-		if (NOBROKENCARTON.equals(propertyName)) setNoBrokenCarton((Boolean)newValue); else
-		if (PRICEDINSETS.equals(propertyName)) setPricedinSets((Boolean)newValue); else
-		if (IMPORTED.equals(propertyName)) setImported((Boolean)newValue); else
-		if (MEASURE.equals(propertyName)) setMeasure((Boolean)newValue); else
-		if (ALLOWNEGATIVE.equals(propertyName)) setAllownegative((Boolean)newValue); else
-		if (ROLLWEIGHT.equals(propertyName)) setRollWeight((Double)newValue); else
-		if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
-		if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (STOCKUNIT.equals(propertyName)) setStockunit((Integer)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (STKGROUP.equals(propertyName)) setStkgroup((StockGroup)newValue); else
+    if (STKCLASS.equals(propertyName)) setStkclass((StockClass)newValue); else
+    if (STKTYPE.equals(propertyName)) setStktype((StockType)newValue); else
+    if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
+    if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
+    if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
+    if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
+    if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
+    if (COATED.equals(propertyName)) setCoated((String)newValue); else
+    if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
+    if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
+    if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentsize((String)newValue); else
+    if (THICKNESS.equals(propertyName)) setThickness((Double)newValue); else
+    if (MWEIGHT.equals(propertyName)) setMweight((Double)newValue); else
+    if (SHEETSPERCARTON.equals(propertyName)) setSheetspercarton((Integer)newValue); else
+    if (MINORDER.equals(propertyName)) setMinorder((Integer)newValue); else
+    if (COMMENTS.equals(propertyName)) setComments((String)newValue); else
+    if (UOM.equals(propertyName)) setUom((String)newValue); else
+    if (COSTUNITS.equals(propertyName)) setCostunits((Integer)newValue); else
+    if (ENTIREORDERCHARGE.equals(propertyName)) setEntireOrderCharge((Boolean)newValue); else
+    if (SHEETSPERSET.equals(propertyName)) setSheetsPerSet((Integer)newValue); else
+    if (ISCOSTINSETS.equals(propertyName)) setIsCostInSets((Boolean)newValue); else
+    if (PRICEEXPIRES.equals(propertyName)) setPriceExpires((Date)newValue); else
+    if (QTYBREAK1.equals(propertyName)) setQtybreak1((Integer)newValue); else
+    if (QTYBREAK2.equals(propertyName)) setQtybreak2((Integer)newValue); else
+    if (QTYBREAK3.equals(propertyName)) setQtybreak3((Integer)newValue); else
+    if (QTYBREAK4.equals(propertyName)) setQtybreak4((Integer)newValue); else
+    if (QTYBREAK5.equals(propertyName)) setQtybreak5((Integer)newValue); else
+    if (QTYBREAK6.equals(propertyName)) setQtybreak6((Integer)newValue); else
+    if (COST1.equals(propertyName)) setCost1((Double)newValue); else
+    if (COST2.equals(propertyName)) setCost2((Double)newValue); else
+    if (COST3.equals(propertyName)) setCost3((Double)newValue); else
+    if (COST4.equals(propertyName)) setCost4((Double)newValue); else
+    if (COST5.equals(propertyName)) setCost5((Double)newValue); else
+    if (COST6.equals(propertyName)) setCost6((Double)newValue); else
+    if (CWT1.equals(propertyName)) setCwt1((Double)newValue); else
+    if (CWT2.equals(propertyName)) setCwt2((Double)newValue); else
+    if (CWT3.equals(propertyName)) setCwt3((Double)newValue); else
+    if (CWT4.equals(propertyName)) setCwt4((Double)newValue); else
+    if (CWT5.equals(propertyName)) setCwt5((Double)newValue); else
+    if (CWT6.equals(propertyName)) setCwt6((Double)newValue); else
+    if (MARKUP1.equals(propertyName)) setMarkup1((Double)newValue); else
+    if (MARKUP2.equals(propertyName)) setMarkup2((Double)newValue); else
+    if (MARKUP3.equals(propertyName)) setMarkup3((Double)newValue); else
+    if (MARKUP4.equals(propertyName)) setMarkup4((Double)newValue); else
+    if (MARKUP5.equals(propertyName)) setMarkup5((Double)newValue); else
+    if (MARKUP6.equals(propertyName)) setMarkup6((Double)newValue); else
+    if (LISTPERM1.equals(propertyName)) setListPerM1((Integer)newValue); else
+    if (LISTPERM2.equals(propertyName)) setListPerM2((Integer)newValue); else
+    if (LISTPERM3.equals(propertyName)) setListPerM3((Integer)newValue); else
+    if (LISTPERM4.equals(propertyName)) setListPerM4((Integer)newValue); else
+    if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
+    if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
+    if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((String)newValue); else
+    if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
+    if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
+    if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
+    if (AUTOCALCULATEBLANK.equals(propertyName)) setAutoCalculateBlank((Boolean)newValue); else
+    if (BLANKSHEETQTY1.equals(propertyName)) setBlankSheetqty1((Integer)newValue); else
+    if (BLANKSHEETQTY2.equals(propertyName)) setBlankSheetqty2((Integer)newValue); else
+    if (BLANKSHEETQTY3.equals(propertyName)) setBlankSheetqty3((Integer)newValue); else
+    if (BLANKSHEETQTY4.equals(propertyName)) setBlankSheetqty4((Integer)newValue); else
+    if (BLANKSHEETQTY5.equals(propertyName)) setBlankSheetqty5((Integer)newValue); else
+    if (BLANKSHEETQTY6.equals(propertyName)) setBlankSheetqty6((Integer)newValue); else
+    if (BLANKSHEETPRICE1.equals(propertyName)) setBlankSheetPrice1((Double)newValue); else
+    if (BLANKSHEETPRICE2.equals(propertyName)) setBlankSheetPrice2((Double)newValue); else
+    if (BLANKSHEETPRICE3.equals(propertyName)) setBlankSheetPrice3((Double)newValue); else
+    if (BLANKSHEETPRICE4.equals(propertyName)) setBlankSheetPrice4((Double)newValue); else
+    if (BLANKSHEETPRICE5.equals(propertyName)) setBlankSheetPrice5((Double)newValue); else
+    if (BLANKSHEETPRICE6.equals(propertyName)) setBlankSheetPrice6((Double)newValue); else
+    if (DEFAULTBW.equals(propertyName)) setDefaultBW((String)newValue); else
+    if (DEFAULTCOLOR.equals(propertyName)) setDefaultColor((String)newValue); else
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) setDefaultLargeFormat((String)newValue); else
+    if (ADDITIONAL1.equals(propertyName)) setAdditional1((String)newValue); else
+    if (ADDITIONAL2.equals(propertyName)) setAdditional2((String)newValue); else
+    if (ADDITIONAL3.equals(propertyName)) setAdditional3((String)newValue); else
+    if (ADDITIONAL4.equals(propertyName)) setAdditional4((String)newValue); else
+    if (ADDITIONAL5.equals(propertyName)) setAdditional5((String)newValue); else
+    if (ADDITIONAL6.equals(propertyName)) setAdditional6((String)newValue); else
+    if (ADDITIONAL7.equals(propertyName)) setAdditional7((String)newValue); else
+    if (ADDITIONAL8.equals(propertyName)) setAdditional8((String)newValue); else
+    if (ADDITIONAL9.equals(propertyName)) setAdditional9((String)newValue); else
+    if (ADDITIONAL10.equals(propertyName)) setAdditional10((String)newValue); else
+    if (STANDARDITEM.equals(propertyName)) setStandardItem((Boolean)newValue); else
+    if (ONHAND.equals(propertyName)) setOnHand((Integer)newValue); else
+    if (COMMITTED.equals(propertyName)) setCommitted((Integer)newValue); else
+    if (AVAILABLE.equals(propertyName)) setAvailable((Integer)newValue); else
+    if (ONORDER.equals(propertyName)) setOnOrder((Integer)newValue); else
+    if (TARGETLEVEL.equals(propertyName)) setTargetLevel((Integer)newValue); else
+    if (REORDERPOINT.equals(propertyName)) setReOrderPoint((Integer)newValue); else
+    if (MINORDERQTY.equals(propertyName)) setMinOrderQty((Integer)newValue); else
+    if (EVENINCREMENTS.equals(propertyName)) setEvenIncrements((Boolean)newValue); else
+    if (EXPIRES.equals(propertyName)) setExpires((Date)newValue); else
+    if (BINLOCATION.equals(propertyName)) setBinLocation((String)newValue); else
+    if (SHELLITEM.equals(propertyName)) setShellItem((Boolean)newValue); else
+    if (FORESTMANAGEMENT.equals(propertyName)) setForestManagement((String)newValue); else
+    if (PCWRECYCLEDPERCENT.equals(propertyName)) setPcwRecycledPercent((Double)newValue); else
+    if (FSCCERTIFIED.equals(propertyName)) setFscCertified((Boolean)newValue); else
+    if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
+    if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
+    if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PaperPrice)newValue); else
+    if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
+    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+    if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
+    if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
+    if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((Double)newValue); else
+    if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
+    if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
+    if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
+    if (MILL.equals(propertyName)) setMill((Integer)newValue); else
+    if (LOTCOUNT.equals(propertyName)) setLotcount((Integer)newValue); else
+    if (CARTONWEIGHT.equals(propertyName)) setCartonWeight((Double)newValue); else
+    if (SHEETPERSKID.equals(propertyName)) setSheetperSkid((Integer)newValue); else
+    if (WEIGHTPERSKID.equals(propertyName)) setWeightperSkid((Double)newValue); else
+    if (SHORTGAIN.equals(propertyName)) setShortgain((Integer)newValue); else
+    if (NOBROKENCARTON.equals(propertyName)) setNoBrokenCarton((Boolean)newValue); else
+    if (PRICEDINSETS.equals(propertyName)) setPricedinSets((Boolean)newValue); else
+    if (IMPORTED.equals(propertyName)) setImported((Boolean)newValue); else
+    if (MEASURE.equals(propertyName)) setMeasure((Boolean)newValue); else
+    if (ALLOWNEGATIVE.equals(propertyName)) setAllownegative((Boolean)newValue); else
+    if (ROLLWEIGHT.equals(propertyName)) setRollWeight((Double)newValue); else
+    if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
+    if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -3685,262 +3685,262 @@ public class StockDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (STOCKUNIT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STKGROUP.equals(propertyName)) 
-			return new Class<?>[] {StockGroup.class};		
-		if (STKCLASS.equals(propertyName)) 
-			return new Class<?>[] {StockClass.class};		
-		if (STKTYPE.equals(propertyName)) 
-			return new Class<?>[] {StockType.class};		
-		if (ISMETRIC.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (FINISH.equals(propertyName)) 
-			return new Class<?>[] {StockFinish.class};		
-		if (WEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COLOR.equals(propertyName)) 
-			return new Class<?>[] {StockColors.class};		
-		if (GRADE.equals(propertyName)) 
-			return new Class<?>[] {StockGrade.class};		
-		if (COATED.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STOCKNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (VENDOR.equals(propertyName)) 
-			return new Class<?>[] {Vendor.class};		
-		if (BASICSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PARENTSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (THICKNESS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MWEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SHEETSPERCARTON.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (MINORDER.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (COMMENTS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (UOM.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COSTUNITS.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (ENTIREORDERCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHEETSPERSET.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (ISCOSTINSETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PRICEEXPIRES.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (QTYBREAK1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK2.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK3.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK4.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK5.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (QTYBREAK6.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (COST1.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COST2.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COST3.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COST4.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COST5.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COST6.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT1.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT2.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT3.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT4.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT5.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (CWT6.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP1.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP2.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP3.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP4.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP5.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MARKUP6.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LISTPERM1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LISTPERM2.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LISTPERM3.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LISTPERM4.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LISTPERM5.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LISTPERM6.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (NORMALRUNSIZE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CUTSPER100.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (MINCUTCHARGE.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (DEFAULTPRESS.equals(propertyName)) 
-			return new Class<?>[] {PressDefinition.class};		
-		if (AUTOCALCULATEBLANK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (BLANKSHEETQTY1.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETQTY2.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETQTY3.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETQTY4.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETQTY5.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETQTY6.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (BLANKSHEETPRICE1.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BLANKSHEETPRICE2.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BLANKSHEETPRICE3.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BLANKSHEETPRICE4.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BLANKSHEETPRICE5.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (BLANKSHEETPRICE6.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (DEFAULTBW.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DEFAULTCOLOR.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL1.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL2.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL3.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL4.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL5.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL6.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL7.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL8.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL9.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ADDITIONAL10.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STANDARDITEM.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ONHAND.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (COMMITTED.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (AVAILABLE.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (ONORDER.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (TARGETLEVEL.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (REORDERPOINT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (MINORDERQTY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (EVENINCREMENTS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (EXPIRES.equals(propertyName)) 
-			return new Class<?>[] {Date.class};		
-		if (BINLOCATION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SHELLITEM.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (FORESTMANAGEMENT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (PCWRECYCLEDPERCENT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (FSCCERTIFIED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SFICERTIFIED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (GREENSEALCERTIFIED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (DEFAULTPRICELIST.equals(propertyName)) 
-			return new Class<?>[] {PaperPrice.class};		
-		if (GENERICCOLOR.equals(propertyName)) 
-			return new Class<?>[] {GenericColors.class};		
-		if (ACCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Account.class};		
-		if (STOCKID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CHARGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
-		if (COPIER1PRICEPERSHEET.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COPIER2PRICEPERSHEET.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (COPIER3PRICEPERSHEET.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (STOCKCHANGES.equals(propertyName)) 
-			return new Class<?>[] {java.util.List.class, StockChanges.class};		
-		if (MILL.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (LOTCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (CARTONWEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SHEETPERSKID.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (WEIGHTPERSKID.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SHORTGAIN.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (NOBROKENCARTON.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (PRICEDINSETS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (IMPORTED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (MEASURE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ALLOWNEGATIVE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (ROLLWEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (DEFAULTBWCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		if (DEFAULTLARGECOPIER.equals(propertyName)) 
-			return new Class<?>[] {CopierDefinition.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (STOCKUNIT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STKGROUP.equals(propertyName)) 
+      return new Class<?>[] {StockGroup.class};		
+    if (STKCLASS.equals(propertyName)) 
+      return new Class<?>[] {StockClass.class};		
+    if (STKTYPE.equals(propertyName)) 
+      return new Class<?>[] {StockType.class};		
+    if (ISMETRIC.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FINISH.equals(propertyName)) 
+      return new Class<?>[] {StockFinish.class};		
+    if (WEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COLOR.equals(propertyName)) 
+      return new Class<?>[] {StockColors.class};		
+    if (GRADE.equals(propertyName)) 
+      return new Class<?>[] {StockGrade.class};		
+    if (COATED.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STOCKNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (VENDOR.equals(propertyName)) 
+      return new Class<?>[] {Vendor.class};		
+    if (BASICSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARENTSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (THICKNESS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHEETSPERCARTON.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (MINORDER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COMMENTS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (UOM.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COSTUNITS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ENTIREORDERCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHEETSPERSET.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ISCOSTINSETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRICEEXPIRES.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (QTYBREAK1.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK2.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK3.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK4.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK5.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYBREAK6.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COST1.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COST2.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COST3.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COST4.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COST5.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COST6.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT1.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT2.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT3.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT4.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT5.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CWT6.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP1.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP2.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP3.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP4.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP5.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MARKUP6.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LISTPERM1.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LISTPERM2.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LISTPERM3.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LISTPERM4.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LISTPERM5.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LISTPERM6.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (NORMALRUNSIZE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CUTSPER100.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (MINCUTCHARGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DEFAULTPRESS.equals(propertyName)) 
+      return new Class<?>[] {PressDefinition.class};		
+    if (AUTOCALCULATEBLANK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BLANKSHEETQTY1.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETQTY2.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETQTY3.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETQTY4.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETQTY5.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETQTY6.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (BLANKSHEETPRICE1.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLANKSHEETPRICE2.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLANKSHEETPRICE3.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLANKSHEETPRICE4.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLANKSHEETPRICE5.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLANKSHEETPRICE6.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DEFAULTBW.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DEFAULTCOLOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL1.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL3.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL4.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL5.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL6.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL7.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL8.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL9.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ADDITIONAL10.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STANDARDITEM.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ONHAND.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COMMITTED.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (AVAILABLE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ONORDER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (TARGETLEVEL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (REORDERPOINT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (MINORDERQTY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (EVENINCREMENTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (EXPIRES.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (BINLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SHELLITEM.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FORESTMANAGEMENT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PCWRECYCLEDPERCENT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FSCCERTIFIED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SFICERTIFIED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (GREENSEALCERTIFIED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DEFAULTPRICELIST.equals(propertyName)) 
+      return new Class<?>[] {PaperPrice.class};		
+    if (GENERICCOLOR.equals(propertyName)) 
+      return new Class<?>[] {GenericColors.class};		
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
+    if (STOCKID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CHARGES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+    if (COPIER1PRICEPERSHEET.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COPIER2PRICEPERSHEET.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COPIER3PRICEPERSHEET.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (STOCKCHANGES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, StockChanges.class};		
+    if (MILL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LOTCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (CARTONWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHEETPERSKID.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (WEIGHTPERSKID.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHORTGAIN.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (NOBROKENCARTON.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRICEDINSETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (IMPORTED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MEASURE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ALLOWNEGATIVE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ROLLWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DEFAULTBWCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    if (DEFAULTLARGECOPIER.equals(propertyName)) 
+      return new Class<?>[] {CopierDefinition.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -3949,398 +3949,398 @@ public class StockDefinition extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (STOCKUNIT.equals(propertyName)) return StockDefinition.class;
-		if (NAME.equals(propertyName)) return StockDefinition.class;
-		if (STKGROUP.equals(propertyName)) return StockDefinition.class;
-		if (STKCLASS.equals(propertyName)) return StockDefinition.class;
-		if (STKTYPE.equals(propertyName)) return StockDefinition.class;
-		if (ISMETRIC.equals(propertyName)) return StockDefinition.class;
-		if (FINISH.equals(propertyName)) return StockDefinition.class;
-		if (WEIGHT.equals(propertyName)) return StockDefinition.class;
-		if (COLOR.equals(propertyName)) return StockDefinition.class;
-		if (GRADE.equals(propertyName)) return StockDefinition.class;
-		if (COATED.equals(propertyName)) return StockDefinition.class;
-		if (STOCKNUMBER.equals(propertyName)) return StockDefinition.class;
-		if (VENDOR.equals(propertyName)) return StockDefinition.class;
-		if (BASICSIZE.equals(propertyName)) return StockDefinition.class;
-		if (PARENTSIZE.equals(propertyName)) return StockDefinition.class;
-		if (THICKNESS.equals(propertyName)) return StockDefinition.class;
-		if (MWEIGHT.equals(propertyName)) return StockDefinition.class;
-		if (SHEETSPERCARTON.equals(propertyName)) return StockDefinition.class;
-		if (MINORDER.equals(propertyName)) return StockDefinition.class;
-		if (COMMENTS.equals(propertyName)) return StockDefinition.class;
-		if (UOM.equals(propertyName)) return StockDefinition.class;
-		if (COSTUNITS.equals(propertyName)) return StockDefinition.class;
-		if (ENTIREORDERCHARGE.equals(propertyName)) return StockDefinition.class;
-		if (SHEETSPERSET.equals(propertyName)) return StockDefinition.class;
-		if (ISCOSTINSETS.equals(propertyName)) return StockDefinition.class;
-		if (PRICEEXPIRES.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK1.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK2.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK3.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK4.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK5.equals(propertyName)) return StockDefinition.class;
-		if (QTYBREAK6.equals(propertyName)) return StockDefinition.class;
-		if (COST1.equals(propertyName)) return StockDefinition.class;
-		if (COST2.equals(propertyName)) return StockDefinition.class;
-		if (COST3.equals(propertyName)) return StockDefinition.class;
-		if (COST4.equals(propertyName)) return StockDefinition.class;
-		if (COST5.equals(propertyName)) return StockDefinition.class;
-		if (COST6.equals(propertyName)) return StockDefinition.class;
-		if (CWT1.equals(propertyName)) return StockDefinition.class;
-		if (CWT2.equals(propertyName)) return StockDefinition.class;
-		if (CWT3.equals(propertyName)) return StockDefinition.class;
-		if (CWT4.equals(propertyName)) return StockDefinition.class;
-		if (CWT5.equals(propertyName)) return StockDefinition.class;
-		if (CWT6.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP1.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP2.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP3.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP4.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP5.equals(propertyName)) return StockDefinition.class;
-		if (MARKUP6.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM1.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM2.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM3.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM4.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM5.equals(propertyName)) return StockDefinition.class;
-		if (LISTPERM6.equals(propertyName)) return StockDefinition.class;
-		if (NORMALRUNSIZE.equals(propertyName)) return StockDefinition.class;
-		if (CUTSPER100.equals(propertyName)) return StockDefinition.class;
-		if (MINCUTCHARGE.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTPRESS.equals(propertyName)) return StockDefinition.class;
-		if (AUTOCALCULATEBLANK.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY1.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY2.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY3.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY4.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY5.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETQTY6.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE1.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE2.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE3.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE4.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE5.equals(propertyName)) return StockDefinition.class;
-		if (BLANKSHEETPRICE6.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTBW.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTCOLOR.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTLARGEFORMAT.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL1.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL2.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL3.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL4.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL5.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL6.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL7.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL8.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL9.equals(propertyName)) return StockDefinition.class;
-		if (ADDITIONAL10.equals(propertyName)) return StockDefinition.class;
-		if (STANDARDITEM.equals(propertyName)) return StockDefinition.class;
-		if (ONHAND.equals(propertyName)) return StockDefinition.class;
-		if (COMMITTED.equals(propertyName)) return StockDefinition.class;
-		if (AVAILABLE.equals(propertyName)) return StockDefinition.class;
-		if (ONORDER.equals(propertyName)) return StockDefinition.class;
-		if (TARGETLEVEL.equals(propertyName)) return StockDefinition.class;
-		if (REORDERPOINT.equals(propertyName)) return StockDefinition.class;
-		if (MINORDERQTY.equals(propertyName)) return StockDefinition.class;
-		if (EVENINCREMENTS.equals(propertyName)) return StockDefinition.class;
-		if (EXPIRES.equals(propertyName)) return StockDefinition.class;
-		if (BINLOCATION.equals(propertyName)) return StockDefinition.class;
-		if (SHELLITEM.equals(propertyName)) return StockDefinition.class;
-		if (FORESTMANAGEMENT.equals(propertyName)) return StockDefinition.class;
-		if (PCWRECYCLEDPERCENT.equals(propertyName)) return StockDefinition.class;
-		if (FSCCERTIFIED.equals(propertyName)) return StockDefinition.class;
-		if (SFICERTIFIED.equals(propertyName)) return StockDefinition.class;
-		if (GREENSEALCERTIFIED.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTPRICELIST.equals(propertyName)) return StockDefinition.class;
-		if (GENERICCOLOR.equals(propertyName)) return StockDefinition.class;
-		if (ACCOUNT.equals(propertyName)) return StockDefinition.class;
-		if (STOCKID.equals(propertyName)) return StockDefinition.class;
-		if (CHARGES.equals(propertyName)) return StockDefinition.class;
-		if (COPIER1PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
-		if (COPIER2PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
-		if (COPIER3PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
-		if (STOCKCHANGES.equals(propertyName)) return StockDefinition.class;
-		if (MILL.equals(propertyName)) return StockDefinition.class;
-		if (LOTCOUNT.equals(propertyName)) return StockDefinition.class;
-		if (CARTONWEIGHT.equals(propertyName)) return StockDefinition.class;
-		if (SHEETPERSKID.equals(propertyName)) return StockDefinition.class;
-		if (WEIGHTPERSKID.equals(propertyName)) return StockDefinition.class;
-		if (SHORTGAIN.equals(propertyName)) return StockDefinition.class;
-		if (NOBROKENCARTON.equals(propertyName)) return StockDefinition.class;
-		if (PRICEDINSETS.equals(propertyName)) return StockDefinition.class;
-		if (IMPORTED.equals(propertyName)) return StockDefinition.class;
-		if (MEASURE.equals(propertyName)) return StockDefinition.class;
-		if (ALLOWNEGATIVE.equals(propertyName)) return StockDefinition.class;
-		if (ROLLWEIGHT.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTBWCOPIER.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTCOLORCOPIER.equals(propertyName)) return StockDefinition.class;
-		if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (STOCKUNIT.equals(propertyName)) return StockDefinition.class;
+    if (NAME.equals(propertyName)) return StockDefinition.class;
+    if (STKGROUP.equals(propertyName)) return StockDefinition.class;
+    if (STKCLASS.equals(propertyName)) return StockDefinition.class;
+    if (STKTYPE.equals(propertyName)) return StockDefinition.class;
+    if (ISMETRIC.equals(propertyName)) return StockDefinition.class;
+    if (FINISH.equals(propertyName)) return StockDefinition.class;
+    if (WEIGHT.equals(propertyName)) return StockDefinition.class;
+    if (COLOR.equals(propertyName)) return StockDefinition.class;
+    if (GRADE.equals(propertyName)) return StockDefinition.class;
+    if (COATED.equals(propertyName)) return StockDefinition.class;
+    if (STOCKNUMBER.equals(propertyName)) return StockDefinition.class;
+    if (VENDOR.equals(propertyName)) return StockDefinition.class;
+    if (BASICSIZE.equals(propertyName)) return StockDefinition.class;
+    if (PARENTSIZE.equals(propertyName)) return StockDefinition.class;
+    if (THICKNESS.equals(propertyName)) return StockDefinition.class;
+    if (MWEIGHT.equals(propertyName)) return StockDefinition.class;
+    if (SHEETSPERCARTON.equals(propertyName)) return StockDefinition.class;
+    if (MINORDER.equals(propertyName)) return StockDefinition.class;
+    if (COMMENTS.equals(propertyName)) return StockDefinition.class;
+    if (UOM.equals(propertyName)) return StockDefinition.class;
+    if (COSTUNITS.equals(propertyName)) return StockDefinition.class;
+    if (ENTIREORDERCHARGE.equals(propertyName)) return StockDefinition.class;
+    if (SHEETSPERSET.equals(propertyName)) return StockDefinition.class;
+    if (ISCOSTINSETS.equals(propertyName)) return StockDefinition.class;
+    if (PRICEEXPIRES.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK1.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK2.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK3.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK4.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK5.equals(propertyName)) return StockDefinition.class;
+    if (QTYBREAK6.equals(propertyName)) return StockDefinition.class;
+    if (COST1.equals(propertyName)) return StockDefinition.class;
+    if (COST2.equals(propertyName)) return StockDefinition.class;
+    if (COST3.equals(propertyName)) return StockDefinition.class;
+    if (COST4.equals(propertyName)) return StockDefinition.class;
+    if (COST5.equals(propertyName)) return StockDefinition.class;
+    if (COST6.equals(propertyName)) return StockDefinition.class;
+    if (CWT1.equals(propertyName)) return StockDefinition.class;
+    if (CWT2.equals(propertyName)) return StockDefinition.class;
+    if (CWT3.equals(propertyName)) return StockDefinition.class;
+    if (CWT4.equals(propertyName)) return StockDefinition.class;
+    if (CWT5.equals(propertyName)) return StockDefinition.class;
+    if (CWT6.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP1.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP2.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP3.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP4.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP5.equals(propertyName)) return StockDefinition.class;
+    if (MARKUP6.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM1.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM2.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM3.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM4.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM5.equals(propertyName)) return StockDefinition.class;
+    if (LISTPERM6.equals(propertyName)) return StockDefinition.class;
+    if (NORMALRUNSIZE.equals(propertyName)) return StockDefinition.class;
+    if (CUTSPER100.equals(propertyName)) return StockDefinition.class;
+    if (MINCUTCHARGE.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTPRESS.equals(propertyName)) return StockDefinition.class;
+    if (AUTOCALCULATEBLANK.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY1.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY2.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY3.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY4.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY5.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETQTY6.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE1.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE2.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE3.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE4.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE5.equals(propertyName)) return StockDefinition.class;
+    if (BLANKSHEETPRICE6.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTBW.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTCOLOR.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTLARGEFORMAT.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL1.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL2.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL3.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL4.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL5.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL6.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL7.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL8.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL9.equals(propertyName)) return StockDefinition.class;
+    if (ADDITIONAL10.equals(propertyName)) return StockDefinition.class;
+    if (STANDARDITEM.equals(propertyName)) return StockDefinition.class;
+    if (ONHAND.equals(propertyName)) return StockDefinition.class;
+    if (COMMITTED.equals(propertyName)) return StockDefinition.class;
+    if (AVAILABLE.equals(propertyName)) return StockDefinition.class;
+    if (ONORDER.equals(propertyName)) return StockDefinition.class;
+    if (TARGETLEVEL.equals(propertyName)) return StockDefinition.class;
+    if (REORDERPOINT.equals(propertyName)) return StockDefinition.class;
+    if (MINORDERQTY.equals(propertyName)) return StockDefinition.class;
+    if (EVENINCREMENTS.equals(propertyName)) return StockDefinition.class;
+    if (EXPIRES.equals(propertyName)) return StockDefinition.class;
+    if (BINLOCATION.equals(propertyName)) return StockDefinition.class;
+    if (SHELLITEM.equals(propertyName)) return StockDefinition.class;
+    if (FORESTMANAGEMENT.equals(propertyName)) return StockDefinition.class;
+    if (PCWRECYCLEDPERCENT.equals(propertyName)) return StockDefinition.class;
+    if (FSCCERTIFIED.equals(propertyName)) return StockDefinition.class;
+    if (SFICERTIFIED.equals(propertyName)) return StockDefinition.class;
+    if (GREENSEALCERTIFIED.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTPRICELIST.equals(propertyName)) return StockDefinition.class;
+    if (GENERICCOLOR.equals(propertyName)) return StockDefinition.class;
+    if (ACCOUNT.equals(propertyName)) return StockDefinition.class;
+    if (STOCKID.equals(propertyName)) return StockDefinition.class;
+    if (CHARGES.equals(propertyName)) return StockDefinition.class;
+    if (COPIER1PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+    if (COPIER2PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+    if (COPIER3PRICEPERSHEET.equals(propertyName)) return StockDefinition.class;
+    if (STOCKCHANGES.equals(propertyName)) return StockDefinition.class;
+    if (MILL.equals(propertyName)) return StockDefinition.class;
+    if (LOTCOUNT.equals(propertyName)) return StockDefinition.class;
+    if (CARTONWEIGHT.equals(propertyName)) return StockDefinition.class;
+    if (SHEETPERSKID.equals(propertyName)) return StockDefinition.class;
+    if (WEIGHTPERSKID.equals(propertyName)) return StockDefinition.class;
+    if (SHORTGAIN.equals(propertyName)) return StockDefinition.class;
+    if (NOBROKENCARTON.equals(propertyName)) return StockDefinition.class;
+    if (PRICEDINSETS.equals(propertyName)) return StockDefinition.class;
+    if (IMPORTED.equals(propertyName)) return StockDefinition.class;
+    if (MEASURE.equals(propertyName)) return StockDefinition.class;
+    if (ALLOWNEGATIVE.equals(propertyName)) return StockDefinition.class;
+    if (ROLLWEIGHT.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTBWCOPIER.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTCOLORCOPIER.equals(propertyName)) return StockDefinition.class;
+    if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		StockDefinition objT = (StockDefinition)obj;
-		if (! SmartEquals(getStockunit(), objT.getStockunit()))
-			return false;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getStkgroup(), objT.getStkgroup()))
-			return false;
-		if (! SmartEquals(getStkclass(), objT.getStkclass()))
-			return false;
-		if (! SmartEquals(getStktype(), objT.getStktype()))
-			return false;
-		if (! SmartEquals(getIsMetric(), objT.getIsMetric()))
-			return false;
-		if (! SmartEquals(getFinish(), objT.getFinish()))
-			return false;
-		if (! SmartEquals(getWeight(), objT.getWeight()))
-			return false;
-		if (! SmartEquals(getColor(), objT.getColor()))
-			return false;
-		if (! SmartEquals(getGrade(), objT.getGrade()))
-			return false;
-		if (! SmartEquals(getCoated(), objT.getCoated()))
-			return false;
-		if (! SmartEquals(getStocknumber(), objT.getStocknumber()))
-			return false;
-		if (! SmartEquals(getVendor(), objT.getVendor()))
-			return false;
-		if (! SmartEquals(getBasicsize(), objT.getBasicsize()))
-			return false;
-		if (! SmartEquals(getParentsize(), objT.getParentsize()))
-			return false;
-		if (! SmartEquals(getThickness(), objT.getThickness()))
-			return false;
-		if (! SmartEquals(getMweight(), objT.getMweight()))
-			return false;
-		if (! SmartEquals(getSheetspercarton(), objT.getSheetspercarton()))
-			return false;
-		if (! SmartEquals(getMinorder(), objT.getMinorder()))
-			return false;
-		if (! SmartEquals(getComments(), objT.getComments()))
-			return false;
-		if (! SmartEquals(getUom(), objT.getUom()))
-			return false;
-		if (! SmartEquals(getCostunits(), objT.getCostunits()))
-			return false;
-		if (! SmartEquals(getEntireOrderCharge(), objT.getEntireOrderCharge()))
-			return false;
-		if (! SmartEquals(getSheetsPerSet(), objT.getSheetsPerSet()))
-			return false;
-		if (! SmartEquals(getIsCostInSets(), objT.getIsCostInSets()))
-			return false;
-		if (! SmartEquals(getPriceExpires(), objT.getPriceExpires()))
-			return false;
-		if (! SmartEquals(getQtybreak1(), objT.getQtybreak1()))
-			return false;
-		if (! SmartEquals(getQtybreak2(), objT.getQtybreak2()))
-			return false;
-		if (! SmartEquals(getQtybreak3(), objT.getQtybreak3()))
-			return false;
-		if (! SmartEquals(getQtybreak4(), objT.getQtybreak4()))
-			return false;
-		if (! SmartEquals(getQtybreak5(), objT.getQtybreak5()))
-			return false;
-		if (! SmartEquals(getQtybreak6(), objT.getQtybreak6()))
-			return false;
-		if (! SmartEquals(getCost1(), objT.getCost1()))
-			return false;
-		if (! SmartEquals(getCost2(), objT.getCost2()))
-			return false;
-		if (! SmartEquals(getCost3(), objT.getCost3()))
-			return false;
-		if (! SmartEquals(getCost4(), objT.getCost4()))
-			return false;
-		if (! SmartEquals(getCost5(), objT.getCost5()))
-			return false;
-		if (! SmartEquals(getCost6(), objT.getCost6()))
-			return false;
-		if (! SmartEquals(getCwt1(), objT.getCwt1()))
-			return false;
-		if (! SmartEquals(getCwt2(), objT.getCwt2()))
-			return false;
-		if (! SmartEquals(getCwt3(), objT.getCwt3()))
-			return false;
-		if (! SmartEquals(getCwt4(), objT.getCwt4()))
-			return false;
-		if (! SmartEquals(getCwt5(), objT.getCwt5()))
-			return false;
-		if (! SmartEquals(getCwt6(), objT.getCwt6()))
-			return false;
-		if (! SmartEquals(getMarkup1(), objT.getMarkup1()))
-			return false;
-		if (! SmartEquals(getMarkup2(), objT.getMarkup2()))
-			return false;
-		if (! SmartEquals(getMarkup3(), objT.getMarkup3()))
-			return false;
-		if (! SmartEquals(getMarkup4(), objT.getMarkup4()))
-			return false;
-		if (! SmartEquals(getMarkup5(), objT.getMarkup5()))
-			return false;
-		if (! SmartEquals(getMarkup6(), objT.getMarkup6()))
-			return false;
-		if (! SmartEquals(getListPerM1(), objT.getListPerM1()))
-			return false;
-		if (! SmartEquals(getListPerM2(), objT.getListPerM2()))
-			return false;
-		if (! SmartEquals(getListPerM3(), objT.getListPerM3()))
-			return false;
-		if (! SmartEquals(getListPerM4(), objT.getListPerM4()))
-			return false;
-		if (! SmartEquals(getListPerM5(), objT.getListPerM5()))
-			return false;
-		if (! SmartEquals(getListPerM6(), objT.getListPerM6()))
-			return false;
-		if (! SmartEquals(getNormalRunSize(), objT.getNormalRunSize()))
-			return false;
-		if (! SmartEquals(getCutsPer100(), objT.getCutsPer100()))
-			return false;
-		if (! SmartEquals(getMinCutCharge(), objT.getMinCutCharge()))
-			return false;
-		if (! SmartEquals(getDefaultPress(), objT.getDefaultPress()))
-			return false;
-		if (! SmartEquals(getAutoCalculateBlank(), objT.getAutoCalculateBlank()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty1(), objT.getBlankSheetqty1()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty2(), objT.getBlankSheetqty2()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty3(), objT.getBlankSheetqty3()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty4(), objT.getBlankSheetqty4()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty5(), objT.getBlankSheetqty5()))
-			return false;
-		if (! SmartEquals(getBlankSheetqty6(), objT.getBlankSheetqty6()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice1(), objT.getBlankSheetPrice1()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice2(), objT.getBlankSheetPrice2()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice3(), objT.getBlankSheetPrice3()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice4(), objT.getBlankSheetPrice4()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice5(), objT.getBlankSheetPrice5()))
-			return false;
-		if (! SmartEquals(getBlankSheetPrice6(), objT.getBlankSheetPrice6()))
-			return false;
-		if (! SmartEquals(getDefaultBW(), objT.getDefaultBW()))
-			return false;
-		if (! SmartEquals(getDefaultColor(), objT.getDefaultColor()))
-			return false;
-		if (! SmartEquals(getDefaultLargeFormat(), objT.getDefaultLargeFormat()))
-			return false;
-		if (! SmartEquals(getAdditional1(), objT.getAdditional1()))
-			return false;
-		if (! SmartEquals(getAdditional2(), objT.getAdditional2()))
-			return false;
-		if (! SmartEquals(getAdditional3(), objT.getAdditional3()))
-			return false;
-		if (! SmartEquals(getAdditional4(), objT.getAdditional4()))
-			return false;
-		if (! SmartEquals(getAdditional5(), objT.getAdditional5()))
-			return false;
-		if (! SmartEquals(getAdditional6(), objT.getAdditional6()))
-			return false;
-		if (! SmartEquals(getAdditional7(), objT.getAdditional7()))
-			return false;
-		if (! SmartEquals(getAdditional8(), objT.getAdditional8()))
-			return false;
-		if (! SmartEquals(getAdditional9(), objT.getAdditional9()))
-			return false;
-		if (! SmartEquals(getAdditional10(), objT.getAdditional10()))
-			return false;
-		if (! SmartEquals(getStandardItem(), objT.getStandardItem()))
-			return false;
-		if (! SmartEquals(getOnHand(), objT.getOnHand()))
-			return false;
-		if (! SmartEquals(getCommitted(), objT.getCommitted()))
-			return false;
-		if (! SmartEquals(getAvailable(), objT.getAvailable()))
-			return false;
-		if (! SmartEquals(getOnOrder(), objT.getOnOrder()))
-			return false;
-		if (! SmartEquals(getTargetLevel(), objT.getTargetLevel()))
-			return false;
-		if (! SmartEquals(getReOrderPoint(), objT.getReOrderPoint()))
-			return false;
-		if (! SmartEquals(getMinOrderQty(), objT.getMinOrderQty()))
-			return false;
-		if (! SmartEquals(getEvenIncrements(), objT.getEvenIncrements()))
-			return false;
-		if (! SmartEquals(getExpires(), objT.getExpires()))
-			return false;
-		if (! SmartEquals(getBinLocation(), objT.getBinLocation()))
-			return false;
-		if (! SmartEquals(getShellItem(), objT.getShellItem()))
-			return false;
-		if (! SmartEquals(getForestManagement(), objT.getForestManagement()))
-			return false;
-		if (! SmartEquals(getPcwRecycledPercent(), objT.getPcwRecycledPercent()))
-			return false;
-		if (! SmartEquals(getFscCertified(), objT.getFscCertified()))
-			return false;
-		if (! SmartEquals(getSfiCertified(), objT.getSfiCertified()))
-			return false;
-		if (! SmartEquals(getGreenSealCertified(), objT.getGreenSealCertified()))
-			return false;
-		if (! SmartEquals(getDefaultPriceList(), objT.getDefaultPriceList()))
-			return false;
-		if (! SmartEquals(getGenericColor(), objT.getGenericColor()))
-			return false;
-		if (! SmartEquals(getAccount(), objT.getAccount()))
-			return false;
-		if (! SmartEquals(getStockId(), objT.getStockId()))
-			return false;
-		if (! SmartEquals(getCharges(), objT.getCharges()))
-			return false;
-		if (! SmartEquals(getCopier1PricePerSheet(), objT.getCopier1PricePerSheet()))
-			return false;
-		if (! SmartEquals(getCopier2PricePerSheet(), objT.getCopier2PricePerSheet()))
-			return false;
-		if (! SmartEquals(getCopier3PricePerSheet(), objT.getCopier3PricePerSheet()))
-			return false;
-		if (! SmartEquals(getStockChanges(), objT.getStockChanges()))
-			return false;
-		if (! SmartEquals(getMill(), objT.getMill()))
-			return false;
-		if (! SmartEquals(getLotcount(), objT.getLotcount()))
-			return false;
-		if (! SmartEquals(getCartonWeight(), objT.getCartonWeight()))
-			return false;
-		if (! SmartEquals(getSheetperSkid(), objT.getSheetperSkid()))
-			return false;
-		if (! SmartEquals(getWeightperSkid(), objT.getWeightperSkid()))
-			return false;
-		if (! SmartEquals(getShortgain(), objT.getShortgain()))
-			return false;
-		if (! SmartEquals(getNoBrokenCarton(), objT.getNoBrokenCarton()))
-			return false;
-		if (! SmartEquals(getPricedinSets(), objT.getPricedinSets()))
-			return false;
-		if (! SmartEquals(getImported(), objT.getImported()))
-			return false;
-		if (! SmartEquals(getMeasure(), objT.getMeasure()))
-			return false;
-		if (! SmartEquals(getAllownegative(), objT.getAllownegative()))
-			return false;
-		if (! SmartEquals(getRollWeight(), objT.getRollWeight()))
-			return false;
-		if (! SmartEquals(getDefaultBWCopier(), objT.getDefaultBWCopier()))
-			return false;
-		if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
-			return false;
-		if (! SmartEquals(getDefaultLargeCopier(), objT.getDefaultLargeCopier()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    StockDefinition objT = (StockDefinition)obj;
+    if (! SmartEquals(getStockunit(), objT.getStockunit()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getStkgroup(), objT.getStkgroup()))
+      return false;
+    if (! SmartEquals(getStkclass(), objT.getStkclass()))
+      return false;
+    if (! SmartEquals(getStktype(), objT.getStktype()))
+      return false;
+    if (! SmartEquals(getIsMetric(), objT.getIsMetric()))
+      return false;
+    if (! SmartEquals(getFinish(), objT.getFinish()))
+      return false;
+    if (! SmartEquals(getWeight(), objT.getWeight()))
+      return false;
+    if (! SmartEquals(getColor(), objT.getColor()))
+      return false;
+    if (! SmartEquals(getGrade(), objT.getGrade()))
+      return false;
+    if (! SmartEquals(getCoated(), objT.getCoated()))
+      return false;
+    if (! SmartEquals(getStocknumber(), objT.getStocknumber()))
+      return false;
+    if (! SmartEquals(getVendor(), objT.getVendor()))
+      return false;
+    if (! SmartEquals(getBasicsize(), objT.getBasicsize()))
+      return false;
+    if (! SmartEquals(getParentsize(), objT.getParentsize()))
+      return false;
+    if (! SmartEquals(getThickness(), objT.getThickness()))
+      return false;
+    if (! SmartEquals(getMweight(), objT.getMweight()))
+      return false;
+    if (! SmartEquals(getSheetspercarton(), objT.getSheetspercarton()))
+      return false;
+    if (! SmartEquals(getMinorder(), objT.getMinorder()))
+      return false;
+    if (! SmartEquals(getComments(), objT.getComments()))
+      return false;
+    if (! SmartEquals(getUom(), objT.getUom()))
+      return false;
+    if (! SmartEquals(getCostunits(), objT.getCostunits()))
+      return false;
+    if (! SmartEquals(getEntireOrderCharge(), objT.getEntireOrderCharge()))
+      return false;
+    if (! SmartEquals(getSheetsPerSet(), objT.getSheetsPerSet()))
+      return false;
+    if (! SmartEquals(getIsCostInSets(), objT.getIsCostInSets()))
+      return false;
+    if (! SmartEquals(getPriceExpires(), objT.getPriceExpires()))
+      return false;
+    if (! SmartEquals(getQtybreak1(), objT.getQtybreak1()))
+      return false;
+    if (! SmartEquals(getQtybreak2(), objT.getQtybreak2()))
+      return false;
+    if (! SmartEquals(getQtybreak3(), objT.getQtybreak3()))
+      return false;
+    if (! SmartEquals(getQtybreak4(), objT.getQtybreak4()))
+      return false;
+    if (! SmartEquals(getQtybreak5(), objT.getQtybreak5()))
+      return false;
+    if (! SmartEquals(getQtybreak6(), objT.getQtybreak6()))
+      return false;
+    if (! SmartEquals(getCost1(), objT.getCost1()))
+      return false;
+    if (! SmartEquals(getCost2(), objT.getCost2()))
+      return false;
+    if (! SmartEquals(getCost3(), objT.getCost3()))
+      return false;
+    if (! SmartEquals(getCost4(), objT.getCost4()))
+      return false;
+    if (! SmartEquals(getCost5(), objT.getCost5()))
+      return false;
+    if (! SmartEquals(getCost6(), objT.getCost6()))
+      return false;
+    if (! SmartEquals(getCwt1(), objT.getCwt1()))
+      return false;
+    if (! SmartEquals(getCwt2(), objT.getCwt2()))
+      return false;
+    if (! SmartEquals(getCwt3(), objT.getCwt3()))
+      return false;
+    if (! SmartEquals(getCwt4(), objT.getCwt4()))
+      return false;
+    if (! SmartEquals(getCwt5(), objT.getCwt5()))
+      return false;
+    if (! SmartEquals(getCwt6(), objT.getCwt6()))
+      return false;
+    if (! SmartEquals(getMarkup1(), objT.getMarkup1()))
+      return false;
+    if (! SmartEquals(getMarkup2(), objT.getMarkup2()))
+      return false;
+    if (! SmartEquals(getMarkup3(), objT.getMarkup3()))
+      return false;
+    if (! SmartEquals(getMarkup4(), objT.getMarkup4()))
+      return false;
+    if (! SmartEquals(getMarkup5(), objT.getMarkup5()))
+      return false;
+    if (! SmartEquals(getMarkup6(), objT.getMarkup6()))
+      return false;
+    if (! SmartEquals(getListPerM1(), objT.getListPerM1()))
+      return false;
+    if (! SmartEquals(getListPerM2(), objT.getListPerM2()))
+      return false;
+    if (! SmartEquals(getListPerM3(), objT.getListPerM3()))
+      return false;
+    if (! SmartEquals(getListPerM4(), objT.getListPerM4()))
+      return false;
+    if (! SmartEquals(getListPerM5(), objT.getListPerM5()))
+      return false;
+    if (! SmartEquals(getListPerM6(), objT.getListPerM6()))
+      return false;
+    if (! SmartEquals(getNormalRunSize(), objT.getNormalRunSize()))
+      return false;
+    if (! SmartEquals(getCutsPer100(), objT.getCutsPer100()))
+      return false;
+    if (! SmartEquals(getMinCutCharge(), objT.getMinCutCharge()))
+      return false;
+    if (! SmartEquals(getDefaultPress(), objT.getDefaultPress()))
+      return false;
+    if (! SmartEquals(getAutoCalculateBlank(), objT.getAutoCalculateBlank()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty1(), objT.getBlankSheetqty1()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty2(), objT.getBlankSheetqty2()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty3(), objT.getBlankSheetqty3()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty4(), objT.getBlankSheetqty4()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty5(), objT.getBlankSheetqty5()))
+      return false;
+    if (! SmartEquals(getBlankSheetqty6(), objT.getBlankSheetqty6()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice1(), objT.getBlankSheetPrice1()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice2(), objT.getBlankSheetPrice2()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice3(), objT.getBlankSheetPrice3()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice4(), objT.getBlankSheetPrice4()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice5(), objT.getBlankSheetPrice5()))
+      return false;
+    if (! SmartEquals(getBlankSheetPrice6(), objT.getBlankSheetPrice6()))
+      return false;
+    if (! SmartEquals(getDefaultBW(), objT.getDefaultBW()))
+      return false;
+    if (! SmartEquals(getDefaultColor(), objT.getDefaultColor()))
+      return false;
+    if (! SmartEquals(getDefaultLargeFormat(), objT.getDefaultLargeFormat()))
+      return false;
+    if (! SmartEquals(getAdditional1(), objT.getAdditional1()))
+      return false;
+    if (! SmartEquals(getAdditional2(), objT.getAdditional2()))
+      return false;
+    if (! SmartEquals(getAdditional3(), objT.getAdditional3()))
+      return false;
+    if (! SmartEquals(getAdditional4(), objT.getAdditional4()))
+      return false;
+    if (! SmartEquals(getAdditional5(), objT.getAdditional5()))
+      return false;
+    if (! SmartEquals(getAdditional6(), objT.getAdditional6()))
+      return false;
+    if (! SmartEquals(getAdditional7(), objT.getAdditional7()))
+      return false;
+    if (! SmartEquals(getAdditional8(), objT.getAdditional8()))
+      return false;
+    if (! SmartEquals(getAdditional9(), objT.getAdditional9()))
+      return false;
+    if (! SmartEquals(getAdditional10(), objT.getAdditional10()))
+      return false;
+    if (! SmartEquals(getStandardItem(), objT.getStandardItem()))
+      return false;
+    if (! SmartEquals(getOnHand(), objT.getOnHand()))
+      return false;
+    if (! SmartEquals(getCommitted(), objT.getCommitted()))
+      return false;
+    if (! SmartEquals(getAvailable(), objT.getAvailable()))
+      return false;
+    if (! SmartEquals(getOnOrder(), objT.getOnOrder()))
+      return false;
+    if (! SmartEquals(getTargetLevel(), objT.getTargetLevel()))
+      return false;
+    if (! SmartEquals(getReOrderPoint(), objT.getReOrderPoint()))
+      return false;
+    if (! SmartEquals(getMinOrderQty(), objT.getMinOrderQty()))
+      return false;
+    if (! SmartEquals(getEvenIncrements(), objT.getEvenIncrements()))
+      return false;
+    if (! SmartEquals(getExpires(), objT.getExpires()))
+      return false;
+    if (! SmartEquals(getBinLocation(), objT.getBinLocation()))
+      return false;
+    if (! SmartEquals(getShellItem(), objT.getShellItem()))
+      return false;
+    if (! SmartEquals(getForestManagement(), objT.getForestManagement()))
+      return false;
+    if (! SmartEquals(getPcwRecycledPercent(), objT.getPcwRecycledPercent()))
+      return false;
+    if (! SmartEquals(getFscCertified(), objT.getFscCertified()))
+      return false;
+    if (! SmartEquals(getSfiCertified(), objT.getSfiCertified()))
+      return false;
+    if (! SmartEquals(getGreenSealCertified(), objT.getGreenSealCertified()))
+      return false;
+    if (! SmartEquals(getDefaultPriceList(), objT.getDefaultPriceList()))
+      return false;
+    if (! SmartEquals(getGenericColor(), objT.getGenericColor()))
+      return false;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
+      return false;
+    if (! SmartEquals(getStockId(), objT.getStockId()))
+      return false;
+    if (! SmartEquals(getCharges(), objT.getCharges()))
+      return false;
+    if (! SmartEquals(getCopier1PricePerSheet(), objT.getCopier1PricePerSheet()))
+      return false;
+    if (! SmartEquals(getCopier2PricePerSheet(), objT.getCopier2PricePerSheet()))
+      return false;
+    if (! SmartEquals(getCopier3PricePerSheet(), objT.getCopier3PricePerSheet()))
+      return false;
+    if (! SmartEquals(getStockChanges(), objT.getStockChanges()))
+      return false;
+    if (! SmartEquals(getMill(), objT.getMill()))
+      return false;
+    if (! SmartEquals(getLotcount(), objT.getLotcount()))
+      return false;
+    if (! SmartEquals(getCartonWeight(), objT.getCartonWeight()))
+      return false;
+    if (! SmartEquals(getSheetperSkid(), objT.getSheetperSkid()))
+      return false;
+    if (! SmartEquals(getWeightperSkid(), objT.getWeightperSkid()))
+      return false;
+    if (! SmartEquals(getShortgain(), objT.getShortgain()))
+      return false;
+    if (! SmartEquals(getNoBrokenCarton(), objT.getNoBrokenCarton()))
+      return false;
+    if (! SmartEquals(getPricedinSets(), objT.getPricedinSets()))
+      return false;
+    if (! SmartEquals(getImported(), objT.getImported()))
+      return false;
+    if (! SmartEquals(getMeasure(), objT.getMeasure()))
+      return false;
+    if (! SmartEquals(getAllownegative(), objT.getAllownegative()))
+      return false;
+    if (! SmartEquals(getRollWeight(), objT.getRollWeight()))
+      return false;
+    if (! SmartEquals(getDefaultBWCopier(), objT.getDefaultBWCopier()))
+      return false;
+    if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
+      return false;
+    if (! SmartEquals(getDefaultLargeCopier(), objT.getDefaultLargeCopier()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Address.findall", query = "from Address"),
-	@NamedQuery(name = "Address.byId", query = "select a from Address a where a.id= :id")
+  @NamedQuery(name = "Address.findall", query = "from Address"),
+  @NamedQuery(name = "Address.byId", query = "select a from Address a where a.id= :id")
 })
 
 
@@ -77,9 +77,9 @@ public class Address extends ModelBase {
 	 * @generated
 	 */
 	public Address() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -93,16 +93,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -115,16 +115,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getStreet1(){
-		return street1; 
-	}
+    return street1; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStreet1(String newVal) {
-		this.street1 = newVal;
-	}
+    this.street1 = newVal;
+  }
  	
 	
 	/**
@@ -137,16 +137,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getStreet2(){
-		return street2; 
-	}
+    return street2; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStreet2(String newVal) {
-		this.street2 = newVal;
-	}
+    this.street2 = newVal;
+  }
  	
 	
 	/**
@@ -159,16 +159,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getCity(){
-		return city; 
-	}
+    return city; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCity(String newVal) {
-		this.city = newVal;
-	}
+    this.city = newVal;
+  }
  	
 	
 	/**
@@ -181,16 +181,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getState(){
-		return state; 
-	}
+    return state; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setState(String newVal) {
-		this.state = newVal;
-	}
+    this.state = newVal;
+  }
  	
 	
 	/**
@@ -203,16 +203,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getZip(){
-		return zip; 
-	}
+    return zip; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setZip(String newVal) {
-		this.zip = newVal;
-	}
+    this.zip = newVal;
+  }
  	
 	
 	/**
@@ -225,16 +225,16 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getCountry(){
-		return country; 
-	}
+    return country; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCountry(String newVal) {
-		this.country = newVal;
-	}
+    this.country = newVal;
+  }
  	
 	
 	/**
@@ -247,32 +247,32 @@ public class Address extends ModelBase {
 	 * @generated
  	 */
 	public String getZone(){
-		return zone; 
-	}
+    return zone; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setZone(String newVal) {
-		this.zone = newVal;
-	}
+    this.zone = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (STREET1.equals(propertyName)) return getStreet1();
-		if (STREET2.equals(propertyName)) return getStreet2();
-		if (CITY.equals(propertyName)) return getCity();
-		if (STATE.equals(propertyName)) return getState();
-		if (ZIP.equals(propertyName)) return getZip();
-		if (COUNTRY.equals(propertyName)) return getCountry();
-		if (ZONE.equals(propertyName)) return getZone();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (STREET1.equals(propertyName)) return getStreet1();
+    if (STREET2.equals(propertyName)) return getStreet2();
+    if (CITY.equals(propertyName)) return getCity();
+    if (STATE.equals(propertyName)) return getState();
+    if (ZIP.equals(propertyName)) return getZip();
+    if (COUNTRY.equals(propertyName)) return getCountry();
+    if (ZONE.equals(propertyName)) return getZone();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -280,16 +280,16 @@ public class Address extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (STREET1.equals(propertyName)) setStreet1((String)newValue); else
-		if (STREET2.equals(propertyName)) setStreet2((String)newValue); else
-		if (CITY.equals(propertyName)) setCity((String)newValue); else
-		if (STATE.equals(propertyName)) setState((String)newValue); else
-		if (ZIP.equals(propertyName)) setZip((String)newValue); else
-		if (COUNTRY.equals(propertyName)) setCountry((String)newValue); else
-		if (ZONE.equals(propertyName)) setZone((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (STREET1.equals(propertyName)) setStreet1((String)newValue); else
+    if (STREET2.equals(propertyName)) setStreet2((String)newValue); else
+    if (CITY.equals(propertyName)) setCity((String)newValue); else
+    if (STATE.equals(propertyName)) setState((String)newValue); else
+    if (ZIP.equals(propertyName)) setZip((String)newValue); else
+    if (COUNTRY.equals(propertyName)) setCountry((String)newValue); else
+    if (ZONE.equals(propertyName)) setZone((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -297,24 +297,24 @@ public class Address extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STREET1.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STREET2.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CITY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STATE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ZIP.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COUNTRY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (ZONE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STREET1.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STREET2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CITY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STATE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ZIP.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COUNTRY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ZONE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -323,41 +323,41 @@ public class Address extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return Address.class;
-		if (STREET1.equals(propertyName)) return Address.class;
-		if (STREET2.equals(propertyName)) return Address.class;
-		if (CITY.equals(propertyName)) return Address.class;
-		if (STATE.equals(propertyName)) return Address.class;
-		if (ZIP.equals(propertyName)) return Address.class;
-		if (COUNTRY.equals(propertyName)) return Address.class;
-		if (ZONE.equals(propertyName)) return Address.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return Address.class;
+    if (STREET1.equals(propertyName)) return Address.class;
+    if (STREET2.equals(propertyName)) return Address.class;
+    if (CITY.equals(propertyName)) return Address.class;
+    if (STATE.equals(propertyName)) return Address.class;
+    if (ZIP.equals(propertyName)) return Address.class;
+    if (COUNTRY.equals(propertyName)) return Address.class;
+    if (ZONE.equals(propertyName)) return Address.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Address objT = (Address)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getStreet1(), objT.getStreet1()))
-			return false;
-		if (! SmartEquals(getStreet2(), objT.getStreet2()))
-			return false;
-		if (! SmartEquals(getCity(), objT.getCity()))
-			return false;
-		if (! SmartEquals(getState(), objT.getState()))
-			return false;
-		if (! SmartEquals(getZip(), objT.getZip()))
-			return false;
-		if (! SmartEquals(getCountry(), objT.getCountry()))
-			return false;
-		if (! SmartEquals(getZone(), objT.getZone()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Address objT = (Address)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getStreet1(), objT.getStreet1()))
+      return false;
+    if (! SmartEquals(getStreet2(), objT.getStreet2()))
+      return false;
+    if (! SmartEquals(getCity(), objT.getCity()))
+      return false;
+    if (! SmartEquals(getState(), objT.getState()))
+      return false;
+    if (! SmartEquals(getZip(), objT.getZip()))
+      return false;
+    if (! SmartEquals(getCountry(), objT.getCountry()))
+      return false;
+    if (! SmartEquals(getZone(), objT.getZone()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Campaigns.findall", query = "from Campaigns"),
-	@NamedQuery(name = "Campaigns.byId", query = "select a from Campaigns a where a.id= :id")
+  @NamedQuery(name = "Campaigns.findall", query = "from Campaigns"),
+  @NamedQuery(name = "Campaigns.byId", query = "select a from Campaigns a where a.id= :id")
 })
 
 
@@ -61,9 +61,9 @@ public class Campaigns extends ModelBase {
 	 * @generated
 	 */
 	public Campaigns() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -77,16 +77,16 @@ public class Campaigns extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -99,16 +99,16 @@ public class Campaigns extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getApplied(){
-		return applied; 
-	}
+    return applied; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setApplied(Boolean newVal) {
-		this.applied = newVal;
-	}
+    this.applied = newVal;
+  }
  	
 	
 	/**
@@ -121,16 +121,16 @@ public class Campaigns extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getGlobalCampaign(){
-		return globalCampaign; 
-	}
+    return globalCampaign; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setGlobalCampaign(Boolean newVal) {
-		this.globalCampaign = newVal;
-	}
+    this.globalCampaign = newVal;
+  }
  	
 	
 	/**
@@ -143,28 +143,28 @@ public class Campaigns extends ModelBase {
 	 * @generated
  	 */
 	public String getCampaignId(){
-		return campaignId; 
-	}
+    return campaignId; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCampaignId(String newVal) {
-		this.campaignId = newVal;
-	}
+    this.campaignId = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (APPLIED.equals(propertyName)) return getApplied();
-		if (GLOBALCAMPAIGN.equals(propertyName)) return getGlobalCampaign();
-		if (CAMPAIGNID.equals(propertyName)) return getCampaignId();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (APPLIED.equals(propertyName)) return getApplied();
+    if (GLOBALCAMPAIGN.equals(propertyName)) return getGlobalCampaign();
+    if (CAMPAIGNID.equals(propertyName)) return getCampaignId();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -172,12 +172,12 @@ public class Campaigns extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (APPLIED.equals(propertyName)) setApplied((Boolean)newValue); else
-		if (GLOBALCAMPAIGN.equals(propertyName)) setGlobalCampaign((Boolean)newValue); else
-		if (CAMPAIGNID.equals(propertyName)) setCampaignId((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (APPLIED.equals(propertyName)) setApplied((Boolean)newValue); else
+    if (GLOBALCAMPAIGN.equals(propertyName)) setGlobalCampaign((Boolean)newValue); else
+    if (CAMPAIGNID.equals(propertyName)) setCampaignId((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -185,16 +185,16 @@ public class Campaigns extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (APPLIED.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (GLOBALCAMPAIGN.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (CAMPAIGNID.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (APPLIED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (GLOBALCAMPAIGN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CAMPAIGNID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -203,29 +203,29 @@ public class Campaigns extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return Campaigns.class;
-		if (APPLIED.equals(propertyName)) return Campaigns.class;
-		if (GLOBALCAMPAIGN.equals(propertyName)) return Campaigns.class;
-		if (CAMPAIGNID.equals(propertyName)) return Campaigns.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return Campaigns.class;
+    if (APPLIED.equals(propertyName)) return Campaigns.class;
+    if (GLOBALCAMPAIGN.equals(propertyName)) return Campaigns.class;
+    if (CAMPAIGNID.equals(propertyName)) return Campaigns.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Campaigns objT = (Campaigns)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getApplied(), objT.getApplied()))
-			return false;
-		if (! SmartEquals(getGlobalCampaign(), objT.getGlobalCampaign()))
-			return false;
-		if (! SmartEquals(getCampaignId(), objT.getCampaignId()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Campaigns objT = (Campaigns)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getApplied(), objT.getApplied()))
+      return false;
+    if (! SmartEquals(getGlobalCampaign(), objT.getGlobalCampaign()))
+      return false;
+    if (! SmartEquals(getCampaignId(), objT.getCampaignId()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "OutsideService.findall", query = "from OutsideService"),
-	@NamedQuery(name = "OutsideService.byId", query = "select a from OutsideService a where a.id= :id")
+  @NamedQuery(name = "OutsideService.findall", query = "from OutsideService"),
+  @NamedQuery(name = "OutsideService.byId", query = "select a from OutsideService a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class OutsideService extends PreferencesMarkups {
 	 * @generated
 	 */
 	public OutsideService() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

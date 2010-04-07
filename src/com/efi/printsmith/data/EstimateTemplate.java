@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "EstimateTemplate.findall", query = "from EstimateTemplate"),
-	@NamedQuery(name = "EstimateTemplate.byId", query = "select a from EstimateTemplate a where a.id= :id")
+  @NamedQuery(name = "EstimateTemplate.findall", query = "from EstimateTemplate"),
+  @NamedQuery(name = "EstimateTemplate.byId", query = "select a from EstimateTemplate a where a.id= :id")
 })
 
 
@@ -49,9 +49,9 @@ public class EstimateTemplate extends Estimate {
 	 * @generated
 	 */
 	public EstimateTemplate() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -65,25 +65,25 @@ public class EstimateTemplate extends Estimate {
 	 * @generated
  	 */
 	public String getTemplateName(){
-		return templateName; 
-	}
+    return templateName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTemplateName(String newVal) {
-		this.templateName = newVal;
-	}
+    this.templateName = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TEMPLATENAME.equals(propertyName)) return getTemplateName();
-		return super.getProperty(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) return getTemplateName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -91,9 +91,9 @@ public class EstimateTemplate extends Estimate {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TEMPLATENAME.equals(propertyName)) setTemplateName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -101,10 +101,10 @@ public class EstimateTemplate extends Estimate {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TEMPLATENAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -113,20 +113,20 @@ public class EstimateTemplate extends Estimate {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TEMPLATENAME.equals(propertyName)) return EstimateTemplate.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TEMPLATENAME.equals(propertyName)) return EstimateTemplate.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		EstimateTemplate objT = (EstimateTemplate)obj;
-		if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    EstimateTemplate objT = (EstimateTemplate)obj;
+    if (! SmartEquals(getTemplateName(), objT.getTemplateName()))
+      return false;
+    return true;
+  }			
 }

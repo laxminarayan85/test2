@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Estimate.findall", query = "from Estimate"),
-	@NamedQuery(name = "Estimate.byId", query = "select a from Estimate a where a.id= :id")
+  @NamedQuery(name = "Estimate.findall", query = "from Estimate"),
+  @NamedQuery(name = "Estimate.byId", query = "select a from Estimate a where a.id= :id")
 })
 
 
@@ -45,9 +45,9 @@ public class Estimate extends InvoiceBase {
 	 * @generated
 	 */
 	public Estimate() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 	
 	public Estimate(long id, String Name, String invoiceNumber, double grandTotal) {
 		this.id = id;
