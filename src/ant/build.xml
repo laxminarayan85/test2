@@ -124,7 +124,7 @@
 			<fileset dir="${snowmassHistorydir}"/>
 		</copy>
 
-		<copy todir="${snowmassDistDefaultDatadir">
+		<copy todir="${snowmassDistDefaultDatadir}">
 			<fileset dir="${snowmassDefaultDatadir}*.txt"/>
 		</copy>
 
