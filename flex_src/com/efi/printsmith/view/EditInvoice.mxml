@@ -8,9 +8,7 @@
 		  xmlns:viewStackEffects="org.efflex.mx.viewStackEffects.*"
 		  width="100%"
 		  height="634"
-		  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Invoice')}"
 		  creationComplete="init()"
-		  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Invoice')}"
 		  name="Invoice Editor"
 		  fontSize="9">
 
@@ -116,6 +114,7 @@
 
 			private var editorType:String = EDITINVOICE;
 			
+			private var isEstimate:Boolean = false;
 			public function init():void
 			{
 				vbox.getDividerAt(0).visible=false;
@@ -124,6 +123,18 @@
 					invoice=new Invoice();
 					invoice.takenBy=Snowmass.getInstance().currentUser.name;
 				} else {
+					if (editorType == EDITESTIMATE) {
+						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
+				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
+						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
+					} else {
+						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+					}
+					
+					this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
+						
 					this.bill_to_address_editor.setAddress(invoice.billToAddress);
 					if (invoice != null && invoice.account != null) 
 						accountDataService.getContactsByAccountId("Contact", invoice.account.id);
@@ -164,15 +175,9 @@
 					this.editorType = editorType;
 					if (editorType == EDITINVOICE) {
 						this.invoice = new Invoice();
-						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
-						this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
-						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					} else if (editorType == EDITESTIMATE) {
 						this.invoice = new Estimate();
-						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
-						this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
-						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					}
 				}

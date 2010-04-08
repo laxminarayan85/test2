@@ -299,12 +299,8 @@
 				}
 			}
 			if (!tabFound) {
-				var tmpTitle:String = tab.name;
-				mainNavigator.addChild(tab);
-				tab.title = tmpTitle;
+				var tmpPanel = mainNavigator.addChild(tab) as Panel;
 				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
-				mainNavigator.getTabAt(mainNavigator.selectedIndex).name = tmpTitle;
-				mainNavigator.getTabAt(mainNavigator.selectedIndex).label = tmpTitle;				
 			}
 		}
 		private function init() : void {
