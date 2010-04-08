@@ -30,6 +30,9 @@
 		<mx:SetProperty target="{label1}" name="width" value="128.5"/>
 		<mx:SetProperty target="{colSide}" name="visible" value="false"/>
 		<mx:SetProperty target="{colColor}" name="visible" value="false"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="356"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="174"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="204"/>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -44,7 +47,6 @@
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkInterpolate}" name="y" value="37"/>
-		<mx:SetProperty target="{label1}" name="x" value="260.5"/>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
@@ -55,13 +57,12 @@
 		<mx:SetProperty target="{radiobutton1}" name="enabled" value="false"/>
 		<mx:SetProperty target="{radiobutton2}" name="enabled" value="false"/>
 		<mx:SetProperty name="title" value="Edit Waste Chart {priceList.name}"/>
-		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="visible" value="false"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="visible" value="false"/>
-		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="false"/>
-		<mx:SetProperty target="{chkInterpolate}" name="visible" value="false"/>
-		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
-		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
-		<mx:SetProperty target="{label1}" name="x" value="260.5"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="visible" value="true"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="visible" value="true"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="true"/>
+		<mx:SetProperty target="{chkInterpolate}" name="visible" value="true"/>
+		<mx:SetProperty target="{radiobutton2}" name="visible" value="true"/>
+		<mx:SetProperty target="{radiobutton1}" name="visible" value="true"/>
 
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
@@ -76,7 +77,7 @@
 		<mx:SetProperty target="{colSide}" name="visible" value="true"/>
 		<mx:SetProperty target="{colColor}" name="visible" value="true"/>
 		<mx:SetProperty target="{dataGrid}" name="width" value="196"/>
-		<mx:SetProperty target="{label1}" name="x" value="260.5"/>
+		<mx:SetProperty target="{label1}" name="x" value="231.5"/>
 		<mx:SetProperty target="{title_edit}" name="y" value="38"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="171"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="139"/>
@@ -178,10 +179,10 @@
 	private function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-		quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
-		price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price'); 
-		side_header= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides'); 
-		color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color');  
+//		quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
+//		price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price'); 
+//		side_header= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides'); 
+//		color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color');  
 	    PopUpManager.centerPopUp(this);
 
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
@@ -222,28 +223,24 @@
 		if (priceList is WasteChart) {
 			itemType = "WasteChart";
 			this.currentState = "Waste Chart"
-			this.title = "Waste Chart"
 			this.label = "Waste Chart"
 			this.quantity_header = "Run Length";
 			this.price_header = "Spoilage";
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
 			this.currentState = "Speed Table";
-			this.title = "Speed Table"
 			this.label = "Speed Table"
 			this.quantity_header = "Run Length";
 			this.price_header = "Speed";
 		} else if (priceList is PaperPrice) {
 			itemType = "PaperPrice";
 			this.currentState = "Paper Price";
-			this.title = "Paper Price"
 			this.label = "Paper Price"
 			this.quantity_header = "Copies";
 			this.price_header = "Price";
 		} else if (priceList is com.efi.printsmith.data.Matrix) {
 			itemType = "Matrix";
 			this.currentState = "CopierMatrix";
-			this.title = "Copier Price Matrix"
 			this.label = "Copier Price Matrix"
 			this.quantity_header = "Copies";
 			this.price_header = "Price/Side";
@@ -252,6 +249,7 @@
 			this.currentState = "Price List";
 		}
 		this.priceList = priceList;
+		updateTitle(this.priceList.name);
 	}   
 	                 
 	private function doSelect():void {	
@@ -380,6 +378,18 @@
 		event.currentTarget.itemRenderer.properties = {doubleClickEnabled:true};
 	}
 	
+	private function updateTitle(value:String):void{
+		if (itemType == "PriceList" || itemType == "PriceListBase") {
+			this.title = "Edit Price List "+value
+		} else if (itemType == "WasteChart") {
+			this.title = "Edit Waste Chart "+value
+		} else if (itemType == "SpeedTable") {
+			this.title = "Edit Speed Table "+value
+		} else if (itemType == "PaperPrice") {
+			this.title = "Edit Paper Price "+value
+		}
+
+	}
 		
 ]]>        
 </mx:Script>            
@@ -397,7 +407,7 @@
 		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="60"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:TextInput x="356" y="10" id="title_edit" text="{priceList.name}" width="124"/>
+		<mx:TextInput x="356" y="10" id="title_edit" change="updateTitle(title_edit.text);" width="124" text="{priceList.name}"/>
 
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="291" y="254"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="396" y="254"/>
