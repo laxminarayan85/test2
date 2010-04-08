@@ -49,7 +49,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	[Bindable]	
 	private var grade:Grade;
-		
+	[Bindable]	
+	private var newCamp:Boolean;	
 	    
    
 	public function init():void {
@@ -57,11 +58,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		GradedataService.getAll("Grade"); 
 		campaign = new Campaigns();
 		grade = new Grade();
+		campaignGradearray = new ArrayCollection();
 	}      
 
 	private function doNew():void {
 		campaign_name.text = "";
-		global_campaign.selected = false;
+		
 		campaign = new Campaigns();
 	
 	}  
@@ -76,11 +78,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}    
 		
 	private function doSave():void {
-		campaign.name = campaign_name.text;
-		campaign.globalCampaign = global_campaign.selected;
-		campaign.applied = false;
-		
-		dataService.addUpdate(campaign);
+		if (campaign !=null){
+			campaign.name = campaign_name.text;
+			campaign.applied = false;
+			if (campaign.id == 0 || isNaN(campaign.id))
+				newCamp =  true;
+			dataService.addUpdate(campaign);
+		}
 	
 		                                    		
 	}   
@@ -104,15 +108,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function doNewGrade():void {
 		gradeList.selectedIndex = 0;
 		grade = new Grade();
+		gradeList.text = "";
+		gradeList.selectedIndex = -1;
+		campaignGradearray = new ArrayCollection();
 	
 	}  
 	
 	 private function handleSaveResult(ev:ResultEvent):void {
 		this.campaign = ev.result as Campaigns;
-		campaignsarray.addItem(campaign);
-		/* var selectEvent:CampaignEditCompleteEvent = new CampaignEditCompleteEvent(CampaignEditCompleteEvent.SAVE, this.campaign );
-		dispatchEvent(selectEvent);
-		PopUpManager.removePopUp(this); */
+		if ( newCamp){
+			campaignsarray.addItem(campaign);
+			newCamp = false;
+		}
+		campaign= null;
 	
 	}
 
@@ -132,7 +140,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	}
 
-	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	private function handleLoadGradeResult(ev:ResultEvent):void {
 		gradesarray = ev.result as ArrayCollection; 
 		
@@ -150,9 +165,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function dataRefresh():void{
 		campaign = dataGrid.selectedItem as Campaigns;
+		
+	}
+	private function RemoveCampaign():void{
+		var tempCamp:Campaigns;
+	 	var tempIndex:int
+		tempCamp =  GradeGrid.selectedItem as Campaigns;
+		tempIndex = findItem(tempCamp.name, campaignGradearray);
+		campaignGradearray.removeItemAt(tempIndex);
 	}
 	private function AddCampaign():void{
-		campaignGradearray.addItem(dataGrid2.selectedItem as Campaigns);
+		var tempCamp:Campaigns;
+	 	var tempIndex:int
+		tempCamp =  dataGrid2.selectedItem as Campaigns;
+		tempIndex = findItem(tempCamp.name, campaignGradearray);
+		if (tempIndex == -1)
+			campaignGradearray.addItem(tempCamp);
 	}
 	private function updateGrade():void{
 		if (gradeList.selectedItem != null){
@@ -171,12 +199,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		<mx:TabNavigator x="0" y="7" width="491" height="701" creationPolicy="all">
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" width="100%" height="100%">
 				<mx:TextInput x="87" y="105" id="campaign_name" text="{campaign.name}"/>
-				<mx:CheckBox x="267" y="105" label="Global" id="global_campaign" width="77" selected="{campaign.globalCampaign}"/>
 				<mx:Label x="44" y="107" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableConfigureCommand.Title')}" textAlign="right"/>
-				<mx:DataGrid x="44" y="149" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" editable="false">
+				<mx:DataGrid x="44" y="149" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" >
 					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Slot')}" dataField="campaignId"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Global')}" dataField="globalCampaign" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Slot')}" dataField="campaignId" width="40"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Global')}" dataField="globalCampaign" width="50" textAlign="center"
+							editorDataField="selected" 
+								itemEditor="mx.controls.CheckBox">
+					  		 <mx:itemRenderer>
+					  		  <mx:Component>
+					        	 <mx:CheckBox click="data.globalCampaign=!data.globalCampaign"  selected="{data.globalCampaign}"/>
+					        </mx:Component>				
+					   		</mx:itemRenderer>
+					   		</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Title')}" dataField="name"/>
 					</mx:columns>
 				</mx:DataGrid>
@@ -198,7 +233,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:TextInput x="71" y="98" width="81" id="grade_ID" text="{grade.gradeId}" editable="false"/>
 				<mx:Text x="204" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.Title')}" width="34" textAlign="right"/>
 				
-				<mx:DataGrid x="22" y="156" height="260" width="150" id="GradeGrid"  dataProvider="{campaignGradearray}" >
+				<mx:DataGrid x="22" y="156" height="260" width="150" id="GradeGrid"  dataProvider="{campaignGradearray}" click="RemoveCampaign();" >
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CampaignsandGrades')}" dataField="name"/>
 						
