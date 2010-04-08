@@ -259,11 +259,15 @@ public class CopierDefinition extends ModelBase {
 		this.name = Name;
 	}
 	
-	public CopierDefinition(long id, String name, String oemID, String machineName) {
+	public CopierDefinition(long id, String name, int copyID, String machineName, boolean blackwhite,
+			boolean color, boolean largeformat) {
 		this.id = id;
 		this.name =name;
-		this.oemDeviceID= oemID;
+		this.copyID= copyID;
 		this.machineName = machineName;
+		this.blackwhite=  blackwhite;
+		this.color= color;
+		this.largeFormat = largeformat;
 	}
 	
 	/**

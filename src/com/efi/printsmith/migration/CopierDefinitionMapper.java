@@ -40,7 +40,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("name".equals(currentFieldToken)) {
 					copierDefinition.setName(currentImportToken);
 				} else if ("machine ID".equals(currentFieldToken)) {
-					copierDefinition.setOemDeviceID(currentImportToken);
+					copierDefinition.setCopyID(Utilities
+							.tokenToInt(currentImportToken));
 				} else if ("days per year".equals(currentFieldToken)) {
 					copierDefinition.setDaysOpen(Utilities
 							.tokenToInt(currentImportToken));
@@ -948,11 +949,11 @@ public class CopierDefinitionMapper extends ImportMapper {
 						copierDefinition.setSalesCat(salesCategory);
 					}
 				} else if ("flat rate".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setFlateRate(Utilities.tokenToDouble(currentImportToken));
 				} else if ("flat markup".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("base rate".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setBaseRate(Utilities.tokenToDouble(currentImportToken));
 				} else if ("base markup".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("stock markup".equals(currentFieldToken)) {
@@ -985,7 +986,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("not used".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("device ID".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setOemDeviceID(currentImportToken);
 				} else if ("output desc".equals(currentFieldToken)) {
 					copierDefinition.setOutputDescrip(currentImportToken);
 				} else if ("sequence".equals(currentFieldToken)) {

@@ -94,6 +94,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private var systemPreferences:PreferencesSystem;
 	[Bindable]                                
 	private var copierDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var methodType:ArrayCollection = new ArrayCollection();
+	
 	[Bindable]
 	private var charges:ArrayCollection=new ArrayCollection();
 	
@@ -266,7 +269,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function handleGetResult(ev:ResultEvent):void {
 		copierDefinition = ev.result as CopierDefinition;
-		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, CopierPricingMethod.toArray());
+		updateMethodBox();
+		pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 		var salesCatName:String = "";
@@ -283,7 +287,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		
 		charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
 		this.charges = copierDefinition.charges;
-		updateControlState()
+		updateControlState();
+		
 	     
 	}
 	private function findItemArray(name:String, array:Array):int {
@@ -491,6 +496,37 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function changeStockPriceIs(event:Event):void{
 		updateControlState();
 	}
+	
+	
+	
+	private function updateMethodBox():void {
+		methodType.removeAll();
+		if (copierDefinition.largeFormat ==false){
+			methodType.addItem(CopierPricingMethod.COSTPLUS);
+			methodType.addItem(CopierPricingMethod.FLATRATE);
+			methodType.addItem(CopierPricingMethod.COPIESANDORIGINALS);
+			methodType.addItem(CopierPricingMethod.COPIESPERORIGINALS);
+			methodType.addItem(CopierPricingMethod.TOTALOFALLCOPIES);
+			
+		}else{
+			methodType.addItem(CopierPricingMethod.SQUAREAREAOFORIGINALS);
+			methodType.addItem(CopierPricingMethod.TOTALSQUAREAREA);
+			methodType.addItem(CopierPricingMethod.SQUAREAREAANDCOPIES); 
+			methodType.addItem(CopierPricingMethod.SQUAREAREAPERCOPY);
+			
+		}
+	}
+	
+	
+	private function MatrixSetup():void{
+		if (matrixSetup.selectedValue == "StepTable"){
+			interpolatematrix.enabled = false;
+			interpolatematrix.selected = false;
+		}
+		else
+			interpolatematrix.enabled = true;
+		updateControlState();	
+	}
 	private function updateControlState():void {
 		
 		switch (pricing_method_combo.selectedItem) {
@@ -524,6 +560,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = false;
 				RateCopy.visible =true;
 				RateCopy.enabled = true;
+				baseratelabel.visible =false;
+				baseRate_edit.visible = false;
 				break;
 				
 			case CopierPricingMethod.COPIESANDORIGINALS:
@@ -653,38 +691,40 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				RateCopy.visible =false;
 				break;
 			}
-			switch (matrixSetup.selectedValue) {
-				case "DiscountTable":
-					copymarkuplabel.visible = false;
-					copyMarkup2.visible = false;
-					baseratelabel.visible =true;
-					baseRate_edit.visible = true;
-					baseRate_edit.enabled = true;
-					interpolatematrix.enabled = true;
-					break;
-				case "CopyCost":
-					copymarkuplabel.visible = true;
-					copyMarkup2.visible = true;
-					baseratelabel.visible =false;
-					baseRate_edit.visible = false;
-					interpolatematrix.enabled = true;
-					break;
-				case "StepTable":
-					copymarkuplabel.visible = true;
-					copyMarkup2.visible = true;
-					baseratelabel.visible =false;
-					baseRate_edit.visible = false;
-					interpolatematrix.enabled = false;
-					break;
-				case "MarkupTable":
-					copymarkuplabel.visible = false;
-					copyMarkup2.visible = false;
-					baseratelabel.visible =true;
-					baseRate_edit.enabled = false;
-					baseRate_edit.visible = true;
-					interpolatematrix.enabled = true;
-					break;
-				
+			if (Matrix_button.visible == true){
+				switch (matrixSetup.selectedValue) {
+					case "DiscountTable":
+						copymarkuplabel.visible = false;
+						copyMarkup2.visible = false;
+						baseratelabel.visible =true;
+						baseRate_edit.visible = true;
+						baseRate_edit.enabled = true;
+						interpolatematrix.enabled = true;
+						break;
+					case "CopyCost":
+						copymarkuplabel.visible = true;
+						copyMarkup2.visible = true;
+						baseratelabel.visible =false;
+						baseRate_edit.visible = false;
+						interpolatematrix.enabled = true;
+						break;
+					case "StepTable":
+						copymarkuplabel.visible = true;
+						copyMarkup2.visible = true;
+						baseratelabel.visible =false;
+						baseRate_edit.visible = false;
+						interpolatematrix.enabled = false;
+						break;
+					case "MarkupTable":
+						copymarkuplabel.visible = false;
+						copyMarkup2.visible = false;
+						baseratelabel.visible =true;
+						baseRate_edit.enabled = false;
+						baseRate_edit.visible = true;
+						interpolatematrix.enabled = true;
+						break;
+					
+				}
 			}
 			switch ( stock_Price_is_combo.selectedItem){
 				case StockPriceMethod.MARKEDUPSTOCKCOST:
@@ -714,8 +754,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="color" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="largeFormat" itemRenderer="com.efi.printsmith.itemRenderers.CopierIconRenderer"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Name')}" dataField="name" width="300"/>
-				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="machineName" width="250"/>
-				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" dataField="oemDeviceID" width="75"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineName')}" dataField="machineName" width="250"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" dataField="copyID" width="75"/>
 			</mx:columns>
 		</mx:DataGrid>
 		<mx:Label x="10" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OutputDescription')}" textAlign="right" width="108"/>
@@ -754,7 +794,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:CheckBox x="242" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
 		<mx:Label x="489" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right" width="124"/>
 		<mx:Label x="489" y="263" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right" width="124"/>
-		<mx:ComboBox x="621" y="234.5" height="21" id="pricing_method_combo" dataProvider="{CopierPricingMethod.toArray()}" change="changePricingMethod(event);" width="144" textAlign="left"></mx:ComboBox>
+		<mx:ComboBox x="621" y="234.5" height="21" id="pricing_method_combo" dataProvider="{methodType}" change="changePricingMethod(event);" width="144" textAlign="left"></mx:ComboBox>
 		<mx:ComboBox x="621" y="261.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="144" textAlign="left"></mx:ComboBox>
 		<mx:Label x="14" y="435" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumWidth')}" width="141" textAlign="right"/>
 		<mx:Label x="14" y="457" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumWidth')}" width="141" textAlign="right"/>
@@ -790,9 +830,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="376.5" y="411" width="71" id="tonerCopy" text ="{copierDefinition.tonerCopy}" height="20"/>
 		<mx:TextInput x="376.5" y="433" width="71" id="developerCopy"  text="{copierDefinition.developerCopy}" height="20"/>
 		<mx:TextInput x="376.5" y="455" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
-		<mx:Label x="14" y="605" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel" width="104" textAlign="right"/>
-		<mx:Label x="14" y="605" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.BaseRate')}" id="baseratelabel" width="104" textAlign="right"/>
-		<mx:Label x="14" y="605" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" textAlign="right" enabled="false"/>
+		<mx:Label x="10" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel" width="104" textAlign="right"/>
+		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.BaseRate')}" id="baseratelabel" width="88" visible="false" textAlign="right"/>
+		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" textAlign="right" enabled="false" width="88"/>
 		<mx:TextInput x="126" y="605" width="71" id="copyMarkup2" height="20" text="{copierDefinition.copyMarkup2}"/>
 		<mx:TextInput x="126" y="605" width="71" id="baseRate_edit" height="20" text="{copierDefinition.baseRate}"/>
 		<mx:TextInput x="126" y="605" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flatRate}"/>
@@ -806,11 +846,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:ComboBox x="349" y="606" height="22" id="stock_Price_is_combo" dataProvider="{StockPriceMethod.toArray()}" width="150" change="changeStockPriceIs(event);"></mx:ComboBox>
 		<mx:ComboBox x="349" y="648" height="22" id="price_2_side" dataProvider="{Price2Side.toArray()}"  width="150"></mx:ComboBox>
 		<mx:Button x="5" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.EditMatrix')}" id="Matrix_button" click="doCopierMatrix();"/>
-		<mx:RadioButtonGroup id="matrixSetup" selectedValue="{copierDefinition.matrixType}"/>
+		<mx:RadioButtonGroup id="matrixSetup" selectedValue="{copierDefinition.matrixType}" change="MatrixSetup();"/>
 		<mx:RadioButtonGroup id="matrixArea" selectedValue="{copierDefinition.squareAreaType}"/>
 		<mx:RadioButton x="134" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsCopyCost')}" id="matrixcopycost" groupName="matrixSetup" value="CopyCost"/>
 		<mx:RadioButton x="134" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsDiscountTabl')}" id="matrixdiscount" groupName="matrixSetup" value="DiscountTable"/>
-		<mx:RadioButton x="134" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsStepTable')}" id="matrixstep"  groupName="matrixSetup" value="StepTable"/>
+		<mx:RadioButton x="134" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsStepTable')}" id="matrixstep"  groupName="matrixSetup" value="StepTable" />
 		<mx:RadioButton x="344" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromRunSiz')}" id="squarerunsize" groupName="MatrixArea"  value="AreaRunSize"/>
 		<mx:RadioButton x="344" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromFinish')}" id="squarefinishsize" groupName="MatrixArea" value="AreaFinishSize"/>
 		<mx:CheckBox x="344" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.InterpolateMatrixVal')}" id="interpolatematrix" selected="{copierDefinition.interpolateMatrix}"/>

@@ -61,7 +61,7 @@ package com.efi.printsmith.itemRenderers
                 switch(currentValue) 
                 {
                      case "color":
-                     	if (value.color == true) {
+                     if (value.color == true) {
 	                        image.source = colorIcon;
                      	}
                         break;

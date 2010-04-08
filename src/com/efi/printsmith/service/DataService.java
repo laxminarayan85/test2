@@ -344,10 +344,10 @@ public class DataService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
-		columnstring = "a.id, a.name, a.oemDeviceID, a.machineName";
+		columnstring = "a.id, a.name, a.copyID, a.machineName, a.blackwhite, a.color, a.largeFormat";
 		try {
 
-			log.debug("** getPressPicker .");
+			log.debug("** getCopierPicker .");
 			EntityManager em = entityManagerFactory.createEntityManager();
 
 			String queryString = "select new " + className + "( "
