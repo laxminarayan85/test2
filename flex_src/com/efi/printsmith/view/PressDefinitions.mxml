@@ -187,7 +187,16 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 		return -1;
 	}
-
+	private function doDuplicate():void { 
+		var tempPress:PressDefinition = new PressDefinition();
+		tempPress = pressDefinition;
+		tempPress.id = 0; 
+		tempPress.prevId = null;
+		dataService.addUpdate(tempPress);   		   
+	}
+	private function doRevert():void{
+		dataService.getById("PressDefinition", pressDefinition.id );  
+	}
 	private function doPressGridClick():void {
 	 	var  tempPress : PressDefinition;	
 		tempPress=dataGrid.selectedItem as PressDefinition;
@@ -536,10 +545,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="380" y="520" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right"/>
 	<mx:ComboBox x="496" y="518.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="112" textAlign="right"/>
 	<mx:List x="132" y="546" height="49" width="137" id="chargelist" dataProvider="{pressDefinition.charges}" labelField="name"></mx:List>
-	<mx:Button x="102" y="617" label="Button" width="38" height="38">
+	<mx:Button x="102" y="617" label="Button" width="38" height="38" click="doDuplicate();">
 		<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="148" y="617" height="38" width="38">
+	<mx:Button x="148" y="617" height="38" width="38" click="doRevert();">
 		<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="10" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38"/>

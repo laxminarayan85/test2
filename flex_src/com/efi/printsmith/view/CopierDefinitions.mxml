@@ -260,7 +260,17 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doDeleteCopier():void {         
 		dataService.deleteItem("CopierDefinition", copierDefinition.id);     
 	}
-
+	private function doDuplicate():void { 
+		var tempCopier:CopierDefinition = new CopierDefinition();
+		tempCopier = copierDefinition;
+		tempCopier.id = 0; 
+		tempCopier.prevId = null;
+		tempCopier.copierId = null;
+		dataService.addUpdate(tempCopier);   		   
+	}
+	private function doRevert():void{
+		dataService.getById("CopierDefinition", copierDefinition.id );  
+	}
 	private function doCopierGridClick():void {
 		var  tempCopy : CopierDefinition;	
 		tempCopy=dataGrid.selectedItem as CopierDefinition;
@@ -867,11 +877,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="56" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>
 		<mx:Label x="10" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38"/>
 		<mx:Label x="194" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="38"/>
-		<mx:Button x="148" y="689" width="38" height="38">
+		<mx:Button x="148" y="689" width="38" height="38" click="doRevert();">
 			<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="148" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="38"/>
-		<mx:Button x="102" y="689" width="38" height="38" >
+		<mx:Button x="102" y="689" width="38" height="38" click="doDuplicate();">
 			<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="102" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="38"/>
