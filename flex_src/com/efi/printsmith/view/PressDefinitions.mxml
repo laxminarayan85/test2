@@ -516,16 +516,36 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Text x="501" y="619" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>
 	<mx:Text x="502" y="649" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}" width="165"/>
 	<mx:Button x="380" y="545" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Default')}" click="doDefaultPresses()" width="107"/>
-	<mx:Button x="235" y="647" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" click="doSave()" width="67"/>
-	<mx:Button x="160" y="647" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew()" width="67"/>
-	<mx:Button x="85" y="647" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete()" width="67"/>
+	<mx:Button x="56" y="617" height="38" click="doSave()" width="38">
+		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="10" y="617"  height="38" click="doNew()" width="38">
+		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="194" y="617" height="38" click="doDelete()" width="38">
+		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+	</mx:Button>
 	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
 	<mx:RadioButton x="415" y="152" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
 	<mx:RadioButton x="415" y="182" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
-	<mx:Button x="10" y="647" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="67" id="btnExport"/>
+	<mx:Button x="264" y="617" width="38" id="btnExport" height="38">
+		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
+	</mx:Button>
 	<mx:Label x="335" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CutoffLength')}" width="149" id="cutoffLabel" textAlign="right"/>
 	<mx:TextInput x="492" y="294" width="106" id="cutoff" text="{pressDefinition.cutoffLength}"/>
 	<mx:Label x="380" y="520" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right"/>
 	<mx:ComboBox x="496" y="518.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="112" textAlign="right"/>
 	<mx:List x="132" y="546" height="49" width="137" id="chargelist" dataProvider="{pressDefinition.charges}" labelField="name"></mx:List>
+	<mx:Button x="102" y="617" label="Button" width="38" height="38">
+		<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="148" y="617" height="38" width="38">
+		<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="10" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38"/>
+	<mx:Label x="56" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>
+	<mx:Label x="102" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="38"/>
+	<mx:Label x="148" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="38"/>
+	<mx:Label x="194" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="38"/>
+	<mx:Label x="264" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="38"/>
 </mx:Panel>
