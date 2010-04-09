@@ -9,6 +9,7 @@ package com.efi.printsmith.events
 		public static const SELECTPRICELIST:String = "SelectPriceList";
 		public static const SELECTNEWPRICELIST:String = "SelectNewPriceList";
 		public static const CANCELSELECTPRICELIST:String = "CancelSelectPriceList";
+		public static const CLEARPRICELIST:String = "ClearSelectPriceList";
 		
 		public var priceList:PriceListBase;
 		

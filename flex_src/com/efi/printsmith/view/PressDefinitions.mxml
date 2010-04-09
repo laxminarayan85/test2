@@ -66,7 +66,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private var press:Boolean = false;
     private var stock:Boolean = false; 
 	private var waste:Boolean = false;
-	private var speedTable:Boolean = false;
+	private var speed:Boolean = false;
 	[Bindable]
 	private var salesCategories:ArrayCollection = new ArrayCollection();  
 	[Bindable]                                         
@@ -76,7 +76,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     
 	[Bindable]                                         
      private var priceList:PriceList;  
-    [Bindable]                                         
+    [Bindable]                               
     private var wasteChart:WasteChart;  
                                                                                	
 	[Bindable]                                
@@ -142,6 +142,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		priceListPickerWindow.itemType = "SpeedTable";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectSpeedTable);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearSpeedTable);
 	}
 	
 	private function doStockPriceList():void {
@@ -158,6 +159,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		priceListPickerWindow.itemType = "WasteChart";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
 	}
 	
 	public function setPressDef(pressdef:PressDefinition):void
@@ -323,9 +325,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	 		pressDefinition.wasteChart = price as WasteChart;
 	 		waste= false;
 	 	}
-	 	if (speedTable){
+	 	if (speed){
 	 		pressDefinition.speedTable = price as SpeedTable;
-	 		speedTable=false; 
+	 		speed=false; 
 	 	}
 	}
 	
@@ -344,6 +346,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		Alert.show(message, "Error", 0, null, null, null, 4);                                 
 	}
         
+	private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
+		pressDefinition.wasteChart = null;
+	}
     private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			pressDefinition.wasteChart = evt.priceList as WasteChart;
@@ -357,16 +362,19 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		if (evt.priceList != null) {
 			pressDefinition.pressPriceList = evt.priceList as PriceList;
 		} else {
-			this.wasteChart = null;
+			pressDefinition.pressPriceList = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}  
     }
     
+    private function handleClearSpeedTable(evt:PriceListPickerSelectEvent):void {
+		pressDefinition.speedTable = null;
+    }
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			pressDefinition.speedTable = evt.priceList as SpeedTable;
 		} else {
-			this.wasteChart = null;
+			pressDefinition.speedTable = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}  
     }

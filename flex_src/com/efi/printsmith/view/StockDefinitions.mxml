@@ -349,6 +349,13 @@
 	    priceListPickerWindow.itemType = "PaperPrice";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
+
+	}
+	
+	private function handleClearPriceList(evt:PriceListPickerSelectEvent):void {
+		stockDefinitions.defaultPriceList = null;
 	}
 	
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {

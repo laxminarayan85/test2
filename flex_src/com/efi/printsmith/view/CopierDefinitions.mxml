@@ -467,6 +467,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handleWastePickerCancel);
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleWastePickerSelect);
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.SELECTNEWPRICELIST, handleWastePickerNew);
+	    titleWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleWastePickerClear);
 	    waste = true;
 	    
 	}
@@ -485,6 +486,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	                                  	
 	private function handleWastePickerCancel(evt:PriceListPickerSelectEvent):void {
 		
+	}
+
+	private function handleWastePickerClear(evt:PriceListPickerSelectEvent):void {
+		copierDefinition.wasteChart = null;
+		wasteName.text = "";
 	}
 	
 	private function handleWastePickerSelect(evt:PriceListPickerSelectEvent):void {
