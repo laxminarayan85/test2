@@ -14,13 +14,43 @@ import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
+import com.efi.printsmith.data.PaperPrice;
 
 public class PriceStockEngine {
 	public double priceStock(Job job) {
 		if (job == null) return 0.0;
+		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
+		if (pricingMethod.getTitle().equals("Printing")) {
+			return pricePrintStock(job);
+		} else {
+			return priceCopierStock(job);
+		}
+	}
+	
+	private double pricePrintStock(Job job) {
+		double retVal = 0.0;
 		
-		/* TODO: URGENT - assumes copier job here. Needs to be based on pricing method and chosen estimator */
-		return priceCopierStock(job);
+		PricingRecord pricingRecord = null;
+		PriceLogEntry parentEntry= null;
+		PriceLogEntry priceLogEntry = null;
+		
+		
+		if (job == null) return 0.0;
+		
+		pricingRecord = job.getPricingRecord();
+		parentEntry = pricingRecord.getPriceLogEntry();
+		
+		StockDefinition stockDefinition = job.getStock();
+		
+		if (stockDefinition == null) return 0.0;
+		
+		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "pricePrintStock", "");
+		
+		PaperPrice paperPrice = stockDefinition.getDefaultPriceList();
+		retVal = PriceListUtilities.lookupPrice(paperPrice, job.getQtyOrdered());
+		priceLogEntry.setDescription("Stock Price is Print");
+		priceLogEntry.setValue(retVal);
+		return retVal;
 	}
 	
 	private double priceCopierStock(Job job) {

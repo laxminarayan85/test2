@@ -53,7 +53,12 @@ public class PriceJobEngine {
 				copierPricingMethod.priceCopierJob(job);
 			}
 		} else if (pricingMethod.getTitle().equals("Printing")) {
-//			PrintPricingMethod printPricingMethod = PrintPricingMethodFactory.createPrintPricingMethod(job.getPricingPress());
+			PrintPricingMethod printPricingMethod = PrintPricingMethodFactory.createPrintPricingMethod();
+			if (printPricingMethod == null) {
+				log.error("No pricing Method found for Printing");
+			} else {
+				printPricingMethod.pricePrintJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Roll-Fed")) {
 			
 		} else if (pricingMethod.getTitle().equals("Large Format")) {

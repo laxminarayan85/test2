@@ -8,7 +8,7 @@ import com.efi.printsmith.service.CopierService;
 public class PrintPricingMethodFactory {
 	protected static Logger log = Logger.getLogger(PrintPricingMethodFactory.class);
 
-	static public PrintPricingMethod createPrintPricingMethod(String method) {
+	static public PrintPricingMethod createPrintPricingMethod() {
 		log.info("Creating PrintPricingMethod");
 		return new PrintPricingMethod();
 	}

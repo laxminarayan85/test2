@@ -763,6 +763,11 @@
 						this.job.foldedSize = "";
 						job_fold_size.text = "";
 					}
+					else if (this.job_type.text == "Printing") {
+						this.job.parentSize = evt.stockDefinition.parentsize;
+						this.job.runSize = evt.stockDefinition.parentsize;
+						this.job.finishSize = evt.stockDefinition.parentsize;
+					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
 						this.job.runSize = evt.stockDefinition.normalRunSize;
