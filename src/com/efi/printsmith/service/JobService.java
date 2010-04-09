@@ -26,12 +26,13 @@ public class JobService {
 		job.setStock(stock);
 		
 		// TODO: Following code needs to be moved to common area
-		for (int i=0; i < stock.getCharges().size(); i++) {
-			Charge charge = ChargeUtilities.createChargeFromChargeDefinition(stock.getCharges().get(i));
-			charge.setParentJob(job);
-			job.addCharges(charge);
+		if (stock.getCharges() != null) {
+			for (int i=0; i < stock.getCharges().size(); i++) {
+				Charge charge = ChargeUtilities.createChargeFromChargeDefinition(stock.getCharges().get(i));
+				charge.setParentJob(job);
+				job.addCharges(charge);
+			}
 		}
-		
 		PriceJobEngine.priceJob(job);
 
 		if (job.getCharges() != null) {
