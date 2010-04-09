@@ -348,6 +348,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
         
 	private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
 		pressDefinition.wasteChart = null;
+		waste = false;
 	}
     private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
@@ -369,6 +370,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     
     private function handleClearSpeedTable(evt:PriceListPickerSelectEvent):void {
 		pressDefinition.speedTable = null;
+		speed = false;
     }
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
