@@ -796,9 +796,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="163" y="411" id="minSize" text="{copierDefinition.minSize}" height="20" width="71"/>
 		<mx:HRule y="492" height="0" left="5" right="5"/>
 		<mx:HRule y="675" height="12" left="5" right="5"/>
-		<mx:Button x="523.5" y="693" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockPriceList')}" click="doStockPriceList();" width="107"/>
-		<mx:Button x="638.5" y="693" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalPriceLi')}" click="doCopyPriceList();" width="107"/>
-		<mx:Button x="523.5" y="719" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Default')}" click="doDefaultCopiers();" width="107"/>
+		<mx:Button x="542" y="695" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockPriceList')}" click="doStockPriceList();" width="107"/>
+		<mx:Button x="657" y="695" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalPriceLi')}" click="doCopyPriceList();" width="157"/>
+		<mx:Button x="427" y="695" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Default')}" click="doDefaultCopiers();" width="107"/>
 		<mx:Button x="56" y="689" width="38" height="38" click="doSave();">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 		</mx:Button>
