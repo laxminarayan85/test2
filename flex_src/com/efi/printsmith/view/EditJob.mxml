@@ -204,6 +204,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.JobTemplate;
+			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.PricingRecord;
 			import com.efi.printsmith.pages.JobPricingInfo;
 			import com.efi.printsmith.data.PreferencesPricingMethod;
@@ -544,7 +546,80 @@
 
 				PopUpManager.removePopUp(this);
 			}
+			private function doSaveTemplate():void
+			{
+				mapToJobData();
+				
+				var tmpJob:Job = job;
+				var template:JobTemplate = new JobTemplate();
+				template.user = Snowmass.getInstance().currentUser;
 
+				template.backColors = tmpJob.backColors
+				template.backInks = tmpJob.backInks
+				template.backPasses = tmpJob.backPasses
+				template.backWashes = tmpJob.backWashes
+				template.binderyWaste = tmpJob.binderyWaste
+				template.binderyWasteOverride = tmpJob.binderyWasteOverride
+				template.brokered = tmpJob.brokered
+				template.charges = tmpJob.charges;
+				template.children = tmpJob.children
+				template.comment = tmpJob.comment
+				template.costingCopier = tmpJob.costingCopier
+				template.costingPress = tmpJob.costingPress
+				template.costingRecord = tmpJob.costingRecord
+				template.cutOff = tmpJob.cutOff
+				template.description = tmpJob.description
+				template.doubleSided = tmpJob.doubleSided
+				template.estWaste = tmpJob.estWaste
+				template.estWasteOverride = tmpJob.estWasteOverride
+				template.finished = tmpJob.finished
+				template.finishSize = tmpJob.finishSize
+				template.foldedSize = tmpJob.foldedSize
+				template.frontColors = tmpJob.frontColors
+				template.frontInks = tmpJob.frontInks
+				template.frontPasses = tmpJob.frontPasses
+				template.frontWashes = tmpJob.frontWashes
+				template.inSetsOf = tmpJob.inSetsOf
+				template.inSetsOfOverride = tmpJob.inSetsOfOverride
+				template.jobIndex = tmpJob.jobIndex
+				template.jobNotes = tmpJob.jobNotes
+				template.jobNumber = tmpJob.jobNumber
+				template.jobTicketNotes = tmpJob.jobTicketNotes
+				template.location = tmpJob.location
+				template.numCopies = tmpJob.numCopies
+				template.numCopiesOverride = tmpJob.numCopiesOverride
+				template.numOn = tmpJob.numOn
+				template.numUp = tmpJob.numUp
+				template.oversUnders = tmpJob.oversUnders
+				template.parentSize = tmpJob.parentSize
+				template.press = tmpJob.press
+				template.pressQty = tmpJob.pressQty
+				template.pricingCopier = tmpJob.pricingCopier
+				template.pricingMethod = tmpJob.pricingMethod
+				template.pricingPress = tmpJob.pricingPress
+				template.pricingRecord = tmpJob.pricingRecord
+				template.productCode = tmpJob.productCode
+				template.qtyOrdered = tmpJob.qtyOrdered
+				template.runMethod = tmpJob.runMethod
+				template.runSize = tmpJob.runSize
+				template.salesCategory = tmpJob.salesCategory
+				template.sheets = tmpJob.sheets
+				template.signatures = tmpJob.signatures
+				template.singleSided = tmpJob.singleSided
+				template.stock = tmpJob.stock
+				template.stockQty = tmpJob.stockQty
+				template.taxable = tmpJob.taxable
+				template.totalCopies = tmpJob.totalCopies
+				template.weight = tmpJob.weight
+
+				setJob(template);
+
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+				dispatchEvent(jobEditCompleteEvent);
+
+				PopUpManager.removePopUp(this);
+			}
+			
 			private function handleAssignPricingCopierResult(ev:ResultEvent):void
 			{
 				this.job = ev.result as Job;
@@ -1760,6 +1835,19 @@
 					</mx:Accordion>
 				</mx:HDividedBox>
 			</mx:Canvas>
+			<mx:LinkButton x="629"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doSaveTemplate();"
+					   id="template_button">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="620"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Savetemplateas')}"
+					  width="64"
+					  textAlign="center"/>
 
 		</mx:Canvas>
 	</mx:VBox>

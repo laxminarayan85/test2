@@ -88,6 +88,8 @@
 	import mx.messaging.messages.IMessage;
     import mx.core.Application;
    	import com.efi.printsmith.events.commandEvents.WebAdmin.*;
+   	import com.efi.printsmith.events.JobPickerSelectEvent;
+   	import com.efi.printsmith.view.JobsPicker;
     import mx.events.*;
     import mx.collections.ICollectionView;
 	
@@ -290,6 +292,7 @@
 		}
 		webcatalogs.catagories.addItem(newItem);
 		webcatagories = newItem;
+		webcatagoriesArray = webcatalogs.catagories;
 		refeshCatagoriesTree();
 	}
 
@@ -568,9 +571,24 @@
 	}
 
 	private function changeTemplate():void {
-		//webproductsArray[webproductsGrid.selectedIndex].sku =
+	   	var jobPickerWindow:JobsPicker = JobsPicker(PopUpManager.createPopUp(this, JobsPicker, true));
+	    jobPickerWindow.setStyle("borderAlpha", 0.9);
+	    jobPickerWindow.itemType = "JobTemplate";
+	    jobPickerWindow.addEventListener(JobPickerSelectEvent.CANCELSELECTJOB, handleJobPickerCancel);
+	    jobPickerWindow.addEventListener(JobPickerSelectEvent.SELECTJOB, handleSelectJob);
 	}
-
+	
+    private function handleSelectJob(evt:JobPickerSelectEvent):void {
+ 		if (evt.job != null) {
+			webproducts.sku = evt.job as JobBase;
+		} else {
+			webproductsArray[webproductsGrid.selectedIndex].sku = null;
+			Alert.show("Job Picker returned a null Job Template", "Error");
+		}
+    }
+    private function handleJobPickerCancel(evt:JobPickerSelectEvent):void {
+    	
+    }
 	private function processCatalogsGridData(event:DataGridEvent):void {
 		if (event.reason == DataGridEventReason.CANCELLED){
             // Do not update cell.
