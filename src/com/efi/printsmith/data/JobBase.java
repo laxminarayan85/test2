@@ -1600,12 +1600,12 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer totalImpositions;
+  private Long totalImpositions;
 
 	/**
    * @generated
  	 */
-  public Integer getTotalImpositions(){
+  public Long getTotalImpositions(){
     return totalImpositions; 
   }
 
@@ -1613,7 +1613,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-  public void setTotalImpositions(Integer newVal) {
+  public void setTotalImpositions(Long newVal) {
     this.totalImpositions = newVal;
   }
 
@@ -1750,7 +1750,7 @@ public class JobBase extends ModelBase {
     if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
     if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
     if (IMPOSITIONSPERRUN.equals(propertyName)) setImpositionsPerRun((Long)newValue); else
-    if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Integer)newValue); else
+    if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1877,7 +1877,7 @@ public class JobBase extends ModelBase {
     if (IMPOSITIONSPERRUN.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (TOTALIMPOSITIONS.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
