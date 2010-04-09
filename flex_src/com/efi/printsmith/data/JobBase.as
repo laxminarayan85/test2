@@ -70,6 +70,8 @@ package com.efi.printsmith.data
 		public var numCopiesOverride:Boolean = true;
 		public var stockQty:Number = 0;
 		public var cutOff:Number = 0;
+		public var impositionsPerRun:Number = 0;
+		public var totalImpositions:int = 0;
 	
 	}
 }
