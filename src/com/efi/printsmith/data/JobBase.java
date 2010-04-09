@@ -265,10 +265,13 @@ public class JobBase extends ModelBase {
 	 */
 	public static final String STOCKQTY = "StockQty";
 	/**
-	 * @generated
-	 */
-	public static final String CUTOFF = "CutOff";
-
+   * @generated
+   */
+  public static final String IMPOSITIONSPERRUN = "ImpositionsPerRun";
+	/**
+   * @generated
+   */
+  public static final String TOTALIMPOSITIONS = "TotalImpositions";
 	/**
 	 * @generated
 	 */
@@ -370,7 +373,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany( fetch=FetchType.EAGER)
     @IndexColumn(name="childrenjobbase")
     @JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
@@ -964,7 +967,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne (fetch=FetchType.LAZY)
+    @ManyToOne
 	private StockDefinition stock;
 	
 	/**
@@ -1283,7 +1286,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne
 	private PricingRecord pricingRecord;
 	
 	/**
@@ -1545,25 +1548,51 @@ public class JobBase extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Double cutOff;
-	
+  private Long impositionsPerRun;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getCutOff(){
-    return cutOff; 
+  public Long getImpositionsPerRun(){
+    return impositionsPerRun; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCutOff(Double newVal) {
-    this.cutOff = newVal;
+   * @generated
+   */	
+  public void setImpositionsPerRun(Long newVal) {
+    this.impositionsPerRun = newVal;
   }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long totalImpositions;
+
+	/**
+   * @generated
+ 	 */
+  public Long getTotalImpositions(){
+    return totalImpositions; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalImpositions(Long newVal) {
+    this.totalImpositions = newVal;
+  }
+
+
+
 	/**
 	 * @generated
 	 */		
@@ -1626,7 +1655,8 @@ public class JobBase extends ModelBase {
     if (NUMCOPIES.equals(propertyName)) return getNumCopies();
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
     if (STOCKQTY.equals(propertyName)) return getStockQty();
-    if (CUTOFF.equals(propertyName)) return getCutOff();
+    if (IMPOSITIONSPERRUN.equals(propertyName)) return getImpositionsPerRun();
+    if (TOTALIMPOSITIONS.equals(propertyName)) return getTotalImpositions();
     return super.getProperty(propertyName);
   }
 	
@@ -1692,7 +1722,8 @@ public class JobBase extends ModelBase {
     if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
     if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
     if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
-    if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
+    if (IMPOSITIONSPERRUN.equals(propertyName)) setImpositionsPerRun((Long)newValue); else
+    if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1814,8 +1845,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (STOCKQTY.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
-    if (CUTOFF.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+    if (IMPOSITIONSPERRUN.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (TOTALIMPOSITIONS.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1882,7 +1915,8 @@ public class JobBase extends ModelBase {
     if (NUMCOPIES.equals(propertyName)) return JobBase.class;
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
     if (STOCKQTY.equals(propertyName)) return JobBase.class;
-    if (CUTOFF.equals(propertyName)) return JobBase.class;
+    if (IMPOSITIONSPERRUN.equals(propertyName)) return JobBase.class;
+    if (TOTALIMPOSITIONS.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2006,7 +2040,9 @@ public class JobBase extends ModelBase {
       return false;
     if (! SmartEquals(getStockQty(), objT.getStockQty()))
       return false;
-    if (! SmartEquals(getCutOff(), objT.getCutOff()))
+    if (! SmartEquals(getImpositionsPerRun(), objT.getImpositionsPerRun()))
+      return false;
+    if (! SmartEquals(getTotalImpositions(), objT.getTotalImpositions()))
       return false;
     return true;
   }			
