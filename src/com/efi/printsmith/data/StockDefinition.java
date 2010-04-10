@@ -2949,11 +2949,9 @@ public class StockDefinition extends ModelBase {
 	
 	/**
 	 * @generated
-	 */	
-    @OneToMany( fetch=FetchType.EAGER)
+	 */
 	@ManyToMany
-    @IndexColumn(name="chargesstockdefinition")
-    @JoinTable( name = "stockdefinition_charges")
+    @JoinTable( name = "stockdefinition_charges", joinColumns = {@JoinColumn(name="id")},inverseJoinColumns = {@JoinColumn(name="chargeId")})
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**

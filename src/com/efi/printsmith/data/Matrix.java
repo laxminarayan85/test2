@@ -318,12 +318,12 @@ public class Matrix extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
+    @OneToMany( cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
     @IndexColumn(name="elementsmatrix")
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
 	
-	/**
+	/** 
 	 * @generated
  	 */
 	public java.util.List<MatrixElement> getElements(){

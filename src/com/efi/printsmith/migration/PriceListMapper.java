@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.PriceListElement;
@@ -9,12 +11,14 @@ import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.WasteChart;
 
 public class PriceListMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(PriceListMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
+		log.info("Entering PriceListMapper->importTokens");
 		PriceList priceList = null;
 		SpeedTable speedTable = null;
 		WasteChart wasteChart = null;
@@ -288,6 +292,7 @@ public class PriceListMapper extends ImportMapper {
 		if (rType.equals("S"))
 			returnObject = speedTable;
 		
+		log.info("Leaving PriceListMapper->importTokens");
 		return returnObject;
 	}
 }

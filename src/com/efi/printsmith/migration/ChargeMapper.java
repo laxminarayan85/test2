@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.Location;
@@ -9,11 +11,13 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 
 public class ChargeMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(ChargeMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering ChargeDefinitionMapper->importTokens");
 		Charge charge = new Charge();
 		DataService dataService = new DataService();
 		
@@ -68,7 +72,7 @@ public class ChargeMapper extends ImportMapper {
 				}
 			}
 		}
-		
+		log.info("Leaving ChargeDefinitionMapper->importTokens");		
 		return charge;
 	}
 }

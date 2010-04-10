@@ -2,16 +2,20 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PaperPrice;
 import com.efi.printsmith.data.PriceListElement;
 
 public class PriceScheduleMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(PriceScheduleMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
+		log.info("Entering PriceScheduleMapper->importTokens");
 		PaperPrice paperPrice = new PaperPrice();
 		long qty = 0;
 		int sides1 = 1;
@@ -63,6 +67,7 @@ public class PriceScheduleMapper extends ImportMapper {
 				}
 			}
 		}
+		log.info("Leaving PriceScheduleMapper->importTokens");
 		return paperPrice;
 	}
 }

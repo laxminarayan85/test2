@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
@@ -12,10 +14,12 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.service.DataService;
 
 public class JobMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(JobMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering JobMapper->importTokens");
 		DataService dataService = new DataService();
 		Job job = new Job();
 		SalesCategory salesCategory = null;
@@ -920,6 +924,7 @@ public class JobMapper extends ImportMapper {
 			sequenceValues.setJob(Long.parseLong(job.getJobNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving JobMapper->importTokens");
 		return job;
 	}
 }

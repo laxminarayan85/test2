@@ -6,11 +6,15 @@ import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.TaxElement;
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 public class TaxTableMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(TaxTableMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering TaxTableMapper->importTokens");
 		TaxTable taxTable = new TaxTable();
 		TaxElement taxElement = null;
 		for (int i=0; i < fieldTokens.length; i++) {
@@ -72,6 +76,7 @@ public class TaxTableMapper extends ImportMapper {
 				taxTable.setDontRoundShownTaxElements(Utilities.tokenToInt(currentImportToken));
 			}
 		}
+		log.info("Leaving TaxTableMapper->importTokens");
 		return taxTable;
 	}
 }

@@ -8,10 +8,14 @@ import com.efi.printsmith.service.DataService;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 public class StockChangeMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(StockChangeMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering StockChangeMapper->importTokens");
 		StockChanges stockChanges = new StockChanges();
 		DataService dataService = new DataService();
 		StockDefinition stockDefinition = null;
@@ -81,6 +85,7 @@ public class StockChangeMapper extends ImportMapper {
 			stockDefinition.addStockChanges(stockChanges);
 			dataService.addUpdate(stockDefinition);
 		}
+		log.info("Entering StockChangeMapper->importTokens");
 		return null;
 	}
 }

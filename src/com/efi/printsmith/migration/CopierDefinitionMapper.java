@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.CostCenter;
 import com.efi.printsmith.data.ModelBase;
@@ -9,18 +11,22 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.service.PricingService;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.service.CopierService;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
 
 public class CopierDefinitionMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
+
 	public void importFile(File uploadedFile) throws Exception {
 
 	}
 
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
+		log.info("Entering CopierDefinitionMapper->importTokens");
 		CopierDefinition copierDefinition = new CopierDefinition();
 		DataService dataService = new DataService();
 		CopierService copierService = new CopierService();
@@ -1142,6 +1148,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 			sequenceValues.setCopierDefinition(Long.parseLong(copierDefinition.getCopierId()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving CopierDefinitionMapper->importTokens");
 		return null;
 	}
 }

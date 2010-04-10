@@ -19,10 +19,14 @@ import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.PaperPrice;
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 public class StockDefinitionMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(StockDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering StockDefinitionMapper->importTokens");
 		StockDefinition stockDefinition = new StockDefinition();
 		DataService dataService = new DataService();
 		double weight = 0;
@@ -610,6 +614,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			sequenceValues.setStockDefinition(Long.parseLong(stockDefinition.getStockId()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving StockDefinitionMapper->importTokens");
 		return stockDefinition;
 	}
 }

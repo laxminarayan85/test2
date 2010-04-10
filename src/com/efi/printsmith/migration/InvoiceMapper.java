@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.Account;
@@ -17,10 +19,12 @@ import com.efi.printsmith.data.NotePad;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 
 public class InvoiceMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering InvoiceMapper->importTokens");
 		String type = "";
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -36,11 +40,12 @@ public class InvoiceMapper extends ImportMapper {
 		else {
 			modelBase = this.createEstimate(fieldTokens, importTokens);
 		}
-		
+		log.info("Leaving InvoiceMapper->importTokens");		
 		return modelBase;
 	}
 	
 	private ModelBase createEstimate(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering InvoiceMapper->createEstimate");
 		Estimate invoice = new Estimate();
 		NotePad notePad = new NotePad();
 		DataService dataService = new DataService();
@@ -1534,6 +1539,7 @@ public class InvoiceMapper extends ImportMapper {
 			sequenceValues.setInvoice(Long.parseLong(invoice.getInvoiceNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving InvoiceMapper->createEstimate");
 		return invoice;
 	}
 }

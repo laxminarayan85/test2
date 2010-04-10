@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.ChargeDefinition;
@@ -19,12 +21,14 @@ import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.data.City;
 
 public class CustomerMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 
 	}
 
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
+		log.info("Entering CustomerMapper->importTokens");
 		Account customer = new Account();
 		Address shipToAddress = new Address();
 		Address billToAddress = new Address();
@@ -839,7 +843,7 @@ public class CustomerMapper extends ImportMapper {
 			sequenceValues.setAccount(Long.parseLong(customer.getAccountId()));
 			dataService.addUpdate(sequenceValues);
 		}
-		
+		log.info("Leaving CustomerMapper->importTokens");		
 		return customer;
 	}
 }

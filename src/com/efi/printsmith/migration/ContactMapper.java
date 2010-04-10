@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.City;
 import com.efi.printsmith.data.Contact;
@@ -13,10 +15,12 @@ import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.service.DataService;
 
 public class ContactMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(ContactMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering ContactMapper->importTokens");
 		Contact contact = new Contact();
 		Address address = new Address();
 		Marketing marketing = new Marketing();
@@ -236,6 +240,7 @@ public class ContactMapper extends ImportMapper {
 			sequenceValues.setContact(Long.parseLong(contact.getContactId()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving ContactMapper->importTokens");
 		return contact;
 	}
 }

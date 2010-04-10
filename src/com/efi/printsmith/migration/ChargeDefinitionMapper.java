@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.data.ChargeDefinition;
@@ -25,7 +27,9 @@ import com.efi.printsmith.data.ChargeCategory;
 import com.efi.printsmith.data.SalesCategory;
 
 public class ChargeDefinitionMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(ChargeDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
+		log.info("Entering ChargeDefinitionMapper->importFile");
 		FileInputStream fis = new FileInputStream(uploadedFile);
 		InputStreamReader fileReader = new InputStreamReader(fis);
 		CSVReader csvReader = new CSVReader(fileReader);
@@ -1107,6 +1111,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			}
 		}
 		dataService.addChargeToCategory(chargeDefinition, chargeCategory);
+		log.info("Leaving ChargeDefinitionMapper->importFile");
 		return null;
 	}
 }
