@@ -90,6 +90,11 @@ public class PreferencesSequenceValues extends ModelBase {
 	public static final String GRADE = "Grade";
 
 	/**
+   * @generated
+   */
+  public static final String CREDITCARD = "CreditCard";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSequenceValues() {
@@ -362,6 +367,29 @@ public class PreferencesSequenceValues extends ModelBase {
     this.grade = newVal;
   }
 	/**
+   * @generated
+   */	
+    @Basic
+	@ManyToOne
+  private Long creditCard;
+
+	/**
+   * @generated
+ 	 */
+  public Long getCreditCard(){
+    return creditCard; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCreditCard(Long newVal) {
+    this.creditCard = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -379,6 +407,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (COPIERDEFINITION.equals(propertyName)) return getCopierDefinition();
     if (CAMPAIGN.equals(propertyName)) return getCampaign();
     if (GRADE.equals(propertyName)) return getGrade();
+    if (CREDITCARD.equals(propertyName)) return getCreditCard();
     return super.getProperty(propertyName);
   }
 	
@@ -400,6 +429,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (COPIERDEFINITION.equals(propertyName)) setCopierDefinition((Long)newValue); else
     if (CAMPAIGN.equals(propertyName)) setCampaign((Long)newValue); else
     if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
+    if (CREDITCARD.equals(propertyName)) setCreditCard((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -433,6 +463,8 @@ public class PreferencesSequenceValues extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (GRADE.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (CREDITCARD.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -455,6 +487,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (COPIERDEFINITION.equals(propertyName)) return PreferencesSequenceValues.class;
     if (CAMPAIGN.equals(propertyName)) return PreferencesSequenceValues.class;
     if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (CREDITCARD.equals(propertyName)) return PreferencesSequenceValues.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -489,6 +522,8 @@ public class PreferencesSequenceValues extends ModelBase {
     if (! SmartEquals(getCampaign(), objT.getCampaign()))
       return false;
     if (! SmartEquals(getGrade(), objT.getGrade()))
+      return false;
+    if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
       return false;
     return true;
   }			
