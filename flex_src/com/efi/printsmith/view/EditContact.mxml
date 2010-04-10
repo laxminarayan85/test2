@@ -9,7 +9,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
- 
+<mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="salesRepDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
     <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
@@ -76,6 +78,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.ContactPickerSelectEvent;
 	import com.efi.printsmith.events.CampaignEditCompleteEvent;
+	import com.efi.printsmith.data.PreferencesCreditCard;
 
 	import mx.rpc.Responder;
 	import mx.controls.Alert;                                         
@@ -104,7 +107,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	[Bindable]
 	private var account:Account;
-	
+	[Bindable]                                         
+    private var creditCardPreferences:PreferencesCreditCard;
 	               
 	[Bindable]
     private var salesReps:ArrayCollection = new ArrayCollection(); 
@@ -116,6 +120,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var countrys:ArrayCollection = new ArrayCollection();  
     [Bindable]
     private var zips:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
     
     [Bindable]
     private var compaigns:ArrayCollection = new ArrayCollection();
@@ -130,6 +136,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		notification_consumer.subscribe();     
 		this.doGet();
 		account= new Account();
+		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		dataService.getAll("Contact");  
 		salesRepDataService.getAll("SalesRep");
 		cityDataService.getAll("City");
@@ -268,7 +275,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
  				contact.creditCard.address = new Address();
  				contact.creditCard.address.zip = "";
  			}
- 				
+ 			cardtype.selectedIndex = findIteminCreditCard(contact.creditCard.type, creditCardPreferencesArray)	
  		}
  		
  	}
@@ -280,16 +287,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	     dataService.deleteItem("Contact",contact.id);                                     
 	}
 	
-	                                                       
+	 private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
+		creditCardPreferencesArray = ev.result as ArrayCollection;
+		
+	}	                                                                    
 		
 	private function mapToContactData():void {
+		var tempCredit:PreferencesCreditCard = new PreferencesCreditCard;
 		contact.firstName = name_edit.text;
 		contact.lastName =  last_name_edit.text;
 		contact.prefix = contact_prefix_edit.text;
 		contact.salutation= contact_salutation_edit.text;
 		contact.suffix = contact_suffix_edit.text;
 		contact.jobTitle= contact_job_title_edit.text;
-		
+		 
 		contact.shipToAddress = ship_to_address_editor.getAddress();
 		contact.address = address_editor.getAddress();
 		
@@ -325,7 +336,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
-		contact.creditCard.type = cardtype.text;
+		tempCredit = cardtype.selectedItem as PreferencesCreditCard;
+		if (contact.creditCard != null)
+			contact.creditCard.type = tempCredit.cardType
 		if (contact.parentAccount != null)
 			contact.parentAccount.accountId = accountID.text;
 		saveCampaigns();
@@ -390,6 +403,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	   
 		
 	}
+	private function findIteminCreditCard(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.cardType) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
@@ -398,12 +419,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		return -1;
 	}
-	
 	private function doNew():void {
 	    contact = new Contact();
+	    
 	    setMarketing();
 	    setCreditCard();
-	     setContact(contact);
+	    setContact(contact);
+	    account = new Account();
+		this.setAccount(account);
 	 	
 	}  
 	private function doDelete():void {
@@ -651,6 +674,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 			
 	}
+	public function getCreditName(item:Object):String{
+		var tmpCredit:PreferencesCreditCard = item as PreferencesCreditCard
+		
+		if (tmpCredit != null && tmpCredit.cardType != null && tmpCredit.cardType != "") {
+			return tmpCredit.cardType;
+		} else {
+			return "None";
+		}
+	}
 	
 ]]>	
 
@@ -667,7 +699,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
 				<mx:Label x="224" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
 				<mx:Label x="214" y="144" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
-				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.date}" height="27"/>
+				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
 				<ns1:AddressEditor x="344" y="215" id="ship_to_address_editor" height="157" width="325"/>
 				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Text x="80" y="90" width="142" id="accountName" text="{account.title}"/>
@@ -685,7 +717,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:TextInput x="315" y="120" id="contact_salutation_edit" text="{contact.salutation}"/>
 				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.ID')}" textAlign="right" width="62"/>
 				<mx:Label x="22" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" textAlign="right" width="50"/>
-				<mx:Label x="0" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" textAlign="right" width="60"/>
+				<mx:Label x="0" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" textAlign="right" width="60"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%">
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
@@ -740,20 +772,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:DataGrid>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditInfo" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CreditInfo')}" width="100%" height="100%">
-				<mx:Label x="108" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardHolder')}" textAlign="right"/>
-				<mx:Label x="101" y="58" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardNumber')}" textAlign="right"/>
-				<mx:Label x="101" y="84" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Type')}" textAlign="right"/>
-				<mx:Label x="108" y="110" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Expiration')}" textAlign="right"/>
-				<mx:Label x="115" y="159" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}" textAlign="right"/>
-				<mx:Label x="110" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}" textAlign="right"/>
+				<mx:Label x="135" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardHolder')}" textAlign="right" width="99"/>
+				<mx:Label x="135" y="58" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardNumber')}" textAlign="right" width="99"/>
+				<mx:Label x="126" y="84" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Type')}" textAlign="right" width="109"/>
+				<mx:Label x="148" y="110" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Expiration')}" textAlign="right" width="87"/>
+				<mx:Label x="135" y="159" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}" textAlign="right" width="100"/>
+				<mx:Label x="160" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}" textAlign="right" width="75"/>
 				<mx:TextInput x="243" y="30" id="cardholder" text="{contact.creditCard.cardHolderName}"/>
 				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardNumber}"/>
-				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="false"/>
+				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160"/>
 				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address.street1}"/>
 				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
 				<fc:AutoComplete id="cardzip" x="243" y="183" width="80"  dataProvider="{zips}"  labelField="name" focusOut="doZipCredit()" lookAhead="true"/>
 					
-				<mx:ComboBox x="243" y="82" id="cardtype" text="{contact.creditCard.type}"></mx:ComboBox>
+				<mx:ComboBox x="243" y="82" id="cardtype" dataProvider="{creditCardPreferencesArray}" labelFunction="getCreditName"></mx:ComboBox>
 			</mx:Canvas>
 			<mx:Canvas id="canvasWeb" label="Web" width="100%" height="100%">
 			</mx:Canvas>

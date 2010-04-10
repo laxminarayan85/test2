@@ -1146,7 +1146,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne (cascade=CascadeType.ALL)
+    @ManyToOne
 	private Marketing marketing;
 	
 	/**

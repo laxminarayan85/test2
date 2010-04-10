@@ -113,6 +113,7 @@
 				for (i=0; i<salesCategoryNames.length; i++) {
 					salesCategory = new SalesCategory();
 					salesCategory.name = salesCategoryNames[i];
+					salesCategory.prevId = i.toString();
 					salesCategory.id = 0;
 					dataService.addUpdate(salesCategory);
 				}				
@@ -193,7 +194,7 @@
 		<mx:Button x="10"
 				   y="100"
 				   label="Populate Locations"
-				   click="doPopulateLocations();" width="188"/>
+				   click="doPopulateLocations();" width="188" enabled="false"/>
 		<mx:Button x="10"
 				   y="130"
 				   label="Populate Product Codes"

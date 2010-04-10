@@ -7,6 +7,7 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.CostCenter;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
@@ -37,11 +38,10 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("heads".equals(currentFieldToken)) {
 				pressDefinition.setNumberHeads(Utilities.tokenToLong(currentImportToken));
 			} else if ("sales cat".equals(currentFieldToken)) {
-				if (currentImportToken.equals("0") == false) {
 					SalesCategory salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
 					if (salesCategory != null)
 						pressDefinition.setSalesCat(salesCategory);
-				}	
+					
 			} else if ("setup time".equals(currentFieldToken)) {
 				pressDefinition.setSetupMin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("addl head".equals(currentFieldToken)) {
@@ -211,7 +211,17 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("cost center ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cost center".equals(currentFieldToken)) {
-				pressDefinition.setCostCenter(currentImportToken);
+				if (currentImportToken.equals("") == false) {
+					CostCenter costCenter = dataService
+							.getByCostCenterName(currentImportToken);
+					if (costCenter == null) {
+						costCenter = new CostCenter();
+						costCenter.setName(currentImportToken);
+						costCenter = (CostCenter)dataService.addUpdate(costCenter);
+					}
+					pressDefinition.setCostCenter(currentImportToken);
+				}
+						
 			} else if ("machine name ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("machine name".equals(currentFieldToken)) {

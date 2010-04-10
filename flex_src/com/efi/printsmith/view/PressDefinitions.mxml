@@ -29,7 +29,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionLocationResult(event)"/>
+</mx:RemoteObject>
 	<mx:Producer id="producer" destination="pressdefinitions"/>
 	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -69,6 +74,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var speed:Boolean = false;
 	[Bindable]
 	private var salesCategories:ArrayCollection = new ArrayCollection();  
+	[Bindable]
+	private var costCenterArray:ArrayCollection = new ArrayCollection();  
+	[Bindable]
+	private var productionLocationArray:ArrayCollection = new ArrayCollection();  
+	
+	
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
 	[Bindable]                                         
@@ -90,6 +101,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		notification_consumer.subscribe();     
 		loadPressDefinitions();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		dataServiceCostCenter.getAll("CostCenter");
+		dataServiceProductionLocation.getAll("ProductionLocations");
+
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
 	    pressDefinition = new PressDefinition();
 		doPressType();
@@ -209,18 +223,19 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		this.charges = pressDefinition.charges;
 		updateControlState(); */
 		doPressType();
+	
 	}
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
 		 pressDefinition.name = Name.text;
 		 pressDefinition.machineName = MachineName.text;
 		 pressDefinition.outputDescrip = OutPutDescription.text;
-		 pressDefinition.productionLocation = ProductionLocation.text;
-		 pressDefinition.costCenter = CostCenter.text;
-		 pressDefinition.oemDeviceID = OEMDeviceID.text;
+		 pressDefinition.productionLocation = ProductionLocation.selectedItem as String;
+		 pressDefinition.costCenter = CostCenter.selectedItem as String;
+		// pressDefinition.oemDeviceID = OEMDeviceID.text;
 		 pressDefinition.machineID = parseInt(MachineId.text) 
 		 pressDefinition.costingPress = CostingPress.selected;
-		 pressDefinition.integratedDevice = IntegratedDevice.selected;
+	//	 pressDefinition.integratedDevice = IntegratedDevice.selected;
 		 pressDefinition.maxPaperSize = MaxPaperSize.text;
 		 pressDefinition.minPaperSize = MinPaperSize.text;
 		 pressDefinition.maxRollWidth = MaxRollWidth.text;
@@ -287,13 +302,31 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadResult(ev:ResultEvent):void {
 	     pressDefinitionArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadCostCenterResult(ev:ResultEvent):void {
+	     costCenterArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
+	     productionLocationArray = ev.result as ArrayCollection;
+	}
 	private function handleGetResult(ev:ResultEvent):void {
 		pressDefinition = ev.result as PressDefinition;
 		
+		
 		if (pressDefinition.salesCat != null)
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
+		if (pressDefinition.costCenter != null)
+			CostCenter.selectedIndex = findItem(pressDefinition.costCenter, costCenterArray);
+		if (pressDefinition.productionLocation != null)
+			ProductionLocation.selectedIndex = findItem(pressDefinition.productionLocation, productionLocationArray);
 		this.charges = pressDefinition.charges;
 		updateControlState();
+		if (pressDefinition.speedTable != null){
+			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			AvgImpressPerhour.enabled = false;
+		}else{
+			AvgImpressPerhour.enabled = true;
+			AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
+		}
 	     
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
@@ -371,13 +404,20 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private function handleClearSpeedTable(evt:PriceListPickerSelectEvent):void {
 		pressDefinition.speedTable = null;
 		speed = false;
+		AvgImpressPerhour.enabled = true;
+		AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
     }
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			pressDefinition.speedTable = evt.priceList as SpeedTable;
+			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			AvgImpressPerhour.enabled = false;
+			
 		} else {
 			pressDefinition.speedTable = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
+			AvgImpressPerhour.enabled = true;
+			AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
 		}  
     }
     
@@ -468,17 +508,14 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="10" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OutputDescription')}" textAlign="right" width="113"/>
 	<mx:Label x="10" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.ProductionLocation')}" textAlign="right" width="113"/>
 	<mx:Label x="10" y="215" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.CostCenter')}" textAlign="right" width="113"/>
-	<mx:Label x="10" y="237" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OEMDeviceID')}" textAlign="right" width="113"/>	
 	<mx:TextInput x="131" y="124" width="263" id="Name" text="{pressDefinition.name}" height="20"/>
 	<mx:TextInput x="131" y="146" width="263" id="MachineName" text="{pressDefinition.machineName}" height="20"/>
 	<mx:TextInput x="131" y="168" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}" height="20"/>
-	<mx:TextInput x="131" y="190" id="ProductionLocation" width="263" text="{pressDefinition.productionLocation}"  height="20"/>
-	<mx:TextInput x="131" y="212" id="CostCenter" width="263" text="{pressDefinition.costCenter}" height="20"/>
-	<mx:TextInput x="131" y="234" id="OEMDeviceID" width="263" text="{pressDefinition.oemDeviceID}" height="20"/>
+	<mx:ComboBox x="131" y="190" id="ProductionLocation" width="263" dataProvider="{productionLocationArray}" height="20" labelField="name"/>
+	<mx:ComboBox x="131" y="212" id="CostCenter" width="263" dataProvider="{costCenterArray}" height="20" labelField="name"/>
 	<mx:Label x="402" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID')}" width="67" textAlign="right"/>
 	<mx:TextInput x="477" y="124" width="146" id="MachineId" text="{pressDefinition.machineID}" editable="true"/>
-	<mx:CheckBox x="424" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
-	<mx:CheckBox x="556" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{pressDefinition.integratedDevice}"/>
+	<mx:CheckBox x="415" y="212" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
 	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
 	<mx:Label x="13" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MaxPaperSize')}" textAlign="right" id="label1" width="110"/>
 	<mx:Label x="13" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MaxRollWidth')}" textAlign="right" id="widthlabel1" width="110"/>
@@ -488,8 +525,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="13" y="340" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MinimumLabor')}" textAlign="right" width="110"/>
 	<mx:Label x="13" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Setupminutes')}" textAlign="right" width="110"/>
 	<mx:Label x="13" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlRun')}" textAlign="right" id="label3" width="110"/>
-	<mx:Label x="69" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlSignatures')}" textAlign="right" width="110"/>
-	<mx:Label x="69" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WorkAndTurn2ndSideSe')}" textAlign="right" id="label4" width="110"/>
+	<mx:Label x="26" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlSignatures')}" textAlign="right" width="153"/>
+	<mx:Label x="10" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WorkAndTurn2ndSideSe')}" textAlign="right" id="label4" width="169"/>
 	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20" width="171"/>
 	<mx:TextInput x="131" y="272" id="MaxRollWidth" text="{pressDefinition.maxRollWidth}" height="20" width="171"/>
 	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
@@ -517,8 +554,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="353" y="340"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.FixedWaste')}" textAlign="right" width="131"/>
 	<mx:Label x="353" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlHead')}" textAlign="right" id="label5" width="131"/>
 	<mx:Label x="335" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupFee')}" textAlign="right" width="149"/>
-	<mx:Label x="335" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddlSignaturesAddlHe')}" textAlign="right" width="149"/>
-	<mx:Label x="335" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupMinutes')}" textAlign="right" width="149"/>
+	<mx:Label x="312" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddlSignaturesAddlHe')}" textAlign="right" width="172"/>
+	<mx:Label x="312" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupMinutes')}" textAlign="right" width="172"/>
 	<mx:Label x="335" y="450" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WashupTimePerFountai')}" textAlign="right" width="149"/>
 	<mx:HRule x="10" y="476" width="732" height="6" left="5" right="5"/>
 	<mx:HRule x="10" y="603" width="732" height="6" left="5" right="5"/>
@@ -527,8 +564,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Button x="375" y="647" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressPriceList')}" click="doPressPriceList();"/>
 	<mx:Button x="11" y="518" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WasteChart')}" click="doWasteChart();" width="97"/>
 	<mx:Button x="10" y="546" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddCharges')}" width="98" click="doAddCharge();"/>
-	<mx:CheckBox x="380" y="491" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
-	<mx:Label x="525" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.GripperEdge')}"/>
+	<mx:CheckBox x="371" y="491" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
+	<mx:Label x="548" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" width="92"/>
 	<mx:TextInput x="637" y="491" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="104"/>
 	<mx:Text x="132" y="520" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195"/>
 	<mx:Text x="132" y="493" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195"/>
@@ -552,7 +589,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	</mx:Button>
 	<mx:Label x="335" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CutoffLength')}" width="149" id="cutoffLabel" textAlign="right"/>
 	<mx:TextInput x="492" y="294" width="106" id="cutoff" text="{pressDefinition.cutoffLength}"/>
-	<mx:Label x="380" y="520" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right"/>
+	<mx:Label x="388" y="520" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right" width="100"/>
 	<mx:ComboBox x="496" y="518.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="112" textAlign="right"/>
 	<mx:List x="132" y="546" height="49" width="137" id="chargelist" dataProvider="{pressDefinition.charges}" labelField="name"></mx:List>
 	<mx:Button x="102" y="617" label="Button" width="38" height="38" click="doDuplicate();">

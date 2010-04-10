@@ -1,25 +1,30 @@
-Prepress
+PrePress
 Typesetting
 Design
 Proof
-ProofOKd
+Proof OK'd
 Camera
 Stripping
 Plate
-OutsidePrepress
+Outside Prepress
+PCX
 Production
-StagedPrint
-RunningPrint
-Completedrying
-StagedCopy
-RunningCopy
-StagedColorCopy
-RunningColorCopy
-Outsideproduction
+Staged - Print
+Running - Print
+Complete - drying
+Staged - Copy
+Running - Copy
+Staged - Color Copy
+Running - Color Copy
+Outside Production
 Complete
 Bindery
-Binderyinprogress
-Outsidebindery
+Bindery in progress
+Outside bindery
 Boxing
 Shipping
 Pickup
+Waiting for Approval
+Waiting for Artwork
+Warehouse
+Mail Area

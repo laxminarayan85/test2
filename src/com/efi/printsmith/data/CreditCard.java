@@ -167,24 +167,24 @@ public class CreditCard extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer creditCardID;
+	private String creditCardID;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCreditCardID(){
+	public String getCreditCardID(){
     return creditCardID; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCreditCardID(Integer newVal) {
+   * @generated
+   */	
+  public void setCreditCardID(String newVal) {
     this.creditCardID = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -230,7 +230,7 @@ public class CreditCard extends ModelBase {
     if (CARDNUMBER.equals(propertyName)) setCardNumber((String)newValue); else
     if (EXPIRESDATE.equals(propertyName)) setExpiresDate((Date)newValue); else
     if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-    if (CREDITCARDID.equals(propertyName)) setCreditCardID((Integer)newValue); else
+    if (CREDITCARDID.equals(propertyName)) setCreditCardID((String)newValue); else
     if (TYPE.equals(propertyName)) setType((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -250,7 +250,7 @@ public class CreditCard extends ModelBase {
     if (ADDRESS.equals(propertyName)) 
       return new Class<?>[] {Address.class};		
     if (CREDITCARDID.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {String.class};		
     if (TYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);

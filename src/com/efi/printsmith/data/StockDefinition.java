@@ -2950,7 +2950,8 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToMany
+    @OneToMany( fetch=FetchType.EAGER)
+	@ManyToMany
     @IndexColumn(name="chargesstockdefinition")
     @JoinTable( name = "stockdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
@@ -3049,7 +3050,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany( fetch=FetchType.EAGER)
     @IndexColumn(name="stockchangesstockdefinition")
     @JoinTable( name = "stockdefinition_stockchanges")
 	private java.util.List<StockChanges> stockChanges;

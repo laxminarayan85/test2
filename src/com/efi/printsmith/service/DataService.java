@@ -1040,6 +1040,23 @@ public class DataService {
 		sequenceValues.setGrade(value);
 		this.addUpdate(sequenceValues);
 	}
+	private void setCreditCardId(CreditCard creditcard) throws Exception {
+		if (creditcard.getCreditCardID() != null && creditcard.getCreditCardID().length() > 0)
+			return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getCreditCard();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("CreditCard", " where creditCardId = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
+		creditcard.setCreditCardID(value.toString());
+		sequenceValues.setCreditCard(value);
+		this.addUpdate(sequenceValues);
+	}
+
 
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
@@ -1075,6 +1092,8 @@ public class DataService {
 				this.setCampaignId((Campaigns) object);
 			} else if (object instanceof Grade) {
 				this.setGradeId((Grade) object);
+			}else if (object instanceof CreditCard) {
+				this.setCreditCardId((CreditCard) object);
 			}
 
 			EntityTransaction tx = em.getTransaction();

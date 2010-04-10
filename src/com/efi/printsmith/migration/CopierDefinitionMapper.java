@@ -3,6 +3,7 @@ package com.efi.printsmith.migration;
 import java.io.File;
 
 import com.efi.printsmith.data.CopierDefinition;
+import com.efi.printsmith.data.CostCenter;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -930,7 +931,6 @@ public class CopierDefinitionMapper extends ImportMapper {
 					else if (currentImportToken.equals("5") == true)
 						copierDefinition.setPriceTwoSide("UsingSide2Factor");
 				} else if ("sales category".equals(currentFieldToken)) {
-					if (currentImportToken.equals("0") == false) {
 						salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
 						if (salesCategory != null)
 							copierDefinition.setSalesCat(salesCategory);
@@ -940,7 +940,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 							salesCategory = (SalesCategory)dataService.addUpdate(salesCategory);
 							addSalesCategory = true;
 						}
-					}	
+					
 				} else if ("sales cat name".equals(currentFieldToken)) {
 					if (addSalesCategory == true) {
 						salesCategory.setName(currentImportToken);
@@ -1009,7 +1009,17 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("cost center ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("cost center".equals(currentFieldToken)) {
-					copierDefinition.setCostCenter(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						CostCenter costCenter = dataService
+								.getByCostCenterName(currentImportToken);
+						if (costCenter == null) {
+							costCenter = new CostCenter();
+							costCenter.setName(currentImportToken);
+							costCenter = (CostCenter)dataService.addUpdate(costCenter);
+						}
+						copierDefinition.setCostCenter(currentImportToken);
+					}
+						
 				} else if ("machine name ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("machine name".equals(currentFieldToken)) {
