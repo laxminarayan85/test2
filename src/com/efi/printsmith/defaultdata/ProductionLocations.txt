@@ -12,10 +12,10 @@ Production
 Staged - Print
 Running - Print
 Complete - drying
-Staged - Copy
-Running - Copy
-Staged - Color Copy
-Running - Color Copy
+Staged - Digital
+Running - Digital
+Staged - Color Digital
+Running - Color Digital
 Outside Production
 Complete
 Bindery

@@ -38,8 +38,11 @@
 	private var message:String;                                   
 	[Bindable]                             
 	private var formIsValid:Boolean = false;                               
-	[Bindable]                                     
+	
+[Bindable]                                     
 	public var formIsEmpty:Boolean; 
+	[Bindable]                                     
+	public var prospect_boolean:Boolean; 
 	                                  
 	[Bindable]                                
 	private var accounts:ArrayCollection = new ArrayCollection();
@@ -81,6 +84,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();   
 		accountTypeRadio.selectedValue = "Customer";  
+		prospect_radio.enabled = prospect_boolean;
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
@@ -88,8 +92,10 @@
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (editPage.className != "EditCustomer") {
 			new_button.visible = false;
+			
 		}
 	}
+	
 	private function accountFilter(item:Object):Boolean {
 		var tempaccount:Account = item as Account;
 		var showItem:Boolean = false;

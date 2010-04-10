@@ -137,10 +137,26 @@
 	private function clearSearch():void{
 		
 	}
-	
+	private function UpdateSize():void{
+		if (chkShowRollStock.selected || chkShowLargeFormatStock.selected){
+			txtSizeMin.enabled = false;
+			txtSizeMax.enabled = false;
+			txtRollWidthMin.enabled = true;
+			txtRollWidthMax.enabled =true;
+		}else{
+			txtSizeMin.enabled = true;
+			txtSizeMax.enabled = true;
+			txtRollWidthMin.enabled = false;
+			txtRollWidthMax.enabled =false;
+		}
+	}
+	private function doLargeFormatChange():void{
+		UpdateSize();
+	}
 	private function doRollStockChanged():void{
-		txtRollWidthMin.enabled = chkShowRollStock.selected;
-		txtRollWidthMax.enabled = chkShowRollStock.selected;
+		
+		UpdateSize();
+			
 	}
 	public function setStockArray(temp:ArrayCollection):void{
 		stockDefinitions = temp;
@@ -318,7 +334,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:Label x="396" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}"/>
 		<mx:Label x="411" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}"/>
 		<mx:CheckBox x="418" y="192" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
-		<mx:CheckBox x="418" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock"/>
+		<mx:CheckBox x="418" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
 		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate"/>
 		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock"/>
 		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells"/>

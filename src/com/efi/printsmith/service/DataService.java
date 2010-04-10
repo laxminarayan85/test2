@@ -839,6 +839,7 @@ public class DataService {
 			sequenceValues.setStockDefinition(new Long(0));
 			sequenceValues.setCampaign(new Long(0));
 			sequenceValues.setGrade(new Long(0));
+			sequenceValues.setCreditCard(new Long(0));
 		}
 		return sequenceValues;
 	}

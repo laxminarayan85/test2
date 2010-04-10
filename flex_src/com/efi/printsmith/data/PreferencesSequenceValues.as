@@ -25,6 +25,7 @@ package com.efi.printsmith.data
 		public var copierDefinition:Number = 0;
 		public var campaign:Number = 0;
 		public var grade:Number = 0;
+		public var creditCard:Number = 0;
 	
 	}
 }

@@ -25,7 +25,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionLocationResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
@@ -106,6 +111,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		private var areaTypeRadioValue:String = "AreaRunSize";
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var costCenterArray:ArrayCollection = new ArrayCollection();  
+	[Bindable]
+	private var productionLocationArray:ArrayCollection = new ArrayCollection();  
+	
 
 	public function init():void {
 		consumer.subscribe();
@@ -114,6 +124,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataService.getCopierPicker("CopierDefinition");
 		chargeDataService.getAll("Charge");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		dataServiceCostCenter.getAll("CostCenter");
+		dataServiceProductionLocation.getAll("ProductionLocations");
+
 		
 	    copierDefinition = initNewCopierDefinition();
 	}
@@ -284,6 +297,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 		price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 		var salesCatName:String = "";
+		if (copierDefinition.costCenter != null)
+			CostCenter.selectedIndex = findItem(copierDefinition.costCenter, costCenterArray);
+		if (copierDefinition.productionLocation != null)
+			ProductionLocation.selectedIndex = findItem(copierDefinition.productionLocation, productionLocationArray);
+		
 		if (copierDefinition.salesCat != null) {
 			salesCatName = copierDefinition.salesCat.name;
 		}
@@ -317,13 +335,19 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 		return -1;
 	}
+	private function handleLoadCostCenterResult(ev:ResultEvent):void {
+	     costCenterArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
+	     productionLocationArray = ev.result as ArrayCollection;
+	}
 	private function mapCopierData():void {
 		//copierDefinition.copyDefID = CopierDefID;
 		copierDefinition.name = Name.text;
 		copierDefinition.machineName = MachineName.text;
 		copierDefinition.outputDescrip = OutPutDescription.text;
-		copierDefinition.productionLocation = ProductionLocation.text;
-		copierDefinition.costCenter = CostCenter.text;
+		copierDefinition.productionLocation = ProductionLocation.selectedItem as String;
+		copierDefinition.costCenter = CostCenter.selectedItem as String;
 		copierDefinition.oemDeviceID = OEMDeviceID.text;
 		copierDefinition.copyID = parseInt(copyID.text); 
 		copierDefinition.costingCopy = CostingCopier.selected;
@@ -782,8 +806,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="126" y="124" width="200" id="Name" text="{copierDefinition.name}" height="20"/>
 		<mx:TextInput x="126" y="146" width="200" id="MachineName" text="{copierDefinition.machineName}" height="20"/>
 		<mx:TextInput x="126" y="168" width="200" id="OutPutDescription" text="{copierDefinition.outputDescrip}" height="20"/>
-		<mx:TextInput x="126" y="190" id="ProductionLocation" width="200" text="{copierDefinition.productionLocation}"  height="20"/>
-		<mx:TextInput x="126" y="212" id="CostCenter" width="200" text="{copierDefinition.costCenter}" height="20"/>
+		<mx:ComboBox x="126" y="190" id="ProductionLocation" width="200" labelField="name" dataProvider="{productionLocationArray}" height="20"/>
+		<mx:ComboBox x="126" y="212" id="CostCenter" width="200" labelField="name" dataProvider="{costCenterArray}" height="20"/>
 		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oemDeviceID}" height="20"/>
 		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89"/>
 		<mx:TextInput x="443" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
