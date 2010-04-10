@@ -2,6 +2,8 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
@@ -14,10 +16,12 @@ import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
 
 public class PressDefinitionMapper extends ImportMapper {
+	protected static Logger log = Logger.getLogger(PressDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+		log.info("Entering PressDefinitionMapper->importTokens");
 		PressDefinition pressDefinition = new PressDefinition();
 		DataService dataService = new DataService();
 		String minSize = "";
@@ -2192,6 +2196,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			sequenceValues.setPressDefinition(Long.parseLong(pressDefinition.getPressId()));
 			dataService.addUpdate(sequenceValues);
 		}
+		log.info("Leaving PressDefinitionMapper->importTokens");
 		return pressDefinition;
 	}
 }
