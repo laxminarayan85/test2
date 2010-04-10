@@ -7,6 +7,8 @@ import com.efi.printsmith.data.MatrixElement;
 
 public class MatrixUtilities {
 	static public MatrixElement lookupMatrixElement(Matrix matrix, long lookup) {
+		if (matrix == null) return null;
+		
 		List<MatrixElement> elements = matrix.getElements();
 		
 		int i = 0;
@@ -22,6 +24,8 @@ public class MatrixUtilities {
 	}
 	
 	static public double calculateStepPriceSideOne(Matrix matrix, long qty) {
+		if (matrix == null) return 0.0;
+		
 		List<MatrixElement> elements = matrix.getElements();
 		
 		int i = 0;
@@ -41,6 +45,8 @@ public class MatrixUtilities {
 	}
 	
 	static public double calculateStepPriceSideTwo(Matrix matrix, long qty) {
+		if (matrix == null) return 0.0;
+		
 		List<MatrixElement> elements = matrix.getElements();
 		
 		int i = 0;
