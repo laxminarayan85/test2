@@ -18,6 +18,8 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadColor(event)"/>
 </mx:RemoteObject>
 
+<mx:StringValidator id="priceListValidator" source="{title_edit}" property="text" minLength="2" required="true"/>
+
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -131,6 +133,8 @@
 	import mx.messaging.messages.IMessage;
 	import mx.core.Application;
 	import mx.collections.ArrayCollection;
+    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;
     import mx.events.*;
     
     import com.efi.printsmith.events.*;
@@ -160,6 +164,9 @@
 	private var color_header:String /* = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color');  */
 
 	public var itemType:String;
+
+    private var formIsValid:Boolean = false;
+    private var focussedFormControl:DisplayObject;
 
 	[Bindable]
 	private var amountRadioValue:String = "amtiscurrency";
@@ -251,21 +258,36 @@
 		this.priceList = priceList;
 		updateTitle(this.priceList.name);
 	}   
-	                 
-	private function doSelect():void {	
 
-		maptoPricelist();
-//		var i:int;
-//		if (priceList.elements != null) {
-//			for (i = 0; i < priceList.elements.length; i++) {
-//				var priceListElement:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-//				priceListElement = dataService.addUpdate(priceListElement) as PriceListElement;
-//			}
-//		}
-		dataService.addUpdate(priceList);
-		PopUpManager.removePopUp(this);
+	private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+        return currentControlIsValid;
+	}
+             
+	private function doSelect():void {	
+		var name:String;
+		name = title_edit.text; 
+		priceListValidator.validate(title_edit,false)
+		
+		if (validate(priceListValidator) == true)
+		{
+			maptoPricelist();
+			dataService.addUpdate(priceList);
+			PopUpManager.removePopUp(this);
+		}else {
+			showMessage("Cannot save "+currentState.toString()+" with an empty name.","Cannot Save");
+		}
 	}     
 	
+	private function showMessage(message:String,title:String):void {  
+		Alert.show(message, title, 0, null, null, null,4);                                 
+	}
+
 	private function doNew():void {
 	}
 	
