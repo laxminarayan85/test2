@@ -78,18 +78,23 @@
 
 		<mx:SetProperty target="{colSide}" name="visible" value="true"/>
 		<mx:SetProperty target="{colColor}" name="visible" value="true"/>
-		<mx:SetProperty target="{dataGrid}" name="width" value="196"/>
-		<mx:SetProperty target="{label1}" name="x" value="231.5"/>
-		<mx:SetProperty target="{title_edit}" name="y" value="38"/>
-		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="171"/>
-		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="139"/>
+		<mx:SetProperty target="{dataGrid}" name="width" value="244.5"/>
+		<mx:SetProperty target="{label1}" name="x" value="263.5"/>
+		<mx:SetProperty target="{title_edit}" name="y" value="23"/>
+		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="220.5"/>
+		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="188.5"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:ComboBox id="cboMethod" x="304" y="92" dataProvider="{PaperPriceMethodArray}" labelField="name" width="176"></mx:ComboBox>
+			<mx:ComboBox id="cboMethod" x="365.5" y="51" dataProvider="{PaperPriceMethodArray}" labelField="name" width="152.5"></mx:ComboBox>
 		</mx:AddChild>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:Label x="249" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right"/>
+			<mx:Label x="252.5" y="53" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right"/>
 		</mx:AddChild>
-		<mx:SetProperty target="{label1}" name="y" value="40"/>
+		<mx:SetProperty target="{label1}" name="y" value="25"/>
+		<mx:SetProperty target="{label1}" name="width" value="100"/>
+		<mx:SetProperty target="{title_edit}" name="width" value="152.5"/>
+		<mx:SetProperty target="{title_edit}" name="x" value="365.5"/>
+		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="4"/>
+		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="4"/>
 	</mx:State>
 	<mx:State name="CopierMatrix" basedOn="Price List">
 		<mx:RemoveChild target="{label1}"/>
@@ -186,10 +191,6 @@
 	private function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-//		quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
-//		price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price'); 
-//		side_header= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides'); 
-//		color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color');  
 	    PopUpManager.centerPopUp(this);
 
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
@@ -226,34 +227,41 @@
 	            
 	public function setPriceList(priceList:PriceListBase):void {
 		if (priceList == null) return;
-		
+
+//		quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
+//		price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price'); 
+//		side_header= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides'); 
+//		color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color');  
+	
 		if (priceList is WasteChart) {
 			itemType = "WasteChart";
 			this.currentState = "Waste Chart"
-			this.label = "Waste Chart"
-			this.quantity_header = "Run Length";
-			this.price_header = "Spoilage";
+			this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Wastechart');
+			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
+			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Spoilage');
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
 			this.currentState = "Speed Table";
-			this.label = "Speed Table"
-			this.quantity_header = "Run Length";
-			this.price_header = "Speed";
+			this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Speedtable');
+			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
+			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Speed');
 		} else if (priceList is PaperPrice) {
 			itemType = "PaperPrice";
 			this.currentState = "Paper Price";
-			this.label = "Paper Price"
-			this.quantity_header = "Copies";
-			this.price_header = "Price";
+			this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.PaperPrices');
+			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Copies');
+			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price');
+			this.color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Colors');
+			this.side_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides');
 		} else if (priceList is com.efi.printsmith.data.Matrix) {
 			itemType = "Matrix";
 			this.currentState = "CopierMatrix";
 			this.label = "Copier Price Matrix"
-			this.quantity_header = "Copies";
+			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Copies');
 			this.price_header = "Price/Side";
 		} else {
 			itemType = "PriceList";
-			this.currentState = "Price List";
+			this.currentState = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PriceList');
 		}
 		this.priceList = priceList;
 		updateTitle(this.priceList.name);
@@ -426,7 +434,7 @@
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false" width="60"/>
 		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false" width="60"/>
 			 <mx:DataGridColumn id="colSide" headerText="{side_header}" dataField="side" labelFunction="showSide"/>
-		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="60"/>
+		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="65"/>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:TextInput x="356" y="10" id="title_edit" change="updateTitle(title_edit.text);" width="124" text="{priceList.name}"/>
