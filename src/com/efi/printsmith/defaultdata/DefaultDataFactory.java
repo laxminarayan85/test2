@@ -248,6 +248,7 @@ public class DefaultDataFactory {
 		if (itemList.size() > 0)
 			return;
 
+		int item = 1;
 		ColumnNames columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Account");
 		try {
@@ -255,7 +256,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, true);
+		ProcessPreferencePendingList(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Document");
@@ -264,7 +266,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, true);
+		ProcessPreferencePendingList(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("ReOrderInvCmd.Contact");
@@ -273,7 +276,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 		
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Phone");
@@ -282,7 +286,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Location");
@@ -291,7 +296,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.WantedDate");
@@ -300,7 +306,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("scheduleLateAndCompletedCmd.Hold");
@@ -309,7 +316,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Type");
@@ -318,7 +326,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.DocumentTitle");
@@ -327,7 +336,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.JobComment");
@@ -336,7 +346,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.ProofDate");
@@ -345,7 +356,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.TakenBy");
@@ -354,7 +366,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.SalesRep");
@@ -363,7 +376,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.WebReference");
@@ -372,7 +386,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.JobCount");
@@ -381,8 +396,10 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencePendingList(columnnames, false);
+		ProcessPreferencePendingList(columnnames, false, item);
+
 //stock columns
+		item = 1;
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("name");
 		columnnames.setName("stockPickerCmd.Name");
@@ -391,7 +408,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 		
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("weight");
@@ -401,7 +419,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("parentsize");
@@ -411,7 +430,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("color");
@@ -421,7 +441,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("genericcolor");
@@ -431,7 +452,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("finish");
@@ -441,7 +463,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("thickness");
@@ -451,7 +474,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("grade");
@@ -461,7 +485,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("cwt1");
@@ -471,7 +496,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("vendor");
@@ -481,7 +507,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stocknumber");
@@ -491,7 +518,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("id");
@@ -501,7 +529,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("onhand");
@@ -511,7 +540,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("committed");
@@ -521,7 +551,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("ordered");
@@ -531,7 +562,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("shellitem");
@@ -541,7 +573,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, true);
+		ProcessPreferencesStockDefinition(columnnames, true, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("normalrunsize");
@@ -551,7 +584,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stktype");
@@ -561,7 +595,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stkgroup");
@@ -571,7 +606,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("coated");
@@ -581,7 +617,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("minorder");
@@ -591,7 +628,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("cost1");
@@ -601,7 +639,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("priceexpires");
@@ -611,7 +650,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 		
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("forestmanagement");
@@ -621,7 +661,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("pcwrecycledpercent");
@@ -631,7 +672,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("fsccertified");
@@ -641,7 +683,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("sficertified");
@@ -651,7 +694,8 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		item = item + 1;
 
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("greensealcertified");
@@ -661,14 +705,15 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		ProcessPreferencesStockDefinition(columnnames, false);
+		ProcessPreferencesStockDefinition(columnnames, false, item);
 	}
 
 	private void ProcessPreferencePendingList(ColumnNames columnname,
-			Boolean visible) {
+			Boolean visible, Integer columnorder) {
 		PreferencesPendingList preferencesPendingList = new PreferencesPendingList();
 		preferencesPendingList.setColumns(columnname);
 		preferencesPendingList.setVisible(visible);
+		preferencesPendingList.setColumnOrder(columnorder);
 		try {
 			dataservice.addUpdate(preferencesPendingList);
 		} catch (Exception e) {
@@ -677,10 +722,11 @@ public class DefaultDataFactory {
 	}
 
 	private void ProcessPreferencesStockDefinition(ColumnNames columnname,
-			Boolean visible) {
+			Boolean visible, Integer columnorder) {
 		PreferencesStockDefinition preferencesStockDefinition = new PreferencesStockDefinition();
 		preferencesStockDefinition.setColumns(columnname);
 		preferencesStockDefinition.setVisible(visible);
+		preferencesStockDefinition.setColumnOrder(columnorder);
 		try {
 			dataservice.addUpdate(preferencesStockDefinition);
 		} catch (Exception e) {
