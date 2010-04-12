@@ -47,7 +47,8 @@ public class PriceStockEngine {
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "pricePrintStock", "");
 		
 		PaperPrice paperPrice = stockDefinition.getDefaultPriceList();
-		retVal = PriceListUtilities.lookupPrice(paperPrice, job.getQtyOrdered());
+		if (paperPrice != null)
+			retVal = PriceListUtilities.lookupPrice(paperPrice, job.getQtyOrdered());
 		priceLogEntry.setDescription("Stock Price is Print");
 		priceLogEntry.setValue(retVal);
 		return retVal;

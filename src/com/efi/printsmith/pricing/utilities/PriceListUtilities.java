@@ -57,13 +57,18 @@ public class PriceListUtilities {
 			retVal = elements.get(0).getAmount();
 		} else {
 			int lastElementIndex = 0;
+			boolean found = false;
 			for (i = 0; i < elements.size(); i++) {
 				// Find the actual last element
 				if (elements.get(i).getQuantity() == 0) {
+					found = true;
 					lastElementIndex = i-1;
 					break;
 				}
 			}
+			
+			if (found == false)
+				lastElementIndex = i-1;
 			
 			for (i = lastElementIndex; i >= 0; i--) {
 				// Search backwards for matching element

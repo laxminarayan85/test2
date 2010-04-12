@@ -13,6 +13,8 @@
 				close="doDelete()" width="966" height="660" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
+			<mx:SetProperty target="{job_imp}" name="text" value="{job.impositionsPerRun}"/>
+			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpositions}"/>
 		</mx:State>
 		<mx:State name="CopyMethod">
 			<mx:SetProperty target="{job_total}" name="y" value="444"/>
@@ -512,7 +514,8 @@
 				job.finishSize = job_finish_size.text;
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
-				
+				job.impositionsPerRun = parseInt(job_imp.text);
+				job.totalImpositions = parseInt(total_imp.text);
 			}
 
 			private function mapFromJobData():void
@@ -912,6 +915,12 @@
 				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;	
 				job.pricingRecord = localJob.pricingRecord;
 				charges = localJob.charges;
+				job.impositionsPerRun = localJob.impositionsPerRun;
+				job.totalImpositions = localJob.totalImpositions;
+				job.estWaste = localJob.estWaste;
+				job_imp.text = job.impositionsPerRun.toString();
+				total_imp.text = job.totalImpositions.toString();
+				est_waste.text = job.estWaste.toString();
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
@@ -961,7 +970,14 @@
 				case this.est_waste:
 					doUpdatePrice = true;
 					break;
-					
+				case this.front_colors_text:
+					this.front_passes_text.text = this.front_colors_text.text;
+					doUpdatePrice = true;
+					break;
+				case this.back_colors_text:
+					this.back_passes_text.text = this.back_colors_text.text;
+					doUpdatePrice = true;
+					break;	
 				}
 				if (doUpdatePrice) updatePrice();
 			}
