@@ -62,6 +62,13 @@
 		<servlet-class>com.efi.printsmith.migration.ImportServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>FileIOServlet</servlet-name>
+		<display-name>FileIOServlet</display-name>
+		<servlet-class>com.efi.printsmith.utilities.FileIOServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
@@ -69,6 +76,10 @@
 	<servlet-mapping>
 		<servlet-name>ImportServlet</servlet-name>
 		<url-pattern>/ImportServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileIOServlet</servlet-name>
+		<url-pattern>/FileIOServlet</url-pattern>
 	</servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
