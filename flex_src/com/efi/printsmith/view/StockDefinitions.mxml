@@ -11,8 +11,8 @@
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{NormalRunSize}"/>
 			<mx:RemoveChild target="{label10}"/>
-			<mx:SetProperty target="{minOrder}" name="x" value="130.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="24"/>
+			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
+			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 		</mx:State>
 		<mx:State name="RollStock">
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWeight')}"/>
@@ -51,20 +51,23 @@
 			<mx:RemoveChild target="{mWeight}"/>
 			<mx:SetProperty target="{rollweight}" name="y" value="114"/>
 			<mx:SetProperty target="{rollweight}" name="width" value="139.5"/>
-			<mx:SetProperty target="{minOrder}" name="x" value="136.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="10"/>
+			<mx:SetProperty target="{label7}" name="x" value="-20"/>
 			<mx:SetProperty target="{label7}" name="width" value="118.5"/>
+			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
+			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 		</mx:State>
 		<mx:State name="SheetStock">
 			<mx:SetProperty target="{mWeight}" name="enabled" value="false"/>
 			<mx:SetProperty target="{textinput1}" name="enabled" value="false"/>
-			<mx:SetProperty target="{pcwRecycled}" name="x" value="64"/>
-			<mx:SetProperty target="{pcwRecycled}" name="y" value="47"/>
 			<mx:RemoveChild target="{rollweight}"/>
-			<mx:SetProperty target="{minOrder}" name="x" value="139.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="10"/>
+			<mx:SetProperty target="{label7}" name="x" value="-23"/>
 			<mx:SetProperty target="{label7}" name="width" value="121.5"/>
 			<mx:SetProperty target="{panel1}" name="x" value="549"/>
+			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
+			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
+			<mx:SetProperty target="{pcwRecycled}" name="x" value="152"/>
+			<mx:SetProperty target="{label12}" name="width" value="134"/>
+			<mx:SetProperty target="{pcwRecycled}" name="width" value="32.5"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -77,9 +80,10 @@
 			<mx:RemoveChild target="{label2}"/>
 			<mx:SetProperty target="{label7}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinOrderarea')}"/>
 			<mx:RemoveChild target="{rollweight}"/>
-			<mx:SetProperty target="{minOrder}" name="x" value="140.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="10"/>
+			<mx:SetProperty target="{label7}" name="x" value="-24"/>
 			<mx:SetProperty target="{label7}" name="width" value="122.5"/>
+			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
+			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
@@ -116,9 +120,9 @@
 			<mx:SetProperty target="{cboDefaultPress}" name="enabled" value="false"/>
 			<mx:SetProperty target="{button1}" name="enabled" value="false"/>
 			<mx:RemoveChild target="{rollweight}"/>
-			<mx:SetProperty target="{minOrder}" name="x" value="138.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="10"/>
+			<mx:SetProperty target="{label7}" name="x" value="-22"/>
 			<mx:SetProperty target="{label7}" name="width" value="120.5"/>
+			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
@@ -1378,7 +1382,7 @@
 				<mx:Label x="1" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.StockType')}" textAlign="right" width="97.5" id="label6"/>
 				<mx:Label x="295" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
 				<mx:Label x="0" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ParentSize')}" textAlign="right" width="98.5" id="label3"/>
-				<mx:Label x="261" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Thickness')}" textAlign="right" width="85.5"/>
+				<mx:Label x="261" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Thickness')}" textAlign="right" width="85.5" id="label11"/>
 				<mx:Label x="282" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.BasicSize')}" textAlign="right" width="85.5" id="label5"/>
 				<mx:Label x="0" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsCarton')}" textAlign="right" width="98.5" id="label2"/>
 				<mx:Label x="261" y="91" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MWeight')}" textAlign="right" width="106.5" id="label1"/>
@@ -1406,7 +1410,7 @@
 				<mx:ComboBox x="448" y="60" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
 				<mx:Panel x="598" y="7" width="252.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
 					<mx:Label x="26.25" y="1" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ForestManagement')}"/>
-					<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PCWRecycled')}" width="97.75" textAlign="right"/>
+					<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PCWRecycled')}" width="97.75" textAlign="right" id="label12"/>
 					<mx:CheckBox x="10" y="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.FSCCertified')}" id="chkfscCertified" selected="{stockDefinitions.fscCertified}"/>
 					<mx:CheckBox x="10" y="84" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SFICertified')}" id="chksfiCertified" selected="{stockDefinitions.sfiCertified}"/>
 					<mx:CheckBox x="10" y="104" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GreenSealCertified')}" id="chkgreensealCertified" selected="{stockDefinitions.greenSealCertified}"/>
