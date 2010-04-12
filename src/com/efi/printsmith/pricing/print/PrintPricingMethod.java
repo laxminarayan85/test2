@@ -26,9 +26,11 @@ public class PrintPricingMethod {
 	
 	private void calculateImpositionsPerRun(Job job) {
 		long impositionsPerRun = job.getPressQty() + job.getBinderyWaste() + job.getEstWaste();
+		job.setImpositionsPerRun(impositionsPerRun);
 	}
 	
 	private void calculateTotalImpositions(Job job) {
-		long totalImpositions = (job.getFrontPasses() + job.getBackPasses());
+		long totalImpositions = job.getImpositionsPerRun() * (job.getFrontPasses() + job.getBackPasses());
+		job.setTotalImpositions(totalImpositions);
 	}
 }
