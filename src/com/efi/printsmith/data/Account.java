@@ -1146,8 +1146,8 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne (cascade=CascadeType.ALL)
-	private Marketing marketing;
+    @ManyToOne
+   	private Marketing marketing;
 	
 	/** 
 	 * @generated
@@ -2202,8 +2202,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="invoiceestimatechargesaccount")
+    @OneToMany
     @JoinTable( name = "account_invoiceestimatecharges")
 	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
 	
@@ -2235,8 +2234,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="jobchargesaccount")
+    @OneToMany
     @JoinTable( name = "account_jobcharges")
 	private java.util.List<ChargeDefinition> jobCharges;
 	

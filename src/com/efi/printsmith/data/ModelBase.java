@@ -29,7 +29,7 @@ import org.hibernate.annotations.Index;
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="modelbase")
-abstract public class ModelBase extends HibernateProxy implements Serializable{
+abstract public class ModelBase extends HibernateProxy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)

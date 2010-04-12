@@ -188,8 +188,7 @@ public class WebCatalogs extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="catagorieswebcatalogs")
+    @OneToMany
     @JoinTable( name = "webcatalogs_catagories")
 	private java.util.List<WebCatagories> catagories;
 	

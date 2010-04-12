@@ -67,11 +67,11 @@ public class DataService {
 						DefaultDataFactory df = new DefaultDataFactory();
 						df.LoadDefaultData(this);
 					} catch (Exception e) {
-						log.debug("** Exception: " + e.getMessage());
+						log.error("** Exception: " + e.getMessage());
 					}
 				}
 			}
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			log.error(e);
 		}
 	}

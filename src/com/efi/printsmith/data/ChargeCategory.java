@@ -66,8 +66,7 @@ public class ChargeCategory extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @IndexColumn(name="childrenchargecategory")
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
 	

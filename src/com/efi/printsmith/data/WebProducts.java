@@ -318,8 +318,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="questionswebproducts")
+    @OneToMany
     @JoinTable( name = "webproducts_questions")
 	private java.util.List<WebQuestions> questions;
 	

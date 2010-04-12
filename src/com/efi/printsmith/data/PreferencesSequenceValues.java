@@ -369,7 +369,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	/**
    * @generated
    */	
-    @Basic
+ 	@Basic
   private Long creditCard;
 
 	/**

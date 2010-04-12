@@ -288,6 +288,8 @@
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		stockDefinitions = new StockDefinition;
+		stockDefinitions.charges = new ArrayCollection;
+		stockDefinitions.stockChanges = new ArrayCollection;
 	    loadUomArray();
 	    loadUnitsArray();
 	    
@@ -408,9 +410,13 @@
 		if (stockDefinition != null)
 		{
 			stockDefinitions = stockDefinition;
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
 			mapFromStockDefinitionData();
 		} else {
 	    	stockDefinitions = new StockDefinition();
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
 	    	mapFromStockDefinitionData();
 		}
 		
@@ -521,22 +527,28 @@
 	private function handleStockPickerCancel(evt:StockPickerSelectEvent):void {
 		if (this.stockDefinitions == null) {
 			this.stockDefinitions = new StockDefinition;
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
 		}
 	}
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
 		if (evt.stockDefinition != null) {
-			this.stockDefinitions = evt.stockDefinition ;
+			this.stockDefinitions = evt.stockDefinition;
 			this.mapFromStockDefinitionData();
 	     
 		} else {
 			this.stockDefinitions = new StockDefinition();
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
 			Alert.show("Stock Picker returned a null stock", "Error");
 		}
 	}
 	
 	private function handleStockPickerNew(evt:StockPickerSelectEvent):void {
-		this.stockDefinitions = new StockDefinition();
+		stockDefinitions = new StockDefinition();
+	    stockDefinitions.charges = new ArrayCollection;
+	   	stockDefinitions.stockChanges = new ArrayCollection;
 	}
 	
 	private function doNext():void {  
@@ -586,6 +598,8 @@
 	private function doNew():void {
 		doSave();
   	    stockDefinitions = new StockDefinition();
+    	stockDefinitions.charges = new ArrayCollection;
+    	stockDefinitions.stockChanges = new ArrayCollection;
   	    setStockDefinition(stockDefinitions);
   	    standardItemCheckEvent();
 	}       
@@ -597,6 +611,8 @@
 
 	private function doRevert():void {
 	    stockDefinitions = new StockDefinition();
+    	stockDefinitions.charges = new ArrayCollection;
+    	stockDefinitions.stockChanges = new ArrayCollection;
 	    setStockDefinition(stockDefinitions);                                           
 	}
 

@@ -188,8 +188,7 @@ public class PriceLogEntry extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="childrenpricelogentry")
+    @OneToMany
     @JoinTable( name = "pricelogentry_children")
 	private java.util.List<PriceLogEntry> children;
 	

@@ -1017,8 +1017,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="chargespressdefinition")
+    @OneToMany
     @JoinTable( name = "pressdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	

@@ -379,8 +379,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @IndexColumn(name="childrenjobbase")
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
@@ -412,8 +411,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="chargesjobbase")
+    @OneToMany
     @JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -1215,8 +1213,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="frontinksjobbase")
+    @OneToMany
     @JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	

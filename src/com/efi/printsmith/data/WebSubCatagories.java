@@ -58,8 +58,7 @@ public class WebSubCatagories extends WebCatagories {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="productswebsubcatagories")
+    @OneToMany
     @JoinTable( name = "websubcatagories_products")
 	private java.util.List<WebProducts> products;
 	

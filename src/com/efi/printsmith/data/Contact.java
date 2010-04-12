@@ -379,8 +379,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @IndexColumn(name="campaignscontact")
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	

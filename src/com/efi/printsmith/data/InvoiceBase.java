@@ -613,8 +613,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-    @IndexColumn(name="jobsinvoicebase")
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "invoicebase_jobs")
 	private java.util.List<Job> jobs;
 	

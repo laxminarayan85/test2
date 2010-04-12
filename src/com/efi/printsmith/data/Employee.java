@@ -834,8 +834,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="employeepricingsemployee")
+    @OneToMany
     @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	
@@ -867,8 +866,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="employeechargesemployee")
+    @OneToMany
     @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeDefinition> employeeCharges;
 	
@@ -900,8 +898,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="employeepressesemployee")
+    @OneToMany
     @JoinTable( name = "employee_employeepresses")
 	private java.util.List<PressDefinition> employeePresses;
 	
@@ -933,8 +930,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="employeecopiersemployee")
+    @OneToMany
     @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<CopierDefinition> employeeCopiers;
 	
@@ -1010,8 +1006,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="productionparentsemployee")
+    @OneToMany
     @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	

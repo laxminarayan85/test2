@@ -323,7 +323,7 @@
 			}
 			moveLogo.play();
 		}
-		
+		 
 		private function endMoveLogo() : void {
 			efiLogoFade.play();
 			poweredByFade.play();			

@@ -162,8 +162,7 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="choiceswebquestions")
+    @OneToMany
     @JoinTable( name = "webquestions_choices")
 	private java.util.List<WebChoices> choices;
 	

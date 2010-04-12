@@ -240,8 +240,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="comlinksparty")
+    @OneToMany
     @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
 	

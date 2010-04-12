@@ -88,8 +88,7 @@ public class Grade extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany( fetch=FetchType.EAGER)
-    @IndexColumn(name="campaignsgrade")
+    @OneToMany
     @JoinTable( name = "grade_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	
