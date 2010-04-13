@@ -71,6 +71,12 @@
 		<servlet-class>com.efi.printsmith.utilities.FileIOServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>IntegrationServlet</servlet-name>
+		<display-name>IntegrationServlet</display-name>
+		<servlet-class>com.efi.printsmith.integration.IntegrationServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
@@ -83,6 +89,10 @@
 	<servlet-mapping>
 		<servlet-name>FileIOServlet</servlet-name>
 		<url-pattern>/FileIOServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>IntegrationServlet</servlet-name>
+		<url-pattern>/IntegrationServlet</url-pattern>
 	</servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
