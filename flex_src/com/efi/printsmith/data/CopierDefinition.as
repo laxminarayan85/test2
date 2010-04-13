@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.CopierDefinition")]
-	[Managed]
+
 	public class CopierDefinition extends ModelBase
 	{
 
@@ -18,16 +19,16 @@ package com.efi.printsmith.data
 		public var productionLocation:String = "";
 		public var costCenter:String = "";
 		public var oemDeviceID:String = "";
-		public var costingCopy:Boolean = true;
-		public var blackwhite:Boolean = true;
-		public var color:Boolean = true;
-		public var integratedDevice:Boolean = true;
+		public var costingCopy:Boolean = false;
+		public var blackwhite:Boolean = false;
+		public var color:Boolean = false;
+		public var integratedDevice:Boolean = false;
 		public var maxSize:String = "";
 		public var minSize:String = "";
 		public var monthlyLabor:Number = 0;
 		public var clickCost:Number = 0;
 		public var laborCopy:Number = 0;
-		public var largeFormat:Boolean = true;
+		public var largeFormat:Boolean = false;
 		public var maxWidth:String = "";
 		public var minWidth:String = "";
 		public var daysOpen:int = 0;
@@ -57,10 +58,10 @@ package com.efi.printsmith.data
 		public var stockPriceMethod:String = "";
 		public var sideTwoFactor:Number = 0;
 		public var copierMatrix:Matrix;
-		public var useCopierStockMarkup:Boolean = true;
+		public var useCopierStockMarkup:Boolean = false;
 		public var matrixType:String = "";
 		public var squareAreaType:String = "";
-		public var interpolateMatrix:Boolean = true;
+		public var interpolateMatrix:Boolean = false;
 		public var stockMarkup:Number = 0;
 		public var baseRate:Number = 0;
 	

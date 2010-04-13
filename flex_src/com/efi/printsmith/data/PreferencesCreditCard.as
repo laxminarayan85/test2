@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesCreditCard")]
-	[Managed]
+
 	public class PreferencesCreditCard extends ModelBase
 	{
 
@@ -12,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.PreferencesCreditCard";
 		}
 				
-		public var used:Boolean = true;
+		public var used:Boolean = false;
 		public var cardType:String = "";
 		public var abbreviation:String = "";
 		public var code:String = "";

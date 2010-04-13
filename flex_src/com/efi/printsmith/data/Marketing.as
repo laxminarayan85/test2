@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Marketing")]
-	[Managed]
+
 	public class Marketing extends ModelBase
 	{
 
@@ -28,10 +29,10 @@ package com.efi.printsmith.data
 		public var user9:String = "";
 		public var typeWork:String = "";
 		public var mailerType:String = "";
-		public var customer:Boolean = true;
-		public var prospect:Boolean = true;
-		public var noMail:Boolean = true;
-		public var personalAcct:Boolean = true;
+		public var customer:Boolean = false;
+		public var prospect:Boolean = false;
+		public var noMail:Boolean = false;
+		public var personalAcct:Boolean = false;
 		public var numberofEmployees:int = 0;
 		public var annualRev:int = 0;
 		public var businessType:BusinessType;

@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PricingRecord")]
-	[Managed]
+
 	public class PricingRecord extends ModelBase
 	{
 
@@ -20,12 +21,12 @@ package com.efi.printsmith.data
 		public var oversTotalPrice:Number = 0;
 		public var bindPrice:Number = 0;
 		public var oversUnitPrice:Number = 0;
-		public var unitPriceOverride:Boolean = true;
-		public var totalPriceOverride:Boolean = true;
+		public var unitPriceOverride:Boolean = false;
+		public var totalPriceOverride:Boolean = false;
 		public var laborTotalPrice:Number = 0;
-		public var laborTotalPriceOverride:Boolean = true;
+		public var laborTotalPriceOverride:Boolean = false;
 		public var stockTotalPrice:Number = 0;
-		public var stockTotalPriceOverride:Boolean = true;
+		public var stockTotalPriceOverride:Boolean = false;
 		public var stockMarkup:Number = 0;
 	
 	}

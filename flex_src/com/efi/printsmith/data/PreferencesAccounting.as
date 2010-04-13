@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesAccounting")]
-	[Managed]
+
 	public class PreferencesAccounting extends ModelBase
 	{
 
@@ -15,7 +16,7 @@ package com.efi.printsmith.data
 		public var creditLimit:Number = 0;
 		public var financeChange:Number = 0;
 		public var inactivePeriod:Number = 0;
-		public var removeDraftsFromDeposit:Boolean = true;
+		public var removeDraftsFromDeposit:Boolean = false;
 		public var defaultSalesRep:String = "";
 		public var defaultShipping:String = "";
 		public var pastDue:int = 0;
@@ -24,18 +25,18 @@ package com.efi.printsmith.data
 		public var delinquentNote:String = "";
 		public var frozen:int = 0;
 		public var frozenNote:String = "";
-		public var activateCreditCardApproval:Boolean = true;
+		public var activateCreditCardApproval:Boolean = false;
 		public var invoicePrefix:String = "";
 		public var invoiceDocument:String = "";
 		public var invoiceSuffix:String = "";
-		public var invoiceAllowPrefixMod:Boolean = true;
-		public var invoiceAllowSuffixMod:Boolean = true;
+		public var invoiceAllowPrefixMod:Boolean = false;
+		public var invoiceAllowSuffixMod:Boolean = false;
 		public var estimatePrefix:String = "";
 		public var estimateDocument:String = "";
 		public var estimateSuffix:String = "";
-		public var estimateAllowPrefixMod:Boolean = true;
-		public var estimateAllowSuffixMod:Boolean = true;
-		public var printDocument:Boolean = true;
+		public var estimateAllowPrefixMod:Boolean = false;
+		public var estimateAllowSuffixMod:Boolean = false;
+		public var printDocument:Boolean = false;
 		public var journalDocumentPreference:String = "";
 		public var accountingLinkTo:String = "";
 		public var shippingCollected:String = "";
@@ -49,9 +50,9 @@ package com.efi.printsmith.data
 		public var cashOverShort:String = "";
 		public var paidOut:String = "";
 		public var refundChecks:String = "";
-		public var useObsoleteDropFolder:Boolean = true;
-		public var useSkipJackProcessor:Boolean = true;
-		public var useEfsProcessor:Boolean = true;
+		public var useObsoleteDropFolder:Boolean = false;
+		public var useSkipJackProcessor:Boolean = false;
+		public var useEfsProcessor:Boolean = false;
 		public var creditCardDropFolder:String = "";
 		public var skipJackMode:int = 0;
 		public var internetURL:String = "";
@@ -60,8 +61,8 @@ package com.efi.printsmith.data
 		public var portNumber:String = "";
 		public var merchantID:String = "";
 		public var merchantKey:String = "";
-		public var useAddressValidation:Boolean = true;
-		public var promptUserForValidationInfo:Boolean = true;
+		public var useAddressValidation:Boolean = false;
+		public var promptUserForValidationInfo:Boolean = false;
 	
 	}
 }

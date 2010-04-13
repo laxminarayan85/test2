@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.DataManager")]
-	[Managed]
+
 	public class DataManager extends ModelBase
 	{
 
@@ -12,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.DataManager";
 		}
 				
-		public var dataloaded:Boolean = true;
+		public var dataloaded:Boolean = false;
 	
 	}
 }

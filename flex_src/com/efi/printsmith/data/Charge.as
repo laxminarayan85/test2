@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Charge")]
-	[Managed]
+
 	public class Charge extends ModelBase
 	{
 
@@ -16,23 +17,23 @@ package com.efi.printsmith.data
 		public var description:String = "";
 		public var notes:String = "";
 		public var productionLocation:Location;
-		public var showNotes:Boolean = true;
-		public var finished:Boolean = true;
-		public var taxable:Boolean = true;
-		public var brokered:Boolean = true;
-		public var displayQty:Boolean = true;
-		public var hidden:Boolean = true;
-		public var hidePrice:Boolean = true;
+		public var showNotes:Boolean = false;
+		public var finished:Boolean = false;
+		public var taxable:Boolean = false;
+		public var brokered:Boolean = false;
+		public var displayQty:Boolean = false;
+		public var hidden:Boolean = false;
+		public var hidePrice:Boolean = false;
 		public var price:Number = 0;
-		public var overridePrice:Boolean = true;
+		public var overridePrice:Boolean = false;
 		public var quantity:Number = 0;
-		public var overrideQuantity:Boolean = true;
+		public var overrideQuantity:Boolean = false;
 		public var materialQty:Number = 0;
-		public var overrideMaterialQuantity:Boolean = true;
+		public var overrideMaterialQuantity:Boolean = false;
 		public var rate:Number = 0;
-		public var overrideRate:Boolean = true;
+		public var overrideRate:Boolean = false;
 		public var up:int = 0;
-		public var overrideUp:Boolean = true;
+		public var overrideUp:Boolean = false;
 		public var parentJob:JobBase;
 		public var parentInvoice:Invoice;
 		public var minimumCharge:Number = 0;

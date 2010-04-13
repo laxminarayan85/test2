@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Account")]
-	[Managed]
+
 	public class Account extends ModelBase
 	{
 
@@ -24,19 +25,19 @@ package com.efi.printsmith.data
 		public var salesRank:Number = 0;
 		public var userAcctId:String = "";
 		public var externalAcctId:String = "";
-		public var dollarDiscount:Boolean = true;
-		public var oneTimeDiscount:Boolean = true;
-		public var fileOriginals:Boolean = true;
-		public var webAccessEnabled:Boolean = true;
-		public var prospect:Boolean = true;
-		public var autoPayEnabled:Boolean = true;
-		public var optOutMarketing:Boolean = true;
-		public var acctIsIndividual:Boolean = true;
-		public var taxExempt:Boolean = true;
-		public var payCommissions:Boolean = true;
-		public var poRequired:Boolean = true;
-		public var applyFinanceCharges:Boolean = true;
-		public var generateStatements:Boolean = true;
+		public var dollarDiscount:Boolean = false;
+		public var oneTimeDiscount:Boolean = false;
+		public var fileOriginals:Boolean = false;
+		public var webAccessEnabled:Boolean = false;
+		public var prospect:Boolean = false;
+		public var autoPayEnabled:Boolean = false;
+		public var optOutMarketing:Boolean = false;
+		public var acctIsIndividual:Boolean = false;
+		public var taxExempt:Boolean = false;
+		public var payCommissions:Boolean = false;
+		public var poRequired:Boolean = false;
+		public var applyFinanceCharges:Boolean = false;
+		public var generateStatements:Boolean = false;
 		public var externalRef:String = "";
 		public var salesRep:SalesRep;
 		public var shippingMode:ShippingMethod;

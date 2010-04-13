@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesEstimating")]
-	[Managed]
+
 	public class PreferencesEstimating extends ModelBase
 	{
 
@@ -12,56 +13,56 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.PreferencesEstimating";
 		}
 				
-		public var closeAfterCopy:Boolean = true;
-		public var stockCostInEstimator:Boolean = true;
-		public var canChangeAddress:Boolean = true;
-		public var showPaperCalculator:Boolean = true;
-		public var useStockParentSize:Boolean = true;
-		public var calculateReOrderDate:Boolean = true;
-		public var validateSalesRep:Boolean = true;
-		public var leaveFoldedSizeEmpty:Boolean = true;
-		public var doNotCostDuringPost:Boolean = true;
-		public var autoShowCharges:Boolean = true;
-		public var neverUsePresetPressOnStockChanges:Boolean = true;
-		public var addFixedWasteForEachPass:Boolean = true;
-		public var addFixedWasteForEachColor:Boolean = true;
-		public var calculateInkbyImpressions:Boolean = true;
-		public var useHistoryTitleforNewTitle:Boolean = true;
+		public var closeAfterCopy:Boolean = false;
+		public var stockCostInEstimator:Boolean = false;
+		public var canChangeAddress:Boolean = false;
+		public var showPaperCalculator:Boolean = false;
+		public var useStockParentSize:Boolean = false;
+		public var calculateReOrderDate:Boolean = false;
+		public var validateSalesRep:Boolean = false;
+		public var leaveFoldedSizeEmpty:Boolean = false;
+		public var doNotCostDuringPost:Boolean = false;
+		public var autoShowCharges:Boolean = false;
+		public var neverUsePresetPressOnStockChanges:Boolean = false;
+		public var addFixedWasteForEachPass:Boolean = false;
+		public var addFixedWasteForEachColor:Boolean = false;
+		public var calculateInkbyImpressions:Boolean = false;
+		public var useHistoryTitleforNewTitle:Boolean = false;
 		public var normalDueDateDays:int = 0;
-		public var closeInvoiceAfterPrintingTicket:Boolean = true;
-		public var closeInvoicesAndEstimateAfterPrinting:Boolean = true;
+		public var closeInvoiceAfterPrintingTicket:Boolean = false;
+		public var closeInvoicesAndEstimateAfterPrinting:Boolean = false;
 		public var defaultInvoice:int = 0;
 		public var defaultEstimate:int = 0;
 		public var numberOfDaysBeforeDue:int = 0;
 		public var dueFrom:int = 0;
-		public var useGripEdgeGap:Boolean = true;
+		public var useGripEdgeGap:Boolean = false;
 		public var gripEdgeGap:Number = 0;
-		public var useFolioEdge:Boolean = true;
+		public var useFolioEdge:Boolean = false;
 		public var folioEdge:Number = 0;
-		public var useColorBar:Boolean = true;
+		public var useColorBar:Boolean = false;
 		public var colorBar:Number = 0;
-		public var useWhiteSpace:Boolean = true;
+		public var useWhiteSpace:Boolean = false;
 		public var whiteSpace:Number = 0;
 		public var whiteSpaceTop:Number = 0;
 		public var whiteSpaceRight:Number = 0;
 		public var whiteSpaceBottom:Number = 0;
-		public var useGutter:Boolean = true;
+		public var useGutter:Boolean = false;
 		public var gutter:Number = 0;
 		public var gutterHorizontal:Number = 0;
-		public var useBleed:Boolean = true;
+		public var useBleed:Boolean = false;
 		public var bleed:Number = 0;
 		public var bleedTop:Number = 0;
 		public var bleedRight:Number = 0;
 		public var bleedBottom:Number = 0;
 		public var defaultPressCuttOff:Number = 0;
-		public var backTrimParent:Boolean = true;
-		public var trimFourSides:Boolean = true;
-		public var workandTumble:Boolean = true;
+		public var backTrimParent:Boolean = false;
+		public var trimFourSides:Boolean = false;
+		public var workandTumble:Boolean = false;
 		public var runToFinishGrain:String = "";
-		public var printParentToFinishSection:Boolean = true;
-		public var printParentToRunSection:Boolean = true;
-		public var printRunToFinishSection:Boolean = true;
-		public var attachToJobTicket:Boolean = true;
+		public var printParentToFinishSection:Boolean = false;
+		public var printParentToRunSection:Boolean = false;
+		public var printRunToFinishSection:Boolean = false;
+		public var attachToJobTicket:Boolean = false;
 		public var jobTicketFormat:String = "";
 		public var customJobTicket:String = "";
 		public var chargeDescription:String = "";

@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PressDefinition")]
-	[Managed]
+
 	public class PressDefinition extends ModelBase
 	{
 
@@ -19,8 +20,8 @@ package com.efi.printsmith.data
 		public var costCenter:String = "";
 		public var oemDeviceID:String = "";
 		public var machineID:Number = 0;
-		public var costingPress:Boolean = true;
-		public var integratedDevice:Boolean = true;
+		public var costingPress:Boolean = false;
+		public var integratedDevice:Boolean = false;
 		public var maxPaperSize:String = "";
 		public var minPaperSize:String = "";
 		public var laborRate:Number = 0;
@@ -36,12 +37,12 @@ package com.efi.printsmith.data
 		public var washupMin:Number = 0;
 		public var washupPerFountain:Number = 0;
 		public var gripEdge:Number = 0;
-		public var perfector:Boolean = true;
+		public var perfector:Boolean = false;
 		public var avgImpressPerHour:Number = 0;
 		public var numberHeads:Number = 0;
 		public var setupAddRun:Number = 0;
-		public var sheetFed:Boolean = true;
-		public var rollFed:Boolean = true;
+		public var sheetFed:Boolean = false;
+		public var rollFed:Boolean = false;
 		public var wasteChart:WasteChart;
 		public var pressPriceList:PriceList;
 		public var stockPriceList:PriceList;

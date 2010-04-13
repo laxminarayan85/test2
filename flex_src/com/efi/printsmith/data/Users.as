@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.Users")]
-	[Managed]
+
 	public class Users extends ModelBase
 	{
 
@@ -14,15 +15,15 @@ package com.efi.printsmith.data
 				
 		public var name:String = "";
 		public var password:String = "";
-		public var forcePasswordChange:Boolean = true;
-		public var robustPassword:Boolean = true;
-		public var noOverride:Boolean = true;
-		public var overrideCredit:Boolean = true;
-		public var lockSalesRep:Boolean = true;
-		public var refundCreditCards:Boolean = true;
-		public var noCashReturn:Boolean = true;
-		public var showUserNameLog:Boolean = true;
-		public var quickAccess:Boolean = true;
+		public var forcePasswordChange:Boolean = false;
+		public var robustPassword:Boolean = false;
+		public var noOverride:Boolean = false;
+		public var overrideCredit:Boolean = false;
+		public var lockSalesRep:Boolean = false;
+		public var refundCreditCards:Boolean = false;
+		public var noCashReturn:Boolean = false;
+		public var showUserNameLog:Boolean = false;
+		public var quickAccess:Boolean = false;
 		public var accessLevel:AccessLevel;
 		public var accessGroup:AccessGroup;
 	

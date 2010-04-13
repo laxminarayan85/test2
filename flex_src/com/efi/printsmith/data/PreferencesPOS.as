@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesPOS")]
-	[Managed]
+
 	public class PreferencesPOS extends ModelBase
 	{
 
@@ -14,19 +15,19 @@ package com.efi.printsmith.data
 				
 		public var receiptHeader:String = "";
 		public var receiptFooter:String = "";
-		public var receiptStartNumber:Boolean = true;
+		public var receiptStartNumber:Boolean = false;
 		public var startingNumber:int = 0;
-		public var hideTaxLines:Boolean = true;
+		public var hideTaxLines:Boolean = false;
 		public var receiptPrinterStatus:String = "";
 		public var defaultPrinter:String = "";
-		public var enableCashDrawer:Boolean = true;
-		public var useMasterDrawer:Boolean = true;
-		public var printReceipts:Boolean = true;
-		public var print2forCreditCards:Boolean = true;
-		public var print2forCash:Boolean = true;
-		public var keepLocalSettings:Boolean = true;
-		public var printInvoices:Boolean = true;
-		public var lockSettings:Boolean = true;
+		public var enableCashDrawer:Boolean = false;
+		public var useMasterDrawer:Boolean = false;
+		public var printReceipts:Boolean = false;
+		public var print2forCreditCards:Boolean = false;
+		public var print2forCash:Boolean = false;
+		public var keepLocalSettings:Boolean = false;
+		public var printInvoices:Boolean = false;
+		public var lockSettings:Boolean = false;
 		public var asciiCodeOpenDrawer:int = 0;
 		public var blankLinesBeforeReceipt:int = 0;
 		public var blankLinesAfterReceipt:int = 0;

@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesStocks")]
-	[Managed]
+
 	public class PreferencesStocks extends ModelBase
 	{
 
@@ -20,7 +21,7 @@ package com.efi.printsmith.data
 		public var customerCost:Number = 0;
 		public var customerQuantity:int = 0;
 		public var customerMarkup:Number = 0;
-		public var markupOnly:Boolean = true;
+		public var markupOnly:Boolean = false;
 		public var stdQty1:int = 0;
 		public var stdQty2:int = 0;
 		public var stdQty3:int = 0;

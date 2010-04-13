@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.NotePad")]
-	[Managed]
+
 	public class NotePad extends ModelBase
 	{
 
@@ -20,7 +21,7 @@ package com.efi.printsmith.data
 		public var paper:String = "";
 		public var notes:String = "";
 		public var notesWhen:String = "";
-		public var showOnOpen:Boolean = true;
+		public var showOnOpen:Boolean = false;
 	
 	}
 }

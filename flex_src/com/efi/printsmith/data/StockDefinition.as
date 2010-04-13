@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.StockDefinition")]
-	[Managed]
+
 	public class StockDefinition extends ModelBase
 	{
 
@@ -17,7 +18,7 @@ package com.efi.printsmith.data
 		public var stkgroup:StockGroup;
 		public var stkclass:StockClass;
 		public var stktype:StockType;
-		public var isMetric:Boolean = true;
+		public var isMetric:Boolean = false;
 		public var finish:StockFinish;
 		public var weight:Number = 0;
 		public var color:StockColors;
@@ -34,9 +35,9 @@ package com.efi.printsmith.data
 		public var comments:String = "";
 		public var uom:String = "";
 		public var costunits:int = 0;
-		public var entireOrderCharge:Boolean = true;
+		public var entireOrderCharge:Boolean = false;
 		public var sheetsPerSet:int = 0;
-		public var isCostInSets:Boolean = true;
+		public var isCostInSets:Boolean = false;
 		public var priceExpires:Date = new Date();
 		public var qtybreak1:int = 0;
 		public var qtybreak2:int = 0;
@@ -72,7 +73,7 @@ package com.efi.printsmith.data
 		public var cutsPer100:int = 0;
 		public var minCutCharge:Number = 0;
 		public var defaultPress:PressDefinition;
-		public var autoCalculateBlank:Boolean = true;
+		public var autoCalculateBlank:Boolean = false;
 		public var blankSheetqty1:int = 0;
 		public var blankSheetqty2:int = 0;
 		public var blankSheetqty3:int = 0;
@@ -98,7 +99,7 @@ package com.efi.printsmith.data
 		public var additional8:String = "";
 		public var additional9:String = "";
 		public var additional10:String = "";
-		public var standardItem:Boolean = true;
+		public var standardItem:Boolean = false;
 		public var onHand:int = 0;
 		public var committed:int = 0;
 		public var available:int = 0;
@@ -106,15 +107,15 @@ package com.efi.printsmith.data
 		public var targetLevel:int = 0;
 		public var reOrderPoint:int = 0;
 		public var minOrderQty:int = 0;
-		public var evenIncrements:Boolean = true;
+		public var evenIncrements:Boolean = false;
 		public var expires:Date = new Date();
 		public var binLocation:String = "";
-		public var shellItem:Boolean = true;
+		public var shellItem:Boolean = false;
 		public var forestManagement:String = "";
 		public var pcwRecycledPercent:Number = 0;
-		public var fscCertified:Boolean = true;
-		public var sfiCertified:Boolean = true;
-		public var greenSealCertified:Boolean = true;
+		public var fscCertified:Boolean = false;
+		public var sfiCertified:Boolean = false;
+		public var greenSealCertified:Boolean = false;
 		public var defaultPriceList:PaperPrice;
 		public var genericColor:GenericColors;
 		public var account:Account;
@@ -130,11 +131,11 @@ package com.efi.printsmith.data
 		public var sheetperSkid:int = 0;
 		public var weightperSkid:Number = 0;
 		public var shortgain:int = 0;
-		public var noBrokenCarton:Boolean = true;
-		public var pricedinSets:Boolean = true;
-		public var imported:Boolean = true;
-		public var measure:Boolean = true;
-		public var allownegative:Boolean = true;
+		public var noBrokenCarton:Boolean = false;
+		public var pricedinSets:Boolean = false;
+		public var imported:Boolean = false;
+		public var measure:Boolean = false;
+		public var allownegative:Boolean = false;
 		public var rollWeight:Number = 0;
 		public var defaultBWCopier:CopierDefinition;
 		public var defaultColorCopier:CopierDefinition;

@@ -3,8 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
+	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesSystem")]
-	[Managed]
+
 	public class PreferencesSystem extends ModelBase
 	{
 
@@ -12,17 +13,17 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.PreferencesSystem";
 		}
 				
-		public var eliminateWarningMessages:Boolean = true;
-		public var onlyPostMarkedReadyInvoices:Boolean = true;
-		public var enablePricingSystem:Boolean = true;
-		public var activateUserEventLogging:Boolean = true;
-		public var enableAutoLogOut:Boolean = true;
-		public var secondsOfInactivity:Boolean = true;
+		public var eliminateWarningMessages:Boolean = false;
+		public var onlyPostMarkedReadyInvoices:Boolean = false;
+		public var enablePricingSystem:Boolean = false;
+		public var activateUserEventLogging:Boolean = false;
+		public var enableAutoLogOut:Boolean = false;
+		public var secondsOfInactivity:Boolean = false;
 		public var autoLogOutSeconds:int = 0;
-		public var triggerAfterPosting:Boolean = true;
-		public var showInvoicesWithToday:Boolean = true;
-		public var lineItemTaxes:Boolean = true;
-		public var automaticQuit:Boolean = true;
+		public var triggerAfterPosting:Boolean = false;
+		public var showInvoicesWithToday:Boolean = false;
+		public var lineItemTaxes:Boolean = false;
+		public var automaticQuit:Boolean = false;
 		public var quitTime:String = "";
 		public var shutdownMessage:String = "";
 		public var companyAddress:Address;
@@ -36,15 +37,15 @@ package com.efi.printsmith.data
 		public var companyStoreNumber:String = "";
 		public var companyStoreLocationRef:String = "";
 		public var fiscalYearStartMonth:String = "";
-		public var workSunday:Boolean = true;
-		public var workMonday:Boolean = true;
-		public var workTuesday:Boolean = true;
-		public var workWednesday:Boolean = true;
-		public var workThursday:Boolean = true;
-		public var workFriday:Boolean = true;
-		public var workSaturday:Boolean = true;
+		public var workSunday:Boolean = false;
+		public var workMonday:Boolean = false;
+		public var workTuesday:Boolean = false;
+		public var workWednesday:Boolean = false;
+		public var workThursday:Boolean = false;
+		public var workFriday:Boolean = false;
+		public var workSaturday:Boolean = false;
 		public var workFirstDayOfWeek:int = 0;
-		public var futureDatesExcludeClosed:Boolean = true;
+		public var futureDatesExcludeClosed:Boolean = false;
 		public var numbersIntegers:String = "";
 		public var numbersPercentages:String = "";
 		public var numbersAmount:String = "";
@@ -54,16 +55,16 @@ package com.efi.printsmith.data
 		public var numbersInvoice:String = "";
 		public var numbersShortPercent:String = "";
 		public var numbersRoundto:int = 0;
-		public var alwaysRoundDown:Boolean = true;
-		public var roundTaxUp:Boolean = true;
-		public var useAlternateCurrency:Boolean = true;
+		public var alwaysRoundDown:Boolean = false;
+		public var roundTaxUp:Boolean = false;
+		public var useAlternateCurrency:Boolean = false;
 		public var displayFormat:String = "";
 		public var conversionFactor:Number = 0;
 		public var alternateRoundto:int = 0;
-		public var alternateAlwaysRoundDown:Boolean = true;
-		public var disableTextStyles:Boolean = true;
-		public var austrailianInvoiceRounding:Boolean = true;
-		public var disableNonTaxableOptions:Boolean = true;
+		public var alternateAlwaysRoundDown:Boolean = false;
+		public var disableTextStyles:Boolean = false;
+		public var austrailianInvoiceRounding:Boolean = false;
+		public var disableNonTaxableOptions:Boolean = false;
 		public var inkWeightSingular:String = "";
 		public var inkWeightPlural:String = "";
 		public var authorizeDecrypt:String = "";
