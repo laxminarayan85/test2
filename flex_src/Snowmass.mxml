@@ -125,6 +125,8 @@
 		public var timer : Timer;
 		public var nf:NumberFormatter;
 		
+		private var keyListener:Object;
+
 		private var remoteObject:RemoteObject;
 		
 		public static const RESOURCE_BUNDLE:String = "psResources";
@@ -322,7 +324,58 @@
 				loginService.validateLogin(userName, userPass);
 			}
 			moveLogo.play();
+			
+			this.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
+
+
 		}
+	
+		private function keyHandler(event:KeyboardEvent):void {
+
+		var bAltPressed:Boolean = event.altKey;
+		var bCtrlPressed:Boolean = event.ctrlKey;
+		var curKeyCode:int = event.keyCode;
+
+		if( bAltPressed && bCtrlPressed){
+			if(curKeyCode==83){
+
+				//CTRL + S pressed; saveCall()
+
+			}
+			if(curKeyCode==78 ){
+
+				//CTRL + N pressed; NewEntryCall()
+
+			}
+
+			if(curKeyCode == 68){
+
+				//CTRL + D pressed; DeleteEntryCall()
+
+			}
+
+			if(curKeyCode == 67){
+
+				//CTRL + C pressed; CopyCall()
+
+			}
+
+			if(curKeyCode == 70){
+
+				//CTRL + F pressed; SearchCall()
+
+			}
+			if(curKeyCode == 73){
+
+				//alt + I 
+			doCreateInvoice();
+			}
+			}
+		}
+
+
+
+
 		 
 		private function endMoveLogo() : void {
 			efiLogoFade.play();
