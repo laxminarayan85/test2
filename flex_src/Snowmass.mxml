@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
-		width="100%" height="800" 
+		width="100%" height="100%" 
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
  		xmlns:ns2="flexlib.controls.*"
  		xmlns:flexlib="flexlib.containers.*"
@@ -26,14 +26,14 @@
 	
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
-    <mx:HBox x="0" y="32" width="100%" height="490">
+    <mx:HBox x="0" y="32" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
     <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
 		<mx:Canvas height="2" width="100%">
 		</mx:Canvas>	
-		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="570" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
+		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
 			<mx:Canvas height="100%" width="100%" id="mainWindow" label="{resourceManager.getString(RESOURCE_BUNDLE, 'kQuickAccessPanelCmd.QuickAccessPanel')}" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
 		  		<mx:Image x="-185" y="579" width="186" height="61" id="logo" source="assets/printsmith_logo.png"/>
 				
