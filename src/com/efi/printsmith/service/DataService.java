@@ -1220,7 +1220,19 @@ public class DataService {
 		}
 		return null;
 	}
-
+	public ModelBase getByIdMaster(String className, Long id) throws Exception {
+		try {
+			log.debug("** getById called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query query = em.createNamedQuery(className + ".byId");
+			query.setParameter("id", id);
+			ModelBase object = (ModelBase) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getByAccountId(String className, Long id)
 			throws Exception {

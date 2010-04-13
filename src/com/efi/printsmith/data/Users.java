@@ -94,6 +94,11 @@ public class Users extends ModelBase {
 	public static final String ACCESSGROUP = "AccessGroup";
 
 	/**
+   * @generated
+   */
+  public static final String DISABLEUSER = "DisableUser";
+
+	/**
 	 * @generated
 	 */
 	public Users() {
@@ -388,6 +393,28 @@ public class Users extends ModelBase {
     this.accessGroup = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean disableUser;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getDisableUser(){
+    return disableUser; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDisableUser(Boolean newVal) {
+    this.disableUser = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -406,6 +433,7 @@ public class Users extends ModelBase {
     if (QUICKACCESS.equals(propertyName)) return getQuickAccess();
     if (ACCESSLEVEL.equals(propertyName)) return getAccessLevel();
     if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
+    if (DISABLEUSER.equals(propertyName)) return getDisableUser();
     return super.getProperty(propertyName);
   }
 	
@@ -428,6 +456,7 @@ public class Users extends ModelBase {
     if (QUICKACCESS.equals(propertyName)) setQuickAccess((Boolean)newValue); else
     if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((AccessLevel)newValue); else
     if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
+    if (DISABLEUSER.equals(propertyName)) setDisableUser((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -463,6 +492,8 @@ public class Users extends ModelBase {
       return new Class<?>[] {AccessLevel.class};		
     if (ACCESSGROUP.equals(propertyName)) 
       return new Class<?>[] {AccessGroup.class};		
+    if (DISABLEUSER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -486,6 +517,7 @@ public class Users extends ModelBase {
     if (QUICKACCESS.equals(propertyName)) return Users.class;
     if (ACCESSLEVEL.equals(propertyName)) return Users.class;
     if (ACCESSGROUP.equals(propertyName)) return Users.class;
+    if (DISABLEUSER.equals(propertyName)) return Users.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -522,6 +554,8 @@ public class Users extends ModelBase {
     if (! SmartEquals(getAccessLevel(), objT.getAccessLevel()))
       return false;
     if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
+      return false;
+    if (! SmartEquals(getDisableUser(), objT.getDisableUser()))
       return false;
     return true;
   }			

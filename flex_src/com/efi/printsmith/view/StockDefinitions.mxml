@@ -84,6 +84,8 @@
 			<mx:SetProperty target="{label7}" name="width" value="122.5"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
+			<mx:SetProperty target="{chkIsMetric}" name="x" value="513"/>
+			<mx:SetProperty target="{chkIsMetric}" name="y" value="62"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
@@ -123,6 +125,7 @@
 			<mx:SetProperty target="{label7}" name="x" value="-22"/>
 			<mx:SetProperty target="{label7}" name="width" value="120.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
+			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
@@ -1309,6 +1312,19 @@
 		}
 		
 	}
+	private function doMetric():void{
+	
+		if ( chkIsMetric.selected){
+			Basicsize.text = ""
+			cboUom.selectedIndex = findItem("Microns", stockUom);
+			 
+		}
+		else{
+			Basicsize.text = stockDefinitions.stktype.size
+			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+		}
+
+	}
 	private function doStockUnitChangeEvent(event:Event):void{
 		var item:String = findItem(event.currentTarget.selectedValue,stockUnits).toString();
 		
@@ -1350,7 +1366,7 @@
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
 	<mx:ComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
 	<mx:ComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()"/>
-	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135"/>
+	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
 	<fc:AutoComplete  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>

@@ -123,6 +123,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     [Bindable]
     private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
     
+    
     [Bindable]
     private var compaigns:ArrayCollection = new ArrayCollection();
                      

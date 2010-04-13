@@ -12,6 +12,7 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.commands.commandCommands.StockDefinitions.*;
 	import com.efi.printsmith.commands.commandCommands.SystemPreferences.*;
 	import com.efi.printsmith.commands.commandCommands.WebAdmin.*;
+	import com.efi.printsmith.commands.commandCommands.Users.*
 	import com.efi.printsmith.events.*;
 	import com.efi.printsmith.events.commandEvents.*;
 	import com.efi.printsmith.events.commandEvents.Accounts.*;
@@ -23,6 +24,7 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.*;
 	import com.efi.printsmith.events.commandEvents.SystemPreferences.*;
 	import com.efi.printsmith.events.commandEvents.WebAdmin.*;
+	import com.efi.printsmith.events.commandEvents.Users.*
 
 	public class MainController extends FrontController
 	{
@@ -142,6 +144,7 @@ package com.efi.printsmith.control
 			this.addCommand(WebAdminProductsPanelEvent.COMMANDID, WebAdminProductsPanelCommand);
 			this.addCommand(WebAdminQuestionsPanelEvent.COMMANDID, WebAdminQuestionsPanelCommand);
 			this.addCommand(WebAdminSitePanelEvent.COMMANDID, WebAdminSitePanelCommand);
+			this.addCommand(PasswordEvent.COMMANDID, PasswordCommand);
 
 		}
 		

@@ -22,8 +22,9 @@ public class LoginService extends DataService {
 			q.setParameter("name", userName);
 			
 			Users user1 = (Users) q.getSingleResult();
-					
-			if (user1.getPassword().equals(password)) return user1;
+			if (user1.getDisableUser().equals(false))		
+				if (user1.getPassword().equals(password))
+					return user1;
 		} catch (Exception e) {
 			log.error(e);
 		}

@@ -26,6 +26,7 @@ package com.efi.printsmith.data
 		public var quickAccess:Boolean = false;
 		public var accessLevel:AccessLevel;
 		public var accessGroup:AccessGroup;
+		public var disableUser:Boolean = false;
 	
 	}
 }

@@ -14,11 +14,13 @@
 			<mx:RemoveChild target="{label3}"/>
 			<mx:RemoveChild target="{button3}"/>
 			<mx:AddChild position="lastChild">
-				<mx:TextInput x="295" y="24" id="txtNewItem" focusOut="addItem(txtNewItem.text);"/>
+				<mx:TextInput x="315" y="24" id="txtNewItem" focusOut="doAccessGroupEdit();"/>
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
-				<mx:Label x="215" y="26" text="AccessGroup:"/>
+				<mx:Label x="208" y="26" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" textAlign="right" width="99"/>
 			</mx:AddChild>
+			<mx:RemoveChild target="{button4}"/>
+			<mx:RemoveChild target="{label4}"/>
 		</mx:State>
 	</mx:states>
 	 
@@ -66,7 +68,11 @@
     [Bindable]
    	private var securtiyCommandsLists:ArrayCollection = new ArrayCollection();
 	[Bindable]                             
-	private var access:AccessGroup;   
+	private var access:AccessGroup;  
+	[Bindable]                             
+	private var rename:Boolean;   
+	[Bindable]                             
+	private var org_pos:int;   
 	[Bindable]                             
 	private var security:SecuritySetup;     
 	[Bindable]
@@ -164,12 +170,62 @@
 	}
 	public function doSave():void {                                    
 		mapToAccessGroup()
-	}   
-
+	}  
+	public function doAccessGroupEdit():void{ 
+		var index:int;
+		if (rename == true){
+			if (txtNewItem.text != access.name)
+			{
+				index = findItem(txtNewItem.text,accessGroupLists)
+				if( index == -1){
+					access.name = txtNewItem.text;
+					rename = false;
+					this.currentState = "";
+					accessGroupLists.setItemAt(access,org_pos);
+				}
+				else{
+					txtNewItem.text= ""
+					doRename();
+				}
+			}
+			this.currentState = "";
+		}else{
+			index = findItem(txtNewItem.text,accessGroupLists)
+			if( index == -1){
+				addItem(txtNewItem.text);
+			}
+			else{
+				doNew();
+			}
+		}
+		
+	}
 	public function doNew():void {
 		this.currentState = "newItem";
-	}   
-	
+		txtNewItem.text= "";
+		
+	} 
+	public function doRename():void{
+		//var access:AccessGroup = event.currentTarget.selectedItem as AccessGroup
+		this.currentState = "newItem";
+		rename = true;
+		txtNewItem.text= access.name;
+		org_pos = findItem(access.name , accessGroupLists);
+	}
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+  
+	public function doDelete():void{
+		var index:int;
+		index = findItem(access.name, accessGroupLists);
+		accessGroupLists.removeItemAt(index);
+	}
 	private function addItem(itemName:String):void {
 		securitySetupLists.removeAll();
 		access = new AccessGroup();
@@ -182,7 +238,7 @@
 
 	}
 	private function treeSelect(event:Event):void {
-		var access:AccessGroup = event.currentTarget.selectedItem as AccessGroup
+	    access = event.currentTarget.selectedItem as AccessGroup
 		if (access!=null)
 			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}
@@ -224,7 +280,7 @@
 		<mx:Button x="264" y="10" width="38" height="38"  click="doNew()" id="button3">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="310" y="10" width="38" height="38" id="button1">
+		<mx:Button x="310" y="10" width="38" height="38" id="button1" click="doDelete();">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="310" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="47" textAlign="center" id="label1"/>
@@ -232,19 +288,19 @@
 		<mx:VBox bottom="0" right="0" left="200" top="80">
 			<mx:DataGrid x="0" y="0" id="dataGrid"  
 				dataProvider="{securitySetupLists}" width="100%" height="100%" editable="true">
-				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Enabled')}" dataField="enable" 
+				<mx:columns> 
+					<mx:DataGridColumn  width="50"  textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Enabled')}" dataField="enable"
 						editorDataField="selected"
 							itemEditor="mx.controls.CheckBox">
 					   <mx:itemRenderer>
 					      <mx:Component>
 					         <mx:CheckBox click="data.enable=!data.enable"  selected="{data.enable}"/>
 					      </mx:Component>						
-					   </mx:itemRenderer>
+					   </mx:itemRenderer> 
 					</mx:DataGridColumn>
 
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" labelFunction="gridDisplayLabelMenu" sortable="true" editable="false"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.CommandName')}" labelFunction="gridDisplayLabelCommand" editable="false"/>
+						<mx:DataGridColumn  width="300" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" labelFunction="gridDisplayLabelMenu" sortable="true" editable="false"/>
+						<mx:DataGridColumn width="300" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.CommandName')}" labelFunction="gridDisplayLabelCommand" editable="false"/>
 				</mx:columns>
 			</mx:DataGrid>
 
@@ -256,5 +312,10 @@
 		            labelFunction="tree_labelFunc"
 				></mx:Tree>
 		</mx:HBox>
+		<mx:Button x="365" y="10" label="Button" height="38" width="38" click="doRename();" id="button4">
+			<mx:icon>@Embed(source='../../../../assets/rename.png')</mx:icon>
+		</mx:Button>
+		<mx:Label x="365" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Rename')}" width="59" id="label4"/>
+		
 		
 </mx:Panel>

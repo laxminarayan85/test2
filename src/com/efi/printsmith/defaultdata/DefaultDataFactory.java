@@ -839,6 +839,7 @@ public class DefaultDataFactory {
 		users.setName("admin");
 		users.setPassword("admin");
 		users.setAccessGroup(adminaccessgroup);
+		users.setDisableUser(false);
 		try {
 			dataservice.addUpdate(users);
 		} catch (Exception e) {
