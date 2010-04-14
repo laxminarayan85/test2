@@ -13,9 +13,10 @@
     
 
 	<mx:Producer id="producer" destination="stockdefinitions"/>
+<!--
 	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-
+-->	
 <mx:Script>
                                    
 <![CDATA[
@@ -93,14 +94,14 @@
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
 			if (payloadType == "StockDefinition") {
-				dataService.getAll("StockDefinition");
+				dataService.getAllNameIDOnly("StockDefinition");
 			}
 		}
 	}
                                                      
 	private function init():void {   
-		consumer.subscribe();
-		notification_consumer.subscribe();     
+//		consumer.subscribe();
+//		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
 	    ShellLabel();
 	//	dataService.getAllNameIDOnly("StockDefinition");
