@@ -18,9 +18,9 @@ package com.efi.printsmith.data
 		public var sku:JobBase;
 		public var thumbnail:WebGraphics;
 		public var details:WebGraphics;
-		public var globalProduct:Boolean = false;
+		public var globalProduct:Boolean = true;
 		public var checkoutType:WebCheckoutTypes;
-		public var allowUserEnteredQty:Boolean = false;
+		public var allowUserEnteredQty:Boolean = true;
 		public var description:String = "";
 		public var calculatePrices:PreferencesPricingMethod;
 		public var questions:ArrayCollection;

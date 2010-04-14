@@ -15,18 +15,23 @@ package com.efi.printsmith.data
 				
 		public var shipToAddress:Address;
 		public var parentAccount:Account;
-		public var webAcctNameIncomplete:Boolean = false;
-		public var webCatalogChange:Boolean = false;
-		public var webStateChange:Boolean = false;
-		public var transmitted:Boolean = false;
-		public var useContactAddress:Boolean = false;
-		public var isIndividual:Boolean = false;
+		public var webAcctNameIncomplete:Boolean = true;
+		public var webCatalogChange:Boolean = true;
+		public var webStateChange:Boolean = true;
+		public var transmitted:Boolean = true;
+		public var useContactAddress:Boolean = true;
+		public var isIndividual:Boolean = true;
 		public var defaultSalesRep:SalesRep;
-		public var mailerCampaigns:Boolean = false;
+		public var mailerCampaigns:Boolean = true;
 		public var creditCard:CreditCard;
 		public var marketing:Marketing;
 		public var campaigns:ArrayCollection;
 		public var contactId:String = "";
+		public var webAccess:Boolean = true;
+		public var webRegistered:Boolean = true;
+		public var webContactID:String = "";
+		public var webCatalog:WebCatalogs;
+		public var webStatus:WebStatus;
 	
 	}
 }

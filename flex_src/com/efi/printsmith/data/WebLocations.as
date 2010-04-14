@@ -13,8 +13,8 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.WebLocations";
 		}
 				
-		public var name:String = "";
-		public var key:String = "";
+		public var productionLocations:ProductionLocations;
+		public var webTranslation:WebTranslation;
 	
 	}
 }
