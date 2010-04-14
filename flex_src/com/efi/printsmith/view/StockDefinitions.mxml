@@ -230,7 +230,8 @@
 	import mx.collections.ArrayCollection;                                         
 	import mx.rpc.events.ResultEvent;                                         
 	import mx.rpc.events.FaultEvent;
-	import mx.rpc.*;                                         
+	import mx.rpc.*;  
+	import mx.utils.StringUtil;                                       
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
     import mx.printing.FlexPrintJob;
@@ -334,7 +335,7 @@
 
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event.dispatch();
-		
+		PanelCharges.title = StringUtil.substitute(PanelCharges.title,"10");
 	}      
 
 	public function handleUIButtonEvent(evt:ResultEvent):void {
@@ -460,7 +461,7 @@
 		doStockUnitChange(stockDefinitions.stockunit.toString());
 	}			
 	                                                   	
-	public function loadStockDefinitions():void {  //cej 
+	public function loadStockDefinitions():void { 
 		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
 	}
 	
@@ -559,9 +560,8 @@
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
 		if (evt.stockDefinition != null) {
-			this.stockDefinitions = evt.stockDefinition;
-			this.mapFromStockDefinitionData();
-	     
+			setStockDefinition(evt.stockDefinition)
+				     
 		} else {
 			this.stockDefinitions = new StockDefinition();
 	    	stockDefinitions.charges = new ArrayCollection;
@@ -629,6 +629,15 @@
     	stockDefinitions.stockChanges = new ArrayCollection;
   	    setStockDefinition(stockDefinitions);
   	    standardItemCheckEvent();
+  	    //cej
+  	    cboStockGroup.selectedIndex = -1;
+  	    cbostockClass.selectedIndex =-1;
+  	    cboFinish.selectedIndex = -1;
+  	    cbostkcolor.selectedIndex = -1;
+  	    cboGenericColor.selectedIndex = -1;
+  	    cboStockGrade.selectedIndex = -1;
+  	    cboVendor.selectedIndex =-1;
+  	    
 	}       
 
 	private function doDelete():void {
@@ -745,10 +754,13 @@
 				grades.name = cboStockGrade.text;
 				stockGradeDataService.addUpdate(grades);
 				stockDefinitions.grade = grades;
+				cboStockGrade.text = grades.name;
+				
 			}
 			else {
 				cboStockGrade.selectedItem = item;
 			}
+		stockDefinitions.grade.name = cboStockGrade.text	
 		}
 	}
 
@@ -879,6 +891,7 @@
 	} */
 	
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
+		stockDefinitions.grade = ev.result as StockGrade
     	loadStockGrade();
 	}
 	private function handleSaveStockTypeResult(ev:ResultEvent):void {
@@ -914,10 +927,11 @@
 	     this.enabled = true;
 	}
 	
-	//cej
+
 	private function handleGetResult(ev:ResultEvent):void {
-		this.stockDefinitions = ev.result as StockDefinition;
-		this.mapFromStockDefinitionData();
+	
+		//this.stockDefinitions = ev.result as StockDefinition;
+		setStockDefinition(ev.result as StockDefinition)
 	     
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
@@ -961,29 +975,50 @@
 	}
 	private function handleLoadStockClass(ev:ResultEvent):void {
 		stockClass = ev.result as ArrayCollection;
+		 
 	}
 	
 	private function handleLoadVendor(ev:ResultEvent):void {
 		 stockVendor = ev.result as ArrayCollection;
+		 if ( stockDefinitions.vendor != null){
+		 	cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
+		 }
 	}
 
 	private function handleLoadStockGrade(ev:ResultEvent):void {
 		 stockGrade = ev.result as ArrayCollection;
+		 if ( stockDefinitions.grade != null){
+		 	cboStockGrade.selectedIndex = findItem(stockDefinitions.grade.name, stockGrade);
+		 }
+		 
+		 	
+		
 	}
 	private function handleLoadStockType(ev:ResultEvent):void {
 		 stockType = ev.result as ArrayCollection;
+		 
 	}
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
 		 stockColor = ev.result as ArrayCollection;
+		 if ( stockDefinitions.color != null){
+		 	cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+		 }
+		 
 	}
 
 	private function handleLoadStockGenericColor(ev:ResultEvent):void {
 		 stockGenericColor = ev.result as ArrayCollection;
+		 if ( stockDefinitions.genericColor != null){
+		 	cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		 }
 	}
 	
 	private function handleLoadStockFinish(ev:ResultEvent):void {
 		 stockFinish = ev.result as ArrayCollection;
+		  if ( stockDefinitions.finish != null){
+		 	cboFinish.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
+		 }
 	}
 	     
 	private function handleFault(ev:FaultEvent):void {  
@@ -1073,8 +1108,11 @@
 
 		if (stockDefinitions.color != null) 
 			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
-		if (stockDefinitions.genericColor != null)
-				cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		if (stockDefinitions.genericColor != null){
+			cboGenericColor.text = "";
+			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		}
+				
 		if (stockDefinitions.stktype != null)
 			stkType.selectedIndex = findItem(stockDefinitions.stktype.name, stockType);
 		if (stockDefinitions.vendor != null)
@@ -1539,7 +1577,7 @@
 				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PresetuptoCharges')}" dropShadowEnabled="false">
+			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PresetuptoCharges')}" dropShadowEnabled="false" id="PanelCharges">
 				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>
 				<mx:List x="128" y="6" id="Additional1" dataProvider="{stockDefinitions.charges}"  labelField="name" width="238" height="98"/>
 			</mx:Panel>

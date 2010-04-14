@@ -29,6 +29,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceSystemPricingMethodPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPricingMethodPreferencesResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
 </mx:RemoteObject>
@@ -40,6 +43,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.PreferencesPricingMethod;
 	import com.efi.printsmith.data.SalesCategory;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.data.SpeedTable;
@@ -50,7 +54,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.pages.DefaultPressPicker;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
-	import mx.controls.Alert;                                         
+	import mx.controls.Alert;   
+	import mx.utils.StringUtil;                                      
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection;                                         
@@ -65,6 +70,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
                    
 	[Bindable]
     private var enableSave:Boolean = true;
+    [Bindable]
+    private var rollPaperStyleAbb:String = new String;
+    [Bindable]
+    private var sheetPaperStyleAbb:String = new String;
 	[Bindable]
 		private var charges:ArrayCollection=new ArrayCollection();
 
@@ -84,7 +93,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
      private var pressDefinition:PressDefinition;
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
-    
+    [Bindable]                                         
+    private var systemPricingPreferences:PreferencesPricingMethod;
 	[Bindable]                                         
      private var priceList:PriceList;  
     [Bindable]                               
@@ -95,12 +105,16 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+    
+    [Bindable]                                
+	private var systemPricingPreferencesArray:ArrayCollection = new ArrayCollection();
                                                                          
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		loadPressDefinitions();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		dataServiceSystemPricingMethodPreferences.getAll("PreferencesPricingMethod");
 		dataServiceCostCenter.getAll("CostCenter");
 		dataServiceProductionLocation.getAll("ProductionLocations");
 
@@ -222,7 +236,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
 		this.charges = pressDefinition.charges;
 		updateControlState(); */
-		doPressType();
+	
 	
 	}
 	private function mapAccountData():void {
@@ -327,7 +341,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			AvgImpressPerhour.enabled = true;
 			AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
 		}
-	     
+	    doWashUpPerFountain(); 
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
@@ -340,7 +354,22 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 		}
 	}	                                 
-	                                 
+	private function handleLoadSystemPricingMethodPreferencesResult(ev:ResultEvent):void {
+		systemPricingPreferencesArray = ev.result as ArrayCollection;
+		if (systemPricingPreferencesArray.length > 0)
+		{
+			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(0) as PreferencesPricingMethod;
+			rollPaperStyleAbb = systemPricingPreferences.abbreviation;
+			rollFedRadio.label = StringUtil.substitute(rollFedRadio.label,rollPaperStyleAbb);
+			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(1) as PreferencesPricingMethod;
+			sheetPaperStyleAbb = systemPricingPreferences.abbreviation;
+			sheetFedRadio.label = StringUtil.substitute(sheetFedRadio.label,rollPaperStyleAbb);
+		}else{
+			
+
+		}
+	}	                                     
+	                            
 	private function handleDeleteResult(ev:ResultEvent):void {
 		loadPressDefinitions();
 		doNew();
@@ -460,6 +489,14 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     	}
     	
     }
+    private function doWashUpPerFountain():void{
+    	var tempInt: int;
+    	tempInt = parseInt(WashupTimeFountain.text);
+    	if ( tempInt >= 1)
+    		per_wash_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perpass');
+    	else
+    		per_wash_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perwash');
+    }
     private function updateControlState():void {
 		
 		switch (sheetFedRadio.selected) {
@@ -526,7 +563,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:ComboBox x="131" y="212" id="CostCenter" width="263" dataProvider="{costCenterArray}" height="20" labelField="name"/>
 	<mx:Label x="402" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID')}" width="67" textAlign="right"/>
 	<mx:TextInput x="477" y="124" width="146" id="MachineId" text="{pressDefinition.machineID}" editable="true"/>
-	<mx:CheckBox x="415" y="212" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
+	<mx:CheckBox x="402" y="146" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
 	<mx:HRule x="10" y="255" width="732" height="16" left="5" right="5"/>
 	<mx:Label x="13" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MaxPaperSize')}" textAlign="right" id="label1" width="110"/>
 	<mx:Label x="13" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MaxRollWidth')}" textAlign="right" id="widthlabel1" width="110"/>
@@ -557,8 +594,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:TextInput x="492" y="360" width="79" id="setupAddHead" text="{pressDefinition.setupAddHead}" height="20"/>
 	<mx:TextInput x="492" y="382" width="106" id="WashupFee" text="{pressDefinition.washupFee}" height="20"/>
 	<mx:TextInput x="492" y="404" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}" height="20"/>
-	<mx:Label x="609" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perwash')}"/>
-	<mx:TextInput x="492" y="448" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20"/>
+	<mx:Label x="609" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perwash')}" id="per_wash_label"/>
+	<mx:TextInput x="492" y="448" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20" change="doWashUpPerFountain();"/>
 	<mx:TextInput x="492" y="426" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20"/>
 	<mx:Label x="335" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AvgImpressionsHour')}" textAlign="right" width="149"/>
 	<mx:Label x="335" y="318" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.LaborMarkup')}" textAlign="right" width="149"/>
@@ -592,10 +629,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Button x="194" y="617" height="38" click="doDelete()" width="38">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
-	<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
-	<mx:RadioButton x="415" y="152" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
-	<mx:RadioButton x="415" y="182" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
-	<mx:Button x="264" y="617" width="38" id="btnExport" height="38">
+		<mx:Button x="264" y="617" width="38" id="btnExport" height="38">
 		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="335" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CutoffLength')}" width="149" id="cutoffLabel" textAlign="right"/>
@@ -615,4 +649,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="148" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="38"/>
 	<mx:Label x="194" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="38"/>
 	<mx:Label x="264" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="38"/>
+	<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PaperStyle')}"  x="661" y="124" dropShadowEnabled="false" width="207">
+		<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
+		<mx:RadioButton x="415" y="152" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
+		<mx:RadioButton x="415" y="182" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
+	</mx:Panel>
 </mx:Panel>
