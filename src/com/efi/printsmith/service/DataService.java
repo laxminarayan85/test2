@@ -1544,4 +1544,9 @@ public class DataService {
 		return resultList;
 	}
 
+	public Session getSession() {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		return (Session) em.getDelegate();
+	}
+
 }

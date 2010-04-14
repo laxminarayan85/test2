@@ -11,8 +11,8 @@
                 <properties>
                         <hibernate>
                                 <sessionFactory>
-                                        <class>net.digitalprimates.persistence.hibernate.utils.HibernateUtil</class>
-                                        <getCurrentSessionMethod>getCurrentSession</getCurrentSessionMethod>                            
+                                        <class>com.efi.printsmith.service.DataService</class>
+                                        <getCurrentSessionMethod>getSession</getCurrentSessionMethod>                            
                                 </sessionFactory>
                         </hibernate>
                 </properties>

@@ -26,7 +26,7 @@ import net.digitalprimates.persistence.hibernate.proxy.HibernateProxy;
 
 import org.hibernate.annotations.Index;
 
-@MappedSuperclass
+@Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="modelbase")
 abstract public class ModelBase extends HibernateProxy {
