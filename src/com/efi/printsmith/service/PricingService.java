@@ -65,6 +65,9 @@ public class PricingService {
 				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
 			}
 		}
+		
+		this.calculateOvers(job);
+		
 		return job;
 	}
 	
@@ -87,5 +90,17 @@ public class PricingService {
 		}
 		log.info("Completed priceInvoice for invoice " + invoice.getId());
 		return invoice;
+	}
+	
+	public void calculateOvers(Job job) {
+		double oversUnitPrice = 0.0;
+		double oversPrice = 0.0;
+		
+		if (job.getQtyOrdered() > 0) {
+			oversUnitPrice = job.getPricingRecord().getTotalPrice() / job.getQtyOrdered();
+			oversPrice = oversUnitPrice * job.getOversUnders();
+		}
+		job.getPricingRecord().setOversUnitPrice(oversUnitPrice);
+		job.getPricingRecord().setOversTotalPrice(oversPrice);
 	}
 }

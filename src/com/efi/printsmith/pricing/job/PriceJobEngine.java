@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
 import com.efi.printsmith.pricing.print.PrintPricingMethod;
@@ -82,7 +83,21 @@ public class PriceJobEngine {
 			
 		} else if (pricingMethod.getTitle().equals("Mailing")) {
 			
-		}	
+		}
+		PricingRecord pricingRecord = job.getPricingRecord();
+		calculateOvers(job, pricingRecord);
 		return job;
+	}
+	
+	static private void calculateOvers(Job job, PricingRecord pricingRecord) {
+		double oversPrice = 0.0;
+		double oversUnitPrice = 0.0;
+		if (job.getQtyOrdered() > 0) {
+			oversUnitPrice = pricingRecord.getTotalPrice() / job.getQtyOrdered();
+			oversPrice = oversUnitPrice * job.getOversUnders();
+		}
+		pricingRecord.setOversTotalPrice(oversPrice);
+		pricingRecord.setOversUnitPrice(oversUnitPrice);
+		pricingRecord.setTotalPrice(pricingRecord.getTotalPrice() + pricingRecord.getOversTotalPrice());
 	}
 }
