@@ -279,6 +279,19 @@ public class JobBase extends ModelBase {
   public static final String TOTALIMPOSITIONS = "TotalImpositions";
 
 	/**
+   * @generated
+   */
+  public static final String MARKUP = "Markup";
+	/**
+   * @generated
+   */
+  public static final String TOTALCOST = "TotalCost";
+	/**
+   * @generated
+   */
+  public static final String UNITCOST = "UnitCost";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -379,8 +392,9 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "jobbase_children")
+    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @IndexColumn(name="childrenjobbase")
+	@JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
 	/**
@@ -411,8 +425,9 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
-    @JoinTable( name = "jobbase_charges")
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="chargesjobbase")
+	@JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
 	/**
@@ -1213,8 +1228,9 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
-    @JoinTable( name = "jobbase_frontinks")
+    @OneToMany( fetch=FetchType.EAGER)
+    @IndexColumn(name="frontinksjobbase")
+	@JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	
 	/**
@@ -1616,6 +1632,74 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double markup;
+
+	/**
+   * @generated
+ 	 */
+  public Double getMarkup(){
+    return markup; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMarkup(Double newVal) {
+    this.markup = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double totalCost;
+
+	/**
+   * @generated
+ 	 */
+  public Double getTotalCost(){
+    return totalCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(Double newVal) {
+    this.totalCost = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double unitCost;
+
+	/**
+   * @generated
+ 	 */
+  public Double getUnitCost(){
+    return unitCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitCost(Double newVal) {
+    this.unitCost = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1680,6 +1764,9 @@ public class JobBase extends ModelBase {
     if (CUTOFF.equals(propertyName)) return getCutOff();
     if (IMPOSITIONSPERRUN.equals(propertyName)) return getImpositionsPerRun();
     if (TOTALIMPOSITIONS.equals(propertyName)) return getTotalImpositions();
+    if (MARKUP.equals(propertyName)) return getMarkup();
+    if (TOTALCOST.equals(propertyName)) return getTotalCost();
+    if (UNITCOST.equals(propertyName)) return getUnitCost();
     return super.getProperty(propertyName);
   }
 	
@@ -1748,6 +1835,9 @@ public class JobBase extends ModelBase {
     if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
     if (IMPOSITIONSPERRUN.equals(propertyName)) setImpositionsPerRun((Long)newValue); else
     if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
+    if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1875,6 +1965,12 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (TOTALIMPOSITIONS.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (MARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOTALCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1944,6 +2040,9 @@ public class JobBase extends ModelBase {
     if (CUTOFF.equals(propertyName)) return JobBase.class;
     if (IMPOSITIONSPERRUN.equals(propertyName)) return JobBase.class;
     if (TOTALIMPOSITIONS.equals(propertyName)) return JobBase.class;
+    if (MARKUP.equals(propertyName)) return JobBase.class;
+    if (TOTALCOST.equals(propertyName)) return JobBase.class;
+    if (UNITCOST.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2072,6 +2171,12 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getImpositionsPerRun(), objT.getImpositionsPerRun()))
       return false;
     if (! SmartEquals(getTotalImpositions(), objT.getTotalImpositions()))
+      return false;
+    if (! SmartEquals(getMarkup(), objT.getMarkup()))
+      return false;
+    if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
+      return false;
+    if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
       return false;
     return true;
   }			
