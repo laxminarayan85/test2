@@ -35,11 +35,8 @@
     <listener>
         <listener-class>flex.messaging.HttpFlexSession</listener-class>
     </listener>
-
-	<listener>
-		<listener-class>com.efi.printsmith.integration.IntegrationServletListener</listener-class>
-    </listener> 
 -->
+
 	<filter>
 		<filter-name>hibernateSessionFilter</filter-name>
 		<filter-class>net.digitalprimates.persistence.hibernate.utils.filters.HibernateSessionServletFilter</filter-class>
@@ -49,6 +46,10 @@
 		<filter-name>hibernateSessionFilter</filter-name>
 		<url-pattern>/messagebroker/*</url-pattern>
 	</filter-mapping>
+
+	<listener>
+		<listener-class>com.efi.printsmith.integration.IntegrationServletListener</listener-class>
+    </listener> 
 	
     <!-- MessageBroker Servlet -->
     <servlet>
