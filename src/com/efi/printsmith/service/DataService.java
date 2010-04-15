@@ -1207,6 +1207,32 @@ public class DataService {
 		return null;
 	}
 
+	public List<ChargeCommand> getChargeList() throws Exception {
+		List<ChargeCommand> resultList = new ArrayList<ChargeCommand>();
+		try {
+			log.debug("** getAll called.");
+			EntityManager em = entityManagerFactory.createEntityManager();
+			Query findAllQuery = em.createQuery("from ChargeCommand fetch all properties order by id");
+			resultList = findAllQuery.getResultList();
+			
+			if (resultList != null)
+				for (ChargeCommand chargeCommand:resultList) {
+					List<ChargeCategory> categories = chargeCommand.getChildren();
+					for (ChargeCategory category:categories) {
+						System.out.println(category.getName());
+						List<ChargeDefinition> charges = category.getChildren();
+						for (ChargeDefinition charge:charges) {
+							System.out.println(category.getName());
+						}
+					}
+				}
+				log.debug("** Found " + resultList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return resultList;		
+	}
+	
 	public ModelBase getById(String className, Long id) throws Exception {
 		try {
 			log.debug("** getById called.");

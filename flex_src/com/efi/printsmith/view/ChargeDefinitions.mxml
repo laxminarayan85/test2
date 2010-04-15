@@ -6,6 +6,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
 	<mx:method name="addChargeCategoryToCommand" fault="handleFault(event)" result="handleAddChargeCategoryToCommand(event)"/>
+	<mx:method name="getChargeList" fault="handleFault(event)" result="handleLoadChargeCommandResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
@@ -136,9 +137,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]                                         
 	private var charge:ChargeDefinition;
                 
-	[Bindable]
-	private var charges:ArrayCollection = new ArrayCollection();
-
+//	[Bindable]
+//	private var charges:ArrayCollection = new ArrayCollection();
+//
 	[Bindable]
 	private var productCodes:ArrayCollection = new ArrayCollection();
 	
@@ -162,8 +163,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]
 	private var chargeCommands:ArrayCollection = new ArrayCollection();
 
-	[Bindable]
-	private var chargeCategories:ArrayCollection = new ArrayCollection();
+//	[Bindable]
+//	private var chargeCategories:ArrayCollection = new ArrayCollection();
 	
 	[Bindable]
 	private var costCenters:ArrayCollection = new ArrayCollection();
@@ -208,8 +209,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
 	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
 	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
-	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
-	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
+//	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
+//	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
 	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	    fireGetAllEvent("ProductionLocations", new mx.rpc.Responder(handleLoadProductionLocationsResult, handleFault));
 	    
@@ -347,9 +348,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		costCenters = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadChargeCategoryResult(ev:ResultEvent):void {
-		chargeCategories = ev.result as ArrayCollection;
-	}
+//	private function handleLoadChargeCategoryResult(ev:ResultEvent):void {
+//		chargeCategories = ev.result as ArrayCollection;
+//	}
 	
 	private function handleLoadProductionLocationsResult(ev:ResultEvent):void {
 		locations = ev.result as ArrayCollection;
@@ -371,9 +372,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		salesCategories = ev.result as ArrayCollection;
 	}
 	
-	private function handleLoadChargeResult(ev:ResultEvent):void {
-		charges = ev.result as ArrayCollection;
-	}
+//	private function handleLoadChargeResult(ev:ResultEvent):void {
+//		charges = ev.result as ArrayCollection;
+//	}
 
 	private function handleAddChargeCategoryToCommand(ev:ResultEvent):void {
 		if (ev.result == null) {

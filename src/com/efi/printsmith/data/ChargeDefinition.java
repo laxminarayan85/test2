@@ -2682,7 +2682,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private ChargeCost chargeCost;
 	
 	/** 
