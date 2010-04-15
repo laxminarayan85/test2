@@ -75,6 +75,9 @@ package com.efi.printsmith.data
 		public var markup:Number = 0;
 		public var totalCost:Number = 0;
 		public var unitCost:Number = 0;
+		public var notes:String = "";
+		public var showNotes:Boolean = true;
+		public var vendor:Vendor;
 	
 	}
 }

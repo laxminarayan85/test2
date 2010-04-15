@@ -292,6 +292,19 @@ public class JobBase extends ModelBase {
   public static final String UNITCOST = "UnitCost";
 
 	/**
+   * @generated
+   */
+  public static final String NOTES = "Notes";
+	/**
+   * @generated
+   */
+  public static final String SHOWNOTES = "ShowNotes";
+	/**
+   * @generated
+   */
+  public static final String VENDOR = "Vendor";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1700,6 +1713,74 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String notes;
+
+	/**
+   * @generated
+ 	 */
+  public String getNotes(){
+    return notes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNotes(String newVal) {
+    this.notes = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean showNotes;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getShowNotes(){
+    return showNotes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setShowNotes(Boolean newVal) {
+    this.showNotes = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne
+  private Vendor vendor;
+
+	/**
+   * @generated
+ 	 */
+  public Vendor getVendor(){
+    return vendor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setVendor(Vendor newVal) {
+    this.vendor = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1767,6 +1848,9 @@ public class JobBase extends ModelBase {
     if (MARKUP.equals(propertyName)) return getMarkup();
     if (TOTALCOST.equals(propertyName)) return getTotalCost();
     if (UNITCOST.equals(propertyName)) return getUnitCost();
+    if (NOTES.equals(propertyName)) return getNotes();
+    if (SHOWNOTES.equals(propertyName)) return getShowNotes();
+    if (VENDOR.equals(propertyName)) return getVendor();
     return super.getProperty(propertyName);
   }
 	
@@ -1838,6 +1922,9 @@ public class JobBase extends ModelBase {
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
     if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+    if (NOTES.equals(propertyName)) setNotes((String)newValue); else
+    if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
+    if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1971,6 +2058,12 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (UNITCOST.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (NOTES.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SHOWNOTES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (VENDOR.equals(propertyName)) 
+      return new Class<?>[] {Vendor.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2043,6 +2136,9 @@ public class JobBase extends ModelBase {
     if (MARKUP.equals(propertyName)) return JobBase.class;
     if (TOTALCOST.equals(propertyName)) return JobBase.class;
     if (UNITCOST.equals(propertyName)) return JobBase.class;
+    if (NOTES.equals(propertyName)) return JobBase.class;
+    if (SHOWNOTES.equals(propertyName)) return JobBase.class;
+    if (VENDOR.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2177,6 +2273,12 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
       return false;
     if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
+      return false;
+    if (! SmartEquals(getNotes(), objT.getNotes()))
+      return false;
+    if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
+      return false;
+    if (! SmartEquals(getVendor(), objT.getVendor()))
       return false;
     return true;
   }			
