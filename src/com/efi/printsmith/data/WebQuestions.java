@@ -162,7 +162,7 @@ public class WebQuestions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "webquestions_choices")
 	private java.util.List<WebChoices> choices;
 	

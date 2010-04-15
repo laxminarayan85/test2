@@ -58,7 +58,7 @@ public class WebSubCatagories extends WebCatagories {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "websubcatagories_products")
 	private java.util.List<WebProducts> products;
 	

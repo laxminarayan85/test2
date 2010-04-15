@@ -318,7 +318,7 @@ public class Matrix extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
 	

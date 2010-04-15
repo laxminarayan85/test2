@@ -645,7 +645,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(  cascade = {CascadeType.ALL})
     @IndexColumn(name="chargesinvoicebase")
     @JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
@@ -678,7 +678,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(  cascade = {CascadeType.ALL})
     @IndexColumn(name="markupchargesinvoicebase")
     @JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;

@@ -136,7 +136,7 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "webcatagories_children")
 	private java.util.List<WebSubCatagories> children;
 	

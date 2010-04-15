@@ -188,7 +188,7 @@ public class PriceLogEntry extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "pricelogentry_children")
 	private java.util.List<PriceLogEntry> children;
 	

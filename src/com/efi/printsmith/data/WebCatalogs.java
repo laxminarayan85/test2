@@ -188,7 +188,7 @@ public class WebCatalogs extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "webcatalogs_catagories")
 	private java.util.List<WebCatagories> catagories;
 	

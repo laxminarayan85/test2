@@ -630,7 +630,7 @@ public class Marketing extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private BusinessType businessType;
 	
 	/** 

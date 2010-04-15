@@ -88,7 +88,7 @@ public class Grade extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "grade_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	

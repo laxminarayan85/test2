@@ -999,7 +999,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany
+    @OneToMany()
     @JoinTable( name = "copierdefinition_charges")
 	private java.util.List<ChargeDefinition> charges;
 	
