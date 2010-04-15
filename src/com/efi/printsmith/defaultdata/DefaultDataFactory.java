@@ -47,6 +47,7 @@ public class DefaultDataFactory {
 			ProcessEstimatorTypes();
 			ProcessJobMethods();
 			ProcessPricingMethods();
+			ProcessWebTranslation();
 			
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
@@ -59,6 +60,46 @@ public class DefaultDataFactory {
 		} catch (IOException e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+	}
+	
+	private void ProcessWebTranslation(){
+		List<?> itemList = (List<?>) dataservice.getAll("WebTranslation");
+
+		if (itemList.size() > 0)
+			return;
+
+		WebTranslation webtranslation = new WebTranslation();
+		webtranslation.setName("Bindery");
+		try {
+			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		webtranslation = new WebTranslation();
+		webtranslation.setName("PrePress");
+		try {
+			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		webtranslation = new WebTranslation();
+		webtranslation.setName("Production");
+		try {
+			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
+		webtranslation = new WebTranslation();
+		webtranslation.setName("Ready for Customer");
+		try {
+			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+
 	}
 	private void ProcessPricingMethods(){
 
