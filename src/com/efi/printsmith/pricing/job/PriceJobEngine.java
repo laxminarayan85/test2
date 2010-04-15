@@ -11,7 +11,9 @@ import com.efi.printsmith.pricing.print.PrintPricingMethod;
 import com.efi.printsmith.pricing.print.PrintPricingMethodFactory;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethod;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
+import com.efi.printsmith.pricing.mailing.MailingPricingMethodFactory;
 import com.efi.printsmith.service.PricingService;
+import com.efi.printsmith.pricing.mailing.MailingPricingMethod;
 
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
@@ -82,22 +84,13 @@ public class PriceJobEngine {
 		} else if (pricingMethod.getTitle().equals("Lines & Inches")) {
 			
 		} else if (pricingMethod.getTitle().equals("Mailing")) {
-			
+			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory.createMailingPricingMethod();
+			if (mailingPricingMethod == null) {
+				log.error("No pricing Method found for Mailing");
+			} else {
+				mailingPricingMethod.priceMailingJob(job);
+			}
 		}
-		PricingRecord pricingRecord = job.getPricingRecord();
-		calculateOvers(job, pricingRecord);
 		return job;
-	}
-	
-	static private void calculateOvers(Job job, PricingRecord pricingRecord) {
-		double oversPrice = 0.0;
-		double oversUnitPrice = 0.0;
-		if (job.getQtyOrdered() > 0) {
-			oversUnitPrice = pricingRecord.getTotalPrice() / job.getQtyOrdered();
-			oversPrice = oversUnitPrice * job.getOversUnders();
-		}
-		pricingRecord.setOversTotalPrice(oversPrice);
-		pricingRecord.setOversUnitPrice(oversUnitPrice);
-		pricingRecord.setTotalPrice(pricingRecord.getTotalPrice() + pricingRecord.getOversTotalPrice());
 	}
 }

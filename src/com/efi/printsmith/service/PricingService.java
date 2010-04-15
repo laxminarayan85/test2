@@ -96,11 +96,12 @@ public class PricingService {
 		double oversUnitPrice = 0.0;
 		double oversPrice = 0.0;
 		
-		if (job.getQtyOrdered() > 0) {
+		if (job.getQtyOrdered() > 0 && job.getOversUnders() > 0) {
 			oversUnitPrice = job.getPricingRecord().getTotalPrice() / job.getQtyOrdered();
 			oversPrice = oversUnitPrice * job.getOversUnders();
 		}
 		job.getPricingRecord().setOversUnitPrice(oversUnitPrice);
 		job.getPricingRecord().setOversTotalPrice(oversPrice);
+		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getPricingRecord().getOversTotalPrice());
 	}
 }

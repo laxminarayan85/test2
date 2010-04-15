@@ -10,7 +10,7 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="auto"
 				showCloseButton="true"
-				close="doDelete()" width="966" height="660" xmlns:ns1="com.efi.printsmith.components.*">
+				close="doDelete()" width="966" height="660" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
 			<mx:SetProperty target="{job_imp}" name="text" value="{job.impositionsPerRun}"/>
@@ -119,6 +119,132 @@
 			<mx:SetProperty target="{label17}" name="x" value="5"/>
 			<mx:SetProperty target="{label17}" name="y" value="139"/>
 			<mx:RemoveChild target="{job_size}"/>
+		</mx:State>
+		<mx:State name="Mailing">
+			<mx:RemoveChild target="{customer_suppliled_stock}"/>
+			<mx:RemoveChild target="{checkbox1}"/>
+			<mx:RemoveChild target="{special_order_button}"/>
+			<mx:RemoveChild target="{chage_stock_button}"/>
+			<mx:RemoveChild target="{job_stock}"/>
+			<mx:RemoveChild target="{label18}"/>
+			<mx:RemoveChild target="{label19}"/>
+			<mx:RemoveChild target="{job_color}"/>
+			<mx:RemoveChild target="{job_parent}"/>
+			<mx:RemoveChild target="{label13}"/>
+			<mx:RemoveChild target="{runsize_label}"/>
+			<mx:RemoveChild target="{label17}"/>
+			<mx:RemoveChild target="{label16}"/>
+			<mx:RemoveChild target="{label14}"/>
+			<mx:RemoveChild target="{label15}"/>
+			<mx:RemoveChild target="{job_unit_price}"/>
+			<mx:RemoveChild target="{number_lines}"/>
+			<mx:RemoveChild target="{job_fold_size}"/>
+			<mx:RemoveChild target="{job_finish_size}"/>
+			<mx:RemoveChild target="{job_size}"/>
+			<mx:RemoveChild target="{canvas3}"/>
+			<mx:RemoveChild target="{viewstack4}"/>
+			<mx:RemoveChild target="{label20}"/>
+			<mx:RemoveChild target="{label21}"/>
+			<mx:RemoveChild target="{job_pricing_press}"/>
+			<mx:RemoveChild target="{job_costing_press}"/>
+			<mx:RemoveChild target="{label22}"/>
+			<mx:RemoveChild target="{label23}"/>
+			<mx:RemoveChild target="{label24}"/>
+			<mx:RemoveChild target="{front_colors_text}"/>
+			<mx:RemoveChild target="{front_passes_text}"/>
+			<mx:RemoveChild target="{label25}"/>
+			<mx:RemoveChild target="{front_washes_text}"/>
+			<mx:RemoveChild target="{label26}"/>
+			<mx:RemoveChild target="{back_passes_text}"/>
+			<mx:RemoveChild target="{back_washes_text}"/>
+			<mx:RemoveChild target="{back_colors_text}"/>
+			<mx:RemoveChild target="{label27}"/>
+			<mx:RemoveChild target="{front_inks_text}"/>
+			<mx:RemoveChild target="{back_inks_text}"/>
+			<mx:RemoveChild target="{radiobutton1}"/>
+			<mx:RemoveChild target="{radiobutton2}"/>
+			<mx:RemoveChild target="{radiobutton3}"/>
+			<mx:RemoveChild target="{printing_estimator_canvas}"/>
+			<mx:RemoveChild target="{estimator_viewstack}"/>
+			<mx:SetProperty target="{hrule3}" name="y" value="86"/>
+			<mx:SetProperty target="{job_description}" name="height" value="77"/>
+			<mx:RemoveChild target="{sets_of}"/>
+			<mx:RemoveChild target="{label28}"/>
+			<mx:RemoveChild target="{label29}"/>
+			<mx:RemoveChild target="{job_sheets}"/>
+			<mx:RemoveChild target="{label30}"/>
+			<mx:RemoveChild target="{job_up}"/>
+			<mx:RemoveChild target="{job_on}"/>
+			<mx:RemoveChild target="{label12}"/>
+			<mx:RemoveChild target="{job_press}"/>
+			<mx:RemoveChild target="{label10}"/>
+			<mx:RemoveChild target="{label31}"/>
+			<mx:RemoveChild target="{est_waste}"/>
+			<mx:RemoveChild target="{job_imp}"/>
+			<mx:RemoveChild target="{num_of_sig}"/>
+			<mx:RemoveChild target="{label9}"/>
+			<mx:RemoveChild target="{label11}"/>
+			<mx:RemoveChild target="{label8}"/>
+			<mx:RemoveChild target="{total_imp}"/>
+			<mx:RemoveChild target="{job_weight}"/>
+			<mx:AddChild relativeTo="{label32}" position="before">
+				<mx:TextArea x="85"
+							 y="96"
+							 width="281"
+							 id="job_mailingnotes"
+							 text="{job.notes}"
+							 height="77"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label32}" position="before">
+				<mx:Label x="10"
+						  y="97"
+						  text="Notes" width="67" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<ns1:CheckBoxRenderer x="85" y="181" id="job_shownotes"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label32}" position="before">
+				<mx:Label x="10"
+						  y="181"
+						  text="Show Notes" width="67" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<ns2:AutoComplete x="85" y="207" id="job_vendor" dataProvider="{vendors}"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{label32}" position="before">
+				<mx:Label x="10"
+						  y="209"
+						  text="Vendor" width="67" textAlign="right"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{label33}" name="y" value="60"/>
+			<mx:SetProperty target="{job_over_under}" name="y" value="58"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="496" y="29" width="98" focusOut="fieldChanged(event)" id="job_unitCost" text="{job.unitCost}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="421"
+						  y="31"
+						  text="Unit Cost" width="67" textAlign="right"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{label34}" name="x" value="384"/>
+			<mx:SetProperty target="{label34}" name="y" value="88"/>
+			<mx:SetProperty target="{bindery_waste}" name="y" value="86"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="496" y="114" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="421"
+						  y="116"
+						  text="Total Cost" width="67" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="496" y="144" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="421"
+						  y="146"
+						  text="Markup" width="67" textAlign="right"/>
+			</mx:AddChild>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
@@ -283,6 +409,9 @@
 
 			[Bindable]
 			private var productCodes:ArrayCollection=new ArrayCollection();
+			
+			[Bindable]
+			private var vendors:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
 			public var job:Job=null;
@@ -356,6 +485,7 @@
 					job.pricingRecord = new PricingRecord;			
 					job.pricingRecord.unitPriceOverride = false;
 					job.pricingRecord.totalPriceOverride = false;	
+					job.markup = 2.0;
 				}
 				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -400,12 +530,15 @@
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
-				if (evt.pricingMethod != null) {
+				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing") {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 					
-				} else {
+				} else if (evt.pricingMethod == null) {
 					Alert.show("Job Method Picker returned a null array", "Error");
+				} else {
+					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
+					this.enabled = true;
 				}
 			}
 			
@@ -494,7 +627,7 @@
 				job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
-				job.jobNotes=job_notes.text;
+				job.jobNotes=job_mailingnotes.text;
 				job.jobTicketNotes=check_job_notes.selected;
 				job.frontColors=parseInt(this.front_colors_text.text);
 				//job.frontInks=this.front_inks_text.text;
@@ -516,6 +649,9 @@
 					job.cutOff= parseInt(cutOff_edit.text);
 				job.impositionsPerRun = parseInt(job_imp.text);
 				job.totalImpositions = parseInt(total_imp.text);
+				job.unitCost = parseFloat(job_unitCost.text);
+				job.totalCost = parseFloat(job_totalCost.text);
+				job.markup = parseFloat(job_markup.text);
 			}
 
 			private function mapFromJobData():void
@@ -683,6 +819,11 @@
 			private function handleLoadProductResult(ev:ResultEvent):void
 			{
 				productCodes=ev.result as ArrayCollection;
+			}
+			
+			private function handleLoadVendorResult(ev:ResultEvent):void
+			{
+				vendors=ev.result as ArrayCollection;
 			}
 
 			private function handleDeleteResult(ev:ResultEvent):void
@@ -918,9 +1059,13 @@
 				job.impositionsPerRun = localJob.impositionsPerRun;
 				job.totalImpositions = localJob.totalImpositions;
 				job.estWaste = localJob.estWaste;
+				job.totalCost = localJob.totalCost;
 				job_imp.text = job.impositionsPerRun.toString();
 				total_imp.text = job.totalImpositions.toString();
 				est_waste.text = job.estWaste.toString();
+				job_totalCost.text = job.totalCost.toString();
+				overs_unit_price.text = job.pricingRecord.oversUnitPrice.toString();
+				overs_total_price.text = job.pricingRecord.oversTotalPrice.toString();
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
@@ -978,6 +1123,12 @@
 					this.back_passes_text.text = this.back_colors_text.text;
 					doUpdatePrice = true;
 					break;	
+				case this.job_unitCost:
+					doUpdatePrice = true;
+					break;
+				case this.job_markup:
+					doUpdatePrice = true;
+					break;
 				}
 				if (doUpdatePrice) updatePrice();
 			}
@@ -1021,7 +1172,8 @@
 				} else if (pricingMethod.title == "Lines & Inches") {
 					
 				} else if (pricingMethod.title == "Mailing") {
-					
+					this.currentState = "Mailing";
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				}
 
 			}
@@ -1233,7 +1385,7 @@
 						<mx:Canvas label="View 1"
 								   width="100%"
 								   height="100%"
-								   fontSize="9">
+								   fontSize="9" id="canvas4">
 							<mx:TextArea x="85"
 										 y="1"
 										 width="281"
@@ -1242,7 +1394,7 @@
 										 height="40"/>
 							<mx:Label x="10"
 									  y="2"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}" width="67" textAlign="right"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}" width="67" textAlign="right" id="label32"/>
 							<mx:TextInput x="496"
 										  y="24"
 										  id="job_over_under"
@@ -1382,22 +1534,22 @@
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108" id="label10"/>
 							<mx:Label x="385"
 									  y="163"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.EstWaste')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.EstWaste')}" textAlign="right" width="108" id="label31"/>
 							<mx:Label x="385"
 									  y="140"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.BinderyWaste')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.BinderyWaste')}" textAlign="right" width="108" id="label34"/>
 							<mx:Label x="385"
 									  y="117"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Press')}" textAlign="right" width="108" id="label12"/>
 							<mx:Label x="385"
 									  y="95"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UpOn')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UpOn')}" textAlign="right" width="108" id="label30"/>
 							<mx:Label x="385"
 									  y="72"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheets')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheets')}" textAlign="right" width="108" id="label29"/>
 							<mx:Label x="385"
 									  y="49"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.InSetsOf')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.InSetsOf')}" textAlign="right" width="108" id="label28"/>
 							<mx:TextInput x="496"
 										  y="1"
 										  id="job_ordered"
@@ -1409,7 +1561,7 @@
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ordered')}" textAlign="right" width="108"/>
 							<mx:Label x="385"
 									  y="26"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnders')}" textAlign="right" width="108"/>
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnders')}" textAlign="right" width="108" id="label33"/>
 							<mx:VRule x="374"
 									  bottom="5"
 									  top="5"/>
@@ -1428,7 +1580,7 @@
 							<mx:HRule x="10"
 									  y="46"
 									  width="356"
-									  height="2"/>
+									  height="2" id="hrule3"/>
 							<mx:ViewStack x="10"
 										  y="46"
 										  id="viewstack4"
@@ -1534,11 +1686,11 @@
 									<mx:Label x="6"
 											  y="37"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Stock')}"
-											  fontSize="9" width="94" textAlign="right"/>
+											  fontSize="9" width="94" textAlign="right" id="label18"/>
 									<mx:Label x="10"
 											  y="57"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Color')}"
-											  fontSize="9" textAlign="right" width="90"/>
+											  fontSize="9" textAlign="right" width="90" id="label19"/>
 									<mx:CheckBox x="10"
 												 y="6"
 												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CustomerSuppliedStoc')}"
@@ -1546,7 +1698,7 @@
 												 fontSize="9"/>
 									<mx:CheckBox x="218"
 												 y="7"
-												 fontSize="9"/>
+												 fontSize="9" id="checkbox1"/>
 									<mx:Button x="240"
 											   y="7"
 											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"
@@ -1614,7 +1766,7 @@
 									<mx:Label x="10"
 											  y="7"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingPress')}"
-											  fontSize="9" textAlign="right" width="91"/>
+											  fontSize="9" textAlign="right" width="91" id="label20"/>
 									<fc:AutoComplete x="107"
 													 y="28"
 													 width="241"
@@ -1626,15 +1778,15 @@
 									<mx:Label x="10"
 											  y="30"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingPress')}"
-											  fontSize="9" textAlign="right" width="91"/>
+											  fontSize="9" textAlign="right" width="91" id="label21"/>
 									<mx:Label x="6"
 											  y="96"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Back')}"
-											  fontSize="9" textAlign="right" width="34"/>
+											  fontSize="9" textAlign="right" width="34" id="label26"/>
 									<mx:Label x="5"
 											  y="73"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Front')}"
-											  fontSize="9" textAlign="right" width="35"/>
+											  fontSize="9" textAlign="right" width="35" id="label24"/>
 									<mx:Panel x="10"
 											  y="123"
 											  width="338"
@@ -1649,44 +1801,44 @@
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTurn')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Work_Turn" width="95"/>
+														value="Work_Turn" width="95" id="radiobutton1"/>
 										<mx:RadioButton x="10"
 														y="6"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheetwise')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Sheetwise" width="76"/>
+														value="Sheetwise" width="76" id="radiobutton2"/>
 										<mx:RadioButton x="94"
 														y="6"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Work_Tumble" width="111"/>
+														value="Work_Tumble" width="111" id="radiobutton3"/>
 									</mx:Panel>
 									<mx:Label x="48"
 											  y="54"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Colors')}"
 											  width="46"
 											  textAlign="center"
-											  fontSize="9"/>
+											  fontSize="9" id="label22"/>
 									<mx:Label x="96"
 											  y="54"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Passes')}"
 											  width="46"
 											  textAlign="center"
-											  fontSize="9"/>
+											  fontSize="9" id="label23"/>
 									<mx:Label x="144"
 											  y="54"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Washes')}"
 											  width="46"
 											  textAlign="center"
-											  fontSize="9"/>
+											  fontSize="9" id="label25"/>
 									<mx:Label x="192"
 											  y="54"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ink')}"
 											  width="156"
 											  textAlign="center"
-											  fontSize="9"/>
+											  fontSize="9" id="label27"/>
 									<mx:TextInput x="48"
 												  y="71"
 												  width="46"
