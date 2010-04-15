@@ -4,7 +4,7 @@ width="100%" height="620" title="{resourceManager.getString(Snowmass.RESOURCE_BU
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
@@ -104,7 +104,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
                  
 	[Bindable]                                         
 	private var contact:Contact;
-		
+	[Bindable]
+	private var first:Boolean;	
 	[Bindable]
 	private var account:Account;
 	[Bindable]                                         
@@ -133,18 +134,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
    
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();     
-		this.doGet();
+	//	consumer.subscribe();
+	//	notification_consumer.subscribe();  
+		first = true;   
 		account= new Account();
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
-		dataService.getAll("Contact");  
+		dataService.getContactPicker("Contact");  
 		salesRepDataService.getAll("SalesRep");
-		cityDataService.getAll("City");
-		stateDataService.getAll("State");
-		countryDataService.getAll("Country");
-		zipDataService.getAll("Zip"); 
+		//cityDataService.getAll("City");
+		//stateDataService.getAll("State");
+		//countryDataService.getAll("Country");
+	//	zipDataService.getAll("Zip"); 
 		campaignDataService.getAll("Campaigns");  
+		
 		
 		var eventAddress:ContactsAddressPanelEvent = new ContactsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAddress.dispatch();
@@ -338,7 +340,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
 		tempCredit = cardtype.selectedItem as PreferencesCreditCard;
-		if (contact.creditCard != null)
+		if (contact.creditCard != null && tempCredit != null)
 			contact.creditCard.type = tempCredit.cardType
 		if (contact.parentAccount != null)
 			contact.parentAccount.accountId = accountID.text;
@@ -422,6 +424,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function doNew():void {
 	    contact = new Contact();
+	    contact.creditCard = new CreditCard();
 	    
 	    setMarketing();
 	    setCreditCard();
@@ -439,6 +442,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var contactPickerWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
 	    contactPickerWindow.setStyle("borderAlpha", 0.9);
 	    contactPickerWindow.formIsEmpty = true;
+	    contactPickerWindow.setContactArray(contacts);
 	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.CANCELSELECTACCOUNT, handleContactPickerCancel);
 	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.SELECTACCOUNT, handleContactPickerSelect);
 	    contactPickerWindow.addEventListener(ContactPickerSelectEvent.SELECTNEWACCOUNT, handleContactPickerNew);
@@ -450,30 +454,28 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleContactPickerCancel(evt:ContactPickerSelectEvent):void {
 		
 		contact = new Contact();
+		 contact.creditCard = new CreditCard();
 		setMarketing();
 		setCreditCard();
 		this.setContact(contact);
 
 	}
 	private function handleGetResult(ev:ResultEvent):void {
-			this.setContact(ev.result as Contact);
+		   this.setContact(ev.result as Contact);
 			setMarketing();
 			setCreditCard();
 	     
 	}
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
-		if (evt.contact != null) {
-			this.setContact(evt.contact);
-			setMarketing();
-			setCreditCard();
-		} else {
-			this.setContact(new Contact());
-			Alert.show("Account Picker returned a null contact", "Error");
-		}
+		var temp:Contact = new Contact();
+		temp= evt.contact as Contact;
+		dataService.getById("Contact", temp.id );   
+		
 	}
 	
 	private function handleContactPickerNew(evt:ContactPickerSelectEvent):void {
 		this.contact = new Contact();
+		contact.creditCard = new CreditCard();
 		setMarketing();
 		setCreditCard();
 		this.setContact(contact);
@@ -558,12 +560,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.contact = ev.result as Contact;
 		setContact(this.contact);
-		dataService.getAll("Contact");
+		dataService.getContactPicker("Contact");
 	}
 
 	
 	private function handleLoadResult(ev:ResultEvent):void {
 		contacts = ev.result as ArrayCollection;
+		if (first){
+			first = false;
+			this.doGet();
+		
+		}
 	}
 	private function handleLoadCampaigns(ev:ResultEvent):void {
 		compaigns = ev.result as ArrayCollection;
@@ -600,7 +607,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("Contact");
+		dataService.getContactPicker("Contact");
 		doNew();
 	}
 	

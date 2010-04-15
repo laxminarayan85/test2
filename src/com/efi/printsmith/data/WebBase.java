@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebBase.findall", query = "from WebBase"),
-	@NamedQuery(name = "WebBase.byId", query = "select a from WebBase a where a.id= :id")
+  @NamedQuery(name = "WebBase.findall", query = "from WebBase"),
+  @NamedQuery(name = "WebBase.byId", query = "select a from WebBase a where a.id= :id")
 })
 
 
@@ -133,9 +133,9 @@ public class WebBase extends ModelBase {
 	 * @generated
 	 */
 	public WebBase() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -149,16 +149,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getContactName(){
-		return contactName; 
-	}
+    return contactName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setContactName(String newVal) {
-		this.contactName = newVal;
-	}
+    this.contactName = newVal;
+  }
  	
 	
 	/**
@@ -171,16 +171,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getContactPhone(){
-		return contactPhone; 
-	}
+    return contactPhone; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setContactPhone(String newVal) {
-		this.contactPhone = newVal;
-	}
+    this.contactPhone = newVal;
+  }
  	
 	
 	/**
@@ -193,16 +193,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getContactEmail(){
-		return contactEmail; 
-	}
+    return contactEmail; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setContactEmail(String newVal) {
-		this.contactEmail = newVal;
-	}
+    this.contactEmail = newVal;
+  }
  	
 	
 	/**
@@ -215,16 +215,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getTransferMethod(){
-		return transferMethod; 
-	}
+    return transferMethod; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTransferMethod(Integer newVal) {
-		this.transferMethod = newVal;
-	}
+    this.transferMethod = newVal;
+  }
  	
 	
 	/**
@@ -237,16 +237,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFtpUrl(){
-		return ftpUrl; 
-	}
+    return ftpUrl; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFtpUrl(String newVal) {
-		this.ftpUrl = newVal;
-	}
+    this.ftpUrl = newVal;
+  }
  	
 	
 	/**
@@ -259,16 +259,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFtpUserName(){
-		return ftpUserName; 
-	}
+    return ftpUserName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFtpUserName(String newVal) {
-		this.ftpUserName = newVal;
-	}
+    this.ftpUserName = newVal;
+  }
  	
 	
 	/**
@@ -281,16 +281,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFtpPassword(){
-		return ftpPassword; 
-	}
+    return ftpPassword; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFtpPassword(String newVal) {
-		this.ftpPassword = newVal;
-	}
+    this.ftpPassword = newVal;
+  }
  	
 	
 	/**
@@ -303,16 +303,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFtpMode(){
-		return ftpMode; 
-	}
+    return ftpMode; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFtpMode(String newVal) {
-		this.ftpMode = newVal;
-	}
+    this.ftpMode = newVal;
+  }
  	
 	
 	/**
@@ -325,16 +325,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIgnoreLocalCurrencyFormat(){
-		return ignoreLocalCurrencyFormat; 
-	}
+    return ignoreLocalCurrencyFormat; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIgnoreLocalCurrencyFormat(Boolean newVal) {
-		this.ignoreLocalCurrencyFormat = newVal;
-	}
+    this.ignoreLocalCurrencyFormat = newVal;
+  }
  	
 	
 	/**
@@ -347,16 +347,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getRetryInterval(){
-		return retryInterval; 
-	}
+    return retryInterval; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRetryInterval(Integer newVal) {
-		this.retryInterval = newVal;
-	}
+    this.retryInterval = newVal;
+  }
  	
 	
 	/**
@@ -369,16 +369,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getMaxRetries(){
-		return maxRetries; 
-	}
+    return maxRetries; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMaxRetries(Integer newVal) {
-		this.maxRetries = newVal;
-	}
+    this.maxRetries = newVal;
+  }
  	
 	
 	/**
@@ -391,16 +391,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getTakenBy(){
-		return takenBy; 
-	}
+    return takenBy; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTakenBy(String newVal) {
-		this.takenBy = newVal;
-	}
+    this.takenBy = newVal;
+  }
  	
 	
 	/**
@@ -413,16 +413,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getResponseDelay(){
-		return responseDelay; 
-	}
+    return responseDelay; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setResponseDelay(Integer newVal) {
-		this.responseDelay = newVal;
-	}
+    this.responseDelay = newVal;
+  }
  	
 	
 	/**
@@ -435,16 +435,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getComposerUrl(){
-		return composerUrl; 
-	}
+    return composerUrl; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setComposerUrl(String newVal) {
-		this.composerUrl = newVal;
-	}
+    this.composerUrl = newVal;
+  }
  	
 	
 	/**
@@ -457,16 +457,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getComposerDelay(){
-		return composerDelay; 
-	}
+    return composerDelay; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setComposerDelay(Integer newVal) {
-		this.composerDelay = newVal;
-	}
+    this.composerDelay = newVal;
+  }
  	
 	
 	/**
@@ -479,16 +479,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAutoStartConnection(){
-		return autoStartConnection; 
-	}
+    return autoStartConnection; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAutoStartConnection(Boolean newVal) {
-		this.autoStartConnection = newVal;
-	}
+    this.autoStartConnection = newVal;
+  }
  	
 	
 	/**
@@ -501,16 +501,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getHiddenBackgroundTask(){
-		return hiddenBackgroundTask; 
-	}
+    return hiddenBackgroundTask; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setHiddenBackgroundTask(Boolean newVal) {
-		this.hiddenBackgroundTask = newVal;
-	}
+    this.hiddenBackgroundTask = newVal;
+  }
  	
 	
 	/**
@@ -523,16 +523,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getAutoOenWebConsole(){
-		return autoOenWebConsole; 
-	}
+    return autoOenWebConsole; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAutoOenWebConsole(Boolean newVal) {
-		this.autoOenWebConsole = newVal;
-	}
+    this.autoOenWebConsole = newVal;
+  }
  	
 	
 	/**
@@ -545,16 +545,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSendOutgoingDataImmediately(){
-		return sendOutgoingDataImmediately; 
-	}
+    return sendOutgoingDataImmediately; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSendOutgoingDataImmediately(Boolean newVal) {
-		this.sendOutgoingDataImmediately = newVal;
-	}
+    this.sendOutgoingDataImmediately = newVal;
+  }
  	
 	
 	/**
@@ -567,16 +567,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getReceiveState(){
-		return receiveState; 
-	}
+    return receiveState; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setReceiveState(String newVal) {
-		this.receiveState = newVal;
-	}
+    this.receiveState = newVal;
+  }
  	
 	
 	/**
@@ -589,16 +589,16 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public String getRejectState(){
-		return rejectState; 
-	}
+    return rejectState; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRejectState(String newVal) {
-		this.rejectState = newVal;
-	}
+    this.rejectState = newVal;
+  }
  	
 	
 	/**
@@ -611,46 +611,46 @@ public class WebBase extends ModelBase {
 	 * @generated
  	 */
 	public WebCompany getWebCompanyID(){
-		return webCompanyID; 
-	}
+    return webCompanyID; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWebCompanyID(WebCompany newVal) {
-		this.webCompanyID = newVal;
-	}
+    this.webCompanyID = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (CONTACTNAME.equals(propertyName)) return getContactName();
-		if (CONTACTPHONE.equals(propertyName)) return getContactPhone();
-		if (CONTACTEMAIL.equals(propertyName)) return getContactEmail();
-		if (TRANSFERMETHOD.equals(propertyName)) return getTransferMethod();
-		if (FTPURL.equals(propertyName)) return getFtpUrl();
-		if (FTPUSERNAME.equals(propertyName)) return getFtpUserName();
-		if (FTPPASSWORD.equals(propertyName)) return getFtpPassword();
-		if (FTPMODE.equals(propertyName)) return getFtpMode();
-		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return getIgnoreLocalCurrencyFormat();
-		if (RETRYINTERVAL.equals(propertyName)) return getRetryInterval();
-		if (MAXRETRIES.equals(propertyName)) return getMaxRetries();
-		if (TAKENBY.equals(propertyName)) return getTakenBy();
-		if (RESPONSEDELAY.equals(propertyName)) return getResponseDelay();
-		if (COMPOSERURL.equals(propertyName)) return getComposerUrl();
-		if (COMPOSERDELAY.equals(propertyName)) return getComposerDelay();
-		if (AUTOSTARTCONNECTION.equals(propertyName)) return getAutoStartConnection();
-		if (HIDDENBACKGROUNDTASK.equals(propertyName)) return getHiddenBackgroundTask();
-		if (AUTOOENWEBCONSOLE.equals(propertyName)) return getAutoOenWebConsole();
-		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) return getSendOutgoingDataImmediately();
-		if (RECEIVESTATE.equals(propertyName)) return getReceiveState();
-		if (REJECTSTATE.equals(propertyName)) return getRejectState();
-		if (WEBCOMPANYID.equals(propertyName)) return getWebCompanyID();
-		return super.getProperty(propertyName);
-	}
+    if (CONTACTNAME.equals(propertyName)) return getContactName();
+    if (CONTACTPHONE.equals(propertyName)) return getContactPhone();
+    if (CONTACTEMAIL.equals(propertyName)) return getContactEmail();
+    if (TRANSFERMETHOD.equals(propertyName)) return getTransferMethod();
+    if (FTPURL.equals(propertyName)) return getFtpUrl();
+    if (FTPUSERNAME.equals(propertyName)) return getFtpUserName();
+    if (FTPPASSWORD.equals(propertyName)) return getFtpPassword();
+    if (FTPMODE.equals(propertyName)) return getFtpMode();
+    if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return getIgnoreLocalCurrencyFormat();
+    if (RETRYINTERVAL.equals(propertyName)) return getRetryInterval();
+    if (MAXRETRIES.equals(propertyName)) return getMaxRetries();
+    if (TAKENBY.equals(propertyName)) return getTakenBy();
+    if (RESPONSEDELAY.equals(propertyName)) return getResponseDelay();
+    if (COMPOSERURL.equals(propertyName)) return getComposerUrl();
+    if (COMPOSERDELAY.equals(propertyName)) return getComposerDelay();
+    if (AUTOSTARTCONNECTION.equals(propertyName)) return getAutoStartConnection();
+    if (HIDDENBACKGROUNDTASK.equals(propertyName)) return getHiddenBackgroundTask();
+    if (AUTOOENWEBCONSOLE.equals(propertyName)) return getAutoOenWebConsole();
+    if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) return getSendOutgoingDataImmediately();
+    if (RECEIVESTATE.equals(propertyName)) return getReceiveState();
+    if (REJECTSTATE.equals(propertyName)) return getRejectState();
+    if (WEBCOMPANYID.equals(propertyName)) return getWebCompanyID();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -658,30 +658,30 @@ public class WebBase extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (CONTACTNAME.equals(propertyName)) setContactName((String)newValue); else
-		if (CONTACTPHONE.equals(propertyName)) setContactPhone((String)newValue); else
-		if (CONTACTEMAIL.equals(propertyName)) setContactEmail((String)newValue); else
-		if (TRANSFERMETHOD.equals(propertyName)) setTransferMethod((Integer)newValue); else
-		if (FTPURL.equals(propertyName)) setFtpUrl((String)newValue); else
-		if (FTPUSERNAME.equals(propertyName)) setFtpUserName((String)newValue); else
-		if (FTPPASSWORD.equals(propertyName)) setFtpPassword((String)newValue); else
-		if (FTPMODE.equals(propertyName)) setFtpMode((String)newValue); else
-		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) setIgnoreLocalCurrencyFormat((Boolean)newValue); else
-		if (RETRYINTERVAL.equals(propertyName)) setRetryInterval((Integer)newValue); else
-		if (MAXRETRIES.equals(propertyName)) setMaxRetries((Integer)newValue); else
-		if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
-		if (RESPONSEDELAY.equals(propertyName)) setResponseDelay((Integer)newValue); else
-		if (COMPOSERURL.equals(propertyName)) setComposerUrl((String)newValue); else
-		if (COMPOSERDELAY.equals(propertyName)) setComposerDelay((Integer)newValue); else
-		if (AUTOSTARTCONNECTION.equals(propertyName)) setAutoStartConnection((Boolean)newValue); else
-		if (HIDDENBACKGROUNDTASK.equals(propertyName)) setHiddenBackgroundTask((Boolean)newValue); else
-		if (AUTOOENWEBCONSOLE.equals(propertyName)) setAutoOenWebConsole((Boolean)newValue); else
-		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) setSendOutgoingDataImmediately((Boolean)newValue); else
-		if (RECEIVESTATE.equals(propertyName)) setReceiveState((String)newValue); else
-		if (REJECTSTATE.equals(propertyName)) setRejectState((String)newValue); else
-		if (WEBCOMPANYID.equals(propertyName)) setWebCompanyID((WebCompany)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (CONTACTNAME.equals(propertyName)) setContactName((String)newValue); else
+    if (CONTACTPHONE.equals(propertyName)) setContactPhone((String)newValue); else
+    if (CONTACTEMAIL.equals(propertyName)) setContactEmail((String)newValue); else
+    if (TRANSFERMETHOD.equals(propertyName)) setTransferMethod((Integer)newValue); else
+    if (FTPURL.equals(propertyName)) setFtpUrl((String)newValue); else
+    if (FTPUSERNAME.equals(propertyName)) setFtpUserName((String)newValue); else
+    if (FTPPASSWORD.equals(propertyName)) setFtpPassword((String)newValue); else
+    if (FTPMODE.equals(propertyName)) setFtpMode((String)newValue); else
+    if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) setIgnoreLocalCurrencyFormat((Boolean)newValue); else
+    if (RETRYINTERVAL.equals(propertyName)) setRetryInterval((Integer)newValue); else
+    if (MAXRETRIES.equals(propertyName)) setMaxRetries((Integer)newValue); else
+    if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
+    if (RESPONSEDELAY.equals(propertyName)) setResponseDelay((Integer)newValue); else
+    if (COMPOSERURL.equals(propertyName)) setComposerUrl((String)newValue); else
+    if (COMPOSERDELAY.equals(propertyName)) setComposerDelay((Integer)newValue); else
+    if (AUTOSTARTCONNECTION.equals(propertyName)) setAutoStartConnection((Boolean)newValue); else
+    if (HIDDENBACKGROUNDTASK.equals(propertyName)) setHiddenBackgroundTask((Boolean)newValue); else
+    if (AUTOOENWEBCONSOLE.equals(propertyName)) setAutoOenWebConsole((Boolean)newValue); else
+    if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) setSendOutgoingDataImmediately((Boolean)newValue); else
+    if (RECEIVESTATE.equals(propertyName)) setReceiveState((String)newValue); else
+    if (REJECTSTATE.equals(propertyName)) setRejectState((String)newValue); else
+    if (WEBCOMPANYID.equals(propertyName)) setWebCompanyID((WebCompany)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -689,52 +689,52 @@ public class WebBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (CONTACTNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CONTACTPHONE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CONTACTEMAIL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (TRANSFERMETHOD.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (FTPURL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FTPUSERNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FTPPASSWORD.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FTPMODE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (RETRYINTERVAL.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (MAXRETRIES.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (TAKENBY.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (RESPONSEDELAY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (COMPOSERURL.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (COMPOSERDELAY.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (AUTOSTARTCONNECTION.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (HIDDENBACKGROUNDTASK.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (AUTOOENWEBCONSOLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (RECEIVESTATE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (REJECTSTATE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (WEBCOMPANYID.equals(propertyName)) 
-			return new Class<?>[] {WebCompany.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (CONTACTNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CONTACTPHONE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CONTACTEMAIL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (TRANSFERMETHOD.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (FTPURL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FTPUSERNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FTPPASSWORD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FTPMODE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RETRYINTERVAL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (MAXRETRIES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (TAKENBY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (RESPONSEDELAY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COMPOSERURL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (COMPOSERDELAY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (AUTOSTARTCONNECTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (HIDDENBACKGROUNDTASK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (AUTOOENWEBCONSOLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RECEIVESTATE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (REJECTSTATE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WEBCOMPANYID.equals(propertyName)) 
+      return new Class<?>[] {WebCompany.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -743,83 +743,83 @@ public class WebBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (CONTACTNAME.equals(propertyName)) return WebBase.class;
-		if (CONTACTPHONE.equals(propertyName)) return WebBase.class;
-		if (CONTACTEMAIL.equals(propertyName)) return WebBase.class;
-		if (TRANSFERMETHOD.equals(propertyName)) return WebBase.class;
-		if (FTPURL.equals(propertyName)) return WebBase.class;
-		if (FTPUSERNAME.equals(propertyName)) return WebBase.class;
-		if (FTPPASSWORD.equals(propertyName)) return WebBase.class;
-		if (FTPMODE.equals(propertyName)) return WebBase.class;
-		if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return WebBase.class;
-		if (RETRYINTERVAL.equals(propertyName)) return WebBase.class;
-		if (MAXRETRIES.equals(propertyName)) return WebBase.class;
-		if (TAKENBY.equals(propertyName)) return WebBase.class;
-		if (RESPONSEDELAY.equals(propertyName)) return WebBase.class;
-		if (COMPOSERURL.equals(propertyName)) return WebBase.class;
-		if (COMPOSERDELAY.equals(propertyName)) return WebBase.class;
-		if (AUTOSTARTCONNECTION.equals(propertyName)) return WebBase.class;
-		if (HIDDENBACKGROUNDTASK.equals(propertyName)) return WebBase.class;
-		if (AUTOOENWEBCONSOLE.equals(propertyName)) return WebBase.class;
-		if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) return WebBase.class;
-		if (RECEIVESTATE.equals(propertyName)) return WebBase.class;
-		if (REJECTSTATE.equals(propertyName)) return WebBase.class;
-		if (WEBCOMPANYID.equals(propertyName)) return WebBase.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (CONTACTNAME.equals(propertyName)) return WebBase.class;
+    if (CONTACTPHONE.equals(propertyName)) return WebBase.class;
+    if (CONTACTEMAIL.equals(propertyName)) return WebBase.class;
+    if (TRANSFERMETHOD.equals(propertyName)) return WebBase.class;
+    if (FTPURL.equals(propertyName)) return WebBase.class;
+    if (FTPUSERNAME.equals(propertyName)) return WebBase.class;
+    if (FTPPASSWORD.equals(propertyName)) return WebBase.class;
+    if (FTPMODE.equals(propertyName)) return WebBase.class;
+    if (IGNORELOCALCURRENCYFORMAT.equals(propertyName)) return WebBase.class;
+    if (RETRYINTERVAL.equals(propertyName)) return WebBase.class;
+    if (MAXRETRIES.equals(propertyName)) return WebBase.class;
+    if (TAKENBY.equals(propertyName)) return WebBase.class;
+    if (RESPONSEDELAY.equals(propertyName)) return WebBase.class;
+    if (COMPOSERURL.equals(propertyName)) return WebBase.class;
+    if (COMPOSERDELAY.equals(propertyName)) return WebBase.class;
+    if (AUTOSTARTCONNECTION.equals(propertyName)) return WebBase.class;
+    if (HIDDENBACKGROUNDTASK.equals(propertyName)) return WebBase.class;
+    if (AUTOOENWEBCONSOLE.equals(propertyName)) return WebBase.class;
+    if (SENDOUTGOINGDATAIMMEDIATELY.equals(propertyName)) return WebBase.class;
+    if (RECEIVESTATE.equals(propertyName)) return WebBase.class;
+    if (REJECTSTATE.equals(propertyName)) return WebBase.class;
+    if (WEBCOMPANYID.equals(propertyName)) return WebBase.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebBase objT = (WebBase)obj;
-		if (! SmartEquals(getContactName(), objT.getContactName()))
-			return false;
-		if (! SmartEquals(getContactPhone(), objT.getContactPhone()))
-			return false;
-		if (! SmartEquals(getContactEmail(), objT.getContactEmail()))
-			return false;
-		if (! SmartEquals(getTransferMethod(), objT.getTransferMethod()))
-			return false;
-		if (! SmartEquals(getFtpUrl(), objT.getFtpUrl()))
-			return false;
-		if (! SmartEquals(getFtpUserName(), objT.getFtpUserName()))
-			return false;
-		if (! SmartEquals(getFtpPassword(), objT.getFtpPassword()))
-			return false;
-		if (! SmartEquals(getFtpMode(), objT.getFtpMode()))
-			return false;
-		if (! SmartEquals(getIgnoreLocalCurrencyFormat(), objT.getIgnoreLocalCurrencyFormat()))
-			return false;
-		if (! SmartEquals(getRetryInterval(), objT.getRetryInterval()))
-			return false;
-		if (! SmartEquals(getMaxRetries(), objT.getMaxRetries()))
-			return false;
-		if (! SmartEquals(getTakenBy(), objT.getTakenBy()))
-			return false;
-		if (! SmartEquals(getResponseDelay(), objT.getResponseDelay()))
-			return false;
-		if (! SmartEquals(getComposerUrl(), objT.getComposerUrl()))
-			return false;
-		if (! SmartEquals(getComposerDelay(), objT.getComposerDelay()))
-			return false;
-		if (! SmartEquals(getAutoStartConnection(), objT.getAutoStartConnection()))
-			return false;
-		if (! SmartEquals(getHiddenBackgroundTask(), objT.getHiddenBackgroundTask()))
-			return false;
-		if (! SmartEquals(getAutoOenWebConsole(), objT.getAutoOenWebConsole()))
-			return false;
-		if (! SmartEquals(getSendOutgoingDataImmediately(), objT.getSendOutgoingDataImmediately()))
-			return false;
-		if (! SmartEquals(getReceiveState(), objT.getReceiveState()))
-			return false;
-		if (! SmartEquals(getRejectState(), objT.getRejectState()))
-			return false;
-		if (! SmartEquals(getWebCompanyID(), objT.getWebCompanyID()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebBase objT = (WebBase)obj;
+    if (! SmartEquals(getContactName(), objT.getContactName()))
+      return false;
+    if (! SmartEquals(getContactPhone(), objT.getContactPhone()))
+      return false;
+    if (! SmartEquals(getContactEmail(), objT.getContactEmail()))
+      return false;
+    if (! SmartEquals(getTransferMethod(), objT.getTransferMethod()))
+      return false;
+    if (! SmartEquals(getFtpUrl(), objT.getFtpUrl()))
+      return false;
+    if (! SmartEquals(getFtpUserName(), objT.getFtpUserName()))
+      return false;
+    if (! SmartEquals(getFtpPassword(), objT.getFtpPassword()))
+      return false;
+    if (! SmartEquals(getFtpMode(), objT.getFtpMode()))
+      return false;
+    if (! SmartEquals(getIgnoreLocalCurrencyFormat(), objT.getIgnoreLocalCurrencyFormat()))
+      return false;
+    if (! SmartEquals(getRetryInterval(), objT.getRetryInterval()))
+      return false;
+    if (! SmartEquals(getMaxRetries(), objT.getMaxRetries()))
+      return false;
+    if (! SmartEquals(getTakenBy(), objT.getTakenBy()))
+      return false;
+    if (! SmartEquals(getResponseDelay(), objT.getResponseDelay()))
+      return false;
+    if (! SmartEquals(getComposerUrl(), objT.getComposerUrl()))
+      return false;
+    if (! SmartEquals(getComposerDelay(), objT.getComposerDelay()))
+      return false;
+    if (! SmartEquals(getAutoStartConnection(), objT.getAutoStartConnection()))
+      return false;
+    if (! SmartEquals(getHiddenBackgroundTask(), objT.getHiddenBackgroundTask()))
+      return false;
+    if (! SmartEquals(getAutoOenWebConsole(), objT.getAutoOenWebConsole()))
+      return false;
+    if (! SmartEquals(getSendOutgoingDataImmediately(), objT.getSendOutgoingDataImmediately()))
+      return false;
+    if (! SmartEquals(getReceiveState(), objT.getReceiveState()))
+      return false;
+    if (! SmartEquals(getRejectState(), objT.getRejectState()))
+      return false;
+    if (! SmartEquals(getWebCompanyID(), objT.getWebCompanyID()))
+      return false;
+    return true;
+  }			
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "WebLocations.findall", query = "from WebLocations"),
-	@NamedQuery(name = "WebLocations.byId", query = "select a from WebLocations a where a.id= :id")
+  @NamedQuery(name = "WebLocations.findall", query = "from WebLocations"),
+  @NamedQuery(name = "WebLocations.byId", query = "select a from WebLocations a where a.id= :id")
 })
 
 
@@ -53,9 +53,9 @@ public class WebLocations extends ModelBase {
 	 * @generated
 	 */
 	public WebLocations() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -69,16 +69,16 @@ public class WebLocations extends ModelBase {
 	 * @generated
  	 */
 	public ProductionLocations getProductionLocations(){
-		return productionLocations; 
-	}
+    return productionLocations; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setProductionLocations(ProductionLocations newVal) {
-		this.productionLocations = newVal;
-	}
+    this.productionLocations = newVal;
+  }
  	
 	
 	/**
@@ -91,26 +91,26 @@ public class WebLocations extends ModelBase {
 	 * @generated
  	 */
 	public WebTranslation getWebTranslation(){
-		return webTranslation; 
-	}
+    return webTranslation; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setWebTranslation(WebTranslation newVal) {
-		this.webTranslation = newVal;
-	}
+    this.webTranslation = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (PRODUCTIONLOCATIONS.equals(propertyName)) return getProductionLocations();
-		if (WEBTRANSLATION.equals(propertyName)) return getWebTranslation();
-		return super.getProperty(propertyName);
-	}
+    if (PRODUCTIONLOCATIONS.equals(propertyName)) return getProductionLocations();
+    if (WEBTRANSLATION.equals(propertyName)) return getWebTranslation();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -118,10 +118,10 @@ public class WebLocations extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (PRODUCTIONLOCATIONS.equals(propertyName)) setProductionLocations((ProductionLocations)newValue); else
-		if (WEBTRANSLATION.equals(propertyName)) setWebTranslation((WebTranslation)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (PRODUCTIONLOCATIONS.equals(propertyName)) setProductionLocations((ProductionLocations)newValue); else
+    if (WEBTRANSLATION.equals(propertyName)) setWebTranslation((WebTranslation)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -129,12 +129,12 @@ public class WebLocations extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (PRODUCTIONLOCATIONS.equals(propertyName)) 
-			return new Class<?>[] {ProductionLocations.class};		
-		if (WEBTRANSLATION.equals(propertyName)) 
-			return new Class<?>[] {WebTranslation.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (PRODUCTIONLOCATIONS.equals(propertyName)) 
+      return new Class<?>[] {ProductionLocations.class};		
+    if (WEBTRANSLATION.equals(propertyName)) 
+      return new Class<?>[] {WebTranslation.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -143,23 +143,23 @@ public class WebLocations extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (PRODUCTIONLOCATIONS.equals(propertyName)) return WebLocations.class;
-		if (WEBTRANSLATION.equals(propertyName)) return WebLocations.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (PRODUCTIONLOCATIONS.equals(propertyName)) return WebLocations.class;
+    if (WEBTRANSLATION.equals(propertyName)) return WebLocations.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		WebLocations objT = (WebLocations)obj;
-		if (! SmartEquals(getProductionLocations(), objT.getProductionLocations()))
-			return false;
-		if (! SmartEquals(getWebTranslation(), objT.getWebTranslation()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    WebLocations objT = (WebLocations)obj;
+    if (! SmartEquals(getProductionLocations(), objT.getProductionLocations()))
+      return false;
+    if (! SmartEquals(getWebTranslation(), objT.getWebTranslation()))
+      return false;
+    return true;
+  }			
 }
