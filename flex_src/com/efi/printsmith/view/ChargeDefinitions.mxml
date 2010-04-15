@@ -211,9 +211,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
 //	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
 //	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
-	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+//	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	    fireGetAllEvent("ProductionLocations", new mx.rpc.Responder(handleLoadProductionLocationsResult, handleFault));
-	    
+	    dataService.getChargeList();
 		charge_stack.selectedChild = charge_blank_canvas;
 	    throbber.play();
 		updateControlState();
