@@ -1354,10 +1354,12 @@
 	
 		if ( chkIsMetric.selected){
 			Basicsize.text = ""
+			label5.visible = false;
 			cboUom.selectedIndex = findItem("Microns", stockUom);
 			 
 		}
 		else{
+			label5.visible =true;
 			Basicsize.text = stockDefinitions.stktype.size
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
 		}
