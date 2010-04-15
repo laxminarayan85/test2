@@ -3,11 +3,11 @@
 width="100%" height="620" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}"
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*">
 
-<mx:RemoteObject id="dataService" destination="dataService">
+<mx:RemoteObject id="dataService2" destination="dataService">
 	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
@@ -17,7 +17,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
 </mx:RemoteObject>	
 
-<mx:RemoteObject id="cityDataService" destination="dataService">
+<!--<mx:RemoteObject id="cityDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCity(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCityResult(event)"/>
 </mx:RemoteObject>
@@ -31,7 +31,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountry(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 </mx:RemoteObject>
-
+-->
 <mx:RemoteObject id="zipDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadZip(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
@@ -134,12 +134,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
    
 	public function init():void {
-	//	consumer.subscribe();
-	//	notification_consumer.subscribe();  
+		consumer.subscribe();
+		notification_consumer.subscribe();  
 		first = true;   
 		account= new Account();
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
-		dataService.getContactPicker("Contact");  
+		dataService2.getContactPicker("Contact");  
 		salesRepDataService.getAll("SalesRep");
 		//cityDataService.getAll("City");
 		//stateDataService.getAll("State");
@@ -287,7 +287,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
                                   
 	private function deleteContact():void {              
-	     dataService.deleteItem("Contact",contact.id);                                     
+	     dataService2.deleteItem("Contact",contact.id);                                     
 	}
 	
 	 private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
@@ -434,7 +434,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 	
 	}  
 	private function doDelete():void {
-	    dataService.deleteItem("Contact",contact.id);
+	    dataService2.deleteItem("Contact",contact.id);
 	 	
 	}  
 	private function doGet():void{
@@ -469,7 +469,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
 		var temp:Contact = new Contact();
 		temp= evt.contact as Contact;
-		dataService.getById("Contact", temp.id );   
+		dataService2.getById("Contact", temp.id );   
 		
 	}
 	
@@ -491,7 +491,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = contacts.length - 1;
 		}
 	    temp = contacts.getItemAt(itemp,0) as Contact;   
-	   	dataService.getById("Contact", temp.id );                       
+	   	dataService2.getById("Contact", temp.id );                       
 	}
 	private function doPrev():void {              
 	    var itemp:int;
@@ -503,7 +503,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = 0; 
 		}
 		temp = contacts.getItemAt(itemp,0) as Contact;   
-	   	dataService.getById("Contact", temp.id );
+	   	dataService2.getById("Contact", temp.id );
 	   
 	                                             
 	}                                           
@@ -517,7 +517,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function doSave():void {
 		mapToContactData();
-		dataService.addUpdate(contact);
+		dataService2.addUpdate(contact);
 		                                    		
 	}   
 
@@ -560,7 +560,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.contact = ev.result as Contact;
 		setContact(this.contact);
-		dataService.getContactPicker("Contact");
+		dataService2.getContactPicker("Contact");
 	}
 
 	
@@ -607,7 +607,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getContactPicker("Contact");
+		dataService2.getContactPicker("Contact");
 		doNew();
 	}
 	
@@ -622,19 +622,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function handleSaveCityResult(ev:ResultEvent):void {
 		
-		cityDataService.getAll("City");
+	//	cityDataService.getAll("City");
 		
 		
 	}      
 	private function handleSaveStateResult(ev:ResultEvent):void {
-		stateDataService.getAll("State");
+	//stateDataService.getAll("State");
 	}   
 	private function handleSaveCampaignResult(ev:ResultEvent):void {
 		campaignDataService.getAll("Campaigns");
 	}       
 
 	private function handleSaveCountryResult(ev:ResultEvent):void {
-		countryDataService.getAll("Country");
+	//countryDataService.getAll("Country");
 	}      
 
 	private function handleSaveZipResult(ev:ResultEvent):void {

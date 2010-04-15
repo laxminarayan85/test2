@@ -3,9 +3,9 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
-	[Bindable]
 	[RemoteClass(alias="com.efi.printsmith.data.WebCompany")]
-
+	[Managed]
+	
 	public class WebCompany extends ModelBase
 	{
 
