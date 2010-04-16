@@ -201,7 +201,7 @@
 						  text="Notes" width="67" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<ns1:CheckBoxRenderer x="85" y="181" id="job_shownotes"/>
+				<ns1:CheckBoxRenderer x="85" y="181" id="job_shownotes" selected="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
@@ -1066,6 +1066,10 @@
 				job_totalCost.text = job.totalCost.toString();
 				overs_unit_price.text = job.pricingRecord.oversUnitPrice.toString();
 				overs_total_price.text = job.pricingRecord.oversTotalPrice.toString();
+				job_prep.text = job.pricingRecord.prepPrice.toString();
+				job_bind.text = job.pricingRecord.bindPrice.toString();
+				job_other.text = job.pricingRecord.otherChargePrice.toString();
+				job_total.text = (job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString();
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
