@@ -125,10 +125,9 @@ public class WebBase extends ModelBase {
 	 */
 	public static final String REJECTSTATE = "RejectState";
 	/**
-	 * @generated
-	 */
-	public static final String WEBCOMPANYID = "WebCompanyID";
-
+   * @generated
+   */
+  public static final String WEBCOMPANYID = "WebCompanyID";
 	/**
 	 * @generated
 	 */
@@ -602,25 +601,26 @@ public class WebBase extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebCompany webCompanyID;
-	
+  private WebCompany webCompanyID;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebCompany getWebCompanyID(){
+  public WebCompany getWebCompanyID(){
     return webCompanyID; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setWebCompanyID(WebCompany newVal) {
+   * @generated
+   */	
+  public void setWebCompanyID(WebCompany newVal) {
     this.webCompanyID = newVal;
   }
+
+
 	/**
 	 * @generated
 	 */		

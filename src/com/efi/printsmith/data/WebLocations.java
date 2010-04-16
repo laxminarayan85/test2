@@ -41,14 +41,13 @@ import org.hibernate.annotations.Type;
 @Table(name = "weblocations")
 public class WebLocations extends ModelBase {
 	/**
-	 * @generated
-	 */
-	public static final String PRODUCTIONLOCATIONS = "ProductionLocations";
+   * @generated
+   */
+  public static final String PRODUCTIONLOCATIONS = "ProductionLocations";
 	/**
-	 * @generated
-	 */
-	public static final String WEBTRANSLATION = "WebTranslation";
-
+   * @generated
+   */
+  public static final String WEBTRANSLATION = "WebTranslation";
 	/**
 	 * @generated
 	 */
@@ -60,47 +59,49 @@ public class WebLocations extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private ProductionLocations productionLocations;
-	
+  private ProductionLocations productionLocations;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public ProductionLocations getProductionLocations(){
+  public ProductionLocations getProductionLocations(){
     return productionLocations; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setProductionLocations(ProductionLocations newVal) {
+   * @generated
+   */	
+  public void setProductionLocations(ProductionLocations newVal) {
     this.productionLocations = newVal;
   }
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebTranslation webTranslation;
-	
+  private WebTranslation webTranslation;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebTranslation getWebTranslation(){
+  public WebTranslation getWebTranslation(){
     return webTranslation; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setWebTranslation(WebTranslation newVal) {
+   * @generated
+   */	
+  public void setWebTranslation(WebTranslation newVal) {
     this.webTranslation = newVal;
   }
+
+
+
 	/**
 	 * @generated
 	 */		

@@ -377,18 +377,17 @@ public class Account extends ModelBase {
 	 */
 	public static final String JOBCHARGES = "JobCharges";
 	/**
-	 * @generated
-	 */
-	public static final String WEBREGISTERED = "WebRegistered";
+   * @generated
+   */
+  public static final String WEBREGISTERED = "WebRegistered";
 	/**
-	 * @generated
-	 */
-	public static final String WEBCOMPANYID = "WebCompanyId";
+   * @generated
+   */
+  public static final String WEBCOMPANYID = "WebCompanyId";
 	/**
-	 * @generated
-	 */
-	public static final String WEBCATALOG = "WebCatalog";
-
+   * @generated
+   */
+  public static final String WEBCATALOG = "WebCatalog";
 	/**
 	 * @generated
 	 */
@@ -2278,69 +2277,64 @@ public class Account extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean webRegistered;
-	
+  private Boolean webRegistered;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getWebRegistered(){
+  public Boolean getWebRegistered(){
     return webRegistered; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebRegistered(Boolean newVal) {
+   * @generated
+   */	
+  public void setWebRegistered(Boolean newVal) {
     this.webRegistered = newVal;
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebCompany webCompanyId;
-	
+  private WebCompany webCompanyId;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebCompany getWebCompanyId(){
+  public WebCompany getWebCompanyId(){
     return webCompanyId; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebCompanyId(WebCompany newVal) {
+   * @generated
+   */	
+  public void setWebCompanyId(WebCompany newVal) {
     this.webCompanyId = newVal;
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebCatalogs webCatalog;
-	
+  private WebCatalogs webCatalog;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebCatalogs getWebCatalog(){
+  public WebCatalogs getWebCatalog(){
     return webCatalog; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebCatalog(WebCatalogs newVal) {
+   * @generated
+   */	
+  public void setWebCatalog(WebCatalogs newVal) {
     this.webCatalog = newVal;
   }
+
 	/**
 	 * @generated
 	 */		

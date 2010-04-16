@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -26,6 +27,9 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
+
+import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
+import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
 
 import org.apache.log4j.Logger;
 import org.hibernate.*;
@@ -43,7 +47,7 @@ import com.efi.printsmith.messaging.MessageTypes;
 import com.efi.printsmith.query.RemoteCriterion;
 import com.efi.printsmith.query.RemoteRestriction;
 
-public class DataService {
+public class DataService extends HibernateService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
@@ -1222,7 +1226,7 @@ public class DataService {
 						System.out.println(category.getName());
 						List<ChargeDefinition> charges = category.getChildren();
 						for (ChargeDefinition charge:charges) {
-							System.out.println(category.getName());
+							System.out.println(charge.getName());
 						}
 					}
 				}
@@ -1573,6 +1577,37 @@ public class DataService {
 	public Session getSession() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		return (Session) em.getDelegate();
+	}
+
+	public Object load(Class clazz, long id)
+	{
+        Session session = null;
+        Object result;
+
+       try
+       {
+           session = getSession();
+           
+           long tStart = new Date().getTime();
+               result = session.get(clazz, id);
+           long tEnd = new Date().getTime();
+           log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
+           
+       }
+       catch (HibernateException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       }
+       catch (RuntimeException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       }
+
+       return result;
 	}
 
 }

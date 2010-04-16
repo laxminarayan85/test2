@@ -97,26 +97,25 @@ public class Contact extends Party {
 	 */
 	public static final String CONTACTID = "ContactId";
 	/**
-	 * @generated
-	 */
-	public static final String WEBACCESS = "WebAccess";
+   * @generated
+   */
+  public static final String WEBACCESS = "WebAccess";
 	/**
-	 * @generated
-	 */
-	public static final String WEBREGISTERED = "WebRegistered";
+   * @generated
+   */
+  public static final String WEBREGISTERED = "WebRegistered";
 	/**
-	 * @generated
-	 */
-	public static final String WEBCONTACTID = "WebContactID";
+   * @generated
+   */
+  public static final String WEBCONTACTID = "WebContactID";
 	/**
-	 * @generated
-	 */
-	public static final String WEBCATALOG = "WebCatalog";
+   * @generated
+   */
+  public static final String WEBCATALOG = "WebCatalog";
 	/**
-	 * @generated
-	 */
-	public static final String WEBSTATUS = "WebStatus";
-
+   * @generated
+   */
+  public static final String WEBSTATUS = "WebStatus";
 	/**
 	 * @generated
 	 */
@@ -452,113 +451,100 @@ public class Contact extends Party {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean webAccess;
-	
+  private Boolean webAccess;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getWebAccess(){
+  public Boolean getWebAccess(){
     return webAccess; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebAccess(Boolean newVal) {
+   * @generated
+   */	
+  public void setWebAccess(Boolean newVal) {
     this.webAccess = newVal;
   }
- 	
-	
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean webRegistered;
-	
+  private Boolean webRegistered;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getWebRegistered(){
+  public Boolean getWebRegistered(){
     return webRegistered; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebRegistered(Boolean newVal) {
+   * @generated
+   */	
+  public void setWebRegistered(Boolean newVal) {
     this.webRegistered = newVal;
   }
- 	
-	
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String webContactID;
-	
+  private String webContactID;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getWebContactID(){
+  public String getWebContactID(){
     return webContactID; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebContactID(String newVal) {
+   * @generated
+   */	
+  public void setWebContactID(String newVal) {
     this.webContactID = newVal;
   }
- 	
-	
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebCatalogs webCatalog;
-	
+  private WebCatalogs webCatalog;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebCatalogs getWebCatalog(){
+  public WebCatalogs getWebCatalog(){
     return webCatalog; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebCatalog(WebCatalogs newVal) {
+   * @generated
+   */	
+  public void setWebCatalog(WebCatalogs newVal) {
     this.webCatalog = newVal;
   }
- 	
-	
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne
-	private WebStatus webStatus;
-	
+  private WebStatus webStatus;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public WebStatus getWebStatus(){
+  public WebStatus getWebStatus(){
     return webStatus; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setWebStatus(WebStatus newVal) {
+   * @generated
+   */	
+  public void setWebStatus(WebStatus newVal) {
     this.webStatus = newVal;
   }
+
 	/**
 	 * @generated
 	 */		

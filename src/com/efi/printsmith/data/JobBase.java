@@ -290,7 +290,6 @@ public class JobBase extends ModelBase {
    * @generated
    */
   public static final String UNITCOST = "UnitCost";
-
 	/**
    * @generated
    */
@@ -1710,6 +1709,7 @@ public class JobBase extends ModelBase {
   public void setUnitCost(Double newVal) {
     this.unitCost = newVal;
   }
+
 
 
 	/**

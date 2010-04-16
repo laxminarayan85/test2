@@ -36,6 +36,15 @@
 			<source>
 				com.efi.printsmith.service.DataService
 			</source>
+			<scope>request</scope>
+			<hibernate>
+				<!--
+					//the name of the method in this class which follows the hibernate
+					//load(Class, id) argument signature.
+					// default is "load"
+				-->
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	
