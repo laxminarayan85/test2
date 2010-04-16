@@ -134,7 +134,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private Address shipToAddress;
 	
 	/**
@@ -156,7 +156,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne(optional=true)
 	private Account parentAccount;
 	
 	/**
@@ -354,7 +354,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private CreditCard creditCard;
 	
 	/**
@@ -376,7 +376,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private Marketing marketing;
 	
 	/**
@@ -399,7 +399,6 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="campaignscontact")
     @JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	
