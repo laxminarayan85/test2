@@ -283,7 +283,7 @@
 			event.dispatch();
 		}
 		
-		private function doLogout():void {
+		public function doLogout():void {
 			for (var i:int = 1; i < mainNavigator.numChildren; i++) {
 				mainNavigator.removeChildAt(i);
 			}

@@ -46,18 +46,15 @@
 		logout();
 	}
 	private function handlePasswordOK(event:PasswordEvent):void{
-		application.currentUser.forcePasswordChange = false;
-		logout();
+		
 	}
 	private function handleFaultNoMessage(ev:FaultEvent):void {  
 	}
 	private function logout():void{
-		application.currentUser.forcePasswordChange = false;
-		for (var i:int = 1; i < application.mainNavigator.numChildren; i++) {
-			application.mainNavigator.removeChildAt(i);
-		}
-		application.currentUser = null;
-		doLogin();
+		
+		application.doLogout();
+		
+		//doLogin();
 		
 	}		
 	private function handleLoginResult(event:ResultEvent):void	{
@@ -84,12 +81,12 @@
 				Alert.show(ev.fault.faultCode,ev.fault.faultDetail, Alert.OK, null, null, null, Alert.OK);
 		}
 
-			private function doLogin():void	{
-				var callbacks:IResponder = new mx.rpc.Responder(handleLoginResult, handleFault);
+	private function doLogin():void	{
+	 var callbacks:IResponder = new mx.rpc.Responder(handleLoginResult, handleFault);
 				
-				var loginEvent:LoginEvent = new LoginEvent(username.text, password.text, callbacks);
-				loginEvent.dispatch();
-			}
+	var loginEvent:LoginEvent = new LoginEvent(username.text, password.text, callbacks);
+		loginEvent.dispatch();
+		}
 		]]>
 	</mx:Script>
 </mx:Application>

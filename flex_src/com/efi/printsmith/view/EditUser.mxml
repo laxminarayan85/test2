@@ -244,6 +244,9 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 	private function doPassword():void{
 		var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
 		setPassword.setStyle("borderAlpha", 0.9);
+		if ( user1.name == "" && nameField.text != "" )
+			user1.name = nameField.text;
+			
 		setPassword.setUser(user1);
 	    setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
 	    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
