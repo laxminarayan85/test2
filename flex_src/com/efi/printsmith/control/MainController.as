@@ -144,9 +144,7 @@ package com.efi.printsmith.control
 			this.addCommand(WebAdminProductsPanelEvent.COMMANDID, WebAdminProductsPanelCommand);
 			this.addCommand(WebAdminQuestionsPanelEvent.COMMANDID, WebAdminQuestionsPanelCommand);
 			this.addCommand(WebAdminSitePanelEvent.COMMANDID, WebAdminSitePanelCommand);
-			this.addCommand(PasswordEvent.COMMANDID, PasswordCommand);
-
-		}
+			}
 		
 	}
 }
