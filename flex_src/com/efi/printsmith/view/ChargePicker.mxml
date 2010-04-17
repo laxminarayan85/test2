@@ -56,7 +56,7 @@
 
 	<mx:RemoteObject id="chargeCommandDataService"
 					 destination="dataService">
-		<mx:method name="getAll"
+		<mx:method name="getChargeList"
 				   fault="handleFault(event)"
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>

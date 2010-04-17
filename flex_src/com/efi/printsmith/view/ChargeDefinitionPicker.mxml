@@ -37,7 +37,7 @@
 	</mx:RemoteObject>
 	<mx:RemoteObject id="chargeCommandDataService"
 					 destination="dataService">
-		<mx:method name="getAll"
+		<mx:method name="getChargeList"
 				   fault="handleFault(event)"
 				   result="handleLoadChargeCommandResult(event)"/>
 	</mx:RemoteObject>
@@ -125,7 +125,7 @@
 			{
 				PopUpManager.centerPopUp(this);
 				chargeDataService.getAll("Charge");
-				chargeCommandDataService.getAll("ChargeCommand");
+				chargeCommandDataService.getChargeList();
 				dataServiceSystemPreferences.getAll("PreferencesSystem");
 				this.currentState="New Charge";
 			
