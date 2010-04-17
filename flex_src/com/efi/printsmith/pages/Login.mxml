@@ -41,11 +41,11 @@
 				application= Snowmass.getInstance();
 			} 
 			
-	private function handlePasswordCancel(event:ResultEvent):void{
+	private function handlePasswordCancel(event:PasswordEvent):void{
 		application.currentUser.forcePasswordChange = true;
 		logout();
 	}
-	private function handlePasswordOK(event:ResultEvent):void{
+	private function handlePasswordOK(event:PasswordEvent):void{
 		application.currentUser.forcePasswordChange = false;
 		logout();
 	}

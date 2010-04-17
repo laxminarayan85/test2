@@ -250,10 +250,10 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 		
 	 	}
 	 	
-	private function handlePasswordCancel(event:ResultEvent):void{
+	private function handlePasswordCancel(event:PasswordEvent):void{
 		
 	}
-	private function handlePasswordOK(event:ResultEvent):void{
+	private function handlePasswordOK(event:PasswordEvent):void{
 		
 	}
 	
