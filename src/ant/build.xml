@@ -130,6 +130,13 @@
 			</fileset>
 		</copy>
 
+		<copy todir="${snowmassBuilddir}">
+			<fileset dir="${checkoutpath}/${module1}/src">
+				<include name="*.xml"/> 
+			</fileset>
+		</copy>
+
+
 		<record name="${checkoutpath}/${module1}/src/ant/war_log.txt" action="start"/> 
 		 <!-- the ant war task. with all resources in place, create the war file -->
 		<war destfile="${warfile}" webxml="${snowmassWebInfdir}/web.xml" basedir="${snowmassPagesdir}" compress="true">
