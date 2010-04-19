@@ -486,6 +486,8 @@
 					job.pricingRecord.unitPriceOverride = false;
 					job.pricingRecord.totalPriceOverride = false;	
 					job.markup = 2.0;
+					job.totalCost = 0.0;
+					job.unitCost = 0.0;
 				}
 				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -627,7 +629,7 @@
 				job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
-				job.jobNotes=job_mailingnotes.text;
+				job.jobNotes=job_notes.text;
 				job.jobTicketNotes=check_job_notes.selected;
 				job.frontColors=parseInt(this.front_colors_text.text);
 				//job.frontInks=this.front_inks_text.text;
@@ -649,9 +651,12 @@
 					job.cutOff= parseInt(cutOff_edit.text);
 				job.impositionsPerRun = parseInt(job_imp.text);
 				job.totalImpositions = parseInt(total_imp.text);
-				job.unitCost = parseFloat(job_unitCost.text);
-				job.totalCost = parseFloat(job_totalCost.text);
-				job.markup = parseFloat(job_markup.text);
+				if (job_unitCost != null)
+					job.unitCost = parseFloat(job_unitCost.text);
+				if (job_totalCost != null)
+					job.totalCost = parseFloat(job_totalCost.text);
+				if (job_markup != null)
+					job.markup = parseFloat(job_markup.text);
 			}
 
 			private function mapFromJobData():void
