@@ -1065,16 +1065,22 @@
 				job.totalImpositions = localJob.totalImpositions;
 				job.estWaste = localJob.estWaste;
 				job.totalCost = localJob.totalCost;
-				job_imp.text = job.impositionsPerRun.toString();
-				total_imp.text = job.totalImpositions.toString();
-				est_waste.text = job.estWaste.toString();
-				job_totalCost.text = job.totalCost.toString();
-				overs_unit_price.text = job.pricingRecord.oversUnitPrice.toString();
-				overs_total_price.text = job.pricingRecord.oversTotalPrice.toString();
-				job_prep.text = job.pricingRecord.prepPrice.toString();
-				job_bind.text = job.pricingRecord.bindPrice.toString();
-				job_other.text = job.pricingRecord.otherChargePrice.toString();
-				job_total.text = (job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString();
+				if (job != null) { 
+					job_imp.text = job.impositionsPerRun.toString();
+					total_imp.text = job.totalImpositions.toString();
+					est_waste.text = job.estWaste.toString();
+					if (job_totalCost != null) {
+						job_totalCost.text = job.totalCost.toString();
+					}
+					if (job.pricingRecord != null) {
+						overs_unit_price.text = job.pricingRecord.oversUnitPrice.toString();
+						overs_total_price.text = job.pricingRecord.oversTotalPrice.toString();
+						job_prep.text = job.pricingRecord.prepPrice.toString();
+						job_bind.text = job.pricingRecord.bindPrice.toString();
+						job_other.text = job.pricingRecord.otherChargePrice.toString();
+						job_total.text = (job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString();
+					}
+				}
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void

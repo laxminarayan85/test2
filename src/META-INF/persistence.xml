@@ -14,6 +14,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
       <property name="hibernate.show_sql" value="false" />
       <property name="hibernate.use_sql_comments" value="true" />
       <property name="hibernate.hbm2ddl.auto" value="update" />
+	<property name="c3p0.acquire_increment" value="5" />
+		<property name="c3p0.idle_test_period" value="100"/> <!-- seconds --> 
+		<property name="c3p0.max_size" value="100"/>
+		<property name="c3p0.max_statements" value="0"/>
+		<property name="c3p0.min_size" value="10"/> 
+		<property name="c3p0.timeout" value="45"/> <!-- seconds --> 
+		<property name="com.mchange.v2.log.MLog" value="com.mchange.v2.log.FallbackMLog"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -114,10 +114,10 @@ public class DataService extends HibernateService {
 	}
 
 	public List<?> getAll(String className) {
+		log.debug("** getAll called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		try {
-			log.debug("** getAll called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findAllQuery = em.createQuery("from " + className
 					+ " fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
@@ -125,15 +125,17 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return resultList;
 	}
 
 	public List<?> getAllOrdeBy(String className, String orderBy) {
+		log.debug("** getAll called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		try {
-			log.debug("** getAll called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findAllQuery = em.createQuery("from " + className
 					+ " fetch all properties order by "+ orderBy);
 			resultList = findAllQuery.getResultList();
@@ -141,16 +143,17 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return resultList;
 	}
 
 	public List<?> getAllNameIDOnly(String className) throws Exception {
+		log.debug("** getAllNameIDOnly.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		try {
-			log.debug("** getAllNameIDOnly .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className
 					+ "( a.id, a.name) from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -161,12 +164,17 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public List<?> getStockPicker(String className,
 			List<PreferencesStockDefinition> Columns) throws Exception {
+		log.debug("** getStockPicker.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
@@ -175,10 +183,6 @@ public class DataService extends HibernateService {
 				+ "a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, "
 				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified";
 		try {
-
-			log.debug("** getAllNameIDOnly .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -189,20 +193,21 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public List<?> getAccountPicker(String className) throws Exception {
+		log.debug("** getAccountPicker .");
+		EntityManager em = entityManagerFactory.createEntityManager();
+
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
 		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect";
 		try {
-
-			log.debug("** getAccountPicker .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -213,17 +218,20 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
 		List<ModelBase> resultList = new ArrayList<ModelBase>();
 		String columnstring = new String();
 
 		columnstring = "a.id, a.invoiceNumber";
 		try {
-			EntityManager em = entityManagerFactory.createEntityManager();
 
 			String queryString = "select new Invoice" + "( "
 					+ columnstring + ") from Invoice a where a.onPendingList = 'TRUE'";
@@ -292,20 +300,20 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public List<?> getContactPicker(String className) throws Exception {
+		log.debug("** getContactPicker .");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
 		columnstring = "a.id, a.firstName, a.lastName, a.contactId";
 		try {
-
-			log.debug("** getContactPicker .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -316,6 +324,8 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -323,13 +333,11 @@ public class DataService extends HibernateService {
 	public List<?> getPressPicker(String className) throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
+		log.debug("** getPressPicker .");
+		EntityManager em = entityManagerFactory.createEntityManager();
 
 		columnstring = "a.id, a.name, a.machineID, a.machineName";
 		try {
-
-			log.debug("** getPressPicker .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -340,6 +348,8 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -348,12 +358,11 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
+		log.debug("** getCopierPicker .");
+		EntityManager em = entityManagerFactory.createEntityManager();
+
 		columnstring = "a.id, a.name, a.copyID, a.machineName, a.blackwhite, a.color, a.largeFormat";
 		try {
-
-			log.debug("** getCopierPicker .");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
@@ -364,40 +373,46 @@ public class DataService extends HibernateService {
 			return resultList;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ModelBase getSingle(String className) {
+		log.debug("** getSingle called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getSingle called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findQuery = em.createQuery("from " + className);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 	
 	public ModelBase getQuery(String className, String where) {
+		log.debug("** getQuery called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getQuery called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findQuery = em.createQuery("from " + className + where);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ModelBase getByPrevId(String className, String prevId) {
+		log.debug("** getByPrevId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByPrevId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from " + className + " where prevId = '"
 					+ prevId + "'";
 			Query query = em.createQuery(queryString);
@@ -405,14 +420,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockDefinition getByStockId(String stockId) {
+		log.debug("** getByStockId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByStockId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockDefinition where stockId = '"
 					+ stockId + "'";
 			Query query = em.createQuery(queryString);
@@ -420,14 +437,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockType getByStockTypeID(String stocktypeId) {
+		log.debug("** getByStocktypeId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByStocktypeId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockType where viewableID = '"
 					+ stocktypeId + "'";
 			Query query = em.createQuery(queryString);
@@ -435,14 +454,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public PressDefinition getByPressId(String pressId) {
+		log.debug("** getByPressId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByPressId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from PressDefinition where pressId = '"
 					+ pressId + "'";
 			Query query = em.createQuery(queryString);
@@ -450,14 +471,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public Account getByAccountId(String accountId) {
+		log.debug("** getByAccountId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByAccountId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from Account where accountId = '" + accountId
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -465,14 +488,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ModelBase getByName(String className, String name) {
+		log.debug("** getByName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from " + className + " where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -480,13 +505,15 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 	public ModelBase getByLastFirstName(String className, String namelast, String namefirst, long id) {
+		log.debug("** getByName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from " + className + " where lastName = '" + namelast
 					+ "' and " + "firstName = '" + namefirst + "' and " + "parentaccount_id = '" + id + "'";
 			Query query = em.createQuery(queryString);
@@ -494,14 +521,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 	public List<?> getFromParent(String className, String parentName, Long id)
 			throws Exception {
+		log.debug("** getId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getId called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from " + className + " where " + parentName
 					+ "_id = :id";
 
@@ -514,45 +543,48 @@ public class DataService extends HibernateService {
 			return list;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockColors getByStockColorName(String name) throws Exception {
+		log.debug("** getBySockColorName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySockColorName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockColors where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockColors object = (StockColors) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockClass getByStockClassName(String name) throws Exception {
+		log.debug("** getBySockClassName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySockClassName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockClass where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockClass object = (StockClass) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public SalesCategory getBySalesCategoryName(String name) throws Exception {
+		log.debug("** getBySalesCategoryName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySalesCategoryName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from SalesCategory where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -560,45 +592,48 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockFinish getByStockFinishName(String name) throws Exception {
+		log.debug("** getBySockFinishName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySockFinishName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockFinish where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockFinish object = (StockFinish) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockGroup getByStockGroupName(String name) throws Exception {
+		log.debug("** getBySockGroupName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySockGroupName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockGroup where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockGroup object = (StockGroup) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public GenericColors getByGenericColorsName(String name) throws Exception {
+		log.debug("** getByGenericColorsName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByGenericColorsName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from GenericColors where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -606,70 +641,80 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public StockGrade getByStockGradeName(String name) throws Exception {
+		log.debug("** getByStockGradeName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByStockGradeName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from StockGrade where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			StockGrade object = (StockGrade) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public CostCenter getByCostCenterName(String name) throws Exception {
+		log.debug("** getByCostCenterName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByCostCenterName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from CostCenter where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			CostCenter object = (CostCenter) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public Location getByLocationName(String name) throws Exception {
+		log.debug("** getByLocationName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByLocationName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from Location where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			Location object = (Location) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public PriceList getByPriceListName(String name) throws Exception {
+		log.debug("** getByPriceListName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByPriceListName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from PriceList where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			PriceList object = (PriceList) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ShippingMethod getByShippingMethodName(String name) throws Exception {
+		log.debug("** getByShippingMethodName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByShippingMethodName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from ShippingMethod where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -677,56 +722,64 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public Substrate getBySubstrateName(String name) throws Exception {
+		log.debug("** getBySubstrateName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getBySubstrateName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from Substrate where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			Substrate object = (Substrate) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public TaxTable getByTaxTableName(String name) throws Exception {
+		log.debug("** getByTaxTableName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByTaxTableName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from TaxTable where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			TaxTable object = (TaxTable) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public WasteChart getByWasteChartName(String name) throws Exception {
+		log.debug("** getByWasteChartName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByWasteChartName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from WasteChart where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			WasteChart object = (WasteChart) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ChargeCommand getByChargeCommandName(String name) throws Exception {
+		log.debug("** getByChargeCommandName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByChargeCommandName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from ChargeCommand where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -734,14 +787,16 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public ChargeCategory getByChargeCategoryName(String name) throws Exception {
+		log.debug("** getByChargeCategoryName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByChargeCategoryName called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "from ChargeCategory where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
@@ -749,17 +804,17 @@ public class DataService extends HibernateService {
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {
+		log.debug("** getAccountsByPartialName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getAccountsByPartialName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "from Account where title like '" + name
 					+ "%'";
 			Query query = em.createQuery(queryString);
@@ -771,6 +826,8 @@ public class DataService extends HibernateService {
 			return accounts;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return new ArrayList<Account>();
 	}
@@ -778,11 +835,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<Employee> getByEmployeesPartialName(String name)
 			throws Exception {
+		log.debug("** getByEmployeesPartialName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByEmployeesPartialName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "from Employee where title like '" + name
 					+ "%'";
 			Query query = em.createQuery(queryString);
@@ -795,17 +850,17 @@ public class DataService extends HibernateService {
 			return employees;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return new ArrayList<Employee>();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByPartialName(String name) throws Exception {
+		log.debug("** getCountactsByPartialName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getCountactsByPartialName called.");
-
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "from Contact where title like '" + name
 					+ "%'";
 			Query query = em.createQuery(queryString);
@@ -818,6 +873,8 @@ public class DataService extends HibernateService {
 			return contacts;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return new ArrayList<Contact>();
 	}
@@ -1045,6 +1102,7 @@ public class DataService extends HibernateService {
 		sequenceValues.setGrade(value);
 		this.addUpdate(sequenceValues);
 	}
+	
 	private void setCreditCardId(CreditCard creditcard) throws Exception {
 		if (creditcard.getCreditCardID() != null && creditcard.getCreditCardID().length() > 0)
 			return;
@@ -1065,9 +1123,8 @@ public class DataService extends HibernateService {
 
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			EntityManager em;
-			em = entityManagerFactory.createEntityManager();
 			if (object.getId() == null || object.getId() == 0) {
 				object.setId(null);
 				object.setCreated(new Timestamp(new Date().getTime()));
@@ -1126,12 +1183,11 @@ public class DataService extends HibernateService {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();
 				throw new Exception(e.getMessage());
-			} finally {
-				log.info("** Closing Entity Manager.");
-				em.close();
 			}
 		} catch (Exception e) {
 			log.error("Exception caught");
+		} finally {
+			em.close();
 		}
 		return object;
 	}
@@ -1139,9 +1195,8 @@ public class DataService extends HibernateService {
 	public ChargeCategory addChargeCategoryToCommand(ChargeCategory category,
 			ChargeCommand command) throws Exception {
 		log.debug("** addChargeCategoryToCommand called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			EntityManager em;
-			em = entityManagerFactory.createEntityManager();
 
 			if (command == null || category == null) {
 				String msg = "null value passed to addChargeCategoryToCommand";
@@ -1169,6 +1224,8 @@ public class DataService extends HibernateService {
 			}
 		} catch (Exception e) {
 			log.error("Exception caught");
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1176,10 +1233,8 @@ public class DataService extends HibernateService {
 	public ChargeDefinition addChargeToCategory(ChargeDefinition charge,
 			ChargeCategory category) throws Exception {
 		log.debug("** addChargeCategoryToCommand called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			EntityManager em;
-			em = entityManagerFactory.createEntityManager();
-
 			if (charge == null || category == null) {
 				String msg = "null value passed to addChargeCategoryToCommand";
 				log.error(msg);
@@ -1207,15 +1262,17 @@ public class DataService extends HibernateService {
 			}
 		} catch (Exception e) {
 			log.error("Exception caught");
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	public List<ChargeCommand> getChargeList() throws Exception {
 		List<ChargeCommand> resultList = new ArrayList<ChargeCommand>();
+		log.debug("** getChargeList called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getAll called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query findAllQuery = em.createQuery("from ChargeCommand fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
 			
@@ -1233,46 +1290,52 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return resultList;		
 	}
 	
 	public ModelBase getById(String className, Long id) throws Exception {
+		log.debug("** getById called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getById called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query query = em.createNamedQuery(className + ".byId");
 			query.setParameter("id", id);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
+	
 	public ModelBase getByIdMaster(String className, Long id) throws Exception {
+		log.debug("** getById called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getById called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			Query query = em.createNamedQuery(className + ".byId");
 			query.setParameter("id", id);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getByAccountId(String className, Long id)
 			throws Exception {
+		log.debug("** getByaccountid Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByaccountid Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "select a from " + className
 					+ " a where a.account.id = :id";
-
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);
 			List<Invoice> invoicelist = query.getResultList();
@@ -1281,6 +1344,8 @@ public class DataService extends HibernateService {
 			return invoicelist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1288,13 +1353,13 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getInvoiceByAccountId(String className, Long id)
 			throws Exception {
-		String columnstring = new String();
+		log.debug("** getByaccountid Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 
+		String columnstring = new String();
 		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal, a.customerPO";
 
 		try {
-			log.debug("** getByaccountid Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			// cej
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className
@@ -1311,6 +1376,8 @@ public class DataService extends HibernateService {
 			return invoicelist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1321,10 +1388,10 @@ public class DataService extends HibernateService {
 		String columnstring = new String();
 
 		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal";
+		EntityManager em = entityManagerFactory.createEntityManager();
 
 		try {
 			log.debug("** getEstimateByAccountId Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			// cej
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className
@@ -1341,6 +1408,8 @@ public class DataService extends HibernateService {
 			return invoicelist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1348,9 +1417,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<Contact> getContactsByAccountId(String className, Long id)
 			throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			log.debug("** getByaccountid Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 
 			String queryString = "select a from " + className
 					+ " a where a.parentAccount.id = :id";
@@ -1363,6 +1432,8 @@ public class DataService extends HibernateService {
 			return contactlist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1370,10 +1441,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByClockInOut(String className, Employee employee)
 			throws Exception {
+		log.debug("** getByEmployee Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByEmployee Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date date = new java.util.Date();
 
@@ -1389,6 +1459,8 @@ public class DataService extends HibernateService {
 			return timecardlist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1396,10 +1468,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByClockInOutBreak(String className,
 			Employee employee) throws Exception {
+		log.debug("** getByEmployee Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByEmployee Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date date = new java.util.Date();
 
@@ -1415,6 +1486,8 @@ public class DataService extends HibernateService {
 			return timecardlist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1422,10 +1495,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<TimeCard> getByTimeCardByEmployee(String className,
 			Employee employee) throws Exception {
+		log.debug("** getByEmployee Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByEmployee Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date date = new java.util.Date();
 
@@ -1441,16 +1513,17 @@ public class DataService extends HibernateService {
 			return timecardlist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Period> getByPeriodOpen(String className) throws Exception {
+		log.debug("** getByEmployee Id called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByEmployee Id called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
-
 			String queryString = "from " + className
 					+ " where periodClosed = 0";
 			Query query = em.createQuery(queryString);
@@ -1460,6 +1533,8 @@ public class DataService extends HibernateService {
 			return periodlist;
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1467,9 +1542,9 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<SecuritySetup> getByAccessGroup(String className,
 			AccessGroup accessGroup) throws Exception {
+		log.debug("** getByAccess called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			log.debug("** getByAccess called.");
-			EntityManager em = entityManagerFactory.createEntityManager();
 			String queryString = "select a from SecuritySetup a where a.accessGroup.id = :id";
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", accessGroup.getId());
@@ -1481,6 +1556,8 @@ public class DataService extends HibernateService {
 
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return null;
 	}
@@ -1489,25 +1566,27 @@ public class DataService extends HibernateService {
 	public void deleteItem(String className, Long id) {
 		log.debug("** deleteObject called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
-		Query q = em.createNamedQuery(className + ".byId");
-		q.setParameter("id", id);
-		ModelBase object = (ModelBase) q.getSingleResult();
-
-		if (object != null) {
-			EntityTransaction tx = em.getTransaction();
-			tx.begin();
-			try {
-				em.remove(object);
-				tx.commit();
-				MessageServiceAdapter.sendNotification(MessageTypes.DELETE,
-						className, id);
-			} catch (Exception e) {
-				log.error("** Error: " + e.getMessage());
-				tx.rollback();
-			} finally {
-				log.info("** Closing Entity Manager.");
-				em.close();
+		try {
+			Query q = em.createNamedQuery(className + ".byId");
+			q.setParameter("id", id);
+			ModelBase object = (ModelBase) q.getSingleResult();
+	
+			if (object != null) {
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				try {
+					em.remove(object);
+					tx.commit();
+					MessageServiceAdapter.sendNotification(MessageTypes.DELETE,
+							className, id);
+				} catch (Exception e) {
+					log.error("** Error: " + e.getMessage());
+					tx.rollback();
+				}
 			}
+		} finally {
+			log.info("** Closing Entity Manager.");
+			em.close();
 		}
 	}
 
@@ -1515,6 +1594,7 @@ public class DataService extends HibernateService {
 			List<RemoteCriterion> criteria) {
 		log.debug("** criteriaQuery called.");
 		List<?> resultList = new ArrayList<Object>();
+		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			for (RemoteCriterion criterion : criteria) {
 				if (criterion instanceof RemoteRestriction) {
@@ -1553,8 +1633,6 @@ public class DataService extends HibernateService {
 								.getPropertyName(), remoteRestriction
 								.getValue()));
 					}
-					EntityManager em = entityManagerFactory
-							.createEntityManager();
 					Session session = (Session) em.getDelegate();
 					Transaction tx = session.beginTransaction();
 					resultList = query.getExecutableCriteria(session).list();
@@ -1570,26 +1648,27 @@ public class DataService extends HibernateService {
 			log.error(e);
 		} catch (Exception e) {
 			log.error(e);
+		} finally {
+			em.close();
 		}
 		return resultList;
 	}
 
-	public Session getSession() {
+	static public Session getSession() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		return (Session) em.getDelegate();
 	}
 
 	public Object load(Class clazz, long id)
 	{
-        Session session = null;
-        Object result;
+       Session session = null;
+       Object result;
+       session = getSession();
 
        try
        {
-           session = getSession();
-           
            long tStart = new Date().getTime();
-               result = session.get(clazz, id);
+           result = session.get(clazz, id);
            long tEnd = new Date().getTime();
            log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
            
@@ -1605,6 +1684,8 @@ public class DataService extends HibernateService {
            HibernateUtil.rollbackTransaction();
            ex.printStackTrace();
            throw ex;
+       } finally {
+    	   session.close();
        }
 
        return result;

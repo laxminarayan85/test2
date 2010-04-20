@@ -1,6 +1,13 @@
 package com.efi.printsmith.service;
 
+import java.util.Date;
+
+import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
+import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
+
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.classic.Session;
 
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.CopierDefinition;
@@ -10,7 +17,7 @@ import com.efi.printsmith.pricing.charge.ChargeUtilities;
 import com.efi.printsmith.pricing.charge.PriceChargeEngine;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
 
-public class JobService {
+public class JobService extends HibernateService {
 	protected static Logger log = Logger.getLogger(JobService.class);
 
 	public JobService() {
@@ -70,4 +77,37 @@ public class JobService {
 		}
 		return job;
 	}
+
+	public Object load(Class clazz, long id)
+	{
+       Session session = null;
+       Object result;
+
+       try
+       {
+           session = DataService.getSession();
+           long tStart = new Date().getTime();
+           result = session.get(clazz, id);
+           long tEnd = new Date().getTime();
+           log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
+           
+       }
+       catch (HibernateException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       }
+       catch (RuntimeException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       } finally {
+    	   session.close();
+       }
+
+       return result;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.efi.printsmith.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.efi.printsmith.data.*;
@@ -13,10 +14,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
+import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
+
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
@@ -29,7 +34,7 @@ import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
 
-public class PricingService {
+public class PricingService extends HibernateService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
@@ -104,4 +109,37 @@ public class PricingService {
 		job.getPricingRecord().setOversTotalPrice(oversPrice);
 		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getPricingRecord().getOversTotalPrice());
 	}
+	
+	public Object load(Class clazz, long id)
+	{
+       Session session = null;
+       Object result;
+
+       try
+       {
+           session = DataService.getSession();
+           long tStart = new Date().getTime();
+           result = session.get(clazz, id);
+           long tEnd = new Date().getTime();
+           log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
+           
+       }
+       catch (HibernateException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       }
+       catch (RuntimeException ex)
+       {
+           HibernateUtil.rollbackTransaction();
+           ex.printStackTrace();
+           throw ex;
+       } finally {
+    	   session.close();
+       }
+
+       return result;
+	}
+
 }

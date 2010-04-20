@@ -36,7 +36,6 @@
 			<source>
 				com.efi.printsmith.service.DataService
 			</source>
-			<scope>request</scope>
 			<hibernate>
 				<!--
 					//the name of the method in this class which follows the hibernate
@@ -53,6 +52,14 @@
 			<source>
 				com.efi.printsmith.service.PricingService
 			</source>
+			<hibernate>
+				<!--
+					//the name of the method in this class which follows the hibernate
+					//load(Class, id) argument signature.
+					// default is "load"
+				-->
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	
@@ -76,6 +83,14 @@
 			<source>
 				com.efi.printsmith.service.InvoiceService
 			</source>
+			<hibernate>
+				<!--
+					//the name of the method in this class which follows the hibernate
+					//load(Class, id) argument signature.
+					// default is "load"
+				-->
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	<destination id="jobService">
@@ -83,6 +98,14 @@
 			<source>
 				com.efi.printsmith.service.JobService
 			</source>
+			<hibernate>
+				<!--
+					//the name of the method in this class which follows the hibernate
+					//load(Class, id) argument signature.
+					// default is "load"
+				-->
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 
