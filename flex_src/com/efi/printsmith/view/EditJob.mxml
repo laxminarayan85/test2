@@ -214,7 +214,7 @@
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
 						  y="209"
-						  text="Vendor" width="67" textAlign="right"/>
+						  text="Vendor" width="67" textAlign="right" id="label35"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{label33}" name="y" value="60"/>
 			<mx:SetProperty target="{job_over_under}" name="y" value="58"/>
@@ -224,7 +224,7 @@
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
 						  y="31"
-						  text="Unit Cost" width="67" textAlign="right"/>
+						  text="Unit Cost" width="67" textAlign="right" id="label36"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{label34}" name="x" value="384"/>
 			<mx:SetProperty target="{label34}" name="y" value="88"/>
@@ -235,7 +235,7 @@
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
 						  y="116"
-						  text="Total Cost" width="67" textAlign="right"/>
+						  text="Total Cost" width="67" textAlign="right" id="label37"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:TextInput x="496" y="144" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right"/>
@@ -243,8 +243,36 @@
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
 						  y="146"
-						  text="Markup" width="67" textAlign="right"/>
+						  text="Markup" width="67" textAlign="right" id="label38"/>
 			</mx:AddChild>
+		</mx:State>
+		<mx:State name="ChargesOnly" basedOn="Mailing">
+			<mx:RemoveChild target="{label35}"/>
+			<mx:RemoveChild target="{job_vendor}"/>
+			<mx:RemoveChild target="{label36}"/>
+			<mx:RemoveChild target="{job_over_under}"/>
+			<mx:RemoveChild target="{job_unitCost}"/>
+			<mx:RemoveChild target="{label33}"/>
+			<mx:RemoveChild target="{label34}"/>
+			<mx:RemoveChild target="{bindery_waste}"/>
+			<mx:RemoveChild target="{job_totalCost}"/>
+			<mx:RemoveChild target="{label37}"/>
+			<mx:RemoveChild target="{label38}"/>
+			<mx:RemoveChild target="{job_markup}"/>
+			<mx:RemoveChild target="{overs_unit_price}"/>
+			<mx:RemoveChild target="{label6}"/>
+			<mx:RemoveChild target="{label1}"/>
+			<mx:RemoveChild target="{overs_total_price}"/>
+			<mx:SetProperty target="{label3}" name="y" value="300"/>
+			<mx:SetProperty target="{job_prep}" name="y" value="300"/>
+			<mx:SetProperty target="{label5}" name="y" value="321"/>
+			<mx:SetProperty target="{job_bind}" name="y" value="321"/>
+			<mx:SetProperty target="{label2}" name="y" value="342"/>
+			<mx:SetProperty target="{job_other}" name="y" value="342"/>
+			<mx:SetProperty target="{hrule2}" name="y" value="366"/>
+			<mx:SetProperty target="{hrule1}" name="y" value="370"/>
+			<mx:SetProperty target="{job_total}" name="y" value="377"/>
+			<mx:SetProperty target="{label4}" name="y" value="377"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
@@ -532,7 +560,7 @@
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
-				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing") {
+				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing" && evt.pricingMethod.title != "Merchandise" && evt.pricingMethod.title != "Charges Only" && evt.pricingMethod.title != "Outside Services") {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 					
@@ -1179,11 +1207,14 @@
 					this.currentState = "LargeFormat";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;					
 				} else if (pricingMethod.title == "Charges Only") {
-					
+					this.currentState = "ChargesOnly";
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Outside Services") {
-					
+					this.currentState = "Mailing";
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Merchandise") {
-					
+					this.currentState = "Mailing";
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Lines & Inches") {
 					
 				} else if (pricingMethod.title == "Mailing") {
