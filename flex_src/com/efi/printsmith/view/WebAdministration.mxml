@@ -88,6 +88,9 @@
 	import mx.messaging.messages.IMessage;
     import mx.core.Application;
    	import com.efi.printsmith.events.commandEvents.WebAdmin.*;
+   	import com.efi.printsmith.events.commandEvents.EditForms.EditWebLocationsEvent;
+   	import com.efi.printsmith.events.commandEvents.EditForms.EditWebConsoleEvent;
+   	
    	import com.efi.printsmith.events.JobPickerSelectEvent;
    	import com.efi.printsmith.view.JobsPicker;
     import mx.events.*;
@@ -221,7 +224,8 @@
 
 		var eventAdmin:WebAdminAdminPanelEvent = new WebAdminAdminPanelEvent(canvasAdmin, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAdmin.dispatch();
-		    
+
+		dochangetransfermethod();
 	}      
 
 	private function loaddata():void {
@@ -560,12 +564,11 @@
 	}
 	private function handleLoadProductsResult(ev:ResultEvent):void {
 		webproductsArray = ev.result as ArrayCollection;
+		webcatagoriesproductsArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadQuestionsResult(ev:ResultEvent):void {
 		webquestionsArray = ev.result as ArrayCollection;
-		if (webquestionsArray.length > 0){
-			webchoicesArray = webquestionsArray.getItemAt(0,0).choices; 
-		} 
+		webproductsquestionsArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadStatusResult(ev:ResultEvent):void {
 		webstatusArray = ev.result as ArrayCollection;
@@ -826,6 +829,66 @@
 		}
 		return item.name + suffix;
 	}
+	private function onCatagoryProductChange():void{
+		
+	}
+	
+	private function dochangetransfermethod():void{
+		if (rgtransfermethod.selectedValue == "1"){
+			txtftpUrl.enabled = false;
+			txtftpUserName.enabled = false;
+		}else{
+			txtftpUrl.enabled = true;
+			txtftpUserName.enabled = true;
+		}
+	}
+	
+	private function handleUIEvent(evt:ResultEvent):void{
+		if (evt.result != null){
+			var child:DisplayObject = evt.result as DisplayObject;
+			addUniqueTab(child);
+		}
+	}
+
+	private function addUniqueTab(tab:DisplayObject):void {
+		var tabFound:Boolean = false;
+		
+		for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+		{
+			if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+			{
+				Snowmass.getInstance().mainNavigator.selectedIndex = i;
+				tabFound = true;
+				break;
+			}
+		}
+		if (!tabFound) {
+			Snowmass.getInstance().mainNavigator.addChild(tab);
+			Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+		}
+	}
+
+	private function handleUIFault(ev:FaultEvent):void{
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+	private function doOpenWebConsole():void{
+		var event:EditWebConsoleEvent = new EditWebConsoleEvent(new mx.rpc.Responder(handleUIEvent, handleUIFault));
+		event.dispatch();
+
+	}
+	
+	private function doWebLocations():void{
+		var event:EditWebLocationsEvent = new EditWebLocationsEvent(new mx.rpc.Responder(handleUIEvent, handleUIFault));
+		event.dispatch();
+		
+	}
 	
 ]]>	
 
@@ -862,7 +925,7 @@
 				<mx:TextInput id="txtcontactname" x="170" y="27" width="209" text="{webbase.contactName}"/>
 				<mx:TextInput id="txtcontactphone" x="170" y="53" width="209" text="{webbase.contactPhone}"/>
 				<mx:TextInput id="txtcontactemail" x="170" y="79" width="209" text="{webbase.contactEmail}"/>
-				<mx:RadioButtonGroup id="rgtransfermethod" selectedValue="{webbase.transferMethod}"/>
+				<mx:RadioButtonGroup id="rgtransfermethod" selectedValue="{webbase.transferMethod}" change="dochangetransfermethod()"/>
 				<mx:RadioButton x="180" y="109" value="1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UsePrintNetIntegrato')}" groupName="rgtransfermethod" textAlign="right" enabled="false" width="294"/>
 				<mx:RadioButton x="180" y="135" value="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.UseFTPServer')}" groupName="rgtransfermethod" textAlign="right" enabled="false" width="294"/>
 				<mx:TextInput id="txtftpUrl" x="199" y="165" text="{webbase.ftpUrl}"/>
@@ -967,8 +1030,12 @@
 					editable="true" 
 					itemEditEnd="processCatagoryProductsGridData(event);" bottom="22" top="212" left="275" right="25">
 					<mx:columns>
+						<mx:DataGridColumn width="20" headerText=" "
+								itemEditor="mx.controls.CheckBox">
+						</mx:DataGridColumn>
+				
 						<mx:DataGridColumn width="140" headerText=" " dataField="name"
-							itemEditor="mx.controls.TextInput" editable="true">
+							itemEditor="mx.controls.TextInput" editable="false">
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
@@ -1167,12 +1234,12 @@
 				<mx:Label x="348" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ReceiveState')}"/>
 				<mx:Label x="348" y="165" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RejectState')}"/>
 				<mx:Button x="65" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.ShowWebConnection')}" width="275" height="50" enabled="false"/>
-				<mx:Button x="65" y="77" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.OpenWebConsole')}" width="275" height="50" enabled="false"/>
+				<mx:Button x="65" y="77" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.OpenWebConsole')}" click="doOpenWebConsole();" width="275" height="50" enabled="true"/>
 				<mx:Button x="348" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SendShippingList')}" width="275" height="50" enabled="false"/>
 				<mx:Button x="348" y="77" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.SendCreditCardList')}" width="275" height="50" enabled="false"/>
-				<mx:Button x="65" y="268" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RecalculatePricing')}" width="275" height="50"/>
+				<mx:Button x="65" y="268" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.RecalculatePricing')}" width="275" height="50" enabled="false"/>
 				<mx:Button x="65" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.TransmitPricing')}" width="275" height="50" enabled="false"/>
-				<mx:Button x="65" y="384" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.WebLocations')}" width="275" height="50" enabled="false"/>
+				<mx:Button x="65" y="384" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.WebLocations')}" click="doWebLocations();" width="275" height="50" enabled="true"/>
 				<mx:Button x="348" y="268" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DisableSelfRegistrat')}" width="275" height="50" enabled="false"/>
 				<mx:Button x="348" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWebAdminCmd.DisableWalkInOrders')}" width="275" height="50" enabled="false"/>
 			</mx:Canvas>
