@@ -85,9 +85,19 @@ public class PriceJobEngine {
 		} else if (pricingMethod.getTitle().equals("Charges Only")) {
 			
 		} else if (pricingMethod.getTitle().equals("Outside Services")) {
-			
+			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory.createMailingPricingMethod();
+			if (mailingPricingMethod == null) {
+				log.error("No pricing Method found for Merchandise");
+			} else {
+				mailingPricingMethod.priceMailingJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Merchandise")) {
-			
+			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory.createMailingPricingMethod();
+			if (mailingPricingMethod == null) {
+				log.error("No pricing Method found for Merchandise");
+			} else {
+				mailingPricingMethod.priceMailingJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Lines & Inches")) {
 			
 		} else if (pricingMethod.getTitle().equals("Mailing")) {
