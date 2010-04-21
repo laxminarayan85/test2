@@ -22,9 +22,67 @@ public class PriceStockEngine {
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 		if (pricingMethod.getTitle().equals("Printing")) {
 			return pricePrintStock(job);
-		} else {
+		} else { if (pricingMethod.getTitle().equals("Blank")) {
+			return priceBlankStock(job);
+		} else
 			return priceCopierStock(job);
 		}
+	}
+	
+	private double priceBlankStock(Job job) {
+		double retVal = 0.0;
+		PricingRecord pricingRecord = null;
+		PriceLogEntry parentEntry= null;
+		PriceLogEntry priceLogEntry = null;
+		
+		
+		if (job == null) return 0.0;
+		
+		pricingRecord = job.getPricingRecord();
+		parentEntry = pricingRecord.getPriceLogEntry();
+		
+		StockDefinition stockDefinition = job.getStock();
+		
+		if (stockDefinition == null) return 0.0;
+		
+		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "priceBlankStock", "");
+		
+		long qty = job.getQtyOrdered();
+		
+		for (int i = 1; i <= 6; i++) {
+			if (i == 1) {
+				if (qty >= stockDefinition.getBlankSheetqty1() && qty < stockDefinition.getBlankSheetqty2())
+					retVal = stockDefinition.getBlankSheetPrice1();
+					retVal = retVal / stockDefinition.getBlankSheetqty1();
+					break;
+			}else if (i == 2) {
+				if (qty >= stockDefinition.getBlankSheetqty2() && qty < stockDefinition.getBlankSheetqty3())
+					retVal = stockDefinition.getBlankSheetPrice2();
+					retVal = retVal / stockDefinition.getBlankSheetqty2();
+					break;
+			}else if (i == 3) {
+				if (qty >= stockDefinition.getBlankSheetqty3() && qty < stockDefinition.getBlankSheetqty4())
+					retVal = stockDefinition.getBlankSheetPrice3();
+					retVal = retVal / stockDefinition.getBlankSheetqty3();
+					break;
+			}else if (i == 4) {
+				if (qty >= stockDefinition.getBlankSheetqty4() && qty < stockDefinition.getBlankSheetqty5())
+					retVal = stockDefinition.getBlankSheetPrice4();
+					retVal = retVal / stockDefinition.getBlankSheetqty4();
+					break;
+			}else if (i == 5) {
+				if (qty >= stockDefinition.getBlankSheetqty5() && qty < stockDefinition.getBlankSheetqty6())
+					retVal = stockDefinition.getBlankSheetPrice5();
+					retVal = retVal / stockDefinition.getBlankSheetqty5();
+					break;
+			}else if (i == 6) {
+				if (qty >= stockDefinition.getBlankSheetqty6())
+					retVal = stockDefinition.getBlankSheetPrice6();
+					retVal = retVal / stockDefinition.getBlankSheetqty6();
+					break;
+			}
+		}
+		return retVal;
 	}
 	
 	private double pricePrintStock(Job job) {

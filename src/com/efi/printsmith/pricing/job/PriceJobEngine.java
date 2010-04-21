@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PricingRecord;
+import com.efi.printsmith.pricing.blank.BlankPricingMethodFactory;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
 import com.efi.printsmith.pricing.print.PrintPricingMethod;
@@ -14,6 +15,7 @@ import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethodFactory;
 import com.efi.printsmith.service.PricingService;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethod;
+import com.efi.printsmith.pricing.blank.BlankPricingMethod;
 
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
@@ -72,7 +74,12 @@ public class PriceJobEngine {
 				largeFormatPricingMethod.priceLargeFormatJob(job);
 			}
 		} else if (pricingMethod.getTitle().equals("Blank")) {
-			
+			BlankPricingMethod blankPricingMethod = BlankPricingMethodFactory.createBlankPricingMethod();
+			if (blankPricingMethod == null) {
+				log.error("No pricing Method found for Blank");
+			} else {
+				blankPricingMethod.priceBlankJob(job);
+			}	
 		} else if (pricingMethod.getTitle().equals("List")) {
 			
 		} else if (pricingMethod.getTitle().equals("Charges Only")) {
