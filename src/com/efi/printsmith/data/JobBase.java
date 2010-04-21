@@ -304,6 +304,15 @@ public class JobBase extends ModelBase {
   public static final String VENDOR = "Vendor";
 
 	/**
+   * @generated
+   */
+  public static final String NUMBEROFLINES = "NumberOfLines";
+	/**
+   * @generated
+   */
+  public static final String NUMBEROFINCHES = "NumberOfInches";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1781,6 +1790,51 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long numberOfLines;
+
+	/**
+   * @generated
+ 	 */
+  public Long getNumberOfLines(){
+    return numberOfLines; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNumberOfLines(Long newVal) {
+    this.numberOfLines = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long numberOfInches;
+
+	/**
+   * @generated
+ 	 */
+  public Long getNumberOfInches(){
+    return numberOfInches; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNumberOfInches(Long newVal) {
+    this.numberOfInches = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1851,6 +1905,8 @@ public class JobBase extends ModelBase {
     if (NOTES.equals(propertyName)) return getNotes();
     if (SHOWNOTES.equals(propertyName)) return getShowNotes();
     if (VENDOR.equals(propertyName)) return getVendor();
+    if (NUMBEROFLINES.equals(propertyName)) return getNumberOfLines();
+    if (NUMBEROFINCHES.equals(propertyName)) return getNumberOfInches();
     return super.getProperty(propertyName);
   }
 	
@@ -1925,6 +1981,8 @@ public class JobBase extends ModelBase {
     if (NOTES.equals(propertyName)) setNotes((String)newValue); else
     if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
+    if (NUMBEROFLINES.equals(propertyName)) setNumberOfLines((Long)newValue); else
+    if (NUMBEROFINCHES.equals(propertyName)) setNumberOfInches((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2064,6 +2122,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (VENDOR.equals(propertyName)) 
       return new Class<?>[] {Vendor.class};		
+    if (NUMBEROFLINES.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (NUMBEROFINCHES.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2139,6 +2201,8 @@ public class JobBase extends ModelBase {
     if (NOTES.equals(propertyName)) return JobBase.class;
     if (SHOWNOTES.equals(propertyName)) return JobBase.class;
     if (VENDOR.equals(propertyName)) return JobBase.class;
+    if (NUMBEROFLINES.equals(propertyName)) return JobBase.class;
+    if (NUMBEROFINCHES.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2279,6 +2343,10 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
       return false;
     if (! SmartEquals(getVendor(), objT.getVendor()))
+      return false;
+    if (! SmartEquals(getNumberOfLines(), objT.getNumberOfLines()))
+      return false;
+    if (! SmartEquals(getNumberOfInches(), objT.getNumberOfInches()))
       return false;
     return true;
   }			
