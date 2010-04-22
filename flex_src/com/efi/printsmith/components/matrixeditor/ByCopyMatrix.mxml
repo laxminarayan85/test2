@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Canvas width="674" height="365" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
+			 fontSize="9">
+		
+		<mx:Text x="0" y="23.35" text="Number of Copies" width="63" height="38.666668" textAlign="center" fontWeight="bold"/>
+		<mx:Text x="71" y="14" text="Number of Originals" width="593" height="21" textAlign="center" fontWeight="bold"/>
+		<mx:TextInput x="63" y="43" width="62" height="20" text="{matrix.header1}"/>
+		<mx:TextInput x="124" y="43" width="62" height="20" text="{matrix.header2}"/>
+		<mx:TextInput x="185" y="43" width="62" height="20" text="{matrix.header3}"/>
+		<mx:TextInput x="246" y="43" width="62" height="20" text="{matrix.header4}"/>
+		<mx:TextInput x="307" y="43" width="62" height="20" text="{matrix.header5}"/>
+		<mx:TextInput x="367" y="43" width="62" height="20" text="{matrix.header6}"/>
+		<mx:TextInput x="428" y="43" width="62" height="20" text="{matrix.header7}"/>
+		<mx:TextInput x="489" y="43" width="62" height="20" text="{matrix.header8}"/>
+		<mx:TextInput x="549" y="43" width="62" height="20" text="{matrix.header9}"/>
+		<mx:TextInput x="610" y="43" width="63" height="20" text="{matrix.header10}"/>
+		<mx:DataGrid 
+			width="674" dataProvider="{matrix.elements}" 
+					showHeaders="false" borderStyle="solid" borderThickness="3" x="0" 
+					editable="true" enabled="true" horizontalGridLines="true"
+					bottom="0" top="60" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+					doubleClickEnabled="true">
+				<mx:columns>
+				     <mx:DataGridColumn dataField="qty" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price1" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price2" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price3" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price4" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price5" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price6" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price7" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price8" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price9" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price10" editable="true" sortable="false" width="60"/>
+				</mx:columns>
+		<mx:Script>
+			<![CDATA[
+				import com.efi.printsmith.data.Matrix; 
+				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+				[Bindable] public var hour:Number = 0;
+			]]>
+		</mx:Script>
+		</mx:DataGrid>
+		<mx:HRule x="0" y="342" width="674" height="3"/>
+	</mx:Canvas>

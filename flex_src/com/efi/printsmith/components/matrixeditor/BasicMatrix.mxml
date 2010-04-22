@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Canvas width="222" height="365" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
+			 fontSize="9">
+		
+		<mx:DataGrid 
+			width="222" dataProvider="{matrix.elements}" 
+					showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
+					editable="true" enabled="true" horizontalGridLines="true"
+					bottom="0" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+					doubleClickEnabled="true">
+				<mx:columns>
+				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60"/>
+				</mx:columns>
+		<mx:Script>
+			<![CDATA[
+				import com.efi.printsmith.data.Matrix; 
+				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+				[Bindable] public var header1:String = "Number of Copies";
+				[Bindable] public var header2:String = "Price per Side";
+			]]>
+		</mx:Script>
+		</mx:DataGrid>
+		<mx:HRule x="0" y="342" width="222" height="3"/>
+	</mx:Canvas>

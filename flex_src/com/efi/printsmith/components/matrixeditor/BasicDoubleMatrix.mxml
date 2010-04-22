@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Canvas width="222" height="381" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
+			 fontSize="9">
+		
+		<mx:DataGrid 
+			width="222" dataProvider="{matrix.elements}" 
+					showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
+					editable="true" enabled="true" horizontalGridLines="true"
+					top="50" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+					doubleClickEnabled="true" height="100%">
+				<mx:columns>
+				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="price2" headerText="{header3}" editable="true" sortable="false" width="60"/>
+				</mx:columns>
+		<mx:Script>
+			<![CDATA[
+				import com.efi.printsmith.data.Matrix; 
+				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+				[Bindable] public var header1:String = "";
+				[Bindable] public var header2:String = "Side 1";
+				[Bindable] public var header3:String = "Side 2";
+			]]>
+		</mx:Script>
+		</mx:DataGrid>
+		<mx:HRule x="0" y="353" width="222" height="3"/>
+		<mx:Text x="10" y="6" text="Number&#xd;of&#xd; Copies" width="55" height="42" fontWeight="bold" textAlign="center"/>
+		<mx:Text x="73" y="32" text="Price per Side" width="139" height="17" fontWeight="bold" textAlign="center"/>
+	</mx:Canvas>

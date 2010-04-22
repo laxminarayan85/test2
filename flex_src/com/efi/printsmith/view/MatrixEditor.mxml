@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="708" height="400" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" xmlns:mtrx="com.efi.printsmith.components.matrixeditor.*" width="254" height="448" 
 	defaultButton="{select_button}" 
 	showCloseButton="false" 
 	creationComplete="init()"
     close="PopUpManager.removePopUp(this);" 
-    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
-    xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobPriceMatrixCmd.PriceMatrix')}" 
+    borderThickness="3" borderStyle="solid" 
     horizontalScrollPolicy="off" 
-    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
+    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobPriceMatrixCmd.PriceMatrix')}" 
     name="Price List"
     verticalScrollPolicy="off" fontSize="9">
 
@@ -18,10 +18,106 @@
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-
+<mx:states>
+	<mx:State name="COPIESANDORIGINALS">
+		<mx:SetProperty name="height" value="448"/>
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:ByCopyMatrix x="0" y="0">
+			</mtrx:ByCopyMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
+		<mx:SetProperty name="width" value="706"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="401"/>
+	</mx:State>
+	<mx:State name="COPIESANDORIGINALSTWOSIDES">
+		<mx:SetProperty name="height" value="460"/>
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:ByCopyDoubleMatrix x="0" y="0">
+			</mtrx:ByCopyDoubleMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
+		<mx:SetProperty name="width" value="1232"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="411"/>
+	</mx:State>
+	<mx:State name="COPIESPERORIGINALS">
+		
+	</mx:State>
+	<mx:State name="COPIESPERORIGINALSTWOSIDES">
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			</mtrx:BasicDoubleMatrix>
+		</mx:AddChild>
+	</mx:State>
+	<mx:State name="TOTALOFALLCOPIES">
+		
+	</mx:State>	
+	<mx:State name="TOTALOFALLCOPIESTWOSIDES">
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			</mtrx:BasicDoubleMatrix>
+		</mx:AddChild>		
+	</mx:State>	
+	<mx:State name="SQUAREAREAOFORIGINALS">
+		
+	</mx:State>
+	<mx:State name="SQUAREAREAOFORIGINALSTWOSIDES">
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			</mtrx:BasicDoubleMatrix>
+		</mx:AddChild>		
+	</mx:State>
+	<mx:State name="TOTALSQUAREAREA">
+		
+	</mx:State>
+	<mx:State name="TOTALSQUAREAREATWOSIDES">
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			</mtrx:BasicDoubleMatrix>
+		</mx:AddChild>		
+	</mx:State>
+	<mx:State name="SQUAREAREAANDCOPIES">
+		<mx:SetProperty name="height" value="448"/>
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:ByCopyMatrix x="0" y="0">
+			</mtrx:ByCopyMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
+		<mx:SetProperty name="width" value="706"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
+	</mx:State>
+	<mx:State name="SQUAREAREAANDCOPIESTWOSIDES">
+		<mx:SetProperty name="height" value="448"/>
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:ByCopyMatrix x="0" y="0">
+			</mtrx:ByCopyMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
+		<mx:SetProperty name="width" value="706"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
+	</mx:State>
+	<mx:State name="SQUAREAREAPERCOPY">
+		
+	</mx:State>
+	<mx:State name="SQUAREAREAPERCOPY">
+		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			</mtrx:BasicDoubleMatrix>
+		</mx:AddChild>		
+	</mx:State>
+</mx:states>
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.enums.CopierPricingMethod;
 	import com.efi.printsmith.events.SavePriceListElementEvent;
 
 	import com.efi.printsmith.view.*;
@@ -44,7 +140,10 @@
 	    
 	[Bindable]                                
 	public var matrix:com.efi.printsmith.data.Matrix;
-		
+	
+	public var doubleSided:Boolean = false;
+	public var pricingType:String = CopierPricingMethod.COPIESANDORIGINALS;
+	
 	public var parentContainer:Container;
    	
 	private function handleFault(ev:FaultEvent):void {                               
@@ -66,73 +165,89 @@
 
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
-		
 		this.matrix = matrix;
 	}   
 	                 
 	private function doSelect():void {	
-//
-//		maptoPricelist();
-////		var i:int;
-////		if (priceList.elements != null) {
-////			for (i = 0; i < priceList.elements.length; i++) {
-////				var priceListElement:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-////				priceListElement = dataService.addUpdate(priceListElement) as PriceListElement;
-////			}
-////		}
 		dataService.addUpdate(matrix);
 		PopUpManager.removePopUp(this);
 	}     
-	
-//	private function maptoPricelist():void {
-//		priceList.name = title_edit.text;
-//		priceList.interpolate = chkInterpolate.selected;
-//		priceList.isRate = chkUseAsRateList.selected;
-//		priceList.isDiscount = chkProductionDiscount.selected;
-//		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
-//	}
-	
 	
 	private function messageHandler(message:IMessage):void
 	{
 	}
 
 	private function doClear():void {
-		
+		PopUpManager.removePopUp(this);
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		matrix = ev.result as com.efi.printsmith.data.Matrix;
-
 		var editPage:Container = parentContainer;
-	}		
+	}
+	
+	public function setMatrixType(pricingMethod:String,doubleSidedPricing:Boolean):void {
+		switch (pricingMethod) {
+		case CopierPricingMethod.COPIESANDORIGINALS:
+			if (doubleSidedPricing) {
+				this.currentState = "COPIESANDORIGINALSTWOSIDES";
+			} else {
+				this.currentState = "COPIESANDORIGINALS";
+			}
+			break;
+		case CopierPricingMethod.COPIESPERORIGINALS:
+			if (doubleSidedPricing) {
+				this.currentState = "COPIESPERORIGINALSTWOSIDES";
+			} else {
+				this.currentState = "COPIESPERORIGINALS";
+			}
+			break;
+		case CopierPricingMethod.SQUAREAREAANDCOPIES:
+			if (doubleSidedPricing) {
+				this.currentState = "SQUAREAREAANDCOPIESTWOSIDES";
+			} else {
+				this.currentState = "SQUAREAREAANDCOPIES";
+			}
+			break;
+		case CopierPricingMethod.SQUAREAREAOFORIGINALS:
+			if (doubleSidedPricing) {
+				this.currentState = "SQUAREAREAOFORIGINALSTWOSIDES";
+			} else {
+				this.currentState = "SQUAREAREAOFORIGINALS";
+			}
+			break;
+		case CopierPricingMethod.SQUAREAREAPERCOPY:
+			if (doubleSidedPricing) {
+				this.currentState = "SQUAREAREAPERCOPYTWOSIDES";
+			} else {
+				this.currentState = "SQUAREAREAPERCOPY";
+			}
+			break;
+		case CopierPricingMethod.TOTALOFALLCOPIES:
+			if (doubleSidedPricing) {
+				this.currentState = "TOTALOFALLCOPIESTWOSIDES";
+			} else {
+				this.currentState = "TOTALOFALLCOPIES";
+			}
+			break;
+		case CopierPricingMethod.TOTALSQUAREAREA:
+			if (doubleSidedPricing) {
+				this.currentState = "TOTALSQUAREAREATWOSIDES";
+			} else {
+				this.currentState = "TOTALSQUAREAREA";
+			}
+			break;
+		}
+	}
+	
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
-		<mx:DataGrid id="dataGrid" width="674" dataProvider="{matrix.elements}"
-			showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
-			editable="true" enabled="true" 
-			bottom="48" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
-			doubleClickEnabled="true">
-		<mx:columns>
-		     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price1" headerText="{matrix.header1}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price2" headerText="{matrix.header2}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price3" headerText="{matrix.header3}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price4" headerText="{matrix.header4}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price5" headerText="{matrix.header5}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price6" headerText="{matrix.header6}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price7" headerText="{matrix.header7}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price8" headerText="{matrix.header8}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price9" headerText="{matrix.header9}" editable="true" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="price10" headerText="{matrix.header10}" editable="true" sortable="false" width="60"/>
-		</mx:columns>
-		</mx:DataGrid>
-
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="472" y="309"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="577" y="309"/>
+		<mtrx:BasicMatrix matrix="{matrix}" id="basicmatrix1" width="220">
+			
+		</mtrx:BasicMatrix>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" right="2" bottom="5"/>
 
 	</mx:Canvas>
-<mx:Spacer height="10" />        
-
 </mx:TitleWindow>

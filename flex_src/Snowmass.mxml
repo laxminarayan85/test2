@@ -303,7 +303,7 @@
 				}
 			}
 			if (!tabFound) {
-				var tmpPanel = mainNavigator.addChild(tab) as Panel;
+				var tmpPanel:Panel = mainNavigator.addChild(tab) as Panel;
 				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
 			}
 		}

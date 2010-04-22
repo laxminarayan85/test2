@@ -1099,7 +1099,7 @@
 			private var focussedFormControl:DisplayObject;
 			public var job:Job;
 			
-			var editingCharge:Boolean = false;
+			private var editingCharge:Boolean = false;
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;

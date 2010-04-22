@@ -497,15 +497,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 
 	private function doCopierMatrix():void {
-
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
-//		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem == Price2Side.USINGSECONDSIDERATE?true:false;
+		titleWindow.setMatrixType(pricing_method_combo.selectedItem as String,doubleSidedPricing);
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setMatrix(copierDefinition.copierMatrix);
-//	    titleWindow.setPriceList(copierDefinition.copierMatrix as PriceListBase);
-//		PopUpManager.removePopUp(this);
-		
+	    titleWindow.setMatrix(copierDefinition.copierMatrix);		
 	}      
 	                                  	
 	private function handleWastePickerCancel(evt:PriceListPickerSelectEvent):void {
