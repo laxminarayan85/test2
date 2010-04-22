@@ -21,7 +21,6 @@
 </compiler>
 <applications>
 <application path="Snowmass.mxml"/>
-<application path="PSUserDef.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>
