@@ -2,6 +2,7 @@ package com.efi.printsmith.pricing.utilities;
 
 import java.util.List;
 
+import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 
@@ -63,5 +64,63 @@ public class MatrixUtilities {
 			}
 		}
 		return (runningTotal/qty);
+	}
+	
+	static public double getStampScheduleCost(StampSchedule stampSchedule, long inches, long lines) {
+		long element = 0;
+		double cost = 0.0;
+		if (stampSchedule != null) {
+			for (int i = 1; i <= 10; i++) {
+				if (i == 1 && (inches <= stampSchedule.getHeader1())) {
+					element = i;
+				} else if (i == 2 && (inches <= stampSchedule.getHeader2())) {
+					element = i;
+				}else if (i == 3 && (inches <= stampSchedule.getHeader3())) {
+					element = i;
+				}else if (i == 4 && (inches <= stampSchedule.getHeader4())) {
+					element = i;
+				}else if (i == 5 && (inches <= stampSchedule.getHeader5())) {
+					element = i;
+				}else if (i == 6 && (inches <= stampSchedule.getHeader6())) {
+					element = i;
+				}else if (i == 7 && (inches <= stampSchedule.getHeader7())) {
+					element = i;
+				}else if (i == 8 && (inches <= stampSchedule.getHeader8())) {
+					element = i;
+				}else if (i == 9 && (inches <= stampSchedule.getHeader9())) {
+					element = i;
+				}else {
+					element = i;
+				}
+			}
+			
+			List<MatrixElement> elements = stampSchedule.getElements();
+			for (int i = 0; i < elements.size(); i++) {
+				if (elements.get(i).getQty() <= lines) {
+					if (element == 1)
+						cost = elements.get(i).getPrice1();
+					if (element == 2)
+						cost = elements.get(i).getPrice2();
+					if (element == 3)
+						cost = elements.get(i).getPrice3();
+					if (element == 4)
+						cost = elements.get(i).getPrice4();
+					if (element == 5)
+						cost = elements.get(i).getPrice5();
+					if (element == 6)
+						cost = elements.get(i).getPrice6();
+					if (element == 7)
+						cost = elements.get(i).getPrice7();
+					if (element == 8)
+						cost = elements.get(i).getPrice8();
+					if (element == 9)
+						cost = elements.get(i).getPrice9();
+					if (element == 10)
+						cost = elements.get(i).getPrice10();
+					break;
+				}
+			}
+		}
+		return cost;
 	}
 }

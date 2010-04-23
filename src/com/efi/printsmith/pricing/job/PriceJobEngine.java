@@ -16,6 +16,8 @@ import com.efi.printsmith.pricing.mailing.MailingPricingMethodFactory;
 import com.efi.printsmith.service.PricingService;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethod;
 import com.efi.printsmith.pricing.blank.BlankPricingMethod;
+import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethod;
+import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethodFactory;
 
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
@@ -99,6 +101,12 @@ public class PriceJobEngine {
 				mailingPricingMethod.priceMailingJob(job);
 			}
 		} else if (pricingMethod.getTitle().equals("Lines & Inches")) {
+			LinesAndInchesPricingMethod linesAndInchesPricingMethod = LinesAndInchesPricingMethodFactory.createLinesAndInchesPricingMethod();
+			if (linesAndInchesPricingMethod == null) {
+				log.error("No pricing Method found for Lines & Inches");
+			} else {
+				linesAndInchesPricingMethod.priceLinesAndInchesJob(job);
+			}
 			
 		} else if (pricingMethod.getTitle().equals("Mailing")) {
 			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory.createMailingPricingMethod();

@@ -274,6 +274,36 @@
 			<mx:SetProperty target="{job_total}" name="y" value="377"/>
 			<mx:SetProperty target="{label4}" name="y" value="377"/>
 		</mx:State>
+		<mx:State name="LinesAndInches" basedOn="Mailing">
+			<mx:AddChild relativeTo="{pricing_throbber}" position="before">
+				<mx:HRule x="10"
+						  y="235"
+						  width="356"
+						  height="2" id="hrule0"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="10" y="257" text="Number Of Lines"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="2" y="281" text="Number Of Inches"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="107" y="255" id="job_number_of_lines" text="{job.numberOfLines}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="107" y="279" id="job_number_of_inches" text="{job.numberOfInches}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{job_unitCost}"/>
+			<mx:RemoveChild target="{label36}"/>
+			<mx:RemoveChild target="{label38}"/>
+			<mx:RemoveChild target="{job_markup}"/>
+			<mx:SetProperty target="{job_totalCost}" name="y" value="84"/>
+			<mx:SetProperty target="{bindery_waste}" name="y" value="56"/>
+			<mx:SetProperty target="{job_over_under}" name="y" value="28"/>
+			<mx:SetProperty target="{label33}" name="y" value="30"/>
+			<mx:SetProperty target="{label34}" name="y" value="58"/>
+			<mx:SetProperty target="{label37}" name="y" value="86"/>
+		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -560,7 +590,7 @@
 			}
 			
 			private function handleJobMethodPickerSelect(evt:JobMethodSelectEvent):void {
-				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing" && evt.pricingMethod.title != "Merchandise" && evt.pricingMethod.title != "Charges Only" && evt.pricingMethod.title != "Outside Services") {
+				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing" && evt.pricingMethod.title != "Merchandise" && evt.pricingMethod.title != "Charges Only" && evt.pricingMethod.title != "Outside Services" && evt.pricingMethod.title != "Lines & Inches") {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 					
@@ -1172,6 +1202,11 @@
 				case this.job_markup:
 					doUpdatePrice = true;
 					break;
+				case this.job_number_of_inches:
+					doUpdatePrice = true;
+					break;
+				case this.job_number_of_lines:
+					break;
 				}
 				if (doUpdatePrice) updatePrice();
 			}
@@ -1216,7 +1251,8 @@
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Lines & Inches") {
-					
+					this.currentState = "LinesAndInches";
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Mailing") {
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
