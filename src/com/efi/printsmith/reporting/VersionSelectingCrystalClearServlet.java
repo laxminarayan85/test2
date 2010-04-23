@@ -20,11 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+
 /**
  * @author <a href="mailto:proyal@pace2020.com">peter royal</a>
  */
 public class VersionSelectingCrystalClearServlet extends HttpServlet
-    implements Serviceable, Contextualizable, Servlet, LogEnabled
+    implements Contextualizable, Servlet, LogEnabled
 {
     /**
 	 * 

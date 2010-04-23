@@ -29,11 +29,19 @@ import org.apache.commons.httpclient.methods.GetMethod;
 
 import org.apache.log4j.Logger;
 
+import com.inet.report.Area;
+import com.inet.report.Element;
+import com.inet.report.Engine;
+import com.inet.report.FormulaField;
+import com.inet.report.Picture;
+import com.inet.report.ReportException;
+import com.inet.report.ReportServlet;
+import com.inet.report.Section;
 /**
  * @author <a href="proyal@pace2020.com">peter royal</a>
  */
 public class CrystalClearServlet extends ReportServlet
-    implements Serviceable, Initializable, LogEnabled, Contextualizable
+    implements LogEnabled, Contextualizable
 {
     public static final String CCPROPS_LOCATION = "properties.location";
     private static final Pattern LOADKEY = Pattern.compile( "\"key=(.*)\"" );
@@ -199,7 +207,12 @@ public class CrystalClearServlet extends ReportServlet
     public static void replaceLogo( final Engine engine, final LogoLoader logo, final Properties properties )
         throws ReportException
     {
-        final int areas = engine.getAreaCount();
+        int areas = 0;
+		try {
+			areas = engine.getAreaCount();
+		} catch (ReportException e) {
+			e.printStackTrace();
+		}
 
         for( int i = 0; i < areas; i++ )
         {
@@ -233,7 +246,7 @@ public class CrystalClearServlet extends ReportServlet
 
             if( element instanceof Picture )
             {
-                final FormulaField toolTipsTextFormel = element.getToolTipsTextFormel();
+                final FormulaField toolTipsTextFormel = element.getToolTipsTextFormula();
                 final String value = null == toolTipsTextFormel ? "" : toolTipsTextFormel.getFormula();
                 final Matcher m = LOADKEY.matcher( value );
 
@@ -296,7 +309,11 @@ public class CrystalClearServlet extends ReportServlet
         }
         catch( SQLException e )
         {
-            throw new AppboxRuntimeException( "Unable to get connection" );
+            try {
+				throw new AppboxRuntimeException( "Unable to get connection" );
+			} catch (AppboxRuntimeException e1) {
+				e1.printStackTrace();
+			}
         }
 
         setSubReports( engine, connections );

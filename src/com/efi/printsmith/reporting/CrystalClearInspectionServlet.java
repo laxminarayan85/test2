@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
+import com.inet.report.Engine;
+import com.inet.report.ReportException;
+
 /**
  * @author <a href="mailto:jduval@pace2020.com">jerry duval</a>
  */
-public class CrystalClearInspectionServlet extends HttpServlet implements Serviceable, Initializable, LogEnabled,
+public class CrystalClearInspectionServlet extends HttpServlet implements LogEnabled,
     Contextualizable
 {
 	/**
@@ -110,7 +114,11 @@ public class CrystalClearInspectionServlet extends HttpServlet implements Servic
     {
         final Engine engine = new Engine();
 
-        engine.setReportFile( request.getParameter( "report" ) );
+        try {
+			engine.setReportFile( request.getParameter( "report" ) );
+		} catch (ReportException e) {
+			e.printStackTrace();
+		}
 
         return new CrystalClearReportInspection( m_dataSource,
                                                  engine,

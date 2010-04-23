@@ -19,6 +19,11 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import com.inet.report.DatabaseField;
+import com.inet.report.DatabaseTables;
+import com.inet.report.Engine;
+import com.inet.report.ReportException;
+
 /**
  * @author <a href="mailto:jduval@pace2020.com">jerry duval</a>
  */
@@ -88,10 +93,14 @@ public class CrystalClearReportInspection
 
                 inspect( c, getEngine(), root, attributes );//check main report
 
-                for( int i = 0; i < getEngine().getSubReportCount(); i++ )
-                {
-                    inspect( c, getEngine().getSubReport( i ), root, attributes );//check sub report
-                }
+                try {
+					for( int i = 0; i < getEngine().getSubReportCount(); i++ )
+					{
+					    inspect( c, getEngine().getSubReport( i ), root, attributes );//check sub report
+					}
+				} catch (ReportException e) {
+					e.printStackTrace();
+				}
 
                 final String preparer = getPreparerTable();
 

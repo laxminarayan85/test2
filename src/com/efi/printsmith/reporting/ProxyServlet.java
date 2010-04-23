@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:proyal@pace2020.com">peter royal</a>
  */
 @SuppressWarnings("unchecked")
-public class ProxyServlet extends GenericServlet implements Serviceable, LogEnabled
+public class ProxyServlet extends GenericServlet implements LogEnabled
 {
     /**
 	 * 
