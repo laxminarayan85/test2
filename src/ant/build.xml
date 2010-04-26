@@ -43,7 +43,13 @@
 		</fileset>
 		<fileset dir="${snowmassRunTimedir}">
 			<include name="**/*.jar"/> 
-		</fileset> 
+		</fileset>
+		<fileset dir="${checkoutpath}/${module1}/WebContent/WEB-INF/reports/crystalclear"> 
+			<include name="*.jar"/> 
+		</fileset>
+		<fileset dir="${checkoutpath}/${module1}/WebContent/WEB-INF/reports/crystalclear/9.1"> 
+			<include name="*.jar"/> 
+		</fileset>
 	</path> 
 
    	<target name="all" >
