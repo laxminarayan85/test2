@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "StampSchedule.findall", query = "from StampSchedule"),
-	@NamedQuery(name = "StampSchedule.byId", query = "select a from StampSchedule a where a.id= :id")
+  @NamedQuery(name = "StampSchedule.findall", query = "from StampSchedule"),
+  @NamedQuery(name = "StampSchedule.byId", query = "select a from StampSchedule a where a.id= :id")
 })
 
 
@@ -45,8 +45,8 @@ public class StampSchedule extends Matrix {
 	 * @generated
 	 */
 	public StampSchedule() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
 }

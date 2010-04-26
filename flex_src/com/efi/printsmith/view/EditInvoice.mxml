@@ -23,6 +23,9 @@
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
+		<mx:method name="getInvoice"
+				   fault="handleFault(event)"
+				   result="handleGetInvoiceResult(event)"/>
 				   
 				   
 				  
@@ -131,17 +134,18 @@
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+						
 					}
 					
-					this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
-						
-					this.bill_to_address_editor.setAddress(invoice.billToAddress);
-					if (invoice != null && invoice.account != null) 
-						accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+					
+					dataService.getInvoice(invoice.id);
 				}
+				
+				
 				if (invoice.jobs == null) {
 					invoice.jobs=new ArrayCollection();
 				}
+				
 				if (invoice.charges == null) {
 					invoice.charges=new ArrayCollection();
 				}				
@@ -152,10 +156,7 @@
 				eventJobs.dispatch();
 				var eventCharges:InvoiceChargesEvent = new InvoiceChargesEvent(new_job_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventCharges.dispatch();
-				var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
-				eventChangeAccounts.dispatch();
-				doChangeAcct();
-				doAccountPicker();
+				
 			}
 
 			public function handleUIButtonEvent(evt:ResultEvent):void {
@@ -434,7 +435,23 @@
 				accountcontacts=ev.result as ArrayCollection;
 				contact_list.selectedItem=invoice.account.contact as Contact;
 			}
-
+			private function handleGetInvoiceResult(ev:ResultEvent):void{
+				invoice = ev.result as InvoiceBase;
+				this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
+						
+				this.bill_to_address_editor.setAddress(invoice.billToAddress);
+				if (invoice != null && invoice.account != null) 
+					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+				
+				if (invoice.account == null){
+					var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
+					eventChangeAccounts.dispatch();
+					doChangeAcct();
+					doAccountPicker();
+				}
+				
+				
+			}
 			private function doAccountPicker():void
 			{
 				var accountPickerWindow:AccountPicker=AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));

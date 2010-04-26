@@ -134,7 +134,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private Address shipToAddress;
 	
 	/**
@@ -156,7 +156,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(optional=true)
+    @ManyToOne
 	private Account parentAccount;
 	
 	/**
@@ -354,7 +354,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private CreditCard creditCard;
 	
 	/**
@@ -376,7 +376,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private Marketing marketing;
 	
 	/**

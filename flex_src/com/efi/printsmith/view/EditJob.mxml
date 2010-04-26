@@ -727,9 +727,9 @@
 				if (job.pricingCopier != null)
 					job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
 				if (job.costingCopier != null)
-					job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+					job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers); */
 				if (job.location != null)
-					job_location.selectedIndex=findItem(job.location.name, locations); */
+					job_location.selectedIndex=findItem(job.location.name, locations); 
 				if (job.productCode != null)
 					product.selectedIndex=findItem(job.productCode.name, productCodes);
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -854,18 +854,20 @@
 			{
 				copiers=ev.result as ArrayCollection;
 				if (!isNaN(job.id)) {
-					
-					this.job_pricing_copier.selectedIndex =findItem(job.pricingCopier.name, copiers);
-					this.job_costing_copier.selectedIndex = findItem(job.costingCopier.name, copiers);
+					if (job.pricingCopier != null)
+						this.job_pricing_copier.selectedIndex =findItem(job.pricingCopier.name, copiers);
+					if ( job.costingCopier != null)
+						this.job_costing_copier.selectedIndex = findItem(job.costingCopier.name, copiers);
 				}
 			}
 			private function handleLoadPressResult(ev:ResultEvent):void
 			{
 				presses=ev.result as ArrayCollection;
 				if (!isNaN(job.id)) {
-					
-					this.job_pricing_press.selectedIndex =findItem(job.pricingPress.name, presses);
-					this.job_costing_press.selectedIndex = findItem(job.costingPress.name, presses);
+					if ( job.pricingPress != null)
+						this.job_pricing_press.selectedIndex =findItem(job.pricingPress.name, presses);
+					if (job.costingPress != null)
+						this.job_costing_press.selectedIndex = findItem(job.costingPress.name, presses);
 				}
 			}
 		

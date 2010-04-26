@@ -1302,6 +1302,35 @@ public class DataService extends HibernateService {
 		}
 		return resultList;		
 	}
+	public InvoiceBase getInvoice(Long id) throws Exception {
+		log.debug("** getInvoice called.");
+		InvoiceBase invoice = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("InvoiceBase.byId");
+			query.setParameter("id", id);
+			invoice = (InvoiceBase) query.getSingleResult();
+
+			if (invoice != null){
+					for (int i=0; i<invoice.getJobs().size(); i++) {
+						Job job = invoice.getJobs().get(i);
+						if (job != null) {
+							for (int j=0; j<job.getCharges().size(); j++) {
+								Charge charge = job.getCharges().get(j);
+								if (charge == null) {
+									log.error("null charge found");
+								}
+							}
+						}
+					}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return invoice;		
+	}
 	
 	public ModelBase getById(String className, Long id) throws Exception {
 		log.debug("** getById called.");

@@ -61,8 +61,10 @@ public class JobMapper extends ImportMapper {
 				}
 			} else if ("press ID".equals(currentFieldToken)) {
 				PressDefinition pressDefinition = (PressDefinition) dataService.getByPressId(currentImportToken);
-				if (pressDefinition != null)
+				if (pressDefinition != null){
 					job.setPress(pressDefinition);
+					job.setPricingPress(pressDefinition);
+				}
 			} else if ("press name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job ticket notes".equals(currentFieldToken)) {
@@ -325,13 +327,13 @@ public class JobMapper extends ImportMapper {
 			} else if ("product code name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("costing press id".equals(currentFieldToken)) {
-				/* TODO */
-			} else if ("costing press name".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
 					PressDefinition pressDefinition = dataService.getByPressId(currentImportToken);
 					if (pressDefinition != null)
 						job.setCostingPress(pressDefinition);
 				}
+			} else if ("costing press name".equals(currentFieldToken)) {
+				/* TODO */
 			} else if ("ink front 1".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("digital que ID".equals(currentFieldToken)) {

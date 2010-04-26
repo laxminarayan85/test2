@@ -144,7 +144,7 @@ public class CreditCard extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne
 	private Address address;
 	
 	/**
