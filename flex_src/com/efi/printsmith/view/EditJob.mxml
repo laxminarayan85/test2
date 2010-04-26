@@ -584,8 +584,9 @@
 				productDataService.getAll("ProductCode");
 //				chargeDataService.getAll("Charge");
 				dimensionDataService.getAll("Dimension");
-				dataServiceSystemPreferences.getAll("PreferencesSystem");				
-				//dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+				dataServiceSystemPreferences.getAll("PreferencesSystem");		
+				if (stocks == null)		
+				 	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 			}
 			
@@ -655,7 +656,9 @@
 			public function setJob(job2:Job):void
 			{
 				this.job=job2;
-				pricingMethodDataService.getAll("PreferencesPricingMethod");
+				loadData();
+				mapFromJobData();
+				
 				
 			}
 
@@ -727,11 +730,11 @@
 				if (job.pricingCopier != null)
 					job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
 				if (job.costingCopier != null)
-					job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers); */
+					job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers); 
 				if (job.location != null)
 					job_location.selectedIndex=findItem(job.location.name, locations); 
 				if (job.productCode != null)
-					product.selectedIndex=findItem(job.productCode.name, productCodes);
+					product.selectedIndex=findItem(job.productCode.name, productCodes);*/
 				this.copy_single_radio.selected = this.job.singleSided;
 				this.copy_double_radio.selected = this.job.doubleSided;
 				run_method_radiogroup.selectedValue=job.runMethod;
@@ -879,11 +882,16 @@
 			private function handleLoadLocationResult(ev:ResultEvent):void
 			{
 				locations=ev.result as ArrayCollection;
+				if (job.location != null)
+					job_location.selectedIndex=findItem(job.location.name, locations); 
+				
 			}
 
 			private function handleLoadProductResult(ev:ResultEvent):void
 			{
 				productCodes=ev.result as ArrayCollection;
+				if (job.productCode != null)
+					product.selectedIndex=findItem(job.productCode.name, productCodes);
 			}
 			
 			private function handleLoadVendorResult(ev:ResultEvent):void
@@ -937,8 +945,7 @@
 						}
 		 			}
 	 			}
-				loadData();
-				mapFromJobData();
+				
 			}
 
 			private function handleSaveResult(ev:ResultEvent):void

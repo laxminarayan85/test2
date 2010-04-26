@@ -485,7 +485,7 @@
 				this.setAccount(new Account());
 			}
 			
-			private function doDoubleclickInvoiceItem():void {
+			private function doDoubleclickInvoiceItem():void { //cej
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
 				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.setStyle("borderAlpha", 0.9);
