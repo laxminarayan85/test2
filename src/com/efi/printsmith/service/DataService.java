@@ -783,8 +783,15 @@ public class DataService extends HibernateService {
 			String queryString = "from ChargeCommand where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
-			ChargeCommand object = (ChargeCommand) query.getSingleResult();
-			return object;
+			ChargeCommand chargeCommand = (ChargeCommand) query.getSingleResult();
+			List<ChargeCategory> categories = chargeCommand.getChildren();
+			for (int i=0; i<categories.size(); i++) {
+				ChargeCategory chargeCategory = categories.get(i);
+				if (chargeCategory == null) {
+					log.error("null chargeCategory");
+				}
+			}
+			return chargeCommand;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -800,8 +807,15 @@ public class DataService extends HibernateService {
 			String queryString = "from ChargeCategory where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
-			ChargeCategory object = (ChargeCategory) query.getSingleResult();
-			return object;
+			ChargeCategory chargeCategory = (ChargeCategory) query.getSingleResult();
+			List<ChargeDefinition> chargeDefinitions = chargeCategory.getChildren();
+			for (int i=0; i<chargeDefinitions.size(); i++) {
+				ChargeDefinition chargeDefinition = chargeDefinitions.get(i);
+				if (chargeDefinition == null) {
+					log.error("null chargeDefinition");
+				}
+			}
+			return chargeCategory;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -1208,18 +1222,15 @@ public class DataService extends HibernateService {
 				try {
 					command.addChildren(category);
 					command = em.merge(command);
+					tx.commit();
 					category = command.getChildren().get(
 							command.getChildren().size() - 1);
-					tx.commit();
 					return category;
 				} catch (Exception e) {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
 					throw new Exception(e.getMessage());
 
-				} finally {
-					log.info("** Closing Entity Manager.");
-					em.close();
 				}
 			}
 		} catch (Exception e) {
@@ -1254,10 +1265,6 @@ public class DataService extends HibernateService {
 					log.error("** Error: " + e.getMessage());
 					tx.rollback();
 					throw new Exception(e.getMessage());
-
-				} finally {
-					log.info("** Closing Entity Manager.");
-					em.close();
 				}
 			}
 		} catch (Exception e) {

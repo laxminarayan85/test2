@@ -2,6 +2,8 @@ package com.efi.printsmith.service;
 
 import com.efi.printsmith.data.*;
 
+import flex.messaging.FlexContext;
+
 
 
 import javax.persistence.EntityManager;
@@ -21,10 +23,14 @@ public class LoginService extends DataService {
 			Query q = em.createQuery("select u from Users u where upper(u.name)= upper(:name)");
 			q.setParameter("name", userName);
 			
-			Users user1 = (Users) q.getSingleResult();
-			if (user1.getDisableUser().equals(false))		
-				if (user1.getPassword().equals(password))
-					return user1;
+			Users user = (Users) q.getSingleResult();
+			if (user.getDisableUser().equals(false))		
+				if (user.getPassword().equals(password)) {
+					if(FlexContext.getFlexSession() != null){
+			    		FlexContext.getFlexSession().setAttribute("userInfo", user);
+    				}
+					return user;
+				}
 		} catch (Exception e) {
 			log.error(e);
 		}
