@@ -527,7 +527,7 @@
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 				
 				if (job == null) {
-					job=new Job();
+					doNew();
 					job.parentSize = "";
 					job.runSize = "";
 					job.finishSize = "";
@@ -546,6 +546,7 @@
 					job.markup = 2.0;
 					job.totalCost = 0.0;
 					job.unitCost = 0.0;
+				
 				}
 				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -585,7 +586,7 @@
 //				chargeDataService.getAll("Charge");
 				dimensionDataService.getAll("Dimension");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");		
-				if (stocks == null)		
+				if (stocks.length == 0)		
 				 	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 			}
