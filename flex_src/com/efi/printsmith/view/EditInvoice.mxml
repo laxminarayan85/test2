@@ -136,9 +136,9 @@
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						
 					}
-					
-					
-					dataService.getInvoice(invoice.id);
+					if (invoice.id > 0) {
+						dataService.getInvoice(invoice.id);
+					}
 				}
 				
 				
