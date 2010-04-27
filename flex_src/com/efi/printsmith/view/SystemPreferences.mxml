@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationPolicy="all" creationComplete="init()" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.vo.*"
-width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
- label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" name="systempreferences" xmlns:ns1="com.efi.printsmith.components.*">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" creationPolicy="all" creationComplete="init();" 
+	xmlns:fc="http://www.adobe.com/2006/fc" 
+	xmlns:vo="com.efi.printsmith.vo.*"
+	xmlns:cmp="com.efi.printsmith.components.*"
+	width="100%" height="100%" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
+	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
+	xmlns:ns1="com.efi.printsmith.components.*">
  	<mx:states>
  	 	<mx:State name="CreditCardProcessorSetup">
  	 	 	<mx:RemoveChild target="{CreditCardGrid}"/>
@@ -177,6 +184,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import mx.formatters.NumberFormatter;
+	import mx.formatters.CurrencyFormatter;
+	import mx.formatters.NumberBase;
+	import mx.formatters.Formatter;
 	import com.efi.printsmith.data.Merchandise;
 	import com.efi.printsmith.data.OutsideService;
 	import com.efi.printsmith.data.TaxTable;
@@ -229,6 +240,13 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	[Bindable]
 	private var enableSave:Boolean = true;
+
+	private var dollar:String = "$"; 
+	private var yen:String = "¥";
+	private var euro:String = "€";
+
+	[Bindable]
+	private var currentnumberstext:TextInput = null;
 
 //Data field arrays
 	[Bindable]
@@ -606,7 +624,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 		openTree();
 		setup();
-
+		
 		var eventbehavior:SystemPreferencesBehaviorPanelEvent = new SystemPreferencesBehaviorPanelEvent(behavior_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventbehavior.dispatch();
 		var eventcompany:SystemPreferencesCompanyPanelEvent = new SystemPreferencesCompanyPanelEvent(company_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
@@ -829,6 +847,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 //			this.txtCurrentRange.text = tmpString;
 
 		}
+
 		//radio buttons
 //		if (preferencesSystem.workFirstDayOfWeek != "")
 //			this.opgFirstDayOfWorkWeek.selectedValue = parseInt(preferencesSystem.workFirstDayOfWeek)
@@ -837,7 +856,12 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		address_editor.setAddress(preferencesSystem.companyAddress);
 
 		this.txtInactivitySeconds.text = preferencesSystem.autoLogOutSeconds.toString();
-		this.txtTimeOfDayQuit.text = preferencesSystem.quitTime;
+		if (preferencesSystem.quitTime != null && preferencesSystem.quitTime.length < 7){
+			this.txtTimeOfDayQuit.hour = parseInt(preferencesSystem.quitTime.substr(0,2),0);
+			this.txtTimeOfDayQuit.minute = parseInt(preferencesSystem.quitTime.substr(2,2),0)
+			this.txtTimeOfDayQuit.am_pm = preferencesSystem.quitTime.substr(4,2)
+		}
+		//this.txtTimeOfDayQuit = preferencesSystem.quitTime;
 		this.txtShutdownNotificationMessage.text = preferencesSystem.shutdownMessage;
 		this.txtPhone.text = preferencesSystem.companyPhone
 		this.txtFax.text = preferencesSystem.companyFax;
@@ -848,21 +872,57 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		this.txtCompanyId.text = preferencesSystem.companyId;
 		this.txtStoreNumber.text = preferencesSystem.companyStoreNumber; 
 		this.txtLocationReference.text = preferencesSystem.companyStoreLocationRef;
+		
+		if (preferencesSystem.numbersIntegers.length == 0){
+			preferencesSystem.numbersIntegers = "###,###,###,###";
+		}
 		this.txtIntegers.text = preferencesSystem.numbersIntegers;
+		
+		if (preferencesSystem.numbersPercentages.length == 0){
+			preferencesSystem.numbersPercentages = "###,##0.###%;-###,##0.###%;0%";
+		}
 		this.txtPercentages.text = preferencesSystem.numbersPercentages;
+		
+		if (preferencesSystem.numbersAmount.length == 0) {
+			preferencesSystem.numbersAmount = "###,###,###,##0.00";
+		}
 		this.txtAmount.text = preferencesSystem.numbersAmount;
+		
+		if (preferencesSystem.numbersTaxRate.length == 0) {
+			preferencesSystem.numbersTaxRate = "###,###,###%;-###,###,###%;0%";
+		}
+		this.txtTaxRate.text = preferencesSystem.numbersTaxRate;
+		
+		if (preferencesSystem.numbersRate.length == 0) {
+			preferencesSystem.numbersRate = "###,###,###,##0.00##";
+		}
 		this.txtRate.text = preferencesSystem.numbersRate;
+		
+		if (preferencesSystem.numbersFactor.length == 0) {
+			preferencesSystem.numbersFactor = "###,###,###,##0.####;-###,###,###,##.####;0"
+		}
 		this.txtFactor.text = preferencesSystem.numbersFactor;
+		
+		if (preferencesSystem.numbersInvoice.length == 0) {
+			preferencesSystem.numbersInvoice = "###,###,###,##0.00";
+		}
 		this.txtInvoice.text = preferencesSystem.numbersInvoice;
+		
+		if (preferencesSystem.numbersShortPercent.length == 0) {
+			preferencesSystem.numbersShortPercent = "#####0%";
+		}
 		this.txtShortPercent.text = preferencesSystem.numbersShortPercent;
+
 		this.txtRoundTo.text = preferencesSystem.numbersRoundto.toString();
 		this.txtFormat.text = preferencesSystem.displayFormat;
 		this.txtConversionFactor.text = preferencesSystem.conversionFactor.toString();
 		this.txtRoundToAlternateCurrency.text = preferencesSystem.alternateRoundto.toString();
 		this.txtInkWeightSingular.text = preferencesSystem.inkWeightSingular;
 		this.txtInkWeightPlural.text = preferencesSystem.inkWeightPlural;
-			
 
+		setDisplayText(txtIntegers);
+		setCurrentRange();
+			
 	}
 	private function mapFromPreferencesAccountingData():void {
 		this.chkActivateCCAprovalProcess.selected = preferencesAccounting.activateCreditCardApproval 
@@ -1158,7 +1218,8 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 		//textboxes
 		preferencesSystem.autoLogOutSeconds = parseInt(this.txtInactivitySeconds.text);
-		preferencesSystem.quitTime = this.txtTimeOfDayQuit.text;
+//		preferencesSystem.quitTime = this.txtTimeOfDayQuit.text;
+		preferencesSystem.quitTime = padString(this.txtTimeOfDayQuit.hour.toString(),2,"0")+padString(this.txtTimeOfDayQuit.minute.toString(),2,"0")+this.txtTimeOfDayQuit.am_pm.toString();
 		preferencesSystem.shutdownMessage = this.txtShutdownNotificationMessage.text;
 		preferencesSystem.companyPhone = this.txtPhone.text;
 		preferencesSystem.companyFax =txtFax.text;
@@ -1765,11 +1826,62 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		//Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
 		preferences_stack.selectedIndex = node.@tag; 
 	}
-	private function setDisplayText(text:TextInput):void{
-		txtDisplayArea.text = "";
-		txtDisplayDemo.text = text.name;
+	
+	private function doSignSymbol(text:String):void{
+		currentnumberstext.text = currentnumberstext.text + text; 
+	}
+	
+	private function setDisplayText(textInput:TextInput):void{
+		currentnumberstext = textInput;
+		var number1:Number = 1234.567890
+		var number2:Number = 0.0
+		var number3:Number = -1234.567890
+		var number4:Number = 0.555555
+		var str:String = currentnumberstext.text;
+		if (str.substr(str.indexOf(";")).length > 0){
+			str = str.substr(0,str.indexOf(";"))
+		}
+ 
+		var fmt1:mx.formatters.CurrencyFormatter = new CurrencyFormatter();
+		var fmt2:mx.formatters.NumberFormatter = new NumberFormatter();
+		if (str.length > 0){
+			if (str.substr(str.indexOf(dollar)).length > 0 || str.substr(str.indexOf(yen)).length > 0 || str.substr(str.indexOf(euro)).length > 0) {
+				if (str.substr(str.indexOf(".")).length > 0){
+					fmt1.precision = str.substr(str.indexOf(".")).length 
+				}else{
+					fmt1.precision = 0;
+				}
+				if (str.substr(str.indexOf(dollar)).length > 0){
+					fmt1.currencySymbol = dollar;
+				}  
+				if (str.substr(str.indexOf(yen)).length > 0){
+					fmt1.currencySymbol = yen;
+				}  
+				if (str.substr(str.indexOf(euro)).length > 0){
+					fmt1.currencySymbol = euro;
+				}
+				txtDisplayArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
+			}else {
+				if (str.substr(str.indexOf(".")).length > 0){
+					fmt2.precision = str.substr(str.indexOf(".")).length 
+				}else {
+					fmt2.precision = 0;
+				}
+				txtDisplayArea.text = fmt2.format(number1)+ "\n" + fmt2.format(number2)+ "\n" + fmt2.format(number3)+ "\n" + fmt2.format(number4);
+			}		
+		}
+
+		txtDisplayDemo.text = textInput.name;
 	}
 
+	private function setCurrentRange():void{
+		var dt1:Date= new Date();
+		dt1.setFullYear(dt1.fullYear,cboFiscalYearStartMonth.selectedIndex,"1");
+		var dt2:Date = new Date(dt1.fullYear+1, cboFiscalYearStartMonth.selectedIndex, 0);
+		txtCurrentRange.text = dt1.toDateString() + " - " + dt2.toDateString(); 
+	}
+
+	
 	private function checkEnableAutoLogOut():void{
 		chkSecondsOfInactivity.enabled = chkEnableAutomaticLogOut.selected;
 		chkTriggerAfterPosting.enabled = chkEnableAutomaticLogOut.selected;
@@ -2080,39 +2192,60 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
 	}        
 
+	private function padString(_str:String, _n:Number, _pStr:String):String {
+	    var _rtn:String = _str;
+	    if (_pStr == null || _pStr.length < 1)
+	    {
+	        _pStr = " ";
+	    }
+	    //
+	    if (_str.length < _n)
+	    {
+	        var _s:String = "";
+	        for (var i:Number = 0 ; i < (_n - _str.length) ; i++)
+	        {
+	            _s += _pStr;
+	        }
+	        _rtn = _s + _str;
+	    }
+	    
+	    return _rtn;
+	}
+
 ]]>
 
 </mx:Script>	
-	<mx:Tree x="0" y="0" width="200"  
+	<mx:Tree width="190"  
 		id="tvPreference" 
 		dataProvider="{treeData.node}"
-		height="100%" change="treeSelect(event);" labelFunction="TreeDisplayLabel"></mx:Tree>
+		change="treeSelect(event);" labelFunction="TreeDisplayLabel" bottom="0" top="0" x="0"></mx:Tree>
 
 	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="274" y="6" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+	<mx:Button x="291" y="6" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 
-	<mx:VBox id="vbox2" left="190" top="72" height="566" width="100%" creationPolicy="all">
+	<mx:VBox id="vbox2" left="190" top="72" height="100%" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
 			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Behavior')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Eliminatesomewarning')}"/>
-				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Onlypostinvoicesmark')}"/>
-				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}"/>
-				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Activateusereventlog')}"/>
-				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Enableautomaticlogou')}" change="checkEnableAutoLogOut();"/>
-				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" enabled="false"/>
-				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TriggerafterPosting')}" enabled="false"/>
-				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}"/>
-				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}"/>
-				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Enableautomaticquit')}"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Behavior')}" textAlign="center" left="0" right="0"/>
+				<mx:HRule y="17" left="0" right="0"/>
+				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Eliminatesomewarning')}" width="360"/>
+				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Onlypostinvoicesmark')}" width="360"/>
+				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}" width="360"/>
+				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Activateusereventlog')}" width="360"/>
+				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Enableautomaticlogou')}" change="checkEnableAutoLogOut();" width="360"/>
+				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" enabled="false" width="189"/>
+				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TriggerafterPosting')}" enabled="false" width="189"/>
+				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}" width="360"/>
+				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}" width="360"/>
+				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Enableautomaticquit')}" width="360"/>
 				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.autoLogOutSeconds}"/>
 				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Timeofdaytoquit')}" textAlign="right"/>
-				<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>
+<!--			<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>-->
+				<cmp:TimeEntry x ="168" y="328" width="118" id="txtTimeOfDayQuit"/>
 				<mx:Label x="80" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Shutdownnotification')}" textAlign="right"/>
 				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" 
 					text="{preferencesSystem.shutdownMessage}"/>
@@ -2122,24 +2255,24 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:HRule x="0" y="17" width="100%"/>
 				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
 
-				<mx:Label x="79" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
+				<mx:Label x="10" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Phone')}" textAlign="right" width="113"/>
 				<mx:TextInput x="127" y="195" width="148" id="txtPhone" text="{preferencesSystem.companyPhone}"/>
-				<mx:Label x="344" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Fax')}" textAlign="right"/>
+				<mx:Label x="283" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FAX')}" textAlign="right" width="95"/>
 				<mx:TextInput x="377" y="195" width="148" id="txtFax" text="{preferencesSystem.companyFax}"/>
-				<mx:Label x="79" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
+				<mx:Label x="10" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EMail')}" textAlign="right" width="113"/>
 				<mx:TextInput x="125" y="225" width="400" id="txtEmail" text="{preferencesSystem.companyEmail}"/>
-				<mx:Label x="81" y="257" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Other')}" textAlign="right"/>
+				<mx:Label x="10" y="257" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Other')}" textAlign="right" width="113"/>
 				<mx:TextInput x="125" y="255" width="400" id="txtOther1" text="{preferencesSystem.companyOther1}"/>
-				<mx:Label x="81" y="287" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Other')}" textAlign="right"/>
+				<mx:Label x="10" y="287" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Other')}" textAlign="right" width="113"/>
 				<mx:TextInput x="125" y="285" width="400" id="txtOther2" text="{preferencesSystem.companyOther2}"/>
-				<mx:Label x="8" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyIDLabel')}" textAlign="right"/>
+				<mx:Label x="10" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyIDLabel')}" textAlign="right" width="113"/>
 				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel" text="{preferencesSystem.companyIdLabel}"/>
-				<mx:Label x="242" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyID')}" textAlign="right"/>
+				<mx:Label x="242" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyID')}" textAlign="right" width="86"/>
 				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId" text="{preferencesSystem.companyId}"/>
 				
-				<mx:Label x="187" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.StoreNumber')}" textAlign="right"/>
+				<mx:Label x="91" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.StoreNumber')}" textAlign="right" width="184"/>
 				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber" text="{preferencesSystem.companyStoreNumber}"/>
-				<mx:Label x="52" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.WorkstationStoreloca')}" textAlign="right"/>
+				<mx:Label x="91" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.WorkstationStoreloca')}" textAlign="right" width="184"/>
 				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference" text="{preferencesSystem.companyStoreLocationRef}"/>
 				<mx:TextArea x="125" y="420" width="400" height="63">
 					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TheCompanyIDisprinte')}</mx:text>
@@ -2150,12 +2283,12 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.BusinessCalendar')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fiscalyearstartsfirs')}" textAlign="right"/>
-				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name"></mx:ComboBox>
-				<mx:Label x="176" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CurrentRange')}" textAlign="right"/>
-				<mx:TextArea x="270" y="145" id="txtCurrentRange" height="19" width="210" enabled="false"/>
+				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fiscalyearstartsfirs')}" textAlign="right" width="162"/>
+				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name" change="setCurrentRange();"></mx:ComboBox>
+				<mx:Label x="54" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CurrentRange')}" textAlign="right" width="158"/>
+				<mx:TextArea x="220" y="145" id="txtCurrentRange" height="19" width="260" enabled="false"/>
 				
-				<mx:Label x="50" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Workdays')}" textAlign="right"/>
+				<mx:Label x="50" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Workdays')}" textAlign="left" width="162"/>
 				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
 				<mx:RadioButton x="53" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="1"/>
 				<mx:RadioButton x="93" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="2"/>
@@ -2172,7 +2305,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Button x="200" y="211" label="T" width="40"/>
 				<mx:Button x="240" y="211" label="F" width="40"/>
 				<mx:Button x="280" y="211" label="S" width="40"/>
-				<mx:Label x="325" y="250" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FirstDayofWorkWeek')}" textAlign="right"/>
+				<mx:Label x="325" y="250" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FirstDayofWorkWeek')}" textAlign="left"/>
 				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Futuredatesexcludeda')}"/>
 				
 			</mx:Canvas>
@@ -2180,32 +2313,34 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Numbers')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="67" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Integers')}" textAlign="right"/>
-				<mx:Label x="46" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Percentages')}" textAlign="right"/>
-				<mx:Label x="71" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Amount')}" textAlign="right"/>
-				<mx:Label x="88" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Rate')}" textAlign="right"/>
-				<mx:Label x="81" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Factor')}" textAlign="right"/>
-				<mx:Label x="74" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Invoice')}" textAlign="right"/>
-				<mx:Label x="40" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShortPercent')}" textAlign="right"/>
-				<mx:Label x="63" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right"/>
+				<mx:Label x="13" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Integers')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Percentages')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Amount')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TaxRate')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Rate')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Factor')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Invoice')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShortPercent')}" textAlign="right" width="146"/>
+				<mx:Label x="13" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right" width="146"/>
 
-				<mx:TextInput x="127" y="30" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
-				<mx:TextInput x="127" y="60" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
-				<mx:TextInput x="127" y="90" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);" text="{preferencesSystem.numbersAmount}"/>
-				<mx:TextInput x="127" y="120" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);" text="{preferencesSystem.numbersRate}"/>
-				<mx:TextInput x="127" y="150" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);" text="{preferencesSystem.numbersFactor}"/>
-				<mx:TextInput x="127" y="180" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);" text="{preferencesSystem.numbersInvoice}"/>
-				<mx:TextInput x="127" y="210" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);" text="{preferencesSystem.numbersShortPercent}"/>
-				<mx:TextInput x="127" y="240" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);" text="{preferencesSystem.numbersRoundto}"/>
+				<mx:TextInput x="167" y="28" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
+				<mx:TextInput x="167" y="58" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
+				<mx:TextInput x="167" y="88" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);" text="{preferencesSystem.numbersAmount}"/>
+				<mx:TextInput x="167" y="118" width="347" name="Tax Rate" id="txtTaxRate" focusIn="setDisplayText(txtTaxRate);" text="{preferencesSystem.numbersTaxRate}"/>
+				<mx:TextInput x="167" y="148" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);" text="{preferencesSystem.numbersRate}"/>
+				<mx:TextInput x="167" y="178" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);" text="{preferencesSystem.numbersFactor}"/>
+				<mx:TextInput x="167" y="210" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);" text="{preferencesSystem.numbersInvoice}"/>
+				<mx:TextInput x="167" y="238" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);" text="{preferencesSystem.numbersShortPercent}"/>
+				<mx:TextInput x="167" y="268" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);" text="{preferencesSystem.numbersRoundto}"/>
 
-				<mx:CheckBox x="216" y="240"  id="chkAlwaysRoundDown" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}"/>
-				<mx:CheckBox x="216" y="270"  id="chkTaxRoundUp" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}"/>
+				<mx:CheckBox x="256" y="268"  id="chkAlwaysRoundDown" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}" width="218"/>
+				<mx:CheckBox x="256" y="298"  id="chkTaxRoundUp" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" width="218"/>
 
-				<mx:Button x="50" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Dollar')}"  width="75"/>
-				<mx:Button x="130" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Pound')}"  width="75"/>
-				<mx:Button x="210" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Yen')}"  width="75"/>
-				<mx:Button x="290" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Euro')}"  width="75"/>
-				<mx:Button x="370" y="320" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Space')}"  width="75"/>
+				<mx:Button x="50" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Dollar')}"  width="75" click="doSignSymbol(dollar)"/>
+				<mx:Button x="130" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Pound')}"  width="75" click="doSignSymbol('#')"/>
+				<mx:Button x="210" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Yen')}"  width="75" click="doSignSymbol(yen)"/>
+				<mx:Button x="290" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Euro')}"  width="75" click="doSignSymbol(euro)"/>
+				<mx:Button x="370" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Space')}"  width="75" click="doSignSymbol(' ')"/>
 				<mx:TextArea x="23" y="391" height="131" width="451" id="txtDisplayArea" enabled="false"/>
 				<mx:Text x="50" y="374" text="xx" id="txtDisplayDemo"/>
 			</mx:Canvas>
@@ -2215,15 +2350,14 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Usealternatecurrency')}" change="checkAlternateCurrency();"/>
 
-				<mx:Label x="84" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}" textAlign="right"/>
+				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}" textAlign="right"  width="124"/>
 				<mx:TextInput x="136" y="60" width="338" id="txtFormat" enabled="false" text="{preferencesSystem.displayFormat}"/>
-				<mx:Label x="24" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}" textAlign="right"/>
+				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}" textAlign="right" width="124"/>
 				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false" text="{preferencesSystem.conversionFactor}"/>
-				<mx:Label x="72" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right"/>
+				<mx:Label x="10" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right" width="124"/>
 				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false" text="{preferencesSystem.alternateRoundto}"/>
 
 				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}" enabled="false"/>
-				
 				
 				<mx:TextArea x="23" y="203" height="40%" width="451" id="txtSampleArea" enabled="false"/>
 				<mx:Label x="50" y="186" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SampleCurrency')}" id="txtSampleDemo" textAlign="right"/>
@@ -2232,13 +2366,13 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.International')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}"/>
-				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}"/>
-				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}"/>
+				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}" width="451"/>
+				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}" width="451"/>
+				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}" width="451"/>
 
-				<mx:Label x="26" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}" textAlign="right"/>
+				<mx:Label x="10" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}" textAlign="right" width="138"/>
 				<mx:TextInput x="154" y="120" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
-				<mx:Label x="39" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}" textAlign="right"/>
+				<mx:Label x="10" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}" textAlign="right" width="143"/>
 				<mx:TextInput x="154" y="150" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
 
 			</mx:Canvas>
@@ -2246,7 +2380,7 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AddressFormatting')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultcountry')}" textAlign="right"/>
+				<mx:Label x="36" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultcountry')}" textAlign="right"/>
 				<fc:AutoComplete  x="148" y="30" width="181" id="cboDefaultCountry" dataProvider="{CountryArray}" lookAhead="true" labelField="name" focusOut="doCountryFind(cboDefaultCountry,CountryArray)"/>
 				<mx:TextArea x="23" y="203" height="25%" width="451" id="txtSampleAddressArea" enabled="false"/>
 				<mx:Text x="50" y="186" text="Sample Address" id="txtSampleAddress"/>
@@ -2256,40 +2390,40 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Receipt')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="54" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Header')}" textAlign="right"/>
-				<mx:Label x="59" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Footer')}" textAlign="right"/>
+				<mx:Label x="10" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Header')}" textAlign="right" width="99"/>
+				<mx:Label x="10" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Footer')}" textAlign="right" width="99"/>
 				<mx:TextArea x="107" y="30" id="txtReceiptHeader" width="390" height="130" text="{preferencesPOS.receiptHeader}"/>
 				<mx:TextArea x="107" y="180" id="txtReceiptFooter" width="390" height="100" text="{preferencesPOS.receiptFooter}"/>
 
-				<mx:TextInput x="272" y="300" id="txtSerialNumber" width="70" text="{preferencesPOS.startingNumber}"/>
-				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Serialnumbersonrecei')}"/>
-				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Hidetaxinlineitems')}"/>
+				<mx:TextInput x="322" y="300" id="txtSerialNumber" width="70" text="{preferencesPOS.startingNumber}"/>
+				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Serialnumbersonrecei')}" width="273"/>
+				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Hidetaxinlineitems')}" width="273"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashdrawer_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashDrawer')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptPrinter')}" textAlign="right"/>
+				<mx:Label x="29" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptPrinter')}" textAlign="right"/>
 				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
-				<mx:Label x="95" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterRptPackageCmd.Printer')}" textAlign="right"/>
+				<mx:Label x="21" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterRptPackageCmd.Printer')}" textAlign="right"/>
 				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200" text="{preferencesPOS.defaultPrinter}"/>
 
-				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}"/>
-				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}"/>
-				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}"/>
-				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}"/>
-				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}"/>
-				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}"/>
+				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}" width="232"/>
+				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}" width="232"/>
+				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}" width="212"/>
+				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}" width="212"/>
+				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}" width="232"/>
+				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}" width="232"/>
 
-				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}"/>
-				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}"/>
+				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}" width="188"/>
+				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}" width="188"/>
 
-				<mx:Label x="50" y="273" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}" textAlign="right"/>
-				<mx:Label x="56" y="298" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesbeforeRece')}" textAlign="right"/>
-				<mx:Label x="66" y="323" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesafterRecei')}" textAlign="right"/>
+				<mx:Label x="56" y="273" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}" textAlign="right" width="158"/>
+				<mx:Label x="56" y="298" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesbeforeRece')}" textAlign="right" width="158"/>
+				<mx:Label x="66" y="323" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesafterRecei')}" textAlign="right" width="148"/>
 				<mx:Label x="101" y="348" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptStartCode')}" textAlign="right"/>
-				<mx:Label x="107" y="373" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}" textAlign="right"/>
+				<mx:Label x="95" y="373" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}" textAlign="right"/>
 
 				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47" text="{preferencesPOS.asciiCodeOpenDrawer}"/>
 				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47" text="{preferencesPOS.blankLinesBeforeReceipt}"/>
@@ -2297,10 +2431,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77" text="{preferencesPOS.receiptStartCode}"/>
 				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77" text="{preferencesPOS.receiptEndCode}"/>
 
-				<mx:Label x="50" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}" textAlign="right"/>
-				<mx:Label x="220" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}" textAlign="right"/>
-				<mx:Label x="77" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}" textAlign="right"/>
-				<mx:Label x="216" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}" textAlign="right"/>
+				<mx:Label x="21" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}" textAlign="right" width="99"/>
+				<mx:Label x="207" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}" textAlign="right" width="75"/>
+				<mx:Label x="21" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}" textAlign="right" width="99"/>
+				<mx:Label x="207" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}" textAlign="right" width="75"/>
 
 				<mx:ComboBox x="119" y="418" id="cboBaudRate"  dataProvider="{BaudRateArray}" labelField="name" width="90" enabled="false"/>
 				<mx:ComboBox x="281" y="418" id="cboStopBits"  dataProvider="{StopBitsArray}" labelField="name" width="90" enabled="false"/>
@@ -2313,10 +2447,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid width="508" id="CashRegisterGrid" 
+				<mx:DataGrid id="CashRegisterGrid" 
 					dataProvider="{PreferencesCashRegisterArray}" 
 					editable="true" 
-					itemEditEnd="processCashRegisterGridData(event);" bottom="80" top="27" right="22">
+					itemEditEnd="processCashRegisterGridData(event);" bottom="80" top="27" right="52" left="28">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Tax')}" dataField="tax" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2386,12 +2520,12 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:TextInput x="225" y="465" id="txtListFont" width="150"/>
 				<mx:TextInput x="225" y="495" id="txtHeaderFont" width="150"/>
 
-				<mx:DataGrid x="50" y="27" width="442" height="230" id="PendingListGrid" 
+				<mx:DataGrid y="27" height="230" id="PendingListGrid" 
 					dataProvider="{PreferencesPendingListArray}" 
 					editable="true" allowMultipleSelection="true" 
         	        dragEnabled="true" 
     	            dropEnabled="true" 
-	                dragMoveEnabled="true">
+	                dragMoveEnabled="true" right="96" left="50">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2410,23 +2544,23 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorBehavior')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Closesourcedocumenta')}"/>
-				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.EnterStockCostinEsti')}"/>
-				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CanchangeaddressonAL')}"/>
-				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AutoshowPaperCalcula')}"/>
-				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AlwaysuseStocksParen')}"/>
-				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CalculateReorderdate')}"/>
-				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Validatesalesrep')}"/>
-				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.LeaveFoldedsizeempty')}"/>
-				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DonotperformCostingd')}"/>
-				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AutoshowChargesonnew')}"/>
-				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}"/>
-				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"/>
-				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"/>
-				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}"/>
-				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}"/>
+				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Closesourcedocumenta')}" width="453"/>
+				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.EnterStockCostinEsti')}" width="453"/>
+				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CanchangeaddressonAL')}" width="453"/>
+				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AutoshowPaperCalcula')}" width="453"/>
+				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AlwaysuseStocksParen')}" width="453"/>
+				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CalculateReorderdate')}" width="453"/>
+				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Validatesalesrep')}" width="453"/>
+				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.LeaveFoldedsizeempty')}" width="453"/>
+				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DonotperformCostingd')}" width="453"/>
+				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AutoshowChargesonnew')}" width="453"/>
+				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}" width="453"/>
+				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
+				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
+				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}" width="453"/>
+				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}" width="453"/>
 
-				<mx:Label x="50" y="442" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Normalduedatedays')}" textAlign="right"/>
+				<mx:Label x="71" y="442" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Normalduedatedays')}" textAlign="right"/>
 				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
 				
 				
@@ -2435,26 +2569,26 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorPrinting')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}"/>
-				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}"/>
+				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}" width="400"/>
+				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}" width="400"/>
 
-				<mx:Label x="58" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}" textAlign="right"/>
-				<mx:Label x="50" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}" textAlign="right"/>
+				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}" textAlign="right" width="149"/>
+				<mx:Label x="10" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}" textAlign="right" width="150"/>
 
 				<mx:ComboBox x="160" y="90" id="cboDefaultInvoice"  dataProvider="{DefaultInvoiceArray}" labelField="name" width="250"/>
 				<mx:ComboBox x="160" y="115" id="cboDefaultEstimate"  dataProvider="{DefaultEstimateArray}" labelField="name" width="250"/>
 
 
 				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PaymentDueDate')}">
-					<mx:Label x="20" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}" textAlign="right"/>
+					<mx:Label x="20" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}" textAlign="right" width="165"/>
 					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
 
 					<mx:RadioButtonGroup id="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}" groupName="optPaymentDueDays" value="1"/>
-					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}" groupName="optPaymentDueDays" value="2"/>
-					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}" groupName="optPaymentDueDays" value="3"/>
-					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}" groupName="optPaymentDueDays" value="4"/>
-					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}" groupName="optPaymentDueDays" value="5"/>
+					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}" groupName="optPaymentDueDays" value="1" width="282"/>
+					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}" groupName="optPaymentDueDays" value="2" width="282"/>
+					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}" groupName="optPaymentDueDays" value="3" width="282"/>
+					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}" groupName="optPaymentDueDays" value="4" width="282"/>
+					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}" groupName="optPaymentDueDays" value="5" width="282"/>
 				</mx:Panel>
 
 				
@@ -2523,22 +2657,22 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="30" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}" textAlign="right"/>
+				<mx:Label x="50" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}" textAlign="left" width="231"/>
 				<mx:RadioButtonGroup id="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OldStylepre50')}" groupName="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStyle')}" groupName="opgTicketFormat"/>
 				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomStyle')}" groupName="opgTicketFormat"/>
-				<mx:ComboBox x="155" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="375"/>
+				<mx:ComboBox x="192" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="338"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:DataGrid width="270" id="QuantityBreaksGrid" 
+				<mx:DataGrid id="QuantityBreaksGrid" 
 					dataProvider="{PreferencesQuantityBreaksArray}" 
 					editable="true" 
-					itemEditEnd="processQuantityBreaksGridData(event);" top="27" bottom="80" x="50">
+					itemEditEnd="processQuantityBreaksGridData(event);" top="27" bottom="80" left="50" right="268">
 					<mx:columns>
 						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" dataField="quantity"/>
 						<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" dataField="qtyBreak" editorDataField="selected"
@@ -2680,12 +2814,12 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StockDefinitions')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" width="442" id="StockDefinitionGrid"
+				<mx:DataGrid id="StockDefinitionGrid"
 					dataProvider="{PreferencesStockDefinitionArray}" 
 					editable="true" bottom="80" top="27" allowMultipleSelection="true" 
 	                dragEnabled="true" 
     	            dropEnabled="true" 
-        	        dragMoveEnabled="true">
+        	        dragMoveEnabled="true" left="50" right="96">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2704,10 +2838,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:DataGrid x="50" width="500" id="PricingMethodGrid" 
+				<mx:DataGrid id="PricingMethodGrid" 
 					dataProvider="{PreferencesPricingMethodArray}" 
 					editable="true" 
-					itemEditEnd="processPricingMethodGridData(event);" top="27" bottom="80">
+					itemEditEnd="processPricingMethodGridData(event);" top="27" bottom="80" left="50" right="38">
 					<mx:columns>
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Use')}" dataField="used" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
@@ -2781,12 +2915,12 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditDefaults')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 				
-				<mx:Label x="72" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right"/>
-				<mx:Label x="50" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FinanceCharge')}" textAlign="right"/>
-				<mx:Label x="53" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InactivePeriod')}" textAlign="right"/>
-				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Removedraftsfromdepo')}"/>
-				<mx:Label x="50" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}" textAlign="right"/>
-				<mx:Label x="58" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}" textAlign="right"/>
+				<mx:Label x="10" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right" width="136"/>
+				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FinanceCharge')}" textAlign="right" width="136"/>
+				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InactivePeriod')}" textAlign="right" width="136"/>
+				<mx:CheckBox x="50" y="120" id="chkRemoveDraftFromDeposit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Removedraftsfromdepo')}" width="307"/>
+				<mx:Label x="10" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}" textAlign="right" width="240"/>
+				<mx:Label x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}" textAlign="right" width="240"/>
 
 				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379" text="{preferencesAccounting.creditLimit}"/>
 				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379" text="{preferencesAccounting.financeChange}"/>
@@ -2798,9 +2932,9 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AgingPeriods')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="28" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PastDue')}" textAlign="right"/>
-				<mx:Label x="18" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Delinquent')}" textAlign="right"/>
-				<mx:Label x="41" y="232" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frozen')}" textAlign="right"/>
+				<mx:Label x="7" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PastDue')}" textAlign="right" width="81"/>
+				<mx:Label x="7" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Delinquent')}" textAlign="right" width="81"/>
+				<mx:Label x="7" y="232" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frozen')}" textAlign="right" width="81"/>
 				<mx:TextInput x="90" y="30" id="txtPastDue" width="60" text="{preferencesAccounting.pastDue}"/>
 				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60" text="{preferencesAccounting.delinquent}"/>
 				<mx:TextInput x="90" y="230" id="txtFrozen" width="60" text="{preferencesAccounting.frozen}"/>
@@ -2813,10 +2947,10 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:Canvas width="100%" height="100%" id="salescategories_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SalesCategories')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:DataGrid x="50" width="200" id="SalesCategoryGrid"
+				<mx:DataGrid id="SalesCategoryGrid"
 					dataProvider="{PreferencesSalesCategoryArray}"
 					editable="true"
-					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80">
+					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80" left="50" right="338">
 					<mx:columns>
 						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
@@ -2842,20 +2976,20 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.GLProfiles')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:Label x="50" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Linkto')}" textAlign="right"/>
+				<mx:Label x="10" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Linkto')}" textAlign="right" width="101"/>
 				<mx:ComboBox x="110" y="30" id="cboAccountingPackages"  dataProvider="{AccountingPackagesArray}" labelField="name" width="200"/>
 
-				<mx:Label x="50" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ShippingCollected')}" textAlign="right"/>
-				<mx:Label x="42" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ActualBankDeposit')}" textAlign="right"/>
-				<mx:Label x="32" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UndepositedReceipts')}" textAlign="right"/>
-				<mx:Label x="100" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Discounts')}" textAlign="right"/>
-				<mx:Label x="98" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SalesTax')}" textAlign="right"/>
-				<mx:Label x="55" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TotalARReceipts')}" textAlign="right"/>
-				<mx:Label x="37" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DepositsonInvoices')}" textAlign="right"/>
-				<mx:Label x="48" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.NewChargestoAR')}" textAlign="right"/>
-				<mx:Label x="61" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.CashOverShort')}" textAlign="right"/>
-				<mx:Label x="105" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.PaidOut')}" textAlign="right"/>
-				<mx:Label x="69" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.RefundChecks')}" textAlign="right"/>
+				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ShippingCollected')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ActualBankDeposit')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UndepositedReceipts')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Discounts')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SalesTax')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TotalARReceipts')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DepositsonInvoices')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.NewChargestoAR')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.CashOverShort')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.PaidOut')}" textAlign="right" width="152"/>
+				<mx:Label x="10" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.RefundChecks')}" textAlign="right" width="152"/>
 
 				<mx:TextInput x="166" y="60"  id="txtShippingCollected" width="80" text="{preferencesAccounting.shippingCollected}"/>
 				<mx:TextInput x="166" y="90"  id="txtActualBankDeposit" width="80" text="{preferencesAccounting.actualBankDeposit}"/>
@@ -2869,26 +3003,26 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				<mx:TextInput x="166" y="330" id="txtPaidOut" width="80" text="{preferencesAccounting.paidOut}"/>
 				<mx:TextInput x="166" y="360" id="txtRefundChecks" width="80" text="{preferencesAccounting.refundChecks}"/>
 
-				<mx:Label x="250" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.income')}" textAlign="right"/>
-				<mx:Label x="250" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
-				<mx:Label x="250" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
-				<mx:Label x="250" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
-				<mx:Label x="250" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="right"/>
-				<mx:Label x="250" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
-				<mx:Label x="250" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="right"/>
-				<mx:Label x="250" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
-				<mx:Label x="250" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
-				<mx:Label x="250" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="right"/>
-				<mx:Label x="250" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="right"/>
+				<mx:Label x="250" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.income')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="302" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="332" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}" textAlign="left" width="123"/>
+				<mx:Label x="250" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}" textAlign="left" width="123"/>
 
-				<mx:Label x="30" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnterGeneralLedgerco')}" textAlign="right"/>
+				<mx:Label x="10" y="388" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnterGeneralLedgerco')}" textAlign="left" width="524"/>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="creditcards_canvas" hideEffect="effect" showEffect="effect" creationPolicy="all">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditCardInfo')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Activatecreditcardap')}"/>
+				<mx:CheckBox x="50" y="30" id="chkActivateCCAprovalProcess" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Activatecreditcardap')}" width="388"/>
 				
 				<mx:DataGrid x="50" width="300" id="CreditCardGrid"
 					dataProvider="{PreferencesCreditCardArray}"
@@ -2932,8 +3066,8 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}"/>
-					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"/>
-					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}" width="430"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}" width="430"/>
 				</mx:Panel>
 
 				<mx:Panel x="50" y="261" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate')}" width="500" height="226">
@@ -2943,22 +3077,22 @@ width="800" height="678" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}"/>
 					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}"/>
 					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}"/>
-					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"/>
-					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"/>
+					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}" width="430"/>
+					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}" width="430"/>
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="journalentries_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JournalEntries')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
 
-				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.PrintDocument')}"/>
+				<mx:CheckBox x="50" y="30" id="chkPrintDocument" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.PrintDocument')}" width="424"/>
 				
-				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.JournalDocumentPrefe')}" textAlign="right"/>
+				<mx:Label x="55" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.JournalDocumentPrefe')}" textAlign="right" width="166"/>
 				<mx:ComboBox x="224" y="90" id="cboJournalDocumentPreference"  dataProvider="{JournalDocumentPreferenceArray}" labelField="name" width="250"/>
 
 			</mx:Canvas>
 		</mx:ViewStack>					
 	</mx:VBox>
-	<mx:Label x="228" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
-	<mx:Label x="277" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}"/>
+	<mx:Label x="211" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="65" textAlign="center"/>
+	<mx:Label x="274" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="69" textAlign="center"/>
 </mx:Panel>
