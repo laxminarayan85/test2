@@ -24,6 +24,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
@@ -524,7 +525,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doCopierMatrix():void {
 		/* Read in the copierMatrix - the handler for this call will actually open the EditMatrix window */
 		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
-			var token:AsyncToken = dataService.getById("Matrix", copierDefinition.copierMatrix.id);
+			var token:AsyncToken = dataService.getMatrix(copierDefinition.copierMatrix.id);
 			token.operation = "getPricingMatrix";
 		} else if (copierDefinition != null) {
 			copierDefinition.copierMatrix = createCopierMatrix();

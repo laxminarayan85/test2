@@ -1348,6 +1348,30 @@ public class DataService extends HibernateService {
 		return null;
 	}
 	
+	public ModelBase getMatrix(Long id) throws Exception {
+		log.debug("** getById called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Matrix.byId");
+			query.setParameter("id", id);
+			Matrix matrix = (Matrix) query.getSingleResult();
+			
+			for (int i=0; i < matrix.getElements().size(); i++) {
+				MatrixElement element = matrix.getElements().get(i);
+				
+				if (element == null) {
+					log.error("Null matrix element found");
+				}
+			}
+			return matrix;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
 	public ModelBase getByIdMaster(String className, Long id) throws Exception {
 		log.debug("** getById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
