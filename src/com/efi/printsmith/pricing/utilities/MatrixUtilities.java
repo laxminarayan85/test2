@@ -56,10 +56,10 @@ public class MatrixUtilities {
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
 			if (element.getQty() < qty) {
-				runningTotal += (element.getQty()-prevQty) * element.getPrice2();
+				runningTotal += (element.getQty()-prevQty) * element.getPrice1();
 				prevQty = element.getQty();
 			} else {
-				runningTotal += (qty-prevQty) * element.getPrice2();
+				runningTotal += (qty-prevQty) * element.getPrice1();
 				break;
 			}
 		}
@@ -122,5 +122,33 @@ public class MatrixUtilities {
 			}
 		}
 		return cost;
+	}
+	
+	static public double calculateInterpolation(Matrix matrix, long lookup) {
+		double retVal = 0.0;
+		
+		if (matrix == null) return retVal;
+		
+		List<MatrixElement> elements = matrix.getElements();
+		
+		int i = 0;
+		long lastQty = 0;
+		double lastPrice = 0.0;
+		for (i = 0; i < elements.size(); i++) {
+			if (elements.get(i).getQty() >= lookup) {
+				break;
+			}
+			lastQty = elements.get(i).getQty();
+			lastPrice = elements.get(i).getPrice1();
+		}
+		if (lastQty > 0) {
+			long qtyRange = elements.get(i).getQty() - lastQty;
+			long lookupRange = lookup - lastQty;
+			double priceRange = (elements.get(i).getPrice1() - lastPrice);
+			retVal = ((lookupRange * priceRange) / qtyRange) + lastPrice;
+		} else {
+			retVal = elements.get(i).getPrice1();
+		}
+		return retVal;
 	}
 }

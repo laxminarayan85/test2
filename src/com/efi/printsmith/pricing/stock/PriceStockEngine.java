@@ -19,14 +19,16 @@ import com.efi.printsmith.data.PaperPrice;
 public class PriceStockEngine {
 	public double priceStock(Job job) {
 		if (job == null) return 0.0;
+		double retVal = 0.0;
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 		if (pricingMethod.getTitle().equals("Printing")) {
-			return pricePrintStock(job);
+			retVal =pricePrintStock(job);
 		} else { if (pricingMethod.getTitle().equals("Blank")) {
-			return priceBlankStock(job);
+			retVal = priceBlankStock(job);
 		} else
-			return priceCopierStock(job);
+			retVal = priceCopierStock(job);
 		}
+		return retVal;
 	}
 	
 	private double priceBlankStock(Job job) {
@@ -113,7 +115,6 @@ public class PriceStockEngine {
 	}
 	
 	private double priceCopierStock(Job job) {
-		double retVal = 0.0;
 		PricingRecord pricingRecord = null;
 		PriceLogEntry parentEntry= null;
 		PriceLogEntry priceLogEntry = null;
@@ -151,7 +152,7 @@ public class PriceStockEngine {
 			priceLogEntry.setDescription("Stock price method unknown - setting stock price to 0");
 		}
 		priceLogEntry.setValue(sheetPrice);
-		return retVal;		
+		return sheetPrice;		
 	}
 	
 	private double getSheetPrice(Job job, PriceLogEntry priceLogEntry) {
@@ -208,13 +209,13 @@ public class PriceStockEngine {
 				markup = stockDefinition.getMarkup6();
 				stockCost = stockDefinition.getCost6();
 			} else {
-				markup = 0.0;
-				stockCost = 0.0;
+				markup = stockDefinition.getMarkup1();
+				stockCost = stockDefinition.getCost1();
 			}
 			if (copierDefinition.getUseCopierStockMarkup()) {
 				markup = copierDefinition.getStockMarkup();
 			}
-			retVal = stockCost/stockDefinition.getCostunits() * qty * markup;
+			retVal = stockCost/stockDefinition.getCostunits() * markup;
 			priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockCost + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + markup);
 		}
 		return retVal;
