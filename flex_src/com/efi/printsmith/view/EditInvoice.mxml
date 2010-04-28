@@ -26,9 +26,9 @@
 		<mx:method name="getInvoice"
 				   fault="handleFault(event)"
 				   result="handleGetInvoiceResult(event)"/>
-				   
-				   
-				  
+		<mx:method name="getById"
+					fault="handleFault(event)"
+					result="handleLoadJobForEdit(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -485,12 +485,21 @@
 				this.setAccount(new Account());
 			}
 			
-			private function doDoubleclickInvoiceItem():void { //cej
+			private function handleLoadJobForEdit(evt:ResultEvent):void {
+				var job:Job = evt.result as Job;
+				
+				if (job != null) {
+					var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+					var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+					editJobWindow.setStyle("borderAlpha", 0.9);
+					editJobWindow.setJob(selectedJob);
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
+				}	
+			}
+			
+			private function doDoubleclickInvoiceItem():void {
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
-				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
-				editJobWindow.setStyle("borderAlpha", 0.9);
-				editJobWindow.setJob(selectedJob);
-				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
+				dataService.getById("JobBase", selectedJob.id);
 			}
 
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {
