@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<mx:Canvas width="222" height="365" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
+	<mx:Canvas width="222" height="307" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
 			 fontSize="9">
 		
 		<mx:DataGrid 
@@ -21,5 +21,5 @@
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
-		<mx:HRule x="0" y="342" width="222" height="3"/>
+		<mx:HRule x="0" y="284" width="222" height="3"/>
 	</mx:Canvas>
