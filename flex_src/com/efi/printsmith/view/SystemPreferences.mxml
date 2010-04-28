@@ -856,10 +856,14 @@
 		address_editor.setAddress(preferencesSystem.companyAddress);
 
 		this.txtInactivitySeconds.text = preferencesSystem.autoLogOutSeconds.toString();
-		if (preferencesSystem.quitTime != null && preferencesSystem.quitTime.length < 7){
+		if (preferencesSystem.quitTime != null && preferencesSystem.quitTime.length > 0 && preferencesSystem.quitTime.length < 7){
 			this.txtTimeOfDayQuit.hour = parseInt(preferencesSystem.quitTime.substr(0,2),0);
 			this.txtTimeOfDayQuit.minute = parseInt(preferencesSystem.quitTime.substr(2,2),0)
 			this.txtTimeOfDayQuit.am_pm = preferencesSystem.quitTime.substr(4,2)
+		}else {
+			this.txtTimeOfDayQuit.hour = 12;
+			this.txtTimeOfDayQuit.minute = 00;
+			this.txtTimeOfDayQuit.am_pm = "am"
 		}
 		//this.txtTimeOfDayQuit = preferencesSystem.quitTime;
 		this.txtShutdownNotificationMessage.text = preferencesSystem.shutdownMessage;
