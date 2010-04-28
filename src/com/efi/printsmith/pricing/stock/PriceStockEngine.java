@@ -22,7 +22,7 @@ public class PriceStockEngine {
 		double retVal = 0.0;
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 		if (pricingMethod.getTitle().equals("Printing")) {
-			retVal =pricePrintStock(job);
+			retVal = pricePrintStock(job);
 		} else { if (pricingMethod.getTitle().equals("Blank")) {
 			retVal = priceBlankStock(job);
 		} else
@@ -88,8 +88,6 @@ public class PriceStockEngine {
 	}
 	
 	private double pricePrintStock(Job job) {
-		double retVal = 0.0;
-		
 		PricingRecord pricingRecord = null;
 		PriceLogEntry parentEntry= null;
 		PriceLogEntry priceLogEntry = null;
@@ -101,17 +99,33 @@ public class PriceStockEngine {
 		parentEntry = pricingRecord.getPriceLogEntry();
 		
 		StockDefinition stockDefinition = job.getStock();
+		CopierDefinition copierDefinition = job.getPricingCopier();
 		
-		if (stockDefinition == null) return 0.0;
+		if (stockDefinition == null || copierDefinition == null) return 0.0;
 		
+		double sheetPrice = 0.0;
+
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "pricePrintStock", "");
-		
-		PaperPrice paperPrice = stockDefinition.getDefaultPriceList();
-		if (paperPrice != null)
-			retVal = PriceListUtilities.lookupPrice(paperPrice, job.getQtyOrdered());
-		priceLogEntry.setDescription("Stock Price is Print");
-		priceLogEntry.setValue(retVal);
-		return retVal;
+		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.MarkedUpStockCost.name())) {
+			sheetPrice = getSheetPrice(job, priceLogEntry);
+			priceLogEntry.setValue(sheetPrice);
+		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.IncludeInRate.name())) {
+			sheetPrice = 0.0; /* By definition the stock price is already included in the copier rate */
+			priceLogEntry.setDescription("Stock price included in rate");
+		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name())) {
+			sheetPrice = stockDefinition.getCopier1PricePerSheet();
+			priceLogEntry.setDescription("Stock price is copier 1 price per sheet");
+		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name())) {
+			sheetPrice = stockDefinition.getCopier2PricePerSheet();
+			priceLogEntry.setDescription("Stock price is copier 2 price per sheet");
+		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name())) {
+			sheetPrice = stockDefinition.getCopier3PricePerSheet();
+			priceLogEntry.setDescription("Stock price is copier 3 price per sheet");
+		} else {
+			priceLogEntry.setDescription("Stock price method unknown - setting stock price to 0");
+		}
+		priceLogEntry.setValue(sheetPrice);
+		return sheetPrice;		
 	}
 	
 	private double priceCopierStock(Job job) {

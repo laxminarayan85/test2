@@ -22,22 +22,25 @@ public class PrintPricingMethod {
 		double stockPrice = priceStockEngine.priceStock(job);
 		double pressPrice = 0.0;
 		long pressSpeed = 0;
-		if (pressDefinition.getSpeedTable() != null)
-			pressSpeed = Double.doubleToLongBits(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions()));
+		if (pressDefinition.getSpeedTable() != null) {
+			pressSpeed = new Double(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions())).longValue();
+		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		double runHours = job.getTotalImpositions() / pressSpeed;
-		double wasteHours = job.getEstWaste() / pressSpeed;
-		double totalHours = runHours + wasteHours;
-		double minimumHours = pressDefinition.getMinLabor() / pressSpeed;
+		float runHours = job.getTotalImpositions() / pressSpeed;
+		float wasteHours = job.getEstWaste() / pressSpeed;
+		float totalHours = runHours;
+		float minimumHours = new Double(pressDefinition.getMinLabor()).floatValue() / 60;
 		if (totalHours < minimumHours)
 			totalHours = minimumHours;
 		if (job.getDoubleSided() == true)
 			totalHours = totalHours * 2;
+		totalHours = totalHours + wasteHours;
 		pressPrice = totalHours * pressDefinition.getLaborRate() * pressDefinition.getLaborMarkup();
-		
-		pricingRecord.setTotalPrice(pressPrice + stockPrice);
+		stockPrice = stockPrice * job.getImpositionsPerRun();
+		double price = pressPrice + stockPrice;
+		pricingRecord.setTotalPrice(new Double(Math.round(price * 100)) / 100);
 		
 		return job;
 	}
