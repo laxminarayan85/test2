@@ -157,6 +157,29 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
+	static public double getSpeedFromSpeedTable(SpeedTable speedTable, long qty) {
+		double retVal = 0;
+		
+		if (speedTable != null) {
+			List <PriceListElement> speedTableElements = speedTable.getElements();
+			PriceListElement elementToUse = null;
+			if(speedTableElements != null && speedTableElements.size() > 0) {
+				elementToUse = speedTableElements.get(0);
+				for (int i=1; i < speedTableElements.size(); i++) {
+					PriceListElement curElement = speedTableElements.get(i);
+					if (curElement.getQuantity() > qty) {
+						elementToUse = speedTableElements.get(i-1);
+						break;
+					}
+				}
+				if (elementToUse.getQuantity() > 0) {
+					retVal = elementToUse.getAmount();
+				}
+			}
+		}
+		return retVal;
+	}
+	
 	static public long getAreaFromSizeString(String size) throws NumberFormatException, ParseException {
 		long retVal = 0;
 		

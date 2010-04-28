@@ -21,11 +21,21 @@ public class PrintPricingMethod {
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		double stockPrice = priceStockEngine.priceStock(job);
 		double pressPrice = 0.0;
-		if (!pricingRecord.getTotalPriceOverride()) {
-			PriceList pressPriceList = pressDefinition.getPressPriceList();
-			if (pressPriceList != null)
-				pressPrice = PriceListUtilities.lookupPrice(pressPriceList, job.getTotalImpositions());
-		}
+		long pressSpeed = 0;
+		if (pressDefinition.getSpeedTable() != null)
+			pressSpeed = Double.doubleToLongBits(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions()));
+		else
+			pressSpeed = pressDefinition.getAvgImpressPerHour();
+		
+		double runHours = job.getTotalImpositions() / pressSpeed;
+		double wasteHours = job.getEstWaste() / pressSpeed;
+		double totalHours = runHours + wasteHours;
+		double minimumHours = pressDefinition.getMinLabor() / pressSpeed;
+		if (totalHours < minimumHours)
+			totalHours = minimumHours;
+		if (job.getDoubleSided() == true)
+			totalHours = totalHours * 2;
+		pressPrice = totalHours * pressDefinition.getLaborRate() * pressDefinition.getLaborMarkup();
 		
 		pricingRecord.setTotalPrice(pressPrice + stockPrice);
 		
