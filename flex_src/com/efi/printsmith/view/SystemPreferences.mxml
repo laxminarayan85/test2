@@ -1852,10 +1852,10 @@
 		var node:XML = XML(event.currentTarget.selectedItem);
 		if( node == null ) return;
 		
-		if( node.@label == "System" ) return;
-		if( node.@label == "POS" ) return;
-		if( node.@label == "Estimator" ) return;
-		if( node.@label == "Accounting" ) return;
+		if( node.@label == "genericPrefCmd.System" ) return;
+		if( node.@label == "genericPrefCmd.POS" ) return;
+		if( node.@label == "genericPrefCmd.Estimator" ) return;
+		if( node.@label == "genericPrefCmd.Accounting" ) return;
 
 		//var message:String;
 		//message = node.@label; 
