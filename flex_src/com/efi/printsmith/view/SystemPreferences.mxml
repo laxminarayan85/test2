@@ -2297,7 +2297,7 @@
 				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}" width="360"/>
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}" width="360"/>
 				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Enableautomaticquit')}" width="360"/>
-				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" text="{preferencesSystem.autoLogOutSeconds}"/>
+				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" restrict="0-9" text="{preferencesSystem.autoLogOutSeconds}"/>
 				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Timeofdaytoquit')}" textAlign="right"/>
 <!--			<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>-->
 				<cmp:TimeEntry x ="168" y="328" width="118" id="txtTimeOfDayQuit"/>
@@ -2515,7 +2515,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
-						         <mx:CheckBox click="data.tax=!data.tax"  selected="{data.tax}"/>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
+							         <mx:CheckBox click="data.tax=!data.tax"  selected="{data.tax}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2589,9 +2592,12 @@
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
-						      <mx:Component>
-						         <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
-						      </mx:Component>
+							<mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
+						        	 <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
+						      	</mx:Box>
+							</mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="200" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColumnTitle')}" labelFunction="columnnamePendingList" editable="false"/>
@@ -2613,11 +2619,11 @@
 				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.LeaveFoldedsizeempty')}" width="453"/>
 				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DonotperformCostingd')}" width="453"/>
 				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AutoshowChargesonnew')}" width="453"/>
-				<mx:CheckBox x="50" y="305" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}" width="453"/>
-				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
-				<mx:CheckBox x="50" y="355" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
-				<mx:CheckBox x="50" y="380" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}" width="453"/>
-				<mx:CheckBox x="50" y="405" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}" width="453"/>
+				<mx:CheckBox x="50" y="280" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}" width="453"/>
+				<mx:CheckBox x="50" y="305" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
+				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
+				<mx:CheckBox x="50" y="355" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}" width="453"/>
+				<mx:CheckBox x="50" y="380" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}" width="453"/>
 
 				<mx:Label x="71" y="442" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Normalduedatedays')}" textAlign="right"/>
 				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
@@ -2672,14 +2678,14 @@
 				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}" textAlign="right"/>
 				<mx:Label x="50" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
 
-				<mx:TextInput x="50" y="50" id="txtGripEdge" width="93" text="{preferencesEstimating.gripEdgeGap}"/>
-				<mx:TextInput x="50" y="100" id="txtFolioEdge" width="93" text="{preferencesEstimating.folioEdge}"/>
-				<mx:TextInput x="50" y="150" id="txtColorBar" width="93" text="{preferencesEstimating.colorBar}"/>
-				<mx:TextInput x="50" y="200" id="txtWhiteSpace" width="93" text="{preferencesEstimating.whiteSpace}"/>
-				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" width="93" text="{preferencesEstimating.whiteSpaceRight}"/>
-				<mx:TextInput x="50" y="300" id="txtGutter" width="93" text="{preferencesEstimating.gutter}"/>
-				<mx:TextInput x="50" y="350" id="txtBleed" width="93" text="{preferencesEstimating.bleed}"/>
-				<mx:TextInput x="50" y="400" id="txtBleedRight" width="93" text="{preferencesEstimating.bleedRight}"/>
+				<mx:TextInput x="50" y="50" id="txtGripEdge" restrict="0-9." width="93" text="{preferencesEstimating.gripEdgeGap}"/>
+				<mx:TextInput x="50" y="100" id="txtFolioEdge" restrict="0-9." width="93" text="{preferencesEstimating.folioEdge}"/>
+				<mx:TextInput x="50" y="150" id="txtColorBar" restrict="0-9." width="93" text="{preferencesEstimating.colorBar}"/>
+				<mx:TextInput x="50" y="200" id="txtWhiteSpace" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpace}"/>
+				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceRight}"/>
+				<mx:TextInput x="50" y="300" id="txtGutter" restrict="0-9." width="93" text="{preferencesEstimating.gutter}"/>
+				<mx:TextInput x="50" y="350" id="txtBleed" restrict="0-9." width="93" text="{preferencesEstimating.bleed}"/>
+				<mx:TextInput x="50" y="400" id="txtBleedRight" restrict="0-9." width="93" text="{preferencesEstimating.bleedRight}"/>
 
 				<mx:Label x="151" y="180" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
 				<mx:Label x="151" y="230" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
@@ -2687,14 +2693,14 @@
 				<mx:Label x="151" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
 				<mx:Label x="151" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
 
-				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
-				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
-				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" width="93" text="{preferencesEstimating.gutterHorizontal}"/>
-				<mx:TextInput x="151" y="350" id="txtBleedTop" width="93" text="{preferencesEstimating.bleedTop}"/>
-				<mx:TextInput x="151" y="400" id="txtBleedBottom" width="93" text="{preferencesEstimating.bleedBottom}"/>
+				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
+				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
+				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" restrict="0-9." width="93" text="{preferencesEstimating.gutterHorizontal}"/>
+				<mx:TextInput x="151" y="350" id="txtBleedTop" restrict="0-9." width="93" text="{preferencesEstimating.bleedTop}"/>
+				<mx:TextInput x="151" y="400" id="txtBleedBottom" restrict="0-9." width="93" text="{preferencesEstimating.bleedBottom}"/>
 
 				<mx:Label x="27" y="462" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DefaultPressCutoff')}" textAlign="right"/>
-				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
+				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" restrict="0-9." width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
 
 
 				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"/>
@@ -2738,7 +2744,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.qtybreak=!data.qtybreak"  selected="{data.qtybreak}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2883,9 +2892,12 @@
 						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Visible')}" dataField="visible" editorDataField="selected"
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
-						      <mx:Component>
-						         <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
-						      </mx:Component>
+							<mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
+						        	 <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
+						      	</mx:Box>
+							</mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn width="200" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ColumnTitle')}" labelFunction="columnsnameStockDefinition" editable="false"/>
@@ -2906,7 +2918,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.used=!data.used"  selected="{data.used}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2916,7 +2931,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.brokered=!data.brokered"  selected="{data.brokered}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2924,7 +2942,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.taxable=!data.taxable"  selected="{data.taxable}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2932,7 +2953,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.finished=!data.finished"  selected="{data.finished}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2940,7 +2964,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.showNotes=!data.showNotes"  selected="{data.showNotes}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -3091,7 +3118,10 @@
 								itemEditor="mx.controls.CheckBox">
 						   <mx:itemRenderer>
 						      <mx:Component>
+								<mx:Box width="100%" height="100%" horizontalAlign="center"
+						        		 verticalAlign="middle">
 						         <mx:CheckBox click="data.used=!data.used"  selected="{data.used}"/>
+						         </mx:Box>
 						      </mx:Component>
 						   </mx:itemRenderer>
 						</mx:DataGridColumn>
