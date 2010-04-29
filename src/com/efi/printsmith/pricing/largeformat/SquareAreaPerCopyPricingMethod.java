@@ -34,8 +34,11 @@ public class SquareAreaPerCopyPricingMethod extends
 		double unitPrice = 0.0;
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
-			if (copierDefinition.getMatrixType() == "CopyCost") {
-				pricePerCopy = matrixElement.getPrice1();
+			if (copierDefinition.getMatrixType().equals("CopyCost")) {
+				if (copierDefinition.getInterpolateMatrix() == true)
+					pricePerCopy = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+				else
+					pricePerCopy = matrixElement.getPrice1();
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				pricingRecord.setUnitPrice(pricePerCopy);
 				if (job.getDoubleSided()) {
@@ -63,9 +66,41 @@ public class SquareAreaPerCopyPricingMethod extends
 					unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
 					pricingRecord.setUnitPrice(unitPrice);
 				}
-			} else if (copierDefinition.getMatrixType() == "DiscountTable") {
-				
-			} else if (copierDefinition.getMatrixType() == "StepTable") {
+			} else if (copierDefinition.getMatrixType().equals("DiscountTable")) {
+				double discountPct = 0.0;
+				if (copierDefinition.getInterpolateMatrix() == true)
+					discountPct = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+				else
+					discountPct = matrixElement.getPrice1();
+				pricePerCopy = copierDefinition.getBaseRate() * discountPct;
+				pricePerCopy *= copierDefinition.getCopyMarkup();
+				pricingRecord.setUnitPrice(pricePerCopy);
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+						pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
+						pricingRecord.setTotalPrice((pricePerCopy * area*2) + stockPrice*job.getTotalCopies());
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies() * 2;
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						pricePerSecondSide = matrixElement.getPrice2();
+						pricingRecord.setTotalPrice((pricePerCopy * area) + (pricePerSecondSide * job.getSheets()*job.getInSetsOf())+ stockPrice*job.getTotalCopies());					
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
+						pricePerSecondSide = pricePerCopy*copierDefinition.getSideTwoFactor();
+						pricingRecord.setTotalPrice((pricePerCopy * area) + (pricePerSecondSide * job.getSheets()*job.getInSetsOf())+ stockPrice*job.getTotalCopies());					
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					}
+				} else {
+					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());				
+					unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+					pricingRecord.setUnitPrice(unitPrice);
+				}
+			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), area * 2);
 				} else {
@@ -78,6 +113,39 @@ public class SquareAreaPerCopyPricingMethod extends
 						pricingRecord.setUnitPrice(unitPrice);
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 						pricingRecord.setTotalPrice((pricePerCopy * area*2) + stockPrice*job.getTotalCopies());					
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies() * 2;
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						pricePerSecondSide = matrixElement.getPrice2();
+						pricingRecord.setTotalPrice((pricePerCopy * area) + (pricePerSecondSide * job.getSheets()*job.getInSetsOf())+ stockPrice*job.getTotalCopies());					
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
+						pricePerSecondSide = pricePerCopy*copierDefinition.getSideTwoFactor();
+						pricingRecord.setTotalPrice((pricePerCopy * area) + (pricePerSecondSide * job.getSheets()*job.getInSetsOf())+ stockPrice*job.getTotalCopies());					
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					}
+				} else {
+					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());				
+					unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+					pricingRecord.setUnitPrice(unitPrice);
+				}
+			}else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
+				double markup = 0.0;
+				if (copierDefinition.getInterpolateMatrix() == true)
+					markup = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+				else
+					markup = matrixElement.getPrice1();
+				pricePerCopy = copierDefinition.getBaseRate() * markup;
+				pricingRecord.setUnitPrice(pricePerCopy);
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+						pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
+						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
+						pricingRecord.setUnitPrice(unitPrice);
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
+						pricingRecord.setTotalPrice((pricePerCopy * area*2) + stockPrice*job.getTotalCopies());
 						unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies() * 2;
 						pricingRecord.setUnitPrice(unitPrice);
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {

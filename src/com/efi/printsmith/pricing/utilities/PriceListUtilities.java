@@ -121,11 +121,10 @@ public class PriceListUtilities {
 				qty = lookupQty - elements.get(base).getQuantity();
 				
 				if (qty!= 0) {
-					long qtyRange = elements.get(last).getQuantity() - elements.get(base).getQuantity();
+					long qtyRange = elements.get(base).getQuantity() - elements.get(last).getQuantity();
+					long lookupRange = qty - elements.get(last).getQuantity();
 					double priceRange = elements.get(last).getAmount() - retVal;
-					
-					qty = ((qtyRange != 0) ? (qty/qtyRange):0);
-					retVal = retVal + (priceRange * qty);
+					retVal = ((lookupRange * priceRange) / qtyRange) + elements.get(last).getAmount();
 				}
 			} else {
 				retVal = elements.get(last).getAmount();

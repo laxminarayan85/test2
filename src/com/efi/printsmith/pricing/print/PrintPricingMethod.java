@@ -71,7 +71,7 @@ public class PrintPricingMethod {
 			long setupAddlRun = pressDefinition.getSetupAddRun() * (job.getFrontPasses() + job.getBackPasses());
 			WasteChart wasteChart = pressDefinition.getWasteChart();
 			if (wasteChart != null) {
-				double wastePct = PriceListUtilities.lookupPrice(wasteChart, ((new Double(fixedWaste).longValue() + new Double(setupMin).longValue() + setupAddlRun) * (job.getFrontPasses() + job.getBackPasses())));
+				double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getQtyOrdered());
 				estWaste = (job.getImpositionsPerRun() * wastePct * (job.getFrontPasses() + job.getBackPasses()));
 			}
 			estWaste += fixedWaste;
