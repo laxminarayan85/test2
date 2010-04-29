@@ -988,10 +988,20 @@
 		this.txtRefundChecks.text = preferencesAccounting.refundChecks;
 
 		this.txtInvoicePrefix.text = preferencesAccounting.invoicePrefix;
+		
+		if (preferencesAccounting.invoiceDocument.length == 0){
+			preferencesAccounting.invoiceDocument = "123456789"
+		}
 		this.txtInvoiceDocument.text = preferencesAccounting.invoiceDocument;
+
 		this.txtInvoiceSuffix.text = preferencesAccounting.invoiceSuffix;
 		this.txtEstimatePrefix.text = preferencesAccounting.estimatePrefix;
+
+		if (preferencesAccounting.estimateDocument.length == 0){
+			preferencesAccounting.estimateDocument = "123456789"
+		}
 		this.txtEstimateDocument.text = preferencesAccounting.estimateDocument;
+
 		this.txtEstimateSuffix.text = preferencesAccounting.estimateSuffix;
 
 		if (preferencesAccounting.useSkipJackProcessor==true){
@@ -1030,7 +1040,11 @@
 			this.currentState="DropFolderSetup";
 			this.txtCreditCardDropFolder.text = preferencesAccounting.creditCardDropFolder;
 			this.currentState="";
-		} 
+		}
+		
+		setOrderNumberFormatSample("invoice");
+		setOrderNumberFormatSample("estimate");
+		 
 	}
 	private function mapFromPreferencesEstimatingData():void {
 		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
@@ -1886,6 +1900,15 @@
 		}
 
 	}
+	
+	private function setOrderNumberFormatSample(item:String):void{
+		if (item=="invoice"){
+			this.txtSampleInvoice.text = this.txtInvoicePrefix.text + this.txtInvoiceDocument.text + this.txtInvoiceSuffix.text;
+		}else{
+			this.txtSampleEstimate.text = this.txtEstimatePrefix.text + this.txtEstimateDocument.text + this.txtEstimateSuffix.text;
+		}
+	}
+	
 	private function setDisplayText(textInput:TextInput):void{
 		currentnumberstext = textInput;
 		var number1:Number = 1234.567890
@@ -2265,6 +2288,10 @@
 	    }
 	    
 	    return _rtn;
+	}
+
+	private function formatNumberMarkup(item:Object, column:DataGridColumn):String {
+		return item.markup.toFixed(2);
 	}
 
 ]]>
@@ -2780,7 +2807,7 @@
 					editable="true" top="100" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup" labelFunction="formatNumberMarkup"/>
 					</mx:columns>
 				</mx:DataGrid>
 
@@ -2797,7 +2824,7 @@
 					editable="true" top="100" bottom="80">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup" labelFunction="formatNumberMarkup"/>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button x="300" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);" bottom="25">
@@ -3008,11 +3035,11 @@
 				<mx:Label x="10" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}" textAlign="right" width="240"/>
 				<mx:Label x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}" textAlign="right" width="240"/>
 
-				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="379" text="{preferencesAccounting.creditLimit}"/>
-				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="379" text="{preferencesAccounting.financeChange}"/>
-				<mx:TextInput x="151" y="90" id="txtInactivePeriod" width="379" text="{preferencesAccounting.inactivePeriod}"/>
-				<mx:TextInput x="255" y="150" id="txtDefaultSalesRep" width="275" text="{preferencesAccounting.defaultSalesRep}"/>
-				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="275" text="{preferencesAccounting.defaultShipping}"/>
+				<mx:TextInput x="151" y="30" id="txtCreditLimit" width="100" text="{preferencesAccounting.creditLimit}"/>
+				<mx:TextInput x="151" y="60" id="txtFinanceCharge" width="100" text="{preferencesAccounting.financeChange}"/>
+				<mx:TextInput x="151" y="90" id="txtInactivePeriod" width="100" text="{preferencesAccounting.inactivePeriod}"/>
+				<mx:TextInput x="255" y="150" id="txtDefaultSalesRep" width="145" text="{preferencesAccounting.defaultSalesRep}"/>
+				<mx:TextInput x="255" y="180" id="txtDefaultShippingAddress" width="145" text="{preferencesAccounting.defaultShipping}"/>
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="agingperiods_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AgingPeriods')}" textAlign="center"/>
@@ -3021,9 +3048,9 @@
 				<mx:Label x="7" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PastDue')}" textAlign="right" width="81"/>
 				<mx:Label x="7" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Delinquent')}" textAlign="right" width="81"/>
 				<mx:Label x="7" y="232" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frozen')}" textAlign="right" width="81"/>
-				<mx:TextInput x="90" y="30" id="txtPastDue" width="60" text="{preferencesAccounting.pastDue}"/>
-				<mx:TextInput x="90" y="130" id="txtDelinquent" width="60" text="{preferencesAccounting.delinquent}"/>
-				<mx:TextInput x="90" y="230" id="txtFrozen" width="60" text="{preferencesAccounting.frozen}"/>
+				<mx:TextInput x="90" y="30" id="txtPastDue" restrict="0-9" width="60" text="{preferencesAccounting.pastDue}"/>
+				<mx:TextInput x="90" y="130" id="txtDelinquent" restrict="0-9" width="60" text="{preferencesAccounting.delinquent}"/>
+				<mx:TextInput x="90" y="230" id="txtFrozen" restrict="0-9" width="60" text="{preferencesAccounting.frozen}"/>
 
 				<mx:TextArea y="60" id="txtPastDueArea" height="60" text="{preferencesAccounting.pastDueNote}" left="90" right="87"/>
 				<mx:TextArea y="160" id="txtDelinquentArea" height="60" text="{preferencesAccounting.delinquentNote}" left="90" right="87"/>
@@ -3038,7 +3065,7 @@
 					editable="true"
 					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80" left="50" right="277">
 					<mx:columns>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="category"
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="category"
 							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
                 			<mx:itemRenderer>
                     			<mx:Component>
@@ -3046,7 +3073,7 @@
                     			</mx:Component>
                 			</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}" dataField="accountNumber" width="100"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}" dataField="accountNumber"/>
 					</mx:columns>
 				</mx:DataGrid>
 				
@@ -3138,7 +3165,7 @@
 					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 				</mx:Button>
 				<mx:RadioButtonGroup enabled="{chkActivateCCAprovalProcess.selected}" id="CreditCardProcessor" change="doCreditCardProcessorChange();"/>
-				<mx:RadioButton x="70" y="60" label="Use Obsolete Drop Folder" groupName="CreditCardProcessor" id="rdoDropFolder"/>
+				<!--<mx:RadioButton x="70" y="60" label="Use Obsolete Drop Folder" groupName="CreditCardProcessor" id="rdoDropFolder"/>-->
 				<mx:RadioButton x="70" y="86" label="Use SkipJack Processor" groupName="CreditCardProcessor" id="rdoSkipJack"/>
 				<mx:RadioButton x="70" y="112" label="Use EFS Processor" groupName="CreditCardProcessor" id="rdoEfs"/>
 				<mx:Button x="86" y="155" enabled="{chkActivateCCAprovalProcess.selected}" label="Processor Setup" click="doProcessorSetup(CreditCardProcessor.selectedValue);" id="btnProcessorSetup"/>
@@ -3152,9 +3179,17 @@
 					<mx:Label x="10" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}" textAlign="right"/>
 					<mx:Label x="130" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}" textAlign="right"/>
 					<mx:Label x="250" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}" textAlign="right"/>
-					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}"/>
-					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}"/>
-					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}"/>
+
+					<mx:Label x="10" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}" textAlign="right" width="65" fontWeight="bold"/>
+					<mx:Label x="250" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}" textAlign="right" width="65" fontWeight="bold"/>
+
+					<mx:TextInput x="10" y="30" id="txtInvoicePrefix" width="115" text="{preferencesAccounting.invoicePrefix}" change="setOrderNumberFormatSample('invoice');" maxChars="6"/>
+					<mx:TextInput x="130" y="30" id="txtInvoiceDocument" width="115" text="{preferencesAccounting.invoiceDocument}" enabled="false" editable="false"/>
+					<mx:TextInput x="250" y="30" id="txtInvoiceSuffix" width="115" text="{preferencesAccounting.invoiceSuffix}" change="setOrderNumberFormatSample('invoice');" maxChars="6"/>
+
+					<mx:Label x="11" y="74" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Sample')}" textAlign="right" width="79"/>
+					<mx:Label x="90" y="74" id="txtSampleInvoice" width="115"/>
+
 					<mx:CheckBox x="10" y="100" id="chkAllowInvoicePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}" width="430"/>
 					<mx:CheckBox x="10" y="130" id="chkAllowInvoiceSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}" width="430"/>
 				</mx:Panel>
@@ -3163,9 +3198,17 @@
 					<mx:Label x="10" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}" textAlign="right"/>
 					<mx:Label x="130" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}" textAlign="right"/>
 					<mx:Label x="250" y="13" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}" textAlign="right"/>
-					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}"/>
-					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}"/>
-					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}"/>
+
+					<mx:Label x="10" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}" textAlign="right" width="65" fontWeight="bold"/>
+					<mx:Label x="250" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}" textAlign="right" width="65" fontWeight="bold"/>
+
+					<mx:TextInput x="10" y="30" id="txtEstimatePrefix" width="115" text="{preferencesAccounting.estimatePrefix}" change="setOrderNumberFormatSample('estimate');" maxChars="6"/>
+					<mx:TextInput x="130" y="30" id="txtEstimateDocument" width="115" text="{preferencesAccounting.estimateDocument}" enabled="false" editable="false"/>
+					<mx:TextInput x="250" y="30" id="txtEstimateSuffix" width="115" text="{preferencesAccounting.estimateSuffix}" change="setOrderNumberFormatSample('estimate');" maxChars="6"/>
+
+					<mx:Label x="11" y="74" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Sample')}" textAlign="right" width="79"/>
+					<mx:Label x="90" y="74" id="txtSampleEstimate" width="115"/>
+
 					<mx:CheckBox x="10" y="100" id="chkAllowEstimatePrefixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}" width="430"/>
 					<mx:CheckBox x="10" y="130" id="chkAllowEstimateSuffixModification" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}" width="430"/>
 				</mx:Panel>

@@ -34,6 +34,6 @@
 
 	]]>
 	</mx:Script>
-    <mx:ComboBox id="pickCategory" width="100" dataProvider="{CategoryArray}" labelField="name" selectedItem="{data.name}">
+    <mx:ComboBox id="pickCategory" width="100%" dataProvider="{CategoryArray}" labelField="name" selectedItem="{data.name}">
     </mx:ComboBox>
 </mx:VBox>
