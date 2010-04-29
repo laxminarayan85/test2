@@ -22,6 +22,7 @@ package com.efi.printsmith.data
 		public var showNotes:Boolean = false;
 		public var category:SalesCategory;
 		public var estimator:EstimatorTypes;
+		public var method:String = "";
 	
 	}
 }

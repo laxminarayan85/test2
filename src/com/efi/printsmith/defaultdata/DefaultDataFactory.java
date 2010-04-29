@@ -107,11 +107,24 @@ public class DefaultDataFactory {
 
 		if (itemList.size() > 0)
 			return;
-
+		
 		PreferencesPricingMethod pricingMethod = new PreferencesPricingMethod();
+		pricingMethod.setUsed(true);
+		pricingMethod.setTitle("Multi Part");
+		pricingMethod.setAbbreviation("Multi Part");
+		pricingMethod.setMethod("Multi Part");
+
+		try {
+			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		pricingMethod = new PreferencesPricingMethod();
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Printing");
 		pricingMethod.setAbbreviation("Printing");
+		pricingMethod.setMethod("Printing");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -123,6 +136,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Roll-Fed");
 		pricingMethod.setAbbreviation("Roll-Fed");
+		pricingMethod.setMethod("RollFed");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -134,6 +148,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("B&W");
 		pricingMethod.setAbbreviation("B&W");
+		pricingMethod.setMethod("B&W");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -144,6 +159,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Color");
 		pricingMethod.setAbbreviation("Color");
+		pricingMethod.setMethod("Color");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -155,6 +171,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Large Format");
 		pricingMethod.setAbbreviation("Large Format");
+		pricingMethod.setMethod("Large Format");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -166,6 +183,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Blank");
 		pricingMethod.setAbbreviation("Blank");
+		pricingMethod.setMethod("Blank");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -177,6 +195,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("List");
 		pricingMethod.setAbbreviation("List");
+		pricingMethod.setMethod("List");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -188,6 +207,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Charges Only");
 		pricingMethod.setAbbreviation("Charges Only");
+		pricingMethod.setMethod("Charges Only");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -199,6 +219,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Outside Services");
 		pricingMethod.setAbbreviation("Outside Services");
+		pricingMethod.setMethod("Outside Services");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -210,6 +231,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Merchandise");
 		pricingMethod.setAbbreviation("Merchandise");
+		pricingMethod.setMethod("Merchandise");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -221,6 +243,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Lines & Inches");
 		pricingMethod.setAbbreviation("Lines & Inches");
+		pricingMethod.setMethod("Lines & Inches");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -232,6 +255,7 @@ public class DefaultDataFactory {
 		pricingMethod.setUsed(true);
 		pricingMethod.setTitle("Mailing");
 		pricingMethod.setAbbreviation("Mailing");
+		pricingMethod.setMethod("Mailing");
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);

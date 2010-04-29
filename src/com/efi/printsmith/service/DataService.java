@@ -727,7 +727,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-
+	
 	public Substrate getBySubstrateName(String name) throws Exception {
 		log.debug("** getBySubstrateName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -759,7 +759,21 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-
+	public PreferencesPricingMethod getByMethodType(String name) throws Exception {
+		log.debug("** PreferencesPricingMethod called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from PreferencesPricingMethod where method = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			PreferencesPricingMethod object = (PreferencesPricingMethod) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 	public WasteChart getByWasteChartName(String name) throws Exception {
 		log.debug("** getByWasteChartName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();

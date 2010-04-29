@@ -80,6 +80,8 @@ package com.efi.printsmith.data
 		public var vendor:Vendor;
 		public var numberOfLines:Number = 0;
 		public var numberOfInches:Number = 0;
+		public var specialOrderStock:Boolean = false;
+		public var customerSuppliedStock:Boolean = false;
 	
 	}
 }

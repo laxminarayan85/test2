@@ -313,6 +313,15 @@ public class JobBase extends ModelBase {
   public static final String NUMBEROFINCHES = "NumberOfInches";
 
 	/**
+   * @generated
+   */
+  public static final String SPECIALORDERSTOCK = "SpecialOrderStock";
+	/**
+   * @generated
+   */
+  public static final String CUSTOMERSUPPLIEDSTOCK = "CustomerSuppliedStock";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1835,6 +1844,51 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean specialOrderStock;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getSpecialOrderStock(){
+    return specialOrderStock; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSpecialOrderStock(Boolean newVal) {
+    this.specialOrderStock = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean customerSuppliedStock;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getCustomerSuppliedStock(){
+    return customerSuppliedStock; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCustomerSuppliedStock(Boolean newVal) {
+    this.customerSuppliedStock = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1907,6 +1961,8 @@ public class JobBase extends ModelBase {
     if (VENDOR.equals(propertyName)) return getVendor();
     if (NUMBEROFLINES.equals(propertyName)) return getNumberOfLines();
     if (NUMBEROFINCHES.equals(propertyName)) return getNumberOfInches();
+    if (SPECIALORDERSTOCK.equals(propertyName)) return getSpecialOrderStock();
+    if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return getCustomerSuppliedStock();
     return super.getProperty(propertyName);
   }
 	
@@ -1983,6 +2039,8 @@ public class JobBase extends ModelBase {
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
     if (NUMBEROFLINES.equals(propertyName)) setNumberOfLines((Long)newValue); else
     if (NUMBEROFINCHES.equals(propertyName)) setNumberOfInches((Long)newValue); else
+    if (SPECIALORDERSTOCK.equals(propertyName)) setSpecialOrderStock((Boolean)newValue); else
+    if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) setCustomerSuppliedStock((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2126,6 +2184,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (NUMBEROFINCHES.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (SPECIALORDERSTOCK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2203,6 +2265,8 @@ public class JobBase extends ModelBase {
     if (VENDOR.equals(propertyName)) return JobBase.class;
     if (NUMBEROFLINES.equals(propertyName)) return JobBase.class;
     if (NUMBEROFINCHES.equals(propertyName)) return JobBase.class;
+    if (SPECIALORDERSTOCK.equals(propertyName)) return JobBase.class;
+    if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2347,6 +2411,10 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getNumberOfLines(), objT.getNumberOfLines()))
       return false;
     if (! SmartEquals(getNumberOfInches(), objT.getNumberOfInches()))
+      return false;
+    if (! SmartEquals(getSpecialOrderStock(), objT.getSpecialOrderStock()))
+      return false;
+    if (! SmartEquals(getCustomerSuppliedStock(), objT.getCustomerSuppliedStock()))
       return false;
     return true;
   }			

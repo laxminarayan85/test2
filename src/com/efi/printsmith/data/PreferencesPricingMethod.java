@@ -78,6 +78,11 @@ public class PreferencesPricingMethod extends ModelBase {
 	public static final String ESTIMATOR = "Estimator";
 
 	/**
+   * @generated
+   */
+  public static final String METHOD = "Method";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesPricingMethod() {
@@ -284,6 +289,28 @@ public class PreferencesPricingMethod extends ModelBase {
     this.estimator = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String method;
+
+	/**
+   * @generated
+ 	 */
+  public String getMethod(){
+    return method; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMethod(String newVal) {
+    this.method = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -298,6 +325,7 @@ public class PreferencesPricingMethod extends ModelBase {
     if (SHOWNOTES.equals(propertyName)) return getShowNotes();
     if (CATEGORY.equals(propertyName)) return getCategory();
     if (ESTIMATOR.equals(propertyName)) return getEstimator();
+    if (METHOD.equals(propertyName)) return getMethod();
     return super.getProperty(propertyName);
   }
 	
@@ -316,6 +344,7 @@ public class PreferencesPricingMethod extends ModelBase {
     if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
     if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
     if (ESTIMATOR.equals(propertyName)) setEstimator((EstimatorTypes)newValue); else
+    if (METHOD.equals(propertyName)) setMethod((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -343,6 +372,8 @@ public class PreferencesPricingMethod extends ModelBase {
       return new Class<?>[] {SalesCategory.class};		
     if (ESTIMATOR.equals(propertyName)) 
       return new Class<?>[] {EstimatorTypes.class};		
+    if (METHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -362,6 +393,7 @@ public class PreferencesPricingMethod extends ModelBase {
     if (SHOWNOTES.equals(propertyName)) return PreferencesPricingMethod.class;
     if (CATEGORY.equals(propertyName)) return PreferencesPricingMethod.class;
     if (ESTIMATOR.equals(propertyName)) return PreferencesPricingMethod.class;
+    if (METHOD.equals(propertyName)) return PreferencesPricingMethod.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -390,6 +422,8 @@ public class PreferencesPricingMethod extends ModelBase {
     if (! SmartEquals(getCategory(), objT.getCategory()))
       return false;
     if (! SmartEquals(getEstimator(), objT.getEstimator()))
+      return false;
+    if (! SmartEquals(getMethod(), objT.getMethod()))
       return false;
     return true;
   }			

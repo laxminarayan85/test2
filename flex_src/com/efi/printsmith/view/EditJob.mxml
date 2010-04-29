@@ -122,7 +122,7 @@
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
-			<mx:RemoveChild target="{checkbox1}"/>
+			<mx:RemoveChild target="{specialOrder}"/>
 			<mx:RemoveChild target="{special_order_button}"/>
 			<mx:RemoveChild target="{chage_stock_button}"/>
 			<mx:RemoveChild target="{job_stock}"/>
@@ -525,7 +525,7 @@
 				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
-				
+			
 				if (job == null) {
 					doNew();
 					job.parentSize = "";
@@ -546,6 +546,7 @@
 					job.markup = 2.0;
 					job.totalCost = 0.0;
 					job.unitCost = 0.0;
+					
 				
 				}
 				
@@ -719,6 +720,8 @@
 					job.totalCost = parseFloat(job_totalCost.text);
 				if (job_markup != null)
 					job.markup = parseFloat(job_markup.text);
+				job.specialOrderStock = specialOrder.selected;
+				job.customerSuppliedStock = customer_suppliled_stock.selected;
 			}
 
 			private function mapFromJobData():void
@@ -922,6 +925,7 @@
 			{
 				chargeCommands=ev.result as ArrayCollection;
 				add_charge_button.enabled=true;
+				
 			}
 
 			private function handleLoadPricingMethodResult(ev:ResultEvent):void
@@ -1036,7 +1040,16 @@
 					this.job.stock=new StockDefinition();
 				}
 			}
-
+			private function doCustomerSupplied():void{
+				if  (customer_suppliled_stock.selected)
+					specialOrder.selected = false;
+								
+				
+			}
+			private function doSpecialOrder():void{
+				 if (specialOrder.selected)
+				 	customer_suppliled_stock.selected = false;
+			}
 			private function handleStockPickerSelect(evt:StockPickerSelectEvent):void
 			{
 				if (evt.stockDefinition != null)
@@ -1084,6 +1097,7 @@
 
 			private function handleStockPickerNew(evt:StockPickerSelectEvent):void
 			{
+				/* TODO */
 				this.job.stock=new StockDefinition();
 			}
 			
@@ -1787,10 +1801,14 @@
 												 y="6"
 												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CustomerSuppliedStoc')}"
 												 id="customer_suppliled_stock"
-												 fontSize="9"/>
+												 fontSize="9"
+												  selected="{job.customerSuppliedStock}"
+												   change="doCustomerSupplied()"/>
 									<mx:CheckBox x="218"
 												 y="7"
-												 fontSize="9" id="checkbox1"/>
+												 fontSize="9" id="specialOrder"
+												  selected="{job.specialOrderStock}"
+												   change="doSpecialOrder()"/>
 									<mx:Button x="240"
 											   y="7"
 											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"

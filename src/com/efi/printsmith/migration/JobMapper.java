@@ -11,6 +11,7 @@ import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.service.DataService;
 
 public class JobMapper extends ImportMapper {
@@ -23,6 +24,7 @@ public class JobMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		Job job = new Job();
 		SalesCategory salesCategory = null;
+		String method = "";
 		boolean addSalesCategory = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -98,7 +100,138 @@ public class JobMapper extends ImportMapper {
 			} else if ("runout".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pricing method".equals(currentFieldToken)) {
-				/* TODO */
+				method = currentImportToken;
+				if (method.equals("16")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(false);
+					
+				} else if (method.equals("17")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(true);
+					
+				} else if (method.equals("18")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(true);
+					job.setSpecialOrderStock(false);
+
+				} else if (method.equals("26")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(false);
+				}else if (method.equals("27")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(true);	
+				} else if (method.equals("28")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(true);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("36")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("37")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(true);
+				} else if (method.equals("38")){
+					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(true);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("46")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("47")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(true);
+				} else if (method.equals("48")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(true);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("56")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("57")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(false);
+					job.setSpecialOrderStock(true);
+				} else if (method.equals("58")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					job.setPricingMethod(Method);
+					job.setCustomerSuppliedStock(true);
+					job.setSpecialOrderStock(false);
+				} else if (method.equals("60")){
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("70")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("80")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("90")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("100")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Merchandise");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("110")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Lines & Inches");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("120")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Multi Part");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("130")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("140")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("150")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("160")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("170")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Mailing");
+					job.setPricingMethod(Method);
+					
+				} else if (method.equals("190")) {
+					PreferencesPricingMethod Method = dataService.getByMethodType("Charges Only");
+					job.setPricingMethod(Method);
+				
+				}
 			} else if ("colors front".equals(currentFieldToken)) {
 				job.setFrontColors(Utilities.tokenToInt(currentImportToken));
 			} else if ("colors back".equals(currentFieldToken)) {
@@ -621,9 +754,15 @@ public class JobMapper extends ImportMapper {
 			} else if ("is Copy Job".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("is large format".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true){
+					PreferencesPricingMethod Method = dataService.getByMethodType("Large Format");
+					job.setPricingMethod(Method);
+				}
 			} else if ("is Roll Job".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true){
+					PreferencesPricingMethod Method = dataService.getByMethodType("Roll-Fed");
+					job.setPricingMethod(Method);
+				}
 			} else if ("est has mult qty".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("est selected multi qty version".equals(currentFieldToken)) {

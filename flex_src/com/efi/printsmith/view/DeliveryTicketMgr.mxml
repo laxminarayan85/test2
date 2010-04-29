@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Delivery Ticket" name="Delivery Ticket"
+width="100%" height="100%"  creationComplete="init()"  
+     title="Delivery Ticket" xmlns:text="flash.text.*">
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+<mx:Script>                                   
+<![CDATA[
+	import mx.rpc.events.ResultEvent;
+
+
+	import com.efi.printsmith.data.DeliveryTicketJobs;
+	import com.efi.printsmith.data.DeliveryTicket;
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.controls.Alert;
+	
+	[Bindable]
+	private var deliveryTicketLines:ArrayCollection=new ArrayCollection();
+	
+	[Bindable]
+	private var deliveryTickets:ArrayCollection=new ArrayCollection();
+	
+   [Bindable]
+	private var lineItem:DeliveryTicketJobs;	
+	
+	private function doNew(item:Button):void{
+		
+	}
+	public function init():void{
+		deliveryTickets = new ArrayCollection();
+		
+		dataService.getAll("DeliveryTicketJobs");
+	}
+	private function doDoubleClick():void{
+		lineItem = dataGrid.selectedItem as DeliveryTicketJobs
+		dataService.getById(lineItem.id);
+		
+	}
+	private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+	private function handleLoadResult(ev:ResultEvent):void{
+		deliveryTicketLines = ev.result as ArrayCollection;
+	}
+	private function handleSaveResult(ev:ResultEvent):void{
+		dataService.getAll("DeliveryTicketJobs");
+	}
+	private function handleDeleteResult(ev:ResultEvent):void{
+		dataService.getAll("DeliveryTicketJobs");
+	}
+	private function getTicket(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+			
+		return temp.parentDeliveryTicket.ticketNumber as String;
+	}
+	private function getInvJob(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+		var tempString:String;
+		 tempString = temp.orderNumber as String;
+		 tempString += "/"
+		 tempString += temp.jobNumber as String;
+	return tempString;
+	}
+	private function getAccountName(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+		
+		return temp.account.title;
+	}
+	private function getShipVia(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+		
+		return temp.parentDeliveryTicket.shipMode.name;
+	}
+	private function getDriver(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+		return temp.parentDeliveryTicket.driver.name;
+	}
+	private function getDeliveryDate(item:Object, column:DataGridColumn):String{
+		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
+		return temp.parentDeliveryTicket.deliveryDate as String;
+	}
+	private function doDelete():void{
+		var tempdeliveryTicket:DeliveryTicket;
+	
+		lineItem = dataGrid.selectedItem as DeliveryTicketJobs;
+		tempdeliveryTicket = lineItem.parentDeliveryTicket as DeliveryTicket;
+		dataService.deleteItem(tempdeliveryTicket);
+		
+	}
+	private function doSearch():void{
+		
+	}
+	private function doArchive():void{
+		var tempdeliveryTicket:DeliveryTicket;
+	
+		lineItem = dataGrid.selectedItem as DeliveryTicketJobs;
+		tempdeliveryTicket = lineItem.parentDeliveryTicket as DeliveryTicket;
+		tempdeliveryTicket.archive = true;
+		dataService.addUpdate(tempdeliveryTicket);
+		
+		
+	}
+]]>
+                             
+</mx:Script>
+
+	<mx:TabNavigator width="100%" height="100%">
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.History')}" width="100%" height="100%">
+			<mx:Button id="cmdNew" x="10" y="28" height="38" width="38" click="doNew(cmdNew);"	>
+				<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+			</mx:Button>
+			<mx:DataGrid  id="dataGrid" x="10" y="104" width="659" dataProvider="{deliveryTicketLines}" doubleClick="doDoubleClick()" height="263">
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket')}" labelFunction="getTicket"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.InvJob')}" labelFunction="getInvJob"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}" labelFunction="getAccountName"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}" labelFunction="getShipVia"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Driver')}" labelFunction="getDriver"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Description')}" dataField="description"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryDate')}" labelFunction="getDeliveryDate"/>
+					
+				
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Button id="cmdDelete" x="66" y="28" height="38" width="38" click="doDelete"	>
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:Button>
+			<mx:Button x="112" y="28" height="38" width="38" click="doArchive"	>
+				<mx:icon>@Embed(source='../../../../assets/archive_icons.png')</mx:icon>
+			</mx:Button>
+			<mx:Button x="296" y="28" height="38" width="38" click="doSearch"	>
+				<mx:icon>@Embed(source='../../../../assets/find.png')</mx:icon>
+			</mx:Button>
+			<mx:CheckBox x="10" y="388" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Hidecompleteddeliver')}x" id="hideCompleted"/>
+		</mx:Canvas>
+		<mx:Canvas label="Form Preferences" width="100%" height="100%">
+			<mx:Button id="cmdNew1" label="Add" x="10" y="28" height="52" width="59" click="doNew(cmdNew1);">
+						
+			</mx:Button>
+		</mx:Canvas>
+		<mx:Canvas label="Brokers" width="100%" height="100%">
+			<mx:Button id="cmdNew2" label="Add 1" x="10" y="28" height="52" width="59" click="doNew(cmdNew2);">
+						
+			</mx:Button>
+		</mx:Canvas>
+	</mx:TabNavigator>
+	
+</mx:Panel>

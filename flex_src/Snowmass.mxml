@@ -429,7 +429,7 @@
 		}
 
 		private function doDeliveryTicket():void{
-			var child:DeliveryTicket = new DeliveryTicket();
+			var child:DeliveryTicketMgr = new DeliveryTicketMgr();
 			addUniqueTab(child);
 		}		
 		
