@@ -9,7 +9,7 @@
 		<param-name>flex.class.path</param-name>
 		<param-value>/WEB-INF/flex/hotfixes,/WEB-INF/flex/jars</param-value>
 	</context-param>
-	
+
 <!--
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -82,6 +82,53 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+ <!--
+ 	<servlet>
+		<servlet-name>ProxyServlet</servlet-name>
+		<display-name>ProxyServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.ProxyServlet</servlet-class>
+		<init-param>
+			<param-name>timeout</param-name>
+			<param-value>120</param-value>
+		</init-param>
+		<init-param>
+			<param-name>remote-host</param-name>
+			<param-value>http://localhost</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>CrystalClearServlet</servlet-name>
+		<display-name>CrystalClearServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.CrystalClearServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>CrystalClearInspectionServlet</servlet-name>
+		<display-name>CrystalClearInspectionServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.CrystalClearInspectionServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>StaticVersionCrystalClearViewerServlet</servlet-name>
+		<display-name>StaticVersionCrystalClearViewerServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.StaticVersionCrystalClearViewerServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>VersionSelectingCrystalClearServlet</servlet-name>
+		<display-name>VersionSelectingCrystalClearServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.VersionSelectingCrystalClearServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>VersionSelectingCrystalClearViewerServlet</servlet-name>
+		<display-name>VersionSelectingCrystalClearViewerServlet</display-name>
+		<servlet-class>com.efi.printsmith.reporting.VersionSelectingCrystalClearViewerServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+-->
+
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
@@ -99,6 +146,32 @@
 		<url-pattern>/IntegrationServlet</url-pattern>
 	</servlet-mapping>
 	
+ <!--
+     <servlet-mapping>
+        <servlet-name>ProxyServlet</servlet-name>
+        <url-pattern>/ProxyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrystalClearServlet</servlet-name>
+        <url-pattern>/CrystalClearServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrystalClearInspectionServlet</servlet-name>
+        <url-pattern>/CrystalClearInspectionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaticVersionCrystalClearViewerServlet</servlet-name>
+        <url-pattern>/StaticVersionCrystalClearViewerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VersionSelectingCrystalClearServlet</servlet-name>
+        <url-pattern>/VersionSelectingCrystalClearServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VersionSelectingCrystalClearViewerServlet</servlet-name>
+        <url-pattern>/VersionSelectingCrystalClearViewerServlet</url-pattern>
+    </servlet-mapping>	
+-->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

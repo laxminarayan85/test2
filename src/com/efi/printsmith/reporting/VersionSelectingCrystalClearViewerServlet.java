@@ -12,12 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class VersionSelectingCrystalClearViewerServlet extends HttpServlet
 {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	protected void doGet( final HttpServletRequest req, final HttpServletResponse resp )
+    protected void doGet( final HttpServletRequest req, final HttpServletResponse resp )
         throws ServletException, IOException
     {
         req.getRequestDispatcher( "/WEB-INF/CrystalClear" + req.getPathInfo() ).forward( req, resp );

@@ -1,8 +1,11 @@
-/*
- * Copyright (c) 2005 Pace Systems Group, Inc. All Rights Reserved.
- */
 package com.efi.printsmith.reporting;
 
+//import org.apache.avalon.excalibur.io.IOUtil;
+//import org.apache.avalon.framework.service.ServiceException;
+//import org.apache.avalon.framework.service.ServiceManager;
+//import org.apache.avalon.framework.service.Serviceable;
+//import org.apache.avalon.framework.logger.LogEnabled;
+//import org.apache.avalon.framework.logger.Logger;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
@@ -10,6 +13,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.HeadMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -25,19 +30,12 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 /**
  * @author <a href="mailto:proyal@pace2020.com">peter royal</a>
  */
-@SuppressWarnings("unchecked")
-public class ProxyServlet extends GenericServlet implements LogEnabled
+public class ProxyServlet extends GenericServlet
 {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private static final Set PROXY_SKIP_HEADERS;
+    private static final Set PROXY_SKIP_HEADERS;
 
     static
     {
@@ -57,22 +55,7 @@ public class ProxyServlet extends GenericServlet implements LogEnabled
 
     private int m_timeout;
     private URI m_remoteHost;
-    private Logger logger;
-
-    public void enableLogging( Logger logger )
-    {
-        this.logger = logger;
-    }
-
-    public Logger getLogger()
-    {
-        return logger;
-    }
-
-    public void service( final ServiceManager manager ) throws ServiceException
-    {
-        m_connectionManager = (HttpConnectionManager)manager.lookup( HttpConnectionManager.class.getName() );
-    }
+    private Logger log = Logger.getLogger(ProxyServlet.class);
 
     public void init() throws ServletException
     {
@@ -88,8 +71,7 @@ public class ProxyServlet extends GenericServlet implements LogEnabled
         }
     }
 
-    @SuppressWarnings("deprecation")
-	protected void service( final HttpServletRequest req, final HttpServletResponse resp )
+    protected void service( final HttpServletRequest req, final HttpServletResponse resp )
         throws ServletException, IOException
     {
         final HttpClient client = new HttpClient( m_connectionManager );
@@ -97,7 +79,7 @@ public class ProxyServlet extends GenericServlet implements LogEnabled
 
         client.setTimeout( m_timeout );
 
-        if( getLogger().isDebugEnabled() ) getLogger().debug( "Proxying request - " + method.getURI() );
+        log.debug( "Proxying request - " + method.getURI() );
 
         try
         {
@@ -124,7 +106,7 @@ public class ProxyServlet extends GenericServlet implements LogEnabled
                 }
             }
 
-            IOUtil.copy( method.getResponseBodyAsStream(), resp.getOutputStream() );
+            IOUtils.copy( method.getResponseBodyAsStream(), resp.getOutputStream() );
         }
         finally
         {
@@ -132,8 +114,7 @@ public class ProxyServlet extends GenericServlet implements LogEnabled
         }
     }
 
-    @SuppressWarnings("deprecation")
-	private HttpMethod createMethod( final HttpServletRequest request ) throws IOException
+    private HttpMethod createMethod( final HttpServletRequest request ) throws IOException
     {
         final String uri = m_remoteHost.resolve( request.getRequestURI() ).toString();
         final HttpMethod method;

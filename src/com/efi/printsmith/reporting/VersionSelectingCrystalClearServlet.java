@@ -21,17 +21,24 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+//import org.apache.avalon.framework.container.ContainerUtil;
+//import org.apache.avalon.framework.context.Context;
+//import org.apache.avalon.framework.context.ContextException;
+//import org.apache.avalon.framework.context.Contextualizable;
+//import org.apache.avalon.framework.logger.LogEnabled;
+//import org.apache.avalon.framework.logger.Logger;
+//import org.apache.avalon.framework.service.ServiceException;
+//import org.apache.avalon.framework.service.ServiceManager;
+//import org.apache.avalon.framework.service.Serviceable;
+//
+//import com.pace2020.appbox.Version;
+
 /**
  * @author <a href="mailto:proyal@pace2020.com">peter royal</a>
  */
 public class VersionSelectingCrystalClearServlet extends HttpServlet
-    implements Contextualizable, Servlet, LogEnabled
 {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private static final Pattern NAME = Pattern.compile( "^properties\\.location\\.(.*)$" );
+    private static final Pattern NAME = Pattern.compile( "^properties\\.location\\.(.*)$" );
     private static final String SERVLET_NAME = "com.pace2020.epace.web.crystalclear.CrystalClearServlet";
     private static final String INSPECTION_SERVLET_NAME =
         "com.pace2020.epace.web.crystalclear.CrystalClearInspectionServlet";
@@ -39,67 +46,42 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
     private static final String CC_VERSION_4_2 = "4.2";
     private static final String CC_VERSION_6_5 = "6.5";
 
-    private Logger m_logger;
-    private Context m_context;
+    private Logger log = Logger.getLogger(VersionSelectingCrystalClearServlet.class);
     private File m_appHome;
-    private ServiceManager m_manager;
 
-    @SuppressWarnings("unchecked")
-	private Map m_servlets;
+    private Map m_servlets;
     private String m_defaultVersion;
     private String m_inspectionVersion;
 
-    public void enableLogging( final Logger logger )
-    {
-        m_logger = logger;
-    }
-
-    private Logger getLogger()
-    {
-        return m_logger;
-    }
-
-    public void contextualize( final Context context ) throws ContextException
-    {
-        m_context = context;
-        m_appHome = (File)context.get( "app.home" );
-    }
-
-    public void service( final ServiceManager manager ) throws ServiceException
-    {
-        m_manager = manager;
-    }
-
     public void init() throws ServletException
     {
-        m_inspectionVersion = getServletConfig().getInitParameter( "inspection.version" );
-        m_servlets = createServlets( getServletConfig() );
-        m_defaultVersion = getServletConfig().getInitParameter( "default.version" );
-
-        if( m_servlets.isEmpty() )
-        {
-            throw new ServletException( "No versions specified" );
-        }
-        else if( null == m_defaultVersion )
-        {
-            throw new ServletException( "No default version specified in default.version" );
-        }
-        else if( null == m_inspectionVersion )
-        {
-            throw new ServletException( "No inspection version specified in inspection.version" );
-        }
-        else if( !m_servlets.containsKey( "inspection" ) )
-        {
-            throw new ServletException( "No inspection version of '" + m_inspectionVersion + "' is not a configured version" );
-        }
-        else if( !m_servlets.containsKey( m_defaultVersion ) )
-        {
-            throw new ServletException( "No default version of '" + m_defaultVersion + "' is not a configured version" );
-        }
+//        m_inspectionVersion = getServletConfig().getInitParameter( "inspection.version" );
+//        m_servlets = createServlets( getServletConfig() );
+//        m_defaultVersion = getServletConfig().getInitParameter( "default.version" );
+//
+//        if( m_servlets.isEmpty() )
+//        {
+//            throw new ServletException( "No versions specified" );
+//        }
+//        else if( null == m_defaultVersion )
+//        {
+//            throw new ServletException( "No default version specified in default.version" );
+//        }
+//        else if( null == m_inspectionVersion )
+//        {
+//            throw new ServletException( "No inspection version specified in inspection.version" );
+//        }
+//        else if( !m_servlets.containsKey( "inspection" ) )
+//        {
+//            throw new ServletException( "No inspection version of '" + m_inspectionVersion + "' is not a configured version" );
+//        }
+//        else if( !m_servlets.containsKey( m_defaultVersion ) )
+//        {
+//            throw new ServletException( "No default version of '" + m_defaultVersion + "' is not a configured version" );
+//        }
     }
 
-    @SuppressWarnings("unchecked")
-	private Map createServlets( final ServletConfig config ) throws ServletException
+    private Map createServlets( final ServletConfig config ) throws ServletException
     {
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
         final URL epaceCrystalClearURL = createEPaceCrystalClearURL();
@@ -124,7 +106,7 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
                     throw new RuntimeException( "Unable to create CC " + version + " servlet", e1 );
                 }
 
-                if( getLogger().isInfoEnabled() ) getLogger().info( "Created CC " + version + " servlet" );
+                log.info( "Created CC " + version + " servlet" );
             }
 
         }
@@ -138,14 +120,12 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
         {
             throw new RuntimeException( "Unable to create CC " + m_inspectionVersion + " inspection servlet", e1 );
         }
-        if( getLogger().isInfoEnabled() )
-            getLogger().info( "Created CC " + m_inspectionVersion + " inspection servlet" );
+        log.info( "Created CC " + m_inspectionVersion + " inspection servlet" );
 
         return servlets;
     }
 
-    @SuppressWarnings("unchecked")
-	private HttpServlet createCrystalClearServlet( final String version,
+    private HttpServlet createCrystalClearServlet( final String version,
                                                    final ClassLoader parent,
                                                    final URL epaceCrystalClearURL,
                                                    final String clazz)
@@ -180,28 +160,27 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
 
         }
 
-        if( getLogger().isDebugEnabled() ) getLogger().debug( "Created version ClassLoader" );
+        log.debug( "Created version ClassLoader" );
 
         final Class servletClass = loader.loadClass( clazz );
 
-        if( getLogger().isDebugEnabled() ) getLogger().debug( "Loaded servlet" );
+        log.debug( "Loaded servlet" );
 
         final HttpServlet servlet = (HttpServlet)servletClass.newInstance();
 
-        if( getLogger().isDebugEnabled() ) getLogger().debug( "Instantiated servlet" );
+        log.debug( "Instantiated servlet" );
 
-        ContainerUtil.enableLogging( servlet, getLogger() );
-        ContainerUtil.contextualize( servlet, m_context );
-        ContainerUtil.service( servlet, m_manager );
-        ContainerUtil.initialize( servlet );
+//        ContainerUtil.enableLogging( servlet, getLogger().getChildLogger( version ) );
+//        ContainerUtil.contextualize( servlet, m_context );
+//        ContainerUtil.service( servlet, m_manager );
+//        ContainerUtil.initialize( servlet );
 
         servlet.init( createServletConfig( version ) );
 
         return servlet;
     }
 
-    @SuppressWarnings("unchecked")
-	private ServletConfig createServletConfig( final String version )
+    private ServletConfig createServletConfig( final String version )
     {
         final Map parameters = new HashMap();
 
@@ -216,8 +195,9 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
 
     private URL createEPaceCrystalClearURL() throws ServletException
     {
-        final String jarName = "epace-crystal-clear-" + Version.SHORT_VERSION + ".jar";
-        return getJarURL( jarName, "SAR-INF/CrystalClear/" + jarName );
+    	return null;
+//        final String jarName = "epace-crystal-clear-" + Version.SHORT_VERSION + ".jar";
+//        return getJarURL( jarName, "SAR-INF/CrystalClear/" + jarName );
     }
 
     private URL createCrystalClearJarURL( final String version, final String jarName ) throws Exception
@@ -227,8 +207,7 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
 
 
 
-    @SuppressWarnings("deprecation")
-	private URL getJarURL( final String jarName, final String location )
+    private URL getJarURL( final String jarName, final String location )
         throws ServletException
     {
         final File file = new File( m_appHome, location );
@@ -239,7 +218,7 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
             {
                 final URL resource = file.toURL();
 
-                getLogger().debug( "Using " + jarName + " from " + resource );
+                log.debug( "Using " + jarName + " from " + resource );
 
                 return resource;
             }
@@ -259,8 +238,7 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
         destroyCrystalClearServlets();
     }
 
-    @SuppressWarnings("unchecked")
-	private void destroyCrystalClearServlets()
+    private void destroyCrystalClearServlets()
     {
         if( null != m_servlets )
         {
@@ -291,7 +269,7 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
 
         if( null == servlet )
         {
-            getLogger().warn( "Invalid CC version '" + version + "' specified in request for "
+            log.warn( "Invalid CC version '" + version + "' specified in request for "
                     + ( (HttpServletRequest)req ).getRequestURI() );
 
             servlet = (Servlet)m_servlets.get( m_defaultVersion );
@@ -301,7 +279,6 @@ public class VersionSelectingCrystalClearServlet extends HttpServlet
 
         servlet.service( req, res );
 
-        if( getLogger().isDebugEnabled() )
-            getLogger().debug( "Processed in " + ( System.currentTimeMillis() - start ) + "ms" );
+        log.debug( "Processed in " + ( System.currentTimeMillis() - start ) + "ms" );
     }
 }

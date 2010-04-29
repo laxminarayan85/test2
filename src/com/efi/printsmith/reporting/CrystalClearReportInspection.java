@@ -12,17 +12,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import javax.sql.DataSource;
-import org.apache.log4j.Logger;
 
-
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-
+import com.efi.printsmith.service.DataService;
 import com.inet.report.DatabaseField;
 import com.inet.report.DatabaseTables;
 import com.inet.report.Engine;
 import com.inet.report.ReportException;
+
+import org.apache.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 /**
  * @author <a href="mailto:jduval@pace2020.com">jerry duval</a>
@@ -31,17 +31,16 @@ public class CrystalClearReportInspection
 {
     private final DataSource m_dataSource;
     private final Engine m_engine;
-    private final Logger m_logger;
+    private final Logger log = Logger.getLogger(CrystalClearReportInspection.class);
     private boolean m_excludeUDFTables;
     private final String m_preparerTable;
 
 
-    public CrystalClearReportInspection( DataSource dataSource, Engine engine, Logger logger, boolean excludeUDFTables,
+    public CrystalClearReportInspection( DataSource dataSource, Engine engine, boolean excludeUDFTables,
                                          String preparerTable )
     {
         m_dataSource = dataSource;
         m_engine = engine;
-        m_logger = logger;
         m_excludeUDFTables = excludeUDFTables;
         m_preparerTable = preparerTable;
     }
@@ -56,10 +55,6 @@ public class CrystalClearReportInspection
         return m_engine;
     }
 
-    private Logger getLogger()
-    {
-        return m_logger;
-    }
 
     public String getPreparerTable()
     {
@@ -72,8 +67,7 @@ public class CrystalClearReportInspection
             .startsWith( "udo_" ) );
     }
 
-    @SuppressWarnings("unchecked")
-	public Document getInspectionResults() throws ReportException
+    public Document getInspectionResults() throws ReportException
     {
         Connection c = null;
 
@@ -81,7 +75,7 @@ public class CrystalClearReportInspection
 
         final Element root = document.addElement( "report" );
 
-//        root.addAttribute( "file", (getEngine().getReportFile()).toExternalForm() );
+        root.addAttribute( "file", getEngine().getReportFile().toExternalForm() );
 
         try
         {
@@ -93,14 +87,10 @@ public class CrystalClearReportInspection
 
                 inspect( c, getEngine(), root, attributes );//check main report
 
-                try {
-					for( int i = 0; i < getEngine().getSubReportCount(); i++ )
-					{
-					    inspect( c, getEngine().getSubReport( i ), root, attributes );//check sub report
-					}
-				} catch (ReportException e) {
-					e.printStackTrace();
-				}
+                for( int i = 0; i < getEngine().getSubReportCount(); i++ )
+                {
+                    inspect( c, getEngine().getSubReport( i ), root, attributes );//check sub report
+                }
 
                 final String preparer = getPreparerTable();
 
@@ -128,7 +118,7 @@ public class CrystalClearReportInspection
         {
             final String message = "Unable to inspect report due to sql execption.";
 
-            getLogger().error( message, e );
+            log.error( message, e );
 
             addElement( root, "warn", "Unable to inspect report due to sql execption" );
         }
@@ -136,8 +126,7 @@ public class CrystalClearReportInspection
         return document;
     }
 
-    @SuppressWarnings("unchecked")
-	private void addObjectsMap( final Map attributes, final Element root )
+    private void addObjectsMap( final Map attributes, final Element root )
     {
         final Iterator i = attributes.entrySet().iterator();
 
@@ -153,8 +142,7 @@ public class CrystalClearReportInspection
         }
     }
 
-    @SuppressWarnings("unchecked")
-	private void addAttributes( final List attributes, final Element root )
+    private void addAttributes( final List attributes, final Element root )
     {
         final Iterator i = attributes.iterator();
 
@@ -178,8 +166,7 @@ public class CrystalClearReportInspection
         return element;
     }
 
-    @SuppressWarnings("unchecked")
-	private void inspect( final Connection connection, final Engine engine, final Element root, final Map attributes )
+    private void inspect( final Connection connection, final Engine engine, final Element root, final Map attributes )
         throws SQLException, ReportException
     {
         final DatabaseTables dbTables = engine.getDatabaseTables();
@@ -225,15 +212,14 @@ public class CrystalClearReportInspection
                 {
                     final String message = "Report references database table " + table + ", but it does not exist.";
 
-                    getLogger().warn( message );
+                    log.warn( message );
                     addElement( root, "warn", message );
                 }
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
-	private void inspect( final Connection connection, String[] columns, final String alias, final String table,
+    private void inspect( final Connection connection, String[] columns, final String alias, final String table,
                           final Engine engine, final Element root, final List attrs )
         throws SQLException, ReportException
     {
@@ -242,7 +228,7 @@ public class CrystalClearReportInspection
             final String column = columns[i];
             final String translated = alias + "." + column;
 
-            final DatabaseField field = (engine.getFields()).getDatabaseField( translated );
+            final DatabaseField field = engine.getFields().getDatabaseField( translated );
 
             if( null != field )
             {
@@ -260,7 +246,7 @@ public class CrystalClearReportInspection
                             final String message =
                                 "found " + result + " " + use + " for " + table + "." + column + " but it does not exist in database";
 
-                            getLogger().warn( message );
+                            log.warn( message );
                             addElement( root, "warn", message );
                         }
                         else
@@ -276,15 +262,15 @@ public class CrystalClearReportInspection
                 }
                 catch( NoSuchMethodException e )
                 {
-                    getLogger().error( "Unable to inspect, not such method", e );
+                    log.error( "Unable to inspect, not such method", e );
                 }
                 catch( InvocationTargetException e )
                 {
-                    getLogger().error( "Unable to inspect, not such method", e );
+                	log.error( "Unable to inspect, not such method", e );
                 }
                 catch( IllegalAccessException e )
                 {
-                    getLogger().error( "Unable to inspect, not such method", e );
+                	log.error( "Unable to inspect, not such method", e );
                 }
             }
         }

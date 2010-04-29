@@ -12,12 +12,10 @@ import org.apache.commons.collections.iterators.IteratorEnumeration;
  */
 class CrystalClearServletConfig implements ServletConfig
 {
-    @SuppressWarnings("unchecked")
-	private final Map m_parameters;
+    private final Map m_parameters;
     private final ServletContext m_context;
 
-    @SuppressWarnings("unchecked")
-	public CrystalClearServletConfig( final ServletContext context, final Map parameters )
+    public CrystalClearServletConfig( final ServletContext context, final Map parameters )
     {
         m_context = context;
         m_parameters = parameters;
@@ -28,8 +26,7 @@ class CrystalClearServletConfig implements ServletConfig
         return (String)m_parameters.get( name );
     }
 
-    @SuppressWarnings("unchecked")
-	public Enumeration getInitParameterNames()
+    public Enumeration getInitParameterNames()
     {
         return new IteratorEnumeration( m_parameters.keySet().iterator() );
     }

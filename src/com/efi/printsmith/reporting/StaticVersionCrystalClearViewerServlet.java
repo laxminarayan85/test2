@@ -7,12 +7,7 @@ import javax.servlet.ServletException;
  */
 public class StaticVersionCrystalClearViewerServlet extends AbstractCrystalClearViewerServlet
 {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public void init() throws ServletException
+    public void init() throws ServletException
     {
         setVersion( getInitParameter( "version" ) );
     }

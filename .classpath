@@ -5,15 +5,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/PrintSmith Server"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/9.1/CCLib.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/9.1/CrystalClear.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/9.1/JavaClient.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/jcommon.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/jfreechartCC.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/milton-api-1.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/milton-servlet-1.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/mime-util.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/reports/crystalclear/slf4j-simple-1.5.6.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

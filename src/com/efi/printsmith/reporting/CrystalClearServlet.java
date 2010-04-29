@@ -26,7 +26,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
-
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.inet.report.Area;
@@ -37,11 +37,11 @@ import com.inet.report.Picture;
 import com.inet.report.ReportException;
 import com.inet.report.ReportServlet;
 import com.inet.report.Section;
+
 /**
  * @author <a href="proyal@pace2020.com">peter royal</a>
  */
 public class CrystalClearServlet extends ReportServlet
-    implements LogEnabled, Contextualizable
 {
     public static final String CCPROPS_LOCATION = "properties.location";
     private static final Pattern LOADKEY = Pattern.compile( "\"key=(.*)\"" );
@@ -53,34 +53,15 @@ public class CrystalClearServlet extends ReportServlet
     private URL m_reportLogoUrl;
     private String m_viewerPrefix;
     private File m_appHome;
-    private Logger m_logger;
-    private ServiceManager m_manager;
+    private Logger log = Logger.getLogger(CrystalClearServlet.class);
     private DataSource m_dataSource;
-    private ReportRepository m_repository;
 
-    public void enableLogging( final Logger logger )
+    public void init( final ServletConfig config ) throws ServletException
     {
-        m_logger = logger;
-    }
+        final File properties = new File("/crystalclear9.1.properties");
 
-    private Logger getLogger()
-    {
-        return m_logger;
-    }
-
-    public void contextualize( final Context context )
-        throws ContextException
-    {
-        m_appHome = (File)context.get( "app.home" );
-    }
-
-    @SuppressWarnings("deprecation")
-	public void init( final ServletConfig config ) throws ServletException
-    {
-        final File properties = new File( m_appHome, config.getInitParameter( CCPROPS_LOCATION ) );
-
-        if( getLogger().isDebugEnabled() )
-            getLogger().debug( "Properties location: " + properties );
+        if( log.isDebugEnabled() )
+            log.debug( "Properties location: " + properties );
 
         try
         {
@@ -98,19 +79,7 @@ public class CrystalClearServlet extends ReportServlet
         {
             m_viewerPrefix = "";
         }
-
-        Engine.setLogStream( new PrintStream( new LoggerAwareOutputStream( this.getLogger() )
-        {
-            @SuppressWarnings("unused")
-			protected void logMessage( final String message )
-            {
-                if( m_logger.isInfoEnabled() )
-                {
-                    m_logger.info( message );
-                }
-            }
-        } ) );
-
+        
         try
         {
             m_logoUrl = new URL( config.getInitParameter( "logo.url" ) );
@@ -142,34 +111,23 @@ public class CrystalClearServlet extends ReportServlet
         super.destroy();
     }
 
-    /**
-     * @phoenix:dependency name="com.pace2020.appbox.services.datasource.DataSourceSelector"
-     * @phoenix:dependency name="com.pace2020.appbox.services.reporting.ReportRepository"
-     */
-    public void service( final ServiceManager manager ) throws ServiceException
-    {
-        m_manager = manager;
-        m_repository = (ReportRepository)manager.lookup( ReportRepository.class.getName() );
-    }
-
     public void initialize() throws Exception
     {
-        DataSourceSelector dss = null;
-
-        try
-        {
-            dss = (DataSourceSelector)m_manager.lookup( DataSourceSelector.class.getName() );
-
-            m_dataSource = dss.getDataSource( Constants.DATA_SOURCE_NAME );
-        }
-        finally
-        {
-            m_manager.release( dss );
-        }
+//        DataSourceSelector dss = null;
+//
+//        try
+//        {
+//            dss = (DataSourceSelector)m_manager.lookup( DataSourceSelector.class.getName() );
+//
+//            m_dataSource = dss.getDataSource( Constants.DATA_SOURCE_NAME );
+//        }
+//        finally
+//        {
+//            m_manager.release( dss );
+//        }
     }
 
-    @SuppressWarnings("unchecked")
-	public void checkProperties( final Engine engine, final Properties properties, final Object o )
+    public void checkProperties( final Engine engine, final Properties properties, final Object o )
         throws ReportException
     {
         final HttpServletRequest request = (HttpServletRequest)o;
@@ -207,12 +165,7 @@ public class CrystalClearServlet extends ReportServlet
     public static void replaceLogo( final Engine engine, final LogoLoader logo, final Properties properties )
         throws ReportException
     {
-        int areas = 0;
-		try {
-			areas = engine.getAreaCount();
-		} catch (ReportException e) {
-			e.printStackTrace();
-		}
+        final int areas = engine.getAreaCount();
 
         for( int i = 0; i < areas; i++ )
         {
@@ -234,8 +187,7 @@ public class CrystalClearServlet extends ReportServlet
         }
     }
 
-    @SuppressWarnings("unchecked")
-	private static void replaceLogoInSection( final Section section, final LogoLoader logo,
+    private static void replaceLogoInSection( final Section section, final LogoLoader logo,
                                               final Properties properties ) throws ReportException
     {
         final Enumeration e = section.getElementsV().elements();
@@ -298,8 +250,7 @@ public class CrystalClearServlet extends ReportServlet
         }
     }
 
-    @SuppressWarnings("unchecked")
-	private void setConnection( final Engine engine, final List connections ) throws ReportException
+    private void setConnection( final Engine engine, final List connections ) throws ReportException
     {
         try
         {
@@ -309,11 +260,7 @@ public class CrystalClearServlet extends ReportServlet
         }
         catch( SQLException e )
         {
-            try {
-				throw new AppboxRuntimeException( "Unable to get connection" );
-			} catch (AppboxRuntimeException e1) {
-				e1.printStackTrace();
-			}
+//            throw new AppboxRuntimeException( "Unable to get connection" );
         }
 
         setSubReports( engine, connections );
@@ -321,11 +268,10 @@ public class CrystalClearServlet extends ReportServlet
 
     private Connection getConnection() throws SQLException
     {
-        return ConnectionClosedOnceInvocationHandler.newInstance( m_dataSource.getConnection(), getLogger() );
+    	return m_dataSource.getConnection();
     }
 
-    @SuppressWarnings("unchecked")
-	private void setSubReports( final Engine engine, final List connections ) throws ReportException
+    private void setSubReports( final Engine engine, final List connections ) throws ReportException
     {
         for( int i = 0; i < engine.getSubReportCount(); i++ )
         {
@@ -340,16 +286,23 @@ public class CrystalClearServlet extends ReportServlet
     {
         final String reportName = getReportName( httpServletRequest );
 
-        final URL reportURL = m_repository.getURL( reportName );
-
-		if( null == reportURL )
-		{
-		    throw new ServletException( "Unknown Report File" + reportName );
-		}
-		else
-		{
-		    properties.put( "report", reportURL.toExternalForm() );
-		}
+//        try
+//        {
+//            final URL reportURL = m_repository.getURL( reportName );
+//
+//            if( null == reportURL )
+//            {
+//                throw new ServletException( "Unknown Report File" + reportName );
+//            }
+//            else
+//            {
+//                properties.put( "report", reportURL.toExternalForm() );
+//            }
+//        }
+//        catch( MalformedURLException e )
+//        {
+//            log.warn( "Malformed URL: " + e.getMessage() );
+//        }
 
         super.afterPropertiesStoredHook( httpServletRequest, httpServletResponse, properties );
     }
@@ -361,11 +314,10 @@ public class CrystalClearServlet extends ReportServlet
 
         logParameters( request, reportName );
 
-        if( getLogger().isDebugEnabled() ) getLogger().debug( "Using report name: " + reportName );
+        if( log.isDebugEnabled() ) log.debug( "Using report name: " + reportName );
     }
 
-    @SuppressWarnings("unchecked")
-	private void logParameters( final HttpServletRequest request, final String fileName )
+    private void logParameters( final HttpServletRequest request, final String fileName )
     {
         final Map parameters = request.getParameterMap();
         final Iterator i = parameters.entrySet().iterator();
@@ -381,7 +333,7 @@ public class CrystalClearServlet extends ReportServlet
             buffer.append( " " + entry.getKey() + " : " + value );
         }
 
-        getLogger().info( buffer.toString() );
+        log.info( buffer.toString() );
     }
 
     public static String getReportName( final HttpServletRequest request )
@@ -399,8 +351,7 @@ public class CrystalClearServlet extends ReportServlet
         }
     }
 
-    @SuppressWarnings("unchecked")
-	public void service( final HttpServletRequest request, final HttpServletResponse response )
+    public void service( final HttpServletRequest request, final HttpServletResponse response )
         throws ServletException, IOException
     {
         try
@@ -459,32 +410,29 @@ public class CrystalClearServlet extends ReportServlet
         super.doWriteHtmlPage( properties, request, response );
     }
 
-    @SuppressWarnings("unchecked")
-	private void closeConnections( final List connections, final HttpServletRequest request )
+    private void closeConnections( final List connections, final HttpServletRequest request )
     {
         final Iterator i = connections.iterator();
 
         while( i.hasNext() )
         {
             final Connection connection = (Connection)i.next();
-            final ConnectionClosedOnceInvocationHandler handler =
-                ConnectionClosedOnceInvocationHandler.getHandler( connection );
-
-            if( !handler.isClosed() )
-            {
-                try
-                {
-                    getLogger().warn( "Closing connection CC left open on report '"
-                            + getReportName( request ) + "?" + request.getQueryString()
-                            + "' - " + connection );
-
-                    connection.close();
-                }
-                catch( SQLException e )
-                {
-                    getLogger().error( "Unexpected error closing connection", e );
-                }
-            }
+//            
+//            if( !handler.isClosed() )
+//            {
+//                try
+//                {
+//                	log.warn( "Closing connection CC left open on report '"
+//                            + getReportName( request ) + "?" + request.getQueryString()
+//                            + "' - " + connection );
+//
+//                    connection.close();
+//                }
+//                catch( SQLException e )
+//                {
+//                    log.error( "Unexpected error closing connection", e );
+//                }
+//            }
         }
     }
 
@@ -514,7 +462,7 @@ public class CrystalClearServlet extends ReportServlet
             }
             catch( MalformedURLException e )
             {
-                getLogger().error( "Unable to load print logo", e );
+                log.error( "Unable to load print logo", e );
                 return null;
             }
             return loadLogo( url );
@@ -533,21 +481,20 @@ public class CrystalClearServlet extends ReportServlet
                 {
                     final ByteArrayOutputStream outputStream = new ByteArrayOutputStream( 8096 );
 
-                    IOUtil.copy( method.getResponseBodyAsStream(), outputStream );
+                    IOUtils.copy( method.getResponseBodyAsStream(), outputStream );
 
                     return outputStream.toByteArray();
                 }
                 else
                 {
-                    getLogger()
-                            .warn( "Attempt to load print logo returned " + response );
+                    log.warn( "Attempt to load print logo returned " + response );
 
                     return null;
                 }
             }
             catch( IOException e )
             {
-                getLogger().error( "Unable to load print logo", e );
+                log.error( "Unable to load print logo", e );
 
                 return null;
             }
