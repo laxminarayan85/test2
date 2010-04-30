@@ -407,26 +407,26 @@
 			return (currentUser==null)?false:true;
 		}
 		
-		CONFIG::debugging
+//		CONFIG::debugging
 		private function showDebugButton():Boolean {
 			return true;
 		}
 		
-		CONFIG::release
-		private function showDebugButton():Boolean {
-			return false;
-		}
+//		CONFIG::release
+//		private function showDebugButton():Boolean {
+//			return false;
+//		}
 		
-		CONFIG::debugging
+//		CONFIG::debugging
 		private function doDebug():void {
 			var debugPopup : Debug = Debug(PopUpManager.createPopUp(this, Debug, true));
 		//	this.mainContainer.visible=false;
 			PopUpManager.centerPopUp(debugPopup);
 		}
 		
-		CONFIG::release
-		private function doDebug():void {
-		}
+//		CONFIG::release
+//		private function doDebug():void {
+//		}
 
 		private function doDeliveryTicket():void{
 			var child:DeliveryTicketMgr = new DeliveryTicketMgr();
