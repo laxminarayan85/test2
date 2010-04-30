@@ -848,7 +848,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:ComboBox x="126" y="190" id="ProductionLocation" width="200" labelField="name" dataProvider="{productionLocationArray}" height="20"/>
 		<mx:ComboBox x="126" y="212" id="CostCenter" width="200" labelField="name" dataProvider="{costCenterArray}" height="20"/>
 		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oemDeviceID}" height="20"/>
-		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89"/>
+		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89" textAlign="right"/>
 		<mx:TextInput x="443" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
 		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
 		<mx:CheckBox x="345" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>

@@ -623,20 +623,28 @@
 	}
 
 	private function doNew():void {
-		doSave();
+		
   	    stockDefinitions = new StockDefinition();
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
-  	    setStockDefinition(stockDefinitions);
+  	   
   	    standardItemCheckEvent();
   	    //cej
   	    cboStockGroup.selectedIndex = -1;
+  	    cboStockGroup.text = "";
   	    cbostockClass.selectedIndex =-1;
+  	    cbostockClass.text = "";
   	    cboFinish.selectedIndex = -1;
+  	    cboFinish.text = "";
   	    cbostkcolor.selectedIndex = -1;
+  	    cbostkcolor.text = " ";
   	    cboGenericColor.selectedIndex = -1;
+  	    cboGenericColor.text = " ";
   	    cboStockGrade.selectedIndex = -1;
+  	    cboStockGrade.text = "";
   	    cboVendor.selectedIndex =-1;
+  	    cboVendor.text = " ";
+  	     setStockDefinition(stockDefinitions);
   	    
 	}       
 
@@ -710,8 +718,8 @@
 		var colors:GenericColors;
 		var result:Boolean;
 		
-		if (cboGenericColor.typedText != null && cboGenericColor.typedText != "" && cboGenericColor.selectedIndex == -1) {
-			var item:int = findItem(cboGenericColor.typedText, stockGenericColor);
+		if (cboGenericColor.text != null && cboGenericColor.text != "" && cboGenericColor.selectedIndex == -1) {
+			var item:int = findItem(cboGenericColor.text, stockGenericColor);
 			if (item == -1) {
 				colors = new GenericColors();
 				colors.name = cboGenericColor.text;
@@ -729,8 +737,8 @@
 		var colors:StockColors;
 		var result:Boolean;
 		
-		if (cbostkcolor.typedText != null && cbostkcolor.typedText != "" && cbostkcolor.selectedIndex == -1) {
-			var item:int = findItem(cbostkcolor.typedText, stockColor);
+		if (cbostkcolor.text != null && cbostkcolor.text != "" && cbostkcolor.selectedIndex == -1) {
+			var item:int = findItem(cbostkcolor.text, stockColor);
 			if (item == -1) {
 				colors = new StockColors();
 				colors.name = cbostkcolor.text;
@@ -747,8 +755,8 @@
 		var grades:StockGrade;
 		var result:Boolean;
 		
-		if (cboStockGrade.typedText != null && cboStockGrade.typedText != "" && cboStockGrade.selectedIndex == -1) {
-			var item:int = findItem(cboStockGrade.typedText, stockGrade);
+		if (cboStockGrade.text != null && cboStockGrade.text != "" && cboStockGrade.selectedIndex == -1) {
+			var item:int = findItem(cboStockGrade.text, stockGrade);
 			if (item == -1) {
 				grades = new StockGrade();
 				grades.name = cboStockGrade.text;
@@ -769,8 +777,8 @@
 		var finishing:StockFinish;
 		var result:Boolean;
 		
-		if (cboFinish.typedText != null && cboFinish.typedText != "" && cboFinish.selectedIndex == -1) {
-			var item:int = findItem(cboFinish.typedText, stockFinish);
+		if (cboFinish.text != null && cboFinish.text != "" && cboFinish.selectedIndex == -1) {
+			var item:int = findItem(cboFinish.text, stockFinish);
 			if (item == -1) {
 				finishing = new StockFinish();
 				finishing.name = this.cboFinish.text;
@@ -788,8 +796,8 @@
 		var stockvendor:Vendor;
 		var result:Boolean;
 		
-		if (cboVendor.typedText != null && cboVendor.typedText != "" && cboVendor.selectedIndex == -1) {
-			var item:int = findItem(cboVendor.typedText, stockFinish);
+		if (cboVendor.text != null && cboVendor.text != "" && cboVendor.selectedIndex == -1) {
+			var item:int = findItem(cboVendor.text, stockFinish);
 			if (item == -1) {
 				stockvendor = new Vendor();
 				stockvendor.name = this.cboVendor.text;
@@ -1109,7 +1117,6 @@
 		if (stockDefinitions.color != null) 
 			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
 		if (stockDefinitions.genericColor != null){
-			cboGenericColor.text = "";
 			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
 		}
 				
@@ -1356,12 +1363,14 @@
 			Basicsize.text = ""
 			label5.visible = false;
 			cboUom.selectedIndex = findItem("Microns", stockUom);
+			cboUom.enabled = false;
 			 
 		}
 		else{
 			label5.visible =true;
 			Basicsize.text = stockDefinitions.stktype.size
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+			cboUom.enabled = true;
 		}
 
 	}
@@ -1409,9 +1418,9 @@
 	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
-	<fc:AutoComplete  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" lookAhead="true" labelField="name" focusOut="doStockColor()"/>
+	<mx:ComboBox  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" labelField="name" focusOut="doStockColor()"/>
 	<mx:TextInput x="126" y="85" width="160" id="stockName" text="{stockDefinitions.name}" change="validateStockName(event);"/>
-	<fc:AutoComplete  x="380" y="88" width="105" id ="cboFinish" dataProvider="{stockFinish}" lookAhead="true" labelField="name" focusOut="doStockFinish()"/>
+	<mx:ComboBox  x="380" y="88" width="105" id ="cboFinish" dataProvider="{stockFinish}" labelField="name" focusOut="doStockFinish()"/>
 
 	<mx:Label x="310" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Finish')}" width="62" textAlign="right"/>
 	<mx:Label x="10" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GenericColor')}" width="108" textAlign="right"/>
@@ -1419,8 +1428,8 @@
 	<mx:Label x="493" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight')}" width="67.5" textAlign="right"/>
 	<mx:Label x="493" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}" width="67.5" textAlign="right"/>
 
-	<fc:AutoComplete  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" lookAhead="true" labelField="name" focusOut="doStockGenericColor()"/>
-	<fc:AutoComplete  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}" lookAhead="true" labelField="name" focusOut="doStockGrade()"/>
+	<mx:ComboBox  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
+	<mx:ComboBox  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
 	<mx:TextInput x="568.5" y="90" width="55" id="weight" text="{stockDefinitions.weight}"/>
 	<mx:TextInput x="568.5" y="114" width="55" id="coated" text="{stockDefinitions.coated}"/>
 
@@ -1438,7 +1447,7 @@
 				<mx:Label x="1" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.StockType')}" textAlign="right" width="97.5" id="label6"/>
 				<mx:Label x="295" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
 				<mx:Label x="0" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ParentSize')}" textAlign="right" width="98.5" id="label3"/>
-				<mx:Label x="261" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Thickness')}" textAlign="right" width="85.5" id="label11"/>
+				<mx:Label x="246.5" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Thickness')}" textAlign="right" width="85.5" id="label11"/>
 				<mx:Label x="282" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.BasicSize')}" textAlign="right" width="85.5" id="label5"/>
 				<mx:Label x="0" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsCarton')}" textAlign="right" width="98.5" id="label2"/>
 				<mx:Label x="261" y="91" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MWeight')}" textAlign="right" width="106.5" id="label1"/>
@@ -1610,7 +1619,7 @@
 				<mx:TextInput x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
 				<mx:Text x="430" y="176" width="291" id="account_name" text="{stockDefinitions.account.title}" />
-				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"/>
+				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}" />
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MostRecentInventoryC')}" dropShadowEnabled="false">
 				<mx:Button x="10" y="204" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kInventoryHistoryCmd.ShowEntireHistory')}" click="doShowHistory();"/>
