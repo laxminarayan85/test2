@@ -60,7 +60,7 @@ width="100%" height="100%"  creationComplete="init()"
 		brokersList = new ArrayCollection();
 		
 		dataService.getAll("DeliveryTicketJobs");
-		dataService.getAll("Broker");
+		dataServiceBroker.getAll("Broker");
 	}
 	private function doDoubleClick():void{
 		lineItem = dataGrid.selectedItem as DeliveryTicketJobs
@@ -89,10 +89,10 @@ width="100%" height="100%"  creationComplete="init()"
 		brokersList = ev.result as ArrayCollection;
 	}
 	private function handleDeleteBrokerResult(ev:ResultEvent):void{
-		dataService.getAll("Broker");
+		dataServiceBroker.getAll("Broker");
 	}
 	private function handleSaveBrokerResult(ev:ResultEvent):void{
-		dataService.getAll("Broker");
+		dataServiceBroker.getAll("Broker");
 	}
 
 	private function getTicket(item:Object, column:DataGridColumn):String{
@@ -149,7 +149,7 @@ width="100%" height="100%"  creationComplete="init()"
 		var broker:Broker;
 	
 		broker = dataGrid.selectedItem as Broker;
-		dataService.deleteItem(broker);
+		dataServiceBroker.deleteItem(broker);
 	}
 
 ]]>
