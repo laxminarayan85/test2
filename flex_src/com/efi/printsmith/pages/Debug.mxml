@@ -14,10 +14,20 @@
 		<mx:method name="addUpdate"
 				   fault="handleFault(event)"
 				   result="handleSaveResult(event)"/>
+		<mx:method name="getById"
+					fault="handleFault(event)"
+					result="handleGetByIdResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="jdfIntegrationService"
+					destination="jdfIntegrationService">
+		<mx:method name="sendJobToFiery"
+					fault="handleFault(event)"
+					result="sendJobToFieryResult(event)"/>
 	</mx:RemoteObject>
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.ModelBase;
 			import com.efi.printsmith.query.RemoteRestriction;
 			import com.efi.printsmith.query.RemoteCriterion;
@@ -182,6 +192,21 @@
 				criteriaArray.addItem(criterion);
 				dataService.criteriaQuery(city.getRemoteObjectName(), criteriaArray);			
 			}
+			
+			private function handleGetByIdResult(evt:ResultEvent):void {
+				if (evt.result != null) {
+					var job:Job = evt.result as Job;
+					jdfIntegrationService.sendJobToFiery(15560,15562);
+				}
+			}
+			
+			private function sendJobToFieryResult(evt:ResultEvent):void {
+				
+			}
+			
+			private function sendFieryJob():void {
+				dataService.getById("Job", 15562);
+			}
 		]]>
 	</mx:Script>
 
@@ -205,8 +230,8 @@
 				   click="doPopulateDimensions();" width="188"/>
 		<mx:Button x="10"
 				   y="190"
-				   label="DB Query"
-				   click="doDBQuery();" width="188"/>
+				   label="Send To Fiery"
+				   click="sendFieryJob();" width="188"/>
 		<mx:Button x="10" y="229" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
 	</mx:Canvas>
 

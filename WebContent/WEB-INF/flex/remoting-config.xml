@@ -84,11 +84,6 @@
 				com.efi.printsmith.service.InvoiceService
 			</source>
 			<hibernate>
-				<!--
-					//the name of the method in this class which follows the hibernate
-					//load(Class, id) argument signature.
-					// default is "load"
-				-->
 				<loadMethod>load</loadMethod>
 			</hibernate>
 		</properties>
@@ -99,14 +94,18 @@
 				com.efi.printsmith.service.JobService
 			</source>
 			<hibernate>
-				<!--
-					//the name of the method in this class which follows the hibernate
-					//load(Class, id) argument signature.
-					// default is "load"
-				-->
 				<loadMethod>load</loadMethod>
 			</hibernate>
 		</properties>
 	</destination>
-
+	<destination id="jdfIntegrationService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.JDFIntegrationService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
 </service>
