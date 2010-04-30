@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Delivery Ticket" name="Delivery Ticket"
 width="100%" height="100%"  creationComplete="init()"  
-     title="Delivery Ticket" xmlns:text="flash.text.*">
+     title="Delivery Ticket" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -150,14 +150,39 @@ width="100%" height="100%"  creationComplete="init()"
 			<mx:CheckBox x="10" y="388" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Hidecompleteddeliver')}x" id="hideCompleted"/>
 		</mx:Canvas>
 		<mx:Canvas label="Form Preferences" width="100%" height="100%">
-			<mx:Button id="cmdNew1" label="Add" x="10" y="28" height="52" width="59" click="doNew(cmdNew1);">
-						
+			<mx:DataGrid x="10" y="91" width="540" height="130">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Default" dataField="col1"/>
+					<mx:DataGridColumn headerText="Title" dataField="col2"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Button id="cmdNewForm" height="38" width="38" click=""	 x="10" y="10">
+				<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+			</mx:Button>
+			<mx:Button id="cmdEditForm" height="38" width="38" click=""	 x="65" y="10">
+				<mx:icon>@Embed(source='../../../../assets/edit.png')</mx:icon>
+			</mx:Button>
+			<mx:Button id="cmdDeleteForm" height="38" width="38" click=""	 x="124" y="10">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 			</mx:Button>
 		</mx:Canvas>
 		<mx:Canvas label="Brokers" width="100%" height="100%">
-			<mx:Button id="cmdNew2" label="Add 1" x="10" y="28" height="52" width="59" click="doNew(cmdNew2);">
-						
+			<mx:Button id="cmdNewForm0" height="38" width="38" click="" x="10" y="10">
+				<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 			</mx:Button>
+			<mx:Button id="cmdDeleteForm0" height="38" width="38" click="" x="102" y="10">
+				<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
+			</mx:Button>
+			<mx:Button id="cmdDeleteForm1" height="38" width="38" click="" x="56" y="10">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:Button>
+			<mx:DataGrid x="10" y="89" width="540" height="81">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Brokers" dataField="col1"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<ns1:AddressEditor x="10" y="179" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
+			<ns1:ContactInfoEditor x="343" y="178" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 		</mx:Canvas>
 	</mx:TabNavigator>
 	
