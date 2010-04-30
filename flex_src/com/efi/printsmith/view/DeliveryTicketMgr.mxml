@@ -14,12 +14,26 @@ width="100%" height="100%"  creationComplete="init()"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceBroker"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadBrokersResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveBrokerResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteBrokerResult(event)"/>
+	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
 	import mx.rpc.events.ResultEvent;
 
 
 	import com.efi.printsmith.data.DeliveryTicketJobs;
+	import com.efi.printsmith.data.Broker;
 	import com.efi.printsmith.data.DeliveryTicket;
 	import mx.collections.ArrayCollection;
 	import mx.rpc.events.ResultEvent;
@@ -28,6 +42,9 @@ width="100%" height="100%"  creationComplete="init()"
 	
 	[Bindable]
 	private var deliveryTicketLines:ArrayCollection=new ArrayCollection();
+	
+	[Bindable]
+	private var brokersList:ArrayCollection=new ArrayCollection();
 	
 	[Bindable]
 	private var deliveryTickets:ArrayCollection=new ArrayCollection();
@@ -40,8 +57,10 @@ width="100%" height="100%"  creationComplete="init()"
 	}
 	public function init():void{
 		deliveryTickets = new ArrayCollection();
+		brokersList = new ArrayCollection();
 		
 		dataService.getAll("DeliveryTicketJobs");
+		dataService.getAll("Broker");
 	}
 	private function doDoubleClick():void{
 		lineItem = dataGrid.selectedItem as DeliveryTicketJobs
@@ -58,12 +77,24 @@ width="100%" height="100%"  creationComplete="init()"
 	private function handleLoadResult(ev:ResultEvent):void{
 		deliveryTicketLines = ev.result as ArrayCollection;
 	}
+	
 	private function handleSaveResult(ev:ResultEvent):void{
 		dataService.getAll("DeliveryTicketJobs");
 	}
 	private function handleDeleteResult(ev:ResultEvent):void{
 		dataService.getAll("DeliveryTicketJobs");
 	}
+	
+	private function handleLoadBrokersResult(ev:ResultEvent):void{
+		brokersList = ev.result as ArrayCollection;
+	}
+	private function handleDeleteBrokerResult(ev:ResultEvent):void{
+		dataService.getAll("Broker");
+	}
+	private function handleSaveBrokerResult(ev:ResultEvent):void{
+		dataService.getAll("Broker");
+	}
+
 	private function getTicket(item:Object, column:DataGridColumn):String{
 		var temp:DeliveryTicketJobs =  item as DeliveryTicketJobs;
 			
@@ -113,9 +144,14 @@ width="100%" height="100%"  creationComplete="init()"
 		tempdeliveryTicket = lineItem.parentDeliveryTicket as DeliveryTicket;
 		tempdeliveryTicket.archive = true;
 		dataService.addUpdate(tempdeliveryTicket);
-		
-		
 	}
+	private function doDeleteBroker():void{
+		var broker:Broker;
+	
+		broker = dataGrid.selectedItem as Broker;
+		dataService.deleteItem(broker);
+	}
+
 ]]>
                              
 </mx:Script>
@@ -173,16 +209,16 @@ width="100%" height="100%"  creationComplete="init()"
 			<mx:Button id="cmdDeleteForm0" height="38" width="38" click="" x="102" y="10">
 				<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 			</mx:Button>
-			<mx:Button id="cmdDeleteForm1" height="38" width="38" click="" x="56" y="10">
+			<mx:Button id="cmdDeleteForm1" height="38" width="38" click="doDeleteBroker" x="56" y="10">
 				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 			</mx:Button>
-			<mx:DataGrid x="10" y="89" width="540" height="81">
+			<mx:DataGrid x="10" y="89" width="540" height="81" dataProvider="{brokersList}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="Brokers" dataField="col1"/>
+					<mx:DataGridColumn headerText="Brokers" dataField="firstName"/>
 				</mx:columns>
 			</mx:DataGrid>
-			<ns1:AddressEditor x="10" y="179" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
-			<ns1:ContactInfoEditor x="343" y="178" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+			<ns1:AddressEditor x="10" y="179" id="ship_to_address_editor" addressLabel="Address" height="157" width="325"/>
+			<ns1:ContactInfoEditor x="343" y="178" height="157" width="325" id="ship_to_contact_editor" contactLabel="Contact"/>
 		</mx:Canvas>
 	</mx:TabNavigator>
 	
