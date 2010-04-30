@@ -12,10 +12,14 @@
     verticalScrollPolicy="off" fontSize="9">
 
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event);" result="handleSaveResult(event);"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServicePriceList" destination="dataService">
+	<mx:method name="addUpdate" fault="handleFault(event);" result="handleSaveItemsResult(event);"/>
+</mx:RemoteObject>
+
 <mx:RemoteObject id="ColorDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadColor(event)"/>
+	<mx:method name="getAll" fault="handleFault(event);" result="handleLoadColor(event);"/>
 </mx:RemoteObject>
 
 <mx:StringValidator id="priceListValidator" source="{title_edit}" property="text" minLength="2" required="true"/>
@@ -285,7 +289,11 @@
 		if (validate(priceListValidator) == true)
 		{
 			maptoPricelist();
-			dataService.addUpdate(priceList);
+			
+//			for each(var item:PriceListElement in priceList.elements){
+//				dataServicePriceList.addUpdate(item);
+//			} 
+			dataServicePriceList.addUpdate(priceList);
 			PopUpManager.removePopUp(this);
 		}else {
 			showMessage("Cannot save "+currentState.toString()+" with an empty name.","Cannot Save");
@@ -320,6 +328,9 @@
 	{
 	}
 
+	private function handleSaveItemsResult(ev:ResultEvent):void {	
+	}
+	
 	private function handleSaveResult(ev:ResultEvent):void {
 		if (itemType == "PriceList" || itemType == "PriceListBase") {
 			priceList = ev.result as PriceList;
@@ -399,7 +410,9 @@
 		titleWindow=PriceListElementEditorPopup(PopUpManager.createPopUp(this, PriceListElementEditorPopup,true));
 		titleWindow.element = priceListElement; 
 		titleWindow.setStyle("borderAlpha", 0.9);
-		titleWindow.SetVisible(itemType != "Matrix");
+		titleWindow.SetVisible(itemType == "PaperPrice");
+		titleWindow.title = this.title;
+		titleWindow.SetLabels(quantity_header,price_header);
 		titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
 		titleWindow.addEventListener("SavePriceListElementEvent", savePriceListElementHandler, false, 1);
 	}

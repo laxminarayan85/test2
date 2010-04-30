@@ -18,8 +18,8 @@
 	</mx:RemoteObject>
 
     <mx:Canvas width="409" height="167">
-    <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Quantity')}" width="67" textAlign="right"/>
-    <mx:Label x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" width="67" textAlign="right"/>
+    <mx:Label id="label_quantity" x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Quantity')}" width="67" textAlign="right"/>
+    <mx:Label id="label_price" x="10" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" width="67" textAlign="right"/>
     <mx:Label x="10" y="61" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides')}" width="67" textAlign="right" id="lblSides"/>
     <mx:Label x="10" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="67" textAlign="right" id="lblColor"/>
 
@@ -79,6 +79,12 @@
 		this.lblColor.visible=value;
 		this.lblSides.visible=value;
 	}
+	
+	public function SetLabels(quantityStr:String,priceStr:String):void{
+		label_quantity.text = quantityStr;
+		label_price.text = priceStr;
+	}
+	
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
