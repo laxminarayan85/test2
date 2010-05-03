@@ -322,6 +322,11 @@ public class JobBase extends ModelBase {
   public static final String CUSTOMERSUPPLIEDSTOCK = "CustomerSuppliedStock";
 
 	/**
+   * @generated
+   */
+  public static final String PAPERPRICE = "PaperPrice";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1889,6 +1894,28 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+    @ManyToOne
+  private PaperPrice paperPrice;
+
+	/**
+   * @generated
+ 	 */
+  public PaperPrice getPaperPrice(){
+    return paperPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPaperPrice(PaperPrice newVal) {
+    this.paperPrice = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1963,6 +1990,7 @@ public class JobBase extends ModelBase {
     if (NUMBEROFINCHES.equals(propertyName)) return getNumberOfInches();
     if (SPECIALORDERSTOCK.equals(propertyName)) return getSpecialOrderStock();
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return getCustomerSuppliedStock();
+    if (PAPERPRICE.equals(propertyName)) return getPaperPrice();
     return super.getProperty(propertyName);
   }
 	
@@ -2041,6 +2069,7 @@ public class JobBase extends ModelBase {
     if (NUMBEROFINCHES.equals(propertyName)) setNumberOfInches((Long)newValue); else
     if (SPECIALORDERSTOCK.equals(propertyName)) setSpecialOrderStock((Boolean)newValue); else
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) setCustomerSuppliedStock((Boolean)newValue); else
+    if (PAPERPRICE.equals(propertyName)) setPaperPrice((PaperPrice)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2188,6 +2217,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (PAPERPRICE.equals(propertyName)) 
+      return new Class<?>[] {PaperPrice.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2267,6 +2298,7 @@ public class JobBase extends ModelBase {
     if (NUMBEROFINCHES.equals(propertyName)) return JobBase.class;
     if (SPECIALORDERSTOCK.equals(propertyName)) return JobBase.class;
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return JobBase.class;
+    if (PAPERPRICE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2415,6 +2447,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getSpecialOrderStock(), objT.getSpecialOrderStock()))
       return false;
     if (! SmartEquals(getCustomerSuppliedStock(), objT.getCustomerSuppliedStock()))
+      return false;
+    if (! SmartEquals(getPaperPrice(), objT.getPaperPrice()))
       return false;
     return true;
   }			
