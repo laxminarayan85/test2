@@ -30,6 +30,7 @@ public class CostPlusPricingMethod extends CopierPricingMethod {
 		
 		double machineCost = copierDefinition.getMachineCostPerCopy();
 		double pricePerCopy = machineCost*copierDefinition.getCopyMarkup();
+		pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
 			pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());

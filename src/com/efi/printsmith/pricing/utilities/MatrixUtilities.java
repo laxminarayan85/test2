@@ -19,10 +19,11 @@ public class MatrixUtilities {
 				break;
 			}
 		}
-		if (i > 0) i--;
+		//if (i > 0) i--;
 		
 		return elements.get(i);
 	}
+	
 	
 	static public double calculateStepPriceSideOne(Matrix matrix, long qty) {
 		if (matrix == null) return 0.0;
@@ -67,36 +68,40 @@ public class MatrixUtilities {
 	}
 	
 	static public double getStampScheduleCost(StampSchedule stampSchedule, long inches, long lines) {
+		return getCost(stampSchedule,inches,lines);
+	}
+	
+	static public double getCost(Matrix matrix, long xLookup, long yLookup) {
 		long element = 0;
 		double cost = 0.0;
-		if (stampSchedule != null) {
+		if (matrix != null) {
 			for (int i = 1; i <= 10; i++) {
-				if (i == 1 && (inches <= stampSchedule.getHeader1())) {
+				if (i == 1 && (xLookup <= matrix.getHeader1())) {
 					element = i;
-				} else if (i == 2 && (inches <= stampSchedule.getHeader2())) {
+				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
 					element = i;
-				}else if (i == 3 && (inches <= stampSchedule.getHeader3())) {
+				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
 					element = i;
-				}else if (i == 4 && (inches <= stampSchedule.getHeader4())) {
+				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
 					element = i;
-				}else if (i == 5 && (inches <= stampSchedule.getHeader5())) {
+				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
 					element = i;
-				}else if (i == 6 && (inches <= stampSchedule.getHeader6())) {
+				}else if (i == 6 && (xLookup <= matrix.getHeader6())) {
 					element = i;
-				}else if (i == 7 && (inches <= stampSchedule.getHeader7())) {
+				}else if (i == 7 && (xLookup <= matrix.getHeader7())) {
 					element = i;
-				}else if (i == 8 && (inches <= stampSchedule.getHeader8())) {
+				}else if (i == 8 && (xLookup <= matrix.getHeader8())) {
 					element = i;
-				}else if (i == 9 && (inches <= stampSchedule.getHeader9())) {
+				}else if (i == 9 && (xLookup <= matrix.getHeader9())) {
 					element = i;
 				}else {
 					element = i;
 				}
 			}
 			
-			List<MatrixElement> elements = stampSchedule.getElements();
+			List<MatrixElement> elements = matrix.getElements();
 			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getQty() <= lines) {
+				if (elements.get(i).getQty() <= yLookup) {
 					if (element == 1)
 						cost = elements.get(i).getPrice1();
 					if (element == 2)

@@ -34,6 +34,25 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
+	static public double lookupPaperPrice(PriceListBase priceList, long copies, long colors, long side) {
+		double retVal = 0.0;
+		
+		if (priceList == null) return retVal;
+		
+		List<PriceListElement> elements = priceList.getElements();
+
+		if (elements.size() <= 0) return retVal;
+		
+		for (int i = 0; i < elements.size(); i++) {
+			if (elements.get(i).getQuantity() >= copies  && elements.get(i).getColor() == colors && elements.get(i).getSide() == side) {
+				retVal = elements.get(i).getAmount();
+				break;
+			}
+		}
+		
+		return retVal;
+	}
+	
 	static public double lookupPrice(PriceListBase priceList, long qty) {
 		double retVal = 0.0;
 		long lookupQty = qty;

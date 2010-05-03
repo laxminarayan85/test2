@@ -18,6 +18,8 @@ import com.efi.printsmith.pricing.mailing.MailingPricingMethod;
 import com.efi.printsmith.pricing.blank.BlankPricingMethod;
 import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethod;
 import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethodFactory;
+import com.efi.printsmith.pricing.list.ListPricingMethod;
+import com.efi.printsmith.pricing.list.ListPricingMethodFactory;
 
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
@@ -83,7 +85,12 @@ public class PriceJobEngine {
 				blankPricingMethod.priceBlankJob(job);
 			}	
 		} else if (pricingMethod.getTitle().equals("List")) {
-			
+			ListPricingMethod listPricingMethod = ListPricingMethodFactory.createListPricingMethod();
+			if (listPricingMethod == null) {
+				log.error("No pricing method found for List");
+			} else {
+				listPricingMethod.priceListJob(job);
+			}
 		} else if (pricingMethod.getTitle().equals("Charges Only")) {
 			
 		} else if (pricingMethod.getTitle().equals("Outside Services")) {

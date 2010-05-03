@@ -28,16 +28,16 @@ public class SquareAreaAndCopiesPricingMethod extends
 		catch (Exception e) {
 			
 		}
-		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), area * job.getTotalCopies());
+		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), area);
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;
 		double unitPrice = 0.0;
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixType().equals("CopyCost")) {
 				if (copierDefinition.getInterpolateMatrix() == true)
-					pricePerCopy = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+					pricePerCopy = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				else
-					pricePerCopy = matrixElement.getPrice1();
+					pricePerCopy = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				pricingRecord.setUnitPrice(pricePerCopy);
 				if (job.getDoubleSided()) {
@@ -68,9 +68,9 @@ public class SquareAreaAndCopiesPricingMethod extends
 			} else if (copierDefinition.getMatrixType().equals("DiscountTable")) {
 				double discountPct = 0.0;
 				if (copierDefinition.getInterpolateMatrix() == true)
-					discountPct = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+					discountPct = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				else
-					discountPct = matrixElement.getPrice1();
+					discountPct = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				pricePerCopy = copierDefinition.getBaseRate() * discountPct;
 				pricePerCopy *= copierDefinition.getCopyMarkup();
 				pricingRecord.setUnitPrice(pricePerCopy);
@@ -133,9 +133,9 @@ public class SquareAreaAndCopiesPricingMethod extends
 			} else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
 				double markup = 0.0;
 				if (copierDefinition.getInterpolateMatrix() == true)
-					markup = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), area);
+					markup = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				else
-					markup = matrixElement.getPrice1();
+					markup = MatrixUtilities.getCost(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies(), area);
 				pricePerCopy = copierDefinition.getBaseRate() * markup;
 				pricingRecord.setUnitPrice(pricePerCopy);
 				if (job.getDoubleSided()) {
