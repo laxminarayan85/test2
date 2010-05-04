@@ -940,6 +940,7 @@
 		this.txtAuthorizeDecrypTo.text = preferencesSystem.authorizeDecrypt;
 
 //set controls for System items
+		checkEnableAutoLogOut();
 		checkAlternateCurrency()
 		setDisplayText(txtIntegers);
 		setAlternateCurrencyText(txtFormat);
@@ -1963,6 +1964,7 @@
 	private function checkEnableAutoLogOut():void{
 		chkSecondsOfInactivity.enabled = chkEnableAutomaticLogOut.selected;
 		chkTriggerAfterPosting.enabled = chkEnableAutomaticLogOut.selected;
+		txtInactivitySeconds.enabled = chkSecondsOfInactivity.selected; 
 	}
 	
 	private function checkAlternateCurrency():void{
@@ -2319,7 +2321,7 @@
 				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}" width="360"/>
 				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Activateusereventlog')}" width="360"/>
 				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Enableautomaticlogou')}" change="checkEnableAutoLogOut();" width="360"/>
-				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" enabled="false" width="189"/>
+				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" change="checkEnableAutoLogOut();" enabled="false" width="189"/>
 				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TriggerafterPosting')}" enabled="false" width="189"/>
 				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}" width="360"/>
 				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}" width="360"/>
