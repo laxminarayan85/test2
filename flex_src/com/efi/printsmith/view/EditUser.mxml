@@ -53,7 +53,9 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 	[Bindable]                             
 	private var formIsValid:Boolean = false;                               
 	[Bindable]                                     
-	public var formIsEmpty:Boolean;    
+	public var formIsEmpty:Boolean;  
+	[Bindable]
+	public var newUser:Boolean;  
 	[Bindable]
     	private var userslist:ArrayCollection = new ArrayCollection();
     [Bindable]
@@ -88,7 +90,7 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 		PopUpManager.removePopUp(this);
 		dataService.getAll("Users");
 		dataGrid.invalidateList();
-		
+		newUser = true;
 		
 		send();                                  
 	}
@@ -102,12 +104,19 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 	public function saveUser():void {                                    
 		var temp:int;
 		mapToUserData();
-		notSaveChange = false;
-		findItem(user1.name, userslist);
-		if (temp == -1)
-			dataService.addUpdate(user1);       
+		if (newUser){
+			temp = findItem(user1.name, userslist);
+			if (temp == -1){
+				dataService.addUpdate(user1);  
+				newUser = false;   
+			}  
+			else
+				clearFormHandler(); 
+			
+		}
 		else
-			clearFormHandler();                                 
+			 dataService.addUpdate(user1);  
+		notSaveChange = false;                               
 	}
 	private function deleteUser():void {  
 		if (userslist.length > 1){
@@ -254,7 +263,7 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 		setPassword.setUser(user1);
 	    setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
 	    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
-		
+		notSaveChange = true;
 	 	}
 	 	
 	private function handlePasswordCancel(event:PasswordEvent):void{

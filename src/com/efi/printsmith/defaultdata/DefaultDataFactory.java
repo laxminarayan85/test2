@@ -43,6 +43,7 @@ public class DefaultDataFactory {
 			ProcessComLinkType();
 			ProcessShippingMethod();
 			ProcessProductionLocations();
+			ProcessProductionFacilty();
 			ProcessColumnNames();
 			ProcessEstimatorTypes();
 			ProcessJobMethods();
@@ -1135,6 +1136,15 @@ public class DefaultDataFactory {
 		} catch (IOException e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));		}
 	}
+	private void ProcessProductionFacilty(){
+		try{
+			LoadProductionFaciltyData(new String[] {currentPath});
+			
+		}catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+	}
 
 	private void LoadStatesData(String[] args) throws IOException {
 		try {
@@ -1339,7 +1349,26 @@ public class DefaultDataFactory {
 		}
 		return rv;
 	}
-
+private void LoadProductionFaciltyData(String[] args) throws IOException {
+	if (args.length == 0)
+		args = new String[] { ".." };
+	String path = new File(args[0]).getParent();
+	File pathName = new File(path);
+	String[] fileNames = pathName.list();
+	for (int i = 0; i < fileNames.length; i++) {
+		if (fileNames[i].endsWith(".txt") == true
+				&& fileNames[i].toLowerCase().startsWith(
+						"productionfacility") == true) {
+			File f = new File(pathName.getPath(), fileNames[i]);
+			int result = doProductionFacilityFile(f);
+			if (result < 0) {
+				log
+						.debug("** Exception: ProductionLocations file Load failed.");
+			}
+			break;
+		}
+	}
+}
 	private void LoadProductionLocationsData(String[] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -1360,7 +1389,51 @@ public class DefaultDataFactory {
 			}
 		}
 	}
+	private int doProductionFacilityFile(File file)throws java.io.IOException {
 
+		List<?> productionFacilityList = (List<?>) dataservice
+				.getAll("ProductionFacilities");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+		java.io.BufferedReader br = new java.io.BufferedReader(ip);
+		String line = null;
+		int rv = -1;
+		while ((line = br.readLine()) != null) {
+			if (line.length() > 0) {
+				if (productionFacilityList.size() > 0) {
+					boolean found = false;
+					for (int i = 0; i < productionFacilityList.size(); i++) {
+						if (((ProductionFacilities) productionFacilityList
+								.get(i)).getName().trim().equals(line.trim()) == true) {
+							found = true;
+							break;
+						}
+					}
+					if (found != true) {
+						ProductionFacilities productionFacility = new ProductionFacilities();
+						productionFacility.setName(line.trim());
+						try {
+							dataservice.addUpdate(productionFacility);
+						} catch (Exception e) {
+							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+							break;
+						}
+					}
+				} else {
+					ProductionFacilities productionFacility = new ProductionFacilities();
+					productionFacility.setName(line.trim());
+					try {
+						dataservice.addUpdate(productionFacility);
+					} catch (Exception e) {
+						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+						break;
+					}
+				}
+			}
+		}
+		return rv;
+	}
 	private int doProductionLocationsFile(File file) throws java.io.IOException {
 
 		List<?> productionLocationsList = (List<?>) dataservice

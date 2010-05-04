@@ -223,7 +223,38 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+	@SuppressWarnings("unchecked")
+	public List<?> getTracker(String className) throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<ModelBase> resultList = new ArrayList<ModelBase>();
+		String columnstring = new String();
+
+		columnstring = "a.id, a.invoiceNumber";
+		try {
+
+			String queryString = "select new Invoice" + "( "
+					+ columnstring + ") from Invoice a where a.onPendingList = 'TRUE'";
+			Query query = em.createQuery(queryString);
+
+			resultList = query.getResultList();
+			for (int i = 0; i < resultList.size(); i++) {
+				Invoice listItem = (Invoice)resultList.get(i);
+				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
+				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
+						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
+				resultList.add(resultInvoice);
+			}
+			
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+			return resultList;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}	
 	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();

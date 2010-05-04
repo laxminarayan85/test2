@@ -17,7 +17,7 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFaciltyResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServicePending" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
+	<mx:method name="getTracker" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
 </mx:RemoteObject>
 <mx:Script> 
                                   
@@ -37,7 +37,7 @@
 	[Bindable] 
 	private var employeesArray:ArrayCollection = new ArrayCollection();
 	[Bindable] 
-	private var pendingList:ArrayCollection = new ArrayCollection();
+	private var trackerList:ArrayCollection = new ArrayCollection();
 	[Bindable] 
 	private var productionLocationArray:ArrayCollection = new ArrayCollection();
 	 
@@ -49,7 +49,7 @@
 	dataService.getAll("Employee");	
 	dataServiceProductionLocation.getAll("ProductionLocations");
 	dataServiceFacilty.getAll("ProductionFacilities");	
-	dataServicePending.getPending("InvoiceBase"); 
+	dataServicePending.getTracker("InvoiceBase"); 
 	}    
 	 
 	private function handleFault(ev:FaultEvent):void {  
@@ -71,7 +71,7 @@
 	     productionLocationArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadPendingResult(ev:ResultEvent):void{
-		pendingList = ev.result as ArrayCollection;
+		trackerList = ev.result as ArrayCollection;
 	}
 	private function handleLoadFaciltyResult(ev:ResultEvent):void {
 	     faciltyArray = ev.result as ArrayCollection;
@@ -128,7 +128,7 @@
 			<mx:Button x="781" y="398" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Layout')}" height="92" id="layout_button" labelPlacement="bottom" width="77">
 				<mx:icon>@Embed(source='../../../../assets/TrackingCutouts.png')</mx:icon>
 			</mx:Button>
-			<mx:DataGrid x="38" y="82" width="824" id="invoiceGrid" dataProvider="{pendingList}">
+			<mx:DataGrid x="38" y="82" width="824" id="invoiceGrid" dataProvider="{trackerList}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}" dataField="col1"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="col2"/>
