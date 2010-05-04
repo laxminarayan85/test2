@@ -153,6 +153,11 @@
 	}
 
 	private function doEdit():void {
+	    if (dataGrid.selectedItem == null){
+	    	Alert.show("No Item selected to Edit.", "Warning", 0, this, null);
+			return;	    	
+	    }
+
 		var editPage:Container = parentContainer;
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
