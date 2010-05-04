@@ -116,9 +116,15 @@
 		if (securitySetupLists.length == 0){
 			addCommands();
 		}
+		securitySetupLists.filterFunction=filterForTestData;
 		dataGrid.invalidateDisplayList();
 		ArrayCollection(dataGrid.dataProvider).refresh();
 	}	
+
+    private function filterForTestData(item:Object):Boolean{
+		if(item.commandName!="rStandardMenuText.1") return true;
+			else return false;      
+	}
 
 	private function handleLoadSecurityCommandsResult(ev:ResultEvent):void {
 		securtiyCommandsLists = ev.result as ArrayCollection;
