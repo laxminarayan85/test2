@@ -23,6 +23,10 @@
 		<mx:method name="sendJobToFiery"
 					fault="handleFault(event)"
 					result="sendJobToFieryResult(event)"/>
+		<mx:method name="cancelFierySubscription"
+					fault="handleFault(event)"
+					result="sendJobToFieryResult(event)"/>
+					
 	</mx:RemoteObject>
 	<mx:Script>
 
@@ -207,6 +211,10 @@
 			private function sendFieryJob():void {
 				dataService.getById("Job", 15562);
 			}
+			
+			private function cancelFierySubscription():void {
+				jdfIntegrationService.cancelFierySubscription(15562);
+			}
 		]]>
 	</mx:Script>
 
@@ -232,7 +240,11 @@
 				   y="190"
 				   label="Send To Fiery"
 				   click="sendFieryJob();" width="188"/>
-		<mx:Button x="10" y="229" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
+		<mx:Button x="10"
+				   y="220"
+				   label="Cancel Fiery Subscription"
+				   click="cancelFierySubscription();" width="188"/>
+		<mx:Button x="10" y="258" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
