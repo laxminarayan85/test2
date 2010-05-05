@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="346" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="482" showCloseButton="false" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
@@ -13,7 +13,7 @@
     import com.efi.printsmith.view.EditCustomer;    
     import com.efi.printsmith.view.PressDefinitions;
     import com.efi.printsmith.data.Charge;   
-    import com.efi.printsmith.events.PriceListPickerSelectEvent;
+    import com.efi.printsmith.events.PriceListPickerSelectEvent
          
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.SpeedTable;  
@@ -34,6 +34,7 @@
 	import flash.net.FileReference;
 	import mx.rpc.Responder;
 	import com.efi.printsmith.events.commandEvents.EditForms.EditWebAdminEvent;
+	import com.efi.printsmith.events.commandEvents.EditForms.TableEditorEvent;
 		
 	private var fileReference:FileReference;
 	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
@@ -309,6 +310,12 @@
 		event.dispatch();
 
 	}
+	private function doTableEditor():void {
+		var event:TableEditorEvent = new TableEditorEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+		event.dispatch();
+
+	}
+	
 
 	private function handleFault(ev:FaultEvent):void {
 		var errorDetail:String="";
@@ -364,6 +371,7 @@
 		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="10"/>
 		<mx:Button label="Import Stock Changes" id="import_stock_changes" enabled="true" click="doImportStockChanges();"  width="256" x="276" y="70"/>
 		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="10" y="70"/>
+		<mx:Button x="274" y="250" label="TableEditor" width="258" click="doTableEditor();"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

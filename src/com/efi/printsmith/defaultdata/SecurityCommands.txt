@@ -242,7 +242,7 @@ rStandardMenuText.Admin,	genericPrefCmd.EstimatorCalculation,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.StockIndex,CMD_
 rStandardMenuText.Admin,	genericPrefCmd.ShippingLink,CMD_
 rStandardMenuText.Admin,rStandardMenuText.DocumentPreferences,CMD_
-rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_
+rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_Table_Editor
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_
 rStandardMenuText.Admin,rStandardMenuText.ClearEstimates,CMD_
 rStandardMenuText.Admin,rStandardMenuText.PaperCalculator,CMD_

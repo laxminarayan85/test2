@@ -83,6 +83,7 @@ package com.efi.printsmith.data
 		public var specialOrderStock:Boolean = false;
 		public var customerSuppliedStock:Boolean = false;
 		public var paperPrice:PaperPrice;
+		public var jdfStatus:JobJDFStatus;
 	
 	}
 }

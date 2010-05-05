@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" width="100%" height="818" creationComplete="init()" 
+	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" name="Stock Definition">
+<mx:RemoteObject id="dataTableService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableDataResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	
+</mx:RemoteObject>
+<mx:Script>
+                                   
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.collections.ArrayCollection;
+import mx.rpc.events.FaultEvent;  
+import mx.controls.Alert; 
+import com.efi.printsmith.data.TableEditor; 
+
+
+[Bindable]                             
+	private var tablesArray : ArrayCollection = new ArrayCollection(); 
+[Bindable]                             
+	private var tableDataArray : ArrayCollection = new ArrayCollection();                                    
+
+[Bindable]                             
+	private var new_pass:String= new String; 
+	
+	
+	public function init():void {
+		loadTables();
+	}
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	private function handleLoadTableResult(ev:ResultEvent):void{
+		tablesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadTableDataResult(ev:ResultEvent):void{
+	  tableDataArray = ev.result as ArrayCollection;
+	}
+	private function loadTables():void {
+	  dataTableService.getAll("TableEditor");	
+	}
+	
+	private function doTableCombo():void{
+		var temp:TableEditor;
+		temp = table_combo.selectedItem as TableEditor;
+		dataService.getAll(temp.name)
+	}
+	private function handleDeleteResult(ev:ResultEvent):void {
+		doTableCombo();
+		
+	}
+	private function handleSaveResult(ev:ResultEvent):void {
+		doTableCombo();
+		
+	}
+	private function doDelete():void{
+		var temp:TableEditor;
+		var temp2:TableEditor;
+		temp = table_combo.selectedItem as TableEditor;
+		temp2 = datagrid.selectedItem as TableEditor;
+		if (temp2 != null)
+			dataService.deleteItem(temp.name, temp2.id);
+	}
+	
+	private function doAdd():void{
+		var temp:TableEditor;
+		var temp2:TableEditor;
+		//var tempclass:Class = new Class();
+		temp = table_combo.selectedItem as TableEditor;
+
+		if (datagrid.selectedItem != null){
+//		temp2 = datagrid.selectedItem as temp.name;
+			dataService.addUpdate(temp2);
+		}
+	}
+]]>        
+</mx:Script>
+
+
+	<mx:ComboBox x="176" y="31" id="table_combo" dataProvider="{tablesArray}" change="doTableCombo();" width="167" labelField="userName"></mx:ComboBox>
+	<mx:Label x="38" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
+	<mx:Button id="button_delete" x="370" y="23" width="38" height="38" click="doDelete();">
+		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+	</mx:Button>
+	<mx:Label  x="373" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
+	<mx:DataGrid  id="datagrid" x="38" y="130" width="416"  editable="true" dataProvider="{tableDataArray}" height="445" change="doAdd()" >
+		<mx:columns>
+			<mx:DataGridColumn  id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="id"/>
+			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
+			<mx:DataGridColumn  id="namecolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" dataField="name"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+</mx:Panel>

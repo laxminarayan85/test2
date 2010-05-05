@@ -145,6 +145,7 @@ package com.efi.printsmith.control
 
 			this.addCommand(EditWebLocationsEvent.COMMANDID, EditWebLocationsCommand);
 			this.addCommand(EditWebConsoleEvent.COMMANDID, EditWebConsoleCommand); 
+			this.addCommand(TableEditorEvent.COMMANDID, TableEditorCommand); 
 			
 			}
 		
