@@ -14,6 +14,7 @@ import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
+import com.efi.printsmith.data.ProductionPress;
 
 public class PressDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(PressDefinitionMapper.class);
@@ -28,6 +29,7 @@ public class PressDefinitionMapper extends ImportMapper {
 		String maxSize = "";
 		boolean defaultSheetfed = false;
 		boolean defaultRollfed = false;
+		String machineNameId = "";
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -227,9 +229,15 @@ public class PressDefinitionMapper extends ImportMapper {
 				}
 						
 			} else if ("machine name ID".equals(currentFieldToken)) {
-				/* TODO */
+				machineNameId = currentImportToken;
 			} else if ("machine name".equals(currentFieldToken)) {
 				pressDefinition.setMachineName(currentImportToken);
+				if (machineNameId.equals("") == false) {
+					ProductionPress productionPress = new ProductionPress();
+					productionPress.setPrevId(machineNameId);
+					productionPress.setName(currentImportToken);
+					dataService.addUpdate(productionPress);
+				}
 			} else if ("wash minutes".equals(currentFieldToken)) {
 				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));
 			} else if ("wash fountain".equals(currentFieldToken)) {

@@ -16,6 +16,7 @@ import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.service.CopierService;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
+import com.efi.printsmith.data.ProductionCopiers;
 
 public class CopierDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
@@ -35,6 +36,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 		boolean defaultBW = false;
 		boolean defaultColor = false;
 		boolean defaultLF = false;
+		String machineNameId = "";
 		for (int x = 1; x <= 15; x++) {
 			MatrixElement matrixElement = new MatrixElement();
 			boolean addSalesCategory = false;
@@ -1027,9 +1029,15 @@ public class CopierDefinitionMapper extends ImportMapper {
 					}
 						
 				} else if ("machine name ID".equals(currentFieldToken)) {
-					/* TODO */
+					machineNameId = currentImportToken;
 				} else if ("machine name".equals(currentFieldToken)) {
 					copierDefinition.setMachineName(currentImportToken);
+					if (machineNameId.equals("") == false) {
+						ProductionCopiers productionCopiers = new ProductionCopiers();
+						productionCopiers.setPrevId(machineNameId);
+						productionCopiers.setName(currentImportToken);
+						dataService.addUpdate(productionCopiers);
+					}
 				} else if ("setup time".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("labor rate".equals(currentFieldToken)) {
