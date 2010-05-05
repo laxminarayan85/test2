@@ -104,7 +104,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		employee = new Employee();
 		pressService.getAll("PressDefinition");
 		copierService.getAll("CopierDefinition");
-		priceListService.getAll("PerferencesPricingMethod");
+		priceListService.getAll("PreferencesPricingMethod");
 		chargeService.getAll("ChargeDefinition");
 
 		var eventPersonal:EmployeeEmployeesPersonalPanelEvent = new EmployeeEmployeesPersonalPanelEvent(canvasPersonal, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
@@ -439,10 +439,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas id="canvasProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" width="100%" height="100%">	
-				<mx:Panel x="10" y="30" width="185" height="255" layout="absolute" title="Include">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoice')}" id="invoice_check" selected="{employee.includeInvoice}"/>
-					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimate')}" id="estimate_check" selected="{employee.includeEstimate}"/>
-					<mx:CheckBox x="38" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" id="jobs_check" selected="{employee.includeJobs}"/>
+				<mx:Panel x="10" y="30" width="185" height="233"  layout="absolute" title="Include">
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoice')}" id="invoice_check" selected="{employee.includeInvoice}" width="161"/>
+					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimate')}" id="estimate_check" selected="{employee.includeEstimate}" width="156"/>
+					<mx:CheckBox x="31" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" id="jobs_check" selected="{employee.includeJobs}"/>
 					<mx:CheckBox x="66" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charges')}" id="job_charges" selected="{employee.includeJobCharges}"/>
 					<mx:CheckBox x="10" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.InvoiceLevelCharges')}" id="invoice_level_charges" selected="{employee.includeInvoiceCharges}"/>
 				</mx:Panel>

@@ -22,6 +22,8 @@
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.data.Job;
+	import com.efi.printsmith.data.Invoice;
 	import com.efi.printsmith.data.Employee;  
 	import com.efi.printsmith.data.InvoiceBase;                        
 	import mx.controls.Alert;                                         
@@ -84,13 +86,26 @@
 		 tempString += temp.lastName as String;
 		return tempString;
 	}
+	private function doAccount(item:Object):String{
+		var temp:Invoice = item as Invoice;
+		return temp.account.accountId;
+	}
+	/* private function doMachine(item:Object):String{
+		
+		
+	} */
+	private function getEmployee():void {
+		employee = employee_edit.selectedItem as Employee;
+		
+	}
+	
 ]]>
                         
 </mx:Script>	
 	<mx:TabNavigator x="0" y="10" width="100%" height="100%">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveItems')}" width="100%" height="100%">
 			<mx:Label x="38" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Employee')}"/>
-			<mx:ComboBox x="174" y="43" id="employee_edit" dataProvider="{employeesArray}" labelFunction="doName" width="115">
+			<mx:ComboBox x="174" y="43" id="employee_edit" dataProvider="{employeesArray}" labelFunction="doName" width="115" change="getEmployee">
 			</mx:ComboBox>
 			<mx:Panel x="38" y="249" width="392" height="142" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CurrentStation')}">
 				<mx:Label x="48" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Facility')}"/>
@@ -130,15 +145,16 @@
 			</mx:Button>
 			<mx:DataGrid x="38" y="82" width="824" id="invoiceGrid" dataProvider="{trackerList}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}" dataField="col1"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}" dataField="col3"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}" dataField="invoiceNumber"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="name"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}" dataField="wantDate"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" dataField="col4"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.RunDate')}" dataField="col2"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveLocation')}" dataField="col3"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}" dataField="col1"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Priority')}" dataField="col2"/>
-					
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="col2"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Account')}" labelFunction="doAccount"/>
 				</mx:columns>
 			</mx:DataGrid>
 			<mx:DataGrid x="38" y="645" width="824" id="employee_jobs_grid" height="123">

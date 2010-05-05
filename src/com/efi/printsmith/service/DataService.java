@@ -227,6 +227,7 @@ public class DataService extends HibernateService {
 	public List<?> getTracker(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<ModelBase> resultList = new ArrayList<ModelBase>();
+		List<ModelBase> invoiceList = new ArrayList<ModelBase>();
 		String columnstring = new String();
 
 		columnstring = "a.id, a.invoiceNumber";
@@ -242,12 +243,12 @@ public class DataService extends HibernateService {
 				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
 				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
 						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
-				resultList.add(resultInvoice);
+				invoiceList.add(resultInvoice);
 			}
 			
-			if (resultList != null)
+			if (invoiceList != null)
 				log.debug("** Found " + resultList.size() + "records:");
-			return resultList;
+			return invoiceList;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
