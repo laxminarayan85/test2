@@ -233,10 +233,13 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("machine name".equals(currentFieldToken)) {
 				pressDefinition.setMachineName(currentImportToken);
 				if (machineNameId.equals("") == false) {
-					ProductionPress productionPress = new ProductionPress();
-					productionPress.setPrevId(machineNameId);
-					productionPress.setName(currentImportToken);
-					dataService.addUpdate(productionPress);
+					ProductionPress productionPress = (ProductionPress)dataService.getByPrevId("ProductionPress", machineNameId);
+					if (productionPress == null) {
+						productionPress = new ProductionPress();
+						productionPress.setPrevId(machineNameId);
+						productionPress.setName(currentImportToken);
+						dataService.addUpdate(productionPress);
+					}
 				}
 			} else if ("wash minutes".equals(currentFieldToken)) {
 				pressDefinition.setWashupMin(Utilities.tokenToLong(currentImportToken));

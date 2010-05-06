@@ -1033,10 +1033,13 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("machine name".equals(currentFieldToken)) {
 					copierDefinition.setMachineName(currentImportToken);
 					if (machineNameId.equals("") == false) {
-						ProductionCopiers productionCopiers = new ProductionCopiers();
-						productionCopiers.setPrevId(machineNameId);
-						productionCopiers.setName(currentImportToken);
-						dataService.addUpdate(productionCopiers);
+						ProductionCopiers productionCopiers = (ProductionCopiers)dataService.getByPrevId("ProductionCopiers", machineNameId);
+						if (productionCopiers == null) {
+							productionCopiers = new ProductionCopiers();
+							productionCopiers.setPrevId(machineNameId);
+							productionCopiers.setName(currentImportToken);
+							dataService.addUpdate(productionCopiers);
+						}
 					}
 				} else if ("setup time".equals(currentFieldToken)) {
 					/* TODO */
