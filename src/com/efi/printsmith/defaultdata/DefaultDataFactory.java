@@ -295,7 +295,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableEditor();
-		tableEditor.setName("ProductionPresses");
+		tableEditor.setName("ProductionPress");
 		tableEditor.setUserName("Production Presses");
 		try {
 			tableEditor = (TableEditor) dataservice.addUpdate(tableEditor);

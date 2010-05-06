@@ -868,29 +868,30 @@ public class Employee extends Party {
 	 */	
     @OneToMany()
     @JoinTable( name = "employee_employeecharges")
-	private java.util.List<ChargeDefinition> employeeCharges;
+	private java.util.List<ChargeCommand> employeeCharges;
 	
 	/**
 	 * @generated
  	 */
-	public java.util.List<ChargeDefinition> getEmployeeCharges(){
+	public java.util.List<ChargeCommand> getEmployeeCharges(){
     return employeeCharges; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addEmployeeCharges(ChargeDefinition obj) {
+   * @generated
+   */	
+  public void addEmployeeCharges(ChargeCommand obj) {
     if (employeeCharges == null) {
-      employeeCharges = new java.util.ArrayList<ChargeDefinition>();
+      employeeCharges = new java.util.ArrayList<ChargeCommand>();
     }
     employeeCharges.add(obj);
   }
-	
+
+
 	/**
 	 * @generated
 	 */	
-	public void setEmployeeCharges(java.util.List<ChargeDefinition> newVal) {
+	public void setEmployeeCharges(java.util.List<ChargeCommand> newVal) {
     this.employeeCharges = newVal;
   }
  	
@@ -900,29 +901,30 @@ public class Employee extends Party {
 	 */	
     @OneToMany()
     @JoinTable( name = "employee_employeepresses")
-	private java.util.List<PressDefinition> employeePresses;
+	private java.util.List<ProductionPress> employeePresses;
 	
 	/**
 	 * @generated
  	 */
-	public java.util.List<PressDefinition> getEmployeePresses(){
+	public java.util.List<ProductionPress> getEmployeePresses(){
     return employeePresses; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addEmployeePresses(PressDefinition obj) {
+   * @generated
+   */	
+  public void addEmployeePresses(ProductionPress obj) {
     if (employeePresses == null) {
-      employeePresses = new java.util.ArrayList<PressDefinition>();
+      employeePresses = new java.util.ArrayList<ProductionPress>();
     }
     employeePresses.add(obj);
   }
-	
+
+
 	/**
 	 * @generated
 	 */	
-	public void setEmployeePresses(java.util.List<PressDefinition> newVal) {
+	public void setEmployeePresses(java.util.List<ProductionPress> newVal) {
     this.employeePresses = newVal;
   }
  	
@@ -932,29 +934,30 @@ public class Employee extends Party {
 	 */	
     @OneToMany()
     @JoinTable( name = "employee_employeecopiers")
-	private java.util.List<CopierDefinition> employeeCopiers;
+	private java.util.List<ProductionCopiers> employeeCopiers;
 	
 	/**
 	 * @generated
  	 */
-	public java.util.List<CopierDefinition> getEmployeeCopiers(){
+	public java.util.List<ProductionCopiers> getEmployeeCopiers(){
     return employeeCopiers; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addEmployeeCopiers(CopierDefinition obj) {
+   * @generated
+   */	
+  public void addEmployeeCopiers(ProductionCopiers obj) {
     if (employeeCopiers == null) {
-      employeeCopiers = new java.util.ArrayList<CopierDefinition>();
+      employeeCopiers = new java.util.ArrayList<ProductionCopiers>();
     }
     employeeCopiers.add(obj);
   }
-	
+
+
 	/**
 	 * @generated
 	 */	
-	public void setEmployeeCopiers(java.util.List<CopierDefinition> newVal) {
+	public void setEmployeeCopiers(java.util.List<ProductionCopiers> newVal) {
     this.employeeCopiers = newVal;
   }
  	
@@ -1250,9 +1253,9 @@ public class Employee extends Party {
     if (ALLCHARGETYPES.equals(propertyName)) setAllChargeTypes((Boolean)newValue); else
     if (ONLYSHOWPRODUCTIONPARENTS.equals(propertyName)) setOnlyShowProductionParents((Boolean)newValue); else
     if (EMPLOYEEPRICING.equals(propertyName)) setEmployeePricings((java.util.List<PreferencesPricingMethod>)newValue); else
-    if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<ChargeDefinition>)newValue); else
-    if (EMPLOYEEPRESSES.equals(propertyName)) setEmployeePresses((java.util.List<PressDefinition>)newValue); else
-    if (EMPLOYEECOPIERS.equals(propertyName)) setEmployeeCopiers((java.util.List<CopierDefinition>)newValue); else
+    if (EMPLOYEECHARGES.equals(propertyName)) setEmployeeCharges((java.util.List<ChargeCommand>)newValue); else
+    if (EMPLOYEEPRESSES.equals(propertyName)) setEmployeePresses((java.util.List<ProductionPress>)newValue); else
+    if (EMPLOYEECOPIERS.equals(propertyName)) setEmployeeCopiers((java.util.List<ProductionCopiers>)newValue); else
     if (ANYPASTDUE.equals(propertyName)) setAnyPastDue((Boolean)newValue); else
     if (CUSTOMERWANT.equals(propertyName)) setCustomerWant((String)newValue); else
     if (PRODUCTIONPARENTS.equals(propertyName)) setProductionParents((java.util.List<ProductionLocations>)newValue); else
@@ -1330,11 +1333,11 @@ public class Employee extends Party {
     if (EMPLOYEEPRICING.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, PreferencesPricingMethod.class};		
     if (EMPLOYEECHARGES.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
+      return new Class<?>[] {java.util.List.class, ChargeCommand.class};		
     if (EMPLOYEEPRESSES.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, PressDefinition.class};		
+      return new Class<?>[] {java.util.List.class, ProductionPress.class};		
     if (EMPLOYEECOPIERS.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, CopierDefinition.class};		
+      return new Class<?>[] {java.util.List.class, ProductionCopiers.class};		
     if (ANYPASTDUE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (CUSTOMERWANT.equals(propertyName)) 
