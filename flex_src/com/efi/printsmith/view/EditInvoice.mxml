@@ -11,7 +11,13 @@
 		  creationComplete="init()"
 		  name="Invoice Editor"
 		  fontSize="9">
-
+	
+	<mx:RemoteObject id="estimatorService"
+						destination="estimatorService">
+		<mx:method name="createInvoiceFromEstimate"
+					fault="handleFault(event)"
+					result="handleCreateInvoiceResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -52,6 +58,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ResourceEvent;
 			import mx.controls.dataGridClasses.DataGridColumn;
 			import com.efi.printsmith.data.Estimate;
 			import com.efi.printsmith.data.InvoiceBase;
@@ -203,6 +210,12 @@
 			{
 				this.invoice = ev.result as InvoiceBase;
 			}
+			
+			private function handleCreateInvoiceResult(ev:ResultEvent):void
+			{
+				this.invoice = ev.result as InvoiceBase;
+				this.editorType = EDITINVOICE;
+			}
 
 			private function handleDeleteResult(event:Event):void
 			{
@@ -325,6 +338,15 @@
 			{
 				job_costing_stack.selectedChild=this.invoice_job_canvas;
 				viewstack3.selectedChild=this.invoice_total_canvas;
+				if (editorType == EDITESTIMATE) {
+					this.createInvoice.visible = true;
+				}
+			}
+			
+			public function doCreateInvoice():void
+			{
+				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+				estimatorService.createInvoiceFromEstimate(this.invoice,Job);
 			}
 
 			public function setAccount(accountItem:Account):void
@@ -939,6 +961,7 @@
 									 id="info_text"
 									 textAlign="center"
 									 height="20"/>
+							<mx:Button x="62.45" y="80" label="Create Invoice" id="createInvoice" click="doCreateInvoice()"/>
 						</mx:Canvas>
 						<mx:Canvas label=""
 								   width="100%"

@@ -62,14 +62,6 @@
 			</hibernate>
 		</properties>
 	</destination>
-	
-	<destination id="estimatorService">
-		<properties>
-			<source>
-				com.efi.printsmith.service.EstimatorService
-			</source>
-		</properties>
-	</destination>
 
 	<destination id="chargeService">
 		<properties>
@@ -92,6 +84,16 @@
 		<properties>
 			<source>
 				com.efi.printsmith.service.JobService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
+	<destination id="estimatorService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.EstimatorService
 			</source>
 			<hibernate>
 				<loadMethod>load</loadMethod>

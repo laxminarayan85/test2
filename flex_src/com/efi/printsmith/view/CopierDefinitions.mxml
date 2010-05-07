@@ -16,6 +16,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:SetProperty target="{label4}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostperSqUnit')}"/>
 			<mx:SetProperty target="{label4}" name="x" value="456"/>
 			<mx:SetProperty target="{label4}" name="y" value="341"/>
+			<mx:SetProperty target="{copyID}" name="text" value=""/>
 		</mx:State>
 	</mx:states>
  
@@ -25,6 +26,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataServiceProductionCopiers" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionCopiersResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
@@ -117,7 +121,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var costCenterArray:ArrayCollection = new ArrayCollection();  
 	[Bindable]
 	private var productionLocationArray:ArrayCollection = new ArrayCollection();  
-	
+	[Bindable]
+	private var productionCopiersArray:ArrayCollection = new ArrayCollection();
 
 	public function init():void {
 		consumer.subscribe();
@@ -128,6 +133,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCostCenter.getAll("CostCenter");
 		dataServiceProductionLocation.getAll("ProductionLocations");
+		dataServiceProductionCopiers.getAll("ProductionCopiers");
 
 		
 	    copierDefinition = initNewCopierDefinition();
@@ -322,7 +328,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			if(copierDefinition.squareAreaType != null){
 				areaTypeRadioValue = copierDefinition.squareAreaType;
 			}
-			
+			if (copierDefinition.machineName != "") {
+				productionCopiers.selectedIndex = findItem(copierDefinition.machineName, productionCopiersArray);
+			}
 			charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
 			this.charges = copierDefinition.charges;
 			updateControlState();
@@ -367,10 +375,13 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
 	     productionLocationArray = ev.result as ArrayCollection;
 	}
+	private function handleLoadProductionCopiersResult(ev:ResultEvent):void {
+		productionCopiersArray = ev.result as ArrayCollection;
+	}
 	private function mapCopierData():void {
 		//copierDefinition.copyDefID = CopierDefID;
 		copierDefinition.name = Name.text;
-		copierDefinition.machineName = MachineName.text;
+		copierDefinition.machineName = productionCopiers.selectedItem.toString();
 		copierDefinition.outputDescrip = OutPutDescription.text;
 		copierDefinition.productionLocation = ProductionLocation.selectedItem as String;
 		copierDefinition.costCenter = CostCenter.selectedItem as String;
@@ -843,7 +854,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="10" y="215" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleShowCostCenterCmd.CostCenter')}" textAlign="right" width="108"/>
 		<mx:Label x="10" y="237" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OEMDeviceID')}" textAlign="right" width="108"/>
 		<mx:TextInput x="126" y="124" width="200" id="Name" text="{copierDefinition.name}" height="20"/>
-		<mx:TextInput x="126" y="146" width="200" id="MachineName" text="{copierDefinition.machineName}" height="20"/>
 		<mx:TextInput x="126" y="168" width="200" id="OutPutDescription" text="{copierDefinition.outputDescrip}" height="20"/>
 		<mx:ComboBox x="126" y="190" id="ProductionLocation" width="200" labelField="name" dataProvider="{productionLocationArray}" height="20"/>
 		<mx:ComboBox x="126" y="212" id="CostCenter" width="200" labelField="name" dataProvider="{costCenterArray}" height="20"/>
@@ -958,6 +968,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:icon>@Embed(source='../../../../assets/Export.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="255" y="731" id = "export_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="47"/>
+		<mx:ComboBox x="126" y="146" id="productionCopiers" width="200" labelField="name" dataProvider="{productionCopiersArray}" height="20"/>
 	</mx:Canvas>
 <!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copierDefinition.wasteChart.name}"/>
 -->																						<!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copierDefinition.stockPriceList.name}"/>
