@@ -53,6 +53,41 @@
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkInterpolate}" name="y" value="37"/>
+		<mx:SetProperty name="width" value="1032"/>
+		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="643"/>
+		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="675"/>
+		<mx:SetProperty target="{dataGrid}" name="x" value="478"/>
+		<mx:SetProperty target="{select_button}" name="x" value="769"/>
+		<mx:SetProperty target="{clear_button}" name="x" value="874"/>
+		<mx:SetProperty target="{chkInterpolate}" name="x" value="834"/>
+		<mx:SetProperty target="{title_edit}" name="x" value="834"/>
+		<mx:SetProperty target="{label1}" name="x" value="707"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:LineChart x="36" y="13" id="linechart0" height="289" dataProvider="{priceList.elements}" showDataTips="true">
+				 <mx:horizontalAxis>
+				    <mx:CategoryAxis 
+				         dataProvider="{priceList.elements}" 
+				         categoryField="quantity.toString()"
+				     />
+				 </mx:horizontalAxis>
+			  <mx:series>
+			     <mx:LineSeries 
+			      yField="amount" 
+			      displayName="Waste Percent"
+			      lineSegmentRenderer=
+			         	 "mx.charts.renderers.ShadowLineRenderer"
+			     >
+			      <mx:lineStroke>
+			          <mx:Stroke 
+			              color="0x0099FF" 
+			              weight="20" 
+			              alpha=".2"
+			          />
+			      </mx:lineStroke>                
+			     </mx:LineSeries>
+			  </mx:series>
+			</mx:LineChart>
+		</mx:AddChild>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
@@ -69,6 +104,50 @@
 		<mx:SetProperty target="{chkInterpolate}" name="visible" value="true"/>
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="true"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="true"/>
+		<mx:SetProperty name="width" value="1040"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:LineChart x="36" y="13" id="linechart1" height="289" dataProvider="{priceList.elements}" showDataTips="true">
+				 <mx:horizontalAxis>
+				    <mx:CategoryAxis 
+				         dataProvider="{priceList.elements}" 
+				         categoryField="quantity.toString()"
+				     />
+				 </mx:horizontalAxis>
+			  <mx:series>
+			     <mx:LineSeries 
+			      yField="amount" 
+			      displayName="Waste Percent"
+			      lineSegmentRenderer=
+               	 "mx.charts.renderers.ShadowLineRenderer"
+			     >
+			      <mx:lineStroke>
+			          <mx:Stroke 
+			              color="0x0099FF" 
+			              weight="20" 
+			              alpha=".2"
+			          />
+			      </mx:lineStroke>                
+			     </mx:LineSeries>
+			  </mx:series>
+			</mx:LineChart>
+		</mx:AddChild>
+		<mx:SetProperty target="{dataGrid}" name="x" value="465"/>
+		<mx:SetStyle target="{dataGrid}" name="top" value="2"/>
+		<mx:SetStyle target="{dataGrid}" name="bottom" value="23"/>
+		<mx:SetProperty target="{clear_button}" name="x" value="886"/>
+		<mx:SetProperty target="{select_button}" name="x" value="781"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="x" value="846"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="846"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="x" value="846"/>
+		<mx:SetProperty target="{chkInterpolate}" name="x" value="846"/>
+		<mx:SetProperty target="{radiobutton1}" name="x" value="846"/>
+		<mx:SetProperty target="{radiobutton2}" name="x" value="846"/>
+		<mx:SetProperty target="{title_edit}" name="x" value="846"/>
+		<mx:SetProperty target="{label1}" name="x" value="719"/>
+		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="630"/>
+		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="1"/>
+		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="662"/>
+		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="1"/>
 
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
@@ -200,7 +279,6 @@
 		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
 		fillArray();
 		ColorDataService.getAll("StockColors")
-
 	}
 
 	private function fillArray():void {
