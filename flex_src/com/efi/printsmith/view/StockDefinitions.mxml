@@ -367,11 +367,11 @@
 		stockUnits.addItem(Rigid);
 	}
 
-	public function setPriceList(price:PriceListBase): void {
-	 	this.priceList = price as PaperPrice;
-	 	stockDefinitions.defaultPriceList = price as PaperPrice;
-	}
-	
+//	public function setPriceList(price:PriceListBase): void {
+//	 	this.priceList = price as PaperPrice;
+//	 	stockDefinitions.defaultPriceList = price as PaperPrice;
+//	}
+//	
 	private function doPriceList():void {
 	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);

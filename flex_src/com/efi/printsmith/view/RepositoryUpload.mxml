@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="vertical"
+				width="484"
+				height="451"
+				title="Upload Files">
+
+
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.AsyncToken;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.managers.PopUpManager;
+
+			private var refUploadFile:FileReference;
+
+			private var UploadFiles:Array=new Array();
+
+
+			// Called to add file(s) for upload 
+			private function addFiles():void
+			{
+				refUploadFile=new FileReference();
+				refUploadFile.browse();
+				refUploadFile.addEventListener(Event.SELECT, onFileSelect);
+				refUploadFile.addEventListener(Event.COMPLETE, onFileComplete);
+			}
+
+			// Called when a file is selected 
+			private function onFileSelect(event:Event):void
+			{
+				UploadFiles.push({name: refUploadFile.name, size: formatFileSize(refUploadFile.size), status: "initial"});
+				listFiles.dataProvider=UploadFiles;
+				listFiles.selectedIndex=UploadFiles.length - 1;
+
+				refUploadFile.load();
+				for (var i:int=0; i < UploadFiles.length; i++)
+				{
+					if (UploadFiles[i].name == refUploadFile)
+					{
+						UploadFiles[i].status="loaded";
+						listFiles.dataProvider=UploadFiles;
+						break;
+					}
+				}
+			}
+
+			// Called to format number to file size 
+			private function formatFileSize(numSize:Number):String
+			{
+				var strReturn:String;
+				numSize=Number(numSize / 1000);
+				strReturn=String(numSize.toFixed(1) + " KB");
+				if (numSize > 1000)
+				{
+					numSize=numSize / 1000;
+					strReturn=String(numSize.toFixed(1) + " MB");
+					if (numSize > 1000)
+					{
+						numSize=numSize / 1000;
+						strReturn=String(numSize.toFixed(1) + " GB");
+					}
+				}
+				return strReturn;
+			}
+
+			private function onFileComplete(event:Event):void
+			{
+				refUploadFile=event.currentTarget as FileReference;
+				var data:ByteArray=new ByteArray();
+				refUploadFile.data.readBytes(data, 0, refUploadFile.data.length);
+
+				var token:AsyncToken=AsyncToken(remoteUpload.doUpload(data, refUploadFile.name));
+
+				token.kind=refUploadFile.name;
+
+				for (var i:int=0; i < UploadFiles.length; i++)
+				{
+					if (UploadFiles[i].name == refUploadFile)
+					{
+						UploadFiles[i].status="upload";
+						listFiles.dataProvider=UploadFiles;
+						break;
+					}
+				}
+			}
+
+			private function uploadResultHandler(event:ResultEvent):void
+			{
+				for (var i:int=0; i < UploadFiles.length; i++)
+				{
+					if (UploadFiles[i].name == event.token.kind)
+					{
+						UploadFiles[i].status="finished";
+						listFiles.dataProvider=UploadFiles;
+						break;
+					}
+				}
+			}
+
+			private function faultResultHandler(event:FaultEvent):void
+			{
+				for (var i:int=0; i < UploadFiles.length; i++)
+				{
+					if (UploadFiles[i].name == event.token.kind)
+					{
+						UploadFiles[i].status="error";
+						listFiles.dataProvider=UploadFiles;
+						break;
+					}
+				}
+			}
+
+			private function doCancel():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:RemoteObject id="remoteUpload"
+					 destination="reportRepositoryService"
+					 result="uploadResultHandler(event)"
+					 fault="faultResultHandler(event)"/>
+
+
+	<mx:Canvas width="100%"
+			   height="100%">
+		<mx:DataGrid id="listFiles"
+					 left="0"
+					 top="0"
+					 bottom="0"
+					 right="0"
+					 allowMultipleSelection="true"
+					 verticalScrollPolicy="on"
+					 draggableColumns="false"
+					 resizableColumns="false"
+					 sortableColumns="false">
+			<mx:columns>
+				<mx:DataGridColumn headerText="File"
+								   width="150"
+								   dataField="name"
+								   wordWrap="true"/>
+				<mx:DataGridColumn headerText="Size"
+								   width="50"
+								   dataField="size"
+								   textAlign="right"/>
+				<mx:DataGridColumn headerText="Status"
+								   width="50"
+								   dataField="status"
+								   textAlign="right"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Canvas>
+	<mx:ControlBar horizontalAlign="center"
+				   verticalAlign="middle">
+		<mx:Button id="btnAdd"
+				   toolTip="Add file(s)"
+				   click="addFiles()"
+				   label="Upload Files"
+				   width="150"/>
+		<mx:Button id="btn_cancel"
+				   toolTip="Add file(s)"
+				   click="doCancel()"
+				   label="Cancel"
+				   width="150"/>
+	</mx:ControlBar>
+</mx:TitleWindow>

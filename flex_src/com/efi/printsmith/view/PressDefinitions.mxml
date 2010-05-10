@@ -621,7 +621,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Button x="11" y="518" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WasteChart')}" click="doWasteChart();" width="97"/>
 	<mx:Button x="10" y="546" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddCharges')}" width="98" click="doAddCharge();"/>
 	<mx:CheckBox x="371" y="491" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
-	<mx:Label x="548" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" width="92"/>
+	<mx:Label x="537" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" width="92"/>
 	<mx:TextInput x="637" y="491" id="GripEdge" text="{pressDefinition.gripEdge}" height="20" width="104"/>
 	<mx:Text x="132" y="520" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195" click="doclickwaste(event);"/>
 	<mx:Text x="132" y="493" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195" click="doclickSpeedTable(event);"/>
@@ -643,7 +643,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="335" y="296" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CutoffLength')}" width="149" id="cutoffLabel" textAlign="right"/>
 	<mx:TextInput x="492" y="294" width="106" id="cutoff" text="{pressDefinition.cutoffLength}"/>
 	<mx:Label x="388" y="520" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right" width="100"/>
-	<mx:ComboBox x="496" y="518.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="112" textAlign="right"/>
+	<mx:ComboBox x="496" y="518.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="112" textAlign="left"/>
 	<mx:List x="132" y="546" height="49" width="137" id="chargelist" dataProvider="{pressDefinition.charges}" labelField="name"></mx:List>
 	<mx:Button x="102" y="617" label="Button" width="38" height="38" click="doDuplicate();">
 		<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
@@ -657,10 +657,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Label x="148" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="38"/>
 	<mx:Label x="194" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="38"/>
 	<mx:Label x="264" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="38"/>
-	<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PaperStyle')}"  x="661" y="124" dropShadowEnabled="false" width="207">
+	<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PaperStyle')}"  x="661" y="124" dropShadowEnabled="false" width="207" paddingLeft="5" borderThicknessLeft="3" borderThicknessRight="3" borderThicknessBottom="3">
 		<mx:RadioButtonGroup id="pressTypeRadioGroup"/>
-		<mx:RadioButton x="415" y="152" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
-		<mx:RadioButton x="415" y="182" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
+		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
+		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
 	</mx:Panel>
 	<mx:ComboBox x="131" y="146" id="productionPress" width="263" labelField="name" dataProvider="{productionPressArray}" height="20"/>
 </mx:Panel>

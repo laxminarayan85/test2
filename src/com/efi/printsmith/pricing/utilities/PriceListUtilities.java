@@ -199,6 +199,7 @@ public class PriceListUtilities {
 	}
 	
 	static public long getAreaFromSizeString(String size) throws NumberFormatException, ParseException {
+		// TODO: Need to be much more flexible in string handling here (A4, B4, different lengths of dimensions)
 		long retVal = 0;
 		
 		int i = size.indexOf("x");
@@ -211,5 +212,29 @@ public class PriceListUtilities {
 		}
 		
 		return retVal;
+	}
+	
+	static public long getLengthFromSizeString(String size) throws NumberFormatException, ParseException {
+		// TODO: Need to be much more flexible in string handling here
+		String lengthString = "0";
+		
+		int i = size.indexOf("x");
+		if (i > -1) {
+			lengthString = size.substring(0, i - 1);
+		}
+		
+		return Utilities.tokenToLong(lengthString);
+	}
+	
+	static public long getWidthFromSizeString(String size) throws NumberFormatException, ParseException {
+		// TODO: Need to be much more flexible in string handling here
+		String widthString = "0";
+		
+		int i = size.indexOf("x");
+		if (i > -1) {
+			widthString = size.substring(i + 2);
+		}
+		
+		return Utilities.tokenToLong(widthString);
 	}
 }

@@ -58,6 +58,23 @@ public class JDFQueueEntry extends ModelBase {
 	public static final String STATUS = "Status";
 
 	/**
+   * @generated
+   */
+  public static final String URL = "Url";
+	/**
+   * @generated
+   */
+  public static final String JOBID = "Jobid";
+	/**
+   * @generated
+   */
+  public static final String DEVICEID = "DeviceId";
+	/**
+   * @generated
+   */
+  public static final String MSGTYPE = "MsgType";
+
+	/**
 	 * @generated
 	 */
 	public JDFQueueEntry() {
@@ -154,6 +171,97 @@ public class JDFQueueEntry extends ModelBase {
     this.status = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String url;
+
+	/**
+   * @generated
+ 	 */
+  public String getUrl(){
+    return url; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUrl(String newVal) {
+    this.url = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long jobid;
+
+	/**
+   * @generated
+ 	 */
+  public Long getJobid(){
+    return jobid; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setJobid(Long newVal) {
+    this.jobid = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String deviceId;
+
+	/**
+   * @generated
+ 	 */
+  public String getDeviceId(){
+    return deviceId; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDeviceId(String newVal) {
+    this.deviceId = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String msgType;
+
+	/**
+   * @generated
+ 	 */
+  public String getMsgType(){
+    return msgType; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMsgType(String newVal) {
+    this.msgType = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -163,6 +271,10 @@ public class JDFQueueEntry extends ModelBase {
     if (RESPONSE.equals(propertyName)) return getResponse();
     if (SENT.equals(propertyName)) return getSent();
     if (STATUS.equals(propertyName)) return getStatus();
+    if (URL.equals(propertyName)) return getUrl();
+    if (JOBID.equals(propertyName)) return getJobid();
+    if (DEVICEID.equals(propertyName)) return getDeviceId();
+    if (MSGTYPE.equals(propertyName)) return getMsgType();
     return super.getProperty(propertyName);
   }
 	
@@ -176,6 +288,10 @@ public class JDFQueueEntry extends ModelBase {
     if (RESPONSE.equals(propertyName)) setResponse((String)newValue); else
     if (SENT.equals(propertyName)) setSent((Date)newValue); else
     if (STATUS.equals(propertyName)) setStatus((String)newValue); else
+    if (URL.equals(propertyName)) setUrl((String)newValue); else
+    if (JOBID.equals(propertyName)) setJobid((Long)newValue); else
+    if (DEVICEID.equals(propertyName)) setDeviceId((String)newValue); else
+    if (MSGTYPE.equals(propertyName)) setMsgType((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -193,6 +309,14 @@ public class JDFQueueEntry extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (STATUS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (URL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (DEVICEID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (MSGTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -207,6 +331,10 @@ public class JDFQueueEntry extends ModelBase {
     if (RESPONSE.equals(propertyName)) return JDFQueueEntry.class;
     if (SENT.equals(propertyName)) return JDFQueueEntry.class;
     if (STATUS.equals(propertyName)) return JDFQueueEntry.class;
+    if (URL.equals(propertyName)) return JDFQueueEntry.class;
+    if (JOBID.equals(propertyName)) return JDFQueueEntry.class;
+    if (DEVICEID.equals(propertyName)) return JDFQueueEntry.class;
+    if (MSGTYPE.equals(propertyName)) return JDFQueueEntry.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -225,6 +353,14 @@ public class JDFQueueEntry extends ModelBase {
     if (! SmartEquals(getSent(), objT.getSent()))
       return false;
     if (! SmartEquals(getStatus(), objT.getStatus()))
+      return false;
+    if (! SmartEquals(getUrl(), objT.getUrl()))
+      return false;
+    if (! SmartEquals(getJobid(), objT.getJobid()))
+      return false;
+    if (! SmartEquals(getDeviceId(), objT.getDeviceId()))
+      return false;
+    if (! SmartEquals(getMsgType(), objT.getMsgType()))
       return false;
     return true;
   }			

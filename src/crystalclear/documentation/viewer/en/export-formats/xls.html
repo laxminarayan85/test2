@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xml:lang="en" lang="en"
+	dir="ltr">
+<head>
+<title>XLS Export</title>
+
+<meta name="generator" content="DokuWiki Git 2010-02-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2010-03-08T15:58:40+0100" />
+<meta name="keywords" content="documentation,crystal-clear,viewer,en,export-formats,xls" />
+<meta name="description" content="Parameters of the MS Excel output format" />
+<link rel="canonical" href="http://documentation/documentation/crystal-clear/viewer/en/export-formats/xls" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../lib/exe/css.php.t.crystal-clear-documentation.css" />
+<script type="text/javascript" charset="utf-8" ><!--//--><![CDATA[//><!--
+var NS='documentation:crystal-clear:viewer:en:export-formats';var JSINFO = {"id":"documentation:crystal-clear:viewer:en:export-formats:xls","namespace":"documentation:crystal-clear:viewer:en:export-formats","conf":{"lang":"en"}};
+//--><!]]></script>
+<script type="text/javascript" charset="utf-8" src="../../../lib/exe/js.php.js" ></script>
+<meta name="copyright" content="i-net software" />
+<meta name="author" content="i-net software" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link rel="shortcut icon" href="../../../lib/tpl/crystal-clear-documentation/images/favicon.ico" />
+</head>
+
+<body>
+<!-- Background mendatory -->
+<div id="background"><!-- Heading  mendatory -->
+<div id="heading">
+<h4><a href="http://www.inetsoftware.de/products/crystal-clear" title="i-net Crystal-Clear">&nbsp;<span>i-net Crystal-Clear</span></a></h4>
+<noscript id="javaRequired">
+<p>This program is fully usable with JavaScript only.</p>
+</noscript>
+</div>
+
+<div id="content">
+
+<!-- Content -->
+<div id="page" class="dokuwiki"> 
+
+
+
+<h1><a name="xls-export" id="xls-export">XLS Export</a></h1>
+<div class="level1">
+
+<p>
+
+With the following properties you can configure the XLS export.
+</p>
+
+<p>
+<img src="../../../viewer/en/export-formats/export-xls.jpg" class="mediacenter" title="Java Viewer - XLS export format" alt="Java Viewer - XLS export format" />
+</p>
+
+</div>
+
+<h2><a name="truncating-behaviour" id="truncating-behaviour">Truncating Behaviour</a></h2>
+<div class="level2">
+
+<p>
+
+The parameter &quot;celltruncate&quot; specifies whether strings which are too long for their cell will be truncated or not. The default value is true.
+</p>
+
+</div>
+
+<h2><a name="cell-distribution" id="cell-distribution">Cell Distribution</a></h2>
+<div class="level2">
+
+<p>
+
+The parameter &quot;celldistribution&quot; determines how to distribute text to Excel cells if the text does not fit a simple cell. Choose one of the following value:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>staticlayout</strong> - the text is displayed in the first row of the element. The width, background and border, if set, correspond to the design of the element. If the element contains multiple rows, they will be merged.</div>
+</li>
+<li class="level1"><div class="li"> <strong>oneline</strong> - the text is displayed in the first row of the element. The width, background and border, if set, correspond to the design of the element. If the element contains multiple rows, they are not merged.</div>
+</li>
+<li class="level1"><div class="li"> <strong>linebreak</strong> - the text, (as well as background and border, if set) are displayed in one single cell. Existing line breaks will split the text in several text lines within the cell.</div>
+</li>
+<li class="level1"><div class="li"> <strong>multicells</strong> - the text is split into multiple Excel cells. The number of required rows will be the same as number of lines in the text. The rows are not merged. Background and border, if set, are common to all lines of text.</div>
+</li>
+<li class="level1"><div class="li"> <strong>mergecells</strong> - the text is split into multiple merged Excel rows. Background and border, if set, are common for all lines of text.</div>
+</li>
+<li class="level1"><div class="li"> <strong>singlecell</strong> - the text is displayed in the first row of the element. The width, background and border, if set, correspond to the design of the element.</div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="new-sheet-per-top-level-group" id="new-sheet-per-top-level-group">New sheet per top-level group</a></h2>
+<div class="level2">
+
+<p>
+
+The parameter &quot;firstgroupassheets&quot; specifies whether a new sheet will be created for every instance of the top-most group or not. The default value is false.
+</p>
+
+</div>
+
+<h2><a name="number-of-group-levels-in-outline" id="number-of-group-levels-in-outline">Number of group levels in outline</a></h2>
+<div class="level2">
+
+<p>
+
+The parameter &quot;grouplevel&quot; specifies how many group levels are to be shown in the outline of the excel sheet. A number between 0 and 7 is valid. The default value is: 0. 
+</p>
+
+</div>
+
+<h3><a name="see-also" id="see-also">See also:</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="../../../viewer/en/export-formats.html" class="wikilink1" title="Export Formats">Export Formats</a></div>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="feedback" class="dokuwiki">
+
+	<hr />
+	<div id="feedbackContainer">
+		
+		<p>i-net software strives to provide accurate product documentation. Please give us your feedback using the form below.<br />
+		<b>NOTE:</b> This form is for documentation feedback only. For technical assistance, please send an email to 
+		<a href="mailto:"></a>.</p>
+		
+		<form action="https://www.inetsoftware.de/external_services/feedback/index.php" method="post" id="feedbackForm" name="feedbackForm" >
+			<table class="feedback">
+				<tr>
+					<th>This page is:</th>
+					<td>very poor</td>
+					<td><input type="radio" name="Points" value="1" /></td>
+					<td><input type="radio" name="Points" value="2" /></td>
+					<td><input type="radio" name="Points" value="3" /></td>
+					<td><input type="radio" name="Points" value="4" /></td>
+					<td><input type="radio" name="Points" value="5" /></td>
+					<td>very good</td>
+				</tr>
+				<tr>
+					<th>Comment:</th>
+					<td colspan="7">
+						<textarea name="Comment" cols="40" rows="3" ></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" colspan="8">
+						<input type="submit" name="send" value="submit"/>
+						<input type="hidden" name="Product" value="CC Online Doku" />
+						<input type="hidden" name="Version" value="9.2" />
+						<input type="hidden" name="Page" value="/documentation/crystal-clear/viewer/en/export-formats/xls" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<div class="clearer">&nbsp;</div>
+
+<a href="http://www.inetsoftware.de" class="inetsoftware"><img
+	src="../../../lib/tpl/crystal-clear-documentation/images/logo.png" alt="i-net software" /></a></div>
+
+<div id="footer">
+<p>
+<a href="http://www.inetsoftware.de/de/company/impressum" class="urlextern" title="http://www.inetsoftware.de/de/company/impressum"  rel="nofollow">Imprint</a>
+
+</p>
+<p class="footer-left">Version: <a href="../../../doc/support/releasenotes/changes.html" >9.2</a>/ March 09,2010<br />
+Copyright &copy; 1996 - 2010 <a href="http://www.inetsoftware.de/" >i-net software</a>.
+All rights reserved.</p>
+</div>
+</div>
+
+					
+<!--[if !( lt IE 6)]><!-->
+<!-- UserVoice Code -->
+<script type="text/javascript">
+var uservoiceOptions = {
+  /* required */
+  key: 'crystalclear',
+  host: 'crystalclear.uservoice.com', 
+  forum: '29247',
+  showTab: true,  
+  /* optional */
+  alignment: 'left',
+  background_color:'#3b67b7', 
+  text_color: 'white',
+  hover_color: '#0041B7',
+  lang: 'en'
+};
+
+addInitEvent( function() {
+  var s = document.createElement('script');
+  s.setAttribute('type', 'text/javascript');
+  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+  document.getElementsByTagName('head')[0].appendChild(s);
+});
+</script>
+<!--<![endif]-->
+
+</body>
+</html>

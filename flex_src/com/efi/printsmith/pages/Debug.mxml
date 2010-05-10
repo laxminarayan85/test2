@@ -38,6 +38,9 @@
 			import com.efi.printsmith.data.ProductCode;
 			import com.efi.printsmith.data.Location;
 			import com.efi.printsmith.data.SalesCategory;
+			import com.efi.printsmith.view.RepositoryDownload;
+			import com.efi.printsmith.view.RepositoryUpload;	
+			import com.efi.printsmith.view.JMFQueue;		
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.ChargeCost;
 			import com.efi.printsmith.data.enums.ChargeCostMethod;
@@ -95,6 +98,16 @@
 			
 			private function doPopulateEstimators():void {
 				
+			}
+			
+			private function doUpload():void {
+				var download : RepositoryUpload = RepositoryUpload(PopUpManager.createPopUp(this, RepositoryUpload, true));
+				PopUpManager.centerPopUp(download);
+			}
+			
+			private function doDownload():void {
+				var download : RepositoryDownload = RepositoryDownload(PopUpManager.createPopUp(this, RepositoryDownload, true));
+				PopUpManager.centerPopUp(download);
 			}
 			
 			private function doPopulateProductCodes():void {
@@ -200,7 +213,7 @@
 			private function handleGetByIdResult(evt:ResultEvent):void {
 				if (evt.result != null) {
 					var job:Job = evt.result as Job;
-					jdfIntegrationService.sendJobToFiery(15560,15562);
+					jdfIntegrationService.sendJobToFiery(6408,6428);
 				}
 			}
 			
@@ -209,11 +222,16 @@
 			}
 			
 			private function sendFieryJob():void {
-				dataService.getById("Job", 15562);
+				dataService.getById("Job", 6428);
 			}
 			
 			private function cancelFierySubscription():void {
-				jdfIntegrationService.cancelFierySubscription(15562);
+				jdfIntegrationService.cancelFierySubscription(6428);
+			}
+			
+			private function showFieryQueue():void {
+				var queueWindow : JMFQueue = JMFQueue(PopUpManager.createPopUp(this, JMFQueue, true));
+				PopUpManager.centerPopUp(queueWindow);
 			}
 		]]>
 	</mx:Script>
@@ -221,30 +239,33 @@
 	<mx:Canvas width="100%"
 			   height="100%">
 		<mx:Button x="10"
-				   y="70"
+				   y="10"
 				   label="Populate Sales Categories"
 				   click="doPopulateSalesCategories();" width="188"/>
 		<mx:Button x="10"
-				   y="100"
+				   y="40"
 				   label="Populate Locations"
 				   click="doPopulateLocations();" width="188" enabled="false"/>
 		<mx:Button x="10"
-				   y="130"
+				   y="70"
 				   label="Populate Product Codes"
 				   click="doPopulateProductCodes();" width="188"/>
 		<mx:Button x="10"
-				   y="160"
+				   y="100"
 				   label="Populate Stock Dimensions"
 				   click="doPopulateDimensions();" width="188"/>
 		<mx:Button x="10"
-				   y="190"
+				   y="207"
 				   label="Send To Fiery"
 				   click="sendFieryJob();" width="188"/>
 		<mx:Button x="10"
-				   y="220"
+				   y="237"
 				   label="Cancel Fiery Subscription"
 				   click="cancelFierySubscription();" width="188"/>
-		<mx:Button x="10" y="258" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
+		<mx:Button x="10" y="130" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
+		<mx:Button x="10" y="347" label="Download File From Repository" width="188"  click="doDownload();"  id="btn_download_repository"/>
+		<mx:Button x="10" y="317" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
+		<mx:Button x="10" y="267" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

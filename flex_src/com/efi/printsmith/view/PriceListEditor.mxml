@@ -12,7 +12,8 @@
     verticalScrollPolicy="off" fontSize="9">
 
 <mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="addUpdate" fault="handleFault(event);" result="handleSaveResult(event);"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="getPriceList" fault="handleFault(event)" result="handleLoadPriceList(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServicePriceList" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event);" result="handleSaveItemsResult(event);"/>
@@ -345,8 +346,8 @@
 			itemType = "PriceList";
 			this.currentState = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PriceList');
 		}
-		this.priceList = priceList;
-		updateTitle(this.priceList.name);
+		dataService.getPriceList(priceList.id);
+		updateTitle(priceList.name);
 	}   
 
 	private function validate(validator:Validator):Boolean
@@ -426,6 +427,18 @@
 		var editPage:Container = parentContainer;
 	}
 		
+	private function handleLoadPriceList(ev:ResultEvent):void {
+		if (itemType == "PriceList" || itemType == "PriceListBase") {
+			priceList = ev.result as PriceList;
+		} else if (itemType == "WasteChart") {
+			priceList = ev.result as WasteChart;
+		} else if (itemType == "SpeedTable") {
+			priceList = ev.result as SpeedTable;
+		} else if (itemType == "PaperPrice") {
+			priceList = ev.result as PaperPrice;
+		}		
+	}
+	
 	private function doNewPriceListElement():void {
 		if (priceList.elements == null) priceList.elements = new ArrayCollection();
 		var newItem:PriceListElement = new PriceListElement();

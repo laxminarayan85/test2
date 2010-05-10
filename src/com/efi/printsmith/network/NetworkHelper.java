@@ -217,9 +217,8 @@ public class NetworkHelper {
 			
 			HttpClient client = new HttpClient();
 
-			client.getHostConfiguration().setHost("10.34.80.228");
-//			client.getHostConfiguration().setHost(urlObj.getHost(),
-//					urlObj.getPort(), urlObj.getProtocol());
+			client.getHostConfiguration().setHost(urlObj.getHost(),
+					urlObj.getPort(), urlObj.getProtocol());
 			method = new PostMethod(urlS);
 			NetworkHelper.setApacheTimeouts(timeouts, client);
 			NetworkHelper.setApacheProxyInfo(client, method);
@@ -228,9 +227,9 @@ public class NetworkHelper {
 			method.setPath(URIUtil.getPath(urlS));
 			method.setQueryString(URIUtil.getQuery(urlS));
 //			method.setStrictMode(true);
-//			method.setHttp11(true);
+			method.setHttp11(false);
 
-			method.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			method.setRequestHeader("Content-type", content.getType());
 
 			if (content.getLength() >= 0) {
 				method.setRequestContentLength(content.getLength());
@@ -271,7 +270,7 @@ public class NetworkHelper {
 
 		return response;
 	}
-
+	
 	/**
 	 * @deprecated The Apache httpclient should be used instead, for better
 	 *             control of timeouts.

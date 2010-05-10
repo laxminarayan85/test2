@@ -5,16 +5,26 @@ width="786" height="531"  creationComplete="init()"
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="jdfIntegrationService"
+				destination="jdfIntegrationService">
+	<mx:method name="sendJobToFiery"
+				fault="handleFault(event)"
+				result="sendJobToFieryResult(event)"/>
+	<mx:method name="cancelFieryJob"
+				fault="handleFault(event)"
+				result="cancelFieryJobResult(event)"/>
+	<mx:method name="pauseFieryJob"
+				fault="handleFault(event)"
+				result="pauseFieryJobResult(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="invoicebase"/>
 <mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-	
 
-
-
-<mx:Script>                                   
+<mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.Job;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                  
@@ -53,7 +63,6 @@ width="786" height="531"  creationComplete="init()"
 		notification_consumer.subscribe();
 		dataService.getPending("InvoiceBase");
 		invoicebases.filterFunction = invoiceEsimtateFilter;
-	
 	} 
 	
 	private function fillReportArray(fillArray:ArrayCollection):void {
@@ -76,6 +85,7 @@ width="786" height="531"  creationComplete="init()"
 		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Integration');
 		fillArray.addItem(array);
 	}
+	
 	private function fillSortArray(fillArray:ArrayCollection):void {
 		var array:Object=new Object();
 		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Customer');
@@ -118,9 +128,6 @@ width="786" height="531"  creationComplete="init()"
 		fillArray.addItem(array);
 	}
 	
-	
-	
-	 
 	private function refreshData():void{
 		invoice_list.invalidateList();
 		invoicebases.refresh();
@@ -130,11 +137,13 @@ width="786" height="531"  creationComplete="init()"
 		
 		refreshData();
 	}
+	
 	private function handleLoadResult(event:ResultEvent):void {
 		invoicebases = event.result as ArrayCollection;
 		invoicebases.filterFunction = invoiceEsimtateFilter;
 		refreshData();
 	}
+	
 	public function getAccountLabel(item:Object, column:DataGridColumn):String{
 		var tmpInvoice:InvoiceBase = item as InvoiceBase;
 		
@@ -144,6 +153,7 @@ width="786" height="531"  creationComplete="init()"
 			return "None";
 		}
 	}
+	
 	private function invoiceEsimtateFilter(item:Object):Boolean {
 		var showItem:Boolean = false;
 		
@@ -159,6 +169,7 @@ width="786" height="531"  creationComplete="init()"
 		
 		return showItem
 	}
+	
 	private function DoComboReportChange():void{
 		refreshData();
 		var temp:String = reportType_comob.selectedItem.name as String;
@@ -186,13 +197,7 @@ width="786" height="531"  creationComplete="init()"
 				total_column.visible = false;
 				location_column.visible = false;
 				break;
-				
-		
 		}
-		
-	
-			
-		
 	}
 	
 	private function handleFault(event:FaultEvent):void {
@@ -203,7 +208,59 @@ width="786" height="531"  creationComplete="init()"
 		+ event.fault.faultDetail + " - "                                  
 		+ event.fault.faultString;
 		Alert.show(message, "Error", 0, null, null, null, 4);        	
-	} 	
+	} 
+		
+	private function sendJobToFieryResult(evt:ResultEvent):void {
+		
+	}
+	
+	private function cancelFieryJobResult(evt:ResultEvent):void {
+	}
+	
+	private function pauseFieryJobResult(evt:ResultEvent): void {
+	}
+	
+	private function sendFieryJob():void {
+		// TODO: Just plain ugly here until WIP report supports jobs instead of invoices...0
+		var invoice:Invoice = invoice_list.selectedItem as Invoice;
+		if (invoice != null) {
+			var jobs:ArrayCollection = invoice.jobs;
+			if (jobs != null && jobs.length > 0) {
+				var job:Job = jobs.getItemAt(0) as Job;
+				jdfIntegrationService.sendJobToFiery(job.id, invoice.id);	
+			}
+		}
+	}
+	
+	private function pauseFieryJob():void {
+		var invoice:Invoice = invoice_list.selectedItem as Invoice;
+		if (invoice != null) {
+			var jobs:ArrayCollection = invoice.jobs;
+			if (jobs != null && jobs.length > 0) {
+				var job:Job = jobs.getItemAt(0) as Job;
+				jdfIntegrationService.pauseFieryJob(job.id);
+			}
+		}
+	}
+	
+	private function cancelFieryJob():void {
+		var invoice:Invoice = invoice_list.selectedItem as Invoice;
+		if (invoice != null) {
+			var jobs:ArrayCollection = invoice.jobs;
+			if (jobs != null && jobs.length > 0) {
+				var job:Job = jobs.getItemAt(0) as Job;
+				jdfIntegrationService.cancelFieryJob(job.id);
+			}
+		}
+	}
+
+	private function enableFieryButton():Boolean {
+		if (invoice_list.selectedIndex >= 0) {
+			return true;
+		}
+		return false;
+	}
+	
 	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
@@ -217,6 +274,11 @@ width="786" height="531"  creationComplete="init()"
 			}
 		}
 	}	
+	
+	private function submitToFiery():void
+	{
+		
+	}
 ]]>
                              
 </mx:Script>
@@ -236,21 +298,32 @@ width="786" height="531"  creationComplete="init()"
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:Label x="23" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ReportType')}" textAlign="right" width="83"/>
-	<mx:Label x="33" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
-	<mx:ComboBox x="114" y="67" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name"></mx:ComboBox>
-	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()" ></mx:ComboBox>
-	<mx:Panel x="10" y="97" width="583" height="105" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}">
-		<mx:CheckBox x="25" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check"/>
-		<mx:CheckBox x="25" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check"/>
-		<mx:CheckBox x="152" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check"/>
+	<mx:Label x="33" y="59" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
+	<mx:ComboBox x="114" y="57" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name" width="151"></mx:ComboBox>
+	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()"  width="151"></mx:ComboBox>
+	<mx:Panel x="10" y="97" width="583" height="105" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
+		<mx:CheckBox x="25" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check" width="119"/>
+		<mx:CheckBox x="25" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check" width="119"/>
+		<mx:CheckBox x="152" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check" width="81"/>
 		<mx:CheckBox x="152" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.NoPricing')}" id="noPricing_check"/>
 		<mx:CheckBox x="380" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintDoubleSpace')}" id="doubleSpace_check"/>
 		<mx:CheckBox x="380" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
-		<mx:CheckBox x="231" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check"/>
+		<mx:CheckBox x="241" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check" width="131"/>
 	</mx:Panel>
-	<mx:Panel x="327" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}">
-		<mx:CheckBox x="10" y="0" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()"/>
-		<mx:CheckBox x="10" y="17" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()"/>
+	<mx:Panel x="292" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
+		<mx:CheckBox x="10" y="0" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()" width="120"/>
+		<mx:CheckBox x="10" y="17" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()" width="120"/>
+	</mx:Panel>
+	<mx:Panel x="460" y="10" width="133" height="79"  dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
+		<mx:LinkButton x="7" y="6" id="btn_submit" width="33" click="submitToFiery()">
+			<mx:icon>@Embed(source='../../../../assets/media_play.png')</mx:icon>
+		</mx:LinkButton>
+		<mx:LinkButton x="48" y="6" id="btn_stop" width="33" click="pauseFieryJob()">
+			<mx:icon>@Embed(source='../../../../assets/media_pause.png')</mx:icon>
+		</mx:LinkButton>
+		<mx:LinkButton x="89" y="6" id="btn_info" width="33" click="cancelFieryJob()">
+			<mx:icon>@Embed(source='../../../../assets/information2.png')</mx:icon>
+		</mx:LinkButton>
 	</mx:Panel>
 
 </mx:Canvas>

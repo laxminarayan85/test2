@@ -9,34 +9,7 @@
 		<param-name>flex.class.path</param-name>
 		<param-value>/WEB-INF/flex/hotfixes,/WEB-INF/flex/jars</param-value>
 	</context-param>
-
-<!--
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/applicationContext.xml,
-			/WEB-INF/springSecurityContext.xml
-		</param-value>
-	</context-param>
-
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 	
-
--->
-	<!-- Http Flex Session attribute and binding listener support -->
- <!--
-    <listener>
-        <listener-class>flex.messaging.HttpFlexSession</listener-class>
-    </listener>
--->
-
 	<filter>
 		<filter-name>hibernateSessionFilter</filter-name>
 		<filter-class>net.digitalprimates.persistence.hibernate.utils.filters.HibernateSessionServletFilter</filter-class>
@@ -81,53 +54,61 @@
 		<servlet-class>com.efi.printsmith.integration.IntegrationServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
- <!--
- 	<servlet>
-		<servlet-name>ProxyServlet</servlet-name>
-		<display-name>ProxyServlet</display-name>
-		<servlet-class>com.efi.printsmith.reporting.ProxyServlet</servlet-class>
-		<init-param>
-			<param-name>timeout</param-name>
-			<param-value>120</param-value>
-		</init-param>
-		<init-param>
-			<param-name>remote-host</param-name>
-			<param-value>http://localhost</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
 	<servlet>
 		<servlet-name>CrystalClearServlet</servlet-name>
 		<display-name>CrystalClearServlet</display-name>
 		<servlet-class>com.efi.printsmith.reporting.CrystalClearServlet</servlet-class>
+		<init-param>
+			<param-name>logo.url</param-name>
+			<param-value>file:///Users/bknabel/Pictures/2631674293_4ecc428aae_o.jpg</param-value>
+		</init-param>
+		<init-param>
+			<param-name>reportlogo.url</param-name>
+			<param-value>file:///Users/bknabel/Pictures/2631674293_4ecc428aae_o.jpg</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet>
-		<servlet-name>CrystalClearInspectionServlet</servlet-name>
-		<display-name>CrystalClearInspectionServlet</display-name>
-		<servlet-class>com.efi.printsmith.reporting.CrystalClearInspectionServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>StaticVersionCrystalClearViewerServlet</servlet-name>
-		<display-name>StaticVersionCrystalClearViewerServlet</display-name>
-		<servlet-class>com.efi.printsmith.reporting.StaticVersionCrystalClearViewerServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>VersionSelectingCrystalClearServlet</servlet-name>
-		<display-name>VersionSelectingCrystalClearServlet</display-name>
-		<servlet-class>com.efi.printsmith.reporting.VersionSelectingCrystalClearServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>VersionSelectingCrystalClearViewerServlet</servlet-name>
-		<display-name>VersionSelectingCrystalClearViewerServlet</display-name>
-		<servlet-class>com.efi.printsmith.reporting.VersionSelectingCrystalClearViewerServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
--->
+        <servlet-name>Report</servlet-name>
+        <servlet-class>com.inet.report.ReportServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>TransferReport</servlet-name>
+        <servlet-class>com.inet.report.database.beans.TransferServlet</servlet-class>
+    </servlet>	
+    
+    
+    <servlet>
+        <servlet-name>Remote</servlet-name>
+        <servlet-class>com.inet.remote.gui.RemoteGuiServlet</servlet-class>
+    </servlet>
+            
+    
+    <servlet>
+		<servlet-name>CrystalClear</servlet-name>
+		<servlet-class>com.inet.report.StaticServlet</servlet-class>
+    </servlet>
+           
+	<servlet-mapping>
+		<servlet-name>Report</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>CrystalClear</servlet-name>
+		<url-pattern>/crystalclear/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+	    <servlet-name>TransferReport</servlet-name>
+	    <url-pattern>/TransferServlet/*</url-pattern>
+	</servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>Remote</servlet-name>
+        <url-pattern>/remote/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
@@ -145,33 +126,13 @@
 		<servlet-name>IntegrationServlet</servlet-name>
 		<url-pattern>/IntegrationServlet</url-pattern>
 	</servlet-mapping>
-	
- <!--
-     <servlet-mapping>
-        <servlet-name>ProxyServlet</servlet-name>
-        <url-pattern>/ProxyServlet</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CrystalClearServlet</servlet-name>
-        <url-pattern>/CrystalClearServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CrystalClearInspectionServlet</servlet-name>
-        <url-pattern>/CrystalClearInspectionServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StaticVersionCrystalClearViewerServlet</servlet-name>
-        <url-pattern>/StaticVersionCrystalClearViewerServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VersionSelectingCrystalClearServlet</servlet-name>
-        <url-pattern>/VersionSelectingCrystalClearServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VersionSelectingCrystalClearViewerServlet</servlet-name>
-        <url-pattern>/VersionSelectingCrystalClearViewerServlet</url-pattern>
-    </servlet-mapping>	
--->
+        <url-pattern>/CrystalClearServlet/*</url-pattern>
+    </servlet-mapping>    
+    
+    
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

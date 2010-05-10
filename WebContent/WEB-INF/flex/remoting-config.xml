@@ -110,4 +110,14 @@
 			</hibernate>
 		</properties>
 	</destination>
+	<destination id="reportRepositoryService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.repository.ReportRepository
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>	
 </service>

@@ -1394,8 +1394,32 @@ public class DataService extends HibernateService {
 		return null;
 	}
 	
+	public ModelBase getPriceList(Long id) throws Exception {
+		log.debug("** getPriceList called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("PriceList.byId");
+			query.setParameter("id", id);
+			PriceList priceList = (PriceList) query.getSingleResult();
+
+			for (int i=0; i < priceList.getElements().size(); i++) {
+				PriceListElement element = priceList.getElements().get(i);
+				
+				if (element == null) {
+					log.error("Null priceList element found");
+				}
+			}
+			return priceList;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
 	public ModelBase getMatrix(Long id) throws Exception {
-		log.debug("** getById called.");
+		log.debug("** getMatrix called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Query query = em.createNamedQuery("Matrix.byId");

@@ -325,7 +325,6 @@ public class JobBase extends ModelBase {
    * @generated
    */
   public static final String PAPERPRICE = "PaperPrice";
-
 	/**
    * @generated
    */
@@ -1918,6 +1917,7 @@ public class JobBase extends ModelBase {
   public void setPaperPrice(PaperPrice newVal) {
     this.paperPrice = newVal;
   }
+
 
 
 	/**

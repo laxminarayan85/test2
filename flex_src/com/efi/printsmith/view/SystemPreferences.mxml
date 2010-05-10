@@ -4,6 +4,7 @@
 	xmlns:fc="http://www.adobe.com/2006/fc" 
 	xmlns:vo="com.efi.printsmith.vo.*"
 	xmlns:cmp="com.efi.printsmith.components.*"
+	xmlns:vld="com.efi.printsmith.validators.*"
 	width="100%" height="100%" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
@@ -165,6 +166,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCategoryResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCategoryResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceIntegration" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadIntegrationResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveIntegrationResult(event)"/>
+	</mx:RemoteObject>
 
     <mx:PhoneNumberValidator id="pnVPhone" 
         source="{this.txtPhone}" property="text"
@@ -178,7 +183,10 @@
         source="{this.txtEmail}" property="text"
         trigger="{this.btnSave}" 
         triggerEvent="click"/>
-
+	<vld:URLValidator id="urlValidator"
+		source="{this.txtFieryURL}" property="text"
+		trigger="{this.btnSave}"
+		triggerEvent="click"/>
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -214,6 +222,7 @@
 	import com.efi.printsmith.data.PreferencesStockDefinition;
 	import com.efi.printsmith.data.PreferencesStocks;
 	
+	import com.efi.printsmith.data.PreferencesIntegration;
 	
 	import com.efi.printsmith.data.Country;
 	import com.efi.printsmith.data.ColumnNames;
@@ -251,8 +260,6 @@
 //Data field arrays
 	[Bindable]
 	private var PreferencesSystemArray:ArrayCollection = new ArrayCollection();
-	[Bindable]
-	private var PreferencesPOSArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesEstimatingArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -358,6 +365,9 @@
 	private var preferencesCashRegister:PreferencesCashRegister;
 		
 	[Bindable]
+	private var preferencesIntegration:PreferencesIntegration;
+	
+	[Bindable]
 	private var country:Country;
 
 //Tree view XML table
@@ -398,6 +408,9 @@
 				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24" command="CMD_Preferences_CreditCardInfo"/>
 				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command=""/>
 				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="CMD_Preferences_JournalEntries"/>
+			</node>
+			<node label="genericPrefCmd.Integration" command="CMD_Preferences_Integration">
+				<node label="Fiery" isBranch="false" tag="27" command="CMD_Preferences_Fiery"/>
 			</node>
 		</root>;
 	
@@ -725,6 +738,7 @@
 		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
 		dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 		dataServiceStocks.getAll("PreferencesStocks");
+		dataServiceIntegration.getAll("PreferencesIntegration");
 
 	}
 
@@ -734,6 +748,7 @@
 		dataServiceEstimator.addUpdate(preferencesEstimating);
 		dataServiceAccounting.addUpdate(preferencesAccounting);
 		dataServiceStocks.addUpdate(preferencesStocks);
+		dataServiceIntegration.addUpdate(preferencesIntegration);
 		
 		//remove and or delete items from table
 		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
@@ -807,27 +822,29 @@
 		}
 
 	}
-
+	private function mapFromPrefereincesIntegrationData():void {
+		this.txtFieryURL.text = preferencesIntegration.fieryConnectorURL;
+	}
 	private function mapFromPreferencesSystemData():void {
 		//check boxes
-		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging
-		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown
-		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown
-		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions
-		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles
-		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages
-		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut
-		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit
-		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes
-		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem
-		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed
-		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices
-		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity
-		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday
-		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp
-		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting
-		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency
-		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding
+		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging;
+		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown;
+		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown;
+		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions;
+		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles;
+		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages;
+		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut;
+		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit;
+		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes;
+		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem;
+		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed;
+		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices;
+		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity;
+		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday;
+		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp;
+		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting;
+		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency;
+		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding;
 		
 		//comboboxs
 		if (preferencesSystem.fiscalYearStartMonth != "")
@@ -1216,6 +1233,7 @@
 		mapToPreferencesPOSData();
 		mapToPreferencesSystem();
 		mapToPreferencesStocksData();
+		mapToPreferencesIntegration();
 //		this.chkAlwaysIncludePastDue.selected 
 //		this.chkColorPastDueEntries.selected 
 //		this.chkShowDocumentType.selected
@@ -1223,6 +1241,10 @@
 		
 	}
 
+	private function mapToPreferencesIntegration() {
+		preferencesIntegration.fieryConnectorURL = this.txtFieryURL.text;
+	}
+	
 	private function mapToPreferencesSystem():void {
 		
 		preferencesSystem.companyAddress = address_editor.getAddress();
@@ -1655,6 +1677,17 @@
 	}
 
 // Data Load Handlers
+	private function handleLoadIntegrationResult(ev:ResultEvent):void {
+		var preferencesIntegrationArray:ArrayCollection = ev.result as ArrayCollection;
+		if (preferencesIntegrationArray.length > 0) {
+			preferencesIntegration = preferencesIntegrationArray.getItemAt(0,0) as PreferencesIntegration;
+		}
+		if (preferencesIntegration == null) {
+			preferencesIntegration = new PreferencesIntegration();
+		}
+		mapFromPrefereincesIntegrationData();
+	}
+	
 	private function handleLoadSystemResult(ev:ResultEvent):void {
 		PreferencesSystemArray = ev.result as ArrayCollection;
 		if (PreferencesSystemArray.length > 0)
@@ -1666,9 +1699,9 @@
 		mapFromPreferencesSystemData();
 	}
 	private function handleLoadPOSResult(ev:ResultEvent):void {
-		PreferencesPOSArray = ev.result as ArrayCollection;
-		if ( PreferencesPOSArray.length >0 )
-			preferencesPOS = PreferencesPOSArray.getItemAt(0,0) as PreferencesPOS;
+		var preferencesPOSArray:ArrayCollection = ev.result as ArrayCollection;
+		if ( preferencesPOSArray.length >0 )
+			preferencesPOS = preferencesPOSArray.getItemAt(0,0) as PreferencesPOS;
 		if (preferencesPOS == null)
 		{
 			preferencesPOS = new PreferencesPOS();
@@ -1707,6 +1740,9 @@
 		{
 			preferencesCashRegister = new PreferencesCashRegister();
 		} 
+	}
+	private function handleLoadIntegrationPreferencesResult(ev:ResultEvent):void {
+		preferencesIntegration.fieryConnectorURL = this.txtFieryURL.text;
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
@@ -1752,6 +1788,9 @@
 	}
 
 // Data Save Handlers
+	private function handleSaveIntegrationResult(ev:ResultEvent):void {
+		dataServiceSystem.getAll("PreferencesIntegration");
+	}
 	private function handleSaveSystemResult(ev:ResultEvent):void {
     	dataServiceSystem.getAll("PreferencesSystem");
 	}
@@ -3224,6 +3263,13 @@
 				<mx:Label x="55" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.JournalDocumentPrefe')}" textAlign="right" width="166"/>
 				<mx:ComboBox x="224" y="90" id="cboJournalDocumentPreference"  dataProvider="{JournalDocumentPreferenceArray}" labelField="name" width="250"/>
 
+			</mx:Canvas>
+			<mx:Canvas width="100%" height="100%" id="fiery_canvas" hideEffect="effect" showEffect="effect">
+				<mx:TextInput x="153" y="44" width="365" id="txtFieryURL"/>
+				<mx:Label x="23" y="46" text="Fiery Connector URL:"/>
+				<mx:Label x="0" y="0" width="100%" height="20" text="Fiery" textAlign="center"/>
+				<mx:HRule x="0" y="17" width="100%"/>
+				
 			</mx:Canvas>
 		</mx:ViewStack>					
 	</mx:VBox>

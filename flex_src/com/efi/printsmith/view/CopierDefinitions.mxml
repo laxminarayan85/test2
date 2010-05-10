@@ -242,20 +242,20 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	{
 	}
                                   
-	public function setPriceList(price:PriceListBase): void {
-//	 	if (copy){
-//	 		copierDefinition.copierPriceList = price as PriceList;
-//	 		copy = false;
-//	 	}
-//	 	if (stock){
-//	 		copierDefinition.stockPriceList = price as PriceList;
-//	 		stock= false;
-//	 	}
-//	 	if (waste){
-//	 		copierDefinition.wasteChart = price as WasteChart;
-//	 		waste= false;
-//	 	}
-	}   
+//	public function setPriceList(price:PriceListBase): void {
+////	 	if (copy){
+////	 		copierDefinition.copierPriceList = price as PriceList;
+////	 		copy = false;
+////	 	}
+////	 	if (stock){
+////	 		copierDefinition.stockPriceList = price as PriceList;
+////	 		stock= false;
+////	 	}
+////	 	if (waste){
+////	 		copierDefinition.wasteChart = price as WasteChart;
+////	 		waste= false;
+////	 	}
+//	}   
 
 	private function doAddCopier():void {
 		dataService.addUpdate(copierDefinition);
