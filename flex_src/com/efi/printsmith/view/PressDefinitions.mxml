@@ -40,6 +40,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceProductionPress" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionPressResult(event)"/>
+	<mx:method name="getByName" fault="handleFault(event)" result="handleGetProductionPressByName(event)"/>
 </mx:RemoteObject>
 	<mx:Producer id="producer" destination="pressdefinitions"/>
 	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
@@ -54,6 +55,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.data.PriceListBase;
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.WasteChart;
+	import com.efi.printsmith.data.ProductionPress;
 	import com.efi.printsmith.pages.DefaultPressPicker;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
@@ -95,6 +97,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	[Bindable]                                         
      private var pressDefinition:PressDefinition;
+     [Bindable]
+     private var productionMachine:ProductionPress;
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
     [Bindable]                                         
@@ -246,7 +250,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
 		 pressDefinition.name = Name.text;
-		 pressDefinition.machineName = productionPress.selectedItem as String;
+		 pressDefinition.machineName = productionPress.selectedItem.name as String;
 		 pressDefinition.outputDescrip = OutPutDescription.text;
 		 pressDefinition.productionLocation = ProductionLocation.selectedItem as String;
 		 pressDefinition.costCenter = CostCenter.selectedItem as String;
@@ -310,7 +314,15 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doNew():void {
 	    pressDefinition = new PressDefinition();
 	 	
-	}       
+	}
+	
+	private function updateMachineId():void {
+		dataServiceProductionPress.getByName("ProductionPress",productionPress.selectedItem.name as String);
+	}
+	private function handleGetProductionPressByName(ev:ResultEvent):void {
+		productionMachine = ev.result as ProductionPress;
+		pressDefinition.machineID = parseInt(productionMachine.prevId);
+	}
 	private function handleSaveResult(ev:ResultEvent):void {
     	loadPressDefinitions();
 	}
@@ -662,5 +674,5 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
 		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
 	</mx:Panel>
-	<mx:ComboBox x="131" y="146" id="productionPress" width="263" labelField="name" dataProvider="{productionPressArray}" height="20"/>
+	<mx:ComboBox x="131" y="146" id="productionPress" width="263" labelField="name" dataProvider="{productionPressArray}" height="20" change="updateMachineId()"/>
 </mx:Panel>

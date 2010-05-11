@@ -29,6 +29,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceProductionCopiers" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionCopiersResult(event)"/>
+	<mx:method name="getByName" fault="handleFault(event)" result="handleGetProductionCopiersByName(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCostCenter" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCostCenterResult(event)"/>
@@ -57,7 +58,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.pages.DefaultCopierPicker;
 	
 	import com.efi.printsmith.data.PreferencesSystem;
-	
+	import com.efi.printsmith.data.ProductionCopiers;
 	import com.efi.printsmith.data.PriceListBase;
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.WasteChart;
@@ -100,7 +101,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var salesCategories:ArrayCollection = new ArrayCollection();                     
 	[Bindable]                                         
     private var copierDefinition:CopierDefinition;
-    
+    [Bindable]
+    private var productionMachine:ProductionCopiers;
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
 	[Bindable]                                
@@ -369,6 +371,14 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 		return -1;
 	}
+	
+	private function updateMachineId():void {
+		dataServiceProductionCopiers.getByName("ProductionCopiers",productionCopiers.selectedItem.name as String);
+	}
+	private function handleGetProductionCopiersByName(ev:ResultEvent):void {
+		productionMachine = ev.result as ProductionCopiers;
+		copierDefinition.copyID = parseInt(productionMachine.prevId);
+	}
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 	     costCenterArray = ev.result as ArrayCollection;
 	}
@@ -381,7 +391,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function mapCopierData():void {
 		//copierDefinition.copyDefID = CopierDefID;
 		copierDefinition.name = Name.text;
-		copierDefinition.machineName = productionCopiers.selectedItem.toString();
+		copierDefinition.machineName = productionCopiers.selectedItem.name as String;
 		copierDefinition.outputDescrip = OutPutDescription.text;
 		copierDefinition.productionLocation = ProductionLocation.selectedItem as String;
 		copierDefinition.costCenter = CostCenter.selectedItem as String;
@@ -968,7 +978,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:icon>@Embed(source='../../../../assets/Export.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="255" y="731" id = "export_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="47"/>
-		<mx:ComboBox x="126" y="146" id="productionCopiers" width="200" labelField="name" dataProvider="{productionCopiersArray}" height="20"/>
+		<mx:ComboBox x="126" y="146" id="productionCopiers" width="200" labelField="name" dataProvider="{productionCopiersArray}" height="20" change="updateMachineId()"/>
 	</mx:Canvas>
 <!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copierDefinition.wasteChart.name}"/>
 -->																						<!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copierDefinition.stockPriceList.name}"/>
