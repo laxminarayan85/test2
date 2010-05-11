@@ -68,20 +68,20 @@
 				 <mx:horizontalAxis>
 				    <mx:CategoryAxis 
 				         dataProvider="{priceList.elements}" 
-				         categoryField="quantity.toString()"
+				         categoryField="quantity"
 				     />
 				 </mx:horizontalAxis>
 			  <mx:series>
 			     <mx:LineSeries 
 			      yField="amount" 
-			      displayName="Waste Percent"
+			      displayName="Speed"
 			      lineSegmentRenderer=
 			         	 "mx.charts.renderers.ShadowLineRenderer"
 			     >
 			      <mx:lineStroke>
 			          <mx:Stroke 
 			              color="0x0099FF" 
-			              weight="20" 
+			              weight="2" 
 			              alpha=".2"
 			          />
 			      </mx:lineStroke>                
@@ -111,7 +111,7 @@
 				 <mx:horizontalAxis>
 				    <mx:CategoryAxis 
 				         dataProvider="{priceList.elements}" 
-				         categoryField="quantity.toString()"
+				         categoryField="quantity"
 				     />
 				 </mx:horizontalAxis>
 			  <mx:series>
@@ -124,7 +124,7 @@
 			      <mx:lineStroke>
 			          <mx:Stroke 
 			              color="0x0099FF" 
-			              weight="20" 
+			              weight="2" 
 			              alpha=".2"
 			          />
 			      </mx:lineStroke>                
