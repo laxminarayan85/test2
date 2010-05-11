@@ -1398,9 +1398,9 @@ public class DataService extends HibernateService {
 		log.debug("** getPriceList called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("PriceList.byId");
+			Query query = em.createNamedQuery("PriceListBase.byId");
 			query.setParameter("id", id);
-			PriceList priceList = (PriceList) query.getSingleResult();
+			PriceListBase priceList = (PriceListBase) query.getSingleResult();
 
 			for (int i=0; i < priceList.getElements().size(); i++) {
 				PriceListElement element = priceList.getElements().get(i);
