@@ -2,7 +2,25 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="920" height="768" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}"
 	 creationComplete="init();" showCloseButton="true" close="PopUpManager.removePopUp(this);">
+<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem"
+				   fault="handleFault(event)"
+				   result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>	
 	
+	<mx:RemoteObject id="paperCalculatorService"
+					 destination="paperCalculatorService">
+		<mx:method name="CalcOut"
+					fault="handleFault(event)"
+				    result="handleCalOutResult(event)"/>
+	</mx:RemoteObject>	
 	<mx:Script>                                   
 <![CDATA[
 	import mx.controls.Alert;                                         
@@ -37,11 +55,25 @@
 	
 	
 	private function init():void{
-		fillRunToFinishGrainArray(RunToFinishGrainArray);
+		//fillRunToFinishGrainArray(RunToFinishGrainArray);
 		
 	}
-	
-	
+	private function handleCalOutResult(ev:ResultEvent):void{
+		
+	}
+	private function handleLoadResult(ev:ResultEvent):void
+	{
+				
+	}
+	private function handleDeleteResult(ev:ResultEvent):void
+	{
+	}
+	private function handleSaveResult(ev:ResultEvent):void
+	{
+			PopUpManager.removePopUp(this);
+			
+			/* Todo brodcast save*/
+	}
 	private function handleFault(ev:FaultEvent):void
 		{
 			var message:String;
@@ -52,6 +84,7 @@
 
 
 	public function setJob(job2:JobBase):void{
+		fillRunToFinishGrainArray(RunToFinishGrainArray);
 		job = job2;
 		mapFromJobData();
 	}
@@ -60,12 +93,15 @@
 		
 	}
 	private function mapFromJobData():void{
-		gripLocationRadioValue = job.gripLocation;
+		gripLocationRadioValue = job.paperCal.gripLocation;
 		doGrip();
-		folioLocationRadioValue = job.folioLocation;
+		folioLocationRadioValue = job.paperCal.folioLocation;
 		doFolio();
-		if (job.runToFinishGrain != "")
-			cboRunToFinishGrain.selectedIndex = findItem(job.runToFinishGrain, RunToFinishGrainArray);
+		if (job.paperCal.runToFinishGrain != "")
+			cboRunToFinishGrain.selectedIndex = findItem(job.paperCal.runToFinishGrain, RunToFinishGrainArray);
+		job.paperCal.runSize = job.runSize;
+		job.paperCal.finishSize = job.finishSize;
+		job.paperCal.parentSize = job.parentSize;
 
 	}
 	private function findItem(name:String, array:ArrayCollection):int {
@@ -76,14 +112,45 @@
 		}
 		return -1;
 	}
-	private function mapToJobDate():void{
+	private function mapToJobData():void{
 		if ( gripLocation.selectedValue != null)
-			job.gripLocation = gripLocation.selectedValue.toString();
+			job.paperCal.gripLocation = gripLocation.selectedValue.toString();
 		if ( folioLocation.selectedValue != null)
-			job.folioLocation = folioLocation.selectedValue.toString();
+			job.paperCal.folioLocation = folioLocation.selectedValue.toString();
 		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
-	 		job.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
-		
+	 		job.paperCal.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
+	 	job.paperCal.runSize = run_size_edit.text
+	 	job.paperCal.attachToJobTicket = chkAttachToJobTicket.selected;
+	 	job.paperCal.backTrimParent= chkBackTrimParent.selected;
+	 	job.paperCal.bleed = parseInt(txtBleed.text);
+	 	job.paperCal.bleedBottom = parseInt(txtBleedBottom.text);
+	 	job.paperCal.bleedRight = parseInt(txtBleedRight.text);
+	 	job.paperCal.bleedTop = parseInt(txtBleedTop.text);
+	 	job.paperCal.colorBar = parseInt(txtColorBar.text);
+	 	job.paperCal.cutstoFinish = parseInt(txtCutstoFinish.text);
+	 	job.paperCal.cutstoRun = parseInt(txtCutstoRun.text);
+	 	job.paperCal.disableFSC = chkDisableFSC.selected
+	 	job.paperCal.finishSize = finish_size_edit.text
+	 	job.paperCal.folioEdge =parseInt(txtFolioEdge.text);
+	 	job.paperCal.gripEdgeGap= parseInt(txtGripEdge.text);
+	 	job.paperCal.gutter = parseInt(txtGutter.text);
+	 	job.paperCal.gutterHorizontal = parseInt(txtGutterHorizontal.text);
+	 	job.paperCal.parentSize = parent_size_edit.text;
+	 	job.paperCal.sheetsOut = parseInt(txtSheetsOut.text);
+	 	job.paperCal.trimFourSides = chkTrimFourSides.selected;
+	 	job.paperCal.useBleed = chkBleed.selected;
+	 	job.paperCal.useColorBar = chkColorBar.selected;
+	 	job.paperCal.useFolioEdge = chkFolioEdge.selected;
+	 	job.paperCal.useGripEdgeGap = chkGripEdge.selected;
+	 	job.paperCal.useGutter = chkGutter.selected;
+	 	job.paperCal.useWhiteSpace = chkWhiteSpace.selected;
+	 	//job.paperCal.whichStartSize 
+	 	job.paperCal.whiteSpace = parseInt(txtWhiteSpace.text);
+	 	job.paperCal.whiteSpaceBottom = parseInt(txtWhiteSpaceBottom.text);
+	 	job.paperCal.whiteSpaceRight= parseInt(txtWhiteSpaceRight.text);
+	 	job.paperCal.whiteSpaceTop = parseInt(txtWhiteSpaceTop.text);
+	 	job.paperCal.workandTumble = chkWorkAndTumble.selected;
+	 	
 	}
 	private function doGrip():void{
 		if (gripLocation.selectedValue == "Top")
@@ -122,18 +189,23 @@
 		setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SwingCombination' );
 		fillArray.addItem(setting);
 	}
+	private function doSave():void{
+		mapToJobData();
+		dataService.addUpdate(job.paperCal);
+	}
+	
 	
 ]]>
                
 </mx:Script>
 <mx:Canvas width="100%" height="699" id="papercalculator_canvas" hideEffect="effect" showEffect="effect" y="0">
 
-				<mx:CheckBox x="241" y="148" id="chkGripEdge" selected="{job.useGripEdgeGap}"/>
-				<mx:CheckBox x="241" y="196" id="chkFolioEdge" selected="{job.useFolioEdge}"/>
-				<mx:CheckBox x="242" y="244" id="chkColorBar" selected="{job.useColorBar}"/>
-				<mx:CheckBox x="242" y="292" id="chkWhiteSpace" selected="{job.useWhiteSpace}"/>
-				<mx:CheckBox x="242" y="392" id="chkGutter" selected="{job.useGutter}"/>
-				<mx:CheckBox x="242" y="442" id="chkBleed" selected="{job.useBleed}"/>
+				<mx:CheckBox x="241" y="148" id="chkGripEdge" selected="{job.paperCal.useGripEdgeGap}"/>
+				<mx:CheckBox x="241" y="196" id="chkFolioEdge" selected="{job.paperCal.useFolioEdge}"/>
+				<mx:CheckBox x="242" y="244" id="chkColorBar" selected="{job.paperCal.useColorBar}"/>
+				<mx:CheckBox x="242" y="292" id="chkWhiteSpace" selected="{job.paperCal.useWhiteSpace}"/>
+				<mx:CheckBox x="242" y="392" id="chkGutter" selected="{job.paperCal.useGutter}"/>
+				<mx:CheckBox x="242" y="442" id="chkBleed" selected="{job.paperCal.useBleed}"/>
 				
 				<mx:Label x="241" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" textAlign="right"/>
 				<mx:Label x="261" y="174" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FolioEdge')}" textAlign="right"/>
@@ -144,14 +216,14 @@
 				<mx:Label x="262" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}" textAlign="right"/>
 				<mx:Label x="262" y="470" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
 
-				<mx:TextInput  enabled="{chkGripEdge.selected}" x="261" y="146" id="txtGripEdge" restrict="0-9." width="93" text="{job.gripEdgeGap}"/>
-				<mx:TextInput enabled="{chkFolioEdge.selected}" x="261" y="194" id="txtFolioEdge" restrict="0-9." width="93" text="{job.folioEdge}"/>
-				<mx:TextInput enabled="{chkColorBar.selected}" x="262" y="242" id="txtColorBar" restrict="0-9." width="93" text="{job.colorBar}"/>
-				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="262" y="290" id="txtWhiteSpace" restrict="0-9." width="93" text="{job.whiteSpace}"/>
-				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="262" y="340" id="txtWhiteSpaceRight" restrict="0-9." width="93" text="{job.whiteSpaceRight}"/>
-				<mx:TextInput enabled="{chkGutter.selected}" x="262" y="390" id="txtGutter" restrict="0-9." width="93" text="{job.gutter}"/>
-				<mx:TextInput enabled="{chkBleed.selected}" x="262" y="440" id="txtBleed" restrict="0-9." width="93" text="{job.bleed}"/>
-				<mx:TextInput enabled="{chkBleed.selected}" x="262" y="490" id="txtBleedRight" restrict="0-9." width="93" text="{job.bleedRight}"/>
+				<mx:TextInput  enabled="{chkGripEdge.selected}" x="261" y="146" id="txtGripEdge" restrict="0-9." width="93" text="{job.paperCal.gripEdgeGap}"/>
+				<mx:TextInput enabled="{chkFolioEdge.selected}" x="261" y="194" id="txtFolioEdge" restrict="0-9." width="93" text="{job.paperCal.folioEdge}"/>
+				<mx:TextInput enabled="{chkColorBar.selected}" x="262" y="242" id="txtColorBar" restrict="0-9." width="93" text="{job.paperCal.colorBar}"/>
+				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="262" y="290" id="txtWhiteSpace" restrict="0-9." width="93" text="{job.paperCal.whiteSpace}"/>
+				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="262" y="340" id="txtWhiteSpaceRight" restrict="0-9." width="93" text="{job.paperCal.whiteSpaceRight}"/>
+				<mx:TextInput enabled="{chkGutter.selected}" x="262" y="390" id="txtGutter" restrict="0-9." width="93" text="{job.paperCal.gutter}"/>
+				<mx:TextInput enabled="{chkBleed.selected}" x="262" y="440" id="txtBleed" restrict="0-9." width="93" text="{job.paperCal.bleed}"/>
+				<mx:TextInput enabled="{chkBleed.selected}" x="262" y="490" id="txtBleedRight" restrict="0-9." width="93" text="{job.paperCal.bleedRight}"/>
 
 				<mx:Label x="363" y="270" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
 				<mx:Label x="363" y="320" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
@@ -159,25 +231,25 @@
 				<mx:Label x="363" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
 				<mx:Label x="363" y="470" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
 
-				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="363" y="290" id="txtWhiteSpaceTop" restrict="0-9." width="93" text="{job.whiteSpaceTop}"/>
-				<mx:TextInput enabled="{chkWhiteSpace.selected}"  x="363" y="340" id="txtWhiteSpaceBottom" restrict="0-9." width="93" text="{job.whiteSpaceBottom}"/>
-				<mx:TextInput enabled="{chkGutter.selected}"  x="363" y="390" id="txtGutterHorizontal" restrict="0-9." width="93" text="{job.gutterHorizontal}"/>
-				<mx:TextInput enabled="{chkBleed.selected}" x="363" y="440" id="txtBleedTop" restrict="0-9." width="93" text="{job.bleedTop}"/>
-				<mx:TextInput enabled="{chkBleed.selected}" x="363" y="490" id="txtBleedBottom" restrict="0-9." width="93" text="{job.bleedBottom}"/>
+				<mx:TextInput enabled="{chkWhiteSpace.selected}" x="363" y="290" id="txtWhiteSpaceTop" restrict="0-9." width="93" text="{job.paperCal.whiteSpaceTop}"/>
+				<mx:TextInput enabled="{chkWhiteSpace.selected}"  x="363" y="340" id="txtWhiteSpaceBottom" restrict="0-9." width="93" text="{job.paperCal.whiteSpaceBottom}"/>
+				<mx:TextInput enabled="{chkGutter.selected}"  x="363" y="390" id="txtGutterHorizontal" restrict="0-9." width="93" text="{job.paperCal.gutterHorizontal}"/>
+				<mx:TextInput enabled="{chkBleed.selected}" x="363" y="440" id="txtBleedTop" restrict="0-9." width="93" text="{job.paperCal.bleedTop}"/>
+				<mx:TextInput enabled="{chkBleed.selected}" x="363" y="490" id="txtBleedBottom" restrict="0-9." width="93" text="{job.paperCal.bleedBottom}"/>
 
 
-				<mx:CheckBox x="242" y="541" id="chkBackTrimParent" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}" selected="{job.backTrimParent}"/>
-				<mx:CheckBox x="242" y="562" id="chkTrimFourSides" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}" selected="{job.trimFourSides}"/>
-				<mx:CheckBox x="242" y="520" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}" selected="{job.workandTumble}"/>
+				<mx:CheckBox x="242" y="541" id="chkBackTrimParent" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}" selected="{job.paperCal.backTrimParent}"/>
+				<mx:CheckBox x="242" y="562" id="chkTrimFourSides" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}" selected="{job.paperCal.trimFourSides}"/>
+				<mx:CheckBox x="242" y="520" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}" selected="{job.paperCal.workandTumble}"/>
 
-				<mx:Label x="242" y="611" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right" width="109"/>
-				<mx:ComboBox x="359" y="609" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="139"/>
+				<mx:Label x="190" y="630" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right" width="161"/>
+				<mx:ComboBox x="359" y="628" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="139"/>
 
 				<mx:Panel x="515" y="520" width="287" height="169" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
-					<mx:CheckBox x="10" y="10" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}" selected="{job.printParentToFinishSection}" width="193"/>
-					<mx:CheckBox x="10" y="97" id="chkAttachToJobTicket" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}" selected="{job.attachToJobTicket}"/>
-					<mx:CheckBox x="10" y="37" id="chkPrintParentToRun" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}" selected="{job.printParentToRunSection}" width="193"/>
-					<mx:CheckBox x="10" y="67" id="chkPrintRunToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}" selected="{job.printRunToFinishSection}" width="229"/>
+					<mx:CheckBox x="10" y="10" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}" selected="{job.paperCal.printParentToFinishSection}" width="193"/>
+					<mx:CheckBox x="10" y="97" id="chkAttachToJobTicket" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}" selected="{job.paperCal.attachToJobTicket}"/>
+					<mx:CheckBox x="10" y="37" id="chkPrintParentToRun" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}" selected="{job.paperCal.printParentToRunSection}" width="193"/>
+					<mx:CheckBox x="10" y="67" id="chkPrintRunToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}" selected="{job.paperCal.printRunToFinishSection}" width="229"/>
 				</mx:Panel>
 				<mx:RadioButtonGroup id="gripLocation" selectedValue="{gripLocationRadioValue}" change="doGrip();"/>
 				<mx:RadioButton x="378" y="139"  value="Top" id="topGrip" icon="@Embed(source='../../../../assets/Original PS Icons/GripSideTopBottom.png')" groupName="gripLocation" width="36" height="29"/>
@@ -191,17 +263,17 @@
 				<mx:RadioButton x="413" y="189"  value="Left" id="leftFolio" groupName="folioLocation">
 					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideLeftRight.png')</mx:icon>
 				</mx:RadioButton>
-				<mx:CheckBox x="242" y="581" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DisableFSCoptions')}" selected="{job.disableFSC}"/>
-				<mx:List x="21" y="328" height="301" dataProvider="{dimensions}" labelField="name"></mx:List>
+				<mx:CheckBox x="242" y="581" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DisableFSCoptions')}" selected="{job.paperCal.disableFSC}" id="chkDisableFSC"/>
+				<mx:List x="21" y="328" height="301" dataProvider="{dimensions}" labelField="name" width="192"></mx:List>
 				<mx:Label x="21" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TemplateName')}"/>
 				<mx:TextInput x="21" y="139"/>
-				<mx:TextInput x="21" y="189" text="{job.parentSize}"/>
+				<mx:TextInput x="21" y="189" text="{job.parentSize}" id="parent_size_edit"/>
 				<mx:Label x="21" y="165" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ParentSize')}"/>
 				<mx:Label x="21" y="219" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RunSize')}"/>
-				<mx:TextInput x="21" y="237" text="{job.runSize}"/>
+				<mx:TextInput x="21" y="237" text="{job.runSize}" id="run_size_edit"/>
 				<mx:Label x="21" y="267" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FinishSize')}"/>
-				<mx:TextInput x="21" y="287" text="{job.finishSize}"/>
-				<mx:Button x="32" y="21"  icon="@Embed(source='../../../../assets/save.png')" width="38" height="38"/>
+				<mx:TextInput x="21" y="287" text="{job.finishSize}" id="finish_size_edit"/>
+				<mx:Button x="32" y="21"  icon="@Embed(source='../../../../assets/save.png')" width="38" height="38" click="doSave();"/>
 				<mx:Button x="116" y="21"  width="38" height="38" icon="@Embed(source='../../../../assets/find.png')"/>
 				<mx:Button x="241" y="21"  width="38" height="38" icon="@Embed(source='../../../../assets/print.png')"/>
 				<mx:Button x="322" y="21" width="38" height="38" icon="@Embed(source='../../../../assets/cancel.png')"/>
@@ -210,13 +282,13 @@
 				<mx:Label x="119" y="67" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}"/>
 				<mx:Label x="244" y="67" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}"/>
 				<mx:Label x="322" y="67" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
-				<mx:TextInput x="515" y="143" width="171" text="{job.finishSize}' '{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.outof')}' '{job.runSize}"/>
-				<mx:TextInput x="712" y="143" width="123" text="{job.sheetsOut}"/>
+				<mx:TextInput x="515" y="143" width="171" text="{job.paperCal.finishSize} {resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.outof')} {job.paperCal.runSize}"/>
+				<mx:TextInput x="712" y="143" width="123" text="{job.paperCal.sheetsOut}" id="txtSheetsOut"/>
 				<mx:Label x="712" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SheetsOut')}"/>
 				<mx:Label x="515" y="191" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.CutstoRun')}"/>
 				<mx:Label x="676" y="191" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.CutstoFinish')}"/>
-				<mx:TextInput x="515" y="220" width="125" text="{job.cutstoRun}"/>
-				<mx:TextInput x="676" y="220" text="{job.cutstoFinish}"/>
+				<mx:TextInput x="515" y="220" width="125" text="{job.paperCal.cutstoRun}" id="txtCutstoRun"/>
+				<mx:TextInput x="676" y="220" text="{job.paperCal.cutstoFinish}" id="txtCutstoFinish"/>
 				<mx:Canvas x="515" y="270" width="342" height="233" borderStyle="inset">
 				</mx:Canvas>
 				<mx:Label x="694" y="145" text="=" width="20"/>

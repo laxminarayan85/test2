@@ -445,12 +445,12 @@ public class PricingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (PRICELOGENTRY.equals(propertyName)) return getPriceLogEntry();
-    if (UNITPRICE.equals(propertyName)) return getUnitPrice();
-    if (TOTALPRICE.equals(propertyName)) return getTotalPrice();
-    if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
     if (PREPPRICE.equals(propertyName)) return getPrepPrice();
     if (OVERSTOTALPRICE.equals(propertyName)) return getOversTotalPrice();
+    if (OTHERCHARGEPRICE.equals(propertyName)) return getOtherChargePrice();
+    if (PRICELOGENTRY.equals(propertyName)) return getPriceLogEntry();
+    if (TOTALPRICE.equals(propertyName)) return getTotalPrice();
+    if (UNITPRICE.equals(propertyName)) return getUnitPrice();
     if (BINDPRICE.equals(propertyName)) return getBindPrice();
     if (OVERSUNITPRICE.equals(propertyName)) return getOversUnitPrice();
     if (UNITPRICEOVERRIDE.equals(propertyName)) return getUnitPriceOverride();
@@ -469,12 +469,12 @@ public class PricingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (PRICELOGENTRY.equals(propertyName)) setPriceLogEntry((PriceLogEntry)newValue); else
-    if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
-    if (TOTALPRICE.equals(propertyName)) setTotalPrice((Double)newValue); else
-    if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
     if (PREPPRICE.equals(propertyName)) setPrepPrice((Double)newValue); else
     if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((Double)newValue); else
+    if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
+    if (PRICELOGENTRY.equals(propertyName)) setPriceLogEntry((PriceLogEntry)newValue); else
+    if (TOTALPRICE.equals(propertyName)) setTotalPrice((Double)newValue); else
+    if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
     if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
     if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
     if (UNITPRICEOVERRIDE.equals(propertyName)) setUnitPriceOverride((Boolean)newValue); else
@@ -493,17 +493,17 @@ public class PricingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (PRICELOGENTRY.equals(propertyName)) 
-      return new Class<?>[] {PriceLogEntry.class};		
-    if (UNITPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (TOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (OTHERCHARGEPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
     if (PREPPRICE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (OVERSTOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (OTHERCHARGEPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRICELOGENTRY.equals(propertyName)) 
+      return new Class<?>[] {PriceLogEntry.class};		
+    if (TOTALPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (UNITPRICE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (BINDPRICE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
@@ -533,12 +533,12 @@ public class PricingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (PRICELOGENTRY.equals(propertyName)) return PricingRecord.class;
-    if (UNITPRICE.equals(propertyName)) return PricingRecord.class;
-    if (TOTALPRICE.equals(propertyName)) return PricingRecord.class;
-    if (OTHERCHARGEPRICE.equals(propertyName)) return PricingRecord.class;
     if (PREPPRICE.equals(propertyName)) return PricingRecord.class;
     if (OVERSTOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (OTHERCHARGEPRICE.equals(propertyName)) return PricingRecord.class;
+    if (PRICELOGENTRY.equals(propertyName)) return PricingRecord.class;
+    if (TOTALPRICE.equals(propertyName)) return PricingRecord.class;
+    if (UNITPRICE.equals(propertyName)) return PricingRecord.class;
     if (BINDPRICE.equals(propertyName)) return PricingRecord.class;
     if (OVERSUNITPRICE.equals(propertyName)) return PricingRecord.class;
     if (UNITPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
@@ -559,17 +559,17 @@ public class PricingRecord extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     PricingRecord objT = (PricingRecord)obj;
-    if (! SmartEquals(getPriceLogEntry(), objT.getPriceLogEntry()))
-      return false;
-    if (! SmartEquals(getUnitPrice(), objT.getUnitPrice()))
-      return false;
-    if (! SmartEquals(getTotalPrice(), objT.getTotalPrice()))
-      return false;
-    if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
-      return false;
     if (! SmartEquals(getPrepPrice(), objT.getPrepPrice()))
       return false;
     if (! SmartEquals(getOversTotalPrice(), objT.getOversTotalPrice()))
+      return false;
+    if (! SmartEquals(getOtherChargePrice(), objT.getOtherChargePrice()))
+      return false;
+    if (! SmartEquals(getPriceLogEntry(), objT.getPriceLogEntry()))
+      return false;
+    if (! SmartEquals(getTotalPrice(), objT.getTotalPrice()))
+      return false;
+    if (! SmartEquals(getUnitPrice(), objT.getUnitPrice()))
       return false;
     if (! SmartEquals(getBindPrice(), objT.getBindPrice()))
       return false;

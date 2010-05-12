@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PaperCalculator;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
@@ -23,10 +24,15 @@ public class JobMapper extends ImportMapper {
 		log.info("Entering JobMapper->importTokens");
 		DataService dataService = new DataService();
 		Job job = new Job();
+		PaperCalculator tempPaper = new PaperCalculator();
+		
 		SalesCategory salesCategory = null;
 		String method = "";
 		Boolean dutch = false;
 		Boolean grain = false;
+		Boolean Copy = false;
+		Long qtyPress = null;
+		Long totalQty= null;
 		boolean addSalesCategory = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -86,15 +92,16 @@ public class JobMapper extends ImportMapper {
 			} else if ("book id".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("press".equals(currentFieldToken)) {
-				/* TODO */
+				qtyPress= Utilities.tokenToLong(currentImportToken);
+							
 			} else if ("runs".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("originals".equals(currentFieldToken)) {
-				/* TODO */
+				job.setSheets(Utilities.tokenToLong(currentImportToken));
 			} else if ("signatures".equals(currentFieldToken)) {
 				job.setSignatures(Utilities.tokenToLong(currentImportToken));
 			} else if ("sets".equals(currentFieldToken)) {
-				/* TODO */
+				job.setInSetsOf(Utilities.tokenToLong(currentImportToken));
 			} else if ("up".equals(currentFieldToken)) {
 				job.setNumUp(Utilities.tokenToLong(currentImportToken));
 			} else if ("on".equals(currentFieldToken)) {
@@ -247,13 +254,14 @@ public class JobMapper extends ImportMapper {
 			} else if ("wash back".equals(currentFieldToken)) {
 				job.setBackWashes(Utilities.tokenToInt(currentImportToken));
 			} else if ("sheets".equals(currentFieldToken)) {
-				job.setSheets(Utilities.tokenToLong(currentImportToken));
+				job.setTotalImpositions(Utilities.tokenToLong(currentImportToken));
 			} else if ("waste".equals(currentFieldToken)) {
-				/* TODO */
+				job.setEstWaste(Utilities.tokenToLong(currentImportToken));
 			} else if ("impressions".equals(currentFieldToken)) {
-				/* TODO */
+				job.setImpositionsPerRun(Utilities.tokenToLong(currentImportToken));
 			} else if ("total impressions".equals(currentFieldToken)) {
-				/* TODO */
+				totalQty = Utilities.tokenToLong(currentImportToken);
+				
 			} else if ("stock id".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false && currentImportToken.equals("0") == false) {
 					StockDefinition stockDefinition = dataService.getByStockId(currentImportToken);
@@ -417,47 +425,47 @@ public class JobMapper extends ImportMapper {
 			} else if ("base sets".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("gripper edge".equals(currentFieldToken)) {
-				job.setGripEdgeGap(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setGripEdgeGap(Utilities.tokenToDouble(currentImportToken));
 			} else if ("grip side".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true) 
-					job.setGripLocation("Top");
+					tempPaper.setGripLocation("Top");
 				if (currentImportToken.equals("2") == true) 
-						job.setGripLocation("Left");
+					tempPaper.setGripLocation("Left");
 			} else if ("folio edge".equals(currentFieldToken)) {
-				job.setFolioEdge(Utilities.tokenToDouble(currentImportToken));				
+				tempPaper.setFolioEdge(Utilities.tokenToDouble(currentImportToken));				
 			} else if ("folio side".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true) 
-					job.setFolioLocation("Top");
+					tempPaper.setFolioLocation("Top");
 				if (currentImportToken.equals("2") == true) 
-					job.setFolioLocation("Left");
+					tempPaper.setFolioLocation("Left");
 			} else if ("finish bleed[1]".equals(currentFieldToken)) {
-				job.setBleed(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setBleed(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[2]".equals(currentFieldToken)) {
-				job.setBleedRight(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setBleedRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[3]".equals(currentFieldToken)) {
-				job.setBleedTop(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setBleedTop(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[4]".equals(currentFieldToken)) {
-				job.setBleedBottom(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setBleedBottom(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish gutter[1]".equals(currentFieldToken)) {
-				job.setGutterHorizontal(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setGutterHorizontal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish gutter[2]".equals(currentFieldToken)) {
-				job.setGutter(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setGutter(Utilities.tokenToDouble(currentImportToken));
 			} else if ("parent out".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cuts run".equals(currentFieldToken)) {
-				job.setCutstoRun(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setCutstoRun(Utilities.tokenToInt(currentImportToken));
 			} else if ("cuts finish".equals(currentFieldToken)) {
-				job.setCutstoFinish(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setCutstoFinish(Utilities.tokenToInt(currentImportToken));
 			} else if ("use grip".equals(currentFieldToken)) {
-				job.setUseGripEdgeGap(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setUseGripEdgeGap(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use folio".equals(currentFieldToken)) {
-				job.setUseFolioEdge(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setUseFolioEdge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use finish bleed".equals(currentFieldToken)) {
-				job.setUseBleed(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setUseBleed(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use finish gutter".equals(currentFieldToken)) {
-				job.setUseGutter(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setUseGutter(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use color bar".equals(currentFieldToken)) {
-				job.setUseColorBar(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setUseColorBar(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o run cuts".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o finish cuts".equals(currentFieldToken)) {
@@ -655,31 +663,31 @@ public class JobMapper extends ImportMapper {
 			} else if ("run size area".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("white space[1]".equals(currentFieldToken)) {
-				job.setWhiteSpace(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setWhiteSpace(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[2]".equals(currentFieldToken)) {
-				job.setWhiteSpaceRight(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setWhiteSpaceRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[3]".equals(currentFieldToken)) {
-				job.setWhiteSpaceTop(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setWhiteSpaceTop(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[4]".equals(currentFieldToken)) {
-				job.setWhiteSpaceBottom(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setWhiteSpaceBottom(Utilities.tokenToDouble(currentImportToken));
 			} else if ("across".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setAcross(Utilities.tokenToInt(currentImportToken));
 			} else if ("down".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setDown(Utilities.tokenToInt(currentImportToken));
 			} else if ("dAcross".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setDAcross(Utilities.tokenToInt(currentImportToken));
 			} else if ("dDown".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setDDown(Utilities.tokenToInt(currentImportToken));
 			} else if ("r margin".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setRMargin(Utilities.tokenToInt(currentImportToken));
 			} else if ("b margin".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setBMargin(Utilities.tokenToInt(currentImportToken));
 			} else if ("t margin".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setTMargin(Utilities.tokenToInt(currentImportToken));
 			} else if ("used area".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setUsedSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("parent area".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setParentSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("washup time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pick stock group".equals(currentFieldToken)) {
@@ -729,19 +737,19 @@ public class JobMapper extends ImportMapper {
 			} else if ("obs_tax in price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("dutch bottom".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setDutchBottom(Utilities.tokenToInt(currentImportToken));
 			} else if ("finish".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("back trim parent".equals(currentFieldToken)) {
-				job.setBackTrimParent(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setBackTrimParent(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("back trim run".equals(currentFieldToken)) {
-				job.setTrimFourSides(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setTrimFourSides(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("diagram on job".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setAttachToJobTicket(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("digital submitted".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("work & turn new".equals(currentFieldToken)) {
-				job.setWorkandTumble(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setWorkandTumble(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("override washup time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production release".equals(currentFieldToken)) {
@@ -761,7 +769,9 @@ public class JobMapper extends ImportMapper {
 			} else if ("is Print Job".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("is Copy Job".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true){
+					Copy = true;
+				}
 			} else if ("is large format".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true){
 					PreferencesPricingMethod Method = dataService.getByMethodType("Large Format");
@@ -1067,7 +1077,10 @@ public class JobMapper extends ImportMapper {
 			} else if ("tax".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("OBSv3job".equals(currentFieldToken)) {
-				job.setDisableFSC(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setDisableFSC(Utilities.tokenToBooleanValue(currentImportToken));
+			}
+			else if ("bindery waste".equals(currentFieldToken)) {
+				job.setBinderyWaste(Utilities.tokenToLong(currentImportToken));
 			}
 		}
 		if (job.getJobNumber() != null
@@ -1076,13 +1089,21 @@ public class JobMapper extends ImportMapper {
 			sequenceValues.setJob(Long.parseLong(job.getJobNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		if (Copy){
+			job.setNumCopies(qtyPress);
+			job.setTotalCopies(totalQty);
+		}
+		else{
+				job.setPressQty(qtyPress);
+				job.setTotalImpositions(totalQty);
+		}
 		if( dutch)
-			job.setRunToFinishGrain("Swing / Combination");
+			tempPaper.setRunToFinishGrain("Swing / Combination");
 		else if (grain)
-				job.setRunToFinishGrain("Match Grain");
+			tempPaper.setRunToFinishGrain("Match Grain");
 			else
-				job.setRunToFinishGrain("Neither");
-		
+				tempPaper.setRunToFinishGrain("Neither");
+		job.setPaperCal(tempPaper);
 		log.info("Leaving JobMapper->importTokens");
 		return job;
 	}

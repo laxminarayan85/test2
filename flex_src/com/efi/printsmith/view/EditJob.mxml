@@ -3,6 +3,7 @@
 				xmlns:view="com.efi.printsmith.view.*"
 				xmlns:vo="com.efi.printsmith.vo.*"
 				xmlns:fc="http://www.adobe.com/2006/fc"
+				xmlns:comp="com.efi.printsmith.components.*"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Jobs')}"
 				creationComplete="init()"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Jobs')}"
@@ -512,6 +513,9 @@
 			}
 			
 			private function handleLoadEstimatingPreferencesResult(ev:ResultEvent):void {
+				throbber.stop();
+				throbber.visible = false;
+
 				estimatingPreferencesArray = ev.result as ArrayCollection;
 				if (estimatingPreferencesArray.length > 0) {
 					estimatingPreferences = estimatingPreferencesArray.getItemAt(0) as PreferencesEstimating;
@@ -580,6 +584,7 @@
 			}
 			
 			private function loadData():void {
+				throbber.play();
 				pressDataService.getAll("PressDefinition");
 				copierDataService.getAll("CopierDefinition");
 				locationDataService.getAll("Location");
@@ -628,35 +633,35 @@
 				setPrefernceDataforPaperCal();
 			}
 			private function setPrefernceDataforPaperCal():void{
-				job.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
-				job.gripEdgeGap = estimatingPreferences.gripEdgeGap;
-				job.gripLocation = estimatingPreferences.gripLocation;
-				job.useFolioEdge = estimatingPreferences.useFolioEdge;
-				job.folioLocation = estimatingPreferences.folioLocation;
-				job.folioEdge = estimatingPreferences.folioEdge;
-				job.useColorBar = estimatingPreferences.useColorBar;
-				job.colorBar = estimatingPreferences.colorBar;
-				job.useWhiteSpace = estimatingPreferences.useWhiteSpace;
-				job.whiteSpace = estimatingPreferences.whiteSpace;
-				job.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
-				job.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
-				job.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
-				job.useGutter = estimatingPreferences.useGutter;
-				job.gutter = estimatingPreferences.gutter;
-				job.gutterHorizontal = estimatingPreferences.gutterHorizontal;
-				job.useBleed = estimatingPreferences.useBleed;
-				job.bleed= estimatingPreferences.bleed;
-				job.bleedBottom = estimatingPreferences.bleedBottom;
-				job.bleedRight = estimatingPreferences.bleedRight;
-				job.bleedTop = estimatingPreferences.bleedTop;
-				job.backTrimParent = estimatingPreferences.backTrimParent;
-				job.trimFourSides = estimatingPreferences.trimFourSides;
-				job.workandTumble = estimatingPreferences.workandTumble;
-				job.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
-				job.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
-				job.printParentToRunSection = estimatingPreferences.printParentToRunSection;
-				job.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
-				job.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
+				job.paperCal.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
+				job.paperCal.gripEdgeGap = estimatingPreferences.gripEdgeGap;
+				job.paperCal.gripLocation = estimatingPreferences.gripLocation;
+				job.paperCal.useFolioEdge = estimatingPreferences.useFolioEdge;
+				job.paperCal.folioLocation = estimatingPreferences.folioLocation;
+				job.paperCal.folioEdge = estimatingPreferences.folioEdge;
+				job.paperCal.useColorBar = estimatingPreferences.useColorBar;
+				job.paperCal.colorBar = estimatingPreferences.colorBar;
+				job.paperCal.useWhiteSpace = estimatingPreferences.useWhiteSpace;
+				job.paperCal.whiteSpace = estimatingPreferences.whiteSpace;
+				job.paperCal.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
+				job.paperCal.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
+				job.paperCal.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
+				job.paperCal.useGutter = estimatingPreferences.useGutter;
+				job.paperCal.gutter = estimatingPreferences.gutter;
+				job.paperCal.gutterHorizontal = estimatingPreferences.gutterHorizontal;
+				job.paperCal.useBleed = estimatingPreferences.useBleed;
+				job.paperCal.bleed= estimatingPreferences.bleed;
+				job.paperCal.bleedBottom = estimatingPreferences.bleedBottom;
+				job.paperCal.bleedRight = estimatingPreferences.bleedRight;
+				job.paperCal.bleedTop = estimatingPreferences.bleedTop;
+				job.paperCal.backTrimParent = estimatingPreferences.backTrimParent;
+				job.paperCal.trimFourSides = estimatingPreferences.trimFourSides;
+				job.paperCal.workandTumble = estimatingPreferences.workandTumble;
+				job.paperCal.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
+				job.paperCal.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
+				job.paperCal.printParentToRunSection = estimatingPreferences.printParentToRunSection;
+				job.paperCal.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
+				job.paperCal.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
 		
 			}
 			private function doDelete():void
@@ -1342,6 +1347,9 @@
 	    	private function doPaperCal():void{
 	    		var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
 				paperCalWindow.setStyle("borderAlpha", 0.9);
+				if (job.paperCal.colorBar == 0)
+					job.paperCal.colorBar = estimatingPreferences.colorBar;
+				
 			 	paperCalWindow.setJob(job);
 			 	paperCalWindow.setdimension(dimensions)
 			   
@@ -1355,6 +1363,7 @@
 	<mx:VBox width="100%"
 			 height="597"
 			 creationPolicy="all" id="vbox1" verticalScrollPolicy="off">
+		<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 		<mx:Canvas width="926"
 				   height="598"
 				   verticalScrollPolicy="off"
@@ -1606,17 +1615,17 @@
 									  y="206"
 									  width="98"
 									  id="job_imp"
-									  height="20" textAlign="right"/>
+									  height="20" textAlign="right" text="{job.impositionsPerRun}"/>
 							<mx:Label x="496"
 									  y="227"
 									  width="98"
 									  id="total_imp"
-									  height="20" textAlign="right"/>
+									  height="20" textAlign="right" text="{job.totalImpositions}"/>
 							<mx:Label x="496"
 									  y="248"
 									  width="98"
 									  id="job_weight"
-									  height="20" textAlign="right"/>
+									  height="20" textAlign="right" text="{job.weight}"/>
 							<mx:Label x="385"
 									  y="366"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
