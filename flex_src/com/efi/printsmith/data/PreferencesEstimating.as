@@ -13,6 +13,8 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.PreferencesEstimating";
 		}
 				
+		public var folioLocation:String = "";
+		public var gripLocation:String = "";
 		public var closeAfterCopy:Boolean = false;
 		public var stockCostInEstimator:Boolean = false;
 		public var canChangeAddress:Boolean = false;

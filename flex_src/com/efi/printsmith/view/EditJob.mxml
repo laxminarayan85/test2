@@ -625,8 +625,40 @@
 			{
 				job=new Job();
 				setJob(job);
+				setPrefernceDataforPaperCal();
 			}
-
+			private function setPrefernceDataforPaperCal():void{
+				job.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
+				job.gripEdgeGap = estimatingPreferences.gripEdgeGap;
+				job.gripLocation = estimatingPreferences.gripLocation;
+				job.useFolioEdge = estimatingPreferences.useFolioEdge;
+				job.folioLocation = estimatingPreferences.folioLocation;
+				job.folioEdge = estimatingPreferences.folioEdge;
+				job.useColorBar = estimatingPreferences.useColorBar;
+				job.colorBar = estimatingPreferences.colorBar;
+				job.useWhiteSpace = estimatingPreferences.useWhiteSpace;
+				job.whiteSpace = estimatingPreferences.whiteSpace;
+				job.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
+				job.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
+				job.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
+				job.useGutter = estimatingPreferences.useGutter;
+				job.gutter = estimatingPreferences.gutter;
+				job.gutterHorizontal = estimatingPreferences.gutterHorizontal;
+				job.useBleed = estimatingPreferences.useBleed;
+				job.bleed= estimatingPreferences.bleed;
+				job.bleedBottom = estimatingPreferences.bleedBottom;
+				job.bleedRight = estimatingPreferences.bleedRight;
+				job.bleedTop = estimatingPreferences.bleedTop;
+				job.backTrimParent = estimatingPreferences.backTrimParent;
+				job.trimFourSides = estimatingPreferences.trimFourSides;
+				job.workandTumble = estimatingPreferences.workandTumble;
+				job.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
+				job.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
+				job.printParentToRunSection = estimatingPreferences.printParentToRunSection;
+				job.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
+				job.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
+		
+			}
 			private function doDelete():void
 			{
 				PopUpManager.removePopUp(this);
@@ -1307,6 +1339,15 @@
 	    			job.pricingRecord.unitPrice = parseFloat(job_unitPrice.text); 
 	    		}
 	    	}
+	    	private function doPaperCal():void{
+	    		var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
+				paperCalWindow.setStyle("borderAlpha", 0.9);
+			 	paperCalWindow.setJob(job);
+			 	paperCalWindow.setdimension(dimensions)
+			   
+			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+			 }
 		]]>
 
 	</mx:Script>
@@ -1818,7 +1859,7 @@
 									<mx:Image x="215"
 											  y="81"
 											  width="139"
-											  height="124"/>
+											  height="124" click="doPaperCal();" source="assets/Original PS Icons/380.png"/>
 									<mx:HRule x="2"
 											  y="215"
 											  width="356"

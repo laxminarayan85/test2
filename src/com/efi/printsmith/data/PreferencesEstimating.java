@@ -41,6 +41,14 @@ import org.hibernate.annotations.Type;
 @Table(name = "preferencesestimating")
 public class PreferencesEstimating extends ModelBase {
 	/**
+   * @generated
+   */
+  public static final String FOLIOLOCATION = "FolioLocation";
+	/**
+   * @generated
+   */
+  public static final String GRIPLOCATION = "GripLocation";
+	/**
 	 * @generated
 	 */
 	public static final String CLOSEAFTERCOPY = "CloseAfterCopy";
@@ -263,6 +271,52 @@ public class PreferencesEstimating extends ModelBase {
 
  	
 	
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String folioLocation;
+
+	/**
+   * @generated
+ 	 */
+  public String getFolioLocation(){
+    return folioLocation; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFolioLocation(String newVal) {
+    this.folioLocation = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String gripLocation;
+
+	/**
+   * @generated
+ 	 */
+  public String getGripLocation(){
+    return gripLocation; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGripLocation(String newVal) {
+    this.gripLocation = newVal;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -1433,6 +1487,8 @@ public class PreferencesEstimating extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
+    if (FOLIOLOCATION.equals(propertyName)) return getFolioLocation();
+    if (GRIPLOCATION.equals(propertyName)) return getGripLocation();
     if (CLOSEAFTERCOPY.equals(propertyName)) return getCloseAfterCopy();
     if (STOCKCOSTINESTIMATOR.equals(propertyName)) return getStockCostInEstimator();
     if (CANCHANGEADDRESS.equals(propertyName)) return getCanChangeAddress();
@@ -1495,6 +1551,8 @@ public class PreferencesEstimating extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+    if (FOLIOLOCATION.equals(propertyName)) setFolioLocation((String)newValue); else
+    if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
     if (CLOSEAFTERCOPY.equals(propertyName)) setCloseAfterCopy((Boolean)newValue); else
     if (STOCKCOSTINESTIMATOR.equals(propertyName)) setStockCostInEstimator((Boolean)newValue); else
     if (CANCHANGEADDRESS.equals(propertyName)) setCanChangeAddress((Boolean)newValue); else
@@ -1557,6 +1615,10 @@ public class PreferencesEstimating extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+    if (FOLIOLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (GRIPLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     if (CLOSEAFTERCOPY.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (STOCKCOSTINESTIMATOR.equals(propertyName)) 
@@ -1673,6 +1735,8 @@ public class PreferencesEstimating extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+    if (FOLIOLOCATION.equals(propertyName)) return PreferencesEstimating.class;
+    if (GRIPLOCATION.equals(propertyName)) return PreferencesEstimating.class;
     if (CLOSEAFTERCOPY.equals(propertyName)) return PreferencesEstimating.class;
     if (STOCKCOSTINESTIMATOR.equals(propertyName)) return PreferencesEstimating.class;
     if (CANCHANGEADDRESS.equals(propertyName)) return PreferencesEstimating.class;
@@ -1737,6 +1801,10 @@ public class PreferencesEstimating extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     PreferencesEstimating objT = (PreferencesEstimating)obj;
+    if (! SmartEquals(getFolioLocation(), objT.getFolioLocation()))
+      return false;
+    if (! SmartEquals(getGripLocation(), objT.getGripLocation()))
+      return false;
     if (! SmartEquals(getCloseAfterCopy(), objT.getCloseAfterCopy()))
       return false;
     if (! SmartEquals(getStockCostInEstimator(), objT.getStockCostInEstimator()))

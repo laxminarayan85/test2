@@ -41,6 +41,118 @@ import org.hibernate.annotations.Type;
 @Table(name = "jobbase")
 public class JobBase extends ModelBase {
 	/**
+   * @generated
+   */
+  public static final String PRINTRUNTOFINISHSECTION = "PrintRunToFinishSection";
+	/**
+   * @generated
+   */
+  public static final String PRINTPARENTTORUNSECTION = "PrintParentToRunSection";
+	/**
+   * @generated
+   */
+  public static final String PRINTPARENTTOFINISHSECTION = "PrintParentToFinishSection";
+	/**
+   * @generated
+   */
+  public static final String RUNTOFINISHGRAIN = "RunToFinishGrain";
+	/**
+   * @generated
+   */
+  public static final String WORKANDTUMBLE = "WorkandTumble";
+	/**
+   * @generated
+   */
+  public static final String TRIMFOURSIDES = "TrimFourSides";
+	/**
+   * @generated
+   */
+  public static final String BACKTRIMPARENT = "BackTrimParent";
+	/**
+   * @generated
+   */
+  public static final String DEFAULTPRESSCUTTOFF = "DefaultPressCuttOff";
+	/**
+   * @generated
+   */
+  public static final String BLEEDBOTTOM = "BleedBottom";
+	/**
+   * @generated
+   */
+  public static final String BLEEDRIGHT = "BleedRight";
+	/**
+   * @generated
+   */
+  public static final String BLEEDTOP = "BleedTop";
+	/**
+   * @generated
+   */
+  public static final String BLEED = "Bleed";
+	/**
+   * @generated
+   */
+  public static final String USEBLEED = "UseBleed";
+	/**
+   * @generated
+   */
+  public static final String GUTTERHORIZONTAL = "GutterHorizontal";
+	/**
+   * @generated
+   */
+  public static final String GUTTER = "Gutter";
+	/**
+   * @generated
+   */
+  public static final String USEGUTTER = "UseGutter";
+	/**
+   * @generated
+   */
+  public static final String WHITESPACEBOTTOM = "WhiteSpaceBottom";
+	/**
+   * @generated
+   */
+  public static final String WHITESPACERIGHT = "WhiteSpaceRight";
+	/**
+   * @generated
+   */
+  public static final String WHITESPACETOP = "WhiteSpaceTop";
+	/**
+   * @generated
+   */
+  public static final String WHITESPACE = "WhiteSpace";
+	/**
+   * @generated
+   */
+  public static final String USEWHITESPACE = "UseWhiteSpace";
+	/**
+   * @generated
+   */
+  public static final String COLORBAR = "ColorBar";
+	/**
+   * @generated
+   */
+  public static final String USECOLORBAR = "UseColorBar";
+	/**
+   * @generated
+   */
+  public static final String FOLIOEDGE = "FolioEdge";
+	/**
+   * @generated
+   */
+  public static final String USEFOLIOEDGE = "UseFolioEdge";
+	/**
+   * @generated
+   */
+  public static final String GRIPEDGEGAP = "GripEdgeGap";
+	/**
+   * @generated
+   */
+  public static final String USEGRIPEDGEGAP = "UseGripEdgeGap";
+	/**
+   * @generated
+   */
+  public static final String ATTACHTOJOBTICKET = "AttachToJobTicket";
+	/**
 	 * @generated
 	 */
 	public static final String JOBNUMBER = "JobNumber";
@@ -331,6 +443,31 @@ public class JobBase extends ModelBase {
   public static final String JDFSTATUS = "JdfStatus";
 
 	/**
+   * @generated
+   */
+  public static final String DISABLEFSC = "DisableFSC";
+	/**
+   * @generated
+   */
+  public static final String CUTSTORUN = "CutstoRun";
+	/**
+   * @generated
+   */
+  public static final String SHEETSOUT = "SheetsOut";
+	/**
+   * @generated
+   */
+  public static final String CUTSTOFINISH = "CutstoFinish";
+	/**
+   * @generated
+   */
+  public static final String GRIPLOCATION = "GripLocation";
+	/**
+   * @generated
+   */
+  public static final String FOLIOLOCATION = "FolioLocation";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -340,6 +477,650 @@ public class JobBase extends ModelBase {
 
  	
 	
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean printRunToFinishSection;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPrintRunToFinishSection(){
+    return printRunToFinishSection; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrintRunToFinishSection(Boolean newVal) {
+    this.printRunToFinishSection = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean printParentToRunSection;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPrintParentToRunSection(){
+    return printParentToRunSection; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrintParentToRunSection(Boolean newVal) {
+    this.printParentToRunSection = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean printParentToFinishSection;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPrintParentToFinishSection(){
+    return printParentToFinishSection; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrintParentToFinishSection(Boolean newVal) {
+    this.printParentToFinishSection = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String runToFinishGrain;
+
+	/**
+   * @generated
+ 	 */
+  public String getRunToFinishGrain(){
+    return runToFinishGrain; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setRunToFinishGrain(String newVal) {
+    this.runToFinishGrain = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean workandTumble;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWorkandTumble(){
+    return workandTumble; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWorkandTumble(Boolean newVal) {
+    this.workandTumble = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean trimFourSides;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getTrimFourSides(){
+    return trimFourSides; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTrimFourSides(Boolean newVal) {
+    this.trimFourSides = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean backTrimParent;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getBackTrimParent(){
+    return backTrimParent; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBackTrimParent(Boolean newVal) {
+    this.backTrimParent = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double defaultPressCuttOff;
+
+	/**
+   * @generated
+ 	 */
+  public Double getDefaultPressCuttOff(){
+    return defaultPressCuttOff; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDefaultPressCuttOff(Double newVal) {
+    this.defaultPressCuttOff = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double bleedBottom;
+
+	/**
+   * @generated
+ 	 */
+  public Double getBleedBottom(){
+    return bleedBottom; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBleedBottom(Double newVal) {
+    this.bleedBottom = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double bleedRight;
+
+	/**
+   * @generated
+ 	 */
+  public Double getBleedRight(){
+    return bleedRight; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBleedRight(Double newVal) {
+    this.bleedRight = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double bleedTop;
+
+	/**
+   * @generated
+ 	 */
+  public Double getBleedTop(){
+    return bleedTop; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBleedTop(Double newVal) {
+    this.bleedTop = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double bleed;
+
+	/**
+   * @generated
+ 	 */
+  public Double getBleed(){
+    return bleed; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBleed(Double newVal) {
+    this.bleed = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useBleed;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseBleed(){
+    return useBleed; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseBleed(Boolean newVal) {
+    this.useBleed = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double gutterHorizontal;
+
+	/**
+   * @generated
+ 	 */
+  public Double getGutterHorizontal(){
+    return gutterHorizontal; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGutterHorizontal(Double newVal) {
+    this.gutterHorizontal = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double gutter;
+
+	/**
+   * @generated
+ 	 */
+  public Double getGutter(){
+    return gutter; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGutter(Double newVal) {
+    this.gutter = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useGutter;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseGutter(){
+    return useGutter; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseGutter(Boolean newVal) {
+    this.useGutter = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double whiteSpaceBottom;
+
+	/**
+   * @generated
+ 	 */
+  public Double getWhiteSpaceBottom(){
+    return whiteSpaceBottom; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWhiteSpaceBottom(Double newVal) {
+    this.whiteSpaceBottom = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double whiteSpaceRight;
+
+	/**
+   * @generated
+ 	 */
+  public Double getWhiteSpaceRight(){
+    return whiteSpaceRight; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWhiteSpaceRight(Double newVal) {
+    this.whiteSpaceRight = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double whiteSpaceTop;
+
+	/**
+   * @generated
+ 	 */
+  public Double getWhiteSpaceTop(){
+    return whiteSpaceTop; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWhiteSpaceTop(Double newVal) {
+    this.whiteSpaceTop = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double whiteSpace;
+
+	/**
+   * @generated
+ 	 */
+  public Double getWhiteSpace(){
+    return whiteSpace; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWhiteSpace(Double newVal) {
+    this.whiteSpace = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useWhiteSpace;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseWhiteSpace(){
+    return useWhiteSpace; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseWhiteSpace(Boolean newVal) {
+    this.useWhiteSpace = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double colorBar;
+
+	/**
+   * @generated
+ 	 */
+  public Double getColorBar(){
+    return colorBar; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setColorBar(Double newVal) {
+    this.colorBar = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useColorBar;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseColorBar(){
+    return useColorBar; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseColorBar(Boolean newVal) {
+    this.useColorBar = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double folioEdge;
+
+	/**
+   * @generated
+ 	 */
+  public Double getFolioEdge(){
+    return folioEdge; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFolioEdge(Double newVal) {
+    this.folioEdge = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useFolioEdge;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseFolioEdge(){
+    return useFolioEdge; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseFolioEdge(Boolean newVal) {
+    this.useFolioEdge = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double gripEdgeGap;
+
+	/**
+   * @generated
+ 	 */
+  public Double getGripEdgeGap(){
+    return gripEdgeGap; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGripEdgeGap(Double newVal) {
+    this.gripEdgeGap = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useGripEdgeGap;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseGripEdgeGap(){
+    return useGripEdgeGap; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUseGripEdgeGap(Boolean newVal) {
+    this.useGripEdgeGap = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean attachToJobTicket;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getAttachToJobTicket(){
+    return attachToJobTicket; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAttachToJobTicket(Boolean newVal) {
+    this.attachToJobTicket = newVal;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -1943,11 +2724,176 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean disableFSC;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getDisableFSC(){
+    return disableFSC; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDisableFSC(Boolean newVal) {
+    this.disableFSC = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer cutstoRun;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getCutstoRun(){
+    return cutstoRun; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCutstoRun(Integer newVal) {
+    this.cutstoRun = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer sheetsOut;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getSheetsOut(){
+    return sheetsOut; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSheetsOut(Integer newVal) {
+    this.sheetsOut = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer cutstoFinish;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getCutstoFinish(){
+    return cutstoFinish; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCutstoFinish(Integer newVal) {
+    this.cutstoFinish = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String gripLocation;
+
+	/**
+   * @generated
+ 	 */
+  public String getGripLocation(){
+    return gripLocation; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGripLocation(String newVal) {
+    this.gripLocation = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String folioLocation;
+
+	/**
+   * @generated
+ 	 */
+  public String getFolioLocation(){
+    return folioLocation; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFolioLocation(String newVal) {
+    this.folioLocation = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
+    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return getPrintRunToFinishSection();
+    if (PRINTPARENTTORUNSECTION.equals(propertyName)) return getPrintParentToRunSection();
+    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return getPrintParentToFinishSection();
+    if (RUNTOFINISHGRAIN.equals(propertyName)) return getRunToFinishGrain();
+    if (WORKANDTUMBLE.equals(propertyName)) return getWorkandTumble();
+    if (TRIMFOURSIDES.equals(propertyName)) return getTrimFourSides();
+    if (BACKTRIMPARENT.equals(propertyName)) return getBackTrimParent();
+    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return getDefaultPressCuttOff();
+    if (BLEEDBOTTOM.equals(propertyName)) return getBleedBottom();
+    if (BLEEDRIGHT.equals(propertyName)) return getBleedRight();
+    if (BLEEDTOP.equals(propertyName)) return getBleedTop();
+    if (BLEED.equals(propertyName)) return getBleed();
+    if (USEBLEED.equals(propertyName)) return getUseBleed();
+    if (GUTTERHORIZONTAL.equals(propertyName)) return getGutterHorizontal();
+    if (GUTTER.equals(propertyName)) return getGutter();
+    if (USEGUTTER.equals(propertyName)) return getUseGutter();
+    if (WHITESPACEBOTTOM.equals(propertyName)) return getWhiteSpaceBottom();
+    if (WHITESPACERIGHT.equals(propertyName)) return getWhiteSpaceRight();
+    if (WHITESPACETOP.equals(propertyName)) return getWhiteSpaceTop();
+    if (WHITESPACE.equals(propertyName)) return getWhiteSpace();
+    if (USEWHITESPACE.equals(propertyName)) return getUseWhiteSpace();
+    if (COLORBAR.equals(propertyName)) return getColorBar();
+    if (USECOLORBAR.equals(propertyName)) return getUseColorBar();
+    if (FOLIOEDGE.equals(propertyName)) return getFolioEdge();
+    if (USEFOLIOEDGE.equals(propertyName)) return getUseFolioEdge();
+    if (GRIPEDGEGAP.equals(propertyName)) return getGripEdgeGap();
+    if (USEGRIPEDGEGAP.equals(propertyName)) return getUseGripEdgeGap();
+    if (ATTACHTOJOBTICKET.equals(propertyName)) return getAttachToJobTicket();
     if (JOBNUMBER.equals(propertyName)) return getJobNumber();
     if (JOBINDEX.equals(propertyName)) return getJobIndex();
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
@@ -2019,6 +2965,12 @@ public class JobBase extends ModelBase {
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return getCustomerSuppliedStock();
     if (PAPERPRICE.equals(propertyName)) return getPaperPrice();
     if (JDFSTATUS.equals(propertyName)) return getJdfStatus();
+    if (DISABLEFSC.equals(propertyName)) return getDisableFSC();
+    if (CUTSTORUN.equals(propertyName)) return getCutstoRun();
+    if (SHEETSOUT.equals(propertyName)) return getSheetsOut();
+    if (CUTSTOFINISH.equals(propertyName)) return getCutstoFinish();
+    if (GRIPLOCATION.equals(propertyName)) return getGripLocation();
+    if (FOLIOLOCATION.equals(propertyName)) return getFolioLocation();
     return super.getProperty(propertyName);
   }
 	
@@ -2028,6 +2980,34 @@ public class JobBase extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) setPrintRunToFinishSection((Boolean)newValue); else
+    if (PRINTPARENTTORUNSECTION.equals(propertyName)) setPrintParentToRunSection((Boolean)newValue); else
+    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) setPrintParentToFinishSection((Boolean)newValue); else
+    if (RUNTOFINISHGRAIN.equals(propertyName)) setRunToFinishGrain((String)newValue); else
+    if (WORKANDTUMBLE.equals(propertyName)) setWorkandTumble((Boolean)newValue); else
+    if (TRIMFOURSIDES.equals(propertyName)) setTrimFourSides((Boolean)newValue); else
+    if (BACKTRIMPARENT.equals(propertyName)) setBackTrimParent((Boolean)newValue); else
+    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) setDefaultPressCuttOff((Double)newValue); else
+    if (BLEEDBOTTOM.equals(propertyName)) setBleedBottom((Double)newValue); else
+    if (BLEEDRIGHT.equals(propertyName)) setBleedRight((Double)newValue); else
+    if (BLEEDTOP.equals(propertyName)) setBleedTop((Double)newValue); else
+    if (BLEED.equals(propertyName)) setBleed((Double)newValue); else
+    if (USEBLEED.equals(propertyName)) setUseBleed((Boolean)newValue); else
+    if (GUTTERHORIZONTAL.equals(propertyName)) setGutterHorizontal((Double)newValue); else
+    if (GUTTER.equals(propertyName)) setGutter((Double)newValue); else
+    if (USEGUTTER.equals(propertyName)) setUseGutter((Boolean)newValue); else
+    if (WHITESPACEBOTTOM.equals(propertyName)) setWhiteSpaceBottom((Double)newValue); else
+    if (WHITESPACERIGHT.equals(propertyName)) setWhiteSpaceRight((Double)newValue); else
+    if (WHITESPACETOP.equals(propertyName)) setWhiteSpaceTop((Double)newValue); else
+    if (WHITESPACE.equals(propertyName)) setWhiteSpace((Double)newValue); else
+    if (USEWHITESPACE.equals(propertyName)) setUseWhiteSpace((Boolean)newValue); else
+    if (COLORBAR.equals(propertyName)) setColorBar((Double)newValue); else
+    if (USECOLORBAR.equals(propertyName)) setUseColorBar((Boolean)newValue); else
+    if (FOLIOEDGE.equals(propertyName)) setFolioEdge((Double)newValue); else
+    if (USEFOLIOEDGE.equals(propertyName)) setUseFolioEdge((Boolean)newValue); else
+    if (GRIPEDGEGAP.equals(propertyName)) setGripEdgeGap((Double)newValue); else
+    if (USEGRIPEDGEGAP.equals(propertyName)) setUseGripEdgeGap((Boolean)newValue); else
+    if (ATTACHTOJOBTICKET.equals(propertyName)) setAttachToJobTicket((Boolean)newValue); else
     if (JOBNUMBER.equals(propertyName)) setJobNumber((String)newValue); else
     if (JOBINDEX.equals(propertyName)) setJobIndex((Long)newValue); else
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
@@ -2099,6 +3079,12 @@ public class JobBase extends ModelBase {
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) setCustomerSuppliedStock((Boolean)newValue); else
     if (PAPERPRICE.equals(propertyName)) setPaperPrice((PaperPrice)newValue); else
     if (JDFSTATUS.equals(propertyName)) setJdfStatus((JobJDFStatus)newValue); else
+    if (DISABLEFSC.equals(propertyName)) setDisableFSC((Boolean)newValue); else
+    if (CUTSTORUN.equals(propertyName)) setCutstoRun((Integer)newValue); else
+    if (SHEETSOUT.equals(propertyName)) setSheetsOut((Integer)newValue); else
+    if (CUTSTOFINISH.equals(propertyName)) setCutstoFinish((Integer)newValue); else
+    if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
+    if (FOLIOLOCATION.equals(propertyName)) setFolioLocation((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2108,6 +3094,62 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRINTPARENTTORUNSECTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RUNTOFINISHGRAIN.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WORKANDTUMBLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TRIMFOURSIDES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BACKTRIMPARENT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLEEDBOTTOM.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLEEDRIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLEEDTOP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (BLEED.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USEBLEED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (GUTTERHORIZONTAL.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (GUTTER.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USEGUTTER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (WHITESPACEBOTTOM.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WHITESPACERIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WHITESPACETOP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WHITESPACE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USEWHITESPACE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COLORBAR.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USECOLORBAR.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FOLIOEDGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USEFOLIOEDGE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (GRIPEDGEGAP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (USEGRIPEDGEGAP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ATTACHTOJOBTICKET.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     if (JOBNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (JOBINDEX.equals(propertyName)) 
@@ -2250,6 +3292,18 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {PaperPrice.class};		
     if (JDFSTATUS.equals(propertyName)) 
       return new Class<?>[] {JobJDFStatus.class};		
+    if (DISABLEFSC.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CUTSTORUN.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (SHEETSOUT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (CUTSTOFINISH.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (GRIPLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FOLIOLOCATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2260,6 +3314,34 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return JobBase.class;
+    if (PRINTPARENTTORUNSECTION.equals(propertyName)) return JobBase.class;
+    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return JobBase.class;
+    if (RUNTOFINISHGRAIN.equals(propertyName)) return JobBase.class;
+    if (WORKANDTUMBLE.equals(propertyName)) return JobBase.class;
+    if (TRIMFOURSIDES.equals(propertyName)) return JobBase.class;
+    if (BACKTRIMPARENT.equals(propertyName)) return JobBase.class;
+    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return JobBase.class;
+    if (BLEEDBOTTOM.equals(propertyName)) return JobBase.class;
+    if (BLEEDRIGHT.equals(propertyName)) return JobBase.class;
+    if (BLEEDTOP.equals(propertyName)) return JobBase.class;
+    if (BLEED.equals(propertyName)) return JobBase.class;
+    if (USEBLEED.equals(propertyName)) return JobBase.class;
+    if (GUTTERHORIZONTAL.equals(propertyName)) return JobBase.class;
+    if (GUTTER.equals(propertyName)) return JobBase.class;
+    if (USEGUTTER.equals(propertyName)) return JobBase.class;
+    if (WHITESPACEBOTTOM.equals(propertyName)) return JobBase.class;
+    if (WHITESPACERIGHT.equals(propertyName)) return JobBase.class;
+    if (WHITESPACETOP.equals(propertyName)) return JobBase.class;
+    if (WHITESPACE.equals(propertyName)) return JobBase.class;
+    if (USEWHITESPACE.equals(propertyName)) return JobBase.class;
+    if (COLORBAR.equals(propertyName)) return JobBase.class;
+    if (USECOLORBAR.equals(propertyName)) return JobBase.class;
+    if (FOLIOEDGE.equals(propertyName)) return JobBase.class;
+    if (USEFOLIOEDGE.equals(propertyName)) return JobBase.class;
+    if (GRIPEDGEGAP.equals(propertyName)) return JobBase.class;
+    if (USEGRIPEDGEGAP.equals(propertyName)) return JobBase.class;
+    if (ATTACHTOJOBTICKET.equals(propertyName)) return JobBase.class;
     if (JOBNUMBER.equals(propertyName)) return JobBase.class;
     if (JOBINDEX.equals(propertyName)) return JobBase.class;
     if (SALESCATEGORY.equals(propertyName)) return JobBase.class;
@@ -2331,6 +3413,12 @@ public class JobBase extends ModelBase {
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return JobBase.class;
     if (PAPERPRICE.equals(propertyName)) return JobBase.class;
     if (JDFSTATUS.equals(propertyName)) return JobBase.class;
+    if (DISABLEFSC.equals(propertyName)) return JobBase.class;
+    if (CUTSTORUN.equals(propertyName)) return JobBase.class;
+    if (SHEETSOUT.equals(propertyName)) return JobBase.class;
+    if (CUTSTOFINISH.equals(propertyName)) return JobBase.class;
+    if (GRIPLOCATION.equals(propertyName)) return JobBase.class;
+    if (FOLIOLOCATION.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2342,6 +3430,62 @@ public class JobBase extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     JobBase objT = (JobBase)obj;
+    if (! SmartEquals(getPrintRunToFinishSection(), objT.getPrintRunToFinishSection()))
+      return false;
+    if (! SmartEquals(getPrintParentToRunSection(), objT.getPrintParentToRunSection()))
+      return false;
+    if (! SmartEquals(getPrintParentToFinishSection(), objT.getPrintParentToFinishSection()))
+      return false;
+    if (! SmartEquals(getRunToFinishGrain(), objT.getRunToFinishGrain()))
+      return false;
+    if (! SmartEquals(getWorkandTumble(), objT.getWorkandTumble()))
+      return false;
+    if (! SmartEquals(getTrimFourSides(), objT.getTrimFourSides()))
+      return false;
+    if (! SmartEquals(getBackTrimParent(), objT.getBackTrimParent()))
+      return false;
+    if (! SmartEquals(getDefaultPressCuttOff(), objT.getDefaultPressCuttOff()))
+      return false;
+    if (! SmartEquals(getBleedBottom(), objT.getBleedBottom()))
+      return false;
+    if (! SmartEquals(getBleedRight(), objT.getBleedRight()))
+      return false;
+    if (! SmartEquals(getBleedTop(), objT.getBleedTop()))
+      return false;
+    if (! SmartEquals(getBleed(), objT.getBleed()))
+      return false;
+    if (! SmartEquals(getUseBleed(), objT.getUseBleed()))
+      return false;
+    if (! SmartEquals(getGutterHorizontal(), objT.getGutterHorizontal()))
+      return false;
+    if (! SmartEquals(getGutter(), objT.getGutter()))
+      return false;
+    if (! SmartEquals(getUseGutter(), objT.getUseGutter()))
+      return false;
+    if (! SmartEquals(getWhiteSpaceBottom(), objT.getWhiteSpaceBottom()))
+      return false;
+    if (! SmartEquals(getWhiteSpaceRight(), objT.getWhiteSpaceRight()))
+      return false;
+    if (! SmartEquals(getWhiteSpaceTop(), objT.getWhiteSpaceTop()))
+      return false;
+    if (! SmartEquals(getWhiteSpace(), objT.getWhiteSpace()))
+      return false;
+    if (! SmartEquals(getUseWhiteSpace(), objT.getUseWhiteSpace()))
+      return false;
+    if (! SmartEquals(getColorBar(), objT.getColorBar()))
+      return false;
+    if (! SmartEquals(getUseColorBar(), objT.getUseColorBar()))
+      return false;
+    if (! SmartEquals(getFolioEdge(), objT.getFolioEdge()))
+      return false;
+    if (! SmartEquals(getUseFolioEdge(), objT.getUseFolioEdge()))
+      return false;
+    if (! SmartEquals(getGripEdgeGap(), objT.getGripEdgeGap()))
+      return false;
+    if (! SmartEquals(getUseGripEdgeGap(), objT.getUseGripEdgeGap()))
+      return false;
+    if (! SmartEquals(getAttachToJobTicket(), objT.getAttachToJobTicket()))
+      return false;
     if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
       return false;
     if (! SmartEquals(getJobIndex(), objT.getJobIndex()))
@@ -2483,6 +3627,18 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getPaperPrice(), objT.getPaperPrice()))
       return false;
     if (! SmartEquals(getJdfStatus(), objT.getJdfStatus()))
+      return false;
+    if (! SmartEquals(getDisableFSC(), objT.getDisableFSC()))
+      return false;
+    if (! SmartEquals(getCutstoRun(), objT.getCutstoRun()))
+      return false;
+    if (! SmartEquals(getSheetsOut(), objT.getSheetsOut()))
+      return false;
+    if (! SmartEquals(getCutstoFinish(), objT.getCutstoFinish()))
+      return false;
+    if (! SmartEquals(getGripLocation(), objT.getGripLocation()))
+      return false;
+    if (! SmartEquals(getFolioLocation(), objT.getFolioLocation()))
       return false;
     return true;
   }			

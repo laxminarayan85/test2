@@ -13,6 +13,34 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.JobBase";
 		}
 				
+		public var printRunToFinishSection:Boolean = false;
+		public var printParentToRunSection:Boolean = false;
+		public var printParentToFinishSection:Boolean = false;
+		public var runToFinishGrain:String = "";
+		public var workandTumble:Boolean = false;
+		public var trimFourSides:Boolean = false;
+		public var backTrimParent:Boolean = false;
+		public var defaultPressCuttOff:Number = 0;
+		public var bleedBottom:Number = 0;
+		public var bleedRight:Number = 0;
+		public var bleedTop:Number = 0;
+		public var bleed:Number = 0;
+		public var useBleed:Boolean = false;
+		public var gutterHorizontal:Number = 0;
+		public var gutter:Number = 0;
+		public var useGutter:Boolean = false;
+		public var whiteSpaceBottom:Number = 0;
+		public var whiteSpaceRight:Number = 0;
+		public var whiteSpaceTop:Number = 0;
+		public var whiteSpace:Number = 0;
+		public var useWhiteSpace:Boolean = false;
+		public var colorBar:Number = 0;
+		public var useColorBar:Boolean = false;
+		public var folioEdge:Number = 0;
+		public var useFolioEdge:Boolean = false;
+		public var gripEdgeGap:Number = 0;
+		public var useGripEdgeGap:Boolean = false;
+		public var attachToJobTicket:Boolean = false;
 		public var jobNumber:String = "";
 		public var jobIndex:Number = 0;
 		public var salesCategory:SalesCategory;
@@ -84,6 +112,12 @@ package com.efi.printsmith.data
 		public var customerSuppliedStock:Boolean = false;
 		public var paperPrice:PaperPrice;
 		public var jdfStatus:JobJDFStatus;
+		public var disableFSC:Boolean = false;
+		public var cutstoRun:int = 0;
+		public var sheetsOut:int = 0;
+		public var cutstoFinish:int = 0;
+		public var gripLocation:String = "";
+		public var folioLocation:String = "";
 	
 	}
 }

@@ -28,8 +28,8 @@ import org.hibernate.annotations.Type;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TableEditor.findall", query = "from TableEditor"),
-	@NamedQuery(name = "TableEditor.byId", query = "select a from TableEditor a where a.id= :id")
+  @NamedQuery(name = "TableEditor.findall", query = "from TableEditor"),
+  @NamedQuery(name = "TableEditor.byId", query = "select a from TableEditor a where a.id= :id")
 })
 
 
@@ -53,9 +53,9 @@ public class TableEditor extends ModelBase {
 	 * @generated
 	 */
 	public TableEditor() {
-		this.created = new Date();
-		this.modified = new Date();
-	}
+    this.created = new Date();
+    this.modified = new Date();
+  }
 
  	
 	
@@ -69,16 +69,16 @@ public class TableEditor extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
  	
 	
 	/**
@@ -91,26 +91,26 @@ public class TableEditor extends ModelBase {
 	 * @generated
  	 */
 	public String getUserName(){
-		return userName; 
-	}
+    return userName; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setUserName(String newVal) {
-		this.userName = newVal;
-	}
+    this.userName = newVal;
+  }
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (USERNAME.equals(propertyName)) return getUserName();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (USERNAME.equals(propertyName)) return getUserName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -118,10 +118,10 @@ public class TableEditor extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (USERNAME.equals(propertyName)) setUserName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (USERNAME.equals(propertyName)) setUserName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -129,12 +129,12 @@ public class TableEditor extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (USERNAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (USERNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -143,23 +143,23 @@ public class TableEditor extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return TableEditor.class;
-		if (USERNAME.equals(propertyName)) return TableEditor.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return TableEditor.class;
+    if (USERNAME.equals(propertyName)) return TableEditor.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		TableEditor objT = (TableEditor)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getUserName(), objT.getUserName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    TableEditor objT = (TableEditor)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getUserName(), objT.getUserName()))
+      return false;
+    return true;
+  }			
 }

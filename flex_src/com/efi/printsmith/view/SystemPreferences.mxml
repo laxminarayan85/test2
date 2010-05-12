@@ -345,6 +345,13 @@
 	private var optPaymentDueDaysValue:String = "1";
 	[Bindable]
 	private var opgChargeDescriptionValue:String = "1";
+	
+	[Bindable]
+	private var folioLocationValue:String ;
+	[Bindable]
+	private var gripLocationValue:String;
+
+	
 //Data view variables
 	[Bindable]
 	private var preferencesSystem:PreferencesSystem;
@@ -577,13 +584,13 @@
 
 	private function fillRunToFinishGrainArray(fillArray:ArrayCollection):void{
 		var setting:Object = new Object();
-		setting.name="Neither";
+		setting.name= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Neither' );
 		fillArray.addItem(setting);
 		setting = new Object();
-		setting.name="Match Grain";
+		setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.MatchGrain' );
 		fillArray.addItem(setting);
 		setting = new Object();
-		setting.name="Swing / Combination";
+		setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SwingCombination' );
 		fillArray.addItem(setting);
 	}
 	
@@ -1084,6 +1091,10 @@
 		this.chkEnterStockCost.selected = preferencesEstimating.stockCostInEstimator
 		this.chkFolioEdge.selected = preferencesEstimating.useFolioEdge
 		this.chkGripEdge.selected = preferencesEstimating.useGripEdgeGap
+		gripLocationValue = preferencesEstimating.gripLocation;
+		doGrip();
+		folioLocationValue = preferencesEstimating.folioLocation;
+		doFolio();
 		this.chkGutter.selected = preferencesEstimating.useGutter
 		this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimating.leaveFoldedSizeEmpty
 		this.chkNeverUsePresetPress.selected = preferencesEstimating.neverUsePresetPressOnStockChanges
@@ -1450,6 +1461,11 @@
 		preferencesEstimating.stockCostInEstimator = this.chkEnterStockCost.selected 
 		preferencesEstimating.useFolioEdge = this.chkFolioEdge.selected
 		preferencesEstimating.useGripEdgeGap = this.chkGripEdge.selected
+		
+		if (gripLocation.selectedValue != null)
+			preferencesEstimating.gripLocation = gripLocation.selectedValue.toString();
+		if (folioLocation.selectedValue != null)
+			preferencesEstimating.folioLocation = folioLocation.selectedValue.toString();	
 		preferencesEstimating.useGutter = this.chkGutter.selected
 		preferencesEstimating.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
 		preferencesEstimating.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected
@@ -2334,7 +2350,33 @@
 	private function formatNumberMarkup(item:Object, column:DataGridColumn):String {
 		return item.markup.toFixed(2);
 	}
-
+	
+	private function doGrip():void{
+		if (gripLocation.selectedValue == "Top")
+		{
+			topGrip.alpha = .4;
+			leftGrip.alpha = 1;
+		}
+		if (gripLocation.selectedValue == "Left")
+		{
+			topGrip.alpha = 1;
+			leftGrip.alpha = .4;
+		}
+			
+	}
+	private function doFolio():void{
+		if (folioLocation.selectedValue == "Top")
+		{
+			topFolio.alpha = 0.4;
+			leftFolio.alpha = 1;
+		}
+		if (folioLocation.selectedValue == "Left")
+		{
+			topFolio.alpha = 1;
+			leftFolio.alpha = .4;
+		}
+			
+	}
 ]]>
 
 </mx:Script>	
@@ -2775,8 +2817,8 @@
 				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"/>
 				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"/>
 
-				<mx:Label x="260" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right"/>
-				<mx:ComboBox x="377" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="80"/>
+				<mx:Label x="239" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right" width="160"/>
+				<mx:ComboBox x="407" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="104"/>
 
 				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
 					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"/>
@@ -2784,6 +2826,18 @@
 					<mx:CheckBox x="10" y="45" id="chkPrintRunToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}"/>
 					<mx:CheckBox x="10" y="65" id="chkAttachToJobTicket" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}"/>
 				</mx:Panel>
+				<mx:RadioButtonGroup id="gripLocation" selectedValue="{gripLocationValue}" change="doGrip()"/>
+				<mx:RadioButton x="167" y="46" value="Top" id="topGrip" icon="@Embed(source='../../../../assets/Original PS Icons/GripSideTopBottom.png')" groupName="gripLocation" width="36" height="29" enabled="true"/>
+				<mx:RadioButton x="202" y="46" value="Left"  id="leftGrip" groupName="gripLocation" width="32" height="29">
+					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/GripSideLeftRight.png')</mx:icon>
+				</mx:RadioButton>
+				<mx:RadioButtonGroup id="folioLocation" selectedValue="{folioLocationValue}"  change="doFolio();"/>
+				<mx:RadioButton x="167" y="95" value="Top" id="topFolio" groupName="folioLocation" >
+					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideTopBottom.png')</mx:icon>
+				</mx:RadioButton>
+				<mx:RadioButton x="202" y="95"  value="Left" id="leftFolio" groupName="folioLocation" >
+					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideLeftRight.png')</mx:icon>
+				</mx:RadioButton>
 				
 			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">

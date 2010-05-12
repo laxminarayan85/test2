@@ -25,6 +25,8 @@ public class JobMapper extends ImportMapper {
 		Job job = new Job();
 		SalesCategory salesCategory = null;
 		String method = "";
+		Boolean dutch = false;
+		Boolean grain = false;
 		boolean addSalesCategory = false;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -338,9 +340,10 @@ public class JobMapper extends ImportMapper {
 			} else if ("workNturn".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("dutch".equals(currentFieldToken)) {
-				/* TODO */
+				dutch = Utilities.tokenToBooleanValue(currentImportToken);
+				
 			} else if ("grain".equals(currentFieldToken)) {
-				/* TODO */
+				grain = Utilities.tokenToBooleanValue(currentImportToken);
 			} else if ("stock ordered".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tickets printed".equals(currentFieldToken)) {
@@ -414,41 +417,47 @@ public class JobMapper extends ImportMapper {
 			} else if ("base sets".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("gripper edge".equals(currentFieldToken)) {
-				/* TODO */
+				job.setGripEdgeGap(Utilities.tokenToDouble(currentImportToken));
 			} else if ("grip side".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true) 
+					job.setGripLocation("Top");
+				if (currentImportToken.equals("2") == true) 
+						job.setGripLocation("Left");
 			} else if ("folio edge".equals(currentFieldToken)) {
-				/* TODO */
+				job.setFolioEdge(Utilities.tokenToDouble(currentImportToken));				
 			} else if ("folio side".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("1") == true) 
+					job.setFolioLocation("Top");
+				if (currentImportToken.equals("2") == true) 
+					job.setFolioLocation("Left");
 			} else if ("finish bleed[1]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBleed(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[2]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBleedRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[3]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBleedTop(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[4]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBleedBottom(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish gutter[1]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setGutterHorizontal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish gutter[2]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setGutter(Utilities.tokenToDouble(currentImportToken));
 			} else if ("parent out".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cuts run".equals(currentFieldToken)) {
-				/* TODO */
+				job.setCutstoRun(Utilities.tokenToInt(currentImportToken));
 			} else if ("cuts finish".equals(currentFieldToken)) {
-				/* TODO */
+				job.setCutstoFinish(Utilities.tokenToInt(currentImportToken));
 			} else if ("use grip".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUseGripEdgeGap(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use folio".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUseFolioEdge(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use finish bleed".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUseBleed(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use finish gutter".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUseGutter(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("use color bar".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUseColorBar(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o run cuts".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o finish cuts".equals(currentFieldToken)) {
@@ -646,13 +655,13 @@ public class JobMapper extends ImportMapper {
 			} else if ("run size area".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("white space[1]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setWhiteSpace(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[2]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setWhiteSpaceRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[3]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setWhiteSpaceTop(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[4]".equals(currentFieldToken)) {
-				/* TODO */
+				job.setWhiteSpaceBottom(Utilities.tokenToDouble(currentImportToken));
 			} else if ("across".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("down".equals(currentFieldToken)) {
@@ -724,15 +733,15 @@ public class JobMapper extends ImportMapper {
 			} else if ("finish".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("back trim parent".equals(currentFieldToken)) {
-				/* TODO */
+				job.setBackTrimParent(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("back trim run".equals(currentFieldToken)) {
-				/* TODO */
+				job.setTrimFourSides(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("diagram on job".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("digital submitted".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("work & turn new".equals(currentFieldToken)) {
-				/* TODO */
+				job.setWorkandTumble(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("override washup time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production release".equals(currentFieldToken)) {
@@ -1057,6 +1066,8 @@ public class JobMapper extends ImportMapper {
 				/* TODO */
 			} else if ("tax".equals(currentFieldToken)) {
 				/* TODO */
+			} else if ("OBSv3job".equals(currentFieldToken)) {
+				job.setDisableFSC(Utilities.tokenToBooleanValue(currentImportToken));
 			}
 		}
 		if (job.getJobNumber() != null
@@ -1065,6 +1076,13 @@ public class JobMapper extends ImportMapper {
 			sequenceValues.setJob(Long.parseLong(job.getJobNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		if( dutch)
+			job.setRunToFinishGrain("Swing / Combination");
+		else if (grain)
+				job.setRunToFinishGrain("Match Grain");
+			else
+				job.setRunToFinishGrain("Neither");
+		
 		log.info("Leaving JobMapper->importTokens");
 		return job;
 	}
