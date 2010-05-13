@@ -59,7 +59,7 @@
 
 			private function getRemoteFiles(event:Event):void
 			{
-				var token:AsyncToken=AsyncToken(remoteDownload.getDownloadList());
+				var token:AsyncToken=AsyncToken(remoteDownload.getItemList());
 				token.kind="remoteFileList";
 			}
 

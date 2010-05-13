@@ -1,6 +1,7 @@
 package com.efi.printsmith.integration;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
@@ -20,6 +21,8 @@ import org.cip4.jdflib.jmf.JDFReturnQueueEntryParams;
 import org.cip4.jdflib.jmf.JDFSignal;
 import org.cip4.jdflib.util.mime.MimeReader;
 
+import com.efi.printsmith.integration.JDF.JMFMessages;
+import com.efi.printsmith.network.HttpContentType;
 import com.efi.printsmith.network.NetworkHelper;
 
 	public class IntegrationServlet extends HttpServlet implements Servlet {
@@ -52,6 +55,15 @@ import com.efi.printsmith.network.NetworkHelper;
 					
 					if (command.getType().equals("ReturnQueueEntry")) {
 						handleReturnQueueEntry(command);
+						
+						JDFDoc jmfResponse = JMFMessages.ReturnQueueEntryResponse(0);
+						
+						response.setContentType(HttpContentType.CONTENT_TYPE_JMF);
+						String responseBody = jmfResponse.toXML();
+						response.setContentLength(responseBody.length());
+						OutputStream out = response.getOutputStream();
+						out.write(responseBody.getBytes());
+						out.close();						
 					}
 				}
 			}

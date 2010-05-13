@@ -388,7 +388,12 @@
 		<mx:method name="assignPricingCopierToJob" fault="handleFault(event)" result="handleAssignPricingCopierResult(event)"/>
 		<mx:method name="assignStockToJob" fault="handleFault(event)" result="handleAssignStockResult(event)"/>
 	</mx:RemoteObject>
-	
+	<mx:RemoteObject id="jdfIntegrationService"
+				destination="jdfIntegrationService">
+		<mx:method name="sendJobToFiery"
+				fault="handleFault(event)"
+				result="sendJobToFieryResult(event)"/>
+	</mx:RemoteObject>			
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.JobTemplate;
@@ -510,6 +515,10 @@
 					check_taxtable.visible = true;
 				}
 		
+			}
+			
+			private function sendJobToFieryResult(ev:ResultEvent):void {
+				
 			}
 			
 			private function handleLoadEstimatingPreferencesResult(ev:ResultEvent):void {
@@ -1356,6 +1365,16 @@
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
 			 }
+	    	
+	    	private function submitToFiery():void {
+				if (invoice != null && !isNaN(invoice.id)) { // Only allow submission if invoice & job have been saved
+					if (job != null && !isNaN(job.id)) {
+						jdfIntegrationService.sendJobToFiery(job.id, invoice.id);	
+					}
+				} else {
+					Alert.show("You may only submit jobs that have been saved to a valid invoice.", "Error", 0, null);
+				}
+	    	}
 		]]>
 
 	</mx:Script>
@@ -1434,7 +1453,8 @@
 					   y="10"
 					   width="38"
 					   height="38"
-					   id="preview_button">
+					   id="preview_button"
+					   click="submitToFiery()">
 				<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
 			</mx:LinkButton>
 			<mx:Label x="554"

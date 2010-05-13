@@ -5,6 +5,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getEmployee" fault="handleFault(event)" result="handleLoadEmployee(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
@@ -139,7 +140,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}	
 	public function setEmployee(employee2:Employee):void
 	{
-		this.employee = employee2;
+		dataService.getEmployee(employee2.id);
+	}
+	private function handleLoadEmployee(evt:ResultEvent):void
+	{
+		this.employee = evt.result as Employee;
 		if( this.employee.employeeCharges == null)
 			this.employee.employeeCharges = new ArrayCollection();
 		if( this.employee.employeePresses == null)
@@ -151,7 +156,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if( this.employee.productionParents == null)
 			this.employee.productionParents = new ArrayCollection();
 		mapFromEmployeeData();
-	}	
+
+	}
 	private function mapFromEmployeeData():void{
 		var tCharge:ChargeCommand;
 		var index:int;

@@ -85,6 +85,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.events.ModelGetAllEvent;
 	import com.efi.printsmith.events.ModelDeleteItemEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.events.DeviceListSelectEvent;
 
 	[Bindable]                   
     private var enableSave:Boolean = true;
@@ -598,7 +599,20 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		updateControlState();
 	}
 	
+	private function getDeviceList():void {
+		var deviceListWindow:DeviceList = DeviceList(PopUpManager.createPopUp(this, DeviceList, true));
+	    deviceListWindow.addEventListener(DeviceListSelectEvent.CANCELSELECTDEVICE, handleDeviceListCancel);
+	    deviceListWindow.addEventListener(DeviceListSelectEvent.SELECTDEVICE, handleDeviceListSelect);
+		deviceListWindow.setStyle("borderAlpha", 0.9);
+	}
 	
+	private function handleDeviceListCancel(evt:DeviceListSelectEvent):void {
+		
+	}
+
+	private function handleDeviceListSelect(evt:DeviceListSelectEvent):void {
+		this.OEMDeviceID.text = evt.deviceId as String;
+	}
 	
 	private function updateMethodBox():void {
 		methodType.removeAll();
@@ -628,6 +642,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			interpolatematrix.enabled = true;
 		updateControlState();	
 	}
+	
 	private function updateControlState():void {
 		
 		switch (pricing_method_combo.selectedItem) {
@@ -867,11 +882,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:TextInput x="126" y="168" width="200" id="OutPutDescription" text="{copierDefinition.outputDescrip}" height="20"/>
 		<mx:ComboBox x="126" y="190" id="ProductionLocation" width="200" labelField="name" dataProvider="{productionLocationArray}" height="20"/>
 		<mx:ComboBox x="126" y="212" id="CostCenter" width="200" labelField="name" dataProvider="{costCenterArray}" height="20"/>
-		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="200" text="{copierDefinition.oemDeviceID}" height="20"/>
+		<mx:TextInput x="126" y="234" id="OEMDeviceID" width="164" text="{copierDefinition.oemDeviceID}" height="20"/>
 		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89" textAlign="right"/>
 		<mx:TextInput x="443" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
 		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
-		<mx:CheckBox x="345" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
+		<mx:CheckBox x="345" y="211" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
 		<mx:HRule y="282" height="13" left="5" right="5"/>
 		<mx:Label x="14" y="391" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2" width="141" textAlign="right"/>
 		<mx:Label x="14" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumSize')}" id="label3" width="141" textAlign="right"/>
@@ -979,6 +994,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		</mx:Button>
 		<mx:Label x="255" y="731" id = "export_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="47"/>
 		<mx:ComboBox x="126" y="146" id="productionCopiers" width="200" labelField="name" dataProvider="{productionCopiersArray}" height="20" change="updateMachineId()"/>
+		<mx:Button x="290" y="235" label="..." click="getDeviceList();" width="35" height="18" fontSize="9"/>
 	</mx:Canvas>
 <!--		<mx:Text x="695" y="249" width="137" id="wasteChartList" text="{copierDefinition.wasteChart.name}"/>
 -->																						<!--		<mx:Text x="131" y="805" width="144" id="stockPriceList" text="{copierDefinition.stockPriceList.name}"/>

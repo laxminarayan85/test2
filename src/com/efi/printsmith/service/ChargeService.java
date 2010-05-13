@@ -11,7 +11,7 @@ import com.efi.printsmith.data.SquareAreaCharge;
 import com.efi.printsmith.data.enums.ChargeMethod;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 
-public class ChargeService {
+public class ChargeService extends SnowmassHibernateService{
 	protected static Logger log = Logger.getLogger(ChargeService.class);
 
 	public Charge createChargeFromChargeDefinition(ChargeDefinition chargeDefinition) {

@@ -29,7 +29,7 @@ import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.service.DataService;
 
 
-public class EstimatorService extends HibernateService {
+public class EstimatorService extends SnowmassHibernateService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
@@ -69,36 +69,5 @@ public class EstimatorService extends HibernateService {
 		invoice.addJobs(job);
 		dataService.addUpdate(invoice);
 		return invoice;
-	}
-	public Object load(Class clazz, long id)
-	{
-       Session session = null;
-       Object result;
-
-       try
-       {
-           session = DataService.getSession();
-           long tStart = new Date().getTime();
-           result = session.get(clazz, id);
-           long tEnd = new Date().getTime();
-     //      log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
-           
-       }
-       catch (HibernateException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       }
-       catch (RuntimeException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       } finally {
-    	   session.close();
-       }
-
-       return result;
 	}
 }

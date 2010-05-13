@@ -49,6 +49,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>ReportServlet</servlet-name>
+		<display-name>ReportServlet</display-name>
+		<servlet-class>com.efi.printsmith.utilities.ReportServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>IntegrationServlet</servlet-name>
 		<display-name>IntegrationServlet</display-name>
 		<servlet-class>com.efi.printsmith.integration.IntegrationServlet</servlet-class>
@@ -68,7 +74,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
+<!-- 
 	<servlet>
         <servlet-name>Report</servlet-name>
         <servlet-class>com.inet.report.ReportServlet</servlet-class>
@@ -103,13 +109,11 @@
 	    <servlet-name>TransferReport</servlet-name>
 	    <url-pattern>/TransferServlet/*</url-pattern>
 	</servlet-mapping>
-
-
     <servlet-mapping>
         <servlet-name>Remote</servlet-name>
         <url-pattern>/remote/*</url-pattern>
     </servlet-mapping>
-
+-->
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
@@ -121,6 +125,10 @@
 	<servlet-mapping>
 		<servlet-name>FileIOServlet</servlet-name>
 		<url-pattern>/FileIOServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReportServlet</servlet-name>
+		<url-pattern>/reportservlet/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>IntegrationServlet</servlet-name>

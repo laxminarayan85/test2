@@ -27,7 +27,7 @@ import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 
-public class CopierService {
+public class CopierService extends SnowmassHibernateService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 

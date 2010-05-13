@@ -34,7 +34,7 @@ import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
 
-public class PricingService extends HibernateService {
+public class PricingService extends SnowmassHibernateService {
 
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
@@ -109,37 +109,4 @@ public class PricingService extends HibernateService {
 		job.getPricingRecord().setOversTotalPrice(oversPrice);
 		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getPricingRecord().getOversTotalPrice());
 	}
-	
-	public Object load(Class clazz, long id)
-	{
-       Session session = null;
-       Object result;
-
-       try
-       {
-           session = DataService.getSession();
-           long tStart = new Date().getTime();
-           result = session.get(clazz, id);
-           long tEnd = new Date().getTime();
-           log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
-           
-       }
-       catch (HibernateException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       }
-       catch (RuntimeException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       } finally {
-    	   session.close();
-       }
-
-       return result;
-	}
-
 }

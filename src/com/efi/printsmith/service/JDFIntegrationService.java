@@ -46,6 +46,7 @@ import org.cip4.jdflib.core.VString;
 import org.cip4.jdflib.datatypes.JDFIntegerRangeList;
 import org.cip4.jdflib.datatypes.JDFXYPair;
 import org.cip4.jdflib.jmf.JDFCommand;
+import org.cip4.jdflib.jmf.JDFDeviceInfo;
 import org.cip4.jdflib.jmf.JDFJMF;
 import org.cip4.jdflib.jmf.JDFMessage;
 import org.cip4.jdflib.jmf.JDFQueueEntry;
@@ -58,6 +59,7 @@ import org.cip4.jdflib.node.JDFNode.EnumType;
 import org.cip4.jdflib.pool.JDFAuditPool;
 import org.cip4.jdflib.pool.JDFResourcePool;
 import org.cip4.jdflib.resource.JDFCreated;
+import org.cip4.jdflib.resource.JDFDeviceList;
 import org.cip4.jdflib.resource.JDFLayoutPreparationParams;
 import org.cip4.jdflib.resource.JDFResource.EnumResStatus;
 import org.cip4.jdflib.resource.process.JDFAddress;
@@ -78,7 +80,10 @@ import org.cip4.jdflib.core.JDFParser;
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -97,7 +102,7 @@ import com.efi.printsmith.network.HttpResponse;
 import com.efi.printsmith.network.NetworkHelper;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
-public class JDFIntegrationService extends HibernateService {
+public class JDFIntegrationService extends SnowmassHibernateService {
 	private Logger log = Logger.getLogger(JDFIntegrationService.class);
 
 	public void sendJobToFiery(long invoiceId, long jobId) throws InvalidParameterException, Exception {
@@ -321,6 +326,94 @@ public class JDFIntegrationService extends HibernateService {
 		// TODO: Parse the response cleanly here.
 		return true;
 	}
+	
+	public List<String> getDeviceIds() throws Exception {
+		try {
+			JDFDoc message = JMFMessages.QueryKnownDevices();
+		
+			String messageString = message.toXML() + "\n";
+			HttpPostContent postContent = new HttpPostContent(messageString, HttpContentType.CONTENT_TYPE_JMF);
+			DataService dataService = new DataService();
+			List<PreferencesIntegration> integrationPreferenceList = (List<PreferencesIntegration>) dataService.getAll("PreferencesIntegration"); //TODO: Fix this Paulism
+			PreferencesIntegration integrationPreferences = integrationPreferenceList.get(0);
+			URL url = new URL(integrationPreferences.getFieryConnectorURL());		
+			HttpResponse response = NetworkHelper.httpPost(postContent, url.toString(), null);
+			System.out.println(messageString);
+			System.out.println(response.getBody());
+			return (handleQueryKnownDevicesResponse(response));
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return null;
+	}
+	
+	private List<String> handleQueryKnownDevicesResponse(HttpResponse response) {
+		List<String> devices = new ArrayList<String>();
+		if (response.getBody() != null) {
+			log.info(response.getBody());
+		
+			JDFParser parser = new JDFParser();
+			JDFDoc responseDoc = parser.parseString(response.getBody());
+			JDFJMF responseRoot = responseDoc.getJMFRoot();
+			
+			if (responseRoot != null) {
+				JDFMessage responseMessage = responseRoot.getMessageElement(EnumFamily.Response, JDFMessage.EnumType.KnownDevices,0);
+				if (responseMessage != null) {
+					JDFDeviceList deviceList = responseMessage.getDeviceList(0);
+					if (deviceList != null) {
+						Collection<JDFDeviceInfo> deviceInfoList = deviceList.getAllDeviceInfo();
+						if (deviceInfoList != null) {
+							Iterator deviceIter = deviceInfoList.iterator();
+							while(deviceIter.hasNext()) {
+								JDFDeviceInfo deviceInfo = (JDFDeviceInfo)deviceIter.next();
+								if (deviceInfo != null) {
+									String deviceId = deviceInfo.getDeviceID();
+									if (deviceId != null && deviceId.length() > 0) {
+										devices.add(deviceId);
+									}
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}		
+		return devices;
+	}
+
+	public boolean pauseFieryJob(Job job) throws Exception {
+		if (job == null) {
+			throw new InvalidParameterException("No job passed to pauseFieryJob");
+		}
+		
+		if (job.getJdfStatus() == null) {
+			throw new InvalidParameterException("No job submission information found for job in pauseFieryJob");
+		}
+		
+		JobJDFStatus jobStatus = job.getJdfStatus();
+		
+		String queueId = jobStatus.getQueueId();
+		if (queueId == null || queueId.length() == 0) {
+			throw new InvalidParameterException("No queue id found for job in pauseFieryJob");			
+		}
+		
+		String deviceId = jobStatus.getDeviceId();
+		if (deviceId == null || deviceId.length() == 0) {
+			throw new InvalidParameterException("No deviceId found for job in pauseFieryJob");			
+		}
+		JDFDoc message = JMFMessages.HoldQueueEntry(deviceId, queueId, false);
+		String messageStr = message.toXML() + "\n";
+		HttpPostContent postContent = new HttpPostContent(messageStr, HttpContentType.CONTENT_TYPE_JMF);
+		DataService dataService = new DataService();
+		List<PreferencesIntegration> integrationPreferenceList = (List<PreferencesIntegration>) dataService.getAll("PreferencesIntegration"); //TODO: Fix this Paulism
+		PreferencesIntegration integrationPreferences = integrationPreferenceList.get(0);
+		URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId); //new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
+		HttpResponse response = NetworkHelper.httpPost(postContent, url.toString(), null);
+		// TODO: Parse the response cleanly here.
+		return true;
+	}
+	
 	private void handleSubmitQueueEntryResponse(HttpResponse response, Job job) {
 		if (response.getBody() != null) {
 			log.info(response.getBody());
@@ -407,32 +500,6 @@ public class JDFIntegrationService extends HibernateService {
 		} catch (Exception e) {
 			log.error(e);
 		}
-	}
-	public Object load(Class clazz, long id) {
-		Session session = null;
-		Object result;
-
-		try {
-			session = DataService.getSession();
-			long tStart = new Date().getTime();
-			result = session.get(clazz, id);
-			long tEnd = new Date().getTime();
-			// log.debug("{load()}" +(tEnd-tStart) +"ms class=" +clazz.getName()
-			// );
-
-		} catch (HibernateException ex) {
-			HibernateUtil.rollbackTransaction();
-			ex.printStackTrace();
-			throw ex;
-		} catch (RuntimeException ex) {
-			HibernateUtil.rollbackTransaction();
-			ex.printStackTrace();
-			throw ex;
-		} finally {
-			session.close();
-		}
-
-		return result;
 	}
 	
 	private static String readFileAsString(String filePath) throws java.io.IOException{

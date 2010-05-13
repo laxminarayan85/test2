@@ -130,4 +130,34 @@
 			</hibernate>
 		</properties>
 	</destination>	
+	<destination id="invoiceRepositoryService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.repository.InvoiceRepository
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>	
+	<destination id="reportService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.ReportService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>	
+	<destination id="propertiesService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.PropertiesService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
 </service>

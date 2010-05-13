@@ -41,7 +41,7 @@ import com.inet.report.Section;
 /**
  * @author <a href="proyal@pace2020.com">peter royal</a>
  */
-public class CrystalClearServlet extends ReportServlet {
+public class CrystalClearServlet {
 	public static final String CCPROPS_LOCATION = "properties.location";
 	private static final Pattern LOADKEY = Pattern.compile("\"key=(.*)\"");
 
@@ -56,15 +56,15 @@ public class CrystalClearServlet extends ReportServlet {
 	private DataSource m_dataSource;
 
 	public void init(final ServletConfig config) throws ServletException {
-		super.init(config);
+//		super.init(config);
 	}
 
-	@Override
-	public void service(HttpServletRequest arg0, HttpServletResponse arg1)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.service(arg0, arg1);
-	}
+//	@Override
+//	public void service(HttpServletRequest arg0, HttpServletResponse arg1)
+//			throws ServletException, IOException {
+//		// TODO Auto-generated method stub
+//		super.service(arg0, arg1);
+//	}
 	
 ////		final File properties = new File(
 ////				config.getServletContext().getRealPath("WEB-INF/crystalclear9.1.properties"));

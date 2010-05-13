@@ -44,6 +44,7 @@ import org.hibernate.exception.GenericJDBCException;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
+import com.efi.printsmith.properties.PropertiesHelper;
 import com.efi.printsmith.query.RemoteCriterion;
 import com.efi.printsmith.query.RemoteRestriction;
 
@@ -259,83 +260,23 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
-		List<ModelBase> resultList = new ArrayList<ModelBase>();
-		String columnstring = new String();
-
-		columnstring = "a.id, a.invoiceNumber";
-		try {
-
-			String queryString = "select new Invoice" + "( "
-					+ columnstring + ") from Invoice a where a.onPendingList = 'TRUE'";
-			Query query = em.createQuery(queryString);
-
-			resultList = query.getResultList();
-			for (int i = 0; i < resultList.size(); i++) {
-				Invoice listItem = (Invoice)resultList.get(i);
-				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
-				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
-						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
-				resultList.set(i, resultInvoice);
+		Session session = (Session) em.getDelegate();
+		List<InvoiceBase> invoices = session.createCriteria(Invoice.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
+		List<Estimate> estimates = session.createCriteria(Estimate.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
+		invoices.addAll(estimates);
+		
+		for (int i = 0; i < invoices.size(); i++) {
+			InvoiceBase invoice = invoices.get(i);
+			
+			for (int j = 0; j < invoice.getJobs().size(); j++) {
+				Job job = invoice.getJobs().get(j);
+				
+				if (job != null) {
+					log.error("Null job found in invoice");
+				}
 			}
-			
-			List<ModelBase> estimateResultList = new ArrayList<ModelBase>();
-			
-			queryString = "select new Estimate" + "( "+ columnstring + ") from Estimate a where a.onPendingList = 'TRUE'";							
-			
-			query = em.createQuery(queryString);
-			estimateResultList = query.getResultList();
-			
-			for (int i = 0; i < estimateResultList.size(); i++) {
-				Estimate listItem = (Estimate)estimateResultList.get(i);
-				Estimate invoice = (Estimate) this.getById("Estimate", ((ModelBase) listItem).getId());
-				Estimate resultInvoice = new Estimate(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
-						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
-				resultList.add(resultInvoice);
-			}
-			
-			
-//			log.debug("** getPending .");
-//			EntityManager em = entityManagerFactory.createEntityManager();
-//
-//			String queryString = "select new " + className + "( "
-//					+ columnstring + ") from " + className + " a";
-//			Query query = em.createQuery(queryString);
-//
-//			resultList = query.getResultList();
-//			for (int i = 0; i < resultList.size(); i++) {
-//				Object listItem = resultList.get(i);
-//				if (listItem instanceof Invoice) {
-//					Invoice invoice = (Invoice) this.getById("Invoice",
-//							((ModelBase) listItem).getId());
-//					Invoice resultInvoice = new Invoice(invoice.getId(),
-//							invoice.getInvoiceNumber(), invoice.getAccount(),
-//							invoice.getContact());
-//					resultList.set(i, resultInvoice);
-//				} else if (listItem instanceof Estimate) {
-//					Estimate invoice = (Estimate) this.getById("Estimate",
-//							((ModelBase) listItem).getId());
-//					Estimate resultInvoice = new Estimate(invoice.getId(),
-//							invoice.getInvoiceNumber(), invoice.getAccount(),
-//							invoice.getContact());
-//					resultList.set(i, resultInvoice);
-//				} else {
-//					InvoiceBase invoice = (InvoiceBase) this.getById(
-//							"InvoiceBase", ((ModelBase) listItem).getId());
-//					InvoiceBase resultInvoice = new InvoiceBase(
-//							invoice.getId(), invoice.getInvoiceNumber(),
-//							invoice.getAccount(), invoice.getContact());
-//					resultList.set(i, resultInvoice);
-//				}
-//			}
-			if (resultList != null)
-				log.debug("** Found " + resultList.size() + "records:");
-			return resultList;
-		} catch (Exception e) {
-			log.error(e);
-		} finally {
-			em.close();
 		}
-		return null;
+		return invoices;
 	}
 
 	public List<?> getContactPicker(String className) throws Exception {
@@ -1401,15 +1342,89 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery("PriceListBase.byId");
 			query.setParameter("id", id);
 			PriceListBase priceList = (PriceListBase) query.getSingleResult();
-
-			for (int i=0; i < priceList.getElements().size(); i++) {
-				PriceListElement element = priceList.getElements().get(i);
-				
-				if (element == null) {
-					log.error("Null priceList element found");
+			
+			if (priceList.getElements() != null) {
+				for (int i=0; i < priceList.getElements().size(); i++) {
+					PriceListElement element = priceList.getElements().get(i);
+					
+					if (element == null) {
+						log.error("Null priceList element found");
+					}
 				}
 			}
 			return priceList;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	public ModelBase getEmployee(Long id) throws Exception {
+		log.debug("** getEmployee called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Employee.byId");
+			query.setParameter("id", id);
+			Employee employee = (Employee) query.getSingleResult();
+			
+			if (employee.getComLinks() != null) {
+				for (int i=0; i < employee.getComLinks().size(); i++) {
+					ComLink comLink = employee.getComLinks().get(i);
+					
+					if (comLink == null) {
+						log.error("Null comLink found");
+					}		
+				}
+			}
+			if (employee.getEmployeeCharges() != null) {
+				for (int i=0; i < employee.getEmployeeCharges().size(); i++) {
+					ChargeCommand charge = employee.getEmployeeCharges().get(i);
+					
+					if (charge == null) {
+						log.error("Null charge found");
+					}		
+				}				
+			}
+			if (employee.getEmployeeCopiers() != null) {
+				for (int i=0; i < employee.getEmployeeCopiers().size(); i++) {
+					ProductionCopiers copier = employee.getEmployeeCopiers().get(i);
+					
+					if (copier == null) {
+						log.error("Null copier found");
+					}		
+				}								
+			}
+			if (employee.getEmployeePresses() != null) {
+				for (int i=0; i < employee.getEmployeePresses().size(); i++) {
+					ProductionPress press = employee.getEmployeePresses().get(i);
+					
+					if (press == null) {
+						log.error("Null press found");
+					}		
+				}												
+			}
+			if (employee.getEmployeePricings() != null) {
+				for (int i=0; i < employee.getEmployeePricings().size(); i++) {
+					PreferencesPricingMethod preferencesPricingMethod = employee.getEmployeePricings().get(i);
+					
+					if (preferencesPricingMethod == null) {
+						log.error("Null preferencesPricingMethod found");
+					}		
+				}																
+			}
+			if (employee.getProductionParents() != null) {
+				for (int i=0; i < employee.getProductionParents().size(); i++) {
+					ProductionLocations productionLocations = employee.getProductionParents().get(i);
+					
+					if (productionLocations == null) {
+						log.error("Null productionLocations found");
+					}		
+				}																				
+			}
+			
+			return employee;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -1426,11 +1441,13 @@ public class DataService extends HibernateService {
 			query.setParameter("id", id);
 			Matrix matrix = (Matrix) query.getSingleResult();
 			
-			for (int i=0; i < matrix.getElements().size(); i++) {
-				MatrixElement element = matrix.getElements().get(i);
-				
-				if (element == null) {
-					log.error("Null matrix element found");
+			if (matrix.getElements() != null) {
+				for (int i=0; i < matrix.getElements().size(); i++) {
+					MatrixElement element = matrix.getElements().get(i);
+					
+					if (element == null) {
+						log.error("Null matrix element found");
+					}
 				}
 			}
 			return matrix;

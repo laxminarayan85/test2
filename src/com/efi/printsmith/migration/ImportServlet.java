@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.service.PropertiesService;
 import com.efi.printsmith.data.ModelBase;
 
 public class ImportServlet extends HttpServlet implements Servlet {
@@ -33,6 +34,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected static Logger log = Logger.getLogger(ImportServlet.class);
+	protected static PropertiesService propertiesService = new PropertiesService();
 	protected static DataService dataService = new DataService();
 	
 	public ImportServlet() {

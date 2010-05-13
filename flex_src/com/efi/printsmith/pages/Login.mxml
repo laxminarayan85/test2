@@ -68,11 +68,10 @@
 				var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
 				setPassword.setStyle("borderAlpha", 0.9);
 				setPassword.setUser(application.currentUser);
-	 		   setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
-	 		   setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
-		
+	 		    setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
+	 		    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
 			}
-					
+			application.updateTitle();
 		} else {
 			Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 		}

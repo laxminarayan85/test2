@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="386"
-				height="522"
+				width="418"
+				height="438"
 				defaultButton="{okButton}"
 				showCloseButton="true"
 				close="PopUpManager.removePopUp(this);"
 				title="Debug"
-				xmlns:text="flash.text.*">
+				xmlns:text="flash.text.*"
+				creationComplete="init()">
 
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -26,7 +27,15 @@
 		<mx:method name="cancelFierySubscription"
 					fault="handleFault(event)"
 					result="sendJobToFieryResult(event)"/>
-					
+	</mx:RemoteObject>
+	<mx:RemoteObject id="reportService"
+					destination="reportService">
+		<mx:method name="generateReport" fault="handleFault(event)" result="handleReportResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="reportRepositoryService" destination="reportRepositoryService">
+		<mx:method name="getItemList"
+					fault="handleFault(event)"
+					result="handleLoadReportTemplates(event)"/>		
 	</mx:RemoteObject>
 	<mx:Script>
 
@@ -81,6 +90,13 @@
 
 			private var stocktypesizes:Array= ["17 x 22","25 x 38","20 x 26","5.5 x 30.5","24 x3 6","22 x 38","2.5 x 28.5","19 x 24","25 x 38","24 x 36"];
 	
+			[Bindable]
+			private var reportTemplates:ArrayCollection = new ArrayCollection();
+			
+			private function init():void {
+				reportRepositoryService.getItemList();
+			}
+			
 			private function handleFault(ev:FaultEvent):void
 			{
 				
@@ -91,6 +107,10 @@
 				
 			}
 			
+			private function handleLoadReportTemplates(evt:ResultEvent):void
+			{
+				this.reportTemplates = evt.result as ArrayCollection;
+			}
 			private function doOK():void
 			{
 				PopUpManager.removePopUp(this);
@@ -220,24 +240,26 @@
 			private function sendJobToFieryResult(evt:ResultEvent):void {
 				
 			}
-			
-			private function sendFieryJob():void {
-				dataService.getById("Job", 6428);
-			}
-			
-			private function cancelFierySubscription():void {
-				jdfIntegrationService.cancelFierySubscription(6428);
-			}
-			
+						
 			private function showFieryQueue():void {
 				var queueWindow : JMFQueue = JMFQueue(PopUpManager.createPopUp(this, JMFQueue, true));
 				PopUpManager.centerPopUp(queueWindow);
+			}
+			
+			public function handleReportResult(evt:ResultEvent):void {
+				
+			}
+			
+			private function doSampleReport():void {
+				var reportName = report_list.selectedItem as String;
+				var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?reportName="+reportName);
+            	navigateToURL(urlRequest, "_blank");
 			}
 		]]>
 	</mx:Script>
 
 	<mx:Canvas width="100%"
-			   height="100%">
+			   height="366">
 		<mx:Button x="10"
 				   y="10"
 				   label="Populate Sales Categories"
@@ -255,26 +277,23 @@
 				   label="Populate Stock Dimensions"
 				   click="doPopulateDimensions();" width="188"/>
 		<mx:Button x="10"
-				   y="207"
-				   label="Send To Fiery"
-				   click="sendFieryJob();" width="188"/>
-		<mx:Button x="10"
-				   y="237"
-				   label="Cancel Fiery Subscription"
-				   click="cancelFierySubscription();" width="188"/>
+				   y="314"
+				   label="Generate Report"
+				   click="doSampleReport();" width="188"/>
 		<mx:Button x="10" y="130" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
-		<mx:Button x="10" y="347" label="Download File From Repository" width="188"  click="doDownload();"  id="btn_download_repository"/>
-		<mx:Button x="10" y="317" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
-		<mx:Button x="10" y="267" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
+		<mx:Button x="10" y="264" label="Download File From Repository" width="188"  click="doDownload();"  id="btn_download_repository"/>
+		<mx:Button x="10" y="234" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
+		<mx:Button x="10" y="184" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
+		<mx:ComboBox x="206" y="314" width="174" id="report_list" dataProvider="{reportTemplates}"></mx:ComboBox>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
 		<mx:Button label="OK"
 				   id="okButton"
 				   enabled="true"
-				   click="doOK();"/>
+				   click="doOK();" width="99"/>
 		<mx:Button label="Cancel"
-				   click="PopUpManager.removePopUp(this);"/>
+				   click="PopUpManager.removePopUp(this);" width="99"/>
 	</mx:ControlBar>
 
 </mx:TitleWindow>
