@@ -175,9 +175,9 @@
 	
 	private function doImportChargeDefinitions():void {
 		doImport(handleSelectChargeDefinitionsFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
-		this.import_price_lists.enabled = false;
+		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = false;
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
@@ -199,11 +199,12 @@
 	
 	private function doImportInvoices():void {
 		doImport(handleSelectInvoicesFile);
+		this.import_charge.enabled = true;
 	} 
 
 	private function doImportJobs():void {
 		doImport(handleSelectJobsFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = true;
@@ -218,7 +219,7 @@
 	
 	private function doImportPressDefinitions():void {  
 		doImport(handleSelectPressDefinitionsFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = true;
@@ -233,7 +234,7 @@
 	
 	private function doImportPriceLists():void {
 		doImport(handleSelectPriceListsFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = true;
@@ -248,7 +249,7 @@
 	
 	private function doImportCopierDefinitions():void {
 		doImport(handleSelectCopierDefinitionsFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = true;
@@ -273,7 +274,7 @@
 	
 	private function doImportPriceSchedules():void {
 		doImport(handleSelectPriceSchedulesFile);
-		this.import_charge.enabled = true;
+		this.import_charge.enabled = false;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
 		this.import_price_schedules.enabled = true;
@@ -288,17 +289,6 @@
 	
 	private function doImportCharge():void {
 		doImport(handleSelectChargeFile);
-		this.import_charge.enabled = true;
-		this.import_tax_tables.enabled = true;
-		this.import_price_lists.enabled = true;
-		this.import_price_schedules.enabled = false;
-		this.import_customers.enabled = true;
-		this.import_contacts.enabled = true;
-		this.import_stock_definitions.enabled = false;
-		this.import_press_definitions.enabled = false;
-		this.import_copier_definitions.enabled = false;
-		this.import_jobs.enabled = false;
-		this.import_invoices.enabled = false;
 	}
 	
 	private function doImportStockChanges():void {
@@ -356,22 +346,22 @@
 
                              
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:Button label="Import Customers &amp; Customer Contacts" id="import_customers" enabled="true" click="doImportCustomers();"  width="256" x="10" y="160"/>
+		<mx:Button label="Import Customers &amp; Customer Contacts" id="import_customers" enabled="true" click="doImportCustomers();"  width="256" x="10" y="130"/>
 		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="256" x="10" y="10"/>
-		<mx:Button label="Import Charges" id="import_charge" enabled="true" click="doImportCharge();"  width="256" x="10" y="40"/>
-		<mx:Button label="Import Standalone Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="256" x="10" y="190"/>
-		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="274" y="160"/>
-		<mx:Button label="Web Administration" id="printsmith_site_webadmin" enabled="true" click="doWebAdministration();"  width="256" x="274" y="220"/>
+		<mx:Button label="Import Charges" id="import_charge" enabled="true" click="doImportCharge();"  width="256" x="276" y="160"/>
+		<mx:Button label="Import Standalone Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="256" x="10" y="160"/>
+		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="274" y="190"/>
+		<mx:Button label="Web Administration" id="printsmith_site_webadmin" enabled="true" click="doWebAdministration();"  width="256" x="10" y="275"/>
 		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="274" y="130"/>
 		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="274" y="100"/>
-		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="220"/>
+		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="190"/>
 		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
-		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="100"/>
-		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="130"/>
+		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="70"/>
+		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="100"/>
 		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="10"/>
 		<mx:Button label="Import Stock Changes" id="import_stock_changes" enabled="true" click="doImportStockChanges();"  width="256" x="276" y="70"/>
-		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="10" y="70"/>
-		<mx:Button x="274" y="250" label="TableEditor" width="258" click="doTableEditor();"/>
+		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="10" y="40"/>
+		<mx:Button x="274" y="275" label="TableEditor" width="258" click="doTableEditor();"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

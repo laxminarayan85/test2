@@ -3,12 +3,14 @@ package com.efi.printsmith.migration;
 import java.io.File;
 
 import org.apache.log4j.Logger;
-
+import java.util.List;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.Invoice;
 
 public class ChargeMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeMapper.class);
@@ -20,7 +22,9 @@ public class ChargeMapper extends ImportMapper {
 		log.info("Entering ChargeDefinitionMapper->importTokens");
 		Charge charge = new Charge();
 		DataService dataService = new DataService();
-		
+		String documentNumber = "";
+		String documentType = "";
+		String jobNumber = "";
 		for (int i = 0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -29,6 +33,12 @@ public class ChargeMapper extends ImportMapper {
 				charge.setPrevId(currentImportToken);
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
+			} else if ("doc number".equals(currentFieldToken)) {
+				documentNumber = currentImportToken;
+			} else if ("doc type".equals(currentFieldToken)) {
+				documentType = currentImportToken;
+			} else if ("job number".equals(currentFieldToken)) {
+				jobNumber = currentImportToken;
 			} else if ("description".equals(currentFieldToken)) {
 				charge.setDescription(currentImportToken);
 			} else if ("finished".equals(currentFieldToken)) {
@@ -72,7 +82,25 @@ public class ChargeMapper extends ImportMapper {
 				}
 			}
 		}
-		log.info("Leaving ChargeDefinitionMapper->importTokens");		
+		charge = (Charge)dataService.addUpdate(charge);
+		charge.setId(charge.getId());
+		if (documentNumber.equals("") == false && jobNumber.equals("") == false) {
+			Invoice invoice = null;
+			if (documentType.equals("I") == true)
+				invoice = (Invoice)dataService.getQuery("Invoice", " where invoiceNumber = '" + documentNumber + "'");
+			else
+				invoice = null;
+			if (invoice != null && invoice.getJobs().isEmpty() == false) {
+				List<Job> jobs = invoice.getJobs();
+				for (int i = 0; i < jobs.size(); i++) {
+					if (jobs.get(i).getJobNumber() == jobNumber) {
+						jobs.get(i).addCharges(charge);
+						dataService.addUpdate(jobs.get(i));
+					}
+				}
+			}
+		}
+		log.info("Leaving ChargeDefinitionMapper->importTokens");	
 		return charge;
 	}
 }

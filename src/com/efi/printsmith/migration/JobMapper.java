@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.Location;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PaperCalculator;
@@ -24,6 +25,8 @@ public class JobMapper extends ImportMapper {
 		log.info("Entering JobMapper->importTokens");
 		DataService dataService = new DataService();
 		Job job = new Job();
+		PricingRecord pricingRecord = new PricingRecord();
+		
 		PaperCalculator tempPaper = new PaperCalculator();
 		
 		SalesCategory salesCategory = null;
@@ -375,15 +378,15 @@ public class JobMapper extends ImportMapper {
 			} else if ("overs".equals(currentFieldToken)) {
 				job.setOversUnders(Utilities.tokenToLong(currentImportToken));
 			} else if ("overs unit price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setOversUnitPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("overs price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setOversTotalPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("prep price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setPrepPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("prod price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("bind price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setBindPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("markup total".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("prod charge total".equals(currentFieldToken)) {
@@ -391,11 +394,11 @@ public class JobMapper extends ImportMapper {
 			} else if ("add M".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("unit price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setUnitPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("total price".equals(currentFieldToken)) {
-				/* TODO */
+				pricingRecord.setTotalPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("description".equals(currentFieldToken)) {
 				job.setDescription(currentImportToken);
 			} else if ("stock name".equals(currentFieldToken)) {
@@ -1104,6 +1107,9 @@ public class JobMapper extends ImportMapper {
 			else
 				tempPaper.setRunToFinishGrain("Neither");
 		job.setPaperCal(tempPaper);
+		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
+		pricingRecord.setId(pricingRecord.getId());
+		job.setPricingRecord(pricingRecord);
 		log.info("Leaving JobMapper->importTokens");
 		return job;
 	}
