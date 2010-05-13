@@ -3,7 +3,7 @@ package com.efi.printsmith.events
 	import com.efi.printsmith.data.Account;
 	
 	import flash.events.Event;
-	
+	 
 	public class DeviceListSelectEvent extends Event
 	{
 		public static const SELECTDEVICE:String = "SelectDevice";

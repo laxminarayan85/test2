@@ -260,23 +260,29 @@ public class DataService extends HibernateService {
 	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
-		Session session = (Session) em.getDelegate();
-		List<InvoiceBase> invoices = session.createCriteria(Invoice.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
-		List<Estimate> estimates = session.createCriteria(Estimate.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
-		invoices.addAll(estimates);
-		
-		for (int i = 0; i < invoices.size(); i++) {
-			InvoiceBase invoice = invoices.get(i);
+		try {
+			Session session = (Session) em.getDelegate();
+			List<InvoiceBase> invoices = null;
+			invoices = session.createCriteria(Invoice.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
+			List<Estimate> estimates = session.createCriteria(Estimate.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
+			invoices.addAll(estimates);
 			
-			for (int j = 0; j < invoice.getJobs().size(); j++) {
-				Job job = invoice.getJobs().get(j);
+			for (int i = 0; i < invoices.size(); i++) {
+				InvoiceBase invoice = invoices.get(i);
 				
-				if (job != null) {
-					log.error("Null job found in invoice");
+				for (int j = 0; j < invoice.getJobs().size(); j++) {
+					Job job = invoice.getJobs().get(j);
+					
+					if (job != null) {
+						log.error("Null job found in invoice");
+					}
 				}
 			}
+			return invoices;
 		}
-		return invoices;
+		finally {
+			em.close();
+		}
 	}
 
 	public List<?> getContactPicker(String className) throws Exception {
@@ -1801,17 +1807,18 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 
-	static public Session getSession() {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		return (Session) em.getDelegate();
+	static public EntityManager getEntityManager() {
+		return entityManagerFactory.createEntityManager();
+//		return (Session) em.getDelegate();
 	}
 
 	public Object load(Class clazz, long id)
 	{
        Session session = null;
        Object result;
-       session = getSession();
-
+       //session = getSession();
+       EntityManager em = getEntityManager();
+       session = (Session)em.getDelegate();
        try
        {
            long tStart = new Date().getTime();
@@ -1832,7 +1839,7 @@ public class DataService extends HibernateService {
            ex.printStackTrace();
            throw ex;
        } finally {
-    	   session.close();
+    	   em.close();
        }
 
        return result;

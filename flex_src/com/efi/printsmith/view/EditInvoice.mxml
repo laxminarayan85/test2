@@ -139,6 +139,7 @@
 				if (invoice == null) {
 					invoice=new Invoice();
 					invoice.takenBy=Snowmass.getInstance().currentUser.name;
+					invoice.onPendingList = true;
 				} else {
 					if (editorType == EDITESTIMATE) {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');

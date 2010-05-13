@@ -2,6 +2,8 @@ package com.efi.printsmith.service;
 
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
@@ -12,9 +14,9 @@ public class SnowmassHibernateService extends HibernateService {
 	public Object load(Class clazz, long id) {
 		Session session = null;
 		Object result;
-
+		EntityManager em = DataService.getEntityManager();
 		try {
-			session = DataService.getSession();
+			session = (Session)em.getDelegate();
 			long tStart = new Date().getTime();
 			result = session.get(clazz, id);
 			long tEnd = new Date().getTime();
@@ -27,7 +29,7 @@ public class SnowmassHibernateService extends HibernateService {
 			ex.printStackTrace();
 			throw ex;
 		} finally {
-			session.close();
+			em.close();
 		}
 
 		return result;

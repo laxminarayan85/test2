@@ -6,7 +6,7 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-</mx:RemoteObject>
+</mx:RemoteObject> 
 
 <mx:RemoteObject id="jdfIntegrationService" destination="jdfIntegrationService">
 	<mx:method name="resendMessage" fault="handleFault(event)" result="handleResendResult(event)"/>
