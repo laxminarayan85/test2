@@ -415,7 +415,7 @@
 			import com.efi.printsmith.data.StockDefinition;
 			import com.efi.printsmith.data.PreferencesSystem;
 			import com.efi.printsmith.data.PreferencesEstimating;
-
+			
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
@@ -638,10 +638,12 @@
 			private function doNew():void
 			{
 				job=new Job();
+				job.paperCal = new com.efi.printsmith.data.PaperCalculator();
 				setJob(job);
-				setPrefernceDataforPaperCal();
+			//	setPreferenceDataforPaperCal();
 			}
-			private function setPrefernceDataforPaperCal():void{
+			
+			private function setPreferenceDataforPaperCal():void {
 				job.paperCal.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
 				job.paperCal.gripEdgeGap = estimatingPreferences.gripEdgeGap;
 				job.paperCal.gripLocation = estimatingPreferences.gripLocation;
@@ -671,8 +673,8 @@
 				job.paperCal.printParentToRunSection = estimatingPreferences.printParentToRunSection;
 				job.paperCal.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
 				job.paperCal.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
-		
 			}
+			
 			private function doDelete():void
 			{
 				PopUpManager.removePopUp(this);
