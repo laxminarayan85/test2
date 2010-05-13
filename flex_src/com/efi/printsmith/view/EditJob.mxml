@@ -493,6 +493,9 @@
 			public var refreshSO:Boolean=false;
 
 			[Bindable]
+			private var setPaperCalculatorData:Boolean=false;
+
+			[Bindable]
 			private var charges:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
@@ -529,6 +532,11 @@
 				if (estimatingPreferencesArray.length > 0) {
 					estimatingPreferences = estimatingPreferencesArray.getItemAt(0) as PreferencesEstimating;
 				}
+				if (job.paperCal != null)
+				{
+					setPreferenceDataforPaperCal();
+					setPaperCalculatorData = false;
+				}
 			}	                                  
 
 			public function init():void
@@ -559,8 +567,8 @@
 					job.markup = 2.0;
 					job.totalCost = 0.0;
 					job.unitCost = 0.0;
-					
-				
+					job.paperCal = new com.efi.printsmith.data.PaperCalculator();
+					setPaperCalculatorData = true;
 				}
 				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -638,41 +646,42 @@
 			private function doNew():void
 			{
 				job=new Job();
-				job.paperCal = new com.efi.printsmith.data.PaperCalculator();
 				setJob(job);
-			//	setPreferenceDataforPaperCal();
 			}
 			
 			private function setPreferenceDataforPaperCal():void {
-				job.paperCal.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
-				job.paperCal.gripEdgeGap = estimatingPreferences.gripEdgeGap;
-				job.paperCal.gripLocation = estimatingPreferences.gripLocation;
-				job.paperCal.useFolioEdge = estimatingPreferences.useFolioEdge;
-				job.paperCal.folioLocation = estimatingPreferences.folioLocation;
-				job.paperCal.folioEdge = estimatingPreferences.folioEdge;
-				job.paperCal.useColorBar = estimatingPreferences.useColorBar;
-				job.paperCal.colorBar = estimatingPreferences.colorBar;
-				job.paperCal.useWhiteSpace = estimatingPreferences.useWhiteSpace;
-				job.paperCal.whiteSpace = estimatingPreferences.whiteSpace;
-				job.paperCal.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
-				job.paperCal.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
-				job.paperCal.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
-				job.paperCal.useGutter = estimatingPreferences.useGutter;
-				job.paperCal.gutter = estimatingPreferences.gutter;
-				job.paperCal.gutterHorizontal = estimatingPreferences.gutterHorizontal;
-				job.paperCal.useBleed = estimatingPreferences.useBleed;
-				job.paperCal.bleed= estimatingPreferences.bleed;
-				job.paperCal.bleedBottom = estimatingPreferences.bleedBottom;
-				job.paperCal.bleedRight = estimatingPreferences.bleedRight;
-				job.paperCal.bleedTop = estimatingPreferences.bleedTop;
-				job.paperCal.backTrimParent = estimatingPreferences.backTrimParent;
-				job.paperCal.trimFourSides = estimatingPreferences.trimFourSides;
-				job.paperCal.workandTumble = estimatingPreferences.workandTumble;
-				job.paperCal.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
-				job.paperCal.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
-				job.paperCal.printParentToRunSection = estimatingPreferences.printParentToRunSection;
-				job.paperCal.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
-				job.paperCal.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
+				if (estimatingPreferences != null)
+				{
+					job.paperCal.useGripEdgeGap = estimatingPreferences.useGripEdgeGap;
+					job.paperCal.gripEdgeGap = estimatingPreferences.gripEdgeGap;
+					job.paperCal.gripLocation = estimatingPreferences.gripLocation;
+					job.paperCal.useFolioEdge = estimatingPreferences.useFolioEdge;
+					job.paperCal.folioLocation = estimatingPreferences.folioLocation;
+					job.paperCal.folioEdge = estimatingPreferences.folioEdge;
+					job.paperCal.useColorBar = estimatingPreferences.useColorBar;
+					job.paperCal.colorBar = estimatingPreferences.colorBar;
+					job.paperCal.useWhiteSpace = estimatingPreferences.useWhiteSpace;
+					job.paperCal.whiteSpace = estimatingPreferences.whiteSpace;
+					job.paperCal.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
+					job.paperCal.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
+					job.paperCal.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
+					job.paperCal.useGutter = estimatingPreferences.useGutter;
+					job.paperCal.gutter = estimatingPreferences.gutter;
+					job.paperCal.gutterHorizontal = estimatingPreferences.gutterHorizontal;
+					job.paperCal.useBleed = estimatingPreferences.useBleed;
+					job.paperCal.bleed= estimatingPreferences.bleed;
+					job.paperCal.bleedBottom = estimatingPreferences.bleedBottom;
+					job.paperCal.bleedRight = estimatingPreferences.bleedRight;
+					job.paperCal.bleedTop = estimatingPreferences.bleedTop;
+					job.paperCal.backTrimParent = estimatingPreferences.backTrimParent;
+					job.paperCal.trimFourSides = estimatingPreferences.trimFourSides;
+					job.paperCal.workandTumble = estimatingPreferences.workandTumble;
+					job.paperCal.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
+					job.paperCal.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
+					job.paperCal.printParentToRunSection = estimatingPreferences.printParentToRunSection;
+					job.paperCal.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
+					job.paperCal.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
+				}
 			}
 			
 			private function doDelete():void
@@ -1358,7 +1367,7 @@
 	    	private function doPaperCal():void{
 	    		var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
 				paperCalWindow.setStyle("borderAlpha", 0.9);
-				if (job.paperCal.colorBar == 0)
+				if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
 					job.paperCal.colorBar = estimatingPreferences.colorBar;
 				
 			 	paperCalWindow.setJob(job);
