@@ -197,9 +197,11 @@
 					if (editorType == EDITINVOICE) {
 						this.invoice = new Invoice();
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
+						invoice.onPendingList = true;
 					} else if (editorType == EDITESTIMATE) {
 						this.invoice = new Estimate();
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
+						invoice.onPendingList = true;
 					}
 				}
 			}

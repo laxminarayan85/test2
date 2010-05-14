@@ -56,6 +56,8 @@ public class DataService extends HibernateService {
 
 	protected static EntityManagerFactory entityManagerFactory = null;
 
+	protected static EntityManager sharedEntityManager = null;
+	
 	public DataService() {
 		super();
 		try {
@@ -1807,6 +1809,13 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 
+	static public Session getSession() {
+		if (sharedEntityManager == null)
+			sharedEntityManager = entityManagerFactory.createEntityManager();
+		return (Session) sharedEntityManager.getDelegate();
+
+	}
+	
 	static public EntityManager getEntityManager() {
 		return entityManagerFactory.createEntityManager();
 //		return (Session) em.getDelegate();
