@@ -10,7 +10,7 @@ import com.efi.printsmith.data.Location;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.Invoice;
+import com.efi.printsmith.data.InvoiceBase;
 
 public class ChargeMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeMapper.class);
@@ -85,17 +85,15 @@ public class ChargeMapper extends ImportMapper {
 		charge = (Charge)dataService.addUpdate(charge);
 		charge.setId(charge.getId());
 		if (documentNumber.equals("") == false && jobNumber.equals("") == false) {
-			Invoice invoice = null;
-			if (documentType.equals("I") == true)
-				invoice = (Invoice)dataService.getQuery("Invoice", " where invoiceNumber = '" + documentNumber + "'");
-			else
-				invoice = null;
-			if (invoice != null && invoice.getJobs().isEmpty() == false) {
+			InvoiceBase invoice = (InvoiceBase)dataService.getQuery("InvoiceBase", " where invoiceNumber = '" + documentNumber + "'");;
+			if (invoice != null) {
+				invoice = dataService.getInvoice(invoice.getId());
 				List<Job> jobs = invoice.getJobs();
 				for (int i = 0; i < jobs.size(); i++) {
-					if (jobs.get(i).getJobNumber() == jobNumber) {
-						jobs.get(i).addCharges(charge);
-						dataService.addUpdate(jobs.get(i));
+					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
+						Job job = jobs.get(i);
+						job.addCharges(charge);
+						dataService.addUpdate(job);
 					}
 				}
 			}
