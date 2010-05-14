@@ -72,7 +72,8 @@ public class PricingService extends SnowmassHibernateService {
 		}
 		
 		this.calculateOvers(job);
-		
+		job.getPricingRecord().setTotalPrice(new Double(Math.round(job.getPricingRecord().getTotalPrice() * 100)) / 100);
+		job.getPricingRecord().setUnitPrice(new Double(Math.round(job.getPricingRecord().getUnitPrice() * 10000)) / 10000);
 		return job;
 	}
 	
@@ -93,6 +94,7 @@ public class PricingService extends SnowmassHibernateService {
 				invoice.setPriceTotal(invoice.getPriceTotal()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice());
 			}
 		}
+		invoice.setPriceTotal(new Double(Math.round(invoice.getPriceTotal() * 100)) / 100);
 		log.info("Completed priceInvoice for invoice " + invoice.getId());
 		return invoice;
 	}
@@ -105,8 +107,8 @@ public class PricingService extends SnowmassHibernateService {
 			oversUnitPrice = job.getPricingRecord().getTotalPrice() / job.getQtyOrdered();
 			oversPrice = oversUnitPrice * job.getOversUnders();
 		}
-		job.getPricingRecord().setOversUnitPrice(oversUnitPrice);
-		job.getPricingRecord().setOversTotalPrice(oversPrice);
+		job.getPricingRecord().setOversUnitPrice(new Double(Math.round(oversUnitPrice * 10000)) / 10000);
+		job.getPricingRecord().setOversTotalPrice(new Double(Math.round(oversPrice * 100)) / 100);
 		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getPricingRecord().getOversTotalPrice());
 	}
 }

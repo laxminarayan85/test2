@@ -19,7 +19,7 @@ public class MatrixUtilities {
 				break;
 			}
 		}
-		//if (i > 0) i--;
+		if (i > elements.size()) i--;
 		
 		return elements.get(i);
 	}
