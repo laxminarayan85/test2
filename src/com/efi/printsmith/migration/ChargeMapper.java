@@ -87,7 +87,6 @@ public class ChargeMapper extends ImportMapper {
 		if (documentNumber.equals("") == false && jobNumber.equals("") == false) {
 			InvoiceBase invoice = (InvoiceBase)dataService.getQuery("InvoiceBase", " where invoiceNumber = '" + documentNumber + "'");;
 			if (invoice != null) {
-				invoice = dataService.getInvoice(invoice.getId());
 				List<Job> jobs = invoice.getJobs();
 				for (int i = 0; i < jobs.size(); i++) {
 					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
