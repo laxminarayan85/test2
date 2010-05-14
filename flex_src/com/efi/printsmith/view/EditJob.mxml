@@ -609,8 +609,8 @@
 //				chargeDataService.getAll("Charge");
 				dimensionDataService.getAll("Dimension");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");		
-				if (stocks.length == 0)		
-				 	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+				//if (stocks.length == 0)		
+				// 	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 			}
 			
