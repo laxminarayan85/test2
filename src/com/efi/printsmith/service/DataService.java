@@ -37,8 +37,10 @@ import org.hibernate.criterion.*;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
+import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
 
@@ -64,7 +66,7 @@ public class DataService extends HibernateService {
 			if (entityManagerFactory == null) {
 				entityManagerFactory = Persistence
 						.createEntityManagerFactory(PERSISTENCE_UNIT);
-
+				
 				boolean needToLoadStaticData = checkStaticData();
 
 				if (needToLoadStaticData == true) {
@@ -1809,12 +1811,12 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 
-	static public Session getSession() {
-		if (sharedEntityManager == null)
-			sharedEntityManager = entityManagerFactory.createEntityManager();
-		return (Session) sharedEntityManager.getDelegate();
-
-	}
+//	static public Session getSession() {
+//		if (sharedEntityManager == null)
+//			sharedEntityManager = entityManagerFactory.createEntityManager();
+//		return (Session) sharedEntityManager.getDelegate();
+//
+//	}
 	
 	static public EntityManager getEntityManager() {
 		return entityManagerFactory.createEntityManager();
@@ -1853,5 +1855,114 @@ public class DataService extends HibernateService {
 
        return result;
 	}
+	
+    private static SessionFactory sessionFactory = null;
+    public static final ThreadLocal<Session> threadSession = new ThreadLocal<Session>();
+    public static final ThreadLocal<Transaction> threadTransaction = new ThreadLocal<Transaction>();
 
+    public static SessionFactory getSessionFactory() throws HibernateException
+    {
+    	if (sessionFactory == null && entityManagerFactory != null) {
+            try
+            {
+                // Create the SessionFactory
+                sessionFactory = ((HibernateEntityManagerFactory)entityManagerFactory).getSessionFactory();
+            }
+            catch (Throwable ex)
+            {
+                // Make sure you log the exception, as it might be swallowed
+                System.err.println("Initial SessionFactory creation failed." + ex);
+                throw new ExceptionInInitializerError(ex);
+            }
+    	}
+    	return sessionFactory;
+    }
+    
+    
+    public static Session getCurrentSession() throws HibernateException
+    {
+    	return getCurrentSession(false);
+    }
+    
+    
+    public static Session getCurrentSession(Boolean forceNewConnection) throws HibernateException
+    {
+    	Session s = null;
+    	if( !forceNewConnection )
+    	{
+    		s = threadSession.get();
+    	}
+    	
+        // Open a new Session, if this Thread has none yet
+        if (s == null)
+        {
+            s = getSessionFactory().openSession();
+            threadSession.set(s);
+        }
+        return s;
+    }
+
+
+    public static void closeSession() throws HibernateException
+    {
+        Session s = threadSession.get();
+        threadSession.set(null);
+        try
+        {
+        	if (s != null && !s.connection().isClosed()) s.close();
+        }
+        catch( SQLException ex){}
+    }
+
+
+    public static Transaction getTransaction()
+    {
+    	return threadTransaction.get();
+    }
+    
+    
+    public static void beginTransaction()
+    {
+        Transaction tx = threadTransaction.get();
+        if (tx == null)
+        {
+            tx = getCurrentSession().beginTransaction();
+            threadTransaction.set(tx);
+        }
+    }
+
+
+    public static void commitTransaction()
+    {
+        Transaction tx = threadTransaction.get();
+        try
+        {
+            if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) tx.commit();
+            threadTransaction.set(null);
+        }
+        catch (HibernateException ex)
+        {
+            rollbackTransaction();
+            throw ex;
+        }
+    }
+
+
+    public static void rollbackTransaction()
+    {
+        Transaction tx = threadTransaction.get();
+        threadTransaction.set(null);
+        try
+        {
+            if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack())
+            {
+                tx.rollback();
+            }
+        }
+        finally
+        {
+            closeSession();
+        }
+
+    }
 }
