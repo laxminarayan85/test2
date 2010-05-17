@@ -22,7 +22,8 @@ package com.efi.printsmith.validators
                 return results;
            
             // match regex pattern
-            var pattern:RegExp = new RegExp("^http[s]?\:\\/\\/([^\\/]+)\\/");
+//            var pattern:RegExp = new RegExp("^http[s]?\:\\/\\/([^\\/]+)\\/");
+			var pattern:RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
             // run the pattern, but don't error if there is no value and this is not required
             if (!(!required && !value) && !pattern.exec(String(value))) {
                 results.push(new ValidationResult(true, null, "notURL",

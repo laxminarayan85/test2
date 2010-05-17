@@ -44,6 +44,7 @@ width="786" height="531"  creationComplete="init()"
 	import com.efi.printsmith.data.Estimate;
 	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;	       
+	import com.efi.printsmith.pages.JDFStatus;
 	
 	[Bindable]                                         
 	private var account:Account;
@@ -238,18 +239,28 @@ width="786" height="531"  creationComplete="init()"
 			var jobs:ArrayCollection = invoice.jobs;
 			if (jobs != null && jobs.length > 0) {
 				var job:Job = jobs.getItemAt(0) as Job;
-				jdfIntegrationService.pauseFieryJob(job.id);
+				jdfIntegrationService.pauseFieryJob(job);
 			}
 		}
 	}
 	
-	private function cancelFieryJob():void {
+	private function infoFieryJob():void {
+//		var invoice:Invoice = invoice_list.selectedItem as Invoice;
+//		if (invoice != null) {
+//			var jobs:ArrayCollection = invoice.jobs;
+//			if (jobs != null && jobs.length > 0) {
+//				var job:Job = jobs.getItemAt(0) as Job;
+//				jdfIntegrationService.cancelFieryJob(job.id);
+//			}
+//		}
 		var invoice:Invoice = invoice_list.selectedItem as Invoice;
 		if (invoice != null) {
 			var jobs:ArrayCollection = invoice.jobs;
 			if (jobs != null && jobs.length > 0) {
 				var job:Job = jobs.getItemAt(0) as Job;
-				jdfIntegrationService.cancelFieryJob(job.id);
+				var titleWindow:JDFStatus=JDFStatus(PopUpManager.createPopUp(this, JDFStatus,true));
+				titleWindow.setJob(job); 
+				titleWindow.setStyle("borderAlpha", 0.9);
 			}
 		}
 	}
@@ -279,7 +290,7 @@ width="786" height="531"  creationComplete="init()"
 </mx:Script>
 
 <mx:Canvas width="100%" height="100%">
-	<mx:DataGrid x="10" y="219" height="253" id="invoice_list" dataProvider="{invoicebases}">
+	<mx:DataGrid x="10" y="219" height="253" id="invoice_list" dataProvider="{invoicebases}" width="756" verticalScrollPolicy="on">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoice')}" dataField="invoiceNumber" />
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
@@ -316,7 +327,7 @@ width="786" height="531"  creationComplete="init()"
 		<mx:LinkButton x="48" y="6" id="btn_stop" width="33" click="pauseFieryJob()">
 			<mx:icon>@Embed(source='../../../../assets/media_pause.png')</mx:icon>
 		</mx:LinkButton>
-		<mx:LinkButton x="89" y="6" id="btn_info" width="33" click="cancelFieryJob()">
+		<mx:LinkButton x="89" y="6" id="btn_info" width="33" click="infoFieryJob()">
 			<mx:icon>@Embed(source='../../../../assets/information2.png')</mx:icon>
 		</mx:LinkButton>
 	</mx:Panel>

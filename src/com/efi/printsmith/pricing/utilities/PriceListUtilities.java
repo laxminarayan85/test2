@@ -214,7 +214,7 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
-	static public long getLengthFromSizeString(String size) throws NumberFormatException, ParseException {
+	static public float getLengthFromSizeString(String size) throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String lengthString = "0";
 		
@@ -223,10 +223,10 @@ public class PriceListUtilities {
 			lengthString = size.substring(0, i - 1);
 		}
 		
-		return Utilities.tokenToLong(lengthString);
+		return Float.parseFloat(lengthString);
 	}
 	
-	static public long getWidthFromSizeString(String size) throws NumberFormatException, ParseException {
+	static public float getWidthFromSizeString(String size) throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String widthString = "0";
 		
@@ -235,6 +235,6 @@ public class PriceListUtilities {
 			widthString = size.substring(i + 2);
 		}
 		
-		return Utilities.tokenToLong(widthString);
+		return Float.parseFloat(widthString);
 	}
 }

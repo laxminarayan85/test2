@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="432"
+				height="190"
+				defaultButton="{ok_btn}"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="PopUpManager.removePopUp(this);"
+				title="Job JDF Status"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off">
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getById" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject> 
+	<mx:Script>
+
+		<![CDATA[
+			import mx.rpc.AsyncToken;
+			import com.efi.printsmith.events.DialogDoneEvent;
+			import com.efi.printsmith.events.ModelGetSingleEvent;
+			import com.efi.printsmith.events.ModelQueryByCriteriaEvent;
+			import com.efi.printsmith.events.ModelAddUpdateEvent;
+			
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.JobJDFStatus;
+			import com.efi.printsmith.data.ModelBase;
+			
+			import com.efi.printsmith.query.RemoteRestriction;
+			
+			import com.efi.printsmith.view.EditContact;
+			import com.efi.printsmith.view.EditCustomer;
+			import com.efi.printsmith.view.StockDefinitions;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var job:Job = new Job();
+
+			[Bindable]
+			private var jdfJobStatus:JobJDFStatus = new JobJDFStatus();
+
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				Alert.show("Error retrieving data from Server.", "Error");
+			}
+
+			private function handleLoadResult(evt:ResultEvent):void {
+				if (evt.result != null) {
+					if (evt.token.operation == "Job") {
+						this.job = evt.result as Job;
+						if (this.job.jdfStatus != null) {
+							dataService.getById("JobJDFStatus",this.job.jdfStatus.id);
+						} 
+					} else {
+						this.jdfJobStatus = evt.result as JobJDFStatus;
+					}
+				}
+			}
+			
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
+			public function setJob(job:Job):void {
+				this.job = job;
+				var token:AsyncToken = dataService.getById("Job", job.id);
+				token.operation = "Job";
+			}
+
+			private function doOK():void {
+				PopUpManager.removePopUp(this);
+			}
+
+			private function doCancel():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</mx:Script>
+
+
+
+	<mx:Canvas width="392"
+			   height="142"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+		<mx:Button id="ok_btn"
+				   click="doOK()"
+				   x="117"
+				   y="110"
+				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"
+				   width="75"/>
+		<mx:Button id="cancel_btn"
+				   click="doCancel()"
+				   x="200"
+				   y="110"
+				   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
+				   width="75"/>
+		<mx:Text x="127" y="10" text="{job.jobNumber}" width="77"/>
+		<mx:Text x="212" y="10" text="{job.description}" width="170"/>
+		<mx:Text x="127" y="31" text="{jdfJobStatus.status}" width="214"/>
+		<mx:Text x="127" y="68" text="{jdfJobStatus.modified}" width="214"/>
+		<mx:Text x="10" y="31" text="Status:&#xd;" width="109" height="18" textAlign="right"/>
+		<mx:Text x="127" y="50" text="&#xd;" width="214"/>
+		<mx:Text x="10" y="50" text="Percent Complete:" width="109" height="18" textAlign="right"/>
+		<mx:Text x="10" y="10" text="Job #:&#xd;" width="109" height="18" textAlign="right"/>
+		<mx:Text x="10" y="68" text="Last Updated:&#xd;" width="109" height="18" textAlign="right"/>
+	</mx:Canvas>
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>

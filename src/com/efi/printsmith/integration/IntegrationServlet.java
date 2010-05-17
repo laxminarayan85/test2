@@ -17,13 +17,18 @@ import org.apache.log4j.Logger;
 import org.cip4.jdflib.core.JDFDoc;
 import org.cip4.jdflib.core.JDFParser;
 import org.cip4.jdflib.jmf.JDFCommand;
+import org.cip4.jdflib.jmf.JDFDeviceInfo;
+import org.cip4.jdflib.jmf.JDFJobPhase;
 import org.cip4.jdflib.jmf.JDFReturnQueueEntryParams;
 import org.cip4.jdflib.jmf.JDFSignal;
 import org.cip4.jdflib.util.mime.MimeReader;
 
+import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.JobJDFStatus;
 import com.efi.printsmith.integration.JDF.JMFMessages;
 import com.efi.printsmith.network.HttpContentType;
 import com.efi.printsmith.network.NetworkHelper;
+import com.efi.printsmith.service.DataService;
 
 	public class IntegrationServlet extends HttpServlet implements Servlet {
 		private static final long serialVersionUID = 1L;
@@ -75,6 +80,47 @@ import com.efi.printsmith.network.NetworkHelper;
 					JDFSignal signal = (JDFSignal)signalIterator.next();
 					
 					if (signal != null) {
+						JDFDeviceInfo deviceInfo = signal.getDeviceInfo(0);
+						if (deviceInfo != null) {
+							JDFJobPhase jobPhase = deviceInfo.getJobPhase(0);
+							if (jobPhase != null) {
+								try {
+									double percentComplete = jobPhase.getPercentCompleted();
+									String status = jobPhase.getStatus().getName();
+									String jobId = jobPhase.getJobID();
+									String queueEntryId = jobPhase.getQueueEntryID();
+									
+									DataService dataService = new DataService();
+									
+									JobBase job = (JobBase)dataService.getById("JobBase", Long.parseLong(jobId));
+									if (job != null) {
+										JobJDFStatus jdfStatus = job.getJdfStatus();
+										if (jdfStatus != null) {
+											jdfStatus.setStatus(status);
+											if (jdfStatus.getQueueId() != queueEntryId) {
+												jdfStatus.setQueueId(queueEntryId);
+											} 
+											dataService.addUpdate(jdfStatus);
+										} else {
+											jdfStatus = new JobJDFStatus();
+											jdfStatus.setQueueId(queueEntryId);
+											jdfStatus.setStatus(status);
+											jdfStatus = (JobJDFStatus)dataService.addUpdate(jdfStatus);
+											job.setJdfStatus(jdfStatus);
+											dataService.addUpdate(job);
+										}
+									}
+								} catch (NumberFormatException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}
+							
+						}
 					}
 					System.out.println(signal.toXML());
 				}

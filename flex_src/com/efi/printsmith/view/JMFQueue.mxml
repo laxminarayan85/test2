@@ -83,7 +83,7 @@
                              
 	<mx:Canvas width="585" height="100%">
 		<mx:DataGrid id="dataGrid" width="457" height="420" dataProvider="{queueEntries}"
-		doubleClickEnabled="true" doubleClick="doResend()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="0">               
+		doubleClickEnabled="true" doubleClick="doResend()"  showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="0">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="jobid" headerText="Job ID" />                         
 		     <mx:DataGridColumn dataField="deviceId" headerText="Device ID" />                         

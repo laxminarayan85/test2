@@ -417,7 +417,7 @@
 				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="CMD_Preferences_JournalEntries"/>
 			</node>
 			<node label="genericPrefCmd.Integration" command="CMD_Preferences_Integration">
-				<node label="Fiery" isBranch="false" tag="27" command="CMD_Preferences_Fiery"/>
+				<node label="genericPrefCmd.Integration" isBranch="false" tag="27" command="CMD_Preferences_Fiery"/>
 			</node>
 		</root>;
 	
@@ -1892,7 +1892,7 @@
 		var nodeList:XMLListCollection = 
 			tvPreference.dataProvider as XMLListCollection;
 		var node:XMLList = nodeList.source;
-		for(var i:int=0; i < 4; i++) {
+		for(var i:int=0; i < node.length(); i++) {
 			var n:XML = node[i];
 			if( n.children() != null ) {
 				tvPreference.expandItem(n,true,false);

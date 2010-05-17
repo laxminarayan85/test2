@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="418"
+				width="438"
 				height="438"
 				defaultButton="{okButton}"
 				showCloseButton="true"
@@ -258,8 +258,8 @@
 		]]>
 	</mx:Script>
 
-	<mx:Canvas width="100%"
-			   height="366">
+	<mx:Canvas width="407"
+			   height="354">
 		<mx:Button x="10"
 				   y="10"
 				   label="Populate Sales Categories"
@@ -284,7 +284,7 @@
 		<mx:Button x="10" y="264" label="Download File From Repository" width="188"  click="doDownload();"  id="btn_download_repository"/>
 		<mx:Button x="10" y="234" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
 		<mx:Button x="10" y="184" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
-		<mx:ComboBox x="206" y="314" width="174" id="report_list" dataProvider="{reportTemplates}"></mx:ComboBox>
+		<mx:ComboBox x="206" y="314" width="191" id="report_list" dataProvider="{reportTemplates}"></mx:ComboBox>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

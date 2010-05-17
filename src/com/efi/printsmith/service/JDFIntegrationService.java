@@ -216,8 +216,8 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		JDFMedia jdfMedia = (JDFMedia)jdfResourcePool.appendElementN(ElementName.MEDIA, 1, null);
 		jdfMedia.setID("m0001");
 		StockDefinition stockDefinition = job.getStock();
-		long width = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
-		long length = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
+		float width = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
+		float length = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
 		JDFXYPair dimensions = new JDFXYPair(width, length);
 		if (stockDefinition != null) {
 			stockDefinition = (StockDefinition)dataService.getByStockId(stockDefinition.getStockId());
@@ -264,12 +264,32 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			handleSubmitQueueEntryResponse(response, job);
 			sendSubscriptionRequest(url, returnURL, deviceId, job.getId().toString());
 			log.info("Submitting job to Fiery: " + jdfDoc.toXML());
+			addJDFQueueEntry(deviceId, job.getId(), jdfStatus.getStatus(), "SubmitQueueEntry", jdfDoc.toXML(), url.toString());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	private void addJDFQueueEntry(String deviceId, Long jobId, String message, String msgType, String status, String url) {
+		com.efi.printsmith.data.JDFQueueEntry jdfQueueEntry = new com.efi.printsmith.data.JDFQueueEntry();
+		jdfQueueEntry.setDeviceId(deviceId);
+		jdfQueueEntry.setJobid(jobId);
+		if (message.length() > 250) {
+			jdfQueueEntry.setMessage(message.substring(0,250));
+		} else {
+			jdfQueueEntry.setMessage(message);
+		}
+		jdfQueueEntry.setMsgType(msgType);
+		jdfQueueEntry.setStatus(status);
+		jdfQueueEntry.setUrl(url);
+		DataService dataService = new DataService();
+		try {
+			dataService.addUpdate(jdfQueueEntry);
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
 	private HttpResponse submitJDFToDevice(JDFDoc theDoc, final URL url,
 			final boolean bMime, final URL returnURL, final boolean packageAll) {
 		try {
@@ -323,6 +343,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		PreferencesIntegration integrationPreferences = integrationPreferenceList.get(0);
 		URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId); //new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
 		HttpResponse response = NetworkHelper.httpPost(postContent, url.toString(), null);
+		addJDFQueueEntry(deviceId, job.getId(), jobStatus.getStatus(), message.getRoot().getTypeName().toString(), message.toXML(), url.toString());
 		// TODO: Parse the response cleanly here.
 		return true;
 	}
@@ -410,6 +431,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		PreferencesIntegration integrationPreferences = integrationPreferenceList.get(0);
 		URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId); //new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
 		HttpResponse response = NetworkHelper.httpPost(postContent, url.toString(), null);
+		addJDFQueueEntry(deviceId, job.getId(), jobStatus.getStatus(), message.getRoot().getTypeName().toString(), message.toXML(), url.toString());
 		// TODO: Parse the response cleanly here.
 		return true;
 	}
@@ -434,9 +456,9 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 						if (jdfStatus != null) {
 							jdfStatus.setQueueId(responseQueueEntry.getQueueEntryID());
 							if (responseQueueEntry.getStatus() != null) {
-								jdfStatus.setStatus(responseQueueEntry.getStatus().toString());
+								jdfStatus.setStatus(responseQueueEntry.getStatus().getName());
 							} else {
-								jdfStatus.setStatus(EnumNodeStatus.Ready.toString());
+								jdfStatus.setStatus(EnumNodeStatus.Ready.getName());
 							}
 						}
 					}
@@ -489,6 +511,51 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		}
 	}
 	
+	private void queryJobStatus(long jobId) throws Exception {
+		try {
+			DataService dataService = new DataService();
+			Job job = (Job) dataService.getById("Job", jobId);
+			if (job == null) {
+				throw new InvalidParameterException("No Job found for id: " + jobId);
+			}
+			
+			CopierDefinition copierDefinition = job.getCostingCopier();
+			if (copierDefinition == null) {
+				throw new InvalidParameterException("No copier definition found in job");
+			}
+		
+			JobJDFStatus jdfStatus = job.getJdfStatus();
+			String queueId = jdfStatus.getQueueId();
+			
+			String deviceId = copierDefinition.getOemDeviceID();
+			
+			List<PreferencesIntegration> integrationPreferenceList = (List<PreferencesIntegration>) dataService.getAll("PreferencesIntegration"); //TODO: Fix this Paulism
+			PreferencesIntegration integrationPreferences = integrationPreferenceList.get(0);
+
+			URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId);
+			InetAddress addr = InetAddress.getLocalHost();
+			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/IntegrationServlet"); // TODO Fix this too
+			sendQueryJobStatus(url, returnURL, deviceId, queueId);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+		
+	private void sendQueryJobStatus(final URL url, final URL returnURL, String deviceId, String queueId) {
+		try {
+			
+			JDFDoc subscriptionMsg = JMFMessages.QueryQueueEntryStatus(deviceId, queueId);
+			String subscriptionString = subscriptionMsg.toXML() + "\n";
+			HttpPostContent postContent = new HttpPostContent(subscriptionString, HttpContentType.CONTENT_TYPE_JMF);
+     		HttpResponse response = NetworkHelper.httpPost(subscriptionString, url.toString(), null);
+			System.out.println(subscriptionString);
+			System.out.println(response.getBody());
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
+
 	private void sendSubscriptionCancelation(final URL url, final URL returnURL, String deviceId, String jobId) {
 		try {
 			JDFDoc subscriptionMsg = JMFMessages.StopPersistentChannel(url.toString(), deviceId, jobId, null);
