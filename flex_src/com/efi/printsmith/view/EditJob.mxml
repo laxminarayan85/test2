@@ -111,15 +111,16 @@
 				<mx:Label x="10" y="111" width="91" id="cutoff_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="107" y="109" width="100" height="20" id="cutOff_edit"  text="{job.cutOff}"/>
+				<mx:TextInput x="107" y="110" width="100" height="20" id="cutOff_edit"  text="{job.cutOff}"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{job_fold_size}" name="y" value="162"/>
-			<mx:SetProperty target="{job_finish_size}" name="y" value="137"/>
 			<mx:SetProperty target="{label16}" name="x" value="5"/>
 			<mx:SetProperty target="{label16}" name="y" value="164"/>
 			<mx:SetProperty target="{label17}" name="x" value="5"/>
 			<mx:SetProperty target="{label17}" name="y" value="139"/>
-			<mx:RemoveChild target="{job_size}"/>
+			<mx:SetProperty target="{job_fold_size}" name="y" value="162"/>
+			<mx:SetProperty target="{job_finish_size}" name="y" value="135"/>
+			<mx:RemoveChild target="{job_parent}"/>
+			<mx:SetProperty target="{job_size}" name="y" value="82"/>
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
@@ -130,7 +131,6 @@
 			<mx:RemoveChild target="{label18}"/>
 			<mx:RemoveChild target="{label19}"/>
 			<mx:RemoveChild target="{job_color}"/>
-			<mx:RemoveChild target="{job_parent}"/>
 			<mx:RemoveChild target="{label13}"/>
 			<mx:RemoveChild target="{runsize_label}"/>
 			<mx:RemoveChild target="{label17}"/>
@@ -139,9 +139,6 @@
 			<mx:RemoveChild target="{label15}"/>
 			<mx:RemoveChild target="{job_unit_price}"/>
 			<mx:RemoveChild target="{number_lines}"/>
-			<mx:RemoveChild target="{job_fold_size}"/>
-			<mx:RemoveChild target="{job_finish_size}"/>
-			<mx:RemoveChild target="{job_size}"/>
 			<mx:RemoveChild target="{canvas3}"/>
 			<mx:RemoveChild target="{viewstack4}"/>
 			<mx:RemoveChild target="{label20}"/>
@@ -209,9 +206,6 @@
 						  y="181"
 						  text="Show Notes" width="67" textAlign="right"/>
 			</mx:AddChild>
-			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<ns2:AutoComplete x="85" y="207" id="job_vendor" dataProvider="{vendors}"/>
-			</mx:AddChild>
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
 						  y="209"
@@ -246,10 +240,12 @@
 						  y="146"
 						  text="Markup" width="67" textAlign="right" id="label38"/>
 			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:ComboBox x="85" y="207" id="job_vendor" labelField="name" dataProvider="{vendors}" width="183"></mx:ComboBox>
+			</mx:AddChild>
 		</mx:State>
 		<mx:State name="ChargesOnly" basedOn="Mailing">
 			<mx:RemoveChild target="{label35}"/>
-			<mx:RemoveChild target="{job_vendor}"/>
 			<mx:RemoveChild target="{label36}"/>
 			<mx:RemoveChild target="{job_over_under}"/>
 			<mx:RemoveChild target="{job_unitCost}"/>
@@ -274,6 +270,7 @@
 			<mx:SetProperty target="{hrule1}" name="y" value="370"/>
 			<mx:SetProperty target="{job_total}" name="y" value="377"/>
 			<mx:SetProperty target="{label4}" name="y" value="377"/>
+			<mx:RemoveChild target="{job_vendor}"/>
 		</mx:State>
 		<mx:State name="LinesAndInches" basedOn="Mailing">
 			<mx:AddChild relativeTo="{pricing_throbber}" position="before">
@@ -304,6 +301,7 @@
 			<mx:SetProperty target="{label33}" name="y" value="30"/>
 			<mx:SetProperty target="{label34}" name="y" value="58"/>
 			<mx:SetProperty target="{label37}" name="y" value="86"/>
+			<mx:SetProperty target="{job_vendor}" name="width" value="182"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
@@ -457,7 +455,7 @@
 			private var estimatingPreferencesArray:ArrayCollection = new ArrayCollection();
 
 			[Bindable]
-			private var dimensions:ArrayCollection=new ArrayCollection();
+			private var dimensionsArray:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
 			private var accounts:ArrayCollection=new ArrayCollection();
@@ -905,12 +903,11 @@
 
 			private function handleLoadDimensionResult(ev:ResultEvent):void
 			{
-				dimensions=ev.result as ArrayCollection;
-
-				this.job_parent.text = job.parentSize;
-				this.job_size.text = job.runSize;
-				this.job_fold_size.text = job.foldedSize;
-				this.job_finish_size.text = job.finishSize;
+				dimensionsArray=ev.result as ArrayCollection;
+				this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
+				this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
+				this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensionsArray);
+				this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
 
 			}
 			
@@ -1119,21 +1116,28 @@
 						else
 							cutoff = 0;
 						this.job.parentSize = evt.stockDefinition.parentsize;
-						/*this.job.runSize = evt.stockDefinition.parentsize + " x " + cutoff; */
+						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.cutOff = cutoff;
 						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
 						this.job.foldedSize = "";
 						job_fold_size.text = "";
 					}
 					else if (this.job_type.text == "Printing") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
+						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.parentsize;
+						this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.parentsize;
+						this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensionsArray);
 					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
+						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.normalRunSize;
+						this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.normalRunSize;
+						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
 					}
 					this.mapToJobData();
 					jobService.assignStockToJob(this.job, evt.stockDefinition);
@@ -1371,7 +1375,7 @@
 					job.paperCal.colorBar = estimatingPreferences.colorBar;
 				
 			 	paperCalWindow.setJob(job);
-			 	paperCalWindow.setdimension(dimensions)
+			 	paperCalWindow.setdimension(dimensionsArray)
 			   
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
@@ -1783,50 +1787,6 @@
 											 id="job_color"
 											 text="{job.stock.color.name}"
 											 fontSize="9"/>
-								    <fc:AutoComplete x="107"
-								      y="79"
-								      width="100"
-								      height="20"
-								      id="job_parent"
-								      dataProvider="{dimensions}"
-								      labelField="name"
-								      fontSize="9"
-								      text="{job.parentSize}"
-								      focusOut="handleFocusOutEvent(event)"
-								      />
-									<fc:AutoComplete x="107"
-												  y="101"
-												  width="100"
-												  height="20"
-												  id="job_size"
-												  dataProvider="{dimensions}"
-												  labelField="name"
-												  fontSize="9"
-												  text="{job.runSize}"
-												  focusOut="handleFocusOutEvent(event)"
-												  />
-									<fc:AutoComplete x="107"
-												  y="123"
-												  width="100"
-												  height="20"
-												  id="job_finish_size"
-												  dataProvider="{dimensions}"
-												  labelField="name"
-												  fontSize="9"
-												  text="{job.finishSize}"
-												  focusOut="handleFocusOutEvent(event)"
-												  />
-									<fc:AutoComplete x="107"
-												  y="145"
-												  width="100"
-												  height="20"
-												  id="job_fold_size"
-												  dataProvider="{dimensions}"
-												  labelField="name"
-												  fontSize="9"
-												  text="{job.foldedSize}"
-												  focusOut="handleFocusOutEvent(event)"
-												  />
 									<mx:TextInput x="107"
 												  y="167"
 												  width="100"
@@ -1911,6 +1871,10 @@
 											   height="18"
 											   id="chage_stock_button"
 											   click="changeStockDefinition()" width="62"/>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"
