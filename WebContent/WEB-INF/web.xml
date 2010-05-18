@@ -51,6 +51,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>MobileIntegrationServlet</servlet-name>
+		<display-name>MobileIntegrationServlet</display-name>
+		<servlet-class>com.efi.printsmith.integration.mobileapp.MobileIntegrationServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>JDFIntegrationServlet</servlet-name>
 		<display-name>JDFIntegrationServlet</display-name>
 		<servlet-class>com.efi.printsmith.integration.jdf.JDFIntegrationServlet</servlet-class>
@@ -70,46 +76,6 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-<!-- 
-	<servlet>
-        <servlet-name>Report</servlet-name>
-        <servlet-class>com.inet.report.ReportServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>TransferReport</servlet-name>
-        <servlet-class>com.inet.report.database.beans.TransferServlet</servlet-class>
-    </servlet>	
-    
-    
-    <servlet>
-        <servlet-name>Remote</servlet-name>
-        <servlet-class>com.inet.remote.gui.RemoteGuiServlet</servlet-class>
-    </servlet>
-            
-    
-    <servlet>
-		<servlet-name>CrystalClear</servlet-name>
-		<servlet-class>com.inet.report.StaticServlet</servlet-class>
-    </servlet>
-           
-	<servlet-mapping>
-		<servlet-name>Report</servlet-name>
-		<url-pattern>/report/*</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-		<servlet-name>CrystalClear</servlet-name>
-		<url-pattern>/crystalclear/*</url-pattern>
-    </servlet-mapping>
-	<servlet-mapping>
-	    <servlet-name>TransferReport</servlet-name>
-	    <url-pattern>/TransferServlet/*</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Remote</servlet-name>
-        <url-pattern>/remote/*</url-pattern>
-    </servlet-mapping>
--->
     <servlet-mapping>
         <servlet-name>MessageBrokerServlet</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
@@ -127,16 +93,14 @@
 		<url-pattern>/reportservlet/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>JDFIntegrationServlet</servlet-name>
-		<url-pattern>/JDFIntegrationServlet</url-pattern>
+		<servlet-name>MobileIntegrationServlet</servlet-name>
+		<url-pattern>/mobile/*</url-pattern>
 	</servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CrystalClearServlet</servlet-name>
-        <url-pattern>/CrystalClearServlet/*</url-pattern>
-    </servlet-mapping>    
-    
-    
-    
+	<servlet-mapping>
+		<servlet-name>JDFIntegrationServlet</servlet-name>
+		<url-pattern>/JDFIntegrationServlet/*</url-pattern>
+	</servlet-mapping>
+	
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
