@@ -35,6 +35,9 @@
 		<mx:method name="getById"
 					fault="handleFault(event)"
 					result="handleLoadJobForEdit(event)"/>
+		<mx:method name="getInvoice"
+					fault="handleFault(event)"
+					result="handleLoadInvoice(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -209,6 +212,7 @@
 			public function setInvoice(invoice:InvoiceBase):void
 			{
 				this.invoice=invoice;
+				dataService.getInvoice(invoice.id);
 			}
 
 			public function getInvoice():InvoiceBase
@@ -216,6 +220,10 @@
 				return this.invoice;
 			}
 
+			private function handleLoadInvoice(event:ResultEvent):void {
+				this.invoice = event.result as InvoiceBase;
+			}
+			
 			private function handleLoadResult(event:Event):void
 			{
 

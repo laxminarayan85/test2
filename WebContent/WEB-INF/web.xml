@@ -20,10 +20,6 @@
 		<url-pattern>/messagebroker/*</url-pattern>
 	</filter-mapping>
 
-	<listener>
-		<listener-class>com.efi.printsmith.integration.IntegrationServletListener</listener-class>
-    </listener> 
-	
     <!-- MessageBroker Servlet -->
     <servlet>
         <servlet-name>MessageBrokerServlet</servlet-name>
@@ -55,9 +51,9 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>IntegrationServlet</servlet-name>
-		<display-name>IntegrationServlet</display-name>
-		<servlet-class>com.efi.printsmith.integration.IntegrationServlet</servlet-class>
+		<servlet-name>JDFIntegrationServlet</servlet-name>
+		<display-name>JDFIntegrationServlet</display-name>
+		<servlet-class>com.efi.printsmith.integration.jdf.JDFIntegrationServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
@@ -131,8 +127,8 @@
 		<url-pattern>/reportservlet/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>IntegrationServlet</servlet-name>
-		<url-pattern>/IntegrationServlet</url-pattern>
+		<servlet-name>JDFIntegrationServlet</servlet-name>
+		<url-pattern>/JDFIntegrationServlet</url-pattern>
 	</servlet-mapping>
     <servlet-mapping>
         <servlet-name>CrystalClearServlet</servlet-name>

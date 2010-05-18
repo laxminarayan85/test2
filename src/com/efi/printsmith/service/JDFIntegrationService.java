@@ -95,7 +95,7 @@ import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.StockDefinition;
-import com.efi.printsmith.integration.JDF.JMFMessages;
+import com.efi.printsmith.integration.jdf.JMFMessages;
 import com.efi.printsmith.network.HttpContentType;
 import com.efi.printsmith.network.HttpPostContent;
 import com.efi.printsmith.network.HttpResponse;
@@ -256,7 +256,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			
 			url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId); //new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
 			InetAddress addr = InetAddress.getLocalHost();
-			returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/IntegrationServlet"); // TODO Fix this too
+			returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
 			JobJDFStatus jdfStatus = new JobJDFStatus();
 			jdfStatus.setDeviceId(deviceId);
 			job.setJdfStatus(jdfStatus);
@@ -484,7 +484,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 	public void cancelFierySubscription(long jobId) throws Exception {
 		try {
 //			URL url = new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
-//			URL returnURL = new URL("http://10.34.80.80:8080/Snowmass/IntegrationServlet");
+//			URL returnURL = new URL("http://10.34.80.80:8080/Snowmass/JDFIntegrationServlet");
 			DataService dataService = new DataService();
 			Job job = (Job) dataService.getById("Job", jobId);
 			if (job == null) {
@@ -503,7 +503,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 
 			URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId);
 			InetAddress addr = InetAddress.getLocalHost();
-			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/IntegrationServlet"); // TODO Fix this too
+			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
 			sendSubscriptionCancelation(url, returnURL, deviceId, String.valueOf(jobId));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -534,7 +534,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 
 			URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId);
 			InetAddress addr = InetAddress.getLocalHost();
-			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/IntegrationServlet"); // TODO Fix this too
+			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
 			sendQueryJobStatus(url, returnURL, deviceId, queueId);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
