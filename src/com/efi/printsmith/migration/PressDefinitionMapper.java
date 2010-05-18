@@ -146,7 +146,7 @@ public class PressDefinitionMapper extends ImportMapper {
 					pressDefinition.addCharges(chargeDefinition);
 				}
 			} else if ("charges[10]".equals(currentFieldToken)) {
-				/* TODO */ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 				if (modelBase != null) {
 					long id = modelBase.getId();
 					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
