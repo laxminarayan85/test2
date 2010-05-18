@@ -820,6 +820,30 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
+	public ChargeCategory getByChargeCategoryPrevId(String prevId) throws Exception {
+		log.debug("** getByChargeCategoryPrevId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from ChargeCategory where prevId = '" + prevId
+					+ "'";
+			Query query = em.createQuery(queryString);
+			ChargeCategory chargeCategory = (ChargeCategory) query.getSingleResult();
+			List<ChargeDefinition> chargeDefinitions = chargeCategory.getChildren();
+			for (int i=0; i<chargeDefinitions.size(); i++) {
+				ChargeDefinition chargeDefinition = chargeDefinitions.get(i);
+				if (chargeDefinition == null) {
+					log.error("null chargeDefinition");
+				}
+			}
+			return chargeCategory;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Account> getByAccountsPartialName(String name) throws Exception {

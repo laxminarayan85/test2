@@ -409,6 +409,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (categoryids.isEmpty() == true) {
 								ChargeCategory chargeCategory = new ChargeCategory();
 								chargeCategory.setName(description);
+								chargeCategory.setPrevId(currentImportToken);
 								int index = commandlinkids.indexOf(linkId);
 								if (index >= 0) {
 									ChargeCommand chargeCommand = dataService
@@ -427,6 +428,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 								if (index < 0) {
 									ChargeCategory chargeCategory = new ChargeCategory();
 									chargeCategory.setName(description);
+									chargeCategory.setPrevId(currentImportToken);
 									index = commandlinkids.indexOf(linkId);
 									ChargeCommand chargeCommand = dataService
 											.getByChargeCommandName(commandnames
@@ -686,9 +688,8 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					}
 				}
 				if (newCommand == false && newCategory == false) {
-					int index = categoryids.indexOf(categoryId);
 					ChargeCategory chargeCategory = dataService
-							.getByChargeCategoryName(categorynames.get(index));
+							.getByChargeCategoryPrevId(categoryId);
 					dataService.addChargeToCategory(chargeDefinition,
 							chargeCategory);
 				}
