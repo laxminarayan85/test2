@@ -93,4 +93,11 @@ public class Utilities {
 		return date;
 		
 	}
+	
+	static public Date tokenToDateTime(String token) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+		Date date = formatter.parse(token);
+		return date;
+		
+	}
 }

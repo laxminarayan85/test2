@@ -38,6 +38,7 @@ public class CustomerMapper extends ImportMapper {
 		BusinessType businessType = new BusinessType();
 		String contactId = "";
 		String billContactId = "";
+		String lastNotifiedDate = "";
 		DataService dataService = new DataService();
 
 		for (int i = 0; i < fieldTokens.length; i++) {
@@ -815,10 +816,11 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.equals("") == false)
 						customer.setLastNotifiedDate(Utilities
 								.tokenToDate(currentImportToken));
+						lastNotifiedDate = currentImportToken;
 				} else if ("last notified time".equals(currentFieldToken)) {
 					if (currentImportToken.equals("") == false)
 						customer.setLastNotifiedDate(Utilities
-								.tokenToDate(currentImportToken));
+								.tokenToDateTime(lastNotifiedDate + " " + currentImportToken));
 				} else if ("exp data 2".equals(currentFieldToken)) {
 					/* TODO */
 				}
