@@ -25,6 +25,9 @@
 		<mx:method name="CalcOut"
 				   fault="handleFault(event)"
 				   result="handleCalcOutResult(event)"/>
+<!--		<mx:method name="GeneratePageImage"
+				   fault="handleFault(event)"
+				   result="handleCalcOutResult(event)"/>-->				   
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
@@ -64,6 +67,9 @@
 
 			private function handleCalcOutResult(ev:ResultEvent):void
 			{
+				if (ev.result != null) {
+					this.job.paperCal.cutstoRun = ev.result as Number;
+				}
 
 			}
 
@@ -203,6 +209,13 @@
 
 			}
 
+			private function refreshCalcAndImage():void
+			{
+				mapToJobData();
+				paperCalculatorService.CalcOut(this.job);
+				//paperCalculatorService.GeneratePageImage(this.job);
+			}
+			
 			private function fillRunToFinishGrainArray(fillArray:ArrayCollection):void
 			{
 				var setting:Object=new Object();
@@ -469,7 +482,7 @@
 						y="112"
 						value="Top"
 						id="topGrip"
-						icon="@Embed(source='../../../../assets/Original PS Icons/GripSideTopBottom.png')"
+						icon="@Embed(source='../../../../assets/GripSideTopBottom.png')"
 						groupName="gripLocation"
 						width="20"
 						height="20"/>
@@ -480,7 +493,7 @@
 						groupName="gripLocation"
 						width="20"
 						height="20">
-			<mx:icon>@Embed(source='../../../../assets/Original PS Icons/GripSideLeftRight.png')</mx:icon>
+			<mx:icon>@Embed(source='../../../../assets/GripSideLeftRight.png')</mx:icon>
 		</mx:RadioButton>
 		<mx:RadioButtonGroup id="folioLocation"
 							 selectedValue="{folioLocationRadioValue}"
@@ -490,14 +503,14 @@
 						value="Top"
 						id="topFolio"
 						groupName="folioLocation" height="20" width="20">
-			<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideTopBottom.png')</mx:icon>
+			<mx:icon>@Embed(source='../../../../assets/FolioSideTopBottom.png')</mx:icon>
 		</mx:RadioButton>
 		<mx:RadioButton x="390"
 						y="167"
 						value="Left"
 						id="leftFolio"
 						groupName="folioLocation" height="20" width="20">
-			<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideLeftRight.png')</mx:icon>
+			<mx:icon>@Embed(source='../../../../assets/FolioSideLeftRight.png')</mx:icon>
 		</mx:RadioButton>
 		<mx:CheckBox x="242"
 					 y="534"
@@ -519,6 +532,7 @@
 		<mx:TextInput x="21"
 					  y="160"
 					  text="{job.parentSize}"
+					  focusOut="refreshCalcAndImage()"
 					  id="parent_size_edit" width="192" height="20"/>
 		<mx:Label x="21"
 				  y="139"
