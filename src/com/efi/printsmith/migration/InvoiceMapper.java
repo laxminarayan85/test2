@@ -51,7 +51,7 @@ public class InvoiceMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		String last = new String();
 		String first = new String();
-		Account account= new Account();
+		Account account= null;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -785,9 +785,11 @@ public class InvoiceMapper extends ImportMapper {
 		notePad = (NotePad)dataService.addUpdate(notePad);
 		notePad.setId(notePad.getId());
 		invoice.setNotes(notePad);
-		Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
-		if (contact != null)
-			invoice.setContact(contact);
+		if (account != null) {
+			Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
+			if (contact != null)
+				invoice.setContact(contact);
+		}
 		return invoice;
 	}
 	
@@ -796,7 +798,7 @@ public class InvoiceMapper extends ImportMapper {
 		NotePad notePad = new NotePad();
 		String last = new String();
 		String first = new String();
-		Account account = new Account();
+		Account account = null;
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -1530,9 +1532,11 @@ public class InvoiceMapper extends ImportMapper {
 		notePad = (NotePad)dataService.addUpdate(notePad);
 		notePad.setId(notePad.getId());
 		invoice.setNotes(notePad);
-		Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
-		if (contact != null)
-			invoice.setContact(contact);
+		if (account != null) {
+			Contact contact = (Contact) dataService.getByLastFirstName("Contact", last, first, account.getId());
+			if (contact != null)
+				invoice.setContact(contact);
+		}
 		if (invoice.getInvoiceNumber() != null
 				&& invoice.getInvoiceNumber().length() > 0) {
 			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
