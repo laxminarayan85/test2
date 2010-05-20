@@ -1017,7 +1017,9 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-//    @OneToMany()
+@OneToMany()
+	@JoinTable( name = "pressdefinition_charges")
+	//    @OneToMany()
 //    @JoinTable( name = "pressdefinition_charges")
 	@ManyToMany(targetEntity=ChargeDefinition.class)
 	private java.util.List<ChargeDefinition> charges;

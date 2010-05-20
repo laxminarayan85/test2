@@ -85,6 +85,30 @@ package com.efi.printsmith.data
 		public var paperPrice:PaperPrice;
 		public var jdfStatus:JobJDFStatus;
 		public var paperCal:PaperCalculator;
+		public var orQtyOrder:Boolean = false;
+		public var orSets:Boolean = false;
+		public var orRuntime:Boolean = false;
+		public var orSetupTime:Boolean = false;
+		public var orWashupTime:Boolean = false;
+		public var orStockUnits:Boolean = false;
+		public var orStockMarkup:Boolean = false;
+		public var orStockCost:Boolean = false;
+		public var orWaste:Boolean = false;
+		public var orProduction:Boolean = false;
+		public var orUnit:Boolean = false;
+		public var orPrice:Boolean = false;
+		public var orRunOut:Boolean = false;
+		public var orLaborMarkup:Boolean = false;
+		public var orLaborRate:Boolean = false;
+		public var orAvgImpression:Boolean = false;
+		public var orPassFront:Boolean = false;
+		public var orPassBack:Boolean = false;
+		public var orParentSize:Boolean = false;
+		public var orBinderyWaste:Boolean = false;
+		public var orRunCuts:Boolean = false;
+		public var orFinishCuts:Boolean = false;
+		public var orUp:Boolean = false;
+		public var orParentOut:Boolean = false;
 	
 	}
 }

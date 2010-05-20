@@ -335,6 +335,102 @@ public class JobBase extends ModelBase {
    */
   public static final String PAPERCAL = "PaperCal";
 	/**
+   * @generated
+   */
+  public static final String ORQTYORDER = "OrQtyOrder";
+	/**
+   * @generated
+   */
+  public static final String ORSETS = "OrSets";
+	/**
+   * @generated
+   */
+  public static final String ORRUNTIME = "OrRuntime";
+	/**
+   * @generated
+   */
+  public static final String ORSETUPTIME = "OrSetupTime";
+	/**
+   * @generated
+   */
+  public static final String ORWASHUPTIME = "OrWashupTime";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKUNITS = "OrStockUnits";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKMARKUP = "OrStockMarkup";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKCOST = "OrStockCost";
+	/**
+   * @generated
+   */
+  public static final String ORWASTE = "OrWaste";
+	/**
+   * @generated
+   */
+  public static final String ORPRODUCTION = "OrProduction";
+	/**
+   * @generated
+   */
+  public static final String ORUNIT = "OrUnit";
+	/**
+   * @generated
+   */
+  public static final String ORPRICE = "OrPrice";
+	/**
+   * @generated
+   */
+  public static final String ORRUNOUT = "OrRunOut";
+	/**
+   * @generated
+   */
+  public static final String ORLABORMARKUP = "OrLaborMarkup";
+	/**
+   * @generated
+   */
+  public static final String ORLABORRATE = "OrLaborRate";
+	/**
+   * @generated
+   */
+  public static final String ORAVGIMPRESSION = "OrAvgImpression";
+	/**
+   * @generated
+   */
+  public static final String ORPASSFRONT = "OrPassFront";
+	/**
+   * @generated
+   */
+  public static final String ORPASSBACK = "OrPassBack";
+	/**
+   * @generated
+   */
+  public static final String ORPARENTSIZE = "OrParentSize";
+	/**
+   * @generated
+   */
+  public static final String ORBINDERYWASTE = "OrBinderyWaste";
+	/**
+   * @generated
+   */
+  public static final String ORRUNCUTS = "OrRunCuts";
+	/**
+   * @generated
+   */
+  public static final String ORFINISHCUTS = "OrFinishCuts";
+	/**
+   * @generated
+   */
+  public static final String ORUP = "OrUp";
+	/**
+   * @generated
+   */
+  public static final String ORPARENTOUT = "OrParentOut";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1970,6 +2066,533 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orQtyOrder;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrQtyOrder(){
+    return orQtyOrder; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrQtyOrder(Boolean newVal) {
+    this.orQtyOrder = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orSets;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrSets(){
+    return orSets; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrSets(Boolean newVal) {
+    this.orSets = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orRuntime;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrRuntime(){
+    return orRuntime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrRuntime(Boolean newVal) {
+    this.orRuntime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orSetupTime;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrSetupTime(){
+    return orSetupTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrSetupTime(Boolean newVal) {
+    this.orSetupTime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orWashupTime;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrWashupTime(){
+    return orWashupTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrWashupTime(Boolean newVal) {
+    this.orWashupTime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orStockUnits;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrStockUnits(){
+    return orStockUnits; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrStockUnits(Boolean newVal) {
+    this.orStockUnits = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orStockMarkup;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrStockMarkup(){
+    return orStockMarkup; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrStockMarkup(Boolean newVal) {
+    this.orStockMarkup = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orStockCost;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrStockCost(){
+    return orStockCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrStockCost(Boolean newVal) {
+    this.orStockCost = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orWaste;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrWaste(){
+    return orWaste; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrWaste(Boolean newVal) {
+    this.orWaste = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orProduction;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrProduction(){
+    return orProduction; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrProduction(Boolean newVal) {
+    this.orProduction = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orUnit;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrUnit(){
+    return orUnit; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrUnit(Boolean newVal) {
+    this.orUnit = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orPrice;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrPrice(){
+    return orPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrPrice(Boolean newVal) {
+    this.orPrice = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orRunOut;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrRunOut(){
+    return orRunOut; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrRunOut(Boolean newVal) {
+    this.orRunOut = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orLaborMarkup;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrLaborMarkup(){
+    return orLaborMarkup; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrLaborMarkup(Boolean newVal) {
+    this.orLaborMarkup = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orLaborRate;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrLaborRate(){
+    return orLaborRate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrLaborRate(Boolean newVal) {
+    this.orLaborRate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orAvgImpression;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrAvgImpression(){
+    return orAvgImpression; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrAvgImpression(Boolean newVal) {
+    this.orAvgImpression = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orPassFront;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrPassFront(){
+    return orPassFront; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrPassFront(Boolean newVal) {
+    this.orPassFront = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orPassBack;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrPassBack(){
+    return orPassBack; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrPassBack(Boolean newVal) {
+    this.orPassBack = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orParentSize;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrParentSize(){
+    return orParentSize; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrParentSize(Boolean newVal) {
+    this.orParentSize = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orBinderyWaste;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrBinderyWaste(){
+    return orBinderyWaste; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrBinderyWaste(Boolean newVal) {
+    this.orBinderyWaste = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orRunCuts;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrRunCuts(){
+    return orRunCuts; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrRunCuts(Boolean newVal) {
+    this.orRunCuts = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orFinishCuts;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrFinishCuts(){
+    return orFinishCuts; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrFinishCuts(Boolean newVal) {
+    this.orFinishCuts = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orUp;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrUp(){
+    return orUp; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrUp(Boolean newVal) {
+    this.orUp = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean orParentOut;
+	/**
+   * @generated
+ 	 */
+  public Boolean getOrParentOut(){
+    return orParentOut; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrParentOut(Boolean newVal) {
+    this.orParentOut = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2047,6 +2670,30 @@ public class JobBase extends ModelBase {
     if (PAPERPRICE.equals(propertyName)) return getPaperPrice();
     if (JDFSTATUS.equals(propertyName)) return getJdfStatus();
     if (PAPERCAL.equals(propertyName)) return getPaperCal();
+    if (ORQTYORDER.equals(propertyName)) return getOrQtyOrder();
+    if (ORSETS.equals(propertyName)) return getOrSets();
+    if (ORRUNTIME.equals(propertyName)) return getOrRuntime();
+    if (ORSETUPTIME.equals(propertyName)) return getOrSetupTime();
+    if (ORWASHUPTIME.equals(propertyName)) return getOrWashupTime();
+    if (ORSTOCKUNITS.equals(propertyName)) return getOrStockUnits();
+    if (ORSTOCKMARKUP.equals(propertyName)) return getOrStockMarkup();
+    if (ORSTOCKCOST.equals(propertyName)) return getOrStockCost();
+    if (ORWASTE.equals(propertyName)) return getOrWaste();
+    if (ORPRODUCTION.equals(propertyName)) return getOrProduction();
+    if (ORUNIT.equals(propertyName)) return getOrUnit();
+    if (ORPRICE.equals(propertyName)) return getOrPrice();
+    if (ORRUNOUT.equals(propertyName)) return getOrRunOut();
+    if (ORLABORMARKUP.equals(propertyName)) return getOrLaborMarkup();
+    if (ORLABORRATE.equals(propertyName)) return getOrLaborRate();
+    if (ORAVGIMPRESSION.equals(propertyName)) return getOrAvgImpression();
+    if (ORPASSFRONT.equals(propertyName)) return getOrPassFront();
+    if (ORPASSBACK.equals(propertyName)) return getOrPassBack();
+    if (ORPARENTSIZE.equals(propertyName)) return getOrParentSize();
+    if (ORBINDERYWASTE.equals(propertyName)) return getOrBinderyWaste();
+    if (ORRUNCUTS.equals(propertyName)) return getOrRunCuts();
+    if (ORFINISHCUTS.equals(propertyName)) return getOrFinishCuts();
+    if (ORUP.equals(propertyName)) return getOrUp();
+    if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
     return super.getProperty(propertyName);
   }
 	
@@ -2128,6 +2775,30 @@ public class JobBase extends ModelBase {
     if (PAPERPRICE.equals(propertyName)) setPaperPrice((PaperPrice)newValue); else
     if (JDFSTATUS.equals(propertyName)) setJdfStatus((JobJDFStatus)newValue); else
     if (PAPERCAL.equals(propertyName)) setPaperCal((PaperCalculator)newValue); else
+    if (ORQTYORDER.equals(propertyName)) setOrQtyOrder((Boolean)newValue); else
+    if (ORSETS.equals(propertyName)) setOrSets((Boolean)newValue); else
+    if (ORRUNTIME.equals(propertyName)) setOrRuntime((Boolean)newValue); else
+    if (ORSETUPTIME.equals(propertyName)) setOrSetupTime((Boolean)newValue); else
+    if (ORWASHUPTIME.equals(propertyName)) setOrWashupTime((Boolean)newValue); else
+    if (ORSTOCKUNITS.equals(propertyName)) setOrStockUnits((Boolean)newValue); else
+    if (ORSTOCKMARKUP.equals(propertyName)) setOrStockMarkup((Boolean)newValue); else
+    if (ORSTOCKCOST.equals(propertyName)) setOrStockCost((Boolean)newValue); else
+    if (ORWASTE.equals(propertyName)) setOrWaste((Boolean)newValue); else
+    if (ORPRODUCTION.equals(propertyName)) setOrProduction((Boolean)newValue); else
+    if (ORUNIT.equals(propertyName)) setOrUnit((Boolean)newValue); else
+    if (ORPRICE.equals(propertyName)) setOrPrice((Boolean)newValue); else
+    if (ORRUNOUT.equals(propertyName)) setOrRunOut((Boolean)newValue); else
+    if (ORLABORMARKUP.equals(propertyName)) setOrLaborMarkup((Boolean)newValue); else
+    if (ORLABORRATE.equals(propertyName)) setOrLaborRate((Boolean)newValue); else
+    if (ORAVGIMPRESSION.equals(propertyName)) setOrAvgImpression((Boolean)newValue); else
+    if (ORPASSFRONT.equals(propertyName)) setOrPassFront((Boolean)newValue); else
+    if (ORPASSBACK.equals(propertyName)) setOrPassBack((Boolean)newValue); else
+    if (ORPARENTSIZE.equals(propertyName)) setOrParentSize((Boolean)newValue); else
+    if (ORBINDERYWASTE.equals(propertyName)) setOrBinderyWaste((Boolean)newValue); else
+    if (ORRUNCUTS.equals(propertyName)) setOrRunCuts((Boolean)newValue); else
+    if (ORFINISHCUTS.equals(propertyName)) setOrFinishCuts((Boolean)newValue); else
+    if (ORUP.equals(propertyName)) setOrUp((Boolean)newValue); else
+    if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2281,6 +2952,54 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {JobJDFStatus.class};		
     if (PAPERCAL.equals(propertyName)) 
       return new Class<?>[] {PaperCalculator.class};		
+    if (ORQTYORDER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORSETS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORRUNTIME.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORSETUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORWASHUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORSTOCKUNITS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORSTOCKMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORSTOCKCOST.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORWASTE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPRODUCTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORUNIT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPRICE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORRUNOUT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORLABORMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORLABORRATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORAVGIMPRESSION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPASSFRONT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPASSBACK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPARENTSIZE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORBINDERYWASTE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORRUNCUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORFINISHCUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORPARENTOUT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2363,6 +3082,30 @@ public class JobBase extends ModelBase {
     if (PAPERPRICE.equals(propertyName)) return JobBase.class;
     if (JDFSTATUS.equals(propertyName)) return JobBase.class;
     if (PAPERCAL.equals(propertyName)) return JobBase.class;
+    if (ORQTYORDER.equals(propertyName)) return JobBase.class;
+    if (ORSETS.equals(propertyName)) return JobBase.class;
+    if (ORRUNTIME.equals(propertyName)) return JobBase.class;
+    if (ORSETUPTIME.equals(propertyName)) return JobBase.class;
+    if (ORWASHUPTIME.equals(propertyName)) return JobBase.class;
+    if (ORSTOCKUNITS.equals(propertyName)) return JobBase.class;
+    if (ORSTOCKMARKUP.equals(propertyName)) return JobBase.class;
+    if (ORSTOCKCOST.equals(propertyName)) return JobBase.class;
+    if (ORWASTE.equals(propertyName)) return JobBase.class;
+    if (ORPRODUCTION.equals(propertyName)) return JobBase.class;
+    if (ORUNIT.equals(propertyName)) return JobBase.class;
+    if (ORPRICE.equals(propertyName)) return JobBase.class;
+    if (ORRUNOUT.equals(propertyName)) return JobBase.class;
+    if (ORLABORMARKUP.equals(propertyName)) return JobBase.class;
+    if (ORLABORRATE.equals(propertyName)) return JobBase.class;
+    if (ORAVGIMPRESSION.equals(propertyName)) return JobBase.class;
+    if (ORPASSFRONT.equals(propertyName)) return JobBase.class;
+    if (ORPASSBACK.equals(propertyName)) return JobBase.class;
+    if (ORPARENTSIZE.equals(propertyName)) return JobBase.class;
+    if (ORBINDERYWASTE.equals(propertyName)) return JobBase.class;
+    if (ORRUNCUTS.equals(propertyName)) return JobBase.class;
+    if (ORFINISHCUTS.equals(propertyName)) return JobBase.class;
+    if (ORUP.equals(propertyName)) return JobBase.class;
+    if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2517,6 +3260,54 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getJdfStatus(), objT.getJdfStatus()))
       return false;
     if (! SmartEquals(getPaperCal(), objT.getPaperCal()))
+      return false;
+    if (! SmartEquals(getOrQtyOrder(), objT.getOrQtyOrder()))
+      return false;
+    if (! SmartEquals(getOrSets(), objT.getOrSets()))
+      return false;
+    if (! SmartEquals(getOrRuntime(), objT.getOrRuntime()))
+      return false;
+    if (! SmartEquals(getOrSetupTime(), objT.getOrSetupTime()))
+      return false;
+    if (! SmartEquals(getOrWashupTime(), objT.getOrWashupTime()))
+      return false;
+    if (! SmartEquals(getOrStockUnits(), objT.getOrStockUnits()))
+      return false;
+    if (! SmartEquals(getOrStockMarkup(), objT.getOrStockMarkup()))
+      return false;
+    if (! SmartEquals(getOrStockCost(), objT.getOrStockCost()))
+      return false;
+    if (! SmartEquals(getOrWaste(), objT.getOrWaste()))
+      return false;
+    if (! SmartEquals(getOrProduction(), objT.getOrProduction()))
+      return false;
+    if (! SmartEquals(getOrUnit(), objT.getOrUnit()))
+      return false;
+    if (! SmartEquals(getOrPrice(), objT.getOrPrice()))
+      return false;
+    if (! SmartEquals(getOrRunOut(), objT.getOrRunOut()))
+      return false;
+    if (! SmartEquals(getOrLaborMarkup(), objT.getOrLaborMarkup()))
+      return false;
+    if (! SmartEquals(getOrLaborRate(), objT.getOrLaborRate()))
+      return false;
+    if (! SmartEquals(getOrAvgImpression(), objT.getOrAvgImpression()))
+      return false;
+    if (! SmartEquals(getOrPassFront(), objT.getOrPassFront()))
+      return false;
+    if (! SmartEquals(getOrPassBack(), objT.getOrPassBack()))
+      return false;
+    if (! SmartEquals(getOrParentSize(), objT.getOrParentSize()))
+      return false;
+    if (! SmartEquals(getOrBinderyWaste(), objT.getOrBinderyWaste()))
+      return false;
+    if (! SmartEquals(getOrRunCuts(), objT.getOrRunCuts()))
+      return false;
+    if (! SmartEquals(getOrFinishCuts(), objT.getOrFinishCuts()))
+      return false;
+    if (! SmartEquals(getOrUp(), objT.getOrUp()))
+      return false;
+    if (! SmartEquals(getOrParentOut(), objT.getOrParentOut()))
       return false;
     return true;
   }			
