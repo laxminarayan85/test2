@@ -1,5 +1,6 @@
 package com.efi.printsmith.service;
 
+import java.security.InvalidParameterException;
 import java.util.Date;
 
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.data.Invoice;
+import com.efi.printsmith.Constants;
 
 public class PaperCalculatorService extends SnowmassHibernateService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
@@ -22,15 +24,26 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 	
 	protected static EntityManagerFactory entityManagerFactory = null;
 
-	public int CalcOut(JobBase job) {
+	public Integer CalcOut(JobBase job) throws Exception {
 		int out= 0;
-		log.info("how many sheets can be gotten	out of a given parent sheet. " );
 		
+		if (job == null) {
+			throw new InvalidParameterException("Null job passed to CalcOut");
+		}
+		log.info("CalcOut called with job: " + job.getId());
 		
+		/* Just for illustration: */
+		if (job.getPaperCal() != null) {
+			if (job.getPaperCal().getFolioEdge().equals(Constants.PAPER_CALCULATOR_FOLIO_LEFT)) {
+				out = 1;
+			} else if (job.getPaperCal().getFolioEdge().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP)) {
+				out = 2;
+			} else {
+				throw new InvalidParameterException("Invalid value in Paper Calculator's FolioEdge");
+			}
+		}
 		
-		
-		
-		log.info("Completed sheets can be gotten	out of a given parent sheet");
+		log.info("CalcOut returned: " + out);
 		return out;
 	}
 	

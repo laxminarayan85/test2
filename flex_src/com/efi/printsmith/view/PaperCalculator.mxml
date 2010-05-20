@@ -47,7 +47,8 @@
 			import mx.events.ValidationResultEvent;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.Dimension;
-
+			import com.efi.printsmith.Constants;
+			
 			[Bindable]
 			private var job:JobBase;
 			[Bindable]
@@ -139,10 +140,12 @@
 
 			private function mapToJobData():void
 			{
-				if (gripLocation.selectedValue != null)
+				if (gripLocation.selectedValue != null) {
 					job.paperCal.gripLocation=gripLocation.selectedValue.toString();
-				if (folioLocation.selectedValue != null)
+				}
+				if (folioLocation.selectedValue != null) {
 					job.paperCal.folioLocation=folioLocation.selectedValue.toString();
+				}
 				if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 					job.paperCal.runToFinishGrain=cboRunToFinishGrain.selectedItem.name;
 				job.paperCal.runSize=run_size_edit.text
@@ -181,12 +184,12 @@
 
 			private function doGrip():void
 			{
-				if (gripLocation.selectedValue == "Top")
+				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_TOP)
 				{
 					topGrip.alpha=.4;
 					leftGrip.alpha=1;
 				}
-				if (gripLocation.selectedValue == "Left")
+				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_LEFT)
 				{
 					topGrip.alpha=1;
 					leftGrip.alpha=.4;
@@ -196,12 +199,12 @@
 
 			private function doFolio():void
 			{
-				if (folioLocation.selectedValue == "Top")
+				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_TOP)
 				{
 					topFolio.alpha=0.4;
 					leftFolio.alpha=1;
 				}
-				if (folioLocation.selectedValue == "Left")
+				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_LEFT)
 				{
 					topFolio.alpha=1;
 					leftFolio.alpha=.4;
@@ -480,7 +483,7 @@
 							 change="doGrip();"/>
 		<mx:RadioButton x="362"
 						y="112"
-						value="Top"
+						value="{Constants.PAPER_CALCULATOR_GRIPPER_TOP}"
 						id="topGrip"
 						icon="@Embed(source='../../../../assets/GripSideTopBottom.png')"
 						groupName="gripLocation"
@@ -488,7 +491,7 @@
 						height="20"/>
 		<mx:RadioButton x="390"
 						y="112"
-						value="Left"
+						value="{Constants.PAPER_CALCULATOR_GRIPPER_LEFT}"
 						id="leftGrip"
 						groupName="gripLocation"
 						width="20"
@@ -500,14 +503,14 @@
 							 change="doFolio();"/>
 		<mx:RadioButton x="362"
 						y="167"
-						value="Top"
+						value="{Constants.PAPER_CALCULATOR_FOLIO_TOP}"
 						id="topFolio"
 						groupName="folioLocation" height="20" width="20">
 			<mx:icon>@Embed(source='../../../../assets/FolioSideTopBottom.png')</mx:icon>
 		</mx:RadioButton>
 		<mx:RadioButton x="390"
 						y="167"
-						value="Left"
+						value="{Constants.PAPER_CALCULATOR_FOLIO_LEFT}"
 						id="leftFolio"
 						groupName="folioLocation" height="20" width="20">
 			<mx:icon>@Embed(source='../../../../assets/FolioSideLeftRight.png')</mx:icon>

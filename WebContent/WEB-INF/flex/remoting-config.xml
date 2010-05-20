@@ -82,14 +82,14 @@
 			</hibernate>
 		</properties>
 	</destination>
-	<destination id="paperCalulatorService">
+	<destination id="paperCalculatorService">
 		<properties>
 			<source>
-				com.efi.printsmith.service.PaperCalulatorService
+				com.efi.printsmith.service.PaperCalculatorService
 			</source>
 			<hibernate>
 				<loadMethod>load</loadMethod>
-			</hibernate>
+			</hibernate> 
 		</properties>
 	</destination>
 	<destination id="jobService">
