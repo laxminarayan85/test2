@@ -59,20 +59,21 @@ public class DataService extends HibernateService {
 	protected static EntityManagerFactory entityManagerFactory = null;
 
 	protected static EntityManager sharedEntityManager = null;
-	
+
 	public DataService() {
 		super();
 		try {
 			if (entityManagerFactory == null) {
 				entityManagerFactory = Persistence
 						.createEntityManagerFactory(PERSISTENCE_UNIT);
-				
+
 				boolean needToLoadStaticData = checkStaticData();
 
 				if (needToLoadStaticData == true) {
 					try {
 						// LoadStaticData(new String[]{new
-						// DefaultDataFactory().getClass().getResource("DefaultDataFactory.class").getPath()});
+						// DefaultDataFactory().getClass().getResource(
+						// "DefaultDataFactory.class").getPath()});
 						DefaultDataFactory df = new DefaultDataFactory();
 						df.LoadDefaultData(this);
 					} catch (Exception e) {
@@ -142,7 +143,7 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		try {
 			Query findAllQuery = em.createQuery("from " + className
-					+ " fetch all properties order by "+ orderBy);
+					+ " fetch all properties order by " + orderBy);
 			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
@@ -228,6 +229,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<?> getTracker(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -238,19 +240,23 @@ public class DataService extends HibernateService {
 		columnstring = "a.id, a.invoiceNumber";
 		try {
 
-			String queryString = "select new Invoice" + "( "
-					+ columnstring + ") from Invoice a where a.onPendingList = 'TRUE'";
+			String queryString = "select new Invoice" + "( " + columnstring
+					+ ") from Invoice a where a.onPendingList = 'TRUE'";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
 			for (int i = 0; i < resultList.size(); i++) {
-				Invoice listItem = (Invoice)resultList.get(i);
-				Invoice invoice = (Invoice) this.getById("Invoice", ((ModelBase) listItem).getId());
-				Invoice resultInvoice = new Invoice(invoice.getId(), invoice.getInvoiceNumber(), invoice.getAccount(),invoice.getContact(),
-						invoice.getName(), invoice.getGrandTotal(), invoice.getOrderedDate(), invoice.getWantedDate(), invoice.getProofDate());
+				Invoice listItem = (Invoice) resultList.get(i);
+				Invoice invoice = (Invoice) this.getById("Invoice",
+						((ModelBase) listItem).getId());
+				Invoice resultInvoice = new Invoice(invoice.getId(), invoice
+						.getInvoiceNumber(), invoice.getAccount(), invoice
+						.getContact(), invoice.getName(), invoice
+						.getGrandTotal(), invoice.getOrderedDate(), invoice
+						.getWantedDate(), invoice.getProofDate());
 				invoiceList.add(resultInvoice);
 			}
-			
+
 			if (invoiceList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return invoiceList;
@@ -260,31 +266,35 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return null;
-	}	
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<?> getPending(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Session session = (Session) em.getDelegate();
 			List<InvoiceBase> invoices = null;
-			invoices = session.createCriteria(Invoice.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
-			List<Estimate> estimates = session.createCriteria(Estimate.class).add(Restrictions.eq("onPendingList", true)).setFetchMode("invoicebase_jobs", FetchMode.JOIN).list();
+			invoices = session.createCriteria(Invoice.class).add(
+					Restrictions.eq("onPendingList", true)).setFetchMode(
+					"invoicebase_jobs", FetchMode.JOIN).list();
+			List<Estimate> estimates = session.createCriteria(Estimate.class)
+					.add(Restrictions.eq("onPendingList", true)).setFetchMode(
+							"invoicebase_jobs", FetchMode.JOIN).list();
 			invoices.addAll(estimates);
-			
+
 			for (int i = 0; i < invoices.size(); i++) {
 				InvoiceBase invoice = invoices.get(i);
-				
+
 				for (int j = 0; j < invoice.getJobs().size(); j++) {
 					Job job = invoice.getJobs().get(j);
-					
+
 					if (job != null) {
 						log.error("Null job found in invoice");
 					}
 				}
 			}
 			return invoices;
-		}
-		finally {
+		} finally {
 			em.close();
 		}
 	}
@@ -376,7 +386,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getQuery(String className, String where) {
 		log.debug("** getQuery called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -384,6 +394,22 @@ public class DataService extends HibernateService {
 			Query findQuery = em.createQuery("from " + className + where);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+
+	public List<?> getAllQuery(String className, String where) {
+		log.debug("** getQuery called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<?> resultList = new ArrayList<Object>();
+		try {
+			Query findQuery = em.createQuery("from " + className + where);
+			resultList = findQuery.getResultList();
+			return resultList;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -493,12 +519,15 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	public ModelBase getByLastFirstName(String className, String namelast, String namefirst, long id) {
+
+	public ModelBase getByLastFirstName(String className, String namelast,
+			String namefirst, long id) {
 		log.debug("** getByName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className + " where lastName = '" + namelast
-					+ "' and " + "firstName = '" + namefirst + "' and " + "parentaccount_id = '" + id + "'";
+			String queryString = "from " + className + " where lastName = '"
+					+ namelast + "' and " + "firstName = '" + namefirst
+					+ "' and " + "parentaccount_id = '" + id + "'";
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
@@ -509,6 +538,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public List<?> getFromParent(String className, String parentName, Long id)
 			throws Exception {
 		log.debug("** getId called.");
@@ -710,7 +740,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public Substrate getBySubstrateName(String name) throws Exception {
 		log.debug("** getBySubstrateName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -742,13 +772,17 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	public PreferencesPricingMethod getByMethodType(String name) throws Exception {
+
+	public PreferencesPricingMethod getByMethodType(String name)
+			throws Exception {
 		log.debug("** PreferencesPricingMethod called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from PreferencesPricingMethod where method = '" + name + "'";
+			String queryString = "from PreferencesPricingMethod where method = '"
+					+ name + "'";
 			Query query = em.createQuery(queryString);
-			PreferencesPricingMethod object = (PreferencesPricingMethod) query.getSingleResult();
+			PreferencesPricingMethod object = (PreferencesPricingMethod) query
+					.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -757,6 +791,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public WasteChart getByWasteChartName(String name) throws Exception {
 		log.debug("** getByWasteChartName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -780,9 +815,10 @@ public class DataService extends HibernateService {
 			String queryString = "from ChargeCommand where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
-			ChargeCommand chargeCommand = (ChargeCommand) query.getSingleResult();
+			ChargeCommand chargeCommand = (ChargeCommand) query
+					.getSingleResult();
 			List<ChargeCategory> categories = chargeCommand.getChildren();
-			for (int i=0; i<categories.size(); i++) {
+			for (int i = 0; i < categories.size(); i++) {
 				ChargeCategory chargeCategory = categories.get(i);
 				if (chargeCategory == null) {
 					log.error("null chargeCategory");
@@ -804,9 +840,11 @@ public class DataService extends HibernateService {
 			String queryString = "from ChargeCategory where name = '" + name
 					+ "'";
 			Query query = em.createQuery(queryString);
-			ChargeCategory chargeCategory = (ChargeCategory) query.getSingleResult();
-			List<ChargeDefinition> chargeDefinitions = chargeCategory.getChildren();
-			for (int i=0; i<chargeDefinitions.size(); i++) {
+			ChargeCategory chargeCategory = (ChargeCategory) query
+					.getSingleResult();
+			List<ChargeDefinition> chargeDefinitions = chargeCategory
+					.getChildren();
+			for (int i = 0; i < chargeDefinitions.size(); i++) {
 				ChargeDefinition chargeDefinition = chargeDefinitions.get(i);
 				if (chargeDefinition == null) {
 					log.error("null chargeDefinition");
@@ -820,17 +858,20 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
-	public ChargeCategory getByChargeCategoryPrevId(String prevId) throws Exception {
+
+	public ChargeCategory getByChargeCategoryPrevId(String prevId)
+			throws Exception {
 		log.debug("** getByChargeCategoryPrevId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from ChargeCategory where prevId = '" + prevId
-					+ "'";
+			String queryString = "from ChargeCategory where prevId = '"
+					+ prevId + "'";
 			Query query = em.createQuery(queryString);
-			ChargeCategory chargeCategory = (ChargeCategory) query.getSingleResult();
-			List<ChargeDefinition> chargeDefinitions = chargeCategory.getChildren();
-			for (int i=0; i<chargeDefinitions.size(); i++) {
+			ChargeCategory chargeCategory = (ChargeCategory) query
+					.getSingleResult();
+			List<ChargeDefinition> chargeDefinitions = chargeCategory
+					.getChildren();
+			for (int i = 0; i < chargeDefinitions.size(); i++) {
 				ChargeDefinition chargeDefinition = chargeDefinitions.get(i);
 				if (chargeDefinition == null) {
 					log.error("null chargeDefinition");
@@ -949,7 +990,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Account", " where accountId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Account",
+					" where accountId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -967,7 +1009,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Employee", " where employeeId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Employee",
+					" where employeeId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -985,7 +1028,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Contact", " where contactId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Contact",
+					" where contactId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1002,7 +1046,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Broker", " where brokerId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Broker", " where brokerId = '"
+					+ value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1021,7 +1066,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("StockDefinition", " where stockId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("StockDefinition",
+					" where stockId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1039,7 +1085,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Invoice", " where invoiceNumber = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Invoice",
+					" where invoiceNumber = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1056,7 +1103,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Job", " where jobNumber = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Job", " where jobNumber = '"
+					+ value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1075,7 +1123,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("PressDefinition", " where pressId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("PressDefinition",
+					" where pressId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1094,7 +1143,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("CopierDefinition", " where copierId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("CopierDefinition",
+					" where copierId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1112,7 +1162,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Campaigns", " where campaignId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Campaigns",
+					" where campaignId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1129,7 +1180,8 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("Grade", " where gradeId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("Grade", " where gradeId = '"
+					+ value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1137,16 +1189,18 @@ public class DataService extends HibernateService {
 		sequenceValues.setGrade(value);
 		this.addUpdate(sequenceValues);
 	}
-	
+
 	private void setCreditCardId(CreditCard creditcard) throws Exception {
-		if (creditcard.getCreditCardID() != null && creditcard.getCreditCardID().length() > 0)
+		if (creditcard.getCreditCardID() != null
+				&& creditcard.getCreditCardID().length() > 0)
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getCreditCard();
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("CreditCard", " where creditCardId = '" + value.toString() + "'");
+			ModelBase modelBase = this.getQuery("CreditCard",
+					" where creditCardId = '" + value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
 		}
@@ -1154,7 +1208,6 @@ public class DataService extends HibernateService {
 		sequenceValues.setCreditCard(value);
 		this.addUpdate(sequenceValues);
 	}
-
 
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
@@ -1189,7 +1242,7 @@ public class DataService extends HibernateService {
 				this.setCampaignId((Campaigns) object);
 			} else if (object instanceof Grade) {
 				this.setGradeId((Grade) object);
-			}else if (object instanceof CreditCard) {
+			} else if (object instanceof CreditCard) {
 				this.setCreditCardId((CreditCard) object);
 			}
 
@@ -1198,8 +1251,8 @@ public class DataService extends HibernateService {
 			try {
 				object = em.merge(object);
 				tx.commit();
-				 MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
-				 object.getClass().getSimpleName(), object.getId());
+				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
+						object.getClass().getSimpleName(), object.getId());
 			} catch (RollbackException e) {
 				ConstraintViolationException cve = (ConstraintViolationException) e
 						.getCause();
@@ -1301,28 +1354,31 @@ public class DataService extends HibernateService {
 		log.debug("** getChargeList called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query findAllQuery = em.createQuery("from ChargeCommand fetch all properties order by id");
+			Query findAllQuery = em
+					.createQuery("from ChargeCommand fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
-			
+
 			if (resultList != null)
-				for (ChargeCommand chargeCommand:resultList) {
-					List<ChargeCategory> categories = chargeCommand.getChildren();
-					for (ChargeCategory category:categories) {
+				for (ChargeCommand chargeCommand : resultList) {
+					List<ChargeCategory> categories = chargeCommand
+							.getChildren();
+					for (ChargeCategory category : categories) {
 						System.out.println(category.getName());
 						List<ChargeDefinition> charges = category.getChildren();
-						for (ChargeDefinition charge:charges) {
+						for (ChargeDefinition charge : charges) {
 							System.out.println(charge.getName());
 						}
 					}
 				}
-				log.debug("** Found " + resultList.size() + "records:");
+			log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
-		return resultList;		
+		return resultList;
 	}
+
 	public InvoiceBase getInvoice(Long id) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;
@@ -1332,64 +1388,55 @@ public class DataService extends HibernateService {
 			query.setParameter("id", id);
 			invoice = (InvoiceBase) query.getSingleResult();
 
-			if (invoice != null){
-					for (int i=0; i<invoice.getJobs().size(); i++) {
-						Job job = invoice.getJobs().get(i);
-						if (job != null) {
-							for (int j=0; j<job.getCharges().size(); j++) {
-								Charge charge = job.getCharges().get(j);
-								if (charge == null) {
-									log.error("null charge found");
-								}
+			if (invoice != null) {
+				for (int i = 0; i < invoice.getJobs().size(); i++) {
+					Job job = invoice.getJobs().get(i);
+					if (job != null) {
+						for (int j = 0; j < job.getCharges().size(); j++) {
+							Charge charge = job.getCharges().get(j);
+							if (charge == null) {
+								log.error("null charge found");
 							}
 						}
 					}
+				}
 			}
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
-		return invoice;		
+		return invoice;
 	}
-	
-	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber, String docType) throws Exception {
+
+	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber,
+			String docType) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
+			Session session = (Session) em.getDelegate();
 			if (docType.equals("I")) {
-				Query findQuery = em.createQuery("from Invoice where invoiceNumber = '" + invoiceNumber + "'");
-				invoice = (InvoiceBase) findQuery.getSingleResult();
-			}
-			else {
-				Query findQuery = em.createQuery("from Estimate where invoiceNumber = '" + invoiceNumber + "'");
-				invoice = (InvoiceBase) findQuery.getSingleResult();
-			}
-				
-			
-
-			if (invoice != null){
-					for (int i=0; i<invoice.getJobs().size(); i++) {
-						Job job = invoice.getJobs().get(i);
-						if (job != null) {
-							for (int j=0; j<job.getCharges().size(); j++) {
-								Charge charge = job.getCharges().get(j);
-								if (charge == null) {
-									log.error("null charge found");
-								}
-							}
-						}
-					}
+				invoice = (InvoiceBase) session.createCriteria(Invoice.class)
+						.add(Restrictions.eq("invoiceNumber", invoiceNumber))
+						.setFetchMode("invoicebase_jobs", FetchMode.JOIN)
+						.setFetchMode("jobbase_charges", FetchMode.JOIN)
+						.uniqueResult();
+			} else {
+				invoice = (InvoiceBase) session.createCriteria(Estimate.class)
+						.add(Restrictions.eq("invoiceNumber", invoiceNumber))
+						.setFetchMode("invoicebase_jobs", FetchMode.JOIN)
+						.setFetchMode("jobbase_charges", FetchMode.JOIN)
+						.uniqueResult();
 			}
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
-		return invoice;		
+		return invoice;
 	}
-	
+
 	public ModelBase getById(String className, Long id) throws Exception {
 		log.debug("** getById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1405,7 +1452,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getPriceList(Long id) throws Exception {
 		log.debug("** getPriceList called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1413,11 +1460,11 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery("PriceListBase.byId");
 			query.setParameter("id", id);
 			PriceListBase priceList = (PriceListBase) query.getSingleResult();
-			
+
 			if (priceList.getElements() != null) {
-				for (int i=0; i < priceList.getElements().size(); i++) {
+				for (int i = 0; i < priceList.getElements().size(); i++) {
 					PriceListElement element = priceList.getElements().get(i);
-					
+
 					if (element == null) {
 						log.error("Null priceList element found");
 					}
@@ -1431,7 +1478,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getEmployee(Long id) throws Exception {
 		log.debug("** getEmployee called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1439,62 +1486,66 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery("Employee.byId");
 			query.setParameter("id", id);
 			Employee employee = (Employee) query.getSingleResult();
-			
+
 			if (employee.getComLinks() != null) {
-				for (int i=0; i < employee.getComLinks().size(); i++) {
+				for (int i = 0; i < employee.getComLinks().size(); i++) {
 					ComLink comLink = employee.getComLinks().get(i);
-					
+
 					if (comLink == null) {
 						log.error("Null comLink found");
-					}		
+					}
 				}
 			}
 			if (employee.getEmployeeCharges() != null) {
-				for (int i=0; i < employee.getEmployeeCharges().size(); i++) {
+				for (int i = 0; i < employee.getEmployeeCharges().size(); i++) {
 					ChargeCommand charge = employee.getEmployeeCharges().get(i);
-					
+
 					if (charge == null) {
 						log.error("Null charge found");
-					}		
-				}				
+					}
+				}
 			}
 			if (employee.getEmployeeCopiers() != null) {
-				for (int i=0; i < employee.getEmployeeCopiers().size(); i++) {
-					ProductionCopiers copier = employee.getEmployeeCopiers().get(i);
-					
+				for (int i = 0; i < employee.getEmployeeCopiers().size(); i++) {
+					ProductionCopiers copier = employee.getEmployeeCopiers()
+							.get(i);
+
 					if (copier == null) {
 						log.error("Null copier found");
-					}		
-				}								
+					}
+				}
 			}
 			if (employee.getEmployeePresses() != null) {
-				for (int i=0; i < employee.getEmployeePresses().size(); i++) {
-					ProductionPress press = employee.getEmployeePresses().get(i);
-					
+				for (int i = 0; i < employee.getEmployeePresses().size(); i++) {
+					ProductionPress press = employee.getEmployeePresses()
+							.get(i);
+
 					if (press == null) {
 						log.error("Null press found");
-					}		
-				}												
+					}
+				}
 			}
 			if (employee.getEmployeePricings() != null) {
-				for (int i=0; i < employee.getEmployeePricings().size(); i++) {
-					PreferencesPricingMethod preferencesPricingMethod = employee.getEmployeePricings().get(i);
-					
+				for (int i = 0; i < employee.getEmployeePricings().size(); i++) {
+					PreferencesPricingMethod preferencesPricingMethod = employee
+							.getEmployeePricings().get(i);
+
 					if (preferencesPricingMethod == null) {
 						log.error("Null preferencesPricingMethod found");
-					}		
-				}																
+					}
+				}
 			}
 			if (employee.getProductionParents() != null) {
-				for (int i=0; i < employee.getProductionParents().size(); i++) {
-					ProductionLocations productionLocations = employee.getProductionParents().get(i);
-					
+				for (int i = 0; i < employee.getProductionParents().size(); i++) {
+					ProductionLocations productionLocations = employee
+							.getProductionParents().get(i);
+
 					if (productionLocations == null) {
 						log.error("Null productionLocations found");
-					}		
-				}																				
+					}
+				}
 			}
-			
+
 			return employee;
 		} catch (Exception e) {
 			log.error(e);
@@ -1503,7 +1554,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getMatrix(Long id) throws Exception {
 		log.debug("** getMatrix called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1511,11 +1562,11 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery("Matrix.byId");
 			query.setParameter("id", id);
 			Matrix matrix = (Matrix) query.getSingleResult();
-			
+
 			if (matrix.getElements() != null) {
-				for (int i=0; i < matrix.getElements().size(); i++) {
+				for (int i = 0; i < matrix.getElements().size(); i++) {
 					MatrixElement element = matrix.getElements().get(i);
-					
+
 					if (element == null) {
 						log.error("Null matrix element found");
 					}
@@ -1529,7 +1580,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public ModelBase getByIdMaster(String className, Long id) throws Exception {
 		log.debug("** getById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1545,7 +1596,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Invoice> getByAccountId(String className, Long id)
 			throws Exception {
@@ -1788,7 +1839,7 @@ public class DataService extends HibernateService {
 			Query q = em.createNamedQuery(className + ".byId");
 			q.setParameter("id", id);
 			ModelBase object = (ModelBase) q.getSingleResult();
-	
+
 			if (object != null) {
 				EntityTransaction tx = em.getTransaction();
 				tx.begin();
@@ -1872,158 +1923,129 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 
-//	static public Session getSession() {
-//		if (sharedEntityManager == null)
-//			sharedEntityManager = entityManagerFactory.createEntityManager();
-//		return (Session) sharedEntityManager.getDelegate();
-//
-//	}
-	
+	// static public Session getSession() {
+	// if (sharedEntityManager == null)
+	// sharedEntityManager = entityManagerFactory.createEntityManager();
+	// return (Session) sharedEntityManager.getDelegate();
+	//
+	// }
+
 	static public EntityManager getEntityManager() {
 		return entityManagerFactory.createEntityManager();
-//		return (Session) em.getDelegate();
+		// return (Session) em.getDelegate();
 	}
 
-	public Object load(Class clazz, long id)
-	{
-       Session session = null;
-       Object result;
-       //session = getSession();
-       EntityManager em = getEntityManager();
-       session = (Session)em.getDelegate();
-       try
-       {
-           long tStart = new Date().getTime();
-           result = session.get(clazz, id);
-           long tEnd = new Date().getTime();
-           log.debug("{load()}" +(tEnd-tStart) +"ms  class=" +clazz.getName() );
-           
-       }
-       catch (HibernateException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       }
-       catch (RuntimeException ex)
-       {
-           HibernateUtil.rollbackTransaction();
-           ex.printStackTrace();
-           throw ex;
-       } finally {
-    	   em.close();
-       }
+	public Object load(Class clazz, long id) {
+		Session session = null;
+		Object result;
+		// session = getSession();
+		EntityManager em = getEntityManager();
+		session = (Session) em.getDelegate();
+		try {
+			long tStart = new Date().getTime();
+			result = session.get(clazz, id);
+			long tEnd = new Date().getTime();
+			log.debug("{load()}" + (tEnd - tStart) + "ms  class="
+					+ clazz.getName());
 
-       return result;
+		} catch (HibernateException ex) {
+			HibernateUtil.rollbackTransaction();
+			ex.printStackTrace();
+			throw ex;
+		} catch (RuntimeException ex) {
+			HibernateUtil.rollbackTransaction();
+			ex.printStackTrace();
+			throw ex;
+		} finally {
+			em.close();
+		}
+
+		return result;
 	}
-	
-    private static SessionFactory sessionFactory = null;
-    public static final ThreadLocal<Session> threadSession = new ThreadLocal<Session>();
-    public static final ThreadLocal<Transaction> threadTransaction = new ThreadLocal<Transaction>();
 
-    public static SessionFactory getSessionFactory() throws HibernateException
-    {
-    	if (sessionFactory == null && entityManagerFactory != null) {
-            try
-            {
-                // Create the SessionFactory
-                sessionFactory = ((HibernateEntityManagerFactory)entityManagerFactory).getSessionFactory();
-            }
-            catch (Throwable ex)
-            {
-                // Make sure you log the exception, as it might be swallowed
-                System.err.println("Initial SessionFactory creation failed." + ex);
-                throw new ExceptionInInitializerError(ex);
-            }
-    	}
-    	return sessionFactory;
-    }
-    
-    
-    public static Session getCurrentSession() throws HibernateException
-    {
-    	return getCurrentSession(false);
-    }
-    
-    
-    public static Session getCurrentSession(Boolean forceNewConnection) throws HibernateException
-    {
-    	Session s = null;
-    	if( !forceNewConnection )
-    	{
-    		s = threadSession.get();
-    	}
-    	
-        // Open a new Session, if this Thread has none yet
-        if (s == null)
-        {
-            s = getSessionFactory().openSession();
-            threadSession.set(s);
-        }
-        return s;
-    }
+	private static SessionFactory sessionFactory = null;
+	public static final ThreadLocal<Session> threadSession = new ThreadLocal<Session>();
+	public static final ThreadLocal<Transaction> threadTransaction = new ThreadLocal<Transaction>();
 
+	public static SessionFactory getSessionFactory() throws HibernateException {
+		if (sessionFactory == null && entityManagerFactory != null) {
+			try {
+				// Create the SessionFactory
+				sessionFactory = ((HibernateEntityManagerFactory) entityManagerFactory)
+						.getSessionFactory();
+			} catch (Throwable ex) {
+				// Make sure you log the exception, as it might be swallowed
+				System.err.println("Initial SessionFactory creation failed."
+						+ ex);
+				throw new ExceptionInInitializerError(ex);
+			}
+		}
+		return sessionFactory;
+	}
 
-    public static void closeSession() throws HibernateException
-    {
-        Session s = threadSession.get();
-        threadSession.set(null);
-        try
-        {
-        	if (s != null && !s.connection().isClosed()) s.close();
-        }
-        catch( SQLException ex){}
-    }
+	public static Session getCurrentSession() throws HibernateException {
+		return getCurrentSession(false);
+	}
 
+	public static Session getCurrentSession(Boolean forceNewConnection)
+			throws HibernateException {
+		Session s = null;
+		if (!forceNewConnection) {
+			s = threadSession.get();
+		}
 
-    public static Transaction getTransaction()
-    {
-    	return threadTransaction.get();
-    }
-    
-    
-    public static void beginTransaction()
-    {
-        Transaction tx = threadTransaction.get();
-        if (tx == null)
-        {
-            tx = getCurrentSession().beginTransaction();
-            threadTransaction.set(tx);
-        }
-    }
+		// Open a new Session, if this Thread has none yet
+		if (s == null) {
+			s = getSessionFactory().openSession();
+			threadSession.set(s);
+		}
+		return s;
+	}
 
+	public static void closeSession() throws HibernateException {
+		Session s = threadSession.get();
+		threadSession.set(null);
+		try {
+			if (s != null && !s.connection().isClosed())
+				s.close();
+		} catch (SQLException ex) {
+		}
+	}
 
-    public static void commitTransaction()
-    {
-        Transaction tx = threadTransaction.get();
-        try
-        {
-            if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) tx.commit();
-            threadTransaction.set(null);
-        }
-        catch (HibernateException ex)
-        {
-            rollbackTransaction();
-            throw ex;
-        }
-    }
+	public static Transaction getTransaction() {
+		return threadTransaction.get();
+	}
 
+	public static void beginTransaction() {
+		Transaction tx = threadTransaction.get();
+		if (tx == null) {
+			tx = getCurrentSession().beginTransaction();
+			threadTransaction.set(tx);
+		}
+	}
 
-    public static void rollbackTransaction()
-    {
-        Transaction tx = threadTransaction.get();
-        threadTransaction.set(null);
-        try
-        {
-            if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack())
-            {
-                tx.rollback();
-            }
-        }
-        finally
-        {
-            closeSession();
-        }
+	public static void commitTransaction() {
+		Transaction tx = threadTransaction.get();
+		try {
+			if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack())
+				tx.commit();
+			threadTransaction.set(null);
+		} catch (HibernateException ex) {
+			rollbackTransaction();
+			throw ex;
+		}
+	}
 
-    }
+	public static void rollbackTransaction() {
+		Transaction tx = threadTransaction.get();
+		threadTransaction.set(null);
+		try {
+			if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) {
+				tx.rollback();
+			}
+		} finally {
+			closeSession();
+		}
+
+	}
 }
