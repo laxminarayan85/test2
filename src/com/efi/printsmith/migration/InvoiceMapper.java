@@ -323,11 +323,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("order display no".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job rec".equals(currentFieldToken)) {
-				if (currentImportToken.equals("0") == false) {
-					Job job = (Job) dataService.getByPrevId("Job",currentImportToken);
-					if (job != null)
-						invoice.addJobs(job);
-				}
+				/* Don't use job linkage done in job mapper */
 			} else if ("charge rec".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
 					Charge charge = (Charge) dataService.getByPrevId("Charge", currentImportToken);

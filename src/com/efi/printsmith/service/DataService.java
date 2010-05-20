@@ -1353,6 +1353,43 @@ public class DataService extends HibernateService {
 		return invoice;		
 	}
 	
+	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber, String docType) throws Exception {
+		log.debug("** getInvoice called.");
+		InvoiceBase invoice = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			if (docType.equals("I")) {
+				Query findQuery = em.createQuery("from Invoice where invoiceNumber = '" + invoiceNumber + "'");
+				invoice = (InvoiceBase) findQuery.getSingleResult();
+			}
+			else {
+				Query findQuery = em.createQuery("from Estimate where invoiceNumber = '" + invoiceNumber + "'");
+				invoice = (InvoiceBase) findQuery.getSingleResult();
+			}
+				
+			
+
+			if (invoice != null){
+					for (int i=0; i<invoice.getJobs().size(); i++) {
+						Job job = invoice.getJobs().get(i);
+						if (job != null) {
+							for (int j=0; j<job.getCharges().size(); j++) {
+								Charge charge = job.getCharges().get(j);
+								if (charge == null) {
+									log.error("null charge found");
+								}
+							}
+						}
+					}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return invoice;		
+	}
+	
 	public ModelBase getById(String className, Long id) throws Exception {
 		log.debug("** getById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();

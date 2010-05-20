@@ -85,13 +85,12 @@ public class ChargeMapper extends ImportMapper {
 		charge = (Charge)dataService.addUpdate(charge);
 		charge.setId(charge.getId());
 		if (documentNumber.equals("") == false && jobNumber.equals("") == false) {
-		//	InvoiceBase invoice = (InvoiceBase)dataService.getQuery("InvoiceBase", " where invoiceNumber = '" + documentNumber + "'");;
-			InvoiceBase invoice = dataService.getInvoice(Long.parseLong(documentNumber));
+			InvoiceBase invoice = (InvoiceBase)dataService.getInvoiceByInvoiceNumber(documentNumber, documentType);
 			if (invoice != null) {
 				List<Job> jobs = invoice.getJobs();
 				for (int i = 0; i < jobs.size(); i++) {
 					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
-						Job job = jobs.get(i);
+						Job job = (Job)dataService.getById("Job", jobs.get(i).getId());
 						job.addCharges(charge);
 						dataService.addUpdate(job);
 					}

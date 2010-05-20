@@ -3,7 +3,7 @@ package com.efi.printsmith.migration;
 import java.io.File;
 
 import org.apache.log4j.Logger;
-
+import java.util.List;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.Location;
@@ -14,6 +14,7 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.service.DataService;
 
 public class JobMapper extends ImportMapper {
@@ -31,6 +32,8 @@ public class JobMapper extends ImportMapper {
 		
 		SalesCategory salesCategory = null;
 		String method = "";
+		String docType = "";
+		String invoiceNumber = "";
 		Boolean dutch = false;
 		Boolean grain = false;
 		Boolean Copy = false;
@@ -48,9 +51,11 @@ public class JobMapper extends ImportMapper {
 			} else if ("rtype".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("doc type".equals(currentFieldToken)) {
-				/* TODO */
+				docType = currentImportToken;
+			} else if ("invoice number".equals(currentFieldToken)) {
+				invoiceNumber = currentImportToken;
 			} else if ("order number".equals(currentFieldToken)) {
-				/* TODO */
+				invoiceNumber = currentImportToken;
 			} else if ("job number".equals(currentFieldToken)) {
 				job.setJobNumber(currentImportToken);
 			} else if ("sales category".equals(currentFieldToken)) {
@@ -1110,7 +1115,16 @@ public class JobMapper extends ImportMapper {
 		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
 		pricingRecord.setId(pricingRecord.getId());
 		job.setPricingRecord(pricingRecord);
+		job = (Job)dataService.addUpdate(job);
+		job.setId(job.getId());
+		if (invoiceNumber.equals("") == false && docType.equals("") == false) {
+			InvoiceBase invoice = (InvoiceBase)dataService.getInvoiceByInvoiceNumber(invoiceNumber, docType);
+			if (invoice != null) {
+				invoice.addJobs(job);
+				dataService.addUpdate(invoice);
+			}
+		}
 		log.info("Leaving JobMapper->importTokens");
-		return job;
+		return null;
 	}
 }
