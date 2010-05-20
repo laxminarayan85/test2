@@ -636,7 +636,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
 	private JobBase parentJob;
 	
 	/**
@@ -658,7 +658,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
 	private Invoice parentInvoice;
 	
 	/**

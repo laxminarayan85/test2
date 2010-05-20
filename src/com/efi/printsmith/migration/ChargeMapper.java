@@ -90,7 +90,7 @@ public class ChargeMapper extends ImportMapper {
 				List<Job> jobs = invoice.getJobs();
 				for (int i = 0; i < jobs.size(); i++) {
 					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
-						Job job = (Job)dataService.getById("Job", jobs.get(i).getId());
+						Job job = jobs.get(i);
 						job.addCharges(charge);
 						dataService.addUpdate(job);
 					}
