@@ -999,8 +999,8 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-@OneToMany()
-	@JoinTable( name = "copierdefinition_charges")
+//@OneToMany()
+//	@JoinTable( name = "copierdefinition_charges")
 	//    @OneToMany()
 //    @JoinTable( name = "copierdefinition_charges")
 	@ManyToMany(targetEntity=ChargeDefinition.class)

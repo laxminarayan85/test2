@@ -2950,8 +2950,6 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-@OneToMany()
-	@JoinTable( name = "stockdefinition_charges")
 	//    @ManyToMany()
 //    @JoinTable( name = "stockdefinition_charges")
 	@ManyToMany(targetEntity=ChargeDefinition.class)
