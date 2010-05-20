@@ -320,35 +320,35 @@ public class JobMapper extends ImportMapper {
 			} else if ("labor markup amt".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o sets".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrSets(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o overprice".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o overunitprice".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o runtime".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrRuntime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o Setuptime".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrSetupTime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o stockUnits".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrStockUnits(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o stockMarkup".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrStockMarkup(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o stockCost".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrStockCost(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o Waste".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrWaste(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o Prod".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrProduction(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o unit".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrUnit(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o price".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrPrice(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o runout".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrRunOut(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o labor markup".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrLaborMarkup(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o labor rate".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrLaborRate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o aimp".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentFieldToken)) {
@@ -371,9 +371,9 @@ public class JobMapper extends ImportMapper {
 			} else if ("taxable".equals(currentFieldToken)) {
 				job.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o pass front".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrPassFront(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o pass back".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrPassBack(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("noPages".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("hasCover".equals(currentFieldToken)) {
@@ -475,13 +475,13 @@ public class JobMapper extends ImportMapper {
 			} else if ("use color bar".equals(currentFieldToken)) {
 				tempPaper.setUseColorBar(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o run cuts".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrRunCuts(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o finish cuts".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrFinishCuts(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o up".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrUp(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("o parent out".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrParentOut(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("product code name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("costing press id".equals(currentFieldToken)) {
@@ -729,15 +729,15 @@ public class JobMapper extends ImportMapper {
 			} else if ("show notes".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("oParentSize".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrParentSize(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("price locked".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o bind waste".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrBinderyWaste(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("copier side adjust".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("use white space".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setUseWhiteSpace(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("is crouser".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run & tumble".equals(currentFieldToken)) {
@@ -759,7 +759,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("work & turn new".equals(currentFieldToken)) {
 				tempPaper.setWorkandTumble(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("override washup time".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrWashupTime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("production release".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("attach routing list".equals(currentFieldToken)) {
@@ -773,7 +773,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("web adjusted price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o Qty Ordered".equals(currentFieldToken)) {
-				/* TODO */
+				job.setOrQtyOrder(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("is Print Job".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("is Copy Job".equals(currentFieldToken)) {
