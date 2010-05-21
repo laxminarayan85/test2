@@ -1122,7 +1122,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToMany
 	private WasteChart wasteChart;
 	
 	/**

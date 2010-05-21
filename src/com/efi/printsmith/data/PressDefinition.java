@@ -885,7 +885,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToMany
 	private WasteChart wasteChart;
 	
 	/**
@@ -951,7 +951,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToMany
 	private SpeedTable speedTable;
 	
 	/**
