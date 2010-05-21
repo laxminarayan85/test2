@@ -260,11 +260,14 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			JobJDFStatus jdfStatus = new JobJDFStatus();
 			jdfStatus.setDeviceId(deviceId);
 			job.setJdfStatus(jdfStatus);
-			HttpResponse response = submitJDFToDevice(jdfDoc, url, true, returnURL, true);
-			handleSubmitQueueEntryResponse(response, job);
-			sendSubscriptionRequest(url, returnURL, deviceId, job.getId().toString());
 			log.info("Submitting job to Fiery: " + jdfDoc.toXML());
-			addJDFQueueEntry(deviceId, job.getId(), jdfStatus.getStatus(), "SubmitQueueEntry", jdfDoc.toXML(), url.toString());
+			HttpResponse response = submitJDFToDevice(jdfDoc, url, true, returnURL, true);
+			if (handleSubmitQueueEntryResponse(response, job) == 200) {
+				sendSubscriptionRequest(url, returnURL, deviceId, job.getId().toString());
+			} else {
+				handleCommFailure(response,job);
+			}
+			addJDFQueueEntry(deviceId, job.getId(), jdfDoc.toXML(), "SubmitQueueEntry", jdfStatus.getStatus(), url.toString());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -350,6 +353,8 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 	
 	public List<String> getDeviceIds() throws Exception {
 		try {
+			String test = JMFMessages.Test();
+			
 			JDFDoc message = JMFMessages.QueryKnownDevices();
 		
 			String messageString = message.toXML() + "\n";
@@ -403,6 +408,21 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		return devices;
 	}
 
+	public boolean resend(com.efi.printsmith.data.JDFQueueEntry entry)  throws Exception {
+		if (entry.getJobid() != 0) {
+			if (entry.getMsgType().equals("SubmitQueueEntry")) {
+				DataService dataService = new DataService();
+				Job job = (Job) dataService.getById("Job", entry.getJobid());
+				if (job.getParentInvoice() == null) {
+					throw new InvalidParameterException("Job has no parent Invoice");
+				}
+				this.sendJobToFiery(job.getParentInvoice().getId(), entry.getJobid());
+			}
+			
+		}
+		return true;
+	}
+	
 	public boolean pauseFieryJob(Job job) throws Exception {
 		if (job == null) {
 			throw new InvalidParameterException("No job passed to pauseFieryJob");
@@ -436,11 +456,20 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		return true;
 	}
 	
-	private void handleSubmitQueueEntryResponse(HttpResponse response, Job job) {
+	private void handleCommFailure(HttpResponse response, Job job) {
+		JobJDFStatus jdfStatus = job.getJdfStatus();
+		if (jdfStatus != null) {
+			jdfStatus.setQueueId("None");
+			jdfStatus.setStatus("Communication Error");
+		}	
+	}
+	
+	private int handleSubmitQueueEntryResponse(HttpResponse response, Job job) {
 		if (response.getBody() != null) {
 			log.info(response.getBody());
 		
 			JDFParser parser = new JDFParser();
+			if (response.getStatusCode() != 200) return response.getStatusCode();
 			JDFDoc responseDoc = parser.parseString(response.getBody());
 			JDFJMF responseRoot = responseDoc.getJMFRoot();
 			
@@ -465,6 +494,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 				}
 			}
 		}		
+		return response.getStatusCode();
 	}
 	
 	public void sendSubscriptionRequest(final URL url, final URL returnURL, String deviceId, String jobId) {
@@ -569,6 +599,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		}
 	}
 	
+
 	private static String readFileAsString(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
 	    BufferedInputStream f = new BufferedInputStream(new FileInputStream(filePath));

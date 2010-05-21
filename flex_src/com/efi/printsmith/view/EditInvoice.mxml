@@ -317,6 +317,7 @@
 			private function doNewJob():void
 			{
 				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+				editJobWindow.invoice = this.invoice;
 				editJobWindow.setStyle("borderAlpha", 0.9);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
 			}

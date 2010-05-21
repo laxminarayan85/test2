@@ -21,7 +21,7 @@ import org.cip4.jdflib.jmf.JDFQueueSubmissionParams;
 public class JMFMessages {
 	private static JDFDoc SubmitQueueEntry(String deviceID, String returnJMF, String jdfURL, boolean resubmit, String jobID, boolean fullQuery, long queryIntervalSecs) {
 		//TODO: Handle filtering the resulting queue status?
-		//String result = null;
+		//String result = null; 
 		JDFDoc jmfDoc = null;
 		try{
             jmfDoc=new JDFDoc("JMF");
@@ -271,9 +271,11 @@ public class JMFMessages {
         return result;				
 	}
 	
+	public static String Test() {
+		return "Success";
+	}
+	
 	public static JDFDoc ReturnQueueEntryResponse(int returnCode) {
-		JDFDoc result = null;
-		
 		try {
 			JDFDoc jmfDoc = new JDFDoc("JMF");
 			JDFJMF jaj = jmfDoc.getJMFRoot();
@@ -282,10 +284,11 @@ public class JMFMessages {
 			
 			response.setType(EnumType.ReturnQueueEntry);
 			response.setReturnCode(returnCode);
+			return jmfDoc;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 }
 

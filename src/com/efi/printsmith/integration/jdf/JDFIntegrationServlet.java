@@ -70,7 +70,7 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 					response.setContentLength(responseBody.length());
 					OutputStream out = response.getOutputStream();
 					out.write(responseBody.getBytes());
-					out.close();
+//					out.close();
 				}
 			}
 		}

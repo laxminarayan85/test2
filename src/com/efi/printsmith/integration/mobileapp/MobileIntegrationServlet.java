@@ -61,7 +61,7 @@ public class MobileIntegrationServlet extends HttpServlet implements Servlet {
 			try {
 				DataService dataService = new DataService();
 				
-				List<Invoice> invoices = (List<Invoice>)dataService.getPending("Invoice");
+				List<Invoice> invoices = (List<Invoice>)dataService.getPending();
 				response.setContentType(HttpContentType.CONTENT_TYPE_DEFAULT_XML);
 				if (invoices != null) {
 					XMLEncoder encoder = new XMLEncoder(response.getOutputStream());

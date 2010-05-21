@@ -431,6 +431,10 @@ public class JobBase extends ModelBase {
    */
   public static final String ORPARENTOUT = "OrParentOut";
 	/**
+   * @generated
+   */
+  public static final String PARENTINVOICE = "ParentInvoice";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -2592,6 +2596,28 @@ public class JobBase extends ModelBase {
   }
 
 
+
+	/**
+   * @generated
+   */	
+    @ManyToOne(fetch=FetchType.LAZY)
+  private InvoiceBase parentInvoice;
+	/**
+   * @generated
+ 	 */
+  public InvoiceBase getParentInvoice(){
+    return parentInvoice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setParentInvoice(InvoiceBase newVal) {
+    this.parentInvoice = newVal;
+  }
+
+
 	/**
 	 * @generated
 	 */		
@@ -2694,6 +2720,7 @@ public class JobBase extends ModelBase {
     if (ORFINISHCUTS.equals(propertyName)) return getOrFinishCuts();
     if (ORUP.equals(propertyName)) return getOrUp();
     if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
+    if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
     return super.getProperty(propertyName);
   }
 	
@@ -2799,6 +2826,7 @@ public class JobBase extends ModelBase {
     if (ORFINISHCUTS.equals(propertyName)) setOrFinishCuts((Boolean)newValue); else
     if (ORUP.equals(propertyName)) setOrUp((Boolean)newValue); else
     if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
+    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3000,6 +3028,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (ORPARENTOUT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (PARENTINVOICE.equals(propertyName)) 
+      return new Class<?>[] {InvoiceBase.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3106,6 +3136,7 @@ public class JobBase extends ModelBase {
     if (ORFINISHCUTS.equals(propertyName)) return JobBase.class;
     if (ORUP.equals(propertyName)) return JobBase.class;
     if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
+    if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3308,6 +3339,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getOrUp(), objT.getOrUp()))
       return false;
     if (! SmartEquals(getOrParentOut(), objT.getOrParentOut()))
+      return false;
+    if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
       return false;
     return true;
   }			

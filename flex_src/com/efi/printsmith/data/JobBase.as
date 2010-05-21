@@ -109,6 +109,7 @@ package com.efi.printsmith.data
 		public var orFinishCuts:Boolean = false;
 		public var orUp:Boolean = false;
 		public var orParentOut:Boolean = false;
+		public var parentInvoice:InvoiceBase;
 	
 	}
 }

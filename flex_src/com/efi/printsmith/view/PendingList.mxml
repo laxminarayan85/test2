@@ -179,7 +179,7 @@
 		this.throbber.visible = true;
 		this.throbber.play();
 		
-		dataService.getPending("InvoiceBase");
+		dataService.getPending();
 
 		fillDocumentArray(DocumentArray);
 		fillFilterArray(FilterArray);
@@ -259,7 +259,7 @@
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
 			if (payloadType == "Invoice" || payloadType == "InvoiceBase" || payloadType =="Estimate") {
-		  		dataService.getPending("InvoiceBase");
+		  		dataService.getPending();
 			}
 		}
 	}

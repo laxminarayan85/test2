@@ -401,6 +401,7 @@
 			import com.efi.printsmith.data.PreferencesPricingMethod;
 			import com.efi.printsmith.events.PriceJobEvent;
 			import com.efi.printsmith.data.Invoice;
+			import com.efi.printsmith.data.InvoiceBase;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.PressDefinition;
 			import com.efi.printsmith.data.CopierDefinition;
@@ -479,7 +480,7 @@
 			public var job:Job=null;
 
 			[Bindable]
-			private var invoice:Invoice;
+			public var invoice:InvoiceBase;
 
 			[Bindable]
 			private var chargeCommands:ArrayCollection=new ArrayCollection();
@@ -565,6 +566,7 @@
 					job.markup = 2.0;
 					job.totalCost = 0.0;
 					job.unitCost = 0.0;
+					job.parentInvoice = null;//this.invoice as InvoiceBase;
 					job.paperCal = new com.efi.printsmith.data.PaperCalculator();
 					setPaperCalculatorData = true;
 				}
@@ -644,6 +646,7 @@
 			private function doNew():void
 			{
 				job=new Job();
+				job.parentInvoice = null; // = invoice as InvoiceBase;
 				setJob(job);
 			}
 			
@@ -695,7 +698,7 @@
 // 			   	jobMethodPicker.addEventListener(JobMethodSelectEvent.SELECTJOBMETHOD, handleJobMethodPickerSelect);				
 			}
 			
-			public function getInvoice():Invoice
+			public function getInvoice():InvoiceBase
 			{
 				return this.invoice;
 			}
@@ -703,6 +706,7 @@
 			public function setInvoice(invoice:Invoice):void
 			{
 				this.invoice=invoice;
+				this.job.parentInvoice; // = invoice as InvoiceBase;
 			}
 
 			private function doGet():void

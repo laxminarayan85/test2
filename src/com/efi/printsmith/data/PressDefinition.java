@@ -963,7 +963,7 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
+	 * @generated 
 	 */	
 	public void setSpeedTable(SpeedTable newVal) {
     this.speedTable = newVal;

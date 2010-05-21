@@ -4,6 +4,7 @@ width="786" height="531"  creationComplete="init()"
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getPendingIntegratedJobs" fault="handleFault(event)" result="handleLoadIntegratedJobs(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="jdfIntegrationService"
 				destination="jdfIntegrationService">
@@ -24,6 +25,7 @@ width="786" height="531"  creationComplete="init()"
 
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.data.Job;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -55,14 +57,20 @@ width="786" height="531"  creationComplete="init()"
     private var reportArray:ArrayCollection = new ArrayCollection(); 
     [Bindable]
     private var sortArray:ArrayCollection = new ArrayCollection(); 
+	[Bindable]
+	private var integratedJobs:ArrayCollection = new ArrayCollection();
 	
 	public function init():void {
 		consumer.subscribe();
 		invoice_check.selected = true;
+		this.fiery_panel.visible = false;
+		invoicebases.sort = null;
+		integratedJobs.sort = null;
 		fillReportArray(reportArray);
 		fillSortArray(sortArray);
 		notification_consumer.subscribe();
-		dataService.getPending("InvoiceBase");
+		dataService.getPending();
+		dataService.getPendingIntegratedJobs();
 		invoicebases.filterFunction = invoiceEsimtateFilter;
 	} 
 	
@@ -130,12 +138,22 @@ width="786" height="531"  creationComplete="init()"
 	}
 	
 	private function refreshData():void{
-		invoice_list.invalidateList();
-		invoicebases.refresh();
+//		invoice_list.invalidateList();
+//		if (invoicebases != null) {
+//			invoicebases.refresh();
+//		}
+//		if (integratedJobs != null) {
+//			integratedJobs.refresh();
+//		}
 	}
 
 	private function DoCheck():void{
 		
+		refreshData();
+	}
+	
+	private function handleLoadIntegratedJobs(event:ResultEvent):void {
+		integratedJobs = event.result as ArrayCollection;
 		refreshData();
 	}
 	
@@ -173,30 +191,40 @@ width="786" height="531"  creationComplete="init()"
 	
 	private function DoComboReportChange():void{
 		refreshData();
-		var temp:String = reportType_comob.selectedItem.name as String;
+		var temp:String = reportType_combo.selectedItem.name as String;
 		
 		switch (temp){
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kAcctRankings.Standard'):
+				this.list_stack.selectedChild=this.invoice_list_canvas;
+				this.fiery_panel.visible = false;
 				total_column.visible = false;
 				location_column.visible = true;
 				break;
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleReportsCmd.DueDate'):
+				this.list_stack.selectedChild=this.invoice_list_canvas;
+				this.fiery_panel.visible = false;
 				total_column.visible = false;
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location'):
+				this.list_stack.selectedChild=this.invoice_list_canvas;
+				this.fiery_panel.visible = false;
 				total_column.visible = false;
 				location_column.visible = true;
 				break;
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly'):
+				this.list_stack.selectedChild=this.invoice_list_canvas;
+				this.fiery_panel.visible = false;
 				total_column.visible = false;
 				location_column.visible = false;
 				break;
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Press'):
+				this.list_stack.selectedChild=this.invoice_list_canvas;
+				this.fiery_panel.visible = false;
 				total_column.visible = false;
 				location_column.visible = false;
 				break;
 			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Integration'):
-				total_column.visible = false;
-				location_column.visible = false;
+				this.list_stack.selectedChild=this.job_list_canvas;
+				this.fiery_panel.visible = true;
 				break;
 		}
 	}
@@ -223,45 +251,27 @@ width="786" height="531"  creationComplete="init()"
 	
 	private function sendFieryJob():void {
 		// TODO: Just plain ugly here until WIP report supports jobs instead of invoices...0
-		var invoice:Invoice = invoice_list.selectedItem as Invoice;
-		if (invoice != null) {
-			var jobs:ArrayCollection = invoice.jobs;
-			if (jobs != null && jobs.length > 0) {
-				var job:Job = jobs.getItemAt(0) as Job;
-				jdfIntegrationService.sendJobToFiery(invoice.id, job.id);	
+		var job:Job = job_list.selectedItem as Job;
+		if (job != null) {
+			if (job.parentInvoice != null) {
+				jdfIntegrationService.sendJobToFiery(job.parentInvoice.id, job.id);
 			}
 		}
 	}
 	
 	private function pauseFieryJob():void {
-		var invoice:Invoice = invoice_list.selectedItem as Invoice;
-		if (invoice != null) {
-			var jobs:ArrayCollection = invoice.jobs;
-			if (jobs != null && jobs.length > 0) {
-				var job:Job = jobs.getItemAt(0) as Job;
-				jdfIntegrationService.pauseFieryJob(job);
-			}
+		var job:Job = job_list.selectedItem as Job;
+		if (job != null) {
+			jdfIntegrationService.pauseFieryJob(job);
 		}
 	}
 	
 	private function infoFieryJob():void {
-//		var invoice:Invoice = invoice_list.selectedItem as Invoice;
-//		if (invoice != null) {
-//			var jobs:ArrayCollection = invoice.jobs;
-//			if (jobs != null && jobs.length > 0) {
-//				var job:Job = jobs.getItemAt(0) as Job;
-//				jdfIntegrationService.cancelFieryJob(job.id);
-//			}
-//		}
-		var invoice:Invoice = invoice_list.selectedItem as Invoice;
-		if (invoice != null) {
-			var jobs:ArrayCollection = invoice.jobs;
-			if (jobs != null && jobs.length > 0) {
-				var job:Job = jobs.getItemAt(0) as Job;
-				var titleWindow:JDFStatus=JDFStatus(PopUpManager.createPopUp(this, JDFStatus,true));
-				titleWindow.setJob(job); 
-				titleWindow.setStyle("borderAlpha", 0.9);
-			}
+		var job:Job = job_list.selectedItem as Job;
+		if (job != null) {
+			var titleWindow:JDFStatus=JDFStatus(PopUpManager.createPopUp(this, JDFStatus,true));
+			titleWindow.setJob(job); 
+			titleWindow.setStyle("borderAlpha", 0.9);
 		}
 	}
 
@@ -285,42 +295,121 @@ width="786" height="531"  creationComplete="init()"
 			}
 		}
 	}	
+
+	public function getJobLabel(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		var retVal:String = "";
+		
+		if (job != null) {
+			var invoice:InvoiceBase = job.parentInvoice;
+			
+			if (invoice != null) {
+				retVal = invoice.invoiceNumber;
+				retVal += "/" + job.jobNumber;
+				return retVal;
+			}
+		}
+		return "?"
+	}
+	public function getJobDescription(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.description != null && job.description.length > 0) {
+				return job.description;
+			} else if (job.pricingMethod != null && job.pricingMethod.title != null && job.pricingMethod.title.length >0) {
+				return job.pricingMethod.title;
+			} else {
+				return "Job"; //TODO: Localize this string
+			}
+		}
+		return "";
+	}
+	
+	public function getJobDeviceId(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.pricingCopier != null && job.pricingCopier.oemDeviceID != null && job.pricingCopier.oemDeviceID.length > 0) {
+				return job.pricingCopier.oemDeviceID;
+			}
+		}
+		return "";
+	}
+	
+	public function getJobStatus(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.jdfStatus != null  && job.jdfStatus.status != null) {
+				return job.jdfStatus.status;
+			}
+		}
+		return "";
+	}
+		
+	public function getJobQueue(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.jdfStatus != null  && job.jdfStatus.queueId != null) {
+				return job.jdfStatus.queueId;
+			}
+		}
+		return "";
+	}
+	
+	public function getJobOrderedDate(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.parentInvoice != null) {
+				return job.parentInvoice.orderedDate as String;
+			}
+		}
+		return "";
+	}
+	
+	public function getJobWantedDate(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.parentInvoice != null) {
+				return job.parentInvoice.wantedDate as String;
+			}
+		}
+		return "";		
+	}
 ]]>
                              
 </mx:Script>
 
 <mx:Canvas width="100%" height="100%">
-	<mx:DataGrid x="10" y="219" height="253" id="invoice_list" dataProvider="{invoicebases}" width="756" verticalScrollPolicy="on">
-		<mx:columns>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoice')}" dataField="invoiceNumber" />
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Title')}" dataField="name"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Proofby')}" dataField="proofDate" />
-			<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="grandTotal"/>
-			<mx:DataGridColumn  id="location_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Location')}" dataField="location"/>
-			
-		</mx:columns>
-	</mx:DataGrid>
 	<mx:Label x="23" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ReportType')}" textAlign="right" width="83"/>
 	<mx:Label x="33" y="59" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
 	<mx:ComboBox x="114" y="57" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name" width="151"></mx:ComboBox>
-	<mx:ComboBox x="114" y="29" id="reportType_comob" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()"  width="151"></mx:ComboBox>
-	<mx:Panel x="10" y="97" width="583" height="105" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
-		<mx:CheckBox x="25" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check" width="119"/>
-		<mx:CheckBox x="25" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check" width="119"/>
-		<mx:CheckBox x="152" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check" width="81"/>
-		<mx:CheckBox x="152" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.NoPricing')}" id="noPricing_check"/>
-		<mx:CheckBox x="380" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintDoubleSpace')}" id="doubleSpace_check"/>
-		<mx:CheckBox x="380" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
-		<mx:CheckBox x="241" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check" width="131"/>
+	<mx:ComboBox x="114" y="29" id="reportType_combo" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()"  width="151"></mx:ComboBox>
+	<mx:Panel x="10" y="97" width="583" height="95" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
+		<mx:CheckBox x="25" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check" width="119"/>
+		<mx:CheckBox x="25" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check" width="119"/>
+		<mx:CheckBox x="152" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check" width="81"/>
+		<mx:CheckBox x="152" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.NoPricing')}" id="noPricing_check"/>
+		<mx:CheckBox x="380" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintDoubleSpace')}" id="doubleSpace_check"/>
+		<mx:CheckBox x="380" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
+		<mx:CheckBox x="241" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check" width="131"/>
 	</mx:Panel>
-	<mx:Panel x="292" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
-		<mx:CheckBox x="10" y="0" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()" width="120"/>
-		<mx:CheckBox x="10" y="17" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()" width="120"/>
+	<mx:Panel x="292" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
+		<mx:CheckBox x="10" y="3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()" width="120"/>
+		<mx:CheckBox x="10" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()" width="120"/>
 	</mx:Panel>
-	<mx:Panel x="460" y="10" width="133" height="79"  dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2">
+	<mx:Panel x="460" y="10" width="133" height="79" id="fiery_panel" dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
 		<mx:LinkButton x="7" y="6" id="btn_submit" width="33" click="sendFieryJob()">
 			<mx:icon>@Embed(source='../../../../assets/media_play.png')</mx:icon>
 		</mx:LinkButton>
@@ -331,6 +420,38 @@ width="786" height="531"  creationComplete="init()"
 			<mx:icon>@Embed(source='../../../../assets/information2.png')</mx:icon>
 		</mx:LinkButton>
 	</mx:Panel>
+	<mx:ViewStack x="0" id="list_stack" width="766" height="291" bottom="0">
+		<mx:Canvas id="invoice_list_canvas" label="View 1" width="100%" height="100%">
+			<mx:DataGrid id="invoice_list" dataProvider="{invoicebases}" verticalScrollPolicy="on" bottom="0" top="0" left="10" right="10" horizontalScrollPolicy="auto">
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoice')}" dataField="invoiceNumber" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Title')}" dataField="name"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Proofby')}" dataField="proofDate" />
+					<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="grandTotal"/>
+					<mx:DataGridColumn  id="location_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Location')}" dataField="location"/>
+					
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+		<mx:Canvas id="job_list_canvas" label="" width="100%" height="100%">
+			<mx:DataGrid id="job_list" dataProvider="{integratedJobs}" verticalScrollPolicy="on" bottom="0" top="0" right="10" left="10" horizontalScrollPolicy="auto">
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DocJob')}" labelFunction="getJobLabel" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Description')}" labelFunction="getJobDescription"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="getJobOrderedDate"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" labelFunction="getJobDeviceId" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="getJobWantedDate" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Status')}" labelFunction="getJobStatus" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Queue')}" labelFunction="getJobQueue"/>
+					
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+	</mx:ViewStack>
 
 </mx:Canvas>
 

@@ -36,6 +36,10 @@ public class ReportServlet extends HttpServlet implements Servlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		try {
+			String tmpProp = System.getProperty("crystalclear.config");
+			if (tmpProp != null) {
+				System.out.println(tmpProp);
+			}
 			String reportName = request.getParameter("reportName");
 			String invoiceName = request.getParameter("invoiceName");
 			String reportParameter = request.getParameter("reportParameter");

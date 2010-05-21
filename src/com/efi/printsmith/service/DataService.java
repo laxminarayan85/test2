@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.lang.String;
 
@@ -269,31 +270,88 @@ public class DataService extends HibernateService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<?> getPending(String className) throws Exception {
+	public List<ModelBase> getPendingIntegratedJobs() throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<InvoiceBase> resultList = new ArrayList<InvoiceBase>();
+		List<ModelBase> retVal = new ArrayList<ModelBase>();
+		String columnstring = new String();
+
+		try {
+			String queryString = "select a from Invoice a where a.onPendingList = 'TRUE'";
+			Query query = em.createQuery(queryString);
+
+			resultList = query.getResultList();
+			
+			for (int i = 0; i < resultList.size(); i++) {
+				InvoiceBase invoice = resultList.get(i);
+	
+				for (int j = 0; j < invoice.getJobs().size(); j++) {
+					Job job = invoice.getJobs().get(j);
+	
+					if (job == null) {
+						log.error("Null job found in invoice");
+					} else {
+						//if (job.getPricingCopier() != null && job.getPricingCopier().getOemDeviceID() != null && job.getPricingCopier().getOemDeviceID().length() > 0) {
+							job.setParentInvoice(invoice);
+							retVal.add(job);
+					//	}						
+					}
+				}
+			}
+
+//			Session session = (Session) em.getDelegate();
+//			List<JobBase> jobs = null;
+//			jobs = session.createCriteria(JobBase.class).list();
+//			Iterator<JobBase> it = jobs.iterator();
+//			List <JobBase> retVal = new ArrayList<JobBase>();
+//			
+//			// TODO: Following code is just plain atrocious - let's get it wrapped into the query above instead of hacking at it like a dead moose
+//			while (it.hasNext()) {
+//				JobBase job = it.next();
+//				
+//				if (job.getPricingCopier() != null && job.getPricingCopier().getOemDeviceID() != null && job.getPricingCopier().getOemDeviceID().length() > 0) {
+//					if (job.getParentInvoice() != null && job.getParentInvoice().getOnPendingList() == true) {
+//						retVal.add(job);
+//					}
+//				}
+//			}
+			return retVal;
+		} catch (Exception e) {
+			log.error(e);
+			throw e;
+		}
+		finally {
+			em.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<?> getPending() throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Session session = (Session) em.getDelegate();
 			List<InvoiceBase> invoices = null;
 			invoices = session.createCriteria(Invoice.class).add(
-					Restrictions.eq("onPendingList", true)).setFetchMode(
-					"invoicebase_jobs", FetchMode.JOIN).list();
+					Restrictions.eq("onPendingList", true)).list();
 			List<Estimate> estimates = session.createCriteria(Estimate.class)
-					.add(Restrictions.eq("onPendingList", true)).setFetchMode(
-							"invoicebase_jobs", FetchMode.JOIN).list();
+					.add(Restrictions.eq("onPendingList", true)).list();
 			invoices.addAll(estimates);
 
-			for (int i = 0; i < invoices.size(); i++) {
-				InvoiceBase invoice = invoices.get(i);
-
-				for (int j = 0; j < invoice.getJobs().size(); j++) {
-					Job job = invoice.getJobs().get(j);
-
-					if (job != null) {
-						log.error("Null job found in invoice");
-					}
-				}
-			}
+//			for (int i = 0; i < invoices.size(); i++) {
+//				InvoiceBase invoice = invoices.get(i);
+//
+//				for (int j = 0; j < invoice.getJobs().size(); j++) {
+//					Job job = invoice.getJobs().get(j);
+//
+//					if (job == null) {
+//						log.error("Null job found in invoice");
+//					}
+//				}
+//			}
 			return invoices;
+		} catch (Exception e) {
+			log.error(e);
+			throw e;
 		} finally {
 			em.close();
 		}
