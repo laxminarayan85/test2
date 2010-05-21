@@ -123,7 +123,8 @@ public class InvoiceMapper extends ImportMapper {
 				if (currentImportToken.equals("") == false) {
 					SpecialInstructions specialInstructions = new SpecialInstructions();
 					specialInstructions.setInstructions(currentImportToken);
-					dataService.addUpdate(specialInstructions);
+					specialInstructions = (SpecialInstructions)dataService.addUpdate(specialInstructions);
+					specialInstructions.setId(specialInstructions.getId());
 					invoice.setSpecialInstructions(specialInstructions);
 				}
 			} else if ("old estimate number".equals(currentFieldToken)) {
@@ -867,7 +868,8 @@ public class InvoiceMapper extends ImportMapper {
 				if (currentImportToken.equals("") == false) {
 					SpecialInstructions specialInstructions = new SpecialInstructions();
 					specialInstructions.setInstructions(currentImportToken);
-					dataService.addUpdate(specialInstructions);
+					specialInstructions = (SpecialInstructions)dataService.addUpdate(specialInstructions);
+					specialInstructions.setId(specialInstructions.getId());
 					invoice.setSpecialInstructions(specialInstructions);
 				}
 			} else if ("old estimate number".equals(currentFieldToken)) {
