@@ -1408,26 +1408,36 @@ public class DataService extends HibernateService {
 		}
 		return invoice;
 	}
-
-	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber,
-			String docType) throws Exception {
+	
+	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber, String docType) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Session session = (Session) em.getDelegate();
 			if (docType.equals("I")) {
-				invoice = (InvoiceBase) session.createCriteria(Invoice.class)
-						.add(Restrictions.eq("invoiceNumber", invoiceNumber))
-						.setFetchMode("invoicebase_jobs", FetchMode.JOIN)
-						.setFetchMode("jobbase_charges", FetchMode.JOIN)
-						.uniqueResult();
-			} else {
-				invoice = (InvoiceBase) session.createCriteria(Estimate.class)
-						.add(Restrictions.eq("invoiceNumber", invoiceNumber))
-						.setFetchMode("invoicebase_jobs", FetchMode.JOIN)
-						.setFetchMode("jobbase_charges", FetchMode.JOIN)
-						.uniqueResult();
+				Query findQuery = em.createQuery("from Invoice where invoiceNumber = '" + invoiceNumber + "'");
+				invoice = (InvoiceBase) findQuery.getSingleResult();
+			}
+			else {
+				Query findQuery = em.createQuery("from Estimate where invoiceNumber = '" + invoiceNumber + "'");
+				invoice = (InvoiceBase) findQuery.getSingleResult();
+			}
+				
+			
+
+			if (invoice != null){
+					for (int i=0; i<invoice.getJobs().size(); i++) {
+						Job job = invoice.getJobs().get(i);
+						if (job != null) {
+							for (int j=0; j<job.getCharges().size(); j++) {
+								Charge charge = job.getCharges().get(j);
+								if (charge == null) {
+									log.error("null charge found");
+								}
+							}
+						}
+					}
 			}
 		} catch (Exception e) {
 			log.error(e);
