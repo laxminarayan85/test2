@@ -164,9 +164,10 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		String[] importTokens = null;
 		
 		while ((importTokens = csvReader.readNext()) != null) {
-			if (importTokens.length != fieldTokens.length) {
-				throw new InvalidParameterException("Wrong number of fields on line #" + lineNumber + ".");
-			} else {
+			//if (importTokens.length != fieldTokens.length) {
+				//throw new InvalidParameterException("Wrong number of fields on line #" + lineNumber + ".");
+			//} else {
+			if (importTokens.length == fieldTokens.length) {
 				try {
 					ModelBase modelBase = mapper.importTokens(fieldTokens, importTokens);
 					dataService.addUpdate(modelBase);
