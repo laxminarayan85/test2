@@ -12,6 +12,7 @@
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
 			import mx.managers.PopUpManager;
+			import flash.net.FileReference;
 
 			private var refUploadFile:FileReference;
 
