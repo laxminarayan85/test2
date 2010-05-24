@@ -277,50 +277,57 @@ public class DataService extends HibernateService {
 		String columnstring = new String();
 
 		try {
-			String queryString = "select a from Invoice a where a.onPendingList = 'TRUE'";
+			String queryString = "select a from Invoice a inner join a.jobs where a.onPendingList = 'TRUE'";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
-			
-			for (int i = 0; i < resultList.size(); i++) {
-				InvoiceBase invoice = resultList.get(i);
-	
-				for (int j = 0; j < invoice.getJobs().size(); j++) {
-					Job job = invoice.getJobs().get(j);
-	
-					if (job == null) {
-						log.error("Null job found in invoice");
-					} else {
-						//if (job.getPricingCopier() != null && job.getPricingCopier().getOemDeviceID() != null && job.getPricingCopier().getOemDeviceID().length() > 0) {
-							job.setParentInvoice(invoice);
-							retVal.add(job);
-					//	}						
-					}
-				}
-			}
 
-//			Session session = (Session) em.getDelegate();
-//			List<JobBase> jobs = null;
-//			jobs = session.createCriteria(JobBase.class).list();
-//			Iterator<JobBase> it = jobs.iterator();
-//			List <JobBase> retVal = new ArrayList<JobBase>();
-//			
-//			// TODO: Following code is just plain atrocious - let's get it wrapped into the query above instead of hacking at it like a dead moose
-//			while (it.hasNext()) {
-//				JobBase job = it.next();
-//				
-//				if (job.getPricingCopier() != null && job.getPricingCopier().getOemDeviceID() != null && job.getPricingCopier().getOemDeviceID().length() > 0) {
-//					if (job.getParentInvoice() != null && job.getParentInvoice().getOnPendingList() == true) {
+//			for (int i = 0; i < resultList.size(); i++) {
+//				InvoiceBase invoice = resultList.get(i);
+//
+//				for (int j = 0; j < invoice.getJobs().size(); j++) {
+//					Job job = invoice.getJobs().get(j);
+//
+//					if (job == null) {
+//						log.error("Null job found in invoice");
+//					} else {
+//						// if (job.getPricingCopier() != null &&
+//						// job.getPricingCopier().getOemDeviceID() != null &&
+//						// job.getPricingCopier().getOemDeviceID().length() > 0)
+//						// {
+//						job.setParentInvoice(invoice);
 //						retVal.add(job);
+//						// }
 //					}
 //				}
 //			}
+
+			// Session session = (Session) em.getDelegate();
+			// List<JobBase> jobs = null;
+			// jobs = session.createCriteria(JobBase.class).list();
+			// Iterator<JobBase> it = jobs.iterator();
+			// List <JobBase> retVal = new ArrayList<JobBase>();
+			//			
+			// // TODO: Following code is just plain atrocious - let's get it
+			// wrapped into the query above instead of hacking at it like a dead
+			// moose
+			// while (it.hasNext()) {
+			// JobBase job = it.next();
+			//				
+			// if (job.getPricingCopier() != null &&
+			// job.getPricingCopier().getOemDeviceID() != null &&
+			// job.getPricingCopier().getOemDeviceID().length() > 0) {
+			// if (job.getParentInvoice() != null &&
+			// job.getParentInvoice().getOnPendingList() == true) {
+			// retVal.add(job);
+			// }
+			// }
+			// }
 			return retVal;
 		} catch (Exception e) {
 			log.error(e);
 			throw e;
-		}
-		finally {
+		} finally {
 			em.close();
 		}
 	}
@@ -337,17 +344,17 @@ public class DataService extends HibernateService {
 					.add(Restrictions.eq("onPendingList", true)).list();
 			invoices.addAll(estimates);
 
-//			for (int i = 0; i < invoices.size(); i++) {
-//				InvoiceBase invoice = invoices.get(i);
-//
-//				for (int j = 0; j < invoice.getJobs().size(); j++) {
-//					Job job = invoice.getJobs().get(j);
-//
-//					if (job == null) {
-//						log.error("Null job found in invoice");
-//					}
-//				}
-//			}
+			// for (int i = 0; i < invoices.size(); i++) {
+			// InvoiceBase invoice = invoices.get(i);
+			//
+			// for (int j = 0; j < invoice.getJobs().size(); j++) {
+			// Job job = invoice.getJobs().get(j);
+			//
+			// if (job == null) {
+			// log.error("Null job found in invoice");
+			// }
+			// }
+			// }
 			return invoices;
 		} catch (Exception e) {
 			log.error(e);
@@ -1467,35 +1474,87 @@ public class DataService extends HibernateService {
 		return invoice;
 	}
 	
-	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber, String docType) throws Exception {
+	public PressDefinition getPressDefinition(Long id) throws Exception {
+		log.debug("** getPressDefinition called.");
+		PressDefinition pressDefinition = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("PressDefinition.byId");
+			query.setParameter("id", id);
+			pressDefinition = (PressDefinition) query.getSingleResult();
+
+			if (pressDefinition != null) {
+				for (int i = 0; i < pressDefinition.getCharges().size(); i++) {
+					ChargeDefinition chargeDefinition = pressDefinition.getCharges().get(i);
+					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return pressDefinition;
+	}	
+	
+	public CopierDefinition getCopierDefinition(Long id) throws Exception {
+		log.debug("** getCopierDefinition called.");
+		CopierDefinition copierDefinition = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("CopierDefinition.byId");
+			query.setParameter("id", id);
+			copierDefinition = (CopierDefinition) query.getSingleResult();
+
+			if (copierDefinition != null) {
+				for (int i = 0; i < copierDefinition.getCharges().size(); i++) {
+					ChargeDefinition chargeDefinition = copierDefinition.getCharges().get(i);
+					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return copierDefinition;
+	}
+
+	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber,
+			String docType) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Session session = (Session) em.getDelegate();
 			if (docType.equals("I")) {
-				Query findQuery = em.createQuery("from Invoice where invoiceNumber = '" + invoiceNumber + "'");
+				Query findQuery = em
+						.createQuery("from Invoice where invoiceNumber = '"
+								+ invoiceNumber + "'");
+				invoice = (InvoiceBase) findQuery.getSingleResult();
+			} else {
+				Query findQuery = em
+						.createQuery("from Estimate where invoiceNumber = '"
+								+ invoiceNumber + "'");
 				invoice = (InvoiceBase) findQuery.getSingleResult();
 			}
-			else {
-				Query findQuery = em.createQuery("from Estimate where invoiceNumber = '" + invoiceNumber + "'");
-				invoice = (InvoiceBase) findQuery.getSingleResult();
-			}
-				
-			
 
-			if (invoice != null){
-					for (int i=0; i<invoice.getJobs().size(); i++) {
-						Job job = invoice.getJobs().get(i);
-						if (job != null) {
-							for (int j=0; j<job.getCharges().size(); j++) {
-								Charge charge = job.getCharges().get(j);
-								if (charge == null) {
-									log.error("null charge found");
-								}
+			if (invoice != null) {
+				for (int i = 0; i < invoice.getJobs().size(); i++) {
+					Job job = invoice.getJobs().get(i);
+					if (job != null) {
+						for (int j = 0; j < job.getCharges().size(); j++) {
+							Charge charge = job.getCharges().get(j);
+							if (charge == null) {
+								log.error("null charge found");
 							}
 						}
 					}
+				}
 			}
 		} catch (Exception e) {
 			log.error(e);

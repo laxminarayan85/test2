@@ -1,5 +1,6 @@
 package com.efi.printsmith.integration.jdf;
 
+import org.cip4.jdflib.auto.JDFAutoSubscription.EnumRetryPolicy;
 import org.cip4.jdflib.auto.JDFAutoStatusQuParams.EnumDeviceDetails;
 import org.cip4.jdflib.auto.JDFAutoStatusQuParams.EnumJobDetails;
 import org.cip4.jdflib.core.JDFDoc;
@@ -53,6 +54,7 @@ public class JMFMessages {
 	            JDFSubscription subscription = jdfQuery.appendSubscription();
 	            subscription.setURL(returnJMF);
 	            subscription.setRepeatTime(queryIntervalSecs);
+	            subscription.setRetryPolicy(EnumRetryPolicy.DiscardAtNextSignal);
 	            jdfQuery.removeAttribute("xsi:type");
             }
         } catch (Exception e) {

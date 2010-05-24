@@ -24,7 +24,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:method name="getPressPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getPressDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
@@ -233,12 +233,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataService.addUpdate(tempPress);   		   
 	}
 	private function doRevert():void{
-		dataService.getById("PressDefinition", pressDefinition.id );  
+		dataService.getPressDefinition(pressDefinition.id );  
 	}
 	private function doPressGridClick():void {
 	 	var  tempPress : PressDefinition;	
 		tempPress=dataGrid.selectedItem as PressDefinition;
-		dataService.getById("PressDefinition", tempPress.id );   
+		dataService.getPressDefinition(tempPress.id );   
 		/* pressDefinition = dataGrid.selectedItem as PressDefinition;
 		if (pressDefinition.salesCat != null)
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
