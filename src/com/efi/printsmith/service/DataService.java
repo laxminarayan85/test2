@@ -1474,6 +1474,31 @@ public class DataService extends HibernateService {
 		return invoice;
 	}
 	
+	public StockDefinition getStockDefinition(Long id) throws Exception {
+		log.debug("** getStockDefinition called.");
+		StockDefinition stockDefinition = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("StockDefinition.byId");
+			query.setParameter("id", id);
+			stockDefinition = (StockDefinition) query.getSingleResult();
+
+			if (stockDefinition != null) {
+				for (int i = 0; i < stockDefinition.getCharges().size(); i++) {
+					ChargeDefinition chargeDefinition = stockDefinition.getCharges().get(i);
+					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return stockDefinition;
+	}	
+
 	public PressDefinition getPressDefinition(Long id) throws Exception {
 		log.debug("** getPressDefinition called.");
 		PressDefinition pressDefinition = null;

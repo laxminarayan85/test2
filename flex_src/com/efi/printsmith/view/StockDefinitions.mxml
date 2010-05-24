@@ -134,7 +134,7 @@
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
@@ -586,7 +586,7 @@
 			itemp = StockDefinitionArray.length - 1;
 		}
 		tempStock = StockDefinitionArray.getItemAt(itemp) as StockDefinition;
-		dataService.getById("StockDefinition", tempStock.id );               
+		dataService.getStockDefinition(tempStock.id );               
 	}
 	
 	private function doPrev():void {              
@@ -600,7 +600,7 @@
 			itemp = 0; 
 		}
 		tempStock = StockDefinitionArray.getItemAt(itemp) as StockDefinition;
-		dataService.getById("StockDefinition", tempStock.id );
+		dataService.getStockDefinition(tempStock.id );
 		                                       
 	}                                           
 
