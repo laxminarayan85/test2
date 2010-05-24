@@ -435,6 +435,14 @@ public class JobBase extends ModelBase {
    */
   public static final String PARENTINVOICE = "ParentInvoice";
 	/**
+   * @generated
+   */
+  public static final String ROOTCHARGERECORD = "RootChargeRecord";
+	/**
+   * @generated
+   */
+  public static final String NEXTRECORD = "NextRecord";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -2600,7 +2608,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
   private InvoiceBase parentInvoice;
 	/**
    * @generated
@@ -2615,6 +2623,49 @@ public class JobBase extends ModelBase {
    */	
   public void setParentInvoice(InvoiceBase newVal) {
     this.parentInvoice = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String rootChargeRecord;
+	/**
+   * @generated
+ 	 */
+  public String getRootChargeRecord(){
+    return rootChargeRecord; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setRootChargeRecord(String newVal) {
+    this.rootChargeRecord = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer nextRecord;
+	/**
+   * @generated
+ 	 */
+  public Integer getNextRecord(){
+    return nextRecord; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNextRecord(Integer newVal) {
+    this.nextRecord = newVal;
   }
 
 
@@ -2721,6 +2772,8 @@ public class JobBase extends ModelBase {
     if (ORUP.equals(propertyName)) return getOrUp();
     if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
     if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
+    if (ROOTCHARGERECORD.equals(propertyName)) return getRootChargeRecord();
+    if (NEXTRECORD.equals(propertyName)) return getNextRecord();
     return super.getProperty(propertyName);
   }
 	
@@ -2827,6 +2880,8 @@ public class JobBase extends ModelBase {
     if (ORUP.equals(propertyName)) setOrUp((Boolean)newValue); else
     if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
+    if (ROOTCHARGERECORD.equals(propertyName)) setRootChargeRecord((String)newValue); else
+    if (NEXTRECORD.equals(propertyName)) setNextRecord((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3030,6 +3085,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PARENTINVOICE.equals(propertyName)) 
       return new Class<?>[] {InvoiceBase.class};		
+    if (ROOTCHARGERECORD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (NEXTRECORD.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3137,6 +3196,8 @@ public class JobBase extends ModelBase {
     if (ORUP.equals(propertyName)) return JobBase.class;
     if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
     if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
+    if (ROOTCHARGERECORD.equals(propertyName)) return JobBase.class;
+    if (NEXTRECORD.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3341,6 +3402,10 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getOrParentOut(), objT.getOrParentOut()))
       return false;
     if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
+      return false;
+    if (! SmartEquals(getRootChargeRecord(), objT.getRootChargeRecord()))
+      return false;
+    if (! SmartEquals(getNextRecord(), objT.getNextRecord()))
       return false;
     return true;
   }			
