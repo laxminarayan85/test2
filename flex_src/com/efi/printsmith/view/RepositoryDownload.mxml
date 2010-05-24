@@ -54,7 +54,7 @@
 			private function saveFile(event:Event):void
 			{
 				var fileReference:FileReference=new FileReference();
-				fileReference.save(fileData, fileName);
+				//fileReference.save(fileData, fileName);
 			}
 
 			private function getRemoteFiles(event:Event):void
