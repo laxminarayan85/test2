@@ -70,7 +70,7 @@
 			{
 				refUploadFile=event.currentTarget as FileReference;
 				var data:ByteArray=new ByteArray();
-				refUploadFile.data.readBytes(data, 0, refUploadFile.data.length);
+				//refUploadFile.data.readBytes(data, 0, refUploadFile.data.length);
 
 				var token:AsyncToken=AsyncToken(remoteUpload.doUpload(data, refUploadFile.name));
 
