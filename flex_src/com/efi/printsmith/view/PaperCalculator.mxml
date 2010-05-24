@@ -69,7 +69,13 @@
 			private function handleCalcOutResult(ev:ResultEvent):void
 			{
 				if (ev.result != null) {
-					this.job.paperCal.cutstoRun = ev.result as Number;
+					var results:ArrayCollection = ev.result as ArrayCollection;
+					
+					var testIntValue:Number = results.getItemAt(0) as Number;
+					var testStringValue:String = results.getItemAt(1) as String;
+					var testNumberValue:Number = results.getItemAt(2) as Number;
+					
+					this.job.paperCal.cutstoRun = testIntValue;
 				}
 
 			}
