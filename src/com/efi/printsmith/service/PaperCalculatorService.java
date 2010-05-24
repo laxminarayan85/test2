@@ -52,6 +52,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		results.add("Value Two");
 		results.add(new Double(5.0));
 		
+		/* Finish Grain Example */
+		if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
+			
+		} else if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
+			
+		} else if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
+			
+		}
 		return results;
 	}
 	

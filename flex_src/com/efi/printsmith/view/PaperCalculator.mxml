@@ -124,8 +124,15 @@
 				doGrip();
 				folioLocationRadioValue=job.paperCal.folioLocation;
 				doFolio();
-				if (job.paperCal.runToFinishGrain != "")
-					cboRunToFinishGrain.selectedIndex=findItem(job.paperCal.runToFinishGrain, RunToFinishGrainArray);
+				if (job.paperCal.runToFinishGrain != "") {
+					if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER) {
+						cboRunToFinishGrain.selectedIndex = 0;
+					} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN) {
+						cboRunToFinishGrain.selectedIndex = 1;
+					} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION) {
+						cboRunToFinishGrain.selectedIndex = 2;
+					} 
+				}
 				job.paperCal.runSize=job.runSize;
 				job.paperCal.finishSize=job.finishSize;
 				job.paperCal.parentSize=job.parentSize;
@@ -152,8 +159,19 @@
 				if (folioLocation.selectedValue != null) {
 					job.paperCal.folioLocation=folioLocation.selectedValue.toString();
 				}
-				if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
-					job.paperCal.runToFinishGrain=cboRunToFinishGrain.selectedItem.name;
+				if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null) {
+					switch (cboRunToFinishGrain.selectedItem) {
+						case 0:
+							job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
+							break;
+						case 1:
+							job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN;
+							break;
+						case 2:
+							job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION;
+							break;
+					}
+				}
 				job.paperCal.runSize=run_size_edit.text
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
