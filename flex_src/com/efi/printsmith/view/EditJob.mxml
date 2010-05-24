@@ -1003,6 +1003,8 @@
 							
 							if (tmpPricingMethod.id == job.pricingMethod.id) {
 								this.setPricingMethod(tmpPricingMethod);
+								//cej
+								dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 								break;
 							}
 						}
@@ -1914,7 +1916,7 @@
 								<mx:Canvas id="printing_estimator_canvas"
 										   width="100%"
 										   height="100%">
-									<fc:AutoComplete x="107"
+									<mx:ComboBox x="107"
 													 y="5"
 													 width="241"
 													 height="20"
@@ -1926,7 +1928,7 @@
 											  y="7"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingPress')}"
 											  fontSize="9" textAlign="right" width="91" id="label20"/>
-									<fc:AutoComplete x="107"
+									<mx:ComboBox x="107"
 													 y="28"
 													 width="241"
 													 height="20"
@@ -2132,7 +2134,7 @@
 													   dataField="description"/>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
 													   width="90"
-													   dataField="price"
+													   dataField="price" 
 													    textAlign="right"/>
 								</mx:columns>
 							</mx:DataGrid>

@@ -2,17 +2,17 @@ package com.efi.printsmith.events.commandEvents.Jobs
 {
 	import flash.events.Event;
 	import com.efi.printsmith.events.commandEvents.*;
-	import com.adobe.flex.extras.controls.AutoComplete
+	import mx.controls.ComboBox;
 	import mx.rpc.IResponder;
 
 	public class JobsChangePressEvent extends CommandEventBase
 	{
 		public static const COMMANDID:String = "CMD_Jobs_ChangePress";
 
-		public var control:AutoComplete;
+		public var control:ComboBox;
 		public var enabled:Boolean;
 
-		public function JobsChangePressEvent(item:AutoComplete, callbacks:IResponder=null)
+		public function JobsChangePressEvent(item:ComboBox, callbacks:IResponder=null)
 		{
 			this.control = item;
 			super(JobsChangePressEvent.COMMANDID, callbacks);
