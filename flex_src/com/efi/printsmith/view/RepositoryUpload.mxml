@@ -14,7 +14,7 @@
 			import mx.managers.PopUpManager;
 			import flash.net.FileReference;
 
-			private var refUploadFile:FileReference;
+			private var refUploadFile:flash.net.FileReference;
 
 			private var UploadFiles:Array=new Array();
 
