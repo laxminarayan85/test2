@@ -77,9 +77,9 @@ public class PaperCalculator extends ModelBase {
 	 */
 	public static final String USEWHITESPACE = "UseWhiteSpace";
 	/**
-	 * @generated
-	 */
-	public static final String WHITESPACE = "WhiteSpace";
+   * @generated
+   */
+  public static final String WHITESPACELEFT = "WhiteSpaceLeft";
 	/**
 	 * @generated
 	 */
@@ -109,9 +109,9 @@ public class PaperCalculator extends ModelBase {
 	 */
 	public static final String USEBLEED = "UseBleed";
 	/**
-	 * @generated
-	 */
-	public static final String BLEED = "Bleed";
+   * @generated
+   */
+  public static final String BLEEDLEFT = "BleedLeft";
 	/**
 	 * @generated
 	 */
@@ -237,6 +237,11 @@ public class PaperCalculator extends ModelBase {
    * @generated
    */
   public static final String TMARGIN = "TMargin";
+
+	/**
+   * @generated
+   */
+  public static final String LMARGIN = "LMargin";
 
 	/**
 	 * @generated
@@ -447,27 +452,28 @@ public class PaperCalculator extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Double whiteSpace;
-	
+  private Double whiteSpaceLeft;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getWhiteSpace(){
-    return whiteSpace; 
+  public Double getWhiteSpaceLeft(){
+    return whiteSpaceLeft; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setWhiteSpace(Double newVal) {
-    this.whiteSpace = newVal;
+   * @generated
+   */	
+  public void setWhiteSpaceLeft(Double newVal) {
+    this.whiteSpaceLeft = newVal;
   }
- 	
-	
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -623,27 +629,28 @@ public class PaperCalculator extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Double bleed;
-	
+  private Double bleedLeft;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getBleed(){
-    return bleed; 
+  public Double getBleedLeft(){
+    return bleedLeft; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setBleed(Double newVal) {
-    this.bleed = newVal;
+   * @generated
+   */	
+  public void setBleedLeft(Double newVal) {
+    this.bleedLeft = newVal;
   }
- 	
-	
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -1262,12 +1269,12 @@ public class PaperCalculator extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer rMargin;
+  private Double rMargin;
 
 	/**
    * @generated
  	 */
-  public Integer getRMargin(){
+  public Double getRMargin(){
     return rMargin; 
   }
 
@@ -1275,22 +1282,21 @@ public class PaperCalculator extends ModelBase {
 	/**
    * @generated
    */	
-  public void setRMargin(Integer newVal) {
+  public void setRMargin(Double newVal) {
     this.rMargin = newVal;
   }
-
 
 
 	/**
    * @generated
    */	
  	@Basic
-  private Integer bMargin;
+  private Double bMargin;
 
 	/**
    * @generated
  	 */
-  public Integer getBMargin(){
+  public Double getBMargin(){
     return bMargin; 
   }
 
@@ -1298,8 +1304,30 @@ public class PaperCalculator extends ModelBase {
 	/**
    * @generated
    */	
-  public void setBMargin(Integer newVal) {
+  public void setBMargin(Double newVal) {
     this.bMargin = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double tMargin;
+
+	/**
+   * @generated
+ 	 */
+  public Double getTMargin(){
+    return tMargin; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTMargin(Double newVal) {
+    this.tMargin = newVal;
   }
 
 
@@ -1308,21 +1336,21 @@ public class PaperCalculator extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer tMargin;
+  private Double lMargin;
 
 	/**
    * @generated
  	 */
-  public Integer getTMargin(){
-    return tMargin; 
+  public Double getLMargin(){
+    return lMargin; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setTMargin(Integer newVal) {
-    this.tMargin = newVal;
+  public void setLMargin(Double newVal) {
+    this.lMargin = newVal;
   }
 
 
@@ -1341,7 +1369,7 @@ public class PaperCalculator extends ModelBase {
     if (USECOLORBAR.equals(propertyName)) return getUseColorBar();
     if (COLORBAR.equals(propertyName)) return getColorBar();
     if (USEWHITESPACE.equals(propertyName)) return getUseWhiteSpace();
-    if (WHITESPACE.equals(propertyName)) return getWhiteSpace();
+    if (WHITESPACELEFT.equals(propertyName)) return getWhiteSpaceLeft();
     if (WHITESPACETOP.equals(propertyName)) return getWhiteSpaceTop();
     if (WHITESPACERIGHT.equals(propertyName)) return getWhiteSpaceRight();
     if (WHITESPACEBOTTOM.equals(propertyName)) return getWhiteSpaceBottom();
@@ -1349,7 +1377,7 @@ public class PaperCalculator extends ModelBase {
     if (GUTTER.equals(propertyName)) return getGutter();
     if (GUTTERHORIZONTAL.equals(propertyName)) return getGutterHorizontal();
     if (USEBLEED.equals(propertyName)) return getUseBleed();
-    if (BLEED.equals(propertyName)) return getBleed();
+    if (BLEEDLEFT.equals(propertyName)) return getBleedLeft();
     if (BLEEDTOP.equals(propertyName)) return getBleedTop();
     if (BLEEDRIGHT.equals(propertyName)) return getBleedRight();
     if (BLEEDBOTTOM.equals(propertyName)) return getBleedBottom();
@@ -1381,6 +1409,7 @@ public class PaperCalculator extends ModelBase {
     if (RMARGIN.equals(propertyName)) return getRMargin();
     if (BMARGIN.equals(propertyName)) return getBMargin();
     if (TMARGIN.equals(propertyName)) return getTMargin();
+    if (LMARGIN.equals(propertyName)) return getLMargin();
     return super.getProperty(propertyName);
   }
 	
@@ -1399,7 +1428,7 @@ public class PaperCalculator extends ModelBase {
     if (USECOLORBAR.equals(propertyName)) setUseColorBar((Boolean)newValue); else
     if (COLORBAR.equals(propertyName)) setColorBar((Double)newValue); else
     if (USEWHITESPACE.equals(propertyName)) setUseWhiteSpace((Boolean)newValue); else
-    if (WHITESPACE.equals(propertyName)) setWhiteSpace((Double)newValue); else
+    if (WHITESPACELEFT.equals(propertyName)) setWhiteSpaceLeft((Double)newValue); else
     if (WHITESPACETOP.equals(propertyName)) setWhiteSpaceTop((Double)newValue); else
     if (WHITESPACERIGHT.equals(propertyName)) setWhiteSpaceRight((Double)newValue); else
     if (WHITESPACEBOTTOM.equals(propertyName)) setWhiteSpaceBottom((Double)newValue); else
@@ -1407,7 +1436,7 @@ public class PaperCalculator extends ModelBase {
     if (GUTTER.equals(propertyName)) setGutter((Double)newValue); else
     if (GUTTERHORIZONTAL.equals(propertyName)) setGutterHorizontal((Double)newValue); else
     if (USEBLEED.equals(propertyName)) setUseBleed((Boolean)newValue); else
-    if (BLEED.equals(propertyName)) setBleed((Double)newValue); else
+    if (BLEEDLEFT.equals(propertyName)) setBleedLeft((Double)newValue); else
     if (BLEEDTOP.equals(propertyName)) setBleedTop((Double)newValue); else
     if (BLEEDRIGHT.equals(propertyName)) setBleedRight((Double)newValue); else
     if (BLEEDBOTTOM.equals(propertyName)) setBleedBottom((Double)newValue); else
@@ -1436,9 +1465,10 @@ public class PaperCalculator extends ModelBase {
     if (DUTCHBOTTOM.equals(propertyName)) setDutchBottom((Integer)newValue); else
     if (PARENTSQRAREA.equals(propertyName)) setParentSqrArea((Double)newValue); else
     if (USEDSQRAREA.equals(propertyName)) setUsedSqrArea((Double)newValue); else
-    if (RMARGIN.equals(propertyName)) setRMargin((Integer)newValue); else
-    if (BMARGIN.equals(propertyName)) setBMargin((Integer)newValue); else
-    if (TMARGIN.equals(propertyName)) setTMargin((Integer)newValue); else
+    if (RMARGIN.equals(propertyName)) setRMargin((Double)newValue); else
+    if (BMARGIN.equals(propertyName)) setBMargin((Double)newValue); else
+    if (TMARGIN.equals(propertyName)) setTMargin((Double)newValue); else
+    if (LMARGIN.equals(propertyName)) setLMargin((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1466,7 +1496,7 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (USEWHITESPACE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (WHITESPACE.equals(propertyName)) 
+    if (WHITESPACELEFT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (WHITESPACETOP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
@@ -1482,7 +1512,7 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (USEBLEED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (BLEED.equals(propertyName)) 
+    if (BLEEDLEFT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (BLEEDTOP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
@@ -1541,11 +1571,13 @@ public class PaperCalculator extends ModelBase {
     if (USEDSQRAREA.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (RMARGIN.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Double.class};		
     if (BMARGIN.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Double.class};		
     if (TMARGIN.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Double.class};		
+    if (LMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1565,7 +1597,7 @@ public class PaperCalculator extends ModelBase {
     if (USECOLORBAR.equals(propertyName)) return PaperCalculator.class;
     if (COLORBAR.equals(propertyName)) return PaperCalculator.class;
     if (USEWHITESPACE.equals(propertyName)) return PaperCalculator.class;
-    if (WHITESPACE.equals(propertyName)) return PaperCalculator.class;
+    if (WHITESPACELEFT.equals(propertyName)) return PaperCalculator.class;
     if (WHITESPACETOP.equals(propertyName)) return PaperCalculator.class;
     if (WHITESPACERIGHT.equals(propertyName)) return PaperCalculator.class;
     if (WHITESPACEBOTTOM.equals(propertyName)) return PaperCalculator.class;
@@ -1573,7 +1605,7 @@ public class PaperCalculator extends ModelBase {
     if (GUTTER.equals(propertyName)) return PaperCalculator.class;
     if (GUTTERHORIZONTAL.equals(propertyName)) return PaperCalculator.class;
     if (USEBLEED.equals(propertyName)) return PaperCalculator.class;
-    if (BLEED.equals(propertyName)) return PaperCalculator.class;
+    if (BLEEDLEFT.equals(propertyName)) return PaperCalculator.class;
     if (BLEEDTOP.equals(propertyName)) return PaperCalculator.class;
     if (BLEEDRIGHT.equals(propertyName)) return PaperCalculator.class;
     if (BLEEDBOTTOM.equals(propertyName)) return PaperCalculator.class;
@@ -1605,6 +1637,7 @@ public class PaperCalculator extends ModelBase {
     if (RMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (BMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (TMARGIN.equals(propertyName)) return PaperCalculator.class;
+    if (LMARGIN.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1634,7 +1667,7 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getUseWhiteSpace(), objT.getUseWhiteSpace()))
       return false;
-    if (! SmartEquals(getWhiteSpace(), objT.getWhiteSpace()))
+    if (! SmartEquals(getWhiteSpaceLeft(), objT.getWhiteSpaceLeft()))
       return false;
     if (! SmartEquals(getWhiteSpaceTop(), objT.getWhiteSpaceTop()))
       return false;
@@ -1650,7 +1683,7 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getUseBleed(), objT.getUseBleed()))
       return false;
-    if (! SmartEquals(getBleed(), objT.getBleed()))
+    if (! SmartEquals(getBleedLeft(), objT.getBleedLeft()))
       return false;
     if (! SmartEquals(getBleedTop(), objT.getBleedTop()))
       return false;
@@ -1713,6 +1746,8 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getBMargin(), objT.getBMargin()))
       return false;
     if (! SmartEquals(getTMargin(), objT.getTMargin()))
+      return false;
+    if (! SmartEquals(getLMargin(), objT.getLMargin()))
       return false;
     return true;
   }			

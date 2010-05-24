@@ -447,7 +447,7 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("2") == true) 
 					tempPaper.setFolioLocation("Left");
 			} else if ("finish bleed[1]".equals(currentFieldToken)) {
-				tempPaper.setBleed(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setBleedLeft(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[2]".equals(currentFieldToken)) {
 				tempPaper.setBleedRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("finish bleed[3]".equals(currentFieldToken)) {
@@ -671,7 +671,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("run size area".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("white space[1]".equals(currentFieldToken)) {
-				tempPaper.setWhiteSpace(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setWhiteSpaceLeft(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[2]".equals(currentFieldToken)) {
 				tempPaper.setWhiteSpaceRight(Utilities.tokenToDouble(currentImportToken));
 			} else if ("white space[3]".equals(currentFieldToken)) {
@@ -687,11 +687,11 @@ public class JobMapper extends ImportMapper {
 			} else if ("dDown".equals(currentFieldToken)) {
 				tempPaper.setDDown(Utilities.tokenToInt(currentImportToken));
 			} else if ("r margin".equals(currentFieldToken)) {
-				tempPaper.setRMargin(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setRMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("b margin".equals(currentFieldToken)) {
-				tempPaper.setBMargin(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setBMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("t margin".equals(currentFieldToken)) {
-				tempPaper.setTMargin(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setTMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("used area".equals(currentFieldToken)) {
 				tempPaper.setUsedSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("parent area".equals(currentFieldToken)) {

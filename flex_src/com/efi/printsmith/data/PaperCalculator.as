@@ -22,7 +22,7 @@ package com.efi.printsmith.data
 		public var useColorBar:Boolean = false;
 		public var colorBar:Number = 0;
 		public var useWhiteSpace:Boolean = false;
-		public var whiteSpace:Number = 0;
+		public var whiteSpaceLeft:Number = 0;
 		public var whiteSpaceTop:Number = 0;
 		public var whiteSpaceRight:Number = 0;
 		public var whiteSpaceBottom:Number = 0;
@@ -30,7 +30,7 @@ package com.efi.printsmith.data
 		public var gutter:Number = 0;
 		public var gutterHorizontal:Number = 0;
 		public var useBleed:Boolean = false;
-		public var bleed:Number = 0;
+		public var bleedLeft:Number = 0;
 		public var bleedTop:Number = 0;
 		public var bleedRight:Number = 0;
 		public var bleedBottom:Number = 0;
@@ -59,9 +59,10 @@ package com.efi.printsmith.data
 		public var dutchBottom:int = 0;
 		public var parentSqrArea:Number = 0;
 		public var usedSqrArea:Number = 0;
-		public var rMargin:int = 0;
-		public var bMargin:int = 0;
-		public var tMargin:int = 0;
+		public var rMargin:Number = 0;
+		public var bMargin:Number = 0;
+		public var tMargin:Number = 0;
+		public var lMargin:Number = 0;
 	
 	}
 }

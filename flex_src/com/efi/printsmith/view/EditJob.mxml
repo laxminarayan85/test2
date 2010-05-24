@@ -662,7 +662,7 @@
 					job.paperCal.useColorBar = estimatingPreferences.useColorBar;
 					job.paperCal.colorBar = estimatingPreferences.colorBar;
 					job.paperCal.useWhiteSpace = estimatingPreferences.useWhiteSpace;
-					job.paperCal.whiteSpace = estimatingPreferences.whiteSpace;
+					job.paperCal.whiteSpaceLeft = estimatingPreferences.whiteSpace;
 					job.paperCal.whiteSpaceBottom= estimatingPreferences.whiteSpaceBottom;
 					job.paperCal.whiteSpaceRight = estimatingPreferences.whiteSpaceRight;
 					job.paperCal.whiteSpaceTop = estimatingPreferences.whiteSpaceTop;
@@ -670,7 +670,7 @@
 					job.paperCal.gutter = estimatingPreferences.gutter;
 					job.paperCal.gutterHorizontal = estimatingPreferences.gutterHorizontal;
 					job.paperCal.useBleed = estimatingPreferences.useBleed;
-					job.paperCal.bleed= estimatingPreferences.bleed;
+					job.paperCal.bleedLeft = estimatingPreferences.bleed;
 					job.paperCal.bleedBottom = estimatingPreferences.bleedBottom;
 					job.paperCal.bleedRight = estimatingPreferences.bleedRight;
 					job.paperCal.bleedTop = estimatingPreferences.bleedTop;

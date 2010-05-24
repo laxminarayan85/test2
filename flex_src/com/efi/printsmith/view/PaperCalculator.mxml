@@ -175,10 +175,10 @@
 				job.paperCal.runSize=run_size_edit.text
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
-				job.paperCal.bleed=parseInt(txtBleed.text);
-				job.paperCal.bleedBottom=parseInt(txtBleedBottom.text);
-				job.paperCal.bleedRight=parseInt(txtBleedRight.text);
-				job.paperCal.bleedTop=parseInt(txtBleedTop.text);
+				job.paperCal.bleedLeft=parseFloat(txtBleed.text);
+				job.paperCal.bleedBottom=parseFloat(txtBleedBottom.text);
+				job.paperCal.bleedRight=parseFloat(txtBleedRight.text);
+				job.paperCal.bleedTop=parseFloat(txtBleedTop.text);
 				job.paperCal.colorBar=parseInt(txtColorBar.text);
 				job.paperCal.cutstoFinish=parseInt(txtCutstoFinish.text);
 				job.paperCal.cutstoRun=parseInt(txtCutstoRun.text);
@@ -198,10 +198,10 @@
 				job.paperCal.useGutter=chkGutter.selected;
 				job.paperCal.useWhiteSpace=chkWhiteSpace.selected;
 				//job.paperCal.whichStartSize 
-				job.paperCal.whiteSpace=parseInt(txtWhiteSpace.text);
-				job.paperCal.whiteSpaceBottom=parseInt(txtWhiteSpaceBottom.text);
-				job.paperCal.whiteSpaceRight=parseInt(txtWhiteSpaceRight.text);
-				job.paperCal.whiteSpaceTop=parseInt(txtWhiteSpaceTop.text);
+				job.paperCal.whiteSpaceLeft=parseFloat(txtWhiteSpace.text);
+				job.paperCal.whiteSpaceBottom=parseFloat(txtWhiteSpaceBottom.text);
+				job.paperCal.whiteSpaceRight=parseFloat(txtWhiteSpaceRight.text);
+				job.paperCal.whiteSpaceTop=parseFloat(txtWhiteSpaceTop.text);
 				job.paperCal.workandTumble=chkWorkAndTumble.selected;
 
 			}
@@ -356,7 +356,7 @@
 					  id="txtWhiteSpace"
 					  restrict="0-9."
 					  width="93"
-					  text="{job.paperCal.whiteSpace}" height="20"/>
+					  text="{job.paperCal.whiteSpaceLeft}" height="20"/>
 		<mx:TextInput enabled="{chkWhiteSpace.selected}"
 					  x="262"
 					  y="310"
@@ -377,7 +377,7 @@
 					  id="txtBleed"
 					  restrict="0-9."
 					  width="93"
-					  text="{job.paperCal.bleed}" height="20"/>
+					  text="{job.paperCal.bleedLeft}" height="20"/>
 		<mx:TextInput enabled="{chkBleed.selected}"
 					  x="262"
 					  y="445"
