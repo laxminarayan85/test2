@@ -70,12 +70,52 @@
 			{
 				if (ev.result != null) {
 					var results:ArrayCollection = ev.result as ArrayCollection;
+					var intValue:Number;
+			//		var dblValue:Double;
 					
-					var testIntValue:Number = results.getItemAt(0) as Number;
-					var testStringValue:String = results.getItemAt(1) as String;
-					var testNumberValue:Number = results.getItemAt(2) as Number;
+	// maintain same order in PaperCalcualtorService.java
+	//	results.add(out);
+	//	results.add(job.getPaperCal().getDAcross());
+	//	results.add(job.getPaperCal().getDDown());
+	//	results.add(job.getPaperCal().getAcross());
+	//	results.add(job.getPaperCal().getDown());
+	//	results.add(job.getPaperCal().getDutchBottom());
+	//	results.add(job.getPaperCal().getUsedSqrArea());
+	//	results.add(job.getPaperCal().getParentSqrArea());
+	//	results.add(job.getPaperCal().getRMargin());
+	//	results.add(job.getPaperCal().getBMargin());
+	//	results.add(runCuts);
+	//	results.add(finishCuts);
 					
-					this.job.paperCal.cutstoRun = testIntValue;
+					// paper image numbers
+					intValue = results.getItemAt(0) as Number;
+					this.job.paperCal.sheetsOut = intValue;
+					intValue = results.getItemAt(1) as Number;
+					this.job.paperCal.dAcross = intValue;
+					intValue = results.getItemAt(2) as Number;
+					this.job.paperCal.dDown = intValue;
+					intValue = results.getItemAt(3) as Number;
+					this.job.paperCal.across = intValue;
+					intValue = results.getItemAt(4) as Number;
+					this.job.paperCal.down = intValue;
+					intValue = results.getItemAt(5) as Number;
+					this.job.paperCal.dutchBottom = intValue;
+					
+					// floating point numbers
+					this.job.paperCal.usedSqrArea = results.getItemAt(6) as Number;
+					this.job.paperCal.parentSqrArea = results.getItemAt(7) as Number;
+					this.job.paperCal.rMargin = results.getItemAt(8) as Number;
+					this.job.paperCal.bMargin = results.getItemAt(9) as Number;
+					
+					// cut counts, the override logic is handled in JAVA
+					intValue = results.getItemAt(10) as Number;
+					this.job.paperCal.cutstoRun = intValue;
+					intValue = results.getItemAt(11) as Number;
+					this.job.paperCal.cutstoFinish = intValue;
+
+//				var testStringValue:String = results.getItemAt(1) as String;
+	//				var testNumberValue:Number = results.getItemAt(2) as Number;
+					
 				}
 
 			}
@@ -239,7 +279,7 @@
 			private function refreshCalcAndImage():void
 			{
 				mapToJobData();
-				paperCalculatorService.CalcOut(this.job);
+				paperCalculatorService.CalcOut(this.job, this.job.paperCal.whichStartSize);
 				//paperCalculatorService.GeneratePageImage(this.job);
 			}
 			
