@@ -67,7 +67,7 @@
 			import mx.messaging.messages.IMessage;
 
 			private var salesCategoryNames:Array = ["Print", "Bindery", "PrePress", "HS Copy", "Color Copy", "Merch", "Mailing", "Misc...",
-													"Typesetting", "Graphics", "Large Format", "Outside Svcs", "Disc-Markups", "Postage", "Interest", "Shipping"];
+													"Design", "Graphics", "Large Format", "Outside Svcs", "Disc-Markups", "Postage", "Interest", "Shipping"];
 			/* private var chargepricingMethodNames:Array = ["Printing", "Roll-Fed", "B&W", "Color", "Large Format", "Blank", "List", "Charges Only", "Outside Services",
 													"Merchandise", "Lines & Inches", "Mailing"];
 												 */
