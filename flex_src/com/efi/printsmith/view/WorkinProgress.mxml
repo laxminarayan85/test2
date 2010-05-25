@@ -430,7 +430,7 @@ width="786" height="531"  creationComplete="init()"
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Proofby')}" dataField="proofDate" />
-					<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="grandTotal"/>
+					<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="subTotal"/>
 					<mx:DataGridColumn  id="location_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Location')}" dataField="location"/>
 					
 				</mx:columns>
