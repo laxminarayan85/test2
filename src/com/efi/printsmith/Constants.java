@@ -16,4 +16,7 @@ public class Constants {
 	public final static String JOB_RUN_METHOD_WORK_TURN = "WORKANDTURN";
 	public final static String JOB_RUN_METHOD_WORK_TUMBLE = "WORKANDTUMBLE";
 	
+	public static final int PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH = 1;
+	public static final int PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH = 2;
+	public static final int PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN = 3;
 }
