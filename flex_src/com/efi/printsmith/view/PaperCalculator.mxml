@@ -279,6 +279,10 @@
 			private function refreshCalcAndImage():void
 			{
 				mapToJobData();
+				//** TEMP
+				this.job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
+				this.job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
+				
 				paperCalculatorService.CalcOut(this.job, this.job.paperCal.whichStartSize);
 				//paperCalculatorService.GeneratePageImage(this.job);
 			}
