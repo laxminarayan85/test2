@@ -17,7 +17,7 @@ package com.efi.printsmith.integration.xpedx.xsd.response;
 public interface ItemsDocument extends org.apache.xmlbeans.XmlObject
 {
     public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ItemsDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s9C9B078C9E398D3A16916AC871773D92").resolveHandle("items52c7doctype");
+        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ItemsDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s82300A33593A14964FAE4C9DAA490598").resolveHandle("items52c7doctype");
     
     /**
      * Gets the "Items" element
@@ -42,22 +42,47 @@ public interface ItemsDocument extends org.apache.xmlbeans.XmlObject
     public interface Items extends org.apache.xmlbeans.XmlObject
     {
         public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Items.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s9C9B078C9E398D3A16916AC871773D92").resolveHandle("itemsb8e3elemtype");
+            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Items.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s82300A33593A14964FAE4C9DAA490598").resolveHandle("itemsb8e3elemtype");
         
         /**
-         * Gets the "Item" element
+         * Gets array of all "Item" elements
          */
-        com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item getItem();
+        com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] getItemArray();
         
         /**
-         * Sets the "Item" element
+         * Gets ith "Item" element
          */
-        void setItem(com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item item);
+        com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item getItemArray(int i);
         
         /**
-         * Appends and returns a new empty "Item" element
+         * Returns number of "Item" element
+         */
+        int sizeOfItemArray();
+        
+        /**
+         * Sets array of all "Item" element
+         */
+        void setItemArray(com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] itemArray);
+        
+        /**
+         * Sets ith "Item" element
+         */
+        void setItemArray(int i, com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item item);
+        
+        /**
+         * Inserts and returns a new empty value (as xml) as the ith "Item" element
+         */
+        com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item insertNewItem(int i);
+        
+        /**
+         * Appends and returns a new empty value (as xml) as the last "Item" element
          */
         com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item addNewItem();
+        
+        /**
+         * Removes the ith "Item" element
+         */
+        void removeItem(int i);
         
         /**
          * A factory class with static methods for creating instances

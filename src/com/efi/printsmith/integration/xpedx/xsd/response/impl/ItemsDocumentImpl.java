@@ -83,33 +83,94 @@ public class ItemsDocumentImpl extends org.apache.xmlbeans.impl.values.XmlComple
         
         
         /**
-         * Gets the "Item" element
+         * Gets array of all "Item" elements
          */
-        public com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item getItem()
+        public com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] getItemArray()
+        {
+            synchronized (monitor())
+            {
+                check_orphaned();
+                java.util.List targetList = new java.util.ArrayList();
+                get_store().find_all_element_users(ITEM$0, targetList);
+                com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] result = new com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[targetList.size()];
+                targetList.toArray(result);
+                return result;
+            }
+        }
+        
+        /**
+         * Gets ith "Item" element
+         */
+        public com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item getItemArray(int i)
         {
             synchronized (monitor())
             {
                 check_orphaned();
                 com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item target = null;
-                target = (com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item)get_store().find_element_user(ITEM$0, 0);
+                target = (com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item)get_store().find_element_user(ITEM$0, i);
                 if (target == null)
                 {
-                    return null;
+                    throw new IndexOutOfBoundsException();
                 }
                 return target;
             }
         }
         
         /**
-         * Sets the "Item" element
+         * Returns number of "Item" element
          */
-        public void setItem(com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item item)
+        public int sizeOfItemArray()
         {
-            generatedSetterHelperImpl(item, ITEM$0, 0, org.apache.xmlbeans.impl.values.XmlObjectBase.KIND_SETTERHELPER_SINGLETON);
+            synchronized (monitor())
+            {
+                check_orphaned();
+                return get_store().count_elements(ITEM$0);
+            }
         }
         
         /**
-         * Appends and returns a new empty "Item" element
+         * Sets array of all "Item" element  WARNING: This method is not atomicaly synchronized.
+         */
+        public void setItemArray(com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] itemArray)
+        {
+            check_orphaned();
+            arraySetterHelper(itemArray, ITEM$0);
+        }
+        
+        /**
+         * Sets ith "Item" element
+         */
+        public void setItemArray(int i, com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item item)
+        {
+            synchronized (monitor())
+            {
+                check_orphaned();
+                com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item target = null;
+                target = (com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item)get_store().find_element_user(ITEM$0, i);
+                if (target == null)
+                {
+                    throw new IndexOutOfBoundsException();
+                }
+                target.set(item);
+            }
+        }
+        
+        /**
+         * Inserts and returns a new empty value (as xml) as the ith "Item" element
+         */
+        public com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item insertNewItem(int i)
+        {
+            synchronized (monitor())
+            {
+                check_orphaned();
+                com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item target = null;
+                target = (com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item)get_store().insert_element_user(ITEM$0, i);
+                return target;
+            }
+        }
+        
+        /**
+         * Appends and returns a new empty value (as xml) as the last "Item" element
          */
         public com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item addNewItem()
         {
@@ -119,6 +180,18 @@ public class ItemsDocumentImpl extends org.apache.xmlbeans.impl.values.XmlComple
                 com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item target = null;
                 target = (com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item)get_store().add_element_user(ITEM$0);
                 return target;
+            }
+        }
+        
+        /**
+         * Removes the ith "Item" element
+         */
+        public void removeItem(int i)
+        {
+            synchronized (monitor())
+            {
+                check_orphaned();
+                get_store().remove_element(ITEM$0, i);
             }
         }
     }

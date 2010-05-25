@@ -17,7 +17,7 @@ package com.efi.printsmith.integration.xpedx.xsd.response;
 public interface ItemDocument extends org.apache.xmlbeans.XmlObject
 {
     public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ItemDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s9C9B078C9E398D3A16916AC871773D92").resolveHandle("item132cdoctype");
+        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ItemDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s82300A33593A14964FAE4C9DAA490598").resolveHandle("item132cdoctype");
     
     /**
      * Gets the "Item" element
@@ -42,7 +42,7 @@ public interface ItemDocument extends org.apache.xmlbeans.XmlObject
     public interface Item extends org.apache.xmlbeans.XmlObject
     {
         public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Item.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s9C9B078C9E398D3A16916AC871773D92").resolveHandle("item788delemtype");
+            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Item.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s82300A33593A14964FAE4C9DAA490598").resolveHandle("item788delemtype");
         
         /**
          * Gets the "IndexID" element
