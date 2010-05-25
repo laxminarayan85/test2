@@ -531,7 +531,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}	
 		updateButtons();
 		MapfromChargeData();
-		updateControlState();
+	//	updateControlState();
 	}
 	
 	private function doNewCharge():void {
@@ -578,6 +578,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			}
 			updateQtyComboBox(charge.method);
 			charge_quantity_combo.selectedIndex = findItem(charge.quantityType,qtyTypes.toArray());
+			charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
 			charge_group_1.selectedValue = charge.jobQty;
 			if(charge.useColors)
 				charge_group_2.selectedValue = "Colors";
@@ -611,6 +612,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		for each(var element:Object in array) {
 			if (name == element) {
 				return array.indexOf(element);
+			}
+		}
+		return -1;
+	}
+	private function findItem2(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
 			}
 		}
 		return -1;
@@ -679,10 +688,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function updateQtyComboBox(chargeMethod:String):void {
 		qtyTypes.removeAll();
 		switch (chargeMethod) {
-		case ChargeMethod.ASK:
+		case ChargeMethod.ASK: 
 			qtyTypes.addItem(ChargeQtyType.SETS);
 			qtyTypes.addItem(ChargeQtyType.QUANTITY);
 			qtyTypes.addItem(ChargeQtyType.TIME);
+			qtyTypes.addItem(ChargeQtyType.NONE);
+			qtyTypes.addItem(ChargeQtyType.SETUPSETS);
 			break;
 		case ChargeMethod.CUT:
 			qtyTypes.addItem(ChargeQtyType.SETS);
@@ -712,6 +723,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			qtyTypes.addItem(ChargeQtyType.SHIPPINGQTY);
 			break;
 		case ChargeMethod.SQUAREAREA:
+			qtyTypes.addItem(ChargeQtyType.SETS);
+			qtyTypes.addItem(ChargeQtyType.QUANTITY);
 			break;
 		}
 	}
