@@ -389,17 +389,17 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				{	
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
 						// old form
-						out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
+						out2 = LocalCalcOut(job, finishX, finishY, whichToStart);
 						break;
 						
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
 						// use run size as parent
-						out2 = LocalCalcOut(job, runY, runX, whichToStart);
+						out2 = LocalCalcOut(job, runX, runY, whichToStart);
 						break;
 						
 					case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
 						// use parent size
-						out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
+						out2 = LocalCalcOut(job, finishX, finishY, whichToStart);
 						break;
 				}
 				
@@ -440,17 +440,17 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				{	
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
 						// use parent size
-						LocalCalcOut(job, finishY, finishX, whichToStart);
+						LocalCalcOut(job, finishX, finishY, whichToStart);
 						break;
 						
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
 						// use run size as parent
-						LocalCalcOut(job, runY, runX, whichToStart);
+						LocalCalcOut(job, runX, runY, whichToStart);
 						break;
 						
 					case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
 						// use parent size
-						LocalCalcOut(job, finishY, finishX, whichToStart);
+						LocalCalcOut(job, finishX, finishY, whichToStart);
 						break;
 				}
 			//	job->swap = 1;
