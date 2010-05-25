@@ -49,6 +49,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 		String categoryId = "";
 		String method = "";
 		String setuptemp ="";
+		String qtyType= "";
 		while ((importTokens = csvReader.readNext()) != null) {
 			if (importTokens.length != fieldTokens.length) {
 				throw new InvalidParameterException(
@@ -210,21 +211,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						}
 								
 					} else if ("qty type".equals(currentFieldToken)) {
-						if (currentImportToken.equals("0")) {
-							chargeDefinition.setQuantityType("Sets");
-						} else if (currentImportToken.equals("1")) {
-							chargeDefinition.setQuantityType("Quantity");
-						} else if (currentImportToken.equals("2")) {
-							chargeDefinition.setQuantityType("Time");
-						} else if (currentImportToken.equals("3")) {
-							chargeDefinition.setQuantityType("None");
-						} else if (currentImportToken.equals("4")) {
-						chargeDefinition.setQuantityType("SetupSets");
-						} else if (currentImportToken.equals("5")) {
-							chargeDefinition.setQuantityType("TotalWeight");
-						} else if (currentImportToken.equals("6")) {
-						chargeDefinition.setQuantityType("ShippingQty");
-						}
+						qtyType = currentImportToken;
 						
 					} else if ("markup type".equals(currentFieldToken)) {
 						if (currentImportToken.equals("1")) {
@@ -687,6 +674,34 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						/* TODO */
 					}
 				}
+				if ( chargeDefinition.getPriceMethod() != "Shipping" ){
+					if (qtyType.equals("1")) {
+						chargeDefinition.setQuantityType("Sets");
+					} else if (qtyType.equals("2")) {
+						chargeDefinition.setQuantityType("Quantity");
+					} else if (qtyType.equals("3")) {
+						chargeDefinition.setQuantityType("Time");
+					} else if (qtyType.equals("4")) {
+						chargeDefinition.setQuantityType("None");
+					} else if (qtyType.equals("5")) {
+					chargeDefinition.setQuantityType("SetupSets");
+					} 
+				}
+				else{
+						if (qtyType.equals("1")) {
+							chargeDefinition.setQuantityType("TotalWeight");
+						} else if (qtyType.equals("2")) {
+							chargeDefinition.setQuantityType("ShippingQty");
+						} else if (qtyType.equals("3")) {
+							chargeDefinition.setQuantityType("Time");
+						} else if (qtyType.equals("4")) {
+							chargeDefinition.setQuantityType("None");
+						} else if (qtyType.equals("5")) {
+						chargeDefinition.setQuantityType("SetupSets");
+						} 
+					}
+								
+								
 				if (newCommand == false && newCategory == false) {
 					ChargeCategory chargeCategory = dataService
 							.getByChargeCategoryPrevId(categoryId);

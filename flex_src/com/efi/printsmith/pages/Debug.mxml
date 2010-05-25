@@ -156,11 +156,14 @@
 			private function doPopulateSalesCategories():void {
 				var salesCategory:SalesCategory;
 				var i:int;
+				var j:int;
 				
-				for (i=1; i<=salesCategoryNames.length; i++) {
+				for (i=0; i<salesCategoryNames.length; i++) {
+					j=i;
+					j=j+1
 					salesCategory = new SalesCategory();
 					salesCategory.name = salesCategoryNames[i];
-					salesCategory.prevId = i.toString();
+					salesCategory.prevId = j.toString();
 					salesCategory.id = 0;
 					dataService.addUpdate(salesCategory);
 				}				
