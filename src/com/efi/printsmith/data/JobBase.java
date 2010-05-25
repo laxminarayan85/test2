@@ -439,10 +439,6 @@ public class JobBase extends ModelBase {
    */
   public static final String ROOTCHARGERECORD = "RootChargeRecord";
 	/**
-   * @generated
-   */
-  public static final String NEXTRECORD = "NextRecord";
-	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -2649,27 +2645,6 @@ public class JobBase extends ModelBase {
 
 
 	/**
-   * @generated
-   */	
- 	@Basic
-  private Integer nextRecord;
-	/**
-   * @generated
- 	 */
-  public Integer getNextRecord(){
-    return nextRecord; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setNextRecord(Integer newVal) {
-    this.nextRecord = newVal;
-  }
-
-
-	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2773,7 +2748,6 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
     if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
     if (ROOTCHARGERECORD.equals(propertyName)) return getRootChargeRecord();
-    if (NEXTRECORD.equals(propertyName)) return getNextRecord();
     return super.getProperty(propertyName);
   }
 	
@@ -2881,7 +2855,6 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     if (ROOTCHARGERECORD.equals(propertyName)) setRootChargeRecord((String)newValue); else
-    if (NEXTRECORD.equals(propertyName)) setNextRecord((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3087,8 +3060,6 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {InvoiceBase.class};		
     if (ROOTCHARGERECORD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (NEXTRECORD.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3197,7 +3168,6 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
     if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
     if (ROOTCHARGERECORD.equals(propertyName)) return JobBase.class;
-    if (NEXTRECORD.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3404,8 +3374,6 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
       return false;
     if (! SmartEquals(getRootChargeRecord(), objT.getRootChargeRecord()))
-      return false;
-    if (! SmartEquals(getNextRecord(), objT.getNextRecord()))
       return false;
     return true;
   }			

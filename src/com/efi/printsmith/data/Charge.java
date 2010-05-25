@@ -162,6 +162,11 @@ public class Charge extends ModelBase {
 	public static final String CHARGECOSTINGRECORD = "ChargeCostingRecord";
 
 	/**
+   * @generated
+   */
+  public static final String NEXTRECORD = "NextRecord";
+
+	/**
 	 * @generated
 	 */
 	public Charge() {
@@ -830,6 +835,28 @@ public class Charge extends ModelBase {
     this.chargeCostingRecord = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String nextRecord;
+
+	/**
+   * @generated
+ 	 */
+  public String getNextRecord(){
+    return nextRecord; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNextRecord(String newVal) {
+    this.nextRecord = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -865,6 +892,7 @@ public class Charge extends ModelBase {
     if (STARTTIME.equals(propertyName)) return getStartTime();
     if (ENDTIME.equals(propertyName)) return getEndTime();
     if (CHARGECOSTINGRECORD.equals(propertyName)) return getChargeCostingRecord();
+    if (NEXTRECORD.equals(propertyName)) return getNextRecord();
     return super.getProperty(propertyName);
   }
 	
@@ -904,6 +932,7 @@ public class Charge extends ModelBase {
     if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
     if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
     if (CHARGECOSTINGRECORD.equals(propertyName)) setChargeCostingRecord((ChargeCostingRecord)newValue); else
+    if (NEXTRECORD.equals(propertyName)) setNextRecord((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -973,6 +1002,8 @@ public class Charge extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (CHARGECOSTINGRECORD.equals(propertyName)) 
       return new Class<?>[] {ChargeCostingRecord.class};		
+    if (NEXTRECORD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1013,6 +1044,7 @@ public class Charge extends ModelBase {
     if (STARTTIME.equals(propertyName)) return Charge.class;
     if (ENDTIME.equals(propertyName)) return Charge.class;
     if (CHARGECOSTINGRECORD.equals(propertyName)) return Charge.class;
+    if (NEXTRECORD.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1083,6 +1115,8 @@ public class Charge extends ModelBase {
     if (! SmartEquals(getEndTime(), objT.getEndTime()))
       return false;
     if (! SmartEquals(getChargeCostingRecord(), objT.getChargeCostingRecord()))
+      return false;
+    if (! SmartEquals(getNextRecord(), objT.getNextRecord()))
       return false;
     return true;
   }			

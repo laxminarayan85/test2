@@ -43,6 +43,7 @@ package com.efi.printsmith.data
 		public var startTime:Date = new Date();
 		public var endTime:Date = new Date();
 		public var chargeCostingRecord:ChargeCostingRecord;
+		public var nextRecord:String = "";
 	
 	}
 }

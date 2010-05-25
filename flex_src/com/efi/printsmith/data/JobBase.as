@@ -111,7 +111,6 @@ package com.efi.printsmith.data
 		public var orParentOut:Boolean = false;
 		public var parentInvoice:InvoiceBase;
 		public var rootChargeRecord:String = "";
-		public var nextRecord:int = 0;
 	
 	}
 }
