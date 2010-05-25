@@ -16,6 +16,11 @@ package com.efi.printsmith
 		static public const JOB_RUN_METHOD_SHEETWISE = "SHEETWISE";
 		static public const JOB_RUN_METHOD_WORK_TURN = "WORKANDTURN";
 		static public const JOB_RUN_METHOD_WORK_TUMBLE = "WORKANDTUMBLE";
+		
+		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH = 1;
+		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH = 2;
+		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN = 3;
+
 		public function Constants()
 		{
 		}
