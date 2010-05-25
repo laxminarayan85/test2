@@ -742,7 +742,7 @@
 		dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 		dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
-		dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+		dataServiceSalesCategory.getAll("SalesCategory");
 		dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 		dataServiceStocks.getAll("PreferencesStocks");
 		dataServiceIntegration.getAll("PreferencesIntegration");
@@ -818,7 +818,7 @@
 		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
 			dataServicePricingMethod.addUpdate(item6);
 		}
-		for each(var item7:PreferencesSalesCategory in PreferencesSalesCategoryArray) {
+		for each(var item7:SalesCategory in PreferencesSalesCategoryArray) {
 			dataServiceSalesCategory.addUpdate(item7);
 		}
 		for each(var item8:PreferencesCreditCard in PreferencesCreditCardArray) {
@@ -1637,8 +1637,8 @@
 			if (payloadType == "PreferencesQuantityBreaks") {
 				dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 			}
-			if (payloadType == "PreferencesSalesCategory") {
-				dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+			if (payloadType == "SalesCategory") {
+				dataServiceSalesCategory.getAll("SalesCategory");
 			}
 			if (payloadType == "PreferencesStockDefinition") {
 				dataServiceStockDefinition.getAll("PreferencesStockDefinition");
@@ -1845,7 +1845,7 @@
     	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 	}
 	private function handleSaveSalesCategoryResult(ev:ResultEvent):void {
-    	dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+    	dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
     	dataServiceStockDefinition.getAll("PreferencesStockDefinition");
@@ -1883,7 +1883,7 @@
 	}
 	
 	private function handleDeleteSalesCategoryResult(ev:ResultEvent):void {
-    	dataServiceSalesCategory.getAll("PreferencesSalesCategory");
+    	dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	
 	private var openSequence:Array = [];
@@ -2136,12 +2136,12 @@
 	}
 
 	private function doNewSalesCategory():void{
-		var newItem:PreferencesSalesCategory = new PreferencesSalesCategory();
+		var newItem:SalesCategory = new SalesCategory();
 		PreferencesSalesCategoryArray.addItem(newItem);
 	}
 	private function doRemoveSalesCategory():void{
 		if (SalesCategoryGrid.selectedIndex > -1){
-			var newItem:PreferencesSalesCategory = SalesCategoryGrid.selectedItem as PreferencesSalesCategory;
+			var newItem:SalesCategory = SalesCategoryGrid.selectedItem as SalesCategory;
 			PreferencesSalesCategoryDeleteArray.addItem(newItem);
 			PreferencesSalesCategoryArray.removeItemAt(SalesCategoryGrid.selectedIndex);
 		}
@@ -3160,13 +3160,9 @@
 					editable="true"
 					itemEditEnd="processSalesCategoryGridData(event);" top="27" bottom="80" left="50" right="277">
 					<mx:columns>
-						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="category"
-							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.category.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
+						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}" dataField="name"
+							 editable="true">
+                			
 						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}" dataField="accountNumber"/>
 					</mx:columns>
