@@ -12,4 +12,8 @@ public class Constants {
 	public final static String PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN = "MATCH";
 	public final static String PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION = "SWING";
 
+	public final static String JOB_RUN_METHOD_SHEETWISE = "SHEETWISE";
+	public final static String JOB_RUN_METHOD_WORK_TURN = "WORKANDTURN";
+	public final static String JOB_RUN_METHOD_WORK_TUMBLE = "WORKANDTUMBLE";
+	
 }

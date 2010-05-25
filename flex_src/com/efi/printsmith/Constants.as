@@ -12,6 +12,10 @@ package com.efi.printsmith
 		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER = "NEITHER";
 		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN = "MATCH";
 		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION = "SWING";
+
+		static public const JOB_RUN_METHOD_SHEETWISE = "SHEETWISE";
+		static public const JOB_RUN_METHOD_WORK_TURN = "WORKANDTURN";
+		static public const JOB_RUN_METHOD_WORK_TUMBLE = "WORKANDTUMBLE";
 		public function Constants()
 		{
 		}

@@ -16,6 +16,7 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.Constants;
 
 public class JobMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(JobMapper.class);

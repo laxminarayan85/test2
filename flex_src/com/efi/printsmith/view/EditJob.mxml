@@ -11,7 +11,7 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="auto"
 				showCloseButton="true"
-				close="doDelete()" width="966" height="660" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
+				close="doDelete()" width="966" height="684" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
 			<mx:SetProperty target="{job_imp}" name="text" value="{job.impositionsPerRun}"/>
@@ -424,6 +424,8 @@
 			import com.efi.printsmith.pages.JobMethodPicker;
 			import com.efi.printsmith.view.StockPicker;
 
+			import com.efi.printsmith.Constants;
+			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.containers.TitleWindow;
@@ -762,8 +764,9 @@
 				job.backPasses=parseInt(this.back_passes_text.text);
 				job.backWashes=parseInt(this.back_washes_text.text);
 				job.location=job_location.selectedItem as Location;
-				if (run_method_radiogroup.selectedValue != null)
+				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
+				}
 				
 				job.parentSize = job_parent.text;
 				job.runSize = job_size.text;
@@ -1401,11 +1404,10 @@
 	</mx:Script>
 
 	<mx:VBox width="100%"
-			 height="597"
+			 height="625"
 			 creationPolicy="all" id="vbox1" verticalScrollPolicy="off">
-		<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
-		<mx:Canvas width="926"
-				   height="598"
+		<mx:Canvas width="939"
+				   height="624"
 				   verticalScrollPolicy="off"
 				   fontSize="9" id="canvas1">
 			<mx:LinkButton x="10"
@@ -1568,17 +1570,79 @@
 						 right="10"
 						 left="710">
 			</mx:ComboBox>
-			<mx:Canvas x="0" y="121" width="914" height="512" verticalScrollPolicy="auto" id="canvas2">
+			<mx:Canvas x="0" y="119" width="939" height="512" verticalScrollPolicy="auto" id="canvas2">
 				<mx:HDividedBox x="0"
-								width="913"
-								height="470" verticalScrollPolicy="off" id="hdividedbox1" bottom="42">
+								width="939"
+								height="502" verticalScrollPolicy="off" id="hdividedbox1" bottom="10">
 					<!--			<mx:Tree width="200"
 						 height="100%">
 						 </mx:Tree>
 					-->
+					<mx:Accordion width="250"
+								  height="502"
+								  fontSize="9" headerHeight="18">
+						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}"
+								   width="100%"
+								   height="100%"
+								   fontSize="9"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:LinkButton x="188"
+										   id="delete_charge_button"
+										   click="doDeleteCharge()"
+										   icon="@Embed(source='../../../../assets/delete16.png')"
+										   width="24"
+										   bottom="2"/>
+							<mx:LinkButton x="219"
+										   id="add_charge_button"
+										   click="doAddCharge()"
+										   icon="@Embed(source='../../../../assets/add16.png')"
+										   width="24"
+										   bottom="2" enabled="false"/>
+							<mx:DataGrid
+										 id="invoice_charge_datagrid"
+										 dataProvider="{job.charges}"
+										 left="0"
+										 bottom="25"
+										 top="0"
+										 right="0"
+										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
+								<mx:columns>
+									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
+													   dataField="description"/>
+									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
+													   width="90"
+													   dataField="price"
+													    textAlign="right"/>
+								</mx:columns>
+							</mx:DataGrid>
+						</mx:Canvas>
+						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
+								   width="100%"
+								   height="100%">
+							<mx:LinkButton x="10"
+										   y="10"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
+							<mx:LinkButton x="10"
+										   y="30"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
+							<mx:LinkButton x="10"
+										   y="50"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}"/>
+							<mx:LinkButton x="10"
+										   y="70"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
+							<mx:LinkButton x="10"
+										   y="90"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"/>
+							<mx:LinkButton x="10"
+										   y="110"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}"/>
+						</mx:Canvas>
+					</mx:Accordion>
 					<mx:ViewStack id="viewstack3"
 								  width="640"
-								  height="469">
+								  height="504">
 						<mx:Canvas label="View 1"
 								   width="100%"
 								   height="100%"
@@ -1912,7 +1976,7 @@
 										  y="263"
 										  id="estimator_viewstack"
 										  width="358"
-										  height="202">
+										  height="239">
 								<mx:Canvas id="printing_estimator_canvas"
 										   width="100%"
 										   height="100%">
@@ -1948,33 +2012,33 @@
 											  y="73"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Front')}"
 											  fontSize="9" textAlign="right" width="35" id="label24"/>
-									<mx:Panel x="10"
-											  y="123"
-											  width="338"
-											  height="69"
+									<mx:Panel x="48"
+											  y="122"
+											  width="203"
+											  height="94"
 											  layout="absolute"
 											  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunMethod')}"
 											  dropShadowEnabled="false"
-											  fontSize="9">
+											  fontSize="9" headerHeight="20" borderThicknessBottom="3" borderThicknessLeft="3" borderThicknessRight="3">
 										<mx:RadioButtonGroup id="run_method_radiogroup"/>
-										<mx:RadioButton x="213"
-														y="6"
+										<mx:RadioButton x="10"
+														y="27"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTurn')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Work_Turn" width="95" id="radiobutton1"/>
+														value="{Constants.JOB_RUN_METHOD_WORK_TURN}" width="179" id="radiobutton1"/>
 										<mx:RadioButton x="10"
 														y="6"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheetwise')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Sheetwise" width="76" id="radiobutton2"/>
-										<mx:RadioButton x="94"
-														y="6"
+														value="{Constants.JOB_RUN_METHOD_SHEETWISE}" width="177" id="radiobutton2"/>
+										<mx:RadioButton x="10"
+														y="48"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="Work_Tumble" width="111" id="radiobutton3"/>
+														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE" width="169" id="radiobutton3"/>
 									</mx:Panel>
 									<mx:Label x="48"
 											  y="54"
@@ -2098,70 +2162,6 @@
 						
 						</mx:Canvas>
 					</mx:ViewStack>
-					<mx:Accordion width="250"
-								  height="468"
-								  fontSize="9">
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}"
-								   width="100%"
-								   height="100%"
-								   fontSize="9"
-								   verticalScrollPolicy="off"
-								   horizontalScrollPolicy="off">
-							<mx:LinkButton x="203"
-										   y="464"
-										   id="delete_charge_button"
-										   click="doDeleteCharge()"
-										   icon="@Embed(source='../../../../assets/delete16.png')"
-										   width="24"
-										   bottom="0"/>
-							<mx:LinkButton x="234"
-										   y="464"
-										   id="add_charge_button"
-										   click="doAddCharge()"
-										   icon="@Embed(source='../../../../assets/add16.png')"
-										   width="24"
-										   bottom="0" enabled="false"/>
-							<mx:DataGrid
-										 id="invoice_charge_datagrid"
-										 dataProvider="{job.charges}"
-										 left="0"
-										 bottom="25"
-										 top="0"
-										 right="0"
-										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
-								<mx:columns>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
-													   dataField="description"/>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
-													   width="90"
-													   dataField="price" 
-													    textAlign="right"/>
-								</mx:columns>
-							</mx:DataGrid>
-						</mx:Canvas>
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
-								   width="100%"
-								   height="100%">
-							<mx:LinkButton x="10"
-										   y="10"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="30"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="50"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}"/>
-							<mx:LinkButton x="10"
-										   y="70"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
-							<mx:LinkButton x="10"
-										   y="90"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"/>
-							<mx:LinkButton x="10"
-										   y="110"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}"/>
-						</mx:Canvas>
-					</mx:Accordion>
 				</mx:HDividedBox>
 			</mx:Canvas>
 			<mx:LinkButton x="629"
@@ -2177,7 +2177,8 @@
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Savetemplateas')}"
 					  width="64"
 					  textAlign="center"/>
-
+		
 		</mx:Canvas>
+		<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 	</mx:VBox>
 </mx:TitleWindow>

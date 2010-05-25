@@ -2604,7 +2604,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
   private InvoiceBase parentInvoice;
 	/**
    * @generated
