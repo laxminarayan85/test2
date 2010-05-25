@@ -37,6 +37,10 @@ public class ChargeMapper extends ImportMapper {
 				documentNumber = currentImportToken;
 			} else if ("doc type".equals(currentFieldToken)) {
 				documentType = currentImportToken;
+			} else if ("next record".equals(currentFieldToken)) {
+				if (documentType.equals("") == true) {
+					charge.setNextRecord(currentImportToken);
+				}
 			} else if ("job number".equals(currentFieldToken)) {
 				jobNumber = currentImportToken;
 			} else if ("description".equals(currentFieldToken)) {

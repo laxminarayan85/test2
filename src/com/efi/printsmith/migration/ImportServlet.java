@@ -1,6 +1,5 @@
 package com.efi.printsmith.migration;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,29 +35,34 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	protected static Logger log = Logger.getLogger(ImportServlet.class);
 	protected static PropertiesService propertiesService = new PropertiesService();
 	protected static DataService dataService = new DataService();
-	
+
 	public ImportServlet() {
-		
+
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 			if (isMultipart) {
 				FileItemFactory factory = new DiskFileItemFactory();
 				ServletFileUpload upload = new ServletFileUpload(factory);
-				
+
 				List<FileItem> items = upload.parseRequest(request);
-				
+
 				Iterator<FileItem> iter = items.iterator();
 				String importType = null;
-				
-				/* First figure out what kind of file we're importing based on the hint given by the client */
+
+				/*
+				 * First figure out what kind of file we're importing based on
+				 * the hint given by the client
+				 */
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					if (item.isFormField()) {
@@ -71,7 +75,10 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				}
 				iter = items.iterator();
 
-				/* Now perform the actual import once we've found the file information in the passed parameters */
+				/*
+				 * Now perform the actual import once we've found the file
+				 * information in the passed parameters
+				 */
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 
@@ -79,7 +86,8 @@ public class ImportServlet extends HttpServlet implements Servlet {
 						if (importType != null) {
 							processUploadedFile(item, importType);
 						} else {
-							throw new ServletException("Unknown import type passed to ImportServlet");
+							throw new ServletException(
+									"Unknown import type passed to ImportServlet");
 						}
 					}
 				}
@@ -88,10 +96,11 @@ public class ImportServlet extends HttpServlet implements Servlet {
 			log.error(e);
 		}
 	}
-	
-	private void processUploadedFile(FileItem item, String importType) throws Exception {
+
+	private void processUploadedFile(FileItem item, String importType)
+			throws Exception {
 		boolean writeToFile = true;
-				
+
 		if (writeToFile) {
 			try {
 				File uploadedFile = File.createTempFile("PSImport", ".tmp");
@@ -105,78 +114,83 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				log.error("Exception: " + e);
 			}
 		} else {
-			
+
 		}
 	}
-	
+
 	void importData(File uploadedFile, String importType) throws Exception {
 		FileInputStream fis = new FileInputStream(uploadedFile);
 		InputStreamReader fileReader = new InputStreamReader(fis);
 		CSVReader csvReader = new CSVReader(fileReader);
-		
+
 		String[] fieldTokens = csvReader.readNext();
-		
+
 		ImportMapper mapper = null;
-		
+
 		if (importType != null && "ChargeDefinitions".equals(importType)) {
 			mapper = new ChargeDefinitionMapper();
 			mapper.importFile(uploadedFile);
-		}
-		else {
-		if (importType != null) {
-			if ("ChargeDefinitions".equals(importType)) {
-				mapper = new ChargeDefinitionMapper();
-			} else if ("Contacts".equals(importType)) {
-				mapper = new ContactMapper();				
-			} else if ("CopierDefinitions".equals(importType)) {
-				mapper = new CopierDefinitionMapper();				
-			} else if ("CustomerLogs".equals(importType)) {
-				mapper = new CustomerLogMapper();				
-			} else if ("Customers".equals(importType)) {
-				mapper = new CustomerMapper();
-			} else if ("Invoices".equals(importType)) {
-				mapper = new InvoiceMapper();				
-			} else if ("Jobs".equals(importType)) {
-				mapper = new JobMapper();				
-			} else if ("PressDefinitions".equals(importType)) {
-				mapper = new PressDefinitionMapper();				
-			} else if ("PriceLists".equals(importType)) {
-				mapper = new PriceListMapper();				
-			} else if ("StockDefinitions".equals(importType)) {				
-				mapper = new StockDefinitionMapper();
-			} else if ("TaxTables".equals(importType)) {				
-				mapper = new TaxTableMapper();
-			} else if ("PriceSchedules".equals(importType)) {
-				mapper = new PriceScheduleMapper();
-			} else if ("Charge".equals(importType)) {
-				mapper = new ChargeMapper();
-			} else if ("StockChange".equals(importType)) {
-				mapper = new StockChangeMapper();
-			}
-				else {
-				throw(new ServletException("Unknown import type passed to ImportServlet"));
-			}
 		} else {
-			throw(new ServletException("Unknown import type passed to ImportServlet"));
-		}				
-		
-		int lineNumber = 2;
-		String[] importTokens = null;
-		
-		while ((importTokens = csvReader.readNext()) != null) {
-			//if (importTokens.length != fieldTokens.length) {
-				//throw new InvalidParameterException("Wrong number of fields on line #" + lineNumber + ".");
-			//} else {
-			if (importTokens.length == fieldTokens.length) {
-				try {
-					ModelBase modelBase = mapper.importTokens(fieldTokens, importTokens);
-					dataService.addUpdate(modelBase);
-				} catch (Exception e) {
-					log.error(e);
+			if (importType != null) {
+				if ("ChargeDefinitions".equals(importType)) {
+					mapper = new ChargeDefinitionMapper();
+				} else if ("Contacts".equals(importType)) {
+					mapper = new ContactMapper();
+				} else if ("CopierDefinitions".equals(importType)) {
+					mapper = new CopierDefinitionMapper();
+				} else if ("CustomerLogs".equals(importType)) {
+					mapper = new CustomerLogMapper();
+				} else if ("Customers".equals(importType)) {
+					mapper = new CustomerMapper();
+				} else if ("Invoices".equals(importType)) {
+					mapper = new InvoiceMapper();
+				} else if ("Jobs".equals(importType)) {
+					mapper = new JobMapper();
+				} else if ("PressDefinitions".equals(importType)) {
+					mapper = new PressDefinitionMapper();
+				} else if ("PriceLists".equals(importType)) {
+					mapper = new PriceListMapper();
+				} else if ("StockDefinitions".equals(importType)) {
+					mapper = new StockDefinitionMapper();
+				} else if ("TaxTables".equals(importType)) {
+					mapper = new TaxTableMapper();
+				} else if ("PriceSchedules".equals(importType)) {
+					mapper = new PriceScheduleMapper();
+				} else if ("Charge".equals(importType)) {
+					mapper = new ChargeMapper();
+				} else if ("StockChange".equals(importType)) {
+					mapper = new StockChangeMapper();
+				} else {
+					throw (new ServletException(
+							"Unknown import type passed to ImportServlet"));
 				}
+			} else {
+				throw (new ServletException(
+						"Unknown import type passed to ImportServlet"));
 			}
-			lineNumber++;
-		}
+
+			int lineNumber = 2;
+			String[] importTokens = null;
+
+			while ((importTokens = csvReader.readNext()) != null) {
+				// if (importTokens.length != fieldTokens.length) {
+				// throw new
+				// InvalidParameterException("Wrong number of fields on line #"
+				// + lineNumber + ".");
+				// } else {
+				if (importTokens.length == fieldTokens.length) {
+					try {
+						ModelBase modelBase = mapper.importTokens(fieldTokens,
+								importTokens);
+						dataService.addUpdate(modelBase);
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
+				lineNumber++;
+			}
+			if (importType.equals("Charge"))
+				Utilities.setJobChargesFromRootRecord();
 		}
 	}
 }

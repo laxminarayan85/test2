@@ -6,10 +6,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
+import com.efi.printsmith.service.DataService;
 
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.ComLink;
+import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.Job;
 
 public class Utilities {
 	protected static Logger log = Logger.getLogger(Utilities.class);
@@ -99,5 +103,27 @@ public class Utilities {
 		Date date = formatter.parse(token);
 		return date;
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	static public void setJobChargesFromRootRecord() throws Exception {
+		DataService dataService = new DataService();
+		List<Job> jobs = (List<Job>)dataService.getAllQuery("Job", " where rootChargeRecord <> ''");
+		if (jobs.size() > 0) {
+			for (int i=0;i<jobs.size();i++) {
+				Charge charge = (Charge)dataService.getByPrevId("Charge", jobs.get(i).getRootChargeRecord());
+				Job job = jobs.get(i);
+				job.addCharges(charge);
+				if (charge.getNextRecord().equals("") == false) {
+					String nextRecord = charge.getNextRecord();
+					while (nextRecord.equals("") == false) {
+						charge = (Charge)dataService.getByPrevId("Charge", nextRecord);
+						job.addCharges(charge);
+						nextRecord = charge.getNextRecord();
+					}
+				}
+				dataService.addUpdate(job);
+			}
+		}
 	}
 }

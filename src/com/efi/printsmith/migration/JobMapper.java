@@ -52,6 +52,8 @@ public class JobMapper extends ImportMapper {
 				/* TODO */
 			} else if ("doc type".equals(currentFieldToken)) {
 				docType = currentImportToken;
+			} else if ("prep rec".equals(currentFieldToken)) {
+				job.setRootChargeRecord(currentImportToken);
 			} else if ("invoice number".equals(currentFieldToken)) {
 				invoiceNumber = currentImportToken;
 			} else if ("order number".equals(currentFieldToken)) {
@@ -83,6 +85,7 @@ public class JobMapper extends ImportMapper {
 					job.setPress(pressDefinition);
 					job.setPricingPress(pressDefinition);
 				}
+			
 			} else if ("press name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("job ticket notes".equals(currentFieldToken)) {
