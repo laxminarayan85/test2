@@ -244,6 +244,11 @@ public class PaperCalculator extends ModelBase {
   public static final String LMARGIN = "LMargin";
 
 	/**
+   * @generated
+   */
+  public static final String BACKTRIMRUN = "BackTrimRun";
+
+	/**
 	 * @generated
 	 */
 	public PaperCalculator() {
@@ -1355,6 +1360,28 @@ public class PaperCalculator extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean backTrimRun;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getBackTrimRun(){
+    return backTrimRun; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBackTrimRun(Boolean newVal) {
+    this.backTrimRun = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1410,6 +1437,7 @@ public class PaperCalculator extends ModelBase {
     if (BMARGIN.equals(propertyName)) return getBMargin();
     if (TMARGIN.equals(propertyName)) return getTMargin();
     if (LMARGIN.equals(propertyName)) return getLMargin();
+    if (BACKTRIMRUN.equals(propertyName)) return getBackTrimRun();
     return super.getProperty(propertyName);
   }
 	
@@ -1469,6 +1497,7 @@ public class PaperCalculator extends ModelBase {
     if (BMARGIN.equals(propertyName)) setBMargin((Double)newValue); else
     if (TMARGIN.equals(propertyName)) setTMargin((Double)newValue); else
     if (LMARGIN.equals(propertyName)) setLMargin((Double)newValue); else
+    if (BACKTRIMRUN.equals(propertyName)) setBackTrimRun((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1578,6 +1607,8 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (LMARGIN.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (BACKTRIMRUN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1638,6 +1669,7 @@ public class PaperCalculator extends ModelBase {
     if (BMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (TMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (LMARGIN.equals(propertyName)) return PaperCalculator.class;
+    if (BACKTRIMRUN.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1748,6 +1780,8 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getTMargin(), objT.getTMargin()))
       return false;
     if (! SmartEquals(getLMargin(), objT.getLMargin()))
+      return false;
+    if (! SmartEquals(getBackTrimRun(), objT.getBackTrimRun()))
       return false;
     return true;
   }			

@@ -63,6 +63,7 @@ package com.efi.printsmith.data
 		public var bMargin:Number = 0;
 		public var tMargin:Number = 0;
 		public var lMargin:Number = 0;
+		public var backTrimRun:Boolean = false;
 	
 	}
 }
