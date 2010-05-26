@@ -22,7 +22,7 @@ public class StockCheckWSLocator extends org.apache.axis.client.Service implemen
     }
 
     // Use to get a proxy class for StockCheckWSSoap
-    private java.lang.String StockCheckWSSoap_address = "http://b2bstg.xpedx.com:81/webservices/stockcheck.asmx";
+    private java.lang.String StockCheckWSSoap_address = "https://b2bstg.xpedx.com/webservices/stockcheck.asmx";
 
     public java.lang.String getStockCheckWSSoapAddress() {
         return StockCheckWSSoap_address;

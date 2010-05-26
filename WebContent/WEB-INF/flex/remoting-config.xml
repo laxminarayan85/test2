@@ -162,4 +162,14 @@
 			</hibernate>
 		</properties>
 	</destination>
+	<destination id="xpedxIntegrationService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.XpedxIntegrationService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
 </service>

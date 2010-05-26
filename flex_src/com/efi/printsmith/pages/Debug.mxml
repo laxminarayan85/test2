@@ -37,6 +37,11 @@
 					fault="handleFault(event)"
 					result="handleLoadReportTemplates(event)"/>		
 	</mx:RemoteObject>
+	<mx:RemoteObject id="xpedxIntegrationService" destination="xpedxIntegrationService">
+		<mx:method name="XpedxStockCheck"
+					fault="handleFault(event)"
+					result="handleXpedxResult(event)"/>
+	</mx:RemoteObject>
 	<mx:Script>
 
 		<![CDATA[
@@ -258,6 +263,14 @@
 				var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?reportName="+reportName);
             	navigateToURL(urlRequest, "_blank");
 			}
+			
+			private function handleXpedxResult(evt:ResultEvent):void {
+				
+			}
+			
+			private function doXpedxStockCheck():void {
+				xpedxIntegrationService.xpedxStockCheck();
+			}
 		]]>
 	</mx:Script>
 
@@ -267,6 +280,10 @@
 				   y="10"
 				   label="Populate Sales Categories"
 				   click="doPopulateSalesCategories();" width="188"/>
+		<mx:Button x="206"
+				   y="10"
+				   label="xpedx Stock Check"
+				   click="doXpedxStockCheck();" width="188"/>
 		<mx:Button x="10"
 				   y="40"
 				   label="Populate Locations"
