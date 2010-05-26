@@ -1408,25 +1408,38 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
-	private InkColor backInks;
+    @OneToMany()
+    @IndexColumn(name="backinksjobbase")
+	@JoinTable( name = "jobbase_backinks")
+	private java.util.List<InkColor> backInks;
 	
 	/**
 	 * @generated
  	 */
-	public InkColor getBackInks(){
+	public java.util.List<InkColor> getBackInks(){
     return backInks; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBackInks(InkColor newVal) {
+   * @generated
+   */	
+  public void addBackInks(InkColor obj) {
+    if (backInks == null) {
+      backInks = new java.util.ArrayList<InkColor>();
+    }
+    backInks.add(obj);
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBackInks(java.util.List<InkColor> newVal) {
     this.backInks = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -2604,7 +2617,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
   private InvoiceBase parentInvoice;
 	/**
    * @generated
@@ -2799,7 +2812,7 @@ public class JobBase extends ModelBase {
     if (FRONTWASHES.equals(propertyName)) setFrontWashes((Integer)newValue); else
     if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
     if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
-    if (BACKINKS.equals(propertyName)) setBackInks((InkColor)newValue); else
+    if (BACKINKS.equals(propertyName)) setBackInks((java.util.List<InkColor>)newValue); else
     if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
     if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
     if (PRICINGCOPIER.equals(propertyName)) setPricingCopier((CopierDefinition)newValue); else
@@ -2949,7 +2962,7 @@ public class JobBase extends ModelBase {
     if (FRONTINKS.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, InkColor.class};		
     if (BACKINKS.equals(propertyName)) 
-      return new Class<?>[] {InkColor.class};		
+      return new Class<?>[] {java.util.List.class, InkColor.class};		
     if (PRESSQTY.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (PRICINGRECORD.equals(propertyName)) 

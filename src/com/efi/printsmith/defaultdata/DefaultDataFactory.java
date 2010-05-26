@@ -50,6 +50,7 @@ public class DefaultDataFactory {
 			ProcessPricingMethods();
 			ProcessWebTranslation();
 			ProcessTableEditor();
+			ProcessInkColor();
 			
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
@@ -63,7 +64,13 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 	}
-	
+	private void ProcessInkColor() {
+		try {
+			LoadInkData(new String[] { currentPath });
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+	}
 	private void ProcessWebTranslation(){
 		List<?> itemList = (List<?>) dataservice.getAll("WebTranslation");
 
@@ -1557,7 +1564,67 @@ public class DefaultDataFactory {
 			}
 		}
 	}
+	private void LoadInkData(String[] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("inkcolor") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				doInkColor(f);
+				break;
+			}
+		}
+	}
+	private int doInkColor(File file) throws java.io.IOException {
 
+		List<?> inkColorList = (List<?>) dataservice
+				.getAll("InkColor");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+		java.io.BufferedReader br = new java.io.BufferedReader(ip);
+		String line = null;
+		int rv = -1;
+		while ((line = br.readLine()) != null) {
+			if (line.length() > 0) {
+				if (inkColorList.size() > 0) {
+					boolean found = false;
+					for (int i = 0; i < inkColorList.size(); i++) {
+						if (((InkColor) inkColorList.get(i))
+								.getName().trim().equals(line.trim()) == true) {
+							found = true;
+							break;
+						}
+					}
+					if (found != true) {
+						InkColor inkcolors = new InkColor();
+						inkcolors.setName(line.trim());
+						try {
+							dataservice.addUpdate(inkcolors);
+						} catch (Exception e) {
+							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+							break;
+						}
+					}
+				} else {
+					InkColor inkcolors = new InkColor();
+					inkcolors.setName(line.trim());
+					try {
+						dataservice.addUpdate(inkcolors);
+					} catch (Exception e) {
+						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+						break;
+					}
+				}
+			}
+		}
+		return rv;
+	}
+	
 	private int doStatesFile(File file) throws java.io.IOException {
 		int rv = -1;
 		try {

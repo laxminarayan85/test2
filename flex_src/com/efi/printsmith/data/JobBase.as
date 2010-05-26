@@ -55,7 +55,7 @@ package com.efi.printsmith.data
 		public var frontWashes:int = 0;
 		public var backWashes:int = 0;
 		public var frontInks:ArrayCollection;
-		public var backInks:InkColor;
+		public var backInks:ArrayCollection;
 		public var pressQty:Number = 0;
 		public var pricingRecord:PricingRecord;
 		public var pricingCopier:CopierDefinition;

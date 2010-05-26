@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="340"
+				height="280"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="doClose();"
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.InkEditor')}"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off" xmlns:ns1="com.hillelcoren.components.*">
+				
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.events.InkColorEvent;
+			import com.efi.printsmith.events.DialogDoneEvent;
+			import com.efi.printsmith.events.ModelGetSingleEvent;
+			import com.efi.printsmith.events.ModelQueryByCriteriaEvent;
+			import com.efi.printsmith.events.ModelAddUpdateEvent;
+			
+			import com.efi.printsmith.data.InkColor
+			import com.efi.printsmith.data.ModelBase;
+					
+			import com.efi.printsmith.query.RemoteRestriction;
+			
+			
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var inkColorsArray:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var front:Boolean;
+			[Bindable]
+			private var job1:JobBase;
+			
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				var errorDetail:String="";
+				errorDetail = ev.fault.faultDetail;
+				Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+			}
+
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+	  			loadInkColors();
+			}
+			private function doClose():void{
+				var selectEvent:InkColorEvent;
+				if (front){
+					if (ink1.selectedItem != null)
+						job1.frontInks.addItemAt(ink1.selectedItem as InkColor,0)
+					else
+						job1.frontInks.addItem(ink1.text);
+						
+					if (ink2.selectedItem != null)
+						job1.frontInks.addItemAt(ink2.selectedItem as InkColor,1)
+					else
+						job1.frontInks.addItem(ink2.text);
+						
+					if (ink3.selectedItem != null)
+						job1.frontInks.addItemAt(ink3.selectedItem as InkColor,2)
+					else
+						job1.frontInks.addItem(ink3.text);
+						
+					if (ink4.selectedItem != null)
+						job1.frontInks.addItemAt(ink4.selectedItem as InkColor,3)
+					else
+						job1.frontInks.addItem(ink4.text);
+						
+					if (ink5.selectedItem != null)
+						job1.frontInks.addItemAt(ink5.selectedItem as InkColor,4)
+					else
+						job1.frontInks.addItem(ink1.text);
+					
+					if (ink6.selectedItem != null)
+						job1.frontInks.addItemAt(ink6.selectedItem as InkColor,5)
+					else
+						job1.frontInks.addItem(ink6.text);
+						
+					selectEvent = new InkColorEvent(InkColorEvent.Close, job1.frontInks);
+					dispatchEvent(selectEvent);						
+				}
+				else{
+					if (ink1.selectedItem != null)
+						job1.backInks.addItemAt(ink1.selectedItem as InkColor,0)
+					else
+						job1.backInks.addItem(ink1.text);
+						
+					if (ink2.selectedItem != null)
+						job1.backInks.addItemAt(ink2.selectedItem as InkColor,1)
+					else
+						job1.backInks.addItem(ink2.text);
+						
+					if (ink3.selectedItem != null)
+						job1.backInks.addItemAt(ink3.selectedItem as InkColor,2)
+					else
+						job1.backInks.addItem(ink3.text);
+						
+					if (ink4.selectedItem != null)
+						job1.backInks.addItemAt(ink4.selectedItem as InkColor,3)
+					else
+						job1.backInks.addItem(ink4.text);
+						
+					if (ink5.selectedItem != null)
+						job1.backInks.addItemAt(ink5.selectedItem as InkColor,4)
+					else
+						job1.backInks.addItem(ink1.text);
+					
+					if (ink6.selectedItem != null)
+						job1.backInks.addItemAt(ink6.selectedItem as InkColor,5)
+					else
+						job1.backInks.addItem(ink6.text);
+						
+					selectEvent = new InkColorEvent(InkColorEvent.Close, job1.backInks);
+					dispatchEvent(selectEvent);	
+				
+				}
+				
+				
+				PopUpManager.removePopUp(this);
+				
+			}
+
+			private function loadInkColors():void {
+				dataService.getAll("InkColor");
+			}
+			public function setSide(temp:String):void{
+				if (temp == "front")
+					front = true;
+				else
+					front = false;
+		
+			}
+			public function setInks(job:JobBase):void
+			{
+				var temp:InkColor = new InkColor();
+				job1 = job;
+				
+				if (front){
+					if (job.frontInks != null){
+						temp =  job1.frontInks.getItemAt(0) as InkColor;
+						ink1.text = temp.name;
+						temp = job1.frontInks.getItemAt(1) as InkColor;
+						ink2.text = temp.name;
+						temp = job1.frontInks.getItemAt(2) as InkColor;
+						ink3.text = temp.name;
+						temp =job1.frontInks.getItemAt(3) as InkColor;
+						ink4.text = temp.name;
+						temp = job1.frontInks.getItemAt(4) as InkColor;
+						ink5.text = temp.name;
+						temp = job1.frontInks.getItemAt(5) as InkColor;
+						ink6.text = temp.name;
+					}
+					else
+					job1.frontInks = new ArrayCollection();
+								
+				}
+				else{
+					if (job.backInks != null){
+						temp =  job1.backInks.getItemAt(0) as InkColor;
+						ink1.text = temp.name;
+						temp = job1.backInks.getItemAt(1) as InkColor;
+						ink2.text = temp.name;
+						temp = job1.backInks.getItemAt(2) as InkColor;
+						ink3.text = temp.name;
+						temp =job1.backInks.getItemAt(3) as InkColor;
+						ink4.text = temp.name;
+						temp = job1.backInks.getItemAt(4) as InkColor;
+						ink5.text = temp.name;
+						temp = job1.backInks.getItemAt(5) as InkColor;
+						ink6.text = temp.name;
+					}
+					else
+						job1.backInks = new ArrayCollection();
+				}
+				
+			}
+
+			private function handleLoadResult(ev:ResultEvent):void
+			{
+				inkColorsArray = ev.result as ArrayCollection;
+				
+			}
+			
+			
+		]]>
+	</mx:Script>
+
+
+
+	<mx:Canvas width="311"
+			   height="231"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+		<mx:Text x="10"
+				 y="28"
+				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink1')}"
+				 height="20" textAlign="right" width="84"/>
+		<mx:Text x="10"
+				 y="58"
+				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink2')}"
+				 height="20" textAlign="right" width="84"/>
+		<mx:Text x="10" y="88" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink3')}"
+			textAlign="right" width="84"/>
+		<mx:Text x="10" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink4')}"
+			textAlign="right" width="84"/>
+		<mx:Text x="10" y="148" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink5')}"
+			textAlign="right" width="84"/>
+		<mx:Text x="10" y="178" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink6')}"
+			textAlign="right" width="84"/>
+		<ns1:AutoComplete x="113" y="28" id="ink1" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="58" id="ink2" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="88" id="ink3" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="118" id="ink4" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="148" id="ink5" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="178" id="ink6" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+	</mx:Canvas>
+
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>

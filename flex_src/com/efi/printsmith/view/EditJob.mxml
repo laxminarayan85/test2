@@ -421,9 +421,11 @@
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 			import com.efi.printsmith.events.JobMethodSelectEvent;
+			import com.efi.printsmith.events.InkColorEvent;
 			
 			import com.efi.printsmith.pages.JobMethodPicker;
 			import com.efi.printsmith.view.StockPicker;
+			import com.efi.printsmith.pages.InkColorPicker;
 
 			import com.efi.printsmith.Constants;
 			
@@ -493,6 +495,9 @@
 
 			[Bindable]
 			public var refreshSO:Boolean=false;
+			[Bindable]
+			public var front:Boolean=false;
+
 
 			[Bindable]
 			private var setPaperCalculatorData:Boolean=false;
@@ -1395,7 +1400,31 @@
 				digitalAssetsWindow.setStyle("borderAlpha", 0.9);
 	    		
 	    	}
-	    	
+	    	private function doInkEditorFront():void{
+	    		var inkWindow:InkColorPicker = InkColorPicker(PopUpManager.createPopUp(this, InkColorPicker, true));
+				inkWindow.setStyle("borderAlpha", 0.9);
+				inkWindow.setSide("front");
+			 	inkWindow.setInks(job);
+			 	front = true;
+			 	inkWindow.addEventListener(InkColorEvent.Close, handleInkColorClose);
+			 	
+			 }
+			 private function doInkEditorBack():void{
+	    		var inkWindow:InkColorPicker = InkColorPicker(PopUpManager.createPopUp(this, InkColorPicker, true));
+				inkWindow.setStyle("borderAlpha", 0.9);
+				inkWindow.setSide("back");			 	
+			 	inkWindow.setInks(job);
+			 	front = false;
+			 	inkWindow.addEventListener(InkColorEvent.Close, handleInkColorClose);
+			 	
+			 }
+			 private function handleInkColorClose(event:InkColorEvent):void
+			 {
+			 	if (front)
+			 		job.frontInks = event.tempArray;
+			 	else
+			 		job.backInks = event.tempArray;
+			 }
 	    	private function submitToFiery():void {
 				if (invoice != null && !isNaN(invoice.id)) { // Only allow submission if invoice & job have been saved
 					if (job != null && !isNaN(job.id)) {
@@ -2099,20 +2128,22 @@
 												  id="front_washes_text"
 												  fontSize="9" textAlign="center"
 												  text="{job.frontWashes}" focusOut="fieldChanged(event)"/>
-									<mx:TextInput x="192"
+									<mx:List x="192"
 												  y="71"
 												  width="156"
 												  height="20"
 												  id="front_inks_text"
 												  fontSize="9" textAlign="center"
-												  text="{job.frontInks}"/>
-									<mx:TextInput x="192"
+												   dataProvider="{job.frontInks}"
+												    labelField="name" click="doInkEditorFront();" wordWrap="true"/>
+									<mx:List x="192"
 												  y="94"
 												  width="156"
 												  height="20"
 												  id="back_inks_text"
 												  fontSize="9" textAlign="center"
-												  text="{job.backInks}"/>
+												   dataProvider="{job.backInks}"
+												    labelField="name" click="doInkEditorBack();"/>
 									<mx:TextInput x="144"
 												  y="94"
 												  width="46"
