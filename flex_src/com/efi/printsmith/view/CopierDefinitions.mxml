@@ -137,13 +137,14 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceCostCenter.getAll("CostCenter");
 		dataServiceProductionLocation.getAll("ProductionLocations");
 		dataServiceProductionCopiers.getAll("ProductionCopiers");
-
-		
+	
+		doNew();
 	    copierDefinition = initNewCopierDefinition();
 	}
 	
 	private function initNewCopierDefinition():CopierDefinition {
 		var localCopierDefinition:CopierDefinition = new CopierDefinition();
+	
 		localCopierDefinition.largeFormat = false;
 		localCopierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix;
 		localCopierDefinition.copierMatrix.header1 = 1;
@@ -454,7 +455,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	private function doNew():void {
 	    copierDefinition = this.initNewCopierDefinition();
-	 	
+	 	updateMethodBox();
 	}       
 
 	private function doDelete():void {
@@ -616,19 +617,19 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function updateMethodBox():void {
 		methodType.removeAll();
-		if (copierDefinition.largeFormat ==false){
-			methodType.addItem(CopierPricingMethod.COSTPLUS);
-			methodType.addItem(CopierPricingMethod.FLATRATE);
-			methodType.addItem(CopierPricingMethod.COPIESANDORIGINALS);
-			methodType.addItem(CopierPricingMethod.COPIESPERORIGINALS);
-			methodType.addItem(CopierPricingMethod.TOTALOFALLCOPIES);
-			
-		}else{
+		if (copierDefinition.largeFormat == true  || largeformatCheck.selected){
 			methodType.addItem(CopierPricingMethod.SQUAREAREAOFORIGINALS);
 			methodType.addItem(CopierPricingMethod.TOTALSQUAREAREA);
 			methodType.addItem(CopierPricingMethod.SQUAREAREAANDCOPIES); 
 			methodType.addItem(CopierPricingMethod.SQUAREAREAPERCOPY);
 			
+		}else{
+					
+			methodType.addItem(CopierPricingMethod.COSTPLUS);
+			methodType.addItem(CopierPricingMethod.FLATRATE);
+			methodType.addItem(CopierPricingMethod.COPIESANDORIGINALS);
+			methodType.addItem(CopierPricingMethod.COPIESPERORIGINALS);
+			methodType.addItem(CopierPricingMethod.TOTALOFALLCOPIES);
 		}
 	}
 	
@@ -909,9 +910,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Button x="533" y="204.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wasteCmd.WasteChart')}" click="doWasteChart();"/>
 		<mx:Button x="534" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')}" click="doAddCharge();"/>
 		<mx:Label x="14" y="263" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.PrinterType')}" textAlign="right" width="104"/>
-		<mx:CheckBox x="126" y="261" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right"/>
-		<mx:CheckBox x="182" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color')}" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right" width="52"/>
-		<mx:CheckBox x="242" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
+		<mx:CheckBox x="126" y="261" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right" click="updateMethodBox();"/>
+		<mx:CheckBox x="182" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color')}" click="updateMethodBox();" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right" width="52"/>
+		<mx:CheckBox x="242" y="261" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" click="updateMethodBox();" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
 		<mx:Label x="489" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right" width="124"/>
 		<mx:Label x="489" y="263" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right" width="124"/>
 		<mx:ComboBox x="621" y="234.5" height="21" id="pricing_method_combo" dataProvider="{methodType}" change="changePricingMethod(event);" width="144" textAlign="left"></mx:ComboBox>
