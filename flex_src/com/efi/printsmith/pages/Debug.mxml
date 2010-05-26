@@ -45,6 +45,7 @@
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.ModelBase;
 			import com.efi.printsmith.query.RemoteRestriction;
@@ -269,7 +270,29 @@
 			}
 			
 			private function doXpedxStockCheck():void {
-				xpedxIntegrationService.xpedxStockCheck();
+				xpedxIntegrationService.checkStock(460, "2257624", 100);
+				var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
+				params.id = 460;
+				params.xpedxId = "2257624";
+				params.qty = 100;
+				xpedxIntegrationService.checkStock(params);
+			}
+			
+			private function doXpedxMultipleStockCheck():void {
+				var paramArray:ArrayCollection = new ArrayCollection();
+				var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
+				params.id = 460;
+				params.xpedxId = "2257624";
+				params.qty = 100;
+				paramArray.addItem(params);
+				
+				var params2:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
+				params2.id = 470;
+				params2.xpedxId = "2257625";
+				params2.qty = 100;
+				paramArray.addItem(params2);
+				
+				xpedxIntegrationService.checkStocks(paramArray);				
 			}
 		]]>
 	</mx:Script>
@@ -284,6 +307,10 @@
 				   y="10"
 				   label="xpedx Stock Check"
 				   click="doXpedxStockCheck();" width="188"/>
+		<mx:Button x="206"
+				   y="40"
+				   label="xpedx Stock Check (x 2)"
+				   click="doXpedxMultipleStockCheck();" width="188"/>
 		<mx:Button x="10"
 				   y="40"
 				   label="Populate Locations"
