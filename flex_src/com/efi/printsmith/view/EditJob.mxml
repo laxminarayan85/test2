@@ -394,6 +394,7 @@
 	</mx:RemoteObject>			
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.JobDigitalAssets;
 			import com.efi.printsmith.data.JobTemplate;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.PricingRecord;
@@ -1389,6 +1390,11 @@
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
 			 }
+	    	private function doDigitalAssets():void {
+	    		var digitalAssetsWindow:JobDigitalAssets = JobDigitalAssets(PopUpManager.createPopUp(this, JobDigitalAssets, true));
+				digitalAssetsWindow.setStyle("borderAlpha", 0.9);
+	    		
+	    	}
 	    	
 	    	private function submitToFiery():void {
 				if (invoice != null && !isNaN(invoice.id)) { // Only allow submission if invoice & job have been saved
@@ -1634,7 +1640,8 @@
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
 							<mx:LinkButton x="10"
 										   y="90"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"/>
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"
+										   click="doDigitalAssets()"/>
 							<mx:LinkButton x="10"
 										   y="110"
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}"/>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="426"
+				height="434"
+				defaultButton="{ok_btn}"
+				showCloseButton="true"
+				creationComplete="init()"
+				close="PopUpManager.removePopUp(this);"
+				title="Digital Assets"
+				xmlns:text="flash.text.*"
+				borderThickness="3"
+				borderStyle="solid"
+				horizontalScrollPolicy="off"
+				verticalScrollPolicy="off">
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.events.DialogDoneEvent;
+			
+			import com.efi.printsmith.data.ModelBase;
+			import com.efi.printsmith.data.PriceLogEntry;
+			
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.core.Container;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.core.Application;
+			import mx.collections.ArrayCollection;
+
+			private var fileReference:FileReference;
+
+			[Bindable]
+			public var assetArray:ArrayCollection = new ArrayCollection;
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+
+			}
+
+			private function init():void
+			{
+				PopUpManager.centerPopUp(this);
+
+			}
+			
+			private function doOK():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function doCancel():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function handleSelectFile(evt:Event) {
+//				var urlVariables:URLVariables = new URLVariables();
+//				urlVariables.importType = fileType;
+//				servletTarget.data = urlVariables;
+//				servletTarget.method = URLRequestMethod.POST;
+//				fileReference.upload(servletTarget);		
+			}
+			
+			private function handleCancelFile(evt:Event) {
+				
+			}
+			
+			private function doAdd():void {
+				fileReference = new FileReference();
+				fileReference.addEventListener(Event.SELECT, handleSelectFile);
+				fileReference.addEventListener(Event.CANCEL, handleCancelFile);
+				fileReference.browse();
+			}
+			
+			private function doRemove():void {
+			}
+
+
+		]]>
+	</mx:Script>
+	<mx:Canvas width="393"
+			   height="389"
+			   horizontalScrollPolicy="off"
+			   verticalScrollPolicy="off">
+		<mx:DataGrid x="0" y="0" width="393" height="339">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Name" dataField="col1"/>
+				<mx:DataGridColumn headerText="Date" dataField="col2"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Button x="303" y="357" id="cancel_btn" label="Cancel" click="doCancel()" width="80"/>
+		<mx:Button x="215" y="357" id="ok_btn" label="OK" click="doOK()" width="80"/>
+		<mx:Button x="98" y="357" id="remove_btn" label="Remove" click="doRemove()" width="80"/>
+		<mx:Button x="10" y="357" id="add_btn" label="Add..." click="doAdd()" width="80"/>
+			   
+	</mx:Canvas>
+	<mx:Spacer height="10"/>
+
+</mx:TitleWindow>
