@@ -35,8 +35,8 @@ public class ChargeCostingMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering ChargeCostingMapper->importFile");
 		DataService dataService = new DataService();
-		ChargeCost chargeCost = new ChargeCost();
-				
+		ChargeCost chargeCost = null;
+		String method = "";		
 			for (int i = 0; i < fieldTokens.length; i++) {
 				String currentImportToken = importTokens[i];
 				String currentFieldToken = fieldTokens[i];
@@ -44,20 +44,33 @@ public class ChargeCostingMapper extends ImportMapper {
 					/* TODO */
 				} else if ("rtype".equals(currentFieldToken)) {
 					/* TODO */
-				} else if ("charge ID".equals(currentFieldToken)) {
+				} else if ("charge id".equals(currentFieldToken)) {
 					ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
 					if (modelBase != null) {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+						chargeCost= chargeDefinition.getChargeCost();
 					}
 							
 				} else if ("costing method".equals(currentFieldToken)) {
-					
+					method = currentImportToken;
+					if (method.equals("0")) {
+						chargeCost.setCostingMethod("NoCost");
+					} else if (method.equals("1")) {
+						chargeCost.setCostingMethod("HundredPercent");
+					} else if (method.equals("2")) {
+						chargeCost.setCostingMethod("UnitCost");
+					} else if (method.equals("3")) {
+						chargeCost.setCostingMethod("TimeAndMaterial");
+					}else if (method.equals("99")) {
+						chargeCost.setCostingMethod("Undefined");
+					} 
+								
 				} else if ("setup cost".equals(currentFieldToken)) {
 					chargeCost.setSetupCost(Utilities.tokenToDouble(currentImportToken));
 				} else if ("unit cost".equals(currentFieldToken)) {
 					chargeCost.setUnitCost(Utilities.tokenToDouble(currentImportToken));				
-				}  else if ("price list ID".equals(currentFieldToken)) {
+				}  else if ("price list id".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						PriceList priceList = (PriceList)dataService.getByPrevId("PriceList", currentImportToken);
 						if (priceList != null)
@@ -67,7 +80,7 @@ public class ChargeCostingMapper extends ImportMapper {
 					chargeCost.setFixedMaterials(Utilities.tokenToDouble(currentImportToken));
 				} else if ("unit time&mat cost".equals(currentFieldToken)) {
 					chargeCost.setUnitMaterials(Utilities.tokenToDouble(currentImportToken));
-				} else if ("labor time&mat cost".equals(currentFieldToken)) {
+				} else if ("labor time&mat rate".equals(currentFieldToken)) {
 					chargeCost.setLaborRate(Utilities.tokenToDouble(currentImportToken));
 				} else if ("setup time minutes".equals(currentFieldToken)) {
 					chargeCost.setSetupMinutes(Utilities.tokenToDouble(currentImportToken));
