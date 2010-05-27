@@ -394,6 +394,7 @@
 	</mx:RemoteObject>			
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.DigitalAsset;
 			import com.efi.printsmith.pages.JobDigitalAssets;
 			import com.efi.printsmith.data.JobTemplate;
 			import com.efi.printsmith.data.JobBase;
@@ -422,6 +423,8 @@
 			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 			import com.efi.printsmith.events.JobMethodSelectEvent;
 			import com.efi.printsmith.events.InkColorEvent;
+		    import com.efi.printsmith.events.DigitalAssetEvent;
+			import com.efi.printsmith.events.commandEvents.Jobs.*;
 			
 			import com.efi.printsmith.pages.JobMethodPicker;
 			import com.efi.printsmith.view.StockPicker;
@@ -446,7 +449,6 @@
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
 			import mx.core.UIComponent;
-		    import com.efi.printsmith.events.commandEvents.Jobs.*;
 		    
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
@@ -1397,9 +1399,17 @@
 			 }
 	    	private function doDigitalAssets():void {
 	    		var digitalAssetsWindow:JobDigitalAssets = JobDigitalAssets(PopUpManager.createPopUp(this, JobDigitalAssets, true));
+	    		digitalAssetsWindow.addEventListener(DigitalAssetEvent.OK, handleDigitalAssetComplete);
 				digitalAssetsWindow.setStyle("borderAlpha", 0.9);
-	    		
+	    		digitalAssetsWindow.job = this.job;
 	    	}
+	    	
+	    	private function handleDigitalAssetComplete(event:DigitalAssetEvent):void {
+	    		if (event.assetArray != null) {
+	    			this.job.digitalAssets = event.assetArray;
+	    		}
+	    	}
+	    	
 	    	private function doInkEditorFront():void{
 	    		var inkWindow:InkColorPicker = InkColorPicker(PopUpManager.createPopUp(this, InkColorPicker, true));
 				inkWindow.setStyle("borderAlpha", 0.9);

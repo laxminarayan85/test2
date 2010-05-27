@@ -2,7 +2,7 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
 				width="426"
-				height="434"
+				height="452"
 				defaultButton="{ok_btn}"
 				showCloseButton="true"
 				creationComplete="init()"
@@ -13,9 +13,13 @@
 				borderStyle="solid"
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="off">
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY  HH:NN"/>
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.printsmith.events.DigitalAssetEvent;
+			import com.efi.printsmith.data.DigitalAsset;
+			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.events.DialogDoneEvent;
 			
 			import com.efi.printsmith.data.ModelBase;
@@ -34,24 +38,37 @@
 			import mx.messaging.messages.IMessage;
 			import mx.core.Application;
 			import mx.collections.ArrayCollection;
-
+			
+            import flash.events.*;
+            
 			private var fileReference:FileReference;
+		
+			private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/AssetRepositoryServlet");
 
 			[Bindable]
-			public var assetArray:ArrayCollection = new ArrayCollection;
+			public var job:Job;
 			
 			private function handleFault(ev:FaultEvent):void
 			{
-
+				var message:String;
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
 			}
 
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
 
+				if (job != null) {
+					if (job.digitalAssets == null) {
+						job.digitalAssets = new ArrayCollection();
+					}
+				}
 			}
 			
 			private function doOK():void {
+				var selectEvent:DigitalAssetEvent = new DigitalAssetEvent(DigitalAssetEvent.OK, job.digitalAssets);
+				dispatchEvent(selectEvent);						
 				PopUpManager.removePopUp(this);
 			}
 			
@@ -59,15 +76,96 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-			private function handleSelectFile(evt:Event) {
-//				var urlVariables:URLVariables = new URLVariables();
+			private function handleSelectFile(evt:Event):void {
+				disableUI();
+				var urlVariables:URLVariables = new URLVariables();
 //				urlVariables.importType = fileType;
 //				servletTarget.data = urlVariables;
-//				servletTarget.method = URLRequestMethod.POST;
-//				fileReference.upload(servletTarget);		
+				servletTarget.method = URLRequestMethod.POST;
+				fileReference.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA, handleUploadComplete);
+                fileReference.addEventListener(IOErrorEvent.IO_ERROR, onUploadIoError);
+                fileReference.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onUploadSecurityError);
+               	fileReference.addEventListener(ProgressEvent.PROGRESS, onUploadProgress);
+				fileReference.upload(servletTarget);
 			}
 			
-			private function handleCancelFile(evt:Event) {
+            private function disableUI():void {
+            	progress_bar.visible = true;
+                ok_btn.enabled = false;
+                cancel_btn.enabled = false;
+                remove_btn.enabled = false;
+                add_btn.enabled = false;
+                datagrid.enabled = false;
+            }
+            
+            private function enableUI():void {
+            	progress_bar.visible = false;
+                ok_btn.enabled = true;
+                cancel_btn.enabled = true;
+                remove_btn.enabled = true;
+                add_btn.enabled = true;
+                datagrid.enabled = true;
+            }
+            
+            private function onUploadIoError(event:IOErrorEvent):void {
+ 				var message:String;
+				message="I/O Error: " + event.text;
+				Alert.show(message, "Error", 0, null);
+				clearUpload();
+            }
+            
+            // Called on upload security error
+            private function onUploadSecurityError(event:SecurityErrorEvent):void {
+ 				var message:String;
+				message="Security Error: " + event.text;
+				Alert.show(message, "Error", 0, null);
+				clearUpload();
+            }
+            			
+            private function clearUpload():void {
+                fileReference.removeEventListener(ProgressEvent.PROGRESS, onUploadProgress);
+                fileReference.removeEventListener(Event.COMPLETE, handleUploadComplete);
+                fileReference.removeEventListener(IOErrorEvent.IO_ERROR, onUploadIoError);
+                fileReference.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onUploadSecurityError);
+                fileReference.cancel();
+                updateProgBar();
+                enableUI();
+            }
+
+             // Get upload progress
+            private function onUploadProgress(event:ProgressEvent):void {
+                var numPerc:Number = Math.round((event.bytesLoaded / event.bytesTotal) * 100);
+                updateProgBar(numPerc);
+            }
+            
+            private function updateProgBar(numPerc:Number = 0):void {
+                progress_bar.setProgress(numPerc, 100);
+                progress_bar.validateNow();
+            }
+            
+            private function handleUploadComplete(evt:DataEvent):void {
+				if (job != null && evt.data != null) {
+					if (job.digitalAssets == null) {
+						job.digitalAssets = new ArrayCollection();
+					}
+					var digitalAsset:DigitalAsset = new DigitalAsset();
+					
+					digitalAsset.dateAdded = new Date();
+					
+					var fileType:String = "";
+					if (fileReference.name != null && fileReference.name.lastIndexOf(".") > 0 && fileReference.name.lastIndexOf(".") != fileReference.name.length-1) {
+						fileType = fileReference.name.substr(fileReference.name.lastIndexOf(".") + 1, fileReference.name.length);
+					}
+					digitalAsset.fileType = fileType;
+					digitalAsset.job = job;
+					digitalAsset.repositoryPath = evt.data as String;
+					digitalAsset.originalFilename = fileReference.name;
+					job.digitalAssets.addItem(digitalAsset);
+				}
+				clearUpload();
+			}
+			
+			private function handleCancelFile(evt:Event):void {
 				
 			}
 			
@@ -79,27 +177,38 @@
 			}
 			
 			private function doRemove():void {
+				if (datagrid.selectedItem != null) {
+					if (job.digitalAssets != null && job.digitalAssets.contains(datagrid.selectedItem as DigitalAsset)) {
+						// TODO: Delete file on server as well here?
+						job.digitalAssets.removeItemAt(job.digitalAssets.getItemIndex(datagrid.selectedItem as DigitalAsset));
+					}
+				}
+			}
+			public function getDateLabel(item:Object,column:DataGridColumn):String
+			{
+				return dateFormatter.format(item[column.dataField]);
 			}
 
 
 		]]>
 	</mx:Script>
 	<mx:Canvas width="393"
-			   height="389"
+			   height="408"
 			   horizontalScrollPolicy="off"
 			   verticalScrollPolicy="off">
-		<mx:DataGrid x="0" y="0" width="393" height="339">
+		<mx:DataGrid x="0" y="0" width="393" height="349" id="datagrid" dataProvider="{job.digitalAssets}" allowMultipleSelection="false">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Name" dataField="col1"/>
-				<mx:DataGridColumn headerText="Date" dataField="col2"/>
+				<mx:DataGridColumn headerText="Name" dataField="originalFilename" width="200"/>
+				<mx:DataGridColumn headerText="FileType" dataField="fileType" width="60" textAlign="center"/>
+				<mx:DataGridColumn headerText="Date Added" dataField="dateAdded" labelFunction="getDateLabel"/>
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:Button x="303" y="357" id="cancel_btn" label="Cancel" click="doCancel()" width="80"/>
-		<mx:Button x="215" y="357" id="ok_btn" label="OK" click="doOK()" width="80"/>
-		<mx:Button x="98" y="357" id="remove_btn" label="Remove" click="doRemove()" width="80"/>
-		<mx:Button x="10" y="357" id="add_btn" label="Add..." click="doAdd()" width="80"/>
+		<mx:Button x="303" y="375" id="cancel_btn" label="Cancel" click="doCancel()" width="80"/>
+		<mx:Button x="215" y="375" id="ok_btn" label="OK" click="doOK()" width="80"/>
+		<mx:Button x="98" y="375" id="remove_btn" label="Remove" click="doRemove()" width="80"/>
+		<mx:Button x="10" y="375" id="add_btn" label="Add..." click="doAdd()" width="80"/>
+		<mx:ProgressBar x="10" y="352" width="373" height="21" label=" " id="progress_bar" mode="manual" maximum="100" visible="false"/>
 			   
 	</mx:Canvas>
-	<mx:Spacer height="10"/>
 
 </mx:TitleWindow>

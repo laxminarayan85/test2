@@ -63,6 +63,12 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>AssetRepositoryServlet</servlet-name>
+		<display-name>AssetRepositoryServlet</display-name>
+		<servlet-class>com.efi.printsmith.repository.AssetRepositoryServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>CrystalClearServlet</servlet-name>
 		<display-name>CrystalClearServlet</display-name>
 		<servlet-class>com.efi.printsmith.reporting.CrystalClearServlet</servlet-class>
@@ -99,6 +105,10 @@
 	<servlet-mapping>
 		<servlet-name>JDFIntegrationServlet</servlet-name>
 		<url-pattern>/JDFIntegrationServlet/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AssetRepositoryServlet</servlet-name>
+		<url-pattern>/AssetRepositoryServlet/*</url-pattern>
 	</servlet-mapping>
 	
     <welcome-file-list>

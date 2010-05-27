@@ -180,6 +180,7 @@ public class DataService extends HibernateService {
 	public List<?> getStockPicker(String className,
 			List<PreferencesStockDefinition> Columns) throws Exception {
 		log.debug("** getStockPicker.");
+		System.out.println(System.currentTimeMillis());
 		EntityManager em = entityManagerFactory.createEntityManager();
 
 		List<?> resultList = new ArrayList<Object>();
@@ -202,6 +203,7 @@ public class DataService extends HibernateService {
 			log.error(e);
 		} finally {
 			em.close();
+			System.out.println(System.currentTimeMillis());
 		}
 		return null;
 	}
