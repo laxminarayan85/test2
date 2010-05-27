@@ -45,6 +45,7 @@
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.printsmith.view.ImportStockCatalog;
 			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.ModelBase;
