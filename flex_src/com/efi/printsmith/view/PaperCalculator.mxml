@@ -173,6 +173,13 @@
 						cboRunToFinishGrain.selectedIndex = 2;
 					} 
 				}
+				if (job.paperCal.printParentToFinishSection == true) {
+					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH;
+				} else if (job.paperCal.printParentToRunSection == true) {
+					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
+				} else if (job.paperCal.printRunToFinishSection == true) {
+					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;					
+				}
 				job.paperCal.runSize=job.runSize;
 				job.paperCal.finishSize=job.finishSize;
 				job.paperCal.parentSize=job.parentSize;
@@ -211,6 +218,23 @@
 							job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION;
 							break;
 					}
+				}
+				switch (calc_order_radio_group.selectedValue) {
+					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+						job.paperCal.printParentToFinishSection = true;
+						job.paperCal.printParentToRunSection = false;
+						job.paperCal.printRunToFinishSection = false;						
+						break;
+					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+						job.paperCal.printParentToFinishSection = false;
+						job.paperCal.printParentToRunSection = true;
+						job.paperCal.printRunToFinishSection = false;						
+						break;
+					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+						job.paperCal.printParentToFinishSection = false;
+						job.paperCal.printParentToRunSection = false;
+						job.paperCal.printRunToFinishSection = true;						
+						break;					
 				}
 				job.paperCal.runSize=run_size_edit.text
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
@@ -517,11 +541,11 @@
 					 width="129" height="20"/>
 
 		<mx:Panel x="515"
-				  y="456"
+				  y="464"
 				  width="342"
-				  height="148"
+				  height="140"
 				  layout="absolute"
-				  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}" borderThicknessLeft="3" borderThicknessTop="3" borderThicknessRight="3" dropShadowEnabled="false">
+				  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}" borderThicknessLeft="3" borderThicknessTop="3" borderThicknessRight="3" dropShadowEnabled="false" headerHeight="20">
 			<mx:CheckBox x="10"
 						 y="10"
 						 id="chkPrintParentToFinish"
@@ -688,13 +712,17 @@
 		<mx:Canvas x="515"
 				   y="187"
 				   width="342"
-				   height="248"
+				   height="233"
 				   borderStyle="inset">
 		</mx:Canvas>
 		<mx:Label x="694"
 				  y="114"
 				  text="="
 				  width="20"/>
+		<mx:RadioButtonGroup id="calc_order_radio_group"/>
+		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" labelPlacement="right"/>
+		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" labelPlacement="right"/>
+		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" labelPlacement="right"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
