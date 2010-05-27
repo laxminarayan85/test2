@@ -93,6 +93,7 @@ public class ChargeCostingMapper extends ImportMapper {
 				} else if ("avg impressions".equals(currentFieldToken)) {
 						chargeCost.setPiecesPerHour(Utilities.tokenToDouble(currentImportToken));
 				} else if ("created date".equals(currentFieldToken)) {
+					if (currentImportToken.equals("") == false)
 					 chargeCost.setCreated(Utilities.tokenToDate(currentImportToken));
 				} else if ("updated date".equals(currentFieldToken)) {
 					
