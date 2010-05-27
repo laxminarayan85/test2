@@ -64,6 +64,8 @@ package com.efi.printsmith.data
 		public var tMargin:Number = 0;
 		public var lMargin:Number = 0;
 		public var backTrimRun:Boolean = false;
+		public var swap:Boolean = false;
+		public var runout:int = 0;
 	
 	}
 }

@@ -249,6 +249,15 @@ public class PaperCalculator extends ModelBase {
   public static final String BACKTRIMRUN = "BackTrimRun";
 
 	/**
+   * @generated
+   */
+  public static final String SWAP = "Swap";
+	/**
+   * @generated
+   */
+  public static final String RUNOUT = "Runout";
+
+	/**
 	 * @generated
 	 */
 	public PaperCalculator() {
@@ -1382,6 +1391,51 @@ public class PaperCalculator extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean swap;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getSwap(){
+    return swap; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSwap(Boolean newVal) {
+    this.swap = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer runout;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getRunout(){
+    return runout; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setRunout(Integer newVal) {
+    this.runout = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1438,6 +1492,8 @@ public class PaperCalculator extends ModelBase {
     if (TMARGIN.equals(propertyName)) return getTMargin();
     if (LMARGIN.equals(propertyName)) return getLMargin();
     if (BACKTRIMRUN.equals(propertyName)) return getBackTrimRun();
+    if (SWAP.equals(propertyName)) return getSwap();
+    if (RUNOUT.equals(propertyName)) return getRunout();
     return super.getProperty(propertyName);
   }
 	
@@ -1498,6 +1554,8 @@ public class PaperCalculator extends ModelBase {
     if (TMARGIN.equals(propertyName)) setTMargin((Double)newValue); else
     if (LMARGIN.equals(propertyName)) setLMargin((Double)newValue); else
     if (BACKTRIMRUN.equals(propertyName)) setBackTrimRun((Boolean)newValue); else
+    if (SWAP.equals(propertyName)) setSwap((Boolean)newValue); else
+    if (RUNOUT.equals(propertyName)) setRunout((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1609,6 +1667,10 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (BACKTRIMRUN.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (SWAP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (RUNOUT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1670,6 +1732,8 @@ public class PaperCalculator extends ModelBase {
     if (TMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (LMARGIN.equals(propertyName)) return PaperCalculator.class;
     if (BACKTRIMRUN.equals(propertyName)) return PaperCalculator.class;
+    if (SWAP.equals(propertyName)) return PaperCalculator.class;
+    if (RUNOUT.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1782,6 +1846,10 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getLMargin(), objT.getLMargin()))
       return false;
     if (! SmartEquals(getBackTrimRun(), objT.getBackTrimRun()))
+      return false;
+    if (! SmartEquals(getSwap(), objT.getSwap()))
+      return false;
+    if (! SmartEquals(getRunout(), objT.getRunout()))
       return false;
     return true;
   }			
