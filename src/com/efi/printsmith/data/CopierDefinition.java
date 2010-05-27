@@ -1254,7 +1254,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.ALL} )
 	private Matrix copierMatrix;
 	
 	/**

@@ -439,6 +439,10 @@ public class JobBase extends ModelBase {
    */
   public static final String ROOTCHARGERECORD = "RootChargeRecord";
 	/**
+   * @generated
+   */
+  public static final String DIGITALASSETS = "DigitalAssets";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -2658,6 +2662,39 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+    @OneToMany(  cascade = {CascadeType.ALL})
+    @JoinTable( name = "jobbase_digitalassets")
+  private java.util.List<DigitalAsset> digitalAssets;
+	/**
+   * @generated
+ 	 */
+  public java.util.List<DigitalAsset> getDigitalAssets(){
+    return digitalAssets; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void addDigitalAssets(DigitalAsset obj) {
+    if (digitalAssets == null) {
+      digitalAssets = new java.util.ArrayList<DigitalAsset>();
+    }
+    digitalAssets.add(obj);
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDigitalAssets(java.util.List<DigitalAsset> newVal) {
+    this.digitalAssets = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2761,6 +2798,7 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
     if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
     if (ROOTCHARGERECORD.equals(propertyName)) return getRootChargeRecord();
+    if (DIGITALASSETS.equals(propertyName)) return getDigitalAssets();
     return super.getProperty(propertyName);
   }
 	
@@ -2868,6 +2906,7 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     if (ROOTCHARGERECORD.equals(propertyName)) setRootChargeRecord((String)newValue); else
+    if (DIGITALASSETS.equals(propertyName)) setDigitalAssets((java.util.List<DigitalAsset>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3073,6 +3112,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {InvoiceBase.class};		
     if (ROOTCHARGERECORD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (DIGITALASSETS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, DigitalAsset.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3181,6 +3222,7 @@ public class JobBase extends ModelBase {
     if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
     if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
     if (ROOTCHARGERECORD.equals(propertyName)) return JobBase.class;
+    if (DIGITALASSETS.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3387,6 +3429,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
       return false;
     if (! SmartEquals(getRootChargeRecord(), objT.getRootChargeRecord()))
+      return false;
+    if (! SmartEquals(getDigitalAssets(), objT.getDigitalAssets()))
       return false;
     return true;
   }			
