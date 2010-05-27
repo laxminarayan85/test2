@@ -19,13 +19,15 @@ import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.State;
 import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.data.City;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class CustomerMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 
 	}
-
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
 		log.info("Entering CustomerMapper->importTokens");

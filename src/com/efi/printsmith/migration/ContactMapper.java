@@ -13,11 +13,14 @@ import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.State;
 import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.service.DataService;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class ContactMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ContactMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering ContactMapper->importTokens");

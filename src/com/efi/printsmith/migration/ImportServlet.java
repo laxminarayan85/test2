@@ -26,6 +26,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.service.PropertiesService;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 
 public class ImportServlet extends HttpServlet implements Servlet {
 	/**
@@ -35,9 +36,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 	protected static Logger log = Logger.getLogger(ImportServlet.class);
 	protected static PropertiesService propertiesService = new PropertiesService();
 	protected static DataService dataService = new DataService();
-
+	public XpdexImportParams importParams = new XpdexImportParams();
 	public ImportServlet() {
-
+		
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -58,7 +59,6 @@ public class ImportServlet extends HttpServlet implements Servlet {
 
 				Iterator<FileItem> iter = items.iterator();
 				String importType = null;
-
 				/*
 				 * First figure out what kind of file we're importing based on
 				 * the hint given by the client
@@ -70,6 +70,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 						String value = item.getString();
 						if (name.equals("importType")) {
 							importType = value;
+						}
+						if (name.equals("importParams")) {
+							this.importParams = (XpdexImportParams) item;
 						}
 					}
 				}
@@ -108,7 +111,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					uploadedFile.createNewFile();
 				}
 				item.write(uploadedFile);
-				importData(uploadedFile, importType);
+				importData(uploadedFile, importType, importParams);
 				uploadedFile.delete();
 			} catch (Exception e) {
 				log.error("Exception: " + e);
@@ -118,7 +121,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		}
 	}
 
-	void importData(File uploadedFile, String importType) throws Exception {
+	void importData(File uploadedFile, String importType, XpdexImportParams importParams) throws Exception {
 		FileInputStream fis = new FileInputStream(uploadedFile);
 		InputStreamReader fileReader = new InputStreamReader(fis);
 		CSVReader csvReader = new CSVReader(fileReader);

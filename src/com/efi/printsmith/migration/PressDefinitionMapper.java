@@ -15,11 +15,14 @@ import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
 import com.efi.printsmith.data.ProductionPress;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class PressDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(PressDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering PressDefinitionMapper->importTokens");

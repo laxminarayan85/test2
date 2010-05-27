@@ -1,7 +1,7 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import org.apache.log4j.Logger;
 import java.util.List;
 import com.efi.printsmith.data.ChargeDefinition;
@@ -17,7 +17,9 @@ public class ChargeMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
 		
 	}
-	
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering ChargeDefinitionMapper->importTokens");
 		Charge charge = new Charge();

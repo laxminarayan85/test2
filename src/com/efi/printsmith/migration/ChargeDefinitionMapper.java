@@ -1,6 +1,7 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
@@ -28,6 +29,9 @@ import com.efi.printsmith.data.SalesCategory;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeDefinitionMapper.class);
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
+	}
 	public void importFile(File uploadedFile) throws Exception {
 		log.info("Entering ChargeDefinitionMapper->importFile");
 		FileInputStream fis = new FileInputStream(uploadedFile);

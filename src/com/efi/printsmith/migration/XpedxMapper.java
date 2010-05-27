@@ -17,6 +17,7 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.PaperPrice;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import java.io.File;
 
 import org.apache.log4j.Logger;
@@ -25,85 +26,131 @@ public class XpedxMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(StockDefinitionMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 	}
-	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) {
+		return null;
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) throws Exception {
 		log.info("Entering XpedxMapper->importTokens");
 		DataService dataService = new DataService();
 		StockDefinition stockDefinition = null;
+		StockType stockType = null;
+		double caliper = 0.0;
 		for (int i=0; i < importTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			switch(i) {
 			case 0:
 				stockDefinition = dataService.getByStockId(currentImportToken);
-				if (stockDefinition == null)
+				if (stockDefinition == null && importParams.getImportAll() == true)
 					stockDefinition = new StockDefinition();
+				else
+					return null;
 				stockDefinition.setStockId(currentImportToken);
+				stockDefinition.setStocknumber(currentImportToken);
 				break;
 			case 1:
-				stockDefinition.setParentsize(currentImportToken);
+				if (importParams.getFullUpdate())
+					stockDefinition.setParentsize(currentImportToken);
 				break;
 			case 2:
 				break;
 			case 3:
 				break;
 			case 4:
-				stockDefinition.setName(currentImportToken);
+				if (importParams.getFullUpdate())
+					stockDefinition.setName(currentImportToken);
 				break;
 			case 5:
 				break;
 			case 6:
-				stockDefinition.setUom(currentImportToken);
-				if (currentImportToken.equals("SH"))
-					stockDefinition.setStockunit(1);
-				else if (currentImportToken.equals("EN"))
-					stockDefinition.setStockunit(0);
-				else if (currentImportToken.equals("CT"))
-					stockDefinition.setStockunit(2);
-				else
-					stockDefinition.setStockunit(1);
+				if (importParams.getFullUpdate()) {
+					stockDefinition.setUom(currentImportToken);
+					if (currentImportToken.equals("SH"))
+						stockDefinition.setStockunit(1);
+					else if (currentImportToken.equals("EN"))
+						stockDefinition.setStockunit(0);
+					else if (currentImportToken.equals("CT"))
+						stockDefinition.setStockunit(2);
+					else
+						stockDefinition.setStockunit(1);
+				}
 				break;
 			case 7:
-				stockDefinition.setMinOrderQty(Utilities.tokenToInt(currentImportToken));
+				if (importParams.getFullUpdate() && importParams.getNoBrokenCartons())
+					stockDefinition.setMinOrderQty(Utilities.tokenToInt(currentImportToken));
 				break;
 			case 8:
-				stockDefinition.setSheetspercarton(Utilities.tokenToInt(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setSheetspercarton(Utilities.tokenToInt(currentImportToken));
 				break;
 			case 9:
-				if (currentImportToken.equals("M"))
-					stockDefinition.setCostunits(1000);
-				else if (currentImportToken.equals("C"))
-					stockDefinition.setCostunits(100);
-				else if (currentImportToken.equals("B"))
-					stockDefinition.setCostunits(100);
-				else
-					stockDefinition.setCostunits(1000);
+				if (importParams.getFullUpdate()) {
+					if (currentImportToken.equals("M"))
+						stockDefinition.setCostunits(1000);
+					else if (currentImportToken.equals("C"))
+						stockDefinition.setCostunits(100);
+					else if (currentImportToken.equals("B"))
+						stockDefinition.setCostunits(100);
+					else
+						stockDefinition.setCostunits(1000);
+				}
 				break;
 			case 10:
 				break;
 			case 11:
+				if (importParams.getFullUpdate())
+					stockDefinition.setCartonWeight(Utilities.tokenToDouble(currentImportToken));
 				break;
 			case 12:
-				stockDefinition.setWeight(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setWeight(Utilities.tokenToDouble(currentImportToken));
 				break;
 			case 13:
+				if (importParams.getFullUpdate())
+					caliper = Utilities.tokenToDouble(currentImportToken);
 				break;
 			case 14:
 				break;
 			case 15:
 				break;
 			case 16:
-				stockDefinition.setCost5(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getUpdatePrice5()) {
+					if (importParams.getUpdateType() == 1)
+						stockDefinition.setCost5(Utilities.tokenToDouble(currentImportToken) + Utilities.tokenToDouble(currentImportToken) * importParams.getAdjustValue5());
+					else
+						stockDefinition.setCost5(Utilities.tokenToDouble(currentImportToken) + importParams.getAdjustValue5());
+				}
 				break;
 			case 17:
-				stockDefinition.setCost4(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getUpdatePrice4()) {
+					if (importParams.getUpdateType() == 1)
+						stockDefinition.setCost4(Utilities.tokenToDouble(currentImportToken) + Utilities.tokenToDouble(currentImportToken) * importParams.getAdjustValue4());
+					else
+						stockDefinition.setCost4(Utilities.tokenToDouble(currentImportToken) + importParams.getAdjustValue4());
+				}
 				break;
 			case 18:
-				stockDefinition.setCost3(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getUpdatePrice3()) {
+					if (importParams.getUpdateType() == 1)
+						stockDefinition.setCost3(Utilities.tokenToDouble(currentImportToken) + Utilities.tokenToDouble(currentImportToken) * importParams.getAdjustValue3());
+					else
+						stockDefinition.setCost3(Utilities.tokenToDouble(currentImportToken) + importParams.getAdjustValue3());
+				}
 				break;
 			case 19:
-				stockDefinition.setCost2(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getUpdatePrice2()) {
+					if (importParams.getUpdateType() == 1)
+						stockDefinition.setCost2(Utilities.tokenToDouble(currentImportToken) + Utilities.tokenToDouble(currentImportToken) * importParams.getAdjustValue2());
+					else
+						stockDefinition.setCost2(Utilities.tokenToDouble(currentImportToken) + importParams.getAdjustValue2());
+				}
 				break;
 			case 20:
-				stockDefinition.setCost1(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getUpdatePrice1()) {
+					if (importParams.getUpdateType() == 1)
+						stockDefinition.setCost1(Utilities.tokenToDouble(currentImportToken) + Utilities.tokenToDouble(currentImportToken) * importParams.getAdjustValue1());
+					else
+						stockDefinition.setCost1(Utilities.tokenToDouble(currentImportToken) + importParams.getAdjustValue1());
+				}
 				break;
 			case 21:
 				break;
@@ -143,64 +190,144 @@ public class XpedxMapper extends ImportMapper {
 			case 36:
 				break;
 			case 37:
+				if (importParams.getFullUpdate()) {
+					Integer section = Utilities.tokenToInt(currentImportToken);
+					switch (section) {
+					case 1:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 2");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						stockDefinition.setCoated("2");
+						break;
+					case 2:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 3");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						stockDefinition.setCoated("2");
+						break;
+					case 3:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 2");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					case 4:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 3");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					case 5:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 2");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					case 6:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 3");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					case 7:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 1");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					case 99:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 1");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+						break;
+					default:
+						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 1");
+						if (stockType != null)
+							stockDefinition.setStktype(stockType);
+					}
+				}
 				break;
 			case 38:
-				StockGroup stockGroup = dataService.getByStockGroupName(currentImportToken);
-				if (stockGroup == null) {
-					stockGroup = new StockGroup();
-					stockGroup.setName(currentImportToken);
-					stockGroup = (StockGroup)dataService.addUpdate(stockGroup);
-					stockGroup.setId(stockGroup.getId());
+				if (importParams.getFullUpdate()) {
+					StockGroup stockGroup = dataService.getByStockGroupName(currentImportToken);
+					if (stockGroup == null) {
+						stockGroup = new StockGroup();
+						stockGroup.setName(currentImportToken);
+						stockGroup = (StockGroup)dataService.addUpdate(stockGroup);
+						stockGroup.setId(stockGroup.getId());
+					}
+					stockDefinition.setStkgroup(stockGroup);
 				}
-				stockDefinition.setStkgroup(stockGroup);
 				break;
 			case 39:
-				StockColors stockColor = dataService.getByStockColorName(currentImportToken);
-				if (stockColor == null) {
-					stockColor = new StockColors();
-					stockColor.setName(currentImportToken);
-					stockColor = (StockColors)dataService.addUpdate(stockColor);
-					stockColor.setId(stockColor.getId());
+				if (importParams.getFullUpdate()) {
+					StockColors stockColor = dataService.getByStockColorName(currentImportToken);
+					if (stockColor == null) {
+						stockColor = new StockColors();
+						stockColor.setName(currentImportToken);
+						stockColor = (StockColors)dataService.addUpdate(stockColor);
+						stockColor.setId(stockColor.getId());
+					}
+					stockDefinition.setColor(stockColor);
+					GenericColors genericColor = dataService.getByGenericColorsName(currentImportToken);
+					if (genericColor == null) {
+						genericColor = new GenericColors();
+						genericColor.setName(currentImportToken);
+						genericColor = (GenericColors)dataService.addUpdate(genericColor);
+						genericColor.setId(stockColor.getId());
+					}
+					stockDefinition.setGenericColor(genericColor);
 				}
-				stockDefinition.setColor(stockColor);
 				break;
 			case 40:
-				StockFinish stockFinish = dataService.getByStockFinishName(currentImportToken);
-				if (stockFinish == null) {
-					stockFinish = new StockFinish();
-					stockFinish.setName(currentImportToken);
-					stockFinish = (StockFinish)dataService.addUpdate(stockFinish);
-					stockFinish.setId(stockFinish.getId());
+				if (importParams.getFullUpdate()) {
+					StockFinish stockFinish = dataService.getByStockFinishName(currentImportToken);
+					if (stockFinish == null) {
+						stockFinish = new StockFinish();
+						stockFinish.setName(currentImportToken);
+						stockFinish = (StockFinish)dataService.addUpdate(stockFinish);
+						stockFinish.setId(stockFinish.getId());
+					}
 				}
-				stockDefinition.setFinish(stockFinish);
 				break;
 			case 41:
 				break;
 			case 42:
-				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
 				break;
 			case 43:
-				stockDefinition.setForestManagement(currentImportToken);
+				if (importParams.getFullUpdate())
+					stockDefinition.setForestManagement(currentImportToken);
 				break;
 			case 44:
-				stockDefinition.setFscCertified(Utilities.tokenToBooleanValue(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setFscCertified(Utilities.tokenToBooleanValue(currentImportToken));
 				break;
 			case 45:
-				stockDefinition.setSfiCertified(Utilities.tokenToBooleanValue(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setSfiCertified(Utilities.tokenToBooleanValue(currentImportToken));
 				break;
 			case 46:
-				stockDefinition.setGreenSealCertified(Utilities.tokenToBooleanValue(currentImportToken));
+				if (importParams.getFullUpdate())
+					stockDefinition.setGreenSealCertified(Utilities.tokenToBooleanValue(currentImportToken));
 				break;
 			}
 		}
-		Vendor vendor = (Vendor)dataService.getByName("Vendor","xpdex");
-		if (vendor == null) {
-			vendor = new Vendor();
-			vendor.setName("xpedx");
-			vendor = (Vendor)dataService.addUpdate(vendor);
-			vendor.setId(vendor.getId());
+		if (importParams.getFullUpdate()) {
+			if (importParams.getSelectMetric())
+				stockDefinition.setIsMetric(true);
+			if (caliper * 1000 == stockDefinition.getWeight()) {
+				stockDefinition.setThickness(1.0);
+			} else {
+				stockDefinition.setThickness(caliper);
+			}
+			stockDefinition.setAutoCalculateBlank(true);
+			
+			Vendor vendor = (Vendor)dataService.getByName("Vendor","xpdex");
+			if (vendor == null) {
+				vendor = new Vendor();
+				vendor.setName("xpedx");
+				vendor = (Vendor)dataService.addUpdate(vendor);
+				vendor.setId(vendor.getId());
+			}
+			stockDefinition.setVendor(vendor);
 		}
-		stockDefinition.setVendor(vendor);
 		return stockDefinition;
 	}
 }

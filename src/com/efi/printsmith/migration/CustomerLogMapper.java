@@ -6,12 +6,16 @@ import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.CustomerLog;
 import com.efi.printsmith.data.ModelBase;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class CustomerLogMapper extends ImportMapper{
 	protected static Logger log = Logger.getLogger(CustomerLogMapper.class);
 
 	public void importFile(File uploadedFile) throws Exception {
 		
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering CustomerLogMapper->importTokens");

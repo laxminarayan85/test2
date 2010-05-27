@@ -25,42 +25,38 @@
 				<mx:Label x="290" y="102" text="Status"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="70" y="35"/>
+				<mx:TextInput x="70" y="35" id="stock_id"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="365" y="35" width="132"/>
+				<mx:TextInput x="365" y="35" width="132" id="supplier_id"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="84" y="74"/>
+				<mx:TextInput x="84" y="74" id="description"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="100" width="65"/>
+				<mx:TextInput x="82" y="100" width="65" id="availability"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="194" y="100" width="88"/>
+				<mx:TextInput x="194" y="100" width="88" id="price"/>
 			</mx:AddChild>
+			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="338" y="100"/>
+				<mx:TextInput x="338" y="100" id="itemstatus"/>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Extended"/>
 	</mx:states>
+	<mx:RemoteObject id="xpedxIntegrationService" destination="xpedxIntegrationService">
+		<mx:method name="XpedxStockCheck"
+					fault="handleFault(event)"
+					result="handleXpedxResult(event)"/>
+	</mx:RemoteObject>
 <mx:Script>
                                    
-<![CDATA[ 
-	import com.efi.printsmith.data.Contact;           
-    import com.efi.printsmith.data.Account;    
-    import com.efi.printsmith.view.EditContact;
-    import com.efi.printsmith.view.EditCustomer;    
-    import com.efi.printsmith.view.PressDefinitions;
-    import com.efi.printsmith.data.Charge;   
-    import com.efi.printsmith.events.PriceListPickerSelectEvent
-         
+<![CDATA[           
+    import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 	import mx.managers.PopUpManager;     
-	import com.efi.printsmith.data.SpeedTable;  
-	import com.efi.printsmith.data.PriceList;
-	import com.efi.printsmith.data.PriceListBase; 
-	import com.efi.printsmith.data.WasteChart;                          
+	import com.efi.printsmith.data.StockDefinition;                          
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
 	import mx.core.Container;                      
@@ -74,13 +70,12 @@
 	import mx.collections.ArrayCollection;
 	import flash.net.FileReference;
 	import mx.rpc.Responder;
-	import com.efi.printsmith.events.commandEvents.EditForms.EditWebAdminEvent;
-	import com.efi.printsmith.events.commandEvents.EditForms.TableEditorEvent;
 		
 	private var fileReference:FileReference;
 	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
 	private var loader:Loader;
-	                                                       
+	[Bindable]
+	private var stockDefinition:StockDefinition;                                                       
 	private function init():void {   
 		
 	}
@@ -94,32 +89,39 @@
 		}
 	}
 	
-	private function handleSelectXpedxFile(evt:Event):void {
-		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
-		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
-		uploadFile("Xpedx");
-	}
-
-	private function uploadFile(fileType:String):void {
-		var urlVariables:URLVariables = new URLVariables();
-		urlVariables.importType = fileType;
-		servletTarget.data = urlVariables;
-		servletTarget.method = URLRequestMethod.POST;
-		fileReference.upload(servletTarget);		
+	public function setStock(stock:StockDefinition):void {
+		this.stockDefinition = stock;
+		doXpedxStockCheck();
 	}
 	
-	private function handleCancelFile(evt:Event):void {
-		
+	private function doXpedxStockCheck():void {
+		var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
+		params.id = 460;
+		params.xpedxId = this.stockDefinition.stockId;
+		params.qty = 100;
+		xpedxIntegrationService.checkStock(params);
 	}
 	
-	private function doImport(listener:Function):void {
-		fileReference = new FileReference();
-		fileReference.addEventListener(Event.SELECT, listener);
-		fileReference.addEventListener(Event.CANCEL, handleCancelFile);
-		fileReference.browse();
-	}
-	private function doImportAll():void {
-		doImport(handleSelectXpedxFile);
+	private function handleXpedxResult(evt:ResultEvent):void {
+		var resultArray:ArrayCollection = evt.result as ArrayCollection;
+		var i:int;
+		for (i=0;i<resultArray.length;i++)
+		{
+			var name:String = resultArray[i][1];
+			var value:String = resultArray[i][2];
+			if (name == "xpedexPartNumber")
+				this.stock_id.text = value
+			else if (name == "CustomerNumber")
+				this.supplier_id.text = value;
+			else if (name == "ItemDescription")
+				this.description.text = value;
+			else if (name == "AvailabiityMessage")
+				this.availability.text = value;
+			else if (name == "TotalPrice")
+				this.price.text = value;
+			else if (name == "ItemStatus")
+				this.itemstatus.text = value;
+		}
 	}
 
 	private function handleFault(ev:FaultEvent):void {
@@ -160,7 +162,7 @@
 	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF"/>
 <mx:Spacer height="10" />        
 	<mx:Panel width="547" height="461" layout="absolute">
-		<mx:DataGrid x="27.5" y="10" width="472" height="103">
+		<mx:DataGrid x="27.5" y="10" width="472" height="103" id="datagrid1">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
 				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>

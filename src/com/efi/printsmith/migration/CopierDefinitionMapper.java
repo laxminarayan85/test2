@@ -1,6 +1,7 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 
 import org.apache.log4j.Logger;
 
@@ -17,14 +18,16 @@ import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.service.CopierService;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
 import com.efi.printsmith.data.ProductionCopiers;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class CopierDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
 
 	public void importFile(File uploadedFile) throws Exception {
 
 	}
-
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
+	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens)
 			throws Exception {
 		log.info("Entering CopierDefinitionMapper->importTokens");

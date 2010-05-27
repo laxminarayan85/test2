@@ -14,6 +14,7 @@
     import com.efi.printsmith.view.PressDefinitions;
     import com.efi.printsmith.data.Charge;   
     import com.efi.printsmith.events.PriceListPickerSelectEvent
+    import com.efi.printsmith.integration.xpedx.XpedxImportParams;
          
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.SpeedTable;  
@@ -39,6 +40,7 @@
 	private var fileReference:FileReference;
 	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
 	private var loader:Loader;
+	private var importParams:XpedxImportParams;
 	                                                       
 	private function init():void {   
 		
@@ -62,7 +64,7 @@
 	private function uploadFile(fileType:String):void {
 		var urlVariables:URLVariables = new URLVariables();
 		urlVariables.importType = fileType;
-		servletTarget.data = urlVariables;
+		urlVariables.importParams = this.importParams;
 		servletTarget.method = URLRequestMethod.POST;
 		fileReference.upload(servletTarget);		
 	}
@@ -78,9 +80,47 @@
 		fileReference.browse();
 	}
 	private function doImportAll():void {
+		this.importParams.fullUpdate = this.fullUpdate.selected;
+		this.importParams.importAll = true;
+		this.importParams.adjustValue1 = parseFloat(this.adjustPrice1.text);
+		this.importParams.adjustValue2 = parseFloat(this.adjustPrice2.text);
+		this.importParams.adjustValue3 = parseFloat(this.adjustPrice3.text);
+		this.importParams.adjustValue4 = parseFloat(this.adjustPrice4.text);
+		this.importParams.adjustValue5 = parseFloat(this.adjustPrice5.text);
+		this.importParams.updatePrice1 = this.updatePrice1.selected;
+		this.importParams.updatePrice2 = this.updatePrice2.selected;
+		this.importParams.updatePrice3 = this.updatePrice3.selected;
+		this.importParams.updatePrice4 = this.updatePrice4.selected;
+		this.importParams.updatePrice5 = this.updatePrice5.selected;
+		if (this.percent.selected)
+			this.importParams.updateType = 1;
+		else
+			this.importParams.updateType = 2;
+		this.importParams.selectMetric = this.metric.selected;
+		this.importParams.noBrokenCartons = this.noBrokenCartons.selected;
 		doImport(handleSelectXpedxFile);
 	}
-
+	private function doUpdatePrices():void {
+		this.importParams.fullUpdate = this.fullUpdate.selected;
+		this.importParams.importAll = false;
+		this.importParams.adjustValue1 = parseFloat(this.adjustPrice1.text);
+		this.importParams.adjustValue2 = parseFloat(this.adjustPrice2.text);
+		this.importParams.adjustValue3 = parseFloat(this.adjustPrice3.text);
+		this.importParams.adjustValue4 = parseFloat(this.adjustPrice4.text);
+		this.importParams.adjustValue5 = parseFloat(this.adjustPrice5.text);
+		this.importParams.updatePrice1 = this.updatePrice1.selected;
+		this.importParams.updatePrice2 = this.updatePrice2.selected;
+		this.importParams.updatePrice3 = this.updatePrice3.selected;
+		this.importParams.updatePrice4 = this.updatePrice4.selected;
+		this.importParams.updatePrice5 = this.updatePrice5.selected;
+		if (this.percent.selected)
+			this.importParams.updateType = 1;
+		else
+			this.importParams.updateType = 2;
+		this.importParams.selectMetric = this.metric.selected;
+		this.importParams.noBrokenCartons = this.noBrokenCartons.selected;
+		doImport(handleSelectXpedxFile);
+	}
 	private function handleFault(ev:FaultEvent):void {
 		var errorDetail:String="";
 		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
@@ -122,23 +162,23 @@
 		<mx:RadioButton x="10" y="36" label="Use Generic interpreter" groupName="interpreterType"/>
 		<mx:CheckBox x="397" y="10" label="Verify each stock" id="verifyStock" selected="true"/>
 		<mx:Button x="364" y="322" label="Import All" id="importAll" click="doImportAll()" width="118"/>
-		<mx:Button x="66" y="322" label="Update Prices" id="updatePrices" click="doImportAll()" width="122"/>
-		<mx:CheckBox x="66" y="101" label="Price 1" selected="true"/>
-		<mx:CheckBox x="66" y="131" label="Price 2"/>
-		<mx:CheckBox x="66" y="161" label="Price 3"/>
-		<mx:CheckBox x="66" y="191" label="Price 4"/>
-		<mx:CheckBox x="66" y="221" label="Price 5"/>
-		<mx:TextInput x="183" y="101" width="94" text="0"/>
-		<mx:TextInput x="183" y="131" width="94" text="0"/>
-		<mx:TextInput x="183" y="161" width="94" text="0"/>
-		<mx:TextInput x="183" y="191" width="94" text="0"/>
-		<mx:TextInput x="183" y="221" width="94" text="0"/>
+		<mx:Button x="66" y="322" label="Update Prices" id="updatePrices" click="doUpdatePrices()" width="122"/>
+		<mx:CheckBox x="66" y="101" label="Price 1" selected="true" id="updatePrice1"/>
+		<mx:CheckBox x="66" y="131" label="Price 2" id="updatePrice2"/>
+		<mx:CheckBox x="66" y="161" label="Price 3" id="updatePrice3"/>
+		<mx:CheckBox x="66" y="191" label="Price 4" id="updatePrice4"/>
+		<mx:CheckBox x="66" y="221" label="Price 5" id="updatePrice5"/>
+		<mx:TextInput x="183" y="101" width="94" text="0" id="adjustPrice1"/>
+		<mx:TextInput x="183" y="131" width="94" text="0" id="adjustPrice2"/>
+		<mx:TextInput x="183" y="161" width="94" text="0" id="adjustPrice3"/>
+		<mx:TextInput x="183" y="191" width="94" text="0" id="adjustPrice4"/>
+		<mx:TextInput x="183" y="221" width="94" text="0" id="adjustPrice5"/>
 		<mx:RadioButtonGroup id="updateBy"/>
-		<mx:RadioButton x="305" y="75" label="Percent" groupName="updateBy" selected="true"/>
-		<mx:RadioButton x="305" y="105" label="Amount" groupName="updateBy" height="18"/>
-		<mx:CheckBox x="305" y="161" label="Metric"/>
-		<mx:CheckBox x="305" y="201" label="No broken cartons"/>
-		<mx:CheckBox x="66" y="285" label="Full update, not just Prices."/>
+		<mx:RadioButton x="305" y="75" label="Percent" groupName="updateBy" selected="true" id="percent"/>
+		<mx:RadioButton x="305" y="105" label="Amount" groupName="updateBy" height="18" id="amount"/>
+		<mx:CheckBox x="305" y="161" label="Metric" id="metric"/>
+		<mx:CheckBox x="305" y="201" label="No broken cartons" id="noBrokenCartons"/>
+		<mx:CheckBox x="66" y="285" label="Full update, not just Prices." id="fullUpdate"/>
 	</mx:Panel>
 <mx:Spacer height="10" />        
 

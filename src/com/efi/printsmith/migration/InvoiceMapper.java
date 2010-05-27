@@ -17,11 +17,14 @@ import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Estimate;
 import com.efi.printsmith.data.NotePad;
 import com.efi.printsmith.data.PreferencesSequenceValues;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class InvoiceMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering InvoiceMapper->importTokens");

@@ -35,7 +35,7 @@
 	import mx.collections.ArrayCollection;           
 	import com.efi.printsmith.events.StockPickerSelectEvent;
     import com.efi.printsmith.data.StockDefinition;   
-    
+    import com.efi.printsmith.view.XpdexStockAvailability;
     import com.efi.printsmith.data.PreferencesStockDefinition;
                  
 	import mx.managers.PopUpManager;                                 
@@ -163,6 +163,13 @@
 		UpdateSize();
 			
 	}
+	private function doStatus():void{
+		var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
+		statusWindow.setStyle("borderAlpha", 0.9);
+		var temp:StockDefinition
+		temp = dataGrid.selectedItem as StockDefinition;
+	 	statusWindow.setStock(temp);
+	 }
 	public function setStockArray(temp:ArrayCollection):void{
 		stockDefinitions = temp;
 	}
@@ -368,6 +375,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:TextInput x="295" y="192" width="98" id="txtThickness"/>
 		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet"/>
 		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber"/>
+		<mx:Button x="358" y="10" label="Check Status" width="102" id="status_button" click="doStatus()"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

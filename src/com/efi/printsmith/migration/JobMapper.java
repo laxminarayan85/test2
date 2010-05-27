@@ -17,11 +17,14 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.Constants;
-
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class JobMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(JobMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		
+	}
+	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
+		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering JobMapper->importTokens");
