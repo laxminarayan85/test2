@@ -122,8 +122,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		FileInputStream fis = new FileInputStream(uploadedFile);
 		InputStreamReader fileReader = new InputStreamReader(fis);
 		CSVReader csvReader = new CSVReader(fileReader);
-
-		String[] fieldTokens = csvReader.readNext();
+		String[] fieldTokens = null;
+		if (importType.equals("Xpedx") == false)
+			fieldTokens = csvReader.readNext();
 
 		ImportMapper mapper = null;
 
@@ -160,6 +161,8 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					mapper = new ChargeMapper();
 				} else if ("StockChange".equals(importType)) {
 					mapper = new StockChangeMapper();
+				} else if ("Xpedx".equals(importType)) {
+					mapper = new XpedxMapper();
 				}else if ("ChargeCosting".equals(importType)) {
 						mapper = new ChargeCostingMapper();
 				} else {
@@ -180,7 +183,15 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				// InvalidParameterException("Wrong number of fields on line #"
 				// + lineNumber + ".");
 				// } else {
-				if (importTokens.length == fieldTokens.length) {
+				if (importType.equals("Xpedx") == false && importTokens.length == fieldTokens.length) {
+					try {
+						ModelBase modelBase = mapper.importTokens(fieldTokens,
+								importTokens);
+						dataService.addUpdate(modelBase);
+					} catch (Exception e) {
+						log.error(e);
+					}
+				} else {
 					try {
 						ModelBase modelBase = mapper.importTokens(fieldTokens,
 								importTokens);

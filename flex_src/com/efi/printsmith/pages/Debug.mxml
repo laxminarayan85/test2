@@ -269,6 +269,11 @@
 				
 			}
 			
+			private function doImportStockCatalog():void {
+				var importWindow : ImportStockCatalog = ImportStockCatalog(PopUpManager.createPopUp(this, ImportStockCatalog, true));
+				PopUpManager.centerPopUp(importWindow);
+			}
+			
 			private function doXpedxStockCheck():void {
 				xpedxIntegrationService.checkStock(460, "2257624", 100);
 				var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
@@ -332,6 +337,10 @@
 		<mx:Button x="10" y="234" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
 		<mx:Button x="10" y="184" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
 		<mx:ComboBox x="206" y="314" width="191" id="report_list" dataProvider="{reportTemplates}"></mx:ComboBox>
+		<mx:Button x="206"
+				   y="70"
+				   label="Import Stock Catalog"
+				   click="doImportStockCatalog();" width="188"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
