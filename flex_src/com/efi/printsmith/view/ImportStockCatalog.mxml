@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="482" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Import Stock Catalog" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="Utilities" name="Utilities"
+    verticalScrollPolicy="off">
+<mx:Script>
+                                   
+<![CDATA[ 
+	import com.efi.printsmith.data.Contact;           
+    import com.efi.printsmith.data.Account;    
+    import com.efi.printsmith.view.EditContact;
+    import com.efi.printsmith.view.EditCustomer;    
+    import com.efi.printsmith.view.PressDefinitions;
+    import com.efi.printsmith.data.Charge;   
+    import com.efi.printsmith.events.PriceListPickerSelectEvent
+         
+	import mx.managers.PopUpManager;     
+	import com.efi.printsmith.data.SpeedTable;  
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.PriceListBase; 
+	import com.efi.printsmith.data.WasteChart;                          
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	import flash.net.FileReference;
+	import mx.rpc.Responder;
+	import com.efi.printsmith.events.commandEvents.EditForms.EditWebAdminEvent;
+	import com.efi.printsmith.events.commandEvents.EditForms.TableEditorEvent;
+		
+	private var fileReference:FileReference;
+	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
+	private var loader:Loader;
+	                                                       
+	private function init():void {   
+		
+	}
+	
+	private function handleLoadFileComplete(event:Event):void {
+	}
+		
+	private function handleIOError(event:IOErrorEvent):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	private function handleSelectXpedxFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Xpedx");
+	}
+
+	private function uploadFile(fileType:String):void {
+		var urlVariables:URLVariables = new URLVariables();
+		urlVariables.importType = fileType;
+		servletTarget.data = urlVariables;
+		servletTarget.method = URLRequestMethod.POST;
+		fileReference.upload(servletTarget);		
+	}
+	
+	private function handleCancelFile(evt:Event):void {
+		
+	}
+	
+	private function doImport(listener:Function):void {
+		fileReference = new FileReference();
+		fileReference.addEventListener(Event.SELECT, listener);
+		fileReference.addEventListener(Event.CANCEL, handleCancelFile);
+		fileReference.browse();
+	}
+	private function doImportAll():void {
+		doImport(handleSelectXpedxFile);
+	}
+
+	private function handleFault(ev:FaultEvent):void {
+		var errorDetail:String="";
+		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+			errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+		}else{
+			errorDetail = ev.fault.faultDetail;
+		}
+		Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+	}
+
+	public function handleUIEvent(evt:ResultEvent):void {
+		var child:DisplayObject = evt.result as DisplayObject;
+		addUniqueTab(child);
+	}		
+
+	private function addUniqueTab(tab:DisplayObject):void {
+			var tabFound:Boolean = false;
+			
+			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+			{
+				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+				{
+					Snowmass.getInstance().mainNavigator.selectedIndex = i;
+					tabFound = true;
+					break;
+				}
+			}
+			if (!tabFound) {
+				Snowmass.getInstance().mainNavigator.addChild(tab);
+				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+			}
+		}
+
+]]>        
+</mx:Script>
+	<mx:Panel width="547" height="427" layout="absolute" id="importStockCatalogPanel">
+		<mx:RadioButtonGroup id="interpreterType"/>
+		<mx:RadioButton x="10" y="10" label="Use Xpedx interpreter" groupName="interpreterType" selected="true"/>
+		<mx:RadioButton x="10" y="36" label="Use Generic interpreter" groupName="interpreterType"/>
+		<mx:CheckBox x="397" y="10" label="Verify each stock" id="verifyStock" selected="true"/>
+		<mx:Button x="364" y="322" label="Import All" id="importAll" click="doImportAll()" width="118"/>
+		<mx:Button x="66" y="322" label="Update Prices" id="updatePrices" click="doImportAll()" width="122"/>
+		<mx:CheckBox x="66" y="101" label="Price 1" selected="true"/>
+		<mx:CheckBox x="66" y="131" label="Price 2"/>
+		<mx:CheckBox x="66" y="161" label="Price 3"/>
+		<mx:CheckBox x="66" y="191" label="Price 4"/>
+		<mx:CheckBox x="66" y="221" label="Price 5"/>
+		<mx:TextInput x="183" y="101" width="94" text="0"/>
+		<mx:TextInput x="183" y="131" width="94" text="0"/>
+		<mx:TextInput x="183" y="161" width="94" text="0"/>
+		<mx:TextInput x="183" y="191" width="94" text="0"/>
+		<mx:TextInput x="183" y="221" width="94" text="0"/>
+		<mx:RadioButtonGroup id="updateBy"/>
+		<mx:RadioButton x="305" y="75" label="Percent" groupName="updateBy" selected="true"/>
+		<mx:RadioButton x="305" y="105" label="Amount" groupName="updateBy" height="18"/>
+		<mx:CheckBox x="305" y="161" label="Metric"/>
+		<mx:CheckBox x="305" y="201" label="No broken cartons"/>
+		<mx:CheckBox x="66" y="285" label="Full update, not just Prices."/>
+	</mx:Panel>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

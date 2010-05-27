@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.xml.rpc.ServiceException;
 
+import net.sourceforge.jeuclid.dom.AbstractPartialNodeImpl.NodeList;
+
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
@@ -27,6 +29,8 @@ import com.efi.printsmith.integration.xpedx.xsd.request.StockCheckRequestsDocume
 import com.efi.printsmith.integration.xpedx.xsd.request.XpedxStockCheckWSRequestDocument;
 import com.efi.printsmith.integration.xpedx.xsd.request.XpedxStockCheckWSRequestDocument.XpedxStockCheckWSRequest;
 import com.efi.printsmith.integration.xpedx.xsd.response.XpedxStockCheckWSResponseDocument;
+
+import flex.messaging.io.ArrayList;
 
 public class XpedxIntegrationService extends SnowmassHibernateService {
 	private static Logger log = Logger.getLogger(XpedxIntegrationService.class);
@@ -97,7 +101,8 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 		}
 	}
 	
-	public static void checkStock(long id, String xpedxId, long qty) throws Exception {
+	public static String[][] checkStock(long id, String xpedxId, long qty) throws Exception {
+		String[][] nodeArray = null;
 		try {
 			XpedxStockCheckWSRequestDocument stockCheckWSRequestDocument = generateStockCheckRequest();
 			Item item = stockCheckWSRequestDocument.getXpedxStockCheckWSRequest().getStockCheckRequests().getStockCheckRequest().addNewItems().addNewItem();			
@@ -110,7 +115,18 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			XpedxStockCheckWSResponseDocument response = sendStockCheckRequest(stockCheckWSRequestDocument.toString());
 			
 			/* Handle the response here */
-			
+			Items items = (Items) response.getXpedxStockCheckWSResponse().getStockCheckResponse().getItems();
+			Item[] itemArray = items.getItemArray();
+			for (int i=0;i<itemArray.length;i++) {
+				NodeList nodes = (NodeList) itemArray[i].getDomNode().getChildNodes();
+				nodeArray = new String[nodes.getLength()][2];
+				for (int x=0;x<nodes.getLength();i++) {
+					String nodeName = nodes.item(x).getNodeName();
+					String nodeValue = nodes.item(x).getNodeValue();
+					nodeArray[x][1] = nodeName;
+					nodeArray[x][2] = nodeValue;
+				}
+			}
 		} catch (ServiceException e) {
 			log.error(e);
 			throw e;
@@ -121,6 +137,7 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			log.error(e);
 			throw e;
 		}
+		return nodeArray;
 	}
 
 }
