@@ -40,7 +40,7 @@
 	private var fileReference:FileReference;
 	private var servletTarget:URLRequest = new URLRequest("http://localhost:8080/Snowmass/ImportServlet");
 	private var loader:Loader;
-	private var importParams:XpedxImportParams;
+	private var importParams:XpedxImportParams = new XpedxImportParams;
 	                                                       
 	private function init():void {   
 		
@@ -64,7 +64,7 @@
 	private function uploadFile(fileType:String):void {
 		var urlVariables:URLVariables = new URLVariables();
 		urlVariables.importType = fileType;
-		urlVariables.importParams = this.importParams;
+		servletTarget.data = urlVariables;
 		servletTarget.method = URLRequestMethod.POST;
 		fileReference.upload(servletTarget);		
 	}
