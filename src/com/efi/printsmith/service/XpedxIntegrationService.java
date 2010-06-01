@@ -29,6 +29,7 @@ import com.efi.printsmith.integration.xpedx.xsd.request.StockCheckRequestsDocume
 import com.efi.printsmith.integration.xpedx.xsd.request.XpedxStockCheckWSRequestDocument;
 import com.efi.printsmith.integration.xpedx.xsd.request.XpedxStockCheckWSRequestDocument.XpedxStockCheckWSRequest;
 import com.efi.printsmith.integration.xpedx.xsd.response.XpedxStockCheckWSResponseDocument;
+import com.efi.printsmith.migration.Utilities;
 
 import flex.messaging.io.ArrayList;
 
@@ -113,7 +114,13 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			item.setUOM("LB");
 			
 			XpedxStockCheckWSResponseDocument response = sendStockCheckRequest(stockCheckWSRequestDocument.toString());
-			
+			int errorCode = Utilities.tokenToInt(response.getXpedxStockCheckWSResponse().getRootErrorInfo().getErrorCode());
+			if (errorCode > 0) {
+				nodeArray = new String[1][2];
+				nodeArray[0][0] = "Error";
+				nodeArray[0][1] = response.getXpedxStockCheckWSResponse().getRootErrorInfo().getErrorMessage();
+				return nodeArray;
+			}
 			/* Handle the response here */
 			Items items = (Items) response.getXpedxStockCheckWSResponse().getStockCheckResponse().getItems();
 			Item[] itemArray = items.getItemArray();
@@ -123,8 +130,8 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 				for (int x=0;x<nodes.getLength();i++) {
 					String nodeName = nodes.item(x).getNodeName();
 					String nodeValue = nodes.item(x).getNodeValue();
-					nodeArray[x][1] = nodeName;
-					nodeArray[x][2] = nodeValue;
+					nodeArray[x][0] = nodeName;
+					nodeArray[x][1] = nodeValue;
 				}
 			}
 		} catch (ServiceException e) {

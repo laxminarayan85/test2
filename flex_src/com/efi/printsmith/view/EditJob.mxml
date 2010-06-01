@@ -351,6 +351,35 @@
 			<mx:SetProperty target="{label37}" name="y" value="86"/>
 			<mx:SetProperty target="{job_vendor}" name="width" value="182"/>
 		</mx:State>
+		<mx:State name="Blank">
+			<mx:RemoveChild target="{label14}"/>
+			<mx:RemoveChild target="{number_lines}"/>
+			<mx:RemoveChild target="{job_unit_price}"/>
+			<mx:RemoveChild target="{label15}"/>
+			<mx:RemoveChild target="{label28}"/>
+			<mx:RemoveChild target="{sets_of}"/>
+			<mx:RemoveChild target="{label29}"/>
+			<mx:RemoveChild target="{job_sheets}"/>
+			<mx:RemoveChild target="{label30}"/>
+			<mx:RemoveChild target="{job_up}"/>
+			<mx:RemoveChild target="{job_on}"/>
+			<mx:RemoveChild target="{label12}"/>
+			<mx:RemoveChild target="{job_press}"/>
+			<mx:RemoveChild target="{label31}"/>
+			<mx:RemoveChild target="{est_waste}"/>
+			<mx:RemoveChild target="{label10}"/>
+			<mx:RemoveChild target="{label9}"/>
+			<mx:RemoveChild target="{label8}"/>
+			<mx:RemoveChild target="{total_imp}"/>
+			<mx:RemoveChild target="{job_imp}"/>
+			<mx:RemoveChild target="{total_copies}"/>
+			<mx:SetProperty target="{label34}" name="y" value="49"/>
+			<mx:SetProperty target="{bindery_waste}" name="y" value="47"/>
+			<mx:SetProperty target="{label11}" name="y" value="69"/>
+			<mx:SetProperty target="{job_weight}" name="y" value="69"/>
+			<mx:RemoveChild target="{copy_estimator_canvas}"/>
+			<mx:RemoveChild target="{estimator_viewstack}"/>
+		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -831,7 +860,8 @@
 				job.oversUnders=parseInt(job_over_under.text);
 				job.qtyOrdered=parseInt(job_ordered.text);
 				job.sheets=parseInt(job_sheets.text);
-				job.signatures=parseInt(num_of_sig.text);
+				if (num_of_sig != null)
+					job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
 				job.jobNotes=job_notes.text;
@@ -1216,7 +1246,7 @@
 						this.job.foldedSize = "";
 						job_fold_size.text = "";
 					}
-					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color") {
+					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
 						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.parentsize;
@@ -1456,6 +1486,8 @@
 				} else if (pricingMethod.title == "Mailing") {
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
+				} else if (pricingMethod.title == "Blank") {
+					this.currentState = "Blank";
 				}
 
 			}

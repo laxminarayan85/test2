@@ -239,6 +239,7 @@ public class XpedxMapper extends ImportMapper {
 						stockType = (StockType)dataService.getQuery("StockType", " where viewableid = 1");
 						if (stockType != null)
 							stockDefinition.setStktype(stockType);
+						break;
 					}
 				}
 				break;
@@ -283,6 +284,7 @@ public class XpedxMapper extends ImportMapper {
 						stockFinish = (StockFinish)dataService.addUpdate(stockFinish);
 						stockFinish.setId(stockFinish.getId());
 					}
+					stockDefinition.setFinish(stockFinish);
 				}
 				break;
 			case 41:
@@ -318,7 +320,14 @@ public class XpedxMapper extends ImportMapper {
 				stockDefinition.setThickness(caliper);
 			}
 			stockDefinition.setAutoCalculateBlank(true);
-			
+			StockGrade stockGrade = dataService.getByStockGradeName("");
+			if (stockGrade == null) {
+				stockGrade = new StockGrade();
+				stockGrade.setName("");
+				stockGrade = (StockGrade)dataService.addUpdate(stockGrade);
+				stockGrade.setId(stockGrade.getId());
+			}
+			stockDefinition.setGrade(stockGrade);
 			Vendor vendor = (Vendor)dataService.getByName("Vendor","xpdex");
 			if (vendor == null) {
 				vendor = new Vendor();

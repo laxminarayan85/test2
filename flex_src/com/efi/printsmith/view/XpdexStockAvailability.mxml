@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="556" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="556" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Stock Availability" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
@@ -42,6 +42,12 @@
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:TextInput x="338" y="100" id="itemstatus"/>
+			</mx:AddChild>
+			<mx:SetProperty name="showCloseButton" value="true"/>
+			<mx:SetProperty target="{image1}" name="height" value="44"/>
+			<mx:SetProperty target="{image1}" name="width" value="118"/>
+			<mx:AddChild relativeTo="{panel1}" position="lastChild">
+				<mx:TextArea x="44" y="18" height="101" width="439" wordWrap="true" editable="false" enabled="true" borderStyle="none" id="errorMessage"/>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Extended"/>
@@ -97,7 +103,7 @@
 	private function doXpedxStockCheck():void {
 		var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
 		params.id = 460;
-		params.xpedxId = this.stockDefinition.stockId;
+		params.xpedxId = this.stockDefinition.stocknumber;
 		params.qty = 100;
 		xpedxIntegrationService.checkStock(params);
 	}
@@ -121,6 +127,8 @@
 				this.price.text = value;
 			else if (name == "ItemStatus")
 				this.itemstatus.text = value;
+			else if (name == "Error")
+				this.errorMessage.text = value;
 		}
 	}
 
@@ -159,9 +167,9 @@
 
 ]]>        
 </mx:Script>
-	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF"/>
+	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF" id="image1"/>
 <mx:Spacer height="10" />        
-	<mx:Panel width="547" height="461" layout="absolute">
+	<mx:Panel width="547" height="461" layout="absolute" id="panel1">
 		<mx:DataGrid x="27.5" y="10" width="472" height="103" id="datagrid1">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
