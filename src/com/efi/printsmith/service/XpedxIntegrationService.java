@@ -14,6 +14,7 @@ import net.sourceforge.jeuclid.dom.AbstractPartialNodeImpl.NodeList;
 import org.apache.log4j.Logger;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
+import org.w3c.dom.Node;
 
 import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 import com.efi.printsmith.integration.xpedx.soap.StockCheckWS;
@@ -102,8 +103,11 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 		}
 	}
 	
-	public static String[][] checkStock(long id, String xpedxId, long qty) throws Exception {
-		String[][] nodeArray = null;
+	@SuppressWarnings("unchecked")
+	public static List checkStock(long id, String xpedxId, long qty) throws Exception {
+		List fieldList = new ArrayList();
+		List valueList = new ArrayList();
+		List returnList = new ArrayList();
 		try {
 			XpedxStockCheckWSRequestDocument stockCheckWSRequestDocument = generateStockCheckRequest();
 			Item item = stockCheckWSRequestDocument.getXpedxStockCheckWSRequest().getStockCheckRequests().getStockCheckRequest().addNewItems().addNewItem();			
@@ -114,24 +118,48 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			item.setUOM("LB");
 			
 			XpedxStockCheckWSResponseDocument response = sendStockCheckRequest(stockCheckWSRequestDocument.toString());
-			int errorCode = Utilities.tokenToInt(response.getXpedxStockCheckWSResponse().getRootErrorInfo().getErrorCode());
-			if (errorCode > 0) {
-				nodeArray = new String[1][2];
-				nodeArray[0][0] = "Error";
-				nodeArray[0][1] = response.getXpedxStockCheckWSResponse().getRootErrorInfo().getErrorMessage();
-				return nodeArray;
-			}
 			/* Handle the response here */
-			Items items = (Items) response.getXpedxStockCheckWSResponse().getStockCheckResponse().getItems();
-			Item[] itemArray = items.getItemArray();
+			com.efi.printsmith.integration.xpedx.xsd.response.ItemsDocument.Items items = response.getXpedxStockCheckWSResponse().getStockCheckResponse().getItems();
+			com.efi.printsmith.integration.xpedx.xsd.response.ItemDocument.Item[] itemArray = items.getItemArray();
 			for (int i=0;i<itemArray.length;i++) {
-				NodeList nodes = (NodeList) itemArray[i].getDomNode().getChildNodes();
-				nodeArray = new String[nodes.getLength()][2];
-				for (int x=0;x<nodes.getLength();i++) {
-					String nodeName = nodes.item(x).getNodeName();
-					String nodeValue = nodes.item(x).getNodeValue();
-					nodeArray[x][0] = nodeName;
-					nodeArray[x][1] = nodeValue;
+				org.w3c.dom.NodeList nodes = itemArray[i].getDomNode().getChildNodes();
+				int errorCode = 0;
+				for (int x=0;x<nodes.getLength();x++) {
+					Node node = nodes.item(x);
+					String nodeName = node.getNodeName();
+					String nodeValue = "";
+					if (nodeName.equals("xpedxPartNumber"))
+						nodeValue = itemArray[i].getXpedxPartNumber();
+					else if (nodeName.equals("CustomerNumber"))
+						nodeValue = itemArray[i].getCustomerNumber();
+					else if (nodeName.equals("ItemDescription"))
+						nodeValue = itemArray[i].getItemDescription();
+					else if (nodeName.equals("AvailabilityMessage"))
+						nodeValue = itemArray[i].getAvailabilityMessage();
+					else if (nodeName.equals("TotalPrice"))
+						nodeValue = itemArray[i].getTotalPrice();
+					else if (nodeName.equals("ItemStatus"))
+						nodeValue = itemArray[i].getItemStatus();
+					else if (nodeName.equals("Category1"))
+						nodeValue = itemArray[i].getCategory1();
+					else if (nodeName.equals("Manufacturer"))
+						nodeValue = itemArray[i].getManufacturer();
+					else if (nodeName.equals("UnitPrice1"))
+						nodeValue = itemArray[i].getUnitPrice1();
+					else if (nodeName.equals("UOMDescription1"))
+						nodeValue = itemArray[i].getUOMDescription1();
+					else if (nodeName.equals("UOMCode1"))
+						nodeValue = itemArray[i].getUOMCode1();
+					else if (nodeName.equals("ErrorCode")) {
+						errorCode = Utilities.tokenToInt(itemArray[i].getErrorCode());
+					}
+					else if (nodeName.equals("ErrorMessage") && errorCode > 0) {
+						nodeValue = itemArray[i].getErrorMessage();
+					}
+					if (nodeValue.equals("") == false) {
+						fieldList.add(nodeName);
+						valueList.add(nodeValue);
+					}
 				}
 			}
 		} catch (ServiceException e) {
@@ -144,7 +172,8 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			log.error(e);
 			throw e;
 		}
-		return nodeArray;
+		returnList.add(fieldList);
+		returnList.add(valueList);
+		return returnList;
 	}
-
 }

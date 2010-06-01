@@ -13,7 +13,7 @@
 				<mx:Label x="290" y="37" text="Supplier ID"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="76" text="Description"/>
+				<mx:Label x="10" y="70" text="Description"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:Label x="10" y="102" text="Availability"/>
@@ -25,19 +25,19 @@
 				<mx:Label x="290" y="102" text="Status"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="70" y="35" id="stock_id"/>
+				<mx:TextInput x="70" y="35" id="stock_id" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="365" y="35" width="132" id="supplier_id"/>
+				<mx:TextInput x="365" y="35" width="132" id="supplier_id" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="84" y="74" id="description"/>
+				<mx:TextInput x="84" y="68" id="description" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="100" width="65" id="availability"/>
+				<mx:TextInput x="82" y="100" width="65" id="availability" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="194" y="100" width="88" id="price"/>
+				<mx:TextInput x="194" y="100" width="88" id="price" editable="false"/>
 			</mx:AddChild>
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
@@ -46,14 +46,49 @@
 			<mx:SetProperty name="showCloseButton" value="true"/>
 			<mx:SetProperty target="{image1}" name="height" value="44"/>
 			<mx:SetProperty target="{image1}" name="width" value="118"/>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Label x="10" y="128" text="Category"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:TextInput x="82" y="126" id="category" width="415" editable="false"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Label x="10" y="154" text="Manufacturer"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:TextInput x="95" y="152" id="manufacturer" editable="false"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Label x="263" y="154" text="Unit Price"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:TextInput x="328" y="152" id="unitPrice" editable="false"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Label x="10" y="180" text="UOM Description"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:TextInput x="114" y="178" id="uomDescription" editable="false"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Label x="285" y="180" text="UOM"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:TextInput x="328" y="178" id="uom" editable="false"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{canvas1}" name="y" value="10"/>
+			<mx:SetProperty target="{canvas1}" name="height" value="210"/>
 			<mx:AddChild relativeTo="{panel1}" position="lastChild">
-				<mx:TextArea x="44" y="18" height="101" width="439" wordWrap="true" editable="false" enabled="true" borderStyle="none" id="errorMessage"/>
+				<mx:TextArea x="40" y="247" height="149" width="454" wordWrap="true" editable="false" enabled="true" borderStyle="none" id="errorMessage"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{panel1}" position="lastChild">
+				<mx:Label x="41" y="223" text="Error" color="#FC021F" fontSize="15" fontWeight="bold" id="error_label"/>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Extended"/>
 	</mx:states>
 	<mx:RemoteObject id="xpedxIntegrationService" destination="xpedxIntegrationService">
-		<mx:method name="XpedxStockCheck"
+		<mx:method name="checkStock"
 					fault="handleFault(event)"
 					result="handleXpedxResult(event)"/>
 	</mx:RemoteObject>
@@ -83,7 +118,7 @@
 	[Bindable]
 	private var stockDefinition:StockDefinition;                                                       
 	private function init():void {   
-		
+		this.error_label.visible = false;
 	}
 	
 	private function handleLoadFileComplete(event:Event):void {
@@ -105,30 +140,44 @@
 		params.id = 460;
 		params.xpedxId = this.stockDefinition.stocknumber;
 		params.qty = 100;
-		xpedxIntegrationService.checkStock(params);
+		xpedxIntegrationService.checkStock(params.id,params.xpedxId,params.qty);
 	}
 	
 	private function handleXpedxResult(evt:ResultEvent):void {
 		var resultArray:ArrayCollection = evt.result as ArrayCollection;
+		var fieldArray:ArrayCollection = resultArray[0];
+		var valueArray:ArrayCollection = resultArray[1];
 		var i:int;
-		for (i=0;i<resultArray.length;i++)
+		for (i=0;i<fieldArray.length;i++)
 		{
-			var name:String = resultArray[i][1];
-			var value:String = resultArray[i][2];
-			if (name == "xpedexPartNumber")
+			var name:String = fieldArray[i];
+			var value:String = valueArray[i];
+			if (name == "xpedxPartNumber")
 				this.stock_id.text = value
 			else if (name == "CustomerNumber")
 				this.supplier_id.text = value;
 			else if (name == "ItemDescription")
 				this.description.text = value;
-			else if (name == "AvailabiityMessage")
+			else if (name == "AvailabilityMessage")
 				this.availability.text = value;
 			else if (name == "TotalPrice")
 				this.price.text = value;
 			else if (name == "ItemStatus")
 				this.itemstatus.text = value;
-			else if (name == "Error")
+			else if (name == "ErrorMessage") {
 				this.errorMessage.text = value;
+				this.error_label.visible = true;
+			}
+			else if (name == "Category1")
+				this.category.text = value;
+			else if (name == "Manufacturer")
+				this.manufacturer.text = value;
+			else if (name == "UnitPrice1")
+				this.unitPrice.text = value;
+			else if (name == "UOMDescription1")
+				this.uomDescription.text = value;
+			else if (name == "UOMCode1")
+				this.uom.text = value;
 		}
 	}
 

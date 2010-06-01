@@ -375,7 +375,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:TextInput x="295" y="192" width="98" id="txtThickness"/>
 		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet"/>
 		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber"/>
-		<mx:Button x="358" y="10" label="Check Status" width="102" id="status_button" click="doStatus()"/>
+		<mx:Button x="358" y="10" label="Check Status" width="102" id="status_button" click="doStatus()" enabled="{(dataGrid.selectedItem != null)}"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
