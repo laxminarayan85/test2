@@ -938,7 +938,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 					else if (currentImportToken.equals("3") == true)
 						copierDefinition.setPriceTwoSide("UsingSecondSideRate");
 					else if (currentImportToken.equals("4") == true)
-						copierDefinition.setPriceTwoSide("CountingAsMoreOrininals");
+						copierDefinition.setPriceTwoSide("CountingAsMoreOriginals");
 					else if (currentImportToken.equals("5") == true)
 						copierDefinition.setPriceTwoSide("UsingSide2Factor");
 				} else if ("sales category".equals(currentFieldToken)) {
