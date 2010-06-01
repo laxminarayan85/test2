@@ -71,8 +71,50 @@ public class ImportServlet extends HttpServlet implements Servlet {
 						if (name.equals("importType")) {
 							importType = value;
 						}
-						if (name.equals("importParams")) {
-							this.importParams = (XpdexImportParams) item;
+						if (name.equals("importAll")) {
+							this.importParams.importAll = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("fullUpdate")) {
+							this.importParams.fullUpdate = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("updatePrice2")) {
+							this.importParams.updatePrice2 = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("updatePrice3")) {
+							this.importParams.updatePrice3 = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("updatePrice4")) {
+							this.importParams.updatePrice1 = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("updatePrice4")) {
+							this.importParams.updatePrice1 = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("updatePrice5")) {
+							this.importParams.updatePrice5 = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("adjustValue1")) {
+							this.importParams.adjustValue1 = Utilities.tokenToDouble(value);
+						}
+						if (name.equals("adjustValue2")) {
+							this.importParams.adjustValue2 = Utilities.tokenToDouble(value);
+						}
+						if (name.equals("adjustValue3")) {
+							this.importParams.adjustValue3 = Utilities.tokenToDouble(value);
+						}
+						if (name.equals("adjustValue4")) {
+							this.importParams.adjustValue4 = Utilities.tokenToDouble(value);
+						}
+						if (name.equals("adjustValue5")) {
+							this.importParams.adjustValue5 = Utilities.tokenToDouble(value);
+						}
+						if (name.equals("updateType")) {
+							this.importParams.updateType = Utilities.tokenToInt(value);
+						}
+						if (name.equals("selectMetric")) {
+							this.importParams.selectMetric = Utilities.tokenToBooleanValue(value);
+						}
+						if (name.equals("noBrokenCartons")) {
+							this.importParams.noBrokenCartons = Utilities.tokenToBooleanValue(value);
 						}
 					}
 				}
@@ -197,7 +239,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 				} else {
 					try {
 						ModelBase modelBase = mapper.importTokens(fieldTokens,
-								importTokens);
+								importTokens, this.importParams);
 						dataService.addUpdate(modelBase);
 					} catch (Exception e) {
 						log.error(e);

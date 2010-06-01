@@ -64,6 +64,21 @@
 	private function uploadFile(fileType:String):void {
 		var urlVariables:URLVariables = new URLVariables();
 		urlVariables.importType = fileType;
+		urlVariables.importAll = importParams.importAll.toString();
+		urlVariables.fullUpdate = importParams.fullUpdate.toString();
+		urlVariables.updatePrice1 = importParams.updatePrice1.toString();
+		urlVariables.updatePrice2 = importParams.updatePrice2.toString();
+		urlVariables.updatePrice3 = importParams.updatePrice3.toString();
+		urlVariables.updatePrice4 = importParams.updatePrice4.toString();
+		urlVariables.updatePrice5 = importParams.updatePrice5.toString();
+		urlVariables.adjustValue1 = importParams.adjustValue1.toString();
+		urlVariables.adjustValue2 = importParams.adjustValue2.toString();
+		urlVariables.adjustValue3 = importParams.adjustValue3.toString();
+		urlVariables.adjustValue4 = importParams.adjustValue4.toString();
+		urlVariables.adjustValue5 = importParams.adjustValue5.toString();
+		urlVariables.updateType = importParams.updateType.toString();
+		urlVariables.selectMetric = importParams.selectMetric.toString();
+		urlVariables.noBrokenCartons = importParams.noBrokenCartons.toString();
 		servletTarget.data = urlVariables;
 		servletTarget.method = URLRequestMethod.POST;
 		fileReference.upload(servletTarget);		
@@ -159,7 +174,7 @@
 	<mx:Panel width="547" height="427" layout="absolute" id="importStockCatalogPanel">
 		<mx:RadioButtonGroup id="interpreterType"/>
 		<mx:RadioButton x="10" y="10" label="Use Xpedx interpreter" groupName="interpreterType" selected="true"/>
-		<mx:RadioButton x="10" y="36" label="Use Generic interpreter" groupName="interpreterType"/>
+		<mx:RadioButton x="10" y="36" label="Use Generic interpreter" groupName="interpreterType" enabled="false"/>
 		<mx:CheckBox x="397" y="10" label="Verify each stock" id="verifyStock" selected="true"/>
 		<mx:Button x="364" y="322" label="Import All" id="importAll" click="doImportAll()" width="118"/>
 		<mx:Button x="66" y="322" label="Update Prices" id="updatePrices" click="doUpdatePrices()" width="122"/>
