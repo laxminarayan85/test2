@@ -18,8 +18,8 @@ package com.efi.printsmith
 		static public const JOB_RUN_METHOD_WORK_TUMBLE:String = "WORKANDTUMBLE";
 		
 		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:Number = 1;
-		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:Number = 2;
-		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:Number = 3;
+		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:Number = 2;
+		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:Number = 3;
 
 		public function Constants()
 		{
