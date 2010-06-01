@@ -269,14 +269,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function doCosting():void {
 	    var titleWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
-	    PopUpManager.centerPopUp(titleWindow);
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    if(charge == null){
+	    if(charge != null){
 	    	if (charge.chargeCost == null) 
 	    		charge.chargeCost = new ChargeCost();
 	   		titleWindow.chargeCost = charge.chargeCost;
 	   		titleWindow.formIsEmpty = false;
 	   	}
+	    PopUpManager.centerPopUp(titleWindow);
+	    titleWindow.setStyle("borderAlpha", 0.9);
 	}
 	
 	private function sampleResult(evt:Event):void {
