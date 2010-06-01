@@ -14,8 +14,11 @@
 				close="doDelete()" width="966" height="684" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
-			<mx:SetProperty target="{job_imp}" name="text" value="{job.impositionsPerRun}"/>
 			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpositions}"/>
+			<mx:RemoveChild target="{label14}"/>
+			<mx:RemoveChild target="{number_lines}"/>
+			<mx:RemoveChild target="{job_unit_price}"/>
+			<mx:RemoveChild target="{label15}"/>
 		</mx:State>
 		<mx:State name="CopyMethod">
 			<mx:SetProperty target="{job_total}" name="y" value="444"/>
@@ -61,7 +64,7 @@
 				<mx:Label x="496"
 						  y="185"
 						  width="98"
-						  id="num_of_sig0"
+						  id="num_of_sig"
 						  text="{job.signatures}"
 						  height="20" textAlign="right"/>
 			</mx:AddChild>
@@ -70,10 +73,10 @@
 						  y="185"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{num_of_sig}" name="y" value="207"/>
+			<mx:SetProperty target="{total_copies}" name="y" value="207"/>
 			<mx:SetProperty target="{label10}" name="x" value="384"/>
 			<mx:SetProperty target="{label10}" name="y" value="207"/>
-			<mx:SetProperty target="{num_of_sig}" name="text" value="{job.totalCopies}"/>
+			<mx:SetProperty target="{total_copies}" name="text" value="{job.totalCopies}"/>
 			<mx:SetProperty target="{label10}" name="text">
 				<mx:value>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:value>
 			</mx:SetProperty>
@@ -86,7 +89,7 @@
 			<mx:AddChild relativeTo="{est_waste}" position="before">
 				<mx:TextInput x="496"
 							  y="115"
-							  id="bindery_waste0"
+							  id="num_copies"
 							  text="{job.numCopies}"
 							  height="20"
 							  width="98" textAlign="right" focusOut="fieldChanged(event)"/>
@@ -120,7 +123,52 @@
 			<mx:SetProperty target="{job_fold_size}" name="y" value="162"/>
 			<mx:SetProperty target="{job_finish_size}" name="y" value="135"/>
 			<mx:RemoveChild target="{job_parent}"/>
-			<mx:SetProperty target="{job_size}" name="y" value="82"/>
+			<mx:RemoveChild target="{job_size}"/>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:TextInput x="108" y="81" width="100" height="20" id="roll_width"  text="{job.parentSize}"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{label9}"/>
+			<mx:RemoveChild target="{job_imp}"/>
+			<mx:SetProperty target="{job_weight}" name="y" value="227"/>
+			<mx:SetProperty target="{label11}" name="y" value="227"/>
+			<mx:RemoveChild target="{label8}"/>
+			<mx:RemoveChild target="{total_imp}"/>
+			<mx:RemoveChild target="{label12}"/>
+			<mx:RemoveChild target="{job_press}"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput
+							  id="num_copies1"
+							  text="{job.numCopies}"
+							  height="20"
+							  width="98" textAlign="right" focusOut="fieldChanged(event)" x="496" y="116"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label
+						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108" x="384" y="118"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label
+						  textAlign="right" width="108" id="label39" x="384" y="207">
+					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:text>
+				</mx:Label>
+			</mx:AddChild>
+			<mx:RemoveChild target="{total_copies}"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="496"
+						  y="207"
+						  width="98"
+						  id="total_copies0"
+						  text="{job.totalCopies}"
+						  height="20" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label x="496"
+						  y="185"
+						  width="98"
+						  id="num_of_sig0"
+						  text="{job.signatures}"
+						  height="20" textAlign="right"/>
+			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
@@ -179,7 +227,7 @@
 			<mx:RemoveChild target="{label31}"/>
 			<mx:RemoveChild target="{est_waste}"/>
 			<mx:RemoveChild target="{job_imp}"/>
-			<mx:RemoveChild target="{num_of_sig}"/>
+			<mx:RemoveChild target="{total_copies}"/>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{label11}"/>
 			<mx:RemoveChild target="{label8}"/>
@@ -378,6 +426,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServicePreferencesDefaultPresses" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesDefaultPressesResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServiceEstimatingPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadEstimatingPreferencesResult(event)"/>
 	</mx:RemoteObject>
@@ -416,6 +468,7 @@
 			import com.efi.printsmith.data.StockDefinition;
 			import com.efi.printsmith.data.PreferencesSystem;
 			import com.efi.printsmith.data.PreferencesEstimating;
+			import com.efi.printsmith.data.PreferencesDefaultPresses;
 			
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -449,6 +502,9 @@
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
 			import mx.core.UIComponent;
+		    
+		    [Bindable]
+		    private var preferencesDefaultPresses:PreferencesDefaultPresses;
 		    
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
@@ -529,6 +585,10 @@
 		
 			}
 			
+			private function handleLoadPreferencesDefaultPressesResult(ev:ResultEvent):void {
+				preferencesDefaultPresses = ev.result as PreferencesDefaultPresses;
+			}
+			
 			private function sendJobToFieryResult(ev:ResultEvent):void {
 				
 			}
@@ -555,7 +615,8 @@
 				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
-			
+				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
+				
 				if (job == null) {
 					doNew();
 					job.parentSize = "";
@@ -646,6 +707,18 @@
 				for each (var element:Object in array)
 				{
 					if (name == element.name)
+					{ 
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
+			
+			private function findItemById(id:int, array:ArrayCollection):int
+			{
+				for each (var element:Object in array)
+				{
+					if (id == element.id)
 					{ 
 						return array.getItemIndex(element);
 					}
@@ -782,8 +855,10 @@
 				job.finishSize = job_finish_size.text;
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
-				job.impositionsPerRun = parseInt(job_imp.text);
-				job.totalImpositions = parseInt(total_imp.text);
+				if (job_imp != null)
+					job.impositionsPerRun = parseInt(job_imp.text);
+				if (total_imp != null)
+					job.totalImpositions = parseInt(total_imp.text);
 				if (job_unitCost != null)
 					job.unitCost = parseFloat(job_unitCost.text);
 				if (job_totalCost != null)
@@ -1126,26 +1201,28 @@
 				if (evt.stockDefinition != null)
 				{
 //					this.job.stock=evt.stockDefinition;
-					if (this.job_type.text == "Large Format") {
+					if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
 						var cutoff:Number;
 						if (estimatingPreferences != null)
 							cutoff = estimatingPreferences.defaultPressCuttOff;
 						else
 							cutoff = 0;
 						this.job.parentSize = evt.stockDefinition.parentsize;
-						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
+						this.roll_width.text = job.parentSize;
 						this.job.cutOff = cutoff;
-						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff;
+						this.cutOff_edit.text = cutoff.toString();
+						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff.toString();
 						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
 						this.job.foldedSize = "";
 						job_fold_size.text = "";
 					}
-					else if (this.job_type.text == "Printing") {
+					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
 						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.parentsize;
 						this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.parentsize;
+						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
 						this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensionsArray);
 					}
 					else {
@@ -1225,13 +1302,24 @@
 				job.totalImpositions = localJob.totalImpositions;
 				job.estWaste = localJob.estWaste;
 				job.totalCost = localJob.totalCost;
+				job.totalCopies = localJob.totalCopies;
+				job.numCopies = localJob.numCopies;
 				if (job != null) { 
 					job_imp.text = job.impositionsPerRun.toString();
 					total_imp.text = job.totalImpositions.toString();
 					est_waste.text = job.estWaste.toString();
+					if (this.total_copies != null)
+						this.total_copies.text = job.totalCopies.toString();
+					if (this.num_copies != null)
+						this.num_copies.text = job.numCopies.toString();
+					if (this.total_copies0 != null)
+						this.total_copies.text = job.totalCopies.toString();
+					if (this.num_copies1 != null)
+						this.num_copies.text = job.numCopies.toString();
 					if (job_totalCost != null) {
 						job_totalCost.text = job.totalCost.toString();
 					}
+					
 					if (job.pricingRecord != null) {
 						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversUnitPrice.toString());
 						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
@@ -1331,18 +1419,28 @@
 				if (pricingMethod.title == "Printing") {
 					this.currentState = "PrintMethod";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
+					this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
+					this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 				} else if (pricingMethod.title == "Roll-Fed") {
 					this.currentState = "PrintMethod";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
+					this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
+					this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
 				} else if (pricingMethod.title == "B&W") {
 					this.currentState = "CopyMethod";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;										
+					estimator_viewstack.selectedChild = copy_estimator_canvas;	
+					this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
+					this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);			
 				} else if (pricingMethod.title == "Color") {
 					this.currentState = "CopyMethod";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;					
+					estimator_viewstack.selectedChild = copy_estimator_canvas;				
+					this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
+					this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
 				} else if (pricingMethod.title == "Large Format") {
 					this.currentState = "LargeFormat";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;					
+					estimator_viewstack.selectedChild = copy_estimator_canvas;	
+					this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
+					this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);				
 				} else if (pricingMethod.title == "Charges Only") {
 					this.currentState = "ChargesOnly";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
@@ -1759,7 +1857,7 @@
 							<mx:Label x="496"
 									  y="185"
 									  width="98"
-									  id="num_of_sig"
+									  id="total_copies"
 									  text="{job.signatures}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
@@ -1784,7 +1882,7 @@
 										  y="279"
 										  id="job_price"
 										  height="20"
-										  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 3).format(job.pricingRecord.totalPrice)}"/>
+										  width="98" textAlign="right" text="{job.pricingRecord.totalPrice}"/>
 							<mx:Label x="385"
 									  y="281"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
