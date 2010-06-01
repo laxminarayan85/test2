@@ -63,7 +63,10 @@
 			private function init():void
 			{
 				//fillRunToFinishGrainArray(RunToFinishGrainArray);
-
+				this.job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
+				this.job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
+				this.job.paperCal.gripLocation = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
+				this.job.paperCal.folioLocation = Constants.PAPER_CALCULATOR_FOLIO_TOP;
 			}
 
 			private function handleCalcOutResult(ev:ResultEvent):void
@@ -74,45 +77,54 @@
 			//		var dblValue:Double;
 					
 	// maintain same order in PaperCalcualtorService.java
-	//	results.add(out);
-	//	results.add(job.getPaperCal().getDAcross());
-	//	results.add(job.getPaperCal().getDDown());
-	//	results.add(job.getPaperCal().getAcross());
-	//	results.add(job.getPaperCal().getDown());
-	//	results.add(job.getPaperCal().getDutchBottom());
-	//	results.add(job.getPaperCal().getUsedSqrArea());
-	//	results.add(job.getPaperCal().getParentSqrArea());
-	//	results.add(job.getPaperCal().getRMargin());
-	//	results.add(job.getPaperCal().getBMargin());
-	//	results.add(runCuts);
-	//	results.add(finishCuts);
+	/*
+		results.add(out);
+		results.add(runCuts);
+		results.add(finishCuts);
+		
+		results.add(job.getPaperCal().getDAcross());
+		results.add(job.getPaperCal().getDDown());
+		results.add(job.getPaperCal().getAcross());
+		results.add(job.getPaperCal().getDown());
+		results.add(job.getPaperCal().getDutchBottom());
+		results.add(job.getPaperCal().getUsedSqrArea());
+		results.add(job.getPaperCal().getParentSqrArea());
+		results.add(job.getPaperCal().getRMargin());
+		results.add(job.getPaperCal().getBMargin());
+		results.add(job.getPaperCal().getSwap());
+	*/
 					
 					// paper image numbers
 					intValue = results.getItemAt(0) as Number;
 					this.job.paperCal.sheetsOut = intValue;
+					this.job.paperCal.runout = intValue;
+					
+					// cut counts, the override logic is handled in JAVA
 					intValue = results.getItemAt(1) as Number;
-					this.job.paperCal.dAcross = intValue;
+					this.job.paperCal.cutstoRun = intValue;
 					intValue = results.getItemAt(2) as Number;
-					this.job.paperCal.dDown = intValue;
+					this.job.paperCal.cutstoFinish = intValue;
+					
 					intValue = results.getItemAt(3) as Number;
-					this.job.paperCal.across = intValue;
+					this.job.paperCal.dAcross = intValue;
 					intValue = results.getItemAt(4) as Number;
-					this.job.paperCal.down = intValue;
+					this.job.paperCal.dDown = intValue;
 					intValue = results.getItemAt(5) as Number;
+					this.job.paperCal.across = intValue;
+					intValue = results.getItemAt(6) as Number;
+					this.job.paperCal.down = intValue;
+					intValue = results.getItemAt(7) as Number;
 					this.job.paperCal.dutchBottom = intValue;
 					
 					// floating point numbers
-					this.job.paperCal.usedSqrArea = results.getItemAt(6) as Number;
-					this.job.paperCal.parentSqrArea = results.getItemAt(7) as Number;
-					this.job.paperCal.rMargin = results.getItemAt(8) as Number;
-					this.job.paperCal.bMargin = results.getItemAt(9) as Number;
+					this.job.paperCal.usedSqrArea = results.getItemAt(8) as Number;
+					this.job.paperCal.parentSqrArea = results.getItemAt(9) as Number;
+					this.job.paperCal.rMargin = results.getItemAt(10) as Number;
+					this.job.paperCal.bMargin = results.getItemAt(11) as Number;
 					
-					// cut counts, the override logic is handled in JAVA
-					intValue = results.getItemAt(10) as Number;
-					this.job.paperCal.cutstoRun = intValue;
-					intValue = results.getItemAt(11) as Number;
-					this.job.paperCal.cutstoFinish = intValue;
-
+					// does the image render with swapped sheet values
+					this.job.paperCal.swap = results.getItemAt(12) as Boolean;
+					
 //				var testStringValue:String = results.getItemAt(1) as String;
 	//				var testNumberValue:Number = results.getItemAt(2) as Number;
 					
@@ -173,13 +185,14 @@
 						cboRunToFinishGrain.selectedIndex = 2;
 					} 
 				}
-				if (job.paperCal.printParentToFinishSection == true) {
-					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH;
-				} else if (job.paperCal.printParentToRunSection == true) {
-					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
-				} else if (job.paperCal.printRunToFinishSection == true) {
-					calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;					
-				}
+			//	if (job.paperCal.printParentToFinishSection == true) {
+			//		calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH;
+			//	} else if (job.paperCal.printParentToRunSection == true) {
+			//		calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
+			//	} else if (job.paperCal.printRunToFinishSection == true) {
+			//		calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;					
+			//	}
+				calc_order_radio_group.selectedValue = job.paperCal.whichStartSize;
 				job.paperCal.runSize=job.runSize;
 				job.paperCal.finishSize=job.finishSize;
 				job.paperCal.parentSize=job.parentSize;
@@ -218,22 +231,27 @@
 							job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION;
 							break;
 					}
-				}
+				} else
+					job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
+				
 				switch (calc_order_radio_group.selectedValue) {
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
-						job.paperCal.printParentToFinishSection = true;
-						job.paperCal.printParentToRunSection = false;
-						job.paperCal.printRunToFinishSection = false;						
+				//		job.paperCal.printParentToFinishSection = true;
+				//		job.paperCal.printParentToRunSection = false;
+				//		job.paperCal.printRunToFinishSection = false;	
+						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH;
 						break;
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
-						job.paperCal.printParentToFinishSection = false;
-						job.paperCal.printParentToRunSection = true;
-						job.paperCal.printRunToFinishSection = false;						
+				//		job.paperCal.printParentToFinishSection = false;
+				//		job.paperCal.printParentToRunSection = true;
+				//		job.paperCal.printRunToFinishSection = false;						
+						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
 						break;
-					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
-						job.paperCal.printParentToFinishSection = false;
-						job.paperCal.printParentToRunSection = false;
-						job.paperCal.printRunToFinishSection = true;						
+					case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+				//		job.paperCal.printParentToFinishSection = false;
+				//		job.paperCal.printParentToRunSection = false;
+				//		job.paperCal.printRunToFinishSection = true;						
+						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
 						break;					
 				}
 				job.paperCal.runSize=run_size_edit.text
@@ -243,15 +261,15 @@
 				job.paperCal.bleedBottom=parseFloat(txtBleedBottom.text);
 				job.paperCal.bleedRight=parseFloat(txtBleedRight.text);
 				job.paperCal.bleedTop=parseFloat(txtBleedTop.text);
-				job.paperCal.colorBar=parseInt(txtColorBar.text);
+				job.paperCal.colorBar=parseFloat(txtColorBar.text);
 				job.paperCal.cutstoFinish=parseInt(txtCutstoFinish.text);
 				job.paperCal.cutstoRun=parseInt(txtCutstoRun.text);
 				job.paperCal.disableFSC=chkDisableFSC.selected
 				job.paperCal.finishSize=finish_size_edit.text
-				job.paperCal.folioEdge=parseInt(txtFolioEdge.text);
-				job.paperCal.gripEdgeGap=parseInt(txtGripEdge.text);
-				job.paperCal.gutter=parseInt(txtGutter.text);
-				job.paperCal.gutterHorizontal=parseInt(txtGutterHorizontal.text);
+				job.paperCal.folioEdge=parseFloat(txtFolioEdge.text);
+				job.paperCal.gripEdgeGap=parseFloat(txtGripEdge.text);
+				job.paperCal.gutter=parseFloat(txtGutter.text);
+				job.paperCal.gutterHorizontal=parseFloat(txtGutterHorizontal.text);
 				job.paperCal.parentSize=parent_size_edit.text;
 				job.paperCal.sheetsOut=parseInt(txtSheetsOut.text);
 				job.paperCal.trimFourSides=chkTrimFourSides.selected;
@@ -261,7 +279,6 @@
 				job.paperCal.useGripEdgeGap=chkGripEdge.selected;
 				job.paperCal.useGutter=chkGutter.selected;
 				job.paperCal.useWhiteSpace=chkWhiteSpace.selected;
-				//job.paperCal.whichStartSize 
 				job.paperCal.whiteSpaceLeft=parseFloat(txtWhiteSpace.text);
 				job.paperCal.whiteSpaceBottom=parseFloat(txtWhiteSpaceBottom.text);
 				job.paperCal.whiteSpaceRight=parseFloat(txtWhiteSpaceRight.text);
@@ -303,9 +320,6 @@
 			private function refreshCalcAndImage():void
 			{
 				mapToJobData();
-				//** TEMP
-				this.job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN;
-				this.job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
 				
 				paperCalculatorService.CalcOut(this.job, this.job.paperCal.whichStartSize);
 				//paperCalculatorService.GeneratePageImage(this.job);
@@ -342,26 +356,32 @@
 		<mx:CheckBox x="241"
 					 y="113.5"
 					 id="chkGripEdge"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useGripEdgeGap}"/>
 		<mx:CheckBox x="241"
 					 y="168"
 					 id="chkFolioEdge"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useFolioEdge}"/>
 		<mx:CheckBox x="242"
 					 y="219"
 					 id="chkColorBar"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useColorBar}"/>
 		<mx:CheckBox x="242"
 					 y="267"
 					 id="chkWhiteSpace"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useWhiteSpace}"/>
 		<mx:CheckBox x="242"
 					 y="357"
 					 id="chkGutter"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useGutter}"/>
 		<mx:CheckBox x="242"
 					 y="402"
 					 id="chkBleed"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.useBleed}"/>
 
 		<mx:Label x="261"
@@ -403,6 +423,7 @@
 					  id="txtGripEdge"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.gripEdgeGap}" height="20"/>
 		<mx:TextInput enabled="{chkFolioEdge.selected}"
 					  x="261"
@@ -410,13 +431,15 @@
 					  id="txtFolioEdge"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.folioEdge}" height="20"/>
 		<mx:TextInput enabled="{chkColorBar.selected}"
 					  x="262"
 					  y="217"
 					  id="txtColorBar"
-					  restrict="0-9."
+					  restrict="0-9\."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.colorBar}" height="20"/>
 		<mx:TextInput enabled="{chkWhiteSpace.selected}"
 					  x="262"
@@ -424,6 +447,7 @@
 					  id="txtWhiteSpace"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.whiteSpaceLeft}" height="20"/>
 		<mx:TextInput enabled="{chkWhiteSpace.selected}"
 					  x="262"
@@ -431,6 +455,7 @@
 					  id="txtWhiteSpaceRight"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.whiteSpaceRight}" height="20"/>
 		<mx:TextInput enabled="{chkGutter.selected}"
 					  x="262"
@@ -438,6 +463,7 @@
 					  id="txtGutter"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.gutter}" height="20"/>
 		<mx:TextInput enabled="{chkBleed.selected}"
 					  x="262"
@@ -445,6 +471,7 @@
 					  id="txtBleed"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.bleedLeft}" height="20"/>
 		<mx:TextInput enabled="{chkBleed.selected}"
 					  x="262"
@@ -452,6 +479,7 @@
 					  id="txtBleedRight"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.bleedRight}" height="20"/>
 
 		<mx:Label x="363"
@@ -481,6 +509,7 @@
 					  id="txtWhiteSpaceTop"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.whiteSpaceTop}" height="20"/>
 		<mx:TextInput enabled="{chkWhiteSpace.selected}"
 					  x="363"
@@ -488,6 +517,7 @@
 					  id="txtWhiteSpaceBottom"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.whiteSpaceBottom}" height="20"/>
 		<mx:TextInput enabled="{chkGutter.selected}"
 					  x="363"
@@ -495,6 +525,7 @@
 					  id="txtGutterHorizontal"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.gutterHorizontal}" height="20"/>
 		<mx:TextInput enabled="{chkBleed.selected}"
 					  x="363"
@@ -502,6 +533,7 @@
 					  id="txtBleedTop"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.bleedTop}" height="20"/>
 		<mx:TextInput enabled="{chkBleed.selected}"
 					  x="363"
@@ -509,6 +541,7 @@
 					  id="txtBleedBottom"
 					  restrict="0-9."
 					  width="93"
+					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.bleedBottom}" height="20"/>
 
 
@@ -516,16 +549,19 @@
 					 y="494"
 					 id="chkBackTrimParent"
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.backTrimParent}"/>
 		<mx:CheckBox x="242"
 					 y="515"
 					 id="chkTrimFourSides"
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.trimFourSides}"/>
 		<mx:CheckBox x="242"
 					 y="473"
 					 id="chkWorkAndTumble"
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"
+					 click="refreshCalcAndImage()"
 					 selected="{job.paperCal.workandTumble}"/>
 
 		<mx:Label x="241"
@@ -579,6 +615,7 @@
 						id="topGrip"
 						icon="@Embed(source='../../../../assets/GripSideTopBottom.png')"
 						groupName="gripLocation"
+						click="refreshCalcAndImage()"
 						width="20"
 						height="20"/>
 		<mx:RadioButton x="390"
@@ -586,6 +623,7 @@
 						value="{Constants.PAPER_CALCULATOR_GRIPPER_LEFT}"
 						id="leftGrip"
 						groupName="gripLocation"
+						click="refreshCalcAndImage()"
 						width="20"
 						height="20">
 			<mx:icon>@Embed(source='../../../../assets/GripSideLeftRight.png')</mx:icon>
@@ -638,6 +676,7 @@
 		<mx:TextInput x="21"
 					  y="207"
 					  text="{job.runSize}"
+					  focusOut="refreshCalcAndImage()"
 					  id="run_size_edit" width="192" height="20"/>
 		<mx:Label x="21"
 				  y="233"
@@ -645,6 +684,7 @@
 		<mx:TextInput x="21"
 					  y="254"
 					  text="{job.finishSize}"
+					  focusOut="refreshCalcAndImage()"
 					  id="finish_size_edit" width="192" height="20"/>
 		<mx:Button x="32"
 				   y="21"
@@ -720,9 +760,9 @@
 				  text="="
 				  width="20"/>
 		<mx:RadioButtonGroup id="calc_order_radio_group"/>
-		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" labelPlacement="right"/>
-		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" labelPlacement="right"/>
-		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" labelPlacement="right"/>
+		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
+		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
+		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
