@@ -28,17 +28,16 @@ public class PrintPricingMethod {
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		float runHours = job.getTotalImpositions() / pressSpeed;
-		float wasteHours = job.getEstWaste() / pressSpeed;
-		float totalHours = runHours;
+		float runHours = job.getTotalImpositions() / new Double(pressSpeed).floatValue();
+		float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
+		float totalHours = runHours + wasteHours;
 		float minimumHours = new Double(pressDefinition.getMinLabor()).floatValue() / 60;
 		if (totalHours < minimumHours)
 			totalHours = minimumHours;
 		if (job.getDoubleSided() == true)
 			totalHours = totalHours * 2;
-		totalHours = totalHours + wasteHours;
 		pressPrice = totalHours * pressDefinition.getLaborRate() * pressDefinition.getLaborMarkup();
-		stockPrice = stockPrice * job.getImpositionsPerRun();
+		stockPrice = (stockPrice * job.getImpositionsPerRun()) * job.getSheets();
 		double price = pressPrice + stockPrice;
 		pricingRecord.setTotalPrice(new Double(Math.round(price * 100)) / 100);
 		
@@ -58,7 +57,7 @@ public class PrintPricingMethod {
 	}
 	
 	private void calculateTotalImpositions(Job job) {
-		long totalImpositions = job.getImpositionsPerRun() * (job.getFrontPasses() + job.getBackPasses());
+		long totalImpositions = job.getImpositionsPerRun() * (job.getFrontPasses() + job.getBackPasses()) * job.getSheets();
 		job.setTotalImpositions(totalImpositions);
 	}
 	
@@ -67,11 +66,11 @@ public class PrintPricingMethod {
 		if (pressDefinition != null) {
 			double estWaste = 0.0;
 			double fixedWaste = pressDefinition.getFixedWaste() * (job.getFrontPasses() + job.getBackPasses());
-			double setupMin = pressDefinition.getSetupMin() * (job.getFrontPasses() + job.getBackPasses());
+			double setupMin = pressDefinition.getSetupMin();
 			long setupAddlRun = pressDefinition.getSetupAddRun() * (job.getFrontPasses() + job.getBackPasses());
 			WasteChart wasteChart = pressDefinition.getWasteChart();
 			if (wasteChart != null) {
-				double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getQtyOrdered());
+				double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getImpositionsPerRun());
 				estWaste = (job.getImpositionsPerRun() * wastePct * (job.getFrontPasses() + job.getBackPasses()));
 			}
 			estWaste += fixedWaste;

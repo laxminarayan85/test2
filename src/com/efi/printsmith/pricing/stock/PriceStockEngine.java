@@ -124,7 +124,7 @@ public class PriceStockEngine {
 		} else {
 			priceLogEntry.setDescription("Stock price method unknown - setting stock price to 0");
 		}
-		priceLogEntry.setValue(sheetPrice);
+		priceLogEntry.setValue(sheetPrice * job.getSheets());
 		return sheetPrice;		
 	}
 	

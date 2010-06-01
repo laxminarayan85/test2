@@ -19,8 +19,8 @@ public abstract class CopierPricingMethod {
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
 		wasteSheets *= job.getSheets();		
 		
-		job.setNumCopies(totalCopies);
-		job.setTotalCopies(totalCopies+wasteSheets);
+		job.setNumCopies(totalCopies / (job.getSheets() / (job.getNumUp() / job.getNumOn())));
+		job.setTotalCopies(totalCopies / (job.getNumUp() / job.getNumOn()) + (wasteSheets * (job.getNumUp() / job.getNumOn())));
 	}
 	
 	private void calculateStockQty(Job job) {
