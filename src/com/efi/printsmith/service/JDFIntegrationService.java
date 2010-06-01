@@ -181,17 +181,17 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			JDFCustomerInfo jdfCustomerInfo = jdfNode.appendCustomerInfo();
 			JDFContact jdfContact = jdfCustomerInfo.appendContact(EnumContactType.Customer);
 			jdfContact.setID(acct.getAccountId());
-			
-			Address address;
-			if ((address = contact.getAddress()) != null) {
-				JDFAddress jdfAddress = jdfContact.appendAddress();
-				jdfAddress.setCity(address.getCity());
-				jdfAddress.setRegion(address.getState());
-				jdfAddress.setStreet(address.getStreet1() + " " + address.getStreet2());
-				jdfAddress.setPostalCode(address.getZip());				
-			}
-			
+						
 			if (contact != null) {
+				Address address;
+				if ((address = contact.getAddress()) != null) {
+					JDFAddress jdfAddress = jdfContact.appendAddress();
+					jdfAddress.setCity(address.getCity());
+					jdfAddress.setRegion(address.getState());
+					jdfAddress.setStreet(address.getStreet1() + " " + address.getStreet2());
+					jdfAddress.setPostalCode(address.getZip());				
+				}
+
 				JDFPerson jdfPerson = jdfContact.appendPerson();
 				jdfPerson.setFirstName(contact.getFirstName());
 				jdfPerson.setFamilyName(contact.getLastName());
