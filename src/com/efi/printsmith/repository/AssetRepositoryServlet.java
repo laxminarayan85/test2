@@ -106,7 +106,16 @@ public class AssetRepositoryServlet extends HttpServlet implements Servlet {
 			} else {
 				log.error("Unable to save file to asset directory.");
 			}
-			File uploadedFile = File.createTempFile("PSAsset", ".tmp", assetDirectory);
+			String fileType = "";
+			if (item.getName() != null && item.getName().lastIndexOf(".") > 0 && item.getName().lastIndexOf(".") != item.getName().length()-1) {
+				fileType = item.getName().substring(item.getName().lastIndexOf(".") + 1, item.getName().length());
+			}
+			File uploadedFile = null;
+			if (fileType != null && fileType.length() > 0) {
+				uploadedFile = File.createTempFile("PSAsset", "." + fileType, assetDirectory);
+			} else {
+				uploadedFile = File.createTempFile("PSAsset", ".tmp", assetDirectory);				
+			}
 			if (!uploadedFile.exists()) {
 				uploadedFile.createNewFile();
 			} else {

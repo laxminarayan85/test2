@@ -23,6 +23,7 @@ width="786" height="531"  creationComplete="init()"
 
 <mx:Script>
 <![CDATA[
+	import mx.formatters.DateFormatter;
 	import com.efi.printsmith.data.JobJDFStatus;
 	import com.efi.printsmith.messaging.MessageBody;
 	import com.efi.printsmith.data.JobBase;
@@ -391,13 +392,30 @@ width="786" height="531"  creationComplete="init()"
 		return "";
 	}
 	
+	public function getJobAccountLabel(item:Object, column:DataGridColumn):String
+	{
+		var job:JobBase = item as JobBase;
+		
+		if (job != null) {
+			if (job.parentInvoice != null) {
+				if (job.parentInvoice.account != null) {
+					if (job.parentInvoice.account.title != null) {
+						return job.parentInvoice.account.title;
+					}
+				}
+			}
+		}
+		return "None";
+	}
+	
 	public function getJobOrderedDate(item:Object, column:DataGridColumn):String
 	{
 		var job:JobBase = item as JobBase;
 		
 		if (job != null) {
 			if (job.parentInvoice != null) {
-				return job.parentInvoice.orderedDate as String;
+				var formatter:DateFormatter = new DateFormatter();
+				return formatter.format(job.parentInvoice.orderedDate);
 			}
 		}
 		return "";
@@ -409,7 +427,8 @@ width="786" height="531"  creationComplete="init()"
 		
 		if (job != null) {
 			if (job.parentInvoice != null) {
-				return job.parentInvoice.wantedDate as String;
+				var formatter:DateFormatter = new DateFormatter();
+				return formatter.format(job.parentInvoice.wantedDate);
 			}
 		}
 		return "";		
@@ -423,29 +442,32 @@ width="786" height="531"  creationComplete="init()"
 	<mx:Label x="33" y="59" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.SortBy')}" width="73" textAlign="right"/>
 	<mx:ComboBox x="114" y="57" id="sortBy_combo" editable="false" dataProvider="{sortArray}" labelField="name" width="151"></mx:ComboBox>
 	<mx:ComboBox x="114" y="29" id="reportType_combo" editable="false" dataProvider="{reportArray}" labelField="name" change="DoComboReportChange()"  width="151"></mx:ComboBox>
-	<mx:Panel x="10" y="97" width="583" height="95" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
-		<mx:CheckBox x="25" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check" width="119"/>
-		<mx:CheckBox x="25" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check" width="119"/>
-		<mx:CheckBox x="152" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check" width="81"/>
-		<mx:CheckBox x="152" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.NoPricing')}" id="noPricing_check"/>
-		<mx:CheckBox x="380" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintDoubleSpace')}" id="doubleSpace_check"/>
-		<mx:CheckBox x="380" y="43" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
-		<mx:CheckBox x="241" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check" width="131"/>
+	<mx:Panel x="10" y="97" width="600" height="95" dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Options')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="18">
+		<mx:CheckBox x="31" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Completed')}" id="complete_check" width="119"/>
+		<mx:CheckBox x="31" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.ShowTotals')}" id="showTotal_check" width="119"/>
+		<mx:CheckBox x="158" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.OnHold')}" id="holdState_check" width="81"/>
+		<mx:CheckBox x="158" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.NoPricing')}" id="noPricing_check"/>
+		<mx:CheckBox x="386" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintDoubleSpace')}" id="doubleSpace_check"/>
+		<mx:CheckBox x="386" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.PrintJobComments')}" id="jobComments_check"/>
+		<mx:CheckBox x="247" y="13" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.FirmdatesONLY')}" id="firmDate_check" width="131"/>
 	</mx:Panel>
-	<mx:Panel x="292" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
+	<mx:Panel x="292" y="10" width="160" height="79"  dropShadowEnabled="false" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Include')}" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="18">
 		<mx:CheckBox x="10" y="3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Invoices')}" id="invoice_check" change="DoCheck()" width="120"/>
 		<mx:CheckBox x="10" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()" width="120"/>
 	</mx:Panel>
-	<mx:Panel x="460" y="10" width="133" height="79" id="fiery_panel" dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="20">
-		<mx:LinkButton x="7" y="6" id="btn_submit" width="33" click="sendFieryJob()">
-			<mx:icon>@Embed(source='../../../../assets/media_play.png')</mx:icon>
+	<mx:Panel x="460" y="10" width="150" height="79" id="fiery_panel" dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="18">
+		<mx:LinkButton x="7" y="3" id="btn_submit" width="33" click="sendFieryJob()">
+			<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
 		</mx:LinkButton>
-		<mx:LinkButton x="48" y="6" id="btn_stop" width="33" click="pauseFieryJob()">
-			<mx:icon>@Embed(source='../../../../assets/media_pause.png')</mx:icon>
+		<mx:LinkButton x="56" y="3" id="btn_stop" width="33" click="pauseFieryJob()">
+			<mx:icon>@Embed(source='../../../../assets/cancelSubmit.png')</mx:icon>
 		</mx:LinkButton>
-		<mx:LinkButton x="89" y="6" id="btn_info" width="33" click="infoFieryJob()">
+		<mx:LinkButton x="105" y="3" id="btn_info" width="33" click="infoFieryJob()">
 			<mx:icon>@Embed(source='../../../../assets/information2.png')</mx:icon>
 		</mx:LinkButton>
+		<mx:Text x="0" y="39" text="Submit&#xd;" textAlign="center"/>
+		<mx:Text x="51" y="39" text="Cancel&#xd;" textAlign="center"/>
+		<mx:Text x="104" y="39" text="Info&#xd;" textAlign="center" width="35"/>
 	</mx:Panel>
 	<mx:ViewStack x="0" id="list_stack" width="766" height="291" bottom="0">
 		<mx:Canvas id="invoice_list_canvas" label="View 1" width="100%" height="100%">
@@ -467,10 +489,10 @@ width="786" height="531"  creationComplete="init()"
 			<mx:DataGrid id="job_list" dataProvider="{integratedJobs}" verticalScrollPolicy="on" bottom="0" top="0" right="10" left="10" horizontalScrollPolicy="auto">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DocJob')}" labelFunction="getJobLabel" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getJobAccountLabel"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Description')}" labelFunction="getJobDescription"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="getJobOrderedDate"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="getJobWantedDate" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" labelFunction="getJobOrderedDate"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" labelFunction="getJobWantedDate" />
 					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" labelFunction="getJobDeviceId" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>
 					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Status')}" labelFunction="getJobStatus" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>
 					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Queue')}" labelFunction="getJobQueue" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>

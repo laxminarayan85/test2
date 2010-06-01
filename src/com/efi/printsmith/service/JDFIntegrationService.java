@@ -90,6 +90,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.ComLink;
 import com.efi.printsmith.data.DigitalAsset;
 import com.efi.printsmith.data.JobJDFStatus;
 import com.efi.printsmith.data.PreferencesIntegration;
@@ -99,6 +101,7 @@ import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.Users;
 import com.efi.printsmith.integration.jdf.JMFMessages;
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
@@ -107,6 +110,8 @@ import com.efi.printsmith.network.HttpPostContent;
 import com.efi.printsmith.network.HttpResponse;
 import com.efi.printsmith.network.NetworkHelper;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
+
+import flex.messaging.FlexContext;
 
 public class JDFIntegrationService extends SnowmassHibernateService {
 	private Logger log = Logger.getLogger(JDFIntegrationService.class);
@@ -172,27 +177,43 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		
 		Account acct = invoice.getAccount();
 		Contact contact = invoice.getContact();
-		
-		JDFCustomerInfo jdfCustomerInfo = jdfNode.appendCustomerInfo();
-		JDFContact jdfContact = jdfCustomerInfo.appendContact(EnumContactType.Customer);
-		jdfContact.setID("1");
-		
-		JDFAddress jdfAddress = jdfContact.appendAddress();
-		jdfAddress.setCity("Denver");
-		jdfAddress.setRegion("CO");
-		jdfAddress.setStreet("2242 High St.");
-		jdfAddress.setPostalCode("80205");
-		
-		JDFPerson jdfPerson = jdfContact.appendPerson();
-		jdfPerson.setFirstName("Brad");
-		jdfPerson.setFamilyName("Knabel");
-		
-		JDFCompany jdfCompany = jdfContact.appendCompany();
-		jdfCompany.setOrganizationName("EFI");
-		
-		JDFComChannel jdfComChannel = jdfContact.appendComChannel();
-		jdfComChannel.setLocator("412-979-7347");
-		jdfComChannel.setChannelType(EnumChannelType.Phone);
+		if (acct != null) {
+			JDFCustomerInfo jdfCustomerInfo = jdfNode.appendCustomerInfo();
+			JDFContact jdfContact = jdfCustomerInfo.appendContact(EnumContactType.Customer);
+			jdfContact.setID(acct.getAccountId());
+			
+			Address address;
+			if ((address = contact.getAddress()) != null) {
+				JDFAddress jdfAddress = jdfContact.appendAddress();
+				jdfAddress.setCity(address.getCity());
+				jdfAddress.setRegion(address.getState());
+				jdfAddress.setStreet(address.getStreet1() + " " + address.getStreet2());
+				jdfAddress.setPostalCode(address.getZip());				
+			}
+			
+			if (contact != null) {
+				JDFPerson jdfPerson = jdfContact.appendPerson();
+				jdfPerson.setFirstName(contact.getFirstName());
+				jdfPerson.setFamilyName(contact.getLastName());
+			}
+			JDFCompany jdfCompany = jdfContact.appendCompany();
+			jdfCompany.setOrganizationName(acct.getTitle());
+
+			
+//			List<ComLink> comLinks = contact.getComLinks();
+//			if (comLinks != null) {
+//				Iterator<ComLink> iter = comLinks.iterator();
+//				
+//				while(iter.hasNext()) {
+//					ComLink comLink = iter.next();
+//					
+//					JDFComChannel jdfComChannel = jdfContact.appendComChannel();
+//					jdfComChannel.setLocator(comLink.getValue());
+//					jdfComChannel.setChannelType(EnumChannelType.Phone);
+//
+//				}
+//			}
+		}
 		
 		JDFNodeInfo jdfNodeInfo = jdfNode.appendNodeInfo();
 		jdfNodeInfo.setLastEnd(new JDFDate());
@@ -203,7 +224,10 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			jdfAuditPool = jdfNode.appendAuditPool();
 		}
 		JDFCreated jdfCreated = jdfAuditPool.addCreated(null,null);
-		jdfCreated.setAuthor("Brad Knabel");
+		Users user = (Users) FlexContext.getFlexSession().getAttribute("userInfo");
+		if (user != null) {
+			jdfCreated.setAuthor(user.getName());
+		}
 		jdfCreated.setAgentName("Snowmass Digital Press Connector");
 		jdfCreated.setAgentVersion("1.0a1");
 		jdfCreated.setTimeStamp(new JDFDate());
@@ -219,13 +243,30 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		jdfRunList.setLocked(false);
 		JDFResourceLink runListResourceLink = jdfNode.getLink(jdfRunList, null);
 //		runListResourceLink.setProcessUsage(EnumProcessUsage.Document);
-		JDFRunList jdfRun = jdfRunList.addRun("file://c:/test.jdf");//"cid:PS-0001");
-		jdfRun.setRun("0_1");
-		jdfRun.setStatus(EnumResStatus.Available);
-		jdfRun.setEndOfSet(true);
-		jdfRun.setEndOfDocument(true);
-		//JDFIntegerRangeList rangeList = new JDFIntegerRangeList();
-		jdfRun.setPages(null);
+		String assetDirectoryPath = System.getProperty("com.efi.printsmith.digitalAssetRepository", "./assetRepository");
+//		if (assetList != null) {
+//		asset = assetList.get(0);
+//		String assetDirectoryPath = System.getProperty("com.efi.printsmith.digitalAssetRepository", "./assetRepository");
+//	    String s = this.readFileAsString(assetDirectoryPath + "/" + asset.getRepositoryPath());
+//	    encodedPDF = Base64.encodeBase64(s.getBytes());
+//	}
+
+		if (assetList != null) {
+			Iterator<DigitalAsset> assetIter = assetList.iterator();
+			int runIndex = 0;
+			while (assetIter.hasNext()) {
+				asset = assetIter.next();
+				InetAddress addr = InetAddress.getLocalHost();
+				JDFRunList jdfRun = jdfRunList.addRun("file://" + addr.getHostAddress() + assetDirectoryPath + "/" + asset.getRepositoryPath());//"file://c:/test.jdf");//"cid:PS-0001");
+				jdfRun.setRun("0_" + runIndex++);
+				jdfRun.setStatus(EnumResStatus.Available);
+				jdfRun.setEndOfSet(true);
+				jdfRun.setEndOfDocument(true);
+				//JDFIntegerRangeList rangeList = new JDFIntegerRangeList();
+				jdfRun.setPages(null);				
+			}
+			
+		}
 		
 		JDFLayoutPreparationParams jdfLayoutPreparationParams = (JDFLayoutPreparationParams)jdfResourcePool.appendElementN(ElementName.LAYOUTPREPARATIONPARAMS, 1, null);
 		jdfLayoutPreparationParams.setID("r0002");
@@ -234,6 +275,8 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		jdfLayoutPreparationParams.setSides(EnumSides.OneSidedFront);
 		JDFMedia jdfMedia = (JDFMedia)jdfResourcePool.appendElementN(ElementName.MEDIA, 1, null);
 		jdfMedia.setID("m0001");
+//EFI:EFPaperCatalogID=\"19568\"
+		jdfMedia.setAttribute("MID", "19568");
 		StockDefinition stockDefinition = job.getStock();
 		float width = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
 		float length = PriceListUtilities.getLengthFromSizeString(job.getFinishSize());
@@ -281,7 +324,23 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		JDFRunList pgRunList = (JDFRunList)processGroup.getCreateResource(ElementName.RUNLIST, EnumUsage.Input, 0);
 		pgRunList.setLocked(false);
 		pgRunList.setStatus(EnumNodeStatus.Ready);
-		pgRunList.addRun("c:/test.pdf");
+		if (assetList != null) {
+			Iterator<DigitalAsset> assetIter = assetList.iterator();
+			int runIndex = 0;
+			while (assetIter.hasNext()) {
+				asset = assetIter.next();
+				InetAddress addr = InetAddress.getLocalHost();
+				JDFRunList jdfRun = pgRunList.addRun("file://" + addr.getHostAddress() + "/" + assetDirectoryPath + "/" + asset.getRepositoryPath());//"file://c:/test.jdf");//"cid:PS-0001");
+				jdfRun.setRun("0_" + runIndex++);
+				jdfRun.setStatus(EnumResStatus.Available);
+				jdfRun.setEndOfSet(true);
+				jdfRun.setEndOfDocument(true);
+				//JDFIntegerRangeList rangeList = new JDFIntegerRangeList();
+				jdfRun.setPages(null);				
+			}
+			
+		}
+		
 		JDFMedia pgJdfMedia = (JDFMedia)pgResoucePool.appendElementN(ElementName.MEDIA, 1, null);
 		pgJdfMedia.setAttribute("EFI:EFPaperCatalogID", "19568");
 //		pgRunList.setPartIDKeys(new VString().add("Run"));
@@ -311,8 +370,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 			
 			url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId); //new URL("http://10.34.80.228:8010/FJC/SERVER-D9XWFR4E");
 			InetAddress addr = InetAddress.getLocalHost();
-//			returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
-			returnURL = new URL("http://10.34.4.2:8080/Snowmass/JDFIntegrationServlet");
+			returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
 			JobJDFStatus jdfStatus = new JobJDFStatus();
 			jdfStatus.setDeviceId(deviceId);
 			job.setJdfStatus(jdfStatus);
@@ -344,6 +402,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 		jdfQueueEntry.setMsgType(msgType);
 		jdfQueueEntry.setStatus(status);
 		jdfQueueEntry.setUrl(url);
+		jdfQueueEntry.setSent(new Date());
 		DataService dataService = new DataService();
 		try {
 			dataService.addUpdate(jdfQueueEntry);
@@ -668,8 +727,7 @@ public class JDFIntegrationService extends SnowmassHibernateService {
 
 			URL url = new URL(integrationPreferences.getFieryConnectorURL() + "/" + deviceId);
 			InetAddress addr = InetAddress.getLocalHost();
-//			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
-			URL returnURL = new URL("http://10.34.4.2:8080/Snowmass/JDFIntegrationServlet");
+			URL returnURL = new URL("http://"+addr.getHostAddress()+":8080/Snowmass/JDFIntegrationServlet"); // TODO Fix this too
 			sendSubscriptionCancelation(url, returnURL, deviceId, String.valueOf(jobId));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

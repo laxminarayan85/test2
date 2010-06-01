@@ -85,11 +85,16 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 					while ((deviceInfo = signal.getDeviceInfo(i++)) != null) {
 						int j = 0;
 						JDFJobPhase jobPhase;
+						String deviceStatus = deviceInfo.getDeviceStatus().getName();
+						if (deviceInfo.getStatus() != null && deviceInfo.getStatusDetails().length() > 0) {
+							deviceStatus += ", " + deviceInfo.getStatusDetails();
+						}
 						while ((jobPhase = deviceInfo.getJobPhase(j++)) != null) {
 							try {
 								double percentComplete = jobPhase
 										.getPercentCompleted();
 								String status = jobPhase.getStatus().getName();
+								status += " --  Device Status: " + deviceStatus;
 								String jobId = jobPhase.getJobID();
 								String queueEntryId = jobPhase
 										.getQueueEntryID();
