@@ -150,6 +150,15 @@
 			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
 			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
+			<mx:SetProperty target="{minimum_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 3).format(charge.minimumCharge)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 3).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="AlwaysAsk2" basedOn="">
 			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
@@ -215,6 +224,15 @@
 			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
 			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="AlwaysAsk3" basedOn="">
 			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
@@ -292,6 +310,18 @@
 			<mx:SetProperty target="{time_stop_edit}" name="y" value="246"/>
 			<mx:SetProperty target="{in_sets_of_edit}" name="text" value="{charge.sets}"/>
 			<mx:SetProperty target="{time_start_edit}" name="x" value="134"/>
+			<mx:SetProperty target="{minimum_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.minimumCharge)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="AlwaysAsk4" basedOn="">
 			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
@@ -376,6 +406,15 @@
 			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 			
 		</mx:State>
 		<mx:State name="JobAware" basedOn="">
@@ -439,6 +478,12 @@
 			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
 			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 			
 		</mx:State>
 		<mx:State name="Markup" basedOn="">
@@ -494,6 +539,12 @@
 			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
 			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="FlatRate" basedOn="">
 			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
@@ -550,7 +601,10 @@
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
 			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
 			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="text" value="{charge.rate}"/>
+			<mx:SetProperty target="{rate_edit}" name="text" value="{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}"/>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>){Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="PriceList" basedOn="">
 			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
@@ -604,6 +658,9 @@
 			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="RateList" basedOn="PriceList">
 		</mx:State>
@@ -672,6 +729,15 @@
 			<mx:SetProperty target="{cuts_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
 			<mx:SetProperty target="{cuts_edit}" name="text" value="{(charge as CuttingCharge).cuts}"/>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="InkCharge" basedOn="">
 			<mx:SetProperty target="{number_of_colors_label}" name="x" value="10"/>
@@ -744,7 +810,10 @@
 			<mx:SetProperty target="{percent_coverage_edit}" name="text" value="{(charge as InkCharge).coverage}"/>
 			<mx:SetProperty target="{lbs_of_ink_edit}" name="text" value="{(charge as InkCharge).poundsOfInk}"/>
 			<mx:SetProperty target="{cover_lb_edit}" name="text" value="{(charge as InkCharge).coverPerPound}"/>
-			<mx:SetProperty target="{price_lb_edit}" name="text" value="{(charge as InkCharge).pricePerPound}"/>
+			<mx:SetProperty target="{price_lb_edit}" name="text" value="{Snowmass.getCurrencyFormatter(true, 2).format((charge as InkCharge).pricePerPound)}"/>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="Linear" basedOn="">
 			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
@@ -823,6 +892,15 @@
 			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
 			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="ShippingCharge" basedOn="">
 			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
@@ -885,6 +963,9 @@
 			<mx:SetProperty target="{ship_via_label}" name="visible" value="true"/>
 			<mx:SetProperty target="{ship_via_combo}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="Fold" basedOn="">
 			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
@@ -957,6 +1038,15 @@
 			<mx:SetProperty target="{refresh_price_btn}" name="x" value="560"/>
 			<mx:SetProperty target="{done_button}" name="x" value="516"/>
 			<mx:SetProperty target="{add_button}" name="x" value="439"/>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{material_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="SquareArea" basedOn="">
 			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
@@ -1023,6 +1113,12 @@
 			<mx:SetProperty target="{text1}" name="visible" value="true"/>
 			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
 			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
+			<mx:SetProperty target="{rate_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
+			</mx:SetProperty>
+			<mx:SetProperty target="{price_edit}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 <!--		<mx:State name="Edit Charge" basedOn="">
 			<mx:SetProperty target="{add_button}" name="label" value="Save"/>

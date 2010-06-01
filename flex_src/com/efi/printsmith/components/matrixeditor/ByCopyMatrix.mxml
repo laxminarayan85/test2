@@ -37,7 +37,6 @@
 			<![CDATA[
 				import com.efi.printsmith.data.Matrix; 
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
-				[Bindable] public var hour:Number = 0;
 			]]>
 		</mx:Script>
 		</mx:DataGrid>

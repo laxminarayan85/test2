@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" xmlns:mtrx="com.efi.printsmith.components.matrixeditor.*" width="254" height="448" 
 	defaultButton="{select_button}" 
-	showCloseButton="false" 
+	showCloseButton="false"  
 	creationComplete="init()"
     close="PopUpManager.removePopUp(this);" 
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobPriceMatrixCmd.PriceMatrix')}" 
@@ -23,7 +23,7 @@
 		<mx:SetProperty name="height" value="448"/>
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0">
+			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -34,7 +34,7 @@
 		<mx:SetProperty name="height" value="460"/>
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyDoubleMatrix x="0" y="0">
+			<mtrx:ByCopyDoubleMatrix x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
@@ -42,62 +42,50 @@
 		<mx:SetProperty target="{canvas1}" name="height" value="411"/>
 	</mx:State>
 	<mx:State name="COPIESPERORIGINALS">
-		<mx:SetProperty target="{canvas1}" name="height" value="348"/>
-		<mx:SetProperty name="height" value="396"/>
 		
 	</mx:State>
 	<mx:State name="COPIESPERORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="376">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>
-		<mx:SetProperty name="height" value="464"/>
 	</mx:State>
 	<mx:State name="TOTALOFALLCOPIES">
-		<mx:SetProperty target="{canvas1}" name="height" value="342"/>
-		<mx:SetProperty name="height" value="390"/>
 		
 	</mx:State>	
 	<mx:State name="TOTALOFALLCOPIESTWOSIDES">
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="380">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
-		<mx:SetProperty name="height" value="468"/>
 	</mx:State>	
 	<mx:State name="SQUAREAREAOFORIGINALS">
-		<mx:SetProperty target="{canvas1}" name="height" value="346"/>
-		<mx:SetProperty name="height" value="390"/>
 		
 	</mx:State>
 	<mx:State name="SQUAREAREAOFORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="372">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
-		<mx:SetProperty name="height" value="460"/>
 	</mx:State>
 	<mx:State name="TOTALSQUAREAREA">
-		<mx:SetProperty target="{canvas1}" name="height" value="341"/>
-		<mx:SetProperty name="height" value="396"/>
 		
 	</mx:State>
 	<mx:State name="TOTALSQUAREAREATWOSIDES">
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="376">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
-		<mx:SetProperty name="height" value="464"/>
 	</mx:State>
 	<mx:State name="SQUAREAREAANDCOPIES">
 		<mx:SetProperty name="height" value="448"/>
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0">
+			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -108,7 +96,7 @@
 		<mx:SetProperty name="height" value="448"/>
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0">
+			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -116,14 +104,12 @@
 		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
 	</mx:State>
 	<mx:State name="SQUAREAREAPERCOPY">
-		<mx:SetProperty target="{canvas1}" name="height" value="343"/>
-		<mx:SetProperty name="height" value="390"/>
 		
 	</mx:State>
 	<mx:State name="SQUAREAREAPERCOPY">
 		<mx:RemoveChild target="{basicmatrix1}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360">
+			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
 	</mx:State>

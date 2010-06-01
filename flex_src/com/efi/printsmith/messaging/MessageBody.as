@@ -1,5 +1,6 @@
 package com.efi.printsmith.messaging
 {
+	[RemoteClass(alias="com.efi.printsmith.messaging.MessageBody")]
 	public class MessageBody
 	{
 		public function MessageBody()

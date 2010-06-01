@@ -26,6 +26,8 @@ import org.cip4.jdflib.util.mime.MimeReader;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.JobJDFStatus;
 import com.efi.printsmith.integration.jdf.JMFMessages;
+import com.efi.printsmith.messaging.MessageServiceAdapter;
+import com.efi.printsmith.messaging.MessageTypes;
 import com.efi.printsmith.network.HttpContentType;
 import com.efi.printsmith.network.NetworkHelper;
 import com.efi.printsmith.service.DataService;
@@ -41,10 +43,6 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		//			String realPath = request.getSession().getServletContext().getRealPath("/")+"WEB-INF"+File.separator+"integration"+File.separator;
-		if (request != null) {
-			System.out.println(request);
-		}
 		String deviceId = request.getParameter("device");
 		if (deviceId != null) {
 
@@ -52,6 +50,7 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 
 		MimeReader mimeReader = new MimeReader();
 		JDFDoc jdfDoc = mimeReader.getJDFDoc(request.getInputStream(), 0);
+		System.out.println(jdfDoc.toXML());
 		Collection<JDFCommand> commands = jdfDoc.getJMFRoot().getAllCommand();
 		if (commands != null) {
 			Iterator commandIterator = commands.iterator();
@@ -70,7 +69,6 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 					response.setContentLength(responseBody.length());
 					OutputStream out = response.getOutputStream();
 					out.write(responseBody.getBytes());
-//					out.close();
 				}
 			}
 		}
@@ -82,10 +80,12 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 				JDFSignal signal = (JDFSignal) signalIterator.next();
 
 				if (signal != null) {
-					JDFDeviceInfo deviceInfo = signal.getDeviceInfo(0);
-					if (deviceInfo != null) {
-						JDFJobPhase jobPhase = deviceInfo.getJobPhase(0);
-						if (jobPhase != null) {
+					int i = 0;
+					JDFDeviceInfo deviceInfo;
+					while ((deviceInfo = signal.getDeviceInfo(i++)) != null) {
+						int j = 0;
+						JDFJobPhase jobPhase;
+						while ((jobPhase = deviceInfo.getJobPhase(j++)) != null) {
 							try {
 								double percentComplete = jobPhase
 										.getPercentCompleted();
@@ -115,24 +115,21 @@ public class JDFIntegrationServlet extends HttpServlet implements Servlet {
 										job.setJdfStatus(jdfStatus);
 										dataService.addUpdate(job);
 									}
+									MessageServiceAdapter.sendNotification(MessageTypes.JDFSTATUS, 
+											job.getId().toString(), jdfStatus);
 								}
 							} catch (NumberFormatException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error(e);
 							}
-
-						}
-
+						}						
 					}
+
 				}
-				System.out.println(signal.toXML());
+				log.info("Signal received: " + signal.toXML());
 			}
 		}
-
-		System.out.println(jdfDoc.toXML());
 	}
 
 	protected void doGet(HttpServletRequest request,

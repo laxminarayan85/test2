@@ -9,17 +9,17 @@ package com.efi.printsmith
 		static public const PAPER_CALCULATOR_GRIPPER_LEFT:String = "LEFT";
 		static public const PAPER_CALCULATOR_GRIPPER_TOP:String = "TOP";
 
-		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER = "NEITHER";
-		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN = "MATCH";
-		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION = "SWING";
+		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER:String = "NEITHER";
+		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN:String = "MATCH";
+		static public const PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION:String = "SWING";
 
-		static public const JOB_RUN_METHOD_SHEETWISE = "SHEETWISE";
-		static public const JOB_RUN_METHOD_WORK_TURN = "WORKANDTURN";
-		static public const JOB_RUN_METHOD_WORK_TUMBLE = "WORKANDTUMBLE";
+		static public const JOB_RUN_METHOD_SHEETWISE:String = "SHEETWISE";
+		static public const JOB_RUN_METHOD_WORK_TURN:String = "WORKANDTURN";
+		static public const JOB_RUN_METHOD_WORK_TUMBLE:String = "WORKANDTUMBLE";
 		
-		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH = 1;
-		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH = 2;
-		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN = 3;
+		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:Number = 1;
+		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:Number = 2;
+		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:Number = 3;
 
 		public function Constants()
 		{

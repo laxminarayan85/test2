@@ -261,7 +261,7 @@
 			}
 			
 			private function doSampleReport():void {
-				var reportName = report_list.selectedItem as String;
+				var reportName:String = report_list.selectedItem as String;
 				var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?reportName="+reportName);
             	navigateToURL(urlRequest, "_blank");
 			}

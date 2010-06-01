@@ -2048,7 +2048,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+  @ManyToOne( cascade = {CascadeType.ALL} )
   private JobJDFStatus jdfStatus;
 
 	/**
@@ -2621,7 +2621,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+  @ManyToOne(fetch=FetchType.LAZY)
   private InvoiceBase parentInvoice;
 	/**
    * @generated

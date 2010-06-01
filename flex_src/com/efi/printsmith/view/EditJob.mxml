@@ -1233,12 +1233,12 @@
 						job_totalCost.text = job.totalCost.toString();
 					}
 					if (job.pricingRecord != null) {
-						overs_unit_price.text = job.pricingRecord.oversUnitPrice.toString();
-						overs_total_price.text = job.pricingRecord.oversTotalPrice.toString();
-						job_prep.text = job.pricingRecord.prepPrice.toString();
-						job_bind.text = job.pricingRecord.bindPrice.toString();
-						job_other.text = job.pricingRecord.otherChargePrice.toString();
-						job_total.text = (job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString();
+						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversUnitPrice.toString());
+						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
+						job_prep.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice.toString());
+						job_bind.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice.toString());
+						job_other.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice.toString());
+						job_total.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString());
 					}
 				}
 			}
@@ -1784,7 +1784,7 @@
 										  y="279"
 										  id="job_price"
 										  height="20"
-										  width="98" textAlign="right" text="{job.pricingRecord.totalPrice}"/>
+										  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 3).format(job.pricingRecord.totalPrice)}"/>
 							<mx:Label x="385"
 									  y="281"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>

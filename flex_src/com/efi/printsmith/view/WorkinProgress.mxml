@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}"
 width="786" height="531"  creationComplete="init()"  
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -19,12 +19,12 @@ width="786" height="531"  creationComplete="init()"
 				result="pauseFieryJobResult(event)"/>
 </mx:RemoteObject>
 
-<mx:Producer id="producer" destination="invoicebase"/>
-<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.JobJDFStatus;
+	import com.efi.printsmith.messaging.MessageBody;
 	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.data.Job;
 	import mx.controls.Alert;                                         
@@ -61,7 +61,7 @@ width="786" height="531"  creationComplete="init()"
 	private var integratedJobs:ArrayCollection = new ArrayCollection();
 	
 	public function init():void {
-		consumer.subscribe();
+		notification_consumer.subscribe();     
 		invoice_check.selected = true;
 		this.fiery_panel.visible = false;
 		invoicebases.sort = null;
@@ -71,7 +71,7 @@ width="786" height="531"  creationComplete="init()"
 		notification_consumer.subscribe();
 		dataService.getPending();
 		dataService.getPendingIntegratedJobs();
-		invoicebases.filterFunction = invoiceEsimtateFilter;
+		invoicebases.filterFunction = invoiceEstimateFilter;
 	} 
 	
 	private function fillReportArray(fillArray:ArrayCollection):void {
@@ -159,7 +159,7 @@ width="786" height="531"  creationComplete="init()"
 	
 	private function handleLoadResult(event:ResultEvent):void {
 		invoicebases = event.result as ArrayCollection;
-		invoicebases.filterFunction = invoiceEsimtateFilter;
+		invoicebases.filterFunction = invoiceEstimateFilter;
 		refreshData();
 	}
 	
@@ -173,7 +173,7 @@ width="786" height="531"  creationComplete="init()"
 		}
 	}
 	
-	private function invoiceEsimtateFilter(item:Object):Boolean {
+	private function invoiceEstimateFilter(item:Object):Boolean {
 		var showItem:Boolean = false;
 		
 		/* First make sure we have the right document type */
@@ -262,7 +262,7 @@ width="786" height="531"  creationComplete="init()"
 	private function pauseFieryJob():void {
 		var job:Job = job_list.selectedItem as Job;
 		if (job != null) {
-			jdfIntegrationService.pauseFieryJob(job);
+			jdfIntegrationService.cancelFieryJob(job.id);
 		}
 	}
 	
@@ -284,18 +284,45 @@ width="786" height="531"  creationComplete="init()"
 	
 	private function messageHandler(message:IMessage):void
 	{
-		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
-		
+		var messageBody:com.efi.printsmith.messaging.MessageBody = message.body as com.efi.printsmith.messaging.MessageBody;
+		if (messageBody != null) {
 		var messageType:String = messageBody.messageType;
-		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
-			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
-			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "InvoiceBase" || payloadType == "Invoice" || payloadType == "Estimate") {
-		  		dataService.getAll("InvoiceBase");
+			if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+				var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+				var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+				if (payloadType == "InvoiceBase" || payloadType == "Invoice" || payloadType == "Estimate") {
+			  		dataService.getAll("InvoiceBase");
+				}
+			} else if (messageType == "JDFSTATUS") {
+				updateJDFStatus(message);
 			}
 		}
 	}	
 
+	private function updateJDFStatus(message:IMessage):void
+	{
+		var messageBody:com.efi.printsmith.messaging.MessageBody = message.body as com.efi.printsmith.messaging.MessageBody;
+		var jobIdString:String = messageBody.payloadType as String;
+		var payload:JobJDFStatus = messageBody.payload as JobJDFStatus;
+		
+		if (jobIdString != null && jobIdString.length > 0) {
+			var jobId:Number = parseInt(jobIdString);
+			var found:Boolean = false;
+			var counter:Number = 0;
+			
+			while (integratedJobs != null && !found && counter < this.integratedJobs.length) {
+				var tmpJob:Job = this.integratedJobs.getItemAt(counter++) as Job;
+				if (tmpJob.id == jobId) {
+					tmpJob.jdfStatus = payload;
+					found = true;
+					if (job_list != null && job_list.dataProvider != null) {
+						job_list.dataProvider.itemUpdated(integratedJobs[counter-1]);
+					}
+				}
+			}
+		}
+	}
+	
 	public function getJobLabel(item:Object, column:DataGridColumn):String
 	{
 		var job:JobBase = item as JobBase;
@@ -443,10 +470,10 @@ width="786" height="531"  creationComplete="init()"
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" labelFunction="getAccountLabel"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Description')}" labelFunction="getJobDescription"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="getJobOrderedDate"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" labelFunction="getJobDeviceId" />
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="getJobWantedDate" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Status')}" labelFunction="getJobStatus" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Queue')}" labelFunction="getJobQueue"/>
+					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.DeviceID')}" labelFunction="getJobDeviceId" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>
+					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Status')}" labelFunction="getJobStatus" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>
+					<comp:BlinkWhenChangedColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Queue')}" labelFunction="getJobQueue" blinkColor="0xFF3000" itemRenderer="com.efi.printsmith.components.BlinkWhenChangedRenderer"/>
 					
 				</mx:columns>
 			</mx:DataGrid>

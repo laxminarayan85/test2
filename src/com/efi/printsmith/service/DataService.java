@@ -272,10 +272,10 @@ public class DataService extends HibernateService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ModelBase> getPendingIntegratedJobs() throws Exception {
+	public List<JobBase> getPendingIntegratedJobs() throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<InvoiceBase> resultList = new ArrayList<InvoiceBase>();
-		List<ModelBase> retVal = new ArrayList<ModelBase>();
+		List<JobBase> retVal = new ArrayList<JobBase>();
 		String columnstring = new String();
 
 		try {
@@ -303,28 +303,37 @@ public class DataService extends HibernateService {
 //					}
 //				}
 //			}
-
-			// Session session = (Session) em.getDelegate();
-			// List<JobBase> jobs = null;
-			// jobs = session.createCriteria(JobBase.class).list();
-			// Iterator<JobBase> it = jobs.iterator();
-			// List <JobBase> retVal = new ArrayList<JobBase>();
-			//			
-			// // TODO: Following code is just plain atrocious - let's get it
-			// wrapped into the query above instead of hacking at it like a dead
-			// moose
-			// while (it.hasNext()) {
-			// JobBase job = it.next();
-			//				
-			// if (job.getPricingCopier() != null &&
-			// job.getPricingCopier().getOemDeviceID() != null &&
-			// job.getPricingCopier().getOemDeviceID().length() > 0) {
-			// if (job.getParentInvoice() != null &&
-			// job.getParentInvoice().getOnPendingList() == true) {
-			// retVal.add(job);
-			// }
-			// }
-			// }
+//
+//			Session session = (Session) em.getDelegate();
+//			List<JobBase> jobs = null;
+//			jobs = session.createCriteria(JobBase.class).list();
+//			Iterator<JobBase> it = jobs.iterator();
+//			 List <JobBase> retVal = new ArrayList<JobBase>();
+						
+			 // TODO: Following code is just plain atrocious - let's get it wrapped into the query above instead of hacking at it like a dead moose
+			Iterator<InvoiceBase> it = resultList.iterator();
+			while (it.hasNext()) {
+				InvoiceBase invoice = it.next();
+				List<Job> jobs = null;
+				jobs = invoice.getJobs();
+				
+				Iterator<Job> jobIt = jobs.iterator();
+				while (jobIt.hasNext()) {
+					Job job = jobIt.next();
+					if (job.getPricingCopier() != null &&
+							job.getPricingCopier().getOemDeviceID() != null &&
+							job.getPricingCopier().getOemDeviceID().length() > 0) {
+						job.setParentInvoice(invoice);
+						Iterator assetIt = job.getDigitalAssets().iterator();
+						while (assetIt.hasNext()) {
+							if (assetIt.next() == null) {
+								log.error("Null digital asset found");
+							}
+						}
+						retVal.add(job);
+					}
+				}
+			}
 			return retVal;
 		} catch (Exception e) {
 			log.error(e);
@@ -1446,6 +1455,31 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 
+	public Job getJob(Long id) throws Exception {
+		log.debug("** getJob called.");
+		Job job = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Job.byId");
+			query.setParameter("id", id);
+			job = (Job) query.getSingleResult();
+
+			if (job != null) {
+				for (int i = 0; i < job.getDigitalAssets().size(); i++) {
+					DigitalAsset asset = job.getDigitalAssets().get(i);
+					if (asset == null) {
+						log.error("Found null asset");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return job;		
+	}
+	
 	public InvoiceBase getInvoice(Long id) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;

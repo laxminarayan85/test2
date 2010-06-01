@@ -83,6 +83,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import mx.formatters.CurrencyFormatter;
 		import com.efi.printsmith.events.commandEvents.EditForms.*;
 		
 		import com.efi.printsmith.view.*;
@@ -562,6 +563,13 @@
         
         private function resourceFaultHandler(event:ResourceEvent):void {
 			Alert.show("Error loading resources: " + event.errorText, null, Alert.OK, null, null, null, Alert.OK);
+        }
+        
+        public static function getCurrencyFormatter(showSymbol:Boolean, precision:Number):CurrencyFormatter {
+        	var formatter:CurrencyFormatter = new CurrencyFormatter();
+        	formatter.currencySymbol = "$";
+        	formatter.precision = precision;
+        	return formatter;
         }
 ]]>		
 </mx:Script>

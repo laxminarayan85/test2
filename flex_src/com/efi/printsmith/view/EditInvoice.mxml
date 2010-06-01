@@ -551,8 +551,8 @@
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {
 				var localJob:Job = item as Job;
 				
-				if (localJob != null && localJob.pricingRecord != null) {
-					return localJob.pricingRecord.totalPrice.toString();
+				if (localJob != null && localJob.pricingRecord != null) {					
+					return Snowmass.getCurrencyFormatter(false, 2).format(localJob.pricingRecord.totalPrice.toString());
 				} else {
 					return "";
 				}
@@ -1088,7 +1088,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="net_subtotal_text"
-									 text="{invoice.subTotal}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.subTotal)}"
 									 height="20" right="5"/>
 							<mx:Label x="3"
 									  y="54"
@@ -1107,7 +1107,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="shipping_text"
-									 text="{invoice.shipCharges}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.shipCharges)}"
 									 height="20" right="5"/>
 							<mx:Label x="3"
 									  y="98"
@@ -1117,7 +1117,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="total_text"
-									 text="{invoice.grandTotal}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.grandTotal)}"
 									 height="20" right="5"/>
 							<mx:Label x="3"
 									  y="120"
@@ -1127,7 +1127,7 @@
 									 width="117"
 									 textAlign="right"
 									 id="amt_due_text"
-									 text="{invoice.amountDue}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.amountDue)} "
 									 height="20" right="5"/>
 						</mx:Canvas>
 						<mx:Canvas label="costing_total_canvas"
