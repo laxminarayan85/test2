@@ -19,10 +19,10 @@
 				<mx:Label x="10" y="132" text="Availability"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="155" y="132" text="Price"/>
+				<mx:Label x="328" y="132" text="Price"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="290" y="132" text="Status"/>
+				<mx:Label x="463" y="132" text="Status"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:TextInput x="70" y="65" id="stock_id" editable="false"/>
@@ -34,14 +34,14 @@
 				<mx:TextInput x="84" y="98" id="description" editable="false" width="587"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="130" width="65" id="availability" editable="false"/>
+				<mx:TextInput x="82" y="130" width="238" id="availability" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="194" y="130" width="88" id="price" editable="false"/>
+				<mx:TextInput x="367" y="130" width="88" id="price" editable="false"/>
 			</mx:AddChild>
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="338" y="130" id="itemstatus" width="159"/>
+				<mx:TextInput x="511" y="130" id="itemstatus" width="159"/>
 			</mx:AddChild>
 			<mx:SetProperty name="showCloseButton" value="true"/>
 			<mx:SetProperty target="{image1}" name="height" value="44"/>
@@ -50,7 +50,7 @@
 				<mx:Label x="10" y="158" text="Category"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="156" id="category" width="589" editable="false"/>
+				<mx:TextInput x="82" y="156" id="category" width="415" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:Label x="10" y="184" text="Manufacturer"/>
