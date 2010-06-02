@@ -83,6 +83,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import mx.formatters.DateFormatter;
 		import mx.formatters.CurrencyFormatter;
 		import com.efi.printsmith.events.commandEvents.EditForms.*;
 		
@@ -569,6 +570,12 @@
         	var formatter:CurrencyFormatter = new CurrencyFormatter();
         	formatter.currencySymbol = "$";
         	formatter.precision = precision;
+        	return formatter;
+        }
+        
+        public static function getDateFormatter():DateFormatter {
+        	var formatter:DateFormatter = new DateFormatter;
+        	formatter.formatString = "MMMM DD, YYYY   L:NN:SS A";
         	return formatter;
         }
 ]]>		

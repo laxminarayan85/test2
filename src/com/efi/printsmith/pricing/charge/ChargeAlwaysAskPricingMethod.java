@@ -9,6 +9,7 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.enums.ChargePriceMethod;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
+import com.efi.printsmith.service.ChargeService;
 
 public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 	
@@ -48,19 +49,31 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		} else {
 			log.error("Invalid ChargeQtyType in Charge: " + chargeDefinition.getQuantityType());
 		}
-
-		double setupPrice = this.calculateSetupPrice(charge);
-		
-		double materialPrice = this.calculateMaterialPrice(charge);
-
-		double ratePrice = this.calculateRatePrice(charge);
-		
-		price = setupPrice + materialPrice + ratePrice;
 				
 		if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.PiecePrice.name())) {
+			double setupPrice = this.calculateSetupPrice(charge);
 			
+			double materialPrice = this.calculateMaterialPrice(charge);
+
+			double ratePrice = this.calculateRatePrice(charge);
+			
+			price = setupPrice + materialPrice + ratePrice;			
 		} else if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.CostPlus.name())) {
+			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
 			
+			try {
+				ChargeCostingPrices prices = chargeService.calculateChargeCostingRate(chargeDefinition, charge);
+				
+				if (!charge.getOverrideRate()) {
+					charge.setRate(prices.unitPrice);
+				}
+				price = prices.setupPrice;
+				
+				price += rateQuantity*charge.getRate();
+				price += materialQuantity*charge.getRate();
+			} catch (Exception e) {
+				log.error(e);
+			}			
 		} else {
 			log.error("Invalid ChargePriceMethod in Charge: " + chargeDefinition.getPriceMethod());
 		}

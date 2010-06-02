@@ -6,8 +6,9 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
+import com.efi.printsmith.service.ChargeService;
 
-public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
+public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		double rate = 0;
@@ -97,7 +98,23 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 					charge.setMaterialQty(charge.getMaterialQty()/ups);
 				}
 			}
-			// TODO account for booklets per PrintSmith Source
+		}
+		// TODO account for booklets per PrintSmith Source
+		if (chargeDefinition.getPriceMethod().equals("CostPlus")) { 
+			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
+			
+			try {
+				ChargeCostingPrices prices = chargeService.calculateChargeCostingRate(chargeDefinition, charge);
+				
+				if (!charge.getOverrideRate()) {
+					charge.setRate(prices.unitPrice);
+				}
+				
+				price = prices.setupPrice + (charge.getQuantity()*charge.getRate());
+			} catch (Exception e) {
+				log.error(e);
+			}
+		} else {
 			
 			if (chargeDefinition.getUseSetup()) {
 				setupPrice = chargeDefinition.getSetupPrice();
@@ -122,7 +139,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 				materialPrice = materialQty * chargeDefinition.getMaterial();
 			}
 			
-			if (chargeDefinition.getUseRate() || true) { // TODO: remove the || true when cost plus is entered!!!
+			if (chargeDefinition.getUseRate()) {
 				if (chargeDefinition.getUseRateSets()) {
 					setCount = chargeDefinition.getRateSetCount();
 				} else {
@@ -146,15 +163,11 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod {
 				lookupQty = charge.getQuantity();
 				ratePrice = PriceListUtilities.lookupPrice(chargeDefinition.getPriceList(), (long)lookupQty);
 			}
-			// TODO Cost Plus code here
-			
 			price = setupPrice + materialPrice + ratePrice;
 
 			price += PriceListUtilities.calculatePriceListPrice((long)lookupQty, chargeDefinition.getPriceList(), price, (Job)job);
-			
-			charge.setPrice(price);
-			
 		}
+		charge.setPrice(price);
 		return charge;
 	}
 

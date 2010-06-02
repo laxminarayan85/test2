@@ -533,9 +533,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function updateTreeSelection():void {
-		charge = getSelectedTreeCharge();
-		
-		if (charge == null) {
+		var selectedCharge = getSelectedTreeCharge();
+		if (selectedCharge == null) {
+			charge = null;
 			chargeCategory = getSelectedTreeCategory(false);
 			if (chargeCategory == null) {
 				chargeCommand = getSelectedTreeCommand(false);
@@ -549,15 +549,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				chargeCommand = getSelectedTreeCommand(true);
 			}
 		} else {
+			if (selectedCharge != charge) {
+				charge = selectedCharge;
+				costPricingString = "";
+				chargeService.calculateChargeCostingRate(charge, null);		
+				MapfromChargeData();
+			}
 			charge_stack.selectedChild = charge_canvas;
 			chargeCategory = getSelectedTreeCategory(true);
 			chargeCommand = getSelectedTreeCommand(true);
 		}	
-		if (charge != null) {
-			chargeService.calculateChargeCostingRate(charge, null);		
-		}
 		updateButtons();
-		MapfromChargeData();
 	//	updateControlState();
 	}
 	

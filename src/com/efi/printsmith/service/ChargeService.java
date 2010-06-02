@@ -38,7 +38,7 @@ public class ChargeService extends SnowmassHibernateService{
 			prices.setSetupPrice(0.0);
 			prices.setUnitPrice(0.0);			
 		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.TimeAndMaterial.name())) {
-			double setupCost = chargeCost.getLaborRate()/60*chargeCost.getSetupCost();
+			double setupCost = chargeCost.getLaborRate()/60*chargeCost.getSetupMinutes();
 			setupCost += chargeCost.getFixedMaterials();
 			
 			double minutesPerPiece = 0.0;
