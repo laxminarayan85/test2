@@ -112,24 +112,7 @@ public class PriceStockEngine {
 		double sheetPrice = 0.0;
 
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "pricePrintStock", "");
-		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.MarkedUpStockCost.name())) {
-			sheetPrice = getSheetPrice(job, priceLogEntry);
-			priceLogEntry.setValue(sheetPrice);
-		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.IncludeInRate.name())) {
-			sheetPrice = 0.0; /* By definition the stock price is already included in the copier rate */
-			priceLogEntry.setDescription("Stock price included in rate");
-		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier1PricePerSheet();
-			priceLogEntry.setDescription("Stock price is copier 1 price per sheet");
-		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier2PricePerSheet();
-			priceLogEntry.setDescription("Stock price is copier 2 price per sheet");
-		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier3PricePerSheet();
-			priceLogEntry.setDescription("Stock price is copier 3 price per sheet");
-		} else {
-			priceLogEntry.setDescription("Stock price method unknown - setting stock price to 0");
-		}
+		sheetPrice = getSheetPrice(job, priceLogEntry);
 		priceLogEntry.setValue(sheetPrice * job.getSheets());
 		return sheetPrice;		
 	}
