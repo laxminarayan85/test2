@@ -289,7 +289,7 @@ public class XpedxMapper extends ImportMapper {
 						genericColor = new GenericColors();
 						genericColor.setName(currentImportToken);
 						genericColor = (GenericColors)dataService.addUpdate(genericColor);
-						genericColor.setId(stockColor.getId());
+						genericColor.setId(genericColor.getId());
 					}
 					stockDefinition.setGenericColor(genericColor);
 				}
