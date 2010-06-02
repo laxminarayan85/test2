@@ -456,13 +456,13 @@ width="786" height="531"  creationComplete="init()"
 		<mx:CheckBox x="10" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Estimates')}" id="estimate_check" change="DoCheck()" width="120"/>
 	</mx:Panel>
 	<mx:Panel x="460" y="10" width="150" height="79" id="fiery_panel" dropShadowEnabled="false" layout="absolute" title="Fiery" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessBottom="2" roundedBottomCorners="true" headerHeight="18">
-		<mx:LinkButton x="7" y="3" id="btn_submit" width="33" click="sendFieryJob()">
+		<mx:LinkButton x="7" y="3" id="btn_submit" width="33" click="sendFieryJob()" enabled="{job_list.selectedItem != null}">
 			<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
 		</mx:LinkButton>
-		<mx:LinkButton x="56" y="3" id="btn_stop" width="33" click="pauseFieryJob()">
+		<mx:LinkButton x="56" y="3" id="btn_stop" width="33" click="pauseFieryJob()" enabled="{job_list.selectedItem != null}">
 			<mx:icon>@Embed(source='../../../../assets/cancelSubmit.png')</mx:icon>
 		</mx:LinkButton>
-		<mx:LinkButton x="105" y="3" id="btn_info" width="33" click="infoFieryJob()">
+		<mx:LinkButton x="105" y="3" id="btn_info" width="33" click="infoFieryJob()" enabled="{job_list.selectedItem != null}">
 			<mx:icon>@Embed(source='../../../../assets/information2.png')</mx:icon>
 		</mx:LinkButton>
 		<mx:Text x="0" y="39" text="Submit&#xd;" textAlign="center"/>

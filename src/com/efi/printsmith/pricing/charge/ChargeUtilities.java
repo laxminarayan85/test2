@@ -43,6 +43,11 @@ public class ChargeUtilities {
 			charge.setNotes(chargeDefinition.getNotesDefault());
 		}
 		
+		if (chargeDefinition.getPriceMethod() == "CostPlus") {
+			
+		} else {
+			
+		}
 		charge.setShowNotes(chargeDefinition.getShowNotes());
 		charge.setFinished(chargeDefinition.getFinished());
 		charge.setTaxable(chargeDefinition.getTaxable());

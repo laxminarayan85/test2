@@ -550,6 +550,11 @@ public class StockDefinition extends ModelBase {
 	public static final String DEFAULTLARGECOPIER = "DefaultLargeCopier";
 
 	/**
+   * @generated
+   */
+  public static final String JDFSTOCKID = "JdfStockId";
+
+	/**
 	 * @generated
 	 */
 	public StockDefinition() {
@@ -3407,6 +3412,26 @@ public class StockDefinition extends ModelBase {
     this.defaultLargeCopier = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String jdfStockId;
+
+	/**
+   * @generated
+ 	 */
+  public String getJdfStockId(){
+    return jdfStockId; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setJdfStockId(String newVal) {
+    this.jdfStockId = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3539,6 +3564,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTBWCOPIER.equals(propertyName)) return getDefaultBWCopier();
     if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
     if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
+    if (JDFSTOCKID.equals(propertyName)) return getJdfStockId();
     return super.getProperty(propertyName);
   }
 	
@@ -3675,6 +3701,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTBWCOPIER.equals(propertyName)) setDefaultBWCopier((CopierDefinition)newValue); else
     if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
     if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
+    if (JDFSTOCKID.equals(propertyName)) setJdfStockId((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3938,6 +3965,8 @@ public class StockDefinition extends ModelBase {
       return new Class<?>[] {CopierDefinition.class};		
     if (DEFAULTLARGECOPIER.equals(propertyName)) 
       return new Class<?>[] {CopierDefinition.class};		
+    if (JDFSTOCKID.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4075,6 +4104,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTBWCOPIER.equals(propertyName)) return StockDefinition.class;
     if (DEFAULTCOLORCOPIER.equals(propertyName)) return StockDefinition.class;
     if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
+    if (JDFSTOCKID.equals(propertyName)) return StockDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4339,6 +4369,8 @@ public class StockDefinition extends ModelBase {
     if (! SmartEquals(getDefaultColorCopier(), objT.getDefaultColorCopier()))
       return false;
     if (! SmartEquals(getDefaultLargeCopier(), objT.getDefaultLargeCopier()))
+      return false;
+    if (! SmartEquals(getJdfStockId(), objT.getJdfStockId()))
       return false;
     return true;
   }			

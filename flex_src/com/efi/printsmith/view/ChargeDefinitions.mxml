@@ -11,7 +11,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="chargeService" destination="chargeService">
+	<mx:method name="calculateChargeCostingRate" fault="handleFault(event)" result="handleChargeCostingRateResult(event)"/>
+</mx:RemoteObject>
 <mx:states>
 	<mx:State name="Job Aware">
 		
@@ -71,8 +73,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.data.SalesCategory;
+	import com.efi.printsmith.pricing.ChargeCostingPrices;
+	
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargePresetInfoEvent;
+	import com.efi.printsmith.events.ChargeCostingEvent;
 	
 	import com.efi.printsmith.pages.ChargeCosting;
 	import com.efi.printsmith.data.ShippingMethod;
@@ -202,6 +207,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]
 	public var qtyTypes:ArrayCollection = new ArrayCollection();
 	
+	[Bindable]
+	public var costPricingString:String = new String("");
+	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
@@ -266,17 +274,26 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var addUpdateEvent:ModelAddUpdateEvent = new ModelAddUpdateEvent(item, callbacks);
 		addUpdateEvent.dispatch();			
 	}
-	
+
+    private function handleChargeCostingComplete(evt:ChargeCostingEvent):void {
+ 		if (evt.chargeCost != null) {
+			charge.chargeCost = evt.chargeCost;
+		} else {
+			Alert.show("Charge Cost Dialog returned a null charge cost record", "Error");
+		}     	
+    }
+
 	private function doCosting():void {
-	    var titleWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
+	    var costingWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
+	    costingWindow.addEventListener(ChargeCostingEvent.CHARGECOSTINGOK, handleChargeCostingComplete);
 	    if(charge != null){
 	    	if (charge.chargeCost == null) 
 	    		charge.chargeCost = new ChargeCost();
-	   		titleWindow.chargeCost = charge.chargeCost;
-	   		titleWindow.formIsEmpty = false;
+	   		costingWindow.chargeCost = charge.chargeCost;
+	   		costingWindow.formIsEmpty = false;
 	   	}
-	    PopUpManager.centerPopUp(titleWindow);
-	    titleWindow.setStyle("borderAlpha", 0.9);
+	    PopUpManager.centerPopUp(costingWindow);
+	    costingWindow.setStyle("borderAlpha", 0.9);
 	}
 	
 	private function sampleResult(evt:Event):void {
@@ -348,6 +365,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		costCenters = ev.result as ArrayCollection;
 	}
 	
+	private function handleChargeCostingRateResult(ev:ResultEvent):void {
+		var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
+		costPricingString = Snowmass.getCurrencyFormatter(true, 4).format(prices.unitPrice) + " + " +
+							Snowmass.getCurrencyFormatter(true, 4).format(prices.setupPrice);
+	}
+	
 //	private function handleLoadChargeCategoryResult(ev:ResultEvent):void {
 //		chargeCategories = ev.result as ArrayCollection;
 //	}
@@ -393,6 +416,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			var localCharge:ChargeDefinition = ev.result as ChargeDefinition;
 
 			charge = localCharge;
+			costPricingString = "";
 			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
 	}
@@ -529,6 +553,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			chargeCategory = getSelectedTreeCategory(true);
 			chargeCommand = getSelectedTreeCommand(true);
 		}	
+		if (charge != null) {
+			chargeService.calculateChargeCostingRate(charge, null);		
+		}
 		updateButtons();
 		MapfromChargeData();
 	//	updateControlState();
@@ -1228,7 +1255,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		       				var chargeDefinition:ChargeDefinition = localChargeCategory.children.getItemAt(k) as ChargeDefinition;
 		       				if (chargeDefinition.id == charge.id) {
 		       					charge = chargeDefinition;
-		       					chargeCategory = charge.parent;
+								if (charge != null) {
+									chargeService.calculateChargeCostingRate(charge, null);
+								}
+								chargeCategory = charge.parent;
 		       					chargeCommand = chargeCategory.parent;
 		       					found = true;
 		       					break;
@@ -1379,6 +1409,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleChargePresetInfoOK(evt:ChargePresetInfoEvent):void {
 		if (evt.chargeDefinition != null) {
 			charge = evt.chargeDefinition;
+			if (charge != null) {
+				chargeService.calculateChargeCostingRate(charge, null);
+			}		
 		} else {
 			Alert.show("Charge Preset Info Window returned a null Charge - no changes saved", "Error");
 		}
@@ -1663,7 +1696,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus" />
 					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice" />
 					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}"/>
-					<mx:Text x="422" y="282" width="122" id="sale_price_per_unit_edit"/>
+					<mx:Text x="422" y="282" width="136" id="sale_price_per_unit_edit" text="{costPricingString}" height="17"/>
 					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
 					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(true, 2).format(charge.setupPrice)}"/>
 					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}" change="UpdateAdj();"/>

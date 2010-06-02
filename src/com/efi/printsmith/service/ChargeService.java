@@ -3,12 +3,15 @@ package com.efi.printsmith.service;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.CuttingCharge;
 import com.efi.printsmith.data.InkCharge;
 import com.efi.printsmith.data.ShippingCharge;
 import com.efi.printsmith.data.SquareAreaCharge;
+import com.efi.printsmith.data.enums.ChargeCostMethod;
 import com.efi.printsmith.data.enums.ChargeMethod;
+import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 
 public class ChargeService extends SnowmassHibernateService{
@@ -16,5 +19,46 @@ public class ChargeService extends SnowmassHibernateService{
 
 	public Charge createChargeFromChargeDefinition(ChargeDefinition chargeDefinition) {
 		return ChargeUtilities.createChargeFromChargeDefinition(chargeDefinition);
+	}
+	
+	public ChargeCostingPrices calculateChargeCostingRate(ChargeDefinition chargeDefinition, Charge charge) throws Exception {
+		ChargeCostingPrices prices = new ChargeCostingPrices();
+		prices.setupPrice = 0.0;
+		prices.unitPrice = 0.0;
+		
+		if (chargeDefinition == null) {
+			throw new Exception("null chargeDefinition passed to calculateChargeCostingRate");
+		}
+		ChargeCost chargeCost = chargeDefinition.getChargeCost();
+		
+		if (chargeCost.getCostingMethod().equals(ChargeCostMethod.HundredPercent.name())) {
+			prices.setSetupPrice(0.0);
+			prices.setUnitPrice(0.0);			
+		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.NoCost.name())) {
+			prices.setSetupPrice(0.0);
+			prices.setUnitPrice(0.0);			
+		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.TimeAndMaterial.name())) {
+			double setupCost = chargeCost.getLaborRate()/60*chargeCost.getSetupCost();
+			setupCost += chargeCost.getFixedMaterials();
+			
+			double minutesPerPiece = 0.0;
+			if (chargeCost.getPiecesPerHour() != 0) {
+				minutesPerPiece = 60/chargeCost.getPiecesPerHour();
+			}
+			double unitCost = minutesPerPiece * (chargeCost.getLaborRate()/60);
+			unitCost += chargeCost.getUnitMaterials();
+			
+			double markup = chargeDefinition.getMarkup();
+			prices.setSetupPrice(setupCost * markup);
+			prices.setUnitPrice(unitCost * markup);
+		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.UnitCost.name())) {
+			double unitCost = chargeCost.getUnitCost();
+			double setupCost = chargeCost.getSetupCost();
+			double markup = chargeDefinition.getMarkup();
+			
+			prices.setSetupPrice(setupCost * markup);
+			prices.setUnitPrice(unitCost * markup);
+		}
+		return prices;
 	}
 }

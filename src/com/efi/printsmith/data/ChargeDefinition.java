@@ -514,6 +514,15 @@ public class ChargeDefinition extends ModelBase {
 	public static final String SETUPPRICE = "SetupPrice";
 
 	/**
+   * @generated
+   */
+  public static final String COSTINGUNITPRICE = "CostingUnitPrice";
+	/**
+   * @generated
+   */
+  public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
+
+	/**
 	 * @generated
 	 */
 	public ChargeDefinition() {
@@ -3118,6 +3127,51 @@ public class ChargeDefinition extends ModelBase {
     this.setupPrice = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double costingUnitPrice;
+
+	/**
+   * @generated
+ 	 */
+  public Double getCostingUnitPrice(){
+    return costingUnitPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCostingUnitPrice(Double newVal) {
+    this.costingUnitPrice = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double costingSetupPrice;
+
+	/**
+   * @generated
+ 	 */
+  public Double getCostingSetupPrice(){
+    return costingSetupPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCostingSetupPrice(Double newVal) {
+    this.costingSetupPrice = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3241,6 +3295,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
     if (USERUNAREA.equals(propertyName)) return getUseRunArea();
     if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
+    if (COSTINGUNITPRICE.equals(propertyName)) return getCostingUnitPrice();
+    if (COSTINGSETUPPRICE.equals(propertyName)) return getCostingSetupPrice();
     return super.getProperty(propertyName);
   }
 	
@@ -3368,6 +3424,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
     if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
     if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
+    if (COSTINGUNITPRICE.equals(propertyName)) setCostingUnitPrice((Double)newValue); else
+    if (COSTINGSETUPPRICE.equals(propertyName)) setCostingSetupPrice((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3613,6 +3671,10 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (SETUPPRICE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (COSTINGUNITPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COSTINGSETUPPRICE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3741,6 +3803,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
     if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
     if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (COSTINGUNITPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (COSTINGSETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3987,6 +4051,10 @@ public class ChargeDefinition extends ModelBase {
     if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
       return false;
     if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
+      return false;
+    if (! SmartEquals(getCostingUnitPrice(), objT.getCostingUnitPrice()))
+      return false;
+    if (! SmartEquals(getCostingSetupPrice(), objT.getCostingSetupPrice()))
       return false;
     return true;
   }			

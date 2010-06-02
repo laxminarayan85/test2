@@ -8,7 +8,7 @@ import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
 
 public class PriceChargeEngine {
 	static public Charge priceCharge(Charge charge) {
-		ChargePricingMethod chargePricingMethod = ChargePricingMethodFactory.createCopierPricingMethod(charge.getChargeDefinition().getMethod());
+		ChargePricingMethod chargePricingMethod = ChargePricingMethodFactory.createChargePricingMethod(charge.getChargeDefinition().getMethod());
 		chargePricingMethod.priceCharge(charge);
 		return charge;
 	}

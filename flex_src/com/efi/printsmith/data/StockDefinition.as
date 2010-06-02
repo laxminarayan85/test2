@@ -140,6 +140,7 @@ package com.efi.printsmith.data
 		public var defaultBWCopier:CopierDefinition;
 		public var defaultColorCopier:CopierDefinition;
 		public var defaultLargeCopier:CopierDefinition;
+		public var jdfStockId:String = "";
 	
 	}
 }

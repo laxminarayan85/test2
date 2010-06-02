@@ -79,11 +79,21 @@ public class DataService extends HibernateService {
 						df.LoadDefaultData(this);
 					} catch (Exception e) {
 						log.error("** Exception: " + e.getMessage());
+						System.out.println("Exception caught when creating DataService");
+						System.out.println(e.getMessage());
 					}
 				}
 			}
+		} catch (PersistenceException e) {
+			log.error(e);
+			log.error(e.getCause().getMessage());
+			System.out.println("Exception caught when creating DataService");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause().getMessage());
 		} catch (Exception e) {
 			log.error(e);
+			System.out.println("Exception caught when creating DataService");
+			System.out.println(e.getMessage());
 		}
 	}
 
