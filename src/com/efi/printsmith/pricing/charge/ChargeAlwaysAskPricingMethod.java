@@ -42,7 +42,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			materialQuantity = 1;
 			rateQuantity = 1;
 		} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Time.name())) {
-			rateQuantity = this.calculateChargeTimeQuantity(charge);
+			rateQuantity = this.calculateChargeTimeQuantity(charge)/60;
 			materialQuantity = rateQuantity;
 		} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Quantity.name())) {
 			materialQuantity = charge.getQuantity();
@@ -70,7 +70,9 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 				price = prices.setupPrice;
 				
 				price += rateQuantity*charge.getRate();
-				price += materialQuantity*charge.getRate();
+				if (!chargeDefinition.getQuantityType().equals(ChargeQtyType.Time.name())) {
+					price += materialQuantity*charge.getRate();
+				}
 			} catch (Exception e) {
 				log.error(e);
 			}			
