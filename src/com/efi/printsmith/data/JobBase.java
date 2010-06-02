@@ -576,7 +576,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @IndexColumn(name="chargesjobbase")
 	@JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
