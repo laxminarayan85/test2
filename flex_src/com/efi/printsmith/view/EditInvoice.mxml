@@ -169,7 +169,8 @@
 				
 				if (invoice.charges == null) {
 					invoice.charges=new ArrayCollection();
-				}				
+				}
+				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
 				invoiceRepositoryService.getItemList();
@@ -1000,7 +1001,7 @@
 									 id="info_text"
 									 textAlign="center"
 									 height="20"/>
-							<mx:Button x="62.45" y="80" label="Create Invoice" id="createInvoice" click="doCreateInvoice()"/>
+							<mx:Button x="62.45" y="80" label="Create Invoice" id="createInvoice" click="doCreateInvoice()" enabled="true"/>
 						</mx:Canvas>
 						<mx:Canvas label=""
 								   width="100%"
