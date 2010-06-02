@@ -7,82 +7,89 @@
 	<mx:states>
 		<mx:State name="Standard">
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="37" text="Stock ID"/>
+				<mx:Label x="10" y="67" text="Stock ID"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="290" y="37" text="Supplier ID"/>
+				<mx:Label x="290" y="67" text="Supplier ID"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="70" text="Description"/>
+				<mx:Label x="10" y="100" text="Description"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="102" text="Availability"/>
+				<mx:Label x="10" y="132" text="Availability"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="155" y="102" text="Price"/>
+				<mx:Label x="155" y="132" text="Price"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="290" y="102" text="Status"/>
+				<mx:Label x="290" y="132" text="Status"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="70" y="35" id="stock_id" editable="false"/>
+				<mx:TextInput x="70" y="65" id="stock_id" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="365" y="35" width="132" id="supplier_id" editable="false"/>
+				<mx:TextInput x="365" y="65" width="132" id="supplier_id" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="84" y="68" id="description" editable="false"/>
+				<mx:TextInput x="84" y="98" id="description" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="100" width="65" id="availability" editable="false"/>
+				<mx:TextInput x="82" y="130" width="65" id="availability" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="194" y="100" width="88" id="price" editable="false"/>
+				<mx:TextInput x="194" y="130" width="88" id="price" editable="false"/>
 			</mx:AddChild>
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="338" y="100" id="itemstatus"/>
+				<mx:TextInput x="338" y="130" id="itemstatus"/>
 			</mx:AddChild>
 			<mx:SetProperty name="showCloseButton" value="true"/>
 			<mx:SetProperty target="{image1}" name="height" value="44"/>
 			<mx:SetProperty target="{image1}" name="width" value="118"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="128" text="Category"/>
+				<mx:Label x="10" y="158" text="Category"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="126" id="category" width="415" editable="false"/>
+				<mx:TextInput x="82" y="156" id="category" width="415" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="154" text="Manufacturer"/>
+				<mx:Label x="10" y="184" text="Manufacturer"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="95" y="152" id="manufacturer" editable="false"/>
+				<mx:TextInput x="95" y="182" id="manufacturer" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="263" y="154" text="Unit Price"/>
+				<mx:Label x="263" y="184" text="Unit Price"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="328" y="152" id="unitPrice" editable="false"/>
+				<mx:TextInput x="328" y="176" id="unitPrice" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="10" y="180" text="UOM Description"/>
+				<mx:Label x="10" y="210" text="UOM Description"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="114" y="178" id="uomDescription" editable="false"/>
+				<mx:TextInput x="114" y="208" id="uomDescription" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="285" y="180" text="UOM"/>
+				<mx:Label x="285" y="210" text="UOM"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="328" y="178" id="uom" editable="false"/>
+				<mx:TextInput x="328" y="208" id="uom" editable="false"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{canvas1}" name="y" value="10"/>
-			<mx:SetProperty target="{canvas1}" name="height" value="210"/>
+			<mx:SetProperty target="{canvas1}" name="height" value="243"/>
 			<mx:AddChild relativeTo="{panel1}" position="lastChild">
-				<mx:TextArea x="40" y="247" height="149" width="454" wordWrap="true" editable="false" enabled="true" borderStyle="none" id="errorMessage"/>
+				<mx:TextArea x="40" y="280" height="149" width="454" wordWrap="true" editable="false" enabled="true" borderStyle="none" id="errorMessage"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{panel1}" position="lastChild">
-				<mx:Label x="41" y="223" text="Error" color="#FC021F" fontSize="15" fontWeight="bold" id="error_label"/>
+				<mx:Label x="41" y="256" text="Error" color="#FC021F" fontSize="15" fontWeight="bold" id="error_label"/>
+			</mx:AddChild>
+			<mx:SetProperty name="height" value="582"/>
+			<mx:RemoveChild target="{panel1}"/>
+			<mx:AddChild relativeTo="{spacer1}" position="before" target="{panel1}"/>
+			<mx:SetProperty target="{panel1}" name="height" value="481"/>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:ProgressBar x="153.5" y="10" indeterminate="true" label="Checking Stock" id="stock_check_progress"/>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Extended"/>
@@ -119,6 +126,7 @@
 	private var stockDefinition:StockDefinition;                                                       
 	private function init():void {   
 		this.error_label.visible = false;
+		this.stock_check_progress.visible = true;
 	}
 	
 	private function handleLoadFileComplete(event:Event):void {
@@ -179,6 +187,7 @@
 			else if (name == "UOMCode1")
 				this.uom.text = value;
 		}
+		this.stock_check_progress.visible = false;
 	}
 
 	private function handleFault(ev:FaultEvent):void {
@@ -217,7 +226,7 @@
 ]]>        
 </mx:Script>
 	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF" id="image1"/>
-<mx:Spacer height="10" />        
+<mx:Spacer height="10"  id="spacer1"/>        
 	<mx:Panel width="547" height="461" layout="absolute" id="panel1">
 		<mx:DataGrid x="27.5" y="10" width="472" height="103" id="datagrid1">
 			<mx:columns>

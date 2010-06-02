@@ -3,7 +3,7 @@
     close="PopUpManager.removePopUp(this);"
     title="Import Stock Catalog" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
-    verticalScrollPolicy="off">
+    verticalScrollPolicy="off" xmlns:ns1="com.efi.printsmith.components.*">
 <mx:Script>
                                    
 <![CDATA[ 
@@ -43,10 +43,11 @@
 	private var importParams:XpedxImportParams = new XpedxImportParams;
 	                                                       
 	private function init():void {   
-		
+		this.import_progress.visible = false;
 	}
 	
 	private function handleLoadFileComplete(event:Event):void {
+		this.import_progress.visible = false;
 	}
 		
 	private function handleIOError(event:IOErrorEvent):void {
@@ -62,6 +63,7 @@
 	}
 
 	private function uploadFile(fileType:String):void {
+		this.import_progress.visible = true;
 		var urlVariables:URLVariables = new URLVariables();
 		urlVariables.importType = fileType;
 		urlVariables.importAll = importParams.importAll.toString();
@@ -194,6 +196,7 @@
 		<mx:CheckBox x="305" y="161" label="Metric" id="metric"/>
 		<mx:CheckBox x="305" y="201" label="No broken cartons" id="noBrokenCartons"/>
 		<mx:CheckBox x="66" y="285" label="Full update, not just Prices." id="fullUpdate"/>
+		<mx:ProgressBar x="163.5" y="352" indeterminate="true" label="Importing Xpedx Stock Data" id="import_progress"/>
 	</mx:Panel>
 <mx:Spacer height="10" />        
 
