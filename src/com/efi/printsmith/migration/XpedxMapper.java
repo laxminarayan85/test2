@@ -46,10 +46,28 @@ public class XpedxMapper extends ImportMapper {
 					return null;
 				stockDefinition.setStockId(currentImportToken);
 				stockDefinition.setStocknumber(currentImportToken);
+				stockDefinition.setAutoCalculateBlank(true);
+				stockDefinition.setCartonWeight(0.0);
+				stockDefinition.setCoated("0");
+				stockDefinition.setCommitted(0);
+				stockDefinition.setCwt1(0.0);
+				stockDefinition.setForestManagement("0");
+				stockDefinition.setFscCertified(false);
+				stockDefinition.setGreenSealCertified(false);
+				stockDefinition.setIsMetric(false);
+				stockDefinition.setOnHand(0);
+				stockDefinition.setOnOrder(0);
+				stockDefinition.setPcwRecycledPercent(0.0);
+				stockDefinition.setSfiCertified(false);
+				stockDefinition.setShellItem(false);
+				stockDefinition.setMinOrderQty(0);
+				stockDefinition.setMinorder(0);
 				break;
 			case 1:
-				if (importParams.getFullUpdate())
+				if (importParams.getFullUpdate()) {
 					stockDefinition.setParentsize(currentImportToken);
+					stockDefinition.setNormalRunSize(currentImportToken);
+				}
 				break;
 			case 2:
 				break;
@@ -97,8 +115,10 @@ public class XpedxMapper extends ImportMapper {
 			case 10:
 				break;
 			case 11:
-				if (importParams.getFullUpdate())
+				if (importParams.getFullUpdate()) {
 					stockDefinition.setCartonWeight(Utilities.tokenToDouble(currentImportToken));
+					stockDefinition.setCwt1(Utilities.tokenToDouble(currentImportToken));
+				}
 				break;
 			case 12:
 				if (importParams.getFullUpdate())
@@ -335,6 +355,14 @@ public class XpedxMapper extends ImportMapper {
 				vendor = (Vendor)dataService.addUpdate(vendor);
 				vendor.setId(vendor.getId());
 			}
+			StockClass stockClass = dataService.getByStockClassName("");
+			if (stockClass == null) {
+				stockClass = new StockClass();
+				stockClass.setName("");
+				stockClass = (StockClass)dataService.addUpdate(stockClass);
+				stockClass.setId(stockClass.getId());
+			}
+			stockDefinition.setStkclass(stockClass);
 			stockDefinition.setVendor(vendor);
 		}
 		return stockDefinition;
