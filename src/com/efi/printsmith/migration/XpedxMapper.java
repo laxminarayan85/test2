@@ -39,12 +39,11 @@ public class XpedxMapper extends ImportMapper {
 			String currentImportToken = importTokens[i];
 			switch(i) {
 			case 0:
-				stockDefinition = dataService.getByStockId(currentImportToken);
+				stockDefinition = dataService.getByStockNumber(currentImportToken);
 				if (stockDefinition == null && importParams.getImportAll() == true)
 					stockDefinition = new StockDefinition();
 				else
 					return null;
-				stockDefinition.setStockId(currentImportToken);
 				stockDefinition.setStocknumber(currentImportToken);
 				stockDefinition.setAutoCalculateBlank(true);
 				stockDefinition.setCartonWeight(0.0);
