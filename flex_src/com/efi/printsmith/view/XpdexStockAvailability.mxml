@@ -31,7 +31,7 @@
 				<mx:TextInput x="365" y="65" width="132" id="supplier_id" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="84" y="98" id="description" editable="false"/>
+				<mx:TextInput x="84" y="98" id="description" editable="false" width="587"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:TextInput x="82" y="130" width="65" id="availability" editable="false"/>
@@ -41,7 +41,7 @@
 			</mx:AddChild>
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="338" y="130" id="itemstatus"/>
+				<mx:TextInput x="338" y="130" id="itemstatus" width="159"/>
 			</mx:AddChild>
 			<mx:SetProperty name="showCloseButton" value="true"/>
 			<mx:SetProperty target="{image1}" name="height" value="44"/>
@@ -50,19 +50,19 @@
 				<mx:Label x="10" y="158" text="Category"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="82" y="156" id="category" width="415" editable="false"/>
+				<mx:TextInput x="82" y="156" id="category" width="589" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:Label x="10" y="184" text="Manufacturer"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="95" y="182" id="manufacturer" editable="false"/>
+				<mx:TextInput x="95" y="182" id="manufacturer" editable="false" width="343"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:Label x="263" y="184" text="Unit Price"/>
+				<mx:Label x="446" y="186" text="Unit Price"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:TextInput x="328" y="176" id="unitPrice" editable="false"/>
+				<mx:TextInput x="511" y="183" id="unitPrice" editable="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 				<mx:Label x="10" y="210" text="UOM Description"/>
@@ -89,8 +89,11 @@
 			<mx:AddChild relativeTo="{spacer1}" position="before" target="{panel1}"/>
 			<mx:SetProperty target="{panel1}" name="height" value="481"/>
 			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-				<mx:ProgressBar x="153.5" y="10" indeterminate="true" label="Checking Stock" id="stock_check_progress"/>
+				<mx:ProgressBar x="240.5" y="10" indeterminate="true" label="Checking Stock" id="stock_check_progress"/>
 			</mx:AddChild>
+			<mx:SetProperty name="width" value="754"/>
+			<mx:SetProperty target="{panel1}" name="width" value="721"/>
+			<mx:SetProperty target="{canvas1}" name="width" value="681"/>
 		</mx:State>
 		<mx:State name="Extended"/>
 	</mx:states>
@@ -98,6 +101,11 @@
 		<mx:method name="checkStock"
 					fault="handleFault(event)"
 					result="handleXpedxResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getByStockNumber"
+					fault="handleFault(event)"
+					result="handleGetByStockNumberResult(event)"/>
 	</mx:RemoteObject>
 <mx:Script>
                                    
@@ -139,15 +147,19 @@
 	}
 	
 	public function setStock(stock:StockDefinition):void {
-		this.stockDefinition = stock;
+		dataService.getByStockNumber(stock.stocknumber);
+	}
+	
+	public function handleGetByStockNumberResult(evt:ResultEvent): void {
+		this.stockDefinition = evt.result as StockDefinition;
 		doXpedxStockCheck();
 	}
 	
 	private function doXpedxStockCheck():void {
 		var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
-		params.id = 460;
+		params.id = parseInt(this.stockDefinition.stockId);
 		params.xpedxId = this.stockDefinition.stocknumber;
-		params.qty = 100;
+		params.qty = 1;
 		xpedxIntegrationService.checkStock(params.id,params.xpedxId,params.qty);
 	}
 	
