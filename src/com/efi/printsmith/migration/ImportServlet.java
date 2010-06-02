@@ -77,6 +77,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 						if (name.equals("fullUpdate")) {
 							this.importParams.fullUpdate = Utilities.tokenToBooleanValue(value);
 						}
+						if (name.equals("updatePrice1")) {
+							this.importParams.updatePrice1 = Utilities.tokenToBooleanValue(value);
+						}
 						if (name.equals("updatePrice2")) {
 							this.importParams.updatePrice2 = Utilities.tokenToBooleanValue(value);
 						}
@@ -84,10 +87,7 @@ public class ImportServlet extends HttpServlet implements Servlet {
 							this.importParams.updatePrice3 = Utilities.tokenToBooleanValue(value);
 						}
 						if (name.equals("updatePrice4")) {
-							this.importParams.updatePrice1 = Utilities.tokenToBooleanValue(value);
-						}
-						if (name.equals("updatePrice4")) {
-							this.importParams.updatePrice1 = Utilities.tokenToBooleanValue(value);
+							this.importParams.updatePrice4 = Utilities.tokenToBooleanValue(value);
 						}
 						if (name.equals("updatePrice5")) {
 							this.importParams.updatePrice5 = Utilities.tokenToBooleanValue(value);
