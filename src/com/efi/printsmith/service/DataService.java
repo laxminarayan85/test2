@@ -537,6 +537,23 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
+	public StockDefinition getByStockNumber(String stockNumber) {
+		log.debug("** getByStockNumber called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from StockDefinition where stocknumber = '"
+					+ stockNumber + "'";
+			Query query = em.createQuery(queryString);
+			StockDefinition object = (StockDefinition) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 
 	public StockType getByStockTypeID(String stocktypeId) {
 		log.debug("** getByStocktypeId called.");
