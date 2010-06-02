@@ -206,9 +206,9 @@ public class PriceListUtilities {
 		if (i > -1) {
 			String lengthString = size.substring(0, i - 1);
 			String widthString = size.substring(i + 2);
-			long length = Utilities.tokenToLong(lengthString);
-			long width = Utilities.tokenToLong(widthString);
-			retVal = length * width;
+			float length = Utilities.tokenToFloat(lengthString);
+			float width = Utilities.tokenToFloat(widthString);
+			retVal = (long) (length * width);
 		}
 		
 		return retVal;

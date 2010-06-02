@@ -367,8 +367,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleChargeCostingRateResult(ev:ResultEvent):void {
 		var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
-		costPricingString = Snowmass.getCurrencyFormatter(true, 4).format(prices.unitPrice) + " + " +
-							Snowmass.getCurrencyFormatter(true, 4).format(prices.setupPrice);
+		costPricingString = Snowmass.getCurrencyFormatter(true, 4).format(prices.unitPrice + prices.materialUnitPrice) + " + " +
+							Snowmass.getCurrencyFormatter(true, 4).format(prices.setupPrice + prices.materialSetupPrice);
 	}
 	
 //	private function handleLoadChargeCategoryResult(ev:ResultEvent):void {
@@ -533,7 +533,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function updateTreeSelection():void {
-		var selectedCharge = getSelectedTreeCharge();
+		var selectedCharge:ChargeDefinition = getSelectedTreeCharge();
 		if (selectedCharge == null) {
 			charge = null;
 			chargeCategory = getSelectedTreeCategory(false);

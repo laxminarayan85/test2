@@ -10,7 +10,9 @@ import com.efi.printsmith.data.InkCharge;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.enums.ChargeInkCoverage;
+import com.efi.printsmith.data.enums.ChargePriceMethod;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
+import com.efi.printsmith.service.ChargeService;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 
 public class ChargeInkPricingMethod extends ChargePricingMethod {
@@ -29,11 +31,28 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 		double inches = 0.0;
 		double pounds = 0.0;
 		double price = 0.0;
+		double costingSetup = 0.0;
+		double costingMaterialPrice = 0.0;
 		
 		if (chargeDefinition == null) return localCharge;
 		// TODO: Include NewInkCharge call from PrintSmith
 		if (job == null) return localCharge;
 		
+		if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.CostPlus.name())) {
+			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
+			
+			try {
+				ChargeCostingPrices prices = chargeService.calculateChargeCostingRate(chargeDefinition, charge);
+				
+				if (!localCharge.getOverrideRate()) {
+					localCharge.setRate(prices.unitPrice);
+				}
+				costingSetup = prices.setupPrice + prices.materialSetupPrice;
+				costingMaterialPrice = prices.materialUnitPrice;
+			} catch (Exception e) {
+				log.error(e);
+			}			
+		}
 		if (chargeDefinition.getRateSetCount() == 0) {
 			price = 0.0;
 		} else {
@@ -96,29 +115,33 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 				inches = 1;
 			}
 			
-	//		if (localCharge.getOverridePounds()) {
-	//			pounds = localCharge.getPoundsOfInk();
-	//			if (inches == 0) {
-	//				localCharge.setQuantity(0.0);
-	//			} else {
-	//				localCharge.setQuantity((pounds * chargeDefinition.getRateSetCount())/inches);
-	//			}
-	//			localCharge.setOverrideMaterialQuantity(false);
-	//		} else {
-				pounds = (inches * localCharge.getQuantity())/chargeDefinition.getRateSetCount();
-	//		}
+//			if (localCharge.getOverridePounds()) {
+//				pounds = localCharge.getPoundsOfInk();
+//				if (inches == 0) {
+//					localCharge.setQuantity(0.0);
+//				} else {
+//					localCharge.setQuantity((pounds * chargeDefinition.getRateSetCount())/inches);
+//				}
+//				localCharge.setOverrideMaterialQuantity(false);
+//			} else {
+				pounds = (inches * localCharge.getCoverage())/chargeDefinition.getRateSetCount();
+//			}
 			
 			pounds *= colors;
 			
-			price = pounds * chargeDefinition.getRate();
+			price = pounds * localCharge.getRate();
+			localCharge.setPoundsOfInk(pounds);
 			chargeDefinition.setMaterialSetCount(pounds);
 		}
-		
-		if (chargeDefinition.getUseSetup()) {
-			price += chargeDefinition.getSetupPrice();
+		if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.CostPlus.name())) {
+			price += costingSetup;
+			price += costingMaterialPrice * charge.getMaterialQty();
+		} else {
+			if (chargeDefinition.getUseSetup()) {
+				price += chargeDefinition.getSetupPrice();
+			}
+			price += PriceListUtilities.calculatePriceListPrice((long)pounds, chargeDefinition.getPriceList(), price, (Job)job);
 		}
-		
-		price += PriceListUtilities.calculatePriceListPrice((long)pounds, chargeDefinition.getPriceList(), price, (Job)job);
 		
 		localCharge.setPrice(price);
 		return localCharge;

@@ -566,7 +566,7 @@
 				if (isNaN(invoice.id)) {
 					Alert.show("You must save the invoice before printing", "Error");
 				} else {
-					var reportName = format_combo.selectedItem as String;
+					var reportName:String = format_combo.selectedItem as String;
 					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?invoiceName="+reportName +"&reportParameter="+invoice.id);
                 	navigateToURL(urlRequest, "_blank");
 				}

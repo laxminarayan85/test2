@@ -1192,6 +1192,8 @@
 			[Bindable]
 			private var chargeDefinition:ChargeDefinition = new ChargeDefinition;
 			
+			private var addCharge:Boolean = false;
+			
 			private var focussedFormControl:DisplayObject;
 			public var job:Job;
 			
@@ -1493,27 +1495,26 @@
 
 			private function doAdd():void
 			{
-				mapToChargeData();
-				
+				addCharge = true;
+				updatePrice();
+			}
+
+			private function addChargeToList():void
+			{
 				if (charges == null)
 				{
 					charges = new ArrayCollection;
 				}
-				if (!this.editingCharge) {
-					charges.addItem(this.charge);
-				} 
-//				else {
-//					var index:int = invoice_charge_datagrid.selectedIndex;
-//					charges.setItemAt(charge, index);
-//				}
+				
+				charges.addItem(this.charge);
 				
 				chargeTree.selectedItem = null;
 				invoice_charge_datagrid.selectedItem = null;
 				invoice_charge_datagrid.invalidateList();
-				
+				currentState = "";
 				this.charge = new Charge();
 			}
-
+			
 			private function mapToChargeData():void {
 				this.charge.finished=finished_check.selected;
 				this.charge.taxable=taxable_check.selected;
@@ -1541,6 +1542,12 @@
 					this.charge.endTime = endDate;
 					
 				}
+				if (this.currentState == "InkCharge") {
+					(charge as InkCharge).coverage=parseFloat(percent_coverage_edit.text);
+					(charge as InkCharge).poundsOfInk=parseFloat(lbs_of_ink_edit.text);
+					(charge as InkCharge).coverPerPound=parseFloat(cover_lb_edit.text);
+					(charge as InkCharge).pricePerPound=parseFloat(price_lb_edit.text);
+				}
 			}
 			
 			private function updatePrice():void
@@ -1567,9 +1574,30 @@
 				charge.rate = localCharge.rate;
 				charge.sets = localCharge.sets;
 				charge.materialSets = localCharge.materialSets;
-//				charge = localCharge;
-//				job.pricingRecord.totalPrice = localCharge.pricingRecord.totalPrice;	
-//				job.pricingRecord = localCharge.pricingRecord;
+				if (currentState == "InkCharge") {
+					(charge as InkCharge).poundsOfInk = (localCharge as InkCharge).poundsOfInk;
+					(charge as InkCharge).pricePerPound = (localCharge as InkCharge).pricePerPound;
+					(charge as InkCharge).coverage = (localCharge as InkCharge).coverage;
+					if (isNaN((charge as InkCharge).poundsOfInk)) {
+						lbs_of_ink_edit.text = "0";
+					} else {
+						lbs_of_ink_edit.text = (charge as InkCharge).poundsOfInk.toString();
+					}
+					if (isNaN((charge as InkCharge).coverPerPound)) {
+						cover_lb_edit.text = "0";
+					} else {
+						cover_lb_edit.text = (charge as InkCharge).coverPerPound.toString();
+					}
+					if (isNaN((charge as InkCharge).pricePerPound)) {
+						price_lb_edit.text = "0";
+					} else {
+						price_lb_edit.text = (charge as InkCharge).pricePerPound.toString();
+					}
+				}
+				if (addCharge) {
+					addCharge = false;
+					addChargeToList();
+				}
 			}
 			
 			private function handlePriceChargeFault(ev:FaultEvent):void

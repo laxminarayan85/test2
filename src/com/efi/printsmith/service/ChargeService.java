@@ -39,18 +39,20 @@ public class ChargeService extends SnowmassHibernateService{
 			prices.setUnitPrice(0.0);			
 		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.TimeAndMaterial.name())) {
 			double setupCost = chargeCost.getLaborRate()/60*chargeCost.getSetupMinutes();
-			setupCost += chargeCost.getFixedMaterials();
+			//setupCost += chargeCost.getFixedMaterials();
 			
 			double minutesPerPiece = 0.0;
 			if (chargeCost.getPiecesPerHour() != 0) {
 				minutesPerPiece = 60/chargeCost.getPiecesPerHour();
 			}
 			double unitCost = minutesPerPiece * (chargeCost.getLaborRate()/60);
-			unitCost += chargeCost.getUnitMaterials();
+			//unitCost += chargeCost.getUnitMaterials();
 			
 			double markup = chargeDefinition.getMarkup();
 			prices.setSetupPrice(setupCost * markup);
 			prices.setUnitPrice(unitCost * markup);
+			prices.setMaterialSetupPrice(chargeCost.getFixedMaterials());
+			prices.setMaterialUnitPrice(chargeCost.getUnitMaterials());
 		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.UnitCost.name())) {
 			double unitCost = chargeCost.getUnitCost();
 			double setupCost = chargeCost.getSetupCost();
@@ -58,6 +60,8 @@ public class ChargeService extends SnowmassHibernateService{
 			
 			prices.setSetupPrice(setupCost * markup);
 			prices.setUnitPrice(unitCost * markup);
+			prices.setMaterialSetupPrice(0.0);
+			prices.setMaterialUnitPrice(0.0);			
 		}
 		return prices;
 	}

@@ -562,11 +562,11 @@ public class StockDefinition extends ModelBase {
     this.modified = new Date();
   }
 
-	public StockDefinition(long id, String Name, double weight,String parentsize,StockColors color, GenericColors genericcolor,
-			StockFinish finish, double thickness, StockGrade grade, double cwt1, Vendor vendor, String stocknumber, int onhand,
-			int committed, int ordered, boolean shellitem, String normalrunsize, StockType stocktype,
-			StockGroup stkgroup, String coated, int minorder, double cost1, Date priceexpire, String forestmanagement,
-			double pcwrecycledpercent, boolean fsccertified, boolean sficertified, boolean greensealcertified) {
+	public StockDefinition(Long id, String Name, Double weight,String parentsize,StockColors color, GenericColors genericcolor,
+			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
+			Integer committed, Integer ordered, Boolean shellitem, String normalrunsize, StockType stocktype,
+			StockGroup stkgroup, String coated, Integer minorder, Double cost1, Date priceexpire, String forestmanagement,
+			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified) {
 		this.id = id;
 		this.name = Name;
 		this.weight = weight;

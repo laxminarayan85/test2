@@ -67,11 +67,11 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 				if (!charge.getOverrideRate()) {
 					charge.setRate(prices.unitPrice);
 				}
-				price = prices.setupPrice;
+				price = prices.setupPrice + prices.materialSetupPrice;
 				
 				price += rateQuantity*charge.getRate();
 				if (!chargeDefinition.getQuantityType().equals(ChargeQtyType.Time.name())) {
-					price += materialQuantity*charge.getRate();
+					price += materialQuantity*prices.materialUnitPrice;
 				}
 			} catch (Exception e) {
 				log.error(e);
