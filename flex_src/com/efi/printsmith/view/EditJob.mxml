@@ -1462,11 +1462,13 @@
 						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 					}
 				} else if (pricingMethod.title == "Roll-Fed") {
-					this.currentState = "PrintMethod";
+					this.currentState = "LargeFormat";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
 					if (preferencesDefaultPresses != null) {
-						this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
-						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
+						if (preferencesDefaultPresses.defaultRollFedPress != null) {
+							this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
+							this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
+						}
 					}
 				} else if (pricingMethod.title == "B&W") {
 					this.currentState = "CopyMethod";
