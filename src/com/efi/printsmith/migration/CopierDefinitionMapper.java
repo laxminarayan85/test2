@@ -39,6 +39,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 		boolean defaultBW = false;
 		boolean defaultColor = false;
 		boolean defaultLF = false;
+		double machineCost = 0.0;
 		String machineNameId = "";
 		for (int x = 1; x <= 15; x++) {
 			MatrixElement matrixElement = new MatrixElement();
@@ -74,6 +75,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 							.tokenToDouble(currentImportToken));
 				} else if ("machine".equals(currentFieldToken)) {
 					copierDefinition.setMachineName(currentImportToken);
+					machineCost = Utilities.tokenToDouble(currentImportToken);
 				} else if ("labor".equals(currentFieldToken)) {
 					copierDefinition.setLaborCopy(Utilities
 							.tokenToDouble(currentImportToken));
@@ -1122,13 +1124,15 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("interpolate".equals(currentFieldToken)) {
 					copierDefinition.setInterpolateMatrix(Utilities
 							.tokenToBooleanValue(currentImportToken));
+				} else if ("machine".equals(currentFieldToken)) {
+					machineCost = Utilities.tokenToDouble(currentImportToken);
 				}
 			}
 			matrix.addElements(matrixElement);
 		}
 		matrix = (Matrix)dataService.addUpdate(matrix);
 		copierDefinition.setCopierMatrix(matrix);
-		double machineCostPerCopy = copierService.calculateMachineCostPerCopy(copierDefinition);
+		double machineCostPerCopy = copierDefinition.getClickCost() + machineCost;
 		copierDefinition.setMachineCostPerCopy(machineCostPerCopy);
 		copierDefinition = (CopierDefinition)dataService.addUpdate(copierDefinition);
 		copierDefinition.setId(copierDefinition.getId());

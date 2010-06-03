@@ -21,6 +21,9 @@ public abstract class CopierPricingMethod {
 		
 		job.setNumCopies(totalCopies / (job.getSheets() / (job.getNumUp() / job.getNumOn())));
 		job.setTotalCopies(totalCopies / (job.getNumUp() / job.getNumOn()) + (wasteSheets * (job.getNumUp() / job.getNumOn())));
+		if (job.getDoubleSided()) {
+			job.setTotalCopies(job.getTotalCopies() * 2);
+		}
 	}
 	
 	private void calculateStockQty(Job job) {

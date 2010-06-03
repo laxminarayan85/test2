@@ -65,7 +65,7 @@ public class TotalOfSquareAreaPricingMethod extends
 						pricingRecord.setTotalPrice((pricePerCopy * area) + (pricePerSecondSide * job.getSheets()*job.getInSetsOf())+ stockPrice*job.getTotalCopies());					
 					}
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
+					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*area);
 					unitPrice = pricingRecord.getTotalPrice() / job.getTotalCopies();
 					pricingRecord.setUnitPrice(unitPrice);
 				}
