@@ -15,7 +15,7 @@ public class MatrixUtilities {
 		int i = 0;
 		
 		for (i = 0; i < elements.size(); i++) {
-			if (elements.get(i).getQty() > lookup) {
+			if (elements.get(i).getQty() >= lookup) {
 				break;
 			}
 		}
