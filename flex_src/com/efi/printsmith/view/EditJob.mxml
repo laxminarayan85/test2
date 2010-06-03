@@ -44,7 +44,7 @@
 							  y="279"
 							  id="job_unitPrice"
 							  height="20"
-							  width="98" textAlign="right" text="{job.pricingRecord.unitPrice}"
+							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,3).format(job.pricingRecord.unitPrice)}"
 							  focusOut="editUnitPrice(event)"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label7}" position="before">
@@ -99,6 +99,9 @@
 						  y="117"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108"/>
 			</mx:AddChild>
+			<mx:SetProperty target="{job_price}" name="text">
+				<mx:value>{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}</mx:value>
+			</mx:SetProperty>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
@@ -1168,6 +1171,7 @@
 
 			private function doAddCharge():void
 			{
+				this.mapToJobData();
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
 				chargePicker.charges = this.job.charges;
 				chargePicker.chargeCommands = chargeCommands;
