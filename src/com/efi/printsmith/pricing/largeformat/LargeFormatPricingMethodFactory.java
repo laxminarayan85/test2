@@ -9,9 +9,9 @@ public class LargeFormatPricingMethodFactory {
 	protected static Logger log = Logger.getLogger(LargeFormatPricingMethodFactory.class);
 
 	static public LargeFormatPricingMethod createLargeFormatPricingMethod(String method) {
-		if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
+		if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
 			log.info("Creating SquareAreaAndCopiesPricingMethod");
-			return new SquareAreaAndCopiesPricingMethod();
+			return new SquareAreaPerCopyPricingMethod();
 		} else if (method.equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
 			log.info("SquareAreaAndCopiesPricingMethod");
 			return new SquareAreaAndCopiesPricingMethod();

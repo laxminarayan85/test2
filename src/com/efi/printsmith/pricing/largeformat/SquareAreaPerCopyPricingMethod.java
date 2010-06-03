@@ -28,11 +28,11 @@ public class SquareAreaPerCopyPricingMethod extends
 		catch (Exception e) {
 			
 		}
-		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), area);
+		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies());
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;
 		double unitPrice = 0.0;
-		
+		area = area * job.getTotalCopies();
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixType().equals("CopyCost")) {
 				if (copierDefinition.getInterpolateMatrix() == true)
