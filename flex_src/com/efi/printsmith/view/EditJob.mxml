@@ -1457,14 +1457,14 @@
 				if (pricingMethod.title == "Printing") {
 					this.currentState = "PrintMethod";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
-					if (preferencesDefaultPresses != null) {
+					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultSheetFedPress != null) {
 						this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 					}
 				} else if (pricingMethod.title == "Roll-Fed") {
 					this.currentState = "LargeFormat";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
-					if (preferencesDefaultPresses != null) {
+					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultRollFedPress != null) {
 						if (preferencesDefaultPresses.defaultRollFedPress != null) {
 							this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
 							this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
@@ -1473,21 +1473,21 @@
 				} else if (pricingMethod.title == "B&W") {
 					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;	
-					if (preferencesDefaultPresses != null) {
+					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultBWCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);
 					}			
 				} else if (pricingMethod.title == "Color") {
 					this.currentState = "CopyMethod";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;				
-					if (preferencesDefaultPresses != null) {
-						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
-						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);
+					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultColorCopier != null) {
+						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);	
+						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);
 					}	
 				} else if (pricingMethod.title == "Large Format") {
 					this.currentState = "LargeFormat";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;	
-					if (preferencesDefaultPresses != null) {
+					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultLargeFormat != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
 					}				
