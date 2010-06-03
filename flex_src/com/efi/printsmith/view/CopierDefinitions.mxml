@@ -414,7 +414,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		copierDefinition.developerCopy = parseFloat(developerCopy.text);
 		copierDefinition.hourCostRate = parseFloat(hourlyCostingRate.text);
 		copierDefinition.hoursOpen = parseFloat(openhours.text);
-		copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
+		//copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
 		if (pricing_method_combo.selectedItem != null)
 			copierDefinition.method = pricing_method_combo.selectedItem.toString();
 		if (stock_Price_is_combo.selectedItem != null)

@@ -105,23 +105,48 @@ public class MatrixUtilities {
 					if (element == 1)
 						cost = elements.get(i).getPrice1();
 					if (element == 2)
-						cost = elements.get(i).getPrice2();
+						if (elements.get(i).getPrice2() != null)
+							cost = elements.get(i).getPrice2();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 3)
-						cost = elements.get(i).getPrice3();
+						if (elements.get(i).getPrice3() != null)
+							cost = elements.get(i).getPrice3();
 					if (element == 4)
-						cost = elements.get(i).getPrice4();
+						if (elements.get(i).getPrice4() != null)
+							cost = elements.get(i).getPrice4();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 5)
-						cost = elements.get(i).getPrice5();
+						if (elements.get(i).getPrice5() != null)
+							cost = elements.get(i).getPrice5();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 6)
-						cost = elements.get(i).getPrice6();
+						if (elements.get(i).getPrice6() != null)
+							cost = elements.get(i).getPrice6();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 7)
-						cost = elements.get(i).getPrice7();
+						if (elements.get(i).getPrice7() != null)
+							cost = elements.get(i).getPrice7();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 8)
-						cost = elements.get(i).getPrice8();
+						if (elements.get(i).getPrice8() != null)
+							cost = elements.get(i).getPrice8();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 9)
-						cost = elements.get(i).getPrice9();
+						if (elements.get(i).getPrice9() != null)
+							cost = elements.get(i).getPrice9();
+						else
+							cost = elements.get(i).getPrice1();
 					if (element == 10)
-						cost = elements.get(i).getPrice10();
+						if (elements.get(i).getPrice10() != null)
+							cost = elements.get(i).getPrice10();
+						else
+							cost = elements.get(i).getPrice1();
 					break;
 				}
 			}
