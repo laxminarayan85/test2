@@ -6,10 +6,15 @@
 				defaultButton="{okButton}"
 				showCloseButton="true"
 				close="PopUpManager.removePopUp(this);"
-				title="Debug"
+				title="Server Logs"
 				xmlns:text="flash.text.*"
 				creationComplete="init()">
-
+	<mx:RemoteObject id="logService"
+					destination="logService">
+		<mx:method name="GetLogFileList"
+					fault="handleFault(event)"
+					result="handleLogFileListResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="addUpdate"
@@ -112,6 +117,11 @@
 			private function handleSaveResult(ev:Event):void
 			{
 				
+			}
+			
+			private function handleLogFileListResult(evt:ResultEvent):void
+			{
+				var fileList:ArrayCollection = evt.result as ArrayCollection;
 			}
 			
 			private function handleLoadReportTemplates(evt:ResultEvent):void
@@ -300,6 +310,11 @@
 				
 				xpedxIntegrationService.checkStocks(paramArray);				
 			}
+			
+			private function getServerLogs():void {
+				var serverLogWindow : LogViewer = LogViewer(PopUpManager.createPopUp(this.parent, LogViewer, true));
+				PopUpManager.centerPopUp(serverLogWindow);
+			}
 		]]>
 	</mx:Script>
 
@@ -342,6 +357,10 @@
 				   y="70"
 				   label="Import Stock Catalog"
 				   click="doImportStockCatalog();" width="188"/>
+		<mx:Button x="206"
+				   y="184"
+				   label="Display Server Logs"
+				   click="getServerLogs();" width="188"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

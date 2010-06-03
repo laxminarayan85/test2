@@ -669,7 +669,7 @@
 					job.markup = 2.0;
 					job.totalCost = 0.0;
 					job.unitCost = 0.0;
-					job.parentInvoice = null;//this.invoice as InvoiceBase;
+					job.parentInvoice = this.invoice as InvoiceBase;
 					job.paperCal = new com.efi.printsmith.data.PaperCalculator();
 					setPaperCalculatorData = true;
 				}
@@ -761,7 +761,7 @@
 			private function doNew():void
 			{
 				job=new Job();
-				job.parentInvoice = null; // = invoice as InvoiceBase;
+				job.parentInvoice = invoice as InvoiceBase;
 				setJob(job);
 			}
 			
@@ -821,7 +821,7 @@
 			public function setInvoice(invoice:Invoice):void
 			{
 				this.invoice=invoice;
-				this.job.parentInvoice; // = invoice as InvoiceBase;
+				this.job.parentInvoice = invoice as InvoiceBase;
 			}
 
 			private function doGet():void

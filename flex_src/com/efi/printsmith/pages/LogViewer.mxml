@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="com.efi.vo.*"
+				width="890"
+				height="438"
+				defaultButton="{okButton}"
+				showCloseButton="true"
+				close="PopUpManager.removePopUp(this);"
+				title="Debug"
+				xmlns:text="flash.text.*"
+				creationComplete="init()" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	<mx:RemoteObject id="logService"
+					destination="logService">
+		<mx:method name="GetLogFileList"
+					fault="handleFault(event)"
+					result="handleLogFileListResult(event)"/>
+		<mx:method name="GetLogFileContent"
+					fault="handleFault(event)"
+					result="handleLogContentResult(event)"/>
+	</mx:RemoteObject>
+	<mx:Script>
+
+		<![CDATA[
+			import com.efi.printsmith.data.paramdata.LogFile;
+			import com.efi.printsmith.view.ImportStockCatalog;
+			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.ModelBase;
+			import com.efi.printsmith.query.RemoteRestriction;
+			import com.efi.printsmith.query.RemoteCriterion;
+			import com.efi.printsmith.data.ProductCode;
+			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.SalesCategory;
+			import com.efi.printsmith.view.RepositoryDownload;
+			import com.efi.printsmith.view.RepositoryUpload;	
+			import com.efi.printsmith.view.JMFQueue;		
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.ChargeCost;
+			import com.efi.printsmith.data.enums.ChargeCostMethod;
+			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.StockType;
+			import com.efi.printsmith.data.City;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.containers.Canvas;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+	
+			[Bindable]
+			private var fileNames:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var fileContent:String = "";
+			
+			private function init():void {
+				logService.GetLogFileList();
+			}
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				
+			}
+
+			private function handleLogFileListResult(evt:ResultEvent):void 
+			{
+				fileNames = evt.result as ArrayCollection;				
+			}
+			
+			private function doOK():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getServerLogs():void {
+				logService.GetLogFileList();
+			}
+			
+			private function selectLogFile():void {
+				if (logFileList.selectedItem != null) {
+					logService.GetLogFileContent(logFileList.selectedItem.name);
+				}
+			}
+			
+			private function handleLogContentResult(evt:ResultEvent):void {
+				this.fileContent = evt.result as String;
+			}
+			
+			private function labelFunc(item:Object):String {
+				return item.name;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Canvas width="864"
+			   height="354" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<mx:List id="logFileList" x="0" y="0" height="344" width="171" dataProvider="{fileNames}" labelFunction="labelFunc" change="{selectLogFile()}"></mx:List>
+		<mx:TextArea x="179" y="2" width="675" height="342" text="{fileContent}"/>
+	</mx:Canvas>
+
+	<mx:ControlBar horizontalAlign="center">
+		<mx:Button label="Done"
+				   id="okButton"
+				   enabled="true"
+				   click="doOK();" width="99"/>
+	</mx:ControlBar>
+
+</mx:TitleWindow>

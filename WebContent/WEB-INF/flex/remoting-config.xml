@@ -172,4 +172,11 @@
 			</hibernate>
 		</properties>
 	</destination>
+	<destination id="logService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.LogService
+			</source>
+		</properties>
+	</destination>
 </service>
