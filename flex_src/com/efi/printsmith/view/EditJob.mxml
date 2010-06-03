@@ -881,8 +881,10 @@
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
 				}
-				
-				job.parentSize = job_parent.text;
+				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed")
+					job.parentSize = this.roll_width.text;
+				else
+					job.parentSize = job_parent.text;
 				job.runSize = job_size.text;
 				job.foldedSize = job_fold_size.text;
 				job.finishSize = job_finish_size.text;
@@ -1247,10 +1249,12 @@
 						this.cutOff_edit.text = cutoff.toString();
 						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff.toString();
 						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
+						if (this.job_finish_size.selectedIndex == -1)
+							this.job_finish_size.text = job.finishSize;
 						this.job.foldedSize = "";
 						job_fold_size.text = "";
 					}
-					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank") {
+					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
 						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.parentsize;
@@ -1347,9 +1351,9 @@
 					if (this.num_copies != null)
 						this.num_copies.text = job.numCopies.toString();
 					if (this.total_copies0 != null)
-						this.total_copies.text = job.totalCopies.toString();
+						this.total_copies0.text = job.totalCopies.toString();
 					if (this.num_copies1 != null)
-						this.num_copies.text = job.numCopies.toString();
+						this.num_copies1.text = job.numCopies.toString();
 					if (job_totalCost != null) {
 						job_totalCost.text = job.totalCost.toString();
 					}
