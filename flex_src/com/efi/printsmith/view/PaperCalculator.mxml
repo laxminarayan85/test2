@@ -169,7 +169,60 @@
 				dimensions=dim2;
 
 			}
-
+			
+			//
+			// this is used to change the font in the active field to show a override state
+			//
+			private function setOverrideForField(field:TextInput, overrideActive:Boolean):void
+			{
+				if (overrideActive)
+				{
+					field.setStyle("fontStyle","italic");
+					field.setStyle("textDecoration","underline");
+				} else {
+					field.setStyle("fontStyle","normal");
+					field.setStyle("textDecoration","none");
+				}
+			}
+			
+			//
+			// call back function when the user changes the value in the "Cuts to Run" field
+			// 
+			private function changedCutstoRun():void
+			{				
+				// current value is EMPTY string, remove override
+				if (txtCutstoRun.text == "")
+					job.orRunCuts = false;
+				else
+					job.orRunCuts = true;
+				
+				// update the field font state to match
+				setOverrideForField(txtCutstoRun, job.orRunCuts);
+				
+				// calcuate the REAL value again in the case of override is REMOVED
+				//  function will not replace value if override flag is ON
+				refreshCalcAndImage();
+			}
+	
+			//
+			// call back function when the user changes the value in the "Cuts to Finish" field
+			// 
+			private function changedCutstoFinish():void
+			{				
+				// current value is EMPTY string, remove override
+				if (txtCutstoFinish.text == "")
+					job.orFinishCuts = false;
+				else
+					job.orFinishCuts = true;
+					
+				// update the field font state to match
+				setOverrideForField(txtCutstoFinish, job.orFinishCuts);
+				
+				// calcuate the REAL value again in the case of override is REMOVED
+				//  function will not replace value if override flag is ON
+				refreshCalcAndImage();
+			}
+		
 			private function mapFromJobData():void
 			{
 				gripLocationRadioValue=job.paperCal.gripLocation;
@@ -196,7 +249,9 @@
 				job.paperCal.runSize=job.runSize;
 				job.paperCal.finishSize=job.finishSize;
 				job.paperCal.parentSize=job.parentSize;
-
+				
+				setOverrideForField(txtCutstoRun, job.orRunCuts);
+				setOverrideForField(txtCutstoFinish, job.orFinishCuts);
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -744,10 +799,12 @@
 					  y="159"
 					  width="125"
 					  text="{job.paperCal.cutstoRun}"
+					  change="changedCutstoRun()"
 					  id="txtCutstoRun" height="20"/>
 		<mx:TextInput x="676"
 					  y="159"
 					  text="{job.paperCal.cutstoFinish}"
+					  change="changedCutstoFinish()"
 					  id="txtCutstoFinish" height="20"/>
 		<mx:Canvas x="515"
 				   y="187"
@@ -759,7 +816,7 @@
 				  y="114"
 				  text="="
 				  width="20"/>
-		<mx:RadioButtonGroup id="calc_order_radio_group"/>
+		<mx:RadioButtonGroup id="calc_order_radio_group" selectedValue="{job.paperCal.whichStartSize}"/>
 		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
