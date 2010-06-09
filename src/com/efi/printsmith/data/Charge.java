@@ -179,7 +179,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ChargeDefinition chargeDefinition;
 	
 	/**
@@ -245,7 +245,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Location productionLocation;
 	
 	/**
@@ -817,7 +817,7 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ChargeCostingRecord chargeCostingRecord;
 	
 	/**

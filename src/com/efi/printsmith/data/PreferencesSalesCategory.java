@@ -62,7 +62,7 @@ public class PreferencesSalesCategory extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory category;
 	
 	/**

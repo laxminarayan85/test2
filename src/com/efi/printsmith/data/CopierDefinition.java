@@ -911,7 +911,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory salesCat;
 	
 	/**
@@ -999,11 +999,9 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-//@OneToMany()
-//	@JoinTable( name = "copierdefinition_charges")
-	//    @OneToMany()
-//    @JoinTable( name = "copierdefinition_charges")
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+
+	@JoinTable( name = "copierdefinition_charges")
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -1122,7 +1120,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WasteChart wasteChart;
 	
 	/**
@@ -1144,7 +1142,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList stockPriceList;
 	
 	/**
@@ -1166,7 +1164,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList copierPriceList;
 	
 	/**
@@ -1254,7 +1252,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Matrix copierMatrix;
 	
 	/**

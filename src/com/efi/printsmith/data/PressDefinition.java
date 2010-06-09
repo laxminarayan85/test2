@@ -885,7 +885,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WasteChart wasteChart;
 	
 	/**
@@ -907,7 +907,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList pressPriceList;
 	
 	/**
@@ -929,7 +929,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList stockPriceList;
 	
 	/**
@@ -951,7 +951,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SpeedTable speedTable;
 	
 	/**
@@ -1017,11 +1017,9 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-//@OneToMany()
-//	@JoinTable( name = "pressdefinition_charges")
-	//    @OneToMany()
-//    @JoinTable( name = "pressdefinition_charges")
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+
+	@JoinTable( name = "pressdefinition_charges")
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -1096,7 +1094,7 @@ public class PressDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory salesCat;
 	
 	/**

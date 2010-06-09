@@ -214,7 +214,7 @@ public class StockChanges extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockDefinition stockDefinition;
 	
 	/**

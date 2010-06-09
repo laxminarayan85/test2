@@ -142,7 +142,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private JobBase sku;
 	
 	/**
@@ -164,7 +164,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WebGraphics thumbnail;
 	
 	/**
@@ -186,7 +186,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WebGraphics details;
 	
 	/**
@@ -230,7 +230,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WebCheckoutTypes checkoutType;
 	
 	/**
@@ -296,7 +296,7 @@ public class WebProducts extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PreferencesPricingMethod calculatePrices;
 	
 	/**

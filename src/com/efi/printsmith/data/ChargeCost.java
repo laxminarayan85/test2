@@ -142,7 +142,7 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList rateTable;
 	
 	/**
@@ -318,7 +318,7 @@ public class ChargeCost extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SpeedTable speedTable;
 	
 	/**

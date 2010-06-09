@@ -88,7 +88,7 @@ public class PreferencesStockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ColumnNames columns;
 	
 	/**

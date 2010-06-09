@@ -932,47 +932,49 @@ public class PaperCalculator extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String parentSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension parentSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getParentSize(){
+	public Dimension getParentSize(){
     return parentSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentSize(String newVal) {
+   * @generated
+   */	
+  public void setParentSize(Dimension newVal) {
     this.parentSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String finishSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension finishSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getFinishSize(){
+	public Dimension getFinishSize(){
     return finishSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFinishSize(String newVal) {
+   * @generated
+   */	
+  public void setFinishSize(Dimension newVal) {
     this.finishSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -998,25 +1000,26 @@ public class PaperCalculator extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String runSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension runSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getRunSize(){
+	public Dimension getRunSize(){
     return runSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRunSize(String newVal) {
+   * @generated
+   */	
+  public void setRunSize(Dimension newVal) {
     this.runSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1533,10 +1536,10 @@ public class PaperCalculator extends ModelBase {
     if (PRINTPARENTTORUNSECTION.equals(propertyName)) setPrintParentToRunSection((Boolean)newValue); else
     if (ATTACHTOJOBTICKET.equals(propertyName)) setAttachToJobTicket((Boolean)newValue); else
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) setPrintRunToFinishSection((Boolean)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
-    if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
+    if (FINISHSIZE.equals(propertyName)) setFinishSize((Dimension)newValue); else
     if (USEGRIPEDGEGAP.equals(propertyName)) setUseGripEdgeGap((Boolean)newValue); else
-    if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
+    if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
     if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
     if (CUTSTOFINISH.equals(propertyName)) setCutstoFinish((Integer)newValue); else
     if (SHEETSOUT.equals(propertyName)) setSheetsOut((Integer)newValue); else
@@ -1626,13 +1629,13 @@ public class PaperCalculator extends ModelBase {
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (FINISHSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (USEGRIPEDGEGAP.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (RUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (GRIPLOCATION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (CUTSTOFINISH.equals(propertyName)) 

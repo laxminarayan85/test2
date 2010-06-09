@@ -651,10 +651,10 @@
 				
 				if (job == null) {
 					doNew();
-					job.parentSize = "";
-					job.runSize = "";
-					job.finishSize = "";
-					job.foldedSize = "";
+					job.parentSize.name = "";
+					job.runSize.name = "";
+					job.finishSize.name = "";
+					job.foldedSize.name = "";
 					job.frontColors = 1;
 					job.frontPasses = 1;
 					job.inSetsOf = 1;
@@ -882,12 +882,12 @@
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
 				}
 				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed")
-					job.parentSize = this.roll_width.text;
+					job.parentSize.name = this.roll_width.text;
 				else
-					job.parentSize = job_parent.text;
-				job.runSize = job_size.text;
-				job.foldedSize = job_fold_size.text;
-				job.finishSize = job_finish_size.text;
+					job.parentSize.name = job_parent.text;
+				job.runSize.name = job_size.text;
+				job.foldedSize.name = job_fold_size.text;
+				job.finishSize.name = job_finish_size.text;
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
 				if (job_imp != null)
@@ -1029,10 +1029,10 @@
 			private function handleLoadDimensionResult(ev:ResultEvent):void
 			{
 				dimensionsArray=ev.result as ArrayCollection;
-				this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
-				this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
-				this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensionsArray);
-				this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
+				this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
+				this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+				this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+				this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 
 			}
 			
@@ -1244,32 +1244,32 @@
 						else
 							cutoff = 0;
 						this.job.parentSize = evt.stockDefinition.parentsize;
-						this.roll_width.text = job.parentSize;
+						this.roll_width.text = job.parentSize.name;
 						this.job.cutOff = cutoff;
 						this.cutOff_edit.text = cutoff.toString();
-						this.job.finishSize = evt.stockDefinition.parentsize + " x " + cutoff.toString();
-						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
+						this.job.finishSize.name = evt.stockDefinition.parentsize + " x " + cutoff.toString();
+						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
-							this.job_finish_size.text = job.finishSize;
-						this.job.foldedSize = "";
+							this.job_finish_size.text = job.finishSize.name;
+						this.job.foldedSize.name = "";
 						job_fold_size.text = "";
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
-						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
+						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.parentsize;
-						this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
+						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.parentsize;
-						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
-						this.job_fold_size.selectedIndex = findItem(job.foldedSize, dimensionsArray);
+						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+						this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
-						this.job_parent.selectedIndex = findItem(job.parentSize, dimensionsArray);
+						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
 						this.job.runSize = evt.stockDefinition.normalRunSize;
-						this.job_size.selectedIndex = findItem(job.runSize, dimensionsArray);
+						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.normalRunSize;
-						this.job_finish_size.selectedIndex = findItem(job.finishSize, dimensionsArray);
+						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 					}
 					this.mapToJobData();
 					jobService.assignStockToJob(this.job, evt.stockDefinition);
@@ -1297,13 +1297,13 @@
 			private function handleFocusOutEvent(evt:FocusEvent):void
 			{
 				if (evt.target == job_parent) {
-					job.parentSize = job_parent.text;
+					job.parentSize.name = job_parent.text;
 				} else if (evt.target == job_size) {
-					job.runSize = job_size.text;
+					job.runSize.name = job_size.text;
 				} else if (evt.target == job_finish_size) {
-					job.finishSize = job_finish_size.text;
+					job.finishSize.name = job_finish_size.text;
 				} else if (evt.target == job_fold_size) {
-					job.foldedSize = job_fold_size.text;
+					job.foldedSize.name = job_fold_size.text;
 				}
 				super.focusOutHandler(evt);
 			}

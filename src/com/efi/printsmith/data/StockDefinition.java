@@ -562,9 +562,9 @@ public class StockDefinition extends ModelBase {
     this.modified = new Date();
   }
 
-	public StockDefinition(Long id, String Name, Double weight,String parentsize,StockColors color, GenericColors genericcolor,
+	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,StockColors color, GenericColors genericcolor,
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
-			Integer committed, Integer ordered, Boolean shellitem, String normalrunsize, StockType stocktype,
+			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
 			StockGroup stkgroup, String coated, Integer minorder, Double cost1, Date priceexpire, String forestmanagement,
 			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified) {
 		this.id = id;
@@ -645,7 +645,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockGroup stkgroup;
 	
 	/**
@@ -667,7 +667,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockClass stkclass;
 	
 	/**
@@ -689,7 +689,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockType stktype;
 	
 	/**
@@ -733,7 +733,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockFinish finish;
 	
 	/**
@@ -777,7 +777,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockColors color;
 	
 	/**
@@ -799,7 +799,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockGrade grade;
 	
 	/**
@@ -865,7 +865,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Vendor vendor;
 	
 	/**
@@ -909,25 +909,25 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String parentsize;
+ 	@ManyToOne( cascade = {CascadeType.ALL})
+	@Basic
+	private Dimension parentsize;
 	
 	/**
 	 * @generated
  	 */
-	public String getParentsize(){
+	public Dimension getParentsize(){
     return parentsize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentsize(String newVal) {
+   * @generated
+   */	
+  public void setParentsize(Dimension newVal) {
     this.parentsize = newVal;
   }
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -1833,25 +1833,25 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String normalRunSize;
+ 	@ManyToOne( cascade = {CascadeType.ALL})
+	@Basic
+	private Dimension normalRunSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getNormalRunSize(){
+	public Dimension getNormalRunSize(){
     return normalRunSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setNormalRunSize(String newVal) {
+   * @generated
+   */	
+  public void setNormalRunSize(Dimension newVal) {
     this.normalRunSize = newVal;
   }
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -1899,7 +1899,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition defaultPress;
 	
 	/**
@@ -2867,7 +2867,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PaperPrice defaultPriceList;
 	
 	/**
@@ -2889,7 +2889,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private GenericColors genericColor;
 	
 	/**
@@ -2911,7 +2911,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Account account;
 	
 	/**
@@ -2955,9 +2955,9 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	//    @ManyToMany()
-//    @JoinTable( name = "stockdefinition_charges")
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+
+	@JoinTable( name = "stockdefinition_charges")
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -3350,7 +3350,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultBWCopier;
 	
 	/**
@@ -3372,7 +3372,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultColorCopier;
 	
 	/**
@@ -3394,7 +3394,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultLargeCopier;
 	
 	/**
@@ -3588,7 +3588,7 @@ public class StockDefinition extends ModelBase {
     if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
     if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentsize((String)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentsize((Dimension)newValue); else
     if (THICKNESS.equals(propertyName)) setThickness((Double)newValue); else
     if (MWEIGHT.equals(propertyName)) setMweight((Double)newValue); else
     if (SHEETSPERCARTON.equals(propertyName)) setSheetspercarton((Integer)newValue); else
@@ -3630,7 +3630,7 @@ public class StockDefinition extends ModelBase {
     if (LISTPERM4.equals(propertyName)) setListPerM4((Integer)newValue); else
     if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
     if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
-    if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((String)newValue); else
+    if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((Dimension)newValue); else
     if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
     if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
     if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
@@ -3740,7 +3740,7 @@ public class StockDefinition extends ModelBase {
     if (BASICSIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (THICKNESS.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (MWEIGHT.equals(propertyName)) 
@@ -3824,7 +3824,7 @@ public class StockDefinition extends ModelBase {
     if (LISTPERM6.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (NORMALRUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (CUTSPER100.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (MINCUTCHARGE.equals(propertyName)) 

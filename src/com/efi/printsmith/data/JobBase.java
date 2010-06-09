@@ -499,7 +499,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory salesCategory;
 	
 	/**
@@ -521,7 +521,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ProductCode productCode;
 	
 	/**
@@ -719,7 +719,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Location location;
 	
 	/**
@@ -939,7 +939,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition press;
 	
 	/**
@@ -1071,7 +1071,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition pricingPress;
 	
 	/**
@@ -1093,7 +1093,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition costingPress;
 	
 	/**
@@ -1137,7 +1137,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private StockDefinition stock;
 	
 	/**
@@ -1159,91 +1159,95 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String parentSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension parentSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getParentSize(){
+	public Dimension getParentSize(){
     return parentSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentSize(String newVal) {
+   * @generated
+   */	
+  public void setParentSize(Dimension newVal) {
     this.parentSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String runSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension runSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getRunSize(){
+	public Dimension getRunSize(){
     return runSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRunSize(String newVal) {
+   * @generated
+   */	
+  public void setRunSize(Dimension newVal) {
     this.runSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String finishSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension finishSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getFinishSize(){
+	public Dimension getFinishSize(){
     return finishSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFinishSize(String newVal) {
+   * @generated
+   */	
+  public void setFinishSize(Dimension newVal) {
     this.finishSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String foldedSize;
+ 	@ManyToOne()
+	@Basic
+	private Dimension foldedSize;
 	
 	/**
 	 * @generated
  	 */
-	public String getFoldedSize(){
+	public Dimension getFoldedSize(){
     return foldedSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFoldedSize(String newVal) {
+   * @generated
+   */	
+  public void setFoldedSize(Dimension newVal) {
     this.foldedSize = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1469,7 +1473,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private PricingRecord pricingRecord;
 	
 	/**
@@ -1491,7 +1495,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1513,7 +1517,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -1535,7 +1539,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PreferencesPricingMethod pricingMethod;
 	
 	/**
@@ -1601,7 +1605,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CostingRecord costingRecord;
 	
 	/**
@@ -1913,7 +1917,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private Vendor vendor;
 
 	/**
@@ -2025,7 +2029,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private PaperPrice paperPrice;
 
 	/**
@@ -2048,7 +2052,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-  @ManyToOne( cascade = {CascadeType.ALL} )
+  @ManyToOne( cascade = {CascadeType.ALL})
   private JobJDFStatus jdfStatus;
 
 	/**
@@ -2070,7 +2074,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
   private PaperCalculator paperCal;
 
 	/**
@@ -2839,10 +2843,10 @@ public class JobBase extends ModelBase {
     if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
     if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
     if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentSize((String)newValue); else
-    if (RUNSIZE.equals(propertyName)) setRunSize((String)newValue); else
-    if (FINISHSIZE.equals(propertyName)) setFinishSize((String)newValue); else
-    if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((String)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
+    if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
+    if (FINISHSIZE.equals(propertyName)) setFinishSize((Dimension)newValue); else
+    if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((Dimension)newValue); else
     if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
     if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
     if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
@@ -2979,13 +2983,13 @@ public class JobBase extends ModelBase {
     if (STOCK.equals(propertyName)) 
       return new Class<?>[] {StockDefinition.class};		
     if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (RUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (FINISHSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (FOLDEDSIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (FRONTCOLORS.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (BACKCOLORS.equals(propertyName)) 

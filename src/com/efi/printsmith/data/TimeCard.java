@@ -214,7 +214,7 @@ public class TimeCard extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Employee employee;
 	
 	/**

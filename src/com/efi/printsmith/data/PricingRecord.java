@@ -114,7 +114,7 @@ public class PricingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceLogEntry priceLogEntry;
 	
 	/**

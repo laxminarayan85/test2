@@ -96,7 +96,7 @@ public class DigitalAsset extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private Job job;
 
 	/**

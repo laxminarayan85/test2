@@ -82,7 +82,7 @@ public class WebConsole extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WebStatus webStatus;
 	
 	/**

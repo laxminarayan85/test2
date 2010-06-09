@@ -140,7 +140,7 @@ public class DepositEntry extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private DepositType type;
 	
 	/**

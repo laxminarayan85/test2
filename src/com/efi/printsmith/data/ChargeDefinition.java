@@ -1107,7 +1107,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PriceList priceList;
 	
 	/**
@@ -1129,7 +1129,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WasteChart wasteChart;
 	
 	/**
@@ -1217,7 +1217,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Location location;
 	
 	/**
@@ -1239,7 +1239,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CostCenter costCenter;
 	
 	/**
@@ -1261,7 +1261,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Substrate substrate;
 	
 	/**
@@ -1371,7 +1371,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private FoldTemplate foldTemplate;
 	
 	/**
@@ -1701,7 +1701,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory salesCategory;
 	
 	/**
@@ -1723,7 +1723,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxTable taxTable;
 	
 	/**
@@ -2251,7 +2251,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ShippingMethod shipMode;
 	
 	/**
@@ -2625,7 +2625,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ChargeCategory parent;
 	
 	/**
@@ -2691,7 +2691,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private ChargeCost chargeCost;
 	
 	/** 

@@ -44,10 +44,10 @@ package com.efi.printsmith.data
 		public var costingPress:PressDefinition;
 		public var runMethod:String = "";
 		public var stock:StockDefinition;
-		public var parentSize:String = "";
-		public var runSize:String = "";
-		public var finishSize:String = "";
-		public var foldedSize:String = "";
+		public var parentSize:Dimension;
+		public var runSize:Dimension;
+		public var finishSize:Dimension;
+		public var foldedSize:Dimension;
 		public var frontColors:int = 0;
 		public var backColors:int = 0;
 		public var frontPasses:int = 0;

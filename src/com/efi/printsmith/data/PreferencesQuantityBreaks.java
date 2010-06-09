@@ -110,7 +110,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private JobMethod jobMethod;
 	
 	/**

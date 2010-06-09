@@ -9,6 +9,7 @@ import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.PriceListBase;
 import com.efi.printsmith.data.PriceListElement;
 import com.efi.printsmith.data.SpeedTable;
+import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.migration.Utilities;
 
 public class PriceListUtilities {
@@ -198,14 +199,14 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
-	static public long getAreaFromSizeString(String size) throws NumberFormatException, ParseException {
+	static public long getAreaFromSizeString(Dimension size) throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here (A4, B4, different lengths of dimensions)
 		long retVal = 0;
 		
-		int i = size.indexOf("x");
+		int i = size.NAME.indexOf("x");
 		if (i > -1) {
-			String lengthString = size.substring(0, i - 1);
-			String widthString = size.substring(i + 2);
+			String lengthString = size.NAME.substring(0, i - 1);
+			String widthString = size.NAME.substring(i + 2);
 			float length = Utilities.tokenToFloat(lengthString);
 			float width = Utilities.tokenToFloat(widthString);
 			retVal = (long) (length * width);
@@ -214,25 +215,25 @@ public class PriceListUtilities {
 		return retVal;
 	}
 	
-	static public float getLengthFromSizeString(String size) throws NumberFormatException, ParseException {
+	static public float getLengthFromSizeString(Dimension size) throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String lengthString = "0";
 		
-		int i = size.indexOf("x");
+		int i = size.NAME.indexOf("x");
 		if (i > -1) {
-			lengthString = size.substring(0, i - 1);
+			lengthString = size.NAME.substring(0, i - 1);
 		}
 		
 		return Float.parseFloat(lengthString);
 	}
 	
-	static public float getWidthFromSizeString(String size) throws NumberFormatException, ParseException {
+	static public float getWidthFromSizeString(Dimension size) throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String widthString = "0";
 		
-		int i = size.indexOf("x");
+		int i = size.NAME.indexOf("x");
 		if (i > -1) {
-			widthString = size.substring(i + 2);
+			widthString = size.NAME.substring(i + 2);
 		}
 		
 		return Float.parseFloat(widthString);

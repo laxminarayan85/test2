@@ -74,7 +74,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultBWCopier;
 	
 	/**
@@ -96,7 +96,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultColorCopier;
 	
 	/**
@@ -118,7 +118,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private CopierDefinition defaultLargeFormat;
 	
 	/**
@@ -140,7 +140,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition defaultRollFedPress;
 	
 	/**
@@ -162,7 +162,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PressDefinition defaultSheetFedPress;
 	
 	/**

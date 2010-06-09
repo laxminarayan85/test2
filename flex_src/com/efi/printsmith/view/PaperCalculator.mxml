@@ -309,7 +309,7 @@
 						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
 						break;					
 				}
-				job.paperCal.runSize=run_size_edit.text
+				job.paperCal.runSize.name=run_size_edit.text
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
 				job.paperCal.bleedLeft=parseFloat(txtBleed.text);
@@ -320,12 +320,12 @@
 				job.paperCal.cutstoFinish=parseInt(txtCutstoFinish.text);
 				job.paperCal.cutstoRun=parseInt(txtCutstoRun.text);
 				job.paperCal.disableFSC=chkDisableFSC.selected
-				job.paperCal.finishSize=finish_size_edit.text
+				job.paperCal.finishSize.name=finish_size_edit.text
 				job.paperCal.folioEdge=parseFloat(txtFolioEdge.text);
 				job.paperCal.gripEdgeGap=parseFloat(txtGripEdge.text);
 				job.paperCal.gutter=parseFloat(txtGutter.text);
 				job.paperCal.gutterHorizontal=parseFloat(txtGutterHorizontal.text);
-				job.paperCal.parentSize=parent_size_edit.text;
+				job.paperCal.parentSize.name=parent_size_edit.text;
 				job.paperCal.sheetsOut=parseInt(txtSheetsOut.text);
 				job.paperCal.trimFourSides=chkTrimFourSides.selected;
 				job.paperCal.useBleed=chkBleed.selected;

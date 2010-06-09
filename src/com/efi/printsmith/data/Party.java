@@ -174,7 +174,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address address;
 	
 	/**

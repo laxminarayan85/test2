@@ -14,6 +14,7 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.Constants;
@@ -33,7 +34,10 @@ public class JobMapper extends ImportMapper {
 		PricingRecord pricingRecord = new PricingRecord();
 		
 		PaperCalculator tempPaper = new PaperCalculator();
-		
+		Dimension dimension = new Dimension();
+		Dimension parentdimension = new Dimension();
+		Dimension finishdimension = new Dimension();
+		Dimension folddimension = new Dimension();
 		SalesCategory salesCategory = null;
 		String method = "";
 		String docType = "";
@@ -287,19 +291,33 @@ public class JobMapper extends ImportMapper {
 			} else if ("parent X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("parent size".equals(currentFieldToken)) {
-				job.setParentSize(currentImportToken);
+				if (currentImportToken.equals("0") == false) {
+					parentdimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
+					if (parentdimension != null)
+						job.setParentSize(parentdimension);
+						
+					}
 			} else if ("parent Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run size".equals(currentFieldToken)) {
-				job.setRunSize(currentImportToken);
+				if (currentImportToken.equals("0") == false) {
+					dimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
+					if (dimension != null)
+						job.setRunSize(dimension);
+					}
 			} else if ("run Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("finish X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("finish size".equals(currentFieldToken)) {
-				job.setFinishSize(currentImportToken);
+				if (currentImportToken.equals("0") == false) {
+					finishdimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
+					if (finishdimension != null)
+						job.setFinishSize(finishdimension);
+					
+					}
 			} else if ("finish Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stock cost".equals(currentFieldToken)) {
@@ -670,7 +688,12 @@ public class JobMapper extends ImportMapper {
 			} else if ("folded X".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("folded size".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false) {
+					folddimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
+					if (folddimension != null)
+						job.setFoldedSize(folddimension);
+							
+					}
 			} else if ("folded Y".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("stock lot count".equals(currentFieldToken)) {

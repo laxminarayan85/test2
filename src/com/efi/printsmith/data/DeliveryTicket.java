@@ -274,7 +274,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address toAddress;
 	
 	/**
@@ -296,7 +296,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address fromAddress;
 	
 	/**
@@ -362,7 +362,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Contact deliveryContact;
 	
 	/**
@@ -538,7 +538,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ShippingMethod shipMode;
 	
 	/**
@@ -758,7 +758,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Driver driver;
 	
 	/**

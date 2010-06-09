@@ -43,10 +43,10 @@ package com.efi.printsmith.data
 		public var printParentToRunSection:Boolean = false;
 		public var attachToJobTicket:Boolean = false;
 		public var printRunToFinishSection:Boolean = false;
-		public var parentSize:String = "";
-		public var finishSize:String = "";
+		public var parentSize:Dimension;
+		public var finishSize:Dimension;
 		public var useGripEdgeGap:Boolean = false;
-		public var runSize:String = "";
+		public var runSize:Dimension;
 		public var gripLocation:String = "";
 		public var cutstoFinish:int = 0;
 		public var sheetsOut:int = 0;

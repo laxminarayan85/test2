@@ -122,7 +122,7 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Account customerAccount;
 	
 	/**
@@ -144,7 +144,7 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxTable taxTable;
 	
 	/**
@@ -166,7 +166,7 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxCodes taxCode;
 	
 	/**
@@ -408,7 +408,7 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private PreferencesCreditCard creditCard;
 	
 	/**

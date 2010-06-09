@@ -519,7 +519,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Address shipToAddress;
 	
 	/**
@@ -541,7 +541,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Address billToAddress;
 	
 	/**
@@ -563,7 +563,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Contact contact;
 	
 	/**
@@ -585,7 +585,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Contact billToContact;
 	
 	/**
@@ -981,7 +981,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesRep salesRep;
 	
 	/**
@@ -1003,7 +1003,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ShippingMethod shippingMode;
 	
 	/**
@@ -1157,7 +1157,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Marketing marketing;
 	
 	/**
@@ -2081,7 +2081,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxTable taxTable;
 	
 	/**
@@ -2103,7 +2103,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxCodes taxCode;
 	
 	/**
@@ -2299,7 +2299,7 @@ public class Account extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private WebCompany webCompanyId;
 	/**
    * @generated
@@ -2319,7 +2319,7 @@ public class Account extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private WebCatalogs webCatalog;
 	/**
    * @generated

@@ -249,7 +249,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory category;
 	
 	/**
@@ -271,7 +271,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private EstimatorTypes estimator;
 	
 	/**

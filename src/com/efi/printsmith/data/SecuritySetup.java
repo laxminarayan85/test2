@@ -162,7 +162,7 @@ public class SecuritySetup extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private AccessGroup accessGroup;
 	
 	/**

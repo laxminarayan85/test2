@@ -61,7 +61,7 @@ public class WebLocations extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private ProductionLocations productionLocations;
 	/**
    * @generated
@@ -83,7 +83,7 @@ public class WebLocations extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private WebTranslation webTranslation;
 	/**
    * @generated

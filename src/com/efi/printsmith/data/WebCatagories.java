@@ -92,7 +92,7 @@ public class WebCatagories extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private WebGraphics image;
 	
 	/**

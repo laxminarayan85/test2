@@ -23,7 +23,7 @@ public class SquareAreaAndOriginalsPricingMethod extends
 			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
 				area = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 			else
-				area = new Double(Double.parseDouble(job.getParentSize()) * job.getCutOff()).longValue();
+				area = new Double(Double.parseDouble(job.getParentSize().getName()) * job.getCutOff()).longValue();
 		}
 		catch (Exception e) {
 			

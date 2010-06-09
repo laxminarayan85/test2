@@ -88,7 +88,7 @@ public class ShippingCharge extends Charge {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address shipTo;
 	
 	/**

@@ -1,6 +1,7 @@
 package com.efi.printsmith.migration;
 
 import com.efi.printsmith.data.Account;
+import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.GenericColors;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -33,6 +34,8 @@ public class XpedxMapper extends ImportMapper {
 		log.info("Entering XpedxMapper->importTokens");
 		DataService dataService = new DataService();
 		StockDefinition stockDefinition = null;
+		Dimension dimension = new Dimension();
+		Dimension parentdimension = new Dimension();
 		StockType stockType = null;
 		double caliper = 0.0;
 		for (int i=0; i < importTokens.length; i++) {
@@ -64,8 +67,10 @@ public class XpedxMapper extends ImportMapper {
 				break;
 			case 1:
 				if (importParams.getFullUpdate()) {
-					stockDefinition.setParentsize(currentImportToken);
-					stockDefinition.setNormalRunSize(currentImportToken);
+					dimension.setName(currentImportToken);
+					parentdimension.setName(currentImportToken);
+					stockDefinition.setParentsize(dimension);
+					stockDefinition.setNormalRunSize(parentdimension);
 				}
 				break;
 			case 2:

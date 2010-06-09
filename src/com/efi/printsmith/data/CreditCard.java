@@ -144,7 +144,7 @@ public class CreditCard extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address address;
 	
 	/**

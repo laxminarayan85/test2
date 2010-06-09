@@ -122,7 +122,7 @@ public class PreferencesCashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesCategory category;
 	
 	/**
@@ -166,7 +166,7 @@ public class PreferencesCashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxTable taxTable;
 	
 	/**
@@ -188,7 +188,7 @@ public class PreferencesCashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxCodes taxCodes;
 	
 	/**

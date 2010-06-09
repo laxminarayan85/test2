@@ -88,7 +88,7 @@ public class PreferencesPendingList extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ColumnNames columns;
 	
 	/**

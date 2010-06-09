@@ -121,7 +121,7 @@ public class ChargeCategory extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ChargeCommand parent;
 	
 	/**

@@ -371,7 +371,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SalesRep salesRep;
 	
 	/**
@@ -437,7 +437,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Address billToAddress;
 	
 	/**
@@ -459,7 +459,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL} )
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Address shipToAddress;
 	
 	/**
@@ -481,7 +481,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Contact contact;
 	
 	/**
@@ -547,7 +547,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private ShippingMethod shippingMethod;
 	
 	/**
@@ -591,7 +591,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Account account;
 	
 	/**
@@ -711,7 +711,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SpecialInstructions specialInstructions;
 	
 	/**
@@ -733,7 +733,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private NotePad notes;
 	
 	/**
@@ -755,7 +755,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private HoldState holdState;
 	
 	/**
@@ -1085,7 +1085,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private TaxTable taxTable;
 	
 	/**

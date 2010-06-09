@@ -572,7 +572,7 @@ public class PreferencesSystem extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Address companyAddress;
 	
 	/**

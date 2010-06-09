@@ -353,7 +353,7 @@ public class Users extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private AccessLevel accessLevel;
 	
 	/**
@@ -375,7 +375,7 @@ public class Users extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private AccessGroup accessGroup;
 	
 	/**

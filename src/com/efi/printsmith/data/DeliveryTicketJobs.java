@@ -103,7 +103,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private Account account;
 	
 	/**
@@ -343,7 +343,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private DeliveryTicket parentDeliveryTicket;
 
 	/**

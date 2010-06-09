@@ -603,7 +603,7 @@ public class WebBase extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private WebCompany webCompanyID;
 	/**
    * @generated

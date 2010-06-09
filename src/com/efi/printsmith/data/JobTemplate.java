@@ -91,7 +91,7 @@ public class JobTemplate extends Job {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private Users user;
 	/**
    * @generated
@@ -135,7 +135,7 @@ public class JobTemplate extends Job {
 	/**
    * @generated
    */	
-    @ManyToOne
+    @ManyToOne()
   private Account account;
 	/**
    * @generated

@@ -916,7 +916,7 @@ public class PreferencesStocks extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne
+    @ManyToOne()
 	private SizeTable sizeTable;
 	
 	/**

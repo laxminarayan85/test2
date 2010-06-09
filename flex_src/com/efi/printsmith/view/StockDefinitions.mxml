@@ -1223,7 +1223,7 @@
 	 stockDefinitions.coated = coated.text;
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
-	 stockDefinitions.parentsize = parentSize.text;
+	 stockDefinitions.parentsize.name = parentSize.text;
 	 stockDefinitions.thickness = parseFloat(thickNess.text);
 	 stockDefinitions.mweight = parseInt(mWeight.text);
 	 stockDefinitions.rollWeight = parseInt(rollweight.text);
@@ -1268,7 +1268,7 @@
 	 stockDefinitions.forestManagement = forestMgmt.text;
 	 stockDefinitions.pcwRecycledPercent = pcwRecycled.text as Number;
 	 
-	 stockDefinitions.normalRunSize = NormalRunSize.text;
+	 stockDefinitions.normalRunSize.name = NormalRunSize.text;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;
@@ -1327,9 +1327,9 @@
 	private function handleFocusOutEvent(evt:FocusEvent):void
 	{
 		if (evt.target == parentSize) {
-			stockDefinitions.parentsize = parentSize.text;
+			stockDefinitions.parentsize.name = parentSize.text;
 		} else if (evt.target == NormalRunSize) {
-			stockDefinitions.normalRunSize = NormalRunSize.text;
+			stockDefinitions.normalRunSize.name = NormalRunSize.text;
 		}
 		super.focusOutHandler(evt);
 	}
