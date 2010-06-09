@@ -232,7 +232,8 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					try {
 						ModelBase modelBase = mapper.importTokens(fieldTokens,
 								importTokens);
-						dataService.addUpdate(modelBase);
+						if (modelBase != null)
+							dataService.addUpdate(modelBase);
 					} catch (Exception e) {
 						log.error(e);
 					}
@@ -240,7 +241,8 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					try {
 						ModelBase modelBase = mapper.importTokens(fieldTokens,
 								importTokens, this.importParams);
-						dataService.addUpdate(modelBase);
+						if (modelBase != null)
+							dataService.addUpdate(modelBase);
 					} catch (Exception e) {
 						log.error(e);
 					}
