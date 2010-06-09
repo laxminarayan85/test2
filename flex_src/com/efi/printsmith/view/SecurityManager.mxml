@@ -233,15 +233,15 @@
 		accessGroupLists.removeItemAt(index);
 	}
 	private function addItem(itemName:String):void {
-		securitySetupLists.removeAll();
-		access = new AccessGroup();
-		access.name = itemName;
-
-		accessGroupLists.addItem(access)
 		this.currentState = "";
-		this.tvAccessGroups.selectedIndex = accessGroupLists.length;
-		addCommands();                      
-
+		if (itemName != '') {
+			securitySetupLists.removeAll();
+			access = new AccessGroup();
+			access.name = itemName;
+			accessGroupLists.addItem(access)
+			this.tvAccessGroups.selectedIndex = accessGroupLists.length;
+			addCommands();                      
+		}		
 	}
 	private function treeSelect(event:Event):void {
 	    access = event.currentTarget.selectedItem as AccessGroup
