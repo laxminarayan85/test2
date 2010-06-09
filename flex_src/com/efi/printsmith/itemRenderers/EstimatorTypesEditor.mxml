@@ -34,6 +34,6 @@
 
 	]]>
 	</mx:Script>
-    <mx:ComboBox id="pickEstimator" width="100" dataProvider="{EstimatorTypesArray}" labelField="name" selectedItem="{data.name}">
+    <mx:ComboBox id="pickEstimator" width="188" dataProvider="{EstimatorTypesArray}" labelField="name" selectedItem="{data.name}">
     </mx:ComboBox>
 </mx:VBox>
