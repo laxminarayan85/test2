@@ -2818,7 +2818,7 @@
 				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"/>
 
 				<mx:Label x="239" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right" width="160"/>
-				<mx:ComboBox x="407" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="104"/>
+				<mx:ComboBox x="407" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="164"/>
 
 				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
 					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"/>
