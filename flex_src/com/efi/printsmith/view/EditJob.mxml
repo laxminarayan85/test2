@@ -478,6 +478,7 @@
 	</mx:RemoteObject>			
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.Dimension;
 			import com.efi.printsmith.data.DigitalAsset;
 			import com.efi.printsmith.pages.JobDigitalAssets;
 			import com.efi.printsmith.data.JobTemplate;
@@ -651,10 +652,15 @@
 				
 				if (job == null) {
 					doNew();
-					job.parentSize.name = "";
-					job.runSize.name = "";
-					job.finishSize.name = "";
-					job.foldedSize.name = "";
+					if (job.parentSize != null)
+						job.parentSize.name = "";
+					
+					if (job.runSize != null)
+						job.runSize.name = "";
+					if (job.finishSize != null)
+						job.finishSize.name = "";
+					if (job.foldedSize != null)
+						job.foldedSize.name = "";
 					job.frontColors = 1;
 					job.frontPasses = 1;
 					job.inSetsOf = 1;
@@ -721,6 +727,10 @@
 				if (evt.pricingMethod != null  && evt.pricingMethod.title != "Mailing" && evt.pricingMethod.title != "Merchandise" && evt.pricingMethod.title != "Charges Only" && evt.pricingMethod.title != "Outside Services" && evt.pricingMethod.title != "Lines & Inches") {
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+					job.runSize = new Dimension();
+					job.foldedSize = new Dimension();
+					job.parentSize = new Dimension();
+					job.finishSize = new Dimension();
 					
 				} else if (evt.pricingMethod == null) {
 					Alert.show("Job Method Picker returned a null array", "Error");
@@ -884,10 +894,14 @@
 				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed")
 					job.parentSize.name = this.roll_width.text;
 				else
-					job.parentSize.name = job_parent.text;
-				job.runSize.name = job_size.text;
-				job.foldedSize.name = job_fold_size.text;
-				job.finishSize.name = job_finish_size.text;
+					if ( job.parentSize != null)
+						job.parentSize = job_parent.selectedItem as Dimension;
+				if ( job.runSize != null)
+					job.runSize = job_size.selectedItem as Dimension;
+				if ( job.foldedSize != null)
+					job.foldedSize = job_fold_size.selectedItem as Dimension;
+				if ( job.finishSize != null)
+					job.finishSize = job_finish_size.selectedItem as Dimension;
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
 				if (job_imp != null)
@@ -1029,10 +1043,14 @@
 			private function handleLoadDimensionResult(ev:ResultEvent):void
 			{
 				dimensionsArray=ev.result as ArrayCollection;
-				this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-				this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-				this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
-				this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+				if (job.parentSize != null)
+					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
+				if (job.runSize != null)
+					this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+				if (job.foldedSize != null)
+					this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+				if ( job.finishSize != null)
+					this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 
 			}
 			
