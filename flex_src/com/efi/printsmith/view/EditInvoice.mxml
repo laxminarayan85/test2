@@ -65,6 +65,7 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.NotePad;
 			import mx.events.ResourceEvent;
 			import mx.controls.dataGridClasses.DataGridColumn;
 			import com.efi.printsmith.data.Estimate;
@@ -391,7 +392,10 @@
 			{
 				var titleWindow:NotePadEditor=NotePadEditor(PopUpManager.createPopUp(this, NotePadEditor, true));
 				titleWindow.setStyle("borderAlpha", 0.9);
-				titleWindow.SetNote(invoice.notes.id)
+				if (invoice.notes == null){
+					invoice.notes = new NotePad();
+				}
+				titleWindow.SetNote(invoice.notes.id, invoice)
 			}
 
 			private function doTickets():void

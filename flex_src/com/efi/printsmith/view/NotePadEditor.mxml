@@ -9,10 +9,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataInvoiceService" destination="dataService">
+
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveInvoiceResult(event)"/>
+	
+</mx:RemoteObject>
+
 
 <mx:Script>                                   
 <![CDATA[
-	import com.efi.printsmith.data.Invoice;
+	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.NotePad;
 
@@ -36,7 +42,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]                                         
 	private var job:Job;
 	[Bindable]
-	private var invoice:Invoice;
+	private var invoice:InvoiceBase;
 	[Bindable]
 	private var notePad:NotePad;
 	
@@ -45,8 +51,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
 	}      
-	public function SetNote( tempID:Number ):void{
+	public function SetNote( tempID:Number, invoice:InvoiceBase ):void{
 		dataService.getById("NotePad",tempID);
+		this.invoice = invoice;
 	}
 	private function handleFault(event:Event):void {
 		
@@ -56,11 +63,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	}
 	
-	private function handleSaveResult(event:Event):void {
+	private function handleSaveResult(event:ResultEvent):void {
+		this.notePad = event.result as NotePad;
+		invoice.notes = notePad;
+		dataInvoiceService.addUpdate(this.invoice);
+		
+	}
+	private function handleSaveInvoiceResult(event:Event):void {
 		PopUpManager.removePopUp(this);
 	}
 	private function handleGetResult(ev:ResultEvent):void {
-		notePad = ev.result as NotePad;
+		if (ev.result != null)
+			notePad = ev.result as NotePad;
+		else
+			notePad = new NotePad();
 		
 	}
 	private function handleDeleteResult(event:Event):void {
