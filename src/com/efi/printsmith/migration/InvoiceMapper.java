@@ -790,6 +790,12 @@ public class InvoiceMapper extends ImportMapper {
 			if (contact != null)
 				invoice.setContact(contact);
 		}
+		if (invoice.getInvoiceNumber() != null
+				&& invoice.getInvoiceNumber().length() > 0) {
+			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+			sequenceValues.setEstimate(Long.parseLong(invoice.getInvoiceNumber()));
+			dataService.addUpdate(sequenceValues);
+		}
 		return invoice;
 	}
 	

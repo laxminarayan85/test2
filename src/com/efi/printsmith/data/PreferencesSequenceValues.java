@@ -95,6 +95,11 @@ public class PreferencesSequenceValues extends ModelBase {
   public static final String CREDITCARD = "CreditCard";
 
 	/**
+   * @generated
+   */
+  public static final String ESTIMATE = "Estimate";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSequenceValues() {
@@ -389,6 +394,28 @@ public class PreferencesSequenceValues extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long estimate;
+
+	/**
+   * @generated
+ 	 */
+  public Long getEstimate(){
+    return estimate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setEstimate(Long newVal) {
+    this.estimate = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -407,6 +434,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (CAMPAIGN.equals(propertyName)) return getCampaign();
     if (GRADE.equals(propertyName)) return getGrade();
     if (CREDITCARD.equals(propertyName)) return getCreditCard();
+    if (ESTIMATE.equals(propertyName)) return getEstimate();
     return super.getProperty(propertyName);
   }
 	
@@ -429,6 +457,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (CAMPAIGN.equals(propertyName)) setCampaign((Long)newValue); else
     if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
     if (CREDITCARD.equals(propertyName)) setCreditCard((Long)newValue); else
+    if (ESTIMATE.equals(propertyName)) setEstimate((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -464,6 +493,8 @@ public class PreferencesSequenceValues extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (CREDITCARD.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (ESTIMATE.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -487,6 +518,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (CAMPAIGN.equals(propertyName)) return PreferencesSequenceValues.class;
     if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
     if (CREDITCARD.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (ESTIMATE.equals(propertyName)) return PreferencesSequenceValues.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -523,6 +555,8 @@ public class PreferencesSequenceValues extends ModelBase {
     if (! SmartEquals(getGrade(), objT.getGrade()))
       return false;
     if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
+      return false;
+    if (! SmartEquals(getEstimate(), objT.getEstimate()))
       return false;
     return true;
   }			

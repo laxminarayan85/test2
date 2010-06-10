@@ -138,6 +138,7 @@
 			private var isEstimate:Boolean = false;
 			public function init():void
 			{
+				
 				vbox.getDividerAt(0).visible=false;
 				vbox.getDividerAt(1).visible=false;
 				if (invoice == null) {
@@ -145,21 +146,36 @@
 					invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					invoice.onPendingList = true;
 					doAccountPicker();
+					if (editorType == EDITESTIMATE){
+						inv_number.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceRpt.NewEstimates');
+						invoice_number_edit.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Estimate');
+					} else {
+						inv_number.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceRpt.NewInvoices');
+						invoice_number_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice');
+					}
+					
+					
 				} else {
+					if (invoice is Estimate)
+						editorType= EDITESTIMATE
+					
 					if (editorType == EDITESTIMATE) {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
+						invoice_number_edit.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Estimate');
 					} else {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
+						invoice_number_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice');
 						
 					}
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
 					} else {
 						doAccountPicker();
+					
 					}
 				}
 				
@@ -206,10 +222,12 @@
 						this.invoice = new Invoice();
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 						invoice.onPendingList = true;
+						
 					} else if (editorType == EDITESTIMATE) {
 						this.invoice = new Estimate();
 						this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 						invoice.onPendingList = true;
+						
 					}
 				}
 			}
@@ -237,6 +255,7 @@
 			private function handleSaveResult(ev:ResultEvent):void
 			{
 				this.invoice = ev.result as InvoiceBase;
+				inv_number.text = invoice.invoiceNumber;
 			}
 			
 			private function handleCreateInvoiceResult(ev:ResultEvent):void
@@ -775,7 +794,7 @@
 									  height="20"/>
 						<mx:Label x="349"
 								  y="12"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" width="97" textAlign="right"/>
+								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" width="97" textAlign="right" id="invoice_number_edit"/>
 						<ns1:AddressEditor x="16"
 										   y="61"
 										   id="bill_to_address_editor"

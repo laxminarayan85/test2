@@ -345,14 +345,36 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		pressDefinition = ev.result as PressDefinition;
 		
 		
-		if (pressDefinition.salesCat != null)
+		if (pressDefinition.salesCat != null){
 			charge_sales_category_combo.selectedIndex = findItem(pressDefinition.salesCat.name, salesCategories);
-		if (pressDefinition.costCenter != null)
+			if (charge_sales_category_combo.selectedIndex == -1)
+				charge_sales_category_combo.text= "";
+		}
+		else
+			charge_sales_category_combo.text= "";
+	
+		if (pressDefinition.costCenter != null){
 			CostCenter.selectedIndex = findItem(pressDefinition.costCenter, costCenterArray);
-		if (pressDefinition.productionLocation != null)
+			if (CostCenter.selectedIndex == -1)
+				CostCenter.text= "";
+		}
+		else
+			CostCenter.text ="";
+		if (pressDefinition.productionLocation != null){
 			ProductionLocation.selectedIndex = findItem(pressDefinition.productionLocation, productionLocationArray);
-		if (pressDefinition.machineName != "")
+			if (ProductionLocation.selectedIndex == -1)
+				ProductionLocation.text= "";
+		}
+		else
+			ProductionLocation.text = "";
+			
+		if (pressDefinition.machineName != ""){
 			productionPress.selectedIndex = findItem(pressDefinition.machineName, productionPressArray);
+			if (productionPress.selectedIndex == -1)
+				productionPress.text= "";
+		}
+		else
+		 	productionPress.text = "";
 		this.charges = pressDefinition.charges;
 		updateControlState();
 		if (pressDefinition.speedTable != null){

@@ -201,7 +201,7 @@
 		this.import_charge_costing.enabled = true;
 		this.import_tax_tables.enabled = true;
 		this.import_price_lists.enabled = true;
-		this.import_price_schedules.enabled = false;
+		this.import_price_schedules.enabled = true;
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
 		this.import_stock_definitions.enabled = false;

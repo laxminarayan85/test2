@@ -1182,7 +1182,7 @@ public class DefaultDataFactory {
 			return;
 
 		
-		adminaccessgroup.setName("System");
+		adminaccessgroup.setName("System Admin");
 		try {
 			adminaccessgroup = (AccessGroup) dataservice.addUpdate(adminaccessgroup);
 		} catch (Exception e) {

@@ -509,6 +509,7 @@
 				Snowmass.getInstance().doEditInvoice(invoiceBase);
 			} else if (invoiceBase is Estimate) {
 				Snowmass.getInstance().doEditEstimate(invoiceBase);
+			
 			}
 		}
 	}

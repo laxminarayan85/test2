@@ -1074,6 +1074,7 @@ public class DataService extends HibernateService {
 			sequenceValues.setCopierDefinition(new Long(0));
 			sequenceValues.setEmployee(new Long(0));
 			sequenceValues.setInvoice(new Long(0));
+			sequenceValues.setEstimate(new Long(0));
 			sequenceValues.setJob(new Long(0));
 			sequenceValues.setPressDefinition(new Long(0));
 			sequenceValues.setStockDefinition(new Long(0));
@@ -1195,6 +1196,24 @@ public class DataService extends HibernateService {
 		}
 		invoice.setInvoiceNumber(value.toString());
 		sequenceValues.setInvoice(value);
+		this.addUpdate(sequenceValues);
+	}
+	private void setEstimateId(Estimate estimate) throws Exception {
+		if (estimate.getInvoiceNumber() != null
+				&& estimate.getInvoiceNumber().length() > 0)
+			return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getEstimate();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Estimate",
+					" where invoiceNumber = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
+		estimate.setInvoiceNumber(value.toString());
+		sequenceValues.setEstimate(value);
 		this.addUpdate(sequenceValues);
 	}
 
@@ -1335,6 +1354,8 @@ public class DataService extends HibernateService {
 				this.setStockDefinitionId((StockDefinition) object);
 			} else if (object instanceof Invoice) {
 				this.setInvoiceId((Invoice) object);
+			} else if (object instanceof Estimate) {
+				this.setEstimateId((Estimate) object);
 			} else if (object instanceof Job) {
 				this.setJobId((Job) object);
 			} else if (object instanceof PressDefinition) {
