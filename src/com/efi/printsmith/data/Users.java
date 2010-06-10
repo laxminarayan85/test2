@@ -99,6 +99,23 @@ public class Users extends ModelBase {
   public static final String DISABLEUSER = "DisableUser";
 
 	/**
+   * @generated
+   */
+  public static final String PREVPASSWORD1 = "PrevPassword1";
+	/**
+   * @generated
+   */
+  public static final String PREVPASSWORD2 = "PrevPassword2";
+	/**
+   * @generated
+   */
+  public static final String PREVPASSWORD3 = "PrevPassword3";
+	/**
+   * @generated
+   */
+  public static final String PREVPASSWORD4 = "PrevPassword4";
+
+	/**
 	 * @generated
 	 */
 	public Users() {
@@ -415,6 +432,97 @@ public class Users extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String prevPassword1;
+
+	/**
+   * @generated
+ 	 */
+  public String getPrevPassword1(){
+    return prevPassword1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrevPassword1(String newVal) {
+    this.prevPassword1 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String prevPassword2;
+
+	/**
+   * @generated
+ 	 */
+  public String getPrevPassword2(){
+    return prevPassword2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrevPassword2(String newVal) {
+    this.prevPassword2 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String prevPassword3;
+
+	/**
+   * @generated
+ 	 */
+  public String getPrevPassword3(){
+    return prevPassword3; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrevPassword3(String newVal) {
+    this.prevPassword3 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String prevPassword4;
+
+	/**
+   * @generated
+ 	 */
+  public String getPrevPassword4(){
+    return prevPassword4; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrevPassword4(String newVal) {
+    this.prevPassword4 = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -434,6 +542,10 @@ public class Users extends ModelBase {
     if (ACCESSLEVEL.equals(propertyName)) return getAccessLevel();
     if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
     if (DISABLEUSER.equals(propertyName)) return getDisableUser();
+    if (PREVPASSWORD1.equals(propertyName)) return getPrevPassword1();
+    if (PREVPASSWORD2.equals(propertyName)) return getPrevPassword2();
+    if (PREVPASSWORD3.equals(propertyName)) return getPrevPassword3();
+    if (PREVPASSWORD4.equals(propertyName)) return getPrevPassword4();
     return super.getProperty(propertyName);
   }
 	
@@ -457,6 +569,10 @@ public class Users extends ModelBase {
     if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((AccessLevel)newValue); else
     if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
     if (DISABLEUSER.equals(propertyName)) setDisableUser((Boolean)newValue); else
+    if (PREVPASSWORD1.equals(propertyName)) setPrevPassword1((String)newValue); else
+    if (PREVPASSWORD2.equals(propertyName)) setPrevPassword2((String)newValue); else
+    if (PREVPASSWORD3.equals(propertyName)) setPrevPassword3((String)newValue); else
+    if (PREVPASSWORD4.equals(propertyName)) setPrevPassword4((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -494,6 +610,14 @@ public class Users extends ModelBase {
       return new Class<?>[] {AccessGroup.class};		
     if (DISABLEUSER.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (PREVPASSWORD1.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PREVPASSWORD2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PREVPASSWORD3.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PREVPASSWORD4.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -518,6 +642,10 @@ public class Users extends ModelBase {
     if (ACCESSLEVEL.equals(propertyName)) return Users.class;
     if (ACCESSGROUP.equals(propertyName)) return Users.class;
     if (DISABLEUSER.equals(propertyName)) return Users.class;
+    if (PREVPASSWORD1.equals(propertyName)) return Users.class;
+    if (PREVPASSWORD2.equals(propertyName)) return Users.class;
+    if (PREVPASSWORD3.equals(propertyName)) return Users.class;
+    if (PREVPASSWORD4.equals(propertyName)) return Users.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -556,6 +684,14 @@ public class Users extends ModelBase {
     if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
       return false;
     if (! SmartEquals(getDisableUser(), objT.getDisableUser()))
+      return false;
+    if (! SmartEquals(getPrevPassword1(), objT.getPrevPassword1()))
+      return false;
+    if (! SmartEquals(getPrevPassword2(), objT.getPrevPassword2()))
+      return false;
+    if (! SmartEquals(getPrevPassword3(), objT.getPrevPassword3()))
+      return false;
+    if (! SmartEquals(getPrevPassword4(), objT.getPrevPassword4()))
       return false;
     return true;
   }			
