@@ -205,7 +205,6 @@
 		this.import_customers.enabled = true;
 		this.import_contacts.enabled = true;
 		this.import_stock_definitions.enabled = false;
-		this.import_press_definitions.enabled = false;
 		this.import_copier_definitions.enabled = false;
 		this.import_jobs.enabled = false;
 		this.import_invoices.enabled = false;
