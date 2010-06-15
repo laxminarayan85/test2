@@ -84,6 +84,7 @@
 		uploadFile("Contacts");
 	}
 	
+	
 	private function handleSelectCopierDefinitionsFile(evt:Event):void {
 		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
