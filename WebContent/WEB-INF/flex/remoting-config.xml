@@ -79,6 +79,14 @@
 			<source>
 				com.efi.printsmith.service.ChargeService
 			</source>
+			<hibernate>
+				<!--
+					//the name of the method in this class which follows the hibernate
+					//load(Class, id) argument signature.
+					// default is "load"
+				-->
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	<destination id="invoiceService">
