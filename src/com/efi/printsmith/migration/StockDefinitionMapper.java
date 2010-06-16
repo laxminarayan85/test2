@@ -40,6 +40,14 @@ public class StockDefinitionMapper extends ImportMapper {
 		double weight = 0;
 		boolean envelope = false;
 		boolean largeformat = false;
+		boolean addParentSize = false;
+		boolean addRunSize = false;
+		float parentSizeX = 0;
+		float parentSizeY = 0;
+		float runSizeX = 0;
+		float runSizeY = 0;
+		String parentSizeName = "";
+		String runSizeName = "";
 		for (int i=0; i < fieldTokens.length; i++) {
 			
 			String currentImportToken = importTokens[i];
@@ -103,6 +111,10 @@ public class StockDefinitionMapper extends ImportMapper {
 					if (parentdimension != null)
 						
 						stockDefinition.setParentsize(parentdimension);
+					else {
+						addParentSize = true;
+						parentSizeName = currentImportToken;
+					}
 					
 				}
 				
@@ -111,18 +123,22 @@ public class StockDefinitionMapper extends ImportMapper {
 					dimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (dimension != null)
 						stockDefinition.setNormalRunSize(dimension);
-										
+					else {
+						addRunSize = true;
+						runSizeName = currentImportToken;
+					}
 				}
 			}  else if ("vendor stock no".equals(currentFieldToken)) {
 				stockDefinition.setStocknumber(currentImportToken);
 			}  else if ("parentx".equals(currentFieldToken)) {
+				parentSizeX = Utilities.tokenToFloat(currentImportToken);
 		
 			}  else if ("parenty".equals(currentFieldToken)) {
-				
+				parentSizeY = Utilities.tokenToFloat(currentImportToken);
 			}  else if ("runx".equals(currentFieldToken)) {
-				
+				runSizeX = Utilities.tokenToFloat(currentImportToken);
 			}  else if ("runy".equals(currentFieldToken)) {
-				
+				runSizeY = Utilities.tokenToFloat(currentImportToken);
 			}  else if ("s1cost".equals(currentFieldToken)) {
 				stockDefinition.setCost1(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("s1addm".equals(currentFieldToken)) {
@@ -635,6 +651,23 @@ public class StockDefinitionMapper extends ImportMapper {
 			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
 			sequenceValues.setStockDefinition(Long.parseLong(stockDefinition.getStockId()));
 			dataService.addUpdate(sequenceValues);
+		}
+		
+		if (addParentSize == true) {
+			dimension = new Dimension();
+			dimension.setName(parentSizeName);
+			dimension.setWidth(parentSizeX);
+			dimension.setHeight(parentSizeY);
+			dimension = (Dimension)dataService.addUpdate(dimension);
+			stockDefinition.setParentsize(dimension);
+		}
+		if (addRunSize == true) {
+			dimension = new Dimension();
+			dimension.setName(runSizeName);
+			dimension.setWidth(runSizeX);
+			dimension.setHeight(runSizeY);
+			dimension = (Dimension)dataService.addUpdate(dimension);
+			stockDefinition.setNormalRunSize(dimension);
 		}
 		log.info("Leaving StockDefinitionMapper->importTokens");
 		return stockDefinition;
