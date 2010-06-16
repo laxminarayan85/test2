@@ -35,7 +35,8 @@ package com.efi.printsmith.control
 			
 			//security registered items
 			//default quick access panel items
-			this.addCommand(EncryptCreditCardEvent.ENCRYPTCC, EncryptCreditCardCommand);
+			this.addCommand(EncryptDataEvent.ENCRYPTDATA, EncryptDataCommand);
+			this.addCommand(EncryptDataEvent.DECRYPTDATA, EncryptDataCommand);
 			this.addCommand(ModelAddUpdateEvent.ADDUPDATE, ModelAddUpdateCommand);
 			this.addCommand(ModelDeleteItemEvent.DELETE, ModelDeleteItemCommand);
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);

@@ -34,10 +34,10 @@
 		</properties>
 	</destination>
 	
-	<destination id="creditCardService">
+	<destination id="encryptionService">
 		<properties>
 			<source>
-				com.efi.printsmith.service.CreditCardService
+				com.efi.printsmith.service.EncryptionService
 			</source>
 		</properties>
 	</destination>

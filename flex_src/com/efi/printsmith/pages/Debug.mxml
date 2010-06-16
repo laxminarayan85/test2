@@ -50,7 +50,7 @@
 	<mx:Script>
 
 		<![CDATA[
-			import com.efi.printsmith.events.EncryptCreditCardEvent;
+			import com.efi.printsmith.events.EncryptDataEvent;
 			import com.efi.printsmith.view.ImportStockCatalog;
 			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 			import com.efi.printsmith.data.Job;
@@ -326,7 +326,8 @@
 			
 			private function encryptSampleCC():void {
 				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
-				var encryptCCEvent:EncryptCreditCardEvent = new EncryptCreditCardEvent("5555444433332222", callbacks);
+				// replace EncryptDataEvent.ENCRYPTDATA with EncryptDataEvent.DECRYPTDATA to reverse call
+				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, "5555444433332222", "", callbacks);
 				encryptCCEvent.dispatch();
 			}
 		]]>

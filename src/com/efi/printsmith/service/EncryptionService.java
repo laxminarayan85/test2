@@ -16,14 +16,13 @@ import com.efi.printsmith.data.enums.PreferenceProgramType;
 import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 
-public class CreditCardService extends SnowmassHibernateService{
-	protected static Logger log = Logger.getLogger(CreditCardService.class);
+public class EncryptionService extends SnowmassHibernateService{
+	protected static Logger log = Logger.getLogger(EncryptionService.class);
 
-	public String encryptCreditCard(String value) {
+	public String encryptData(String encryptionData, String encryptionStyle) {
 		DataService dataService = new DataService();
 		
 		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
-		String encryptionData = null;
 		
 		if (preferences.getProgramType().equals(PreferenceProgramType.CopyShop)) {
 			// For illustration purposes
@@ -34,6 +33,23 @@ public class CreditCardService extends SnowmassHibernateService{
 			
 		}
 		
-		return value;
+		return encryptionData;
+	}
+	
+	public String decryptData(String encryptionData, String encryptionStyle) {
+		DataService dataService = new DataService();
+		
+		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
+		
+		if (preferences.getProgramType().equals(PreferenceProgramType.CopyShop)) {
+			// For illustration purposes
+		}
+		
+		if ((encryptionData = preferences.getCCEncryptionData()) != null) {
+			// For illustration purposes
+			
+		}
+		
+		return encryptionData;
 	}
 }

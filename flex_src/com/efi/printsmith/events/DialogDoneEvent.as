@@ -1,15 +1,11 @@
 package com.efi.printsmith.events
-{
-	import com.efi.printsmith.data.Account;
-	
+{	
 	import flash.events.Event;
 	
 	public class DialogDoneEvent extends Event
 	{
 		public static const OK:String = "DialogDoneOK";
 		public static const CANCEL:String = "DialogDoneCancel";
-		
-		public var account:Account;
 		
 		public function DialogDoneEvent(type:String)
 		{
