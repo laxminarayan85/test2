@@ -635,7 +635,7 @@ public class StockDefinitionMapper extends ImportMapper {
 			else if ("inHouse".equals(currentFieldToken)) {
 				stockDefinition.setStandardItem(Utilities.tokenToBooleanValue(currentImportToken));
 			}
-			else if ("inventoryminNotEven".equals(currentFieldToken)) {
+			else if ("inventory order is even".equals(currentFieldToken)) {
 				stockDefinition.setEvenIncrements(Utilities.tokenToBooleanValue(currentImportToken));
 			}
 			
