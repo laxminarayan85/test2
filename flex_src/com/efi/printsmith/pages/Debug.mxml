@@ -50,6 +50,7 @@
 	<mx:Script>
 
 		<![CDATA[
+			import com.efi.printsmith.events.EncryptCreditCardEvent;
 			import com.efi.printsmith.view.ImportStockCatalog;
 			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 			import com.efi.printsmith.data.Job;
@@ -73,6 +74,7 @@
 			import mx.containers.Canvas;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.events.FaultEvent;
+			import mx.rpc.IResponder;
 			import mx.events.ValidationResultEvent;
 			import mx.validators.Validator;
 			import mx.messaging.messages.AsyncMessage;
@@ -315,6 +317,18 @@
 				var serverLogWindow : LogViewer = LogViewer(PopUpManager.createPopUp(this.parent, LogViewer, true));
 				PopUpManager.centerPopUp(serverLogWindow);
 			}
+			
+			private function handleEncryptionResult(event:ResultEvent):void {
+				if (event.result != null) {
+					var encryptionResult:String = event.result as String;
+				}
+			}
+			
+			private function encryptSampleCC():void {
+				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
+				var encryptCCEvent:EncryptCreditCardEvent = new EncryptCreditCardEvent("5555444433332222", callbacks);
+				encryptCCEvent.dispatch();
+			}
 		]]>
 	</mx:Script>
 
@@ -361,6 +375,10 @@
 				   y="184"
 				   label="Display Server Logs"
 				   click="getServerLogs();" width="188"/>
+		<mx:Button x="209"
+				   y="234"
+				   label="Encrypt Credit Card"
+				   click="encryptSampleCC();" width="188"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

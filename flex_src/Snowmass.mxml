@@ -578,6 +578,10 @@
         	formatter.formatString = "MMMM DD, YYYY   L:NN:SS A";
         	return formatter;
         }
+        
+        public function getApplicationRootURL():String {
+        	return this.url.substr(0, this.url.lastIndexOf("/"));
+        }
 ]]>		
 </mx:Script>
 	<business:Services id="services" />

@@ -274,6 +274,43 @@ public class PreferencesSystem extends ModelBase {
 	public static final String DEFAULTCOUNTRY = "DefaultCountry";
 
 	/**
+   * @generated
+   */
+  public static final String SERIALNUMBER = "SerialNumber";
+	/**
+   * @generated
+   */
+  public static final String PROGRAMTYPE = "ProgramType";
+	/**
+   * @generated
+   */
+  public static final String WEBENABLED = "WebEnabled";
+	/**
+   * @generated
+   */
+  public static final String ATTRIBUTE1 = "Attribute1";
+	/**
+   * @generated
+   */
+  public static final String SCHEDULERENABLED = "SchedulerEnabled";
+	/**
+   * @generated
+   */
+  public static final String TRACKERENABLED = "TrackerEnabled";
+	/**
+   * @generated
+   */
+  public static final String MAXIMUMNODECOUNT = "MaximumNodeCount";
+	/**
+   * @generated
+   */
+  public static final String EXPIRATIONDATE = "ExpirationDate";
+	/**
+   * @generated
+   */
+  public static final String CCENCRYPTIONDATA = "CCEncryptionData";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSystem() {
@@ -1558,6 +1595,211 @@ public class PreferencesSystem extends ModelBase {
     this.defaultCountry = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String serialNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getSerialNumber(){
+    return serialNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSerialNumber(String newVal) {
+    this.serialNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @Basic
+  private String programType;
+
+	/**
+   * @generated
+ 	 */
+  public String getProgramType(){
+    return programType; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProgramType(String newVal) {
+    this.programType = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean webEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWebEnabled(){
+    return webEnabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWebEnabled(Boolean newVal) {
+    this.webEnabled = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer attribute1;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getAttribute1(){
+    return attribute1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAttribute1(Integer newVal) {
+    this.attribute1 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean schedulerEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getSchedulerEnabled(){
+    return schedulerEnabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSchedulerEnabled(Boolean newVal) {
+    this.schedulerEnabled = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean trackerEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getTrackerEnabled(){
+    return trackerEnabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTrackerEnabled(Boolean newVal) {
+    this.trackerEnabled = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer maximumNodeCount;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getMaximumNodeCount(){
+    return maximumNodeCount; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMaximumNodeCount(Integer newVal) {
+    this.maximumNodeCount = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date expirationDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getExpirationDate(){
+    return expirationDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setExpirationDate(Date newVal) {
+    this.expirationDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String cCEncryptionData;
+
+	/**
+   * @generated
+ 	 */
+  public String getCCEncryptionData(){
+    return cCEncryptionData; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCCEncryptionData(String newVal) {
+    this.cCEncryptionData = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1621,6 +1863,15 @@ public class PreferencesSystem extends ModelBase {
     if (CREDITCARDAPPROVAL.equals(propertyName)) return getCreditCardApproval();
     if (TRACKERDATACOLLECTION.equals(propertyName)) return getTrackerDataCollection();
     if (DEFAULTCOUNTRY.equals(propertyName)) return getDefaultCountry();
+    if (SERIALNUMBER.equals(propertyName)) return getSerialNumber();
+    if (PROGRAMTYPE.equals(propertyName)) return getProgramType();
+    if (WEBENABLED.equals(propertyName)) return getWebEnabled();
+    if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
+    if (SCHEDULERENABLED.equals(propertyName)) return getSchedulerEnabled();
+    if (TRACKERENABLED.equals(propertyName)) return getTrackerEnabled();
+    if (MAXIMUMNODECOUNT.equals(propertyName)) return getMaximumNodeCount();
+    if (EXPIRATIONDATE.equals(propertyName)) return getExpirationDate();
+    if (CCENCRYPTIONDATA.equals(propertyName)) return getCCEncryptionData();
     return super.getProperty(propertyName);
   }
 	
@@ -1688,6 +1939,15 @@ public class PreferencesSystem extends ModelBase {
     if (CREDITCARDAPPROVAL.equals(propertyName)) setCreditCardApproval((String)newValue); else
     if (TRACKERDATACOLLECTION.equals(propertyName)) setTrackerDataCollection((String)newValue); else
     if (DEFAULTCOUNTRY.equals(propertyName)) setDefaultCountry((Integer)newValue); else
+    if (SERIALNUMBER.equals(propertyName)) setSerialNumber((String)newValue); else
+    if (PROGRAMTYPE.equals(propertyName)) setProgramType((String)newValue); else
+    if (WEBENABLED.equals(propertyName)) setWebEnabled((Boolean)newValue); else
+    if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
+    if (SCHEDULERENABLED.equals(propertyName)) setSchedulerEnabled((Boolean)newValue); else
+    if (TRACKERENABLED.equals(propertyName)) setTrackerEnabled((Boolean)newValue); else
+    if (MAXIMUMNODECOUNT.equals(propertyName)) setMaximumNodeCount((Integer)newValue); else
+    if (EXPIRATIONDATE.equals(propertyName)) setExpirationDate((Date)newValue); else
+    if (CCENCRYPTIONDATA.equals(propertyName)) setCCEncryptionData((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1813,6 +2073,24 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {String.class};		
     if (DEFAULTCOUNTRY.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (SERIALNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PROGRAMTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WEBENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ATTRIBUTE1.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (SCHEDULERENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TRACKERENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MAXIMUMNODECOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (EXPIRATIONDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CCENCRYPTIONDATA.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1881,6 +2159,15 @@ public class PreferencesSystem extends ModelBase {
     if (CREDITCARDAPPROVAL.equals(propertyName)) return PreferencesSystem.class;
     if (TRACKERDATACOLLECTION.equals(propertyName)) return PreferencesSystem.class;
     if (DEFAULTCOUNTRY.equals(propertyName)) return PreferencesSystem.class;
+    if (SERIALNUMBER.equals(propertyName)) return PreferencesSystem.class;
+    if (PROGRAMTYPE.equals(propertyName)) return PreferencesSystem.class;
+    if (WEBENABLED.equals(propertyName)) return PreferencesSystem.class;
+    if (ATTRIBUTE1.equals(propertyName)) return PreferencesSystem.class;
+    if (SCHEDULERENABLED.equals(propertyName)) return PreferencesSystem.class;
+    if (TRACKERENABLED.equals(propertyName)) return PreferencesSystem.class;
+    if (MAXIMUMNODECOUNT.equals(propertyName)) return PreferencesSystem.class;
+    if (EXPIRATIONDATE.equals(propertyName)) return PreferencesSystem.class;
+    if (CCENCRYPTIONDATA.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2007,6 +2294,24 @@ public class PreferencesSystem extends ModelBase {
     if (! SmartEquals(getTrackerDataCollection(), objT.getTrackerDataCollection()))
       return false;
     if (! SmartEquals(getDefaultCountry(), objT.getDefaultCountry()))
+      return false;
+    if (! SmartEquals(getSerialNumber(), objT.getSerialNumber()))
+      return false;
+    if (! SmartEquals(getProgramType(), objT.getProgramType()))
+      return false;
+    if (! SmartEquals(getWebEnabled(), objT.getWebEnabled()))
+      return false;
+    if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+      return false;
+    if (! SmartEquals(getSchedulerEnabled(), objT.getSchedulerEnabled()))
+      return false;
+    if (! SmartEquals(getTrackerEnabled(), objT.getTrackerEnabled()))
+      return false;
+    if (! SmartEquals(getMaximumNodeCount(), objT.getMaximumNodeCount()))
+      return false;
+    if (! SmartEquals(getExpirationDate(), objT.getExpirationDate()))
+      return false;
+    if (! SmartEquals(getCCEncryptionData(), objT.getCCEncryptionData()))
       return false;
     return true;
   }			

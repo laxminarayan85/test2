@@ -45,7 +45,7 @@
 				url="https://{server.name}:{server.port}/{context.root}/messagebroker/amfsecure"
 				class="flex.messaging.endpoints.SecureAMFEndpoint" />
 			<properties>
-				<add-no-cache-headers>false</add-no-cache-headers>
+				<add-no-cache-headers>false</add-no-cache-headers> 
 			</properties>
 		</channel-definition>
 

@@ -8,6 +8,11 @@
 		<mx:method name="validateLogin" />
 	</mx:RemoteObject>
 
+	<mx:RemoteObject id="creditCardService" destination="creditCardService"
+		showBusyCursor="false" >
+		<mx:method name="encryptCreditCard" />
+	</mx:RemoteObject>
+
 	<mx:RemoteObject id="dataService" destination="dataService"
 		showBusyCursor="true" >
 		<mx:method name="addUpdate"/>

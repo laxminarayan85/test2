@@ -71,6 +71,15 @@ package com.efi.printsmith.data
 		public var creditCardApproval:String = "";
 		public var trackerDataCollection:String = "";
 		public var defaultCountry:int = 0;
+		public var serialNumber:String = "";
+		public var programType:String = "";
+		public var webEnabled:Boolean = false;
+		public var attribute1:int = 0;
+		public var schedulerEnabled:Boolean = false;
+		public var trackerEnabled:Boolean = false;
+		public var maximumNodeCount:int = 0;
+		public var expirationDate:Date = new Date();
+		public var cCEncryptionData:String = "";
 	
 	}
 }
