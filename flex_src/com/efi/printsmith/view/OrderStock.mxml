@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="928" height="674" creationComplete="init()"  
+	 close="PopUpManager.removePopUp(this);" showCloseButton="true"
+	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.OrderStock')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.OrderStock')}" name="Stock Order">
+	
+	<mx:RemoteObject id="vendorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadVendor(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
+		<mx:RemoteObject id="stockColorDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockColor(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="stockFinishDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockFinish(event)"/>
+	</mx:RemoteObject>
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.data.StockDefinition;
+	import com.efi.printsmith.data.Vendor;
+	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.events.StockPickerSelectEvent;
+
+	import mx.controls.DateField;                               
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.*; 
+	import mx.controls.Alert;  
+	import mx.utils.StringUtil;                                       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    
+    
+	[Bindable]                                
+    private var stockVendor:ArrayCollection = new ArrayCollection();   
+    [Bindable]                                
+	private var stockUnits:ArrayCollection = new ArrayCollection();   
+	
+    [Bindable]                                         
+	private var stockDefinitions:StockDefinition;
+	[Bindable]                                         
+	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+    private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var stockColor:ArrayCollection = new ArrayCollection(); 
+    [Bindable]                                
+    private var stockFinish:ArrayCollection = new ArrayCollection();   
+    
+    
+    
+    
+	public function init():void {
+		
+		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+		stockDefinitions = new StockDefinition;
+		loadUnitsArray();
+	    loadStockColor();
+	    loadStockFinish();
+	    
+	}
+	public function loadStockVendor():void {   
+	    vendorDataService.getAll("Vendor");
+	}
+	public function loadStockDefinitions():void { 
+		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
+	}
+	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
+		preferencesStockDefinitions = event.result as ArrayCollection;
+		loadStockDefinitions();
+		
+	}
+	
+	public function loadStockColor():void {   
+	    stockColorDataService.getAll("StockColors");
+	}
+
+	public function loadStockFinish():void {   
+	    stockFinishDataService.getAll("StockFinish");
+	}
+	
+	private function handleLoadStockFinish(ev:ResultEvent):void {
+		 stockFinish = ev.result as ArrayCollection;
+		  if ( stockDefinitions.finish != null){
+		 	finish_edit.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
+		 }
+	}
+	private function handleLoadStockColor(ev:ResultEvent):void {
+		 stockColor = ev.result as ArrayCollection;
+		 if ( stockDefinitions.color != null){
+		 	color_edit.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+		 }
+		 
+	}
+
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	private function findItemID(id:int, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (id == element.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+
+	private function findItemById(name:int, array:ArrayCollection):String {
+		var retVal:String;
+		retVal = "";
+		if (name > -1) {
+			retVal = array.getItemAt(name,0).name;
+		}
+		return retVal;
+	}
+	private function handleLoadResult(ev:ResultEvent):void {
+	     StockDefinitionArray = ev.result as ArrayCollection;
+	     this.enabled=true;
+   	 loadStockVendor();
+	}
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+
+	
+
+	private function doGet():void {
+		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+		stockPickerWindow.setStyle("borderAlpha", 0.9);
+	    stockPickerWindow.formIsEmpty = true;
+	   	stockPickerWindow.setStockArray(StockDefinitionArray);
+	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	    
+	}
+	
+	private function handleStockPickerCancel(evt:StockPickerSelectEvent):void {
+		if (this.stockDefinitions == null) {
+			this.stockDefinitions = new StockDefinition;
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
+		}
+	}
+	
+	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
+		if (evt.stockDefinition != null) {
+			setStockDefinition(evt.stockDefinition)
+				     
+		} else {
+			this.stockDefinitions = new StockDefinition();
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
+			Alert.show("Stock Picker returned a null stock", "Error");
+		}
+	}  
+	private function handleLoadVendor(ev:ResultEvent):void {
+		 stockVendor = ev.result as ArrayCollection;
+		 
+	}
+    private function setStockDefinition(stockDefinition:StockDefinition):void
+	{  
+		var temp:int; 
+		var cost:Number;
+		 
+		 
+		
+		stockDefinitions = stockDefinition;
+		temp = stockDefinitions.reOrderPoint + stockDefinitions.committed
+		cost =  (temp/ stockDefinitions.costunits)* stockDefinitions.cost1;
+		order_quantity_edit.text = temp.toString();
+		stock_cost_edit.text = cost.toString();
+		if (stockDefinitions.vendor != null){
+			cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
+			if (cboVendor.selectedIndex == -1)
+				cboVendor.text = "";
+		}	
+		if (stockDefinitions.color != null) 
+			color_edit.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+		if (stockDefinitions.stockunit != -1){
+			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
+		}
+		if (stockDefinitions.finish != null)
+			finish_edit.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
+		if ( stockDefinitions.parentsize != null)
+			sheet_edit.text = stockDefinitions.parentsize.name
+			rollwidth_edit.text = stockDefinitions.parentsize.name
+			
+		name_edit.editable = false;
+		wieght_Edit.editable = false;
+		finish_edit.enabled = false;
+		color_edit.enabled = false;
+		cost_edit.editable = false
+		per_edit.editable = false;
+		
+	}
+	public function getParentsizename(item:Object):String{
+		var tmpItem:Dimension ;
+		tmpItem = item as Dimension;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}    
+	private function loadUnitsArray():void {
+		
+		var Envelope:Object = new Object;
+		Envelope.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope');
+		stockUnits.addItem(Envelope);
+
+		var Sheet:Object = new Object;
+		Sheet.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock');
+		stockUnits.addItem(Sheet);
+
+		var Roll:Object = new Object;
+		Roll.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock');
+		stockUnits.addItem(Roll);
+
+		var Large:Object = new Object;
+		Large.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat');
+		stockUnits.addItem(Large);
+
+		var Rigid:Object = new Object;
+		Rigid.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate');
+		stockUnits.addItem(Rigid);
+	}
+	private function doStockUnitChangeEvent(event:Event):void{
+		var item:String = findItem(event.currentTarget.selectedValue,stockUnits).toString();
+		
+		if (item == "0"){
+			sheet_edit.enabled = true
+			rollwidth_edit.enabled = false;
+			rollweight_edit.enabled = false;
+			rollwidth_edit.text = " ";
+			rollweight_edit.text ="";
+		}
+		if (item == "1"){
+			sheet_edit.enabled = true
+			rollwidth_edit.enabled = false;
+			rollweight_edit.enabled = false;
+			rollwidth_edit.text = " ";
+			rollweight_edit.text ="";
+			
+		}
+		if (item == "2"){
+			sheet_edit.text = "";
+			sheet_edit.enabled = false
+			rollwidth_edit.enabled = true;
+			rollweight_edit.enabled = true;
+			rollwidth_edit.text = '0';
+			rollweight_edit.text = '0';
+		}
+		if (item == "3"){
+			sheet_edit.enabled = true
+			rollwidth_edit.enabled = false;
+			rollweight_edit.enabled = false;
+			rollwidth_edit.text = " ";
+			rollweight_edit.text ="";
+				
+		}
+		if (item == "4"){
+			sheet_edit.enabled = true
+			rollwidth_edit.enabled = false;
+			rollweight_edit.enabled = false;
+			rollwidth_edit.text = " ";
+			rollweight_edit.text ="";
+					
+		}
+		
+	}
+]]>
+                             
+</mx:Script>	
+
+	<mx:Button x="32" y="10" width="38" height="38" label="Button">
+	</mx:Button>
+	<mx:Button x="177" y="10" width="38" height="38" label="Button">
+	</mx:Button>
+	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
+	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')">
+	</mx:Button>
+	<mx:Button x="489" y="10"  width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')"/>
+	<mx:Label x="32" y="56" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Order')}"/>
+	<mx:Label x="177" y="56" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.AutoOrder')}"/>
+	<mx:Label x="284" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.SelectStock')}"/>
+	<mx:Label x="392" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Report')}"/>
+	<mx:Label x="489" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
+	<mx:HRule x="0" y="82" width="860"/>
+	<mx:Label x="46" y="92"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Invoice')}" width="83" fontWeight="bold"/>
+	<mx:Label x="311" y="92" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Job')}" width="67" fontWeight="bold"/>
+	<mx:TextInput x="134" y="92" id="Invoice_Edit" width="93"/>
+	<mx:TextInput x="380" y="92" id="job_edit" width="93"/>
+	<mx:HRule x="0" y="120" width="860" height="11"/>
+	<mx:Label x="36" y="139" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Vendor')}" width="90" fontWeight="bold"/>
+	<mx:Label x="59" y="165" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Name')}" width="69" fontWeight="bold"/>
+	<mx:Label x="78" y="191" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Weight')}" width="49" fontWeight="bold"/>
+	<mx:Label x="59" y="222"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.SheetSize')}" width="74" fontWeight="bold"/>
+	<mx:Label x="61" y="248" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.RollWidth')}" width="72" fontWeight="bold"/>
+	<mx:Label x="51" y="274"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.RollWeight')}" width="82" fontWeight="bold"/>
+	<mx:ComboBox x="136" y="137" id="cboVendor" dataProvider="{stockVendor}" labelField="name" width="131"></mx:ComboBox>
+	<mx:TextInput x="136" y="165" text="{stockDefinitions.name}" width="207" id="name_edit"/>
+	<mx:TextInput x="136" y="191" id="wieght_Edit" width="150" text="{stockDefinitions.weight}"/>
+	<mx:TextInput x="136" y="222"  id="sheet_edit" width="71"/>
+	<mx:TextInput  x="136" y="248"  id="rollwidth_edit" width="85"/>
+	<mx:TextInput x="136" y="274" text="{stockDefinitions.rollWeight}" id="rollweight_edit"/>
+	<mx:TextInput x="403" y="248" text="{stockDefinitions.cost1}" id="cost_edit" width="133" />
+	<mx:Label x="323" y="248" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Cost')}" width="72" fontWeight="bold"/>
+	<mx:Label x="544" y="248" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.per')}" width="45" fontWeight="bold"/>
+	<mx:TextInput x="597" y="248" text="{stockDefinitions.costunits}" id="per_edit" width="91"/>
+	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
+	<mx:RadioButton x="692" y="137" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
+	<mx:RadioButton x="692" y="155" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}"/>
+	<mx:RadioButton x="692" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}"/>
+	<mx:RadioButton x="692" y="197" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"/>
+	<mx:RadioButton x="692" y="218" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
+	<mx:Label x="311" y="191" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Finish')}"  width="84" fontWeight="bold"/>
+	<mx:ComboBox x="397" y="191"  dataProvider="{stockFinish}" labelField="name" id="finish_edit" width="118"/>
+	<mx:TextInput x="597" y="191" text="{stockDefinitions.coated}" id="coated_edit" width="56"/>
+	<mx:Label x="519" y="191" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}"  width="70" fontWeight="bold"/>
+	<mx:Label x="321" y="165" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Color')}" width="74" fontWeight="bold"/>
+	<mx:ComboBox x="397" y="165"  dataProvider="{stockColor}" labelField="name" id="color_edit"/>
+	<mx:HRule x="5" y="307" width="850" height="2"/>
+	<mx:Label x="84" y="317" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.OrderQuantity')}"  fontWeight="bold" width="130"/>
+	<mx:Label x="84" y="343" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.StockOrderNumber')}"  id="order_number_edit" fontWeight="bold"/>
+	<mx:Label x="87" y="369" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.DeliveryDate')}"  fontWeight="bold" width="127"/>
+	<mx:Label x="436" y="317" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.CostofStock')}"  fontWeight="bold"/>
+	<mx:TextInput x="222" y="317" id="order_quantity_edit" width="71"/>
+	<mx:TextInput x="222" y="343" width="71" id="stock_ordernumber_edit"/>
+	<mx:Text x="558" y="317" id="stock_cost_edit"/>
+	<mx:DateField x="222" y="367" id="delivery_date"/>
+	<mx:HRule x="0" y="418" width="870" height="3"/>
+	<mx:Label x="89" y="438" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Currentlyonhand')}" fontWeight="bold"/>
+	<mx:Label x="421" y="438" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Committed')}" fontWeight="bold"/>
+	<mx:Text x="215" y="438" text="{stockDefinitions.onHand}" id="onhand_edit"/>
+	<mx:Text x="558" y="438" text="{stockDefinitions.committed}" id="commit_edit"/>
+	<mx:HRule x="0" y="479" width="860" height="3"/>
+	<mx:CheckBox x="32" y="490" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}"/>
+	<mx:Label x="321" y="139"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" width="74" fontWeight="bold"/>
+	<mx:TextInput x="397" y="139" text="{stockDefinitions.stocknumber}" id="stock_number_edit"/>
+
+</mx:TitleWindow>

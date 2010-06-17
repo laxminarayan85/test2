@@ -53,6 +53,7 @@
 			import com.efi.printsmith.events.EncryptDataEvent;
 			import com.efi.printsmith.view.ImportStockCatalog;
 			import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
+			import com.efi.printsmith.view.OrderStock;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.ModelBase;
 			import com.efi.printsmith.query.RemoteRestriction;
@@ -282,11 +283,14 @@
 				
 			}
 			
+			private function doStockOrder():void {
+				var importWindow : OrderStock = OrderStock(PopUpManager.createPopUp(this, OrderStock, true));
+				PopUpManager.centerPopUp(importWindow);
+			}
 			private function doImportStockCatalog():void {
 				var importWindow : ImportStockCatalog = ImportStockCatalog(PopUpManager.createPopUp(this, ImportStockCatalog, true));
 				PopUpManager.centerPopUp(importWindow);
 			}
-			
 			private function doXpedxStockCheck():void {
 				xpedxIntegrationService.checkStock(460, "2257624", 100);
 				var params:XpedxStockCheckRequestParams = new XpedxStockCheckRequestParams();
@@ -380,6 +384,7 @@
 				   y="234"
 				   label="Encrypt Credit Card"
 				   click="encryptSampleCC();" width="188"/>
+		<mx:Button x="206" y="100" label="Stock Order" width="188" click="doStockOrder()"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
