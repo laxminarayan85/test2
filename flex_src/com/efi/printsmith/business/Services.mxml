@@ -8,9 +8,10 @@
 		<mx:method name="validateLogin" />
 	</mx:RemoteObject>
 
-	<mx:RemoteObject id="creditCardService" destination="creditCardService"
+	<mx:RemoteObject id="encryptionService" destination="encryptionService"
 		showBusyCursor="false" >
-		<mx:method name="encryptCreditCard" />
+		<mx:method name="encryptData" />
+		<mx:method name="decryptData" />
 	</mx:RemoteObject>
 
 	<mx:RemoteObject id="dataService" destination="dataService"
