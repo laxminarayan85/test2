@@ -530,7 +530,7 @@
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
 		<mx:DataGrid id="dataGrid" width="221" dataProvider="{priceList.elements}"
 			showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
-			editable="false" enabled="true" 
+			editable="true" enabled="true" 
 			bottom="25" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
 			doubleClickEnabled="true" itemDoubleClick="doubleClickHandler(event);"
 			initialize="gridInit(event);">
