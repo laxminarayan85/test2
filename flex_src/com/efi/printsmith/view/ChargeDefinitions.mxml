@@ -471,12 +471,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var newCharge:ChargeDefinition = ObjectUtil.copy(charge) as ChargeDefinition;
 		var category:ChargeCategory = charge.parent;
 		
-		updateDataProvider();
 		
+	//	updateDataProvider();
 		newCharge.id = 0;
 		newCharge.parent = null;
+		newCharge.name = newCharge.name +' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy');
+		newCharge.title = newCharge.name;
 		
 		dataService.addChargeToCategory(newCharge, category);
+		
 	}
 	
 	private function getSelectedTreeCommand(deep:Boolean):ChargeCommand {
