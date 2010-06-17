@@ -213,6 +213,7 @@
 	import com.efi.printsmith.data.StockFinish;
 	import com.efi.printsmith.data.StockForest;
 	import com.efi.printsmith.data.Vendor;
+	import com.efi.printsmith.data.Dimension;
 		
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.PaperPrice;
@@ -1139,6 +1140,9 @@
 			doStockUnitChange(stockDefinitions.stockunit.toString())
 			
 		}
+		if ( stockDefinitions.parentsize != null)
+			parentSize.selectedIndex = findItem(stockDefinitions.parentsize.name, dimensions);
+			
 		if (stockDefinitions.priceExpires != null)
 			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
 		if (stockDefinitions.expires != null)
@@ -1154,6 +1158,7 @@
 			chkfscCertified.selected = stockDefinitions.fscCertified;
 			chksfiCertified.selected = stockDefinitions.sfiCertified
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
+			
 			this.charges = stockDefinitions.charges;
 			standardItemCheckEvent();
 			stockChanges = stockDefinitions.stockChanges;
@@ -1228,7 +1233,7 @@
 	 stockDefinitions.mweight = parseInt(mWeight.text);
 	 stockDefinitions.rollWeight = parseInt(rollweight.text);
 	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text);
-	 stockDefinitions.minorder = parseInt(minOrder.text);
+	 stockDefinitions.lotcount = parseInt(minOrder.text);
 	 stockDefinitions.comments = Comments.text;
 
 	 stockDefinitions.costunits = parseInt(Costunits.text);
@@ -1404,6 +1409,16 @@
 	 
 		//stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
 	}
+	public function getParentsizename(item:Object):String{
+		var tmpItem:Dimension ;
+		tmpItem = item as Dimension;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}    
 
 ]]>
                              
@@ -1461,15 +1476,14 @@
 				<fc:AutoComplete x="106.5" y="60" width="132" 
 					  id="parentSize"
 					  dataProvider="{dimensions}"
-					  labelField="name"
-					  text="{stockDefinitions.parentsize}"
-					  focusOut="handleFocusOutEvent(event)"
+					  labelFunction="getParentsizename"
+					   focusOut="handleFocusOutEvent(event)"
 				/>
 				<mx:TextInput x="337" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
 				<mx:TextInput x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
 				<mx:TextInput x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
 				<mx:TextInput x="375.5" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
-				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.minorder}"/>
+				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}"/>
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
 				<mx:Text x="375.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="103" height="22"/>
 				<mx:ComboBox x="448" y="60" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
