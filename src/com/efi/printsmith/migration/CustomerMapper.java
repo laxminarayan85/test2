@@ -830,10 +830,11 @@ public class CustomerMapper extends ImportMapper {
 		}
 		customer.setShipToAddress(shipToAddress);
 		customer.setBillToAddress(billToAddress);
-		customer.setContact(shipToContact);
-		if (contactId.equals(billContactId)) {
+		if (shipToContact.getFirstName() != null || shipToContact.getLastName() != null)
+			customer.setContact(shipToContact);
+		if (contactId.equals(billContactId) && (shipToContact.getFirstName() != null || shipToContact.getLastName() != null)) {
 			customer.setBillToContact(shipToContact);
-		} else {
+		} else if (billToContact.getFirstName() != null || billToContact.getLastName() != null) {
 			customer.setBillToContact(billToContact);
 		}
 		customer.setMarketing(marketing);
