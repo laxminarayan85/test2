@@ -203,10 +203,10 @@ public class PriceListUtilities {
 		// TODO: Need to be much more flexible in string handling here (A4, B4, different lengths of dimensions)
 		long retVal = 0;
 		
-		int i = size.NAME.indexOf("x");
+		int i = size.getName().indexOf("x");
 		if (i > -1) {
-			String lengthString = size.NAME.substring(0, i - 1);
-			String widthString = size.NAME.substring(i + 2);
+			String lengthString = size.getName().substring(0, i - 1);
+			String widthString = size.getName().substring(i + 2);
 			float length = Utilities.tokenToFloat(lengthString);
 			float width = Utilities.tokenToFloat(widthString);
 			retVal = (long) (length * width);
@@ -219,9 +219,9 @@ public class PriceListUtilities {
 		// TODO: Need to be much more flexible in string handling here
 		String lengthString = "0";
 		
-		int i = size.NAME.indexOf("x");
+		int i = size.getName().indexOf("x");
 		if (i > -1) {
-			lengthString = size.NAME.substring(0, i - 1);
+			lengthString = size.getName().substring(0, i - 1);
 		}
 		
 		return Float.parseFloat(lengthString);
@@ -231,9 +231,9 @@ public class PriceListUtilities {
 		// TODO: Need to be much more flexible in string handling here
 		String widthString = "0";
 		
-		int i = size.NAME.indexOf("x");
+		int i = size.getName().indexOf("x");
 		if (i > -1) {
-			widthString = size.NAME.substring(i + 2);
+			widthString = size.getName().substring(i + 2);
 		}
 		
 		return Float.parseFloat(widthString);
