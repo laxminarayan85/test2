@@ -9,10 +9,10 @@
 	<mx:states>
 		<mx:State name="stateFilterDates">
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
-				<mx:DateField id="txtDateTo" showToday="true" y="34" x="275"/>
+				<mx:DateField id="txtDateTo" showToday="true" y="34" x="275" selectedDate="{new Date()}"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
-				<mx:DateField id="txtDateFrom" showToday="true" x="397" y="34"/>
+				<mx:DateField id="txtDateFrom" showToday="true" x="397" y="34" selectedDate="{new Date()}"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
 				<mx:Label text="to" x="374" y="36" textAlign="right"/>
@@ -82,6 +82,10 @@
 	private var FindArray:ArrayCollection = new ArrayCollection();
     [Bindable]
     private var preferencesPendingList:ArrayCollection = new ArrayCollection();
+    [Bindable]
+    private var startDate:Date = new Date();
+    [Bindable]
+    private var endDate:Date = new Date();
     
     [Embed("../../../../assets/file.png")]
     private var FileIcon:Class;
@@ -334,7 +338,10 @@
 				showItem = true;
 				break;
 			case "Due Between":
-				showItem = true;
+				if ((txtDateTo.selectedDate != null && this.(item as InvoiceBase).deliveryIntentDate < txtDateTo.selectedDate) &&
+					(txtDateFrom.selectedDate != null && this.(item as InvoiceBase).deliveryIntentDate > txtDateFrom.selectedDate)) {
+					showItem = true;
+				}
 				break;
 			}
 		}
