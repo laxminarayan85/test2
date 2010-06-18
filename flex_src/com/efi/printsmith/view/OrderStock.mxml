@@ -19,12 +19,18 @@
 	<mx:RemoteObject id="stockFinishDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockFinish(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="stockOrderDataService" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockOrder(event)"/>
+	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.data.StockDefinition;
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.events.StockPickerSelectEvent;
+	import com.efi.printsmith.data.StockOrder;
+	import com.efi.printsmith.data.StockColors;
+	import com.efi.printsmith.data.StockFinish;
 
 	import mx.controls.DateField;                               
 	import mx.managers.PopUpManager;                                         
@@ -50,6 +56,8 @@
 	
     [Bindable]                                         
 	private var stockDefinitions:StockDefinition;
+	[Bindable]                                         
+	private var stockOrder:StockOrder;
 	[Bindable]                                         
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -91,6 +99,37 @@
 	    stockFinishDataService.getAll("StockFinish");
 	}
 	
+	private function handleSaveStockOrder(ev:ResultEvent):void{
+		doNew();
+	}
+	private function doNew():void{
+		
+	}
+	private function doOrder():void{
+		if (stockOrder == null)
+			stockOrder = new StockOrder();
+		stockOrder.invoiceNumber = Invoice_Edit.text;
+		stockOrder.jobNumber = job_edit.text;
+		stockOrder.vendor = cboVendor.selectedItem as Vendor;
+		stockOrder.stockUnit = findItem(stockUnit.selectedValue.toString(),stockUnits);
+		stockOrder.vendorStockNumber = stock_number_edit.text;
+		stockOrder.name = name_edit.text;
+		stockOrder.color = color_edit.selectedItem as StockColors;
+		stockOrder.finish = finish_edit.selectedItem as StockFinish;
+		stockOrder.coated = coated_edit.text;
+		stockOrder.sheetSize = sheet_edit.text;
+		stockOrder.cost = parseFloat(cost_edit.text);
+		stockOrder.per = parseFloat(per_edit.text);
+		stockOrder.rollWeight = parseFloat(rollweight_edit.text);
+		stockOrder.rollWidth = rollwidth_edit.text;
+		stockOrder.orderQuantity = parseInt(order_quantity_edit.text);
+		stockOrder.stockOrderNumber= stock_ordernumber_edit.text;
+		stockOrder.deliveryDate= delivery_date.selectedDate;
+		stockOrder.allowModifaction = allow_mod.selected;
+		
+		
+		stockOrderDataService.addUpdate(stockOrder);
+	}
 	private function handleLoadStockFinish(ev:ResultEvent):void {
 		 stockFinish = ev.result as ArrayCollection;
 		  if ( stockDefinitions.finish != null){
@@ -297,7 +336,7 @@
                              
 </mx:Script>	
 
-	<mx:Button x="32" y="10" width="38" height="38" label="Button">
+	<mx:Button x="32" y="10" width="38" height="38" label="Button" click="doOrder();">
 	</mx:Button>
 	<mx:Button x="177" y="10" width="38" height="38" label="Button">
 	</mx:Button>
@@ -343,7 +382,7 @@
 	<mx:TextInput x="597" y="191" text="{stockDefinitions.coated}" id="coated_edit" width="56"/>
 	<mx:Label x="519" y="191" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}"  width="70" fontWeight="bold"/>
 	<mx:Label x="321" y="165" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Color')}" width="74" fontWeight="bold"/>
-	<mx:ComboBox x="397" y="165"  dataProvider="{stockColor}" labelField="name" id="color_edit"/>
+	<mx:ComboBox x="397" y="165"  dataProvider="{stockColor}" labelField="name" id="color_edit" width="118"/>
 	<mx:HRule x="5" y="307" width="850" height="2"/>
 	<mx:Label x="84" y="317" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.OrderQuantity')}"  fontWeight="bold" width="130"/>
 	<mx:Label x="84" y="343" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.StockOrderNumber')}"  id="order_number_edit" fontWeight="bold"/>
@@ -359,7 +398,7 @@
 	<mx:Text x="215" y="438" text="{stockDefinitions.onHand}" id="onhand_edit"/>
 	<mx:Text x="558" y="438" text="{stockDefinitions.committed}" id="commit_edit"/>
 	<mx:HRule x="0" y="479" width="860" height="3"/>
-	<mx:CheckBox x="32" y="490" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}"/>
+	<mx:CheckBox x="32" y="490" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}" id="allow_mod"/>
 	<mx:Label x="321" y="139"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" width="74" fontWeight="bold"/>
 	<mx:TextInput x="397" y="139" text="{stockDefinitions.stocknumber}" id="stock_number_edit"/>
 

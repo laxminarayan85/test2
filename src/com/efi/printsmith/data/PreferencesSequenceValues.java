@@ -100,6 +100,11 @@ public class PreferencesSequenceValues extends ModelBase {
   public static final String ESTIMATE = "Estimate";
 
 	/**
+   * @generated
+   */
+  public static final String STOCKORDER = "StockOrder";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSequenceValues() {
@@ -416,6 +421,28 @@ public class PreferencesSequenceValues extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long stockOrder;
+
+	/**
+   * @generated
+ 	 */
+  public Long getStockOrder(){
+    return stockOrder; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStockOrder(Long newVal) {
+    this.stockOrder = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -435,6 +462,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (GRADE.equals(propertyName)) return getGrade();
     if (CREDITCARD.equals(propertyName)) return getCreditCard();
     if (ESTIMATE.equals(propertyName)) return getEstimate();
+    if (STOCKORDER.equals(propertyName)) return getStockOrder();
     return super.getProperty(propertyName);
   }
 	
@@ -458,6 +486,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (GRADE.equals(propertyName)) setGrade((Long)newValue); else
     if (CREDITCARD.equals(propertyName)) setCreditCard((Long)newValue); else
     if (ESTIMATE.equals(propertyName)) setEstimate((Long)newValue); else
+    if (STOCKORDER.equals(propertyName)) setStockOrder((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -495,6 +524,8 @@ public class PreferencesSequenceValues extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (ESTIMATE.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (STOCKORDER.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -519,6 +550,7 @@ public class PreferencesSequenceValues extends ModelBase {
     if (GRADE.equals(propertyName)) return PreferencesSequenceValues.class;
     if (CREDITCARD.equals(propertyName)) return PreferencesSequenceValues.class;
     if (ESTIMATE.equals(propertyName)) return PreferencesSequenceValues.class;
+    if (STOCKORDER.equals(propertyName)) return PreferencesSequenceValues.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -557,6 +589,8 @@ public class PreferencesSequenceValues extends ModelBase {
     if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
       return false;
     if (! SmartEquals(getEstimate(), objT.getEstimate()))
+      return false;
+    if (! SmartEquals(getStockOrder(), objT.getStockOrder()))
       return false;
     return true;
   }			

@@ -1081,6 +1081,7 @@ public class DataService extends HibernateService {
 			sequenceValues.setCampaign(new Long(0));
 			sequenceValues.setGrade(new Long(0));
 			sequenceValues.setCreditCard(new Long(0));
+			sequenceValues.setStockOrder(new Long(0));
 		}
 		return sequenceValues;
 	}
@@ -1330,6 +1331,24 @@ public class DataService extends HibernateService {
 		sequenceValues.setCreditCard(value);
 		this.addUpdate(sequenceValues);
 	}
+	private void setStockOrderId(StockOrder stockOrder) throws Exception {
+		if (stockOrder.getOrderNumber() != null
+				&& stockOrder.getOrderNumber().length() > 0)
+			return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getStockOrder();
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("StockOrder",
+					" where OrderNumber = '" + value.toString() + "'");
+			if (modelBase == null)
+				goodId = true;
+		}
+		stockOrder.setOrderNumber(value.toString());
+		sequenceValues.setStockOrder(value);
+		this.addUpdate(sequenceValues);
+	}
 
 	public ModelBase addUpdate(ModelBase object) throws Exception {
 		log.debug("** addUpdateAccount called.");
@@ -1368,6 +1387,8 @@ public class DataService extends HibernateService {
 				this.setGradeId((Grade) object);
 			} else if (object instanceof CreditCard) {
 				this.setCreditCardId((CreditCard) object);
+			}else if (object instanceof StockOrder) {
+				this.setStockOrderId((StockOrder) object);
 			}
 
 			EntityTransaction tx = em.getTransaction();
