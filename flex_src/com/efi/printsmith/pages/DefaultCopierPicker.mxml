@@ -61,6 +61,11 @@
 				Alert.show("Error retrieving data from Server.", "Error");
 			}
 
+			private function handleCriteriaFault(ev:FaultEvent):void
+			{
+				Alert.show("Error retrieving data from Server.", "Error");				
+			}
+			
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
@@ -80,7 +85,7 @@
 				var criteriaArray:ArrayCollection = new ArrayCollection();
 				criteriaArray.addItem(criterion);
 				
-				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadColorCopiers , handleFault));
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadColorCopiers , handleCriteriaFault));
 			}
 			
 			private function loadBWCopiers():void {
@@ -92,7 +97,7 @@
 				var criteriaArray:ArrayCollection = new ArrayCollection();
 				criteriaArray.addItem(criterion);
 				
-				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadBWCopiers, handleFault));
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadBWCopiers, handleCriteriaFault));
 			}
 			
 			private function loadLargeFormatCopiers():void {
@@ -104,7 +109,7 @@
 				var criteriaArray:ArrayCollection = new ArrayCollection();
 				criteriaArray.addItem(criterion);
 				
-				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadLargeFormatCopiers, handleFault));				
+				fireQueryByCriteriaEvent(copierDefinition.getRemoteObjectName(), criteriaArray, new mx.rpc.Responder(handleLoadLargeFormatCopiers, handleCriteriaFault));				
 			}
 			
 			private function fireGetSingleEvent(modelType:String, callbacks:IResponder):void {

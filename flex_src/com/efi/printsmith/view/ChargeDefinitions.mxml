@@ -382,9 +382,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleLoadChargeCommandResult(ev:ResultEvent):void {
 		throbber.stop();
 		throbber.visible = false;
+		var selectedIndex:int = this.chargeTree.selectedIndex;
 		updateDataProvider();
 		chargeCommands = ev.result as ArrayCollection;
+		
 		chargeCommands.filterFunction = filterData;
+		chargeTree.selectedIndex = selectedIndex;
 	}
 	
 	private function handleLoadProductCodeResult(ev:ResultEvent):void {
@@ -405,7 +408,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			charge = null;
 			chargeCategory = ev.result as ChargeCategory;
-			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+			dataService.getChargeList();
+			//fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
 	}
 	
@@ -417,7 +421,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 			charge = localCharge;
 			costPricingString = "";
-			fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+			dataService.getChargeList();
+			//fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
 	}
 	
@@ -452,7 +457,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var chargeCommand:ChargeCommand = new ChargeCommand();
 		chargeCommand.name = "Untitled";
 		dataService.addUpdate(chargeCommand);
-		fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
+		dataService.getChargeList();
+		//fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	}
 	
 	private function doNewCategory():void {
@@ -1245,7 +1251,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
        				chargeCommand = localChargeCommand;
        				found = true;
        			}
-       		} else {
+       		} else if (localChargeCommand.children != null) {
 	       		for (j = 0; j < localChargeCommand.children.length; j++) {
 	       			var localChargeCategory:ChargeCategory = localChargeCommand.children.getItemAt(j) as ChargeCategory;
 	       			if (charge == null) {
@@ -1255,7 +1261,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	       					found = true;
 	       					break;
 	       				}
-	       			} else {
+	       			} else if (localChargeCategory.children != null) {
 	       				for (k = 0; k < localChargeCategory.children.length; k++) {
 		       				var chargeDefinition:ChargeDefinition = localChargeCategory.children.getItemAt(k) as ChargeDefinition;
 		       				if (chargeDefinition.id == charge.id) {

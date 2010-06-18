@@ -2144,7 +2144,6 @@ public class DataService extends HibernateService {
 					Transaction tx = session.beginTransaction();
 					resultList = query.getExecutableCriteria(session).list();
 					tx.commit();
-					session.close();
 
 					if (resultList != null) {
 						log.debug("** Found " + resultList.size() + "records.");
