@@ -1,7 +1,10 @@
 package com.efi.printsmith.service;
 
-import com.efi.printsmith.data.*;
+import java.util.Iterator;
+import java.util.List;
 
+import com.efi.printsmith.data.*;
+import flex.messaging.client.FlexClient;
 import flex.messaging.FlexContext;
 
 
@@ -19,6 +22,13 @@ public class LoginService extends DataService {
 		
 		try {		
 			log.info("Attempting login for " + userName);
+			
+			/* Following line is a hack to try to resolve the DuplicateSession error being thrown by BlazeDS
+			 * if more than one session is logged in simultaneously. See 
+			 * http://helpqlodhelp.blogspot.com/2009/11/lcds-flex-solution-for-duplicate.html
+			 */
+			FlexContext.getFlexClient().invalidate();
+			
 			EntityManager em = entityManagerFactory.createEntityManager();
 			Query q = em.createQuery("select u from Users u where upper(u.name)= upper(:name)");
 			q.setParameter("name", userName);

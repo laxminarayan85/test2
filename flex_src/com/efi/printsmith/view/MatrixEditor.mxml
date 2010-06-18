@@ -21,9 +21,9 @@
 <mx:states>
 	<mx:State name="COPIESANDORIGINALS">
 		<mx:SetProperty name="height" value="448"/>
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="copies_and_originals_editor" x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -32,9 +32,9 @@
 	</mx:State>
 	<mx:State name="COPIESANDORIGINALSTWOSIDES">
 		<mx:SetProperty name="height" value="460"/>
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyDoubleMatrix x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
@@ -45,9 +45,9 @@
 		
 	</mx:State>
 	<mx:State name="COPIESPERORIGINALSTWOSIDES">
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>
 	</mx:State>
@@ -55,9 +55,9 @@
 		
 	</mx:State>	
 	<mx:State name="TOTALOFALLCOPIESTWOSIDES">
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="total_of_all_copies_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
 	</mx:State>	
@@ -65,9 +65,9 @@
 		
 	</mx:State>
 	<mx:State name="SQUAREAREAOFORIGINALSTWOSIDES">
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="square_area_of_originals_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
 	</mx:State>
@@ -75,17 +75,17 @@
 		
 	</mx:State>
 	<mx:State name="TOTALSQUAREAREATWOSIDES">
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="total_square_area_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
 	</mx:State>
 	<mx:State name="SQUAREAREAANDCOPIES">
 		<mx:SetProperty name="height" value="448"/>
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="square_area_and_copies_editor" x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -94,9 +94,9 @@
 	</mx:State>
 	<mx:State name="SQUAREAREAANDCOPIESTWOSIDES">
 		<mx:SetProperty name="height" value="448"/>
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="square_area_and_copies_two_sides_editor" x="0" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
@@ -104,12 +104,9 @@
 		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
 	</mx:State>
 	<mx:State name="SQUAREAREAPERCOPY">
-		
-	</mx:State>
-	<mx:State name="SQUAREAREAPERCOPY">
-		<mx:RemoveChild target="{basicmatrix1}"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="square_area_per_copy_editor" x="0" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
 	</mx:State>
@@ -169,6 +166,52 @@
 	}   
 	                 
 	private function doSelect():void {	
+		switch(this.currentState) {
+		case "COPIESANDORIGINALS":
+			copies_and_originals_editor.mapToMatrix();
+			matrix = copies_and_originals_editor.matrix;
+			break;
+		case "COPIESANDORIGINALSTWOSIDES":
+			copies_and_originals_two_sides_editor.mapToMatrix();
+			matrix = copies_and_originals_two_sides_editor.matrix;
+			break;
+		case "COPIESPERORIGINALSTWOSIDES":
+			copies_per_originals_two_sides_editor.mapToMatrix();
+			matrix = copies_per_originals_two_sides_editor.matrix;
+			break;
+		case "TOTALOFALLCOPIESTWOSIDES":
+			total_of_all_copies_two_sides_editor.mapToMatrix();
+			matrix = total_of_all_copies_two_sides_editor.matrix;
+			break;
+		case "SQUAREAREAOFORIGINALSTWOSIDES":
+			square_area_of_originals_two_sides_editor.mapToMatrix();
+			matrix = square_area_of_originals_two_sides_editor.matrix;
+			break;
+		case "TOTALSQUAREAREATWOSIDES":
+			total_square_area_two_sides_editor.mapToMatrix();
+			matrix = total_square_area_two_sides_editor.matrix;
+			break;
+		case "SQUAREAREAANDCOPIES":
+			square_area_and_copies_editor.mapToMatrix();
+			matrix = square_area_and_copies_editor.matrix;
+			break;
+		case "SQUAREAREAANDCOPIESTWOSIDES":
+			square_area_and_copies_two_sides_editor.mapToMatrix();
+			matrix = square_area_and_copies_two_sides_editor.matrix;
+			break;
+		case "SQUAREAREAPERCOPY":
+			square_area_per_copy_editor.mapToMatrix();
+			matrix = square_area_per_copy_editor.matrix;
+			break;
+		case "TOTALOFALLCOPIES":
+		case "TOTALSQUAREAREA":
+		case "SQUAREAREAOFORIGINALS":
+		case "COPIESPERORIGINALS":
+		default:
+			matrixeditor.mapToMatrix();
+			matrix = matrixeditor.matrix;
+			break;
+		}
 		dataService.addUpdate(matrix);
 		PopUpManager.removePopUp(this);
 	}     
@@ -243,7 +286,7 @@
 ]]>        
 </mx:Script>            
 	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
-		<mtrx:BasicMatrix matrix="{matrix}" id="basicmatrix1" width="220">
+		<mtrx:BasicMatrix matrix="{matrix}" id="matrixeditor" width="220">
 			
 		</mtrx:BasicMatrix>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>

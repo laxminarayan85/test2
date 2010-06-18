@@ -4,16 +4,16 @@
 		
 		<mx:Text x="0" y="23.35" text="Number of Copies" width="63" height="38.666668" textAlign="center" fontWeight="bold"/>
 		<mx:Text x="71" y="14" text="Number of Originals" width="593" height="21" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput x="63" y="43" width="62" height="20" text="{matrix.header1}"/>
-		<mx:TextInput x="124" y="43" width="62" height="20" text="{matrix.header2}"/>
-		<mx:TextInput x="185" y="43" width="62" height="20" text="{matrix.header3}"/>
-		<mx:TextInput x="246" y="43" width="62" height="20" text="{matrix.header4}"/>
-		<mx:TextInput x="307" y="43" width="62" height="20" text="{matrix.header5}"/>
-		<mx:TextInput x="367" y="43" width="62" height="20" text="{matrix.header6}"/>
-		<mx:TextInput x="428" y="43" width="62" height="20" text="{matrix.header7}"/>
-		<mx:TextInput x="489" y="43" width="62" height="20" text="{matrix.header8}"/>
-		<mx:TextInput x="549" y="43" width="62" height="20" text="{matrix.header9}"/>
-		<mx:TextInput x="610" y="43" width="63" height="20" text="{matrix.header10}"/>
+		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}"/>
+		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}"/>
+		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}"/>
+		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}"/>
+		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}"/>
+		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}"/>
+		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}"/>
+		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}"/>
+		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}"/>
+		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}"/>
 		<mx:DataGrid 
 			width="674" dataProvider="{matrix.elements}" 
 					showHeaders="false" borderStyle="solid" borderThickness="3" x="0" 
@@ -37,6 +37,19 @@
 			<![CDATA[
 				import com.efi.printsmith.data.Matrix; 
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+
+				public function mapToMatrix():void {
+					matrix.header1 = parseInt(this.header1.text);
+					matrix.header2 = parseInt(this.header2.text);
+					matrix.header3 = parseInt(this.header3.text);
+					matrix.header4 = parseInt(this.header4.text);
+					matrix.header5 = parseInt(this.header5.text);
+					matrix.header6 = parseInt(this.header6.text);
+					matrix.header7 = parseInt(this.header7.text);
+					matrix.header8 = parseInt(this.header8.text);
+					matrix.header9 = parseInt(this.header9.text);
+					matrix.header10 = parseInt(this.header10.text);
+				}
 			]]>
 		</mx:Script>
 		</mx:DataGrid>

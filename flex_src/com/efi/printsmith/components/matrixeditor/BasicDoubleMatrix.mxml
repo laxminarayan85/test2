@@ -20,6 +20,10 @@
 				[Bindable] public var header1:String = "";
 				[Bindable] public var header2:String = "Side 1";
 				[Bindable] public var header3:String = "Side 2";
+				
+				public function mapToMatrix():void {
+					
+				}
 			]]>
 		</mx:Script>
 		</mx:DataGrid>

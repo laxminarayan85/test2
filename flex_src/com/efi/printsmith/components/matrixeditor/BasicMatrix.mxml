@@ -18,6 +18,9 @@
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
 				[Bindable] public var header1:String = "Number of Copies";
 				[Bindable] public var header2:String = "Price per Side";
+				
+				public function mapToMatrix():void {
+				}
 			]]>
 		</mx:Script>
 		</mx:DataGrid>

@@ -4,16 +4,16 @@
 		
 		<mx:Text x="0" y="16" text="Number&#xd;of&#xd;Copies" width="63" height="43" textAlign="center" fontWeight="bold"/>
 		<mx:Text x="71" y="15" text="Number of Originals&#xd;" width="1119" height="16.5" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput x="60" y="42.5" width="115" height="20" text="{matrix.header1}" textAlign="center"/>
-		<mx:TextInput x="173" y="42.5" width="115" height="20" text="{matrix.header2}" textAlign="center"/>
-		<mx:TextInput x="287" y="42.5" width="115" height="20" text="{matrix.header3}" textAlign="center"/>
-		<mx:TextInput x="400.5" y="42.5" width="115" height="20" text="{matrix.header4}" textAlign="center"/>
-		<mx:TextInput x="514.5" y="42.5" width="115" height="20" text="{matrix.header5}" textAlign="center"/>
-		<mx:TextInput x="627.5" y="42.5" width="115" height="20" text="{matrix.header6}" textAlign="center"/>
-		<mx:TextInput x="741" y="42.5" width="115" height="20" text="{matrix.header7}" textAlign="center"/>
-		<mx:TextInput x="855.5" y="42.5" width="115" height="20" text="{matrix.header8}" textAlign="center"/>
-		<mx:TextInput x="969" y="42.5" width="115" height="20" text="{matrix.header9}" textAlign="center"/>
-		<mx:TextInput x="1083" y="42.5" width="116" height="20" text="{matrix.header10}" textAlign="center"/>
+		<mx:TextInput id="header1" x="60" y="42.5" width="115" height="20" text="{matrix.header1}" textAlign="center"/>
+		<mx:TextInput id="header2" x="173" y="42.5" width="115" height="20" text="{matrix.header2}" textAlign="center"/>
+		<mx:TextInput id="header3" x="287" y="42.5" width="115" height="20" text="{matrix.header3}" textAlign="center"/>
+		<mx:TextInput id="header4" x="400.5" y="42.5" width="115" height="20" text="{matrix.header4}" textAlign="center"/>
+		<mx:TextInput id="header5" x="514.5" y="42.5" width="115" height="20" text="{matrix.header5}" textAlign="center"/>
+		<mx:TextInput id="header6" x="627.5" y="42.5" width="115" height="20" text="{matrix.header6}" textAlign="center"/>
+		<mx:TextInput id="header7" x="741" y="42.5" width="115" height="20" text="{matrix.header7}" textAlign="center"/>
+		<mx:TextInput id="header8" x="855.5" y="42.5" width="115" height="20" text="{matrix.header8}" textAlign="center"/>
+		<mx:TextInput id="header9" x="969" y="42.5" width="115" height="20" text="{matrix.header9}" textAlign="center"/>
+		<mx:TextInput id="header10" x="1083" y="42.5" width="116" height="20" text="{matrix.header10}" textAlign="center"/>
 		<mx:DataGrid 
 			width="100%" dataProvider="{matrix.elements}" 
 					showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
@@ -48,6 +48,18 @@
 				import com.efi.printsmith.data.Matrix; 
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
 				[Bindable] public var hour:Number = 0;
+				public function mapToMatrix():void {
+					matrix.header1 = parseInt(this.header1.text);
+					matrix.header2 = parseInt(this.header2.text);
+					matrix.header3 = parseInt(this.header3.text);
+					matrix.header4 = parseInt(this.header4.text);
+					matrix.header5 = parseInt(this.header5.text);
+					matrix.header6 = parseInt(this.header6.text);
+					matrix.header7 = parseInt(this.header7.text);
+					matrix.header8 = parseInt(this.header8.text);
+					matrix.header9 = parseInt(this.header9.text);
+					matrix.header10 = parseInt(this.header10.text);
+				}
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
