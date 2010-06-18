@@ -103,7 +103,24 @@
 		doNew();
 	}
 	private function doNew():void{
-		
+		Invoice_Edit.text = "";
+		job_edit.text= "";
+		cboVendor.selectedItem as Vendor;
+		stockUnit.selectedValue = 0;
+		stock_number_edit.text= "";
+		name_edit.text= "";
+		color_edit.selectedIndex = -1;
+		finish_edit.selectedIndex = -1;
+		coated_edit.text= "";
+		sheet_edit.text= "";
+		cost_edit.text= "";
+		per_edit.text= "";
+		rollweight_edit.text= "";
+		rollwidth_edit.text= "";
+		order_quantity_edit.text= "";
+		stock_ordernumber_edit.text= "";
+		delivery_date.text = "";
+		allow_mod.selected= false;
 	}
 	private function doOrder():void{
 		if (stockOrder == null)
@@ -336,9 +353,10 @@
                              
 </mx:Script>	
 
-	<mx:Button x="32" y="10" width="38" height="38" label="Button" click="doOrder();">
+	<mx:Button x="32" y="10" width="50" height="38" label="Button" click="doOrder();" icon="@Embed(source='../../../../assets/order.png')">
 	</mx:Button>
-	<mx:Button x="177" y="10" width="38" height="38" label="Button">
+	<mx:Button x="177" y="10" width="50" height="38" label="Button">
+		<mx:icon>@Embed(source='../../../../assets/auto_order.png')</mx:icon>
 	</mx:Button>
 	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
 	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')">
