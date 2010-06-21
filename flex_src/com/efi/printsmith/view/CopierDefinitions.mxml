@@ -312,6 +312,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var daysOpen: int = parseInt(openDays.text);
 		var developerCopy:Number = parseFloat(developerCopy.text);
 		var hoursOpen:Number = parseFloat(openhours.text);
+		var click:Number= parseFloat(clickCost.text);
 		
 	 	if (copyMinutes > 0) {
     		temp = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12
@@ -324,7 +325,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
         
   
 	
-       		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy;
+       		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy+ click;
        		 machineCostperCopy.text = tempmachineCost.toPrecision(7)
   			 }
 		}
