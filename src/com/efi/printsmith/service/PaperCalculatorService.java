@@ -18,7 +18,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.data.Invoice;
-import com.efi.printsmith.pricing.utilities.PriceListUtilities;
+//import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.Constants;
 
 public class PaperCalculatorService extends SnowmassHibernateService {
@@ -133,12 +133,16 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			dutch = 1;
 			grain = 0;
 		}
-		
-		parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-		
-		runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-		runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+
+		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
+		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
+		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
+		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
+
+	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
+//		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
+	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
+	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
 
 		// these are the special case sheet sizes and output options.
 		//
@@ -421,10 +425,15 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				//
 				// compute the square area used by the parent
 				//
-				parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-				parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-				runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-				runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+				parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
+				parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
+				runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
+				runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
+
+		//		parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
+		//		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
+		//		runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
+		//		runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
 
 				if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN) {
 					job.getPaperCal().setParentSqrArea(parentX * parentY);
@@ -455,12 +464,18 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int			out1 = 0;		/* temp values to figure out maximum */
 		int			out2 = 0;	/* temp values to figure out maximum */
 		
-		parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-		runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-		runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
-		finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
-		finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
+		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
+		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
+		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
+		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
+		finishX = job.getPaperCal().getFinishSize().getWidth().doubleValue();
+		finishY = job.getPaperCal().getFinishSize().getHeight().doubleValue();
+	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
+	//	parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
+	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
+	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+	//	finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
+	//	finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
 		grain = 0;
 		
 		/* Finish Grain */
@@ -872,12 +887,19 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int		runCuts;
 		int		finishCuts;
 		
-		parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-		runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-		runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
-		finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
-		finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
+		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
+		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
+		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
+		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
+		finishX = job.getPaperCal().getFinishSize().getWidth().doubleValue();
+		finishY = job.getPaperCal().getFinishSize().getHeight().doubleValue();
+		
+	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
+	//	parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
+	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
+	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+	//	finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
+	//	finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
 		
 		runCuts = job.getPaperCal().getCutstoRun();
 		finishCuts = job.getPaperCal().getCutstoFinish();
