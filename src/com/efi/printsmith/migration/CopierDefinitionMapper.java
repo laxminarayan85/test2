@@ -40,6 +40,9 @@ public class CopierDefinitionMapper extends ImportMapper {
 		boolean defaultColor = false;
 		boolean defaultLF = false;
 		double machineCost = 0.0;
+		double laborcost = 0.0;
+		double tonercost = 0.0;
+		double developercost = 0.0;
 		String machineNameId = "";
 		for (int x = 1; x <= 15; x++) {
 			MatrixElement matrixElement = new MatrixElement();
@@ -79,12 +82,15 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("labor".equals(currentFieldToken)) {
 					copierDefinition.setLaborCopy(Utilities
 							.tokenToDouble(currentImportToken));
+					laborcost= Utilities.tokenToDouble(currentImportToken);
 				} else if ("toner".equals(currentFieldToken)) {
 					copierDefinition.setTonerCopy(Utilities
 							.tokenToDouble(currentImportToken));
+					tonercost = Utilities.tokenToDouble(currentImportToken);
 				} else if ("developer".equals(currentFieldToken)) {
 					copierDefinition.setDeveloperCopy(Utilities
 							.tokenToDouble(currentImportToken));
+					developercost= Utilities.tokenToDouble(currentImportToken);
 				} else if ("copy range[1]".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("copy range[2]".equals(currentFieldToken)) {
@@ -124,7 +130,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("id".equals(currentFieldToken)) {
 					copierDefinition.setCopierId(currentImportToken);
 				} else if ("markup".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setCopyMarkup(Utilities
+							.tokenToDouble(currentImportToken));
 				} else if ("charges[1]".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
 						ModelBase modelBase = dataService.getByPrevId(
@@ -921,7 +928,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 						copierDefinition.setStockPriceMethod("none");
 					else if (currentImportToken.equals("1") == true)
 						copierDefinition
-								.setStockPriceMethod("IncludedInRate");
+								.setStockPriceMethod("IncludeInRate");
 					else if (currentImportToken.equals("2") == true)
 						copierDefinition.setStockPriceMethod("MarkedUpStockCost");
 					else if (currentImportToken.equals("3") == true)
@@ -942,7 +949,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 					else if (currentImportToken.equals("4") == true)
 						copierDefinition.setPriceTwoSide("CountingAsMoreOriginals");
 					else if (currentImportToken.equals("5") == true)
-						copierDefinition.setPriceTwoSide("UsingSide2Factor");
+						copierDefinition.setPriceTwoSide("UsingSideFactor");
 				} else if ("sales category".equals(currentFieldToken)) {
 						salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
 						if (salesCategory != null)
@@ -973,8 +980,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 					copierDefinition.setStockMarkup(Utilities
 							.tokenToDouble(currentImportToken));
 				} else if ("copy markup".equals(currentFieldToken)) {
-					copierDefinition.setCopyMarkup(Utilities
-							.tokenToDouble(currentImportToken));
+					copierDefinition.setCopyMarkup2(Utilities.tokenToDouble(currentImportToken));
 				} else if ("back factor".equals(currentFieldToken)) {
 					copierDefinition.setSideTwoFactor(Utilities
 							.tokenToDouble(currentImportToken));
@@ -1075,9 +1081,9 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("min sheet Y".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("max roll width".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setMaxWidth(currentImportToken);
 				} else if ("min roll width".equals(currentFieldToken)) {
-					/* TODO */
+					copierDefinition.setMinWidth(currentImportToken);
 				} else if ("extra float[1]".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("extra float[2]".equals(currentFieldToken)) {
@@ -1132,7 +1138,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 		}
 		matrix = (Matrix)dataService.addUpdate(matrix);
 		copierDefinition.setCopierMatrix(matrix);
-		double machineCostPerCopy = copierDefinition.getClickCost() + machineCost;
+		double machineCostPerCopy = copierDefinition.getClickCost() + machineCost+ laborcost+tonercost+developercost;
 		copierDefinition.setMachineCostPerCopy(machineCostPerCopy);
 		copierDefinition = (CopierDefinition)dataService.addUpdate(copierDefinition);
 		copierDefinition.setId(copierDefinition.getId());

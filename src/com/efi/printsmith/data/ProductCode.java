@@ -46,6 +46,11 @@ public class ProductCode extends ModelBase {
 	public static final String NAME = "Name";
 
 	/**
+   * @generated
+   */
+  public static final String KEY = "Key";
+
+	/**
 	 * @generated
 	 */
 	public ProductCode() {
@@ -76,12 +81,35 @@ public class ProductCode extends ModelBase {
     this.name = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer key;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getKey(){
+    return key; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setKey(Integer newVal) {
+    this.key = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
+    if (KEY.equals(propertyName)) return getKey();
     return super.getProperty(propertyName);
   }
 	
@@ -92,6 +120,7 @@ public class ProductCode extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (KEY.equals(propertyName)) setKey((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -103,6 +132,8 @@ public class ProductCode extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (KEY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -114,6 +145,7 @@ public class ProductCode extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return ProductCode.class;
+    if (KEY.equals(propertyName)) return ProductCode.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -126,6 +158,8 @@ public class ProductCode extends ModelBase {
       return false;
     ProductCode objT = (ProductCode)obj;
     if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getKey(), objT.getKey()))
       return false;
     return true;
   }			

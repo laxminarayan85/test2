@@ -13,9 +13,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:RemoveChild target="{MaxSize}"/>
 			<mx:RemoveChild target="{minSize}"/>
 			<mx:RemoveChild target="{label3}"/>
-			<mx:SetProperty target="{label4}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostperSqUnit')}"/>
-			<mx:SetProperty target="{label4}" name="x" value="456"/>
-			<mx:SetProperty target="{label4}" name="y" value="341"/>
+			<mx:SetProperty target="{label4}"  name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostperSqUnit')}"/>
+			<mx:SetProperty target="{label4}" name="x" value="509"/>
+			<mx:SetProperty target="{label4}" name="y" value="342"/>
 			<mx:SetProperty target="{copyID}" name="text" value=""/>
 		</mx:State>
 	</mx:states>
@@ -296,7 +296,41 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		tempCopier.copierId = null;
 		dataService.addUpdate(tempCopier);   		   
 	}
+	private function doMachineCost():void{
 	
+	 	var tempmachineCost: Number;
+	 	var temp :Number;
+	 	var temp2 : Number;
+	 	var tempPercent:Number = parseFloat(percentageUse.text) * .01;
+		var tmonthlyMaintenance:Number = parseFloat(monthlyMaintenance.text);
+		var tmonthlyBurdenRate:Number = parseFloat(monthlyBurdenRate.text);
+		var tmonthlyPayment:Number = parseFloat(monthlyPayment.text);
+		var tmonthlyLabor: Number= parseFloat(monthlyLabor.text);
+		var copyMinutes:int = parseInt(copyMinutes.text);
+		var tonerCopy:Number = parseFloat(tonerCopy.text);
+		var laborCopy:Number = parseFloat(laborCopy.text);
+		var daysOpen: int = parseInt(openDays.text);
+		var developerCopy:Number = parseFloat(developerCopy.text);
+		var hoursOpen:Number = parseFloat(openhours.text);
+		
+	 	if (copyMinutes > 0) {
+    		temp = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12
+  			 if (temp != 0) {
+        			temp2  = (tmonthlyBurdenRate + tmonthlyLabor + tmonthlyPayment + tmonthlyMaintenance) / temp;
+
+        /* if (large format method AND max roll width <> 0) {
+            temp2 = temp2 / max roll width;
+        } */
+        
+  
+	
+       		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy;
+       		 machineCostperCopy.text = tempmachineCost.toPrecision(7)
+  			 }
+		}
+
+
+	}
 	private function doRevert():void{
 		var token:AsyncToken = dataService.getCopierDefinition(copierDefinition.id );  
 		token.operation = "getCopierDefinition";
@@ -312,6 +346,10 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleGetResult(ev:ResultEvent):void {
 		if (ev.token.operation == "getCopierDefinition") {
 			copierDefinition = ev.result as CopierDefinition;
+			if ( copierDefinition.largeFormat)
+				this.currentState = "Large Format";
+			else
+				this.currentState = "";
 			updateMethodBox();
 			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
@@ -426,7 +464,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		copierDefinition.developerCopy = parseFloat(developerCopy.text);
 		copierDefinition.hourCostRate = parseFloat(hourlyCostingRate.text);
 		copierDefinition.hoursOpen = parseFloat(openhours.text);
-		//copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
+		copierDefinition.machineCostPerCopy = parseInt(machineCostperCopy.text);
 		if (pricing_method_combo.selectedItem != null)
 			copierDefinition.method = pricing_method_combo.selectedItem.toString();
 		if (stock_Price_is_combo.selectedItem != null)
@@ -437,6 +475,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		copierDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 		copierDefinition.percentUsage = parseFloat(percentageUse.text);
 		copierDefinition.monthlyMaintenance = parseFloat(monthlyMaintenance.text);
+		copierDefinition.monthlyPayment = parseFloat(monthlyPayment.text);
 		copierDefinition.copyMarkup = parseFloat(copyMarkup.text);
 		copierDefinition.monthlyBurdenRate = parseFloat(monthlyBurdenRate.text);
 		copierDefinition.copyMinutes = parseInt(copyMinutes.text);
@@ -937,37 +976,37 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="14" y="325" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyBurdenRate')}" width="141" textAlign="right"/>
 		<mx:Label x="14" y="347" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyLabor')}" width="141" textAlign="right"/>
 		<mx:Label x="14" y="369" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ClickCost')}" height="16" width="141" textAlign="right"/>
-		<mx:TextInput x="163" y="301" id="copyMinutes" text="{copierDefinition.copyMinutes}" height="20" width="71"/>
-		<mx:TextInput x="163" y="323" id="monthlyBurdenRate" text="{copierDefinition.monthlyBurdenRate}" height="20" width="71"/>
-		<mx:TextInput x="163" y="345" id="monthlyLabor" text="{copierDefinition.monthlyLabor}" height="20" width="71"/>
+		<mx:TextInput x="163" y="301" id="copyMinutes" text="{copierDefinition.copyMinutes}" height="20" width="71" focusOut="doMachineCost();"/>
+		<mx:TextInput x="163" y="323" id="monthlyBurdenRate" text="{copierDefinition.monthlyBurdenRate}" height="20" width="71" focusOut="doMachineCost();"/>
+		<mx:TextInput x="163" y="345" id="monthlyLabor" text="{copierDefinition.monthlyLabor}" height="20" width="71" focusOut="doMachineCost();"/>
 		<mx:TextInput x="163" y="367" id="clickCost" text="{copierDefinition.clickCost}" height="20" width="71"/>
 		<mx:Label x="504" y="300" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OpenHoursDay')}" textAlign="right" width="157"/>
-		<mx:TextInput x="671" y="298" id="openhours" text="{copierDefinition.hoursOpen}" width="94" height="20"/>
+		<mx:TextInput x="671" y="298" id="openhours" text="{copierDefinition.hoursOpen}" width="94" height="20" focusOut="doMachineCost();"/>
 		<mx:Label x="504" y="322" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyMaintenance')}" textAlign="right" width="157"/>
-		<mx:TextInput x="671" y="320" id="monthlyMaintenance" text="{copierDefinition.monthlyMaintenance}" width="94" height="20"/>
+		<mx:TextInput x="671" y="320" id="monthlyMaintenance" text="{copierDefinition.monthlyMaintenance}" width="94" height="20" focusOut="doMachineCost();"/>
 		<mx:Label x="504" y="344" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostPerCopy')}" id="label4" textAlign="right" width="157"/>
 		<mx:Text x="671" y="342" id="machineCostperCopy" text = "{copierDefinition.machineCostPerCopy}" width="94" height="20"/>
-		<mx:Label x="264.5" y="303" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OpenDaysYear')}" width="104" textAlign="right"/>
-		<mx:TextInput x="376.5" y="301" width="71" id="openDays" text= "{copierDefinition.daysOpen}" height="20"/>
-		<mx:Label x="264.5" y="325" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyPayment')}" width="104" textAlign="right"/>
-		<mx:TextInput x="376.5" y="323" width="71" id="monthlyPayment" text ="{copierDefinition.monthlyPayment}" height="20"/>
-		<mx:Label x="264.5" y="347" text= "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.TimeInUse')}" width="104" textAlign="right"/>
-		<mx:TextInput x="376.5" y="345" width="71" id="percentageUse" text = "{copierDefinition.percentUsage}" height="20"/>
-		<mx:Label x="264.5" y="369" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.HourlyCostingRate')}" width="104" textAlign="right"/>
-		<mx:TextInput x="376.5" y="367" width="71" id="hourlyCostingRate" text="{copierDefinition.hourCostRate}" height="20"/>
-		<mx:Label x="264.5" y="391" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.LaborCopy')}" width="104" textAlign="right"/>
-		<mx:Label x="264.5" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.TonerCopy')}" width="104" textAlign="right"/>
-		<mx:Label x="264.5" y="435" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.DeveloperCopy')}" width="104" textAlign="right"/>
-		<mx:Label x="264.5" y="457" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" width="104" textAlign="right"/>
-		<mx:TextInput x="376.5" y="389" width="71" id="laborCopy" text ="{copierDefinition.laborCopy}" height="20"/>
-		<mx:TextInput x="376.5" y="411" width="71" id="tonerCopy" text ="{copierDefinition.tonerCopy}" height="20"/>
-		<mx:TextInput x="376.5" y="433" width="71" id="developerCopy"  text="{copierDefinition.developerCopy}" height="20"/>
-		<mx:TextInput x="376.5" y="455" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
+		<mx:Label x="264.5" y="303" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OpenDaysYear')}" width="141" textAlign="right"/>
+		<mx:TextInput x="413.5" y="301" width="71" id="openDays" text= "{copierDefinition.daysOpen}" height="20" focusOut="doMachineCost();"/>
+		<mx:Label x="264.5" y="325" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyPayment')}" width="141" textAlign="right"/>
+		<mx:TextInput x="413.5" y="323" width="71" id="monthlyPayment" text ="{copierDefinition.monthlyPayment}" height="20" focusOut="doMachineCost();"/>
+		<mx:Label x="264.5" y="347" text= "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.TimeInUse')}" width="141" textAlign="right"/>
+		<mx:TextInput x="413.5" y="345" width="71" id="percentageUse" text = "{copierDefinition.percentUsage}" height="20" focusOut="doMachineCost();"/>
+		<mx:Label x="264.5" y="369" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.HourlyCostingRate')}" width="141" textAlign="right"/>
+		<mx:TextInput x="413.5" y="367" width="71" id="hourlyCostingRate" text="{copierDefinition.hourCostRate}" height="20"/>
+		<mx:Label x="264.5" y="391" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.LaborCopy')}" width="141" textAlign="right"/>
+		<mx:Label x="264.5" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.TonerCopy')}" width="141" textAlign="right"/>
+		<mx:Label x="264.5" y="435" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.DeveloperCopy')}" width="141" textAlign="right"/>
+		<mx:Label x="264.5" y="457" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" width="141" textAlign="right"/>
+		<mx:TextInput x="413.5" y="389" width="71" id="laborCopy" text ="{copierDefinition.laborCopy}" height="20" focusOut="doMachineCost();"/>
+		<mx:TextInput x="413.5" y="411" width="71" id="tonerCopy" text ="{copierDefinition.tonerCopy}" height="20" focusOut="doMachineCost();"/>
+		<mx:TextInput x="413.5" y="433" width="71" id="developerCopy"  text="{copierDefinition.developerCopy}" height="20" focusOut="doMachineCost();"/>
+		<mx:TextInput x="413.5" y="455" width="71" id="copyMarkup" text = "{copierDefinition.copyMarkup}" height="20"/>
 		<mx:Label x="10" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopyMarkup')}" id="copymarkuplabel" width="104" textAlign="right"/>
 		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.BaseRate')}" id="baseratelabel" width="88" visible="false" textAlign="right"/>
 		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" textAlign="right" enabled="false" width="88"/>
-		<mx:TextInput x="126" y="605" width="71" id="copyMarkup2" height="20" text="{copierDefinition.copyMarkup2}"/>
-		<mx:TextInput x="126" y="605" width="71" id="baseRate_edit" height="20" text="{copierDefinition.baseRate}"/>
+		<mx:TextInput x="126" y="605" width="71" id="copyMarkup2" height="20" text="{copierDefinition.copyMarkup2}" />
+		<mx:TextInput x="126" y="605" width="71" id="baseRate_edit" height="20" text="{copierDefinition.baseRate}" />
 		<mx:TextInput x="126" y="605" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flatRate}"/>
 		<mx:Label x="14" y="627" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockMarkup')}" width="104" textAlign="right"/>
 		<mx:Label x="14" y="649" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Side2Factor')}" width="104" textAlign="right"/>

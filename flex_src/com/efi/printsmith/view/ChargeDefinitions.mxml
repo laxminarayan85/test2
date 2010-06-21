@@ -97,6 +97,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import com.efi.printsmith.data.PriceListBase;
 	import com.efi.printsmith.data.ModelBase;
 	import com.efi.printsmith.data.PreferencesSystem;
+	import com.efi.printsmith.data.ProductCode;
 	
     import com.efi.printsmith.data.enums.ChargeMethod;
 	import com.efi.printsmith.data.enums.ChargeQtyType;
@@ -615,6 +616,35 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					area_group.selectedValue = "FinishArea";
 			}
 			updateQtyComboBox(charge.method);
+			if( charge.costCenter != null){
+				cost_center_combo.selectedIndex = findItem2(charge.costCenter.name, costCenters);
+				if ( cost_center_combo.selectedIndex == -1)
+					cost_center_combo.text = "";
+			}
+			else{
+				cost_center_combo.selectedIndex = -1;
+				cost_center_combo.text = "";
+			}
+			//cej
+			if( charge.location != null){
+				location_combo.selectedIndex = findItem2(charge.location.name, locations);
+				if ( location_combo.selectedIndex == -1)
+					location_combo.text = "";
+			}
+			else{
+				location_combo.selectedIndex = -1;
+				location_combo.text = "";	
+			}
+			if (charge.productCode != null){
+				product_code_combo.selectedIndex = findItem2(charge.productCode.name, productCodes)
+				if( product_code_combo.selectedIndex == -1)
+					product_code_combo.text = "";
+				
+			}else{
+				product_code_combo.selectedIndex = -1;
+				product_code_combo.text= "";
+			}
+		
 			charge_quantity_combo.selectedIndex = findItem(charge.quantityType,qtyTypes.toArray());
 			charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
 			charge_group_1.selectedValue = charge.jobQty;
@@ -670,6 +700,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.method = charge_method_combo.selectedItem as String;
 		charge.quantityType = charge_quantity_combo.selectedItem as String;
 		charge.salesCategory = charge_sales_category_combo.selectedItem as SalesCategory;
+		charge.productCode = product_code_combo.selectedItem as ProductCode;
 		charge.ignoreCuts = Ignorecuts_radio.selected;
 		charge.cutsArePrePress = cut_prepress_radio.selected;
 		

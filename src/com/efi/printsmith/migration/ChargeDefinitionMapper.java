@@ -20,12 +20,14 @@ import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.ShippingMethod;
 import com.efi.printsmith.data.Substrate;
 import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeCommand;
 import com.efi.printsmith.data.ChargeCategory;
 import com.efi.printsmith.data.SalesCategory;
+import com.efi.printsmith.data.ProductCode;
 
 public class ChargeDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeDefinitionMapper.class);
@@ -389,6 +391,18 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						/* TODO */
 					} else if ("sku".equals(currentFieldToken)) {
 						chargeDefinition.setSku(currentImportToken);
+						if (currentImportToken.equals("") == false){
+							ProductCode  code = (ProductCode) dataService.getByName("ProductCode", currentImportToken);
+							if (code != null) {
+								code.setName(currentImportToken);
+								
+							} else{
+								code = new  ProductCode();
+								code.setName(currentImportToken);
+								code = (ProductCode)dataService.addUpdate(code);
+							}
+							chargeDefinition.setProductCode(code);
+						}
 					} else if ("special".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("rstatus".equals(currentFieldToken)) {
@@ -891,6 +905,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("xNotUsed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sku".equals(currentFieldToken)) {
+				
 				chargeDefinition.setSku(currentImportToken);
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */

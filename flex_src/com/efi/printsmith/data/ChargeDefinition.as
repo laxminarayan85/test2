@@ -133,6 +133,7 @@ package com.efi.printsmith.data
 		public var setupPrice:Number = 0;
 		public var costingUnitPrice:Number = 0;
 		public var costingSetupPrice:Number = 0;
+		public var productCode:ProductCode;
 	
 	}
 }

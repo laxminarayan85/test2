@@ -523,6 +523,11 @@ public class ChargeDefinition extends ModelBase {
   public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
 
 	/**
+   * @generated
+   */
+  public static final String PRODUCTCODE = "ProductCode";
+
+	/**
 	 * @generated
 	 */
 	public ChargeDefinition() {
@@ -3172,6 +3177,28 @@ public class ChargeDefinition extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private ProductCode productCode;
+
+	/**
+   * @generated
+ 	 */
+  public ProductCode getProductCode(){
+    return productCode; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProductCode(ProductCode newVal) {
+    this.productCode = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3297,6 +3324,7 @@ public class ChargeDefinition extends ModelBase {
     if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
     if (COSTINGUNITPRICE.equals(propertyName)) return getCostingUnitPrice();
     if (COSTINGSETUPPRICE.equals(propertyName)) return getCostingSetupPrice();
+    if (PRODUCTCODE.equals(propertyName)) return getProductCode();
     return super.getProperty(propertyName);
   }
 	
@@ -3426,6 +3454,7 @@ public class ChargeDefinition extends ModelBase {
     if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
     if (COSTINGUNITPRICE.equals(propertyName)) setCostingUnitPrice((Double)newValue); else
     if (COSTINGSETUPPRICE.equals(propertyName)) setCostingSetupPrice((Double)newValue); else
+    if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3675,6 +3704,8 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (COSTINGSETUPPRICE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (PRODUCTCODE.equals(propertyName)) 
+      return new Class<?>[] {ProductCode.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3805,6 +3836,7 @@ public class ChargeDefinition extends ModelBase {
     if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (COSTINGUNITPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (COSTINGSETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRODUCTCODE.equals(propertyName)) return ChargeDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4055,6 +4087,8 @@ public class ChargeDefinition extends ModelBase {
     if (! SmartEquals(getCostingUnitPrice(), objT.getCostingUnitPrice()))
       return false;
     if (! SmartEquals(getCostingSetupPrice(), objT.getCostingSetupPrice()))
+      return false;
+    if (! SmartEquals(getProductCode(), objT.getProductCode()))
       return false;
     return true;
   }			
