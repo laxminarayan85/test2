@@ -419,7 +419,7 @@
 			priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
 			priceList = ev.result as PaperPrice;
-		}
+		}		
 //		 else if (itemType == "Matrix") {
 //			priceList = ev.result as com.efi.printsmith.data.Matrix;
 //		}
@@ -429,14 +429,26 @@
 		
 	private function handleLoadPriceList(ev:ResultEvent):void {
 		if (itemType == "PriceList" || itemType == "PriceListBase") {
-			priceList = ev.result as PriceList;
+			if (ev.result == null)
+				priceList = new PriceList();
+			else
+				priceList = ev.result as PriceList;
 		} else if (itemType == "WasteChart") {
-			priceList = ev.result as WasteChart;
+			if (ev.result == null)
+				priceList = new WasteChart();
+			else
+				priceList = ev.result as WasteChart;
 		} else if (itemType == "SpeedTable") {
-			priceList = ev.result as SpeedTable;
+			if (ev.result == null)
+				priceList = new SpeedTable();
+			else
+				priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
-			priceList = ev.result as PaperPrice;
-		}		
+			if (ev.result == null)
+				priceList = new PaperPrice();
+			else
+				priceList = ev.result as PaperPrice;
+		}
 	}
 	
 	private function doNewPriceListElement():void {
