@@ -156,6 +156,12 @@
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
 		uploadFile("StockChange");
 	}
+	
+	private function handleSelectPreferencesFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleIOError);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Preferences");
+	}
 
 	private function uploadFile(fileType:String):void {
 		var urlVariables:URLVariables = new URLVariables();
@@ -295,6 +301,10 @@
 		doImport(handleSelectTaxTablesFile);
 	}
 	
+	private function doImportPreferences():void {
+		doImport(handleSelectPreferencesFile);
+	}
+	
 	private function doImportPriceSchedules():void {
 		doImport(handleSelectPriceSchedulesFile);
 		this.import_charge.enabled = false;
@@ -378,6 +388,7 @@
 		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="274" y="100"/>
 		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="274" y="130"/>
 		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="220"/>
+		<mx:Button label="Import Preferences" id="import_preferences" enabled="true" click="doImportPreferences();"  width="256" x="274" y="220"/>
 		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
 		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="70"/>
 		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="100"/>
