@@ -253,6 +253,15 @@
 			//		calc_order_radio_group.selectedValue = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;					
 			//	}
 				calc_order_radio_group.selectedValue = job.paperCal.whichStartSize;
+				parent_size_edit.selectedIndex = findItem(job.runSize.name,dimensions);
+				if ( parent_size_edit.selectedIndex == -1)
+					parent_size_edit.text = "";
+				finish_size_edit.selectedIndex = findItem(job.finishSize.name, dimensions)
+				if (finish_size_edit.selectedIndex == -1)
+					finish_size_edit.text = "";
+				run_size_edit.selectedIndex = findItem(job.runSize.name, dimensions)
+				if (run_size_edit.selectedIndex == -1)
+					run_size_edit.text = "";
 				job.paperCal.runSize=job.runSize;
 				job.paperCal.finishSize=job.finishSize;
 				job.paperCal.parentSize=job.parentSize;
@@ -316,7 +325,7 @@
 						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
 						break;					
 				}
-				job.paperCal.runSize.name=run_size_edit.text
+				job.paperCal.runSize = run_size_edit.selectedItem as Dimension;
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
 				job.paperCal.bleedLeft=parseFloat(txtBleed.text);
@@ -327,12 +336,12 @@
 				job.paperCal.cutstoFinish=parseInt(txtCutstoFinish.text);
 				job.paperCal.cutstoRun=parseInt(txtCutstoRun.text);
 				job.paperCal.disableFSC=chkDisableFSC.selected
-				job.paperCal.finishSize.name=finish_size_edit.text
+				job.paperCal.finishSize=finish_size_edit.selectedItem as Dimension;
 				job.paperCal.folioEdge=parseFloat(txtFolioEdge.text);
 				job.paperCal.gripEdgeGap=parseFloat(txtGripEdge.text);
 				job.paperCal.gutter=parseFloat(txtGutter.text);
 				job.paperCal.gutterHorizontal=parseFloat(txtGutterHorizontal.text);
-				job.paperCal.parentSize.name=parent_size_edit.text;
+				job.paperCal.parentSize=parent_size_edit.selectedItem as Dimension;
 				job.paperCal.sheetsOut=parseInt(txtSheetsOut.text);
 				job.paperCal.trimFourSides=chkTrimFourSides.selected;
 				job.paperCal.useBleed=chkBleed.selected;
@@ -420,7 +429,7 @@
 				runBoolean = false;
 				finishBoolean = true;
 			}
-			private function doDimension():void{
+		/* 	private function doDimension():void{
 				var tempDim:Dimension;
 				tempDim = dimension_list.selectedItem as Dimension;
 				if (parentBoolean){
@@ -433,8 +442,20 @@
 					job.finishSize = tempDim;
 				}
 				
+			} */
+		private function sizeDisplay(item:Object):String{
+			var tmpItem:Dimension ;
+			var tmpString:String;
+			tmpItem = item as Dimension;
+			
+			if (tmpItem != null ) {
+				tmpString = tmpItem.width.toString() + " x " + tmpItem.height.toString()
+				return tmpString;
+			} else {
+				return "None";
 			}
-		]]>
+		}
+]]>
 
 	</mx:Script>
 	<mx:Canvas width="100%"
@@ -741,42 +762,36 @@
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DisableFSCoptions')}"
 					 selected="{job.paperCal.disableFSC}"
 					 id="chkDisableFSC"/>
-		<mx:List x="21"
-				 y="284"
-				 height="320"
-				 dataProvider="{dimensions}"
-				 labelField="name"
-				 width="192" click="doDimension();" id="dimension_list">
-		</mx:List>
 		<mx:Label x="21"
 				  y="92"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TemplateName')}" textAlign="left"/>
 		<mx:TextInput x="21"
 					  y="113" width="192" height="20"/>
-		<mx:TextInput x="21"
+		<mx:ComboBox x="21"
 					  y="160"
-					  text="{job.parentSize.name}"
-					  focusOut="refreshCalcAndImage()"
-					  id="parent_size_edit" width="192"  height="20" focusIn="doParentBoolean();" />
+					   change="refreshCalcAndImage()"
+					  id="parent_size_edit" width="192"  labelFunction="sizeDisplay" height="20" dataProvider="{dimensions}"/>
 		<mx:Label x="21"
 				  y="139"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ParentSize')}" textAlign="left"/>
 		<mx:Label x="21"
 				  y="186"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RunSize')}" textAlign="left"/>
-		<mx:TextInput x="21"
+		<mx:ComboBox x="21"
 					  y="207"
-					  text="{job.runSize.name}"
-					  focusOut="refreshCalcAndImage()"
-					  id="run_size_edit" width="192" height="20" focusIn="doRunBoolean();"/>
+					  dataProvider="{dimensions}"
+					   labelFunction="sizeDisplay"
+					  change="refreshCalcAndImage()"
+					  id="run_size_edit" width="192" height="20" />
 		<mx:Label x="21"
 				  y="233"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FinishSize')}" textAlign="left"/>
-		<mx:TextInput x="21"
+		<mx:ComboBox x="21"
 					  y="254"
-					  text="{job.finishSize.name}"
-					  focusOut="refreshCalcAndImage()"
-					  id="finish_size_edit" width="192" height="20" focusIn="doFinishBoolean();"/>
+					  dataProvider="{dimensions}"
+					  labelFunction="sizeDisplay"
+					  change="refreshCalcAndImage()"
+					  id="finish_size_edit" width="192" height="20"/>
 		<mx:Button x="32"
 				   y="21"
 				   icon="@Embed(source='../../../../assets/save.png')"

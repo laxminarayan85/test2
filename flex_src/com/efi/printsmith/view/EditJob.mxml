@@ -1558,9 +1558,9 @@
 				paperCalWindow.setStyle("borderAlpha", 0.9);
 				if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
 					job.paperCal.colorBar = estimatingPreferences.colorBar;
-				
+				paperCalWindow.setdimension(dimensionsArray)
 			 	paperCalWindow.setJob(job);
-			 	paperCalWindow.setdimension(dimensionsArray)
+			 	
 			   
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
