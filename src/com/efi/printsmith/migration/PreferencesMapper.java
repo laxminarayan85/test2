@@ -1,11 +1,10 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
+import java.text.ParseException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import nextapp.echo2.webrender.output.XmlDocument;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.NamedNodeMap;
@@ -14,8 +13,6 @@ import org.w3c.dom.NodeList;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import com.sun.xml.internal.txw2.Document;
 
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.PreferencesAccounting;
@@ -23,6 +20,10 @@ import com.efi.printsmith.data.PreferencesPOS;
 import com.efi.printsmith.data.PreferencesEstimating;
 import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.PreferencesQuantityBreaks;
+import com.efi.printsmith.data.PreferencesStocks;
+import com.efi.printsmith.data.SizeTable;
+import com.efi.printsmith.data.PreferencesPricingMethod;
 
 import com.efi.printsmith.service.DataService;
 
@@ -59,9 +60,158 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesPOSField(key, fieldName, fieldValue);
 		else if (group.equals("Paper Calculator"))
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
+		else if (group.equals("Company Info"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
+		else if (group.equals("Quantity Breaks"))
+			importPreferencesQuantityBreaksField(fieldValue);
+		else if (group.equals("Blank Stock Setup"))
+			importPreferencesStocksField(group, key, fieldName, fieldValue);
+		else if (group.equals("Standard Markup"))
+			importPreferencesStocksField(group, key, fieldName, fieldValue);
 	}
 	private void importDongleField(String fieldName, String fieldValue) {
 		
+	}
+	private void importPreferencesPricingMethodField(String key, String name, String value) {
+		DataService dataService = new DataService();
+		PreferencesPricingMethod preferencesPricingMethod = (PreferencesPricingMethod)dataService.getByPrevId("PreferencesPricingMethod", key);
+		if (preferencesPricingMethod == null) {
+			preferencesPricingMethod = new PreferencesPricingMethod();
+			preferencesPricingMethod.setPrevId(key);
+		}
+		if (name.equals("salesCat_bucket_number")) {
+			SalesCategory salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", value);
+			preferencesPricingMethod.setCategory(salesCategory);
+		}
+	}
+	private void importPreferencesStocksField(String group, String key, String name, String value) throws NumberFormatException, ParseException {
+		DataService dataService = new DataService();
+		PreferencesStocks preferencesStocks = (PreferencesStocks)dataService.getSingle("PreferencesStocks");
+		SizeTable sizeTable = null;
+		if (preferencesStocks == null)
+			preferencesStocks = new PreferencesStocks();
+		if (name.equals("sizeTable")) {
+			/*if (value.equals("defaultUS")) {
+				sizeTable = (SizeTable)dataService.getByName("SizeTable", "Sizes - United States");
+				if (sizeTable == null) {
+					sizeTable = new SizeTable();
+					sizeTable.setName("Sizes - United States");
+					
+				}
+			}*/
+		} else if (name.equals("calipersFormatString"))
+			preferencesStocks.setWeight(value);
+		else if (name.equals("pointsFormatString"))
+			preferencesStocks.setPoints(value);
+		else if (name.equals("pliesFormatString"))
+			preferencesStocks.setPlies(value);
+		else if (name.equals("micronsFormatString"))
+			preferencesStocks.setMicrons(value);
+		else if (name.equals("cost_customer_supplied"))
+			preferencesStocks.setCustomerCost(Utilities.tokenToDouble(value));
+		else if (name.equals("units_default"))
+			preferencesStocks.setCustomerQuantity(Utilities.tokenToInt(value));
+		else if (name.equals("markup_default"))
+			preferencesStocks.setCustomerMarkup(Utilities.tokenToDouble(value));
+		else if (name.equals("onlyMarkup_customer_supplied"))
+			preferencesStocks.setMarkupOnly(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("stockUnits_qty_breaks")) {
+			int keyValue = Utilities.tokenToInt(key);
+			switch (keyValue) {
+			case 1:
+				preferencesStocks.setBlankQty1(Utilities.tokenToInt(value));
+				break;
+			case 2:
+				preferencesStocks.setBlankQty2(Utilities.tokenToInt(value));
+				break;
+			case 3:
+				preferencesStocks.setBlankQty3(Utilities.tokenToInt(value));
+				break;
+			case 4:
+				preferencesStocks.setBlankQty4(Utilities.tokenToInt(value));
+				break;
+			case 5:
+				preferencesStocks.setBlankQty5(Utilities.tokenToInt(value));
+				break;
+			case 6:
+				preferencesStocks.setBlankQty6(Utilities.tokenToInt(value));
+				break;
+			}
+		}
+		else if (name.equals("stockMarkup") && group.equals("Blank Stock Setup")) {
+			int keyValue = Utilities.tokenToInt(key);
+			switch (keyValue) {
+			case 1:
+				preferencesStocks.setBlankMarkup1(Utilities.tokenToDouble(value));
+				break;
+			case 2:
+				preferencesStocks.setBlankMarkup2(Utilities.tokenToDouble(value));
+				break;
+			case 3:
+				preferencesStocks.setBlankMarkup3(Utilities.tokenToDouble(value));
+				break;
+			case 4:
+				preferencesStocks.setBlankMarkup4(Utilities.tokenToDouble(value));
+				break;
+			case 5:
+				preferencesStocks.setBlankMarkup5(Utilities.tokenToDouble(value));
+				break;
+			case 6:
+				preferencesStocks.setBlankMarkup6(Utilities.tokenToDouble(value));
+				break;
+			}
+		} else if (name.equals("stockMarkup") && group.equals("Standard Markup")) {
+			int keyValue = Utilities.tokenToInt(key);
+			switch (keyValue) {
+			case 1:
+				preferencesStocks.setStdMarkup1(Utilities.tokenToDouble(value));
+				break;
+			case 2:
+				preferencesStocks.setStdMarkup2(Utilities.tokenToDouble(value));
+				break;
+			case 3:
+				preferencesStocks.setStdMarkup3(Utilities.tokenToDouble(value));
+				break;
+			case 4:
+				preferencesStocks.setStdMarkup4(Utilities.tokenToDouble(value));
+				break;
+			case 5:
+				preferencesStocks.setStdMarkup5(Utilities.tokenToDouble(value));
+				break;
+			case 6:
+				preferencesStocks.setStdMarkup6(Utilities.tokenToDouble(value));
+				break;
+			}
+		} else if (name.equals("stockUnits")) {
+			int keyValue = Utilities.tokenToInt(key);
+			switch (keyValue) {
+			case 1:
+				preferencesStocks.setStdQty1(Utilities.tokenToInt(value));
+				break;
+			case 2:
+				preferencesStocks.setStdQty2(Utilities.tokenToInt(value));
+				break;
+			case 3:
+				preferencesStocks.setStdQty3(Utilities.tokenToInt(value));
+				break;
+			case 4:
+				preferencesStocks.setStdQty4(Utilities.tokenToInt(value));
+				break;
+			case 5:
+				preferencesStocks.setStdQty5(Utilities.tokenToInt(value));
+				break;
+			case 6:
+				preferencesStocks.setStdQty6(Utilities.tokenToInt(value));
+				break;
+			}
+		}
+	}
+	private void importPreferencesQuantityBreaksField(String value) throws Exception {
+		DataService dataService = new DataService();
+		PreferencesQuantityBreaks quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQtyBreak(true);
+		quantityBreak.setQuantity(Utilities.tokenToInt(value));
+		dataService.addUpdate(quantityBreak);
 	}
 	private void importSalesCategoryListRecord(String key, String name) throws Exception {
 		DataService dataService = new DataService();
@@ -175,7 +325,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setDefaultPressCuttOff(Utilities.tokenToDouble(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
-	private void importPreferencesSystemField(String key, String name, String value) {
+	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		if (preferencesSystem == null)
@@ -203,12 +353,9 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setCompanyFax(value);
 		else if (name.equals("email"))
 			preferencesSystem.setCompanyEmail(value);
-		else if (name.equals("creditCardAuthCode"))
-			preferencesSystem.setCCEncryptionData(value);
-		else if (name.equals("creditCardIntegration"))
-			preferencesSystem.setCreditCardApproval(value);
-		else if (name.equals("streNum"))
+		else if (name.equals("storeNum"))
 			preferencesSystem.setCompanyStoreNumber(value);
+		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
 		return null;
