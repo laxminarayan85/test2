@@ -93,7 +93,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 					pricePerCopy = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), lookupQty);
 				else
 					pricePerCopy = matrixElement.getPrice1();
-				pricePerCopy *= copierDefinition.getCopyMarkup();
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
@@ -121,7 +121,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 				else
 					discountPct = matrixElement.getPrice1();
 				pricePerCopy = copierDefinition.getBaseRate() * discountPct;
-				pricePerCopy *= copierDefinition.getCopyMarkup();
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				if (job.getDoubleSided()) {
@@ -168,7 +168,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 				else
 					markup = matrixElement.getPrice1();
 				pricePerCopy = copierDefinition.getBaseRate() * markup;
-				pricePerCopy *= copierDefinition.getCopyMarkup();
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				if (job.getDoubleSided()) {

@@ -175,7 +175,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				double wastePrice = 0.0;
 				if (!pricingRecord.getTotalPriceOverride()) {
 					if (pricingCopier.getMatrixType().equals("CopyCost")) {
-						pricePerCopy *= pricingCopier.getCopyMarkup();
+						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
@@ -200,7 +200,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						double discountPct = unitPrice;
 						
 						pricePerCopy = pricingCopier.getBaseRate() * discountPct;
-						pricePerCopy *= pricingCopier.getCopyMarkup();
+						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						if (job.getDoubleSided()) {
@@ -240,7 +240,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						double markup = unitPrice;
 						
 						pricePerCopy = pricingCopier.getBaseRate() * markup;
-						pricePerCopy *= pricingCopier.getCopyMarkup();
+						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						if (job.getDoubleSided()) {
