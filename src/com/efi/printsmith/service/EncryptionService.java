@@ -79,10 +79,14 @@ public class EncryptionService extends SnowmassHibernateService{
 		int 			serialNumber;
 	//	byte[] b = new byte[4];
 		
-		byte[] mystaticKey = new byte[]{(byte)0x3D, (byte)0x60, (byte)0xEB, (byte)0x10, (byte)0x15, (byte)0xCA, (byte)0x71, (byte)0xBE,
-				(byte)0x2B, (byte)0x73, (byte)0xAE, (byte)0xF0, (byte)0x85, (byte)0x7D, (byte)0x77, (byte)0x81,
-			    		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,(byte)0xD7,
-			    		0x2D,(byte)0x98,0x10,(byte)0xA3,0x09,0x14,(byte)0xDF,(byte)0xF4};
+	//	byte[] mystaticKey = new byte[]{(byte)0x3D, (byte)0x60, (byte)0xEB, (byte)0x10, (byte)0x15, (byte)0xCA, (byte)0x71, (byte)0xBE,
+	//			(byte)0x2B, (byte)0x73, (byte)0xAE, (byte)0xF0, (byte)0x85, (byte)0x7D, (byte)0x77, (byte)0x81,
+	//		    		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,(byte)0xD7,
+	//		    		0x2D,(byte)0x98,0x10,(byte)0xA3,0x09,0x14,(byte)0xDF,(byte)0xF4};
+		byte[] mystaticKey = new byte[]{(byte)0x73, (byte)0x28, (byte)0x6E, (byte)0x42, (byte)0x7D, (byte)0x27, (byte)0x5E, (byte)0x7E,
+				(byte)0x2D, (byte)0x37, (byte)0x33, (byte)0x4A, (byte)0x2B, (byte)0x6F, (byte)0x77, (byte)0x2F,
+			    		0x3B,0x5D,0x5B,0x4E,0x2D,0x77,0x6F,(byte)0x4F,
+			    		0x30,(byte)0x20,0x67,(byte)0x77,0x6B,0x57,(byte)0x3E,(byte)0x26};
 						
 	    //byte[] mystaticKey = new byte []{(byte)0x3D,(byte)0x60,(byte)0xEB,(byte)0x10,(byte)0x15,(byte)0xCA,(byte)0x71,(byte)0xBE};
 	    
@@ -106,23 +110,29 @@ public class EncryptionService extends SnowmassHibernateService{
 	}
 	
 	private static String Aes256BitEncryptData(SecretKeySpec spec, String value) throws Exception {
-		Cipher cipher = Cipher.getInstance("AES");
+		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
 		cipher.init(Cipher.ENCRYPT_MODE, spec);
-		byte [] rawEncryptedData = cipher.doFinal(value.getBytes());
+		
+		byte [] inputBytes = value.getBytes();
+		byte [] rawEncryptedData = cipher.doFinal(inputBytes);
 		String hexString = asHex (rawEncryptedData);
 		return hexString;
 	}
 	
 	private static String Aes256BitDecryptData(SecretKeySpec spec, String value) throws Exception {
 		byte	localBytes[];
+		String	originalString;
 		
-		Cipher cipher = Cipher.getInstance("AES");
+		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, spec);
         
         byte [] rawEncryptedData = hexToBytes(value.getBytes());
         
         localBytes = cipher.doFinal(rawEncryptedData);		//
-		return localBytes.toString();
+        
+        originalString = new String(localBytes);
+
+		return originalString;
 	}
 
 	//
