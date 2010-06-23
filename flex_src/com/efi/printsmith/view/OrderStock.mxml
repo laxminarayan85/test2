@@ -143,6 +143,9 @@
 		stockOrder.stockOrderNumber= stock_ordernumber_edit.text;
 		stockOrder.deliveryDate= delivery_date.selectedDate;
 		stockOrder.allowModifaction = allow_mod.selected;
+		if(stockDefinitions != null)
+			if (stockDefinitions.account !=null)
+				stockOrder.customerName = stockDefinitions.account.title;
 		
 		
 		stockOrderDataService.addUpdate(stockOrder);
@@ -349,6 +352,10 @@
 		}
 		
 	}
+	private function doReport():void{
+		var importWindow : StockOrderReport = StockOrderReport(PopUpManager.createPopUp(this, StockOrderReport, true));
+		PopUpManager.centerPopUp(importWindow);
+	}
 ]]>
                              
 </mx:Script>	
@@ -359,7 +366,7 @@
 		<mx:icon>@Embed(source='../../../../assets/auto_order.png')</mx:icon>
 	</mx:Button>
 	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
-	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')">
+	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')" click="doReport()">
 	</mx:Button>
 	<mx:Button x="489" y="10"  width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')"/>
 	<mx:Label x="32" y="56" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Order')}"/>

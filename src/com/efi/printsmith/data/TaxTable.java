@@ -82,6 +82,20 @@ public class TaxTable extends ModelBase {
 	public static final String NAME = "Name";
 
 	/**
+   * @generated
+   */
+  public static final String ABBR = "Abbr";
+
+	/**
+   * @generated
+   */
+  public static final String TABLECREATEDATETIME = "TableCreateDateTime";
+	/**
+   * @generated
+   */
+  public static final String TABLECREATELOCALDATETIME = "TableCreateLocalDateTime";
+
+	/**
 	 * @generated
 	 */
 	public TaxTable() {
@@ -320,6 +334,73 @@ public class TaxTable extends ModelBase {
     this.name = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String abbr;
+
+	/**
+   * @generated
+ 	 */
+  public String getAbbr(){
+    return abbr; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAbbr(String newVal) {
+    this.abbr = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date tableCreateDateTime;
+
+	/**
+   * @generated
+ 	 */
+  public Date getTableCreateDateTime(){
+    return tableCreateDateTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTableCreateDateTime(Date newVal) {
+    this.tableCreateDateTime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date tableCreateLocalDateTime;
+
+	/**
+   * @generated
+ 	 */
+  public Date getTableCreateLocalDateTime(){
+    return tableCreateLocalDateTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTableCreateLocalDateTime(Date newVal) {
+    this.tableCreateLocalDateTime = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -335,6 +416,9 @@ public class TaxTable extends ModelBase {
     if (DODETAIL.equals(propertyName)) return getDoDetail();
     if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return getDontRoundShownTaxElements();
     if (NAME.equals(propertyName)) return getName();
+    if (ABBR.equals(propertyName)) return getAbbr();
+    if (TABLECREATEDATETIME.equals(propertyName)) return getTableCreateDateTime();
+    if (TABLECREATELOCALDATETIME.equals(propertyName)) return getTableCreateLocalDateTime();
     return super.getProperty(propertyName);
   }
 	
@@ -354,6 +438,9 @@ public class TaxTable extends ModelBase {
     if (DODETAIL.equals(propertyName)) setDoDetail((Boolean)newValue); else
     if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) setDontRoundShownTaxElements((Integer)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (ABBR.equals(propertyName)) setAbbr((String)newValue); else
+    if (TABLECREATEDATETIME.equals(propertyName)) setTableCreateDateTime((Date)newValue); else
+    if (TABLECREATELOCALDATETIME.equals(propertyName)) setTableCreateLocalDateTime((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -383,6 +470,12 @@ public class TaxTable extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (ABBR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (TABLECREATEDATETIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (TABLECREATELOCALDATETIME.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -403,6 +496,9 @@ public class TaxTable extends ModelBase {
     if (DODETAIL.equals(propertyName)) return TaxTable.class;
     if (DONTROUNDSHOWNTAXELEMENTS.equals(propertyName)) return TaxTable.class;
     if (NAME.equals(propertyName)) return TaxTable.class;
+    if (ABBR.equals(propertyName)) return TaxTable.class;
+    if (TABLECREATEDATETIME.equals(propertyName)) return TaxTable.class;
+    if (TABLECREATELOCALDATETIME.equals(propertyName)) return TaxTable.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -433,6 +529,12 @@ public class TaxTable extends ModelBase {
     if (! SmartEquals(getDontRoundShownTaxElements(), objT.getDontRoundShownTaxElements()))
       return false;
     if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getAbbr(), objT.getAbbr()))
+      return false;
+    if (! SmartEquals(getTableCreateDateTime(), objT.getTableCreateDateTime()))
+      return false;
+    if (! SmartEquals(getTableCreateLocalDateTime(), objT.getTableCreateLocalDateTime()))
       return false;
     return true;
   }			

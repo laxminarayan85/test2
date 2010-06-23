@@ -130,6 +130,23 @@ public class StockOrder extends ModelBase {
 	public static final String PONUMBER = "PoNumber";
 
 	/**
+   * @generated
+   */
+  public static final String CUSTOMERNAME = "CustomerName";
+	/**
+   * @generated
+   */
+  public static final String RECEIVEDQUANTITY = "ReceivedQuantity";
+	/**
+   * @generated
+   */
+  public static final String PLACED = "Placed";
+	/**
+   * @generated
+   */
+  public static final String FILLED = "Filled";
+
+	/**
 	 * @generated
 	 */
 	public StockOrder() {
@@ -320,24 +337,24 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Boolean coated;
+	private String coated;
 	
 	/**
 	 * @generated
  	 */
-	public Boolean getCoated(){
+	public String getCoated(){
     return coated; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCoated(Boolean newVal) {
+   * @generated
+   */	
+  public void setCoated(String newVal) {
     this.coated = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -623,6 +640,97 @@ public class StockOrder extends ModelBase {
     this.poNumber = newVal;
   }
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String customerName;
+
+	/**
+   * @generated
+ 	 */
+  public String getCustomerName(){
+    return customerName; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCustomerName(String newVal) {
+    this.customerName = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer receivedQuantity;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getReceivedQuantity(){
+    return receivedQuantity; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setReceivedQuantity(Integer newVal) {
+    this.receivedQuantity = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean placed;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPlaced(){
+    return placed; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPlaced(Boolean newVal) {
+    this.placed = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean filled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getFilled(){
+    return filled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFilled(Boolean newVal) {
+    this.filled = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -650,6 +758,10 @@ public class StockOrder extends ModelBase {
     if (ENTERDATE.equals(propertyName)) return getEnterDate();
     if (ALLOWMODIFACTION.equals(propertyName)) return getAllowModifaction();
     if (PONUMBER.equals(propertyName)) return getPoNumber();
+    if (CUSTOMERNAME.equals(propertyName)) return getCustomerName();
+    if (RECEIVEDQUANTITY.equals(propertyName)) return getReceivedQuantity();
+    if (PLACED.equals(propertyName)) return getPlaced();
+    if (FILLED.equals(propertyName)) return getFilled();
     return super.getProperty(propertyName);
   }
 	
@@ -667,7 +779,7 @@ public class StockOrder extends ModelBase {
     if (ORDERNUMBER.equals(propertyName)) setOrderNumber((String)newValue); else
     if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
     if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
-    if (COATED.equals(propertyName)) setCoated((Boolean)newValue); else
+    if (COATED.equals(propertyName)) setCoated((String)newValue); else
     if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
     if (SHEETSIZE.equals(propertyName)) setSheetSize((String)newValue); else
     if (COST.equals(propertyName)) setCost((Double)newValue); else
@@ -681,6 +793,10 @@ public class StockOrder extends ModelBase {
     if (ENTERDATE.equals(propertyName)) setEnterDate((Date)newValue); else
     if (ALLOWMODIFACTION.equals(propertyName)) setAllowModifaction((Boolean)newValue); else
     if (PONUMBER.equals(propertyName)) setPoNumber((String)newValue); else
+    if (CUSTOMERNAME.equals(propertyName)) setCustomerName((String)newValue); else
+    if (RECEIVEDQUANTITY.equals(propertyName)) setReceivedQuantity((Integer)newValue); else
+    if (PLACED.equals(propertyName)) setPlaced((Boolean)newValue); else
+    if (FILLED.equals(propertyName)) setFilled((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -707,7 +823,7 @@ public class StockOrder extends ModelBase {
     if (FINISH.equals(propertyName)) 
       return new Class<?>[] {StockFinish.class};		
     if (COATED.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
+      return new Class<?>[] {String.class};		
     if (WEIGHT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (SHEETSIZE.equals(propertyName)) 
@@ -734,6 +850,14 @@ public class StockOrder extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PONUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (CUSTOMERNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (RECEIVEDQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PLACED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FILLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -766,6 +890,10 @@ public class StockOrder extends ModelBase {
     if (ENTERDATE.equals(propertyName)) return StockOrder.class;
     if (ALLOWMODIFACTION.equals(propertyName)) return StockOrder.class;
     if (PONUMBER.equals(propertyName)) return StockOrder.class;
+    if (CUSTOMERNAME.equals(propertyName)) return StockOrder.class;
+    if (RECEIVEDQUANTITY.equals(propertyName)) return StockOrder.class;
+    if (PLACED.equals(propertyName)) return StockOrder.class;
+    if (FILLED.equals(propertyName)) return StockOrder.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -820,6 +948,14 @@ public class StockOrder extends ModelBase {
     if (! SmartEquals(getAllowModifaction(), objT.getAllowModifaction()))
       return false;
     if (! SmartEquals(getPoNumber(), objT.getPoNumber()))
+      return false;
+    if (! SmartEquals(getCustomerName(), objT.getCustomerName()))
+      return false;
+    if (! SmartEquals(getReceivedQuantity(), objT.getReceivedQuantity()))
+      return false;
+    if (! SmartEquals(getPlaced(), objT.getPlaced()))
+      return false;
+    if (! SmartEquals(getFilled(), objT.getFilled()))
       return false;
     return true;
   }			

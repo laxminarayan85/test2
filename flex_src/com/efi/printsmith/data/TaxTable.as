@@ -23,6 +23,9 @@ package com.efi.printsmith.data
 		public var doDetail:Boolean = false;
 		public var dontRoundShownTaxElements:int = 0;
 		public var name:String = "";
+		public var abbr:String = "";
+		public var tableCreateDateTime:Date = new Date();
+		public var tableCreateLocalDateTime:Date = new Date();
 	
 	}
 }

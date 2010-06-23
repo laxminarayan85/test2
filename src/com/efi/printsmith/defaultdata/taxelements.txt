@@ -1,0 +1,5 @@
+Single Item Tax Element
+City
+State
+Tax for new Stadium
+Environmental Fee

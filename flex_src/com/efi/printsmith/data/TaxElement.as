@@ -16,6 +16,8 @@ package com.efi.printsmith.data
 		public var rate:Number = 0;
 		public var showTax:Boolean = false;
 		public var userForSeparateShippingTax:Boolean = false;
+		public var tax:TaxTablesElements;
+		public var sequenceid:int = 0;
 	
 	}
 }

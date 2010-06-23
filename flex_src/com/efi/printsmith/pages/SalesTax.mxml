@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="756" height="426"
+	 close="PopUpManager.removePopUp(this);" showCloseButton="true"
+	 xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" name="Sales Tax">
+	
+	
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	
+<mx:Script>                                   
+<![CDATA[
+	import mx.controls.DateField;                               
+	import mx.managers.PopUpManager;                                         
+	import mx.containers.TitleWindow;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.*; 
+	import mx.controls.Alert;  
+	import mx.utils.StringUtil;                                       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
+    [Bindable]                                
+    private var taxTables:ArrayCollection = new ArrayCollection();   
+    [Bindable]                                
+	private var taxTableElements:ArrayCollection = new ArrayCollection();   
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	private function handleLoadResult(ev:ResultEvent):void{
+		
+	}
+
+
+]]>
+                             
+</mx:Script>		
+	<mx:Button x="10" y="10" width="38" height="38"  id="save_button" icon="@Embed(source='../../../../assets/save.png')"/>
+	<mx:Button x="97" y="10" width="38" height="38" id="new_button" icon="@Embed(source='../../../../assets/new.png')"/>
+	<mx:Button x="195" y="10" width="38" height="38"  id="revert_button" icon="@Embed(source='../../../../assets/revert.png')"/>
+	<mx:Label x="10" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="49"/>
+	<mx:Label x="100" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="35"/>
+	<mx:Label x="198" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="35"/>
+</mx:TitleWindow>

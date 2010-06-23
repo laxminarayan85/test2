@@ -5,6 +5,7 @@ import com.efi.printsmith.data.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -51,6 +52,7 @@ public class DefaultDataFactory {
 			ProcessWebTranslation();
 			ProcessTableEditor();
 			ProcessInkColor();
+			ProcessTablesElements();
 			
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
@@ -67,6 +69,13 @@ public class DefaultDataFactory {
 	private void ProcessInkColor() {
 		try {
 			LoadInkData(new String[] { currentPath });
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+	}
+	private void ProcessTablesElements() {
+		try {
+			LoadTaxElements(new String[] { currentPath });
 		} catch (IOException e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
@@ -1578,6 +1587,72 @@ public class DefaultDataFactory {
 				break;
 			}
 		}
+	}
+	private void LoadTaxElements(String[] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("taxelements") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				doTaxElements(f);
+				break;
+			}
+		}
+	}
+	private int doTaxElements(File file)throws java.io.IOException{
+		List<?> taxElementList = (List<?>) dataservice
+		.getAll("TaxTablesElements");
+
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+		java.io.BufferedReader br = new java.io.BufferedReader(ip);
+		String line = null;
+		String prevID = null;
+		int rv = -1;
+		int count = 0;
+		while ((line = br.readLine()) != null) {
+			count++;
+			if (line.length() > 0) {
+				if (taxElementList.size() > 0) {
+					boolean found = false;
+					for (int i = 0; i < taxElementList.size(); i++) {
+						if (((TaxTablesElements) taxElementList.get(i))
+								.getName().trim().equals(line.trim()) == true) {
+							found = true;
+							break;
+						}
+					}
+					if (found != true) {
+						TaxTablesElements taxElement = new TaxTablesElements();
+						taxElement.setName(line.trim());
+						prevID= Integer.toString(count);
+						taxElement.setPrevId(prevID);
+						try {
+							dataservice.addUpdate(taxElement);
+						} catch (Exception e) {
+							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+							break;
+						}
+					}
+				} else {
+					TaxTablesElements taxElement = new TaxTablesElements();
+					taxElement.setName(line.trim());
+					prevID= Integer.toString(count);
+					taxElement.setPrevId(prevID);
+					try {
+						dataservice.addUpdate(taxElement);
+					} catch (Exception e) {
+						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+						break;
+					}
+				}
+			}
+}
+return rv;
 	}
 	private int doInkColor(File file) throws java.io.IOException {
 

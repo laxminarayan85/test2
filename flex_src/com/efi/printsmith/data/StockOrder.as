@@ -21,7 +21,7 @@ package com.efi.printsmith.data
 		public var orderNumber:String = "";
 		public var color:StockColors;
 		public var finish:StockFinish;
-		public var coated:Boolean = false;
+		public var coated:String = "";
 		public var weight:Number = 0;
 		public var sheetSize:String = "";
 		public var cost:Number = 0;
@@ -35,6 +35,10 @@ package com.efi.printsmith.data
 		public var enterDate:Date = new Date();
 		public var allowModifaction:Boolean = false;
 		public var poNumber:String = "";
+		public var customerName:String = "";
+		public var receivedQuantity:int = 0;
+		public var placed:Boolean = false;
+		public var filled:Boolean = false;
 	
 	}
 }
