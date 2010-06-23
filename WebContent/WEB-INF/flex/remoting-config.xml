@@ -184,4 +184,11 @@
 			</source>
 		</properties>
 	</destination>
+	<destination id="taxService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.TaxService
+			</source>
+		</properties>
+	</destination>
 </service>
