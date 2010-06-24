@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -137,156 +138,212 @@ public class PricingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double unitPrice;
+	private BigDecimal unitPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getUnitPrice(){
+	public BigDecimal getUnitPrice(){
     return unitPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUnitPrice(Double newVal) {
+   * @generated
+   */	
+  public void setUnitPrice(BigDecimal newVal) {
     this.unitPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitPrice(double newVal) {
+    this.unitPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double totalPrice;
+	private BigDecimal totalPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalPrice(){
+	public BigDecimal getTotalPrice(){
     return totalPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalPrice(Double newVal) {
+   * @generated
+   */	
+  public void setTotalPrice(BigDecimal newVal) {
     this.totalPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalPrice(double newVal) {
+    this.totalPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double otherChargePrice;
+	private BigDecimal otherChargePrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getOtherChargePrice(){
+	public BigDecimal getOtherChargePrice(){
     return otherChargePrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOtherChargePrice(Double newVal) {
+   * @generated
+   */	
+  public void setOtherChargePrice(BigDecimal newVal) {
     this.otherChargePrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setOtherChargePrice(double newVal) {
+    this.otherChargePrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double prepPrice;
+	private BigDecimal prepPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPrepPrice(){
+	public BigDecimal getPrepPrice(){
     return prepPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPrepPrice(Double newVal) {
+   * @generated
+   */	
+  public void setPrepPrice(BigDecimal newVal) {
     this.prepPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setPrepPrice(double newVal) {
+    this.prepPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double oversTotalPrice;
+	private BigDecimal oversTotalPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getOversTotalPrice(){
+	public BigDecimal getOversTotalPrice(){
     return oversTotalPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOversTotalPrice(Double newVal) {
+   * @generated
+   */	
+  public void setOversTotalPrice(BigDecimal newVal) {
     this.oversTotalPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setOversTotalPrice(double newVal) {
+    this.oversTotalPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double bindPrice;
+	private BigDecimal bindPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBindPrice(){
+	public BigDecimal getBindPrice(){
     return bindPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBindPrice(Double newVal) {
+   * @generated
+   */	
+  public void setBindPrice(BigDecimal newVal) {
     this.bindPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setBindPrice(double newVal) {
+    this.bindPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double oversUnitPrice;
+	private BigDecimal oversUnitPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getOversUnitPrice(){
+	public BigDecimal getOversUnitPrice(){
     return oversUnitPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOversUnitPrice(Double newVal) {
+   * @generated
+   */	
+  public void setOversUnitPrice(BigDecimal newVal) {
     this.oversUnitPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setOversUnitPrice(double newVal) {
+    this.oversUnitPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -335,24 +392,32 @@ public class PricingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double laborTotalPrice;
+	private BigDecimal laborTotalPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborTotalPrice(){
+	public BigDecimal getLaborTotalPrice(){
     return laborTotalPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborTotalPrice(Double newVal) {
+   * @generated
+   */	
+  public void setLaborTotalPrice(BigDecimal newVal) {
     this.laborTotalPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborTotalPrice(double newVal) {
+    this.laborTotalPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -379,24 +444,32 @@ public class PricingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double stockTotalPrice;
+	private BigDecimal stockTotalPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getStockTotalPrice(){
+	public BigDecimal getStockTotalPrice(){
     return stockTotalPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setStockTotalPrice(Double newVal) {
+   * @generated
+   */	
+  public void setStockTotalPrice(BigDecimal newVal) {
     this.stockTotalPrice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setStockTotalPrice(double newVal) {
+    this.stockTotalPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -469,19 +542,19 @@ public class PricingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (PREPPRICE.equals(propertyName)) setPrepPrice((Double)newValue); else
-    if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((Double)newValue); else
-    if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((Double)newValue); else
+    if (PREPPRICE.equals(propertyName)) setPrepPrice((BigDecimal)newValue); else
+    if (OVERSTOTALPRICE.equals(propertyName)) setOversTotalPrice((BigDecimal)newValue); else
+    if (OTHERCHARGEPRICE.equals(propertyName)) setOtherChargePrice((BigDecimal)newValue); else
     if (PRICELOGENTRY.equals(propertyName)) setPriceLogEntry((PriceLogEntry)newValue); else
-    if (TOTALPRICE.equals(propertyName)) setTotalPrice((Double)newValue); else
-    if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
-    if (BINDPRICE.equals(propertyName)) setBindPrice((Double)newValue); else
-    if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((Double)newValue); else
+    if (TOTALPRICE.equals(propertyName)) setTotalPrice((BigDecimal)newValue); else
+    if (UNITPRICE.equals(propertyName)) setUnitPrice((BigDecimal)newValue); else
+    if (BINDPRICE.equals(propertyName)) setBindPrice((BigDecimal)newValue); else
+    if (OVERSUNITPRICE.equals(propertyName)) setOversUnitPrice((BigDecimal)newValue); else
     if (UNITPRICEOVERRIDE.equals(propertyName)) setUnitPriceOverride((Boolean)newValue); else
     if (TOTALPRICEOVERRIDE.equals(propertyName)) setTotalPriceOverride((Boolean)newValue); else
-    if (LABORTOTALPRICE.equals(propertyName)) setLaborTotalPrice((Double)newValue); else
+    if (LABORTOTALPRICE.equals(propertyName)) setLaborTotalPrice((BigDecimal)newValue); else
     if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) setLaborTotalPriceOverride((Boolean)newValue); else
-    if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((Double)newValue); else
+    if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((BigDecimal)newValue); else
     if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) setStockTotalPriceOverride((Boolean)newValue); else
     if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
     super.setProperty(propertyName, newValue);
@@ -494,31 +567,31 @@ public class PricingRecord extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (PREPPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (OVERSTOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (OTHERCHARGEPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (PRICELOGENTRY.equals(propertyName)) 
       return new Class<?>[] {PriceLogEntry.class};		
     if (TOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (UNITPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BINDPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (OVERSUNITPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (UNITPRICEOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (TOTALPRICEOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (LABORTOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORTOTALPRICEOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (STOCKTOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (STOCKMARKUP.equals(propertyName)) 

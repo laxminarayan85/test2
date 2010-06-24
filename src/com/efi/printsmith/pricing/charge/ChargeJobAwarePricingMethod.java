@@ -110,14 +110,14 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 					charge.setRate(prices.unitPrice);
 				}
 				
-				price = prices.setupPrice + (charge.getQuantity()*charge.getRate());
+				price = prices.setupPrice + (charge.getQuantity()*charge.getRate().doubleValue());
 			} catch (Exception e) {
 				log.error(e);
 			}
 		} else {
 			
 			if (chargeDefinition.getUseSetup()) {
-				setupPrice = chargeDefinition.getSetupPrice();
+				setupPrice = chargeDefinition.getSetupPrice().doubleValue();
 				
 				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
 					// TODO account for booklets here
@@ -136,7 +136,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 				lookupQty = materialQty;
 				charge.setMaterialQty(materialQty);
-				materialPrice = materialQty * chargeDefinition.getMaterial();
+				materialPrice = materialQty * chargeDefinition.getMaterial().doubleValue();
 			}
 			
 			if (chargeDefinition.getUseRate()) {
@@ -152,7 +152,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 				lookupQty = rateQty;
 				charge.setQuantity(rateQty);
-				ratePrice = rateQty * charge.getRate();
+				ratePrice = rateQty * charge.getRate().doubleValue();
 //				TODO: additional booklet stuff here
 //				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets) ||
 //						chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {

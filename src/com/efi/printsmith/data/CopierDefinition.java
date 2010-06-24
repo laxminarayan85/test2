@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -538,68 +539,86 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double monthlyLabor;
+	private BigDecimal monthlyLabor;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMonthlyLabor(){
+	public BigDecimal getMonthlyLabor(){
     return monthlyLabor; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMonthlyLabor(Double newVal) {
+   * @generated
+   */	
+  public void setMonthlyLabor(BigDecimal newVal) {
     this.monthlyLabor = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMonthlyLabor(double newVal) {
+    this.monthlyLabor = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double clickCost;
+	private BigDecimal clickCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getClickCost(){
+	public BigDecimal getClickCost(){
     return clickCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setClickCost(Double newVal) {
+   * @generated
+   */	
+  public void setClickCost(BigDecimal newVal) {
     this.clickCost = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setClickCost(double newVal) {
+    this.clickCost = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double laborCopy;
+	private BigDecimal laborCopy;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborCopy(){
+	public BigDecimal getLaborCopy(){
     return laborCopy; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborCopy(Double newVal) {
+   * @generated
+   */	
+  public void setLaborCopy(BigDecimal newVal) {
     this.laborCopy = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setLaborCopy(double newVal) {
+    this.laborCopy = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -692,24 +711,30 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double monthlyPayment;
+	private BigDecimal monthlyPayment;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMonthlyPayment(){
+	public BigDecimal getMonthlyPayment(){
     return monthlyPayment; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMonthlyPayment(Double newVal) {
+   * @generated
+   */	
+  public void setMonthlyPayment(BigDecimal newVal) {
     this.monthlyPayment = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMonthlyPayment(double newVal) {
+    this.monthlyPayment = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -736,68 +761,86 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double hourCostRate;
+	private BigDecimal hourCostRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getHourCostRate(){
+	public BigDecimal getHourCostRate(){
     return hourCostRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setHourCostRate(Double newVal) {
+   * @generated
+   */	
+  public void setHourCostRate(BigDecimal newVal) {
     this.hourCostRate = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setHourCostRate(double newVal) {
+    this.hourCostRate = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double tonerCopy;
+	private BigDecimal tonerCopy;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTonerCopy(){
+	public BigDecimal getTonerCopy(){
     return tonerCopy; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTonerCopy(Double newVal) {
+   * @generated
+   */	
+  public void setTonerCopy(BigDecimal newVal) {
     this.tonerCopy = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setTonerCopy(double newVal) {
+    this.tonerCopy = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double developerCopy;
+	private BigDecimal developerCopy;
 	
 	/**
 	 * @generated
  	 */
-	public Double getDeveloperCopy(){
+	public BigDecimal getDeveloperCopy(){
     return developerCopy; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDeveloperCopy(Double newVal) {
+   * @generated
+   */	
+  public void setDeveloperCopy(BigDecimal newVal) {
     this.developerCopy = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setDeveloperCopy(double newVal) {
+    this.developerCopy = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -846,46 +889,58 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double monthlyMaintenance;
+	private BigDecimal monthlyMaintenance;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMonthlyMaintenance(){
+	public BigDecimal getMonthlyMaintenance(){
     return monthlyMaintenance; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMonthlyMaintenance(Double newVal) {
+   * @generated
+   */	
+  public void setMonthlyMaintenance(BigDecimal newVal) {
     this.monthlyMaintenance = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMonthlyMaintenance(double newVal) {
+    this.monthlyMaintenance = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double machineCostPerCopy;
+	private BigDecimal machineCostPerCopy;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMachineCostPerCopy(){
+	public BigDecimal getMachineCostPerCopy(){
     return machineCostPerCopy; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMachineCostPerCopy(Double newVal) {
+   * @generated
+   */	
+  public void setMachineCostPerCopy(BigDecimal newVal) {
     this.machineCostPerCopy = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMachineCostPerCopy(double newVal) {
+    this.machineCostPerCopy = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -956,24 +1011,30 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double monthlyBurdenRate;
+	private BigDecimal monthlyBurdenRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMonthlyBurdenRate(){
+	public BigDecimal getMonthlyBurdenRate(){
     return monthlyBurdenRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMonthlyBurdenRate(Double newVal) {
+   * @generated
+   */	
+  public void setMonthlyBurdenRate(BigDecimal newVal) {
     this.monthlyBurdenRate = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMonthlyBurdenRate(double newVal) {
+    this.monthlyBurdenRate = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1055,24 +1116,30 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double flateRate;
+	private BigDecimal flateRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getFlateRate(){
+	public BigDecimal getFlateRate(){
     return flateRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFlateRate(Double newVal) {
+   * @generated
+   */	
+  public void setFlateRate(BigDecimal newVal) {
     this.flateRate = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setFlateRate(double newVal) {
+    this.flateRate = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1099,24 +1166,30 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double flatRate;
+	private BigDecimal flatRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getFlatRate(){
+	public BigDecimal getFlatRate(){
     return flatRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFlatRate(Double newVal) {
+   * @generated
+   */	
+  public void setFlatRate(BigDecimal newVal) {
     this.flatRate = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setFlatRate(double newVal) {
+    this.flatRate = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1379,20 +1452,27 @@ public class CopierDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Double baseRate;
+  private BigDecimal baseRate;
 
 	/**
    * @generated
  	 */
-  public Double getBaseRate(){
+  public BigDecimal getBaseRate(){
     return baseRate; 
   }
 
 	/**
    * @generated
    */	
-  public void setBaseRate(Double newVal) {
+  public void setBaseRate(BigDecimal newVal) {
     this.baseRate = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setBaseRate(double newVal) {
+    this.baseRate = BigDecimal.valueOf(newVal);
   }
 
 	/**
@@ -1473,32 +1553,32 @@ public class CopierDefinition extends ModelBase {
     if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
     if (MAXSIZE.equals(propertyName)) setMaxSize((String)newValue); else
     if (MINSIZE.equals(propertyName)) setMinSize((String)newValue); else
-    if (MONTHLYLABOR.equals(propertyName)) setMonthlyLabor((Double)newValue); else
-    if (CLICKCOST.equals(propertyName)) setClickCost((Double)newValue); else
-    if (LABORCOPY.equals(propertyName)) setLaborCopy((Double)newValue); else
+    if (MONTHLYLABOR.equals(propertyName)) setMonthlyLabor((BigDecimal)newValue); else
+    if (CLICKCOST.equals(propertyName)) setClickCost((BigDecimal)newValue); else
+    if (LABORCOPY.equals(propertyName)) setLaborCopy((BigDecimal)newValue); else
     if (LARGEFORMAT.equals(propertyName)) setLargeFormat((Boolean)newValue); else
     if (MAXWIDTH.equals(propertyName)) setMaxWidth((String)newValue); else
     if (MINWIDTH.equals(propertyName)) setMinWidth((String)newValue); else
     if (DAYSOPEN.equals(propertyName)) setDaysOpen((Integer)newValue); else
-    if (MONTHLYPAYMENT.equals(propertyName)) setMonthlyPayment((Double)newValue); else
+    if (MONTHLYPAYMENT.equals(propertyName)) setMonthlyPayment((BigDecimal)newValue); else
     if (PERCENTUSAGE.equals(propertyName)) setPercentUsage((Double)newValue); else
-    if (HOURCOSTRATE.equals(propertyName)) setHourCostRate((Double)newValue); else
-    if (TONERCOPY.equals(propertyName)) setTonerCopy((Double)newValue); else
-    if (DEVELOPERCOPY.equals(propertyName)) setDeveloperCopy((Double)newValue); else
+    if (HOURCOSTRATE.equals(propertyName)) setHourCostRate((BigDecimal)newValue); else
+    if (TONERCOPY.equals(propertyName)) setTonerCopy((BigDecimal)newValue); else
+    if (DEVELOPERCOPY.equals(propertyName)) setDeveloperCopy((BigDecimal)newValue); else
     if (COPYMARKUP.equals(propertyName)) setCopyMarkup((Double)newValue); else
     if (HOURSOPEN.equals(propertyName)) setHoursOpen((Integer)newValue); else
-    if (MONTHLYMAINTENANCE.equals(propertyName)) setMonthlyMaintenance((Double)newValue); else
-    if (MACHINECOSTPERCOPY.equals(propertyName)) setMachineCostPerCopy((Double)newValue); else
+    if (MONTHLYMAINTENANCE.equals(propertyName)) setMonthlyMaintenance((BigDecimal)newValue); else
+    if (MACHINECOSTPERCOPY.equals(propertyName)) setMachineCostPerCopy((BigDecimal)newValue); else
     if (METHOD.equals(propertyName)) setMethod((String)newValue); else
     if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
     if (COPYID.equals(propertyName)) setCopyID((Integer)newValue); else
-    if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((Double)newValue); else
+    if (MONTHLYBURDENRATE.equals(propertyName)) setMonthlyBurdenRate((BigDecimal)newValue); else
     if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
     if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
     if (COPIERID.equals(propertyName)) setCopierId((String)newValue); else
-    if (FLATERATE.equals(propertyName)) setFlateRate((Double)newValue); else
+    if (FLATERATE.equals(propertyName)) setFlateRate((BigDecimal)newValue); else
     if (COPYMARKUP2.equals(propertyName)) setCopyMarkup2((Double)newValue); else
-    if (FLATRATE.equals(propertyName)) setFlatRate((Double)newValue); else
+    if (FLATRATE.equals(propertyName)) setFlatRate((BigDecimal)newValue); else
     if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
     if (STOCKPRICELIST.equals(propertyName)) setStockPriceList((PriceList)newValue); else
     if (COPIERPRICELIST.equals(propertyName)) setCopierPriceList((PriceList)newValue); else
@@ -1511,7 +1591,7 @@ public class CopierDefinition extends ModelBase {
     if (SQUAREAREATYPE.equals(propertyName)) setSquareAreaType((String)newValue); else
     if (INTERPOLATEMATRIX.equals(propertyName)) setInterpolateMatrix((Boolean)newValue); else
     if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
-    if (BASERATE.equals(propertyName)) setBaseRate((Double)newValue); else
+    if (BASERATE.equals(propertyName)) setBaseRate((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1546,11 +1626,11 @@ public class CopierDefinition extends ModelBase {
     if (MINSIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (MONTHLYLABOR.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (CLICKCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORCOPY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LARGEFORMAT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (MAXWIDTH.equals(propertyName)) 
@@ -1560,23 +1640,23 @@ public class CopierDefinition extends ModelBase {
     if (DAYSOPEN.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (MONTHLYPAYMENT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (PERCENTUSAGE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (HOURCOSTRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TONERCOPY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DEVELOPERCOPY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COPYMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (HOURSOPEN.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (MONTHLYMAINTENANCE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MACHINECOSTPERCOPY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (METHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (SALESCAT.equals(propertyName)) 
@@ -1584,7 +1664,7 @@ public class CopierDefinition extends ModelBase {
     if (COPYID.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (MONTHLYBURDENRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COPYMINUTES.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (CHARGES.equals(propertyName)) 
@@ -1592,11 +1672,11 @@ public class CopierDefinition extends ModelBase {
     if (COPIERID.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (FLATERATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COPYMARKUP2.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (FLATRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (WASTECHART.equals(propertyName)) 
       return new Class<?>[] {WasteChart.class};		
     if (STOCKPRICELIST.equals(propertyName)) 
@@ -1622,7 +1702,7 @@ public class CopierDefinition extends ModelBase {
     if (STOCKMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (BASERATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	

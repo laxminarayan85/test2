@@ -771,7 +771,7 @@
 			private function doNew():void
 			{
 				job=new Job();
-				job.parentInvoice = invoice as InvoiceBase;
+				job.parentInvoice = null;//invoice as InvoiceBase;
 				setJob(job);
 			}
 			
@@ -831,7 +831,7 @@
 			public function setInvoice(invoice:Invoice):void
 			{
 				this.invoice=invoice;
-				this.job.parentInvoice = invoice as InvoiceBase;
+				this.job.parentInvoice;// = invoice as InvoiceBase;
 			}
 
 			private function doGet():void

@@ -265,7 +265,7 @@ public class DataService extends HibernateService {
 				Invoice resultInvoice = new Invoice(invoice.getId(), invoice
 						.getInvoiceNumber(), invoice.getAccount(), invoice
 						.getContact(), invoice.getName(), invoice
-						.getGrandTotal(), invoice.getOrderedDate(), invoice
+						.getGrandTotal().doubleValue(), invoice.getOrderedDate(), invoice
 						.getWantedDate(), invoice.getProofDate());
 				invoiceList.add(resultInvoice);
 			}

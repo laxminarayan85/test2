@@ -30,7 +30,7 @@ public class ChargeCostUtilities {
 		if (methodStr.equals(ChargeCostMethod.NoCost)) {
 			totalCost = 0.0;
 		} else if (methodStr.equals(ChargeCostMethod.HundredPercent)) {
-			totalCost = charge.getPrice();
+			totalCost = charge.getPrice().doubleValue();
 		} else if (methodStr.equals(ChargeCostMethod.UnitCost)) {
 			if (chargeDefinition.getMethod().equals(ChargeMethod.Ink)) {
 				updateInkChargeCost(charge, chargeDefinition);
@@ -64,7 +64,7 @@ public class ChargeCostUtilities {
 		}
 				
 		chargeCostingRecord.setActualMaterials(chargeDefinition.getChargeCost().getSetupCost());
-		chargeCostingRecord.setActualMaterials(chargeCostingRecord.getActualMaterials() + (chargeCostingRecord.getActualUnitCount()*chargeDefinition.getChargeCost().getUnitMaterials()));
+		chargeCostingRecord.setActualMaterials(chargeCostingRecord.getActualMaterials().doubleValue() + (chargeCostingRecord.getActualUnitCount().doubleValue()*chargeDefinition.getChargeCost().getUnitMaterials().doubleValue()));
 	
 		double lookupValue = 0.0;
 		if (chargeDefinition.getChargeCost().getSpeedTable() != null) {
@@ -78,8 +78,8 @@ public class ChargeCostUtilities {
 		if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Time)) {
 			chargeCostingRecord.setRunTime(chargeCostingRecord.getActualUnitCount()/lookupValue);
 			chargeCostingRecord.setSetupTime(chargeDefinition.getChargeCost().getSetupMinutes()/60);
-			chargeCostingRecord.setLaborCost(chargeCostingRecord.getSetupTime() * chargeDefinition.getChargeCost().getLaborRate() +
-											 chargeCostingRecord.getRunTime() * chargeDefinition.getChargeCost().getLaborRate());
+			chargeCostingRecord.setLaborCost(chargeCostingRecord.getSetupTime() * chargeDefinition.getChargeCost().getLaborRate().doubleValue() +
+											 chargeCostingRecord.getRunTime() * chargeDefinition.getChargeCost().getLaborRate().doubleValue());
 		} else {
 			chargeCostingRecord.setRunTime(chargeCostingRecord.getActualUnitCount()/lookupValue);
 			if (chargeDefinition.getUseMinimumTime()) {
@@ -87,9 +87,9 @@ public class ChargeCostUtilities {
 					chargeCostingRecord.setRunTime((chargeDefinition.getMinimumTime() - (chargeCostingRecord.getSetupTime()*60))/60);
 				}
 			}
-			chargeCostingRecord.setLaborCost((chargeCostingRecord.getSetupTime() +chargeCostingRecord.getRunTime()) * chargeDefinition.getChargeCost().getLaborRate());
+			chargeCostingRecord.setLaborCost((chargeCostingRecord.getSetupTime() +chargeCostingRecord.getRunTime()) * chargeDefinition.getChargeCost().getLaborRate().doubleValue());
 		}
-		chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials() + chargeCostingRecord.getLaborCost());
+		chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials().doubleValue() + chargeCostingRecord.getLaborCost().doubleValue());
 	
 	}
 	
@@ -119,7 +119,7 @@ public class ChargeCostUtilities {
 		chargeCostingRecord.setActualMaterials(chargeDefinition.getChargeCost().getSetupCost());
 		chargeCostingRecord.setLaborUnitCost(chargeDefinition.getChargeCost().getLaborRate());
 		chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost());
-		chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials() + chargeCostingRecord.getLaborCost());
+		chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials().doubleValue() + chargeCostingRecord.getLaborCost().doubleValue());
 	}
 	
 	static private void updateGenericUnitCostCharge(Charge charge, ChargeDefinition chargeDefinition) {
@@ -137,15 +137,15 @@ public class ChargeCostUtilities {
 			chargeCostingRecord.setLaborUnitCost(PriceListUtilities.lookupPrice(rateTable, chargeCostingRecord.getActualUnitCount().longValue()));			
 			
 			if (!rateTable.getIsDollar()) {
-				chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost() * chargeCostingRecord.getActualUnitCount());
+				chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost().doubleValue() * chargeCostingRecord.getActualUnitCount());
 			} else {
 				chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost());
 			}
-			chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials() + chargeCostingRecord.getLaborCost());
+			chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials().doubleValue() + chargeCostingRecord.getLaborCost().doubleValue());
 		} else {
 			chargeCostingRecord.setLaborUnitCost(chargeDefinition.getChargeCost().getUnitCost());
-			chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost() * chargeCostingRecord.getActualUnitCount());
-			chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials() + chargeCostingRecord.getLaborCost());
+			chargeCostingRecord.setLaborCost(chargeCostingRecord.getLaborUnitCost().doubleValue() * chargeCostingRecord.getActualUnitCount());
+			chargeCostingRecord.setTotalCost(chargeCostingRecord.getActualMaterials().doubleValue() + chargeCostingRecord.getLaborCost().doubleValue());
 		}
 	}
 

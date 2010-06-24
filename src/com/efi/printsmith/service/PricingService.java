@@ -68,13 +68,13 @@ public class PricingService extends SnowmassHibernateService {
 			for (int i=0; i < job.getCharges().size(); i++) {
 				priceCharge(job.getCharges().get(i));
 				
-				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
 			}
 		}
 		
 		this.calculateOvers(job);
-		job.getPricingRecord().setTotalPrice(new Double(Math.round(job.getPricingRecord().getTotalPrice() * 100)) / 100);
-		job.getPricingRecord().setUnitPrice(new Double(Math.round(job.getPricingRecord().getUnitPrice() * 10000)) / 10000);
+		job.getPricingRecord().setTotalPrice(new Double(Math.round(job.getPricingRecord().getTotalPrice().doubleValue() * 100)) / 100);
+		job.getPricingRecord().setUnitPrice(new Double(Math.round(job.getPricingRecord().getUnitPrice().doubleValue() * 10000)) / 10000);
 		return job;
 	}
 	
@@ -92,10 +92,10 @@ public class PricingService extends SnowmassHibernateService {
 			
 			invoice.setPriceTotal(0.0);
 			for (int i=0; i < invoice.getJobs().size(); i++) {
-				invoice.setPriceTotal(invoice.getPriceTotal()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice());
+				invoice.setPriceTotal(invoice.getPriceTotal().doubleValue()+invoice.getJobs().get(i).getPricingRecord().getTotalPrice().doubleValue());
 			}
 		}
-		invoice.setPriceTotal(new Double(Math.round(invoice.getPriceTotal() * 100)) / 100);
+		invoice.setPriceTotal(new Double(Math.round(invoice.getPriceTotal().doubleValue() * 100)) / 100);
 		log.info("Completed priceInvoice for invoice " + invoice.getId());
 		return invoice;
 	}
@@ -105,11 +105,11 @@ public class PricingService extends SnowmassHibernateService {
 		double oversPrice = 0.0;
 		
 		if (job.getQtyOrdered() > 0 && job.getOversUnders() > 0) {
-			oversUnitPrice = job.getPricingRecord().getTotalPrice() / job.getQtyOrdered();
+			oversUnitPrice = job.getPricingRecord().getTotalPrice().doubleValue() / job.getQtyOrdered();
 			oversPrice = oversUnitPrice * job.getOversUnders();
 		}
 		job.getPricingRecord().setOversUnitPrice(new Double(Math.round(oversUnitPrice * 10000)) / 10000);
 		job.getPricingRecord().setOversTotalPrice(new Double(Math.round(oversPrice * 100)) / 100);
-		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getPricingRecord().getOversTotalPrice());
+		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getPricingRecord().getOversTotalPrice().doubleValue());
 	}
 }

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -1025,68 +1026,92 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double rate;
+	private BigDecimal rate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getRate(){
+	public BigDecimal getRate(){
     return rate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(Double newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setRate(double newVal) {
+    this.rate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double material;
+	private BigDecimal material;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMaterial(){
+	public BigDecimal getMaterial(){
     return material; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMaterial(Double newVal) {
+   * @generated
+   */	
+  public void setMaterial(BigDecimal newVal) {
     this.material = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setMaterial(double newVal) {
+    this.material = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double minimum;
+	private BigDecimal minimum;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMinimum(){
+	public BigDecimal getMinimum(){
     return minimum; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMinimum(Double newVal) {
+   * @generated
+   */	
+  public void setMinimum(BigDecimal newVal) {
     this.minimum = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setMinimum(double newVal) {
+    this.minimum = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -1817,24 +1842,32 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double price;
+	private BigDecimal price;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPrice(){
+	public BigDecimal getPrice(){
     return price; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPrice(Double newVal) {
+   * @generated
+   */	
+  public void setPrice(BigDecimal newVal) {
     this.price = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setPrice(double newVal) {
+    this.price = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -3115,32 +3148,42 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double setupPrice;
+	private BigDecimal setupPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSetupPrice(){
+	public BigDecimal getSetupPrice(){
     return setupPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSetupPrice(Double newVal) {
+   * @generated
+   */	
+  public void setSetupPrice(BigDecimal newVal) {
     this.setupPrice = newVal;
   }
+
+
+	/**
+   * @generated
+   */	
+  public void setSetupPrice(double newVal) {
+    this.setupPrice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
    * @generated
    */	
  	@Basic
-  private Double costingUnitPrice;
+  private BigDecimal costingUnitPrice;
 
 	/**
    * @generated
  	 */
-  public Double getCostingUnitPrice(){
+  public BigDecimal getCostingUnitPrice(){
     return costingUnitPrice; 
   }
 
@@ -3148,22 +3191,29 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */	
-  public void setCostingUnitPrice(Double newVal) {
+  public void setCostingUnitPrice(BigDecimal newVal) {
     this.costingUnitPrice = newVal;
   }
 
+
+	/**
+   * @generated
+   */	
+  public void setCostingUnitPrice(double newVal) {
+    this.costingUnitPrice = BigDecimal.valueOf(newVal);
+  }
 
 
 	/**
    * @generated
    */	
  	@Basic
-  private Double costingSetupPrice;
+  private BigDecimal costingSetupPrice;
 
 	/**
    * @generated
  	 */
-  public Double getCostingSetupPrice(){
+  public BigDecimal getCostingSetupPrice(){
     return costingSetupPrice; 
   }
 
@@ -3171,8 +3221,16 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */	
-  public void setCostingSetupPrice(Double newVal) {
+  public void setCostingSetupPrice(BigDecimal newVal) {
     this.costingSetupPrice = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCostingSetupPrice(double newVal) {
+    this.costingSetupPrice = BigDecimal.valueOf(newVal);
   }
 
 
@@ -3356,9 +3414,9 @@ public class ChargeDefinition extends ModelBase {
     if (USEORIGINALS.equals(propertyName)) setUseOriginals((Boolean)newValue); else
     if (RATESETCOUNT.equals(propertyName)) setRateSetCount((Double)newValue); else
     if (MATERIALSETCOUNT.equals(propertyName)) setMaterialSetCount((Double)newValue); else
-    if (RATE.equals(propertyName)) setRate((Double)newValue); else
-    if (MATERIAL.equals(propertyName)) setMaterial((Double)newValue); else
-    if (MINIMUM.equals(propertyName)) setMinimum((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
+    if (MATERIAL.equals(propertyName)) setMaterial((BigDecimal)newValue); else
+    if (MINIMUM.equals(propertyName)) setMinimum((BigDecimal)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (PRICELIST.equals(propertyName)) setPriceList((PriceList)newValue); else
     if (WASTECHART.equals(propertyName)) setWasteChart((WasteChart)newValue); else
@@ -3392,7 +3450,7 @@ public class ChargeDefinition extends ModelBase {
     if (RATEQTY.equals(propertyName)) setRateQty((Double)newValue); else
     if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
     if (GROUPQTY.equals(propertyName)) setGroupQty((Double)newValue); else
-    if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+    if (PRICE.equals(propertyName)) setPrice((BigDecimal)newValue); else
     if (TIMESTART.equals(propertyName)) setTimeStart((Date)newValue); else
     if (TIMEEND.equals(propertyName)) setTimeEnd((Date)newValue); else
     if (CUSTOMERCHARGE.equals(propertyName)) setCustomerCharge((Boolean)newValue); else
@@ -3451,9 +3509,9 @@ public class ChargeDefinition extends ModelBase {
     if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
     if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
     if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
-    if (SETUPPRICE.equals(propertyName)) setSetupPrice((Double)newValue); else
-    if (COSTINGUNITPRICE.equals(propertyName)) setCostingUnitPrice((Double)newValue); else
-    if (COSTINGSETUPPRICE.equals(propertyName)) setCostingSetupPrice((Double)newValue); else
+    if (SETUPPRICE.equals(propertyName)) setSetupPrice((BigDecimal)newValue); else
+    if (COSTINGUNITPRICE.equals(propertyName)) setCostingUnitPrice((BigDecimal)newValue); else
+    if (COSTINGSETUPPRICE.equals(propertyName)) setCostingSetupPrice((BigDecimal)newValue); else
     if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -3509,11 +3567,11 @@ public class ChargeDefinition extends ModelBase {
     if (MATERIALSETCOUNT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (RATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MATERIAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MINIMUM.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (PRICELIST.equals(propertyName)) 
@@ -3581,7 +3639,7 @@ public class ChargeDefinition extends ModelBase {
     if (GROUPQTY.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (PRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TIMESTART.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (TIMEEND.equals(propertyName)) 
@@ -3699,11 +3757,11 @@ public class ChargeDefinition extends ModelBase {
     if (USERUNAREA.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (SETUPPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COSTINGUNITPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COSTINGSETUPPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (PRODUCTCODE.equals(propertyName)) 
       return new Class<?>[] {ProductCode.class};		
     return super.getPropertyClass(propertyName);

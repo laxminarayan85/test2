@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -976,24 +977,30 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double shipCharges;
+	private BigDecimal shipCharges;
 	
 	/**
 	 * @generated
  	 */
-	public Double getShipCharges(){
+	public BigDecimal getShipCharges(){
     return shipCharges; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipCharges(Double newVal) {
+   * @generated
+   */	
+  public void setShipCharges(BigDecimal newVal) {
     this.shipCharges = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setShipCharges(double newVal) {
+    this.shipCharges = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1042,24 +1049,30 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double dollarDiscount;
+	private BigDecimal dollarDiscount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getDollarDiscount(){
+	public BigDecimal getDollarDiscount(){
     return dollarDiscount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDollarDiscount(Double newVal) {
+   * @generated
+   */	
+  public void setDollarDiscount(BigDecimal newVal) {
     this.dollarDiscount = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setDollarDiscount(double newVal) {
+    this.dollarDiscount = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1108,90 +1121,114 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double subTotal;
+	private BigDecimal subTotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSubTotal(){
+	public BigDecimal getSubTotal(){
     return subTotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSubTotal(Double newVal) {
+   * @generated
+   */	
+  public void setSubTotal(BigDecimal newVal) {
     this.subTotal = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setSubTotal(double newVal) {
+    this.subTotal = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double grandTotal;
+	private BigDecimal grandTotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getGrandTotal(){
+	public BigDecimal getGrandTotal(){
     return grandTotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setGrandTotal(Double newVal) {
+   * @generated
+   */	
+  public void setGrandTotal(BigDecimal newVal) {
     this.grandTotal = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setGrandTotal(double newVal) {
+    this.grandTotal = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double amountDue;
+	private BigDecimal amountDue;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAmountDue(){
+	public BigDecimal getAmountDue(){
     return amountDue; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAmountDue(Double newVal) {
+   * @generated
+   */	
+  public void setAmountDue(BigDecimal newVal) {
     this.amountDue = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAmountDue(double newVal) {
+    this.amountDue = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double totalCost;
+	private BigDecimal totalCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalCost(){
+	public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(Double newVal) {
+   * @generated
+   */	
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
+    this.totalCost = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1482,24 +1519,30 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double priceTotal;
+	private BigDecimal priceTotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPriceTotal(){
+	public BigDecimal getPriceTotal(){
     return priceTotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPriceTotal(Double newVal) {
+   * @generated
+   */	
+  public void setPriceTotal(BigDecimal newVal) {
     this.priceTotal = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setPriceTotal(double newVal) {
+    this.priceTotal = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1592,66 +1635,86 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double priceSubTotal;
+	private BigDecimal priceSubTotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPriceSubTotal(){
+	public BigDecimal getPriceSubTotal(){
     return priceSubTotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPriceSubTotal(Double newVal) {
+   * @generated
+   */	
+  public void setPriceSubTotal(BigDecimal newVal) {
     this.priceSubTotal = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setPriceSubTotal(double newVal) {
+    this.priceSubTotal = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double shipPrice;
+	private BigDecimal shipPrice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getShipPrice(){
+	public BigDecimal getShipPrice(){
     return shipPrice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipPrice(Double newVal) {
+   * @generated
+   */	
+  public void setShipPrice(BigDecimal newVal) {
     this.shipPrice = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setShipPrice(double newVal) {
+    this.shipPrice = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double tax;
+	private BigDecimal tax;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTax(){
+	public BigDecimal getTax(){
     return tax; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTax(Double newVal) {
+   * @generated
+   */	
+  public void setTax(BigDecimal newVal) {
     this.tax = newVal;
   }
+
+	/**
+   * @generated
+   */	
+  public void setTax(double newVal) {
+    this.tax = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */		
@@ -1756,16 +1819,16 @@ public class InvoiceBase extends ModelBase {
     if (REORDERDATE.equals(propertyName)) setReorderDate((Date)newValue); else
     if (LOCATIONCHANGEDATE.equals(propertyName)) setLocationChangeDate((Date)newValue); else
     if (DELIVERYINTENTDATE.equals(propertyName)) setDeliveryIntentDate((Date)newValue); else
-    if (SHIPCHARGES.equals(propertyName)) setShipCharges((Double)newValue); else
+    if (SHIPCHARGES.equals(propertyName)) setShipCharges((BigDecimal)newValue); else
     if (MARKUPS.equals(propertyName)) setMarkups((Double)newValue); else
     if (DISCOUNTFACTOR.equals(propertyName)) setDiscountFactor((Double)newValue); else
-    if (DOLLARDISCOUNT.equals(propertyName)) setDollarDiscount((Double)newValue); else
+    if (DOLLARDISCOUNT.equals(propertyName)) setDollarDiscount((BigDecimal)newValue); else
     if (DISCOUNT.equals(propertyName)) setDiscount((Double)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-    if (SUBTOTAL.equals(propertyName)) setSubTotal((Double)newValue); else
-    if (GRANDTOTAL.equals(propertyName)) setGrandTotal((Double)newValue); else
-    if (AMOUNTDUE.equals(propertyName)) setAmountDue((Double)newValue); else
-    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
+    if (GRANDTOTAL.equals(propertyName)) setGrandTotal((BigDecimal)newValue); else
+    if (AMOUNTDUE.equals(propertyName)) setAmountDue((BigDecimal)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
     if (ADDRESSOVERRIDEN.equals(propertyName)) setAddressOverriden((Boolean)newValue); else
     if (COSTED.equals(propertyName)) setCosted((Boolean)newValue); else
     if (OPENNOTESONOPEN.equals(propertyName)) setOpenNotesOnOpen((Integer)newValue); else
@@ -1779,14 +1842,14 @@ public class InvoiceBase extends ModelBase {
     if (NOTTAXABLE.equals(propertyName)) setNotTaxable((Boolean)newValue); else
     if (FIRMWANTEDBYDATE.equals(propertyName)) setFirmWantedByDate((Boolean)newValue); else
     if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
-    if (PRICETOTAL.equals(propertyName)) setPriceTotal((Double)newValue); else
+    if (PRICETOTAL.equals(propertyName)) setPriceTotal((BigDecimal)newValue); else
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) setContainsInventoriedStock((Boolean)newValue); else
     if (DISCOUNTISDOLLARS.equals(propertyName)) setDiscountIsDollars((Boolean)newValue); else
     if (DISCOUNTISONETIME.equals(propertyName)) setDiscountIsOneTime((Boolean)newValue); else
     if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
-    if (PRICESUBTOTAL.equals(propertyName)) setPriceSubTotal((Double)newValue); else
-    if (SHIPPRICE.equals(propertyName)) setShipPrice((Double)newValue); else
-    if (TAX.equals(propertyName)) setTax((Double)newValue); else
+    if (PRICESUBTOTAL.equals(propertyName)) setPriceSubTotal((BigDecimal)newValue); else
+    if (SHIPPRICE.equals(propertyName)) setShipPrice((BigDecimal)newValue); else
+    if (TAX.equals(propertyName)) setTax((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1855,25 +1918,25 @@ public class InvoiceBase extends ModelBase {
     if (DELIVERYINTENTDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (SHIPCHARGES.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MARKUPS.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (DISCOUNTFACTOR.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (DOLLARDISCOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DISCOUNT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (TAXTABLE.equals(propertyName)) 
       return new Class<?>[] {TaxTable.class};		
     if (SUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (GRANDTOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (AMOUNTDUE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TOTALCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ADDRESSOVERRIDEN.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (COSTED.equals(propertyName)) 
@@ -1901,7 +1964,7 @@ public class InvoiceBase extends ModelBase {
     if (RELEASEDTOPRODUCTION.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (PRICETOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (DISCOUNTISDOLLARS.equals(propertyName)) 
@@ -1911,11 +1974,11 @@ public class InvoiceBase extends ModelBase {
     if (TAKENBY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRICESUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SHIPPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TAX.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	

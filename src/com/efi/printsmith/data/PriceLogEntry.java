@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -145,24 +146,32 @@ public class PriceLogEntry extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double value;
+	private BigDecimal value;
 	
 	/**
 	 * @generated
  	 */
-	public Double getValue(){
+	public BigDecimal getValue(){
     return value; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setValue(Double newVal) {
+   * @generated
+   */	
+  public void setValue(BigDecimal newVal) {
     this.value = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setValue(double newVal) {
+    this.value = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -239,7 +248,7 @@ public class PriceLogEntry extends ModelBase {
     if (VERSION.equals(propertyName)) setVersion((Integer)newValue); else
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
     if (METHOD.equals(propertyName)) setMethod((String)newValue); else
-    if (VALUE.equals(propertyName)) setValue((Double)newValue); else
+    if (VALUE.equals(propertyName)) setValue((BigDecimal)newValue); else
     if (DATE.equals(propertyName)) setDate((Date)newValue); else
     if (CHILDREN.equals(propertyName)) setChildren((java.util.List<PriceLogEntry>)newValue); else
     super.setProperty(propertyName, newValue);
@@ -258,7 +267,7 @@ public class PriceLogEntry extends ModelBase {
     if (METHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (VALUE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (CHILDREN.equals(propertyName)) 

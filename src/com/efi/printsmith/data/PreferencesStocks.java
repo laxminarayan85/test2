@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -301,24 +302,32 @@ public class PreferencesStocks extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double customerCost;
+	private BigDecimal customerCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCustomerCost(){
+	public BigDecimal getCustomerCost(){
     return customerCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCustomerCost(Double newVal) {
+   * @generated
+   */	
+  public void setCustomerCost(BigDecimal newVal) {
     this.customerCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setCustomerCost(double newVal) {
+    this.customerCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -987,7 +996,7 @@ public class PreferencesStocks extends ModelBase {
     if (MICRONS.equals(propertyName)) setMicrons((String)newValue); else
     if (PLIES.equals(propertyName)) setPlies((String)newValue); else
     if (MILLIMETERS.equals(propertyName)) setMillimeters((String)newValue); else
-    if (CUSTOMERCOST.equals(propertyName)) setCustomerCost((Double)newValue); else
+    if (CUSTOMERCOST.equals(propertyName)) setCustomerCost((BigDecimal)newValue); else
     if (CUSTOMERQUANTITY.equals(propertyName)) setCustomerQuantity((Integer)newValue); else
     if (CUSTOMERMARKUP.equals(propertyName)) setCustomerMarkup((Double)newValue); else
     if (MARKUPONLY.equals(propertyName)) setMarkupOnly((Boolean)newValue); else
@@ -1036,7 +1045,7 @@ public class PreferencesStocks extends ModelBase {
     if (MILLIMETERS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (CUSTOMERCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (CUSTOMERQUANTITY.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (CUSTOMERMARKUP.equals(propertyName)) 

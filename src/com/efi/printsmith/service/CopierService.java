@@ -64,10 +64,10 @@ public class CopierService extends SnowmassHibernateService {
 		 * 
 		 * 			+ Labor per copy + toner per copy + developer per copy
 		 */
-		double costPerCopy = (copierDefinition.getMonthlyPayment() + copierDefinition.getMonthlyMaintenance() + copierDefinition.getMonthlyLabor()) / 
+		double costPerCopy = (copierDefinition.getMonthlyPayment().doubleValue() + copierDefinition.getMonthlyMaintenance().doubleValue() + copierDefinition.getMonthlyLabor().doubleValue()) / 
 						(copiesPerMonth * copierDefinition.getPercentUsage());
 		
-		costPerCopy += copierDefinition.getTonerCopy() + copierDefinition.getDeveloperCopy() + copierDefinition.getLaborCopy();
+		costPerCopy += copierDefinition.getTonerCopy().doubleValue() + copierDefinition.getDeveloperCopy().doubleValue() + copierDefinition.getLaborCopy().doubleValue();
 		
 		return costPerCopy;
 	}

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -67,24 +68,32 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double totalCost;
+	private BigDecimal totalCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalCost(){
+	public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(Double newVal) {
+   * @generated
+   */	
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
+    this.totalCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -145,7 +154,7 @@ public class PreferencesMarkups extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (ABOVE.equals(propertyName)) setAbove((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
@@ -158,7 +167,7 @@ public class PreferencesMarkups extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (TOTALCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (ABOVE.equals(propertyName)) 

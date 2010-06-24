@@ -129,7 +129,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 			
 			pounds *= colors;
 			
-			price = pounds * localCharge.getRate();
+			price = pounds * localCharge.getRate().doubleValue();
 			localCharge.setPoundsOfInk(pounds);
 			chargeDefinition.setMaterialSetCount(pounds);
 		}
@@ -138,7 +138,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 			price += costingMaterialPrice * charge.getMaterialQty();
 		} else {
 			if (chargeDefinition.getUseSetup()) {
-				price += chargeDefinition.getSetupPrice();
+				price += chargeDefinition.getSetupPrice().doubleValue();
 			}
 			price += PriceListUtilities.calculatePriceListPrice((long)pounds, chargeDefinition.getPriceList(), price, (Job)job);
 		}

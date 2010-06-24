@@ -9,8 +9,8 @@ public class MailingPricingMethod {
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
 		if (job.getQtyOrdered() > 0) {
-			job.setTotalCost(job.getQtyOrdered() * job.getUnitCost());
-			pricingRecord.setTotalPrice(job.getTotalCost() * job.getMarkup());
+			job.setTotalCost(job.getQtyOrdered() * job.getUnitCost().doubleValue());
+			pricingRecord.setTotalPrice(job.getTotalCost().doubleValue() * job.getMarkup());
 		}
 		
 		return job;

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -119,24 +120,32 @@ public class DepositEntry extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double amount;
+	private BigDecimal amount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAmount(){
+	public BigDecimal getAmount(){
     return amount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAmount(Double newVal) {
+   * @generated
+   */	
+  public void setAmount(BigDecimal newVal) {
     this.amount = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setAmount(double newVal) {
+    this.amount = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -201,7 +210,7 @@ public class DepositEntry extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
     if (DATE.equals(propertyName)) setDate((Date)newValue); else
-    if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
+    if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
     if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
     if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
     super.setProperty(propertyName, newValue);
@@ -218,7 +227,7 @@ public class DepositEntry extends ModelBase {
     if (DATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (AMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TYPE.equals(propertyName)) 
       return new Class<?>[] {DepositType.class};		
     if (CREDITCARDTYPE.equals(propertyName)) 

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -93,24 +94,32 @@ public class PriceListElement extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double amount;
+	private BigDecimal amount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAmount(){
+	public BigDecimal getAmount(){
     return amount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAmount(Double newVal) {
+   * @generated
+   */	
+  public void setAmount(BigDecimal newVal) {
     this.amount = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setAmount(double newVal) {
+    this.amount = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -173,7 +182,7 @@ public class PriceListElement extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (QUANTITY.equals(propertyName)) setQuantity((Long)newValue); else
-    if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
+    if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
     if (SIDE.equals(propertyName)) setSide((Integer)newValue); else
     if (COLOR.equals(propertyName)) setColor((Integer)newValue); else
     super.setProperty(propertyName, newValue);
@@ -188,7 +197,7 @@ public class PriceListElement extends ModelBase {
     if (QUANTITY.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (AMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SIDE.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (COLOR.equals(propertyName)) 

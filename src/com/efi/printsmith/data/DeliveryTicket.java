@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -561,24 +562,32 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double shipCost;
+	private BigDecimal shipCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getShipCost(){
+	public BigDecimal getShipCost(){
     return shipCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipCost(Double newVal) {
+   * @generated
+   */	
+  public void setShipCost(BigDecimal newVal) {
     this.shipCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setShipCost(double newVal) {
+    this.shipCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -1277,7 +1286,7 @@ public class DeliveryTicket extends ModelBase {
     if (PARTNUMBER.equals(propertyName)) setPartNumber((String)newValue); else
     if (REFERENCE.equals(propertyName)) setReference((String)newValue); else
     if (SHIPMODE.equals(propertyName)) setShipMode((ShippingMethod)newValue); else
-    if (SHIPCOST.equals(propertyName)) setShipCost((Double)newValue); else
+    if (SHIPCOST.equals(propertyName)) setShipCost((BigDecimal)newValue); else
     if (TOTALWEIGHT.equals(propertyName)) setTotalWeight((Float)newValue); else
     if (CARTONCOUNT.equals(propertyName)) setCartonCount((Integer)newValue); else
     if (ITEMSPERCARTON.equals(propertyName)) setItemsPerCarton((Integer)newValue); else
@@ -1346,7 +1355,7 @@ public class DeliveryTicket extends ModelBase {
     if (SHIPMODE.equals(propertyName)) 
       return new Class<?>[] {ShippingMethod.class};		
     if (SHIPCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TOTALWEIGHT.equals(propertyName)) 
       return new Class<?>[] {Float.class};		
     if (CARTONCOUNT.equals(propertyName)) 

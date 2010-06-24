@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -71,88 +72,122 @@ public class CostingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double unitCost;
+	private BigDecimal unitCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getUnitCost(){
+	public BigDecimal getUnitCost(){
     return unitCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUnitCost(Double newVal) {
+   * @generated
+   */	
+  public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitCost(double newVal) {
+    this.unitCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double totalCost;
+	private BigDecimal totalCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalCost(){
+	public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(Double newVal) {
+   * @generated
+   */	
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
+    this.totalCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double laborCost;
+	private BigDecimal laborCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborCost(){
+	public BigDecimal getLaborCost(){
     return laborCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborCost(Double newVal) {
+   * @generated
+   */	
+  public void setLaborCost(BigDecimal newVal) {
     this.laborCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborCost(double newVal) {
+    this.laborCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double stockCost;
+	private BigDecimal stockCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getStockCost(){
+	public BigDecimal getStockCost(){
     return stockCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setStockCost(Double newVal) {
+   * @generated
+   */	
+  public void setStockCost(BigDecimal newVal) {
     this.stockCost = newVal;
   }
+
+
+	/**
+   * @generated
+   */	
+  public void setStockCost(double newVal) {
+    this.stockCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */		
@@ -172,10 +207,10 @@ public class CostingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
-    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
-    if (LABORCOST.equals(propertyName)) setLaborCost((Double)newValue); else
-    if (STOCKCOST.equals(propertyName)) setStockCost((Double)newValue); else
+    if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
+    if (LABORCOST.equals(propertyName)) setLaborCost((BigDecimal)newValue); else
+    if (STOCKCOST.equals(propertyName)) setStockCost((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -186,13 +221,13 @@ public class CostingRecord extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (UNITCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TOTALCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (STOCKCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	

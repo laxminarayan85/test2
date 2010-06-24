@@ -69,7 +69,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 				}
 				price = prices.setupPrice + prices.materialSetupPrice;
 				
-				price += rateQuantity*charge.getRate();
+				price += rateQuantity*charge.getRate().doubleValue();
 				if (!chargeDefinition.getQuantityType().equals(ChargeQtyType.Time.name())) {
 					price += materialQuantity*prices.materialUnitPrice;
 				}
@@ -88,7 +88,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		double retVal = 0.0;
 		
 		if (charge.getChargeDefinition().getUseSetup()) {
-			retVal = charge.getChargeDefinition().getSetupPrice();
+			retVal = charge.getChargeDefinition().getSetupPrice().doubleValue();
 		}
 		
 		if (charge.getChargeDefinition().getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
@@ -105,7 +105,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			if (charge.getChargeDefinition().getUseMerchandiseSets()) {
 				materialQuantity = this.calculateChargeSets(materialQuantity, 1, 1, charge.getChargeDefinition().getMaterialSetCount());
 			}
-			retVal = materialQuantity * charge.getChargeDefinition().getMaterial();
+			retVal = materialQuantity * charge.getChargeDefinition().getMaterial().doubleValue();
 		}
 		priceListLookupQuantity = retVal; // Use material quantity if nothing later in the pricing process is found
 		return retVal;
@@ -123,7 +123,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		}
 		
 		priceListLookupQuantity = tmpQty; // Use this quantity to lookup price list price if needed
-		retVal = tmpQty * charge.getRate();
+		retVal = tmpQty * charge.getRate().doubleValue();
 
 		if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets) ||
 				chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {

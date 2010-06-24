@@ -32,12 +32,12 @@ public class PrintPricingMethod {
 		float setupHours = pressDefinition.getSetupMin().floatValue() / 60;
 		//float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
 		float totalHours = runHours + setupHours;
-		float minimumHours = new Double(pressDefinition.getMinLabor()).floatValue() / 60;
+		float minimumHours = pressDefinition.getMinLabor().floatValue() / 60;
 		if (totalHours < minimumHours)
 			totalHours = minimumHours;
 		if (job.getDoubleSided() == true)
 			totalHours = totalHours * 2;
-		pressPrice = totalHours * pressDefinition.getLaborRate() * pressDefinition.getLaborMarkup();
+		pressPrice = totalHours * pressDefinition.getLaborRate().doubleValue() * pressDefinition.getLaborMarkup();
 		stockPrice = (stockPrice * job.getImpositionsPerRun()) * job.getSheets();
 		double price = pressPrice + stockPrice;
 		pricingRecord.setTotalPrice(new Double(Math.round(price * 100)) / 100);
@@ -66,8 +66,8 @@ public class PrintPricingMethod {
 		PressDefinition pressDefinition = job.getPricingPress();
 		if (pressDefinition != null) {
 			double estWaste = 0.0;
-			double fixedWaste = pressDefinition.getFixedWaste() * (job.getFrontPasses() + job.getBackPasses());
-			double setupMin = pressDefinition.getSetupMin();
+			double fixedWaste = pressDefinition.getFixedWaste().doubleValue() * (job.getFrontPasses() + job.getBackPasses());
+			double setupMin = pressDefinition.getSetupMin().doubleValue();
 			long setupAddlRun = pressDefinition.getSetupAddRun() * (job.getFrontPasses() + job.getBackPasses());
 			WasteChart wasteChart = pressDefinition.getWasteChart();
 			if (wasteChart != null) {

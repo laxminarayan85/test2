@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -60,10 +61,6 @@ public class ChargeCostingRecord extends ModelBase {
 	 * @generated
 	 */
 	public static final String ACTUALMATERIALS = "ActualMaterials";
-	/**
-	 * @generated
-	 */
-	public static final String ATTRIBUTE3 = "Attribute3";
 	/**
 	 * @generated
 	 */
@@ -191,46 +188,32 @@ public class ChargeCostingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double actualMaterials;
+	private BigDecimal actualMaterials;
 	
 	/**
 	 * @generated
  	 */
-	public Double getActualMaterials(){
+	public BigDecimal getActualMaterials(){
     return actualMaterials; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setActualMaterials(Double newVal) {
+   * @generated
+   */	
+  public void setActualMaterials(BigDecimal newVal) {
     this.actualMaterials = newVal;
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Integer attribute3;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getAttribute3(){
-    return attribute3; 
+   * @generated
+   */	
+  public void setActualMaterials(double newVal) {
+    this.actualMaterials = BigDecimal.valueOf(newVal);
   }
 
-	
-	/**
-	 * @generated
-	 */	
-	public void setAttribute3(Integer newVal) {
-    this.attribute3 = newVal;
-  }
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -279,88 +262,122 @@ public class ChargeCostingRecord extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double laborUnitCost;
+	private BigDecimal laborUnitCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborUnitCost(){
+	public BigDecimal getLaborUnitCost(){
     return laborUnitCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborUnitCost(Double newVal) {
+   * @generated
+   */	
+  public void setLaborUnitCost(BigDecimal newVal) {
     this.laborUnitCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborUnitCost(double newVal) {
+    this.laborUnitCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double laborCost;
+	private BigDecimal laborCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborCost(){
+	public BigDecimal getLaborCost(){
     return laborCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborCost(Double newVal) {
+   * @generated
+   */	
+  public void setLaborCost(BigDecimal newVal) {
     this.laborCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborCost(double newVal) {
+    this.laborCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double totalCost;
+	private BigDecimal totalCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalCost(){
+	public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(Double newVal) {
+   * @generated
+   */	
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
+    this.totalCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double actualCount;
+	private BigDecimal actualCount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getActualCount(){
+	public BigDecimal getActualCount(){
     return actualCount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setActualCount(Double newVal) {
+   * @generated
+   */	
+  public void setActualCount(BigDecimal newVal) {
     this.actualCount = newVal;
   }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualCount(double newVal) {
+    this.actualCount = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */		
@@ -372,7 +389,6 @@ public class ChargeCostingRecord extends ModelBase {
     if (ACTUALUNITCOUNT.equals(propertyName)) return getActualUnitCount();
     if (ACTUALSPOILAGE.equals(propertyName)) return getActualSpoilage();
     if (ACTUALMATERIALS.equals(propertyName)) return getActualMaterials();
-    if (ATTRIBUTE3.equals(propertyName)) return getAttribute3();
     if (SETUPTIME.equals(propertyName)) return getSetupTime();
     if (RUNTIME.equals(propertyName)) return getRunTime();
     if (LABORUNITCOST.equals(propertyName)) return getLaborUnitCost();
@@ -392,14 +408,13 @@ public class ChargeCostingRecord extends ModelBase {
     if (TOTALIMPRESSIONS.equals(propertyName)) setTotalImpressions((Long)newValue); else
     if (ACTUALUNITCOUNT.equals(propertyName)) setActualUnitCount((Double)newValue); else
     if (ACTUALSPOILAGE.equals(propertyName)) setActualSpoilage((Double)newValue); else
-    if (ACTUALMATERIALS.equals(propertyName)) setActualMaterials((Double)newValue); else
-    if (ATTRIBUTE3.equals(propertyName)) setAttribute3((Integer)newValue); else
+    if (ACTUALMATERIALS.equals(propertyName)) setActualMaterials((BigDecimal)newValue); else
     if (SETUPTIME.equals(propertyName)) setSetupTime((Double)newValue); else
     if (RUNTIME.equals(propertyName)) setRunTime((Double)newValue); else
-    if (LABORUNITCOST.equals(propertyName)) setLaborUnitCost((Double)newValue); else
-    if (LABORCOST.equals(propertyName)) setLaborCost((Double)newValue); else
-    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
-    if (ACTUALCOUNT.equals(propertyName)) setActualCount((Double)newValue); else
+    if (LABORUNITCOST.equals(propertyName)) setLaborUnitCost((BigDecimal)newValue); else
+    if (LABORCOST.equals(propertyName)) setLaborCost((BigDecimal)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
+    if (ACTUALCOUNT.equals(propertyName)) setActualCount((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -418,21 +433,19 @@ public class ChargeCostingRecord extends ModelBase {
     if (ACTUALSPOILAGE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (ACTUALMATERIALS.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (ATTRIBUTE3.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETUPTIME.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (RUNTIME.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (LABORUNITCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TOTALCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ACTUALCOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -448,7 +461,6 @@ public class ChargeCostingRecord extends ModelBase {
     if (ACTUALUNITCOUNT.equals(propertyName)) return ChargeCostingRecord.class;
     if (ACTUALSPOILAGE.equals(propertyName)) return ChargeCostingRecord.class;
     if (ACTUALMATERIALS.equals(propertyName)) return ChargeCostingRecord.class;
-    if (ATTRIBUTE3.equals(propertyName)) return ChargeCostingRecord.class;
     if (SETUPTIME.equals(propertyName)) return ChargeCostingRecord.class;
     if (RUNTIME.equals(propertyName)) return ChargeCostingRecord.class;
     if (LABORUNITCOST.equals(propertyName)) return ChargeCostingRecord.class;
@@ -475,8 +487,6 @@ public class ChargeCostingRecord extends ModelBase {
     if (! SmartEquals(getActualSpoilage(), objT.getActualSpoilage()))
       return false;
     if (! SmartEquals(getActualMaterials(), objT.getActualMaterials()))
-      return false;
-    if (! SmartEquals(getAttribute3(), objT.getAttribute3()))
       return false;
     if (! SmartEquals(getSetupTime(), objT.getSetupTime()))
       return false;

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -96,6 +97,23 @@ public class TaxTable extends ModelBase {
   public static final String TABLECREATELOCALDATETIME = "TableCreateLocalDateTime";
 
 	/**
+   * @generated
+   */
+  public static final String MINAMOUNT = "MinAmount";
+	/**
+   * @generated
+   */
+  public static final String DEFAULTTABLE = "DefaultTable";
+	/**
+   * @generated
+   */
+  public static final String SEPARATESHIPPING = "SeparateShipping";
+	/**
+   * @generated
+   */
+  public static final String DISABLETABLE = "DisableTable";
+
+	/**
 	 * @generated
 	 */
 	public TaxTable() {
@@ -109,24 +127,32 @@ public class TaxTable extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double effectiveTaxRate;
+	private BigDecimal effectiveTaxRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getEffectiveTaxRate(){
+	public BigDecimal getEffectiveTaxRate(){
     return effectiveTaxRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setEffectiveTaxRate(Double newVal) {
+   * @generated
+   */	
+  public void setEffectiveTaxRate(BigDecimal newVal) {
     this.effectiveTaxRate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setEffectiveTaxRate(double newVal) {
+    this.effectiveTaxRate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -401,6 +427,105 @@ public class TaxTable extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal minAmount;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getMinAmount(){
+    return minAmount; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMinAmount(BigDecimal newVal) {
+    this.minAmount = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMinAmount(double newVal) {
+    this.minAmount = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean defaultTable;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getDefaultTable(){
+    return defaultTable; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDefaultTable(Boolean newVal) {
+    this.defaultTable = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean separateShipping;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getSeparateShipping(){
+    return separateShipping; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSeparateShipping(Boolean newVal) {
+    this.separateShipping = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer disableTable;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getDisableTable(){
+    return disableTable; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDisableTable(Integer newVal) {
+    this.disableTable = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -419,6 +544,10 @@ public class TaxTable extends ModelBase {
     if (ABBR.equals(propertyName)) return getAbbr();
     if (TABLECREATEDATETIME.equals(propertyName)) return getTableCreateDateTime();
     if (TABLECREATELOCALDATETIME.equals(propertyName)) return getTableCreateLocalDateTime();
+    if (MINAMOUNT.equals(propertyName)) return getMinAmount();
+    if (DEFAULTTABLE.equals(propertyName)) return getDefaultTable();
+    if (SEPARATESHIPPING.equals(propertyName)) return getSeparateShipping();
+    if (DISABLETABLE.equals(propertyName)) return getDisableTable();
     return super.getProperty(propertyName);
   }
 	
@@ -428,7 +557,7 @@ public class TaxTable extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (EFFECTIVETAXRATE.equals(propertyName)) setEffectiveTaxRate((Double)newValue); else
+    if (EFFECTIVETAXRATE.equals(propertyName)) setEffectiveTaxRate((BigDecimal)newValue); else
     if (TAXELEMENTS.equals(propertyName)) setTaxElements((java.util.List<TaxElement>)newValue); else
     if (TAXTABLEISCURRENT.equals(propertyName)) setTaxTableIsCurrent((Boolean)newValue); else
     if (TAXSHIPPING.equals(propertyName)) setTaxShipping((Boolean)newValue); else
@@ -441,6 +570,10 @@ public class TaxTable extends ModelBase {
     if (ABBR.equals(propertyName)) setAbbr((String)newValue); else
     if (TABLECREATEDATETIME.equals(propertyName)) setTableCreateDateTime((Date)newValue); else
     if (TABLECREATELOCALDATETIME.equals(propertyName)) setTableCreateLocalDateTime((Date)newValue); else
+    if (MINAMOUNT.equals(propertyName)) setMinAmount((BigDecimal)newValue); else
+    if (DEFAULTTABLE.equals(propertyName)) setDefaultTable((Boolean)newValue); else
+    if (SEPARATESHIPPING.equals(propertyName)) setSeparateShipping((Boolean)newValue); else
+    if (DISABLETABLE.equals(propertyName)) setDisableTable((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -451,7 +584,7 @@ public class TaxTable extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (EFFECTIVETAXRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TAXELEMENTS.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, TaxElement.class};		
     if (TAXTABLEISCURRENT.equals(propertyName)) 
@@ -476,6 +609,14 @@ public class TaxTable extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (TABLECREATELOCALDATETIME.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
+    if (MINAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (DEFAULTTABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SEPARATESHIPPING.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DISABLETABLE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -499,6 +640,10 @@ public class TaxTable extends ModelBase {
     if (ABBR.equals(propertyName)) return TaxTable.class;
     if (TABLECREATEDATETIME.equals(propertyName)) return TaxTable.class;
     if (TABLECREATELOCALDATETIME.equals(propertyName)) return TaxTable.class;
+    if (MINAMOUNT.equals(propertyName)) return TaxTable.class;
+    if (DEFAULTTABLE.equals(propertyName)) return TaxTable.class;
+    if (SEPARATESHIPPING.equals(propertyName)) return TaxTable.class;
+    if (DISABLETABLE.equals(propertyName)) return TaxTable.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -535,6 +680,14 @@ public class TaxTable extends ModelBase {
     if (! SmartEquals(getTableCreateDateTime(), objT.getTableCreateDateTime()))
       return false;
     if (! SmartEquals(getTableCreateLocalDateTime(), objT.getTableCreateLocalDateTime()))
+      return false;
+    if (! SmartEquals(getMinAmount(), objT.getMinAmount()))
+      return false;
+    if (! SmartEquals(getDefaultTable(), objT.getDefaultTable()))
+      return false;
+    if (! SmartEquals(getSeparateShipping(), objT.getSeparateShipping()))
+      return false;
+    if (! SmartEquals(getDisableTable(), objT.getDisableTable()))
       return false;
     return true;
   }			

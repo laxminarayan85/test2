@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -422,24 +423,32 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double price;
+	private BigDecimal price;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPrice(){
+	public BigDecimal getPrice(){
     return price; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPrice(Double newVal) {
+   * @generated
+   */	
+  public void setPrice(BigDecimal newVal) {
     this.price = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setPrice(double newVal) {
+    this.price = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -554,24 +563,32 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double rate;
+	private BigDecimal rate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getRate(){
+	public BigDecimal getRate(){
     return rate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(Double newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setRate(double newVal) {
+    this.rate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -686,24 +703,32 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double minimumCharge;
+	private BigDecimal minimumCharge;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMinimumCharge(){
+	public BigDecimal getMinimumCharge(){
     return minimumCharge; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMinimumCharge(Double newVal) {
+   * @generated
+   */	
+  public void setMinimumCharge(BigDecimal newVal) {
     this.minimumCharge = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setMinimumCharge(double newVal) {
+    this.minimumCharge = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -913,19 +938,19 @@ public class Charge extends ModelBase {
     if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
     if (HIDDEN.equals(propertyName)) setHidden((Boolean)newValue); else
     if (HIDEPRICE.equals(propertyName)) setHidePrice((Boolean)newValue); else
-    if (PRICE.equals(propertyName)) setPrice((Double)newValue); else
+    if (PRICE.equals(propertyName)) setPrice((BigDecimal)newValue); else
     if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
     if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
     if (OVERRIDEQUANTITY.equals(propertyName)) setOverrideQuantity((Boolean)newValue); else
     if (MATERIALQTY.equals(propertyName)) setMaterialQty((Double)newValue); else
     if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) setOverrideMaterialQuantity((Boolean)newValue); else
-    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
     if (OVERRIDERATE.equals(propertyName)) setOverrideRate((Boolean)newValue); else
     if (UP.equals(propertyName)) setUp((Integer)newValue); else
     if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
     if (PARENTJOB.equals(propertyName)) setParentJob((JobBase)newValue); else
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
-    if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((Double)newValue); else
+    if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((BigDecimal)newValue); else
     if (SETS.equals(propertyName)) setSets((Double)newValue); else
     if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
     if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
@@ -965,7 +990,7 @@ public class Charge extends ModelBase {
     if (HIDEPRICE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (PRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (OVERRIDEPRICE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (QUANTITY.equals(propertyName)) 
@@ -977,7 +1002,7 @@ public class Charge extends ModelBase {
     if (OVERRIDEMATERIALQUANTITY.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (RATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (OVERRIDERATE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (UP.equals(propertyName)) 
@@ -989,7 +1014,7 @@ public class Charge extends ModelBase {
     if (PARENTINVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
     if (MINIMUMCHARGE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETS.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (MATERIALSETS.equals(propertyName)) 

@@ -26,6 +26,9 @@ package com.efi.printsmith.data
 		public var abbr:String = "";
 		public var tableCreateDateTime:Date = new Date();
 		public var tableCreateLocalDateTime:Date = new Date();
-	
+		public var minAmount:Number = 0;
+		public var defaultTable:Boolean = false;
+		public var separateShipping:Boolean = false;
+		public var disableTable:int = 0;
 	}
 }

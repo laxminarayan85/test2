@@ -21,13 +21,13 @@ public class ChargeMarkupPricingMethod extends ChargePricingMethod {
 		}
 		
 		if (chargeDefinition.getUseRate()) {
-			rate = chargeDefinition.getRate();
+			rate = chargeDefinition.getRate().doubleValue();
 		} else {
 			rate = 0;
 		}
 		
 //		if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.OnlyJob)) {
-			lookupQty = job.getPricingRecord().getTotalPrice();
+			lookupQty = job.getPricingRecord().getTotalPrice().doubleValue();
 			price = lookupQty * rate;
 //		} else if (chargeDefinition.getMarkupType().equals(ChargeMarkupType.EntireJob)) {
 //			// TODO

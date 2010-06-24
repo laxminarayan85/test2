@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -565,7 +566,7 @@ public class StockDefinition extends ModelBase {
 	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,StockColors color, GenericColors genericcolor,
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
 			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
-			StockGroup stkgroup, String coated, Integer minorder, Double cost1, Date priceexpire, String forestmanagement,
+			StockGroup stkgroup, String coated, Integer minorder, BigDecimal cost1, Date priceexpire, String forestmanagement,
 			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified) {
 		this.id = id;
 		this.name = Name;
@@ -1306,134 +1307,170 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double cost1;
+	private BigDecimal cost1;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost1(){
+	public BigDecimal getCost1(){
     return cost1; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost1(Double newVal) {
+   * @generated
+   */	
+  public void setCost1(BigDecimal newVal) {
     this.cost1 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost1(double newVal) {
+    this.cost1 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double cost2;
+	private BigDecimal cost2;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost2(){
+	public BigDecimal getCost2(){
     return cost2; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost2(Double newVal) {
+   * @generated
+   */	
+  public void setCost2(BigDecimal newVal) {
     this.cost2 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost2(double newVal) {
+    this.cost2 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double cost3;
+	private BigDecimal cost3;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost3(){
+	public BigDecimal getCost3(){
     return cost3; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost3(Double newVal) {
+   * @generated
+   */	
+  public void setCost3(BigDecimal newVal) {
     this.cost3 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost3(double newVal) {
+    this.cost3 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double cost4;
+	private BigDecimal cost4;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost4(){
+	public BigDecimal getCost4(){
     return cost4; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost4(Double newVal) {
+   * @generated
+   */	
+  public void setCost4(BigDecimal newVal) {
     this.cost4 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost4(double newVal) {
+    this.cost4 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double cost5;
+	private BigDecimal cost5;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost5(){
+	public BigDecimal getCost5(){
     return cost5; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost5(Double newVal) {
+   * @generated
+   */	
+  public void setCost5(BigDecimal newVal) {
     this.cost5 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost5(double newVal) {
+    this.cost5 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double cost6;
+	private BigDecimal cost6;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost6(){
+	public BigDecimal getCost6(){
     return cost6; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost6(Double newVal) {
+   * @generated
+   */	
+  public void setCost6(BigDecimal newVal) {
     this.cost6 = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCost6(double newVal) {
+    this.cost6 = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -2989,68 +3026,86 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double copier1PricePerSheet;
+	private BigDecimal copier1PricePerSheet;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCopier1PricePerSheet(){
+	public BigDecimal getCopier1PricePerSheet(){
     return copier1PricePerSheet; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCopier1PricePerSheet(Double newVal) {
+   * @generated
+   */	
+  public void setCopier1PricePerSheet(BigDecimal newVal) {
     this.copier1PricePerSheet = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCopier1PricePerSheet(double newVal) {
+    this.copier1PricePerSheet = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double copier2PricePerSheet;
+	private BigDecimal copier2PricePerSheet;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCopier2PricePerSheet(){
+	public BigDecimal getCopier2PricePerSheet(){
     return copier2PricePerSheet; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCopier2PricePerSheet(Double newVal) {
+   * @generated
+   */	
+  public void setCopier2PricePerSheet(BigDecimal newVal) {
     this.copier2PricePerSheet = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCopier2PricePerSheet(double newVal) {
+    this.copier2PricePerSheet = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double copier3PricePerSheet;
+	private BigDecimal copier3PricePerSheet;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCopier3PricePerSheet(){
+	public BigDecimal getCopier3PricePerSheet(){
     return copier3PricePerSheet; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCopier3PricePerSheet(Double newVal) {
+   * @generated
+   */	
+  public void setCopier3PricePerSheet(BigDecimal newVal) {
     this.copier3PricePerSheet = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCopier3PricePerSheet(double newVal) {
+    this.copier3PricePerSheet = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -3606,12 +3661,12 @@ public class StockDefinition extends ModelBase {
     if (QTYBREAK4.equals(propertyName)) setQtybreak4((Integer)newValue); else
     if (QTYBREAK5.equals(propertyName)) setQtybreak5((Integer)newValue); else
     if (QTYBREAK6.equals(propertyName)) setQtybreak6((Integer)newValue); else
-    if (COST1.equals(propertyName)) setCost1((Double)newValue); else
-    if (COST2.equals(propertyName)) setCost2((Double)newValue); else
-    if (COST3.equals(propertyName)) setCost3((Double)newValue); else
-    if (COST4.equals(propertyName)) setCost4((Double)newValue); else
-    if (COST5.equals(propertyName)) setCost5((Double)newValue); else
-    if (COST6.equals(propertyName)) setCost6((Double)newValue); else
+    if (COST1.equals(propertyName)) setCost1((BigDecimal)newValue); else
+    if (COST2.equals(propertyName)) setCost2((BigDecimal)newValue); else
+    if (COST3.equals(propertyName)) setCost3((BigDecimal)newValue); else
+    if (COST4.equals(propertyName)) setCost4((BigDecimal)newValue); else
+    if (COST5.equals(propertyName)) setCost5((BigDecimal)newValue); else
+    if (COST6.equals(propertyName)) setCost6((BigDecimal)newValue); else
     if (CWT1.equals(propertyName)) setCwt1((Double)newValue); else
     if (CWT2.equals(propertyName)) setCwt2((Double)newValue); else
     if (CWT3.equals(propertyName)) setCwt3((Double)newValue); else
@@ -3682,9 +3737,9 @@ public class StockDefinition extends ModelBase {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
     if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
-    if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((Double)newValue); else
-    if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((Double)newValue); else
-    if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((Double)newValue); else
+    if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((BigDecimal)newValue); else
+    if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((BigDecimal)newValue); else
+    if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((BigDecimal)newValue); else
     if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
     if (MILL.equals(propertyName)) setMill((Integer)newValue); else
     if (LOTCOUNT.equals(propertyName)) setLotcount((Integer)newValue); else
@@ -3776,17 +3831,17 @@ public class StockDefinition extends ModelBase {
     if (QTYBREAK6.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (COST1.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COST2.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COST3.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COST4.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COST5.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COST6.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (CWT1.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (CWT2.equals(propertyName)) 
@@ -3928,11 +3983,11 @@ public class StockDefinition extends ModelBase {
     if (CHARGES.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, ChargeDefinition.class};		
     if (COPIER1PRICEPERSHEET.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COPIER2PRICEPERSHEET.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COPIER3PRICEPERSHEET.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (STOCKCHANGES.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, StockChanges.class};		
     if (MILL.equals(propertyName)) 

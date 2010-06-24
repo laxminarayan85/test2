@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -468,24 +469,30 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double laborRate;
+	private BigDecimal laborRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborRate(){
+	public BigDecimal getLaborRate(){
     return laborRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborRate(Double newVal) {
+   * @generated
+   */	
+  public void setLaborRate(BigDecimal newVal) {
     this.laborRate = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setLaborRate(double newVal) {
+    this.laborRate = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -512,68 +519,86 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double fixedWaste;
+	private BigDecimal fixedWaste;
 	
 	/**
 	 * @generated
  	 */
-	public Double getFixedWaste(){
+	public BigDecimal getFixedWaste(){
     return fixedWaste; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFixedWaste(Double newVal) {
+   * @generated
+   */	
+  public void setFixedWaste(BigDecimal newVal) {
     this.fixedWaste = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setFixedWaste(double newVal) {
+    this.fixedWaste = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double minLabor;
+	private BigDecimal minLabor;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMinLabor(){
+	public BigDecimal getMinLabor(){
     return minLabor; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMinLabor(Double newVal) {
+   * @generated
+   */	
+  public void setMinLabor(BigDecimal newVal) {
     this.minLabor = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMinLabor(double newVal) {
+    this.minLabor = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double setupMin;
+	private BigDecimal setupMin;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSetupMin(){
+	public BigDecimal getSetupMin(){
     return setupMin; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSetupMin(Double newVal) {
+   * @generated
+   */	
+  public void setSetupMin(BigDecimal newVal) {
     this.setupMin = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setSetupMin(double newVal) {
+    this.setupMin = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -600,24 +625,30 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double workTurnSetup;
+	private BigDecimal workTurnSetup;
 	
 	/**
 	 * @generated
  	 */
-	public Double getWorkTurnSetup(){
+	public BigDecimal getWorkTurnSetup(){
     return workTurnSetup; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWorkTurnSetup(Double newVal) {
+   * @generated
+   */	
+  public void setWorkTurnSetup(BigDecimal newVal) {
     this.workTurnSetup = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setWorkTurnSetup(double newVal) {
+    this.workTurnSetup = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -644,24 +675,30 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double washupFee;
+	private BigDecimal washupFee;
 	
 	/**
 	 * @generated
  	 */
-	public Double getWashupFee(){
+	public BigDecimal getWashupFee(){
     return washupFee; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWashupFee(Double newVal) {
+   * @generated
+   */	
+  public void setWashupFee(BigDecimal newVal) {
     this.washupFee = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setWashupFee(double newVal) {
+    this.washupFee = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -710,24 +747,30 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double washupPerFountain;
+	private BigDecimal washupPerFountain;
 	
 	/**
 	 * @generated
  	 */
-	public Double getWashupPerFountain(){
+	public BigDecimal getWashupPerFountain(){
     return washupPerFountain; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWashupPerFountain(Double newVal) {
+   * @generated
+   */	
+  public void setWashupPerFountain(BigDecimal newVal) {
     this.washupPerFountain = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setWashupPerFountain(double newVal) {
+    this.washupPerFountain = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1177,18 +1220,18 @@ public class PressDefinition extends ModelBase {
     if (INTEGRATEDDEVICE.equals(propertyName)) setIntegratedDevice((Boolean)newValue); else
     if (MAXPAPERSIZE.equals(propertyName)) setMaxPaperSize((String)newValue); else
     if (MINPAPERSIZE.equals(propertyName)) setMinPaperSize((String)newValue); else
-    if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+    if (LABORRATE.equals(propertyName)) setLaborRate((BigDecimal)newValue); else
     if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Double)newValue); else
-    if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Double)newValue); else
-    if (MINLABOR.equals(propertyName)) setMinLabor((Double)newValue); else
-    if (SETUPMIN.equals(propertyName)) setSetupMin((Double)newValue); else
+    if (FIXEDWASTE.equals(propertyName)) setFixedWaste((BigDecimal)newValue); else
+    if (MINLABOR.equals(propertyName)) setMinLabor((BigDecimal)newValue); else
+    if (SETUPMIN.equals(propertyName)) setSetupMin((BigDecimal)newValue); else
     if (SETUPADDSIG.equals(propertyName)) setSetupAddSig((Long)newValue); else
-    if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((Double)newValue); else
+    if (WORKTURNSETUP.equals(propertyName)) setWorkTurnSetup((BigDecimal)newValue); else
     if (SETUPADDHEAD.equals(propertyName)) setSetupAddHead((Long)newValue); else
-    if (WASHUPFEE.equals(propertyName)) setWashupFee((Double)newValue); else
+    if (WASHUPFEE.equals(propertyName)) setWashupFee((BigDecimal)newValue); else
     if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Long)newValue); else
     if (WASHUPMIN.equals(propertyName)) setWashupMin((Long)newValue); else
-    if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((Double)newValue); else
+    if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((BigDecimal)newValue); else
     if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
     if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
     if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
@@ -1238,29 +1281,29 @@ public class PressDefinition extends ModelBase {
     if (MINPAPERSIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (LABORRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (FIXEDWASTE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MINLABOR.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETUPMIN.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETUPADDSIG.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (WORKTURNSETUP.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETUPADDHEAD.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (WASHUPFEE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ADDSIGADDHEAD.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (WASHUPMIN.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (WASHUPPERFOUNTAIN.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (GRIPEDGE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (PERFECTOR.equals(propertyName)) 

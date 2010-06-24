@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -141,24 +142,32 @@ public class InkCharge extends Charge {
 	 * @generated
 	 */	
  	@Basic
-	private Double pricePerPound;
+	private BigDecimal pricePerPound;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPricePerPound(){
+	public BigDecimal getPricePerPound(){
     return pricePerPound; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPricePerPound(Double newVal) {
+   * @generated
+   */	
+  public void setPricePerPound(BigDecimal newVal) {
     this.pricePerPound = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setPricePerPound(double newVal) {
+    this.pricePerPound = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -202,7 +211,7 @@ public class InkCharge extends Charge {
     if (COVERAGE.equals(propertyName)) setCoverage((Double)newValue); else
     if (INKWEIGHT.equals(propertyName)) setInkWeight((Double)newValue); else
     if (COVERPERPOUND.equals(propertyName)) setCoverPerPound((Double)newValue); else
-    if (PRICEPERPOUND.equals(propertyName)) setPricePerPound((Double)newValue); else
+    if (PRICEPERPOUND.equals(propertyName)) setPricePerPound((BigDecimal)newValue); else
     if (POUNDSOFINK.equals(propertyName)) setPoundsOfInk((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -220,7 +229,7 @@ public class InkCharge extends Charge {
     if (COVERPERPOUND.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (PRICEPERPOUND.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (POUNDSOFINK.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);

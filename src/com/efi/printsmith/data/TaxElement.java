@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -77,24 +78,32 @@ public class TaxElement extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double rate;
+	private BigDecimal rate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getRate(){
+	public BigDecimal getRate(){
     return rate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(Double newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setRate(double newVal) {
+    this.rate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -201,7 +210,7 @@ public class TaxElement extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
     if (SHOWTAX.equals(propertyName)) setShowTax((Boolean)newValue); else
     if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) setUserForSeparateShippingTax((Boolean)newValue); else
     if (TAX.equals(propertyName)) setTax((TaxTablesElements)newValue); else
@@ -216,7 +225,7 @@ public class TaxElement extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (RATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SHOWTAX.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (USERFORSEPARATESHIPPINGTAX.equals(propertyName)) 

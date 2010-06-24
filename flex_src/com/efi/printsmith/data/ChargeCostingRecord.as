@@ -18,7 +18,6 @@ package com.efi.printsmith.data
 		public var actualUnitCount:Number = 0;
 		public var actualSpoilage:Number = 0;
 		public var actualMaterials:Number = 0;
-		public var attribute3:int = 0;
 		public var setupTime:Number = 0;
 		public var runTime:Number = 0;
 		public var laborUnitCost:Number = 0;

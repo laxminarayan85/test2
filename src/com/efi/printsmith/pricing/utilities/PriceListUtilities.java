@@ -27,7 +27,7 @@ public class PriceListUtilities {
 			retVal = chargePrice * rate;
 		} else if (priceList.getIsDiscount()) {
 			if (job != null) {
-				retVal = job.getPricingRecord().getTotalPrice() * rate;
+				retVal = job.getPricingRecord().getTotalPrice().doubleValue() * rate;
 			}
 		} else {
 			retVal = rate;
@@ -46,7 +46,7 @@ public class PriceListUtilities {
 		
 		for (int i = 0; i < elements.size(); i++) {
 			if (elements.get(i).getQuantity() >= copies  && elements.get(i).getColor() == colors && elements.get(i).getSide() == side) {
-				retVal = elements.get(i).getAmount();
+				retVal = elements.get(i).getAmount().doubleValue();
 				break;
 			}
 		}
@@ -74,7 +74,7 @@ public class PriceListUtilities {
 		if (elements.size() <= 0) return retVal;
 		
 		if (lookupQty <= elements.get(0).getQuantity()) {
-			retVal = elements.get(0).getAmount();
+			retVal = elements.get(0).getAmount().doubleValue();
 		} else {
 			int lastElementIndex = 0;
 			boolean found = false;
@@ -118,7 +118,7 @@ public class PriceListUtilities {
 			}
 			
 			if (doAdditional) {
-				retVal = elements.get(base).getAmount();
+				retVal = elements.get(base).getAmount().doubleValue();
 				lookupQty = lookupQty - elements.get(base).getQuantity();
 				
 				if (priceList.getIsRate()) {
@@ -128,26 +128,26 @@ public class PriceListUtilities {
 					qty = lookupQty;
 					
 					if (priceList.getInterpolate()) {
-						retVal += (elements.get(elements.size()).getAmount() / elements.get(elements.size()).getQuantity()) * qty;
+						retVal += (elements.get(elements.size()).getAmount().doubleValue() / elements.get(elements.size()).getQuantity()) * qty;
 					} else {
 						if ((lookupQty%elements.get(elements.size()).getQuantity()) != 0) {
 							lookupQty = lookupQty + (elements.get(elements.size()).getQuantity() - (lookupQty&elements.get(elements.size()).getQuantity()));
 						}
-						retVal = retVal + ((lookupQty / elements.get(elements.size()).getQuantity()) * elements.get(elements.size()).getAmount());
+						retVal = retVal + ((lookupQty / elements.get(elements.size()).getQuantity()) * elements.get(elements.size()).getAmount().doubleValue());
 					}
 				}
 			} else if (priceList.getInterpolate()) {
-				retVal = elements.get(base).getAmount();
+				retVal = elements.get(base).getAmount().doubleValue();
 				qty = lookupQty - elements.get(base).getQuantity();
 				
 				if (qty!= 0) {
 					long qtyRange = elements.get(base).getQuantity() - elements.get(last).getQuantity();
 					long lookupRange = qty - elements.get(last).getQuantity();
-					double priceRange = elements.get(last).getAmount() - retVal;
-					retVal = ((lookupRange * priceRange) / qtyRange) + elements.get(last).getAmount();
+					double priceRange = elements.get(last).getAmount().doubleValue() - retVal;
+					retVal = ((lookupRange * priceRange) / qtyRange) + elements.get(last).getAmount().doubleValue();
 				}
 			} else {
-				retVal = elements.get(last).getAmount();
+				retVal = elements.get(last).getAmount().doubleValue();
 			}
 		}
 		return retVal;
@@ -169,7 +169,7 @@ public class PriceListUtilities {
 					}
 				}
 				if (elementToUse.getQuantity() > 0) {
-					retVal = 3600/elementToUse.getAmount();
+					retVal = 3600/elementToUse.getAmount().doubleValue();
 				}
 			}
 		}
@@ -192,7 +192,7 @@ public class PriceListUtilities {
 					}
 				}
 				if (elementToUse.getQuantity() > 0) {
-					retVal = elementToUse.getAmount();
+					retVal = elementToUse.getAmount().doubleValue();
 				}
 			}
 		}

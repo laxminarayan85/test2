@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -255,24 +256,32 @@ public class PreferencesAccounting extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double creditLimit;
+	private BigDecimal creditLimit;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCreditLimit(){
+	public BigDecimal getCreditLimit(){
     return creditLimit; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCreditLimit(Double newVal) {
+   * @generated
+   */	
+  public void setCreditLimit(BigDecimal newVal) {
     this.creditLimit = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setCreditLimit(double newVal) {
+    this.creditLimit = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -1414,7 +1423,7 @@ public class PreferencesAccounting extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (CREDITLIMIT.equals(propertyName)) setCreditLimit((Double)newValue); else
+    if (CREDITLIMIT.equals(propertyName)) setCreditLimit((BigDecimal)newValue); else
     if (FINANCECHANGE.equals(propertyName)) setFinanceChange((Double)newValue); else
     if (INACTIVEPERIOD.equals(propertyName)) setInactivePeriod((Double)newValue); else
     if (REMOVEDRAFTSFROMDEPOSIT.equals(propertyName)) setRemoveDraftsFromDeposit((Boolean)newValue); else
@@ -1474,7 +1483,7 @@ public class PreferencesAccounting extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (CREDITLIMIT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (FINANCECHANGE.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (INACTIVEPERIOD.equals(propertyName)) 

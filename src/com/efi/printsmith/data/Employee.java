@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -329,24 +330,32 @@ public class Employee extends Party {
 	 * @generated
 	 */	
  	@Basic
-	private Double rate;
+	private BigDecimal rate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getRate(){
+	public BigDecimal getRate(){
     return rate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(Double newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setRate(double newVal) {
+    this.rate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -1229,7 +1238,7 @@ public class Employee extends Party {
     if (CLOCKIN.equals(propertyName)) setClockIn((Boolean)newValue); else
     if (CLOCKOUT.equals(propertyName)) setClockOut((Boolean)newValue); else
     if (CLOCKBREAK.equals(propertyName)) setClockBreak((Boolean)newValue); else
-    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
     if (ACTIVE.equals(propertyName)) setActive((Boolean)newValue); else
     if (PINREQUIRED.equals(propertyName)) setPinRequired((Boolean)newValue); else
     if (PIN.equals(propertyName)) setPin((String)newValue); else
@@ -1285,7 +1294,7 @@ public class Employee extends Party {
     if (CLOCKBREAK.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (RATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ACTIVE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (PINREQUIRED.equals(propertyName)) 

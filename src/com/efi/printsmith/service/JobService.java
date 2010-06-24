@@ -46,7 +46,7 @@ public class JobService extends SnowmassHibernateService {
 			for (int i=0; i < job.getCharges().size(); i++) {
 				PriceChargeEngine.priceCharge(job.getCharges().get(i));
 				
-				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
 			}
 		}
 		return job;
@@ -72,7 +72,7 @@ public class JobService extends SnowmassHibernateService {
 			for (int i=0; i < job.getCharges().size(); i++) {
 				PriceChargeEngine.priceCharge(job.getCharges().get(i));
 				
-				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice() + job.getCharges().get(i).getPrice());
+				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
 			}
 		}
 		return job;

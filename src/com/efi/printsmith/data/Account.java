@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -1356,90 +1357,114 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double autoPayMinimum;
+	private BigDecimal autoPayMinimum;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAutoPayMinimum(){
+	public BigDecimal getAutoPayMinimum(){
     return autoPayMinimum; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAutoPayMinimum(Double newVal) {
+   * @generated
+   */	
+  public void setAutoPayMinimum(BigDecimal newVal) {
     this.autoPayMinimum = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAutoPayMinimum(double newVal) {
+    this.autoPayMinimum = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double autoPayMaximum;
+	private BigDecimal autoPayMaximum;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAutoPayMaximum(){
+	public BigDecimal getAutoPayMaximum(){
     return autoPayMaximum; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAutoPayMaximum(Double newVal) {
+   * @generated
+   */	
+  public void setAutoPayMaximum(BigDecimal newVal) {
     this.autoPayMaximum = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAutoPayMaximum(double newVal) {
+    this.autoPayMaximum = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double autoPayTotal;
+	private BigDecimal autoPayTotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAutoPayTotal(){
+	public BigDecimal getAutoPayTotal(){
     return autoPayTotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAutoPayTotal(Double newVal) {
+   * @generated
+   */	
+  public void setAutoPayTotal(BigDecimal newVal) {
     this.autoPayTotal = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAutoPayTotal(double newVal) {
+    this.autoPayTotal = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double autoPayAmount;
+	private BigDecimal autoPayAmount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getAutoPayAmount(){
+	public BigDecimal getAutoPayAmount(){
     return autoPayAmount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAutoPayAmount(Double newVal) {
+   * @generated
+   */	
+  public void setAutoPayAmount(BigDecimal newVal) {
     this.autoPayAmount = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAutoPayAmount(double newVal) {
+    this.autoPayAmount = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1576,68 +1601,86 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double onAccount;
+	private BigDecimal onAccount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getOnAccount(){
+	public BigDecimal getOnAccount(){
     return onAccount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOnAccount(Double newVal) {
+   * @generated
+   */	
+  public void setOnAccount(BigDecimal newVal) {
     this.onAccount = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setOnAccount(double newVal) {
+    this.onAccount = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double balance;
+	private BigDecimal balance;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBalance(){
+	public BigDecimal getBalance(){
     return balance; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBalance(Double newVal) {
+   * @generated
+   */	
+  public void setBalance(BigDecimal newVal) {
     this.balance = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setBalance(double newVal) {
+    this.balance = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double salesMonth;
+	private BigDecimal salesMonth;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSalesMonth(){
+	public BigDecimal getSalesMonth(){
     return salesMonth; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSalesMonth(Double newVal) {
+   * @generated
+   */	
+  public void setSalesMonth(BigDecimal newVal) {
     this.salesMonth = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setSalesMonth(double newVal) {
+    this.salesMonth = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1664,46 +1707,58 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double salesYear;
+	private BigDecimal salesYear;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSalesYear(){
+	public BigDecimal getSalesYear(){
     return salesYear; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSalesYear(Double newVal) {
+   * @generated
+   */	
+  public void setSalesYear(BigDecimal newVal) {
     this.salesYear = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setSalesYear(double newVal) {
+    this.salesYear = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double salesPriorYear;
+	private BigDecimal salesPriorYear;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSalesPriorYear(){
+	public BigDecimal getSalesPriorYear(){
     return salesPriorYear; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSalesPriorYear(Double newVal) {
+   * @generated
+   */	
+  public void setSalesPriorYear(BigDecimal newVal) {
     this.salesPriorYear = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setSalesPriorYear(double newVal) {
+    this.salesPriorYear = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1774,24 +1829,30 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double creditLimit;
+	private BigDecimal creditLimit;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCreditLimit(){
+	public BigDecimal getCreditLimit(){
     return creditLimit; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCreditLimit(Double newVal) {
+   * @generated
+   */	
+  public void setCreditLimit(BigDecimal newVal) {
     this.creditLimit = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCreditLimit(double newVal) {
+    this.creditLimit = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1950,112 +2011,142 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double discountDollarAmt;
+	private BigDecimal discountDollarAmt;
 	
 	/**
 	 * @generated
  	 */
-	public Double getDiscountDollarAmt(){
+	public BigDecimal getDiscountDollarAmt(){
     return discountDollarAmt; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDiscountDollarAmt(Double newVal) {
+   * @generated
+   */	
+  public void setDiscountDollarAmt(BigDecimal newVal) {
     this.discountDollarAmt = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setDiscountDollarAmt(double newVal) {
+    this.discountDollarAmt = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double balance30Day;
+	private BigDecimal balance30Day;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBalance30Day(){
+	public BigDecimal getBalance30Day(){
     return balance30Day; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBalance30Day(Double newVal) {
+   * @generated
+   */	
+  public void setBalance30Day(BigDecimal newVal) {
     this.balance30Day = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setBalance30Day(double newVal) {
+    this.balance30Day = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double balance60Day;
+	private BigDecimal balance60Day;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBalance60Day(){
+	public BigDecimal getBalance60Day(){
     return balance60Day; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBalance60Day(Double newVal) {
+   * @generated
+   */	
+  public void setBalance60Day(BigDecimal newVal) {
     this.balance60Day = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setBalance60Day(double newVal) {
+    this.balance60Day = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double balance90Day;
+	private BigDecimal balance90Day;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBalance90Day(){
+	public BigDecimal getBalance90Day(){
     return balance90Day; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBalance90Day(Double newVal) {
+   * @generated
+   */	
+  public void setBalance90Day(BigDecimal newVal) {
     this.balance90Day = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setBalance90Day(double newVal) {
+    this.balance90Day = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double balanceCurrent;
+	private BigDecimal balanceCurrent;
 	
 	/**
 	 * @generated
  	 */
-	public Double getBalanceCurrent(){
+	public BigDecimal getBalanceCurrent(){
     return balanceCurrent; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBalanceCurrent(Double newVal) {
+   * @generated
+   */	
+  public void setBalanceCurrent(BigDecimal newVal) {
     this.balanceCurrent = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setBalanceCurrent(double newVal) {
+    this.balanceCurrent = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -2480,26 +2571,26 @@ public class Account extends ModelBase {
     if (AUTOPAYMODE.equals(propertyName)) setAutoPayMode((Long)newValue); else
     if (AUTOPAYINTERVAL.equals(propertyName)) setAutoPayInterval((Long)newValue); else
     if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((String)newValue); else
-    if (AUTOPAYMINIMUM.equals(propertyName)) setAutoPayMinimum((Double)newValue); else
-    if (AUTOPAYMAXIMUM.equals(propertyName)) setAutoPayMaximum((Double)newValue); else
-    if (AUTOPAYTOTAL.equals(propertyName)) setAutoPayTotal((Double)newValue); else
-    if (AUTOPAYAMOUNT.equals(propertyName)) setAutoPayAmount((Double)newValue); else
+    if (AUTOPAYMINIMUM.equals(propertyName)) setAutoPayMinimum((BigDecimal)newValue); else
+    if (AUTOPAYMAXIMUM.equals(propertyName)) setAutoPayMaximum((BigDecimal)newValue); else
+    if (AUTOPAYTOTAL.equals(propertyName)) setAutoPayTotal((BigDecimal)newValue); else
+    if (AUTOPAYAMOUNT.equals(propertyName)) setAutoPayAmount((BigDecimal)newValue); else
     if (AUTOPAYSTOP.equals(propertyName)) setAutoPayStop((Date)newValue); else
     if (AUTOPAYSTART.equals(propertyName)) setAutoPayStart((Date)newValue); else
     if (AUTOPAYLASTPOSTED.equals(propertyName)) setAutoPayLastPosted((Date)newValue); else
     if (AUTOPAYPAYMENTQTY.equals(propertyName)) setAutoPayPaymentQty((Long)newValue); else
     if (LASTNOTIFIEDDATE.equals(propertyName)) setLastNotifiedDate((Date)newValue); else
     if (RESALECERTEXPIRATIONDATE.equals(propertyName)) setResaleCertExpirationDate((Date)newValue); else
-    if (ONACCOUNT.equals(propertyName)) setOnAccount((Double)newValue); else
-    if (BALANCE.equals(propertyName)) setBalance((Double)newValue); else
-    if (SALESMONTH.equals(propertyName)) setSalesMonth((Double)newValue); else
+    if (ONACCOUNT.equals(propertyName)) setOnAccount((BigDecimal)newValue); else
+    if (BALANCE.equals(propertyName)) setBalance((BigDecimal)newValue); else
+    if (SALESMONTH.equals(propertyName)) setSalesMonth((BigDecimal)newValue); else
     if (ORDERSMONTH.equals(propertyName)) setOrdersMonth((Long)newValue); else
-    if (SALESYEAR.equals(propertyName)) setSalesYear((Double)newValue); else
-    if (SALESPRIORYEAR.equals(propertyName)) setSalesPriorYear((Double)newValue); else
+    if (SALESYEAR.equals(propertyName)) setSalesYear((BigDecimal)newValue); else
+    if (SALESPRIORYEAR.equals(propertyName)) setSalesPriorYear((BigDecimal)newValue); else
     if (ORDERSYEAR.equals(propertyName)) setOrdersYear((Long)newValue); else
     if (ORDERSTOTAL.equals(propertyName)) setOrdersTotal((Long)newValue); else
     if (ESTIMATECOUNT.equals(propertyName)) setEstimateCount((Long)newValue); else
-    if (CREDITLIMIT.equals(propertyName)) setCreditLimit((Double)newValue); else
+    if (CREDITLIMIT.equals(propertyName)) setCreditLimit((BigDecimal)newValue); else
     if (DISCOUNT.equals(propertyName)) setDiscount((Double)newValue); else
     if (TERMSNET.equals(propertyName)) setTermsNet((Long)newValue); else
     if (TERMSDISCOUNT.equals(propertyName)) setTermsDiscount((Double)newValue); else
@@ -2507,11 +2598,11 @@ public class Account extends ModelBase {
     if (FINANCEYEAR.equals(propertyName)) setFinanceYear((Double)newValue); else
     if (ESTIMATESWON.equals(propertyName)) setEstimatesWon((Long)newValue); else
     if (ESTIMATESLOST.equals(propertyName)) setEstimatesLost((Long)newValue); else
-    if (DISCOUNTDOLLARAMT.equals(propertyName)) setDiscountDollarAmt((Double)newValue); else
-    if (BALANCE30DAY.equals(propertyName)) setBalance30Day((Double)newValue); else
-    if (BALANCE60DAY.equals(propertyName)) setBalance60Day((Double)newValue); else
-    if (BALANCE90DAY.equals(propertyName)) setBalance90Day((Double)newValue); else
-    if (BALANCECURRENT.equals(propertyName)) setBalanceCurrent((Double)newValue); else
+    if (DISCOUNTDOLLARAMT.equals(propertyName)) setDiscountDollarAmt((BigDecimal)newValue); else
+    if (BALANCE30DAY.equals(propertyName)) setBalance30Day((BigDecimal)newValue); else
+    if (BALANCE60DAY.equals(propertyName)) setBalance60Day((BigDecimal)newValue); else
+    if (BALANCE90DAY.equals(propertyName)) setBalance90Day((BigDecimal)newValue); else
+    if (BALANCECURRENT.equals(propertyName)) setBalanceCurrent((BigDecimal)newValue); else
     if (TYPE.equals(propertyName)) setType((String)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
@@ -2620,13 +2711,13 @@ public class Account extends ModelBase {
     if (CREDITCARDTYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (AUTOPAYMINIMUM.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (AUTOPAYMAXIMUM.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (AUTOPAYTOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (AUTOPAYAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (AUTOPAYSTOP.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (AUTOPAYSTART.equals(propertyName)) 
@@ -2640,17 +2731,17 @@ public class Account extends ModelBase {
     if (RESALECERTEXPIRATIONDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (ONACCOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BALANCE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SALESMONTH.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ORDERSMONTH.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (SALESYEAR.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SALESPRIORYEAR.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (ORDERSYEAR.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (ORDERSTOTAL.equals(propertyName)) 
@@ -2658,7 +2749,7 @@ public class Account extends ModelBase {
     if (ESTIMATECOUNT.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (CREDITLIMIT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DISCOUNT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (TERMSNET.equals(propertyName)) 
@@ -2674,15 +2765,15 @@ public class Account extends ModelBase {
     if (ESTIMATESLOST.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (DISCOUNTDOLLARAMT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BALANCE30DAY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BALANCE60DAY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BALANCE90DAY.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BALANCECURRENT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (TAXTABLE.equals(propertyName)) 

@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -1826,12 +1827,12 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Double totalCost;
+  private BigDecimal totalCost;
 
 	/**
    * @generated
  	 */
-  public Double getTotalCost(){
+  public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
@@ -1839,22 +1840,29 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-  public void setTotalCost(Double newVal) {
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
 
+
+	/**
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
+    this.totalCost = BigDecimal.valueOf(newVal);
+  }
 
 
 	/**
    * @generated
    */	
  	@Basic
-  private Double unitCost;
+  private BigDecimal unitCost;
 
 	/**
    * @generated
  	 */
-  public Double getUnitCost(){
+  public BigDecimal getUnitCost(){
     return unitCost; 
   }
 
@@ -1862,10 +1870,17 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */	
-  public void setUnitCost(Double newVal) {
+  public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
 
+
+	/**
+   * @generated
+   */	
+  public void setUnitCost(double newVal) {
+    this.unitCost = BigDecimal.valueOf(newVal);
+  }
 
 
 	/**
@@ -2872,8 +2887,8 @@ public class JobBase extends ModelBase {
     if (IMPOSITIONSPERRUN.equals(propertyName)) setImpositionsPerRun((Long)newValue); else
     if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
-    if (TOTALCOST.equals(propertyName)) setTotalCost((Double)newValue); else
-    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
+    if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
     if (NOTES.equals(propertyName)) setNotes((String)newValue); else
     if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
@@ -3041,9 +3056,9 @@ public class JobBase extends ModelBase {
     if (MARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (TOTALCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (UNITCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (NOTES.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (SHOWNOTES.equals(propertyName)) 

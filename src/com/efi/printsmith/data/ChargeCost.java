@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -99,46 +100,62 @@ public class ChargeCost extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double setupCost;
+	private BigDecimal setupCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSetupCost(){
+	public BigDecimal getSetupCost(){
     return setupCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSetupCost(Double newVal) {
+   * @generated
+   */	
+  public void setSetupCost(BigDecimal newVal) {
     this.setupCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setSetupCost(double newVal) {
+    this.setupCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double unitCost;
+	private BigDecimal unitCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getUnitCost(){
+	public BigDecimal getUnitCost(){
     return unitCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUnitCost(Double newVal) {
+   * @generated
+   */	
+  public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitCost(double newVal) {
+    this.unitCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -165,68 +182,92 @@ public class ChargeCost extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double fixedMaterials;
+	private BigDecimal fixedMaterials;
 	
 	/**
 	 * @generated
  	 */
-	public Double getFixedMaterials(){
+	public BigDecimal getFixedMaterials(){
     return fixedMaterials; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFixedMaterials(Double newVal) {
+   * @generated
+   */	
+  public void setFixedMaterials(BigDecimal newVal) {
     this.fixedMaterials = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setFixedMaterials(double newVal) {
+    this.fixedMaterials = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double unitMaterials;
+	private BigDecimal unitMaterials;
 	
 	/**
 	 * @generated
  	 */
-	public Double getUnitMaterials(){
+	public BigDecimal getUnitMaterials(){
     return unitMaterials; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUnitMaterials(Double newVal) {
+   * @generated
+   */	
+  public void setUnitMaterials(BigDecimal newVal) {
     this.unitMaterials = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitMaterials(double newVal) {
+    this.unitMaterials = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double laborRate;
+	private BigDecimal laborRate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getLaborRate(){
+	public BigDecimal getLaborRate(){
     return laborRate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLaborRate(Double newVal) {
+   * @generated
+   */	
+  public void setLaborRate(BigDecimal newVal) {
     this.laborRate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborRate(double newVal) {
+    this.laborRate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -275,24 +316,32 @@ public class ChargeCost extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double totalUnitCost;
+	private BigDecimal totalUnitCost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalUnitCost(){
+	public BigDecimal getTotalUnitCost(){
     return totalUnitCost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalUnitCost(Double newVal) {
+   * @generated
+   */	
+  public void setTotalUnitCost(BigDecimal newVal) {
     this.totalUnitCost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalUnitCost(double newVal) {
+    this.totalUnitCost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -361,15 +410,15 @@ public class ChargeCost extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (SETUPCOST.equals(propertyName)) setSetupCost((Double)newValue); else
-    if (UNITCOST.equals(propertyName)) setUnitCost((Double)newValue); else
+    if (SETUPCOST.equals(propertyName)) setSetupCost((BigDecimal)newValue); else
+    if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
     if (RATETABLE.equals(propertyName)) setRateTable((PriceList)newValue); else
-    if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((Double)newValue); else
-    if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((Double)newValue); else
-    if (LABORRATE.equals(propertyName)) setLaborRate((Double)newValue); else
+    if (FIXEDMATERIALS.equals(propertyName)) setFixedMaterials((BigDecimal)newValue); else
+    if (UNITMATERIALS.equals(propertyName)) setUnitMaterials((BigDecimal)newValue); else
+    if (LABORRATE.equals(propertyName)) setLaborRate((BigDecimal)newValue); else
     if (SETUPMINUTES.equals(propertyName)) setSetupMinutes((Double)newValue); else
     if (PIECESPERHOUR.equals(propertyName)) setPiecesPerHour((Double)newValue); else
-    if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((Double)newValue); else
+    if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((BigDecimal)newValue); else
     if (COSTINGMETHOD.equals(propertyName)) setCostingMethod((String)newValue); else
     if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
     super.setProperty(propertyName, newValue);
@@ -382,23 +431,23 @@ public class ChargeCost extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (SETUPCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (UNITCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (RATETABLE.equals(propertyName)) 
       return new Class<?>[] {PriceList.class};		
     if (FIXEDMATERIALS.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (UNITMATERIALS.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (LABORRATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SETUPMINUTES.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (PIECESPERHOUR.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (TOTALUNITCOST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (COSTINGMETHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (SPEEDTABLE.equals(propertyName)) 

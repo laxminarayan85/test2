@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -145,24 +146,32 @@ public class PreferencesCashRegister extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double rate;
+	private BigDecimal rate;
 	
 	/**
 	 * @generated
  	 */
-	public Double getRate(){
+	public BigDecimal getRate(){
     return rate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(Double newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setRate(double newVal) {
+    this.rate = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -229,7 +238,7 @@ public class PreferencesCashRegister extends ModelBase {
     if (TAX.equals(propertyName)) setTax((Boolean)newValue); else
     if (TITLE.equals(propertyName)) setTitle((String)newValue); else
     if (CATEGORY.equals(propertyName)) setCategory((SalesCategory)newValue); else
-    if (RATE.equals(propertyName)) setRate((Double)newValue); else
+    if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (TAXCODES.equals(propertyName)) setTaxCodes((TaxCodes)newValue); else
     super.setProperty(propertyName, newValue);
@@ -248,7 +257,7 @@ public class PreferencesCashRegister extends ModelBase {
     if (CATEGORY.equals(propertyName)) 
       return new Class<?>[] {SalesCategory.class};		
     if (RATE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TAXTABLE.equals(propertyName)) 
       return new Class<?>[] {TaxTable.class};		
     if (TAXCODES.equals(propertyName)) 

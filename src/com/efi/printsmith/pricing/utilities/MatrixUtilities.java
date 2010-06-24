@@ -36,10 +36,10 @@ public class MatrixUtilities {
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
 			if (element.getQty() < qty) {
-				runningTotal += (element.getQty()-prevQty) * element.getPrice1();
+				runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
 				prevQty = element.getQty();
 			} else {
-				runningTotal += (qty-prevQty) * element.getPrice1();
+				runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
 				break;
 			}
 		}
@@ -57,10 +57,10 @@ public class MatrixUtilities {
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
 			if (element.getQty() < qty) {
-				runningTotal += (element.getQty()-prevQty) * element.getPrice1();
+				runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
 				prevQty = element.getQty();
 			} else {
-				runningTotal += (qty-prevQty) * element.getPrice1();
+				runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
 				break;
 			}
 		}
@@ -103,50 +103,50 @@ public class MatrixUtilities {
 			for (int i = 0; i < elements.size(); i++) {
 				if (elements.get(i).getQty() <= yLookup) {
 					if (element == 1)
-						cost = elements.get(i).getPrice1();
+						cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 2)
 						if (elements.get(i).getPrice2() != null)
-							cost = elements.get(i).getPrice2();
+							cost = elements.get(i).getPrice2().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 3)
 						if (elements.get(i).getPrice3() != null)
-							cost = elements.get(i).getPrice3();
+							cost = elements.get(i).getPrice3().doubleValue();
 					if (element == 4)
 						if (elements.get(i).getPrice4() != null)
-							cost = elements.get(i).getPrice4();
+							cost = elements.get(i).getPrice4().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 5)
 						if (elements.get(i).getPrice5() != null)
-							cost = elements.get(i).getPrice5();
+							cost = elements.get(i).getPrice5().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 6)
 						if (elements.get(i).getPrice6() != null)
-							cost = elements.get(i).getPrice6();
+							cost = elements.get(i).getPrice6().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 7)
 						if (elements.get(i).getPrice7() != null)
-							cost = elements.get(i).getPrice7();
+							cost = elements.get(i).getPrice7().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 8)
 						if (elements.get(i).getPrice8() != null)
-							cost = elements.get(i).getPrice8();
+							cost = elements.get(i).getPrice8().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 9)
 						if (elements.get(i).getPrice9() != null)
-							cost = elements.get(i).getPrice9();
+							cost = elements.get(i).getPrice9().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 10)
 						if (elements.get(i).getPrice10() != null)
-							cost = elements.get(i).getPrice10();
+							cost = elements.get(i).getPrice10().doubleValue();
 						else
-							cost = elements.get(i).getPrice1();
+							cost = elements.get(i).getPrice1().doubleValue();
 					break;
 				}
 			}
@@ -169,15 +169,15 @@ public class MatrixUtilities {
 				break;
 			}
 			lastQty = elements.get(i).getQty();
-			lastPrice = elements.get(i).getPrice1();
+			lastPrice = elements.get(i).getPrice1().doubleValue();
 		}
 		if (lastQty > 0) {
 			long qtyRange = elements.get(i).getQty() - lastQty;
 			long lookupRange = lookup - lastQty;
-			double priceRange = (elements.get(i).getPrice1() - lastPrice);
+			double priceRange = (elements.get(i).getPrice1().doubleValue() - lastPrice);
 			retVal = ((lookupRange * priceRange) / qtyRange) + lastPrice;
 		} else {
-			retVal = elements.get(i).getPrice1();
+			retVal = elements.get(i).getPrice1().doubleValue();
 		}
 		return retVal;
 	}

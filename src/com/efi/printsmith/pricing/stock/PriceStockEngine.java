@@ -143,13 +143,13 @@ public class PriceStockEngine {
 			sheetPrice = 0.0; /* By definition the stock price is already included in the copier rate */
 			priceLogEntry.setDescription("Stock price included in rate");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier1PricePerSheet();
+			sheetPrice = stockDefinition.getCopier1PricePerSheet().doubleValue();
 			priceLogEntry.setDescription("Stock price is copier 1 price per sheet");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier2PricePerSheet();
+			sheetPrice = stockDefinition.getCopier2PricePerSheet().doubleValue();
 			priceLogEntry.setDescription("Stock price is copier 2 price per sheet");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name())) {
-			sheetPrice = stockDefinition.getCopier3PricePerSheet();
+			sheetPrice = stockDefinition.getCopier3PricePerSheet().doubleValue();
 			priceLogEntry.setDescription("Stock price is copier 3 price per sheet");
 		} else {
 			priceLogEntry.setDescription("Stock price method unknown - setting stock price to 0");
@@ -195,25 +195,25 @@ public class PriceStockEngine {
 			
 			if (qty <= stockDefinition.getQtybreak1()) {
 				markup = stockDefinition.getMarkup1();
-				stockCost = stockDefinition.getCost1();
+				stockCost = stockDefinition.getCost1().doubleValue();
 			} else if (qty <= stockDefinition.getQtybreak2()) {
 				markup = stockDefinition.getMarkup2();
-				stockCost = stockDefinition.getCost2();
+				stockCost = stockDefinition.getCost2().doubleValue();
 			} else if (qty <= stockDefinition.getQtybreak3()) {
 				markup = stockDefinition.getMarkup3();
-				stockCost = stockDefinition.getCost3();
+				stockCost = stockDefinition.getCost3().doubleValue();
 			} else if (qty <= stockDefinition.getQtybreak4()) {
 				markup = stockDefinition.getMarkup4();
-				stockCost = stockDefinition.getCost4();
+				stockCost = stockDefinition.getCost4().doubleValue();
 			} else if (qty <= stockDefinition.getQtybreak5()) {
 				markup = stockDefinition.getMarkup5();
-				stockCost = stockDefinition.getCost5();
+				stockCost = stockDefinition.getCost5().doubleValue();
 			} else if (qty <= stockDefinition.getQtybreak6()) {
 				markup = stockDefinition.getMarkup6();
-				stockCost = stockDefinition.getCost6();
+				stockCost = stockDefinition.getCost6().doubleValue();
 			} else {
 				markup = stockDefinition.getMarkup1();
-				stockCost = stockDefinition.getCost1();
+				stockCost = stockDefinition.getCost1().doubleValue();
 			}
 			if (copierDefinition.getUseCopierStockMarkup()) {
 				markup = copierDefinition.getStockMarkup();

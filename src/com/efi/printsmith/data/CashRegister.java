@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -211,46 +212,62 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double unitprice;
+	private BigDecimal unitprice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getUnitprice(){
+	public BigDecimal getUnitprice(){
     return unitprice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUnitprice(Double newVal) {
+   * @generated
+   */	
+  public void setUnitprice(BigDecimal newVal) {
     this.unitprice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setUnitprice(double newVal) {
+    this.unitprice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double totalprice;
+	private BigDecimal totalprice;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTotalprice(){
+	public BigDecimal getTotalprice(){
     return totalprice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTotalprice(Double newVal) {
+   * @generated
+   */	
+  public void setTotalprice(BigDecimal newVal) {
     this.totalprice = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTotalprice(double newVal) {
+    this.totalprice = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -321,46 +338,62 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double subtotal;
+	private BigDecimal subtotal;
 	
 	/**
 	 * @generated
  	 */
-	public Double getSubtotal(){
+	public BigDecimal getSubtotal(){
     return subtotal; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSubtotal(Double newVal) {
+   * @generated
+   */	
+  public void setSubtotal(BigDecimal newVal) {
     this.subtotal = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setSubtotal(double newVal) {
+    this.subtotal = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double taxamount;
+	private BigDecimal taxamount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getTaxamount(){
+	public BigDecimal getTaxamount(){
     return taxamount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTaxamount(Double newVal) {
+   * @generated
+   */	
+  public void setTaxamount(BigDecimal newVal) {
     this.taxamount = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setTaxamount(double newVal) {
+    this.taxamount = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -453,24 +486,32 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double paymentAmount;
+	private BigDecimal paymentAmount;
 	
 	/**
 	 * @generated
  	 */
-	public Double getPaymentAmount(){
+	public BigDecimal getPaymentAmount(){
     return paymentAmount; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPaymentAmount(Double newVal) {
+   * @generated
+   */	
+  public void setPaymentAmount(BigDecimal newVal) {
     this.paymentAmount = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setPaymentAmount(double newVal) {
+    this.paymentAmount = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -527,18 +568,18 @@ public class CashRegister extends ModelBase {
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
     if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
-    if (UNITPRICE.equals(propertyName)) setUnitprice((Double)newValue); else
-    if (TOTALPRICE.equals(propertyName)) setTotalprice((Double)newValue); else
+    if (UNITPRICE.equals(propertyName)) setUnitprice((BigDecimal)newValue); else
+    if (TOTALPRICE.equals(propertyName)) setTotalprice((BigDecimal)newValue); else
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
     if (INVOICEFORMAT.equals(propertyName)) setInvoiceFormat((String)newValue); else
     if (PAYMENTMETHOD.equals(propertyName)) setPaymentMethod((String)newValue); else
-    if (SUBTOTAL.equals(propertyName)) setSubtotal((Double)newValue); else
-    if (TAXAMOUNT.equals(propertyName)) setTaxamount((Double)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubtotal((BigDecimal)newValue); else
+    if (TAXAMOUNT.equals(propertyName)) setTaxamount((BigDecimal)newValue); else
     if (TENDERED.equals(propertyName)) setTendered((Double)newValue); else
     if (CHANGE.equals(propertyName)) setChange((Double)newValue); else
     if (CREDITCARD.equals(propertyName)) setCreditCard((PreferencesCreditCard)newValue); else
     if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
-    if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((Double)newValue); else
+    if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((BigDecimal)newValue); else
     if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -558,9 +599,9 @@ public class CashRegister extends ModelBase {
     if (QUANTITY.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (UNITPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TOTALPRICE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DESCRIPTION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (INVOICEFORMAT.equals(propertyName)) 
@@ -568,9 +609,9 @@ public class CashRegister extends ModelBase {
     if (PAYMENTMETHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (SUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TAXAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (TENDERED.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (CHANGE.equals(propertyName)) 
@@ -580,7 +621,7 @@ public class CashRegister extends ModelBase {
     if (REFNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PAYMENTAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (CHECKNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);

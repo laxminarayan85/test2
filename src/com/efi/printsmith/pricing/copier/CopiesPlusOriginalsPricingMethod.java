@@ -59,34 +59,34 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				double unitPrice = 0.0;
 				switch (j) {
 				case (0):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice1();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice1().doubleValue();
 					break;
 				case (1):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice2();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice2().doubleValue();
 					break;
 				case (2):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice3();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice3().doubleValue();
 					break;
 				case (3):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice4();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice4().doubleValue();
 					break;
 				case (4):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice5();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice5().doubleValue();
 					break;
 				case (5):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice6();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice6().doubleValue();
 					break;
 				case (6):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice7();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice7().doubleValue();
 					break;
 				case (7):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice8();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice8().doubleValue();
 					break;
 				case (8):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice9();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice9().doubleValue();
 					break;
 				case (9):
-					unitPrice = pricingMatrix.getElements().get(i).getPrice10();
+					unitPrice = pricingMatrix.getElements().get(i).getPrice10().doubleValue();
 					break;
 				}
 				
@@ -98,34 +98,34 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 					} else if (side2PricingMethod.equals(Price2Side.UsingSecondSideRate)) {
 						switch (j) {
 						case (0):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice11();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice11().doubleValue();
 							break;
 						case (1):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice12();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice12().doubleValue();
 							break;
 						case (2):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice13();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice13().doubleValue();
 							break;
 						case (3):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice14();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice14().doubleValue();
 							break;
 						case (4):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice15();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice15().doubleValue();
 							break;
 						case (5):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice16();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice16().doubleValue();
 							break;
 						case (6):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice17();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice17().doubleValue();
 							break;
 						case (7):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice18();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice18().doubleValue();
 							break;
 						case (8):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice19();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice19().doubleValue();
 							break;
 						case (9):
-							unitPrice += pricingMatrix.getElements().get(i).getPrice20();
+							unitPrice += pricingMatrix.getElements().get(i).getPrice20().doubleValue();
 							break;
 						}
 					} else if (side2PricingMethod.equals(Price2Side.CountingAsMoreOriginals)) {
@@ -136,34 +136,34 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						if (i >0) i--;
 						switch (j) {
 						case (0):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice1();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice1().doubleValue();
 							break;
 						case (1):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice2();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice2().doubleValue();
 							break;
 						case (2):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice3();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice3().doubleValue();
 							break;
 						case (3):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice4();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice4().doubleValue();
 							break;
 						case (4):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice5();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice5().doubleValue();
 							break;
 						case (5):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice6();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice6().doubleValue();
 							break;
 						case (6):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice7();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice7().doubleValue();
 							break;
 						case (7):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice8();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice8().doubleValue();
 							break;
 						case (8):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice9();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice9().doubleValue();
 							break;
 						case (9):
-							unitPrice = pricingMatrix.getElements().get(i).getPrice10();
+							unitPrice = pricingMatrix.getElements().get(i).getPrice10().doubleValue();
 							break;
 						}
 					} else if (side2PricingMethod.equals(Price2Side.UsingSideFactor)) {
@@ -200,7 +200,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 					} else if (pricingCopier.getMatrixType().equals("DiscountTable")) {
 						double discountPct = unitPrice;
 						
-						pricePerCopy = pricingCopier.getBaseRate() * discountPct;
+						pricePerCopy = pricingCopier.getBaseRate().doubleValue() * discountPct;
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
@@ -242,7 +242,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 					} else if (pricingCopier.getMatrixType().equals("MarkupTable")) {
 						double markup = unitPrice;
 						
-						pricePerCopy = pricingCopier.getBaseRate() * markup;
+						pricePerCopy = pricingCopier.getBaseRate().doubleValue() * markup;
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);

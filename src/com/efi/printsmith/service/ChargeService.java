@@ -38,24 +38,24 @@ public class ChargeService extends SnowmassHibernateService{
 			prices.setSetupPrice(0.0);
 			prices.setUnitPrice(0.0);			
 		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.TimeAndMaterial.name())) {
-			double setupCost = chargeCost.getLaborRate()/60*chargeCost.getSetupMinutes();
+			double setupCost = chargeCost.getLaborRate().doubleValue()/60*chargeCost.getSetupMinutes();
 			//setupCost += chargeCost.getFixedMaterials();
 			
 			double minutesPerPiece = 0.0;
 			if (chargeCost.getPiecesPerHour() != 0) {
 				minutesPerPiece = 60/chargeCost.getPiecesPerHour();
 			}
-			double unitCost = minutesPerPiece * (chargeCost.getLaborRate()/60);
+			double unitCost = minutesPerPiece * (chargeCost.getLaborRate().doubleValue()/60);
 			//unitCost += chargeCost.getUnitMaterials();
 			
 			double markup = chargeDefinition.getMarkup();
 			prices.setSetupPrice(setupCost * markup);
 			prices.setUnitPrice(unitCost * markup);
-			prices.setMaterialSetupPrice(chargeCost.getFixedMaterials());
-			prices.setMaterialUnitPrice(chargeCost.getUnitMaterials());
+			prices.setMaterialSetupPrice(chargeCost.getFixedMaterials().doubleValue());
+			prices.setMaterialUnitPrice(chargeCost.getUnitMaterials().doubleValue());
 		} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.UnitCost.name())) {
-			double unitCost = chargeCost.getUnitCost();
-			double setupCost = chargeCost.getSetupCost();
+			double unitCost = chargeCost.getUnitCost().doubleValue();
+			double setupCost = chargeCost.getSetupCost().doubleValue();
 			double markup = chargeDefinition.getMarkup();
 			
 			prices.setSetupPrice(setupCost * markup);

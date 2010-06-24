@@ -1,6 +1,7 @@
 
 package com.efi.printsmith.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -403,24 +404,32 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double cost;
+	private BigDecimal cost;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCost(){
+	public BigDecimal getCost(){
     return cost; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCost(Double newVal) {
+   * @generated
+   */	
+  public void setCost(BigDecimal newVal) {
     this.cost = newVal;
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setCost(double newVal) {
+    this.cost = BigDecimal.valueOf(newVal);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -782,7 +791,7 @@ public class StockOrder extends ModelBase {
     if (COATED.equals(propertyName)) setCoated((String)newValue); else
     if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
     if (SHEETSIZE.equals(propertyName)) setSheetSize((String)newValue); else
-    if (COST.equals(propertyName)) setCost((Double)newValue); else
+    if (COST.equals(propertyName)) setCost((BigDecimal)newValue); else
     if (PER.equals(propertyName)) setPer((Double)newValue); else
     if (ROLLWEIGHT.equals(propertyName)) setRollWeight((Double)newValue); else
     if (ROLLWIDTH.equals(propertyName)) setRollWidth((String)newValue); else
@@ -829,7 +838,7 @@ public class StockOrder extends ModelBase {
     if (SHEETSIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (COST.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (PER.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (ROLLWEIGHT.equals(propertyName)) 
