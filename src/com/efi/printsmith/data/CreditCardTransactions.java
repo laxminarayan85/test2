@@ -504,25 +504,26 @@ public class CreditCardTransactions extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
-	private Users user;
+    @Basic
+	@ManyToOne()
+	private String user;
 	
 	/**
 	 * @generated
  	 */
-	public Users getUser(){
+	public String getUser(){
     return user; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setUser(Users newVal) {
+   * @generated
+   */	
+  public void setUser(String newVal) {
     this.user = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -890,7 +891,7 @@ public class CreditCardTransactions extends ModelBase {
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
-    if (USER.equals(propertyName)) setUser((Users)newValue); else
+    if (USER.equals(propertyName)) setUser((String)newValue); else
     if (PONUMBER.equals(propertyName)) setPoNumber((String)newValue); else
     if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
     if (APPROVALCODE.equals(propertyName)) setApprovalCode((String)newValue); else
@@ -945,7 +946,7 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) 
       return new Class<?>[] {Contact.class};		
     if (USER.equals(propertyName)) 
-      return new Class<?>[] {Users.class};		
+      return new Class<?>[] {String.class};		
     if (PONUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (REFERENCENUMBER.equals(propertyName)) 

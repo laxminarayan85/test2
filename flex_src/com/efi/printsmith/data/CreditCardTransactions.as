@@ -28,7 +28,7 @@ package com.efi.printsmith.data
 		public var invoice:Invoice;
 		public var account:Account;
 		public var contact:Contact;
-		public var user:Users;
+		public var user:String = "";
 		public var poNumber:String = "";
 		public var referenceNumber:String = "";
 		public var approvalCode:String = "";
