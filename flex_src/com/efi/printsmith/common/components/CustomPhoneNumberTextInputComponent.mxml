@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml"  initialize="initializeProperties()" focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ValidationResultEvent;
+			import mx.events.ListEvent;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.Alert;
+			import mx.controls.dataGridClasses.*; 
+			
+			[Inspectable(defaultValue=false, verbose=1, category="Checking the component is independent or in the datasgrid")]
+	        public var datagridControl:Boolean;
+	        [Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+	        public var required:Boolean;
+	        private var _customText:String;
+	        [Bindable]public var check:Boolean=false;
+       		[Bindable]public var variableName:String;
+       		[Bindable]public var dataHolder:Object;
+       		[Bindable] public var columnName:String;
+       		[Bindable]public var repeaterElement:Boolean=false;
+       		
+       		/**
+       		 * This function helps to initialize required data.
+       		 */
+       		 
+       		public function initializeProperties():void {
+       			this.editable = editable;
+       			phoneValidator.required = required;  
+       		}
+       		
+       		/**
+       		 * This function returns the data or value which is displayed on UI.
+       		 */
+       		 
+       		public function get customText():String {
+		    	text = _customText;
+		        return _customText;
+		    }
+		    
+		    /**
+		     * This function temporarily stores component value.
+		     */			  
+		     
+		    public function set customText(displayValue:String):void {	
+		    	if(data!=null){
+			    	if(data[columnName+"ErrorText"]!=null){
+			    		_customText = data[columnName+"ErrorText"];
+			    		text = _customText;
+			    	}
+			    	else{
+				    	_customText = displayValue;
+			    		text = _customText;
+			     	}
+		    	}
+		    	else {    	
+		    		_customText = displayValue;
+			    	 text = _customText;	
+		    	}
+		    }
+		     
+		    /**
+		     * This function has got custom implemention for setting style or 
+		     
+		     * background colour display in an datgrid cell on mouse moveover or mouseclick.
+		     */
+		     
+       		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				/* if(!check && datagridControl){
+				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
+				  if(customDataGrid.isItemHighlighted(data)) {
+						setStyle('backgroundColor',0xB2E1FF);
+				   }
+				   else if(customDataGrid.isItemSelected(data)) {
+						setStyle('backgroundColor',0x7FCEFF);
+				   }
+				   else {
+						setStyle('backgroundColor',0xFFFFFF);
+				   }
+				} */
+			}
+			 
+		    /**
+		     * This function get called on focusin, helps to set the style
+		     
+		     * or background colour if the components is inside datagrid. 
+		     */
+		     
+			public function focusInEvent(event:FocusEvent):void{
+				try {	
+		    		if(datagridControl){
+						setStyle('backgroundColor',0xFFFFFF);
+						check=true;
+					} 
+		         } catch(err:Error){
+	         		Alert.show(err.getStackTrace());
+	          	 }
+			}
+			
+			/**
+			 * This function get called on focusout, required
+			 
+			 * phone no. validation will be done and if the component
+			 
+			 * used inside datagrid related style will be set. 
+			 */
+			 
+			public function focusOutEvent(event:FocusEvent):void {
+				try {		
+					
+ 					phoneValidator.property = "text";  
+					phoneValidator.source = this;  
+					var validateEvent:ValidationResultEvent  = phoneValidator.validate(this.text);
+					if(validateEvent.type==ValidationResultEvent.INVALID){
+						if(data!=null){
+							data[columnName+"ErrorText"] = event.currentTarget.text;
+					 	}
+					 	return;
+					}
+		  			
+		  			if(variableName != null) {
+		  				if(repeaterElement){
+		  					if(event.currentTarget.getRepeaterItem()!=null){
+		  						event.currentTarget.getRepeaterItem()[variableName] = this.text;
+		  					}	
+		  				}  
+		  				else {
+						    if(dataHolder != null){
+						    	dataHolder[variableName] = this.text;
+						    } else {
+						    	if(data[columnName+"ErrorText"]!=null){
+					  				data[columnName+"ErrorText"] = null;
+					  			}
+						    	data[variableName] = this.text;
+						    }
+					   }
+			  		}
+	    			if(datagridControl){
+			    		setStyle('backgroundColor',0x7FCEFF);
+						check=false;
+		    		}  
+			   	} catch (err:Error) {
+					Alert.show(err.getStackTrace());
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:PhoneNumberValidator id="phoneValidator" />
+</mx:TextInput>

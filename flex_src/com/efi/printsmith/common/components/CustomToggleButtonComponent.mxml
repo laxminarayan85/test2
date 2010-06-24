@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Button xmlns="*" xmlns:mx="http://www.adobe.com/2006/mxml" toggle="true" click="{clickEventHandler(event)}" >
+	
+	<mx:Script>
+		<![CDATA[
+		
+			[Bindable] public var dataHolder:Object;
+	   		[Bindable] public var variableName:String;
+	   		private var _customText:Boolean;
+	   		
+			private function clickEventHandler(event:Event):void{
+				if(dataHolder!=null){
+					dataHolder[variableName] = this.selected;	
+				}
+			}
+		
+			public function get customText():Boolean {
+				selected = _customText
+				return _customText;
+			}
+			
+			public function set customText(displayValue:Boolean):void{
+				this._customText = displayValue;
+				this.selected = displayValue;
+			}
+			
+			
+		]]>
+	</mx:Script>
+
+</mx:Button>

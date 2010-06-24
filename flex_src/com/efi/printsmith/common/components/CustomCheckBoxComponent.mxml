@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:CheckBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()" click="clickEvent(event)"  focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.modules.Module;
+			import mx.events.DropdownEvent;
+			import mx.controls.Alert;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.dataGridClasses.*; 
+					
+			[Inspectable(defaultValue=false, verbose=1, category="Checking the component is independent or in the datasgrid")]
+	        public var datagridControl:Boolean; 
+	    	[Bindable]public var check:Boolean=false;
+	    	[Inspectable(defaultValue=null, verbose=1, category="Checking the component is independent or in the datasgrid")]
+	    	[Bindable]public var dataHolder:Object;
+	    	[Inspectable(defaultValue=null, verbose=1, category="Checking the component is independent or in the datasgrid")]
+	    	[Bindable]public var defaultValue:Object;
+       		[Bindable]public var variableName:String;
+       		[Bindable]public var visibility:Boolean;
+       		[Bindable]public var selectedValue:Object;
+       		[Bindable]public var deSelectedValue:Object;
+       		[Bindable]public var repeaterElement:Boolean=false;
+		   
+ 			/**
+       		 * This function called on load of the page.
+       		 */
+		   	public function init():void {
+		   		if(data!= null && data[variableName] != null){
+		   			(data[variableName] == selectedValue)?(this.selected = true):
+														  (this.selected = false);
+		   		}else if(dataHolder != null && dataHolder[variableName] != null){
+		   			(dataHolder[variableName] == selectedValue)?(this.selected = true):
+														  	    (this.selected = false);
+		   		} else {
+		   			if(data!= null || dataHolder != null) {
+		   				(defaultValue == selectedValue)?(this.selected = true):(this.selected = false);
+						(dataHolder != null)?(dataHolder[variableName] = defaultValue):
+														 (data[variableName] = defaultValue);
+					}
+		   		}
+		   	}
+   
+		    /**
+       		 * This function returns the data or value which will be displayed on UI.
+       		 */
+       		 
+			public function get customText():Object {
+		        return customText;
+		    }
+		     
+		    /**
+		     * This function temporarily stores component value.
+		     */		
+ 		    public function set customText(displayValue:Object):void {	
+		    	if(displayValue == selectedValue) {
+		    		this.selected = true;
+		    		(dataHolder != null)?(dataHolder[variableName] == selectedValue):
+		    												(data[variableName] == selectedValue);
+		    	} else if(displayValue == deSelectedValue) {
+		    		this.selected = false; 
+		    		(dataHolder != null)?(dataHolder[variableName] == deSelectedValue):
+		    													(data[variableName] == deSelectedValue);
+		    	} else {
+		    		(defaultValue == selectedValue)?(this.selected = true):(this.selected = false);
+		    	}													
+			}
+
+			/**
+		     * This function has got custom implemention for background colour 
+		     
+		     * display in an datgrid cell on mouse moveover or mouseclick.
+		     */
+		     
+       		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				/* if(!check && datagridControl) {
+				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
+				  if(customDataGrid.isItemHighlighted(data)) {
+						setStyle('backgroundColor',0xB2E1FF);
+				   }
+				   else if(customDataGrid.isItemSelected(data)) {
+						setStyle('backgroundColor',0x7FCEFF);
+				   }
+				   else {
+						setStyle('backgroundColor',0xFFFFFF);
+				   }
+				}*/
+				if(datagridControl){
+					var childrenCount:int = numChildren;
+					for (var i:int = 0; i < childrenCount; i++) {
+						var displayField:DisplayObject = getChildAt(i);
+						if (!(displayField is TextField)) {
+							displayField.x = (unscaledWidth - displayField.width) / 2;
+							displayField.y = 0;
+						}
+					}
+				}
+				
+			}
+			 
+			/**
+		     * This function get called on focusin, helps to set the
+		     
+		     * style or background colour if the components is inside datagrid. 
+		     */
+		     
+			public function focusInEvent(event:FocusEvent):void{
+				try {	
+		    		if(datagridControl){
+						setStyle('backgroundColor',0xFFFFFF);
+						check=true;
+					} 
+		         } catch(err:Error){
+	         		Alert.show(err.getStackTrace());
+	          	 }
+			}
+			
+			/**
+			 * This function get called on focusout, helps to set the
+			 
+		     * style or background colour if the components is inside datagrid. 
+			 */
+			 
+			public function focusOutEvent(event:FocusEvent):void {
+				try {
+		    		if(datagridControl){
+			    		setStyle('backgroundColor',0x7FCEFF);
+						check=false;
+		    		} 
+				} catch(err:Error) {
+					Alert.show(err.getStackTrace());
+				}
+			}
+			
+			/**
+			 * This function get called when user checks, unchecks checkbox.
+			 
+			 * helps to save the checkbox selected boolean value.  
+			 */
+			public function clickEvent(event:MouseEvent):void {
+				if(repeaterElement){
+					if(event.currentTarget.getRepeaterItem() != null){
+						(event.target.selected)?(event.currentTarget.getRepeaterItem()[variableName] = selectedValue):
+																			(event.currentTarget.getRepeaterItem()[variableName] = deSelectedValue);
+					}
+				}
+				else {
+					if(dataHolder != null){
+						(event.target.selected)?(dataHolder[variableName] = selectedValue):
+																			(dataHolder[variableName] = deSelectedValue);
+					} else {
+						(event.target.selected)?(data[variableName] = selectedValue):
+																	  (data[variableName] = deSelectedValue);
+					}
+				}
+			}
+		]]>
+	</mx:Script>         
+</mx:CheckBox>

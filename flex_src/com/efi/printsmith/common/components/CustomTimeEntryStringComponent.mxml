@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TimeEntry xmlns="com.efi.printsmith.components.*" xmlns:mx="http://www.adobe.com/2006/mxml" initialize="{initTEComponent()}">
+	<mx:Script>
+		<![CDATA[
+			[Bindable] public var dataHolder:Object;
+			[Bindable] public var variableName:String;
+			private var _customText:String;
+			
+			private function initTEComponent():void{
+				//timeStepper.addEventListener(Event.CHANGE,updateDataEventListener);
+				hourText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+				minuteText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+				if(showSeconds){
+					secondText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+				}
+				if(!is24Hour){
+					amPMText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+				}
+			}
+			
+			private function updateDataEventListener(event:Event):void{
+				if(dataHolder!=null){
+					var timeString:String = "";
+					timeString = ""+hour;
+					timeString = timeString+"-"+minute;
+					if(showSeconds){
+						timeString = timeString+"-"+second;
+					}
+					if(!is24Hour){
+						timeString = timeString+"-"+am_pm;
+					}
+					dataHolder[variableName] = timeString;
+				}
+			}
+			
+			public function get customText():String{
+				return _customText;
+			}
+			
+			public function set customText(displayValue:String):void{
+				if(displayValue!=null  && displayValue.length > 0){
+					this.hour = parseInt(displayValue.split("-")[0],0);
+					this.minute = parseInt(displayValue.split("-")[1],0);
+					if(showSeconds){
+						this.second = parseInt(displayValue.split("-")[2],0);
+						if(!is24Hour){
+							this.am_pm = displayValue.split("-")[3];		
+						}
+					} else {
+						if(!is24Hour){
+							this.am_pm = displayValue.split("-")[2];		
+						}
+					}
+					_customText = displayValue;
+				}
+			}
+		]]>
+	</mx:Script>
+</TimeEntry>

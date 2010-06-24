@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:component="com.efi.printsmith.common.components.*"  initialize="initializeProperties()" focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)" mouseOver="displayToolTip()">
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.AbstractEvent;
+			import mx.core.Application;
+			import mx.events.ValidationResultEvent;
+			import mx.utils.StringUtil;
+			import mx.controls.dataGridClasses.DataGridListData;
+			import mx.controls.Alert;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.dataGridClasses.*; 
+			[Inspectable(defaultValue=2, enumeration="0,1,2,3,4,5,6,7,8,9,10", verbose=1, category="Formatting & Validations")] 
+	        public var precision:int;
+	        
+	        [Inspectable(defaultValue="nearest", enumeration="up,down,nearest,none", verbose=1, category="Formatting & Validations")] 
+	        public var rounding:String;
+	        
+	        [Inspectable(defaultValue=true, verbose=1, category="Formatting & Validations")] 
+	        public var allowNegative:Boolean;
+	        
+	        [Inspectable(defaultValue=NaN, verbose=1, category="Formatting & Validations")]
+	        public var minValue:Number;
+	        
+	        [Inspectable(defaultValue=NaN, verbose=1, category="Formatting & Validations")]
+	        public var maxValue:Number;
+	        
+	        [Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+	        public var required:Boolean;
+	        
+	        [Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+	        [Bindable]public var useThousandsSeparator:Boolean;
+	        [Inspectable(defaultValue=false, enumeration="true,false", verbose=1, category="Checking the component is independent or in the datasgrid")]
+	        public var datagridControl:Boolean;
+			[Bindable]public var check:Boolean=false;
+			[Bindable]public var dataHolder:Object;
+			[Bindable]public var columnName:String;
+			[Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+			[Bindable]public var allowZero:Boolean = true;
+			[Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+			[Bindable]public var defaultZero:Boolean;
+			[Bindable]public var numberLengthBeforeDecimal:int;
+			[Bindable]public var appendZeroes:Boolean=false;
+			[Bindable]public var repeaterElement:Boolean=false;
+			[Bindable]public var allowSymbol:Boolean=false;
+			[Bindable]public var symbolString:String;
+			[Bindable]public var isFocusInEventTrigerred:Boolean=false;
+			[Bindable]public var showToolTip:Boolean=false;
+			[Bindable]public var isInteger:Boolean=false;
+			private var _customText:String;	
+			public var variableName:String;
+			
+			/*
+			 *This method helps to display the tooltip.
+			 */ 
+			public function displayToolTip():void{
+				if(showToolTip){
+					this.toolTip = this.text;
+				}
+			}
+			 
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				/* if(!check && datagridControl){
+				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
+				  if(customDataGrid.isItemHighlighted(data)) {
+						setStyle('backgroundColor',0xB2E1FF);
+				   }
+				   else if(customDataGrid.isItemSelected(data)) {
+						setStyle('backgroundColor',0x7FCEFF);
+				   }
+				   else {
+						setStyle('backgroundColor',0xFFFFFF);
+				   }
+				} */
+			}
+			
+			public function get customText():String {
+		    	text = customText;
+		        return customText;
+		    }			  
+		    public function set customText(displayValue:String):void {	
+		    	var formattedString:String="";
+		    	if(data!=null){
+			    	if(data[columnName+"ErrorText"]!=null){
+			    		_customText = data[columnName+"ErrorText"];
+			    		text = _customText;
+			    	}
+			    	else {
+				    	for (;(displayValue.indexOf(",", 0)) != -1;) {
+							displayValue = displayValue.replace(",", "");
+						}
+						if(allowSymbol) {
+							for (;(displayValue.indexOf(symbolString, 0)) != -1;) {
+								displayValue = displayValue.replace(symbolString, "");
+							}
+						}
+				    	_customText = displayValue;
+				    	if(!isFocusInEventTrigerred){
+					        formattedString=numbFormatter.format(_customText);
+					        if(allowSymbol && Number(formattedString)!=0){
+					        	formattedString = symbolString+formattedString;
+					        }
+					        if(appendZeroes){
+					        	text = formattedString;	
+					        }
+					        else {
+					        	text=formatDecimals(formattedString);
+					        }
+					    }
+			     	}
+		    	}
+		    	else {
+			    	for (;(displayValue.indexOf(",", 0)) != -1;) {
+						displayValue = displayValue.replace(",", "");
+					}
+					if(allowSymbol) {
+						for (;(displayValue.indexOf(symbolString, 0)) != -1;) {
+							displayValue = displayValue.replace(symbolString, "");
+						}
+					}
+			    	_customText = displayValue;
+			    	//text = numbFormatter.format(_customText);
+			    	//Alert.show(numbFormatter.format(_customText));
+			    	//if(removeCommas(numbFormatter.format(_customText)) == 0)
+			    	if(!isFocusInEventTrigerred){
+				        formattedString=numbFormatter.format(_customText);
+				        if(allowSymbol && Number(formattedString)!=0){
+				        	formattedString = symbolString+formattedString;
+				        }
+					    if(appendZeroes){
+					        text = formattedString;	
+				        }
+				        else {
+				        	text=formatDecimals(formattedString);
+				        }
+			        }
+		     	}
+		     	if(!isFocusInEventTrigerred){
+			     	if(this.text == "" || Number(this.text) == 0) {
+						if(defaultZero) {
+							if(allowSymbol){
+								this.text = symbolString+numbFormatter.format("0");	
+							} else {
+								this.text = numbFormatter.format("0");
+							}
+						}
+						else {
+							if(Number(numbFormatter.format(this.text)) == 0) {
+			            		this.text = "";
+			            	}	
+						}
+					}
+		     	}
+		     	if(isFocusInEventTrigerred){
+		     		isFocusInEventTrigerred = false;
+		     	}
+		        setStyle('textAlign','right');
+		    }
+			
+			/*
+	           adds listener for focus in &  focus out for validations & formatting
+	           additionally assigns the default properties to validator & formatter objects
+	        */    
+            public function initializeProperties():void {
+            	
+            	if(Number(numbFormatter.format(this.text)) == 0) {
+            		this.text = "";
+            	}
+            	this.editable = editable;
+            	if(allowNegative){
+            		if(isInteger){
+            			this.restrict = "0-9\\-\\";
+            		} else {
+            			this.restrict = "0-9\\-\\\\.\\";
+            		}
+            	} else {
+            		if(isInteger){
+            			this.restrict = "0-9";
+            		} else {
+            			this.restrict = "0-9\\.\\";
+            		}
+            	}
+            	numbFormatter.useThousandsSeparator=useThousandsSeparator;
+        		numbFormatter.precision=precision;
+        		numbFormatter.rounding=rounding;
+        		validateNumber.allowNegative=allowNegative; 
+        		validateNumber.minValue=minValue;
+        		validateNumber.maxValue=maxValue;
+        		validateNumber.required=required;
+        		validateNumber.numberLengthBeforeDecimal=numberLengthBeforeDecimal;
+        		validateNumber.allowSymbol = allowSymbol;
+        		validateNumber.symbolString = symbolString;
+        		if(this.text == "" || Number(this.text) == 0) {
+					if(defaultZero) {
+						if(allowSymbol){
+							this.text = symbolString+numbFormatter.format("0");	
+						} else {
+							this.text = numbFormatter.format("0");
+						}
+					}
+					else {
+						if(Number(numbFormatter.format(this.text)) == 0) {
+		            		this.text = "";
+		            	}	
+					}
+				}
+        		
+        		var customExceedsMaxError:String="Please enter a value less then {0}"; 
+        		customExceedsMaxError = StringUtil.substitute(customExceedsMaxError,maxValue); 
+        		validateNumber.exceedsMaxError=customExceedsMaxError;
+            }
+			public function focusInEvent(event:FocusEvent):void{
+				this.isFocusInEventTrigerred = true;
+				 try {	
+		        	var dataFromControl:String = this.text;
+		        	for (;dataFromControl.indexOf(",", 0) != -1;) {
+						dataFromControl = dataFromControl.replace(",","");
+					}
+					if(allowSymbol){
+						for (;dataFromControl.indexOf(symbolString, 0) != -1;) {
+							dataFromControl = dataFromControl.replace(symbolString,"");
+						}
+					}
+					event.currentTarget.text =  dataFromControl;
+					this.setSelection(this.selectionBeginIndex, this.text.length);
+					if(datagridControl){
+						setStyle('backgroundColor',0xFFFFFF);
+						check=true;
+					}
+		         } catch(err:Error){
+	         		Alert.show(err.getStackTrace());
+	          	 }
+			}
+			public function focusOutEvent(event:FocusEvent):void {
+				var formattedString:String="";
+				
+				//Initializing Formatter and Validator Objects
+				numbFormatter.useThousandsSeparator=useThousandsSeparator;
+        		numbFormatter.precision=precision;
+        		numbFormatter.rounding=rounding;
+        		validateNumber.allowNegative=allowNegative; 
+        		validateNumber.minValue=minValue;
+        		validateNumber.maxValue=maxValue;
+        		validateNumber.required=required;
+        		validateNumber.numberLengthBeforeDecimal=numberLengthBeforeDecimal;
+        		validateNumber.allowSymbol = allowSymbol;
+        		validateNumber.symbolString = symbolString;
+        		
+        		
+				try {
+						if(isFocusInEventTrigerred){
+		    				isFocusInEventTrigerred = false;
+		    			}
+						if(this.text == "" || Number(this.text) == 0) {
+							if(defaultZero) {
+								this.text = numbFormatter.format("0");
+							}
+							if(!allowZero) {
+								this.errorString = "Please enter a value.";	
+								return;
+							}
+						}
+		    		    
+	    				 var dataFromControl:String = this.text;				    			 
+		    			 for(;dataFromControl.indexOf(",", 0) != -1;) {
+							dataFromControl = dataFromControl.replace(",","");
+						 }
+						 if(allowSymbol){
+							for (;dataFromControl.indexOf(symbolString, 0) != -1;) {
+								dataFromControl = dataFromControl.replace(symbolString,"");
+							}
+						}    								 																 	
+						 validateNumber.source=event.currentTarget;
+						 validateNumber.listener=event.currentTarget;
+						 validateNumber.property="text";
+						 var validateEvent:ValidationResultEvent  = validateNumber.validate(dataFromControl);
+						 
+			  			 if(validateEvent.type  == mx.events.ValidationResultEvent.INVALID ) {
+			  			 	if(data != null){
+			  			 		data[columnName+"ErrorText"] = event.currentTarget.text;
+			  			 	}
+			  			 	return;
+			  			 }
+		  			 	if (variableName != null) {     			
+			  				if(data != null) {
+			  					if(data[columnName+"ErrorText"]!=null){
+				  					data[columnName+"ErrorText"] = null;
+				  				}
+				  				data[variableName] = removeCommas(numbFormatter.format(dataFromControl));
+			  				}
+			  				else {
+			  					if(repeaterElement){
+			  						event.currentTarget.getRepeaterItem()[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
+			  					}
+			  					else {
+			  						dataHolder[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
+			  					}
+			  				}
+				  		}
+			    		formattedString = numbFormatter.format(dataFromControl);
+			    		if(allowSymbol && formattedString!="" && formattedString.length!=0){
+			    			if(Number(formattedString)!=0){
+				        		formattedString = symbolString+formattedString;
+				      		}
+				        }
+			    		if(appendZeroes){
+				        	text = formattedString;	
+				        }
+				        else {
+				        	this.text=formatDecimals(formattedString);
+				        }
+
+		    			if(datagridControl){
+			    			setStyle('backgroundColor',0x7FCEFF);
+			  				check=false;
+		    			}
+				   	} catch (err:Error) {
+							Alert.show(err.getStackTrace());
+					}
+			}
+			
+			private function removeCommas(dataFromControl:String):Number {
+				for (;dataFromControl.indexOf(",", 0) != -1;) {
+						dataFromControl = dataFromControl.replace(",","");
+				}
+				return Number(dataFromControl);
+			}
+			
+			private function formatDecimals(formattedString:String):String{
+				var index:Number=0;
+				var formattedNumber:String="";
+				if(formattedString.indexOf(".")!=-1){
+					for(var i:int=formattedString.length-1;i>=formattedString.indexOf(".");i--){
+						if(formattedString.charAt(i)=="0"){
+							index=i;
+						}
+						else {
+							break;
+						}
+					}
+					if(index==0){
+						formattedNumber = formattedString;
+					}
+					else {
+						if(formattedString.substring(index-1,index)=="."){
+							formattedNumber = formattedString.substring(0,index-1);
+						}
+						else {
+							formattedNumber = formattedString.substring(0,index);
+						}
+					}
+				}
+				else {
+					formattedNumber = formattedString;
+				}
+				return formattedNumber;
+			}
+
+	]]>
+	</mx:Script>
+	<mx:NumberFormatter id="numbFormatter"/>
+	<component:CustomNumberValidator id="validateNumber"/>
+</mx:TextInput>

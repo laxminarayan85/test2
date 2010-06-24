@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="comboBoxInit()" open="openEvent(event)" mouseOver="displayToolTip()" close="closeEvent(event)" change="onChange(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ValidationResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			import mx.rpc.events.AbstractEvent;
+			import mx.events.DropdownEvent;
+			import mx.controls.Alert;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.dataGridClasses.*; 
+					
+			[Inspectable(defaultValue=false, verbose=1,	category="Checking the component is independent or in the datasgrid")]
+	        public var datagridControl:Boolean
+	        private var _customText:ArrayCollection; 
+	    	[Bindable] public var check:Boolean=false;
+	    	[Bindable] public var dataHolder:Object;
+	   		[Bindable] public var variableName:String;
+       		[Bindable] public var labelFieldName:String;
+			[Bindable] public var labelFieldId:String;
+			[Bindable] public var columnName:String;
+			[Bindable] public var required:Boolean;
+			[Bindable] public var initialKeyValue:Object;
+			[Bindable] public var comboListData:ArrayCollection;
+			[Bindable] public var masterList:ArrayCollection = null;
+			[Bindable] public var repeaterElement:Boolean = false;
+			[Bindable] public var dropDownWidth:Number = 0;
+			[Bindable] public var showToolTip:Boolean = false;
+			[Bindable] public var updateFirstElement:Boolean = false;
+			
+			/**
+			 * This method helps to perform some opreration onload of component.
+			 */
+			public function comboBoxInit():void{
+				if(updateFirstElement && masterList != null && masterList.length>0){
+					if(data!= null && (data[variableName] == null || data[variableName] == 0)){
+		   				data[variableName] = masterList.getItemAt(0)[labelFieldId];
+			   		}else if(dataHolder != null && ( dataHolder[variableName] == null || dataHolder[variableName] == 0)){
+			   			dataHolder[variableName] = masterList.getItemAt(0)[labelFieldId];
+			   		}
+				}
+			}
+			
+			/**
+			 * This method helps to display the tool tip.
+			 */ 
+			public function displayToolTip():void{
+				if(showToolTip){
+					this.toolTip = this.text;
+				}
+			}
+								
+			
+			/**
+       		 * This function returns the data or value which will be displayed on UI.
+       		 */
+       		 
+			public function get customText():ArrayCollection {
+		    	this.dataProvider = _customText;
+		        return _customText;
+		    }
+		    
+		    /**
+		     * This function temporarily stores componet value.
+		     */
+		     				  
+		    public function set customText(displayValue:ArrayCollection):void {	
+		    	var objMasterData:int = 0;
+		    	var objDataGridData:int = 1;
+		    	var invalidSelection:Boolean = false;
+		    	_customText = displayValue.getItemAt(objMasterData) as ArrayCollection;
+		    	this.dataProvider = _customText;
+		    	this.labelField = labelFieldName;
+		    	if(displayValue.getItemAt(objDataGridData)){
+		    		if(displayValue.getItemAt(objDataGridData)[columnName+"ErrorText"]!=null){
+		    			invalidSelection = true;
+		    			this.selectedIndex = 0;
+		    		}
+		    	}
+		    	if(!invalidSelection){
+		       		for(var index:int = 0; index < dataProvider.length; index++){
+		       			if(displayValue.getItemAt(objDataGridData) != null) { 
+			   		 		if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
+				       		 	this.selectedIndex = index;
+				      		 	break;
+			  		 		}
+		       			} 
+		       		} 
+	      		}	
+		    }
+    
+			/**
+		     * This function has got custom implemention for setting style or 
+		     
+		     * background colour display in an datgrid cell on mouse moveover or mouseclick.
+		     */
+		     
+       		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				/* if(!check && datagridControl){
+				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
+				  if(customDataGrid.isItemHighlighted(data)) {
+						setStyle('backgroundColor',0xB2E1FF);
+				   }
+				   else if(customDataGrid.isItemSelected(data)) {
+						setStyle('backgroundColor',0x7FCEFF);
+				   }
+				   else {
+						setStyle('backgroundColor',0xFFFFFF);
+				   }
+				} */
+			}
+			 
+		    /**
+		     * This function get called when user clicks the drop-down button to
+		     
+		     * display the drop-down list, helps to set the style or background 
+		     
+		     * colour if the components is inside datagrid. 
+		     */
+		     
+			public function openEvent(event:DropdownEvent):void{
+				try {	
+					if(dropDownWidth > 0){
+						dropdown.width = dropDownWidth;
+					}
+		    		if(datagridControl){
+						setStyle('backgroundColor',0xFFFFFF);
+						check=true;
+					} 
+		         } catch(err:Error){
+	         		Alert.show(err.getStackTrace());
+	          	 }
+			}
+			
+			/**
+			 * This function get called when the drop-down list is dismissed,
+			 
+			 * helps to save the selected index or drop down value. 
+			 */
+			 
+			public function closeEvent(event:DropdownEvent):void {
+				try {
+    	    		if(datagridControl){
+			    		setStyle('backgroundColor',0x7FCEFF);
+						check=false;
+		    		} 
+				} catch(err:Error) {
+					Alert.show(err.getStackTrace());
+				}
+			}
+			/**
+			 * This function get called user selects the value from drop-down list,
+			 
+			 * helps to save the selected item. 
+			 */
+			public function onChange(event:ListEvent):void{
+				var customComboBoxValidator:CustomComboBoxValidator = new CustomComboBoxValidator();
+				customComboBoxValidator.required = required;
+				customComboBoxValidator.keyValue = initialKeyValue;
+				customComboBoxValidator.keyName = labelFieldId;
+				customComboBoxValidator.source = event.currentTarget;
+				customComboBoxValidator.property = "selectedItem";
+				var validateEvent:ValidationResultEvent = customComboBoxValidator.validate(event.currentTarget.selectedItem);
+				if(validateEvent.type == ValidationResultEvent.INVALID){
+					if(data!=null){
+						data[columnName+"ErrorText"] = event.currentTarget.selectedItem[labelFieldId];
+					}
+					return;
+				}
+				if(data!=null){
+					if(data[columnName+"ErrorText"]!=null){
+						data[columnName+"ErrorText"] = null;
+					}
+				}
+				if(repeaterElement){
+					if(event.currentTarget.getRepeaterItem() != null){
+						if(initialKeyValue){
+							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+								event.currentTarget.getRepeaterItem()[variableName] = null;
+							else
+								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+						else {
+							event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+					}
+				}
+				else {
+					if(dataHolder != null){
+						if(initialKeyValue){
+							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+								dataHolder[variableName] = null;
+							else
+								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+						else {
+							dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+					}
+					else {
+						if(initialKeyValue){
+							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+								data[variableName] = null;
+							else
+						 		data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+						}
+						else {
+							data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+						}
+					}
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:ComboBox>
+
