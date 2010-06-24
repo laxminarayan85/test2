@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesPOS;
+			import mx.collections.ArrayCollection;
+			[Bindable] public var preferencesPOS:PreferencesPOS;
+			[Bindable] public var receiptPrinterArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var baudRateArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var stopBitsArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var parityArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var dataSizeArray:ArrayCollection = new ArrayCollection();
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashDrawer')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:Label x="29" y="32"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptPrinter')}"
+		textAlign="right" />
+		
+	<components:CustomComboBoxComponent x="143" y="30"
+		masterList="{receiptPrinterArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesPOS}" variableName="receiptPrinterStatus" customText="{getCustomTextData(receiptPrinterArray,preferencesPOS)}" 
+		updateFirstElement="true" width="120" />
+		
+	<mx:Label x="21" y="62"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterRptPackageCmd.Printer')}"
+		textAlign="right" />
+		
+	<components:CustomStringTextInputComponent x="143" y="60" width="200"
+		dataHolder="{preferencesPOS}" variableName="defaultPrinter" customText="{preferencesPOS.defaultPrinter}" />
+		
+	<components:CustomCheckBoxComponent x="50" y="90" width="232"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}"
+		dataHolder="{preferencesPOS}" variableName="enableCashDrawer" customText="{preferencesPOS.enableCashDrawer}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="50" y="115" width="232"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}"
+		dataHolder="{preferencesPOS}" variableName="printReceipts" customText="{preferencesPOS.printReceipts}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="70" y="140" width="212"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}"
+		dataHolder="{preferencesPOS}" variableName="print2forCreditCards" customText="{preferencesPOS.print2forCreditCards}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="70" y="165" width="212"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}"
+		dataHolder="{preferencesPOS}" variableName="print2forCash" customText="{preferencesPOS.print2forCash}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="50" y="190" width="232"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}"
+		dataHolder="{preferencesPOS}" variableName="printInvoices" customText="{preferencesPOS.printInvoices}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="50" y="215" width="232"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}"
+		dataHolder="{preferencesPOS}" variableName="lockSettings" customText="{preferencesPOS.lockSettings}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="290" y="90" width="188"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}"
+		dataHolder="{preferencesPOS}" variableName="useMasterDrawer" customText="{preferencesPOS.useMasterDrawer}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<components:CustomCheckBoxComponent x="290" y="115" width="188"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}"
+		dataHolder="{preferencesPOS}" variableName="keepLocalSettings" customText="{preferencesPOS.keepLocalSettings}"
+		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		
+	<mx:Label x="56" y="273"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}"
+		textAlign="right" width="158" />
+		
+	<mx:Label x="56" y="298"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesbeforeRece')}"
+		textAlign="right" width="158" />
+		
+	<mx:Label x="66" y="323"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesafterRecei')}"
+		textAlign="right" width="148" />
+		
+	<mx:Label x="101" y="348"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptStartCode')}"
+		textAlign="right" />
+		
+	<mx:Label x="95" y="373"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}"
+		textAlign="right" />
+		
+	<components:CustomNumericTextInputComponent x="216" y="271" width="47"
+		dataHolder="{preferencesPOS}" variableName="asciiCodeOpenDrawer" customText="{preferencesPOS.asciiCodeOpenDrawer}"
+		precision="0" rounding="nearest" isInteger="true"/>
+		
+	<components:CustomNumericTextInputComponent x="216" y="296" id="txtBlankBeforeReceipt" width="47"
+		dataHolder="{preferencesPOS}" variableName="blankLinesBeforeReceipt" customText="{preferencesPOS.blankLinesBeforeReceipt}"
+		precision="0" rounding="nearest" isInteger="true"/>
+		
+	<components:CustomNumericTextInputComponent x="216" y="321" id="txtBlankAfterReceipt" width="47"
+		dataHolder="{preferencesPOS}" variableName="blankLinesAfterReceipt" customText="{preferencesPOS.blankLinesAfterReceipt}"
+		precision="0" rounding="nearest" isInteger="true"/>
+		
+	<components:CustomStringTextInputComponent x="216" y="346" width="77" 
+		dataHolder="{preferencesPOS}" variableName="receiptStartCode" customText="{preferencesPOS.receiptStartCode}" />
+		
+	<components:CustomStringTextInputComponent x="216" y="371" width="77" 
+		dataHolder="{preferencesPOS}" variableName="receiptEndCode" customText="{preferencesPOS.receiptEndCode}" />
+		
+	<mx:Label x="21" y="420"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}"
+		textAlign="right" width="99" />
+		
+	<mx:Label x="207" y="420"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}"
+		textAlign="right" width="75" />
+		
+	<mx:Label x="21" y="445"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}"
+		textAlign="right" width="99" />
+		
+	<mx:Label x="207" y="445"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}"
+		textAlign="right" width="75" />
+		
+	<components:CustomComboBoxComponent x="119" y="418"
+		masterList="{baudRateArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesPOS}" variableName="baudRate" customText="{getCustomTextData(baudRateArray,preferencesPOS)}" 
+		updateFirstElement="true" width="90" enabled="false"/>
+		
+	<components:CustomComboBoxComponent x="281" y="418"
+		masterList="{stopBitsArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesPOS}" variableName="stopBits" customText="{getCustomTextData(stopBitsArray,preferencesPOS)}" 
+		updateFirstElement="true" width="90" enabled="false"/>
+		
+	<components:CustomComboBoxComponent x="119" y="443"
+		masterList="{parityArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesPOS}" variableName="parity" customText="{getCustomTextData(parityArray,preferencesPOS)}" 
+		updateFirstElement="true" width="90" enabled="false"/>
+		
+	<components:CustomComboBoxComponent x="281" y="443"
+		masterList="{dataSizeArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesPOS}" variableName="dataSize" customText="{getCustomTextData(dataSizeArray,preferencesPOS)}" 
+		updateFirstElement="true" width="90" enabled="false"/>
+		
+</mx:Canvas>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesPendingList;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] public var preferencesPendingListArray:ArrayCollection = new ArrayCollection();
+				
+			private function doSelectColor(text:TextInput):void{
+		
+			}
+			
+			private function doSelectFont(text:TextInput):void{
+				if (text != null)
+				{
+					//do something
+				}else{
+					//do something else
+				}	
+			}
+			
+			private function columnnamePendingList(item:Object, column:DataGridColumn):String{
+				var tmpName:PreferencesPendingList = item as PreferencesPendingList;
+				
+				if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
+					var retVal:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpName.columns.name);
+					
+					if (retVal != "") {
+						return retVal;
+					} else {
+						return "None";
+					}
+				} else {
+					return "None";
+				}
+		
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:CheckBox x="50" y="265" id="chkShowDocumentType"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ShowDocumentTypeInNu')}"/>
+		
+	<mx:CheckBox x="50" y="290" id="chkAlwaysIncludePastDue"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.AlwaysIncludePastDue')}" />
+		
+	<mx:CheckBox x="50" y="315" id="chkColorPastDueEntries"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColorPastDueEntries')}" />
+		
+	<mx:Button x="50" y="345"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.PastDueColor')}"
+		click="doSelectColor(txtPastDueColor);" width="167" />
+		
+	<mx:Button x="50" y="375"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ReadyforPickupColor')}"
+		click="doSelectColor(txtReadyforPickupColor);" width="167" />
+		
+	<mx:Button x="50" y="405"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.InvoiceColor')}"
+		click="doSelectColor(txtInvoiceColor);" width="167" />
+		
+	<mx:Button x="50" y="435"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.EstimateColor')}"
+		click="doSelectColor(txtEstimateColor);" width="167" />
+		
+	<mx:Button x="50" y="465"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ListFont')}"
+		click="doSelectFont(txtListFont);" width="167" />
+		
+	<mx:Button x="50" y="495"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.HeaderFont')}"
+		click="doSelectFont(txtHeaderFont);" width="167" />
+		
+	<mx:TextInput x="225" y="345" id="txtPastDueColor" width="80" />
+	
+	<mx:TextInput x="225" y="375" id="txtReadyforPickupColor"
+		width="80" />
+		
+	<mx:TextInput x="225" y="405" id="txtInvoiceColor" width="80" />
+	
+	<mx:TextInput x="225" y="435" id="txtEstimateColor" width="80" />
+	
+	<mx:TextInput x="225" y="465" id="txtListFont" width="150" />
+	
+	<mx:TextInput x="225" y="495" id="txtHeaderFont" width="150" />
+	
+	<mx:DataGrid y="27" height="230" right="96" left="50"
+		dataProvider="{preferencesPendingListArray}" allowMultipleSelection="true">
+		<mx:columns>
+			<mx:DataGridColumn width="40"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible">
+				<mx:itemRenderer>
+					<mx:Component>
+							<components:CustomCheckBoxComponent datagridControl="true" variableName="visible"
+								customText="{data.visible}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="200"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColumnTitle')}"
+				labelFunction="columnnamePendingList" editable="false" />
+		</mx:columns>
+	</mx:DataGrid>
+	
+</mx:Canvas>
