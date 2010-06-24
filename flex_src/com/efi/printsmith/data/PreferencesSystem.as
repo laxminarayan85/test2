@@ -80,13 +80,13 @@ package com.efi.printsmith.data
 		public var maximumNodeCount:int = 0;
 		public var expirationDate:Date = new Date();
 		public var cCEncryptionData:String = "";
-		public var pEK1:String = "";
-		public var pEK2:String = "";
-		public var pEK3:String = "";
+		public var config:String = "";
+		public var process:String = "";
+		public var slogan:String = "";
 		public var reportWriterEnabled:Boolean = false;
 		public var extendedPriceBookEnabled:Boolean = false;
 		public var maximumTransactionCount:int = 0;
-		public var pEK4:String = "";
+		public var settings:String = "";
 	
 	}
 }

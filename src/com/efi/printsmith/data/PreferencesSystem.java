@@ -314,15 +314,15 @@ public class PreferencesSystem extends ModelBase {
 	/**
    * @generated
    */
-  public static final String PEK1 = "PEK1";
+  public static final String CONFIG = "Config";
 	/**
    * @generated
    */
-  public static final String PEK2 = "PEK2";
+  public static final String PROCESS = "Process";
 	/**
    * @generated
    */
-  public static final String PEK3 = "PEK3";
+  public static final String SLOGAN = "Slogan";
 	/**
    * @generated
    */
@@ -339,8 +339,7 @@ public class PreferencesSystem extends ModelBase {
 	/**
    * @generated
    */
-  public static final String PEK4 = "PEK4";
-
+  public static final String SETTINGS = "Settings";
 	/**
 	 * @generated
 	 */
@@ -1834,21 +1833,21 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String pEK1;
+  private String config;
 
 	/**
    * @generated
  	 */
-  public String getPEK1(){
-    return pEK1; 
+  public String getConfig(){
+    return config; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPEK1(String newVal) {
-    this.pEK1 = newVal;
+  public void setConfig(String newVal) {
+    this.config = newVal;
   }
 
 
@@ -1857,21 +1856,21 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String pEK2;
+  private String process;
 
 	/**
    * @generated
  	 */
-  public String getPEK2(){
-    return pEK2; 
+  public String getProcess(){
+    return process; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPEK2(String newVal) {
-    this.pEK2 = newVal;
+  public void setProcess(String newVal) {
+    this.process = newVal;
   }
 
 
@@ -1880,21 +1879,21 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String pEK3;
+  private String slogan;
 
 	/**
    * @generated
  	 */
-  public String getPEK3(){
-    return pEK3; 
+  public String getSlogan(){
+    return slogan; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPEK3(String newVal) {
-    this.pEK3 = newVal;
+  public void setSlogan(String newVal) {
+    this.slogan = newVal;
   }
 
 
@@ -1971,22 +1970,23 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String pEK4;
+  private String settings;
 
 	/**
    * @generated
  	 */
-  public String getPEK4(){
-    return pEK4; 
+  public String getSettings(){
+    return settings; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPEK4(String newVal) {
-    this.pEK4 = newVal;
+  public void setSettings(String newVal) {
+    this.settings = newVal;
   }
+
 
 
 	/**
@@ -2062,13 +2062,13 @@ public class PreferencesSystem extends ModelBase {
     if (MAXIMUMNODECOUNT.equals(propertyName)) return getMaximumNodeCount();
     if (EXPIRATIONDATE.equals(propertyName)) return getExpirationDate();
     if (CCENCRYPTIONDATA.equals(propertyName)) return getCCEncryptionData();
-    if (PEK1.equals(propertyName)) return getPEK1();
-    if (PEK2.equals(propertyName)) return getPEK2();
-    if (PEK3.equals(propertyName)) return getPEK3();
+    if (CONFIG.equals(propertyName)) return getConfig();
+    if (PROCESS.equals(propertyName)) return getProcess();
+    if (SLOGAN.equals(propertyName)) return getSlogan();
     if (REPORTWRITERENABLED.equals(propertyName)) return getReportWriterEnabled();
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return getExtendedPriceBookEnabled();
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return getMaximumTransactionCount();
-    if (PEK4.equals(propertyName)) return getPEK4();
+    if (SETTINGS.equals(propertyName)) return getSettings();
     return super.getProperty(propertyName);
   }
 	
@@ -2145,13 +2145,13 @@ public class PreferencesSystem extends ModelBase {
     if (MAXIMUMNODECOUNT.equals(propertyName)) setMaximumNodeCount((Integer)newValue); else
     if (EXPIRATIONDATE.equals(propertyName)) setExpirationDate((Date)newValue); else
     if (CCENCRYPTIONDATA.equals(propertyName)) setCCEncryptionData((String)newValue); else
-    if (PEK1.equals(propertyName)) setPEK1((String)newValue); else
-    if (PEK2.equals(propertyName)) setPEK2((String)newValue); else
-    if (PEK3.equals(propertyName)) setPEK3((String)newValue); else
+    if (CONFIG.equals(propertyName)) setConfig((String)newValue); else
+    if (PROCESS.equals(propertyName)) setProcess((String)newValue); else
+    if (SLOGAN.equals(propertyName)) setSlogan((String)newValue); else
     if (REPORTWRITERENABLED.equals(propertyName)) setReportWriterEnabled((Boolean)newValue); else
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) setExtendedPriceBookEnabled((Boolean)newValue); else
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) setMaximumTransactionCount((Integer)newValue); else
-    if (PEK4.equals(propertyName)) setPEK4((String)newValue); else
+    if (SETTINGS.equals(propertyName)) setSettings((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2295,11 +2295,11 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (CCENCRYPTIONDATA.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PEK1.equals(propertyName)) 
+    if (CONFIG.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PEK2.equals(propertyName)) 
+    if (PROCESS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PEK3.equals(propertyName)) 
+    if (SLOGAN.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (REPORTWRITERENABLED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
@@ -2307,7 +2307,7 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
-    if (PEK4.equals(propertyName)) 
+    if (SETTINGS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
@@ -2386,13 +2386,13 @@ public class PreferencesSystem extends ModelBase {
     if (MAXIMUMNODECOUNT.equals(propertyName)) return PreferencesSystem.class;
     if (EXPIRATIONDATE.equals(propertyName)) return PreferencesSystem.class;
     if (CCENCRYPTIONDATA.equals(propertyName)) return PreferencesSystem.class;
-    if (PEK1.equals(propertyName)) return PreferencesSystem.class;
-    if (PEK2.equals(propertyName)) return PreferencesSystem.class;
-    if (PEK3.equals(propertyName)) return PreferencesSystem.class;
+    if (CONFIG.equals(propertyName)) return PreferencesSystem.class;
+    if (PROCESS.equals(propertyName)) return PreferencesSystem.class;
+    if (SLOGAN.equals(propertyName)) return PreferencesSystem.class;
     if (REPORTWRITERENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return PreferencesSystem.class;
-    if (PEK4.equals(propertyName)) return PreferencesSystem.class;
+    if (SETTINGS.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2538,11 +2538,11 @@ public class PreferencesSystem extends ModelBase {
       return false;
     if (! SmartEquals(getCCEncryptionData(), objT.getCCEncryptionData()))
       return false;
-    if (! SmartEquals(getPEK1(), objT.getPEK1()))
+    if (! SmartEquals(getConfig(), objT.getConfig()))
       return false;
-    if (! SmartEquals(getPEK2(), objT.getPEK2()))
+    if (! SmartEquals(getProcess(), objT.getProcess()))
       return false;
-    if (! SmartEquals(getPEK3(), objT.getPEK3()))
+    if (! SmartEquals(getSlogan(), objT.getSlogan()))
       return false;
     if (! SmartEquals(getReportWriterEnabled(), objT.getReportWriterEnabled()))
       return false;
@@ -2550,7 +2550,7 @@ public class PreferencesSystem extends ModelBase {
       return false;
     if (! SmartEquals(getMaximumTransactionCount(), objT.getMaximumTransactionCount()))
       return false;
-    if (! SmartEquals(getPEK4(), objT.getPEK4()))
+    if (! SmartEquals(getSettings(), objT.getSettings()))
       return false;
     return true;
   }			
