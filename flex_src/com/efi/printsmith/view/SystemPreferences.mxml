@@ -5,11 +5,16 @@
 	xmlns:vo="com.efi.printsmith.vo.*"
 	xmlns:cmp="com.efi.printsmith.components.*"
 	xmlns:vld="com.efi.printsmith.validators.*"
+	xmlns:prefcomp="com.efi.printsmith.components.preferences.*"
+	xmlns:components="com.efi.printsmith.common.components.*"
 	width="100%" height="100%" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	xmlns:ns1="com.efi.printsmith.components.*">
+	
+	<mx:Script source="../common/scripts/Validation.as"/>
+	
  	<mx:states>
  	 	<mx:State name="CreditCardProcessorSetup">
  	 	 	<mx:RemoveChild target="{CreditCardGrid}"/>
@@ -171,7 +176,7 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveIntegrationResult(event)"/>
 	</mx:RemoteObject>
 
-    <mx:PhoneNumberValidator id="pnVPhone" 
+    <!--<mx:PhoneNumberValidator id="pnVPhone" 
         source="{this.txtPhone}" property="text"
         trigger="{this.btnSave}" 
         triggerEvent="click"/>
@@ -182,7 +187,7 @@
     <mx:EmailValidator id="emV" 
         source="{this.txtEmail}" property="text"
         trigger="{this.btnSave}" 
-        triggerEvent="click"/>
+        triggerEvent="click"/>-->
 	<vld:URLValidator id="urlValidator"
 		source="{this.txtFieryURL}" property="text"
 		trigger="{this.btnSave}"
@@ -192,6 +197,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CustomStringTextInputComponent;
 	import mx.formatters.NumberFormatter;
 	import mx.formatters.CurrencyFormatter;
 	import mx.formatters.NumberBase;
@@ -250,12 +256,8 @@
 	[Bindable]
 	private var enableSave:Boolean = true;
 
-	private var dollar:String = "$"; 
-	private var yen:String = "¥";
-	private var euro:String = "€";
-
 	[Bindable]
-	private var currentnumberstext:TextInput = null;
+	private var currentnumberstext:String = "";
 
 //Data field arrays
 	[Bindable]
@@ -376,6 +378,12 @@
 	
 	[Bindable]
 	private var country:Country;
+	
+	[Bindable] public var numberCanvasTextInput:CustomStringTextInputComponent;
+	
+	private var dollar:String = "$"; 
+	private var yen:String = "¥";
+	private var euro:String = "€";
 
 //Tree view XML table
 	[Bindable]
@@ -834,140 +842,142 @@
 	}
 	private function mapFromPreferencesSystemData():void {
 		//check boxes
-		this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging;
-		this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown;
-		this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown;
-		this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions;
-		this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles;
-		this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages;
-		this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut;
-		this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit;
-		this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes;
-		this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem;
-		this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed;
-		this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices;
-		this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity;
-		this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday;
-		this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp;
-		this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting;
-		this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency;
-		this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding;
+		preferencesSystem.enablePricingSystem = true;
+		preferencesSystem.lineItemTaxes = true;
+		//this.chkActivateUserEventLogging.selected = preferencesSystem.activateUserEventLogging;
+		//this.chkAlwaysRoundDown.selected = preferencesSystem.alwaysRoundDown;
+		//this.chkAlwaysRoundDownAlternateCurrency.selected = preferencesSystem.alternateAlwaysRoundDown;
+		//this.chkDisableNonTaxableOptions.selected = preferencesSystem.disableNonTaxableOptions;
+		//this.chkDisableTextStyles.selected = preferencesSystem.disableTextStyles;
+		//this.chkEliminateSomeWarningMessages.selected = preferencesSystem.eliminateWarningMessages;
+		//this.chkEnableAutomaticLogOut.selected = preferencesSystem.enableAutoLogOut;
+		//this.chkEnableAutomaticQuit.selected = preferencesSystem.automaticQuit;
+		//this.chkEnableLineItemTaxes.selected = preferencesSystem.lineItemTaxes;
+		//this.chkEnablePricingSystem.selected = preferencesSystem.enablePricingSystem;
+		//this.chkFutureDateExcludeClosed.selected = preferencesSystem.futureDatesExcludeClosed;
+		//this.chkOnlyPostInvoicesMarkedReady.selected = preferencesSystem.onlyPostMarkedReadyInvoices;
+		//this.chkSecondsOfInactivity.selected = preferencesSystem.secondsOfInactivity;
+		//this.chkShowInvoices.selected = preferencesSystem.showInvoicesWithToday;
+		//this.chkTaxRoundUp.selected = preferencesSystem.roundTaxUp;
+		//this.chkTriggerAfterPosting.selected = preferencesSystem.triggerAfterPosting;
+		//this.chkUseAlternateCurrency.selected = preferencesSystem.useAlternateCurrency;
+		//this.chkUseAustralianInvoiceRounding.selected = preferencesSystem.austrailianInvoiceRounding;
 		
 		//comboboxs
 		if (preferencesSystem.fiscalYearStartMonth != "")
 		{
-			cboFiscalYearStartMonth.selectedIndex = findItem(preferencesSystem.fiscalYearStartMonth, MonthsArray);
+			//cboFiscalYearStartMonth.selectedIndex = findItem(preferencesSystem.fiscalYearStartMonth, MonthsArray);
 		}
 		if (preferencesSystem.defaultCountry >-1)
 		{
-			cboDefaultCountry.selectedIndex = preferencesSystem.defaultCountry
+			//cboDefaultCountry.selectedIndex = preferencesSystem.defaultCountry
 		}
 
 		//radio buttons
-		if (preferencesSystem.workFirstDayOfWeek > -1)
-			this.opgFirstDayOfWorkWeek.selectedValue = preferencesSystem.workFirstDayOfWeek.toString();
+		/* if (preferencesSystem.workFirstDayOfWeek > -1)
+			this.opgFirstDayOfWorkWeek.selectedValue = preferencesSystem.workFirstDayOfWeek.toString(); */
 
 		//DOW Buttons toggles
-		this.btnWorkDaySunday.selected = preferencesSystem.workSunday;
+		/* this.btnWorkDaySunday.selected = preferencesSystem.workSunday;
 		this.btnWorkDayMonday.selected = preferencesSystem.workMonday;
 		this.btnWorkDayTuesday.selected = preferencesSystem.workTuesday;
 		this.btnWorkDayWednesday.selected = preferencesSystem.workWednesday;
 		this.btnWorkDayThursday.selected = preferencesSystem.workThursday;
 		this.btnWorkDayFriday.selected = preferencesSystem.workFriday;
-		this.btnWorkDaySaturday.selected = preferencesSystem.workSaturday;
+		this.btnWorkDaySaturday.selected = preferencesSystem.workSaturday; */
 
 		//address editor
-		address_editor.setAddress(preferencesSystem.companyAddress);
+		company_canvas.address_editor.setAddress(preferencesSystem.companyAddress);
 
-		this.txtInactivitySeconds.text = preferencesSystem.autoLogOutSeconds.toString();
-		if (preferencesSystem.quitTime != null && preferencesSystem.quitTime.length > 0 && preferencesSystem.quitTime.length < 7){
-			this.txtTimeOfDayQuit.hour = parseInt(preferencesSystem.quitTime.substr(0,2),0);
-			this.txtTimeOfDayQuit.minute = parseInt(preferencesSystem.quitTime.substr(2,2),0)
-			this.txtTimeOfDayQuit.am_pm = preferencesSystem.quitTime.substr(4,2)
+		//this.txtInactivitySeconds.text = preferencesSystem.autoLogOutSeconds.toString();
+		/* if (preferencesSystem.quitTime != null && preferencesSystem.quitTime.length > 0 && preferencesSystem.quitTime.length < 7){
+			this.behavior_canvas.txtTimeOfDayQuit.hour = parseInt(preferencesSystem.quitTime.substr(0,2),0);
+			this.behavior_canvas.txtTimeOfDayQuit.minute = parseInt(preferencesSystem.quitTime.substr(2,2),0)
+			this.behavior_canvas.txtTimeOfDayQuit.am_pm = preferencesSystem.quitTime.substr(4,2)
 		}else {
-			this.txtTimeOfDayQuit.hour = 12;
-			this.txtTimeOfDayQuit.minute = 00;
-			this.txtTimeOfDayQuit.am_pm = "am"
-		}
+			this.behavior_canvas.txtTimeOfDayQuit.hour = 12;
+			this.behavior_canvas.txtTimeOfDayQuit.minute = 00;
+			this.behavior_canvas.txtTimeOfDayQuit.am_pm = "am"
+		} */
 		//this.txtTimeOfDayQuit = preferencesSystem.quitTime;
-		this.txtShutdownNotificationMessage.text = preferencesSystem.shutdownMessage;
-		this.txtPhone.text = preferencesSystem.companyPhone
-		this.txtFax.text = preferencesSystem.companyFax;
-		this.txtEmail.text = preferencesSystem.companyEmail; 
-		this.txtOther1.text = preferencesSystem.companyOther1;
-		this.txtOther2.text = preferencesSystem.companyOther2;
-		this.txtCompanyIdLabel.text = preferencesSystem.companyIdLabel; 
-		this.txtCompanyId.text = preferencesSystem.companyId;
-		this.txtStoreNumber.text = preferencesSystem.companyStoreNumber; 
-		this.txtLocationReference.text = preferencesSystem.companyStoreLocationRef;
+		//this.txtShutdownNotificationMessage.text = preferencesSystem.shutdownMessage;
+		//this.txtPhone.text = preferencesSystem.companyPhone
+		//this.txtFax.text = preferencesSystem.companyFax;
+		//this.txtEmail.text = preferencesSystem.companyEmail; 
+		//this.txtOther1.text = preferencesSystem.companyOther1;
+		//this.txtOther2.text = preferencesSystem.companyOther2;
+		//this.txtCompanyIdLabel.text = preferencesSystem.companyIdLabel; 
+		//this.txtCompanyId.text = preferencesSystem.companyId;
+		//this.txtStoreNumber.text = preferencesSystem.companyStoreNumber; 
+		//this.txtLocationReference.text = preferencesSystem.companyStoreLocationRef;
 		
 		if (preferencesSystem.numbersIntegers.length == 0){
 			preferencesSystem.numbersIntegers = "###,###,###,###";
 		}
-		this.txtIntegers.text = preferencesSystem.numbersIntegers;
+		//this.txtIntegers.text = preferencesSystem.numbersIntegers;
 		
 		if (preferencesSystem.numbersPercentages.length == 0){
 			preferencesSystem.numbersPercentages = "###,##0.###%;-###,##0.###%;0%";
 		}
-		this.txtPercentages.text = preferencesSystem.numbersPercentages;
+		//this.txtPercentages.text = preferencesSystem.numbersPercentages;
 		
 		if (preferencesSystem.numbersAmount.length == 0) {
 			preferencesSystem.numbersAmount = "###,###,###,##0.00";
 		}
-		this.txtAmount.text = preferencesSystem.numbersAmount;
+		//this.txtAmount.text = preferencesSystem.numbersAmount;
 		
 		if (preferencesSystem.numbersTaxRate.length == 0) {
 			preferencesSystem.numbersTaxRate = "###,###,###%;-###,###,###%;0%";
 		}
-		this.txtTaxRate.text = preferencesSystem.numbersTaxRate;
+		//this.txtTaxRate.text = preferencesSystem.numbersTaxRate;
 		
 		if (preferencesSystem.numbersRate.length == 0) {
 			preferencesSystem.numbersRate = "###,###,###,##0.00##";
 		}
-		this.txtRate.text = preferencesSystem.numbersRate;
+		//this.txtRate.text = preferencesSystem.numbersRate;
 		
 		if (preferencesSystem.numbersFactor.length == 0) {
 			preferencesSystem.numbersFactor = "###,###,###,##0.####;-###,###,###,##.####;0"
 		}
-		this.txtFactor.text = preferencesSystem.numbersFactor;
+		//this.txtFactor.text = preferencesSystem.numbersFactor;
 		
 		if (preferencesSystem.numbersInvoice.length == 0) {
 			preferencesSystem.numbersInvoice = "###,###,###,##0.00";
 		}
-		this.txtInvoice.text = preferencesSystem.numbersInvoice;
+		//this.txtInvoice.text = preferencesSystem.numbersInvoice;
 		
 		if (preferencesSystem.numbersShortPercent.length == 0) {
 			preferencesSystem.numbersShortPercent = "#####0%";
 		}
-		this.txtShortPercent.text = preferencesSystem.numbersShortPercent;
+		//this.txtShortPercent.text = preferencesSystem.numbersShortPercent;
 
-		this.txtRoundTo.text = preferencesSystem.numbersRoundto.toString();
+		//this.txtRoundTo.text = preferencesSystem.numbersRoundto.toString();
 		
 		if (preferencesSystem.displayFormat.length == 0){
 			preferencesSystem.displayFormat = "'e'###,###,###,##0.00";
 		}
-		this.txtFormat.text = preferencesSystem.displayFormat;
+		//this.txtFormat.text = preferencesSystem.displayFormat;
 		
 		if (preferencesSystem.conversionFactor < 0){
 			preferencesSystem.conversionFactor = 1.18;
 		}	
-		this.txtConversionFactor.text = preferencesSystem.conversionFactor.toString();
+		//this.txtConversionFactor.text = preferencesSystem.conversionFactor.toString();
 		
 		if (preferencesSystem.alternateRoundto < 0){
 			preferencesSystem.alternateRoundto = 2;
 		}	
-		this.txtRoundToAlternateCurrency.text = preferencesSystem.alternateRoundto.toString();
+		//this.txtRoundToAlternateCurrency.text = preferencesSystem.alternateRoundto.toString();
 		
-		this.txtInkWeightSingular.text = preferencesSystem.inkWeightSingular;
-		this.txtInkWeightPlural.text = preferencesSystem.inkWeightPlural;
+		//this.txtInkWeightSingular.text = preferencesSystem.inkWeightSingular;
+		//this.txtInkWeightPlural.text = preferencesSystem.inkWeightPlural;
 
-		this.txtAuthorizeDecrypTo.text = preferencesSystem.authorizeDecrypt;
+		//this.txtAuthorizeDecrypTo.text = preferencesSystem.authorizeDecrypt;
 
 //set controls for System items
 		checkEnableAutoLogOut();
 		checkAlternateCurrency()
-		setDisplayText(txtIntegers);
-		setAlternateCurrencyText(txtFormat);
+		setDisplayText(null,preferencesSystem.numbersIntegers,"Integers");
+		setAlternateCurrencyText(null,preferencesSystem.displayFormat);
 		setCurrentRange();
 		setCurrentCountry();
 		
@@ -1148,18 +1158,18 @@
 
 	}
 	private function mapFromPreferencesPOSData():void {
-		this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
-		this.chkHideTaxLineItems.selected = preferencesPOS.hideTaxLines
-		this.chkKeepSettingsLocal.selected = preferencesPOS.keepLocalSettings
-		this.chkLockSettings.selected = preferencesPOS.lockSettings
-		this.chkPrint2forCash.selected = preferencesPOS.print2forCash
-		this.chkPrint2forCredit.selected = preferencesPOS.print2forCreditCards
-		this.chkPrintInvoices.selected = preferencesPOS.printInvoices
-		this.chkPrintReceipts.selected = preferencesPOS.printReceipts
-		this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
-		this.chkUseMasterDrawer.selected = preferencesPOS.useMasterDrawer
+		//this.chkEnableCashDrawer.selected = preferencesPOS.enableCashDrawer
+		//this.chkHideTaxLineItems.selected = preferencesPOS.hideTaxLines
+		//this.chkKeepSettingsLocal.selected = preferencesPOS.keepLocalSettings
+		//this.chkLockSettings.selected = preferencesPOS.lockSettings
+		//this.chkPrint2forCash.selected = preferencesPOS.print2forCash
+		//this.chkPrint2forCredit.selected = preferencesPOS.print2forCreditCards
+		//this.chkPrintInvoices.selected = preferencesPOS.printInvoices
+		//this.chkPrintReceipts.selected = preferencesPOS.printReceipts
+		//this.chkSerialNumberReceiptsStart.selected = preferencesPOS.receiptStartNumber
+		//this.chkUseMasterDrawer.selected = preferencesPOS.useMasterDrawer
 
-		if (preferencesPOS.receiptPrinterStatus != "")
+		/* if (preferencesPOS.receiptPrinterStatus != "")
 			cboReceiptPrinter.selectedIndex = findItem(preferencesPOS.receiptPrinterStatus, ReceiptPrinterArray);
 
 		if (preferencesPOS.baudRate != "")
@@ -1171,16 +1181,16 @@
 		if (preferencesPOS.dataSize != "")
 			cboDataSize.selectedIndex = findItem(preferencesPOS.dataSize, DataSizeArray);
 			
-		this.txtReceiptHeader.text = preferencesPOS.receiptHeader;
-		this.txtReceiptFooter.text = preferencesPOS.receiptFooter;
-		this.txtSerialNumber.text = preferencesPOS.startingNumber.toString();
+		//this.txtReceiptHeader.text = preferencesPOS.receiptHeader;
+		//this.txtReceiptFooter.text = preferencesPOS.receiptFooter;
+		//this.txtSerialNumber.text = preferencesPOS.startingNumber.toString();
 
 		this.txtSelectedPrinter.text = preferencesPOS.defaultPrinter;
 		this.txtAsciiCodeOpenDrawer.text = preferencesPOS.asciiCodeOpenDrawer.toString();
 		this.txtBlankBeforeReceipt.text = preferencesPOS.blankLinesBeforeReceipt.toString();
 		this.txtBlankAfterReceipt.text = preferencesPOS.blankLinesAfterReceipt.toString();
 		this.txtReceiptStartCode.text = preferencesPOS.receiptStartCode;
-		this.txtReceiptEndCode.text = preferencesPOS.receiptEndCode;
+		this.txtReceiptEndCode.text = preferencesPOS.receiptEndCode; */
 
 	}
 
@@ -1258,33 +1268,33 @@
 	
 	private function mapToPreferencesSystem():void {
 		
-		preferencesSystem.companyAddress = address_editor.getAddress();
+		preferencesSystem.companyAddress = company_canvas.address_editor.getAddress();
 
-		preferencesSystem.activateUserEventLogging = this.chkActivateUserEventLogging.selected
-		preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
-		preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
-		preferencesSystem.disableNonTaxableOptions = this.chkDisableNonTaxableOptions.selected
-		preferencesSystem.disableTextStyles = this.chkDisableTextStyles.selected
-		preferencesSystem.eliminateWarningMessages = this.chkEliminateSomeWarningMessages.selected
-		preferencesSystem.enableAutoLogOut = this.chkEnableAutomaticLogOut.selected
-		preferencesSystem.automaticQuit = this.chkEnableAutomaticQuit.selected
-		preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
-		preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
-		preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
-		preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
-		preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
-		preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
-		preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
-		preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
-		preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
-		preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
+		///preferencesSystem.activateUserEventLogging = this.chkActivateUserEventLogging.selected
+		//preferencesSystem.alwaysRoundDown = this.chkAlwaysRoundDown.selected
+		//preferencesSystem.alternateAlwaysRoundDown = this.chkAlwaysRoundDownAlternateCurrency.selected
+		//preferencesSystem.disableNonTaxableOptions = this.chkDisableNonTaxableOptions.selected
+		//preferencesSystem.disableTextStyles = this.chkDisableTextStyles.selected
+		//preferencesSystem.eliminateWarningMessages = this.chkEliminateSomeWarningMessages.selected
+		//preferencesSystem.enableAutoLogOut = this.chkEnableAutomaticLogOut.selected
+		//preferencesSystem.automaticQuit = this.chkEnableAutomaticQuit.selected
+		//preferencesSystem.lineItemTaxes = this.chkEnableLineItemTaxes.selected
+		//preferencesSystem.enablePricingSystem = this.chkEnablePricingSystem.selected
+		//preferencesSystem.futureDatesExcludeClosed = this.chkFutureDateExcludeClosed.selected
+		//preferencesSystem.onlyPostMarkedReadyInvoices = this.chkOnlyPostInvoicesMarkedReady.selected
+		//preferencesSystem.secondsOfInactivity = this.chkSecondsOfInactivity.selected
+		//preferencesSystem.showInvoicesWithToday = this.chkShowInvoices.selected
+		//preferencesSystem.roundTaxUp = this.chkTaxRoundUp.selected
+		//preferencesSystem.triggerAfterPosting = this.chkTriggerAfterPosting.selected
+		//preferencesSystem.useAlternateCurrency = this.chkUseAlternateCurrency.selected
+		//preferencesSystem.austrailianInvoiceRounding = this.chkUseAustralianInvoiceRounding.selected
 
 //comboboxes
-		if (cboFiscalYearStartMonth != null && cboFiscalYearStartMonth.selectedItem != null)
-	 		preferencesSystem.fiscalYearStartMonth = cboFiscalYearStartMonth.selectedItem.name;
+		/* if (cboFiscalYearStartMonth != null && cboFiscalYearStartMonth.selectedItem != null)
+	 		preferencesSystem.fiscalYearStartMonth = cboFiscalYearStartMonth.selectedItem.name; */
 
 //Radio buttons
-		if (this.opgFirstDayOfWorkWeek.selectedValue != null)
+		/* if (this.opgFirstDayOfWorkWeek.selectedValue != null)
 			preferencesSystem.workFirstDayOfWeek = this.opgFirstDayOfWorkWeek.selectedValue.toString();
 
 //DOW Buttons toggles
@@ -1294,39 +1304,39 @@
 		preferencesSystem.workWednesday = this.btnWorkDayWednesday.selected;
 		preferencesSystem.workThursday = this.btnWorkDayThursday.selected;
 		preferencesSystem.workFriday = this.btnWorkDayFriday.selected;
-		preferencesSystem.workSaturday = this.btnWorkDaySaturday.selected;
+		preferencesSystem.workSaturday = this.btnWorkDaySaturday.selected; */
 
 		//textboxes
-		preferencesSystem.autoLogOutSeconds = parseInt(this.txtInactivitySeconds.text);
+		//preferencesSystem.autoLogOutSeconds = parseInt(this.txtInactivitySeconds.text);
 //		preferencesSystem.quitTime = this.txtTimeOfDayQuit.text;
-		preferencesSystem.quitTime = padString(this.txtTimeOfDayQuit.hour.toString(),2,"0")+padString(this.txtTimeOfDayQuit.minute.toString(),2,"0")+this.txtTimeOfDayQuit.am_pm.toString();
-		preferencesSystem.shutdownMessage = this.txtShutdownNotificationMessage.text;
-		preferencesSystem.companyPhone = this.txtPhone.text;
-		preferencesSystem.companyFax =txtFax.text;
-		preferencesSystem.companyEmail = this.txtEmail.text; 
-		preferencesSystem.companyOther1 = this.txtOther1.text;
-		preferencesSystem.companyOther2 = this.txtOther2.text;
-		preferencesSystem.companyIdLabel = this.txtCompanyIdLabel.text; 
-		preferencesSystem.companyId = this.txtCompanyId.text;
-		preferencesSystem.companyStoreNumber = this.txtStoreNumber.text; 
-		preferencesSystem.companyStoreLocationRef = this.txtLocationReference.text;
-		preferencesSystem.numbersIntegers = this.txtIntegers.text;
-		preferencesSystem.numbersPercentages = this.txtPercentages.text;
-		preferencesSystem.numbersAmount = this.txtAmount.text;
-		preferencesSystem.numbersRate = this.txtRate.text;
-		preferencesSystem.numbersFactor = this.txtFactor.text;
-		preferencesSystem.numbersInvoice = this.txtInvoice.text;
-		preferencesSystem.numbersShortPercent = this.txtShortPercent.text;
-		preferencesSystem.numbersRoundto = parseInt(this.txtRoundTo.text);
-		preferencesSystem.displayFormat = this.txtFormat.text;
+		//preferencesSystem.quitTime = padString(this.behavior_canvas.txtTimeOfDayQuit.hour.toString(),2,"0")+padString(this.behavior_canvas.txtTimeOfDayQuit.minute.toString(),2,"0")+this.behavior_canvas.txtTimeOfDayQuit.am_pm.toString();
+		//preferencesSystem.shutdownMessage = this.txtShutdownNotificationMessage.text;
+		//preferencesSystem.companyPhone = this.txtPhone.text;
+		//preferencesSystem.companyFax =txtFax.text;
+		//preferencesSystem.companyEmail = this.txtEmail.text; 
+		//preferencesSystem.companyOther1 = this.txtOther1.text;
+		//preferencesSystem.companyOther2 = this.txtOther2.text;
+		//preferencesSystem.companyIdLabel = this.txtCompanyIdLabel.text; 
+		//preferencesSystem.companyId = this.txtCompanyId.text;
+		//preferencesSystem.companyStoreNumber = this.txtStoreNumber.text; 
+		//preferencesSystem.companyStoreLocationRef = this.txtLocationReference.text;
+		//preferencesSystem.numbersIntegers = this.txtIntegers.text;
+		//preferencesSystem.numbersPercentages = this.txtPercentages.text;
+		//preferencesSystem.numbersAmount = this.txtAmount.text;
+		//preferencesSystem.numbersRate = this.txtRate.text;
+		//preferencesSystem.numbersFactor = this.txtFactor.text;
+		//preferencesSystem.numbersInvoice = this.txtInvoice.text;
+		//preferencesSystem.numbersShortPercent = this.txtShortPercent.text;
+		//preferencesSystem.numbersRoundto = parseInt(this.txtRoundTo.text);
+		/* preferencesSystem.displayFormat = this.txtFormat.text;
 		preferencesSystem.conversionFactor = parseFloat(this.txtConversionFactor.text);
-		preferencesSystem.alternateRoundto = parseInt(this.txtRoundToAlternateCurrency.text);
-		preferencesSystem.inkWeightSingular = this.txtInkWeightSingular.text;
-		preferencesSystem.inkWeightPlural = this.txtInkWeightPlural.text;
+		preferencesSystem.alternateRoundto = parseInt(this.txtRoundToAlternateCurrency.text); */
+		//preferencesSystem.inkWeightSingular = this.txtInkWeightSingular.text;
+		//preferencesSystem.inkWeightPlural = this.txtInkWeightPlural.text;
 
-		preferencesSystem.authorizeDecrypt = this.txtAuthorizeDecrypTo.text;
+		//preferencesSystem.authorizeDecrypt = this.txtAuthorizeDecrypTo.text;
 
-		preferencesSystem.defaultCountry = this.cboDefaultCountry.selectedIndex;
+		//preferencesSystem.defaultCountry = this.cboDefaultCountry.selectedIndex;
 		
 	}
 	private function mapToPreferencesAccountingData():void {
@@ -1514,15 +1524,15 @@
 
 	}
 	private function mapToPreferencesPOSData():void {
-		preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
-		preferencesPOS.hideTaxLines = this.chkHideTaxLineItems.selected
+		/* preferencesPOS.enableCashDrawer = this.chkEnableCashDrawer.selected
+		//preferencesPOS.hideTaxLines = this.chkHideTaxLineItems.selected
 		preferencesPOS.keepLocalSettings = this.chkKeepSettingsLocal.selected
 		preferencesPOS.lockSettings = this.chkLockSettings.selected
 		preferencesPOS.print2forCash = this.chkPrint2forCash.selected
 		preferencesPOS.print2forCreditCards = this.chkPrint2forCredit.selected
 		preferencesPOS.printInvoices = this.chkPrintInvoices.selected
 		preferencesPOS.printReceipts = this.chkPrintReceipts.selected
-		preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
+		//preferencesPOS.receiptStartNumber = this.chkSerialNumberReceiptsStart.selected
 		preferencesPOS.useMasterDrawer = this.chkUseMasterDrawer.selected
 
 		if (cboReceiptPrinter != null && cboReceiptPrinter.selectedItem != null)
@@ -1535,19 +1545,19 @@
 		if (cboParity != null && cboParity.selectedItem != null)
 			preferencesPOS.parity = cboParity.selectedItem.name;
 		if (cboDataSize != null && cboDataSize.selectedItem != null)
-			preferencesPOS.dataSize = cboDataSize.selectedItem.name;
+			preferencesPOS.dataSize = cboDataSize.selectedItem.name; */
 		
 		//textboxes
-		preferencesPOS.receiptHeader = this.txtReceiptHeader.text
+		/* preferencesPOS.receiptHeader = this.txtReceiptHeader.text
 		preferencesPOS.receiptFooter = this.txtReceiptFooter.text
-		preferencesPOS.startingNumber = parseInt(this.txtSerialNumber.text);
+		preferencesPOS.startingNumber = parseInt(this.txtSerialNumber.text); */
 
-		preferencesPOS.defaultPrinter = this.txtSelectedPrinter.text;
+		/* preferencesPOS.defaultPrinter = this.txtSelectedPrinter.text;
 		preferencesPOS.asciiCodeOpenDrawer = parseInt(this.txtAsciiCodeOpenDrawer.text);
 		preferencesPOS.blankLinesBeforeReceipt = parseInt(this.txtBlankBeforeReceipt.text);
 		preferencesPOS.blankLinesAfterReceipt = parseInt(this.txtBlankAfterReceipt.text);
 		preferencesPOS.receiptStartCode = this.txtReceiptStartCode.text;
-		preferencesPOS.receiptEndCode = this.txtReceiptEndCode.text;
+		preferencesPOS.receiptEndCode = this.txtReceiptEndCode.text; */
 
 
 	}
@@ -1679,8 +1689,21 @@
 		}
 	}
 	
-	private function setCurrentCountry() : void {
-		this.txtSampleAddress.text = CountryArray.getItemAt(cboDefaultCountry.selectedIndex,0).name; 
+	public function setCurrentCountry(event:Event=null) : void {
+		if(event){
+			addressformatting_canvas.txtSampleAddress.text = event.currentTarget.selectedItem.name;
+		} else {
+			if(preferencesSystem.defaultCountry==0){
+				addressformatting_canvas.txtSampleAddress.text = CountryArray.getItemAt(0).name;
+			} else {
+				for each(var obj:Object in CountryArray){
+					if(obj.id == preferencesSystem.defaultCountry){
+						addressformatting_canvas.txtSampleAddress.text = obj.name;
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	private function findItem(name:String, array:ArrayCollection):int {
@@ -1919,17 +1942,24 @@
 		preferences_stack.selectedIndex = node.@tag; 
 	}
 	
-	private function doSignSymbol(text:String):void{
-		currentnumberstext.text = currentnumberstext.text + text; 
+	public function doSignSymbol(text:String):void{
+		if(numberCanvasTextInput){
+			var text:String = numberCanvasTextInput.text+text;
+			numberCanvasTextInput.dataHolder[numberCanvasTextInput.variableName] = text; 
+			//numberCanvasTextInput.customText = text;
+		} 
 	}
 
-	private function setAlternateCurrencyText(textInput:TextInput):void{
-		currentnumberstext = textInput;
+	public function setAlternateCurrencyText(event:Event=null,text:String=null):void{
+		if(event!=null){
+			text = event.currentTarget.text;
+		}
+		currentnumberstext = text;
 		var number1:Number = 1234.567890
 		var number2:Number = 0.0
 		var number3:Number = -1234.567890
 		var number4:Number = 0.555555
-		var str:String = currentnumberstext.text;
+		var str:String = currentnumberstext;
 		if (str.substr(str.indexOf(";")).length > 0){
 			str = str.substr(0,str.indexOf(";"))
 		}
@@ -1950,9 +1980,9 @@
 			if (str.substr(str.indexOf(euro)).length > 0){
 				fmt1.currencySymbol = euro;
 			}
-			txtSampleArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
+			alternatecurrency_canvas.txtSampleArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
 		}else{
-			txtSampleArea.text = "";
+			alternatecurrency_canvas.txtSampleArea.text = "";
 		}
 
 	}
@@ -1965,13 +1995,18 @@
 		}
 	}
 	
-	private function setDisplayText(textInput:TextInput):void{
-		currentnumberstext = textInput;
-		var number1:Number = 1234.567890
-		var number2:Number = 0.0
-		var number3:Number = -1234.567890
-		var number4:Number = 0.555555
-		var str:String = currentnumberstext.text;
+	public function setDisplayText(event:Event=null,text:String=null,compName:String=null):void{
+		if(event!=null){
+			numberCanvasTextInput = event.currentTarget as CustomStringTextInputComponent;
+			text = event.currentTarget.text;
+			compName = event.currentTarget.name;
+		}
+		currentnumberstext = text;
+		var number1:Number = 1234.567890;
+		var number2:Number = 0.0;
+		var number3:Number = -1234.567890;
+		var number4:Number = 0.555555;
+		var str:String = currentnumberstext;
 		if (str.substr(str.indexOf(";")).length > 0){
 			str = str.substr(0,str.indexOf(";"))
 		}
@@ -1994,44 +2029,48 @@
 				if (str.substr(str.indexOf(euro)).length > 0){
 					fmt1.currencySymbol = euro;
 				}
-				txtDisplayArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
+				numbers_canvas.txtDisplayArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
 			}else {
 				if (str.substr(str.indexOf(".")).length > 0){
 					fmt2.precision = str.substr(str.indexOf(".")).length 
 				}else {
 					fmt2.precision = 0;
 				}
-				txtDisplayArea.text = fmt2.format(number1)+ "\n" + fmt2.format(number2)+ "\n" + fmt2.format(number3)+ "\n" + fmt2.format(number4);
+				numbers_canvas.txtDisplayArea.text = fmt2.format(number1)+ "\n" + fmt2.format(number2)+ "\n" + fmt2.format(number3)+ "\n" + fmt2.format(number4);
 			}		
 		}
 
-		txtDisplayDemo.text = textInput.name;
+		numbers_canvas.txtDisplayDemo.text = compName;
 	}
 
 	private function setCurrentRange():void{
 		var dt1:Date= new Date();
-		dt1.setFullYear(dt1.fullYear,cboFiscalYearStartMonth.selectedIndex,"1");
-		var dt2:Date = new Date(dt1.fullYear+1, cboFiscalYearStartMonth.selectedIndex, 0);
-		txtCurrentRange.text = dt1.toDateString() + " - " + dt2.toDateString(); 
+		dt1.setFullYear(dt1.fullYear,calendar_canvas.cboFiscalYearStartMonth.selectedIndex,"1");
+		var dt2:Date = new Date(dt1.fullYear+1, calendar_canvas.cboFiscalYearStartMonth.selectedIndex, 0);
+		calendar_canvas.txtCurrentRange.text = dt1.toDateString() + " - " + dt2.toDateString(); 
 	}
 
 	
 	private function checkEnableAutoLogOut():void{
-		chkSecondsOfInactivity.enabled = chkEnableAutomaticLogOut.selected;
-		chkTriggerAfterPosting.enabled = chkEnableAutomaticLogOut.selected;
-		txtInactivitySeconds.enabled = chkSecondsOfInactivity.selected; 
+		/* preferencesSystem.secondsOfInactivity = preferencesSystem.enableAutoLogOut;
+		preferencesSystem.triggerAfterPosting = preferencesSystem.enableAutoLogOut;
+		txtInactivitySeconds.enabled = preferencesSystem.secondsOfInactivity;  */
 	}
 	
 	private function checkAlternateCurrency():void{
-		txtFormat.enabled = chkUseAlternateCurrency.selected;
+		/* txtFormat.enabled = chkUseAlternateCurrency.selected;
 		txtConversionFactor.enabled = chkUseAlternateCurrency.selected;
 		txtRoundToAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
-		chkAlwaysRoundDownAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
+		chkAlwaysRoundDownAlternateCurrency.enabled = chkUseAlternateCurrency.selected; */
 	}
 	
 	private function doSave():void{
-		mapToPreferencesAllData();
-		updatePreferencesData();		
+		if(validate(this)){
+			mapToPreferencesAllData();
+			updatePreferencesData();
+		} else {
+			Alert.show("Validation Error");
+		}		
 	}
 	
 	private function doRevert():void{
@@ -2053,18 +2092,7 @@
 	private function doCheckForPalmData():void{
 		
 	}
-	private function doSelectColor(text:TextInput):void{
-		
-	}
-	private function doSelectFont(text:TextInput):void{
-		if (text != null)
-		{
-			//do something
-		}else{
-			//do something else
-		}
-		
-	}
+	
 	private function doPrintBarCodes():void{
 		
 	}
@@ -2290,23 +2318,7 @@
 		}
 
 	}
-	   
-	private function columnnamePendingList(item:Object, column:DataGridColumn):String{
-		var tmpName:PreferencesPendingList = item as PreferencesPendingList;
-		
-		if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
-			var retVal:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpName.columns.name);
-			
-			if (retVal != "") {
-				return retVal;
-			} else {
-				return "None";
-			}
-		} else {
-			return "None";
-		}
-
-	}
+	
 	private function columnsnameStockDefinition(item:Object, column:DataGridColumn):String{
 		var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
 		
@@ -2394,224 +2406,35 @@
 
 	<mx:VBox id="vbox2" left="190" top="72" height="100%" width="100%" creationPolicy="all">
 		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
-			<mx:Canvas width="100%" height="100%" id="behavior_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Behavior')}" textAlign="center" left="0" right="0"/>
-				<mx:HRule y="17" left="0" right="0"/>
-				<mx:CheckBox x="50" y="30"  id="chkEliminateSomeWarningMessages" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Eliminatesomewarning')}" width="360"/>
-				<mx:CheckBox x="50" y="60"  id="chkOnlyPostInvoicesMarkedReady" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Onlypostinvoicesmark')}" width="360"/>
-				<mx:CheckBox x="50" y="90"  id="chkEnablePricingSystem" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}" width="360"/>
-				<mx:CheckBox x="50" y="120" id="chkActivateUserEventLogging" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Activateusereventlog')}" width="360"/>
-				<mx:CheckBox x="50" y="150" id="chkEnableAutomaticLogOut" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Enableautomaticlogou')}" change="checkEnableAutoLogOut();" width="360"/>
-				<mx:CheckBox x="80" y="180" id="chkSecondsOfInactivity" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Secondsofinactivityt')}" change="checkEnableAutoLogOut();" enabled="false" width="189"/>
-				<mx:CheckBox x="80" y="210" id="chkTriggerAfterPosting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TriggerafterPosting')}" enabled="false" width="189"/>
-				<mx:CheckBox x="50" y="240" id="chkShowInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Showinvoiceswithfirm')}" width="360"/>
-				<mx:CheckBox x="50" y="270" id="chkEnableLineItemTaxes" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Enablelineitemtaxes')}" width="360"/>
-				<mx:CheckBox x="50" y="300" id="chkEnableAutomaticQuit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Enableautomaticquit')}" width="360"/>
-				<mx:TextInput x="277" y="180" width="61" id="txtInactivitySeconds" restrict="0-9" text="{preferencesSystem.autoLogOutSeconds}"/>
-				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Timeofdaytoquit')}" textAlign="right"/>
-<!--			<mx:TextInput x="168" y="328" width="59" id="txtTimeOfDayQuit" text="{preferencesSystem.quitTime}"/>-->
-				<cmp:TimeEntry x ="168" y="328" width="118" id="txtTimeOfDayQuit"/>
-				<mx:Label x="80" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Shutdownnotification')}" textAlign="right"/>
-				<mx:TextArea x="80" y="393" width="400" height="72" id="txtShutdownNotificationMessage" 
-					text="{preferencesSystem.shutdownMessage}"/>
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="company_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Company')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				<ns1:AddressEditor x="50" y="30" id="address_editor" height="155" width="400"/>
-
-				<mx:Label x="10" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Phone')}" textAlign="right" width="113"/>
-				<mx:TextInput x="127" y="195" width="148" id="txtPhone" text="{preferencesSystem.companyPhone}"/>
-				<mx:Label x="283" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FAX')}" textAlign="right" width="95"/>
-				<mx:TextInput x="377" y="195" width="148" id="txtFax" text="{preferencesSystem.companyFax}"/>
-				<mx:Label x="10" y="227" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EMail')}" textAlign="right" width="113"/>
-				<mx:TextInput x="125" y="225" width="400" id="txtEmail" text="{preferencesSystem.companyEmail}"/>
-				<mx:Label x="10" y="257" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Other')}" textAlign="right" width="113"/>
-				<mx:TextInput x="125" y="255" width="400" id="txtOther1" text="{preferencesSystem.companyOther1}"/>
-				<mx:Label x="10" y="287" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Other')}" textAlign="right" width="113"/>
-				<mx:TextInput x="125" y="285" width="400" id="txtOther2" text="{preferencesSystem.companyOther2}"/>
-				<mx:Label x="10" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyIDLabel')}" textAlign="right" width="113"/>
-				<mx:TextInput x="125" y="315" width="100" id="txtCompanyIdLabel" text="{preferencesSystem.companyIdLabel}"/>
-				<mx:Label x="242" y="317" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CompanyID')}" textAlign="right" width="86"/>
-				<mx:TextInput x="326" y="315" width="199" id="txtCompanyId" text="{preferencesSystem.companyId}"/>
+			<prefcomp:BehaviourCanvasComponent id="behavior_canvas" preferencesSystem="{preferencesSystem}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:Label x="91" y="367" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.StoreNumber')}" textAlign="right" width="184"/>
-				<mx:TextInput x="276" y="365" width="249" id="txtStoreNumber" text="{preferencesSystem.companyStoreNumber}"/>
-				<mx:Label x="91" y="392" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.WorkstationStoreloca')}" textAlign="right" width="184"/>
-				<mx:TextInput x="276" y="390" width="249" id="txtLocationReference" text="{preferencesSystem.companyStoreLocationRef}"/>
-				<mx:TextArea x="125" y="420" width="400" height="63">
-					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TheCompanyIDisprinte')}</mx:text>
-				</mx:TextArea>
+			<prefcomp:CompanyCanvasComponent id="company_canvas" preferencesSystem="{preferencesSystem}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="calendar_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.BusinessCalendar')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="50" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fiscalyearstartsfirs')}" textAlign="right" width="162"/>
-				<mx:ComboBox x="220" y="90" id="cboFiscalYearStartMonth" width="260" dataProvider="{MonthsArray}" labelField="name" change="setCurrentRange();"></mx:ComboBox>
-				<mx:Label x="54" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CurrentRange')}" textAlign="right" width="158"/>
-				<mx:TextArea x="220" y="145" id="txtCurrentRange" height="19" width="260" enabled="false"/>
+			<prefcomp:CalendarCanvasComponent id="calendar_canvas" preferencesSystem="{preferencesSystem}" monthsArray="{MonthsArray}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:Label x="50" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Workdays')}" textAlign="left" width="162"/>
-				<mx:RadioButtonGroup id="opgFirstDayOfWorkWeek"/>
-				<mx:RadioButton x="53" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="1"/>
-				<mx:RadioButton x="93" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="2"/>
-				<mx:RadioButton x="133" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="3"/>
-				<mx:RadioButton x="173" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="4"/>
-				<mx:RadioButton x="213" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="5"/>
-				<mx:RadioButton x="253" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="6"/>
-				<mx:RadioButton x="293" y="250" label="" groupName="opgFirstDayOfWorkWeek" value="7"/>
-
-				<mx:Button id="btnWorkDaySunday" x="40" y="211" label="S" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDayMonday" x="80" y="211" label="M" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDayTuesday" x="120" y="211" label="T" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDayWednesday" x="160" y="211" label="W" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDayThursday" x="200" y="211" label="T" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDayFriday" x="240" y="211" label="F" width="40" toggle="true"/>
-				<mx:Button id="btnWorkDaySaturday" x="280" y="211" label="S" width="40" toggle="true"/>
-				<mx:Label x="325" y="250" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FirstDayofWorkWeek')}" textAlign="left"/>
-				<mx:CheckBox x="40" y="327" id="chkFutureDateExcludeClosed" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Futuredatesexcludeda')}"/>
+			<prefcomp:NumbersCanvasComponent id="numbers_canvas" preferencesSystem="{preferencesSystem}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="numbers_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Numbers')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="13" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Integers')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Percentages')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Amount')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TaxRate')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Rate')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Factor')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Invoice')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="242" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShortPercent')}" textAlign="right" width="146"/>
-				<mx:Label x="13" y="272" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right" width="146"/>
-
-				<mx:TextInput x="167" y="28" width="347" name="Integers" id="txtIntegers" focusIn="setDisplayText(txtIntegers);" text="{preferencesSystem.numbersIntegers}"/>
-				<mx:TextInput x="167" y="58" width="347" name="Percentages" id="txtPercentages" focusIn="setDisplayText(txtPercentages);" text="{preferencesSystem.numbersPercentages}"/>
-				<mx:TextInput x="167" y="88" width="347" name="Amount" id="txtAmount" focusIn="setDisplayText(txtAmount);" text="{preferencesSystem.numbersAmount}"/>
-				<mx:TextInput x="167" y="118" width="347" name="Tax Rate" id="txtTaxRate" focusIn="setDisplayText(txtTaxRate);" text="{preferencesSystem.numbersTaxRate}"/>
-				<mx:TextInput x="167" y="148" width="347" name="Rate" id="txtRate" focusIn="setDisplayText(txtRate);" text="{preferencesSystem.numbersRate}"/>
-				<mx:TextInput x="167" y="178" width="347" name="Factor" id="txtFactor" focusIn="setDisplayText(txtFactor);" text="{preferencesSystem.numbersFactor}"/>
-				<mx:TextInput x="167" y="210" width="347" name="Invoice" id="txtInvoice" focusIn="setDisplayText(txtInvoice);" text="{preferencesSystem.numbersInvoice}"/>
-				<mx:TextInput x="167" y="238" width="347" name="Short Percent" id="txtShortPercent" focusIn="setDisplayText(txtShortPercent);" text="{preferencesSystem.numbersShortPercent}"/>
-				<mx:TextInput x="167" y="268" width="75" name="Rounded Integers" id="txtRoundTo" focusIn="setDisplayText(txtRoundTo);" text="{preferencesSystem.numbersRoundto}"/>
-
-				<mx:CheckBox x="256" y="268"  id="chkAlwaysRoundDown" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}" width="218"/>
-				<mx:CheckBox x="256" y="298"  id="chkTaxRoundUp" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" width="218"/>
-
-				<mx:Button x="50" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Dollar')}"  width="75" click="doSignSymbol(dollar)"/>
-				<mx:Button x="130" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Pound')}"  width="75" click="doSignSymbol('#')"/>
-				<mx:Button x="210" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Yen')}"  width="75" click="doSignSymbol(yen)"/>
-				<mx:Button x="290" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Euro')}"  width="75" click="doSignSymbol(euro)"/>
-				<mx:Button x="370" y="328" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Space')}"  width="75" click="doSignSymbol(' ')"/>
-				<mx:TextArea x="23" y="391" height="131" width="451" id="txtDisplayArea" enabled="false"/>
-				<mx:Text x="50" y="374" text="xx" id="txtDisplayDemo"/>
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="alternatecurrency_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AlternateCurrency')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:CheckBox x="50" y="30"  id="chkUseAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Usealternatecurrency')}" change="checkAlternateCurrency();" width="299"/>
-
-				<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}" textAlign="right"  width="124"/>
-				<mx:TextInput x="136" y="60" width="338" id="txtFormat" focusIn="setAlternateCurrencyText(txtFormat);" enabled="false" text="{preferencesSystem.displayFormat}"/>
-				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}" textAlign="right" width="124"/>
-				<mx:TextInput x="136" y="90" width="75" id="txtConversionFactor" enabled="false" text="{preferencesSystem.conversionFactor}"/>
-				<mx:Label x="10" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}" textAlign="right" width="124"/>
-				<mx:TextInput x="136" y="120" width="75" id="txtRoundToAlternateCurrency" enabled="false" text="{preferencesSystem.alternateRoundto}"/>
-
-				<mx:CheckBox x="221" y="120"  id="chkAlwaysRoundDownAlternateCurrency" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}" enabled="false"/>
+			<prefcomp:AlternateCurrencyCanvasComponent id="alternatecurrency_canvas" preferencesSystem="{preferencesSystem}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:TextArea x="23" y="203" height="40%" width="451" id="txtSampleArea" enabled="false"/>
-				<mx:Label x="50" y="186" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SampleCurrency')}" id="txtSampleDemo" textAlign="right"/>
+			<prefcomp:InternationalCanvasComponent id="international_canvas" preferencesSystem="{preferencesSystem}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="international_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.International')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				<mx:CheckBox x="50" y="30"  id="chkDisableTextStyles" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}" width="451"/>
-				<mx:CheckBox x="50" y="60"  id="chkUseAustralianInvoiceRounding" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}" width="451"/>
-				<mx:CheckBox x="50" y="90"  id="chkDisableNonTaxableOptions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}" width="451"/>
-
-				<mx:Label x="10" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}" textAlign="right" width="138"/>
-				<mx:TextInput x="154" y="120" id="txtInkWeightSingular" text="{preferencesSystem.inkWeightSingular}"/>
-				<mx:Label x="10" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}" textAlign="right" width="143"/>
-				<mx:TextInput x="154" y="150" id="txtInkWeightPlural" text="{preferencesSystem.inkWeightPlural}"/>
-
-				<mx:Label x="10" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Authorizethedecrypto')}" textAlign="right" width="265"/>
-				<mx:TextInput x="274" y="212" id="txtAuthorizeDecrypTo" text="{preferencesSystem.authorizeDecrypt}"/>
-
-
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="addressformatting_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AddressFormatting')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
+			<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:Label x="36" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultcountry')}" textAlign="right"/>
-				<mx:ComboBox x="148" y="30" width="181" id="cboDefaultCountry" dataProvider="{CountryArray}" labelField="name" change="setCurrentCountry();"/>
-				<mx:TextArea x="23" y="203" height="25%" width="451" id="txtSampleAddressArea" enabled="false"/>
-				<mx:Text x="50" y="186" text="Sample Address" id="txtSampleAddress"/>
+			<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="receipt_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Receipt')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="10" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Header')}" textAlign="right" width="99"/>
-				<mx:Label x="10" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Footer')}" textAlign="right" width="99"/>
-				<mx:TextArea y="30" id="txtReceiptHeader" height="130" text="{preferencesPOS.receiptHeader}" textAlign="center" right="19" left="107"/>
-				<mx:TextArea y="180" id="txtReceiptFooter" height="100" text="{preferencesPOS.receiptFooter}" textAlign="center" right="19" left="107"/>
-
-				<mx:TextInput x="322" y="300" id="txtSerialNumber" width="70" text="{preferencesPOS.startingNumber}"/>
-				<mx:CheckBox x="50" y="300"  id="chkSerialNumberReceiptsStart" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Serialnumbersonrecei')}" width="273"/>
-				<mx:CheckBox x="50" y="330"  id="chkHideTaxLineItems" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Hidetaxinlineitems')}" width="273"/>
+			<prefcomp:CashdrawerCanvasComponent id="cashdrawer_canvas" preferencesPOS="{preferencesPOS}"
+				receiptPrinterArray="{ReceiptPrinterArray}" baudRateArray="{BaudRateArray}" stopBitsArray="{StopBitsArray}"
+				parityArray="{ParityArray}" dataSizeArray="{DataSizeArray}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="cashdrawer_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashDrawer')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="29" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptPrinter')}" textAlign="right"/>
-				<mx:ComboBox x="143" y="30" id="cboReceiptPrinter"  dataProvider="{ReceiptPrinterArray}" labelField="name" width="120"/>
-				<mx:Label x="21" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterRptPackageCmd.Printer')}" textAlign="right"/>
-				<mx:TextInput x="143" y="60" id="txtSelectedPrinter" width="200" text="{preferencesPOS.defaultPrinter}"/>
-
-				<mx:CheckBox x="50" y="90" id="chkEnableCashDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}" width="232"/>
-				<mx:CheckBox x="50" y="115" id="chkPrintReceipts" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}" width="232"/>
-				<mx:CheckBox x="70" y="140" id="chkPrint2forCredit" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}" width="212"/>
-				<mx:CheckBox x="70" y="165" id="chkPrint2forCash" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}" width="212"/>
-				<mx:CheckBox x="50" y="190" id="chkPrintInvoices" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}" width="232"/>
-				<mx:CheckBox x="50" y="215" id="chkLockSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}" width="232"/>
-
-				<mx:CheckBox x="290" y="90" id="chkUseMasterDrawer" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}" width="188"/>
-				<mx:CheckBox x="290" y="115" id="chkKeepSettingsLocal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}" width="188"/>
-
-				<mx:Label x="56" y="273" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}" textAlign="right" width="158"/>
-				<mx:Label x="56" y="298" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesbeforeRece')}" textAlign="right" width="158"/>
-				<mx:Label x="66" y="323" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BlanklinesafterRecei')}" textAlign="right" width="148"/>
-				<mx:Label x="101" y="348" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptStartCode')}" textAlign="right"/>
-				<mx:Label x="95" y="373" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}" textAlign="right"/>
-
-				<mx:TextInput x="216" y="271" id="txtAsciiCodeOpenDrawer" width="47" text="{preferencesPOS.asciiCodeOpenDrawer}"/>
-				<mx:TextInput x="216" y="296" id="txtBlankBeforeReceipt" width="47" text="{preferencesPOS.blankLinesBeforeReceipt}"/>
-				<mx:TextInput x="216" y="321" id="txtBlankAfterReceipt" width="47" text="{preferencesPOS.blankLinesAfterReceipt}"/>
-				<mx:TextInput x="216" y="346" id="txtReceiptStartCode" width="77" text="{preferencesPOS.receiptStartCode}"/>
-				<mx:TextInput x="216" y="371" id="txtReceiptEndCode" width="77" text="{preferencesPOS.receiptEndCode}"/>
-
-				<mx:Label x="21" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}" textAlign="right" width="99"/>
-				<mx:Label x="207" y="420" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}" textAlign="right" width="75"/>
-				<mx:Label x="21" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}" textAlign="right" width="99"/>
-				<mx:Label x="207" y="445" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}" textAlign="right" width="75"/>
-
-				<mx:ComboBox x="119" y="418" id="cboBaudRate"  dataProvider="{BaudRateArray}" labelField="name" width="90" enabled="false"/>
-				<mx:ComboBox x="281" y="418" id="cboStopBits"  dataProvider="{StopBitsArray}" labelField="name" width="90" enabled="false"/>
-				<mx:ComboBox x="119" y="443" id="cboParity"  dataProvider="{ParityArray}" labelField="name" width="90" enabled="false"/>
-				<mx:ComboBox x="281" y="443" id="cboDataSize"  dataProvider="{DataSizeArray}" labelField="name" width="90" enabled="false"/>
-
-				
-			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
@@ -2669,52 +2492,10 @@
 				</mx:Button>
 
 			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="pendinglist_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:CheckBox x="50" y="265" id="chkShowDocumentType" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ShowDocumentTypeInNu')}"/>
-				<mx:CheckBox x="50" y="290" id="chkAlwaysIncludePastDue" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.AlwaysIncludePastDue')}"/>
-				<mx:CheckBox x="50" y="315" id="chkColorPastDueEntries" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColorPastDueEntries')}"/>
-
-				<mx:Button x="50" y="345" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.PastDueColor')}" click="doSelectColor(txtPastDueColor);" width="167"/>
-				<mx:Button x="50" y="375" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ReadyforPickupColor')}" click="doSelectColor(txtReadyforPickupColor);" width="167"/>
-				<mx:Button x="50" y="405" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.InvoiceColor')}" click="doSelectColor(txtInvoiceColor);" width="167"/>
-				<mx:Button x="50" y="435" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.EstimateColor')}" click="doSelectColor(txtEstimateColor);" width="167"/>
-
-				<mx:Button x="50" y="465" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ListFont')}" click="doSelectFont(txtListFont);" width="167"/>
-				<mx:Button x="50" y="495" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.HeaderFont')}" click="doSelectFont(txtHeaderFont);" width="167"/>
-
-				<mx:TextInput x="225" y="345" id="txtPastDueColor" width="80"/>
-				<mx:TextInput x="225" y="375" id="txtReadyforPickupColor" width="80"/>
-				<mx:TextInput x="225" y="405" id="txtInvoiceColor" width="80"/>
-				<mx:TextInput x="225" y="435" id="txtEstimateColor" width="80"/>
-				<mx:TextInput x="225" y="465" id="txtListFont" width="150"/>
-				<mx:TextInput x="225" y="495" id="txtHeaderFont" width="150"/>
-
-				<mx:DataGrid y="27" height="230" id="PendingListGrid" 
-					dataProvider="{PreferencesPendingListArray}" 
-					editable="true" allowMultipleSelection="true" 
-        	        dragEnabled="true" 
-    	            dropEnabled="true" 
-	                dragMoveEnabled="true" right="96" left="50">
-					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Visible')}" dataField="visible" editorDataField="selected"
-								itemEditor="mx.controls.CheckBox">
-						   <mx:itemRenderer>
-							<mx:Component>
-								<mx:Box width="100%" height="100%" horizontalAlign="center"
-						        		 verticalAlign="middle">
-						        	 <mx:CheckBox click="data.visible=!data.visible"  selected="{data.visible}"/>
-						      	</mx:Box>
-							</mx:Component>
-						   </mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn width="200" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColumnTitle')}" labelFunction="columnnamePendingList" editable="false"/>
-					</mx:columns>
-				</mx:DataGrid>
-
-			</mx:Canvas>
+			
+			<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+				
 			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorBehavior')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
