@@ -37,7 +37,7 @@ package com.efi.printsmith.data
 		public var permanent:Boolean = false;
 		public var manualCode:String = "";
 		public var failedAVS:Boolean = false;
-		public var hasCWDdata:Boolean = false;
+		public var hasCVVdata:Boolean = false;
 		public var trackDataUsed:Boolean = false;
 		public var taxExempt:Boolean = false;
 		public var tax:Number = 0;
