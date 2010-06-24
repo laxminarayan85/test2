@@ -86,6 +86,7 @@ package com.efi.printsmith.data
 		public var reportWriterEnabled:Boolean = false;
 		public var extendedPriceBookEnabled:Boolean = false;
 		public var maximumTransactionCount:int = 0;
+		public var pEK4:String = "";
 	
 	}
 }

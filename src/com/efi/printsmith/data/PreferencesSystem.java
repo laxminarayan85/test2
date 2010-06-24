@@ -337,6 +337,11 @@ public class PreferencesSystem extends ModelBase {
   public static final String MAXIMUMTRANSACTIONCOUNT = "MaximumTransactionCount";
 
 	/**
+   * @generated
+   */
+  public static final String PEK4 = "PEK4";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSystem() {
@@ -1963,6 +1968,28 @@ public class PreferencesSystem extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pEK4;
+
+	/**
+   * @generated
+ 	 */
+  public String getPEK4(){
+    return pEK4; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPEK4(String newVal) {
+    this.pEK4 = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2041,6 +2068,7 @@ public class PreferencesSystem extends ModelBase {
     if (REPORTWRITERENABLED.equals(propertyName)) return getReportWriterEnabled();
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return getExtendedPriceBookEnabled();
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return getMaximumTransactionCount();
+    if (PEK4.equals(propertyName)) return getPEK4();
     return super.getProperty(propertyName);
   }
 	
@@ -2123,6 +2151,7 @@ public class PreferencesSystem extends ModelBase {
     if (REPORTWRITERENABLED.equals(propertyName)) setReportWriterEnabled((Boolean)newValue); else
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) setExtendedPriceBookEnabled((Boolean)newValue); else
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) setMaximumTransactionCount((Integer)newValue); else
+    if (PEK4.equals(propertyName)) setPEK4((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2278,6 +2307,8 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (PEK4.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2361,6 +2392,7 @@ public class PreferencesSystem extends ModelBase {
     if (REPORTWRITERENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return PreferencesSystem.class;
+    if (PEK4.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2517,6 +2549,8 @@ public class PreferencesSystem extends ModelBase {
     if (! SmartEquals(getExtendedPriceBookEnabled(), objT.getExtendedPriceBookEnabled()))
       return false;
     if (! SmartEquals(getMaximumTransactionCount(), objT.getMaximumTransactionCount()))
+      return false;
+    if (! SmartEquals(getPEK4(), objT.getPEK4()))
       return false;
     return true;
   }			
