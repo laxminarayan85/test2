@@ -852,7 +852,6 @@ public class CreditCardTransactions extends ModelBase {
     if (INVOICE.equals(propertyName)) return getInvoice();
     if (ACCOUNT.equals(propertyName)) return getAccount();
     if (CONTACT.equals(propertyName)) return getContact();
-    if (USER.equals(propertyName)) return getUser();
     if (PONUMBER.equals(propertyName)) return getPoNumber();
     if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
     if (APPROVALCODE.equals(propertyName)) return getApprovalCode();
@@ -867,6 +866,7 @@ public class CreditCardTransactions extends ModelBase {
     if (TAX.equals(propertyName)) return getTax();
     if (TAXCODE.equals(propertyName)) return getTaxCode();
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
+    if (USER.equals(propertyName)) return getUser();
     return super.getProperty(propertyName);
   }
 	
@@ -891,7 +891,6 @@ public class CreditCardTransactions extends ModelBase {
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
-    if (USER.equals(propertyName)) setUser((String)newValue); else
     if (PONUMBER.equals(propertyName)) setPoNumber((String)newValue); else
     if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
     if (APPROVALCODE.equals(propertyName)) setApprovalCode((String)newValue); else
@@ -906,6 +905,7 @@ public class CreditCardTransactions extends ModelBase {
     if (TAX.equals(propertyName)) setTax((Double)newValue); else
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+    if (USER.equals(propertyName)) setUser((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -945,8 +945,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Account.class};		
     if (CONTACT.equals(propertyName)) 
       return new Class<?>[] {Contact.class};		
-    if (USER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
     if (PONUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (REFERENCENUMBER.equals(propertyName)) 
@@ -975,6 +973,8 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {TaxCodes.class};		
     if (TAXTABLE.equals(propertyName)) 
       return new Class<?>[] {TaxTable.class};		
+    if (USER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1000,7 +1000,6 @@ public class CreditCardTransactions extends ModelBase {
     if (INVOICE.equals(propertyName)) return CreditCardTransactions.class;
     if (ACCOUNT.equals(propertyName)) return CreditCardTransactions.class;
     if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
-    if (USER.equals(propertyName)) return CreditCardTransactions.class;
     if (PONUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (REFERENCENUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (APPROVALCODE.equals(propertyName)) return CreditCardTransactions.class;
@@ -1015,6 +1014,7 @@ public class CreditCardTransactions extends ModelBase {
     if (TAX.equals(propertyName)) return CreditCardTransactions.class;
     if (TAXCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (TAXTABLE.equals(propertyName)) return CreditCardTransactions.class;
+    if (USER.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1056,8 +1056,6 @@ public class CreditCardTransactions extends ModelBase {
       return false;
     if (! SmartEquals(getContact(), objT.getContact()))
       return false;
-    if (! SmartEquals(getUser(), objT.getUser()))
-      return false;
     if (! SmartEquals(getPoNumber(), objT.getPoNumber()))
       return false;
     if (! SmartEquals(getReferenceNumber(), objT.getReferenceNumber()))
@@ -1085,6 +1083,8 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
       return false;
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+      return false;
+    if (! SmartEquals(getUser(), objT.getUser()))
       return false;
     return true;
   }			
