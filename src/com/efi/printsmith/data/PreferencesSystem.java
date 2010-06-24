@@ -289,7 +289,7 @@ public class PreferencesSystem extends ModelBase {
 	/**
    * @generated
    */
-  public static final String ATTRIBUTE1 = "Attribute1";
+  public static final String PAYMENTPLANENABLED = "PaymentPlanEnabled";
 	/**
    * @generated
    */
@@ -310,6 +310,31 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */
   public static final String CCENCRYPTIONDATA = "CCEncryptionData";
+
+	/**
+   * @generated
+   */
+  public static final String PEK1 = "PEK1";
+	/**
+   * @generated
+   */
+  public static final String PEK2 = "PEK2";
+	/**
+   * @generated
+   */
+  public static final String PEK3 = "PEK3";
+	/**
+   * @generated
+   */
+  public static final String REPORTWRITERENABLED = "ReportWriterEnabled";
+	/**
+   * @generated
+   */
+  public static final String EXTENDEDPRICEBOOKENABLED = "ExtendedPriceBookEnabled";
+	/**
+   * @generated
+   */
+  public static final String MAXIMUMTRANSACTIONCOUNT = "MaximumTransactionCount";
 
 	/**
 	 * @generated
@@ -1667,21 +1692,21 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer attribute1;
+  private Boolean paymentPlanEnabled;
 
 	/**
    * @generated
  	 */
-  public Integer getAttribute1(){
-    return attribute1; 
+  public Boolean getPaymentPlanEnabled(){
+    return paymentPlanEnabled; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setAttribute1(Integer newVal) {
-    this.attribute1 = newVal;
+  public void setPaymentPlanEnabled(Boolean newVal) {
+    this.paymentPlanEnabled = newVal;
   }
 
 
@@ -1801,6 +1826,143 @@ public class PreferencesSystem extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pEK1;
+
+	/**
+   * @generated
+ 	 */
+  public String getPEK1(){
+    return pEK1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPEK1(String newVal) {
+    this.pEK1 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pEK2;
+
+	/**
+   * @generated
+ 	 */
+  public String getPEK2(){
+    return pEK2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPEK2(String newVal) {
+    this.pEK2 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pEK3;
+
+	/**
+   * @generated
+ 	 */
+  public String getPEK3(){
+    return pEK3; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPEK3(String newVal) {
+    this.pEK3 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean reportWriterEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getReportWriterEnabled(){
+    return reportWriterEnabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setReportWriterEnabled(Boolean newVal) {
+    this.reportWriterEnabled = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean extendedPriceBookEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getExtendedPriceBookEnabled(){
+    return extendedPriceBookEnabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setExtendedPriceBookEnabled(Boolean newVal) {
+    this.extendedPriceBookEnabled = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer maximumTransactionCount;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getMaximumTransactionCount(){
+    return maximumTransactionCount; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMaximumTransactionCount(Integer newVal) {
+    this.maximumTransactionCount = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1867,12 +2029,18 @@ public class PreferencesSystem extends ModelBase {
     if (SERIALNUMBER.equals(propertyName)) return getSerialNumber();
     if (PROGRAMTYPE.equals(propertyName)) return getProgramType();
     if (WEBENABLED.equals(propertyName)) return getWebEnabled();
-    if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
+    if (PAYMENTPLANENABLED.equals(propertyName)) return getPaymentPlanEnabled();
     if (SCHEDULERENABLED.equals(propertyName)) return getSchedulerEnabled();
     if (TRACKERENABLED.equals(propertyName)) return getTrackerEnabled();
     if (MAXIMUMNODECOUNT.equals(propertyName)) return getMaximumNodeCount();
     if (EXPIRATIONDATE.equals(propertyName)) return getExpirationDate();
     if (CCENCRYPTIONDATA.equals(propertyName)) return getCCEncryptionData();
+    if (PEK1.equals(propertyName)) return getPEK1();
+    if (PEK2.equals(propertyName)) return getPEK2();
+    if (PEK3.equals(propertyName)) return getPEK3();
+    if (REPORTWRITERENABLED.equals(propertyName)) return getReportWriterEnabled();
+    if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return getExtendedPriceBookEnabled();
+    if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return getMaximumTransactionCount();
     return super.getProperty(propertyName);
   }
 	
@@ -1943,12 +2111,18 @@ public class PreferencesSystem extends ModelBase {
     if (SERIALNUMBER.equals(propertyName)) setSerialNumber((String)newValue); else
     if (PROGRAMTYPE.equals(propertyName)) setProgramType((String)newValue); else
     if (WEBENABLED.equals(propertyName)) setWebEnabled((Boolean)newValue); else
-    if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
+    if (PAYMENTPLANENABLED.equals(propertyName)) setPaymentPlanEnabled((Boolean)newValue); else
     if (SCHEDULERENABLED.equals(propertyName)) setSchedulerEnabled((Boolean)newValue); else
     if (TRACKERENABLED.equals(propertyName)) setTrackerEnabled((Boolean)newValue); else
     if (MAXIMUMNODECOUNT.equals(propertyName)) setMaximumNodeCount((Integer)newValue); else
     if (EXPIRATIONDATE.equals(propertyName)) setExpirationDate((Date)newValue); else
     if (CCENCRYPTIONDATA.equals(propertyName)) setCCEncryptionData((String)newValue); else
+    if (PEK1.equals(propertyName)) setPEK1((String)newValue); else
+    if (PEK2.equals(propertyName)) setPEK2((String)newValue); else
+    if (PEK3.equals(propertyName)) setPEK3((String)newValue); else
+    if (REPORTWRITERENABLED.equals(propertyName)) setReportWriterEnabled((Boolean)newValue); else
+    if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) setExtendedPriceBookEnabled((Boolean)newValue); else
+    if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) setMaximumTransactionCount((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2080,8 +2254,8 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {String.class};		
     if (WEBENABLED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (ATTRIBUTE1.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+    if (PAYMENTPLANENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     if (SCHEDULERENABLED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (TRACKERENABLED.equals(propertyName)) 
@@ -2092,6 +2266,18 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (CCENCRYPTIONDATA.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (PEK1.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PEK2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PEK3.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (REPORTWRITERENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2163,12 +2349,18 @@ public class PreferencesSystem extends ModelBase {
     if (SERIALNUMBER.equals(propertyName)) return PreferencesSystem.class;
     if (PROGRAMTYPE.equals(propertyName)) return PreferencesSystem.class;
     if (WEBENABLED.equals(propertyName)) return PreferencesSystem.class;
-    if (ATTRIBUTE1.equals(propertyName)) return PreferencesSystem.class;
+    if (PAYMENTPLANENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (SCHEDULERENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (TRACKERENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (MAXIMUMNODECOUNT.equals(propertyName)) return PreferencesSystem.class;
     if (EXPIRATIONDATE.equals(propertyName)) return PreferencesSystem.class;
     if (CCENCRYPTIONDATA.equals(propertyName)) return PreferencesSystem.class;
+    if (PEK1.equals(propertyName)) return PreferencesSystem.class;
+    if (PEK2.equals(propertyName)) return PreferencesSystem.class;
+    if (PEK3.equals(propertyName)) return PreferencesSystem.class;
+    if (REPORTWRITERENABLED.equals(propertyName)) return PreferencesSystem.class;
+    if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return PreferencesSystem.class;
+    if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2302,7 +2494,7 @@ public class PreferencesSystem extends ModelBase {
       return false;
     if (! SmartEquals(getWebEnabled(), objT.getWebEnabled()))
       return false;
-    if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
+    if (! SmartEquals(getPaymentPlanEnabled(), objT.getPaymentPlanEnabled()))
       return false;
     if (! SmartEquals(getSchedulerEnabled(), objT.getSchedulerEnabled()))
       return false;
@@ -2313,6 +2505,18 @@ public class PreferencesSystem extends ModelBase {
     if (! SmartEquals(getExpirationDate(), objT.getExpirationDate()))
       return false;
     if (! SmartEquals(getCCEncryptionData(), objT.getCCEncryptionData()))
+      return false;
+    if (! SmartEquals(getPEK1(), objT.getPEK1()))
+      return false;
+    if (! SmartEquals(getPEK2(), objT.getPEK2()))
+      return false;
+    if (! SmartEquals(getPEK3(), objT.getPEK3()))
+      return false;
+    if (! SmartEquals(getReportWriterEnabled(), objT.getReportWriterEnabled()))
+      return false;
+    if (! SmartEquals(getExtendedPriceBookEnabled(), objT.getExtendedPriceBookEnabled()))
+      return false;
+    if (! SmartEquals(getMaximumTransactionCount(), objT.getMaximumTransactionCount()))
       return false;
     return true;
   }			

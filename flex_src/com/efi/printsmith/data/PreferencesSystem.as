@@ -74,12 +74,18 @@ package com.efi.printsmith.data
 		public var serialNumber:String = "";
 		public var programType:String = "";
 		public var webEnabled:Boolean = false;
-		public var attribute1:int = 0;
+		public var paymentPlanEnabled:Boolean = false;
 		public var schedulerEnabled:Boolean = false;
 		public var trackerEnabled:Boolean = false;
 		public var maximumNodeCount:int = 0;
 		public var expirationDate:Date = new Date();
 		public var cCEncryptionData:String = "";
+		public var pEK1:String = "";
+		public var pEK2:String = "";
+		public var pEK3:String = "";
+		public var reportWriterEnabled:Boolean = false;
+		public var extendedPriceBookEnabled:Boolean = false;
+		public var maximumTransactionCount:int = 0;
 	
 	}
 }
