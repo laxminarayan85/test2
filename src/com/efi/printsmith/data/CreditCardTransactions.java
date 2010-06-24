@@ -505,7 +505,6 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */	
     @Basic
-	@ManyToOne()
 	private String user;
 	
 	/**
