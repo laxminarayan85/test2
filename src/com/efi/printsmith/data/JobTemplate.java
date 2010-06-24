@@ -46,17 +46,18 @@ public class JobTemplate extends Job {
 	 */
 	public static final String TEMPLATENAME = "TemplateName";
 	/**
-   * @generated
-   */
-  public static final String USER = "User";
+	 * @generated
+	 */
+	public static final String USER = "User";
 	/**
-   * @generated
-   */
-  public static final String SHARED = "Shared";
+	 * @generated
+	 */
+	public static final String SHARED = "Shared";
 	/**
-   * @generated
-   */
-  public static final String ACCOUNT = "Account";
+	 * @generated
+	 */
+	public static final String ACCOUNT = "Account";
+
 	/**
 	 * @generated
 	 */
@@ -87,73 +88,76 @@ public class JobTemplate extends Job {
 	public void setTemplateName(Integer newVal) {
     this.templateName = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private Users user;
+	private Users user;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Users getUser(){
+	public Users getUser(){
     return user; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setUser(Users newVal) {
+	 * @generated
+	 */	
+	public void setUser(Users newVal) {
     this.user = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean shared;
+	private Boolean shared;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getShared(){
+	public Boolean getShared(){
     return shared; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setShared(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setShared(Boolean newVal) {
     this.shared = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private Account account;
+	private Account account;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Account getAccount(){
+	public Account getAccount(){
     return account; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setAccount(Account newVal) {
+	 * @generated
+	 */	
+	public void setAccount(Account newVal) {
     this.account = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

@@ -80,6 +80,7 @@ public class ComLink extends ModelBase {
 	public void setType(String newVal) {
     this.type = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class ComLink extends ModelBase {
 	public void setValue(String newVal) {
     this.value = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

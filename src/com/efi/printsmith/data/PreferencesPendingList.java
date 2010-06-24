@@ -84,6 +84,7 @@ public class PreferencesPendingList extends ModelBase {
 	public void setVisible(Boolean newVal) {
     this.visible = newVal;
   }
+	
  	
 	
 	/**
@@ -106,6 +107,7 @@ public class PreferencesPendingList extends ModelBase {
 	public void setColumns(ColumnNames newVal) {
     this.columns = newVal;
   }
+	
  	
 	
 	/**
@@ -128,6 +130,7 @@ public class PreferencesPendingList extends ModelBase {
 	public void setColumnOrder(Integer newVal) {
     this.columnOrder = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

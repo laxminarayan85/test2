@@ -42,13 +42,13 @@ import org.hibernate.annotations.Type;
 @Table(name = "preferencesestimating")
 public class PreferencesEstimating extends ModelBase {
 	/**
-   * @generated
-   */
-  public static final String FOLIOLOCATION = "FolioLocation";
+	 * @generated
+	 */
+	public static final String FOLIOLOCATION = "FolioLocation";
 	/**
-   * @generated
-   */
-  public static final String GRIPLOCATION = "GripLocation";
+	 * @generated
+	 */
+	public static final String GRIPLOCATION = "GripLocation";
 	/**
 	 * @generated
 	 */
@@ -273,51 +273,51 @@ public class PreferencesEstimating extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String folioLocation;
-
+	private String folioLocation;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getFolioLocation(){
+	public String getFolioLocation(){
     return folioLocation; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setFolioLocation(String newVal) {
+	 * @generated
+	 */	
+	public void setFolioLocation(String newVal) {
     this.folioLocation = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String gripLocation;
-
+	private String gripLocation;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getGripLocation(){
+	public String getGripLocation(){
     return gripLocation; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setGripLocation(String newVal) {
+	 * @generated
+	 */	
+	public void setGripLocation(String newVal) {
     this.gripLocation = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -338,6 +338,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCloseAfterCopy(Boolean newVal) {
     this.closeAfterCopy = newVal;
   }
+	
  	
 	
 	/**
@@ -360,6 +361,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setStockCostInEstimator(Boolean newVal) {
     this.stockCostInEstimator = newVal;
   }
+	
  	
 	
 	/**
@@ -382,6 +384,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCanChangeAddress(Boolean newVal) {
     this.canChangeAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -404,6 +407,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setShowPaperCalculator(Boolean newVal) {
     this.showPaperCalculator = newVal;
   }
+	
  	
 	
 	/**
@@ -426,6 +430,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseStockParentSize(Boolean newVal) {
     this.useStockParentSize = newVal;
   }
+	
  	
 	
 	/**
@@ -448,6 +453,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCalculateReOrderDate(Boolean newVal) {
     this.calculateReOrderDate = newVal;
   }
+	
  	
 	
 	/**
@@ -470,6 +476,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setValidateSalesRep(Boolean newVal) {
     this.validateSalesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -492,6 +499,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setLeaveFoldedSizeEmpty(Boolean newVal) {
     this.leaveFoldedSizeEmpty = newVal;
   }
+	
  	
 	
 	/**
@@ -514,6 +522,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setDoNotCostDuringPost(Boolean newVal) {
     this.doNotCostDuringPost = newVal;
   }
+	
  	
 	
 	/**
@@ -536,6 +545,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setAutoShowCharges(Boolean newVal) {
     this.autoShowCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -558,6 +568,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setNeverUsePresetPressOnStockChanges(Boolean newVal) {
     this.neverUsePresetPressOnStockChanges = newVal;
   }
+	
  	
 	
 	/**
@@ -580,6 +591,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setAddFixedWasteForEachPass(Boolean newVal) {
     this.addFixedWasteForEachPass = newVal;
   }
+	
  	
 	
 	/**
@@ -602,6 +614,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setAddFixedWasteForEachColor(Boolean newVal) {
     this.addFixedWasteForEachColor = newVal;
   }
+	
  	
 	
 	/**
@@ -624,6 +637,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCalculateInkbyImpressions(Boolean newVal) {
     this.calculateInkbyImpressions = newVal;
   }
+	
  	
 	
 	/**
@@ -646,6 +660,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseHistoryTitleforNewTitle(Boolean newVal) {
     this.useHistoryTitleforNewTitle = newVal;
   }
+	
  	
 	
 	/**
@@ -668,6 +683,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setNormalDueDateDays(Integer newVal) {
     this.normalDueDateDays = newVal;
   }
+	
  	
 	
 	/**
@@ -690,6 +706,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCloseInvoiceAfterPrintingTicket(Boolean newVal) {
     this.closeInvoiceAfterPrintingTicket = newVal;
   }
+	
  	
 	
 	/**
@@ -712,6 +729,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCloseInvoicesAndEstimateAfterPrinting(Boolean newVal) {
     this.closeInvoicesAndEstimateAfterPrinting = newVal;
   }
+	
  	
 	
 	/**
@@ -734,6 +752,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setDefaultInvoice(Integer newVal) {
     this.defaultInvoice = newVal;
   }
+	
  	
 	
 	/**
@@ -756,6 +775,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setDefaultEstimate(Integer newVal) {
     this.defaultEstimate = newVal;
   }
+	
  	
 	
 	/**
@@ -778,6 +798,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setNumberOfDaysBeforeDue(Integer newVal) {
     this.numberOfDaysBeforeDue = newVal;
   }
+	
  	
 	
 	/**
@@ -800,6 +821,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setDueFrom(Integer newVal) {
     this.dueFrom = newVal;
   }
+	
  	
 	
 	/**
@@ -822,6 +844,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseGripEdgeGap(Boolean newVal) {
     this.useGripEdgeGap = newVal;
   }
+	
  	
 	
 	/**
@@ -844,6 +867,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setGripEdgeGap(Double newVal) {
     this.gripEdgeGap = newVal;
   }
+	
  	
 	
 	/**
@@ -866,6 +890,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseFolioEdge(Boolean newVal) {
     this.useFolioEdge = newVal;
   }
+	
  	
 	
 	/**
@@ -888,6 +913,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setFolioEdge(Double newVal) {
     this.folioEdge = newVal;
   }
+	
  	
 	
 	/**
@@ -910,6 +936,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseColorBar(Boolean newVal) {
     this.useColorBar = newVal;
   }
+	
  	
 	
 	/**
@@ -932,6 +959,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setColorBar(Double newVal) {
     this.colorBar = newVal;
   }
+	
  	
 	
 	/**
@@ -954,6 +982,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseWhiteSpace(Boolean newVal) {
     this.useWhiteSpace = newVal;
   }
+	
  	
 	
 	/**
@@ -976,6 +1005,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setWhiteSpace(Double newVal) {
     this.whiteSpace = newVal;
   }
+	
  	
 	
 	/**
@@ -998,6 +1028,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setWhiteSpaceTop(Double newVal) {
     this.whiteSpaceTop = newVal;
   }
+	
  	
 	
 	/**
@@ -1020,6 +1051,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setWhiteSpaceRight(Double newVal) {
     this.whiteSpaceRight = newVal;
   }
+	
  	
 	
 	/**
@@ -1042,6 +1074,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setWhiteSpaceBottom(Double newVal) {
     this.whiteSpaceBottom = newVal;
   }
+	
  	
 	
 	/**
@@ -1064,6 +1097,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseGutter(Boolean newVal) {
     this.useGutter = newVal;
   }
+	
  	
 	
 	/**
@@ -1086,6 +1120,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setGutter(Double newVal) {
     this.gutter = newVal;
   }
+	
  	
 	
 	/**
@@ -1108,6 +1143,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setGutterHorizontal(Double newVal) {
     this.gutterHorizontal = newVal;
   }
+	
  	
 	
 	/**
@@ -1130,6 +1166,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setUseBleed(Boolean newVal) {
     this.useBleed = newVal;
   }
+	
  	
 	
 	/**
@@ -1152,6 +1189,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setBleed(Double newVal) {
     this.bleed = newVal;
   }
+	
  	
 	
 	/**
@@ -1174,6 +1212,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setBleedTop(Double newVal) {
     this.bleedTop = newVal;
   }
+	
  	
 	
 	/**
@@ -1196,6 +1235,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setBleedRight(Double newVal) {
     this.bleedRight = newVal;
   }
+	
  	
 	
 	/**
@@ -1218,6 +1258,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setBleedBottom(Double newVal) {
     this.bleedBottom = newVal;
   }
+	
  	
 	
 	/**
@@ -1240,6 +1281,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setDefaultPressCuttOff(Double newVal) {
     this.defaultPressCuttOff = newVal;
   }
+	
  	
 	
 	/**
@@ -1262,6 +1304,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setBackTrimParent(Boolean newVal) {
     this.backTrimParent = newVal;
   }
+	
  	
 	
 	/**
@@ -1284,6 +1327,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setTrimFourSides(Boolean newVal) {
     this.trimFourSides = newVal;
   }
+	
  	
 	
 	/**
@@ -1306,6 +1350,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setWorkandTumble(Boolean newVal) {
     this.workandTumble = newVal;
   }
+	
  	
 	
 	/**
@@ -1328,6 +1373,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setRunToFinishGrain(String newVal) {
     this.runToFinishGrain = newVal;
   }
+	
  	
 	
 	/**
@@ -1350,6 +1396,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setPrintParentToFinishSection(Boolean newVal) {
     this.printParentToFinishSection = newVal;
   }
+	
  	
 	
 	/**
@@ -1372,6 +1419,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setPrintParentToRunSection(Boolean newVal) {
     this.printParentToRunSection = newVal;
   }
+	
  	
 	
 	/**
@@ -1394,6 +1442,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setPrintRunToFinishSection(Boolean newVal) {
     this.printRunToFinishSection = newVal;
   }
+	
  	
 	
 	/**
@@ -1416,6 +1465,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setAttachToJobTicket(Boolean newVal) {
     this.attachToJobTicket = newVal;
   }
+	
  	
 	
 	/**
@@ -1438,6 +1488,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setJobTicketFormat(String newVal) {
     this.jobTicketFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -1460,6 +1511,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setCustomJobTicket(String newVal) {
     this.customJobTicket = newVal;
   }
+	
  	
 	
 	/**
@@ -1482,6 +1534,7 @@ public class PreferencesEstimating extends ModelBase {
 	public void setChargeDescription(String newVal) {
     this.chargeDescription = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

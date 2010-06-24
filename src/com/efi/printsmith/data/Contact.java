@@ -98,25 +98,26 @@ public class Contact extends Party {
 	 */
 	public static final String CONTACTID = "ContactId";
 	/**
-   * @generated
-   */
-  public static final String WEBACCESS = "WebAccess";
+	 * @generated
+	 */
+	public static final String WEBACCESS = "WebAccess";
 	/**
-   * @generated
-   */
-  public static final String WEBREGISTERED = "WebRegistered";
+	 * @generated
+	 */
+	public static final String WEBREGISTERED = "WebRegistered";
 	/**
-   * @generated
-   */
-  public static final String WEBCONTACTID = "WebContactID";
+	 * @generated
+	 */
+	public static final String WEBCONTACTID = "WebContactID";
 	/**
-   * @generated
-   */
-  public static final String WEBCATALOG = "WebCatalog";
+	 * @generated
+	 */
+	public static final String WEBCATALOG = "WebCatalog";
 	/**
-   * @generated
-   */
-  public static final String WEBSTATUS = "WebStatus";
+	 * @generated
+	 */
+	public static final String WEBSTATUS = "WebStatus";
+
 	/**
 	 * @generated
 	 */
@@ -125,12 +126,7 @@ public class Contact extends Party {
     this.modified = new Date();
   }
 
-	public Contact(long id, String firstName, String lastName, String accountID) {
-		this.id = id;
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.contactId = accountID;
-	}
+ 	
 	
 	/**
 	 * @generated
@@ -152,6 +148,7 @@ public class Contact extends Party {
 	public void setShipToAddress(Address newVal) {
     this.shipToAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -174,6 +171,7 @@ public class Contact extends Party {
 	public void setParentAccount(Account newVal) {
     this.parentAccount = newVal;
   }
+	
  	
 	
 	/**
@@ -196,6 +194,7 @@ public class Contact extends Party {
 	public void setWebAcctNameIncomplete(Boolean newVal) {
     this.webAcctNameIncomplete = newVal;
   }
+	
  	
 	
 	/**
@@ -218,6 +217,7 @@ public class Contact extends Party {
 	public void setWebCatalogChange(Boolean newVal) {
     this.webCatalogChange = newVal;
   }
+	
  	
 	
 	/**
@@ -240,6 +240,7 @@ public class Contact extends Party {
 	public void setWebStateChange(Boolean newVal) {
     this.webStateChange = newVal;
   }
+	
  	
 	
 	/**
@@ -262,6 +263,7 @@ public class Contact extends Party {
 	public void setTransmitted(Boolean newVal) {
     this.transmitted = newVal;
   }
+	
  	
 	
 	/**
@@ -284,6 +286,7 @@ public class Contact extends Party {
 	public void setUseContactAddress(Boolean newVal) {
     this.useContactAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -306,6 +309,7 @@ public class Contact extends Party {
 	public void setIsIndividual(Boolean newVal) {
     this.isIndividual = newVal;
   }
+	
  	
 	
 	/**
@@ -328,6 +332,7 @@ public class Contact extends Party {
 	public void setDefaultSalesRep(SalesRep newVal) {
     this.defaultSalesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -350,6 +355,7 @@ public class Contact extends Party {
 	public void setMailerCampaigns(Boolean newVal) {
     this.mailerCampaigns = newVal;
   }
+	
  	
 	
 	/**
@@ -372,6 +378,7 @@ public class Contact extends Party {
 	public void setCreditCard(CreditCard newVal) {
     this.creditCard = newVal;
   }
+	
  	
 	
 	/**
@@ -394,6 +401,7 @@ public class Contact extends Party {
 	public void setMarketing(Marketing newVal) {
     this.marketing = newVal;
   }
+	
  	
 	
 	/**
@@ -426,6 +434,7 @@ public class Contact extends Party {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
     this.campaigns = newVal;
   }
+	
  	
 	
 	/**
@@ -448,103 +457,122 @@ public class Contact extends Party {
 	public void setContactId(String newVal) {
     this.contactId = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean webAccess;
+	private Boolean webAccess;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getWebAccess(){
+	public Boolean getWebAccess(){
     return webAccess; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebAccess(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setWebAccess(Boolean newVal) {
     this.webAccess = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean webRegistered;
+	private Boolean webRegistered;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getWebRegistered(){
+	public Boolean getWebRegistered(){
     return webRegistered; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebRegistered(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setWebRegistered(Boolean newVal) {
     this.webRegistered = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String webContactID;
+	private String webContactID;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getWebContactID(){
+	public String getWebContactID(){
     return webContactID; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebContactID(String newVal) {
+	 * @generated
+	 */	
+	public void setWebContactID(String newVal) {
     this.webContactID = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private WebCatalogs webCatalog;
+	private WebCatalogs webCatalog;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public WebCatalogs getWebCatalog(){
+	public WebCatalogs getWebCatalog(){
     return webCatalog; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebCatalog(WebCatalogs newVal) {
+	 * @generated
+	 */	
+	public void setWebCatalog(WebCatalogs newVal) {
     this.webCatalog = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private WebStatus webStatus;
+	private WebStatus webStatus;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public WebStatus getWebStatus(){
+	public WebStatus getWebStatus(){
     return webStatus; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebStatus(WebStatus newVal) {
+	 * @generated
+	 */	
+	public void setWebStatus(WebStatus newVal) {
     this.webStatus = newVal;
   }
-
+	
 	/**
 	 * @generated
 	 */		

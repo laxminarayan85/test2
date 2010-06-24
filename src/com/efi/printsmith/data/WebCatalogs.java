@@ -96,6 +96,7 @@ public class WebCatalogs extends ModelBase {
 	public void setRollId(Integer newVal) {
     this.rollId = newVal;
   }
+	
  	
 	
 	/**
@@ -118,6 +119,7 @@ public class WebCatalogs extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -140,6 +142,7 @@ public class WebCatalogs extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -162,6 +165,7 @@ public class WebCatalogs extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -184,6 +188,7 @@ public class WebCatalogs extends ModelBase {
 	public void setPath(String newVal) {
     this.path = newVal;
   }
+	
  	
 	
 	/**
@@ -216,6 +221,7 @@ public class WebCatalogs extends ModelBase {
 	public void setCatagories(java.util.List<WebCatagories> newVal) {
     this.catagories = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

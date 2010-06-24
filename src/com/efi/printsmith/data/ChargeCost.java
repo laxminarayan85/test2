@@ -176,6 +176,7 @@ public class ChargeCost extends ModelBase {
 	public void setRateTable(PriceList newVal) {
     this.rateTable = newVal;
   }
+	
  	
 	
 	/**
@@ -288,6 +289,7 @@ public class ChargeCost extends ModelBase {
 	public void setSetupMinutes(Double newVal) {
     this.setupMinutes = newVal;
   }
+	
  	
 	
 	/**
@@ -310,6 +312,7 @@ public class ChargeCost extends ModelBase {
 	public void setPiecesPerHour(Double newVal) {
     this.piecesPerHour = newVal;
   }
+	
  	
 	
 	/**
@@ -362,6 +365,7 @@ public class ChargeCost extends ModelBase {
 	public void setCostingMethod(String newVal) {
     this.costingMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -384,6 +388,7 @@ public class ChargeCost extends ModelBase {
 	public void setSpeedTable(SpeedTable newVal) {
     this.speedTable = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

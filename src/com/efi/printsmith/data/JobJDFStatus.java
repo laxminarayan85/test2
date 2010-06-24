@@ -88,6 +88,7 @@ public class JobJDFStatus extends ModelBase {
 	public void setLastUpdated(Date newVal) {
     this.lastUpdated = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class JobJDFStatus extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class JobJDFStatus extends ModelBase {
 	public void setDeviceId(String newVal) {
     this.deviceId = newVal;
   }
+	
  	
 	
 	/**
@@ -154,6 +157,7 @@ public class JobJDFStatus extends ModelBase {
 	public void setQueueId(String newVal) {
     this.queueId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -95,6 +95,7 @@ public class ChargeCategory extends ModelBase {
 	public void setChildren(java.util.List<ChargeDefinition> newVal) {
     this.children = newVal;
   }
+	
  	
 	
 	/**
@@ -117,6 +118,7 @@ public class ChargeCategory extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -139,6 +141,7 @@ public class ChargeCategory extends ModelBase {
 	public void setParent(ChargeCommand newVal) {
     this.parent = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

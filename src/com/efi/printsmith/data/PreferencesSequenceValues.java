@@ -89,22 +89,18 @@ public class PreferencesSequenceValues extends ModelBase {
 	 * @generated
 	 */
 	public static final String GRADE = "Grade";
-
 	/**
-   * @generated
-   */
-  public static final String CREDITCARD = "CreditCard";
-
+	 * @generated
+	 */
+	public static final String CREDITCARD = "CreditCard";
 	/**
    * @generated
    */
   public static final String ESTIMATE = "Estimate";
-
 	/**
    * @generated
    */
   public static final String STOCKORDER = "StockOrder";
-
 	/**
 	 * @generated
 	 */
@@ -135,6 +131,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setInvoice(Long newVal) {
     this.invoice = newVal;
   }
+	
  	
 	
 	/**
@@ -157,6 +154,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setJob(Long newVal) {
     this.job = newVal;
   }
+	
  	
 	
 	/**
@@ -179,6 +177,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setPressDefinition(Long newVal) {
     this.pressDefinition = newVal;
   }
+	
  	
 	
 	/**
@@ -201,6 +200,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setChargeDefinition(Long newVal) {
     this.chargeDefinition = newVal;
   }
+	
  	
 	
 	/**
@@ -223,6 +223,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setAccount(Long newVal) {
     this.account = newVal;
   }
+	
  	
 	
 	/**
@@ -245,6 +246,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setContact(Long newVal) {
     this.contact = newVal;
   }
+	
  	
 	
 	/**
@@ -267,6 +269,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setStockDefinition(Long newVal) {
     this.stockDefinition = newVal;
   }
+	
  	
 	
 	/**
@@ -289,6 +292,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setEmployee(Long newVal) {
     this.employee = newVal;
   }
+	
  	
 	
 	/**
@@ -311,6 +315,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setBroker(Long newVal) {
     this.broker = newVal;
   }
+	
  	
 	
 	/**
@@ -333,6 +338,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setCopierDefinition(Long newVal) {
     this.copierDefinition = newVal;
   }
+	
  	
 	
 	/**
@@ -355,6 +361,7 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setCampaign(Long newVal) {
     this.campaign = newVal;
   }
+	
  	
 	
 	/**
@@ -377,34 +384,37 @@ public class PreferencesSequenceValues extends ModelBase {
 	public void setGrade(Long newVal) {
     this.grade = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Long creditCard;
-
+	private Long creditCard;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Long getCreditCard(){
+	public Long getCreditCard(){
     return creditCard; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCreditCard(Long newVal) {
+	 * @generated
+	 */	
+	public void setCreditCard(Long newVal) {
     this.creditCard = newVal;
   }
-
-
+	
+ 	
+	
 	/**
    * @generated
    */	
  	@Basic
   private Long estimate;
-
 	/**
    * @generated
  	 */
@@ -421,12 +431,12 @@ public class PreferencesSequenceValues extends ModelBase {
   }
 
 
+
 	/**
    * @generated
    */	
  	@Basic
   private Long stockOrder;
-
 	/**
    * @generated
  	 */

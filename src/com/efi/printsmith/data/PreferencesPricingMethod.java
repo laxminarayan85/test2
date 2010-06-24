@@ -77,11 +77,10 @@ public class PreferencesPricingMethod extends ModelBase {
 	 * @generated
 	 */
 	public static final String ESTIMATOR = "Estimator";
-
 	/**
-   * @generated
-   */
-  public static final String METHOD = "Method";
+	 * @generated
+	 */
+	public static final String METHOD = "Method";
 
 	/**
 	 * @generated
@@ -113,6 +112,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setUsed(Boolean newVal) {
     this.used = newVal;
   }
+	
  	
 	
 	/**
@@ -135,6 +135,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setTitle(String newVal) {
     this.title = newVal;
   }
+	
  	
 	
 	/**
@@ -157,6 +158,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setAbbreviation(String newVal) {
     this.abbreviation = newVal;
   }
+	
  	
 	
 	/**
@@ -179,6 +181,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setBrokered(Boolean newVal) {
     this.brokered = newVal;
   }
+	
  	
 	
 	/**
@@ -201,6 +204,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setTaxable(Boolean newVal) {
     this.taxable = newVal;
   }
+	
  	
 	
 	/**
@@ -223,6 +227,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setFinished(Boolean newVal) {
     this.finished = newVal;
   }
+	
  	
 	
 	/**
@@ -245,6 +250,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setShowNotes(Boolean newVal) {
     this.showNotes = newVal;
   }
+	
  	
 	
 	/**
@@ -267,6 +273,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setCategory(SalesCategory newVal) {
     this.category = newVal;
   }
+	
  	
 	
 	/**
@@ -289,28 +296,30 @@ public class PreferencesPricingMethod extends ModelBase {
 	public void setEstimator(EstimatorTypes newVal) {
     this.estimator = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String method;
-
+	private String method;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getMethod(){
+	public String getMethod(){
     return method; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMethod(String newVal) {
+	 * @generated
+	 */	
+	public void setMethod(String newVal) {
     this.method = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

@@ -168,6 +168,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptHeader(String newVal) {
     this.receiptHeader = newVal;
   }
+	
  	
 	
 	/**
@@ -190,6 +191,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptFooter(String newVal) {
     this.receiptFooter = newVal;
   }
+	
  	
 	
 	/**
@@ -212,6 +214,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptStartNumber(Boolean newVal) {
     this.receiptStartNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -234,6 +237,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setStartingNumber(Integer newVal) {
     this.startingNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -256,6 +260,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setHideTaxLines(Boolean newVal) {
     this.hideTaxLines = newVal;
   }
+	
  	
 	
 	/**
@@ -278,6 +283,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptPrinterStatus(String newVal) {
     this.receiptPrinterStatus = newVal;
   }
+	
  	
 	
 	/**
@@ -300,6 +306,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setDefaultPrinter(String newVal) {
     this.defaultPrinter = newVal;
   }
+	
  	
 	
 	/**
@@ -322,6 +329,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setEnableCashDrawer(Boolean newVal) {
     this.enableCashDrawer = newVal;
   }
+	
  	
 	
 	/**
@@ -344,6 +352,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setUseMasterDrawer(Boolean newVal) {
     this.useMasterDrawer = newVal;
   }
+	
  	
 	
 	/**
@@ -366,6 +375,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setPrintReceipts(Boolean newVal) {
     this.printReceipts = newVal;
   }
+	
  	
 	
 	/**
@@ -388,6 +398,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setPrint2forCreditCards(Boolean newVal) {
     this.print2forCreditCards = newVal;
   }
+	
  	
 	
 	/**
@@ -410,6 +421,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setPrint2forCash(Boolean newVal) {
     this.print2forCash = newVal;
   }
+	
  	
 	
 	/**
@@ -432,6 +444,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setKeepLocalSettings(Boolean newVal) {
     this.keepLocalSettings = newVal;
   }
+	
  	
 	
 	/**
@@ -454,6 +467,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setPrintInvoices(Boolean newVal) {
     this.printInvoices = newVal;
   }
+	
  	
 	
 	/**
@@ -476,6 +490,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setLockSettings(Boolean newVal) {
     this.lockSettings = newVal;
   }
+	
  	
 	
 	/**
@@ -498,6 +513,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setAsciiCodeOpenDrawer(Integer newVal) {
     this.asciiCodeOpenDrawer = newVal;
   }
+	
  	
 	
 	/**
@@ -520,6 +536,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setBlankLinesBeforeReceipt(Integer newVal) {
     this.blankLinesBeforeReceipt = newVal;
   }
+	
  	
 	
 	/**
@@ -542,6 +559,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setBlankLinesAfterReceipt(Integer newVal) {
     this.blankLinesAfterReceipt = newVal;
   }
+	
  	
 	
 	/**
@@ -564,6 +582,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptStartCode(String newVal) {
     this.receiptStartCode = newVal;
   }
+	
  	
 	
 	/**
@@ -586,6 +605,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setReceiptEndCode(String newVal) {
     this.receiptEndCode = newVal;
   }
+	
  	
 	
 	/**
@@ -608,6 +628,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setBaudRate(String newVal) {
     this.baudRate = newVal;
   }
+	
  	
 	
 	/**
@@ -630,6 +651,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setStopBits(String newVal) {
     this.stopBits = newVal;
   }
+	
  	
 	
 	/**
@@ -652,6 +674,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setParity(String newVal) {
     this.parity = newVal;
   }
+	
  	
 	
 	/**
@@ -674,6 +697,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setDataSize(String newVal) {
     this.dataSize = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

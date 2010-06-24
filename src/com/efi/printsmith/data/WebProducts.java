@@ -116,6 +116,7 @@ public class WebProducts extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -138,6 +139,7 @@ public class WebProducts extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -160,6 +162,7 @@ public class WebProducts extends ModelBase {
 	public void setSku(JobBase newVal) {
     this.sku = newVal;
   }
+	
  	
 	
 	/**
@@ -182,6 +185,7 @@ public class WebProducts extends ModelBase {
 	public void setThumbnail(WebGraphics newVal) {
     this.thumbnail = newVal;
   }
+	
  	
 	
 	/**
@@ -204,6 +208,7 @@ public class WebProducts extends ModelBase {
 	public void setDetails(WebGraphics newVal) {
     this.details = newVal;
   }
+	
  	
 	
 	/**
@@ -226,6 +231,7 @@ public class WebProducts extends ModelBase {
 	public void setGlobalProduct(Boolean newVal) {
     this.globalProduct = newVal;
   }
+	
  	
 	
 	/**
@@ -248,6 +254,7 @@ public class WebProducts extends ModelBase {
 	public void setCheckoutType(WebCheckoutTypes newVal) {
     this.checkoutType = newVal;
   }
+	
  	
 	
 	/**
@@ -270,6 +277,7 @@ public class WebProducts extends ModelBase {
 	public void setAllowUserEnteredQty(Boolean newVal) {
     this.allowUserEnteredQty = newVal;
   }
+	
  	
 	
 	/**
@@ -292,6 +300,7 @@ public class WebProducts extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -314,13 +323,13 @@ public class WebProducts extends ModelBase {
 	public void setCalculatePrices(PreferencesPricingMethod newVal) {
     this.calculatePrices = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany()
-    @IndexColumn(name="questionswebproducts")
     @JoinTable( name = "webproducts_questions")
 	private java.util.List<WebQuestions> questions;
 	
@@ -347,6 +356,7 @@ public class WebProducts extends ModelBase {
 	public void setQuestions(java.util.List<WebQuestions> newVal) {
     this.questions = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

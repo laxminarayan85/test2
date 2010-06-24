@@ -80,6 +80,7 @@ public class ColumnNames extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class ColumnNames extends ModelBase {
 	public void setInternalName(String newVal) {
     this.internalName = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

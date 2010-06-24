@@ -76,6 +76,7 @@ public class Vendor extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

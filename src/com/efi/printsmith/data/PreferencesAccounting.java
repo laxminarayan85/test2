@@ -302,6 +302,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setFinanceChange(Double newVal) {
     this.financeChange = newVal;
   }
+	
  	
 	
 	/**
@@ -324,6 +325,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInactivePeriod(Double newVal) {
     this.inactivePeriod = newVal;
   }
+	
  	
 	
 	/**
@@ -346,6 +348,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setRemoveDraftsFromDeposit(Boolean newVal) {
     this.removeDraftsFromDeposit = newVal;
   }
+	
  	
 	
 	/**
@@ -368,6 +371,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDefaultSalesRep(String newVal) {
     this.defaultSalesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -390,6 +394,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDefaultShipping(String newVal) {
     this.defaultShipping = newVal;
   }
+	
  	
 	
 	/**
@@ -412,6 +417,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPastDue(Integer newVal) {
     this.pastDue = newVal;
   }
+	
  	
 	
 	/**
@@ -434,6 +440,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPastDueNote(String newVal) {
     this.pastDueNote = newVal;
   }
+	
  	
 	
 	/**
@@ -456,6 +463,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDelinquent(Integer newVal) {
     this.delinquent = newVal;
   }
+	
  	
 	
 	/**
@@ -478,6 +486,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDelinquentNote(String newVal) {
     this.delinquentNote = newVal;
   }
+	
  	
 	
 	/**
@@ -500,6 +509,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setFrozen(Integer newVal) {
     this.frozen = newVal;
   }
+	
  	
 	
 	/**
@@ -522,6 +532,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setFrozenNote(String newVal) {
     this.frozenNote = newVal;
   }
+	
  	
 	
 	/**
@@ -544,6 +555,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setActivateCreditCardApproval(Boolean newVal) {
     this.activateCreditCardApproval = newVal;
   }
+	
  	
 	
 	/**
@@ -566,6 +578,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInvoicePrefix(String newVal) {
     this.invoicePrefix = newVal;
   }
+	
  	
 	
 	/**
@@ -588,6 +601,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInvoiceDocument(String newVal) {
     this.invoiceDocument = newVal;
   }
+	
  	
 	
 	/**
@@ -610,6 +624,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInvoiceSuffix(String newVal) {
     this.invoiceSuffix = newVal;
   }
+	
  	
 	
 	/**
@@ -632,6 +647,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInvoiceAllowPrefixMod(Boolean newVal) {
     this.invoiceAllowPrefixMod = newVal;
   }
+	
  	
 	
 	/**
@@ -654,6 +670,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInvoiceAllowSuffixMod(Boolean newVal) {
     this.invoiceAllowSuffixMod = newVal;
   }
+	
  	
 	
 	/**
@@ -676,6 +693,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setEstimatePrefix(String newVal) {
     this.estimatePrefix = newVal;
   }
+	
  	
 	
 	/**
@@ -698,6 +716,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setEstimateDocument(String newVal) {
     this.estimateDocument = newVal;
   }
+	
  	
 	
 	/**
@@ -720,6 +739,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setEstimateSuffix(String newVal) {
     this.estimateSuffix = newVal;
   }
+	
  	
 	
 	/**
@@ -742,6 +762,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setEstimateAllowPrefixMod(Boolean newVal) {
     this.estimateAllowPrefixMod = newVal;
   }
+	
  	
 	
 	/**
@@ -764,6 +785,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setEstimateAllowSuffixMod(Boolean newVal) {
     this.estimateAllowSuffixMod = newVal;
   }
+	
  	
 	
 	/**
@@ -786,6 +808,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPrintDocument(Boolean newVal) {
     this.printDocument = newVal;
   }
+	
  	
 	
 	/**
@@ -808,6 +831,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setJournalDocumentPreference(String newVal) {
     this.journalDocumentPreference = newVal;
   }
+	
  	
 	
 	/**
@@ -830,6 +854,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setAccountingLinkTo(String newVal) {
     this.accountingLinkTo = newVal;
   }
+	
  	
 	
 	/**
@@ -852,6 +877,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setShippingCollected(String newVal) {
     this.shippingCollected = newVal;
   }
+	
  	
 	
 	/**
@@ -874,6 +900,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setActualBankDeposit(String newVal) {
     this.actualBankDeposit = newVal;
   }
+	
  	
 	
 	/**
@@ -896,6 +923,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setUndepositedReceipts(String newVal) {
     this.undepositedReceipts = newVal;
   }
+	
  	
 	
 	/**
@@ -918,6 +946,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDiscounts(String newVal) {
     this.discounts = newVal;
   }
+	
  	
 	
 	/**
@@ -940,6 +969,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setSalesTax(String newVal) {
     this.salesTax = newVal;
   }
+	
  	
 	
 	/**
@@ -962,6 +992,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setTotalARReceipts(String newVal) {
     this.totalARReceipts = newVal;
   }
+	
  	
 	
 	/**
@@ -984,6 +1015,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDepositsOnInvoices(String newVal) {
     this.depositsOnInvoices = newVal;
   }
+	
  	
 	
 	/**
@@ -1006,6 +1038,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setNewChargesToAR(String newVal) {
     this.newChargesToAR = newVal;
   }
+	
  	
 	
 	/**
@@ -1028,6 +1061,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setCashOverShort(String newVal) {
     this.cashOverShort = newVal;
   }
+	
  	
 	
 	/**
@@ -1050,6 +1084,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPaidOut(String newVal) {
     this.paidOut = newVal;
   }
+	
  	
 	
 	/**
@@ -1072,6 +1107,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setRefundChecks(String newVal) {
     this.refundChecks = newVal;
   }
+	
  	
 	
 	/**
@@ -1094,6 +1130,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setUseObsoleteDropFolder(Boolean newVal) {
     this.useObsoleteDropFolder = newVal;
   }
+	
  	
 	
 	/**
@@ -1116,6 +1153,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setUseSkipJackProcessor(Boolean newVal) {
     this.useSkipJackProcessor = newVal;
   }
+	
  	
 	
 	/**
@@ -1138,6 +1176,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setUseEfsProcessor(Boolean newVal) {
     this.useEfsProcessor = newVal;
   }
+	
  	
 	
 	/**
@@ -1160,6 +1199,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setCreditCardDropFolder(String newVal) {
     this.creditCardDropFolder = newVal;
   }
+	
  	
 	
 	/**
@@ -1182,6 +1222,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setSkipJackMode(Integer newVal) {
     this.skipJackMode = newVal;
   }
+	
  	
 	
 	/**
@@ -1204,6 +1245,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setInternetURL(String newVal) {
     this.internetURL = newVal;
   }
+	
  	
 	
 	/**
@@ -1226,6 +1268,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setSerialNumber(String newVal) {
     this.serialNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -1248,6 +1291,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setDevelopmentNumber(String newVal) {
     this.developmentNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -1270,6 +1314,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPortNumber(String newVal) {
     this.portNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -1292,6 +1337,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setMerchantID(String newVal) {
     this.merchantID = newVal;
   }
+	
  	
 	
 	/**
@@ -1314,6 +1360,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setMerchantKey(String newVal) {
     this.merchantKey = newVal;
   }
+	
  	
 	
 	/**
@@ -1336,6 +1383,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setUseAddressValidation(Boolean newVal) {
     this.useAddressValidation = newVal;
   }
+	
  	
 	
 	/**
@@ -1358,6 +1406,7 @@ public class PreferencesAccounting extends ModelBase {
 	public void setPromptUserForValidationInfo(Boolean newVal) {
     this.promptUserForValidationInfo = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -96,6 +96,7 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setTax(Boolean newVal) {
     this.tax = newVal;
   }
+	
  	
 	
 	/**
@@ -118,6 +119,7 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setTitle(String newVal) {
     this.title = newVal;
   }
+	
  	
 	
 	/**
@@ -140,6 +142,7 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setCategory(SalesCategory newVal) {
     this.category = newVal;
   }
+	
  	
 	
 	/**
@@ -192,6 +195,7 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
  	
 	
 	/**
@@ -214,6 +218,7 @@ public class PreferencesCashRegister extends ModelBase {
 	public void setTaxCodes(TaxCodes newVal) {
     this.taxCodes = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -116,6 +116,7 @@ public class Matrix extends ModelBase {
 	public void setHeader1(Long newVal) {
     this.header1 = newVal;
   }
+	
  	
 	
 	/**
@@ -138,6 +139,7 @@ public class Matrix extends ModelBase {
 	public void setHeader2(Long newVal) {
     this.header2 = newVal;
   }
+	
  	
 	
 	/**
@@ -160,6 +162,7 @@ public class Matrix extends ModelBase {
 	public void setHeader3(Long newVal) {
     this.header3 = newVal;
   }
+	
  	
 	
 	/**
@@ -182,6 +185,7 @@ public class Matrix extends ModelBase {
 	public void setHeader4(Long newVal) {
     this.header4 = newVal;
   }
+	
  	
 	
 	/**
@@ -204,6 +208,7 @@ public class Matrix extends ModelBase {
 	public void setHeader5(Long newVal) {
     this.header5 = newVal;
   }
+	
  	
 	
 	/**
@@ -226,6 +231,7 @@ public class Matrix extends ModelBase {
 	public void setHeader6(Long newVal) {
     this.header6 = newVal;
   }
+	
  	
 	
 	/**
@@ -248,6 +254,7 @@ public class Matrix extends ModelBase {
 	public void setHeader7(Long newVal) {
     this.header7 = newVal;
   }
+	
  	
 	
 	/**
@@ -270,6 +277,7 @@ public class Matrix extends ModelBase {
 	public void setHeader8(Long newVal) {
     this.header8 = newVal;
   }
+	
  	
 	
 	/**
@@ -292,6 +300,7 @@ public class Matrix extends ModelBase {
 	public void setHeader9(Long newVal) {
     this.header9 = newVal;
   }
+	
  	
 	
 	/**
@@ -314,6 +323,7 @@ public class Matrix extends ModelBase {
 	public void setHeader10(Long newVal) {
     this.header10 = newVal;
   }
+	
  	
 	
 	/**
@@ -323,7 +333,7 @@ public class Matrix extends ModelBase {
     @JoinTable( name = "matrix_elements")
 	private java.util.List<MatrixElement> elements;
 	
-	/** 
+	/**
 	 * @generated
  	 */
 	public java.util.List<MatrixElement> getElements(){
@@ -346,6 +356,7 @@ public class Matrix extends ModelBase {
 	public void setElements(java.util.List<MatrixElement> newVal) {
     this.elements = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

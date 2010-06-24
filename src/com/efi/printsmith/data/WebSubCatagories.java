@@ -86,6 +86,7 @@ public class WebSubCatagories extends WebCatagories {
 	public void setProducts(java.util.List<WebProducts> newVal) {
     this.products = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -76,6 +76,7 @@ public class PreferencesIntegration extends ModelBase {
 	public void setFieryConnectorURL(String newVal) {
     this.fieryConnectorURL = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

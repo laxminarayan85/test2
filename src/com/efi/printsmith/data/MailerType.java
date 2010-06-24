@@ -76,6 +76,7 @@ public class MailerType extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -100,6 +100,7 @@ public class WebConsole extends ModelBase {
 	public void setWebStatus(WebStatus newVal) {
     this.webStatus = newVal;
   }
+	
  	
 	
 	/**
@@ -122,6 +123,7 @@ public class WebConsole extends ModelBase {
 	public void setWebaction(String newVal) {
     this.webaction = newVal;
   }
+	
  	
 	
 	/**
@@ -144,6 +146,7 @@ public class WebConsole extends ModelBase {
 	public void setWebparents(String newVal) {
     this.webparents = newVal;
   }
+	
  	
 	
 	/**
@@ -166,6 +169,7 @@ public class WebConsole extends ModelBase {
 	public void setWebmessagetype(String newVal) {
     this.webmessagetype = newVal;
   }
+	
  	
 	
 	/**
@@ -188,6 +192,7 @@ public class WebConsole extends ModelBase {
 	public void setWebtransactionID(String newVal) {
     this.webtransactionID = newVal;
   }
+	
  	
 	
 	/**
@@ -210,6 +215,7 @@ public class WebConsole extends ModelBase {
 	public void setWebsenddate(Date newVal) {
     this.websenddate = newVal;
   }
+	
  	
 	
 	/**
@@ -232,6 +238,7 @@ public class WebConsole extends ModelBase {
 	public void setServercode(String newVal) {
     this.servercode = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

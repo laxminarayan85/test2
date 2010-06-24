@@ -96,6 +96,7 @@ public class PriceLogEntry extends ModelBase {
 	public void setVersion(Integer newVal) {
     this.version = newVal;
   }
+	
  	
 	
 	/**
@@ -118,6 +119,7 @@ public class PriceLogEntry extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -140,6 +142,7 @@ public class PriceLogEntry extends ModelBase {
 	public void setMethod(String newVal) {
     this.method = newVal;
   }
+	
  	
 	
 	/**
@@ -192,6 +195,7 @@ public class PriceLogEntry extends ModelBase {
 	public void setDate(Date newVal) {
     this.date = newVal;
   }
+	
  	
 	
 	/**
@@ -224,6 +228,7 @@ public class PriceLogEntry extends ModelBase {
 	public void setChildren(java.util.List<PriceLogEntry> newVal) {
     this.children = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -84,6 +84,7 @@ public class SecurityCommands extends ModelBase {
 	public void setMenu(String newVal) {
     this.menu = newVal;
   }
+	
  	
 	
 	/**
@@ -106,6 +107,7 @@ public class SecurityCommands extends ModelBase {
 	public void setCommandName(String newVal) {
     this.commandName = newVal;
   }
+	
  	
 	
 	/**
@@ -128,6 +130,7 @@ public class SecurityCommands extends ModelBase {
 	public void setCommandId(String newVal) {
     this.commandId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

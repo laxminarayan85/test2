@@ -46,9 +46,9 @@ public class StockOrder extends ModelBase {
 	 */
 	public static final String NAME = "Name";
 	/**
-   * @generated
-   */
-  public static final String STOCKUNIT = "StockUnit";
+	 * @generated
+	 */
+	public static final String STOCKUNIT = "StockUnit";
 	/**
 	 * @generated
 	 */
@@ -129,23 +129,22 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */
 	public static final String PONUMBER = "PoNumber";
-
 	/**
-   * @generated
-   */
-  public static final String CUSTOMERNAME = "CustomerName";
+	 * @generated
+	 */
+	public static final String CUSTOMERNAME = "CustomerName";
 	/**
-   * @generated
-   */
-  public static final String RECEIVEDQUANTITY = "ReceivedQuantity";
+	 * @generated
+	 */
+	public static final String RECEIVEDQUANTITY = "ReceivedQuantity";
 	/**
-   * @generated
-   */
-  public static final String PLACED = "Placed";
+	 * @generated
+	 */
+	public static final String PLACED = "Placed";
 	/**
-   * @generated
-   */
-  public static final String FILLED = "Filled";
+	 * @generated
+	 */
+	public static final String FILLED = "Filled";
 
 	/**
 	 * @generated
@@ -172,36 +171,37 @@ public class StockOrder extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setName(String newVal) {
+	 * @generated
+	 */	
+	public void setName(String newVal) {
     this.name = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer stockUnit;
-
+	private Integer stockUnit;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getStockUnit(){
+	public Integer getStockUnit(){
     return stockUnit; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setStockUnit(Integer newVal) {
+	 * @generated
+	 */	
+	public void setStockUnit(Integer newVal) {
     this.stockUnit = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -222,6 +222,7 @@ public class StockOrder extends ModelBase {
 	public void setInvoiceNumber(String newVal) {
     this.invoiceNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -244,6 +245,7 @@ public class StockOrder extends ModelBase {
 	public void setJobNumber(String newVal) {
     this.jobNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -266,6 +268,7 @@ public class StockOrder extends ModelBase {
 	public void setVendor(Vendor newVal) {
     this.vendor = newVal;
   }
+	
  	
 	
 	/**
@@ -288,6 +291,7 @@ public class StockOrder extends ModelBase {
 	public void setOrderNumber(String newVal) {
     this.orderNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -310,6 +314,7 @@ public class StockOrder extends ModelBase {
 	public void setColor(StockColors newVal) {
     this.color = newVal;
   }
+	
  	
 	
 	/**
@@ -332,6 +337,7 @@ public class StockOrder extends ModelBase {
 	public void setFinish(StockFinish newVal) {
     this.finish = newVal;
   }
+	
  	
 	
 	/**
@@ -349,13 +355,14 @@ public class StockOrder extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCoated(String newVal) {
+	 * @generated
+	 */	
+	public void setCoated(String newVal) {
     this.coated = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -376,6 +383,7 @@ public class StockOrder extends ModelBase {
 	public void setWeight(Double newVal) {
     this.weight = newVal;
   }
+	
  	
 	
 	/**
@@ -398,6 +406,7 @@ public class StockOrder extends ModelBase {
 	public void setSheetSize(String newVal) {
     this.sheetSize = newVal;
   }
+	
  	
 	
 	/**
@@ -450,6 +459,7 @@ public class StockOrder extends ModelBase {
 	public void setPer(Double newVal) {
     this.per = newVal;
   }
+	
  	
 	
 	/**
@@ -472,6 +482,7 @@ public class StockOrder extends ModelBase {
 	public void setRollWeight(Double newVal) {
     this.rollWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -489,13 +500,14 @@ public class StockOrder extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRollWidth(String newVal) {
+	 * @generated
+	 */	
+	public void setRollWidth(String newVal) {
     this.rollWidth = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -516,6 +528,7 @@ public class StockOrder extends ModelBase {
 	public void setOrderQuantity(Integer newVal) {
     this.orderQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -538,6 +551,7 @@ public class StockOrder extends ModelBase {
 	public void setVendorStockNumber(String newVal) {
     this.vendorStockNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -560,6 +574,7 @@ public class StockOrder extends ModelBase {
 	public void setStockOrderNumber(String newVal) {
     this.stockOrderNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -582,6 +597,7 @@ public class StockOrder extends ModelBase {
 	public void setDeliveryDate(Date newVal) {
     this.deliveryDate = newVal;
   }
+	
  	
 	
 	/**
@@ -604,6 +620,7 @@ public class StockOrder extends ModelBase {
 	public void setEnterDate(Date newVal) {
     this.enterDate = newVal;
   }
+	
  	
 	
 	/**
@@ -626,6 +643,7 @@ public class StockOrder extends ModelBase {
 	public void setAllowModifaction(Boolean newVal) {
     this.allowModifaction = newVal;
   }
+	
  	
 	
 	/**
@@ -648,97 +666,99 @@ public class StockOrder extends ModelBase {
 	public void setPoNumber(String newVal) {
     this.poNumber = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String customerName;
-
+	private String customerName;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getCustomerName(){
+	public String getCustomerName(){
     return customerName; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCustomerName(String newVal) {
+	 * @generated
+	 */	
+	public void setCustomerName(String newVal) {
     this.customerName = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer receivedQuantity;
-
+	private Integer receivedQuantity;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getReceivedQuantity(){
+	public Integer getReceivedQuantity(){
     return receivedQuantity; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setReceivedQuantity(Integer newVal) {
+	 * @generated
+	 */	
+	public void setReceivedQuantity(Integer newVal) {
     this.receivedQuantity = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean placed;
-
+	private Boolean placed;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getPlaced(){
+	public Boolean getPlaced(){
     return placed; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPlaced(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setPlaced(Boolean newVal) {
     this.placed = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean filled;
-
+	private Boolean filled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getFilled(){
+	public Boolean getFilled(){
     return filled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setFilled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setFilled(Boolean newVal) {
     this.filled = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

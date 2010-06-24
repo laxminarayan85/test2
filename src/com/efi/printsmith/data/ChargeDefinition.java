@@ -3234,6 +3234,7 @@ public class ChargeDefinition extends ModelBase {
   }
 
 
+
 	/**
    * @generated
    */	

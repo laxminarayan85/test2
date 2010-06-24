@@ -76,6 +76,7 @@ public class Zip extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

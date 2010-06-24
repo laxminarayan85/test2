@@ -92,6 +92,7 @@ public class DepositEntry extends ModelBase {
 	public void setReferenceNumber(String newVal) {
     this.referenceNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -114,6 +115,7 @@ public class DepositEntry extends ModelBase {
 	public void setDate(Date newVal) {
     this.date = newVal;
   }
+	
  	
 	
 	/**
@@ -166,6 +168,7 @@ public class DepositEntry extends ModelBase {
 	public void setType(DepositType newVal) {
     this.type = newVal;
   }
+	
  	
 	
 	/**
@@ -188,6 +191,7 @@ public class DepositEntry extends ModelBase {
 	public void setCreditCardType(Integer newVal) {
     this.creditCardType = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -76,6 +76,7 @@ public class AccessLevel extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -358,7 +358,7 @@ public class TaxTableMapper extends ImportMapper {
 			} else if ("taxShipping".equals(currentFieldToken)) {
 				taxTable.setTaxShipping(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("separateShippingTaxElements".equals(currentFieldToken)) {
-				/* TODO */
+				taxTable.setSeparateShipping(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("taxTax".equals(currentFieldToken)) {
 				taxTable.setTaxOnTax(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("roundTaxUp".equals(currentFieldToken)) {
@@ -369,6 +369,8 @@ public class TaxTableMapper extends ImportMapper {
 				taxTable.setDoDetail(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("dontRoundShownTaxElements".equals(currentFieldToken)) {
 				taxTable.setDontRoundShownTaxElements(Utilities.tokenToInt(currentImportToken));
+			}else if ("minimumTaxableAmount".equals(currentFieldToken)) {
+				taxTable.setMinAmount(Utilities.tokenToDouble(currentImportToken));
 			}
 			          
            }

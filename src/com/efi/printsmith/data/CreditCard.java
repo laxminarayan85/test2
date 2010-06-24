@@ -96,6 +96,7 @@ public class CreditCard extends ModelBase {
 	public void setCardHolderName(String newVal) {
     this.cardHolderName = newVal;
   }
+	
  	
 	
 	/**
@@ -118,6 +119,7 @@ public class CreditCard extends ModelBase {
 	public void setCardNumber(String newVal) {
     this.cardNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -140,6 +142,7 @@ public class CreditCard extends ModelBase {
 	public void setExpiresDate(Date newVal) {
     this.expiresDate = newVal;
   }
+	
  	
 	
 	/**
@@ -162,6 +165,7 @@ public class CreditCard extends ModelBase {
 	public void setAddress(Address newVal) {
     this.address = newVal;
   }
+	
  	
 	
 	/**
@@ -179,13 +183,14 @@ public class CreditCard extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCreditCardID(String newVal) {
+	 * @generated
+	 */	
+	public void setCreditCardID(String newVal) {
     this.creditCardID = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -206,6 +211,7 @@ public class CreditCard extends ModelBase {
 	public void setType(String newVal) {
     this.type = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

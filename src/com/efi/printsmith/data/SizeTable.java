@@ -76,6 +76,7 @@ public class SizeTable extends ModelBase {
 	public void setName(Integer newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

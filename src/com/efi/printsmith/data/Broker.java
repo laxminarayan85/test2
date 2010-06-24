@@ -76,6 +76,7 @@ public class Broker extends Party {
 	public void setBrokerId(String newVal) {
     this.brokerId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

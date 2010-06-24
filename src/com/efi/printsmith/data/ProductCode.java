@@ -45,12 +45,10 @@ public class ProductCode extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
-
 	/**
    * @generated
    */
   public static final String KEY = "Key";
-
 	/**
 	 * @generated
 	 */
@@ -81,12 +79,14 @@ public class ProductCode extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
+ 	
+	
 	/**
    * @generated
    */	
  	@Basic
   private Integer key;
-
 	/**
    * @generated
  	 */

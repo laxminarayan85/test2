@@ -156,6 +156,7 @@ public class MatrixElement extends ModelBase {
 	public void setQty(Integer newVal) {
     this.qty = newVal;
   }
+	
  	
 	
 	/**

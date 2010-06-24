@@ -86,7 +86,6 @@ public class TaxTable extends ModelBase {
    * @generated
    */
   public static final String ABBR = "Abbr";
-
 	/**
    * @generated
    */
@@ -95,7 +94,6 @@ public class TaxTable extends ModelBase {
    * @generated
    */
   public static final String TABLECREATELOCALDATETIME = "TableCreateLocalDateTime";
-
 	/**
    * @generated
    */
@@ -381,6 +379,7 @@ public class TaxTable extends ModelBase {
   }
 
 
+
 	/**
    * @generated
    */	
@@ -424,6 +423,7 @@ public class TaxTable extends ModelBase {
   public void setTableCreateLocalDateTime(Date newVal) {
     this.tableCreateLocalDateTime = newVal;
   }
+
 
 
 	/**
@@ -507,12 +507,12 @@ public class TaxTable extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer disableTable;
+  private Boolean disableTable;
 
 	/**
    * @generated
  	 */
-  public Integer getDisableTable(){
+  public Boolean getDisableTable(){
     return disableTable; 
   }
 
@@ -520,7 +520,7 @@ public class TaxTable extends ModelBase {
 	/**
    * @generated
    */	
-  public void setDisableTable(Integer newVal) {
+  public void setDisableTable(Boolean newVal) {
     this.disableTable = newVal;
   }
 
@@ -573,7 +573,7 @@ public class TaxTable extends ModelBase {
     if (MINAMOUNT.equals(propertyName)) setMinAmount((BigDecimal)newValue); else
     if (DEFAULTTABLE.equals(propertyName)) setDefaultTable((Boolean)newValue); else
     if (SEPARATESHIPPING.equals(propertyName)) setSeparateShipping((Boolean)newValue); else
-    if (DISABLETABLE.equals(propertyName)) setDisableTable((Integer)newValue); else
+    if (DISABLETABLE.equals(propertyName)) setDisableTable((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -616,7 +616,7 @@ public class TaxTable extends ModelBase {
     if (SEPARATESHIPPING.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (DISABLETABLE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	

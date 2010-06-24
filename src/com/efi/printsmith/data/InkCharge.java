@@ -92,6 +92,7 @@ public class InkCharge extends Charge {
 	public void setCoverage(Double newVal) {
     this.coverage = newVal;
   }
+	
  	
 	
 	/**
@@ -114,6 +115,7 @@ public class InkCharge extends Charge {
 	public void setInkWeight(Double newVal) {
     this.inkWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -136,6 +138,7 @@ public class InkCharge extends Charge {
 	public void setCoverPerPound(Double newVal) {
     this.coverPerPound = newVal;
   }
+	
  	
 	
 	/**
@@ -188,6 +191,7 @@ public class InkCharge extends Charge {
 	public void setPoundsOfInk(Double newVal) {
     this.poundsOfInk = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

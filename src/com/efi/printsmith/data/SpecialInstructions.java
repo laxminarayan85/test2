@@ -76,6 +76,7 @@ public class SpecialInstructions extends ModelBase {
 	public void setInstructions(String newVal) {
     this.instructions = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

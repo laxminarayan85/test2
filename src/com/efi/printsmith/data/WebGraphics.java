@@ -88,6 +88,7 @@ public class WebGraphics extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class WebGraphics extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class WebGraphics extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -154,6 +157,7 @@ public class WebGraphics extends ModelBase {
 	public void setPathUrl(String newVal) {
     this.pathUrl = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -78,9 +78,9 @@ public class PaperCalculator extends ModelBase {
 	 */
 	public static final String USEWHITESPACE = "UseWhiteSpace";
 	/**
-   * @generated
-   */
-  public static final String WHITESPACELEFT = "WhiteSpaceLeft";
+	 * @generated
+	 */
+	public static final String WHITESPACELEFT = "WhiteSpaceLeft";
 	/**
 	 * @generated
 	 */
@@ -110,9 +110,9 @@ public class PaperCalculator extends ModelBase {
 	 */
 	public static final String USEBLEED = "UseBleed";
 	/**
-   * @generated
-   */
-  public static final String BLEEDLEFT = "BleedLeft";
+	 * @generated
+	 */
+	public static final String BLEEDLEFT = "BleedLeft";
 	/**
 	 * @generated
 	 */
@@ -225,38 +225,34 @@ public class PaperCalculator extends ModelBase {
 	 * @generated
 	 */
 	public static final String USEDSQRAREA = "UsedSqrArea";
-
 	/**
-   * @generated
-   */
-  public static final String RMARGIN = "RMargin";
+	 * @generated
+	 */
+	public static final String RMARGIN = "RMargin";
 	/**
-   * @generated
-   */
-  public static final String BMARGIN = "BMargin";
+	 * @generated
+	 */
+	public static final String BMARGIN = "BMargin";
 	/**
-   * @generated
-   */
-  public static final String TMARGIN = "TMargin";
-
+	 * @generated
+	 */
+	public static final String TMARGIN = "TMargin";
 	/**
-   * @generated
-   */
-  public static final String LMARGIN = "LMargin";
-
+	 * @generated
+	 */
+	public static final String LMARGIN = "LMargin";
 	/**
-   * @generated
-   */
-  public static final String BACKTRIMRUN = "BackTrimRun";
-
+	 * @generated
+	 */
+	public static final String BACKTRIMRUN = "BackTrimRun";
 	/**
-   * @generated
-   */
-  public static final String SWAP = "Swap";
+	 * @generated
+	 */
+	public static final String SWAP = "Swap";
 	/**
-   * @generated
-   */
-  public static final String RUNOUT = "Runout";
+	 * @generated
+	 */
+	public static final String RUNOUT = "Runout";
 
 	/**
 	 * @generated
@@ -288,6 +284,7 @@ public class PaperCalculator extends ModelBase {
 	public void setGripEdgeGap(Double newVal) {
     this.gripEdgeGap = newVal;
   }
+	
  	
 	
 	/**
@@ -310,6 +307,7 @@ public class PaperCalculator extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -332,6 +330,7 @@ public class PaperCalculator extends ModelBase {
 	public void setAcross(Integer newVal) {
     this.across = newVal;
   }
+	
  	
 	
 	/**
@@ -354,6 +353,7 @@ public class PaperCalculator extends ModelBase {
 	public void setWhichStartSize(Integer newVal) {
     this.whichStartSize = newVal;
   }
+	
  	
 	
 	/**
@@ -376,6 +376,7 @@ public class PaperCalculator extends ModelBase {
 	public void setUseFolioEdge(Boolean newVal) {
     this.useFolioEdge = newVal;
   }
+	
  	
 	
 	/**
@@ -398,6 +399,7 @@ public class PaperCalculator extends ModelBase {
 	public void setFolioEdge(Double newVal) {
     this.folioEdge = newVal;
   }
+	
  	
 	
 	/**
@@ -420,6 +422,7 @@ public class PaperCalculator extends ModelBase {
 	public void setUseColorBar(Boolean newVal) {
     this.useColorBar = newVal;
   }
+	
  	
 	
 	/**
@@ -442,6 +445,7 @@ public class PaperCalculator extends ModelBase {
 	public void setColorBar(Double newVal) {
     this.colorBar = newVal;
   }
+	
  	
 	
 	/**
@@ -464,31 +468,32 @@ public class PaperCalculator extends ModelBase {
 	public void setUseWhiteSpace(Boolean newVal) {
     this.useWhiteSpace = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double whiteSpaceLeft;
-
+	private Double whiteSpaceLeft;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getWhiteSpaceLeft(){
+	public Double getWhiteSpaceLeft(){
     return whiteSpaceLeft; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setWhiteSpaceLeft(Double newVal) {
+	 * @generated
+	 */	
+	public void setWhiteSpaceLeft(Double newVal) {
     this.whiteSpaceLeft = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -509,6 +514,7 @@ public class PaperCalculator extends ModelBase {
 	public void setWhiteSpaceTop(Double newVal) {
     this.whiteSpaceTop = newVal;
   }
+	
  	
 	
 	/**
@@ -531,6 +537,7 @@ public class PaperCalculator extends ModelBase {
 	public void setWhiteSpaceRight(Double newVal) {
     this.whiteSpaceRight = newVal;
   }
+	
  	
 	
 	/**
@@ -553,6 +560,7 @@ public class PaperCalculator extends ModelBase {
 	public void setWhiteSpaceBottom(Double newVal) {
     this.whiteSpaceBottom = newVal;
   }
+	
  	
 	
 	/**
@@ -575,6 +583,7 @@ public class PaperCalculator extends ModelBase {
 	public void setUseGutter(Boolean newVal) {
     this.useGutter = newVal;
   }
+	
  	
 	
 	/**
@@ -597,6 +606,7 @@ public class PaperCalculator extends ModelBase {
 	public void setGutter(Double newVal) {
     this.gutter = newVal;
   }
+	
  	
 	
 	/**
@@ -619,6 +629,7 @@ public class PaperCalculator extends ModelBase {
 	public void setGutterHorizontal(Double newVal) {
     this.gutterHorizontal = newVal;
   }
+	
  	
 	
 	/**
@@ -641,31 +652,32 @@ public class PaperCalculator extends ModelBase {
 	public void setUseBleed(Boolean newVal) {
     this.useBleed = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double bleedLeft;
-
+	private Double bleedLeft;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getBleedLeft(){
+	public Double getBleedLeft(){
     return bleedLeft; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setBleedLeft(Double newVal) {
+	 * @generated
+	 */	
+	public void setBleedLeft(Double newVal) {
     this.bleedLeft = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -686,6 +698,7 @@ public class PaperCalculator extends ModelBase {
 	public void setBleedTop(Double newVal) {
     this.bleedTop = newVal;
   }
+	
  	
 	
 	/**
@@ -708,6 +721,7 @@ public class PaperCalculator extends ModelBase {
 	public void setBleedRight(Double newVal) {
     this.bleedRight = newVal;
   }
+	
  	
 	
 	/**
@@ -730,6 +744,7 @@ public class PaperCalculator extends ModelBase {
 	public void setBleedBottom(Double newVal) {
     this.bleedBottom = newVal;
   }
+	
  	
 	
 	/**
@@ -752,6 +767,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDefaultPressCuttOff(Double newVal) {
     this.defaultPressCuttOff = newVal;
   }
+	
  	
 	
 	/**
@@ -774,6 +790,7 @@ public class PaperCalculator extends ModelBase {
 	public void setBackTrimParent(Boolean newVal) {
     this.backTrimParent = newVal;
   }
+	
  	
 	
 	/**
@@ -796,6 +813,7 @@ public class PaperCalculator extends ModelBase {
 	public void setTrimFourSides(Boolean newVal) {
     this.trimFourSides = newVal;
   }
+	
  	
 	
 	/**
@@ -818,6 +836,7 @@ public class PaperCalculator extends ModelBase {
 	public void setWorkandTumble(Boolean newVal) {
     this.workandTumble = newVal;
   }
+	
  	
 	
 	/**
@@ -840,6 +859,7 @@ public class PaperCalculator extends ModelBase {
 	public void setRunToFinishGrain(String newVal) {
     this.runToFinishGrain = newVal;
   }
+	
  	
 	
 	/**
@@ -862,6 +882,7 @@ public class PaperCalculator extends ModelBase {
 	public void setPrintParentToFinishSection(Boolean newVal) {
     this.printParentToFinishSection = newVal;
   }
+	
  	
 	
 	/**
@@ -884,6 +905,7 @@ public class PaperCalculator extends ModelBase {
 	public void setPrintParentToRunSection(Boolean newVal) {
     this.printParentToRunSection = newVal;
   }
+	
  	
 	
 	/**
@@ -906,6 +928,7 @@ public class PaperCalculator extends ModelBase {
 	public void setAttachToJobTicket(Boolean newVal) {
     this.attachToJobTicket = newVal;
   }
+	
  	
 	
 	/**
@@ -928,13 +951,13 @@ public class PaperCalculator extends ModelBase {
 	public void setPrintRunToFinishSection(Boolean newVal) {
     this.printRunToFinishSection = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne()
-	@Basic
+    @ManyToOne()
 	private Dimension parentSize;
 	
 	/**
@@ -946,18 +969,18 @@ public class PaperCalculator extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setParentSize(Dimension newVal) {
+	 * @generated
+	 */	
+	public void setParentSize(Dimension newVal) {
     this.parentSize = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne()
-	@Basic
+    @ManyToOne()
 	private Dimension finishSize;
 	
 	/**
@@ -969,13 +992,14 @@ public class PaperCalculator extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setFinishSize(Dimension newVal) {
+	 * @generated
+	 */	
+	public void setFinishSize(Dimension newVal) {
     this.finishSize = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -996,13 +1020,13 @@ public class PaperCalculator extends ModelBase {
 	public void setUseGripEdgeGap(Boolean newVal) {
     this.useGripEdgeGap = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne()
-	@Basic
+    @ManyToOne()
 	private Dimension runSize;
 	
 	/**
@@ -1014,13 +1038,14 @@ public class PaperCalculator extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRunSize(Dimension newVal) {
+	 * @generated
+	 */	
+	public void setRunSize(Dimension newVal) {
     this.runSize = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1041,6 +1066,7 @@ public class PaperCalculator extends ModelBase {
 	public void setGripLocation(String newVal) {
     this.gripLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -1063,6 +1089,7 @@ public class PaperCalculator extends ModelBase {
 	public void setCutstoFinish(Integer newVal) {
     this.cutstoFinish = newVal;
   }
+	
  	
 	
 	/**
@@ -1085,6 +1112,7 @@ public class PaperCalculator extends ModelBase {
 	public void setSheetsOut(Integer newVal) {
     this.sheetsOut = newVal;
   }
+	
  	
 	
 	/**
@@ -1107,6 +1135,7 @@ public class PaperCalculator extends ModelBase {
 	public void setFolioLocation(String newVal) {
     this.folioLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -1129,6 +1158,7 @@ public class PaperCalculator extends ModelBase {
 	public void setCutstoRun(Integer newVal) {
     this.cutstoRun = newVal;
   }
+	
  	
 	
 	/**
@@ -1151,6 +1181,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDisableFSC(Boolean newVal) {
     this.disableFSC = newVal;
   }
+	
  	
 	
 	/**
@@ -1173,6 +1204,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDown(Integer newVal) {
     this.down = newVal;
   }
+	
  	
 	
 	/**
@@ -1195,6 +1227,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDAcross(Integer newVal) {
     this.dAcross = newVal;
   }
+	
  	
 	
 	/**
@@ -1217,6 +1250,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDDown(Integer newVal) {
     this.dDown = newVal;
   }
+	
  	
 	
 	/**
@@ -1239,6 +1273,7 @@ public class PaperCalculator extends ModelBase {
 	public void setDutchBottom(Integer newVal) {
     this.dutchBottom = newVal;
   }
+	
  	
 	
 	/**
@@ -1261,6 +1296,7 @@ public class PaperCalculator extends ModelBase {
 	public void setParentSqrArea(Double newVal) {
     this.parentSqrArea = newVal;
   }
+	
  	
 	
 	/**
@@ -1283,162 +1319,168 @@ public class PaperCalculator extends ModelBase {
 	public void setUsedSqrArea(Double newVal) {
     this.usedSqrArea = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double rMargin;
-
+	private Double rMargin;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getRMargin(){
+	public Double getRMargin(){
     return rMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setRMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setRMargin(Double newVal) {
     this.rMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double bMargin;
-
+	private Double bMargin;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getBMargin(){
+	public Double getBMargin(){
     return bMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setBMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setBMargin(Double newVal) {
     this.bMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double tMargin;
-
+	private Double tMargin;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getTMargin(){
+	public Double getTMargin(){
     return tMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setTMargin(Double newVal) {
     this.tMargin = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double lMargin;
-
+	private Double lMargin;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getLMargin(){
+	public Double getLMargin(){
     return lMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setLMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setLMargin(Double newVal) {
     this.lMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean backTrimRun;
-
+	private Boolean backTrimRun;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getBackTrimRun(){
+	public Boolean getBackTrimRun(){
     return backTrimRun; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setBackTrimRun(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setBackTrimRun(Boolean newVal) {
     this.backTrimRun = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean swap;
-
+	private Boolean swap;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getSwap(){
+	public Boolean getSwap(){
     return swap; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSwap(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setSwap(Boolean newVal) {
     this.swap = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer runout;
-
+	private Integer runout;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getRunout(){
+	public Integer getRunout(){
     return runout; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setRunout(Integer newVal) {
+	 * @generated
+	 */	
+	public void setRunout(Integer newVal) {
     this.runout = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

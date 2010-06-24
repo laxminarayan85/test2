@@ -53,17 +53,14 @@ public class TaxElement extends ModelBase {
 	 * @generated
 	 */
 	public static final String USERFORSEPARATESHIPPINGTAX = "UserForSeparateShippingTax";
-
 	/**
    * @generated
    */
   public static final String TAX = "Tax";
-
 	/**
    * @generated
    */
   public static final String SEQUENCEID = "Sequenceid";
-
 	/**
 	 * @generated
 	 */
@@ -124,6 +121,7 @@ public class TaxElement extends ModelBase {
 	public void setShowTax(Boolean newVal) {
     this.showTax = newVal;
   }
+	
  	
 	
 	/**
@@ -146,12 +144,14 @@ public class TaxElement extends ModelBase {
 	public void setUserForSeparateShippingTax(Boolean newVal) {
     this.userForSeparateShippingTax = newVal;
   }
+	
+ 	
+	
 	/**
    * @generated
    */	
     @ManyToOne()
   private TaxTablesElements tax;
-
 	/**
    * @generated
  	 */
@@ -168,12 +168,12 @@ public class TaxElement extends ModelBase {
   }
 
 
+
 	/**
    * @generated
    */	
  	@Basic
   private Integer sequenceid;
-
 	/**
    * @generated
  	 */

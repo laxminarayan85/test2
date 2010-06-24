@@ -84,6 +84,7 @@ public class StockType extends ModelBase {
 	public void setSize(String newVal) {
     this.size = newVal;
   }
+	
  	
 	
 	/**
@@ -106,6 +107,7 @@ public class StockType extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -128,6 +130,7 @@ public class StockType extends ModelBase {
 	public void setViewableID(Integer newVal) {
     this.viewableID = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

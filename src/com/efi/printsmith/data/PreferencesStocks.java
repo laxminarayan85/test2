@@ -208,6 +208,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setWeight(String newVal) {
     this.weight = newVal;
   }
+	
  	
 	
 	/**
@@ -230,6 +231,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setPoints(String newVal) {
     this.points = newVal;
   }
+	
  	
 	
 	/**
@@ -252,6 +254,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setMicrons(String newVal) {
     this.microns = newVal;
   }
+	
  	
 	
 	/**
@@ -274,6 +277,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setPlies(String newVal) {
     this.plies = newVal;
   }
+	
  	
 	
 	/**
@@ -296,6 +300,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setMillimeters(String newVal) {
     this.millimeters = newVal;
   }
+	
  	
 	
 	/**
@@ -348,6 +353,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setCustomerQuantity(Integer newVal) {
     this.customerQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -370,6 +376,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setCustomerMarkup(Double newVal) {
     this.customerMarkup = newVal;
   }
+	
  	
 	
 	/**
@@ -392,6 +399,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setMarkupOnly(Boolean newVal) {
     this.markupOnly = newVal;
   }
+	
  	
 	
 	/**
@@ -414,6 +422,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty1(Integer newVal) {
     this.stdQty1 = newVal;
   }
+	
  	
 	
 	/**
@@ -436,6 +445,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty2(Integer newVal) {
     this.stdQty2 = newVal;
   }
+	
  	
 	
 	/**
@@ -458,6 +468,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty3(Integer newVal) {
     this.stdQty3 = newVal;
   }
+	
  	
 	
 	/**
@@ -480,6 +491,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty4(Integer newVal) {
     this.stdQty4 = newVal;
   }
+	
  	
 	
 	/**
@@ -502,6 +514,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty5(Integer newVal) {
     this.stdQty5 = newVal;
   }
+	
  	
 	
 	/**
@@ -524,6 +537,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdQty6(Integer newVal) {
     this.stdQty6 = newVal;
   }
+	
  	
 	
 	/**
@@ -546,6 +560,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup1(Double newVal) {
     this.stdMarkup1 = newVal;
   }
+	
  	
 	
 	/**
@@ -568,6 +583,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup2(Double newVal) {
     this.stdMarkup2 = newVal;
   }
+	
  	
 	
 	/**
@@ -590,6 +606,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup3(Double newVal) {
     this.stdMarkup3 = newVal;
   }
+	
  	
 	
 	/**
@@ -612,6 +629,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup4(Double newVal) {
     this.stdMarkup4 = newVal;
   }
+	
  	
 	
 	/**
@@ -634,6 +652,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup5(Double newVal) {
     this.stdMarkup5 = newVal;
   }
+	
  	
 	
 	/**
@@ -656,6 +675,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setStdMarkup6(Double newVal) {
     this.stdMarkup6 = newVal;
   }
+	
  	
 	
 	/**
@@ -678,6 +698,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty1(Integer newVal) {
     this.blankQty1 = newVal;
   }
+	
  	
 	
 	/**
@@ -700,6 +721,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty2(Integer newVal) {
     this.blankQty2 = newVal;
   }
+	
  	
 	
 	/**
@@ -722,6 +744,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty3(Integer newVal) {
     this.blankQty3 = newVal;
   }
+	
  	
 	
 	/**
@@ -744,6 +767,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty4(Integer newVal) {
     this.blankQty4 = newVal;
   }
+	
  	
 	
 	/**
@@ -766,6 +790,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty5(Integer newVal) {
     this.blankQty5 = newVal;
   }
+	
  	
 	
 	/**
@@ -788,6 +813,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankQty6(Integer newVal) {
     this.blankQty6 = newVal;
   }
+	
  	
 	
 	/**
@@ -810,6 +836,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup1(Double newVal) {
     this.blankMarkup1 = newVal;
   }
+	
  	
 	
 	/**
@@ -832,6 +859,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup2(Double newVal) {
     this.blankMarkup2 = newVal;
   }
+	
  	
 	
 	/**
@@ -854,6 +882,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup3(Double newVal) {
     this.blankMarkup3 = newVal;
   }
+	
  	
 	
 	/**
@@ -876,6 +905,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup4(Double newVal) {
     this.blankMarkup4 = newVal;
   }
+	
  	
 	
 	/**
@@ -898,6 +928,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup5(Double newVal) {
     this.blankMarkup5 = newVal;
   }
+	
  	
 	
 	/**
@@ -920,6 +951,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setBlankMarkup6(Double newVal) {
     this.blankMarkup6 = newVal;
   }
+	
  	
 	
 	/**
@@ -942,6 +974,7 @@ public class PreferencesStocks extends ModelBase {
 	public void setSizeTable(SizeTable newVal) {
     this.sizeTable = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

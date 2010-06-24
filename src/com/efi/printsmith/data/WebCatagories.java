@@ -88,6 +88,7 @@ public class WebCatagories extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class WebCatagories extends ModelBase {
 	public void setImage(WebGraphics newVal) {
     this.image = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class WebCatagories extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -164,6 +167,7 @@ public class WebCatagories extends ModelBase {
 	public void setChildren(java.util.List<WebSubCatagories> newVal) {
     this.children = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

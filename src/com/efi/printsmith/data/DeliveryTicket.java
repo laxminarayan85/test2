@@ -248,6 +248,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -270,6 +271,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setTicketNumber(Integer newVal) {
     this.ticketNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -292,6 +294,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setToAddress(Address newVal) {
     this.toAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -314,6 +317,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setFromAddress(Address newVal) {
     this.fromAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -336,6 +340,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setToAddressID(Long newVal) {
     this.toAddressID = newVal;
   }
+	
  	
 	
 	/**
@@ -358,6 +363,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setFromAddressID(Long newVal) {
     this.fromAddressID = newVal;
   }
+	
  	
 	
 	/**
@@ -380,6 +386,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDeliveryContact(Contact newVal) {
     this.deliveryContact = newVal;
   }
+	
  	
 	
 	/**
@@ -402,6 +409,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setTakenBy(String newVal) {
     this.takenBy = newVal;
   }
+	
  	
 	
 	/**
@@ -424,6 +432,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDeliveryDate(Date newVal) {
     this.deliveryDate = newVal;
   }
+	
  	
 	
 	/**
@@ -446,6 +455,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setCustomerPO(String newVal) {
     this.customerPO = newVal;
   }
+	
  	
 	
 	/**
@@ -468,6 +478,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setOrderNumber(Integer newVal) {
     this.orderNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -490,6 +501,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setTrackingNumber(String newVal) {
     this.trackingNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -512,6 +524,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setPartNumber(String newVal) {
     this.partNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -534,6 +547,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setReference(String newVal) {
     this.reference = newVal;
   }
+	
  	
 	
 	/**
@@ -556,6 +570,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setShipMode(ShippingMethod newVal) {
     this.shipMode = newVal;
   }
+	
  	
 	
 	/**
@@ -608,6 +623,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setTotalWeight(Float newVal) {
     this.totalWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -630,6 +646,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setCartonCount(Integer newVal) {
     this.cartonCount = newVal;
   }
+	
  	
 	
 	/**
@@ -652,6 +669,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setItemsPerCarton(Integer newVal) {
     this.itemsPerCarton = newVal;
   }
+	
  	
 	
 	/**
@@ -674,6 +692,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setTotalItemsInCarton(Integer newVal) {
     this.totalItemsInCarton = newVal;
   }
+	
  	
 	
 	/**
@@ -696,6 +715,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setLabelSkipCount(Integer newVal) {
     this.labelSkipCount = newVal;
   }
+	
  	
 	
 	/**
@@ -718,6 +738,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setPreComment(String newVal) {
     this.preComment = newVal;
   }
+	
  	
 	
 	/**
@@ -740,6 +761,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setPostComment(String newVal) {
     this.postComment = newVal;
   }
+	
  	
 	
 	/**
@@ -762,6 +784,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setLabelStartCount(Integer newVal) {
     this.labelStartCount = newVal;
   }
+	
  	
 	
 	/**
@@ -784,6 +807,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDriver(Driver newVal) {
     this.driver = newVal;
   }
+	
  	
 	
 	/**
@@ -806,6 +830,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setWebOrderShippingID(Long newVal) {
     this.webOrderShippingID = newVal;
   }
+	
  	
 	
 	/**
@@ -828,6 +853,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setFromOther(Boolean newVal) {
     this.fromOther = newVal;
   }
+	
  	
 	
 	/**
@@ -850,6 +876,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setToOther(Boolean newVal) {
     this.toOther = newVal;
   }
+	
  	
 	
 	/**
@@ -872,6 +899,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setAttOther(Boolean newVal) {
     this.attOther = newVal;
   }
+	
  	
 	
 	/**
@@ -894,6 +922,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setOWeight(Boolean newVal) {
     this.oWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -916,6 +945,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setCod(Boolean newVal) {
     this.cod = newVal;
   }
+	
  	
 	
 	/**
@@ -938,6 +968,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setEmailOther(Boolean newVal) {
     this.emailOther = newVal;
   }
+	
  	
 	
 	/**
@@ -960,6 +991,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setEmail(String newVal) {
     this.email = newVal;
   }
+	
  	
 	
 	/**
@@ -982,6 +1014,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setArchive(Boolean newVal) {
     this.archive = newVal;
   }
+	
  	
 	
 	/**
@@ -1004,6 +1037,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setAttNameCheck(Boolean newVal) {
     this.attNameCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1026,6 +1060,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setCustomerNameCheck(Boolean newVal) {
     this.customerNameCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1048,6 +1083,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setAddressCheck(Boolean newVal) {
     this.addressCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1070,6 +1106,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setOrderNumberCheck(Boolean newVal) {
     this.orderNumberCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1092,6 +1129,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDeliveryDescCheck(Boolean newVal) {
     this.deliveryDescCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1114,6 +1152,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDeliveryCommentsCheck(Boolean newVal) {
     this.deliveryCommentsCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1136,6 +1175,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setPoNumberCheck(Boolean newVal) {
     this.poNumberCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1158,6 +1198,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setEstWeightCheck(Boolean newVal) {
     this.estWeightCheck = newVal;
   }
+	
  	
 	
 	/**
@@ -1180,6 +1221,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDateType(String newVal) {
     this.dateType = newVal;
   }
+	
  	
 	
 	/**
@@ -1212,6 +1254,7 @@ public class DeliveryTicket extends ModelBase {
 	public void setDeliveryJobs(java.util.List<DeliveryTicketJobs> newVal) {
     this.deliveryJobs = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

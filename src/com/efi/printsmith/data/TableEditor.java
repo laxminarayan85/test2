@@ -80,6 +80,7 @@ public class TableEditor extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class TableEditor extends ModelBase {
 	public void setUserName(String newVal) {
     this.userName = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

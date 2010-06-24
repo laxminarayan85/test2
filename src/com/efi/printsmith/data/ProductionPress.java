@@ -80,6 +80,7 @@ public class ProductionPress extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class ProductionPress extends ModelBase {
 	public void setKey(String newVal) {
     this.key = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

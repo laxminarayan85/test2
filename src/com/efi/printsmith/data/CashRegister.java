@@ -140,6 +140,7 @@ public class CashRegister extends ModelBase {
 	public void setCustomerAccount(Account newVal) {
     this.customerAccount = newVal;
   }
+	
  	
 	
 	/**
@@ -162,6 +163,7 @@ public class CashRegister extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
  	
 	
 	/**
@@ -184,6 +186,7 @@ public class CashRegister extends ModelBase {
 	public void setTaxCode(TaxCodes newVal) {
     this.taxCode = newVal;
   }
+	
  	
 	
 	/**
@@ -206,6 +209,7 @@ public class CashRegister extends ModelBase {
 	public void setQuantity(Double newVal) {
     this.quantity = newVal;
   }
+	
  	
 	
 	/**
@@ -288,6 +292,7 @@ public class CashRegister extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -310,6 +315,7 @@ public class CashRegister extends ModelBase {
 	public void setInvoiceFormat(String newVal) {
     this.invoiceFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -332,6 +338,7 @@ public class CashRegister extends ModelBase {
 	public void setPaymentMethod(String newVal) {
     this.paymentMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -414,6 +421,7 @@ public class CashRegister extends ModelBase {
 	public void setTendered(Double newVal) {
     this.tendered = newVal;
   }
+	
  	
 	
 	/**
@@ -436,6 +444,7 @@ public class CashRegister extends ModelBase {
 	public void setChange(Double newVal) {
     this.change = newVal;
   }
+	
  	
 	
 	/**
@@ -458,6 +467,7 @@ public class CashRegister extends ModelBase {
 	public void setCreditCard(PreferencesCreditCard newVal) {
     this.creditCard = newVal;
   }
+	
  	
 	
 	/**
@@ -480,6 +490,7 @@ public class CashRegister extends ModelBase {
 	public void setRefNumber(String newVal) {
     this.refNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -532,6 +543,7 @@ public class CashRegister extends ModelBase {
 	public void setCheckNumber(String newVal) {
     this.checkNumber = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -76,6 +76,7 @@ public class DataManager extends ModelBase {
 	public void setDataloaded(Boolean newVal) {
     this.dataloaded = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

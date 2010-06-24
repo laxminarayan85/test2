@@ -85,11 +85,10 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public static final String MANUALNONINVOICEITEM = "ManualNonInvoiceItem";
-
 	/**
-   * @generated
-   */
-  public static final String PARENTDELIVERYTICKET = "ParentDeliveryTicket";
+	 * @generated
+	 */
+	public static final String PARENTDELIVERYTICKET = "ParentDeliveryTicket";
 
 	/**
 	 * @generated
@@ -121,6 +120,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setAccount(Account newVal) {
     this.account = newVal;
   }
+	
  	
 	
 	/**
@@ -143,6 +143,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setOrderNumber(Integer newVal) {
     this.orderNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -165,6 +166,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setDocumentType(String newVal) {
     this.documentType = newVal;
   }
+	
  	
 	
 	/**
@@ -187,6 +189,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -209,6 +212,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setJobNumber(Long newVal) {
     this.jobNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -231,6 +235,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setLineNumber(Integer newVal) {
     this.lineNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -253,6 +258,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setQtyOrder(Integer newVal) {
     this.qtyOrder = newVal;
   }
+	
  	
 	
 	/**
@@ -275,6 +281,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setQtyShipped(Integer newVal) {
     this.qtyShipped = newVal;
   }
+	
  	
 	
 	/**
@@ -297,6 +304,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setWeight(Double newVal) {
     this.weight = newVal;
   }
+	
  	
 	
 	/**
@@ -319,6 +327,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setCompleted(Boolean newVal) {
     this.completed = newVal;
   }
+	
  	
 	
 	/**
@@ -341,28 +350,30 @@ public class DeliveryTicketJobs extends ModelBase {
 	public void setManualNonInvoiceItem(Boolean newVal) {
     this.manualNonInvoiceItem = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private DeliveryTicket parentDeliveryTicket;
-
+	private DeliveryTicket parentDeliveryTicket;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public DeliveryTicket getParentDeliveryTicket(){
+	public DeliveryTicket getParentDeliveryTicket(){
     return parentDeliveryTicket; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setParentDeliveryTicket(DeliveryTicket newVal) {
+	 * @generated
+	 */	
+	public void setParentDeliveryTicket(DeliveryTicket newVal) {
     this.parentDeliveryTicket = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

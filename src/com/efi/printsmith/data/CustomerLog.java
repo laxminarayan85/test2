@@ -76,6 +76,7 @@ public class CustomerLog extends ModelBase {
 	public void setLogEntry(String newVal) {
     this.logEntry = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

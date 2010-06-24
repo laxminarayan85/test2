@@ -104,6 +104,7 @@ public class Party extends ModelBase {
 	public void setPrefix(String newVal) {
     this.prefix = newVal;
   }
+	
  	
 	
 	/**
@@ -126,6 +127,7 @@ public class Party extends ModelBase {
 	public void setSuffix(String newVal) {
     this.suffix = newVal;
   }
+	
  	
 	
 	/**
@@ -148,6 +150,7 @@ public class Party extends ModelBase {
 	public void setSalutation(String newVal) {
     this.salutation = newVal;
   }
+	
  	
 	
 	/**
@@ -170,6 +173,7 @@ public class Party extends ModelBase {
 	public void setJobTitle(String newVal) {
     this.jobTitle = newVal;
   }
+	
  	
 	
 	/**
@@ -192,6 +196,7 @@ public class Party extends ModelBase {
 	public void setAddress(Address newVal) {
     this.address = newVal;
   }
+	
  	
 	
 	/**
@@ -214,6 +219,7 @@ public class Party extends ModelBase {
 	public void setLastName(String newVal) {
     this.lastName = newVal;
   }
+	
  	
 	
 	/**
@@ -236,6 +242,7 @@ public class Party extends ModelBase {
 	public void setFirstName(String newVal) {
     this.firstName = newVal;
   }
+	
  	
 	
 	/**
@@ -268,6 +275,7 @@ public class Party extends ModelBase {
 	public void setComLinks(java.util.List<ComLink> newVal) {
     this.comLinks = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

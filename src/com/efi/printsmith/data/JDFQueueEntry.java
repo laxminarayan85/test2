@@ -57,23 +57,22 @@ public class JDFQueueEntry extends ModelBase {
 	 * @generated
 	 */
 	public static final String STATUS = "Status";
-
 	/**
-   * @generated
-   */
-  public static final String URL = "Url";
+	 * @generated
+	 */
+	public static final String URL = "Url";
 	/**
-   * @generated
-   */
-  public static final String JOBID = "Jobid";
+	 * @generated
+	 */
+	public static final String JOBID = "Jobid";
 	/**
-   * @generated
-   */
-  public static final String DEVICEID = "DeviceId";
+	 * @generated
+	 */
+	public static final String DEVICEID = "DeviceId";
 	/**
-   * @generated
-   */
-  public static final String MSGTYPE = "MsgType";
+	 * @generated
+	 */
+	public static final String MSGTYPE = "MsgType";
 
 	/**
 	 * @generated
@@ -105,6 +104,7 @@ public class JDFQueueEntry extends ModelBase {
 	public void setMessage(String newVal) {
     this.message = newVal;
   }
+	
  	
 	
 	/**
@@ -127,6 +127,7 @@ public class JDFQueueEntry extends ModelBase {
 	public void setResponse(String newVal) {
     this.response = newVal;
   }
+	
  	
 	
 	/**
@@ -149,6 +150,7 @@ public class JDFQueueEntry extends ModelBase {
 	public void setSent(Date newVal) {
     this.sent = newVal;
   }
+	
  	
 	
 	/**
@@ -171,97 +173,99 @@ public class JDFQueueEntry extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String url;
-
+	private String url;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getUrl(){
+	public String getUrl(){
     return url; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setUrl(String newVal) {
+	 * @generated
+	 */	
+	public void setUrl(String newVal) {
     this.url = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Long jobid;
-
+	private Long jobid;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Long getJobid(){
+	public Long getJobid(){
     return jobid; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setJobid(Long newVal) {
+	 * @generated
+	 */	
+	public void setJobid(Long newVal) {
     this.jobid = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String deviceId;
-
+	private String deviceId;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getDeviceId(){
+	public String getDeviceId(){
     return deviceId; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setDeviceId(String newVal) {
+	 * @generated
+	 */	
+	public void setDeviceId(String newVal) {
     this.deviceId = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String msgType;
-
+	private String msgType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getMsgType(){
+	public String getMsgType(){
     return msgType; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMsgType(String newVal) {
+	 * @generated
+	 */	
+	public void setMsgType(String newVal) {
     this.msgType = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

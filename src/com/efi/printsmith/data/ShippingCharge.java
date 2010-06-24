@@ -84,6 +84,7 @@ public class ShippingCharge extends Charge {
 	public void setShipVia(String newVal) {
     this.shipVia = newVal;
   }
+	
  	
 	
 	/**
@@ -106,6 +107,7 @@ public class ShippingCharge extends Charge {
 	public void setShipTo(Address newVal) {
     this.shipTo = newVal;
   }
+	
  	
 	
 	/**
@@ -128,6 +130,7 @@ public class ShippingCharge extends Charge {
 	public void setTotalWeight(Double newVal) {
     this.totalWeight = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

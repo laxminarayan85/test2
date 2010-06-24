@@ -84,6 +84,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setQuantity(Integer newVal) {
     this.quantity = newVal;
   }
+	
  	
 	
 	/**
@@ -106,6 +107,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setQtyBreak(Boolean newVal) {
     this.qtyBreak = newVal;
   }
+	
  	
 	
 	/**
@@ -128,6 +130,7 @@ public class PreferencesQuantityBreaks extends ModelBase {
 	public void setJobMethod(JobMethod newVal) {
     this.jobMethod = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

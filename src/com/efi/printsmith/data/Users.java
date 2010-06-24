@@ -93,12 +93,10 @@ public class Users extends ModelBase {
 	 * @generated
 	 */
 	public static final String ACCESSGROUP = "AccessGroup";
-
 	/**
-   * @generated
-   */
-  public static final String DISABLEUSER = "DisableUser";
-
+	 * @generated
+	 */
+	public static final String DISABLEUSER = "DisableUser";
 	/**
    * @generated
    */
@@ -115,7 +113,6 @@ public class Users extends ModelBase {
    * @generated
    */
   public static final String PREVPASSWORD4 = "PrevPassword4";
-
 	/**
 	 * @generated
 	 */
@@ -146,6 +143,7 @@ public class Users extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -168,6 +166,7 @@ public class Users extends ModelBase {
 	public void setPassword(String newVal) {
     this.password = newVal;
   }
+	
  	
 	
 	/**
@@ -190,6 +189,7 @@ public class Users extends ModelBase {
 	public void setForcePasswordChange(Boolean newVal) {
     this.forcePasswordChange = newVal;
   }
+	
  	
 	
 	/**
@@ -212,6 +212,7 @@ public class Users extends ModelBase {
 	public void setRobustPassword(Boolean newVal) {
     this.robustPassword = newVal;
   }
+	
  	
 	
 	/**
@@ -234,6 +235,7 @@ public class Users extends ModelBase {
 	public void setNoOverride(Boolean newVal) {
     this.noOverride = newVal;
   }
+	
  	
 	
 	/**
@@ -256,6 +258,7 @@ public class Users extends ModelBase {
 	public void setOverrideCredit(Boolean newVal) {
     this.overrideCredit = newVal;
   }
+	
  	
 	
 	/**
@@ -278,6 +281,7 @@ public class Users extends ModelBase {
 	public void setLockSalesRep(Boolean newVal) {
     this.lockSalesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -300,6 +304,7 @@ public class Users extends ModelBase {
 	public void setRefundCreditCards(Boolean newVal) {
     this.refundCreditCards = newVal;
   }
+	
  	
 	
 	/**
@@ -322,6 +327,7 @@ public class Users extends ModelBase {
 	public void setNoCashReturn(Boolean newVal) {
     this.noCashReturn = newVal;
   }
+	
  	
 	
 	/**
@@ -344,6 +350,7 @@ public class Users extends ModelBase {
 	public void setShowUserNameLog(Boolean newVal) {
     this.showUserNameLog = newVal;
   }
+	
  	
 	
 	/**
@@ -366,6 +373,7 @@ public class Users extends ModelBase {
 	public void setQuickAccess(Boolean newVal) {
     this.quickAccess = newVal;
   }
+	
  	
 	
 	/**
@@ -388,6 +396,7 @@ public class Users extends ModelBase {
 	public void setAccessLevel(AccessLevel newVal) {
     this.accessLevel = newVal;
   }
+	
  	
 	
 	/**
@@ -410,34 +419,37 @@ public class Users extends ModelBase {
 	public void setAccessGroup(AccessGroup newVal) {
     this.accessGroup = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean disableUser;
-
+	private Boolean disableUser;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getDisableUser(){
+	public Boolean getDisableUser(){
     return disableUser; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setDisableUser(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setDisableUser(Boolean newVal) {
     this.disableUser = newVal;
   }
-
-
+	
+ 	
+	
 	/**
    * @generated
    */	
  	@Basic
   private String prevPassword1;
-
 	/**
    * @generated
  	 */
@@ -460,7 +472,6 @@ public class Users extends ModelBase {
    */	
  	@Basic
   private String prevPassword2;
-
 	/**
    * @generated
  	 */
@@ -483,7 +494,6 @@ public class Users extends ModelBase {
    */	
  	@Basic
   private String prevPassword3;
-
 	/**
    * @generated
  	 */
@@ -506,7 +516,6 @@ public class Users extends ModelBase {
    */	
  	@Basic
   private String prevPassword4;
-
 	/**
    * @generated
  	 */

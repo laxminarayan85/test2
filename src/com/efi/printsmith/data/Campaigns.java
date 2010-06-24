@@ -88,6 +88,7 @@ public class Campaigns extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class Campaigns extends ModelBase {
 	public void setApplied(Boolean newVal) {
     this.applied = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class Campaigns extends ModelBase {
 	public void setGlobalCampaign(Boolean newVal) {
     this.globalCampaign = newVal;
   }
+	
  	
 	
 	/**
@@ -154,6 +157,7 @@ public class Campaigns extends ModelBase {
 	public void setCampaignId(String newVal) {
     this.campaignId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

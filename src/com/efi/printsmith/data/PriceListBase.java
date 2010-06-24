@@ -120,6 +120,7 @@ public class PriceListBase extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -142,6 +143,7 @@ public class PriceListBase extends ModelBase {
 	public void setIgnorePriceAdjustments(Boolean newVal) {
     this.ignorePriceAdjustments = newVal;
   }
+	
  	
 	
 	/**
@@ -164,6 +166,7 @@ public class PriceListBase extends ModelBase {
 	public void setIsDiscount(Boolean newVal) {
     this.isDiscount = newVal;
   }
+	
  	
 	
 	/**
@@ -186,6 +189,7 @@ public class PriceListBase extends ModelBase {
 	public void setIsRate(Boolean newVal) {
     this.isRate = newVal;
   }
+	
  	
 	
 	/**
@@ -208,6 +212,7 @@ public class PriceListBase extends ModelBase {
 	public void setInterpolate(Boolean newVal) {
     this.interpolate = newVal;
   }
+	
  	
 	
 	/**
@@ -230,6 +235,7 @@ public class PriceListBase extends ModelBase {
 	public void setIsDollar(Boolean newVal) {
     this.isDollar = newVal;
   }
+	
  	
 	
 	/**
@@ -252,6 +258,7 @@ public class PriceListBase extends ModelBase {
 	public void setFillAllValues(Boolean newVal) {
     this.fillAllValues = newVal;
   }
+	
  	
 	
 	/**
@@ -274,6 +281,7 @@ public class PriceListBase extends ModelBase {
 	public void setSequence(Boolean newVal) {
     this.sequence = newVal;
   }
+	
  	
 	
 	/**
@@ -296,6 +304,7 @@ public class PriceListBase extends ModelBase {
 	public void setIsPercentage(Boolean newVal) {
     this.isPercentage = newVal;
   }
+	
  	
 	
 	/**
@@ -318,6 +327,7 @@ public class PriceListBase extends ModelBase {
 	public void setLastItemIsPriceAdditionalQty(Boolean newVal) {
     this.lastItemIsPriceAdditionalQty = newVal;
   }
+	
  	
 	
 	/**
@@ -350,6 +360,7 @@ public class PriceListBase extends ModelBase {
 	public void setElements(java.util.List<PriceListElement> newVal) {
     this.elements = newVal;
   }
+	
  	
 	
 	/**
@@ -372,6 +383,7 @@ public class PriceListBase extends ModelBase {
 	public void setPriceMethod(Integer newVal) {
     this.priceMethod = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

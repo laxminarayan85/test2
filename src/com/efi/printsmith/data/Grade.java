@@ -84,6 +84,7 @@ public class Grade extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -116,6 +117,7 @@ public class Grade extends ModelBase {
 	public void setCampaigns(java.util.List<Campaigns> newVal) {
     this.campaigns = newVal;
   }
+	
  	
 	
 	/**
@@ -138,6 +140,7 @@ public class Grade extends ModelBase {
 	public void setGradeId(String newVal) {
     this.gradeId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

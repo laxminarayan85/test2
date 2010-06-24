@@ -911,6 +911,8 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
+		
+	
 	public ChargeCommand getByChargeCommandName(String name) throws Exception {
 		log.debug("** getByChargeCommandName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1655,7 +1657,30 @@ public class DataService extends HibernateService {
 		}
 		return copierDefinition;
 	}
+	public TaxTable getTaxTable(Long id) throws Exception {
+		log.debug("** getTaxTable called.");
+		TaxTable taxTable = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("TaxTable.byId");
+			query.setParameter("id", id);
+			taxTable = (TaxTable) query.getSingleResult();
 
+			if (taxTable != null) {
+				for (int i = 0; i < taxTable.getTaxElements().size(); i++) {
+					TaxElement taxElement = taxTable.getTaxElements().get(i);
+					if (taxElement == null) {
+						log.error("null tax found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return taxTable;
+	}
 	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber,
 			String docType) throws Exception {
 		log.debug("** getInvoice called.");

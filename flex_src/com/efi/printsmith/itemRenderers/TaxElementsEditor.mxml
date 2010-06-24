@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox width="100" dataProvider="{TaxElementsArray}" 
+	text="{data.name}" labelField="name" selectedItem="{data.name}"
+	xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+ 	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	<mx:Script>
+	<![CDATA[
+	import com.efi.printsmith.data.TaxElement;
+	import com.efi.printsmith.data.TaxTablesElements;
+	
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.collections.ArrayCollection;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]
+	private var TaxElementsArray:ArrayCollection = new ArrayCollection();
+	
+	private function handleLoadResult(ev:ResultEvent):void {
+	     TaxElementsArray = ev.result as ArrayCollection;
+	}
+
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+	}
+	
+	public function init():void {
+		dataService.getAll("TaxTablesElements")	
+	}
+
+	]]>
+	</mx:Script>
+</mx:ComboBox>

@@ -92,6 +92,7 @@ public class SecuritySetup extends ModelBase {
 	public void setEnable(Boolean newVal) {
     this.enable = newVal;
   }
+	
  	
 	
 	/**
@@ -114,6 +115,7 @@ public class SecuritySetup extends ModelBase {
 	public void setMenu(String newVal) {
     this.menu = newVal;
   }
+	
  	
 	
 	/**
@@ -136,6 +138,7 @@ public class SecuritySetup extends ModelBase {
 	public void setCommandId(String newVal) {
     this.commandId = newVal;
   }
+	
  	
 	
 	/**
@@ -158,6 +161,7 @@ public class SecuritySetup extends ModelBase {
 	public void setCommandName(String newVal) {
     this.commandName = newVal;
   }
+	
  	
 	
 	/**
@@ -180,6 +184,7 @@ public class SecuritySetup extends ModelBase {
 	public void setAccessGroup(AccessGroup newVal) {
     this.accessGroup = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

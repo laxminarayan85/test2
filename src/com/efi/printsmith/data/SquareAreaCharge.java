@@ -80,6 +80,7 @@ public class SquareAreaCharge extends Charge {
 	public void setOverrideArea(Boolean newVal) {
     this.overrideArea = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class SquareAreaCharge extends Charge {
 	public void setArea(Double newVal) {
     this.area = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

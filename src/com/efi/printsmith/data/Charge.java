@@ -161,11 +161,10 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHARGECOSTINGRECORD = "ChargeCostingRecord";
-
 	/**
-   * @generated
-   */
-  public static final String NEXTRECORD = "NextRecord";
+	 * @generated
+	 */
+	public static final String NEXTRECORD = "NextRecord";
 
 	/**
 	 * @generated
@@ -197,6 +196,7 @@ public class Charge extends ModelBase {
 	public void setChargeDefinition(ChargeDefinition newVal) {
     this.chargeDefinition = newVal;
   }
+	
  	
 	
 	/**
@@ -219,6 +219,7 @@ public class Charge extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
+	
  	
 	
 	/**
@@ -241,6 +242,7 @@ public class Charge extends ModelBase {
 	public void setNotes(String newVal) {
     this.notes = newVal;
   }
+	
  	
 	
 	/**
@@ -263,6 +265,7 @@ public class Charge extends ModelBase {
 	public void setProductionLocation(Location newVal) {
     this.productionLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -285,6 +288,7 @@ public class Charge extends ModelBase {
 	public void setShowNotes(Boolean newVal) {
     this.showNotes = newVal;
   }
+	
  	
 	
 	/**
@@ -307,6 +311,7 @@ public class Charge extends ModelBase {
 	public void setFinished(Boolean newVal) {
     this.finished = newVal;
   }
+	
  	
 	
 	/**
@@ -329,6 +334,7 @@ public class Charge extends ModelBase {
 	public void setTaxable(Boolean newVal) {
     this.taxable = newVal;
   }
+	
  	
 	
 	/**
@@ -351,6 +357,7 @@ public class Charge extends ModelBase {
 	public void setBrokered(Boolean newVal) {
     this.brokered = newVal;
   }
+	
  	
 	
 	/**
@@ -373,6 +380,7 @@ public class Charge extends ModelBase {
 	public void setDisplayQty(Boolean newVal) {
     this.displayQty = newVal;
   }
+	
  	
 	
 	/**
@@ -395,6 +403,7 @@ public class Charge extends ModelBase {
 	public void setHidden(Boolean newVal) {
     this.hidden = newVal;
   }
+	
  	
 	
 	/**
@@ -417,6 +426,7 @@ public class Charge extends ModelBase {
 	public void setHidePrice(Boolean newVal) {
     this.hidePrice = newVal;
   }
+	
  	
 	
 	/**
@@ -469,6 +479,7 @@ public class Charge extends ModelBase {
 	public void setOverridePrice(Boolean newVal) {
     this.overridePrice = newVal;
   }
+	
  	
 	
 	/**
@@ -491,6 +502,7 @@ public class Charge extends ModelBase {
 	public void setQuantity(Double newVal) {
     this.quantity = newVal;
   }
+	
  	
 	
 	/**
@@ -513,6 +525,7 @@ public class Charge extends ModelBase {
 	public void setOverrideQuantity(Boolean newVal) {
     this.overrideQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -535,6 +548,7 @@ public class Charge extends ModelBase {
 	public void setMaterialQty(Double newVal) {
     this.materialQty = newVal;
   }
+	
  	
 	
 	/**
@@ -557,6 +571,7 @@ public class Charge extends ModelBase {
 	public void setOverrideMaterialQuantity(Boolean newVal) {
     this.overrideMaterialQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -609,6 +624,7 @@ public class Charge extends ModelBase {
 	public void setOverrideRate(Boolean newVal) {
     this.overrideRate = newVal;
   }
+	
  	
 	
 	/**
@@ -631,6 +647,7 @@ public class Charge extends ModelBase {
 	public void setUp(Integer newVal) {
     this.up = newVal;
   }
+	
  	
 	
 	/**
@@ -653,6 +670,7 @@ public class Charge extends ModelBase {
 	public void setOverrideUp(Boolean newVal) {
     this.overrideUp = newVal;
   }
+	
  	
 	
 	/**
@@ -675,6 +693,7 @@ public class Charge extends ModelBase {
 	public void setParentJob(JobBase newVal) {
     this.parentJob = newVal;
   }
+	
  	
 	
 	/**
@@ -697,6 +716,7 @@ public class Charge extends ModelBase {
 	public void setParentInvoice(Invoice newVal) {
     this.parentInvoice = newVal;
   }
+	
  	
 	
 	/**
@@ -749,6 +769,7 @@ public class Charge extends ModelBase {
 	public void setSets(Double newVal) {
     this.sets = newVal;
   }
+	
  	
 	
 	/**
@@ -771,6 +792,7 @@ public class Charge extends ModelBase {
 	public void setMaterialSets(Double newVal) {
     this.materialSets = newVal;
   }
+	
  	
 	
 	/**
@@ -793,6 +815,7 @@ public class Charge extends ModelBase {
 	public void setQtyPerSet(Double newVal) {
     this.qtyPerSet = newVal;
   }
+	
  	
 	
 	/**
@@ -815,6 +838,7 @@ public class Charge extends ModelBase {
 	public void setStartTime(Date newVal) {
     this.startTime = newVal;
   }
+	
  	
 	
 	/**
@@ -837,6 +861,7 @@ public class Charge extends ModelBase {
 	public void setEndTime(Date newVal) {
     this.endTime = newVal;
   }
+	
  	
 	
 	/**
@@ -859,28 +884,30 @@ public class Charge extends ModelBase {
 	public void setChargeCostingRecord(ChargeCostingRecord newVal) {
     this.chargeCostingRecord = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String nextRecord;
-
+	private String nextRecord;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getNextRecord(){
+	public String getNextRecord(){
     return nextRecord; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setNextRecord(String newVal) {
+	 * @generated
+	 */	
+	public void setNextRecord(String newVal) {
     this.nextRecord = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

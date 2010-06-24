@@ -104,6 +104,7 @@ public class Address extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -126,6 +127,7 @@ public class Address extends ModelBase {
 	public void setStreet1(String newVal) {
     this.street1 = newVal;
   }
+	
  	
 	
 	/**
@@ -148,6 +150,7 @@ public class Address extends ModelBase {
 	public void setStreet2(String newVal) {
     this.street2 = newVal;
   }
+	
  	
 	
 	/**
@@ -170,6 +173,7 @@ public class Address extends ModelBase {
 	public void setCity(String newVal) {
     this.city = newVal;
   }
+	
  	
 	
 	/**
@@ -192,6 +196,7 @@ public class Address extends ModelBase {
 	public void setState(String newVal) {
     this.state = newVal;
   }
+	
  	
 	
 	/**
@@ -214,6 +219,7 @@ public class Address extends ModelBase {
 	public void setZip(String newVal) {
     this.zip = newVal;
   }
+	
  	
 	
 	/**
@@ -236,6 +242,7 @@ public class Address extends ModelBase {
 	public void setCountry(String newVal) {
     this.country = newVal;
   }
+	
  	
 	
 	/**
@@ -258,6 +265,7 @@ public class Address extends ModelBase {
 	public void setZone(String newVal) {
     this.zone = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

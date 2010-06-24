@@ -63,7 +63,7 @@ public class ChargeCommand extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(  cascade = {CascadeType.ALL})
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "chargecommand_children")
 	private java.util.List<ChargeCategory> children;
 	
@@ -91,6 +91,7 @@ public class ChargeCommand extends ModelBase {
 	public void setChildren(java.util.List<ChargeCategory> newVal) {
     this.children = newVal;
   }
+	
  	
 	
 	/**
@@ -113,6 +114,7 @@ public class ChargeCommand extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

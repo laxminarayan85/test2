@@ -92,6 +92,7 @@ public class WebQuestions extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -114,6 +115,7 @@ public class WebQuestions extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -136,6 +138,7 @@ public class WebQuestions extends ModelBase {
 	public void setPrompt(String newVal) {
     this.prompt = newVal;
   }
+	
  	
 	
 	/**
@@ -158,6 +161,7 @@ public class WebQuestions extends ModelBase {
 	public void setQuestionType(String newVal) {
     this.questionType = newVal;
   }
+	
  	
 	
 	/**
@@ -190,6 +194,7 @@ public class WebQuestions extends ModelBase {
 	public void setChoices(java.util.List<WebChoices> newVal) {
     this.choices = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

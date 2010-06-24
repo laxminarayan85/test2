@@ -76,6 +76,7 @@ public class WebCompany extends ModelBase {
 	public void setName(Integer newVal) {
     this.name = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -76,6 +76,7 @@ public class InvoiceTemplate extends InvoiceBase {
 	public void setTemplateName(String newVal) {
     this.templateName = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

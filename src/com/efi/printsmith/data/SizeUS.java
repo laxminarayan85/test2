@@ -80,6 +80,7 @@ public class SizeUS extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class SizeUS extends ModelBase {
 	public void setSize(String newVal) {
     this.size = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

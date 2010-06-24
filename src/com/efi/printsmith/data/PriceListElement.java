@@ -88,6 +88,7 @@ public class PriceListElement extends ModelBase {
 	public void setQuantity(Long newVal) {
     this.quantity = newVal;
   }
+	
  	
 	
 	/**
@@ -140,6 +141,7 @@ public class PriceListElement extends ModelBase {
 	public void setSide(Integer newVal) {
     this.side = newVal;
   }
+	
  	
 	
 	/**
@@ -162,6 +164,7 @@ public class PriceListElement extends ModelBase {
 	public void setColor(Integer newVal) {
     this.color = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

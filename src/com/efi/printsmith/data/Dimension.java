@@ -88,6 +88,7 @@ public class Dimension extends ModelBase {
 	public void setType(String newVal) {
     this.type = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class Dimension extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class Dimension extends ModelBase {
 	public void setWidth(Float newVal) {
     this.width = newVal;
   }
+	
  	
 	
 	/**
@@ -154,6 +157,7 @@ public class Dimension extends ModelBase {
 	public void setHeight(Float newVal) {
     this.height = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

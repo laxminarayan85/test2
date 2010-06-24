@@ -164,6 +164,7 @@ public class Marketing extends ModelBase {
 	public void setMarketID(Integer newVal) {
     this.marketID = newVal;
   }
+	
  	
 	
 	/**
@@ -186,6 +187,7 @@ public class Marketing extends ModelBase {
 	public void setFollowup(Date newVal) {
     this.followup = newVal;
   }
+	
  	
 	
 	/**
@@ -208,6 +210,7 @@ public class Marketing extends ModelBase {
 	public void setBirthDate(Date newVal) {
     this.birthDate = newVal;
   }
+	
  	
 	
 	/**
@@ -230,6 +233,7 @@ public class Marketing extends ModelBase {
 	public void setUser3(Date newVal) {
     this.user3 = newVal;
   }
+	
  	
 	
 	/**
@@ -252,6 +256,7 @@ public class Marketing extends ModelBase {
 	public void setUser4(Date newVal) {
     this.user4 = newVal;
   }
+	
  	
 	
 	/**
@@ -274,6 +279,7 @@ public class Marketing extends ModelBase {
 	public void setUser5(Date newVal) {
     this.user5 = newVal;
   }
+	
  	
 	
 	/**
@@ -296,6 +302,7 @@ public class Marketing extends ModelBase {
 	public void setLeadSource(String newVal) {
     this.leadSource = newVal;
   }
+	
  	
 	
 	/**
@@ -318,6 +325,7 @@ public class Marketing extends ModelBase {
 	public void setLeadSource2(String newVal) {
     this.leadSource2 = newVal;
   }
+	
  	
 	
 	/**
@@ -340,6 +348,7 @@ public class Marketing extends ModelBase {
 	public void setCommonInterst(String newVal) {
     this.commonInterst = newVal;
   }
+	
  	
 	
 	/**
@@ -362,6 +371,7 @@ public class Marketing extends ModelBase {
 	public void setSportsInterst(String newVal) {
     this.sportsInterst = newVal;
   }
+	
  	
 	
 	/**
@@ -384,6 +394,7 @@ public class Marketing extends ModelBase {
 	public void setUser6(String newVal) {
     this.user6 = newVal;
   }
+	
  	
 	
 	/**
@@ -406,6 +417,7 @@ public class Marketing extends ModelBase {
 	public void setUser7(String newVal) {
     this.user7 = newVal;
   }
+	
  	
 	
 	/**
@@ -428,6 +440,7 @@ public class Marketing extends ModelBase {
 	public void setUser8(String newVal) {
     this.user8 = newVal;
   }
+	
  	
 	
 	/**
@@ -450,6 +463,7 @@ public class Marketing extends ModelBase {
 	public void setUser9(String newVal) {
     this.user9 = newVal;
   }
+	
  	
 	
 	/**
@@ -472,6 +486,7 @@ public class Marketing extends ModelBase {
 	public void setTypeWork(String newVal) {
     this.typeWork = newVal;
   }
+	
  	
 	
 	/**
@@ -494,6 +509,7 @@ public class Marketing extends ModelBase {
 	public void setMailerType(String newVal) {
     this.mailerType = newVal;
   }
+	
  	
 	
 	/**
@@ -516,6 +532,7 @@ public class Marketing extends ModelBase {
 	public void setCustomer(Boolean newVal) {
     this.customer = newVal;
   }
+	
  	
 	
 	/**
@@ -538,6 +555,7 @@ public class Marketing extends ModelBase {
 	public void setProspect(Boolean newVal) {
     this.prospect = newVal;
   }
+	
  	
 	
 	/**
@@ -560,6 +578,7 @@ public class Marketing extends ModelBase {
 	public void setNoMail(Boolean newVal) {
     this.noMail = newVal;
   }
+	
  	
 	
 	/**
@@ -582,6 +601,7 @@ public class Marketing extends ModelBase {
 	public void setPersonalAcct(Boolean newVal) {
     this.personalAcct = newVal;
   }
+	
  	
 	
 	/**
@@ -604,6 +624,7 @@ public class Marketing extends ModelBase {
 	public void setNumberofEmployees(Integer newVal) {
     this.numberofEmployees = newVal;
   }
+	
  	
 	
 	/**
@@ -626,6 +647,7 @@ public class Marketing extends ModelBase {
 	public void setAnnualRev(Integer newVal) {
     this.annualRev = newVal;
   }
+	
  	
 	
 	/**
@@ -634,7 +656,7 @@ public class Marketing extends ModelBase {
     @ManyToOne( cascade = {CascadeType.ALL})
 	private BusinessType businessType;
 	
-	/** 
+	/**
 	 * @generated
  	 */
 	public BusinessType getBusinessType(){
@@ -648,6 +670,7 @@ public class Marketing extends ModelBase {
 	public void setBusinessType(BusinessType newVal) {
     this.businessType = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

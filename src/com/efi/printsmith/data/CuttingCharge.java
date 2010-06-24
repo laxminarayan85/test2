@@ -76,6 +76,7 @@ public class CuttingCharge extends Charge {
 	public void setCuts(Integer newVal) {
     this.cuts = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -100,6 +100,7 @@ public class StockChanges extends ModelBase {
 	public void setStockChangeID(Long newVal) {
     this.stockChangeID = newVal;
   }
+	
  	
 	
 	/**
@@ -122,6 +123,7 @@ public class StockChanges extends ModelBase {
 	public void setPSUser(String newVal) {
     this.pSUser = newVal;
   }
+	
  	
 	
 	/**
@@ -144,6 +146,7 @@ public class StockChanges extends ModelBase {
 	public void setStockChangeDate(Date newVal) {
     this.stockChangeDate = newVal;
   }
+	
  	
 	
 	/**
@@ -166,6 +169,7 @@ public class StockChanges extends ModelBase {
 	public void setHowChanged(String newVal) {
     this.howChanged = newVal;
   }
+	
  	
 	
 	/**
@@ -188,6 +192,7 @@ public class StockChanges extends ModelBase {
 	public void setQuantity(Integer newVal) {
     this.quantity = newVal;
   }
+	
  	
 	
 	/**
@@ -210,6 +215,7 @@ public class StockChanges extends ModelBase {
 	public void setReference(String newVal) {
     this.reference = newVal;
   }
+	
  	
 	
 	/**
@@ -232,6 +238,7 @@ public class StockChanges extends ModelBase {
 	public void setStockDefinition(StockDefinition newVal) {
     this.stockDefinition = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

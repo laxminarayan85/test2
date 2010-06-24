@@ -92,6 +92,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	public void setDefaultBWCopier(CopierDefinition newVal) {
     this.defaultBWCopier = newVal;
   }
+	
  	
 	
 	/**
@@ -114,6 +115,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	public void setDefaultColorCopier(CopierDefinition newVal) {
     this.defaultColorCopier = newVal;
   }
+	
  	
 	
 	/**
@@ -136,6 +138,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	public void setDefaultLargeFormat(CopierDefinition newVal) {
     this.defaultLargeFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -158,6 +161,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	public void setDefaultRollFedPress(PressDefinition newVal) {
     this.defaultRollFedPress = newVal;
   }
+	
  	
 	
 	/**
@@ -180,6 +184,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	public void setDefaultSheetFedPress(PressDefinition newVal) {
     this.defaultSheetFedPress = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

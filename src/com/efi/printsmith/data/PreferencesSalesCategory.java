@@ -80,6 +80,7 @@ public class PreferencesSalesCategory extends ModelBase {
 	public void setCategory(SalesCategory newVal) {
     this.category = newVal;
   }
+	
  	
 	
 	/**
@@ -102,6 +103,7 @@ public class PreferencesSalesCategory extends ModelBase {
 	public void setAccountNumber(String newVal) {
     this.accountNumber = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

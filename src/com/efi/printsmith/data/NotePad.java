@@ -108,6 +108,7 @@ public class NotePad extends ModelBase {
 	public void setNotesWho(String newVal) {
     this.notesWho = newVal;
   }
+	
  	
 	
 	/**
@@ -130,6 +131,7 @@ public class NotePad extends ModelBase {
 	public void setPhoneNumber(String newVal) {
     this.phoneNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -152,6 +154,7 @@ public class NotePad extends ModelBase {
 	public void setNotesWhat(String newVal) {
     this.notesWhat = newVal;
   }
+	
  	
 	
 	/**
@@ -174,6 +177,7 @@ public class NotePad extends ModelBase {
 	public void setHowMany(String newVal) {
     this.howMany = newVal;
   }
+	
  	
 	
 	/**
@@ -196,6 +200,7 @@ public class NotePad extends ModelBase {
 	public void setWhatSize(String newVal) {
     this.whatSize = newVal;
   }
+	
  	
 	
 	/**
@@ -218,6 +223,7 @@ public class NotePad extends ModelBase {
 	public void setPaper(String newVal) {
     this.paper = newVal;
   }
+	
  	
 	
 	/**
@@ -240,6 +246,7 @@ public class NotePad extends ModelBase {
 	public void setNotes(String newVal) {
     this.notes = newVal;
   }
+	
  	
 	
 	/**
@@ -262,6 +269,7 @@ public class NotePad extends ModelBase {
 	public void setNotesWhen(String newVal) {
     this.notesWhen = newVal;
   }
+	
  	
 	
 	/**
@@ -284,6 +292,7 @@ public class NotePad extends ModelBase {
 	public void setShowOnOpen(Boolean newVal) {
     this.showOnOpen = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

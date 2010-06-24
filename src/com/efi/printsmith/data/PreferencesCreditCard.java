@@ -88,6 +88,7 @@ public class PreferencesCreditCard extends ModelBase {
 	public void setUsed(Boolean newVal) {
     this.used = newVal;
   }
+	
  	
 	
 	/**
@@ -110,6 +111,7 @@ public class PreferencesCreditCard extends ModelBase {
 	public void setCardType(String newVal) {
     this.cardType = newVal;
   }
+	
  	
 	
 	/**
@@ -132,6 +134,7 @@ public class PreferencesCreditCard extends ModelBase {
 	public void setAbbreviation(String newVal) {
     this.abbreviation = newVal;
   }
+	
  	
 	
 	/**
@@ -154,6 +157,7 @@ public class PreferencesCreditCard extends ModelBase {
 	public void setCode(String newVal) {
     this.code = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -236,6 +236,7 @@ public class Employee extends Party {
 	public void setSSN(String newVal) {
     this.sSN = newVal;
   }
+	
  	
 	
 	/**
@@ -258,6 +259,7 @@ public class Employee extends Party {
 	public void setExportCode(Integer newVal) {
     this.exportCode = newVal;
   }
+	
  	
 	
 	/**
@@ -280,6 +282,7 @@ public class Employee extends Party {
 	public void setClockIn(Boolean newVal) {
     this.clockIn = newVal;
   }
+	
  	
 	
 	/**
@@ -302,6 +305,7 @@ public class Employee extends Party {
 	public void setClockOut(Boolean newVal) {
     this.clockOut = newVal;
   }
+	
  	
 	
 	/**
@@ -324,6 +328,7 @@ public class Employee extends Party {
 	public void setClockBreak(Boolean newVal) {
     this.clockBreak = newVal;
   }
+	
  	
 	
 	/**
@@ -376,6 +381,7 @@ public class Employee extends Party {
 	public void setActive(Boolean newVal) {
     this.active = newVal;
   }
+	
  	
 	
 	/**
@@ -398,6 +404,7 @@ public class Employee extends Party {
 	public void setPinRequired(Boolean newVal) {
     this.pinRequired = newVal;
   }
+	
  	
 	
 	/**
@@ -420,6 +427,7 @@ public class Employee extends Party {
 	public void setPin(String newVal) {
     this.pin = newVal;
   }
+	
  	
 	
 	/**
@@ -442,6 +450,7 @@ public class Employee extends Party {
 	public void setAllowOverrideCost(Boolean newVal) {
     this.allowOverrideCost = newVal;
   }
+	
  	
 	
 	/**
@@ -464,6 +473,7 @@ public class Employee extends Party {
 	public void setCostingAmounts(Boolean newVal) {
     this.costingAmounts = newVal;
   }
+	
  	
 	
 	/**
@@ -486,6 +496,7 @@ public class Employee extends Party {
 	public void setHideNonReleaseProduction(Boolean newVal) {
     this.hideNonReleaseProduction = newVal;
   }
+	
  	
 	
 	/**
@@ -508,6 +519,7 @@ public class Employee extends Party {
 	public void setHideEstimateTimeTracker(Boolean newVal) {
     this.hideEstimateTimeTracker = newVal;
   }
+	
  	
 	
 	/**
@@ -530,6 +542,7 @@ public class Employee extends Party {
 	public void setProductionSettings(Boolean newVal) {
     this.productionSettings = newVal;
   }
+	
  	
 	
 	/**
@@ -552,6 +565,7 @@ public class Employee extends Party {
 	public void setTrackerNextLocation(Boolean newVal) {
     this.trackerNextLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -574,6 +588,7 @@ public class Employee extends Party {
 	public void setTrackerClockIn(Boolean newVal) {
     this.trackerClockIn = newVal;
   }
+	
  	
 	
 	/**
@@ -596,6 +611,7 @@ public class Employee extends Party {
 	public void setShowWorkCenter(Boolean newVal) {
     this.showWorkCenter = newVal;
   }
+	
  	
 	
 	/**
@@ -618,6 +634,7 @@ public class Employee extends Party {
 	public void setMagCardReader(Boolean newVal) {
     this.magCardReader = newVal;
   }
+	
  	
 	
 	/**
@@ -640,6 +657,7 @@ public class Employee extends Party {
 	public void setIncludeInvoice(Boolean newVal) {
     this.includeInvoice = newVal;
   }
+	
  	
 	
 	/**
@@ -662,6 +680,7 @@ public class Employee extends Party {
 	public void setIncludeEstimate(Boolean newVal) {
     this.includeEstimate = newVal;
   }
+	
  	
 	
 	/**
@@ -684,6 +703,7 @@ public class Employee extends Party {
 	public void setIncludeJobs(Boolean newVal) {
     this.includeJobs = newVal;
   }
+	
  	
 	
 	/**
@@ -706,6 +726,7 @@ public class Employee extends Party {
 	public void setIncludeJobCharges(Boolean newVal) {
     this.includeJobCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -728,6 +749,7 @@ public class Employee extends Party {
 	public void setIncludeInvoiceCharges(Boolean newVal) {
     this.includeInvoiceCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -750,6 +772,7 @@ public class Employee extends Party {
 	public void setAllPricingMethods(Boolean newVal) {
     this.allPricingMethods = newVal;
   }
+	
  	
 	
 	/**
@@ -772,6 +795,7 @@ public class Employee extends Party {
 	public void setAllPresses(Boolean newVal) {
     this.allPresses = newVal;
   }
+	
  	
 	
 	/**
@@ -794,6 +818,7 @@ public class Employee extends Party {
 	public void setAllCopiers(Boolean newVal) {
     this.allCopiers = newVal;
   }
+	
  	
 	
 	/**
@@ -816,6 +841,7 @@ public class Employee extends Party {
 	public void setAllChargeTypes(Boolean newVal) {
     this.allChargeTypes = newVal;
   }
+	
  	
 	
 	/**
@@ -838,6 +864,7 @@ public class Employee extends Party {
 	public void setOnlyShowProductionParents(Boolean newVal) {
     this.onlyShowProductionParents = newVal;
   }
+	
  	
 	
 	/**
@@ -870,6 +897,7 @@ public class Employee extends Party {
 	public void setEmployeePricings(java.util.List<PreferencesPricingMethod> newVal) {
     this.employeePricings = newVal;
   }
+	
  	
 	
 	/**
@@ -887,22 +915,22 @@ public class Employee extends Party {
   }
 
 	/**
-   * @generated
-   */	
-  public void addEmployeeCharges(ChargeCommand obj) {
+	 * @generated
+	 */	
+	public void addEmployeeCharges(ChargeCommand obj) {
     if (employeeCharges == null) {
       employeeCharges = new java.util.ArrayList<ChargeCommand>();
     }
     employeeCharges.add(obj);
   }
-
-
+	
 	/**
 	 * @generated
 	 */	
 	public void setEmployeeCharges(java.util.List<ChargeCommand> newVal) {
     this.employeeCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -920,22 +948,22 @@ public class Employee extends Party {
   }
 
 	/**
-   * @generated
-   */	
-  public void addEmployeePresses(ProductionPress obj) {
+	 * @generated
+	 */	
+	public void addEmployeePresses(ProductionPress obj) {
     if (employeePresses == null) {
       employeePresses = new java.util.ArrayList<ProductionPress>();
     }
     employeePresses.add(obj);
   }
-
-
+	
 	/**
 	 * @generated
 	 */	
 	public void setEmployeePresses(java.util.List<ProductionPress> newVal) {
     this.employeePresses = newVal;
   }
+	
  	
 	
 	/**
@@ -953,22 +981,22 @@ public class Employee extends Party {
   }
 
 	/**
-   * @generated
-   */	
-  public void addEmployeeCopiers(ProductionCopiers obj) {
+	 * @generated
+	 */	
+	public void addEmployeeCopiers(ProductionCopiers obj) {
     if (employeeCopiers == null) {
       employeeCopiers = new java.util.ArrayList<ProductionCopiers>();
     }
     employeeCopiers.add(obj);
   }
-
-
+	
 	/**
 	 * @generated
 	 */	
 	public void setEmployeeCopiers(java.util.List<ProductionCopiers> newVal) {
     this.employeeCopiers = newVal;
   }
+	
  	
 	
 	/**
@@ -991,6 +1019,7 @@ public class Employee extends Party {
 	public void setAnyPastDue(Boolean newVal) {
     this.anyPastDue = newVal;
   }
+	
  	
 	
 	/**
@@ -1013,6 +1042,7 @@ public class Employee extends Party {
 	public void setCustomerWant(String newVal) {
     this.customerWant = newVal;
   }
+	
  	
 	
 	/**
@@ -1045,6 +1075,7 @@ public class Employee extends Party {
 	public void setProductionParents(java.util.List<ProductionLocations> newVal) {
     this.productionParents = newVal;
   }
+	
  	
 	
 	/**
@@ -1067,6 +1098,7 @@ public class Employee extends Party {
 	public void setAutoHour(Integer newVal) {
     this.autoHour = newVal;
   }
+	
  	
 	
 	/**
@@ -1089,6 +1121,7 @@ public class Employee extends Party {
 	public void setAutoMin(Integer newVal) {
     this.autoMin = newVal;
   }
+	
  	
 	
 	/**
@@ -1111,6 +1144,7 @@ public class Employee extends Party {
 	public void setMessage(String newVal) {
     this.message = newVal;
   }
+	
  	
 	
 	/**
@@ -1133,6 +1167,7 @@ public class Employee extends Party {
 	public void setShowMessageClockout(Boolean newVal) {
     this.showMessageClockout = newVal;
   }
+	
  	
 	
 	/**
@@ -1155,6 +1190,7 @@ public class Employee extends Party {
 	public void setShowMessageClockin(Boolean newVal) {
     this.showMessageClockin = newVal;
   }
+	
  	
 	
 	/**
@@ -1177,6 +1213,7 @@ public class Employee extends Party {
 	public void setEmployeeId(String newVal) {
     this.employeeId = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

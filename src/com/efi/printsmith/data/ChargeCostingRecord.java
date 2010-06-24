@@ -116,6 +116,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setImpressions(Long newVal) {
     this.impressions = newVal;
   }
+	
  	
 	
 	/**
@@ -138,6 +139,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setTotalImpressions(Long newVal) {
     this.totalImpressions = newVal;
   }
+	
  	
 	
 	/**
@@ -160,6 +162,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setActualUnitCount(Double newVal) {
     this.actualUnitCount = newVal;
   }
+	
  	
 	
 	/**
@@ -182,6 +185,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setActualSpoilage(Double newVal) {
     this.actualSpoilage = newVal;
   }
+	
  	
 	
 	/**
@@ -234,6 +238,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setSetupTime(Double newVal) {
     this.setupTime = newVal;
   }
+	
  	
 	
 	/**
@@ -256,6 +261,7 @@ public class ChargeCostingRecord extends ModelBase {
 	public void setRunTime(Double newVal) {
     this.runTime = newVal;
   }
+	
  	
 	
 	/**

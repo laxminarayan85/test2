@@ -42,25 +42,26 @@ import org.hibernate.annotations.Type;
 @Table(name = "digitalasset")
 public class DigitalAsset extends ModelBase {
 	/**
-   * @generated
-   */
-  public static final String REPOSITORYPATH = "RepositoryPath";
+	 * @generated
+	 */
+	public static final String REPOSITORYPATH = "RepositoryPath";
 	/**
-   * @generated
-   */
-  public static final String JOB = "Job";
+	 * @generated
+	 */
+	public static final String JOB = "Job";
 	/**
-   * @generated
-   */
-  public static final String DATEADDED = "DateAdded";
+	 * @generated
+	 */
+	public static final String DATEADDED = "DateAdded";
 	/**
-   * @generated
-   */
-  public static final String ORIGINALFILENAME = "OriginalFilename";
+	 * @generated
+	 */
+	public static final String ORIGINALFILENAME = "OriginalFilename";
 	/**
-   * @generated
-   */
-  public static final String FILETYPE = "FileType";
+	 * @generated
+	 */
+	public static final String FILETYPE = "FileType";
+
 	/**
 	 * @generated
 	 */
@@ -72,120 +73,118 @@ public class DigitalAsset extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String repositoryPath;
-
+	private String repositoryPath;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getRepositoryPath(){
+	public String getRepositoryPath(){
     return repositoryPath; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setRepositoryPath(String newVal) {
+	 * @generated
+	 */	
+	public void setRepositoryPath(String newVal) {
     this.repositoryPath = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private Job job;
-
+	private Job job;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Job getJob(){
+	public Job getJob(){
     return job; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setJob(Job newVal) {
+	 * @generated
+	 */	
+	public void setJob(Job newVal) {
     this.job = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date dateAdded;
-
+	private Date dateAdded;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getDateAdded(){
+	public Date getDateAdded(){
     return dateAdded; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setDateAdded(Date newVal) {
+	 * @generated
+	 */	
+	public void setDateAdded(Date newVal) {
     this.dateAdded = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String originalFilename;
-
+	private String originalFilename;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getOriginalFilename(){
+	public String getOriginalFilename(){
     return originalFilename; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setOriginalFilename(String newVal) {
+	 * @generated
+	 */	
+	public void setOriginalFilename(String newVal) {
     this.originalFilename = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String fileType;
-
+	private String fileType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getFileType(){
+	public String getFileType(){
     return fileType; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setFileType(String newVal) {
+	 * @generated
+	 */	
+	public void setFileType(String newVal) {
     this.fileType = newVal;
   }
-
-
-
+	
 	/**
 	 * @generated
 	 */		

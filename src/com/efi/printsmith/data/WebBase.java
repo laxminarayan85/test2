@@ -126,9 +126,10 @@ public class WebBase extends ModelBase {
 	 */
 	public static final String REJECTSTATE = "RejectState";
 	/**
-   * @generated
-   */
-  public static final String WEBCOMPANYID = "WebCompanyID";
+	 * @generated
+	 */
+	public static final String WEBCOMPANYID = "WebCompanyID";
+
 	/**
 	 * @generated
 	 */
@@ -159,6 +160,7 @@ public class WebBase extends ModelBase {
 	public void setContactName(String newVal) {
     this.contactName = newVal;
   }
+	
  	
 	
 	/**
@@ -181,6 +183,7 @@ public class WebBase extends ModelBase {
 	public void setContactPhone(String newVal) {
     this.contactPhone = newVal;
   }
+	
  	
 	
 	/**
@@ -203,6 +206,7 @@ public class WebBase extends ModelBase {
 	public void setContactEmail(String newVal) {
     this.contactEmail = newVal;
   }
+	
  	
 	
 	/**
@@ -225,6 +229,7 @@ public class WebBase extends ModelBase {
 	public void setTransferMethod(Integer newVal) {
     this.transferMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -247,6 +252,7 @@ public class WebBase extends ModelBase {
 	public void setFtpUrl(String newVal) {
     this.ftpUrl = newVal;
   }
+	
  	
 	
 	/**
@@ -269,6 +275,7 @@ public class WebBase extends ModelBase {
 	public void setFtpUserName(String newVal) {
     this.ftpUserName = newVal;
   }
+	
  	
 	
 	/**
@@ -291,6 +298,7 @@ public class WebBase extends ModelBase {
 	public void setFtpPassword(String newVal) {
     this.ftpPassword = newVal;
   }
+	
  	
 	
 	/**
@@ -313,6 +321,7 @@ public class WebBase extends ModelBase {
 	public void setFtpMode(String newVal) {
     this.ftpMode = newVal;
   }
+	
  	
 	
 	/**
@@ -335,6 +344,7 @@ public class WebBase extends ModelBase {
 	public void setIgnoreLocalCurrencyFormat(Boolean newVal) {
     this.ignoreLocalCurrencyFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -357,6 +367,7 @@ public class WebBase extends ModelBase {
 	public void setRetryInterval(Integer newVal) {
     this.retryInterval = newVal;
   }
+	
  	
 	
 	/**
@@ -379,6 +390,7 @@ public class WebBase extends ModelBase {
 	public void setMaxRetries(Integer newVal) {
     this.maxRetries = newVal;
   }
+	
  	
 	
 	/**
@@ -401,6 +413,7 @@ public class WebBase extends ModelBase {
 	public void setTakenBy(String newVal) {
     this.takenBy = newVal;
   }
+	
  	
 	
 	/**
@@ -423,6 +436,7 @@ public class WebBase extends ModelBase {
 	public void setResponseDelay(Integer newVal) {
     this.responseDelay = newVal;
   }
+	
  	
 	
 	/**
@@ -445,6 +459,7 @@ public class WebBase extends ModelBase {
 	public void setComposerUrl(String newVal) {
     this.composerUrl = newVal;
   }
+	
  	
 	
 	/**
@@ -467,6 +482,7 @@ public class WebBase extends ModelBase {
 	public void setComposerDelay(Integer newVal) {
     this.composerDelay = newVal;
   }
+	
  	
 	
 	/**
@@ -489,6 +505,7 @@ public class WebBase extends ModelBase {
 	public void setAutoStartConnection(Boolean newVal) {
     this.autoStartConnection = newVal;
   }
+	
  	
 	
 	/**
@@ -511,6 +528,7 @@ public class WebBase extends ModelBase {
 	public void setHiddenBackgroundTask(Boolean newVal) {
     this.hiddenBackgroundTask = newVal;
   }
+	
  	
 	
 	/**
@@ -533,6 +551,7 @@ public class WebBase extends ModelBase {
 	public void setAutoOenWebConsole(Boolean newVal) {
     this.autoOenWebConsole = newVal;
   }
+	
  	
 	
 	/**
@@ -555,6 +574,7 @@ public class WebBase extends ModelBase {
 	public void setSendOutgoingDataImmediately(Boolean newVal) {
     this.sendOutgoingDataImmediately = newVal;
   }
+	
  	
 	
 	/**
@@ -577,6 +597,7 @@ public class WebBase extends ModelBase {
 	public void setReceiveState(String newVal) {
     this.receiveState = newVal;
   }
+	
  	
 	
 	/**
@@ -599,29 +620,30 @@ public class WebBase extends ModelBase {
 	public void setRejectState(String newVal) {
     this.rejectState = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private WebCompany webCompanyID;
+	private WebCompany webCompanyID;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public WebCompany getWebCompanyID(){
+	public WebCompany getWebCompanyID(){
     return webCompanyID; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setWebCompanyID(WebCompany newVal) {
+	 * @generated
+	 */	
+	public void setWebCompanyID(WebCompany newVal) {
     this.webCompanyID = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

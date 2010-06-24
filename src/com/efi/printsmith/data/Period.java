@@ -104,6 +104,7 @@ public class Period extends ModelBase {
 	public void setCustomtoDate(Date newVal) {
     this.customtoDate = newVal;
   }
+	
  	
 	
 	/**
@@ -126,6 +127,7 @@ public class Period extends ModelBase {
 	public void setCustomfromDate(Date newVal) {
     this.customfromDate = newVal;
   }
+	
  	
 	
 	/**
@@ -148,6 +150,7 @@ public class Period extends ModelBase {
 	public void setFromDate(Date newVal) {
     this.fromDate = newVal;
   }
+	
  	
 	
 	/**
@@ -170,6 +173,7 @@ public class Period extends ModelBase {
 	public void setToDate(Date newVal) {
     this.toDate = newVal;
   }
+	
  	
 	
 	/**
@@ -192,6 +196,7 @@ public class Period extends ModelBase {
 	public void setDay(String newVal) {
     this.day = newVal;
   }
+	
  	
 	
 	/**
@@ -214,6 +219,7 @@ public class Period extends ModelBase {
 	public void setType(String newVal) {
     this.type = newVal;
   }
+	
  	
 	
 	/**
@@ -236,6 +242,7 @@ public class Period extends ModelBase {
 	public void setPeriodNumber(Integer newVal) {
     this.periodNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -258,6 +265,7 @@ public class Period extends ModelBase {
 	public void setPeriodClosed(Boolean newVal) {
     this.periodClosed = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

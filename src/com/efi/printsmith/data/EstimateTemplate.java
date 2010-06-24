@@ -76,6 +76,7 @@ public class EstimateTemplate extends Estimate {
 	public void setTemplateName(String newVal) {
     this.templateName = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

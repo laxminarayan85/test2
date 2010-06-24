@@ -100,6 +100,7 @@ public class TimeCard extends ModelBase {
 	public void setPeriod(String newVal) {
     this.period = newVal;
   }
+	
  	
 	
 	/**
@@ -122,6 +123,7 @@ public class TimeCard extends ModelBase {
 	public void setStartDateTime(Date newVal) {
     this.startDateTime = newVal;
   }
+	
  	
 	
 	/**
@@ -144,6 +146,7 @@ public class TimeCard extends ModelBase {
 	public void setEndDateTime(Date newVal) {
     this.endDateTime = newVal;
   }
+	
  	
 	
 	/**
@@ -166,6 +169,7 @@ public class TimeCard extends ModelBase {
 	public void setBillable(String newVal) {
     this.billable = newVal;
   }
+	
  	
 	
 	/**
@@ -188,6 +192,7 @@ public class TimeCard extends ModelBase {
 	public void setOnClock(Integer newVal) {
     this.onClock = newVal;
   }
+	
  	
 	
 	/**
@@ -210,6 +215,7 @@ public class TimeCard extends ModelBase {
 	public void setBreakTime(Date newVal) {
     this.breakTime = newVal;
   }
+	
  	
 	
 	/**
@@ -232,6 +238,7 @@ public class TimeCard extends ModelBase {
 	public void setEmployee(Employee newVal) {
     this.employee = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		
