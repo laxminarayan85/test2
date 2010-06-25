@@ -1828,85 +1828,85 @@
 
 // Data Save Handlers
 	private function handleSaveIntegrationResult(ev:ResultEvent):void {
-		dataServiceSystem.getAll("PreferencesIntegration");
+		//dataServiceSystem.getAll("PreferencesIntegration");
 	}
 	private function handleSaveSystemResult(ev:ResultEvent):void {
-    	dataServiceSystem.getAll("PreferencesSystem");
+    	//dataServiceSystem.getAll("PreferencesSystem");
 	}
 	private function handleSavePOSResult(ev:ResultEvent):void {
-    	dataServicePOS.getAll("PreferencesPOS");
+    	//dataServicePOS.getAll("PreferencesPOS");
 	}
 	private function handleSaveEstimatorResult(ev:ResultEvent):void {
-    	dataServiceEstimator.getAll("preferencesEstimating");
+    	//dataServiceEstimator.getAll("preferencesEstimating");
 	}
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
-    	dataServiceAccounting.getAll("PreferencesAccounting");
+    	//dataServiceAccounting.getAll("PreferencesAccounting");
 	}
 	private function handleSaveCountryResult(ev:ResultEvent):void {
-    	dataServiceCountry.getAll("Country");
-		country = ev.result as Country;
+    	/* dataServiceCountry.getAll("Country");
+		country = ev.result as Country; */
 	}
 	private function handleSaveCashRegisterResult(ev:ResultEvent):void {
-    	dataServiceCashRegister.getAll("PreferencesCashRegister");
+    	//dataServiceCashRegister.getAll("PreferencesCashRegister");
 	}
 	private function handleSaveCreditCardResult(ev:ResultEvent):void {
-    	dataServiceCreditCard.getAll("PreferencesCreditCard");
+    	//dataServiceCreditCard.getAll("PreferencesCreditCard");
 	}
 	private function handleSaveMarkupsResult(ev:ResultEvent):void {
-    	dataServiceMarkups.getAll("OutsideServices");
+    	//dataServiceMarkups.getAll("OutsideServices");
 	}
 	private function handleSaveMarkupsMerchandiseResult(ev:ResultEvent):void {
-    	dataServiceMarkupsMerchandise.getAll("Merchandise");
+    	//dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	private function handleSavePendingListResult(ev:ResultEvent):void {
-    	dataServicePendingList.getAll("PreferencesPendingList");
+    	//dataServicePendingList.getAll("PreferencesPendingList");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+    	//dataServicePricingMethod.getAll("PreferencesPricingMethod");
 	}
 	private function handleSaveQuantityBreaksResult(ev:ResultEvent):void {
-    	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+    	//dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 	}
 	private function handleSaveSalesCategoryResult(ev:ResultEvent):void {
-    	dataServiceSalesCategory.getAll("SalesCategory");
+    	//dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
-    	dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+    	//dataServiceStockDefinition.getAll("PreferencesStockDefinition");
 	}
 	private function handleSaveStocksResult(ev:ResultEvent):void {
-    	dataServiceStocks.getAll("PreferencesStocks");
+    	//dataServiceStocks.getAll("PreferencesStocks");
 	}
 	private function handleSaveColumnNamesResult(ev:ResultEvent):void {
-    	dataServiceColumnNames.getAll("ColumnNames");
+    	//dataServiceColumnNames.getAll("ColumnNames");
 	}
 	private function handleSaveSizeTableResult(ev:ResultEvent):void {
-    	dataServiceSizeTable.getAll("SizeTable");
+    	//dataServiceSizeTable.getAll("SizeTable");
 	}
 	private function handleSaveCategoryResult(ev:ResultEvent):void {
-    	dataServiceCategory.getAll("SalesCategory");
+    	//dataServiceCategory.getAll("SalesCategory");
 	}
 
 	private function handleDeleteCashRegisterResult(ev:ResultEvent):void {
-    	dataServiceCashRegister.getAll("PreferencesCashRegister");
+    	//dataServiceCashRegister.getAll("PreferencesCashRegister");
 	}
 	private function handleDeleteCreditCardResult(ev:ResultEvent):void {
-    	dataServiceCreditCard.getAll("PreferencesCreditCard");
+    	//dataServiceCreditCard.getAll("PreferencesCreditCard");
 	}
 	
 	private function handleDeleteMarkupsResult(ev:ResultEvent):void {
-    	dataServiceMarkups.getAll("OutsideServices");
+    	//dataServiceMarkups.getAll("OutsideServices");
 	}
 	
 	private function handleDeleteMarkupsMerchandiseResult(ev:ResultEvent):void {
-    	dataServiceMarkupsMerchandise.getAll("Merchandise");
+    	//dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	
 	private function handleDeletePricingMethodResult(ev:ResultEvent):void {
-    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
+    	//dataServicePricingMethod.getAll("PreferencesPricingMethod");
 	}
 	
 	private function handleDeleteSalesCategoryResult(ev:ResultEvent):void {
-    	dataServiceSalesCategory.getAll("SalesCategory");
+    	//dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	
 	private var openSequence:Array = [];
