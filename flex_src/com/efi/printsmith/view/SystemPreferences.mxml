@@ -1135,8 +1135,8 @@
 		/* if (preferencesEstimating.runToFinishGrain != "")
 			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray); */
 
-		if (preferencesEstimating.customJobTicket != "")
-			cboCustomStyle.selectedIndex = findItem(preferencesEstimating.customJobTicket, JobTicketStylesArray);
+		/* if (preferencesEstimating.customJobTicket != "")
+			cboCustomStyle.selectedIndex = findItem(preferencesEstimating.customJobTicket, JobTicketStylesArray); */
 			
 		opgChargeDescriptionValue = preferencesEstimating.chargeDescription;
 
@@ -1195,7 +1195,7 @@
 	}
 
 	private function mapFromPreferencesStocksData():void {
-		this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
+		/* this.chkMarkupOnly.selected = preferencesStocks.markupOnly;
 
 		this.txtstdqty1.text = preferencesStocks.stdQty1.toString();
 		this.txtstdqty2.text = preferencesStocks.stdQty2.toString();
@@ -1233,7 +1233,7 @@
 
 		this.txtcustomercost.text = preferencesStocks.customerCost.toString();
 		this.txtcustomerquantity.text = preferencesStocks.customerQuantity.toString();
-		this.txtcustomermarkup.text = preferencesStocks.customerMarkup.toString();
+		this.txtcustomermarkup.text = preferencesStocks.customerMarkup.toString(); */
 
 	}
 
@@ -1500,8 +1500,8 @@
 		/* if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
 	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name; */
 		
-		if (cboCustomStyle != null && cboCustomStyle.selectedItem != null)
-			preferencesEstimating.customJobTicket = cboCustomStyle.selectedItem.name; 
+		/* if (cboCustomStyle != null && cboCustomStyle.selectedItem != null)
+			preferencesEstimating.customJobTicket = cboCustomStyle.selectedItem.name; */ 
 
 		preferencesEstimating.chargeDescription = opgChargeDescriptionValue;
 		
@@ -1562,7 +1562,7 @@
 
 	}
 	private function mapToPreferencesStocksData():void {
-		preferencesStocks.markupOnly = this.chkMarkupOnly.selected
+		/* preferencesStocks.markupOnly = this.chkMarkupOnly.selected
 		
 		//textboxes
 		preferencesStocks.stdQty1 = parseInt(this.txtstdqty1.text);
@@ -1600,7 +1600,7 @@
 
 		preferencesStocks.customerCost = parseFloat(this.txtcustomercost.text);
 		preferencesStocks.customerQuantity = parseInt(this.txtcustomerquantity.text);
-		preferencesStocks.customerMarkup = parseFloat(this.txtcustomermarkup.text);
+		preferencesStocks.customerMarkup = parseFloat(this.txtcustomermarkup.text); */
 
 	}
 	
@@ -2043,7 +2043,7 @@
 		numbers_canvas.txtDisplayDemo.text = compName;
 	}
 
-	private function setCurrentRange():void{
+	public function setCurrentRange():void{
 		var dt1:Date= new Date();
 		dt1.setFullYear(dt1.fullYear,calendar_canvas.cboFiscalYearStartMonth.selectedIndex,"1");
 		var dt2:Date = new Date(dt1.fullYear+1, calendar_canvas.cboFiscalYearStartMonth.selectedIndex, 0);
@@ -2506,18 +2506,9 @@
 			<prefcomp:PaperCalculatorCanvasComponent id="papercalculator_canvas" preferencesEstimating="{preferencesEstimating}"
 				runToFinishGrainArray="{RunToFinishGrainArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:Label x="50" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}" textAlign="left" width="231"/>
-				<mx:RadioButtonGroup id="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="50" id="opgOldStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OldStylepre50')}" groupName="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="70" id="opgStandardStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStyle')}" groupName="opgTicketFormat"/>
-				<mx:RadioButton x="50" y="90" id="opgCustomStyle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomStyle')}" groupName="opgTicketFormat"/>
-				<mx:ComboBox x="192" y="90" id="cboCustomStyle" dataProvider="{JobTicketStylesArray}" labelField="name" width="338"/>
+			<prefcomp:JobTicketCanvasComponent id="jobticket_canvas" preferencesEstimating="{preferencesEstimating}"
+				jobTicketStylesArray="{JobTicketStylesArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
@@ -2596,76 +2587,10 @@
 				</mx:Button>
 				
 			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="stocksizes_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StocksandSizes')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				
-				<mx:Panel y="27" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStockandSpec')}" height="295" left="50" width="500">
-					<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
-					<mx:Label x="15" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
-
-					<mx:TextInput x="66" y="3" id="txtstdqty1" width="50" text="{preferencesStocks.stdQty1}"/>
-					<mx:TextInput x="116" y="3" id="txtstdqty2" width="50" text="{preferencesStocks.stdQty2}"/>
-					<mx:TextInput x="166" y="3" id="txtstdqty3" width="50" text="{preferencesStocks.stdQty3}"/>
-					<mx:TextInput x="216" y="3" id="txtstdqty4" width="50" text="{preferencesStocks.stdQty4}"/>
-					<mx:TextInput x="266" y="3" id="txtstdqty5" width="50" text="{preferencesStocks.stdQty5}"/>
-					<mx:TextInput x="316" y="3" id="txtstdqty6" width="50" text="{preferencesStocks.stdQty6}"/>
-	
-					<mx:TextInput x="66" y="26" id="txtstdmarkup1" width="50" text="{preferencesStocks.stdMarkup1}"/>
-					<mx:TextInput x="116" y="26" id="txtstdmarkup2" width="50" text="{preferencesStocks.stdMarkup2}"/>
-					<mx:TextInput x="166" y="26" id="txtstdmarkup3" width="50" text="{preferencesStocks.stdMarkup3}"/>
-					<mx:TextInput x="216" y="26" id="txtstdmarkup4" width="50" text="{preferencesStocks.stdMarkup4}"/>
-					<mx:TextInput x="266" y="26" id="txtstdmarkup5" width="50" text="{preferencesStocks.stdMarkup5}"/>
-					<mx:TextInput x="316" y="26" id="txtstdmarkup6" width="50" text="{preferencesStocks.stdMarkup6}"/>
-
-					<mx:Label x="15" y="55" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockweightnameandfi')}" textAlign="right"/>
-					<mx:Label x="15" y="95" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpointsnameandfi')}" textAlign="right"/>
-					<mx:Label x="15" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmicronsnameandf')}" textAlign="right"/>
-					<mx:Label x="15" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfinh')}" textAlign="right"/>
-					<mx:Label x="15" y="215" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmillimetersname')}" textAlign="right"/>
-
-					<mx:TextInput x="15" y="70" id="txtStockWeight" text="{preferencesStocks.weight}" width="172"/>
-					<mx:TextInput x="15" y="110" id="txtstockPoints" text="{preferencesStocks.points}" width="172"/>
-					<mx:TextInput x="15" y="150" id="txtStockMicrons" text="{preferencesStocks.microns}" width="172"/>
-					<mx:TextInput x="15" y="190" id="txtStockPlies" text="{preferencesStocks.plies}" width="172"/>
-					<mx:TextInput x="15" y="230" id="txtStockMillimeters" text="" width="172"/>
-				</mx:Panel>
-				<mx:Panel x="50" y="326" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.BlankStockPricing')}" width="500" height="92">				
-					<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
-					<mx:Label x="15" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
-
-					<mx:TextInput x="66" y="3" id="txtblankqty1" width="50" text="{preferencesStocks.blankQty1}"/>
-					<mx:TextInput x="116" y="3" id="txtblankqty2" width="50" text="{preferencesStocks.blankQty2}"/>
-					<mx:TextInput x="166" y="3" id="txtblankqty3" width="50" text="{preferencesStocks.blankQty3}"/>
-					<mx:TextInput x="216" y="3" id="txtblankqty4" width="50" text="{preferencesStocks.blankQty4}"/>
-					<mx:TextInput x="266" y="3" id="txtblankqty5" width="50" text="{preferencesStocks.blankQty5}"/>
-					<mx:TextInput x="316" y="3" id="txtblankqty6" width="50" text="{preferencesStocks.blankQty6}"/>
-	
-					<mx:TextInput x="66" y="26" id="txtblankmarkup1" width="50" text="{preferencesStocks.blankMarkup1}"/>
-					<mx:TextInput x="116" y="26" id="txtblankmarkup2" width="50" text="{preferencesStocks.blankMarkup2}"/>
-					<mx:TextInput x="166" y="26" id="txtblankmarkup3" width="50" text="{preferencesStocks.blankMarkup3}"/>
-					<mx:TextInput x="216" y="26" id="txtblankmarkup4" width="50" text="{preferencesStocks.blankMarkup4}"/>
-					<mx:TextInput x="266" y="26" id="txtblankmarkup5" width="50" text="{preferencesStocks.blankMarkup5}"/>
-					<mx:TextInput x="316" y="26" id="txtblankmarkup6" width="50" text="{preferencesStocks.blankMarkup6}"/>
-
-				</mx:Panel>
-				<mx:Panel x="50" y="422" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomerStock')}" width="500" height="134">
-					<mx:Label x="37" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StockCost')}" textAlign="right"/>
-					<mx:Label x="49" y="27" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" textAlign="right"/>
-					<mx:Label x="55" y="49" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" textAlign="right"/>
-
-					<mx:TextInput x="109" y="3" id="txtcustomercost" width="50" text="{preferencesStocks.customerCost}"/>
-					<mx:TextInput x="109" y="26" id="txtcustomerquantity" width="50" text="{preferencesStocks.customerQuantity}"/>
-					<mx:TextInput x="109" y="49" id="txtcustomermarkup" width="50" text="{preferencesStocks.customerMarkup}"/>
-
-					<mx:CheckBox x="10" y="71" id="chkMarkupOnly" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.MarkupOnlynostockcos')}"/>
-								
-				</mx:Panel>
-
-				<mx:Label x="50" y="564" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SizeTabletoUse')}" textAlign="right"/>
-				<mx:ComboBox x="160" y="562" id="cboSizeTableToUse"/>
-
-			</mx:Canvas>
+			
+			<prefcomp:StocksizesCanvasComponent id="stocksizes_canvas" preferencesStocks="{preferencesStocks}" 
+				sizeTableArray="{SizeTableArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+			
 			<mx:Canvas width="100%" height="100%" id="stockdefinitions_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StockDefinitions')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
