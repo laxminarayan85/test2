@@ -37,7 +37,6 @@ package com.efi.printsmith.data
 		public var userName:String = "";
 		public var trackOne:String = "";
 		public var trackTwo:String = "";
-		public var creditCard:CreditCard;
 		public var tempCVV2:String = "";
 	
 	}

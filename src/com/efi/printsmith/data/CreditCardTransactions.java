@@ -142,10 +142,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
-  public static final String CREDITCARD = "CreditCard";
-	/**
-   * @generated
-   */
   public static final String TEMPCVV2 = "TempCVV2";
 
 	/**
@@ -690,29 +686,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne()
-  private CreditCard creditCard;
-
-	/**
-   * @generated
- 	 */
-  public CreditCard getCreditCard(){
-    return creditCard; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setCreditCard(CreditCard newVal) {
-    this.creditCard = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
  	@Basic
   private String tempCVV2;
 
@@ -762,7 +735,6 @@ public class CreditCardTransactions extends ModelBase {
     if (USERNAME.equals(propertyName)) return getUserName();
     if (TRACKONE.equals(propertyName)) return getTrackOne();
     if (TRACKTWO.equals(propertyName)) return getTrackTwo();
-    if (CREDITCARD.equals(propertyName)) return getCreditCard();
     if (TEMPCVV2.equals(propertyName)) return getTempCVV2();
     return super.getProperty(propertyName);
   }
@@ -797,7 +769,6 @@ public class CreditCardTransactions extends ModelBase {
     if (USERNAME.equals(propertyName)) setUserName((String)newValue); else
     if (TRACKONE.equals(propertyName)) setTrackOne((String)newValue); else
     if (TRACKTWO.equals(propertyName)) setTrackTwo((String)newValue); else
-    if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
     if (TEMPCVV2.equals(propertyName)) setTempCVV2((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -856,8 +827,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {String.class};		
     if (TRACKTWO.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (CREDITCARD.equals(propertyName)) 
-      return new Class<?>[] {CreditCard.class};		
     if (TEMPCVV2.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
@@ -894,7 +863,6 @@ public class CreditCardTransactions extends ModelBase {
     if (USERNAME.equals(propertyName)) return CreditCardTransactions.class;
     if (TRACKONE.equals(propertyName)) return CreditCardTransactions.class;
     if (TRACKTWO.equals(propertyName)) return CreditCardTransactions.class;
-    if (CREDITCARD.equals(propertyName)) return CreditCardTransactions.class;
     if (TEMPCVV2.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -954,8 +922,6 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getTrackOne(), objT.getTrackOne()))
       return false;
     if (! SmartEquals(getTrackTwo(), objT.getTrackTwo()))
-      return false;
-    if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
       return false;
     if (! SmartEquals(getTempCVV2(), objT.getTempCVV2()))
       return false;
