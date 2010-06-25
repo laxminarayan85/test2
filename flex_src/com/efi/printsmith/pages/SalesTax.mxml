@@ -36,15 +36,19 @@
     private var taxTables:ArrayCollection = new ArrayCollection();   
      [Bindable]                                
     private var taxTable:TaxTable;
+   [Bindable]                                
+    private var tempTaxTable:TaxTable;
     [Bindable]                                
-		private var taxElements:ArrayCollection = new ArrayCollection();   
+		private var taxElementsArray:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
 		private var taxElement:TaxElement;
 	[Bindable]
 		private var defaultTable:Boolean = false;
-		
+	[Bindable]
+		private var tempRate:Number;	
 	public function init():void{
 		taxTable = new TaxTable();
+		tempTaxTable = new TaxTable;
 		dataService.getAll("TaxTable");
 	}
 	
@@ -84,46 +88,69 @@
 		return ("");
 	}
 	private function doSelectTaxTable():void{
-		taxElements = new ArrayCollection();
+		taxElementsArray = new ArrayCollection();
 		taxTable=tableGrid.selectedItem as TaxTable;
 		dataService.getTaxTable(taxTable.id)
-		taxElements = taxTable.taxElements;
+		
 		 
 	}
 	
 	private function handleGetResult(ev:ResultEvent):void{
+		var tempTax:TaxElement;
 		taxTable = ev.result as TaxTable;
-		taxElements = taxTable.taxElements;
+		taxElementsArray = new ArrayCollection();
+		for( var i:int = 0;i < taxTable.taxElements.length;i++){
+			tempTax = new TaxElement();
+			tempTax = taxTable.taxElements.getItemAt(i) as TaxElement;
+			taxElementsArray.addItem(tempTax)
+		}
+		
 	}
 	private function handleSaveResult(ev:ResultEvent):void{
 		taxTable = ev.result as TaxTable;
 		if ( taxTable.taxTableIsCurrent == false)
 			SaveNewTax();
+		dataService.getAll("TaxTable");
 	}
 	private function SaveNewTax():void{
-	 var tempTax:TaxTable = new TaxTable;
-		tempTax.separateShipping = seperate_shipping_check.selected;
-		tempTax.taxShipping = tax_shipping_check.selected;
-		tempTax.taxInPrice = tax_inPrice_check.selected;
-		tempTax.effectiveTaxRate = parseInt(effect_rate.text);
-		tempTax.minAmount = parseFloat(min_edit.text);
-		tempTax.abbr = Abbr_edit.text;
-		tempTax.name = name_edit.text;
-		tempTax.taxElements = taxElements;
-		tempTax.taxTableIsCurrent= true;
+	 var tempTax:TaxElement;
+	 
+		tempTaxTable.separateShipping = seperate_shipping_check.selected;
+		tempTaxTable.taxShipping = tax_shipping_check.selected;
+		tempTaxTable.taxInPrice = tax_inPrice_check.selected;
+		tempTaxTable.effectiveTaxRate = tempRate;
+		tempTaxTable.minAmount = parseFloat(min_edit.text);
+		tempTaxTable.abbr = Abbr_edit.text;
+		tempTaxTable.name = name_edit.text;
+		tempTaxTable.taxElements = new ArrayCollection();
+		for( var i:int = 0;i < taxElementsArray.length;i++){
+			tempTax = new TaxElement();
+			tempTax = taxElementsArray.getItemAt(i) as TaxElement;
+			tempTax.id = 0;
+			tempTaxTable.taxElements.addItem(tempTax)
+		}
+		
+		tempTaxTable.taxTableIsCurrent= true;
 		//tempTax.tableCreateDateTime = 
-		tempTax.defaultTable = defaultTable
-		tempTax.disableTable = false
-		tempTax.roundTaxUp = round_tax_check.selected;
-		tempTax.taxOnTax = tax_on_tax_check.selected;
-		dataService.addUpdate(tempTax);
+		tempTaxTable.defaultTable = defaultTable
+		tempTaxTable.disableTable = false
+		tempTaxTable.roundTaxUp = round_tax_check.selected;
+		tempTaxTable.taxOnTax = tax_on_tax_check.selected;
+		dataService.addUpdate(tempTaxTable);
 		
 	}	
 	private function updatetax():void{
-		
+		var temp:Number = 0;
+		var tempTax :TaxElement;
+
+		for( var i:int = 0;i < taxElementsArray.length;i++){
+			tempTax = taxElementsArray.getItemAt(i) as TaxElement;
+			temp = temp + tempTax.rate;
+		}
+		effect_rate.text = temp.toString();
 	}	
 	private function doSave():void{
-		var tempRate:int;
+		
 		tempRate = parseFloat(effect_rate.text);
 		if ( tempRate != taxTable.effectiveTaxRate){
 			taxTable.taxTableIsCurrent = false;
@@ -139,7 +166,7 @@
 		taxTable.separateShipping = seperate_shipping_check.selected;
 		taxTable.taxShipping = tax_shipping_check.selected;
 		taxTable.taxInPrice = tax_inPrice_check.selected;
-		taxTable.effectiveTaxRate = parseInt(effect_rate.text);
+		taxTable.effectiveTaxRate = parseFloat(effect_rate.text);
 		taxTable.minAmount = parseFloat(min_edit.text);
 		taxTable.abbr = Abbr_edit.text;
 		taxTable.name = name_edit.text;
@@ -147,19 +174,19 @@
 		taxTable.roundTaxUp = round_tax_check.selected;
 		taxTable.taxOnTax = tax_on_tax_check.selected;
 		
-		if (taxElements != null)
-			taxTable.taxElements = taxElements;
+		if (taxElementsArray != null)
+			taxTable.taxElements = taxElementsArray;
 		dataService.addUpdate(taxTable);
 		}
 		
 	}
 	private function doNewTaxElement():void{
 		taxElement = new TaxElement;
-		taxElements.addItem(taxElement);
+		taxElementsArray.addItem(taxElement);
 	}
 	private function doRemoveTaxElement():void {
 		var deleteItem:TaxElement = elementGrid.selectedItem as TaxElement;
-		taxElements.removeItemAt(taxElements.getItemIndex(deleteItem)); 
+		taxElementsArray.removeItemAt(taxElementsArray.getItemIndex(deleteItem)); 
 	}
 ]]>
                              
@@ -174,7 +201,7 @@
 	<mx:Label x="17" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Abbreviation')}" width="67"/>
 	<mx:TextInput x="92" y="82" id="name_edit" text="{taxTable.name}"/>
 	<mx:TextInput x="92" y="112" id="Abbr_edit" text="{taxTable.abbr}"/>
-	<mx:DataGrid x="17" y="140" width="450" height="273"  editable="true" dataProvider="{taxElements}"  id="elementGrid">
+	<mx:DataGrid x="17" y="140" width="450" height="273"  editable="true" change="updatetax()" dataProvider="{taxElementsArray}"  id="elementGrid">
 		<mx:columns>
 			<mx:DataGridColumn editorDataField="selectedItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Description')}" labelFunction="doTaxName"
 			itemEditor="com.efi.printsmith.itemRenderers.TaxElementsEditor" editable="true" dataField="tax"  >
@@ -196,15 +223,15 @@
 				   icon="@Embed(source='../../../../assets/add16.png')"
 				   width="24"
 				   bottom="317"/>
-	<mx:Label x="191" y="449" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
-	<mx:Label id="min_edit" x="182" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}"/>
+	<mx:Label x="184" y="451"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
+	<mx:Label id="min_edit" x="92" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}" width="212.5"/>
 	<mx:CheckBox x="6" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
 	<mx:CheckBox x="151" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
 	<mx:CheckBox x="293" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
 	<mx:CheckBox x="151" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
 	<mx:CheckBox x="6" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
-	<mx:Text x="315" y="449" id="effect_rate" text="{taxTable.effectiveTaxRate}"/>
-	<mx:Text x="315" y="475" id="min_tax" text="{taxTable.minAmount}" width="116" height="21"/>
+	<mx:TextInput x="315" y="449" id="effect_rate" text="{taxTable.effectiveTaxRate}" editable="false"/>
+	<mx:TextInput x="315" y="475" id="min_tax" text="{taxTable.minAmount}" width="116" height="21"/>
 	<mx:DataGrid x="-1" y="564" width="286"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="141">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}" labelFunction="doDefault" width="50"/>
