@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesPOS")]
 	[Managed]
 	
-	public class PreferencesPOS extends ModelBase
+	public dynamic class PreferencesPOS extends ModelBase
 	{
 
 		public function PreferencesPOS() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesEstimating")]
 	[Managed]
 	
-	public class PreferencesEstimating extends ModelBase
+	public dynamic class PreferencesEstimating extends ModelBase
 	{
 
 		public function PreferencesEstimating() {
