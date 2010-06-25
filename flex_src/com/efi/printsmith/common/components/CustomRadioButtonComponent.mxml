@@ -68,12 +68,14 @@
 				   }
 				} */
 				/* This code helps to display checkbox center aligned inside datagrid*/
-				var childrenCount:int = numChildren;
-				for (var i:int = 0; i < childrenCount; i++) {
-					var displayField:DisplayObject = getChildAt(i);
-					if (!(displayField is TextField)) {
-						displayField.x = (unscaledWidth - displayField.width) / 2;
-						displayField.y = 0;
+				if(datagridControl){
+					var childrenCount:int = numChildren;
+					for (var i:int = 0; i < childrenCount; i++) {
+						var displayField:DisplayObject = getChildAt(i);
+						if (!(displayField is TextField)) {
+							displayField.x = (unscaledWidth - displayField.width) / 2;
+							displayField.y = 0;
+						}
 					}
 				}
 			}

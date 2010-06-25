@@ -65,7 +65,7 @@
 		     * This function temporarily stores componet value.
 		     */
 		     				  
-		    public function set customText(displayValue:ArrayCollection):void {	
+		    public function set customText(displayValue:ArrayCollection):void {
 		    	var objMasterData:int = 0;
 		    	var objDataGridData:int = 1;
 		    	var invalidSelection:Boolean = false;
