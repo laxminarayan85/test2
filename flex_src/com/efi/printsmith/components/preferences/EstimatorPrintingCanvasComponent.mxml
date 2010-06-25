@@ -8,7 +8,7 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesEstimating;
-			[Bindable] public var preferencesEstimating:PreferencesEstimating;
+			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
 			
 			[Bindable] public var defaultInvoiceArray:ArrayCollection = new ArrayCollection();
 			

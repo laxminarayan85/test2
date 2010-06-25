@@ -8,7 +8,7 @@
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesPOS;
 			import mx.collections.ArrayCollection;
-			[Bindable] public var preferencesPOS:PreferencesPOS;
+			[Bindable] public var preferencesPOS:PreferencesPOS = new PreferencesPOS();
 			[Bindable] public var receiptPrinterArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var baudRateArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var stopBitsArray:ArrayCollection = new ArrayCollection();

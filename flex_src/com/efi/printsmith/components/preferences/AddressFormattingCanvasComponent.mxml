@@ -8,7 +8,7 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesSystem;
-			[Bindable] public var preferencesSystem:PreferencesSystem;
+			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
 			[Bindable] public var countryArray:ArrayCollection = new ArrayCollection();
 		]]>
 	</mx:Script>

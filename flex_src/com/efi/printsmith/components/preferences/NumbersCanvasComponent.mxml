@@ -6,7 +6,7 @@
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesSystem;
 			
-			[Bindable] public var preferencesSystem:PreferencesSystem;
+			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
 			private var dollar:String = "$"; 
 			private var yen:String = "¥";
 			private var euro:String = "€";

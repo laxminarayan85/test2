@@ -4,7 +4,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesEstimating;
-			[Bindable] public var preferencesEstimating:PreferencesEstimating;
+			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();;
 		]]>
 	</mx:Script>
 	

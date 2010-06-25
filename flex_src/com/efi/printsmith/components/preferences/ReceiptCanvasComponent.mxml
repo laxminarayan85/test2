@@ -5,7 +5,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesPOS;
-			[Bindable] public var preferencesPOS:PreferencesPOS;
+			[Bindable] public var preferencesPOS:PreferencesPOS = new PreferencesPOS();
 		]]>
 	</mx:Script>
 	

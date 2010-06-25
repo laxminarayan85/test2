@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*">
+
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.PreferencesStocks;
+			[Bindable] public var preferencesStocks:PreferencesStocks = new PreferencesStocks();
+			
+			[Bindable] public var sizeTableArray:ArrayCollection = new ArrayCollection();
+		]]>
+	</mx:Script>
+
+	<mx:VBox width="100%" height="100%">
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StocksandSizes')}"
+			textAlign="center" width="100%"/>
+		<mx:HRule width="100%"/>
+		<mx:HBox width="100%" height="100%">
+			<mx:Spacer width="30"/>
+			<mx:VBox width="100%" height="100%">
+				<mx:Panel layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStockandSpec')}"
+					width="500">					
+					<mx:VBox x="5" width="100%"> 
+					
+						<mx:VBox width="100%" verticalGap="1"> 
+						
+							<mx:HBox width="100%" horizontalGap="1">
+								<mx:Label 
+									text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}"
+									textAlign="right" width="75"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty1" customText="{preferencesStocks.stdQty1}"
+									precision="0" rounding="nearest" isInteger="true"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty2" customText="{preferencesStocks.stdQty2}"
+									precision="0" rounding="nearest" isInteger="true"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty3" customText="{preferencesStocks.stdQty3}"
+									precision="0" rounding="nearest" isInteger="true"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty4" customText="{preferencesStocks.stdQty4}"
+									precision="0" rounding="nearest" isInteger="true"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty5" customText="{preferencesStocks.stdQty5}"
+									precision="0" rounding="nearest" isInteger="true"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdQty6" customText="{preferencesStocks.stdQty6}"
+									precision="0" rounding="nearest" isInteger="true"/>
+							</mx:HBox>
+								
+							<mx:HBox width="100%" horizontalGap="1">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
+									textAlign="right" width="75"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup1" customText="{preferencesStocks.stdMarkup1}"
+									precision="2" rounding="nearest"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup2" customText="{preferencesStocks.stdMarkup2}"
+									precision="2" rounding="nearest"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup3" customText="{preferencesStocks.stdMarkup3}"
+									precision="2" rounding="nearest"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup4" customText="{preferencesStocks.stdMarkup4}"
+									precision="2" rounding="nearest"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup5" customText="{preferencesStocks.stdMarkup5}"
+									precision="2" rounding="nearest"/>
+									
+								<components:CustomNumericTextInputComponent width="50"
+									dataHolder="{preferencesStocks}" variableName="stdMarkup6" customText="{preferencesStocks.stdMarkup6}"
+									precision="2" rounding="nearest"/>
+								
+							</mx:HBox>
+						
+						</mx:VBox>
+							
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockweightnameandfi')}"
+							textAlign="right" />
+							
+						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
+							dataHolder="{preferencesStocks}" variableName="weight" customText="{preferencesStocks.weight}" width="172" />
+							
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpointsnameandfi')}"
+							textAlign="right" />
+							
+						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
+							dataHolder="{preferencesStocks}" variableName="points" customText="{preferencesStocks.points}" width="172" />
+							
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmicronsnameandf')}"
+							textAlign="right" />
+						
+						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
+							dataHolder="{preferencesStocks}" variableName="microns" customText="{preferencesStocks.microns}" width="172" />
+							
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfinh')}"
+							textAlign="right" />
+							
+						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
+							dataHolder="{preferencesStocks}" variableName="plies" customText="{preferencesStocks.plies}" width="172" />
+							
+					</mx:VBox>
+						
+				</mx:Panel>
+				
+				<mx:Panel layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.BlankStockPricing')}"
+					width="500" verticalGap="1">
+					
+					<mx:VBox x="5" width="100%"> 
+					
+						<mx:HBox width="100%" horizontalGap="1">
+						
+							<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}"
+							textAlign="right" width="75"/>
+							
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty1" customText="{preferencesStocks.blankQty1}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty2" customText="{preferencesStocks.blankQty2}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty3" customText="{preferencesStocks.blankQty3}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty4" customText="{preferencesStocks.blankQty4}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty5" customText="{preferencesStocks.blankQty5}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankQty6" customText="{preferencesStocks.blankQty6}"
+								precision="0" rounding="nearest" isInteger="true"/>
+								
+						</mx:HBox>
+						
+						<mx:HBox width="100%" horizontalGap="1">
+						
+							<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
+								textAlign="right" width="75"/>
+						
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup1" customText="{preferencesStocks.blankMarkup1}"
+								precision="2" rounding="nearest"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup2" customText="{preferencesStocks.blankMarkup2}"
+								precision="2" rounding="nearest"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup3" customText="{preferencesStocks.blankMarkup3}"
+								precision="2" rounding="nearest"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup4" customText="{preferencesStocks.blankMarkup4}"
+								precision="2" rounding="nearest"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup5" customText="{preferencesStocks.blankMarkup5}"
+								precision="2" rounding="nearest"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="blankMarkup6" customText="{preferencesStocks.blankMarkup6}"
+								precision="2" rounding="nearest"/>
+								
+						</mx:HBox>
+					
+					</mx:VBox>
+											
+				</mx:Panel>
+				<mx:Panel layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomerStock')}"
+					width="500">
+					
+					<mx:VBox x="5" width="100%"> 
+						<mx:HBox width="100%">
+						
+							<mx:Label 
+								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StockCost')}"
+								textAlign="right" width="100"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="customerCost" customText="{preferencesStocks.customerCost}"
+								precision="2" rounding="nearest"/>
+						
+						</mx:HBox>
+						
+						<mx:HBox width="100%">
+							
+							<mx:Label 
+								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}"
+								textAlign="right" width="100"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="customerQuantity" customText="{preferencesStocks.customerQuantity}"
+								precision="0" rounding="nearest" isInteger="true"/>
+					
+						</mx:HBox>
+						
+						<mx:HBox width="100%">
+							
+							<mx:Label 
+								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
+								textAlign="right" width="100"/>
+								
+							<components:CustomNumericTextInputComponent width="50"
+								dataHolder="{preferencesStocks}" variableName="customerMarkup" customText="{preferencesStocks.customerMarkup}"
+								precision="2" rounding="nearest"/>
+							
+						</mx:HBox>
+							
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.MarkupOnlynostockcos')}"
+							dataHolder="{preferencesStocks}" variableName="markupOnly" customText="{preferencesStocks.markupOnly}"
+							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						
+					</mx:VBox>
+						
+				</mx:Panel>
+				
+				<mx:HBox width="100%">
+				
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SizeTabletoUse')}"
+						textAlign="right" />
+						
+					<components:CustomComboBoxComponent 
+						masterList="{sizeTableArray}" labelFieldId="id" labelFieldName="name"
+						dataHolder="{preferencesStocks}" variableName="sizeTable" customText="{getCustomTextData(sizeTableArray,preferencesStocks)}" 
+						updateFirstElement="true" updateObject="true" objectLabelFieldId="id"/>
+					
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>	
+	</mx:VBox>
+</mx:Canvas>

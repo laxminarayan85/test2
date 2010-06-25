@@ -4,7 +4,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesSystem;
-			[Bindable] public var preferencesSystem:PreferencesSystem;
+			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
 		]]>
 	</mx:Script>
 	
