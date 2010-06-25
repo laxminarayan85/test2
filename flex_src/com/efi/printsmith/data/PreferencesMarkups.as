@@ -16,6 +16,7 @@ package com.efi.printsmith.data
 		public var totalCost:Number = 0;
 		public var markup:Number = 0;
 		public var above:Boolean = false;
+		public var markupType:int = 0;
 	
 	}
 }

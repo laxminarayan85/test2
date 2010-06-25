@@ -55,6 +55,11 @@ public class PreferencesMarkups extends ModelBase {
 	public static final String ABOVE = "Above";
 
 	/**
+   * @generated
+   */
+  public static final String MARKUPTYPE = "MarkupType";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesMarkups() {
@@ -139,6 +144,28 @@ public class PreferencesMarkups extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer markupType;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getMarkupType(){
+    return markupType; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMarkupType(Integer newVal) {
+    this.markupType = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -147,6 +174,7 @@ public class PreferencesMarkups extends ModelBase {
     if (TOTALCOST.equals(propertyName)) return getTotalCost();
     if (MARKUP.equals(propertyName)) return getMarkup();
     if (ABOVE.equals(propertyName)) return getAbove();
+    if (MARKUPTYPE.equals(propertyName)) return getMarkupType();
     return super.getProperty(propertyName);
   }
 	
@@ -159,6 +187,7 @@ public class PreferencesMarkups extends ModelBase {
     if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (ABOVE.equals(propertyName)) setAbove((Boolean)newValue); else
+    if (MARKUPTYPE.equals(propertyName)) setMarkupType((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -174,6 +203,8 @@ public class PreferencesMarkups extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (ABOVE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (MARKUPTYPE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -187,6 +218,7 @@ public class PreferencesMarkups extends ModelBase {
     if (TOTALCOST.equals(propertyName)) return PreferencesMarkups.class;
     if (MARKUP.equals(propertyName)) return PreferencesMarkups.class;
     if (ABOVE.equals(propertyName)) return PreferencesMarkups.class;
+    if (MARKUPTYPE.equals(propertyName)) return PreferencesMarkups.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -203,6 +235,8 @@ public class PreferencesMarkups extends ModelBase {
     if (! SmartEquals(getMarkup(), objT.getMarkup()))
       return false;
     if (! SmartEquals(getAbove(), objT.getAbove()))
+      return false;
+    if (! SmartEquals(getMarkupType(), objT.getMarkupType()))
       return false;
     return true;
   }			
