@@ -67,6 +67,15 @@ public class CreditCard extends ModelBase {
 	public static final String TYPE = "Type";
 
 	/**
+   * @generated
+   */
+  public static final String ENCRYPTION = "Encryption";
+	/**
+   * @generated
+   */
+  public static final String CARDDISPLAYNUMBER = "CardDisplayNumber";
+
+	/**
 	 * @generated
 	 */
 	public CreditCard() {
@@ -213,6 +222,51 @@ public class CreditCard extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String encryption;
+
+	/**
+   * @generated
+ 	 */
+  public String getEncryption(){
+    return encryption; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setEncryption(String newVal) {
+    this.encryption = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String cardDisplayNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getCardDisplayNumber(){
+    return cardDisplayNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCardDisplayNumber(String newVal) {
+    this.cardDisplayNumber = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -224,6 +278,8 @@ public class CreditCard extends ModelBase {
     if (ADDRESS.equals(propertyName)) return getAddress();
     if (CREDITCARDID.equals(propertyName)) return getCreditCardID();
     if (TYPE.equals(propertyName)) return getType();
+    if (ENCRYPTION.equals(propertyName)) return getEncryption();
+    if (CARDDISPLAYNUMBER.equals(propertyName)) return getCardDisplayNumber();
     return super.getProperty(propertyName);
   }
 	
@@ -239,6 +295,8 @@ public class CreditCard extends ModelBase {
     if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
     if (CREDITCARDID.equals(propertyName)) setCreditCardID((String)newValue); else
     if (TYPE.equals(propertyName)) setType((String)newValue); else
+    if (ENCRYPTION.equals(propertyName)) setEncryption((String)newValue); else
+    if (CARDDISPLAYNUMBER.equals(propertyName)) setCardDisplayNumber((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -260,6 +318,10 @@ public class CreditCard extends ModelBase {
       return new Class<?>[] {String.class};		
     if (TYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (ENCRYPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CARDDISPLAYNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -276,6 +338,8 @@ public class CreditCard extends ModelBase {
     if (ADDRESS.equals(propertyName)) return CreditCard.class;
     if (CREDITCARDID.equals(propertyName)) return CreditCard.class;
     if (TYPE.equals(propertyName)) return CreditCard.class;
+    if (ENCRYPTION.equals(propertyName)) return CreditCard.class;
+    if (CARDDISPLAYNUMBER.equals(propertyName)) return CreditCard.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -298,6 +362,10 @@ public class CreditCard extends ModelBase {
     if (! SmartEquals(getCreditCardID(), objT.getCreditCardID()))
       return false;
     if (! SmartEquals(getType(), objT.getType()))
+      return false;
+    if (! SmartEquals(getEncryption(), objT.getEncryption()))
+      return false;
+    if (! SmartEquals(getCardDisplayNumber(), objT.getCardDisplayNumber()))
       return false;
     return true;
   }			

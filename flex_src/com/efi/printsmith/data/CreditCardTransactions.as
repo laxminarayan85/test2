@@ -26,7 +26,6 @@ package com.efi.printsmith.data
 		public var amount:Number = 0;
 		public var taxInAmount:Boolean = false;
 		public var invoice:Invoice;
-		public var account:Account;
 		public var contact:Contact;
 		public var poNumber:String = "";
 		public var referenceNumber:String = "";
@@ -42,7 +41,7 @@ package com.efi.printsmith.data
 		public var tax:Number = 0;
 		public var taxCode:TaxCodes;
 		public var taxTable:TaxTable;
-		public var user:String = "";
+		public var userName:String = "";
 	
 	}
 }

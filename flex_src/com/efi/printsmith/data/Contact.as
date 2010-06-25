@@ -32,6 +32,7 @@ package com.efi.printsmith.data
 		public var webContactID:String = "";
 		public var webCatalog:WebCatalogs;
 		public var webStatus:WebStatus;
+		public var ccImportRec:String = "";
 	
 	}
 }

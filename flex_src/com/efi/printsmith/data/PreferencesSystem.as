@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesSystem")]
 	[Managed]
 	
-	public dynamic class PreferencesSystem extends ModelBase
+	public class PreferencesSystem extends ModelBase
 	{
 
 		public function PreferencesSystem() {
@@ -87,6 +87,10 @@ package com.efi.printsmith.data
 		public var extendedPriceBookEnabled:Boolean = false;
 		public var maximumTransactionCount:int = 0;
 		public var settings:String = "";
+		public var oconfig:String = "";
+		public var oprocess:String = "";
+		public var oslogan:String = "";
+		public var osettings:String = "";
 	
 	}
 }

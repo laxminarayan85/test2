@@ -341,6 +341,22 @@ public class PreferencesSystem extends ModelBase {
    */
   public static final String SETTINGS = "Settings";
 	/**
+   * @generated
+   */
+  public static final String OCONFIG = "Oconfig";
+	/**
+   * @generated
+   */
+  public static final String OPROCESS = "Oprocess";
+	/**
+   * @generated
+   */
+  public static final String OSLOGAN = "Oslogan";
+	/**
+   * @generated
+   */
+  public static final String OSETTINGS = "Osettings";
+	/**
 	 * @generated
 	 */
 	public PreferencesSystem() {
@@ -1990,6 +2006,93 @@ public class PreferencesSystem extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String oconfig;
+	/**
+   * @generated
+ 	 */
+  public String getOconfig(){
+    return oconfig; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOconfig(String newVal) {
+    this.oconfig = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String oprocess;
+	/**
+   * @generated
+ 	 */
+  public String getOprocess(){
+    return oprocess; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOprocess(String newVal) {
+    this.oprocess = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String oslogan;
+	/**
+   * @generated
+ 	 */
+  public String getOslogan(){
+    return oslogan; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOslogan(String newVal) {
+    this.oslogan = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String osettings;
+	/**
+   * @generated
+ 	 */
+  public String getOsettings(){
+    return osettings; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOsettings(String newVal) {
+    this.osettings = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2069,6 +2172,10 @@ public class PreferencesSystem extends ModelBase {
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return getExtendedPriceBookEnabled();
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return getMaximumTransactionCount();
     if (SETTINGS.equals(propertyName)) return getSettings();
+    if (OCONFIG.equals(propertyName)) return getOconfig();
+    if (OPROCESS.equals(propertyName)) return getOprocess();
+    if (OSLOGAN.equals(propertyName)) return getOslogan();
+    if (OSETTINGS.equals(propertyName)) return getOsettings();
     return super.getProperty(propertyName);
   }
 	
@@ -2152,6 +2259,10 @@ public class PreferencesSystem extends ModelBase {
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) setExtendedPriceBookEnabled((Boolean)newValue); else
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) setMaximumTransactionCount((Integer)newValue); else
     if (SETTINGS.equals(propertyName)) setSettings((String)newValue); else
+    if (OCONFIG.equals(propertyName)) setOconfig((String)newValue); else
+    if (OPROCESS.equals(propertyName)) setOprocess((String)newValue); else
+    if (OSLOGAN.equals(propertyName)) setOslogan((String)newValue); else
+    if (OSETTINGS.equals(propertyName)) setOsettings((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2309,6 +2420,14 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (SETTINGS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (OCONFIG.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OPROCESS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OSLOGAN.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OSETTINGS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2393,6 +2512,10 @@ public class PreferencesSystem extends ModelBase {
     if (EXTENDEDPRICEBOOKENABLED.equals(propertyName)) return PreferencesSystem.class;
     if (MAXIMUMTRANSACTIONCOUNT.equals(propertyName)) return PreferencesSystem.class;
     if (SETTINGS.equals(propertyName)) return PreferencesSystem.class;
+    if (OCONFIG.equals(propertyName)) return PreferencesSystem.class;
+    if (OPROCESS.equals(propertyName)) return PreferencesSystem.class;
+    if (OSLOGAN.equals(propertyName)) return PreferencesSystem.class;
+    if (OSETTINGS.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2551,6 +2674,14 @@ public class PreferencesSystem extends ModelBase {
     if (! SmartEquals(getMaximumTransactionCount(), objT.getMaximumTransactionCount()))
       return false;
     if (! SmartEquals(getSettings(), objT.getSettings()))
+      return false;
+    if (! SmartEquals(getOconfig(), objT.getOconfig()))
+      return false;
+    if (! SmartEquals(getOprocess(), objT.getOprocess()))
+      return false;
+    if (! SmartEquals(getOslogan(), objT.getOslogan()))
+      return false;
+    if (! SmartEquals(getOsettings(), objT.getOsettings()))
       return false;
     return true;
   }			
