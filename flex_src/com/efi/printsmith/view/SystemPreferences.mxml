@@ -1082,40 +1082,40 @@
 		 
 	}
 	private function mapFromPreferencesEstimatingData():void {
-		this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
-		this.chkAddFixedWasteForEachPass.selected = preferencesEstimating.addFixedWasteForEachPass
-		this.chkAlwaysUseStockParentSize.selected = preferencesEstimating.useStockParentSize
-		this.chkAttachToJobTicket.selected = preferencesEstimating.attachToJobTicket
-		this.chkAutoShowCharges.selected = preferencesEstimating.autoShowCharges
-		this.chkAutoShowPaperCalculator.selected = preferencesEstimating.showPaperCalculator
-		this.chkBackTrimParent.selected = preferencesEstimating.backTrimParent
-		this.chkBleed.selected = preferencesEstimating.useBleed
-		this.chkCalculateInkByImpressions.selected = preferencesEstimating.calculateInkbyImpressions
-		this.chkCalculateReOrderDate.selected = preferencesEstimating.calculateReOrderDate
-		this.chkCanChangeAddress.selected = preferencesEstimating.canChangeAddress
-		this.chkCloseInvoiceAfterPrinting.selected = preferencesEstimating.closeInvoiceAfterPrintingTicket
-		this.chkCloseInvoiceAndEstimatesAfterPrinting.selected = preferencesEstimating.closeInvoicesAndEstimateAfterPrinting
-		this.chkCloseSourceAfterCopying.selected = preferencesEstimating.closeAfterCopy
-		this.chkColorBar.selected = preferencesEstimating.useColorBar
-		this.chkDoNotCostDuringPost.selected = preferencesEstimating.doNotCostDuringPost
-		this.chkEnterStockCost.selected = preferencesEstimating.stockCostInEstimator
-		this.chkFolioEdge.selected = preferencesEstimating.useFolioEdge
-		this.chkGripEdge.selected = preferencesEstimating.useGripEdgeGap
+		//this.chkAddFixedWasteForEachColor.selected = preferencesEstimating.addFixedWasteForEachColor
+		//this.chkAddFixedWasteForEachPass.selected = preferencesEstimating.addFixedWasteForEachPass
+		//this.chkAlwaysUseStockParentSize.selected = preferencesEstimating.useStockParentSize
+		//this.chkAttachToJobTicket.selected = preferencesEstimating.attachToJobTicket
+		//this.chkAutoShowCharges.selected = preferencesEstimating.autoShowCharges
+		//this.chkAutoShowPaperCalculator.selected = preferencesEstimating.showPaperCalculator
+		/* this.chkBackTrimParent.selected = preferencesEstimating.backTrimParent
+		this.chkBleed.selected = preferencesEstimating.useBleed */
+		//this.chkCalculateInkByImpressions.selected = preferencesEstimating.calculateInkbyImpressions
+		//this.chkCalculateReOrderDate.selected = preferencesEstimating.calculateReOrderDate
+		//this.chkCanChangeAddress.selected = preferencesEstimating.canChangeAddress
+		//this.chkCloseInvoiceAfterPrinting.selected = preferencesEstimating.closeInvoiceAfterPrintingTicket
+		//this.chkCloseInvoiceAndEstimatesAfterPrinting.selected = preferencesEstimating.closeInvoicesAndEstimateAfterPrinting
+		//this.chkCloseSourceAfterCopying.selected = preferencesEstimating.closeAfterCopy
+		//this.chkColorBar.selected = preferencesEstimating.useColorBar
+		//this.chkDoNotCostDuringPost.selected = preferencesEstimating.doNotCostDuringPost
+		//this.chkEnterStockCost.selected = preferencesEstimating.stockCostInEstimator
+		/* this.chkFolioEdge.selected = preferencesEstimating.useFolioEdge
+		this.chkGripEdge.selected = preferencesEstimating.useGripEdgeGap */
 		gripLocationValue = preferencesEstimating.gripLocation;
 		doGrip();
 		folioLocationValue = preferencesEstimating.folioLocation;
 		doFolio();
-		this.chkGutter.selected = preferencesEstimating.useGutter
-		this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimating.leaveFoldedSizeEmpty
-		this.chkNeverUsePresetPress.selected = preferencesEstimating.neverUsePresetPressOnStockChanges
-		this.chkPrintParentToFinish.selected = preferencesEstimating.printParentToFinishSection
+		//this.chkGutter.selected = preferencesEstimating.useGutter
+		//this.chkLeaveFoldedSizeEmpty.selected = preferencesEstimating.leaveFoldedSizeEmpty
+		//this.chkNeverUsePresetPress.selected = preferencesEstimating.neverUsePresetPressOnStockChanges
+		/* this.chkPrintParentToFinish.selected = preferencesEstimating.printParentToFinishSection
 		this.chkPrintParentToRun.selected = preferencesEstimating.printParentToRunSection
 		this.chkPrintRunToFinish.selected = preferencesEstimating.printRunToFinishSection
-		this.chkTrimFourSides.selected = preferencesEstimating.trimFourSides
-		this.chkUseHistoryTitle.selected = preferencesEstimating.useHistoryTitleforNewTitle
-		this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
-		this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
-		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble
+		this.chkTrimFourSides.selected = preferencesEstimating.trimFourSides */
+		//this.chkUseHistoryTitle.selected = preferencesEstimating.useHistoryTitleforNewTitle
+		//this.chkValidateSalesRep.selected = preferencesEstimating.validateSalesRep
+		/* this.chkWhiteSpace.selected = preferencesEstimating.useWhiteSpace
+		this.chkWorkAndTumble.selected = preferencesEstimating.workandTumble */
 //		Following code doesn't compile...		
 //		if (preferencesEstimating.defaultEstimate != null)
 //			cboDefaultEstimate.selectedIndex = findItem(preferencesEstimating.defaultEstimate, DefaultEstimateArray);
@@ -1123,25 +1123,25 @@
 //		if (preferencesEstimating.defaultInvoice != null)
 //			cboDefaultInvoice.selectedIndex = findItem(preferencesEstimating.defaultInvoice, DefaultInvoiceArray);
 //
-		if (preferencesEstimating.dueFrom != 0)
+		/* if (preferencesEstimating.dueFrom != 0)
 		{
 			optPaymentDueDays.selectedValue = preferencesEstimating.dueFrom.toString();
 		}else
 		{
 			optPaymentDueDays.selectedValue="1"
-		}
+		} */
 		
 
-		if (preferencesEstimating.runToFinishGrain != "")
-			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray);
+		/* if (preferencesEstimating.runToFinishGrain != "")
+			cboRunToFinishGrain.selectedIndex = findItem(preferencesEstimating.runToFinishGrain, RunToFinishGrainArray); */
 
 		if (preferencesEstimating.customJobTicket != "")
 			cboCustomStyle.selectedIndex = findItem(preferencesEstimating.customJobTicket, JobTicketStylesArray);
 			
 		opgChargeDescriptionValue = preferencesEstimating.chargeDescription;
 
-		this.txtNumberOfDaysBeforeDue.text = preferencesEstimating.numberOfDaysBeforeDue.toString();
-		this.txtGripEdge.text = preferencesEstimating.gripEdgeGap.toString();
+		//this.txtNumberOfDaysBeforeDue.text = preferencesEstimating.numberOfDaysBeforeDue.toString();
+		/* this.txtGripEdge.text = preferencesEstimating.gripEdgeGap.toString();
 		this.txtFolioEdge.text = preferencesEstimating.folioEdge.toString();
 		this.txtColorBar.text = preferencesEstimating.colorBar.toString();
 		this.txtWhiteSpace.text = preferencesEstimating.whiteSpace.toString();
@@ -1154,7 +1154,7 @@
 		this.txtGutterHorizontal.text = preferencesEstimating.gutterHorizontal.toString();
 		this.txtBleedTop.text = preferencesEstimating.bleedTop.toString();
 		this.txtBleedBottom.text = preferencesEstimating.bleedBottom.toString();
-		this.txtDefaultPressCutoff.text = preferencesEstimating.defaultPressCuttOff.toString();
+		this.txtDefaultPressCutoff.text = preferencesEstimating.defaultPressCuttOff.toString(); */
 
 	}
 	private function mapFromPreferencesPOSData():void {
@@ -1452,53 +1452,53 @@
 
 	}
 	private function mapToPreferencesEstimatingData():void {
-		preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
-		preferencesEstimating.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
-		preferencesEstimating.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
-		preferencesEstimating.attachToJobTicket = this.chkAttachToJobTicket.selected
-		preferencesEstimating.autoShowCharges = this.chkAutoShowCharges.selected
-		preferencesEstimating.showPaperCalculator = this.chkAutoShowPaperCalculator.selected
-		preferencesEstimating.backTrimParent = this.chkBackTrimParent.selected
-		preferencesEstimating.useBleed = this.chkBleed.selected
-		preferencesEstimating.calculateInkbyImpressions = this.chkCalculateInkByImpressions.selected
+		//preferencesEstimating.addFixedWasteForEachColor = this.chkAddFixedWasteForEachColor.selected
+		//preferencesEstimating.addFixedWasteForEachPass = this.chkAddFixedWasteForEachPass.selected
+		//preferencesEstimating.useStockParentSize = this.chkAlwaysUseStockParentSize.selected
+		//preferencesEstimating.attachToJobTicket = this.chkAttachToJobTicket.selected
+		//preferencesEstimating.autoShowCharges = this.chkAutoShowCharges.selected
+		//preferencesEstimating.showPaperCalculator = this.chkAutoShowPaperCalculator.selected
+		/* preferencesEstimating.backTrimParent = this.chkBackTrimParent.selected
+		preferencesEstimating.useBleed = this.chkBleed.selected */
+		/* preferencesEstimating.calculateInkbyImpressions = this.chkCalculateInkByImpressions.selected
 		preferencesEstimating.calculateReOrderDate = this.chkCalculateReOrderDate.selected
-		preferencesEstimating.canChangeAddress = this.chkCanChangeAddress.selected
-		preferencesEstimating.closeInvoiceAfterPrintingTicket = this.chkCloseInvoiceAfterPrinting.selected
-		preferencesEstimating.closeInvoicesAndEstimateAfterPrinting = this.chkCloseInvoiceAndEstimatesAfterPrinting.selected
-		preferencesEstimating.closeAfterCopy = this.chkCloseSourceAfterCopying.selected
-		preferencesEstimating.useColorBar = this.chkColorBar.selected
-		preferencesEstimating.doNotCostDuringPost = this.chkDoNotCostDuringPost.selected
-		preferencesEstimating.stockCostInEstimator = this.chkEnterStockCost.selected 
-		preferencesEstimating.useFolioEdge = this.chkFolioEdge.selected
+		preferencesEstimating.canChangeAddress = this.chkCanChangeAddress.selected */
+		/* preferencesEstimating.closeInvoiceAfterPrintingTicket = this.chkCloseInvoiceAfterPrinting.selected
+		preferencesEstimating.closeInvoicesAndEstimateAfterPrinting = this.chkCloseInvoiceAndEstimatesAfterPrinting.selected */
+		//preferencesEstimating.closeAfterCopy = this.chkCloseSourceAfterCopying.selected
+		//preferencesEstimating.useColorBar = this.chkColorBar.selected
+		/* preferencesEstimating.doNotCostDuringPost = this.chkDoNotCostDuringPost.selected
+		preferencesEstimating.stockCostInEstimator = this.chkEnterStockCost.selected  */
+		/* preferencesEstimating.useFolioEdge = this.chkFolioEdge.selected
 		preferencesEstimating.useGripEdgeGap = this.chkGripEdge.selected
 		
 		if (gripLocation.selectedValue != null)
 			preferencesEstimating.gripLocation = gripLocation.selectedValue.toString();
 		if (folioLocation.selectedValue != null)
 			preferencesEstimating.folioLocation = folioLocation.selectedValue.toString();	
-		preferencesEstimating.useGutter = this.chkGutter.selected
-		preferencesEstimating.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
-		preferencesEstimating.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected
-		preferencesEstimating.printParentToFinishSection = this.chkPrintParentToFinish.selected
+		preferencesEstimating.useGutter = this.chkGutter.selected */
+		/* preferencesEstimating.leaveFoldedSizeEmpty = this.chkLeaveFoldedSizeEmpty.selected
+		preferencesEstimating.neverUsePresetPressOnStockChanges = this.chkNeverUsePresetPress.selected */
+		/* preferencesEstimating.printParentToFinishSection = this.chkPrintParentToFinish.selected
 		preferencesEstimating.printParentToRunSection = this.chkPrintParentToRun.selected
 		preferencesEstimating.printRunToFinishSection = this.chkPrintRunToFinish.selected
-		preferencesEstimating.trimFourSides = this.chkTrimFourSides.selected
-		preferencesEstimating.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
-		preferencesEstimating.validateSalesRep = this.chkValidateSalesRep.selected
-		preferencesEstimating.useWhiteSpace = this.chkWhiteSpace.selected
-		preferencesEstimating.workandTumble = this.chkWorkAndTumble.selected
+		preferencesEstimating.trimFourSides = this.chkTrimFourSides.selected */
+		/* preferencesEstimating.useHistoryTitleforNewTitle = this.chkUseHistoryTitle.selected
+		preferencesEstimating.validateSalesRep = this.chkValidateSalesRep.selected */
+		/* preferencesEstimating.useWhiteSpace = this.chkWhiteSpace.selected
+		preferencesEstimating.workandTumble = this.chkWorkAndTumble.selected */
 
-		if (cboDefaultEstimate != null && cboDefaultEstimate.selectedItem != null)
+		/* if (cboDefaultEstimate != null && cboDefaultEstimate.selectedItem != null)
 	 		preferencesEstimating.defaultEstimate = cboDefaultEstimate.selectedItem.name;
 		if (cboDefaultInvoice != null && cboDefaultInvoice.selectedItem != null)
 	 		preferencesEstimating.defaultInvoice = cboDefaultInvoice.selectedItem.name;
 
 //		Following code doesn't compile...
 		if (optPaymentDueDays.selectedValue != null)
-			preferencesEstimating.dueFrom = parseInt(optPaymentDueDays.selectedValue.toString());
+			preferencesEstimating.dueFrom = parseInt(optPaymentDueDays.selectedValue.toString()); */
 
-		if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
-	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name;
+		/* if (cboRunToFinishGrain != null && cboRunToFinishGrain.selectedItem != null)
+	 		preferencesEstimating.runToFinishGrain = cboRunToFinishGrain.selectedItem.name; */
 		
 		if (cboCustomStyle != null && cboCustomStyle.selectedItem != null)
 			preferencesEstimating.customJobTicket = cboCustomStyle.selectedItem.name; 
@@ -1506,8 +1506,8 @@
 		preferencesEstimating.chargeDescription = opgChargeDescriptionValue;
 		
 		//textboxes
-		preferencesEstimating.numberOfDaysBeforeDue = parseInt(this.txtNumberOfDaysBeforeDue.text);
-		preferencesEstimating.gripEdgeGap = parseFloat(this.txtGripEdge.text);
+		//preferencesEstimating.numberOfDaysBeforeDue = parseInt(this.txtNumberOfDaysBeforeDue.text);
+		/* preferencesEstimating.gripEdgeGap = parseFloat(this.txtGripEdge.text);
 		preferencesEstimating.folioEdge = parseFloat(this.txtFolioEdge.text);
 		preferencesEstimating.colorBar = parseFloat(this.txtColorBar.text);
 		preferencesEstimating.whiteSpace = parseFloat(this.txtWhiteSpace.text);
@@ -1520,7 +1520,7 @@
 		preferencesEstimating.gutterHorizontal = parseFloat(this.txtGutterHorizontal.text);
 		preferencesEstimating.bleedTop = parseFloat(this.txtBleedTop.text);
 		preferencesEstimating.bleedBottom = parseFloat(this.txtBleedBottom.text);
-		preferencesEstimating.defaultPressCuttOff = parseFloat(this.txtDefaultPressCutoff.text);
+		preferencesEstimating.defaultPressCuttOff = parseFloat(this.txtDefaultPressCutoff.text); */
 
 	}
 	private function mapToPreferencesPOSData():void {
@@ -2364,7 +2364,7 @@
 	}
 	
 	private function doGrip():void{
-		if (gripLocation.selectedValue == "Top")
+		/* if (gripLocation.selectedValue == "Top")
 		{
 			topGrip.alpha = .4;
 			leftGrip.alpha = 1;
@@ -2373,11 +2373,11 @@
 		{
 			topGrip.alpha = 1;
 			leftGrip.alpha = .4;
-		}
+		} */
 			
 	}
 	private function doFolio():void{
-		if (folioLocation.selectedValue == "Top")
+		/* if (folioLocation.selectedValue == "Top")
 		{
 			topFolio.alpha = 0.4;
 			leftFolio.alpha = 1;
@@ -2386,7 +2386,7 @@
 		{
 			topFolio.alpha = 1;
 			leftFolio.alpha = .4;
-		}
+		} */
 			
 	}
 ]]>
@@ -2496,131 +2496,16 @@
 			<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
 				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<mx:Canvas width="100%" height="100%" id="estimatorbehavior_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorBehavior')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:CheckBox x="50" y="30" id="chkCloseSourceAfterCopying" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Closesourcedocumenta')}" width="453"/>
-				<mx:CheckBox x="50" y="55" id="chkEnterStockCost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.EnterStockCostinEsti')}" width="453"/>
-				<mx:CheckBox x="50" y="80" id="chkCanChangeAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CanchangeaddressonAL')}" width="453"/>
-				<mx:CheckBox x="50" y="105" id="chkAutoShowPaperCalculator" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AutoshowPaperCalcula')}" width="453"/>
-				<mx:CheckBox x="50" y="130" id="chkAlwaysUseStockParentSize" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AlwaysuseStocksParen')}" width="453"/>
-				<mx:CheckBox x="50" y="155" id="chkCalculateReOrderDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CalculateReorderdate')}" width="453"/>
-				<mx:CheckBox x="50" y="180" id="chkValidateSalesRep" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Validatesalesrep')}" width="453"/>
-				<mx:CheckBox x="50" y="205" id="chkLeaveFoldedSizeEmpty" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.LeaveFoldedsizeempty')}" width="453"/>
-				<mx:CheckBox x="50" y="230" id="chkDoNotCostDuringPost" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DonotperformCostingd')}" width="453"/>
-				<mx:CheckBox x="50" y="255" id="chkAutoShowCharges" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.AutoshowChargesonnew')}" width="453"/>
-				<mx:CheckBox x="50" y="280" id="chkNeverUsePresetPress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Neverusepresetpresso')}" width="453"/>
-				<mx:CheckBox x="50" y="305" id="chkAddFixedWasteForEachPass" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
-				<mx:CheckBox x="50" y="330" id="chkAddFixedWasteForEachColor" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}" width="453"/>
-				<mx:CheckBox x="50" y="355" id="chkCalculateInkByImpressions" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CalculateINKbyImpres')}" width="453"/>
-				<mx:CheckBox x="50" y="380" id="chkUseHistoryTitle" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}" width="453"/>
-
-				<mx:Label x="71" y="442" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Normalduedatedays')}" textAlign="right"/>
-				<mx:TextInput x="196" y="440" id="txtNormalDueDateDays" width="70" text="{preferencesEstimating.normalDueDateDays}"/>
+			<prefcomp:EstimatorBehaviorCanvasComponent id="estimatorbehavior_canvas" preferencesEstimating="{preferencesEstimating}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
+			<prefcomp:EstimatorPrintingCanvasComponent id="estimatorprinting_canvas" preferencesEstimating="{preferencesEstimating}"
+				defaultInvoiceArray="{DefaultInvoiceArray}" defaultEstimateArray="{DefaultEstimateArray}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="estimatorprinting_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorPrinting')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
+			<prefcomp:PaperCalculatorCanvasComponent id="papercalculator_canvas" preferencesEstimating="{preferencesEstimating}"
+				runToFinishGrainArray="{RunToFinishGrainArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:CheckBox x="50" y="30" id="chkCloseInvoiceAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}" width="400"/>
-				<mx:CheckBox x="50" y="55" id="chkCloseInvoiceAndEstimatesAfterPrinting" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}" width="400"/>
-
-				<mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}" textAlign="right" width="149"/>
-				<mx:Label x="10" y="117" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}" textAlign="right" width="150"/>
-
-				<mx:ComboBox x="160" y="90" id="cboDefaultInvoice"  dataProvider="{DefaultInvoiceArray}" labelField="name" width="250"/>
-				<mx:ComboBox x="160" y="115" id="cboDefaultEstimate"  dataProvider="{DefaultEstimateArray}" labelField="name" width="250"/>
-
-
-				<mx:Panel x="10" y="159" width="520" height="174" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PaymentDueDate')}">
-					<mx:Label x="20" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}" textAlign="right" width="165"/>
-					<mx:TextInput x="188" y="5" id="txtNumberOfDaysBeforeDue" width="50" text="{preferencesEstimating.numberOfDaysBeforeDue}"/>
-
-					<mx:RadioButtonGroup id="optPaymentDueDays"/>
-					<mx:RadioButton x="50" y="25" id="opbFromNotifiedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}" groupName="optPaymentDueDays" value="1" width="282"/>
-					<mx:RadioButton x="50" y="45" id="opbFromCompletedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}" groupName="optPaymentDueDays" value="2" width="282"/>
-					<mx:RadioButton x="50" y="65" id="opbFromPickupDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}" groupName="optPaymentDueDays" value="3" width="282"/>
-					<mx:RadioButton x="50" y="85" id="opbFromOrderedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}" groupName="optPaymentDueDays" value="4" width="282"/>
-					<mx:RadioButton x="50" y="105" id="opbFromPrintedDate" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}" groupName="optPaymentDueDays" value="5" width="282"/>
-				</mx:Panel>
-
-				
-			</mx:Canvas>
-			<mx:Canvas width="100%" height="100%" id="papercalculator_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:CheckBox x="30" y="52" id="chkGripEdge"/>
-				<mx:CheckBox x="30" y="102" id="chkFolioEdge"/>
-				<mx:CheckBox x="30" y="152" id="chkColorBar"/>
-				<mx:CheckBox x="30" y="202" id="chkWhiteSpace"/>
-				<mx:CheckBox x="30" y="302" id="chkGutter"/>
-				<mx:CheckBox x="30" y="352" id="chkBleed"/>
-				
-				<mx:Label x="50" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" textAlign="right"/>
-				<mx:Label x="50" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FolioEdge')}" textAlign="right"/>
-				<mx:Label x="50" y="130" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ColorBar')}" textAlign="right"/>
-				<mx:Label x="50" y="180" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WhiteSpace')}" textAlign="right"/>
-				<mx:Label x="50" y="230" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
-				<mx:Label x="50" y="280" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Gutter')}" textAlign="right"/>
-				<mx:Label x="50" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}" textAlign="right"/>
-				<mx:Label x="50" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}" textAlign="right"/>
-
-				<mx:TextInput x="50" y="50" id="txtGripEdge" restrict="0-9." width="93" text="{preferencesEstimating.gripEdgeGap}"/>
-				<mx:TextInput x="50" y="100" id="txtFolioEdge" restrict="0-9." width="93" text="{preferencesEstimating.folioEdge}"/>
-				<mx:TextInput x="50" y="150" id="txtColorBar" restrict="0-9." width="93" text="{preferencesEstimating.colorBar}"/>
-				<mx:TextInput x="50" y="200" id="txtWhiteSpace" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpace}"/>
-				<mx:TextInput x="50" y="250" id="txtWhiteSpaceRight" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceRight}"/>
-				<mx:TextInput x="50" y="300" id="txtGutter" restrict="0-9." width="93" text="{preferencesEstimating.gutter}"/>
-				<mx:TextInput x="50" y="350" id="txtBleed" restrict="0-9." width="93" text="{preferencesEstimating.bleed}"/>
-				<mx:TextInput x="50" y="400" id="txtBleedRight" restrict="0-9." width="93" text="{preferencesEstimating.bleedRight}"/>
-
-				<mx:Label x="151" y="180" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
-				<mx:Label x="151" y="230" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
-				<mx:Label x="151" y="280" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Horizontal')}" textAlign="right"/>
-				<mx:Label x="151" y="330" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}" textAlign="right"/>
-				<mx:Label x="151" y="380" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}" textAlign="right"/>
-
-				<mx:TextInput x="151" y="200" id="txtWhiteSpaceTop" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceTop}"/>
-				<mx:TextInput x="151" y="250" id="txtWhiteSpaceBottom" restrict="0-9." width="93" text="{preferencesEstimating.whiteSpaceBottom}"/>
-				<mx:TextInput x="151" y="300" id="txtGutterHorizontal" restrict="0-9." width="93" text="{preferencesEstimating.gutterHorizontal}"/>
-				<mx:TextInput x="151" y="350" id="txtBleedTop" restrict="0-9." width="93" text="{preferencesEstimating.bleedTop}"/>
-				<mx:TextInput x="151" y="400" id="txtBleedBottom" restrict="0-9." width="93" text="{preferencesEstimating.bleedBottom}"/>
-
-				<mx:Label x="27" y="462" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DefaultPressCutoff')}" textAlign="right"/>
-				<mx:TextInput x="151" y="460" id="txtDefaultPressCutoff" restrict="0-9." width="93" text="{preferencesEstimating.defaultPressCuttOff}"/>
-
-
-				<mx:CheckBox x="260" y="52" id="chkBackTrimParent" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"/>
-				<mx:CheckBox x="260" y="77" id="chkTrimFourSides" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"/>
-				<mx:CheckBox x="260" y="102" id="chkWorkAndTumble" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"/>
-
-				<mx:Label x="239" y="152" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}" textAlign="right" width="160"/>
-				<mx:ComboBox x="407" y="150" id="cboRunToFinishGrain"  dataProvider="{RunToFinishGrainArray}" labelField="name" width="164"/>
-
-				<mx:Panel x="260" y="200" width="270" height="135" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
-					<mx:CheckBox x="10" y="5" id="chkPrintParentToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"/>
-					<mx:CheckBox x="10" y="25" id="chkPrintParentToRun" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}"/>
-					<mx:CheckBox x="10" y="45" id="chkPrintRunToFinish" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}"/>
-					<mx:CheckBox x="10" y="65" id="chkAttachToJobTicket" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}"/>
-				</mx:Panel>
-				<mx:RadioButtonGroup id="gripLocation" selectedValue="{gripLocationValue}" change="doGrip()"/>
-				<mx:RadioButton x="167" y="46" value="Top" id="topGrip" icon="@Embed(source='../../../../assets/Original PS Icons/GripSideTopBottom.png')" groupName="gripLocation" width="36" height="29" enabled="true"/>
-				<mx:RadioButton x="202" y="46" value="Left"  id="leftGrip" groupName="gripLocation" width="32" height="29">
-					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/GripSideLeftRight.png')</mx:icon>
-				</mx:RadioButton>
-				<mx:RadioButtonGroup id="folioLocation" selectedValue="{folioLocationValue}"  change="doFolio();"/>
-				<mx:RadioButton x="167" y="95" value="Top" id="topFolio" groupName="folioLocation" >
-					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideTopBottom.png')</mx:icon>
-				</mx:RadioButton>
-				<mx:RadioButton x="202" y="95"  value="Left" id="leftFolio" groupName="folioLocation" >
-					<mx:icon>@Embed(source='../../../../assets/Original PS Icons/FolioSideLeftRight.png')</mx:icon>
-				</mx:RadioButton>
-				
-			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="jobticket_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
