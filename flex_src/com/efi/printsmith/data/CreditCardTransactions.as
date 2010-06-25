@@ -14,19 +14,12 @@ package com.efi.printsmith.data
 		}
 				
 		public var transactionDate:Date = new Date();
-		public var cardType:String = "";
 		public var transactionType:String = "";
 		public var transactionStatus:String = "";
 		public var transactionResults:String = "";
-		public var encryption:String = "";
-		public var address:Address;
-		public var cCHolderName:String = "";
-		public var cCNumber:String = "";
-		public var cCNumberDisplay:String = "";
 		public var amount:Number = 0;
 		public var taxInAmount:Boolean = false;
 		public var invoice:Invoice;
-		public var contact:Contact;
 		public var poNumber:String = "";
 		public var referenceNumber:String = "";
 		public var approvalCode:String = "";
@@ -42,6 +35,10 @@ package com.efi.printsmith.data
 		public var taxCode:TaxCodes;
 		public var taxTable:TaxTable;
 		public var userName:String = "";
+		public var trackOne:String = "";
+		public var trackTwo:String = "";
+		public var creditCard:CreditCard;
+		public var tempCVV2:String = "";
 	
 	}
 }

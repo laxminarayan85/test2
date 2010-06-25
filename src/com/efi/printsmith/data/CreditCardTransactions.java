@@ -48,10 +48,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String CARDTYPE = "CardType";
-	/**
-	 * @generated
-	 */
 	public static final String TRANSACTIONTYPE = "TransactionType";
 	/**
 	 * @generated
@@ -64,26 +60,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ENCRYPTION = "Encryption";
-	/**
-	 * @generated
-	 */
-	public static final String ADDRESS = "Address";
-	/**
-	 * @generated
-	 */
-	public static final String CCHOLDERNAME = "CCHolderName";
-	/**
-	 * @generated
-	 */
-	public static final String CCNUMBER = "CCNumber";
-	/**
-	 * @generated
-	 */
-	public static final String CCNUMBERDISPLAY = "CCNumberDisplay";
-	/**
-	 * @generated
-	 */
 	public static final String AMOUNT = "Amount";
 	/**
 	 * @generated
@@ -93,10 +69,6 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */
 	public static final String INVOICE = "Invoice";
-	/**
-	 * @generated
-	 */
-	public static final String CONTACT = "Contact";
 	/**
 	 * @generated
 	 */
@@ -160,6 +132,23 @@ public class CreditCardTransactions extends ModelBase {
   public static final String USERNAME = "UserName";
 
 	/**
+   * @generated
+   */
+  public static final String TRACKONE = "TrackOne";
+	/**
+   * @generated
+   */
+  public static final String TRACKTWO = "TrackTwo";
+	/**
+   * @generated
+   */
+  public static final String CREDITCARD = "CreditCard";
+	/**
+   * @generated
+   */
+  public static final String TEMPCVV2 = "TempCVV2";
+
+	/**
 	 * @generated
 	 */
 	public CreditCardTransactions() {
@@ -188,28 +177,6 @@ public class CreditCardTransactions extends ModelBase {
 	 */	
 	public void setTransactionDate(Date newVal) {
     this.transactionDate = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String cardType;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCardType(){
-    return cardType; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCardType(String newVal) {
-    this.cardType = newVal;
   }
  	
 	
@@ -283,116 +250,6 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private String encryption;
-	
-	/**
-	 * @generated
- 	 */
-	public String getEncryption(){
-    return encryption; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setEncryption(String newVal) {
-    this.encryption = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	private Address address;
-	
-	/**
-	 * @generated
- 	 */
-	public Address getAddress(){
-    return address; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setAddress(Address newVal) {
-    this.address = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String cCHolderName;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCCHolderName(){
-    return cCHolderName; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCCHolderName(String newVal) {
-    this.cCHolderName = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String cCNumber;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCCNumber(){
-    return cCNumber; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCCNumber(String newVal) {
-    this.cCNumber = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String cCNumberDisplay;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCCNumberDisplay(){
-    return cCNumberDisplay; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCCNumberDisplay(String newVal) {
-    this.cCNumberDisplay = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
 	private Double amount;
 	
 	/**
@@ -452,28 +309,6 @@ public class CreditCardTransactions extends ModelBase {
 	 */	
 	public void setInvoice(Invoice newVal) {
     this.invoice = newVal;
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	private Contact contact;
-	
-	/**
-	 * @generated
- 	 */
-	public Contact getContact(){
-    return contact; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setContact(Contact newVal) {
-    this.contact = newVal;
   }
  	
 	
@@ -807,25 +642,109 @@ public class CreditCardTransactions extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String trackOne;
+
+	/**
+   * @generated
+ 	 */
+  public String getTrackOne(){
+    return trackOne; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTrackOne(String newVal) {
+    this.trackOne = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String trackTwo;
+
+	/**
+   * @generated
+ 	 */
+  public String getTrackTwo(){
+    return trackTwo; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTrackTwo(String newVal) {
+    this.trackTwo = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private CreditCard creditCard;
+
+	/**
+   * @generated
+ 	 */
+  public CreditCard getCreditCard(){
+    return creditCard; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCreditCard(CreditCard newVal) {
+    this.creditCard = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String tempCVV2;
+
+	/**
+   * @generated
+ 	 */
+  public String getTempCVV2(){
+    return tempCVV2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTempCVV2(String newVal) {
+    this.tempCVV2 = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (TRANSACTIONDATE.equals(propertyName)) return getTransactionDate();
-    if (CARDTYPE.equals(propertyName)) return getCardType();
     if (TRANSACTIONTYPE.equals(propertyName)) return getTransactionType();
     if (TRANSACTIONSTATUS.equals(propertyName)) return getTransactionStatus();
     if (TRANSACTIONRESULTS.equals(propertyName)) return getTransactionResults();
-    if (ENCRYPTION.equals(propertyName)) return getEncryption();
-    if (ADDRESS.equals(propertyName)) return getAddress();
-    if (CCHOLDERNAME.equals(propertyName)) return getCCHolderName();
-    if (CCNUMBER.equals(propertyName)) return getCCNumber();
-    if (CCNUMBERDISPLAY.equals(propertyName)) return getCCNumberDisplay();
     if (AMOUNT.equals(propertyName)) return getAmount();
     if (TAXINAMOUNT.equals(propertyName)) return getTaxInAmount();
     if (INVOICE.equals(propertyName)) return getInvoice();
-    if (CONTACT.equals(propertyName)) return getContact();
     if (PONUMBER.equals(propertyName)) return getPoNumber();
     if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
     if (APPROVALCODE.equals(propertyName)) return getApprovalCode();
@@ -841,6 +760,10 @@ public class CreditCardTransactions extends ModelBase {
     if (TAXCODE.equals(propertyName)) return getTaxCode();
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
     if (USERNAME.equals(propertyName)) return getUserName();
+    if (TRACKONE.equals(propertyName)) return getTrackOne();
+    if (TRACKTWO.equals(propertyName)) return getTrackTwo();
+    if (CREDITCARD.equals(propertyName)) return getCreditCard();
+    if (TEMPCVV2.equals(propertyName)) return getTempCVV2();
     return super.getProperty(propertyName);
   }
 	
@@ -851,19 +774,12 @@ public class CreditCardTransactions extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (TRANSACTIONDATE.equals(propertyName)) setTransactionDate((Date)newValue); else
-    if (CARDTYPE.equals(propertyName)) setCardType((String)newValue); else
     if (TRANSACTIONTYPE.equals(propertyName)) setTransactionType((String)newValue); else
     if (TRANSACTIONSTATUS.equals(propertyName)) setTransactionStatus((String)newValue); else
     if (TRANSACTIONRESULTS.equals(propertyName)) setTransactionResults((String)newValue); else
-    if (ENCRYPTION.equals(propertyName)) setEncryption((String)newValue); else
-    if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
-    if (CCHOLDERNAME.equals(propertyName)) setCCHolderName((String)newValue); else
-    if (CCNUMBER.equals(propertyName)) setCCNumber((String)newValue); else
-    if (CCNUMBERDISPLAY.equals(propertyName)) setCCNumberDisplay((String)newValue); else
     if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
     if (TAXINAMOUNT.equals(propertyName)) setTaxInAmount((Boolean)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (PONUMBER.equals(propertyName)) setPoNumber((String)newValue); else
     if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
     if (APPROVALCODE.equals(propertyName)) setApprovalCode((String)newValue); else
@@ -879,6 +795,10 @@ public class CreditCardTransactions extends ModelBase {
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (USERNAME.equals(propertyName)) setUserName((String)newValue); else
+    if (TRACKONE.equals(propertyName)) setTrackOne((String)newValue); else
+    if (TRACKTWO.equals(propertyName)) setTrackTwo((String)newValue); else
+    if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
+    if (TEMPCVV2.equals(propertyName)) setTempCVV2((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -890,23 +810,11 @@ public class CreditCardTransactions extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (TRANSACTIONDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
-    if (CARDTYPE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
     if (TRANSACTIONTYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (TRANSACTIONSTATUS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (TRANSACTIONRESULTS.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (ENCRYPTION.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (ADDRESS.equals(propertyName)) 
-      return new Class<?>[] {Address.class};		
-    if (CCHOLDERNAME.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CCNUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CCNUMBERDISPLAY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (AMOUNT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
@@ -914,8 +822,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
-    if (CONTACT.equals(propertyName)) 
-      return new Class<?>[] {Contact.class};		
     if (PONUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (REFERENCENUMBER.equals(propertyName)) 
@@ -946,6 +852,14 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {TaxTable.class};		
     if (USERNAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (TRACKONE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (TRACKTWO.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CREDITCARD.equals(propertyName)) 
+      return new Class<?>[] {CreditCard.class};		
+    if (TEMPCVV2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -957,19 +871,12 @@ public class CreditCardTransactions extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (TRANSACTIONDATE.equals(propertyName)) return CreditCardTransactions.class;
-    if (CARDTYPE.equals(propertyName)) return CreditCardTransactions.class;
     if (TRANSACTIONTYPE.equals(propertyName)) return CreditCardTransactions.class;
     if (TRANSACTIONSTATUS.equals(propertyName)) return CreditCardTransactions.class;
     if (TRANSACTIONRESULTS.equals(propertyName)) return CreditCardTransactions.class;
-    if (ENCRYPTION.equals(propertyName)) return CreditCardTransactions.class;
-    if (ADDRESS.equals(propertyName)) return CreditCardTransactions.class;
-    if (CCHOLDERNAME.equals(propertyName)) return CreditCardTransactions.class;
-    if (CCNUMBER.equals(propertyName)) return CreditCardTransactions.class;
-    if (CCNUMBERDISPLAY.equals(propertyName)) return CreditCardTransactions.class;
     if (AMOUNT.equals(propertyName)) return CreditCardTransactions.class;
     if (TAXINAMOUNT.equals(propertyName)) return CreditCardTransactions.class;
     if (INVOICE.equals(propertyName)) return CreditCardTransactions.class;
-    if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (PONUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (REFERENCENUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (APPROVALCODE.equals(propertyName)) return CreditCardTransactions.class;
@@ -985,6 +892,10 @@ public class CreditCardTransactions extends ModelBase {
     if (TAXCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (TAXTABLE.equals(propertyName)) return CreditCardTransactions.class;
     if (USERNAME.equals(propertyName)) return CreditCardTransactions.class;
+    if (TRACKONE.equals(propertyName)) return CreditCardTransactions.class;
+    if (TRACKTWO.equals(propertyName)) return CreditCardTransactions.class;
+    if (CREDITCARD.equals(propertyName)) return CreditCardTransactions.class;
+    if (TEMPCVV2.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -998,31 +909,17 @@ public class CreditCardTransactions extends ModelBase {
     CreditCardTransactions objT = (CreditCardTransactions)obj;
     if (! SmartEquals(getTransactionDate(), objT.getTransactionDate()))
       return false;
-    if (! SmartEquals(getCardType(), objT.getCardType()))
-      return false;
     if (! SmartEquals(getTransactionType(), objT.getTransactionType()))
       return false;
     if (! SmartEquals(getTransactionStatus(), objT.getTransactionStatus()))
       return false;
     if (! SmartEquals(getTransactionResults(), objT.getTransactionResults()))
       return false;
-    if (! SmartEquals(getEncryption(), objT.getEncryption()))
-      return false;
-    if (! SmartEquals(getAddress(), objT.getAddress()))
-      return false;
-    if (! SmartEquals(getCCHolderName(), objT.getCCHolderName()))
-      return false;
-    if (! SmartEquals(getCCNumber(), objT.getCCNumber()))
-      return false;
-    if (! SmartEquals(getCCNumberDisplay(), objT.getCCNumberDisplay()))
-      return false;
     if (! SmartEquals(getAmount(), objT.getAmount()))
       return false;
     if (! SmartEquals(getTaxInAmount(), objT.getTaxInAmount()))
       return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
-      return false;
-    if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     if (! SmartEquals(getPoNumber(), objT.getPoNumber()))
       return false;
@@ -1053,6 +950,14 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
       return false;
     if (! SmartEquals(getUserName(), objT.getUserName()))
+      return false;
+    if (! SmartEquals(getTrackOne(), objT.getTrackOne()))
+      return false;
+    if (! SmartEquals(getTrackTwo(), objT.getTrackTwo()))
+      return false;
+    if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
+      return false;
+    if (! SmartEquals(getTempCVV2(), objT.getTempCVV2()))
       return false;
     return true;
   }			
