@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="100%" height="818" creationComplete="init()" 
+	layout="absolute" width="559" height="394" creationComplete="init()" 
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" name="Stock Definition">
 <mx:RemoteObject id="dataTableService" destination="dataService">
@@ -20,16 +20,18 @@ import mx.collections.ArrayCollection;
 import mx.rpc.events.FaultEvent;  
 import mx.controls.Alert; 
 import com.efi.printsmith.data.TableEditor; 
+import com.efi.printsmith.data.*;
 
 
 [Bindable]                             
 	private var tablesArray : ArrayCollection = new ArrayCollection(); 
+[Bindable]
+	private var tempClass:Class;
 [Bindable]                             
 	private var tableDataArray : ArrayCollection = new ArrayCollection();                                    
 
 [Bindable]                             
 	private var new_pass:String= new String; 
-	
 	
 	public function init():void {
 		loadTables();
@@ -47,6 +49,7 @@ import com.efi.printsmith.data.TableEditor;
 		tablesArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadTableDataResult(ev:ResultEvent):void{
+		tableDataArray = new ArrayCollection();
 	  tableDataArray = ev.result as ArrayCollection;
 	}
 	private function loadTables():void {
@@ -64,7 +67,191 @@ import com.efi.printsmith.data.TableEditor;
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
 		doTableCombo();
+	}
+	
+	private function setClassType():Class{
+		var temp:TableEditor;
 		
+		temp = table_combo.selectedItem as TableEditor;
+		
+		 switch (temp.name)
+		 {
+			case "Business Type":
+				tempClass = BusinessType;
+				break;
+		 	case "City":
+		 		tempClass = City
+		 		break;
+		 	case "CommonInterest":
+		 		tempClass = CommonInterest
+		 		break;
+		 	case "Dimension":
+		 		tempClass = Dimension
+		 		break;
+		 /* 	case "ContactNameSuffixes":
+		 		tempClass = ContactNameSuffixes
+		 		break; */
+		 	case "Country":
+		 		tempClass = Country
+		 		break;
+		 	case "CTPSubstrate":
+		 		tempClass = CTPSubstrate
+		 		break;
+		 	case "Driver":
+		 		tempClass = Driver
+		 		break;
+		 	case "GenericColors":
+		 		tempClass = GenericColors
+		 		break;
+		 	case "HoldState":
+		 		tempClass = HoldState
+		 		break;
+		 	case "InkColor":
+		 		tempClass = InkColor
+		 		break;
+		 	/* case "JobTitle":
+		 		tempClass = JobTitle
+		 		break; */
+		 	case "LeadSource":
+		 		tempClass = LeadSource
+		 		break;
+		 	case "MailerType": 
+		 		tempClass = MailerType
+		 		break;
+		 	case "MarketingDateLabels":
+		 		tempClass = MarketingDateLabels
+		 		break;
+			case "MarketingMailers":
+		 		tempClass = MarketingMailers
+		 		break;
+		 	case "PhoneTags":
+		 		tempClass = PhoneTags
+		 		break;
+		 	case "ProductionCopiers":
+		 		tempClass = ProductionCopiers
+		 		break;
+		 	case "ProductionDates":
+		 		tempClass = ProductionDates
+		 		break;
+		 	case "ProductionExceptions":
+		 		tempClass = ProductionExceptions
+		 		break;
+		 	case "ProductionFacilities":
+		 		tempClass = ProductionFacilities
+		 		break;
+		 	case "ProductionLocations":
+		 		tempClass = ProductionLocations
+		 		break;
+		 	case "ProductionPress":
+		 		tempClass = ProductionPress
+		 		break;
+		 	case "ProductionPriority":
+		 		tempClass = ProductionPriority
+		 		break;
+		 	case "ProductionStations":
+		 		tempClass = ProductionStations
+		 		break;
+		 	case "Products":
+		 		tempClass = Products
+		 		break;
+		 	case "ReportCategories":
+		 		tempClass = ReportCategories
+		 		break;
+		 	case "SalesRep":
+		 		tempClass = SalesRep
+		 		break;
+		 		
+		 	case "ShippingMethod":
+		 		tempClass = ShippingMethod
+		 		break;
+		 	case "SportsInterest":
+		 		tempClass = SportsInterest
+		 		break;
+		 	case "State":
+		 		tempClass = State
+		 		break;
+		 	case "StockColors":
+		 		tempClass = StockColors
+		 		break;
+		 	case "StockFinish":
+		 		tempClass = StockFinish
+		 		break;
+		 	case "StockForest":
+		 		tempClass = StockForest
+		 		break;
+		 	case "StockGrade":
+		 		tempClass = StockGrade
+		 		break;
+		 	case "StockGroup":
+		 		tempClass = StockGroup
+		 		break;
+		 	case "TaxCodes":
+		 		tempClass = TaxCodes
+		 		break;
+		 	case "TaxTablesElements":
+		 		tempClass = TaxTablesElements
+		 		break;
+		 	case "TaxTable":
+		 		tempClass = TaxTable
+		 		break;
+		 	case "TypeofWork":
+		 		tempClass = TypeofWork
+		 		break;
+		 	case "Vendor":
+		 		tempClass = Vendor
+		 		break;
+		 	case "WebLocations":
+		 		tempClass = WebLocations
+		 		break;
+		 	case "Zip":
+		 		tempClass =Zip
+		 		break;
+		 	
+		
+		 }
+		return tempClass;
+	}
+	private function doSave():void{
+		
+		for (var i:int = 0; i < tableDataArray.length; i++) 
+	 		dataService.addUpdate(tableDataArray.getItemAt(i));
+		
+	}
+	
+	private function addItem():void{
+		var tempClass:Class;
+		var tempObject: Object;
+		tempClass = setClassType();
+		tempObject = new tempClass();
+		tempObject.id = 0;
+		tableDataArray.addItem(tempObject);
+		
+		
+	}
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	
+	private function removeItem() : void{
+		var temp:TableEditor;
+		var index:int;
+		tempClass = setClassType();
+		var tempObject: Object = new tempClass();
+		temp = table_combo.selectedItem as TableEditor;
+		tempObject = datagrid.selectedItem as tempClass;
+		if ( tempObject.id  == 0){
+			index = findItem(tempObject.name, tableDataArray);
+			tableDataArray.removeItemAt(index);
+		}
+		else
+			dataService.deleteItem(temp.name, tempObject.id);
+	
 	}
 	private function doDelete():void{
 		var temp:TableEditor;
@@ -76,32 +263,34 @@ import com.efi.printsmith.data.TableEditor;
 	}
 	
 	private function doAdd():void{
-		var temp:TableEditor;
-		var temp2:TableEditor;
-		//var tempclass:Class = new Class();
-		temp = table_combo.selectedItem as TableEditor;
-
-		if (datagrid.selectedItem != null){
-//		temp2 = datagrid.selectedItem as temp.name;
-			dataService.addUpdate(temp2);
-		}
+		
 	}
 ]]>        
 </mx:Script>
 
 
-	<mx:ComboBox x="176" y="31" id="table_combo" dataProvider="{tablesArray}" change="doTableCombo();" width="167" labelField="userName"></mx:ComboBox>
-	<mx:Label x="38" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
-	<mx:Button id="button_delete" x="370" y="23" width="38" height="38" click="doDelete();">
-		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-	</mx:Button>
-	<mx:Label  x="373" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-	<mx:DataGrid  id="datagrid" x="38" y="130" width="416"  editable="true" dataProvider="{tableDataArray}" height="445" change="doAdd()" >
+	<mx:ComboBox x="268" y="26" id="table_combo" dataProvider="{tablesArray}" change="doTableCombo();" width="167" labelField="userName"></mx:ComboBox>
+	<mx:Label x="130" y="28" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
+	<mx:DataGrid  id="datagrid" x="38" y="120" width="416"  editable="true" dataProvider="{tableDataArray}" height="215" change="doAdd()" >
 		<mx:columns>
-			<mx:DataGridColumn  id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="id"/>
+			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="id"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
 			<mx:DataGridColumn  id="namecolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" dataField="name"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<mx:Button x="47" y="18"  click="doSave()" width="38" height="38" icon="@Embed(source='../../../../assets/save.png')"/>
+	<mx:Label x="47" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>
+	<mx:LinkButton x="47"
+				   id="remove_item_button"
+				   click="removeItem()"
+				   icon="@Embed(source='../../../../assets/delete16.png')"
+				   width="24"
+				   bottom="242"/>
+	<mx:LinkButton x="79"
+				   id="add_item_button"
+				   click="addItem()"
+				   icon="@Embed(source='../../../../assets/add16.png')"
+				   width="24"
+				   bottom="242"/>
 
 </mx:Panel>

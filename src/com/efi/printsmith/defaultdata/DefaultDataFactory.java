@@ -446,13 +446,6 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableEditor();
-		tableEditor.setName("SalesRep");
-		tableEditor.setUserName("Sales Rep");
-		try {
-			tableEditor = (TableEditor) dataservice.addUpdate(tableEditor);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}tableEditor = new TableEditor();
 		tableEditor.setName("TypeofWork");
 		tableEditor.setUserName("Type of Work");
 		
