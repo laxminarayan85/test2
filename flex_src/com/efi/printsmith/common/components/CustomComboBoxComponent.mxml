@@ -28,17 +28,27 @@
 			[Bindable] public var dropDownWidth:Number = 0;
 			[Bindable] public var showToolTip:Boolean = false;
 			[Bindable] public var updateFirstElement:Boolean = false;
+			[Bindable] public var updateObject:Boolean = false;
+			[Bindable] public var objectLabelFieldId:String;
 			
 			/**
 			 * This method helps to perform some opreration onload of component.
 			 */
 			public function comboBoxInit():void{
 				if(updateFirstElement && masterList != null && masterList.length>0){
-					if(data!= null && (data[variableName] == null || data[variableName] == 0)){
-		   				data[variableName] = masterList.getItemAt(0)[labelFieldId];
-			   		}else if(dataHolder != null && ( dataHolder[variableName] == null || dataHolder[variableName] == 0)){
-			   			dataHolder[variableName] = masterList.getItemAt(0)[labelFieldId];
-			   		}
+					if(updateObject) {
+						if(data!= null && (data[variableName]==null || data[variableName]==0)){
+			   				data[variableName] = masterList.getItemAt(0);
+				   		}else if(dataHolder != null && (dataHolder[variableName]==null || dataHolder[variableName]==0)){
+				   			dataHolder[variableName] = masterList.getItemAt(0);
+				   		}
+					} else {
+						if(data!= null && (data[variableName] == null || data[variableName] == 0)){
+			   				data[variableName] = masterList.getItemAt(0)[labelFieldId];
+				   		}else if(dataHolder != null && ( dataHolder[variableName] == null || dataHolder[variableName] == 0)){
+				   			dataHolder[variableName] = masterList.getItemAt(0)[labelFieldId];
+				   		}
+			  		}
 				}
 			}
 			
@@ -80,14 +90,22 @@
 		    	}
 		    	if(!invalidSelection){
 		       		for(var index:int = 0; index < dataProvider.length; index++){
-		       			if(displayValue.getItemAt(objDataGridData) != null) { 
-			   		 		if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
-				       		 	this.selectedIndex = index;
-				      		 	break;
-			  		 		}
+		       			if(displayValue.getItemAt(objDataGridData) != null) {
+		       				if(updateObject){
+		       					if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName][objectLabelFieldId]){
+					       		 	this.selectedIndex = index;
+					      		 	break;
+				  		 		}
+		       				} else {
+				   		 		if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
+					       		 	this.selectedIndex = index;
+					      		 	break;
+				  		 		}
+		       				}
 		       			} 
 		       		} 
-	      		}	
+	      		}
+	      		comboBoxInit();
 		    }
     
 			/**
@@ -177,14 +195,22 @@
 				if(repeaterElement){
 					if(event.currentTarget.getRepeaterItem() != null){
 						if(initialKeyValue){
-							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
-								event.currentTarget.getRepeaterItem()[variableName] = null;
-							else
+							if(updateObject) {
+								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
+							} else {
+								if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+									event.currentTarget.getRepeaterItem()[variableName] = null;
+								else
+									event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+						}
+						else {
+							if(updateObject){
+								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
+							} else { 
 								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
-						else {
-							event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
-							}
+						}
 					}
 				}
 				else {
@@ -196,8 +222,12 @@
 								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
 						else {
-							dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							if(updateObject) {
+								dataHolder[variableName] = event.currentTarget.selectedItem;
+							} else {
+								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
+						}
 					}
 					else {
 						if(initialKeyValue){
@@ -207,7 +237,11 @@
 						 		data[variableName] = event.currentTarget.selectedItem[labelFieldId];
 						}
 						else {
-							data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							if(updateObject) {
+								data[variableName] = event.currentTarget.selectedItem;
+							} else {
+								data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
 						}
 					}
 				}
