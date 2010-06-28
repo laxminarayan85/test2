@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesAccounting")]
 	[Managed]
 	
-	public class PreferencesAccounting extends ModelBase
+	public dynamic class PreferencesAccounting extends ModelBase
 	{
 
 		public function PreferencesAccounting() {
@@ -63,6 +63,8 @@ package com.efi.printsmith.data
 		public var merchantKey:String = "";
 		public var useAddressValidation:Boolean = false;
 		public var promptUserForValidationInfo:Boolean = false;
+		
+		public var creditCardProcessor:String="";
 	
 	}
 }

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesPricingMethod")]
 	[Managed]
 	
-	public class PreferencesPricingMethod extends ModelBase
+	public dynamic class PreferencesPricingMethod extends ModelBase
 	{
 
 		public function PreferencesPricingMethod() {
