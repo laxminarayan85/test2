@@ -101,6 +101,18 @@
 	<mx:RemoteObject id="dataServiceEstimatorTypes" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadEstimatorTypesResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTaxTables" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTablesResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTaxCodes" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodesResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceJobMethods" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadJobMethodsResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
@@ -292,6 +304,12 @@
 	[Bindable] public var numberCanvasTextInput:CustomStringTextInputComponent;
 	
 	[Bindable] public var estimatorTypesArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var taxTablesArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var taxCodesArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var jobMethodsArray:ArrayCollection = new ArrayCollection();
 	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
@@ -667,6 +685,9 @@
 		dataServiceStocks.getAll("PreferencesStocks");
 		dataServiceIntegration.getAll("PreferencesIntegration");
 		dataServiceEstimatorTypes.getAll("EstimatorTypes");
+		dataServiceTaxTables.getAll("TaxTable");
+		dataServiceTaxCodes.getAll("TaxCodes");
+		dataServiceJobMethods.getAll("JobMethod");
 	}
 
 	private function updatePreferencesData():void{
@@ -935,6 +956,18 @@
 
 	private function handleLoadEstimatorTypesResult(event:ResultEvent):void {
 		estimatorTypesArray = event.result as ArrayCollection;
+	}
+	
+	private function handleLoadTaxTablesResult(event:ResultEvent):void {
+		taxTablesArray = event.result as ArrayCollection;
+	}
+	
+	private function handleLoadTaxCodesResult(event:ResultEvent):void {
+		taxCodesArray = event.result as ArrayCollection;
+	}
+	
+	private function handleLoadJobMethodsResult(event:ResultEvent):void {
+		jobMethodsArray = event.result as ArrayCollection;
 	}
 
 	private function handleLoadIntegrationResult(ev:ResultEvent):void {
@@ -1318,32 +1351,6 @@
 	private function doSelectFolder():void{
 		
 	}
-
-	private function doNewCashRegister():void{
-		var newItem:PreferencesCashRegister = new PreferencesCashRegister();
-		PreferencesCashRegisterArray.addItem(newItem);
-	}
-	private function doRemoveCashRegister():void{
-		if (CashRegisterGrid.selectedIndex > -1){
-			var newItem:PreferencesCashRegister = CashRegisterGrid.selectedItem as PreferencesCashRegister;
-			PreferencesCashRegisterDeleteArray.addItem(newItem);
-			PreferencesCashRegisterArray.removeItemAt(CashRegisterGrid.selectedIndex);
-		}
-	}
-
-	private function doNewQuantityBreak():void{
-		var newItem:PreferencesQuantityBreaks = new PreferencesQuantityBreaks();
-		PreferencesQuantityBreaksArray.addItem(newItem);
-		
-	}
-
-	private function doRemoveQuantityBreak():void{
-		if (QuantityBreaksGrid.selectedIndex > -1){
-			var newItem:PreferencesQuantityBreaks = QuantityBreaksGrid.selectedItem as PreferencesQuantityBreaks;
-			PreferencesQuantityBreaksDeleteArray.addItem(newItem);
-			PreferencesQuantityBreaksArray.removeItemAt(QuantityBreaksGrid.selectedIndex);
-		}
-	}
 	
 
 	private function doNewMarkup(item:String):void{
@@ -1392,80 +1399,6 @@
 			SalesCategoryGrid.dataProvider.itemUpdated(event.itemRenderer.data);
 		}	 */
 	}	
-
-	private function processQuantityBreaksGridData(event:DataGridEvent):void {
-        if (event.reason == DataGridEventReason.CANCELLED){
-            // Do not update cell.
-            return;
-        }           
-		if(event.dataField == "jobmethod")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
-
-			// Get new category from editor.
-			QuantityBreaksGrid.editedItemRenderer.data.jobmethod = JobMethodEditor(DataGrid(event.target).itemEditorInstance).pickJobMethod.selectedItem;
-
-			// Close the cell editor.
-			QuantityBreaksGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			QuantityBreaksGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}	
-		
-	}	
-	
-	private function processCashRegisterGridData(event:DataGridEvent):void {
-        // Check the reason for the event.
-        if (event.reason == DataGridEventReason.CANCELLED){
-            // Do not update cell.
-            return;
-        }           
-
-		if(event.dataField == "category")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
-
-			// Get new category from editor.
-			CashRegisterGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
-
-			// Close the cell editor.
-			CashRegisterGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}
-		if(event.dataField == "taxCodes")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
-
-			// Get new category from editor.
-			CashRegisterGrid.editedItemRenderer.data.taxCodes = TaxCodeEditor(DataGrid(event.target).itemEditorInstance).pickTaxCodes.selectedItem;
-
-			// Close the cell editor.
-			CashRegisterGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}
-		if(event.dataField == "taxTable")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
-
-			// Get new category from editor.
-			CashRegisterGrid.editedItemRenderer.data.taxTable = TaxTableEditor(DataGrid(event.target).itemEditorInstance).pickTaxTable.selectedItem;
-
-			// Close the cell editor.
-			CashRegisterGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			CashRegisterGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}
-
-	}
 	
 	private function TreeDisplayLabel(item:XML):String {
 		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
@@ -1567,63 +1500,10 @@
 				parityArray="{ParityArray}" dataSizeArray="{DataSizeArray}" 
 				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<mx:Canvas width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-
-				<mx:DataGrid id="CashRegisterGrid" 
-					dataProvider="{PreferencesCashRegisterArray}" 
-					editable="true" 
-					itemEditEnd="processCashRegisterGridData(event);" bottom="80" top="27" right="52" left="28">
-					<mx:columns>
-						<mx:DataGridColumn width="40" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Tax')}" dataField="tax" editorDataField="selected"
-								itemEditor="mx.controls.CheckBox">
-						   <mx:itemRenderer>
-						      <mx:Component>
-								<mx:Box width="100%" height="100%" horizontalAlign="center"
-						        		 verticalAlign="middle">
-							         <mx:CheckBox click="data.tax=!data.tax"  selected="{data.tax}"/>
-						         </mx:Box>
-						      </mx:Component>
-						   </mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Title')}" dataField="title"/>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.SalesCategory')}" dataField="category"
-							itemEditor="com.efi.printsmith.itemRenderers.SalesCategoryEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.category.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Rate')}" dataField="rate" editable="true"/>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" dataField="taxTable"
-							itemEditor="com.efi.printsmith.itemRenderers.TaxTableEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.taxTable.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.TaxCode')}" dataField="taxCodes"
-							itemEditor="com.efi.printsmith.itemRenderers.TaxCodeEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.taxCodes.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
-						</mx:DataGridColumn>
-					</mx:columns>
-				</mx:DataGrid>
-
-				<mx:Button x="50" width="38" height="38" click="doNewCashRegister();" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-				</mx:Button>
-				<mx:Button x="100" width="38" height="38" click="doRemoveCashRegister();" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-				</mx:Button>
-
-			</mx:Canvas>
+			<prefcomp:CashRegisterCanvasComponent id="cashregister_canvas" preferencesCashRegisterArray="{PreferencesCashRegisterArray}"
+				preferencesCashRegisterDeleteArray="{PreferencesCashRegisterDeleteArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
+				taxTablesArray="{taxTablesArray}" taxCodesArray="{taxCodesArray}"
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 			
 			<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
 				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
@@ -1641,44 +1521,10 @@
 			<prefcomp:JobTicketCanvasComponent id="jobticket_canvas" preferencesEstimating="{preferencesEstimating}"
 				jobTicketStylesArray="{JobTicketStylesArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<mx:Canvas width="100%" height="100%" id="quantitybreaks_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
+			<prefcomp:QuantityBreaksCanvasComponent id="quantitybreaks_canvas" preferencesQuantityBreaksArray="{PreferencesQuantityBreaksArray}"
+				preferencesQuantityBreaksDeleteArray="{PreferencesQuantityBreaksDeleteArray}" jobMethodsArray="{jobMethodsArray}"
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<mx:DataGrid id="QuantityBreaksGrid" 
-					dataProvider="{PreferencesQuantityBreaksArray}" 
-					editable="true" 
-					itemEditEnd="processQuantityBreaksGridData(event);" top="27" bottom="80" left="50" right="268">
-					<mx:columns>
-						<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}" dataField="quantity"/>
-						<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" dataField="qtyBreak" editorDataField="selected"
-								itemEditor="mx.controls.CheckBox">
-						   <mx:itemRenderer>
-						      <mx:Component>
-								<mx:Box width="100%" height="100%" horizontalAlign="center"
-						        		 verticalAlign="middle">
-						         <mx:CheckBox click="data.qtybreak=!data.qtybreak"  selected="{data.qtybreak}"/>
-						         </mx:Box>
-						      </mx:Component>
-						   </mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn width="140" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}" dataField="jobMethod"
-							itemEditor="com.efi.printsmith.itemRenderers.JobMethodEditor" editable="true">
-                			<mx:itemRenderer>
-                    			<mx:Component>
-	                        		<mx:Text selectable="false" text="{data.jobmethod.name}"/>
-                    			</mx:Component>
-                			</mx:itemRenderer>
-						</mx:DataGridColumn>
-					</mx:columns>
-				</mx:DataGrid>
-				<mx:Button x="50" width="38" height="38" click="doNewQuantityBreak();" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-				</mx:Button>
-				<mx:Button x="100" width="38" height="38" click="doRemoveQuantityBreak();" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-				</mx:Button>
-			</mx:Canvas>
 			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
 				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Markups')}" textAlign="center"/>
 				<mx:HRule x="0" y="17" width="100%"/>
