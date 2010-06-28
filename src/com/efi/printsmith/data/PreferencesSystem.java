@@ -1644,12 +1644,12 @@ public class PreferencesSystem extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String serialNumber;
+  private Long serialNumber;
 
 	/**
    * @generated
  	 */
-  public String getSerialNumber(){
+  public Long getSerialNumber(){
     return serialNumber; 
   }
 
@@ -1657,10 +1657,9 @@ public class PreferencesSystem extends ModelBase {
 	/**
    * @generated
    */	
-  public void setSerialNumber(String newVal) {
+  public void setSerialNumber(Long newVal) {
     this.serialNumber = newVal;
   }
-
 
 
 	/**
@@ -2243,7 +2242,7 @@ public class PreferencesSystem extends ModelBase {
     if (CREDITCARDAPPROVAL.equals(propertyName)) setCreditCardApproval((String)newValue); else
     if (TRACKERDATACOLLECTION.equals(propertyName)) setTrackerDataCollection((String)newValue); else
     if (DEFAULTCOUNTRY.equals(propertyName)) setDefaultCountry((Integer)newValue); else
-    if (SERIALNUMBER.equals(propertyName)) setSerialNumber((String)newValue); else
+    if (SERIALNUMBER.equals(propertyName)) setSerialNumber((Long)newValue); else
     if (PROGRAMTYPE.equals(propertyName)) setProgramType((String)newValue); else
     if (WEBENABLED.equals(propertyName)) setWebEnabled((Boolean)newValue); else
     if (PAYMENTPLANENABLED.equals(propertyName)) setPaymentPlanEnabled((Boolean)newValue); else
@@ -2389,7 +2388,7 @@ public class PreferencesSystem extends ModelBase {
     if (DEFAULTCOUNTRY.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (SERIALNUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Long.class};		
     if (PROGRAMTYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (WEBENABLED.equals(propertyName)) 
