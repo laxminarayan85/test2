@@ -823,9 +823,7 @@
 			preferencesSystem.alternateRoundto = 2;
 		}	
 
-//set controls for System items
-		checkEnableAutoLogOut();
-		checkAlternateCurrency()
+		//set controls for System items
 		setDisplayText(null,preferencesSystem.numbersIntegers,"Integers");
 		setAlternateCurrencyText(null,preferencesSystem.displayFormat);
 		setCurrentRange();
@@ -1239,14 +1237,6 @@
 
 	}
 	
-	/* private function setOrderNumberFormatSample(item:String):void{
-		if (item=="invoice"){
-			this.txtSampleInvoice.text = this.txtInvoicePrefix.text + this.txtInvoiceDocument.text + this.txtInvoiceSuffix.text;
-		}else{
-			this.txtSampleEstimate.text = this.txtEstimatePrefix.text + this.txtEstimateDocument.text + this.txtEstimateSuffix.text;
-		}
-	} */
-	
 	public function setDisplayText(event:Event=null,text:String=null,compName:String=null):void{
 		if(event!=null){
 			numberCanvasTextInput = event.currentTarget as CustomStringTextInputComponent;
@@ -1300,20 +1290,6 @@
 		dt1.setFullYear(dt1.fullYear,calendar_canvas.cboFiscalYearStartMonth.selectedIndex,"1");
 		var dt2:Date = new Date(dt1.fullYear+1, calendar_canvas.cboFiscalYearStartMonth.selectedIndex, 0);
 		calendar_canvas.txtCurrentRange.text = dt1.toDateString() + " - " + dt2.toDateString(); 
-	}
-
-	
-	private function checkEnableAutoLogOut():void{
-		/* preferencesSystem.secondsOfInactivity = preferencesSystem.enableAutoLogOut;
-		preferencesSystem.triggerAfterPosting = preferencesSystem.enableAutoLogOut;
-		txtInactivitySeconds.enabled = preferencesSystem.secondsOfInactivity;  */
-	}
-	
-	private function checkAlternateCurrency():void{
-		/* txtFormat.enabled = chkUseAlternateCurrency.selected;
-		txtConversionFactor.enabled = chkUseAlternateCurrency.selected;
-		txtRoundToAlternateCurrency.enabled = chkUseAlternateCurrency.selected;
-		chkAlwaysRoundDownAlternateCurrency.enabled = chkUseAlternateCurrency.selected; */
 	}
 	
 	private function doSave():void{
@@ -1377,28 +1353,6 @@
 			}
 		}
 	}	
-
-	private function processSalesCategoryGridData(event:DataGridEvent):void {
-        /* if (event.reason == DataGridEventReason.CANCELLED){
-            // Do not update cell.
-            return;
-        }           
-
-		if(event.dataField == "category")
-		{
-			// Disable copying data back to the control.
-			event.preventDefault();
-
-			// Get new category from editor.
-			SalesCategoryGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
-
-			// Close the cell editor.
-			SalesCategoryGrid.destroyItemEditor();
-
-			// Notify the list control to update its display.
-			SalesCategoryGrid.dataProvider.itemUpdated(event.itemRenderer.data);
-		}	 */
-	}	
 	
 	private function TreeDisplayLabel(item:XML):String {
 		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
@@ -1426,33 +1380,6 @@
 
 	private function formatNumberMarkup(item:Object, column:DataGridColumn):String {
 		return item.markup.toFixed(2);
-	}
-	
-	private function doGrip():void{
-		/* if (gripLocation.selectedValue == "Top")
-		{
-			topGrip.alpha = .4;
-			leftGrip.alpha = 1;
-		}
-		if (gripLocation.selectedValue == "Left")
-		{
-			topGrip.alpha = 1;
-			leftGrip.alpha = .4;
-		} */
-			
-	}
-	private function doFolio():void{
-		/* if (folioLocation.selectedValue == "Top")
-		{
-			topFolio.alpha = 0.4;
-			leftFolio.alpha = 1;
-		}
-		if (folioLocation.selectedValue == "Left")
-		{
-			topFolio.alpha = 1;
-			leftFolio.alpha = .4;
-		} */
-			
 	}
 ]]>
 
