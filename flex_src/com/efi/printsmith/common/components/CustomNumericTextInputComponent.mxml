@@ -83,8 +83,8 @@
 		    public function set customText(displayValue:String):void {	
 		    	var formattedString:String="";
 		    	if(data!=null){
-			    	if(data[columnName+"ErrorText"]!=null){
-			    		_customText = data[columnName+"ErrorText"];
+			    	if(data[variableName+"ErrorText"]!=null){
+			    		_customText = data[variableName+"ErrorText"];
 			    		text = _customText;
 			    	}
 			    	else {
@@ -279,14 +279,14 @@
 						 
 			  			 if(validateEvent.type  == mx.events.ValidationResultEvent.INVALID ) {
 			  			 	if(data != null){
-			  			 		data[columnName+"ErrorText"] = event.currentTarget.text;
+			  			 		data[variableName+"ErrorText"] = event.currentTarget.text;
 			  			 	}
 			  			 	return;
 			  			 }
 		  			 	if (variableName != null) {     			
 			  				if(data != null) {
-			  					if(data[columnName+"ErrorText"]!=null){
-				  					data[columnName+"ErrorText"] = null;
+			  					if(data[variableName+"ErrorText"]!=null){
+				  					data[variableName+"ErrorText"] = null;
 				  				}
 				  				data[variableName] = removeCommas(numbFormatter.format(dataFromControl));
 			  				}

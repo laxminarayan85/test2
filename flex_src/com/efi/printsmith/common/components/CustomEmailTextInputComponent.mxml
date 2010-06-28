@@ -43,8 +43,8 @@
 		     
 		    public function set customText(displayValue:String):void {	
 		    	if(data!=null){
-			    	if(data[columnName+"ErrorText"]!=null){
-			    		_customText = data[columnName+"ErrorText"];
+			    	if(data[variableName+"ErrorText"]!=null){
+			    		_customText = data[variableName+"ErrorText"];
 			    		text = _customText;
 			    	}
 			    	else{
@@ -113,7 +113,7 @@
 					var validateEvent:ValidationResultEvent  = emailValidator.validate(this.text);
 					if(validateEvent.type==ValidationResultEvent.INVALID){
 						if(data!=null){
-							data[columnName+"ErrorText"] = event.currentTarget.text;
+							data[variableName+"ErrorText"] = event.currentTarget.text;
 					 	}
 					 	return;
 					}
@@ -128,8 +128,8 @@
 						    if(dataHolder != null){
 						    	dataHolder[variableName] = this.text;
 						    } else {
-						    	if(data[columnName+"ErrorText"]!=null){
-					  				data[columnName+"ErrorText"] = null;
+						    	if(data[variableName+"ErrorText"]!=null){
+					  				data[variableName+"ErrorText"] = null;
 					  			}
 						    	data[variableName] = this.text;
 						    }
