@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="com.efi.printsmith.common.components.*" updateComplete="{updateComp(preferencesAccounting)}">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesCreditCard;
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.PreferencesAccounting;
+			
+			[Bindable] public var updated:Boolean = false;
+			
+			[Bindable] public var preferencesCreditCardArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesCreditCardDeleteArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
+			
+			public static const creditCardPrefCmdUseskipjackpro:String = "Use SkipJack Processor";
+			
+			public static const creditCardPrefCmdUseefspro:String = "Use EFS Processor";
+			
+			public static const creditCardPrefCmdDevelopment:String = "Development";
+			
+			private function updateComp(preferencesAccounting:PreferencesAccounting):void{
+				if(preferencesAccounting && !updated){
+					if(preferencesAccounting.useSkipJackProcessor){
+						this.currentState="SkipJackSetup"; 
+						preferencesAccounting.creditCardProcessor = creditCardPrefCmdUseskipjackpro;
+					} else if(preferencesAccounting.useEfsProcessor){
+						this.currentState="EFSSetup";
+						preferencesAccounting.creditCardProcessor = creditCardPrefCmdUseefspro;
+					} else if(preferencesAccounting.useObsoleteDropFolder){
+						this.currentState="DropFolderSetup";
+						preferencesAccounting.creditCardProcessor = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde');
+					}
+					updated = true;
+				}
+			}
+			
+			private function setStatus():void {
+				if(preferencesAccounting.creditCardProcessor==creditCardPrefCmdUseskipjackpro){
+					preferencesAccounting.useSkipJackProcessor = true;
+					preferencesAccounting.useEfsProcessor = false;
+					preferencesAccounting.useObsoleteDropFolder = false;
+				} else if(preferencesAccounting.creditCardProcessor==creditCardPrefCmdUseefspro){
+					preferencesAccounting.useSkipJackProcessor = false;
+					preferencesAccounting.useEfsProcessor = true;
+					preferencesAccounting.useObsoleteDropFolder = false;
+				}  else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')){
+					preferencesAccounting.useSkipJackProcessor = false;
+					preferencesAccounting.useEfsProcessor = false;
+					preferencesAccounting.useObsoleteDropFolder = true;
+				}
+			} 
+			
+			private function doNewCreditCard():void{
+				var newItem:PreferencesCreditCard = new PreferencesCreditCard();
+				preferencesCreditCardArray.addItem(newItem);
+			}
+			private function doRemoveCreditCard():void{
+				if (creditCardGrid.selectedIndex > -1){
+					var newItem:PreferencesCreditCard = creditCardGrid.selectedItem as PreferencesCreditCard;
+					preferencesCreditCardDeleteArray.addItem(newItem);
+					preferencesCreditCardArray.removeItemAt(creditCardGrid.selectedIndex);
+				}
+			}
+			
+			private function doProcessorSetup():void{
+				if(preferencesAccounting.creditCardProcessor==creditCardPrefCmdUseskipjackpro){
+					this.currentState="SkipJackSetup"; 
+				}  else if(preferencesAccounting.creditCardProcessor==creditCardPrefCmdUseefspro){
+					this.currentState="EFSSetup";
+				}   else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')){
+					this.currentState="DropFolderSetup";
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:states>
+ 	 	<mx:State name="EFSSetup">
+ 	 		<mx:RemoveChild target="{dataGridComp}"/>
+ 	 	 	<mx:AddChild relativeTo="{mainVBox}" position="lastChild">
+ 	 	 		<mx:HBox width="100%">
+  	 			<mx:Spacer width="50"/>
+	 	 	 		<mx:VBox width="100%">	
+	 	 	 	 	 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.InternetURL')}"/>
+	 	 	 	 	 	<components:CustomTextAreaComponent width="344"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="internetURL" customText="{preferencesAccounting.internetURL}"/>
+	 	 	 	 	 	<mx:HBox width="100%">
+	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.MerchantIdM_ID')}"
+	 	 	 	 	 			textAlign="right" width="150"/>
+	 	 	 	 	 		<components:CustomStringTextInputComponent
+	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="merchantID" customText="{preferencesAccounting.merchantID}"/>
+	 	 	 	 	 	</mx:HBox>
+	 	 	 	 	 	<mx:HBox width="100%">
+	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.MerchantKeyM_KEY')}"
+	 	 	 	 	 			textAlign="right" width="150"/>
+	 	 	 	 	 		<components:CustomStringTextInputComponent
+	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="merchantKey" customText="{preferencesAccounting.merchantKey}"/>
+	 	 	 	 	 	</mx:HBox>
+	 	 	 	 	 	<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Useaddressvalidation')}"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="useAddressValidation" customText="{preferencesAccounting.useAddressValidation}"
+	 	 	 	 	 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+	 	 	 	 	 	
+	 	 	 	 	 	<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Promptuserforvalidat')}"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="promptUserForValidationInfo" customText="{preferencesAccounting.promptUserForValidationInfo}"
+	 	 	 	 	 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+	 	 	 	 	 	
+	 	 	 	 	 	<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kSupportCenterCommand.Close')}"
+	 	 	 	 	 		click="{this.currentState=''}"/>
+	 	 	 	 	</mx:VBox>
+	 	 		</mx:HBox>
+ 	 	 	</mx:AddChild>
+ 	 	</mx:State>
+ 	 	<mx:State name="DropFolderSetup">
+ 	 	 	<mx:RemoveChild target="{dataGridComp}"/>
+ 	 	 	<mx:AddChild relativeTo="{mainVBox}" position="lastChild">
+ 	 	 		<mx:HBox width="100%">
+	  	 			<mx:Spacer width="50"/>
+	 	 	 		<mx:VBox width="100%">
+	 	 	 			<mx:HBox width="100%">
+		 	 	 	 		<mx:Label text="Drop Folder Location:" textAlign="right"/>
+		 	 	 	 		<components:CustomStringTextInputComponent width="266" allowSpecialCharacters="true"
+		 	 	 	 			dataHolder="{preferencesAccounting}" variableName="creditCardDropFolder" customText="{preferencesAccounting.creditCardDropFolder}"/>
+	 	 	 	 		</mx:HBox>
+	 	 	 	 		
+	 	 	 	 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kSupportCenterCommand.Close')}"
+	 	 	 	 	 		click="{this.currentState=''}"/>
+	 	 	 	 	</mx:VBox>
+	 	 	 	 </mx:HBox>
+ 	 	 	</mx:AddChild>
+ 	 	</mx:State>
+ 	 	<mx:State name="SkipJackSetup">
+ 	 		<mx:RemoveChild target="{dataGridComp}"/>
+ 	 	 	<mx:AddChild relativeTo="{mainVBox}" position="lastChild">
+ 	 	 		<mx:HBox width="100%">
+	  	 			<mx:Spacer width="50"/>
+	 	 	 		<mx:VBox width="100%">
+	 	 	 			<mx:RadioButtonGroup id="SkipJackType"/>
+		 	 	 	 	<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.NormalMode')}" 
+		 	 	 	 		value="0" groupName="SkipJackType"
+		 	 	 	 		dataHolder="{preferencesAccounting}" variableName="skipJackMode" customText="{preferencesAccounting.skipJackMode}"/>
+		 	 	 	 	<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.AdvancedMode')}" 
+		 	 	 	 		value="1" groupName="SkipJackType"
+		 	 	 	 		dataHolder="{preferencesAccounting}" variableName="skipJackMode" customText="{preferencesAccounting.skipJackMode}"/>
+		 	 	 	 	<components:CustomRadioButtonComponent label="{creditCardPrefCmdDevelopment}" 
+		 	 	 	 		value="2" groupName="SkipJackType"
+		 	 	 	 		dataHolder="{preferencesAccounting}" variableName="skipJackMode" customText="{preferencesAccounting.skipJackMode}"/>
+		 	 	 	 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.InternetURL')}"/>
+	 	 	 	 	 	<components:CustomTextAreaComponent width="344"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="internetURL" customText="{preferencesAccounting.internetURL}"/>
+	 	 	 	 	 	<mx:HBox width="100%">
+	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Serial')}"
+	 	 	 	 	 			textAlign="right" width="100"/>
+	 	 	 	 	 		<components:CustomStringTextInputComponent allowSpecialCharacters="true"
+	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="serialNumber" customText="{preferencesAccounting.serialNumber}"/>
+	 	 	 	 	 	</mx:HBox>
+	 	 	 	 	 	<mx:HBox width="100%">
+	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Development')}"
+	 	 	 	 	 			textAlign="right" width="100"/>
+	 	 	 	 	 		<components:CustomStringTextInputComponent allowSpecialCharacters="true"
+	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="developmentNumber" customText="{preferencesAccounting.developmentNumber}"/>
+	 	 	 	 	 	</mx:HBox>
+	 	 	 	 	 	<mx:HBox width="100%">
+	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Port')}"
+	 	 	 	 	 			textAlign="right" width="100"/>
+	 	 	 	 	 		<components:CustomStringTextInputComponent allowSpecialCharacters="true"
+	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="portNumber" customText="{preferencesAccounting.portNumber}"/>
+	 	 	 	 	 	</mx:HBox>
+	 	 	 	 	 	<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Useaddressvalidation')}"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="useAddressValidation" customText="{preferencesAccounting.useAddressValidation}"
+	 	 	 	 	 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+	 	 	 	 	 	
+	 	 	 	 	 	<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Promptuserforvalidat')}"
+	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="promptUserForValidationInfo" customText="{preferencesAccounting.promptUserForValidationInfo}"
+	 	 	 	 	 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+	 	 	 	 	 	
+	 	 	 	 	 	<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kSupportCenterCommand.Close')}"
+	 	 	 	 	 		click="{this.currentState=''}"/>
+	 	 	 	 	</mx:VBox>
+	 	 	 	 </mx:HBox>
+ 	 	 	</mx:AddChild>
+ 	 	</mx:State>
+ 	</mx:states>
+	
+	<mx:VBox id="mainVBox" width="100%" height="100%">
+	
+	 	<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditCardInfo')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
+		
+		<mx:HBox width="100%">
+		
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%">
+		
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Activatecreditcardap')}"
+					dataHolder="{preferencesAccounting}" variableName="activateCreditCardApproval" customText="{preferencesAccounting.activateCreditCardApproval}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<mx:HBox width="100%">
+				
+					<mx:Spacer width="20"/>
+					
+					<mx:VBox width="100%">
+					
+						<mx:RadioButtonGroup id="CreditCardProcessor" enabled="{preferencesAccounting.activateCreditCardApproval}"/>
+						
+						<components:CustomRadioButtonComponent label="{creditCardPrefCmdUseskipjackpro}"
+							groupName="CreditCardProcessor" value="{creditCardPrefCmdUseskipjackpro}" click="{setStatus()}"
+							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
+							
+						<components:CustomRadioButtonComponent label="{creditCardPrefCmdUseefspro}"
+							groupName="CreditCardProcessor" value="{creditCardPrefCmdUseefspro}" click="{setStatus()}"
+							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
+							
+						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')}"
+							groupName="CreditCardProcessor" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')}" click="{setStatus()}"
+							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
+							
+						<mx:Button 
+							label="Processor Setup" click="{doProcessorSetup()}"
+							enabled="{preferencesAccounting.activateCreditCardApproval}"/>
+						
+					</mx:VBox>
+					
+				</mx:HBox>
+				
+				<mx:VBox id="dataGridComp" width="100%">
+					
+					<mx:DataGrid id="creditCardGrid"
+						dataProvider="{preferencesCreditCardArray}" editable="true" top="296" bottom="80">
+						<mx:columns>
+						
+							<mx:DataGridColumn width="40"
+								headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Use')}" dataField="used" editable="false">
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent datagridControl="true" variableName="used" customText="{data.used}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							
+							<mx:DataGridColumn
+								headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CardTitle')}"
+								dataField="cardType" />
+								
+							<mx:DataGridColumn
+								headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Abbrev')}"
+								dataField="abbreviation" width="60" />
+								
+							<mx:DataGridColumn
+								headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Code')}"
+								dataField="code" width="50" />
+								
+						</mx:columns>
+					</mx:DataGrid>
+					
+					<mx:HBox width="100%">
+					
+						<mx:Button click="{doNewCreditCard()}">
+							<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
+						</mx:Button>
+						
+						<mx:Button click="{doRemoveCreditCard()}">
+							<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+						</mx:Button>
+					
+					</mx:HBox>
+				
+				</mx:VBox>
+					
+			</mx:VBox>
+			
+		</mx:HBox>
+			
+	</mx:VBox>
+		
+</mx:Canvas>

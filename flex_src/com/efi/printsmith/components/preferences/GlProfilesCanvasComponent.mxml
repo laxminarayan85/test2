@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="com.efi.printsmith.common.components.*">
+
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.PreferencesAccounting;
+			
+			[Bindable] public var accountingPackagesArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.GLProfiles')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:Label x="10" y="32"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Linkto')}"
+		textAlign="right" width="101" />
+		
+	<components:CustomComboBoxComponent x="110" y="30" width="200"
+		masterList="{accountingPackagesArray}" labelFieldId="name" labelFieldName="name"
+		dataHolder="{preferencesAccounting}" variableName="accountingLinkTo" customText="{getCustomTextData(accountingPackagesArray,preferencesAccounting)}"
+		updateFirstElement="true"/>
+		
+	<mx:Label x="10" y="62"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ShippingCollected')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="92"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.ActualBankDeposit')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="122"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UndepositedReceipts')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="152"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Discounts')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="182"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.SalesTax')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="212"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.TotalARReceipts')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="242"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DepositsonInvoices')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="272"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.NewChargestoAR')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="302"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.CashOverShort')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="332"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.PaidOut')}"
+		textAlign="right" width="152" />
+		
+	<mx:Label x="10" y="362"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.RefundChecks')}"
+		textAlign="right" width="152" />
+		
+	<components:CustomStringTextInputComponent x="166" y="60" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="shippingCollected" customText="{preferencesAccounting.shippingCollected}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="90" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="actualBankDeposit" customText="{preferencesAccounting.actualBankDeposit}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="120" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="undepositedReceipts" customText="{preferencesAccounting.undepositedReceipts}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="150" id="txtDiscounts" width="80"
+		dataHolder="{preferencesAccounting}" variableName="discounts" customText="{preferencesAccounting.discounts}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="180" id="txtSalesTax" width="80"
+		dataHolder="{preferencesAccounting}" variableName="salesTax" customText="{preferencesAccounting.salesTax}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="210" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="totalARReceipts" customText="{preferencesAccounting.totalARReceipts}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="240" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="depositsOnInvoices" customText="{preferencesAccounting.depositsOnInvoices}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="270" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="newChargesToAR" customText="{preferencesAccounting.newChargesToAR}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="300" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="cashOverShort" customText="{preferencesAccounting.cashOverShort}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="330" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="paidOut" customText="{preferencesAccounting.paidOut}" />
+		
+	<components:CustomStringTextInputComponent x="166" y="360" width="80" 
+		dataHolder="{preferencesAccounting}" variableName="refundChecks" customText="{preferencesAccounting.refundChecks}" />
+		
+	<mx:Label x="250" y="62"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.income')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="92"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="122"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="152"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="182"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="212"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="242"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.liability')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="272"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="302"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="332"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.expense')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="250" y="362"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'generalLedgerProfilesCmd.asset')}"
+		textAlign="left" width="123" />
+		
+	<mx:Label x="10" y="388"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnterGeneralLedgerco')}"
+		textAlign="left" width="524" />
+		
+</mx:Canvas>

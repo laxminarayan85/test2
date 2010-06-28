@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.SalesCategory;
+			
+			[Bindable] public var preferencesSalesCategoryDeleteArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesSalesCategoryArray:ArrayCollection = new ArrayCollection();
+		
+			private function doNewSalesCategory():void{
+				var newItem:SalesCategory = new SalesCategory();
+				preferencesSalesCategoryArray.addItem(newItem);
+			}
+			private function doRemoveSalesCategory():void{
+				if (salesCategoryGrid.selectedIndex > -1){
+					var newItem:SalesCategory = salesCategoryGrid.selectedItem as SalesCategory;
+					preferencesSalesCategoryDeleteArray.addItem(newItem);
+					preferencesSalesCategoryArray.removeItemAt(salesCategoryGrid.selectedIndex);
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SalesCategories')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:DataGrid id="salesCategoryGrid" dataProvider="{preferencesSalesCategoryArray}"
+		editable="true" top="27" bottom="80" left="50" right="277">
+		<mx:columns>
+		
+			<mx:DataGridColumn width="100"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}"
+				dataField="name" editable="true">
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}"
+				dataField="accountNumber" />
+				
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<mx:Button x="50" width="38" height="38" click="{doNewSalesCategory()}"
+		bottom="25">
+		<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
+	</mx:Button>
+	
+	<mx:Button x="100" width="38" height="38"
+		click="{doRemoveSalesCategory()}" bottom="25">
+		<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+	</mx:Button>
+</mx:Canvas>

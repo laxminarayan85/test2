@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="com.efi.printsmith.common.components.*" updateComplete="{updateComp(preferencesAccounting)}">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesAccounting;
+			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
+			
+			[Bindable] public var updated:Boolean = false;
+			
+			private function updateComp(preferencesAccounting:PreferencesAccounting):void{
+				if(preferencesAccounting && !updated){
+					txtSampleInvoice.text = preferencesAccounting.invoicePrefix + preferencesAccounting.invoiceDocument + preferencesAccounting.invoiceSuffix;
+					txtSampleEstimate.text = preferencesAccounting.estimatePrefix + preferencesAccounting.estimateDocument + preferencesAccounting.estimateSuffix;
+					updated = true;
+				}
+			}
+			
+			private function setOrderNumberFormatSample(item:String):void{
+				if (item=="invoice"){
+					txtSampleInvoice.text = txtInvoicePrefix.text + txtInvoiceDocument.text + txtInvoiceSuffix.text;
+				}else{
+					txtSampleEstimate.text = txtEstimatePrefix.text + txtEstimateDocument.text + txtEstimateSuffix.text;
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.OrderNumberFormat')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:Panel x="50" y="27" layout="absolute"
+		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice')}"
+		width="500" height="226">
+		
+		<mx:Label x="10" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}"
+			textAlign="right" />
+			
+		<mx:Label x="130" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}"
+			textAlign="right" />
+			
+		<mx:Label x="250" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}"
+			textAlign="right" />
+			
+		<mx:Label x="10" y="52"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}"
+			textAlign="right" width="65" fontWeight="bold" />
+			
+		<mx:Label x="250" y="52"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}"
+			textAlign="right" width="65" fontWeight="bold" />
+			
+		<components:CustomStringTextInputComponent id="txtInvoicePrefix" x="10" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="invoicePrefix" customText="{preferencesAccounting.invoicePrefix}" 
+			change="setOrderNumberFormatSample('invoice');" maxValue="6" />
+			
+		<components:CustomStringTextInputComponent id="txtInvoiceDocument" x="130" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="invoiceDocument" customText="{preferencesAccounting.invoiceDocument}"
+			enabled="false" editable="false" />
+			
+		<components:CustomStringTextInputComponent id="txtInvoiceSuffix" x="250" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="invoiceSuffix" customText="{preferencesAccounting.invoiceSuffix}"
+			change="setOrderNumberFormatSample('invoice');" maxValue="6"/>
+			
+		<mx:Label x="11" y="74"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Sample')}"
+			textAlign="right" width="79" />
+			
+		<mx:Label x="90" y="74" id="txtSampleInvoice" width="115" />
+		
+		<components:CustomCheckBoxComponent x="10" y="100" width="430"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"
+			dataHolder="{preferencesAccounting}" variableName="invoiceAllowPrefixMod" customText="{preferencesAccounting.invoiceAllowPrefixMod}"
+			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			
+		<components:CustomCheckBoxComponent x="10" y="130" width="430"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"
+			dataHolder="{preferencesAccounting}" variableName="invoiceAllowSuffixMod" customText="{preferencesAccounting.invoiceAllowSuffixMod}"
+			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			
+	</mx:Panel>
+	<mx:Panel x="50" y="261" layout="absolute"
+		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate')}"
+		width="500" height="226">
+		
+		<mx:Label x="10" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Prefix')}"
+			textAlign="right" />
+			
+		<mx:Label x="130" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Document')}"
+			textAlign="right" />
+			
+		<mx:Label x="250" y="13"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Suffix')}"
+			textAlign="right" />
+			
+		<mx:Label x="10" y="52"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}"
+			textAlign="right" width="65" fontWeight="bold" />
+			
+		<mx:Label x="250" y="52"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.max6')}"
+			textAlign="right" width="65" fontWeight="bold" />
+			
+		<components:CustomStringTextInputComponent id="txtEstimatePrefix" x="10" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="estimatePrefix" customText="{preferencesAccounting.estimatePrefix}" 
+			change="setOrderNumberFormatSample('estimate');" maxValue="6" />
+			
+		<components:CustomStringTextInputComponent id="txtEstimateDocument" x="130" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="estimateDocument" customText="{preferencesAccounting.estimateDocument}"
+			enabled="false" editable="false" />
+			
+		<components:CustomStringTextInputComponent id="txtEstimateSuffix" x="250" y="30" width="115"
+			dataHolder="{preferencesAccounting}" variableName="estimateSuffix" customText="{preferencesAccounting.estimateSuffix}"
+			change="setOrderNumberFormatSample('estimate');" maxValue="6" />
+			
+		<mx:Label x="11" y="74"
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Sample')}"
+			textAlign="right" width="79" />
+			
+		<mx:Label x="90" y="74" id="txtSampleEstimate" width="115" />
+		
+		<components:CustomCheckBoxComponent x="10" y="100" width="430"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowPrefixmodificat')}"
+			dataHolder="{preferencesAccounting}" variableName="estimateAllowPrefixMod" customText="{preferencesAccounting.estimateAllowPrefixMod}"
+			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			
+		<components:CustomCheckBoxComponent x="10" y="130" width="430"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AllowSuffixmodificat')}"
+			dataHolder="{preferencesAccounting}" variableName="estimateAllowSuffixMod" customText="{preferencesAccounting.estimateAllowSuffixMod}"
+			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			
+	</mx:Panel>
+</mx:Canvas>

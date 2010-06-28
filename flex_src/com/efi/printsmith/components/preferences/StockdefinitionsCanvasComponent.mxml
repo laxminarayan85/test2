@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.PreferencesStockDefinition;
+			
+			[Bindable] public var preferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
+			private function columnsnameStockDefinition(item:Object, column:DataGridColumn):String{
+				var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
+				if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
+					var retVal:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpName.columns.name);
+					
+					if (retVal != "") {
+						return retVal;
+					} else {
+						return "None";
+					}
+				} else {
+					return "None";
+				}
+				
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.StockDefinitions')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:DataGrid id="StockDefinitionGrid" dataProvider="{preferencesStockDefinitionArray}"
+		bottom="80" top="27" allowMultipleSelection="true"
+		dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" left="50"
+		right="96">
+		<mx:columns>
+			<mx:DataGridColumn width="40"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Visible')}"
+				dataField="visible">
+				<mx:itemRenderer>
+					<mx:Component>
+						<components:CustomCheckBoxComponent datagridControl="true" variableName="visible"
+							customText="{data.visible}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="200"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ColumnTitle')}"
+				labelFunction="columnsnameStockDefinition"/>
+		</mx:columns>
+	</mx:DataGrid>
+	
+</mx:Canvas>
