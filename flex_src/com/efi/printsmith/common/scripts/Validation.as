@@ -10,6 +10,7 @@ import mx.events.ValidationResultEvent;
 import mx.validators.EmailValidator;
 import mx.validators.PhoneNumberValidator;
 import mx.validators.StringValidator;
+import mx.validators.Validator;
 
 private function validate(displayObject:Object):Boolean{
 	var valid:Boolean = true;
@@ -113,6 +114,15 @@ public function validateStringComponent(customStringTextInputComponent:CustomStr
 	var stringValidateEvent:ValidationResultEvent  = validateString.validate(customStringTextInputComponent.text);
 	if (stringValidateEvent.type  == ValidationResultEvent.INVALID ) {
 		return false;
+	}
+	if(customStringTextInputComponent.validatorClass){
+		var customValidate:Validator = customStringTextInputComponent.validatorClass;
+		customValidate.source = customStringTextInputComponent;
+		customValidate.property = "text";
+		var customStringValidateEvent:ValidationResultEvent  = customValidate.validate(customStringTextInputComponent.text);
+		if (customStringValidateEvent.type  == ValidationResultEvent.INVALID ) {
+			return false;
+		}
 	}
 	return true;
 }
