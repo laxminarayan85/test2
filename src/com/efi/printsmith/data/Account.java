@@ -2304,7 +2304,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @IndexColumn(name="invoiceestimatechargesaccount")
     @JoinTable( name = "account_invoiceestimatecharges")
 	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
@@ -2337,7 +2337,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @IndexColumn(name="jobchargesaccount")
     @JoinTable( name = "account_jobcharges")
 	private java.util.List<ChargeDefinition> jobCharges;

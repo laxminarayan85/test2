@@ -24,7 +24,7 @@ package com.efi.printsmith.data
 		public var brokered:Boolean = false;
 		public var taxable:Boolean = false;
 		public var finished:Boolean = false;
-		public var location:Location;
+		public var location:ProductionLocations;
 		public var comment:String = "";
 		public var description:String = "";
 		public var qtyOrdered:Number = 0;

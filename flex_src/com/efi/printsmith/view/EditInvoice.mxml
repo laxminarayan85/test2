@@ -94,6 +94,7 @@
 			import com.efi.printsmith.data.TaxCodes;
 			import com.efi.printsmith.data.SpecialInstructions;
 			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.Users;
 			
 			import flash.geom.Matrix;
 			import com.efi.printsmith.data.Account;
@@ -121,7 +122,8 @@
 
 			[Bindable]
 			private var invoice:InvoiceBase = null;
-			
+			[Bindable]
+			private var loginUser:Users;
 			[Bindable]
 			private var salesReps:ArrayCollection=new ArrayCollection();
 			[Bindable]
@@ -138,7 +140,9 @@
 			private var isEstimate:Boolean = false;
 			public function init():void
 			{
-				
+				loginUser = new Users();
+				loginUser = Snowmass.getInstance().currentUser;
+				inv_sales_rep.enabled = !(loginUser.lockSalesRep);
 				vbox.getDividerAt(0).visible=false;
 				vbox.getDividerAt(1).visible=false;
 				if (invoice == null) {

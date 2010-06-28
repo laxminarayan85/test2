@@ -1248,24 +1248,24 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	private Location location;
+	private ProductionLocations location;
 	
 	/**
 	 * @generated
  	 */
-	public Location getLocation(){
+	public ProductionLocations getLocation(){
     return location; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLocation(Location newVal) {
+   * @generated
+   */	
+  public void setLocation(ProductionLocations newVal) {
     this.location = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -3424,7 +3424,7 @@ public class ChargeDefinition extends ModelBase {
     if (FIXEDWASTE.equals(propertyName)) setFixedWaste((Long)newValue); else
     if (WASTEPERCENTAGE.equals(propertyName)) setWastePercentage((Double)newValue); else
     if (BASELINEARNUMBER.equals(propertyName)) setBaseLinearNumber((Long)newValue); else
-    if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
+    if (LOCATION.equals(propertyName)) setLocation((ProductionLocations)newValue); else
     if (COSTCENTER.equals(propertyName)) setCostCenter((CostCenter)newValue); else
     if (SUBSTRATE.equals(propertyName)) setSubstrate((Substrate)newValue); else
     if (MINIMUMTIME.equals(propertyName)) setMinimumTime((Long)newValue); else
@@ -3586,7 +3586,7 @@ public class ChargeDefinition extends ModelBase {
     if (BASELINEARNUMBER.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (LOCATION.equals(propertyName)) 
-      return new Class<?>[] {Location.class};		
+      return new Class<?>[] {ProductionLocations.class};		
     if (COSTCENTER.equals(propertyName)) 
       return new Class<?>[] {CostCenter.class};		
     if (SUBSTRATE.equals(propertyName)) 

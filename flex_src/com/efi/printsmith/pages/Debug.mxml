@@ -363,7 +363,7 @@
 		<mx:Button x="10"
 				   y="40"
 				   label="Populate Locations"
-				   click="doPopulateLocations();" width="188" enabled="false"/>
+				   click="doPopulateLocations();"  visible="false" width="188" enabled="false"/>
 		<mx:Button x="10"
 				   y="70"
 				   label="Populate Product Codes"

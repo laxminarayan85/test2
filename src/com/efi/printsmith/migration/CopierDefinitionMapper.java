@@ -11,6 +11,7 @@ import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.SalesCategory;
+import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.service.PricingService;
 import com.efi.printsmith.data.Matrix;
@@ -19,6 +20,7 @@ import com.efi.printsmith.service.CopierService;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
 import com.efi.printsmith.data.ProductionCopiers;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
+import com.efi.printsmith.data.ProductionLocations;
 public class CopierDefinitionMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
 
@@ -1024,7 +1026,17 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("production location ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("production location".equals(currentFieldToken)) {
-					copierDefinition.setProductionLocation(currentImportToken);
+					if (currentImportToken.equals("") == false) {
+						ProductionLocations prodLocation = dataService
+								.getByLocationName(currentImportToken);
+						if (prodLocation == null){
+							prodLocation = new ProductionLocations();
+							prodLocation.setName(currentImportToken);
+							prodLocation = (ProductionLocations)dataService.addUpdate(prodLocation);
+						}
+						copierDefinition.setProductionLocation(currentImportToken);	
+					}
+					
 				} else if ("cost center ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("cost center".equals(currentFieldToken)) {
@@ -1067,7 +1079,11 @@ public class CopierDefinitionMapper extends ImportMapper {
 				} else if ("sheet area type[2]".equals(currentFieldToken)){
 					/* TODO */
 				} else if ("waste chart".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("0") == false) {
+						WasteChart wasteChart = (WasteChart)dataService.getByPrevId("WasteChart", currentImportToken);
+						if (wasteChart != null)
+							copierDefinition.setWasteChart(wasteChart);
+					}
 				} else if ("max sheet X".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("max sheet".equals(currentFieldToken)) {

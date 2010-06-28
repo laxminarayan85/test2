@@ -9,7 +9,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="getByIdMaster" fault="handleFault(event)" result="handleGetMasterResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="contactdataService" destination="dataService">
@@ -213,7 +213,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
-		if (evt.account != null) {
+		
+		dataService.getAccount(evt.account.id);
+		
+		/* if (evt.account != null) {
 			this.setAccount(evt.account);
 			contactdataService.getContactsByAccountId("Contact", account.id);
 			setMarketing();
@@ -222,7 +225,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			this.setAccount(new Account());
 			Alert.show("Account Picker returned a null account", "Error");
-		}
+		} */
 	}
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
@@ -282,7 +285,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = accounts.length - 1;
 		}
 		temp = accounts.getItemAt(itemp,0) as Account;   
-	   dataService.getById("Account", temp.id );                            
+	   dataService.getAccount("Account", temp.id );                            
 	}
 	private function doPrev():void {              
 	    var itemp:int;
@@ -294,7 +297,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = 0; 
 		}
 		temp = accounts.getItemAt(itemp,0) as Account;   
-	    dataService.getById("Account", temp.id );                                           
+	    dataService.getAccount("Account", temp.id );                                           
 	} 
 	private function findItemID(id:int, array:ArrayCollection):int {
 		for each(var element:Object in array) {
@@ -399,7 +402,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
 			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
 			
-		account.financeRate = parseInt(monthly_finance_charge_edit.text);
+		account.financeRate = parseFloat(monthly_finance_charge_edit.text);
 		account.creditLimit = parseInt(credit_limit_edit.text);
 		account.termsNet = parseInt(due_days_edit.text);
 		account.applyFinanceCharges = never_calculate_finance_check.selected;
@@ -418,12 +421,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		
 		auto_discount_percent_radio
-		if (auto_discount.selectedValue == "discount_dollars") {
+		if (auto_discount.selectedValue == "discount_dollar") {
 			account.dollarDiscount = true;
-			account.discountDollarAmt = parseInt(auto_discount_dollar_text.text);
+			account.discountDollarAmt = parseFloat(auto_discount_dollar_text.text);
 		} else {
 			account.dollarDiscount = false; 
-			account.discount = parseInt(auto_discount_percent_edit.text);
+			account.discount = parseFloat(auto_discount_percent_edit.text);
 						
 		}
 		
@@ -585,6 +588,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.account = ev.result as Account;
+		this.EstInvCharges = this.account.invoiceEstimateCharges;
+		this.JobCharges = this.account.jobCharges;
 		dataService.getAccountPicker("Account")
 	}
 //// load

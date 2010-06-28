@@ -19,20 +19,21 @@
 	</mx:RemoteObject>
 	
     <mx:Canvas width="360" height="294">
-    <mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="10" width="265" id="first_name_edit" text="{contact.firstName}"/>
-    <mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Last')}" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="36" width="265" id="last_name_edit" text="{contact.lastName}"/>
-    <mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Prefix')}" width="67" textAlign="right"/>
-    <mx:Label x="193" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Suffix')}" width="56" textAlign="right"/>
-    <mx:TextInput x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
-    <mx:Label x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="90" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
-    <mx:Label x="10" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="118" width="265" id="salutation_edit" text="{contact.salutation}"/>
-    <fc:AutoComplete id="comlink_combo" x="10" y="146" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
-    <mx:TextInput x="148" y="146" width="202" id="comlink_edit"/>
-    <mx:TextInput x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
+    <mx:Label tabIndex="1" x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="2" x="85" y="10" width="265" id="first_name_edit" text="{contact.firstName}"/>
+    <mx:Label tabIndex="3" x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Last')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="4" x="85" y="36" width="265" id="last_name_edit" text="{contact.lastName}"/>
+    <mx:Label tabIndex="5" x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Prefix')}" width="67" textAlign="right"/>
+    <mx:Label tabIndex="6" x="193" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Suffix')}" width="56" textAlign="right"/>
+    <mx:TextInput tabIndex="7" x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
+    <mx:TextInput tabIndex="8" x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
+    <mx:Label tabIndex="9" x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="10" x="85" y="90" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
+    <mx:Label tabIndex="11" x="10" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="12" x="85" y="118" width="265" id="salutation_edit" text="{contact.salutation}"/>
+    <fc:AutoComplete  tabIndex="13" id="comlink_combo" x="10" y="146" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
+    <mx:TextInput tabIndex="14" x="148" y="146" width="202" id="comlink_edit"/>
+    
     	
     <mx:Button x="192" y="262" id="ok_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="75" click="doOK()"/>
     <mx:Button x="275" y="262" id="cancel_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" width="75" click="doCancel()"/>

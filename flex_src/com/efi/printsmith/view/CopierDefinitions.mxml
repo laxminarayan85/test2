@@ -145,6 +145,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function initNewCopierDefinition():CopierDefinition {
 		var localCopierDefinition:CopierDefinition = new CopierDefinition();
 	
+		
+		
+		
 		localCopierDefinition.largeFormat = false;
 		localCopierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix;
 		localCopierDefinition.copierMatrix.header1 = 1;
@@ -340,6 +343,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doCopierGridClick():void {
 		var  tempCopy : CopierDefinition;	
 		tempCopy=dataGrid.selectedItem as CopierDefinition;
+		pricing_method_combo.selectedIndex =-1;
 		var token:AsyncToken = dataService.getCopierDefinition(tempCopy.id );
 		token.operation = "getCopierDefinition";   
 	}
@@ -352,7 +356,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			else
 				this.currentState = "";
 			updateMethodBox();
-			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
+			
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 			price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 			var salesCatName:String = "";
@@ -434,12 +438,19 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 	     costCenterArray = ev.result as ArrayCollection;
+	     CostCenter.selectedIndex = -1;
+	     CostCenter.text ="";
 	}
 	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
 	     productionLocationArray = ev.result as ArrayCollection;
+	     ProductionLocation.selectedIndex = -1
+	     ProductionLocation.text = "";
+	     
 	}
 	private function handleLoadProductionCopiersResult(ev:ResultEvent):void {
 		productionCopiersArray = ev.result as ArrayCollection;
+		productionCopiers.selectedIndex = -1;
+		productionCopiers.text = "";
 	}
 	private function mapCopierData():void {
 		//copierDefinition.copyDefID = CopierDefID;
@@ -506,6 +517,10 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}       
 
 	private function doNew():void {
+		pricing_method_combo.selectedIndex = -1;
+		pricing_method_combo.text = "";
+		
+		
 	    copierDefinition = this.initNewCopierDefinition();
 	 	updateMethodBox();
 	}       
@@ -524,6 +539,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
 		salesCategories = ev.result as ArrayCollection;
+		charge_sales_category_combo.selectedIndex = -1;
+		charge_sales_category_combo.text = "";
 	}
 	
 	private function doCheckDefaultBW():void {
@@ -667,14 +684,17 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		this.OEMDeviceID.text = evt.deviceId as String;
 	}
 	
-	private function updateMethodBox():void {
+	private function updateMethodBox():void { //cej
+		var tempIndex:int = -1;
+		tempIndex = pricing_method_combo.selectedIndex;
 		methodType.removeAll();
+		
 		if (copierDefinition.largeFormat == true  || largeformatCheck.selected){
 			methodType.addItem(CopierPricingMethod.SQUAREAREAOFORIGINALS);
 			methodType.addItem(CopierPricingMethod.TOTALSQUAREAREA);
 			methodType.addItem(CopierPricingMethod.SQUAREAREAANDCOPIES); 
 			methodType.addItem(CopierPricingMethod.SQUAREAREAPERCOPY);
-			
+			pricing_method_combo.selectedIndex = tempIndex;
 		}else{
 					
 			methodType.addItem(CopierPricingMethod.COSTPLUS);
@@ -682,7 +702,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			methodType.addItem(CopierPricingMethod.COPIESANDORIGINALS);
 			methodType.addItem(CopierPricingMethod.COPIESPERORIGINALS);
 			methodType.addItem(CopierPricingMethod.TOTALOFALLCOPIES);
+			pricing_method_combo.selectedIndex = tempIndex;
 		}
+		if (pricing_method_combo.selectedIndex != -1){
+			pricing_method_combo.selectedIndex = findItemArray(pricing_method_combo.selectedItem.toString(), methodType.toArray());
+		}else
+			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 	}
 	
 	

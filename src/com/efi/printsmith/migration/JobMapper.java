@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PricingRecord;
-import com.efi.printsmith.data.Location;
+import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PaperCalculator;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -443,12 +443,12 @@ public class JobMapper extends ImportMapper {
 				job.setJobNotes(currentImportToken);
 			} else if ("location".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					Location location = dataService
+					ProductionLocations location = dataService
 							.getByLocationName(currentImportToken);
 					if (location == null) {
-						location = new Location();
+						location = new ProductionLocations();
 						location.setName(currentImportToken);
-						location = (Location)dataService.addUpdate(location);
+						location = (ProductionLocations)dataService.addUpdate(location);
 						location.setId(location.getId());
 					}
 					job.setLocation(location);

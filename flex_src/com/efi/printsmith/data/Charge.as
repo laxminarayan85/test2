@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 		public var chargeDefinition:ChargeDefinition;
 		public var description:String = "";
 		public var notes:String = "";
-		public var productionLocation:Location;
+		public var productionLocation:ProductionLocations;
 		public var showNotes:Boolean = false;
 		public var finished:Boolean = false;
 		public var taxable:Boolean = false;

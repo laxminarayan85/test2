@@ -249,25 +249,24 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	private Location productionLocation;
+	private ProductionLocations productionLocation;
 	
 	/**
 	 * @generated
  	 */
-	public Location getProductionLocation(){
+	public ProductionLocations getProductionLocation(){
     return productionLocation; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setProductionLocation(Location newVal) {
+   * @generated
+   */	
+  public void setProductionLocation(ProductionLocations newVal) {
     this.productionLocation = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -957,7 +956,7 @@ public class Charge extends ModelBase {
     if (CHARGEDEFINITION.equals(propertyName)) setChargeDefinition((ChargeDefinition)newValue); else
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
     if (NOTES.equals(propertyName)) setNotes((String)newValue); else
-    if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((Location)newValue); else
+    if (PRODUCTIONLOCATION.equals(propertyName)) setProductionLocation((ProductionLocations)newValue); else
     if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
     if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
     if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
@@ -1001,7 +1000,7 @@ public class Charge extends ModelBase {
     if (NOTES.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRODUCTIONLOCATION.equals(propertyName)) 
-      return new Class<?>[] {Location.class};		
+      return new Class<?>[] {ProductionLocations.class};		
     if (SHOWNOTES.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (FINISHED.equals(propertyName)) 

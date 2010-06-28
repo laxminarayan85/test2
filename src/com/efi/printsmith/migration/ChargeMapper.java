@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
-import com.efi.printsmith.data.Location;
+import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Job;
@@ -78,11 +78,11 @@ public class ChargeMapper extends ImportMapper {
 				}
 			} else if ("production location".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					Location location = (Location)dataService.getByName("Location", currentImportToken);
+					ProductionLocations location = (ProductionLocations)dataService.getByName("Location", currentImportToken);
 					if (location == null) {
-						location = new Location();
+						location = new ProductionLocations();
 						location.setName(currentImportToken);
-						location = (Location)dataService.addUpdate(location);
+						location = (ProductionLocations)dataService.addUpdate(location);
 					}
 					charge.setProductionLocation(location);
 				}

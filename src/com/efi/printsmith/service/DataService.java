@@ -50,6 +50,7 @@ import com.efi.printsmith.messaging.MessageTypes;
 import com.efi.printsmith.properties.PropertiesHelper;
 import com.efi.printsmith.query.RemoteCriterion;
 import com.efi.printsmith.query.RemoteRestriction;
+import com.efi.printsmith.data.ProductionLocations;
 
 public class DataService extends HibernateService {
 
@@ -795,13 +796,13 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
-	public Location getByLocationName(String name) throws Exception {
+	public ProductionLocations getByLocationName(String name) throws Exception {
 		log.debug("** getByLocationName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from Location where name = '" + name + "'";
+			String queryString = "from ProductionLocation where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
-			Location object = (Location) query.getSingleResult();
+			ProductionLocations object = (ProductionLocations) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -1632,7 +1633,36 @@ public class DataService extends HibernateService {
 		}
 		return pressDefinition;
 	}	
-	
+	public Account getAccount(Long id) throws Exception {
+		log.debug("** getAccount called.");
+		Account account = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Account.byId");
+			query.setParameter("id", id);
+			account = (Account) query.getSingleResult();
+
+			if (account != null) {
+				for (int i = 0; i < account.getInvoiceEstimateCharges().size(); i++) {
+					ChargeDefinition chargeDefinition = account.getInvoiceEstimateCharges().get(i);
+					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+				for (int i = 0; i < account.getJobCharges().size(); i++) {
+					ChargeDefinition chargeDefinition = account.getJobCharges().get(i);
+					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return account;
+	}
 	public CopierDefinition getCopierDefinition(Long id) throws Exception {
 		log.debug("** getCopierDefinition called.");
 		CopierDefinition copierDefinition = null;

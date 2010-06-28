@@ -478,6 +478,7 @@
 	</mx:RemoteObject>			
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.Users;
 			import com.efi.printsmith.data.Dimension;
 			import com.efi.printsmith.data.DigitalAsset;
 			import com.efi.printsmith.pages.JobDigitalAssets;
@@ -492,7 +493,7 @@
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.PressDefinition;
 			import com.efi.printsmith.data.CopierDefinition;
-			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.ProductionLocations;
 			import com.efi.printsmith.data.Account;
 			import com.efi.printsmith.data.ProductCode;
 			import com.efi.printsmith.data.Charge;
@@ -502,6 +503,7 @@
 			import com.efi.printsmith.data.PreferencesSystem;
 			import com.efi.printsmith.data.PreferencesEstimating;
 			import com.efi.printsmith.data.PreferencesDefaultPresses;
+	
 			
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -577,7 +579,7 @@
 
 			[Bindable]
 			public var invoice:InvoiceBase;
-
+			
 			[Bindable]
 			private var chargeCommands:ArrayCollection=new ArrayCollection();
 
@@ -646,6 +648,7 @@
 				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
 				
+				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
@@ -713,7 +716,7 @@
 				throbber.play();
 				pressDataService.getAll("PressDefinition");
 				copierDataService.getAll("CopierDefinition");
-				locationDataService.getAll("Location");
+				locationDataService.getAll("ProductionLocations");
 				productDataService.getAll("ProductCode");
 //				chargeDataService.getAll("Charge");
 				dimensionDataService.getAll("Dimension");
@@ -887,7 +890,7 @@
 				//job.backInks=this.back_inks_text;
 				job.backPasses=parseInt(this.back_passes_text.text);
 				job.backWashes=parseInt(this.back_washes_text.text);
-				job.location=job_location.selectedItem as Location;
+				job.location=job_location.selectedItem as ProductionLocations;
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
 				}

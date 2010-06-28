@@ -86,7 +86,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.WasteChart;	
 	import com.efi.printsmith.data.ChargeCost;
 	import com.efi.printsmith.data.ChargeCommand;
-	import com.efi.printsmith.data.Location;
+	import com.efi.printsmith.data.ProductionLocations;
 	import com.efi.printsmith.data.ChargeCategory;
 	import com.efi.printsmith.data.ChargeDefinition;
     import com.efi.printsmith.data.Charge;
@@ -570,7 +570,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			chargeCommand = getSelectedTreeCommand(true);
 		}	
 		updateButtons();
-	//	updateControlState();
+	
+		updateControlState();
 	}
 	
 	private function doNewCharge():void {
@@ -668,7 +669,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				charge_group_4.selectedValue = "/Up";
 			else
 				charge_group_4.selectedValue = "NA";
-				
+		waste_chart_link.label = wasteChartLabel();	
+		price_list_link.label = priceListLabel();	
 		UpdateAdjset();
 		UpdateAdj();	
 		}
@@ -695,7 +697,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function mapToCharge():void {
 		charge.title = charge_name_edit.text;
 		charge.name = charge_name_edit.text;
-		charge.location = location_combo.selectedItem as Location;
+		charge.location = location_combo.selectedItem as ProductionLocations;
 		charge.costCenter = cost_center_combo.selectedItem as CostCenter;
 		charge.method = charge_method_combo.selectedItem as String;
 		charge.quantityType = charge_quantity_combo.selectedItem as String;
@@ -755,6 +757,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function updateQtyComboBox(chargeMethod:String):void {
+		var index:int;
+		index = charge_quantity_combo.selectedIndex;
 		qtyTypes.removeAll();
 		switch (chargeMethod) {
 		case ChargeMethod.ASK: 
@@ -796,6 +800,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			qtyTypes.addItem(ChargeQtyType.QUANTITY);
 			break;
 		}
+		charge_quantity_combo.selectedIndex = index;
 	}
 	
 	private function updateControlState():void {
@@ -810,7 +815,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -886,7 +891,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = false;
@@ -922,7 +927,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			newCanvas = job_aware_canvas;
@@ -959,7 +964,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -996,7 +1001,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1032,7 +1037,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1069,7 +1074,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1105,7 +1110,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1141,7 +1146,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1177,7 +1182,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = false;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1213,7 +1218,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			hide_charge_in_printouts_check.enabled = true;
 			bindery_operation_check.enabled = true;
 			excluded_from_workflow_check.enabled = true;
-			tracker_pre_production_check.enabled = false;
+			tracker_pre_production_check.enabled = true;
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
@@ -1435,7 +1440,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function doWasteChart():void {
 	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
-	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.itemType = "WasteChart";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
 	}

@@ -721,24 +721,24 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	private Location location;
+	private ProductionLocations location;
 	
 	/**
 	 * @generated
  	 */
-	public Location getLocation(){
+	public ProductionLocations getLocation(){
     return location; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLocation(Location newVal) {
+   * @generated
+   */	
+  public void setLocation(ProductionLocations newVal) {
     this.location = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -2838,7 +2838,7 @@ public class JobBase extends ModelBase {
     if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
     if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
     if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-    if (LOCATION.equals(propertyName)) setLocation((Location)newValue); else
+    if (LOCATION.equals(propertyName)) setLocation((ProductionLocations)newValue); else
     if (COMMENT.equals(propertyName)) setComment((String)newValue); else
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
     if (QTYORDERED.equals(propertyName)) setQtyOrdered((Long)newValue); else
@@ -2958,7 +2958,7 @@ public class JobBase extends ModelBase {
     if (FINISHED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (LOCATION.equals(propertyName)) 
-      return new Class<?>[] {Location.class};		
+      return new Class<?>[] {ProductionLocations.class};		
     if (COMMENT.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (DESCRIPTION.equals(propertyName)) 

@@ -44,7 +44,7 @@ package com.efi.printsmith.data
 		public var fixedWaste:Number = 0;
 		public var wastePercentage:Number = 0;
 		public var baseLinearNumber:Number = 0;
-		public var location:Location;
+		public var location:ProductionLocations;
 		public var costCenter:CostCenter;
 		public var substrate:Substrate;
 		public var minimumTime:Number = 0;

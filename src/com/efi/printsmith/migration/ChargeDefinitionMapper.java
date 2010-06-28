@@ -15,7 +15,7 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.CostCenter;
-import com.efi.printsmith.data.Location;
+import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.ShippingMethod;
 import com.efi.printsmith.data.Substrate;
@@ -579,25 +579,16 @@ public class ChargeDefinitionMapper extends ImportMapper {
 								.tokenToDouble(currentImportToken));
 					} else if ("price list".equals(currentFieldToken)) {
 						if (currentImportToken.equals("") == false) {
-							PriceList priceList = dataService
-									.getByPriceListName(currentImportToken);
-							if (priceList == null) {
-								priceList = new PriceList();
-								priceList.setName(currentImportToken);
-								priceList = (PriceList)dataService.addUpdate(priceList);
-							}
-							chargeDefinition.setPriceList(priceList);
+							PriceList priceList = (PriceList)dataService
+									.getByPrevId("PriceList", currentImportToken);
+							if (priceList != null) 
+								chargeDefinition.setPriceList(priceList);
 						}
 					} else if ("waste chart".equals(currentFieldToken)) {
 						if (currentImportToken.equals("") == false) {
-							WasteChart wasteChart = dataService
-									.getByWasteChartName(currentImportToken);
-							if (wasteChart == null) {
-								wasteChart = new WasteChart();
-								wasteChart.setName(currentImportToken);
-								wasteChart = (WasteChart)dataService.addUpdate(wasteChart);
-							}
-							chargeDefinition.setWasteChart(wasteChart);
+							WasteChart wasteChart = (WasteChart)dataService.getByPrevId("WasteChart", currentImportToken);
+							if (wasteChart != null)
+								chargeDefinition.setWasteChart(wasteChart);
 						}
 					} else if ("fixed waste".equals(currentFieldToken)) {
 						chargeDefinition.setFixedWaste(Utilities
@@ -612,12 +603,12 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						/* TODO */
 					} else if ("production location".equals(currentFieldToken)) {
 						if (currentImportToken.equals("") == false) {
-							Location location = dataService
+							ProductionLocations location = dataService
 									.getByLocationName(currentImportToken);
 							if (location == null) {
-								location = new Location();
+								location = new ProductionLocations();
 								location.setName(currentImportToken);
-								location = (Location)dataService.addUpdate(location);
+								location = (ProductionLocations)dataService.addUpdate(location);
 							}
 							chargeDefinition.setLocation(location);
 							charge.setProductionLocation(location);
@@ -1068,12 +1059,12 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				/* TODO */
 			} else if ("production location".equals(currentFieldToken)) {
 				if (currentImportToken != "") {
-					Location location = dataService
+					ProductionLocations location = dataService
 							.getByLocationName(currentImportToken);
 					if (location == null) {
-						location = new Location();
+						location = new ProductionLocations();
 						location.setName(currentImportToken);
-						location = (Location)dataService.addUpdate(location);
+						location = (ProductionLocations)dataService.addUpdate(location);
 					}
 					chargeDefinition.setLocation(location);
 					charge.setProductionLocation(location);

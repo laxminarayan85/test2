@@ -334,12 +334,18 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 	     costCenterArray = ev.result as ArrayCollection;
+	     CostCenter.selectedIndex = -1;
+	     CostCenter.text = "";
 	}
 	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
 	     productionLocationArray = ev.result as ArrayCollection;
+	    ProductionLocation.selectedIndex = -1;
+	    ProductionLocation.text = "";
 	}
 	private function handleLoadProductionPressResult(ev:ResultEvent):void {
 		productionPressArray = ev.result as ArrayCollection;
+		productionPress.selectedIndex = -1;
+		productionPress.text = " ";
 	}
 	private function handleGetResult(ev:ResultEvent):void {
 		pressDefinition = ev.result as PressDefinition;
