@@ -78,7 +78,7 @@
 	<mx:HRule x="0" y="17" width="100%" />
 	
 	<mx:DataGrid id="PricingMethodGrid" dataProvider="{preferencesPricingMethodArray}"
-		itemEditEnd="{processPricingMethodGridData(event)}" editable="true" top="27" bottom="80" left="50" right="38">
+		itemEditEnd="{processPricingMethodGridData(event)}" editable="true" top="27" bottom="80" left="50" right="38" rowHeight="25">
 		<mx:columns>
 			<mx:DataGridColumn width="40"
 				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Use')}"

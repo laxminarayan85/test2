@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesCashRegister;
+			import mx.events.DataGridEventReason;
+			import mx.events.DataGridEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] public var preferencesCashRegisterArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesCashRegisterDeleteArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var salesCategoryArray:ArrayCollection = new ArrayCollection(); 
+			
+			[Bindable] public var taxTablesArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var taxCodesArray:ArrayCollection = new ArrayCollection();
+			
+			private function processCashRegisterGridData(event:DataGridEvent):void {
+		        // Check the reason for the event.
+		        if (event.reason == DataGridEventReason.CANCELLED){
+		            // Do not update cell.
+		            return;
+		        }
+		        
+		        if(event.dataField == "rate")
+		        {
+		        	// Disable copying data back to the control.
+					event.preventDefault();
+		
+					// Close the cell editor.
+					cashRegisterGrid.destroyItemEditor();
+		        }           
+		
+				if(event.dataField == "category")
+				{
+					// Disable copying data back to the control.
+					event.preventDefault();
+		
+					// Close the cell editor.
+					cashRegisterGrid.destroyItemEditor();
+				}
+				if(event.dataField == "taxCodes")
+				{
+					// Disable copying data back to the control.
+					event.preventDefault();
+		
+					// Close the cell editor.
+					cashRegisterGrid.destroyItemEditor();
+				}
+				if(event.dataField == "taxTable")
+				{
+					// Disable copying data back to the control.
+					event.preventDefault();
+		
+					// Close the cell editor.
+					cashRegisterGrid.destroyItemEditor();
+				}
+		
+			}
+			
+			private function doNewCashRegister():void{
+				var newItem:PreferencesCashRegister = new PreferencesCashRegister();
+				preferencesCashRegisterArray.addItem(newItem);
+			}
+			private function doRemoveCashRegister():void{
+				if (cashRegisterGrid.selectedIndex > -1){
+					var newItem:PreferencesCashRegister = cashRegisterGrid.selectedItem as PreferencesCashRegister;
+					preferencesCashRegisterDeleteArray.addItem(newItem);
+					preferencesCashRegisterArray.removeItemAt(cashRegisterGrid.selectedIndex);
+				}
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Label x="0" y="0" width="100%" height="20"
+		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}"
+		textAlign="center" />
+		
+	<mx:HRule x="0" y="17" width="100%" />
+	
+	<mx:DataGrid id="cashRegisterGrid" dataProvider="{preferencesCashRegisterArray}"
+		editable="true" itemEditEnd="processCashRegisterGridData(event);"
+		bottom="80" top="27" right="52" left="28" rowHeight="25">
+		<mx:columns>
+		
+			<mx:DataGridColumn width="40"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Tax')}"
+				dataField="tax" editable="false">
+				<mx:itemRenderer>
+					<mx:Component>
+							<components:CustomCheckBoxComponent 
+								datagridControl="true" variableName="tax" customText="{data.tax}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn width="100"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Title')}"
+				dataField="title" />
+				
+			<mx:DataGridColumn width="140"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.SalesCategory')}"
+				dataField="category" editable="true">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Text selectable="false" text="{data.category.name}" />
+					</mx:Component>
+				</mx:itemRenderer>
+				<mx:itemEditor>
+					<mx:Component>
+						<components:CustomComboBoxComponent datagridControl="true" variableName="category"
+							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+							masterList="{outerDocument.salesCategoryArray}" 
+							customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data)}"/>
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn width="50"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posSetupCmd.Rate')}"
+				dataField="rate" editable="true">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Text selectable="false" text="{data.rate}" textAlign="right"/>
+					</mx:Component>
+				</mx:itemRenderer>
+				<mx:itemEditor>
+					<mx:Component>
+						<components:CustomNumericTextInputComponent datagridControl="true"
+							variableName="rate" customText="{data.rate}"
+							precision="2" rounding="nearest"/>
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+				
+			<mx:DataGridColumn width="140"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}"
+				dataField="taxTable" editable="true">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Text selectable="false" text="{data.taxTable.name}" />
+					</mx:Component>
+				</mx:itemRenderer>
+				<mx:itemEditor>
+					<mx:Component>
+						<components:CustomComboBoxComponent datagridControl="true" variableName="taxTable"
+							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+							masterList="{outerDocument.taxTablesArray}" 
+							customText="{outerDocument.getCustomTextData(outerDocument.taxTablesArray,data)}"/>
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn width="140"
+				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'customInvCmd.TaxCode')}"
+				dataField="taxCodes" editable="true">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Text selectable="false" text="{data.taxCodes.name}" />
+					</mx:Component>
+				</mx:itemRenderer>
+				<mx:itemEditor>
+					<mx:Component>
+						<components:CustomComboBoxComponent datagridControl="true" variableName="taxCodes"
+							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+							masterList="{outerDocument.taxCodesArray}" 
+							customText="{outerDocument.getCustomTextData(outerDocument.taxCodesArray,data)}"/>
+					</mx:Component>
+				</mx:itemEditor>
+			</mx:DataGridColumn>
+			
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<mx:Button x="50" width="38" height="38" click="{doNewCashRegister()}"
+		bottom="25">
+		<mx:icon>@Embed(source='../../../../../assets/new.png')
+		</mx:icon>
+	</mx:Button>
+	
+	<mx:Button x="100" width="38" height="38"
+		click="{doRemoveCashRegister()}" bottom="25">
+		<mx:icon>@Embed(source='../../../../../assets/cancel.png')
+		</mx:icon>
+	</mx:Button>
+	
+</mx:Canvas>
