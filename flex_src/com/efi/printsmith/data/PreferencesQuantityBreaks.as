@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesQuantityBreaks")]
 	[Managed]
 	
-	public class PreferencesQuantityBreaks extends ModelBase
+	public dynamic class PreferencesQuantityBreaks extends ModelBase
 	{
 
 		public function PreferencesQuantityBreaks() {

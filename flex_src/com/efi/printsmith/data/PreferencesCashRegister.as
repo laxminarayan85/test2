@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesCashRegister")]
 	[Managed]
 	
-	public class PreferencesCashRegister extends ModelBase
+	public dynamic class PreferencesCashRegister extends ModelBase
 	{
 
 		public function PreferencesCashRegister() {
