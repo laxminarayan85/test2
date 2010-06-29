@@ -47,6 +47,7 @@
 			[Bindable]public var isFocusInEventTrigerred:Boolean=false;
 			[Bindable]public var showToolTip:Boolean=false;
 			[Bindable]public var isInteger:Boolean=false;
+			[Bindable]public var isItemEditor:Boolean=false;
 			private var _customText:String;	
 			public var variableName:String;
 			
@@ -234,91 +235,93 @@
 	          	 }
 			}
 			public function focusOutEvent(event:FocusEvent):void {
-				var formattedString:String="";
-				
-				//Initializing Formatter and Validator Objects
-				numbFormatter.useThousandsSeparator=useThousandsSeparator;
-        		numbFormatter.precision=precision;
-        		numbFormatter.rounding=rounding;
-        		validateNumber.allowNegative=allowNegative; 
-        		validateNumber.minValue=minValue;
-        		validateNumber.maxValue=maxValue;
-        		validateNumber.required=required;
-        		validateNumber.numberLengthBeforeDecimal=numberLengthBeforeDecimal;
-        		validateNumber.allowSymbol = allowSymbol;
-        		validateNumber.symbolString = symbolString;
-        		
-        		
-				try {
-						if(isFocusInEventTrigerred){
-		    				isFocusInEventTrigerred = false;
-		    			}
-						if(this.text == "" || Number(this.text) == 0) {
-							if(defaultZero) {
-								this.text = numbFormatter.format("0");
+				if(!isItemEditor){
+					var formattedString:String="";
+					
+					//Initializing Formatter and Validator Objects
+					numbFormatter.useThousandsSeparator=useThousandsSeparator;
+	        		numbFormatter.precision=precision;
+	        		numbFormatter.rounding=rounding;
+	        		validateNumber.allowNegative=allowNegative; 
+	        		validateNumber.minValue=minValue;
+	        		validateNumber.maxValue=maxValue;
+	        		validateNumber.required=required;
+	        		validateNumber.numberLengthBeforeDecimal=numberLengthBeforeDecimal;
+	        		validateNumber.allowSymbol = allowSymbol;
+	        		validateNumber.symbolString = symbolString;
+	        		
+	        		
+					try {
+							if(isFocusInEventTrigerred){
+			    				isFocusInEventTrigerred = false;
+			    			}
+							if(this.text == "" || Number(this.text) == 0) {
+								if(defaultZero) {
+									this.text = numbFormatter.format("0");
+								}
+								if(!allowZero) {
+									this.errorString = "Please enter a value.";	
+									return;
+								}
 							}
-							if(!allowZero) {
-								this.errorString = "Please enter a value.";	
-								return;
-							}
-						}
-		    		    
-	    				 var dataFromControl:String = this.text;				    			 
-		    			 for(;dataFromControl.indexOf(",", 0) != -1;) {
-							dataFromControl = dataFromControl.replace(",","");
-						 }
-						 if(allowSymbol){
-							for (;dataFromControl.indexOf(symbolString, 0) != -1;) {
-								dataFromControl = dataFromControl.replace(symbolString,"");
-							}
-						}    								 																 	
-						 validateNumber.source=event.currentTarget;
-						 validateNumber.listener=event.currentTarget;
-						 validateNumber.property="text";
-						 var validateEvent:ValidationResultEvent  = validateNumber.validate(dataFromControl);
-						 
-			  			 if(validateEvent.type  == mx.events.ValidationResultEvent.INVALID ) {
-			  			 	if(data != null){
-			  			 		data[variableName+"ErrorText"] = event.currentTarget.text;
-			  			 	}
-			  			 	return;
-			  			 }
-		  			 	if (variableName != null) {     			
-			  				if(data != null) {
-			  					if(data[variableName+"ErrorText"]!=null){
-				  					data[variableName+"ErrorText"] = null;
+			    		    
+		    				 var dataFromControl:String = this.text;				    			 
+			    			 for(;dataFromControl.indexOf(",", 0) != -1;) {
+								dataFromControl = dataFromControl.replace(",","");
+							 }
+							 if(allowSymbol){
+								for (;dataFromControl.indexOf(symbolString, 0) != -1;) {
+									dataFromControl = dataFromControl.replace(symbolString,"");
+								}
+							}    								 																 	
+							 validateNumber.source=event.currentTarget;
+							 validateNumber.listener=event.currentTarget;
+							 validateNumber.property="text";
+							 var validateEvent:ValidationResultEvent  = validateNumber.validate(dataFromControl);
+							 
+				  			 if(validateEvent.type  == mx.events.ValidationResultEvent.INVALID ) {
+				  			 	if(data != null){
+				  			 		data[variableName+"ErrorText"] = event.currentTarget.text;
+				  			 	}
+				  			 	return;
+				  			 }
+			  			 	if (variableName != null) {     			
+				  				if(data != null) {
+				  					if(data[variableName+"ErrorText"]!=null){
+					  					data[variableName+"ErrorText"] = null;
+					  				}
+					  				data[variableName] = removeCommas(numbFormatter.format(dataFromControl));
 				  				}
-				  				data[variableName] = removeCommas(numbFormatter.format(dataFromControl));
-			  				}
-			  				else {
-			  					if(repeaterElement){
-			  						event.currentTarget.getRepeaterItem()[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
-			  					}
-			  					else {
-			  						dataHolder[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
-			  					}
-			  				}
-				  		}
-			    		formattedString = numbFormatter.format(dataFromControl);
-			    		if(allowSymbol && formattedString!="" && formattedString.length!=0){
-			    			if(Number(formattedString)!=0){
-				        		formattedString = symbolString+formattedString;
-				      		}
-				        }
-			    		if(appendZeroes){
-				        	text = formattedString;	
-				        }
-				        else {
-				        	this.text=formatDecimals(formattedString);
-				        }
-
-		    			if(datagridControl){
-			    			setStyle('backgroundColor',0x7FCEFF);
-			  				check=false;
-		    			}
-				   	} catch (err:Error) {
-							Alert.show(err.getStackTrace());
-					}
+				  				else {
+				  					if(repeaterElement){
+				  						event.currentTarget.getRepeaterItem()[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
+				  					}
+				  					else {
+				  						dataHolder[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
+				  					}
+				  				}
+					  		}
+				    		formattedString = numbFormatter.format(dataFromControl);
+				    		if(allowSymbol && formattedString!="" && formattedString.length!=0){
+				    			if(Number(formattedString)!=0){
+					        		formattedString = symbolString+formattedString;
+					      		}
+					        }
+				    		if(appendZeroes){
+					        	text = formattedString;	
+					        }
+					        else {
+					        	this.text=formatDecimals(formattedString);
+					        }
+	
+			    			if(datagridControl){
+				    			setStyle('backgroundColor',0x7FCEFF);
+				  				check=false;
+			    			}
+					   	} catch (err:Error) {
+								Alert.show(err.getStackTrace());
+						}
+				}
 			}
 			
 			private function removeCommas(dataFromControl:String):Number {
