@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesMarkups")]
 	[Managed]
 	
-	public class PreferencesMarkups extends ModelBase
+	public dynamic class PreferencesMarkups extends ModelBase
 	{
 
 		public function PreferencesMarkups() {
