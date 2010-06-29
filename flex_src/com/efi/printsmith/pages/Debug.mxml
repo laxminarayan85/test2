@@ -340,7 +340,7 @@
 			private function encryptSampleCC():void {
 				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
 				// replace EncryptDataEvent.ENCRYPTDATA with EncryptDataEvent.DECRYPTDATA to reverse call
-				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, "5555444433332222", "", callbacks);
+				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, "5555444433332222", "AES256WITHSERIALNUMBER", callbacks);
 				encryptCCEvent.dispatch();
 			}
 		]]>
