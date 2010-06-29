@@ -2,6 +2,7 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
 		width="100%" height="100%" pageTitle="Snowmass"
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
+ 		applicationComplete="initAppFunctions()"
  		xmlns:ns2="flexlib.controls.*"
  		xmlns:flexlib="flexlib.containers.*"
  		xmlns:business="com.efi.printsmith.business.*"
@@ -83,6 +84,9 @@
 
 <mx:Script>
 	<![CDATA[
+		import mx.managers.IFocusManagerComponent;
+		import mx.managers.FocusManager;
+		import mx.core.ComponentDescriptor;
 		import mx.formatters.DateFormatter;
 		import mx.formatters.CurrencyFormatter;
 		import com.efi.printsmith.events.commandEvents.EditForms.*;
@@ -113,7 +117,8 @@
         import mx.managers.BrowserManager;
         import mx.managers.IBrowserManager;
         import mx.events.BrowserChangeEvent;
-        		
+        import mx.utils.StringUtil;
+         
 		import com.efi.printsmith.pages.Login;
 		import mx.managers.ToolTipManager;
 		import flash.events.EventDispatcher;
@@ -138,6 +143,14 @@
 		
 		public var userName:String;
 		public var userPass:String;
+		
+		private var gCardDataBuffer:String;
+		private var gQuestionMarkCount:int = 0;
+		private var gCardDataCharCount:int = 0;
+		private var gCaptureCardData:Boolean = false;
+		private var gComponent:IFocusManagerComponent = null;
+		private var gTimer:Timer = null;
+
 		
 		public var security:com.efi.printsmith.security.PSSecurity;
 		
@@ -316,6 +329,11 @@
 				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
 			}
 		}
+		
+		private function initAppFunctions() : void {
+			stage.addEventListener(KeyboardEvent.KEY_UP, myKeyUpHandler);
+		}
+		
 		private function init() : void {
 			thisInstance = this;
 			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
@@ -383,7 +401,167 @@
 			}
 			}
 		}
-
+		
+		//
+		// timer to allow for failed credit card brick reading, this will switch back to normal
+		//	operations when no REAL card data can be found.
+		//
+ 		private function timerCallBack(evt:TimerEvent):void {
+            var tmr:Timer = evt.currentTarget as Timer;
+            if (tmr.currentCount >= 3) {
+            	// give up on more data coming in from card reader
+				gCaptureCardData = false;
+				// restore the focus
+				focusManager.setFocus(gComponent);
+				tmr.stop();
+            }
+        }
+        
+		private function startWaitTimer():void {
+			if (gTimer == null) {
+	             gTimer = new Timer(1000,3);
+	             gTimer.addEventListener(TimerEvent.TIMER, timerCallBack);
+	             gTimer.start();
+	 		 } else {
+	 		 	gTimer.reset();
+	 		 	gTimer.start();
+	 		 }
+        }
+		
+		//
+		// The main level key UP event processing, handles ALL key strokes from the user,
+		//	which is also where the card brick data comes from.
+		// *** BE VERY CAREFUL MAKING CHANGES HERE, EFFECTS GLOBAL STATES AND TIMERS ***
+		//
+		// Sample raw card data:  Track one and Track two
+		// %B3000 100000 50000^RODGERS/D                 ^1109061188864?
+		// ;3000150000052007=110906119999?
+		//
+		private function myKeyUpHandler(event:KeyboardEvent):void {
+		
+			var curKeyCode:int;
+			var localString:String;
+			
+			// ONLY WHEN NO ALT OR CONTROL KEYS ARE DOWN
+			//
+			if( event.altKey == false && event.ctrlKey == false){
+				curKeyCode = event.keyCode;
+				
+				// all bricks are programmed to preceed data with a "F6" key stroke.
+				if(curKeyCode==Keyboard.F6 && gCaptureCardData == false) {
+					gCardDataBuffer = "";
+					gQuestionMarkCount = 0;
+					gCardDataCharCount = 0;
+					gCaptureCardData = true;
+					// save off the current focus and set the current focus to null, keep text fields from seeing the card data
+					gComponent = focusManager.getFocus();
+					this.stage.focus = null;
+					
+					// kick off a timer to know when all data should have come in.
+					//  give up after a few seconds.
+					startWaitTimer();
+				} 
+				//
+				// if the card data is being captured, grab one character at a time into the buffer
+				//
+				else if (gCaptureCardData) {
+					
+					localString = String.fromCharCode(event.charCode);
+					gCardDataBuffer = gCardDataBuffer.concat(localString);
+					
+					++gCardDataCharCount;
+					
+					if (event.charCode == 63) {		// "?"
+						gQuestionMarkCount += 1;
+					}
+					
+					if (gCardDataBuffer.length > 40 && gQuestionMarkCount > 1 && event.charCode == 13) {
+						// tell the timer we are complete, it can shut down now
+						if (gTimer != null) {
+							gTimer.stop();
+						}
+						// no more data will be captured into the card buffer
+						gCaptureCardData = false;
+						// restore the focus
+						focusManager.setFocus(gComponent);
+						
+						parseCreditCardRawTrackData(gCardDataBuffer);
+					}
+				}
+			}
+		}
+		
+		private function parseCreditCardRawTrackData(inputTxt:String):void {
+			var startSentinal:String;
+			var cardNumber:String;
+			var cardHolderName:String;
+			var formatCode:String;
+			var expirationYY:String;
+			var expirationMM:String;
+			var cr:String = String.fromCharCode(13);
+			var trackOne:String;
+			var trackTwo:String;
+			var k:int;
+			var len:int;
+			var i:int;
+			var cardType:Number;
+			var myRegExp:RegExp;
+			
+			startSentinal = inputTxt.charAt(0);
+			formatCode = inputTxt.charAt(1);
+			
+			// good starting code and track data markers
+			if (startSentinal == "%" && formatCode == "B") {
+				len = inputTxt.length;
+				k = 0;
+				while (inputTxt.charAt(k) != "^" && k < len)
+				{
+					++k;
+				}
+				--k;  // don't include the "^" symbol
+				cardNumber = inputTxt.substring(2,k);
+				
+				myRegExp = new RegExp(" ","g");		// find a SPACE character, all of them
+				cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
+				
+				k += 2;  // skip the "^" symbol
+						
+				len = inputTxt.length;
+				i = k;	// the starting point, first letter in name section
+				while (inputTxt.charAt(k) != "^" && k < len)
+				{
+					++k;
+				}
+				--k;  // don't include the "^" symbol
+				cardHolderName = inputTxt.substring(i,k);
+				cardHolderName = StringUtil.trim(cardHolderName);
+				
+				// read the YYMM expiration date
+				k += 2;
+				i=k;
+				expirationYY = inputTxt.substring(i,i+1);
+				i += 2;
+				expirationMM = inputTxt.substring(i,i+1);
+				
+				// find the track one and track two seperator
+				k = i+1;
+				while (inputTxt.charAt(k) != cr && k < len)
+				{
+					++k;
+				}
+				
+				// capture the raw track data and compute the credit card type number from first digit
+				cardType = (cardNumber.charCodeAt(0) - 48);
+				trackOne = inputTxt.substring(0,k);
+				trackTwo = inputTxt.substring(k+1,len);
+				
+				// remove white space at the end, ie.. CR, LF, SPACE
+				trackOne = StringUtil.trim(trackOne);
+				trackTwo = StringUtil.trim(trackTwo);
+			}
+		}
+		
+		
 		private function endMoveLogo() : void {
 			efiLogoFade.play();
 			poweredByFade.play();			
