@@ -675,7 +675,7 @@
 		dataServiceCashRegister.getAll("PreferencesCashRegister");
 		dataServiceCashRegister.getAll("PreferencesCashRegister");
 		dataServiceCreditCard.getAll("PreferencesCreditCard");
-		dataServiceMarkups.getAll("OutsideServices");
+		dataServiceMarkups.getAll("OutsideService");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
 		dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 		dataServicePricingMethod.getAll("PreferencesPricingMethod");
@@ -1326,32 +1326,6 @@
 	}
 	private function doSelectFolder():void{
 		
-	}
-	
-
-	private function doNewMarkup(item:String):void{
-		if (item=="outside")
-		{
-			var newItem1:OutsideService = new OutsideService();
-			PreferencesMarkupsArray.addItem(newItem1);
-		}else {
-			var newItem2:Merchandise = new Merchandise();
-			PreferencesMarkupsMerchandiseArray.addItem(newItem2);
-		}
-	}
-	private function doRemoveMarkup(item:String, dg:DataGrid):void{
-		if (dg.selectedIndex > -1) {
-			if (item=="outside")
-			{
-				var newItem1:OutsideService = dg.selectedItem as OutsideService;
-				PreferencesMarkupsDeleteArray.addItem(newItem1);
-				PreferencesMarkupsArray.removeItemAt(dg.selectedIndex);
-			}else {
-				var newItem2:Merchandise = dg.selectedItem as Merchandise;
-				PreferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
-				PreferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
-			}
-		}
 	}	
 	
 	private function TreeDisplayLabel(item:XML):String {
@@ -1377,10 +1351,7 @@
 	    
 	    return _rtn;
 	}
-
-	private function formatNumberMarkup(item:Object, column:DataGridColumn):String {
-		return item.markup.toFixed(2);
-	}
+	
 ]]>
 
 </mx:Script>	
@@ -1452,46 +1423,10 @@
 				preferencesQuantityBreaksDeleteArray="{PreferencesQuantityBreaksDeleteArray}" jobMethodsArray="{jobMethodsArray}"
 				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<mx:Canvas width="100%" height="100%" id="markups_canvas" hideEffect="effect" showEffect="effect">
-				<mx:Label x="0" y="0" width="100%" height="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Markups')}" textAlign="center"/>
-				<mx:HRule x="0" y="17" width="100%"/>
-				
-				<mx:Text x="50" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markupissteppedandba')}" height="38" width="488"/>
-
-				<mx:Label x="50" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}" textAlign="right"/>
-				<mx:DataGrid x="50" id="OutsideServicesGrid" 
-					dataProvider="{PreferencesMarkupsArray}" 
-					editable="true" top="100" bottom="80">
-					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup" labelFunction="formatNumberMarkup"/>
-					</mx:columns>
-				</mx:DataGrid>
-
-				<mx:Button x="50" width="38" height="38" click="doNewMarkup(&quot;outside&quot;);" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-				</mx:Button>
-				<mx:Button x="100" width="38" height="38" click="doRemoveMarkup(&quot;outside&quot;,OutsideServicesGrid);" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-				</mx:Button>
-
-				<mx:Label x="300" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}" textAlign="right"/>
-				<mx:DataGrid x="300" id="MerchandiseGrid" 
-					dataProvider="{PreferencesMarkupsMerchandiseArray}" 
-					editable="true" top="100" bottom="80">
-					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}" dataField="totalCost"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" dataField="markup" labelFunction="formatNumberMarkup"/>
-					</mx:columns>
-				</mx:DataGrid>
-				<mx:Button x="300" width="38" height="38" click="doNewMarkup(&quot;merchandise&quot;);" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-				</mx:Button>
-				<mx:Button x="350" width="38" height="38" click="doRemoveMarkup(&quot;merchandise&quot;,MerchandiseGrid);" bottom="25">
-					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-				</mx:Button>
-				
-			</mx:Canvas>
+			<prefcomp:MarkupsCanvasComponent id="markups_canvas" preferencesMarkupsArray="{PreferencesMarkupsArray}"
+				preferencesMarkupsMerchandiseArray="{PreferencesMarkupsMerchandiseArray}" preferencesMarkupsDeleteArray="{PreferencesMarkupsDeleteArray}"
+				preferencesMarkupsMerchandiseDeleteArray="{PreferencesMarkupsMerchandiseDeleteArray}" 
+				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 			
 			<prefcomp:StocksizesCanvasComponent id="stocksizes_canvas" preferencesStocks="{preferencesStocks}" 
 				sizeTableArray="{SizeTableArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
