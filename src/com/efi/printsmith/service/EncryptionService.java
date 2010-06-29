@@ -21,116 +21,300 @@ import java.security.Key;
 import java.security.Security;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionService extends SnowmassHibernateService{
 	protected static Logger log = Logger.getLogger(EncryptionService.class);
 
+	/*
+	 * The main public function to Encrypt data using a know style of key generation.	
+	 * 
+	 */
 	public String encryptData(String encryptionData, String encryptionStyle) throws Exception {
 		DataService dataService = new DataService();
-		String		temp;
+	//	String		temp;
 		
 		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		
-		if (preferences != null){
-			if (preferences.getProgramType().equals(PreferenceProgramType.CopyShop)) {
-				// For illustration purposes
-			}
-			
-			if ((encryptionData = preferences.getCCEncryptionData()) != null) {
-				// For illustration purposes
-				
-			}
+		if (preferences == null) {
+			preferences = new PreferencesSystem();
 		}
 		
-		encryptionData = Aes256BitEncryptData(getKeySpec(encryptionStyle, preferences), encryptionData);
-		temp = encryptionData;
-		temp = Aes256BitDecryptData(getKeySpec(encryptionStyle, preferences), temp);
+		if (encryptionStyle.equalsIgnoreCase("AES256PASSWORD_A") ||
+			encryptionStyle.equalsIgnoreCase("AES256STATIC_A") ||
+			encryptionStyle.equalsIgnoreCase("AES256TEMPKEYWITHSERIALNUMBER") ||
+			encryptionStyle.equalsIgnoreCase("AES256WITHSERIALNUMBER")) {
+				
+			encryptionData = Aes256BitEncryptData(getAes256KeySpec(encryptionStyle, dataService, preferences), encryptionData);
+		
+	//		temp = encryptionData;
+	//		temp = Aes256BitDecryptData(getAes256KeySpec(encryptionStyle, dataService, preferences), temp);
+		}
 		
 		return encryptionData;
 	}
-	
+	/*
+	 * The main public function to Decryption data using a know style of key generation.	
+	 * 
+	 */	
 	public String decryptData(String encryptionData, String encryptionStyle) throws Exception {
 		DataService dataService = new DataService();
 		
 		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		
-		if (preferences != null){
-			if (preferences.getProgramType().equals(PreferenceProgramType.CopyShop)) {
-				// For illustration purposes
-			}
-			
-			if ((encryptionData = preferences.getCCEncryptionData()) != null) {
-				// For illustration purposes
-				
-			}
+		if (preferences == null) {
+			preferences = new PreferencesSystem();
 		}
 		
-		encryptionData = Aes256BitDecryptData(getKeySpec(encryptionStyle, preferences), encryptionData);
+		if (encryptionStyle.equalsIgnoreCase("AES256PASSWORD_A") ||
+				encryptionStyle.equalsIgnoreCase("AES256STATIC_A") ||
+				encryptionStyle.equalsIgnoreCase("AES256WITHSERIALNUMBER")) {		
+				
+			encryptionData = Aes256BitDecryptData(getAes256KeySpec(encryptionStyle, dataService, preferences), encryptionData);
+		}
 		
 		return encryptionData;
 	}
 	
+	// 
+	// external function to generate a new key and encrypt that key for storage
+	//
+	public String generateNewKey(String encryptionStyle) throws Exception {
+		String	newKeyString = null;
+		
+		newKeyString = localNewKey(encryptionStyle);
+		
+		// encrypt and convert to HEX
+		// turns a 32 byte (256 bits) into 64 bytes.
+		if (encryptionStyle.equalsIgnoreCase("AES256")) {
+			newKeyString = Aes256BitEncryptData(getAes256KeySpec("AES256STATIC_A", null, null), newKeyString);
+		}
+		
+		return newKeyString;
+	}
+	//
+	// =============================== private from here down =====================================
+	//
 
-	private static SecretKeySpec getKeySpec(String encryptionStyle, PreferencesSystem preferences) throws Exception {
+	//
+	// this generates the keys for the encryption functions, the type of key is passed in.
+	// several static and dynamic keys can be generated.
+	// Keys are return in there native format for consumption by AES cipher calls.
+	//
+	private static SecretKeySpec getAes256KeySpec(String encryptionStyle, DataService dataService, PreferencesSystem preferences) throws Exception {
 		SecretKeySpec	spec;
 		byte 			[]newKey;
-		int 			serialNumber;
-	//	byte[] b = new byte[4];
+		long 			serialNumber;
+		int				countKeyParts = 0;
+		String			savedKeyData = null;
+		String			savedKeyDataPart;
+		//
+		// static key for other keys to be encrypted
+		//
+		byte[] mystaticKey = new byte[]{(byte)0x3D, (byte)0x60, (byte)0xEB, (byte)0x10, (byte)0x15, (byte)0xCA, (byte)0x71, (byte)0xBE,
+				(byte)0x2B, (byte)0x73, (byte)0xAE, (byte)0xF0, (byte)0x85, (byte)0x7D, (byte)0x77, (byte)0x81,
+			    		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,(byte)0xD7,
+			    		0x2D,(byte)0x98,0x10,(byte)0xA3,0x09,0x14,(byte)0xDF,(byte)0xF4};
 		
-	//	byte[] mystaticKey = new byte[]{(byte)0x3D, (byte)0x60, (byte)0xEB, (byte)0x10, (byte)0x15, (byte)0xCA, (byte)0x71, (byte)0xBE,
-	//			(byte)0x2B, (byte)0x73, (byte)0xAE, (byte)0xF0, (byte)0x85, (byte)0x7D, (byte)0x77, (byte)0x81,
-	//		    		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,(byte)0xD7,
-	//		    		0x2D,(byte)0x98,0x10,(byte)0xA3,0x09,0x14,(byte)0xDF,(byte)0xF4};
-		byte[] mystaticKey = new byte[]{(byte)0x73, (byte)0x28, (byte)0x6E, (byte)0x42, (byte)0x7D, (byte)0x27, (byte)0x5E, (byte)0x7E,
-				(byte)0x2D, (byte)0x37, (byte)0x33, (byte)0x4A, (byte)0x2B, (byte)0x6F, (byte)0x77, (byte)0x2F,
-			    		0x3B,0x5D,0x5B,0x4E,0x2D,0x77,0x6F,(byte)0x4F,
-			    		0x30,(byte)0x20,0x67,(byte)0x77,0x6B,0x57,(byte)0x3E,(byte)0x26};
-						
-	    //byte[] mystaticKey = new byte []{(byte)0x3D,(byte)0x60,(byte)0xEB,(byte)0x10,(byte)0x15,(byte)0xCA,(byte)0x71,(byte)0xBE};
-	    
-	    //		0x2B,0x73,0xAE,0xF0,0x85,0x7D,0x77,0x81,
-	    //		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,0xD7,
-	    //		0x2D,0x98,0x10,0xA3,0x09,0x14,0xDF,0xF4};
-	    
-		if (preferences != null) {
-			//	int serialNumber = Integer.getInteger(preferences.getSerialNumber()).intValue();
-		} else
-			serialNumber = 0;
+		// static key for passwords	
+		byte[] passwordKey = new byte[]{(byte)0x2D, (byte)0x09, (byte)0x1F, (byte)0x7D, (byte)0x77, (byte)0xCA, (byte)0xBE, (byte)0xF0,
+				(byte)0x2B, (byte)0x73, (byte)0xAE, (byte)0xF0, (byte)0x85, (byte)0x7D, (byte)0x77, (byte)0x81,
+			    		0x1F,0x35,0x2C,0x07,0x3B,0x61,0x08,(byte)0xD7,
+			    		0x1A,(byte)0xA1,0x10,(byte)0xA2,0x08,0x15,(byte)0xDF,(byte)0xF5};
+	// key after overlay
+	//	byte[] mystaticKey = new byte[]{(byte)0x73, (byte)0x28, (byte)0x6E, (byte)0x42, (byte)0x7D, (byte)0x27, (byte)0x5E, (byte)0x7E,
+	//			(byte)0x2D, (byte)0x37, (byte)0x33, (byte)0x4A, (byte)0x2B, (byte)0x6F, (byte)0x77, (byte)0x2F,
+	//		    		0x3B,0x5D,0x5B,0x4E,0x2D,0x77,0x6F,(byte)0x4F,
+	//		    		0x30,(byte)0x20,0x67,(byte)0x77,0x6B,0x57,(byte)0x3E,(byte)0x26};
+	
+	//	byte[] savedKey = new byte[]{(byte)0x73, (byte)0x28, (byte)0x6E, (byte)0x40, (byte)0x74, (byte)0x26, (byte)0x58, (byte)0x7E,
+	//			(byte)0x2D, (byte)0x37, (byte)0x33, (byte)0x48, (byte)0x2A, (byte)0x6E, (byte)0x77, (byte)0x2B,
+	//		    		0x3B,0x5D,0x5B,0x4E,0x25,0x76,0x6F,(byte)0x4F,
+	//		    		0x30,(byte)0x20,0x67,(byte)0x75,0x6B,0x50,(byte)0x3C,(byte)0x24};
 		
-		if (encryptionStyle.equalsIgnoreCase("AES256WITHSERIALNUMBER")) {
-			serialNumber = 9922;	//•• TEMP
-			newKey = OverlaySerialNumberOntoKeyPhrase( mystaticKey, serialNumber);
-		} else
+		//
+		// built in password key, always the same for this type
+		//
+		if (encryptionStyle.equalsIgnoreCase("AES256PASSWORD_A")) {
+			newKey = passwordKey.clone();
+		
+		//
+		// The built in static key, this is for reading/writing other keys to the database
+		//
+		} else if (encryptionStyle.equalsIgnoreCase("AES256STATIC_A")) {
 			newKey = mystaticKey.clone();
 		
+		//
+		// normal operations using the saved key, which itself is stored as encrypted hex
+		//	
+		} else if (encryptionStyle.equalsIgnoreCase("AES256WITHSERIALNUMBER")) {
+			// read from saved key
+			//
+			if (preferences != null) {
+				if ((savedKeyDataPart = preferences.getConfig()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyDataPart;
+				}
+				if ((savedKeyDataPart = preferences.getProcess()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}
+				
+				if ((savedKeyDataPart = preferences.getSlogan()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}
+				
+				if ((savedKeyDataPart = preferences.getSettings()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}				
+			}
+			
+			// must have all four parts to make a valid encyption key
+			// if not valid, then create a new key and store in the preference system
+			//
+			if (countKeyParts < 4) {
+				savedKeyData = localNewKey("AES256");
+				
+				// encrypt and convert to HEX
+				// turns a 32 byte (256 bits) into 64 bytes.
+				savedKeyDataPart = Aes256BitEncryptData(getAes256KeySpec("AES256STATIC_A", null, null), savedKeyData);
+
+				if (dataService != null) {
+					preferences.setConfig(savedKeyDataPart.substring(0, 16));
+					preferences.setProcess(savedKeyDataPart.substring(16, 32));
+					preferences.setSlogan(savedKeyDataPart.substring(32, 48));
+					preferences.setSettings(savedKeyDataPart.substring(48, 64));
+					dataService.addUpdate(preferences);
+				}
+			} else {
+			
+				//
+				// saved key is also encrypted, using the static key
+				//
+				savedKeyData = Aes256BitDecryptData(getAes256KeySpec("AES256STATIC_A", null, null), savedKeyData);
+			}
+			
+			if (preferences != null) {
+				serialNumber = preferences.getSerialNumber();
+			} else
+				serialNumber = 9999;
+			
+			newKey = OverlaySerialNumberOntoKeyPhrase( savedKeyData.getBytes(), serialNumber);
+		//
+		// the key must be in the process of updating, get the TEMP key
+		//
+		} if (encryptionStyle.equalsIgnoreCase("AES256TEMPKEYWITHSERIALNUMBER")) {
+			
+			// Read the stored key from the preference system.
+			// (THIS VERSION WORKS ON THE TEMP KEY, NOT THE MAIN USE KEY)
+			//
+			if (preferences != null) {
+				if ((savedKeyDataPart = preferences.getOconfig()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyDataPart;
+				}
+				if ((savedKeyDataPart = preferences.getOprocess()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}
+				
+				if ((savedKeyDataPart = preferences.getOslogan()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}
+				
+				if ((savedKeyDataPart = preferences.getOsettings()) != null) {
+					if (savedKeyDataPart.length() > 0)
+						++countKeyParts;
+					savedKeyData = savedKeyData.concat(savedKeyDataPart);
+				}				
+			}
+			// must have all four parts to make a valid encyption key
+			// if not valid, then create a new key and store in the preference system
+			// (THIS VERSION WORKS ON THE TEMP KEY, NOT THE MAIN USE KEY)
+			//
+			if (countKeyParts < 4) {
+				savedKeyData = localNewKey("AES256");
+				
+				// encrypt and convert to HEX
+				// turns a 32 byte (256 bits) into 64 bytes.
+				savedKeyDataPart = Aes256BitEncryptData(getAes256KeySpec("AES256STATIC_A", null, null), savedKeyData);
+
+				if (dataService != null) {
+					preferences.setOconfig(savedKeyDataPart.substring(0, 16));
+					preferences.setOprocess(savedKeyDataPart.substring(16, 32));
+					preferences.setOslogan(savedKeyDataPart.substring(32, 48));
+					preferences.setOsettings(savedKeyDataPart.substring(48, 64));
+					dataService.addUpdate(preferences);
+				}
+			} else {
+			
+				//
+				// saved key is also encrypted, using the static key
+				//
+				savedKeyData = Aes256BitDecryptData(getAes256KeySpec("AES256STATIC_A", null, null), savedKeyData);
+			}
+			
+			if (preferences != null) {
+				serialNumber = preferences.getSerialNumber();
+			} else
+				serialNumber = 9999;
+			
+			newKey = OverlaySerialNumberOntoKeyPhrase( savedKeyData.getBytes(), serialNumber);
+		} else {
+			newKey = mystaticKey.clone();
+		}
+				
 	    spec = new SecretKeySpec(newKey,"AES");
 	    return spec;
 	}
 	
+	//
+	// local function which performs the JAVA cipher calls to handle encryption
+	//
+	//
 	private static String Aes256BitEncryptData(SecretKeySpec spec, String value) throws Exception {
+		//
+		// the style of AES used here is very specific, otherwise the classic data will not decrypt properly
+		//
 		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
 		cipher.init(Cipher.ENCRYPT_MODE, spec);
 		
-		byte [] inputBytes = value.getBytes();
-		byte [] rawEncryptedData = cipher.doFinal(inputBytes);
-		String hexString = asHex (rawEncryptedData);
+		byte [] inputBytes = value.getBytes();					// convert string into a byte array
+		byte [] rawEncryptedData = cipher.doFinal(inputBytes);// do all the work here
+		String hexString = asHex (rawEncryptedData);			// convert raw bytes into HEX string
 		return hexString;
 	}
-	
+	//
+	// local function which performs the JAVA cipher calls to handle decryption
+	//
+	//
 	private static String Aes256BitDecryptData(SecretKeySpec spec, String value) throws Exception {
 		byte	localBytes[];
 		String	originalString;
 		
+		//
+		// the style of AES used here is very specific, otherwise the classic data will not decrypt properly
+		//
 		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, spec);
         
-        byte [] rawEncryptedData = hexToBytes(value.getBytes());
+        byte [] rawEncryptedData = hexToBytes(value.getBytes());	// convert HEX to byte array
         
-        localBytes = cipher.doFinal(rawEncryptedData);		//
+        localBytes = cipher.doFinal(rawEncryptedData);		// do all the work here
         
-        originalString = new String(localBytes);
+        originalString = new String(localBytes);			// convert from byte array into a string
 
 		return originalString;
 	}
@@ -139,7 +323,7 @@ public class EncryptionService extends SnowmassHibernateService{
 	// OverlaySerialNumberOntoKeyPhrase - mask the encryption key with a overlay from the serial number.
 	//										makes all installs of PrintSmith unique key.
 	//
-	private static byte[] OverlaySerialNumberOntoKeyPhrase( byte []inputKey, int serialNumber)
+	private static byte[] OverlaySerialNumberOntoKeyPhrase( byte []inputKey, long serialNumber)
 	{
 		int				i,k;
 		byte			[]formattedSerialNumber;
@@ -179,21 +363,15 @@ public class EncryptionService extends SnowmassHibernateService{
 		   if (((int) buf[i] & 0xff) < 0x10)
 		    strbuf.append("0");
 		
-		   strbuf.append(Long.toString((int) buf[i] & 0xff, 16));
+		   strbuf.append(Long.toString((int) buf[i] & 0xff, 16).toUpperCase());
 		  }
 		
 		  return strbuf.toString();
 	 }
 	 
-	// private static String getHexString(byte[] b) throws Exception {
-	//	  String result = "";
-	//	  for (int i=0; i < b.length; i++) {
-	//	    result +=
-	//	          Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
-	//	  }
-	//	  return result;
-	//	}
-	 
+	 //
+	 // turn hex bytes into a byte array, which in turn is a string
+	 //
 	  private static byte[] hexToBytes(byte[] hex) {
 	    int length = hex.length / 2;
 	    byte[] raw = new byte[length];
@@ -207,6 +385,39 @@ public class EncryptionService extends SnowmassHibernateService{
 	    }
 	    return raw;
 	  }
+	  
+	  /**
+	     * Appends two bytes array into one.
+	     *
+	     * @param a A byte[].
+	     * @param b A byte[].
+	     * @return A byte[].
+	     */
+	//    private static byte[] append(byte[] a, byte[] b) {
+	//        byte[] z = new byte[a.length + b.length];
+	//        System.arraycopy(a, 0, z, 0, a.length);
+	//        System.arraycopy(b, 0, z, a.length, b.length);
+	//        return z;
+	//    }
+	    
+	    // generate a new key for AES 256, the key will be in HEX and be encrypted using a static key
+		// return value:  256bit (32 bytes) that have been turned into HEX, for a total of (64) bytes.
+		//
+		private static String localNewKey(String encryptionStyle) throws Exception {
+			String	newKeyString = null;
+			
+			if (encryptionStyle.equalsIgnoreCase("AES256")) {
+				KeyGenerator kgen = KeyGenerator.getInstance("AES");
+				kgen.init(256);
+
+				// Generate the secret key specs.
+				SecretKey skey = kgen.generateKey();
+				byte[] raw = skey.getEncoded();
+				newKeyString = new String(raw);
+			} 
+			
+			return newKeyString;
+		}
 }
 
 
