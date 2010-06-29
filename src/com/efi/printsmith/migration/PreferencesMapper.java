@@ -24,6 +24,9 @@ import com.efi.printsmith.data.PreferencesQuantityBreaks;
 import com.efi.printsmith.data.PreferencesStocks;
 import com.efi.printsmith.data.SizeTable;
 import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.PreferencesCashRegister;
+import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.TaxCodes;
 
 import com.efi.printsmith.service.DataService;
 
@@ -68,11 +71,40 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
 		else if (group.equals("Standard Markup"))
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
+		else if (group.equals("Pricing Methods"))
+			importPreferencesPricingMethodField(key, fieldName, fieldValue);
+		else if (group.equals("Cash Register")) {
+			importPreferencesCashRegisterField(key, fieldName, fieldValue);
+			importPreferencesPOSField(key, fieldName, fieldValue);
+		} else if (group.equals("Alternate Currency"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
+		else if (group.equals("Dongle"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
 	}
-	private void importDongleField(String fieldName, String fieldValue) {
-		
+	private void importPreferencesCashRegisterField(String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		PreferencesCashRegister preferencesCashRegister = (PreferencesCashRegister)dataService.getByPrevId("PreferencesCashRegister", key);
+		if (preferencesCashRegister == null) {
+			preferencesCashRegister = new PreferencesCashRegister();
+			preferencesCashRegister.setPrevId(key);
+		}
+		if (name.equals("buttonName"))
+			preferencesCashRegister.setTitle(value);
+		else if (name.equals("ButtonRate"))
+			preferencesCashRegister.setRate(Utilities.tokenToDouble(value));
+		else if (name.equals("buttonSalesCat")) {
+			SalesCategory salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", value);
+			preferencesCashRegister.setCategory(salesCategory);
+		} else if (name.equals("buttonTaxTableID")) {
+			TaxTable taxTable = (TaxTable)dataService.getByPrevId("TaxTable", value);
+			preferencesCashRegister.setTaxTable(taxTable);
+		} else if (name.equals("buttonTaxCodeID")) {
+			TaxCodes taxCodes = (TaxCodes)dataService.getByPrevId("TaxCodes",value);
+			preferencesCashRegister.setTaxCodes(taxCodes);
+		}
+		dataService.addUpdate(preferencesCashRegister);
 	}
-	private void importPreferencesPricingMethodField(String key, String name, String value) {
+	private void importPreferencesPricingMethodField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesPricingMethod preferencesPricingMethod = (PreferencesPricingMethod)dataService.getByPrevId("PreferencesPricingMethod", key);
 		if (preferencesPricingMethod == null) {
@@ -82,7 +114,21 @@ public class PreferencesMapper extends ImportMapper {
 		if (name.equals("salesCat_bucket_number")) {
 			SalesCategory salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", value);
 			preferencesPricingMethod.setCategory(salesCategory);
-		}
+		} else if (name.equals("pricingMethodName"))
+			preferencesPricingMethod.setTitle(value);
+		else if (name.equals("pricingMethodAbbrev"))
+			preferencesPricingMethod.setAbbreviation(value);
+		else if (name.equals("pricingMethod"))
+			preferencesPricingMethod.setMethod(value);
+		else if (name.equals("showNotes"))
+			preferencesPricingMethod.setShowNotes(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("finished"))
+			preferencesPricingMethod.setFinished(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("taxable"))
+			preferencesPricingMethod.setTaxable(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("brokered"))
+			preferencesPricingMethod.setBrokered(Utilities.tokenToBooleanValue(value));
+		dataService.addUpdate(preferencesPricingMethod);
 	}
 	private void importPreferencesStocksField(String group, String key, String name, String value) throws NumberFormatException, ParseException {
 		DataService dataService = new DataService();
@@ -252,7 +298,40 @@ public class PreferencesMapper extends ImportMapper {
 			if (Utilities.tokenToInt(key) > 1)
 				currentFooter = currentFooter + "\r";
 			preferencesPOS.setReceiptFooter(currentFooter + value);
-		}
+		} else if (name.equals("recieptBlankLine_after"))
+			preferencesPOS.setBlankLinesAfterReceipt(Utilities.tokenToInt(value));
+		else if (name.equals("recieptBlankLine_before"))
+			preferencesPOS.setBlankLinesBeforeReceipt(Utilities.tokenToInt(value));
+		else if (name.equals("caseReceiptTwoCopies"))
+			preferencesPOS.setPrint2forCash(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("useNamedSerial")) {
+			if (Utilities.tokenToBooleanValue(value)) {
+				preferencesPOS.setReceiptPrinterStatus("Named Serial Port");
+			}
+		} else if (name.equals("useNamedPrinter")) {
+			if (Utilities.tokenToBooleanValue(value)) {
+				preferencesPOS.setReceiptPrinterStatus("Named Graphic Printer");
+			}
+		} else if (name.equals("ccReceiptTwoCopies"))
+			preferencesPOS.setPrint2forCreditCards(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("useUSBPrinter")) {
+			if (Utilities.tokenToBooleanValue(value)) {
+				preferencesPOS.setReceiptPrinterStatus("USB Serial Printer");
+			}
+		} else if (name.equals("usePrinterPort")) {
+			if (Utilities.tokenToBooleanValue(value)) {
+				preferencesPOS.setReceiptPrinterStatus("Printer Port");
+			}
+		} else if (name.equals("remoteDrawer"))
+			preferencesPOS.setUseMasterDrawer(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("printInv"))
+			preferencesPOS.setPrintInvoices(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("receiptOn"))
+			preferencesPOS.setPrintReceipts(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("drawerOn"))
+			preferencesPOS.setEnableCashDrawer(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("printerName"))
+			preferencesPOS.setDefaultPrinter(value);
 		dataService.addUpdate(preferencesPOS);
 	}
 	private void importPreferencesEstimatingField(String key, String name, String value) throws Exception {
@@ -355,6 +434,40 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setCompanyEmail(value);
 		else if (name.equals("storeNum"))
 			preferencesSystem.setCompanyStoreNumber(value);
+		else if (name.equals("useAltCurrency"))
+			preferencesSystem.setUseAlternateCurrency(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("factor"))
+			preferencesSystem.setConversionFactor(Utilities.tokenToDouble(value));
+		else if (name.equals("roundDown"))
+			preferencesSystem.setAlwaysRoundDown(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("roundToCnt"))
+			preferencesSystem.setAlternateRoundto(Utilities.tokenToInt(value));
+		else if (name.equals("Serial Number"))
+			preferencesSystem.setSerialNumber(Utilities.tokenToLong(value));
+		else if (name.equals("Web Enabled"))
+			preferencesSystem.setWebEnabled(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Scheduler Enabled"))
+			preferencesSystem.setSchedulerEnabled(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Program Type"))
+			preferencesSystem.setProgramType(value);
+		else if (name.equals("Maximum Node Count"))
+			preferencesSystem.setMaximumNodeCount(Utilities.tokenToInt(value));
+		else if (name.equals("Expiration Date"))
+			preferencesSystem.setExpirationDate(Utilities.tokenToDate(value.substring(0, 7)));
+		else if (name.equals("ReportWriter Enabled"))
+			preferencesSystem.setReportWriterEnabled(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Extended Price Book Enabled"))
+			preferencesSystem.setExtendedPriceBookEnabled(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Maximum Transaction Count"))
+			preferencesSystem.setMaximumTransactionCount(Utilities.tokenToInt(value));
+		else if (name.equals("PEK 1"))
+			preferencesSystem.setConfig(value);
+		else if (name.equals("PEK 2"))
+			preferencesSystem.setProcess(value);
+		else if (name.equals("PEK 3"))
+			preferencesSystem.setSlogan(value);
+		else if (name.equals("PEK 4"))
+			preferencesSystem.setSettings(value);
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {

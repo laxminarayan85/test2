@@ -213,6 +213,8 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					mapper = new XpedxMapper();
 				}else if ("ChargeCosting".equals(importType)) {
 						mapper = new ChargeCostingMapper();
+				} else if ("CreditCardTransactions".equals(importType)) {
+					mapper = new CreditCardTransactionsMapper();
 				} else {
 					throw (new ServletException(
 							"Unknown import type passed to ImportServlet"));

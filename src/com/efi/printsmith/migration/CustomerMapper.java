@@ -298,6 +298,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("contact record".equals(currentFieldToken)) {
 					contactId = currentImportToken;
 					shipToContact.setContactId(currentImportToken);
+					shipToContact.setPrevId(currentImportToken);
 				} else if ("master acct".equals(currentFieldToken)) {
 					customer.setMasterAcct(Utilities
 							.tokenToLong(currentImportToken));
@@ -349,6 +350,7 @@ public class CustomerMapper extends ImportMapper {
 					shipToContact.setSuffix(currentImportToken);
 				} else if ("bill contact".equals(currentFieldToken)) {
 					billToContact.setContactId(currentImportToken);
+					billToContact.setPrevId(currentImportToken);
 				} else if ("bill first name".equals(currentFieldToken)) {
 					billToContact.setFirstName(currentImportToken);
 				} else if ("bill salutation".equals(currentFieldToken)) {

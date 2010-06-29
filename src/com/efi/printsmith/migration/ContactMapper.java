@@ -24,7 +24,7 @@ public class ContactMapper extends ImportMapper {
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering ContactMapper->importTokens");
-		Contact contact = new Contact();
+		Contact contact = null;
 		Address address = new Address();
 		Marketing marketing = new Marketing();
 		String custAcct = "";
@@ -35,6 +35,9 @@ public class ContactMapper extends ImportMapper {
 			String currentFieldToken = fieldTokens[i];
 
 			if ("recno".equals(currentFieldToken)) {
+				contact = (Contact)dataService.getByPrevId("Contact", currentImportToken);
+				if (contact == null)
+					contact = new Contact();
 				contact.setPrevId(currentImportToken);
 			} else if ("rstatus".equals(currentFieldToken)) {
 				/* TODO */
@@ -103,24 +106,44 @@ public class ContactMapper extends ImportMapper {
 			} else if ("job title".equals(currentFieldToken)) {
 				contact.setJobTitle(currentImportToken);
 			} else if ("phone".equals(currentFieldToken)) {
-				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				try {
+					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+					}
+				} catch (Exception e) {
+					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
 				}
 			} else if ("fax".equals(currentFieldToken)) {
-				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Fax"));
+				try {
+					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Fax"));
+					}
+				} catch (Exception e) {
+					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
 				}
 			} else if ("phone 2".equals(currentFieldToken)) {
-				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				try {
+					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+					}
+				} catch (Exception e) {
+					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
 				}
 			} else if ("phone 3".equals(currentFieldToken)) {
-				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				try {
+					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+					}
+				} catch (Exception e) {
+					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
 				}
 			} else if ("phone 4".equals(currentFieldToken)) {
-				if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-					contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+				try {
+					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+					}
+				} catch (Exception e) {
+					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
 				}
 			} else if ("prefix".equals(currentFieldToken)) {
 				contact.setPrefix(currentImportToken);
@@ -147,7 +170,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("shipping data".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cc ptr".equals(currentFieldToken)) {
-				/* TODO */
+				contact.setCcImportRec(currentImportToken);
 			} else if ("created".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("marketing dates[1]".equals(currentFieldToken)) {
@@ -231,11 +254,6 @@ public class ContactMapper extends ImportMapper {
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			}
-		}
-		
-		if (!custAcct.equals("") && !custAcct.equals("0"))
-		{
-			contact = null;
 		}
 		if (contact.getContactId() != null
 				&& contact.getContactId().length() > 0) {

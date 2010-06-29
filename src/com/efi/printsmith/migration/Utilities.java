@@ -92,7 +92,13 @@ public class Utilities {
 	static public Date tokenToDate(String token) throws ParseException {
 		int dateShort = SimpleDateFormat.SHORT;
 		DateFormat fmt = DateFormat.getDateInstance(dateShort);
-		Date date = fmt.parse(token);
+		Date date = null;
+		try {
+			date = fmt.parse(token);
+		} catch (Exception e) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+			date = formatter.parse(token);
+		}
 
 		return date;
 		
