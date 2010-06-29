@@ -9,46 +9,72 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.International')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
+	<mx:VBox width="100%" height="100%">
 	
-	<components:CustomCheckBoxComponent x="50" y="30" width="451"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}"
-		dataHolder="{preferencesSystem}" variableName="disableTextStyles" customText="{preferencesSystem.disableTextStyles}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.International')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<components:CustomCheckBoxComponent x="50" y="60" width="451"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}"
-		dataHolder="{preferencesSystem}" variableName="austrailianInvoiceRounding" customText="{preferencesSystem.austrailianInvoiceRounding}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:HBox width="100%" height="100%">
 		
-	<components:CustomCheckBoxComponent x="50" y="90" width="451"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}"
-		dataHolder="{preferencesSystem}" variableName="disableNonTaxableOptions" customText="{preferencesSystem.disableNonTaxableOptions}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}"
+					dataHolder="{preferencesSystem}" variableName="disableTextStyles" customText="{preferencesSystem.disableTextStyles}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseAustralianinvoice')}"
+					dataHolder="{preferencesSystem}" variableName="austrailianInvoiceRounding" customText="{preferencesSystem.austrailianInvoiceRounding}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disablenontaxableopt')}"
+					dataHolder="{preferencesSystem}" variableName="disableNonTaxableOptions" customText="{preferencesSystem.disableNonTaxableOptions}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}"
+						textAlign="right" width="150" />
+						
+					<components:CustomStringTextInputComponent width="150"
+						dataHolder="{preferencesSystem}" variableName="inkWeightSingular" customText="{preferencesSystem.inkWeightSingular}" />
+				
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}"
+						textAlign="right" width="150" />
+						
+					<components:CustomStringTextInputComponent width="150"
+						dataHolder="{preferencesSystem}" variableName="inkWeightPlural" customText="{preferencesSystem.inkWeightPlural}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Authorizethedecrypto')}"
+						textAlign="right" width="150" />
+						
+					<components:CustomStringTextInputComponent width="150"
+						dataHolder="{preferencesSystem}" variableName="authorizeDecrypt" customText="{preferencesSystem.authorizeDecrypt}" />
+					
+				</mx:HBox>
+					
+			</mx:VBox>
+			
+		</mx:HBox>
 		
-	<mx:Label x="10" y="122"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightsingular')}"
-		textAlign="right" width="138" />
-		
-	<components:CustomStringTextInputComponent x="154" y="120"
-		dataHolder="{preferencesSystem}" variableName="inkWeightSingular" customText="{preferencesSystem.inkWeightSingular}" />
-		
-	<mx:Label x="10" y="152"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InkWeightplural')}"
-		textAlign="right" width="143" />
-		
-	<components:CustomStringTextInputComponent x="154" y="150"
-		dataHolder="{preferencesSystem}" variableName="inkWeightPlural" customText="{preferencesSystem.inkWeightPlural}" />
-		
-	<mx:Label x="10" y="214"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Authorizethedecrypto')}"
-		textAlign="right" width="265" />
-		
-	<components:CustomStringTextInputComponent x="274" y="212"
-		dataHolder="{preferencesSystem}" variableName="authorizeDecrypt" customText="{preferencesSystem.authorizeDecrypt}" />
+	</mx:VBox>
 		
 </mx:Canvas>

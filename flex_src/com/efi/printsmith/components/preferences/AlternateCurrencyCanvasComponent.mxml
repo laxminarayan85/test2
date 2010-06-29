@@ -8,54 +8,82 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AlternateCurrency')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
+	<mx:VBox width="100%" height="100%">
 	
-	<components:CustomCheckBoxComponent x="50" y="30" width="299" 
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Usealternatecurrency')}"
-		dataHolder="{preferencesSystem}" variableName="useAlternateCurrency" customText="{preferencesSystem.useAlternateCurrency}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.AlternateCurrency')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<mx:Label x="10" y="62"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}"
-		textAlign="right" width="124" />
+		<mx:HBox width="100%" height="100%">
 		
-	<components:CustomStringTextInputComponent x="136" y="60" width="338"
-		focusIn="{parentDocument.setAlternateCurrencyText(event)}" enabled="{preferencesSystem.useAlternateCurrency}"
-		allowSpecialCharacters="true" dataHolder="{preferencesSystem}" variableName="displayFormat" customText="{preferencesSystem.displayFormat}"/>
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<components:CustomCheckBoxComponent 
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Usealternatecurrency')}"
+					dataHolder="{preferencesSystem}" variableName="useAlternateCurrency" customText="{preferencesSystem.useAlternateCurrency}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<mx:HBox width="100%">
+				
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Format')}"
+						textAlign="right" width="124" />
+						
+					<components:CustomStringTextInputComponent width="338"
+						focusIn="{parentDocument.setAlternateCurrencyText(event)}" enabled="{preferencesSystem.useAlternateCurrency}"
+						allowSpecialCharacters="true" dataHolder="{preferencesSystem}" variableName="displayFormat" customText="{preferencesSystem.displayFormat}"/>
+					
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}"
+						textAlign="right" width="124" />
+						
+					<components:CustomNumericTextInputComponent width="75"
+						enabled="{preferencesSystem.useAlternateCurrency}"
+						dataHolder="{preferencesSystem}" variableName="conversionFactor" customText="{preferencesSystem.conversionFactor}"
+						precision="2" rounding="nearest"/>
+						
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}"
+						textAlign="right" width="124" />
+						
+					<components:CustomNumericTextInputComponent width="75"
+						enabled="{preferencesSystem.useAlternateCurrency}"
+						dataHolder="{preferencesSystem}" variableName="alternateRoundto" customText="{preferencesSystem.alternateRoundto}"
+						precision="0" rounding="nearest" isInteger="true"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}"
+						enabled="{preferencesSystem.useAlternateCurrency}" 
+						dataHolder="{preferencesSystem}" variableName="alternateAlwaysRoundDown" customText="{preferencesSystem.alternateAlwaysRoundDown}"
+						selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						
+				</mx:HBox>
+				
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SampleCurrency')}"
+					id="txtSampleDemo" textAlign="right" />
+					
+				<mx:TextArea height="40%" width="451"
+					id="txtSampleArea" enabled="false" />
+					
+				
+					
+			</mx:VBox>
+			
+		</mx:HBox>
 		
-	<mx:Label x="10" y="92"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ConversionFactor')}"
-		textAlign="right" width="124" />
-		
-	<components:CustomNumericTextInputComponent x="136" y="90" width="75"
-		enabled="{preferencesSystem.useAlternateCurrency}"
-		dataHolder="{preferencesSystem}" variableName="conversionFactor" customText="{preferencesSystem.conversionFactor}"
-		precision="2" rounding="nearest"/>
-		
-	<mx:Label x="10" y="122"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundto')}"
-		textAlign="right" width="124" />
-		
-	<components:CustomNumericTextInputComponent x="136" y="120" width="75"
-		enabled="{preferencesSystem.useAlternateCurrency}"
-		dataHolder="{preferencesSystem}" variableName="alternateRoundto" customText="{preferencesSystem.alternateRoundto}"
-		precision="0" rounding="nearest" isInteger="true"/>
-		
-	<components:CustomCheckBoxComponent x="221" y="120"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}"
-		enabled="{preferencesSystem.useAlternateCurrency}" 
-		dataHolder="{preferencesSystem}" variableName="alternateAlwaysRoundDown" customText="{preferencesSystem.alternateAlwaysRoundDown}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<mx:TextArea x="23" y="203" height="40%" width="451"
-		id="txtSampleArea" enabled="false" />
-		
-	<mx:Label x="50" y="186"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.SampleCurrency')}"
-		id="txtSampleDemo" textAlign="right" />
+	</mx:VBox>
 		
 </mx:Canvas>
