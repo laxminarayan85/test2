@@ -352,7 +352,7 @@ public class XpedxMapper extends ImportMapper {
 				stockGrade.setId(stockGrade.getId());
 			}
 			stockDefinition.setGrade(stockGrade);
-			Vendor vendor = (Vendor)dataService.getByName("Vendor","xpdex");
+			Vendor vendor = (Vendor)dataService.getByName("Vendor","xpedx");
 			if (vendor == null) {
 				vendor = new Vendor();
 				vendor.setName("xpedx");
