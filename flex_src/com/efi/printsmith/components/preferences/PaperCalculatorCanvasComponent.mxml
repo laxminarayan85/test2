@@ -50,224 +50,543 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
+	<mx:VBox width="100%" height="100%">
 	
-	<components:CustomCheckBoxComponent x="30" y="52"
-		dataHolder="{preferencesEstimating}" variableName="useGripEdgeGap" customText="{preferencesEstimating.useGripEdgeGap}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="30" y="102"
-		dataHolder="{preferencesEstimating}" variableName="useFolioEdge" customText="{preferencesEstimating.useFolioEdge}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="30" y="152"
-		dataHolder="{preferencesEstimating}" variableName="useColorBar" customText="{preferencesEstimating.useColorBar}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="30" y="202"
-		dataHolder="{preferencesEstimating}" variableName="useWhiteSpace" customText="{preferencesEstimating.useWhiteSpace}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-	
-	<components:CustomCheckBoxComponent x="30" y="302"
-		dataHolder="{preferencesEstimating}" variableName="useGutter" customText="{preferencesEstimating.useGutter}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="30" y="352"
-		dataHolder="{preferencesEstimating}" variableName="useBleed" customText="{preferencesEstimating.useBleed}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-	
-	<mx:Label x="50" y="30"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="80"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FolioEdge')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="130"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ColorBar')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="180"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WhiteSpace')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="230"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="280"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Gutter')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="330"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}"
-		textAlign="right" />
-		
-	<mx:Label x="50" y="380"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}"
-		textAlign="right" />
-		
-	<components:CustomNumericTextInputComponent x="50" y="50" width="93"
-		dataHolder="{preferencesEstimating}" variableName="gripEdgeGap" customText="{preferencesEstimating.gripEdgeGap}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="100" width="93"
-		dataHolder="{preferencesEstimating}" variableName="folioEdge" customText="{preferencesEstimating.folioEdge}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="150" width="93"
-		dataHolder="{preferencesEstimating}" variableName="colorBar" customText="{preferencesEstimating.colorBar}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="200" width="93"
-		dataHolder="{preferencesEstimating}" variableName="whiteSpace" customText="{preferencesEstimating.whiteSpace}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="250" width="93"
-		dataHolder="{preferencesEstimating}" variableName="whiteSpaceRight" customText="{preferencesEstimating.whiteSpaceRight}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="300" width="93"
-		dataHolder="{preferencesEstimating}" variableName="gutter" customText="{preferencesEstimating.gutter}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="350" width="93"
-		dataHolder="{preferencesEstimating}" variableName="bleed" customText="{preferencesEstimating.bleed}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="50" y="400" width="93"
-		dataHolder="{preferencesEstimating}" variableName="bleedRight" customText="{preferencesEstimating.bleedRight}"
-		precision="2" rounding="nearest"/>
-		
-	<mx:Label x="151" y="180"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}"
-		textAlign="right" />
-		
-	<mx:Label x="151" y="230"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}"
-		textAlign="right" />
-		
-	<mx:Label x="151" y="280"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Horizontal')}"
-		textAlign="right" />
-		
-	<mx:Label x="151" y="330"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}"
-		textAlign="right" />
-		
-	<mx:Label x="151" y="380"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}"
-		textAlign="right" />
-		
-	<components:CustomNumericTextInputComponent x="151" y="200" width="93"
-		dataHolder="{preferencesEstimating}" variableName="whiteSpaceTop" customText="{preferencesEstimating.whiteSpaceTop}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="250" width="93"
-		dataHolder="{preferencesEstimating}" variableName="whiteSpaceBottom" customText="{preferencesEstimating.whiteSpaceBottom}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="300" width="93"
-		dataHolder="{preferencesEstimating}" variableName="gutterHorizontal" customText="{preferencesEstimating.gutterHorizontal}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="350" width="93"
-		dataHolder="{preferencesEstimating}" variableName="bleedTop" customText="{preferencesEstimating.bleedTop}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="400" width="93"
-		dataHolder="{preferencesEstimating}" variableName="bleedBottom" customText="{preferencesEstimating.bleedBottom}"
-		precision="2" rounding="nearest"/>
-		
-	<mx:Label x="27" y="462"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DefaultPressCutoff')}"
-		textAlign="right" />
-		
-	<components:CustomNumericTextInputComponent x="151" y="460" width="93"
-		dataHolder="{preferencesEstimating}" variableName="defaultPressCuttOff" customText="{preferencesEstimating.defaultPressCuttOff}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomCheckBoxComponent x="260" y="52"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"
-		dataHolder="{preferencesEstimating}" variableName="backTrimParent" customText="{preferencesEstimating.backTrimParent}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="260" y="77"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"
-		dataHolder="{preferencesEstimating}" variableName="trimFourSides" customText="{preferencesEstimating.trimFourSides}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<components:CustomCheckBoxComponent x="260" y="102"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"
-		dataHolder="{preferencesEstimating}" variableName="workandTumble" customText="{preferencesEstimating.workandTumble}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<mx:Label x="239" y="152"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}"
-		textAlign="right" width="160" />
-		
-	<components:CustomComboBoxComponent x="407" y="150" width="164"
-		masterList="{runToFinishGrainArray}" labelFieldId="name" labelFieldName="name"
-		dataHolder="{preferencesEstimating}" variableName="runToFinishGrain" customText="{getCustomTextData(runToFinishGrainArray,preferencesEstimating)}" 
-		updateFirstElement="true"/>
-		
-	<mx:Panel x="260" y="200" width="270" height="135" layout="absolute"
-		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
-		
-		<components:CustomCheckBoxComponent x="10" y="5"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"
-			dataHolder="{preferencesEstimating}" variableName="printParentToFinishSection" customText="{preferencesEstimating.printParentToFinishSection}"
-			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}"
+			textAlign="center" width="100%"/>
 			
-		<components:CustomCheckBoxComponent x="10" y="25"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}"
-			dataHolder="{preferencesEstimating}" variableName="printParentToRunSection" customText="{preferencesEstimating.printParentToRunSection}"
-			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:HRule width="100%"/>
+		
+		<mx:HBox width="100%" height="100%">
+		
+			<mx:Spacer width="30"/>
 			
-		<components:CustomCheckBoxComponent x="10" y="45"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}"
-			dataHolder="{preferencesEstimating}" variableName="printRunToFinishSection" customText="{preferencesEstimating.printRunToFinishSection}"
-			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			<mx:VBox width="100%" height="100%">
 			
-		<components:CustomCheckBoxComponent x="10" y="65"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}"
-			dataHolder="{preferencesEstimating}" variableName="attachToJobTicket" customText="{preferencesEstimating.attachToJobTicket}"
-			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+				<mx:HBox width="100%" height="100%">
+					
+					<mx:VBox>
+					
+						<mx:Grid width="100%">
+						
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}"
+										textAlign="right"/>
+										
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+							
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useGripEdgeGap" customText="{preferencesEstimating.useGripEdgeGap}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>	
+									
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="gripEdgeGap" customText="{preferencesEstimating.gripEdgeGap}"
+										precision="2" rounding="nearest"/>
+									
+								</mx:GridItem>
+								
+								<mx:RadioButtonGroup id="gripLocationGroup"/>
+								<mx:GridItem>
+								
+									<mx:HBox>
+																
+										<components:CustomRadioButtonComponent id="topGrip" value="Top"
+											icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideTopBottom.png')"
+											groupName="gripLocationGroup" width="36" height="29" alpha="{setAlphaForGrip(preferencesEstimating,'Top')}"
+											dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
+											click="{setAlphaAfterChange('grip')}"/>
+											
+										<components:CustomRadioButtonComponent id="leftGrip" value="Left"
+											groupName="gripLocationGroup" width="36" height="29"
+											icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideLeftRight.png')"
+											alpha="{setAlphaForGrip(preferencesEstimating,'Left')}"
+											dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
+											click="{setAlphaAfterChange('grip')}"/>
+										
+									</mx:HBox>
+										
+								</mx:GridItem>
+							
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.FolioEdge')}"
+										textAlign="right"/>
+										
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+							
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useFolioEdge" customText="{preferencesEstimating.useFolioEdge}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>	
+									
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="folioEdge" customText="{preferencesEstimating.folioEdge}"
+										precision="2" rounding="nearest"/>
+									
+								</mx:GridItem>
+								
+								<mx:RadioButtonGroup id="folioLocationGroup"/>
+								
+								<mx:GridItem>
+								
+									<mx:HBox>
+																
+										<components:CustomRadioButtonComponent id="topFolio" value="Top" width="36" height="29"
+											icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideTopBottom.png')"
+											groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,'Top')}"
+											dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
+											click="{setAlphaAfterChange('folio')}"/>
+											
+										<components:CustomRadioButtonComponent id="leftFolio" value="Left" width="36" height="29"
+											icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideLeftRight.png')"
+											groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,'Left')}"
+											dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
+											click="{setAlphaAfterChange('folio')}"/>
+										
+									</mx:HBox>
+										
+								</mx:GridItem>
+							
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label 
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.ColorBar')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useColorBar" customText="{preferencesEstimating.useColorBar}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="colorBar" customText="{preferencesEstimating.colorBar}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WhiteSpace')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}"
+										textAlign="right" />
+						
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useWhiteSpace" customText="{preferencesEstimating.useWhiteSpace}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="whiteSpace" customText="{preferencesEstimating.whiteSpace}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="whiteSpaceTop" customText="{preferencesEstimating.whiteSpaceTop}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+						
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}"
+										textAlign="right" />
+						
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="whiteSpaceRight" customText="{preferencesEstimating.whiteSpaceRight}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent x="151" y="250" width="93"
+										dataHolder="{preferencesEstimating}" variableName="whiteSpaceBottom" customText="{preferencesEstimating.whiteSpaceBottom}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Gutter')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Horizontal')}"
+										textAlign="right" />
+						
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useGutter" customText="{preferencesEstimating.useGutter}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="gutter" customText="{preferencesEstimating.gutter}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="gutterHorizontal" customText="{preferencesEstimating.gutterHorizontal}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bleed')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Top')}"
+										textAlign="right" />
+						
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										dataHolder="{preferencesEstimating}" variableName="useBleed" customText="{preferencesEstimating.useBleed}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="bleed" customText="{preferencesEstimating.bleed}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="bleedTop" customText="{preferencesEstimating.bleedTop}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Right')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Bottom')}"
+										textAlign="right" />
+						
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem/>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="bleedRight" customText="{preferencesEstimating.bleedRight}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+								<mx:GridItem>
+								
+									<components:CustomNumericTextInputComponent width="93"
+										dataHolder="{preferencesEstimating}" variableName="bleedBottom" customText="{preferencesEstimating.bleedBottom}"
+										precision="2" rounding="nearest"/>
+								
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow height="15"/>
+						
+							<mx:GridRow>
+								
+								<mx:GridItem colSpan="2">
+									
+									<mx:Label
+										text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.DefaultPressCutoff')}"
+										textAlign="right" />
+										
+								</mx:GridItem>
+								
+								<mx:GridItem>
+									
+								<components:CustomNumericTextInputComponent width="93"
+									dataHolder="{preferencesEstimating}" variableName="defaultPressCuttOff" customText="{preferencesEstimating.defaultPressCuttOff}"
+									precision="2" rounding="nearest"/>
+									
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+						</mx:Grid>
+						
+					</mx:VBox>
+					
+					<mx:Spacer width="25"/>
+						
+					<mx:VBox>
+					
+						<mx:Grid width="100%">
+						
+							<mx:GridRow>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+								
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.BackTrimParent')}"
+										dataHolder="{preferencesEstimating}" variableName="backTrimParent" customText="{preferencesEstimating.backTrimParent}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+								
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"
+										dataHolder="{preferencesEstimating}" variableName="trimFourSides" customText="{preferencesEstimating.trimFourSides}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow>
+								
+								<mx:GridItem>
+								
+									<components:CustomCheckBoxComponent
+										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"
+										dataHolder="{preferencesEstimating}" variableName="workandTumble" customText="{preferencesEstimating.workandTumble}"
+										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+							<mx:GridRow/>
+							
+							<mx:GridRow>
+							
+								<mx:GridItem>
+								
+									<mx:HBox>
+								
+										<mx:Label
+											text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.RuntoFinishGrain')}"
+											textAlign="right" width="160" />
+											
+										<components:CustomComboBoxComponent width="164"
+											masterList="{runToFinishGrainArray}" labelFieldId="name" labelFieldName="name"
+											dataHolder="{preferencesEstimating}" variableName="runToFinishGrain" customText="{getCustomTextData(runToFinishGrainArray,preferencesEstimating)}" 
+											updateFirstElement="true"/>
+										
+									</mx:HBox>
+									
+								</mx:GridItem>
+								
+							</mx:GridRow>
+							
+						</mx:Grid>
+						
+						<mx:Panel width="270" layout="vertical"
+							title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintOptions')}">
+							
+							<components:CustomCheckBoxComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoFinishS')}"
+								dataHolder="{preferencesEstimating}" variableName="printParentToFinishSection" customText="{preferencesEstimating.printParentToFinishSection}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+							<components:CustomCheckBoxComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintParenttoRunSect')}"
+								dataHolder="{preferencesEstimating}" variableName="printParentToRunSection" customText="{preferencesEstimating.printParentToRunSection}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+							<components:CustomCheckBoxComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.PrintRuntoFinishSect')}"
+								dataHolder="{preferencesEstimating}" variableName="printRunToFinishSection" customText="{preferencesEstimating.printRunToFinishSection}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+							<components:CustomCheckBoxComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.AttachtoJobTicket')}"
+								dataHolder="{preferencesEstimating}" variableName="attachToJobTicket" customText="{preferencesEstimating.attachToJobTicket}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								
+						</mx:Panel>
+						
+					</mx:VBox>
+					
+				</mx:HBox>
+					
+			</mx:VBox>
 			
-	</mx:Panel>
-	
-	<mx:RadioButtonGroup id="gripLocationGroup"/>
+		</mx:HBox>
 		
-	<components:CustomRadioButtonComponent id="topGrip" x="167" y="46" value="Top"
-		icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideTopBottom.png')"
-		groupName="gripLocationGroup" width="36" height="29" alpha="{setAlphaForGrip(preferencesEstimating,'Top')}"
-		dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
-		click="{setAlphaAfterChange('grip')}"/>
-		
-	<components:CustomRadioButtonComponent id="leftGrip" x="202" y="46" value="Left"
-		groupName="gripLocationGroup" width="32" height="29"
-		icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideLeftRight.png')"
-		alpha="{setAlphaForGrip(preferencesEstimating,'Left')}"
-		dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
-		click="{setAlphaAfterChange('grip')}"/>
-	
-	<mx:RadioButtonGroup id="folioLocationGroup"/>
-		
-	<components:CustomRadioButtonComponent id="topFolio" x="167" y="95" value="Top"
-		icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideTopBottom.png')"
-		groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,'Top')}"
-		dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
-		click="{setAlphaAfterChange('folio')}"/>
-		
-	<components:CustomRadioButtonComponent id="leftFolio" x="202" y="95" value="Left"
-		icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideLeftRight.png')"
-		groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,'Left')}"
-		dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
-		click="{setAlphaAfterChange('folio')}"/>
+	</mx:VBox>
 	
 </mx:Canvas>

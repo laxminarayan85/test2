@@ -13,37 +13,58 @@
 			[Bindable] public var jobTicketStylesArray:ArrayCollection = new ArrayCollection();
 		]]>
 	</mx:Script>
-
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
 	
-	<mx:Label x="50" y="27"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}"
-		textAlign="left" width="231" />
-		
-	<mx:RadioButtonGroup id="opgTicketFormat" />
 	
-	<components:CustomRadioButtonComponent x="50" y="50"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OldStylepre50')}"
-		groupName="opgTicketFormat" value="oldstyle"
-		dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+	<mx:VBox width="100%" height="100%">
+	
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.JobTicket')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<components:CustomRadioButtonComponent x="50" y="70"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStyle')}"
-		groupName="opgTicketFormat" value="standardstyle"
-		dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+		<mx:HBox width="100%" height="100%">
 		
-	<components:CustomRadioButtonComponent x="50" y="90"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomStyle')}"
-		groupName="opgTicketFormat" value="customstyle"
-		dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<mx:Label
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}"
+					textAlign="left" width="231" />
+					
+				<mx:Spacer height="10"/>
 		
-	<components:CustomComboBoxComponent x="192" y="90" width="338"
-		masterList="{jobTicketStylesArray}" labelFieldId="name" labelFieldName="name"
-		dataHolder="{preferencesEstimating}" variableName="customJobTicket" customText="{getCustomTextData(jobTicketStylesArray,preferencesEstimating)}" 
-		updateFirstElement="true" enabled="{preferencesEstimating.jobTicketFormat=='customstyle'}"/>
+				<mx:RadioButtonGroup id="opgTicketFormat" />
+				
+				<components:CustomRadioButtonComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OldStylepre50')}"
+					groupName="opgTicketFormat" value="oldstyle"
+					dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+					
+				<components:CustomRadioButtonComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.StandardStyle')}"
+					groupName="opgTicketFormat" value="standardstyle"
+					dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+					
+				<mx:HBox width="100%">
+					
+					<components:CustomRadioButtonComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.CustomStyle')}"
+						groupName="opgTicketFormat" value="customstyle"
+						dataHolder="{preferencesEstimating}" variableName="jobTicketFormat" customText="{preferencesEstimating.jobTicketFormat}"/>
+						
+					<components:CustomComboBoxComponent width="338"
+						masterList="{jobTicketStylesArray}" labelFieldId="name" labelFieldName="name"
+						dataHolder="{preferencesEstimating}" variableName="customJobTicket" customText="{getCustomTextData(jobTicketStylesArray,preferencesEstimating)}" 
+						updateFirstElement="true" enabled="{preferencesEstimating.jobTicketFormat=='customstyle'}"/>
+						
+				</mx:HBox>
+				
+			</mx:VBox>
+			
+		</mx:HBox>
+		
+	</mx:VBox>
 		
 </mx:Canvas>

@@ -49,80 +49,96 @@
 			
 		]]>
 	</mx:Script>
-
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
 	
-	<mx:DataGrid id="quantityBreaksGrid" dataProvider="{preferencesQuantityBreaksArray}"
-		editable="true" itemEditEnd="{processQuantityBreaksGridData(event)}"
-		top="27" bottom="80" left="50" right="268" rowHeight="25">
+	<mx:VBox width="100%" height="100%">
+	
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.QuantityBreaks')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-		<mx:columns>
+		<mx:HBox width="100%" height="100%">
 		
-			<mx:DataGridColumn width="100"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}"
-				dataField="quantity" editable="true">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.quantity}" />
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomNumericTextInputComponent
-							datagridControl="true" variableName="quantity" customText="{data.quantity}"
-							precision="0" rounding="nearest" isInteger="true"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<mx:DataGrid id="quantityBreaksGrid" dataProvider="{preferencesQuantityBreaksArray}"
+					editable="true" itemEditEnd="{processQuantityBreaksGridData(event)}"
+					width="98%" height="90%" rowHeight="25">
+					
+					<mx:columns>
+					
+						<mx:DataGridColumn width="100"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Quantity')}"
+							dataField="quantity" editable="true">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Text selectable="false" text="{data.quantity}" />
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent
+										datagridControl="true" variableName="quantity" customText="{data.quantity}"
+										precision="0" rounding="nearest" isInteger="true"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
+							
+						<mx:DataGridColumn width="50"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}"
+							dataField="qtyBreak" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+										<components:CustomCheckBoxComponent
+											datagridControl="true" variableName="qtyBreak" customText="{data.qtyBreak}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="140"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
+							dataField="jobMethod" editable="true">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Text selectable="false" text="{data.jobmethod.name}" />
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomComboBoxComponent datagridControl="true" variableName="jobmethod"
+										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+										masterList="{outerDocument.jobMethodsArray}" 
+										customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data)}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
+						
+					</mx:columns>
+					
+				</mx:DataGrid>
 				
-			<mx:DataGridColumn width="50"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}"
-				dataField="qtyBreak" editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-							<components:CustomCheckBoxComponent
-								datagridControl="true" variableName="qtyBreak" customText="{data.qtyBreak}"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
-			
-			<mx:DataGridColumn width="140"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
-				dataField="jobMethod" editable="true">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.jobmethod.name}" />
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomComboBoxComponent datagridControl="true" variableName="jobmethod"
-							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-							masterList="{outerDocument.jobMethodsArray}" 
-							customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data)}"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
-			
-		</mx:columns>
+				<mx:HBox width="100%">
+				
+					<mx:Button width="38" height="38" click="{doNewQuantityBreak()}">
+						<mx:icon>@Embed(source='../../../../../assets/new.png')
+						</mx:icon>
+					</mx:Button>
+					
+					<mx:Button width="38" height="38" click="{doRemoveQuantityBreak()}">
+						<mx:icon>@Embed(source='../../../../../assets/cancel.png')
+						</mx:icon>
+					</mx:Button>
+				
+				</mx:HBox>
+				
+			</mx:VBox>
+				
+		</mx:HBox>
 		
-	</mx:DataGrid>
-	
-	<mx:Button x="50" width="38" height="38" click="{doNewQuantityBreak()}"
-		bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/new.png')
-		</mx:icon>
-	</mx:Button>
-	
-	<mx:Button x="100" width="38" height="38"
-		click="{doRemoveQuantityBreak()}" bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/cancel.png')
-		</mx:icon>
-	</mx:Button>
+	</mx:VBox>
 	
 </mx:Canvas>

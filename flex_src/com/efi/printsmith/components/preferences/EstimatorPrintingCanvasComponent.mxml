@@ -16,86 +16,108 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorPrinting')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
+	<mx:VBox width="100%" height="100%">
 	
-	<components:CustomCheckBoxComponent x="50" y="30" width="400"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}"
-		dataHolder="{preferencesEstimating}" variableName="closeInvoiceAfterPrintingTicket" customText="{preferencesEstimating.closeInvoiceAfterPrintingTicket}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorPrinting')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<components:CustomCheckBoxComponent x="50" y="55" width="400"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}"
-		dataHolder="{preferencesEstimating}" variableName="closeInvoicesAndEstimateAfterPrinting" customText="{preferencesEstimating.closeInvoicesAndEstimateAfterPrinting}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+		<mx:HBox width="100%" height="100%">
 		
-	<mx:Label x="10" y="92"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}"
-		textAlign="right" width="149" />
-		
-	<mx:Label x="10" y="117"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}"
-		textAlign="right" width="150" />
-		
-	<components:CustomComboBoxComponent x="160" y="90" width="250"
-		masterList="{defaultInvoiceArray}" labelFieldId="name" labelFieldName="name"
-		dataHolder="{preferencesEstimating}" variableName="defaultInvoice" customText="{getCustomTextData(defaultInvoiceArray,preferencesEstimating)}" 
-		updateFirstElement="true"/>
-		
-	<components:CustomComboBoxComponent x="160" y="115" width="250"
-		masterList="{defaultEstimateArray}" labelFieldId="name" labelFieldName="name"
-		dataHolder="{preferencesEstimating}" variableName="defaultEstimate" customText="{getCustomTextData(defaultEstimateArray,preferencesEstimating)}" 
-		updateFirstElement="true"/>
-		
-	<mx:Panel x="10" y="159" width="520" layout="vertical"
-		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PaymentDueDate')}">
-		
-		<mx:HBox width="100%">
-			<mx:Spacer width="15"/>
-			<mx:Label
-				text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}"
-				textAlign="right" width="165" />
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoiceafterpri')}"
+					dataHolder="{preferencesEstimating}" variableName="closeInvoiceAfterPrintingTicket" customText="{preferencesEstimating.closeInvoiceAfterPrintingTicket}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CloseInvoicesandEsti')}"
+					dataHolder="{preferencesEstimating}" variableName="closeInvoicesAndEstimateAfterPrinting" customText="{preferencesEstimating.closeInvoicesAndEstimateAfterPrinting}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultInvoice')}"
+						textAlign="right" width="150" />
+						
+					<components:CustomComboBoxComponent width="250"
+						masterList="{defaultInvoiceArray}" labelFieldId="name" labelFieldName="name"
+						dataHolder="{preferencesEstimating}" variableName="defaultInvoice" customText="{getCustomTextData(defaultInvoiceArray,preferencesEstimating)}" 
+						updateFirstElement="true"/>
+					
+				</mx:HBox>
 				
-			<components:CustomNumericTextInputComponent width="50"
-				dataHolder="{preferencesEstimating}" variableName="numberOfDaysBeforeDue" customText="{preferencesEstimating.numberOfDaysBeforeDue}"
-				precision="0" rounding="nearest" isInteger="true"/>
-		</mx:HBox>
-			
-		<mx:RadioButtonGroup id="optPaymentDueDays" />
-		
-		<mx:HBox width="100%">
-			<mx:Spacer width="15"/>
-			<mx:VBox width="100%">
-				<components:CustomRadioButtonComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}"
-					groupName="optPaymentDueDays" value="1"
-					dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+				<mx:HBox width="100%">
 					
-				<components:CustomRadioButtonComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}"
-					groupName="optPaymentDueDays" value="2"
-					dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.DefaultEstimate')}"
+						textAlign="right" width="150" />
+						
+					<components:CustomComboBoxComponent width="250"
+						masterList="{defaultEstimateArray}" labelFieldId="name" labelFieldName="name"
+						dataHolder="{preferencesEstimating}" variableName="defaultEstimate" customText="{getCustomTextData(defaultEstimateArray,preferencesEstimating)}" 
+						updateFirstElement="true"/>
 					
-				<components:CustomRadioButtonComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}"
-					groupName="optPaymentDueDays" value="3"
-					dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+				</mx:HBox>
 					
-				<components:CustomRadioButtonComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}"
-					groupName="optPaymentDueDays" value="4"
-					dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+				<mx:Panel width="520" layout="vertical"
+					title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.PaymentDueDate')}">
 					
-				<components:CustomRadioButtonComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}"
-					groupName="optPaymentDueDays" value="5"
-					dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+					<mx:HBox width="100%">
+						<mx:Spacer width="15"/>
+						<mx:Label
+							text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Numberofdaysbeforedu')}"
+							textAlign="right" width="165" />
+							
+						<components:CustomNumericTextInputComponent width="50"
+							dataHolder="{preferencesEstimating}" variableName="numberOfDaysBeforeDue" customText="{preferencesEstimating.numberOfDaysBeforeDue}"
+							precision="0" rounding="nearest" isInteger="true"/>
+					</mx:HBox>
+						
+					<mx:RadioButtonGroup id="optPaymentDueDays" />
+					
+					<mx:HBox width="100%">
+						<mx:Spacer width="15"/>
+						<mx:VBox width="100%">
+							<components:CustomRadioButtonComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromnotifieddate')}"
+								groupName="optPaymentDueDays" value="1"
+								dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+								
+							<components:CustomRadioButtonComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromcompleteddate')}"
+								groupName="optPaymentDueDays" value="2"
+								dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+								
+							<components:CustomRadioButtonComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Frompickupdate')}"
+								groupName="optPaymentDueDays" value="3"
+								dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+								
+							<components:CustomRadioButtonComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromordereddate')}"
+								groupName="optPaymentDueDays" value="4"
+								dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+								
+							<components:CustomRadioButtonComponent
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Fromprinteddate')}"
+								groupName="optPaymentDueDays" value="5"
+								dataHolder="{preferencesEstimating}" variableName="dueFrom" customText="{preferencesEstimating.dueFrom}"/>
+						</mx:VBox>
+					</mx:HBox>
+						
+				</mx:Panel>
+				
 			</mx:VBox>
-		</mx:HBox>
 			
-	</mx:Panel>
+		</mx:HBox>
+		
+	</mx:VBox>
 	
 </mx:Canvas>
