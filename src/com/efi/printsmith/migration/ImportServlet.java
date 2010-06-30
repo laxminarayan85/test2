@@ -179,6 +179,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 		} else if (importType != null && "Preferences".equals(importType)) {
 			mapper = new PreferencesMapper();
 			mapper.importFile(uploadedFile);
+		} else if (importType != null && "TableEditor".equals(importType)) {
+			mapper = new TableEditorMapper();
+			mapper.importFile(uploadedFile);
 		} else {
 			if (importType != null) {
 				if ("ChargeDefinitions".equals(importType)) {
