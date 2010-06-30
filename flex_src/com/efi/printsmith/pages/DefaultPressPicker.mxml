@@ -63,11 +63,26 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-	  			fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
-				loadSheetFedPresses();
-				loadRollFedPresses();
+	  			loadSheetFedPresses();
+				
 			}
-
+			private function setComboBox():void{
+				if( sheetFedPresses != null)
+					if (this.defaultPresses.defaultSheetFedPress != null)
+						defaultSheetFed.selectedIndex = findItem(this.defaultPresses.defaultSheetFedPress.name, sheetFedPresses);
+				if ( rollFedPresses != null)
+					if( this.defaultPresses.defaultRollFedPress != null)
+						defaultRollFed.selectedIndex = findItem(this.defaultPresses.defaultRollFedPress.name, rollFedPresses);
+				
+			}
+			private function findItem(name:String, array:ArrayCollection):int {
+				for each(var element:Object in array) {
+					if (name == element.name) {
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
 			private function loadSheetFedPresses():void {
 				var criterion:RemoteRestriction = new RemoteRestriction();
 				criterion.setOperator(RemoteRestriction.eq);
@@ -108,16 +123,20 @@
 				if (defaultPresses == null) {
 					defaultPresses = new PreferencesDefaultPresses();
 				}
+				setComboBox();
 			}
 			
 			private function handleLoadSheetFedPresses(ev:ResultEvent):void
 			{
 				sheetFedPresses = ev.result as ArrayCollection;
+				loadRollFedPresses();
 			}
 			
 			private function handleLoadRollFedPresses(ev:ResultEvent):void
 			{
 				rollFedPresses = ev.result as ArrayCollection;
+				fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
+				
 			}
 						
 			private function doOK():void
@@ -177,10 +196,10 @@
 					 change="setDefaultPresses()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="10"
+		<mx:Text x="0"
 				 y="12"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.DefaultSheetFed')}"
-				 height="20" textAlign="right" width="84"/>
+				 height="20" textAlign="right" width="94"/>
 		<mx:ComboBox x="102"
 					 y="40"
 					 id="defaultRollFed"
@@ -188,10 +207,10 @@
 					 change="setDefaultPresses()"
 					 labelField="name" width="199">
 		</mx:ComboBox>
-		<mx:Text x="10"
+		<mx:Text x="0"
 				 y="42"
 				 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.DefaultRollFed')}"
-				 height="20" textAlign="right" width="84"/>
+				 height="20" textAlign="right" width="94"/>
 	</mx:Canvas>
 	<mx:Spacer height="10"/>
 

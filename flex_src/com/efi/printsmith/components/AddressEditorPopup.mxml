@@ -45,13 +45,15 @@
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
     <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
-    <fc:AutoComplete id="statecombo" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState()" lookAhead="true" width="46"/>
-    <fc:AutoComplete id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip()" lookAhead="true" width="76"/>
+    <fc:AutoComplete  id="statecombo" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" lookAhead="true" width="46"/>
+    <mx:ComboBox id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
     <fc:AutoComplete id="countrycombo" x="224" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="175"/>
     	
     <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
     <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
+    <mx:ZipCodeValidator  id="ZipCodeValidator"  domain="US or Canada"  source="{zipcombo}" property="text"/>
+
 <mx:Script>
 	<![CDATA[
 	import com.efi.printsmith.events.SaveAddressEvent;
@@ -67,7 +69,9 @@
 	import mx.managers.PopUpManager;                                         
 	import mx.rpc.events.ResultEvent;                                         
 	import mx.rpc.events.FaultEvent;                                         
-	import mx.controls.Alert;                                         
+	import mx.controls.Alert;   
+	    import mx.validators.Validator;
+    import mx.events.ValidationResultEvent;                                          
 
 	[Bindable]                                         
 	private var address:Address ;
@@ -83,9 +87,13 @@
 
 	[Bindable]
 	public var countryDataProvider:ArrayCollection = null;
+     [Bindable]
+    private var formIsValid:Boolean;
     
     private var originalAddress:Address = null;
-	
+	 
+	 private var focussedFormControl:DisplayObject;
+	 
 	private function init():void {
 		cityDataService.getAll("City");
 		stateDataService.getAll("State");
@@ -94,8 +102,25 @@
 		
 	
 	
-	}      
-		
+	}   
+	 private function validateForm(event:Event):void 
+    {                    
+        focussedFormControl = event.target as DisplayObject;    
+
+        formIsValid = true;            
+        validate(ZipCodeValidator);
+    }
+    
+	private function validate(validator:Validator):Boolean
+	{                
+        var validatorSource:DisplayObject = validator.source as DisplayObject;
+     	var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+        var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+        var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+		formIsValid = formIsValid && currentControlIsValid;
+         	
+		return currentControlIsValid;
+	}	
  	private function itemExists(list:ArrayCollection, item:Object):Boolean {
 		var i:int;
 		
@@ -204,6 +229,9 @@
 			 this.address.country = "";
 			 this.address.zip = "";
 		}
+		else
+			formIsValid = true; 
+	
 		
 	}
 	
@@ -232,10 +260,11 @@
 			address.city = citycombo.text;
 	}
 
-	private function focusOutState(): void{                             
+	private function focusOutState(evt:Event):void {
+    	                    
 		var state:com.efi.printsmith.data.State;
 		var result:Boolean;
-		
+		       
 		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
 			var item:int = findItem(statecombo.typedText, stateDataProvider);
 			if (item == -1) {
@@ -253,12 +282,12 @@
 		address.state = statecombo.text;
 	}
 
-	private function focusOutZip(): void{                             
+	private function focusOutZip(evt:Event): void{                             
 		var zip:Zip;
 		var result:Boolean;
-		
-		if (zipcombo.typedText != null && zipcombo.typedText != "" && zipcombo.selectedIndex == -1) {
-			var item:int = findItem(zipcombo.typedText, zipDataProvider);
+		validateForm(evt);
+		if (zipcombo.text != null && zipcombo.text != "" && zipcombo.selectedIndex == -1) {
+			var item:int = findItem(zipcombo.text, zipDataProvider);
 			if (item == -1) {
 				zip = new Zip();
 				zip.name = zipcombo.text;

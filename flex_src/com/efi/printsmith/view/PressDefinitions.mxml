@@ -407,10 +407,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		systemPricingPreferencesArray = ev.result as ArrayCollection;
 		if (systemPricingPreferencesArray.length > 0)
 		{
-			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(1) as PreferencesPricingMethod;
+			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(2) as PreferencesPricingMethod;
 			rollPaperStyleAbb = systemPricingPreferences.abbreviation;
 			rollFedRadio.label = StringUtil.substitute(rollFedRadio.label,rollPaperStyleAbb);
-			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(0) as PreferencesPricingMethod;
+			systemPricingPreferences = systemPricingPreferencesArray.getItemAt(1) as PreferencesPricingMethod;
 			sheetPaperStyleAbb = systemPricingPreferences.abbreviation;
 			sheetFedRadio.label = StringUtil.substitute(sheetFedRadio.label,sheetPaperStyleAbb);
 		}else{

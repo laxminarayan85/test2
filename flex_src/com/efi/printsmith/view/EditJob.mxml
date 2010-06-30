@@ -1409,6 +1409,7 @@
 				case this.job_ordered:
 					doUpdatePrice = true;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					updateWeight();
 					break;
 				case this.job_over_under:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
@@ -1417,10 +1418,12 @@
 				case this.sets_of:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
+					updateWeight();
 					break;
 				case this.job_sheets:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
+					updateWeight();
 					break;
 				case this.job_up:
 					doUpdatePrice = true;
@@ -1532,7 +1535,30 @@
 				}
 
 			}
-			
+			private function updateWeight():void{
+				var tempweight:Number;
+				var finish:Number;
+				var parent:Number;
+				var basic:Number;
+				if ( job.parentSize != null)
+						job.parentSize = job_parent.selectedItem as Dimension;
+				if ( job.finishSize != null)
+					job.finishSize = job_finish_size.selectedItem as Dimension;
+				
+				if ( job.stock != null)
+				 if( this.currentState != "LargeFormat"){
+				   finish = job.finishSize.width * job.finishSize.height;
+				   parent = job.parentSize.width * job.parentSize.height;
+				   if (parent > 0.0){
+						tempweight = ((finish / parent )* job.stock.mweight) / 1000;
+						job.weight= (job.qtyOrdered * job.inSetsOf * job.sheets)* tempweight;
+				  	 }
+				}else{
+					parent = job.stock.parentsize.width * job.cutOff;
+					//basic = job.stock.stktype.size
+				}
+					
+			}
 			public function setPricingMethod(pricingMethod:PreferencesPricingMethod):void {
 				if (pricingMethod != null)  {
 					this.job_type.selectedItem = pricingMethod;
@@ -2167,9 +2193,9 @@
 											   height="18"
 											   id="chage_stock_button"
 											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="updateWeight()"></mx:ComboBox>
 									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}"  focusOut="updateWeight()" editable="true"></mx:ComboBox>
 									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"

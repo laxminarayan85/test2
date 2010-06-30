@@ -69,10 +69,8 @@
 			private function init():void
 			{
 				PopUpManager.centerPopUp(this);
-	  			fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
-				loadColorCopiers();
-				loadBWCopiers();
-				loadLargeFormatCopiers();
+	  			loadColorCopiers();
+				
 
 			}
 
@@ -121,32 +119,57 @@
 				var queryByCriteriaEvent:ModelQueryByCriteriaEvent = new ModelQueryByCriteriaEvent(modelType, criteria, callbacks);
 				queryByCriteriaEvent.dispatch();
 			}
-
+			private function setComboBox():void{
+				if( BWCopiers != null)
+					if (this.defaultPresses.defaultBWCopier != null)
+						defaultBW.selectedIndex = findItem(this.defaultPresses.defaultBWCopier.name, BWCopiers);
+				if (colorCopiers != null)
+					if (this.defaultPresses.defaultColorCopier != null)
+						defaultColor.selectedIndex = findItem(this.defaultPresses.defaultColorCopier.name, colorCopiers);
+				if (largeFormatCopiers !=null)
+					if (this.defaultPresses.defaultLargeFormat != null)
+						defaultLargeFormat.selectedIndex = findItem(this.defaultPresses.defaultLargeFormat.name, largeFormatCopiers);
+			}
+			private function findItem(name:String, array:ArrayCollection):int {
+				for each(var element:Object in array) {
+					if (name == element.name) {
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
 			private function handleLoadPreferencesDefaultPressesResult(ev:ResultEvent):void
 			{
 				defaultPresses = ev.result as PreferencesDefaultPresses;
 				if (defaultPresses == null) {
 					defaultPresses = new PreferencesDefaultPresses();
 				}
+				setComboBox()
 			}
 			
 			private function handleLoadBWCopiers(ev:ResultEvent):void
 			{
 				BWCopiers = ev.result as ArrayCollection;
+				loadLargeFormatCopiers();
 			}
 			
 			private function handleLoadColorCopiers(ev:ResultEvent):void
 			{
 				colorCopiers = ev.result as ArrayCollection;
+				loadBWCopiers();
+				
 			}
 			
 			private function handleLoadLargeFormatCopiers(ev:ResultEvent):void
 			{
 				largeFormatCopiers = ev.result as ArrayCollection;
+				fireGetSingleEvent("PreferencesDefaultPresses", new mx.rpc.Responder(handleLoadPreferencesDefaultPressesResult, handleFault));
+				
 			}
 			
 			private function doOK():void {
 				fireSaveEvent(this.defaultPresses);
+
 			}
 
 			private function doCancel():void

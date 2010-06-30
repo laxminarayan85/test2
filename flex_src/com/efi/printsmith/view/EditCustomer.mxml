@@ -1063,7 +1063,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="520" y="337" width="149" id="last_estimate_date_text" text="{account.lastEstimateDate}"/>
 				<mx:Label x="435" y="363" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstInvoice')}"/>
 				<mx:Label x="427" y="389" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FirstEstimate')}"/>
-				<mx:Label x="429" y="415" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.EstimatesWonLost')}"/>
+				<mx:Label x="395" y="415" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.EstimatesWonLost')}"/>
 				<mx:Text x="520" y="363" width="149" id="first_invoice_date_text" text="{account.firstInvoiceDate}"/>
 				<mx:Text x="520" y="389" width="149" id="first_estimate_date_text" text="{account.firstEstimateDate}"/>
 				<mx:Text x="520" y="415" width="149" id="won_lost_text" text="{account.estimatesWon}:{account.estimatesLost}"/>

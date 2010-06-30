@@ -1410,8 +1410,7 @@
 	}
 	private function UpdateAvailable():void {
 		Available.text = (parseInt(OnHand.text)-parseInt(Committed.text)).toString();  
-	 
-		//stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
+	 	//stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
 	}
 	public function getParentsizename(item:Object):String{
 		var tmpItem:Dimension ;

@@ -548,7 +548,14 @@
 			{
 				if (evt.account != null)
 				{
+					if (evt.account.status == "CustomerStatusFrozen"){
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'messages.148'));
+						this.setAccount(new Account());
+					}
+					else{
+					
 					this.setAccount(evt.account);
+					}
 				}
 				else
 				{
