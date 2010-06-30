@@ -1424,6 +1424,13 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+		comLinkType = new ComLinkType();
+		comLinkType.setType("Other");
+		try {
+			dataservice.addUpdate(comLinkType);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
 	}
 
 	private void ProcessShippingMethod() {

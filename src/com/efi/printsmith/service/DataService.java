@@ -1655,6 +1655,18 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
+				for (int i = 0; i < account.getContact().getComLinks().size(); i++) {
+					 ComLink link = account.getContact().getComLinks().get(i);
+					if (link == null) {
+						log.error("null charge found");
+					}
+				}
+				for (int i = 0; i < account.getBillToContact().getComLinks().size(); i++) {
+					 ComLink link = account.getBillToContact().getComLinks().get(i);
+					if (link == null) {
+						log.error("null charge found");
+					}
+				}
 			}
 		} catch (Exception e) {
 			log.error(e);
@@ -1686,6 +1698,30 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return copierDefinition;
+	}
+	public Contact getContact(Long id) throws Exception {
+		log.debug("** getContact called.");
+		Contact contact = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Contact.byId");
+			query.setParameter("id", id);
+			contact = (Contact) query.getSingleResult();
+
+			if (contact != null) {
+				for (int i = 0; i < contact.getComLinks().size(); i++) {
+					 ComLink link = contact.getComLinks().get(i);
+					if (link == null) {
+						log.error("null charge found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return contact;
 	}
 	public TaxTable getTaxTable(Long id) throws Exception {
 		log.debug("** getTaxTable called.");

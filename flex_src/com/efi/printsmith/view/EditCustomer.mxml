@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="624" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}" name="Customer Editor" xmlns:ns1="com.efi.printsmith.components.*">
+width="100%" height="624" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
+creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" name="Customer Editor" xmlns:ns1="com.efi.printsmith.components.*">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>                            
@@ -238,6 +238,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.setAccount(ev.result as Account);
 		contactdataService.getContactsByAccountId("Contact", account.id);
 		setMarketing();
+		title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  " + account.title;
 		this.JobCharges = ev.result.jobCharges;
 		this.EstInvCharges = ev.result.invoiceEstimateCharges;
 	     
@@ -252,7 +253,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    account = new Account();
 	    setMarketing();
 	    setAccount(account);
-	    
+	 	
 	    
 	 	
 	}  
@@ -285,7 +286,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = accounts.length - 1;
 		}
 		temp = accounts.getItemAt(itemp,0) as Account;   
-	   dataService.getAccount("Account", temp.id );                            
+	   dataService.getAccount(temp.id );                            
 	}
 	private function doPrev():void {              
 	    var itemp:int;
@@ -297,7 +298,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = 0; 
 		}
 		temp = accounts.getItemAt(itemp,0) as Account;   
-	    dataService.getAccount("Account", temp.id );                                           
+	    dataService.getAccount(temp.id );                                           
 	} 
 	private function findItemID(id:int, array:ArrayCollection):int {
 		for each(var element:Object in array) {
@@ -316,6 +317,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	public function setAccount(account:Account):void
 	{
+		
 		this.account = account;
 		mapFromAccountData();
 		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
@@ -495,7 +497,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
-				return array.getItemIndex(element);
 			}
 		}
 		return -1;

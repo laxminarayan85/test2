@@ -179,7 +179,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private Address address;
 	
 	/**
@@ -248,7 +248,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
 	

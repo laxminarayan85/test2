@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.OutsideService")]
 	[Managed]
 	
-	public dynamic class OutsideService extends PreferencesMarkups
+	public class OutsideService extends PreferencesMarkups
 	{
 
 		public function OutsideService() {

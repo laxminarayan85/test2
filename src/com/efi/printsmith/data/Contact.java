@@ -130,13 +130,18 @@ public class Contact extends Party {
     this.created = new Date();
     this.modified = new Date();
   }
-
+	public Contact(long id, String firstName, String lastName, String accountID) {
+		this.id = id;
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.contactId = accountID;
+	}
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
 	private Address shipToAddress;
 	
 	/**
@@ -159,7 +164,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(optional=true)
 	private Account parentAccount;
 	
 	/**
@@ -366,7 +371,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	private CreditCard creditCard;
 	
 	/**
@@ -389,7 +394,7 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	private Marketing marketing;
 	
 	/**

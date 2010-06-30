@@ -6,7 +6,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="dataService2" destination="dataService">
 	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getContact" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
@@ -54,13 +54,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 
-<mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+<!--<mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactLastValidator" source="{last_name_edit}"	property="text"	minLength="2" required="true"/>
-
+-->
 
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.data.ComLink;
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayCollection;
 	import com.efi.printsmith.data.Contact;
@@ -231,8 +232,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			mapFromContactData();
 			setCampaigns()
 		}
-		address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
-		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
+	/* 	address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
+	 */	ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
 	}
 					
 	private function setAccount(account:Account):void
@@ -298,15 +299,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	private function mapToContactData():void {
 		var tempCredit:PreferencesCreditCard = new PreferencesCreditCard;
-		contact.firstName = name_edit.text;
-		contact.lastName =  last_name_edit.text;
-		contact.prefix = contact_prefix_edit.text;
-		contact.salutation= contact_salutation_edit.text;
-		contact.suffix = contact_suffix_edit.text;
-		contact.jobTitle= contact_job_title_edit.text;
+		var tempCom: ComLink;
+		var index:int;
+		var tmpContact: Contact;
+		tmpContact = contact_editor.getContact();
+		contact.firstName = tmpContact.firstName;
+		contact.lastName =  tmpContact.lastName;
+		contact.prefix = tmpContact.prefix;
+		contact.salutation= tmpContact.salutation;
+		contact.suffix = tmpContact.suffix;
+		contact.jobTitle= tmpContact.jobTitle;
+		contact.comLinks = tmpContact.comLinks;
 		 
 		contact.shipToAddress = ship_to_address_editor.getAddress();
-		contact.address = address_editor.getAddress();
+		contact.address = null;
 		
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
@@ -331,11 +337,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.creditCard.cardHolderName = cardholder.text;
 		contact.creditCard.cardNumber = cardnumber.text;
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
+		
+		
 		if (contact.creditCard.address != null){
 			contact.creditCard.address.street1 = cardstreet.text;
 			if (cardzip != null && cardzip.selectedItem != null) 
 				contact.creditCard.address.zip = cardzip.text;
-		}
+		} 
 		
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
@@ -346,7 +354,62 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (contact.parentAccount != null)
 			contact.parentAccount.accountId = accountID.text;
 		saveCampaigns();
-		
+	/*  if (phone_edit.text.length >0){
+	 	index = findCom("Phone", contact.comLinks);
+	 	if (index != 1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = phone_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = phone_edit.text;
+	 		tempCom.type = "Phone"
+	 		contact.comLinks.addItem(tempCom);
+	 	}
+	 	
+	 }
+	 if (mobile_edit.text.length >0){
+	 	index = findCom("Cell", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = mobile_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = mobile_edit.text;
+	 		tempCom.type = "Cell"
+	 		contact.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
+	 if (other_edit.text.length >0){
+	 	index = findCom("Other", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = other_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = other_edit.text;
+	 		tempCom.type = "Other"
+	 		contact.comLinks.addItem(tempCom);
+	 	}
+	 }
+	 if (email_edit.text.length >0){
+	 	index = findCom("E-Mail", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = email_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = email_edit.text;
+	 		tempCom.type = "E-Mail"
+	 		contact.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
+		 */
 	}
 	private function saveCampaigns():void{
 		var i:int;
@@ -380,11 +443,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		ship_to_address_editor.zipDataProvider = zips;
 		ship_to_address_editor.countryDataProvider = countrys;
 		
-		address_editor.setAddress(contact.address);
+	/* 	address_editor.setAddress(contact.address);
 		address_editor.cityDataProvider = citys;
 		address_editor.stateDataProvider = states1;
 		address_editor.zipDataProvider = zips;
-		address_editor.countryDataProvider = countrys;
+		address_editor.countryDataProvider = countrys; */
 		if (contact.parentAccount != null)
 			accountName.text = contact.parentAccount.title;
 	 	if (contact.creditCard.address != null)
@@ -404,8 +467,28 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (contact.defaultSalesRep != null)
 			sales_rep_combo.selectedIndex = findItem(contact.defaultSalesRep.name, salesReps);
 	    
-	   
-		
+	/*     for (var i:int =0; i < contact.comLinks.length ; i++)
+	    {	 var tempCom:ComLink;
+	    	tempCom = contact.comLinks.getItemAt(i) as ComLink;
+	    	switch (tempCom.type){
+	    		case "Phone" :
+	    			phone_edit.text = tempCom.value;
+	    			break;
+	    		case "Cell":
+	    			mobile_edit.text = tempCom.value;
+	    			break;
+	    		case "Fax":
+	    			fax_edit.text = tempCom.value;
+	    			break;
+	    		case "E-Mail":
+	    			email_edit.text = tempCom.value;
+	    			break;
+	    		case "Other":
+	    			other_edit.text = tempCom.value;
+	    			break;
+	    	}
+	    } */
+	    	
 	}
 	private function findIteminCreditCard(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
@@ -418,6 +501,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	private function findCom(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.type) {
 				return array.getItemIndex(element);
 			}
 		}
@@ -463,6 +554,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function handleGetResult(ev:ResultEvent):void {
 		   this.setContact(ev.result as Contact);
+		   contact_editor.setContact(contact);
 			setMarketing();
 			setCreditCard();
 	     
@@ -470,7 +562,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
 		var temp:Contact = new Contact();
 		temp= evt.contact as Contact;
-		dataService2.getById("Contact", temp.id );   
+		dataService2.getContact(temp.id );   
 		
 	}
 	
@@ -492,7 +584,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = contacts.length - 1;
 		}
 	    temp = contacts.getItemAt(itemp,0) as Contact;   
-	   	dataService2.getById("Contact", temp.id );                       
+	   	dataService2.getContact(temp.id );                         
 	}
 	private function doPrev():void {              
 	    var itemp:int;
@@ -504,7 +596,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			itemp = 0; 
 		}
 		temp = contacts.getItemAt(itemp,0) as Contact;   
-	   	dataService2.getById("Contact", temp.id );
+	   	dataService2.getContact(temp.id );  
 	   
 	                                             
 	}                                           
@@ -648,8 +740,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function validateForm(event:Event):void{                    
         focussedFormControl = event.target as DisplayObject;    
         formIsValid = true;            
-        validate(contactFirstValidator);
-        validate(contactLastValidator);        
+     /*    validate(contactFirstValidator);
+        validate(contactLastValidator);   */      
     }
     private function validate(validator:Validator):Boolean
 	{                
@@ -702,31 +794,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:Canvas width="851" height="704">
 		<mx:TabNavigator x="0" y="70" width="681" height="635" creationPolicy="all">
 			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.EditAddress')}" width="100%" height="100%">
-				<mx:TextInput x="315" y="8" id="name_edit" width="193" text="{contact.firstName}" />
 				<mx:Text x="111" y="90" width="121" id="accountName" text="{account.title}"/>
-				<mx:Label x="224" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="83" textAlign="right"/>
-				<mx:Label x="224" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Last')}" width="83" textAlign="right"/>
-				<mx:Label x="240" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Prefix')}" width="67" textAlign="right"/>
-				<mx:Label x="240" y="94" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
-				<mx:Label x="407" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Suffix')}" width="48" textAlign="right"/>
-				<mx:Label x="240" y="122" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
-				<mx:TextInput x="315" y="40" width="194" id="last_name_edit" text="{contact.lastName}" change="validateForm(event);"/>
-				<mx:TextInput x="316.5" y="64" width="46" id="contact_prefix_edit" text="{contact.prefix}"/>
-				<mx:TextInput x="463" y="66" width="46" id="contact_suffix_edit" text="{contact.suffix}"/>
-				<mx:TextInput x="315" y="92" width="194" id="contact_job_title_edit" text="{contact.jobTitle}"/>
-				<mx:TextInput x="315" y="120" id="contact_salutation_edit" text="{contact.salutation}"/>
+				<ns1:ContactInfoEditor x="298" y="10" height="157" width="325" id="contact_editor" contactLabel="Contact"/>
 				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.ID')}" textAlign="right" width="62"/>
 				<mx:Label x="22" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" textAlign="right" width="50"/>
 				<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" textAlign="right" width="93"/>
 				<mx:Button x="10" y="168" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}" id="AccountsPicker" click="doAccountPicker()"/>
-				<fc:AutoComplete id="sales_rep_combo" x="315" y="168" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
-				<ns1:AddressEditor x="10" y="215" id="address_editor" height="157" width="325"/>
+				<fc:AutoComplete id="sales_rep_combo" x="464" y="216" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
 				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.accountId}"/>
 				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
-				<mx:Label x="224" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
-				<mx:Label x="214" y="144" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
-				<mx:Text x="315" y="144" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
-				<ns1:AddressEditor x="344" y="215" id="ship_to_address_editor" height="157" width="325"/>
+				<mx:Label x="373" y="218" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
+				<mx:Label x="363" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
+				<mx:Text x="464" y="175" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
+				<ns1:AddressEditor x="10" y="218" id="ship_to_address_editor" height="157" width="325"/>
 				
 			</mx:Canvas>
 			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%">

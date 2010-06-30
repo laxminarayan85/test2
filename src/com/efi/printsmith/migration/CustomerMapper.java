@@ -87,7 +87,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Phone");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						shipToContact.addComLinks(comlink);
 					}
@@ -179,7 +179,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Phone");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						billToContact.addComLinks(comlink);
 					}
@@ -332,7 +332,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Cell");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						shipToContact.addComLinks(comlink);
 					}
@@ -340,7 +340,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Other");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						shipToContact.addComLinks(comlink);
 					}
@@ -361,7 +361,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Cell");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						billToContact.addComLinks(comlink);
 					}
@@ -369,7 +369,7 @@ public class CustomerMapper extends ImportMapper {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
 						ComLink comlink = Utilities.tokenToComLink(
-								currentImportToken, "Telephone");
+								currentImportToken, "Other");
 						comlink = (ComLink)dataService.addUpdate(comlink);
 						billToContact.addComLinks(comlink);
 					}
@@ -474,7 +474,22 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("bill addr4".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("inv phone 4".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.length() > 0
+							&& !currentImportToken.equals(" ")) {
+						ComLink comlink = Utilities.tokenToComLink(
+								currentImportToken, "E-Mail");
+						comlink = (ComLink)dataService.addUpdate(comlink);
+						shipToContact.addComLinks(comlink);
+					}
+				}else if ("bill phone 4".equals(currentFieldToken)) {
+						if (currentImportToken.length() > 0
+								&& !currentImportToken.equals(" ")) {
+							ComLink comlink = Utilities.tokenToComLink(
+									currentImportToken, "E-Mail");
+							comlink = (ComLink)dataService.addUpdate(comlink);
+							billToContact.addComLinks(comlink);
+						}
+						
 				} else if ("ship address ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("bill address ID".equals(currentFieldToken)) {

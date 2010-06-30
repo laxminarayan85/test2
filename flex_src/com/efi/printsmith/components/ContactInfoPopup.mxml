@@ -18,7 +18,7 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveComLinkResult(event)"/>
 	</mx:RemoteObject>
 	
-    <mx:Canvas width="360" height="294">
+    <mx:Canvas width="360" height="304">
     <mx:Label tabIndex="1" x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="67" textAlign="right"/>
     <mx:TextInput tabIndex="2" x="85" y="10" width="265" id="first_name_edit" text="{contact.firstName}"/>
     <mx:Label tabIndex="3" x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Last')}" width="67" textAlign="right"/>
@@ -27,16 +27,26 @@
     <mx:Label tabIndex="6" x="193" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Suffix')}" width="56" textAlign="right"/>
     <mx:TextInput tabIndex="7" x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
     <mx:TextInput tabIndex="8" x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
-    <mx:Label tabIndex="9" x="10" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
-    <mx:TextInput tabIndex="10" x="85" y="90" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
-    <mx:Label tabIndex="11" x="10" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
-    <mx:TextInput tabIndex="12" x="85" y="118" width="265" id="salutation_edit" text="{contact.salutation}"/>
-    <fc:AutoComplete  tabIndex="13" id="comlink_combo" x="10" y="146" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
-    <mx:TextInput tabIndex="14" x="148" y="146" width="202" id="comlink_edit"/>
+    <mx:Label tabIndex="19" x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="20" x="85" y="180" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
+    <mx:Label tabIndex="21" x="10" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
+    <mx:TextInput tabIndex="22" x="85" y="210" width="265" id="salutation_edit" text="{contact.salutation}"/>
+    <fc:AutoComplete   visible="false"  id="comlink_combo" x="10" y="240" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
+    <mx:TextInput  visible="false"  x="148" y="240" width="202" id="comlink_edit"/>
     
     	
-    <mx:Button x="192" y="262" id="ok_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="75" click="doOK()"/>
-    <mx:Button x="275" y="262" id="cancel_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" width="75" click="doCancel()"/>
+    <mx:Button x="192" y="272" id="ok_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="75" click="doOK()"/>
+    <mx:Button x="275" y="272" id="cancel_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" width="75" click="doCancel()"/>
+    <mx:Label tabIndex="9" x="42" y="90" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Phone')}"/>
+    <mx:Label  tabIndex="10" x="42" y="116" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}"/>
+    <mx:Label  tabIndex="11" x="42" y="142" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EMail')}"/>
+    <mx:TextInput  tabIndex="12" x="85" y="90"  width="95" id="phone_edit"/>
+    <mx:TextInput  tabIndex="14" x="85" y="114" width="95" id="mobile_edit"/>
+    <mx:TextInput tabIndex="16" x="85" y="140" width="265" id="email_edit"/>
+    <mx:Label  tabIndex="17" x="214" y="92" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FAX')}"/>
+    <mx:Label  tabIndex="18" x="214" y="116"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Other')}"/>
+    <mx:TextInput  tabIndex="13" x="252" y="90" width="98" id="fax_edit"/>
+    <mx:TextInput  tabIndex="15" x="252" y="114" width="98" id="other_edit"/>
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
@@ -113,14 +123,50 @@
 		}
 		return -1;
 	}
-   
+   private function findCom(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.type) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	public function setContact(addr:Contact):void {
+		
+		var tempCom:ComLink;
+		
 		this.contact = addr;
 		originalContact = addr;
-		if (this.contact.comLinks != null){
+		/* if (this.contact.comLinks != null){
 			var comLink:ComLink = this.contact.comLinks.getItemAt(0) as ComLink
 			comlink_edit.text = comLink.value;
+		} */
+		if (contact.comLinks != null){
+			 for (var i:int =0; i < contact.comLinks.length ; i++)
+		    {	
+		    	tempCom = contact.comLinks.getItemAt(i) as ComLink;
+		    	switch (tempCom.type){
+		    		case "Phone" :
+		    			phone_edit.text = tempCom.value;
+		    			break;
+		    		case "Cell":
+		    			mobile_edit.text = tempCom.value;
+		    			break;
+		    		case "Fax":
+		    			fax_edit.text = tempCom.value;
+		    			break;
+		    		case "E-Mail":
+		    			email_edit.text = tempCom.value;
+		    			break;
+		    		case "Other":
+		    			other_edit.text = tempCom.value;
+		    			break;
+		    	}
+		    }
+		}else{
+			contact.comLinks = new ArrayCollection();
 		}
+	
 		
 	}
 	
@@ -176,13 +222,16 @@
 	}
 	
 	private function doOK():void {
+		var index:int;
+		var tempCom:ComLink;
+		tempCom = new ComLink();
 		contact.firstName = first_name_edit.text;
 		contact.lastName = last_name_edit.text;
 		contact.jobTitle = job_title_edit.text;
 		contact.suffix = suffix_edit.text;
 		contact.prefix = prefix_edit.text;
 		contact.salutation = salutation_edit.text;
-		var comLinks:ArrayCollection = contact.comLinks;
+		/* var comLinks:ArrayCollection = contact.comLinks;
 		if (comLinks == null) {
 			comLinks = new ArrayCollection();
 			
@@ -210,7 +259,62 @@
 				contact.comLinks.setItemAt(comLink, 0);
 		
 		}
-		
+		 */
+		 	if (phone_edit.text.length >0){
+	 		index = findCom("Phone", contact.comLinks);
+	 		if (index != 1){
+	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
+		 		tempCom.value = phone_edit.text;
+		 		contact.comLinks.setItemAt(tempCom, index);
+		 	}
+	 		else{
+	 		tempCom.value = phone_edit.text;
+	 		tempCom.type = "Phone"
+	 		contact.comLinks.addItem(tempCom);
+	 	}
+	 	
+	 }
+	 if (mobile_edit.text.length >0){
+	 	index = findCom("Cell", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = mobile_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = mobile_edit.text;
+	 		tempCom.type = "Cell"
+	 		contact.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
+	 if (other_edit.text.length >0){
+	 	index = findCom("Other", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = other_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = other_edit.text;
+	 		tempCom.type = "Other"
+	 		contact.comLinks.addItem(tempCom);
+	 	}
+	 }
+	 if (email_edit.text.length >0){
+	 	index = findCom("E-Mail", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = email_edit.text;
+	 		contact.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom.value = email_edit.text;
+	 		tempCom.type = "E-Mail"
+	 		contact.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
 		var eventObj:SaveContactEvent = new SaveContactEvent("SaveContactEvent", contact);
 		dispatchEvent(eventObj);
 		PopUpManager.removePopUp(this);

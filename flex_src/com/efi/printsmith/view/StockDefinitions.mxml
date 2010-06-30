@@ -573,8 +573,10 @@
 	
 	private function handleStockPickerNew(evt:StockPickerSelectEvent):void {
 		stockDefinitions = new StockDefinition();
-	    stockDefinitions.charges = new ArrayCollection;
-	   	stockDefinitions.stockChanges = new ArrayCollection;
+	    stockDefinitions.charges = new ArrayCollection();
+	   	stockDefinitions.stockChanges = new ArrayCollection();
+	   	stockDefinitions.parentsize = new Dimension();
+	   	stockDefinitions.normalRunSize = new Dimension();
 	}
 	
 	private function doNext():void {  
@@ -626,6 +628,7 @@
 	private function doNew():void {
 		
   	    stockDefinitions = new StockDefinition();
+  	    stockDefinitions.parentsize = new Dimension();
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
   	   
@@ -1086,6 +1089,7 @@
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
 		this.account = new Account();
+		
 	}
 
 	private function setAccount(account2:Account):void
@@ -1225,7 +1229,7 @@
 	
 	 stockDefinitions.name = stockName.text;
 	 stockDefinitions.weight = parseInt(weight.text);
-	 stockDefinitions.coated = coated.text;
+	 stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
 	 stockDefinitions.parentsize.name = parentSize.text;

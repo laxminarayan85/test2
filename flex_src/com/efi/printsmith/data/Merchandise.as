@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Merchandise")]
 	[Managed]
 	
-	public dynamic class Merchandise extends PreferencesMarkups
+	public class Merchandise extends PreferencesMarkups
 	{
 
 		public function Merchandise() {

@@ -108,7 +108,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("phone".equals(currentFieldToken)) {
 				try {
 					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Phone"));
 					}
 				} catch (Exception e) {
 					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
@@ -124,7 +124,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("phone 2".equals(currentFieldToken)) {
 				try {
 					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Cell"));
 					}
 				} catch (Exception e) {
 					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
@@ -132,7 +132,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("phone 3".equals(currentFieldToken)) {
 				try {
 					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Other"));
 					}
 				} catch (Exception e) {
 					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
@@ -140,7 +140,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("phone 4".equals(currentFieldToken)) {
 				try {
 					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {
-						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "Telephone"));
+						contact.addComLinks(Utilities.tokenToComLink(currentImportToken, "E-Mail"));
 					}
 				} catch (Exception e) {
 					/* CURRENT PROBLEM WITH COM LINK LAZY LOAD, THIS IS HERE UNTIL RESOLVED */
