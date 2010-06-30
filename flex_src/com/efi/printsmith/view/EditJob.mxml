@@ -1581,6 +1581,14 @@
 	    		}
 	    	}
 	    	
+	    	private function doXpedxStockStatus():void{
+				var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
+				statusWindow.setStyle("borderAlpha", 0.9);
+				var temp:StockDefinition
+				temp = job.stock as StockDefinition;
+			 	statusWindow.setStock(temp);
+			 }
+	    	
 	    	private function doInkEditorFront():void{
 	    		var inkWindow:InkColorPicker = InkColorPicker(PopUpManager.createPopUp(this, InkColorPicker, true));
 				inkWindow.setStyle("borderAlpha", 0.9);
@@ -1855,6 +1863,7 @@
 							<mx:LinkButton x="10"
 										   y="110"
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}"/>
+							<mx:LinkButton x="22" y="129" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
 						</mx:Canvas>
 					</mx:Accordion>
 					<mx:ViewStack id="viewstack3"
