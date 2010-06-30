@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ColorPicker xmlns:mx="http://www.adobe.com/2006/mxml" change="{changeEventHandler(event)}">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ColorPickerEvent;
+			
+			[Bindable] public var dataHolder:Object;
+	   		[Bindable] public var variableName:String;
+	   		private var _customText:String;
+	   		
+			private function changeEventHandler(event:Event):void{
+				if(dataHolder!=null){
+					dataHolder[variableName] = this.selectedColor.toString();
+				}
+			}
+		
+			public function get customText():String {
+				if(_customText!=null) {
+					this.selectedColor = uint(parseInt(_customText));
+				}
+				return _customText;
+			}
+			
+			public function set customText(displayValue:String):void{
+				if(displayValue!=null) {
+					this._customText = displayValue;
+					this.selectedColor = uint(parseInt(displayValue));
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:ColorPicker>

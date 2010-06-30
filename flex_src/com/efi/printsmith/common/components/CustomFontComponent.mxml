@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	width="400" height="315" xmlns:components="com.efi.printsmith.common.components.*" initialize="{initComponent()}" showCloseButton="true"
+	close="{closeEventHandler(event)}">
+	
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import flash.utils.setTimeout;
+			import flash.net.registerClassAlias;
+			import mx.utils.ObjectUtil;
+			import mx.core.FontAsset;
+			import mx.managers.PopUpManager;
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.model.FontBean;
+			
+			[Bindable] public var dataHolder:Object;
+			
+			[Bindable] public var variableName:String;
+		
+			[Bindable] public var fontBean:FontBean;
+			
+			[Bindable] public var fontStyleArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var fontSizeArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var sampleTextString:String = "This is a test string";
+			
+			private var _customText:FontBean;
+			
+			private function initComponent():void {
+				var collection:ArrayCollection = new ArrayCollection(Font.enumerateFonts(true));
+				var sort:Sort = new Sort();
+				sort.fields = [new SortField("fontName",true)];
+				collection.sort = sort;
+				collection.refresh();
+				fontStyleArray = collection;
+				var fontSizeObj:Object = new Object();
+				fontSizeObj.id=9;
+				fontSizeObj.name = "9";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=10;
+				fontSizeObj.name = "10";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=12;
+				fontSizeObj.name = "12";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=14;
+				fontSizeObj.name = "14";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=18;
+				fontSizeObj.name = "18";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=24;
+				fontSizeObj.name = "24";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=36;
+				fontSizeObj.name = "36";
+				fontSizeArray.addItem(fontSizeObj);
+				fontSizeObj = new Object();
+				fontSizeObj.id=72;
+				fontSizeObj.name = "72";
+				fontSizeArray.addItem(fontSizeObj);
+			}
+			
+			public function get customText():FontBean {
+				return _customText;
+			}
+			
+			public function set customText(displayValue:FontBean):void {
+				_customText = displayValue;
+				if(displayValue){
+					registerClassAlias("com.efi.printsmith.model",FontBean);
+					fontBean = ObjectUtil.copy(displayValue) as FontBean;
+				} else {
+					fontBean = new FontBean();
+				}
+				callLater(updateStyle);
+			}
+			
+			private function updateStyle():void {
+				if(fontBean!=null) {
+					if(fontBean.fontStyle!=null){
+						labelTxt.setStyle("fontFamily",fontBean.fontStyle);	
+					}
+					if(fontBean.fontSize!=0) { 
+						labelTxt.setStyle("fontSize",fontBean.fontSize);
+					} else {
+						labelTxt.setStyle("fontSize",parseInt(fontSizeArray.getItemAt(0).toString()));
+					}
+					if(fontBean.isBold){
+						labelTxt.setStyle("fontWeight","bold");
+					} else {
+						labelTxt.setStyle("fontWeight","normal");
+					}
+					if(fontBean.isItalic){
+						labelTxt.setStyle("fontStyle","italic");
+					} else {
+						labelTxt.setStyle("fontStyle","normal");
+					}
+					if(fontBean.isUnderLine){
+						labelTxt.setStyle("textDecoration","underline");
+					} else {
+						labelTxt.setStyle("textDecoration","none");
+					}
+					if(fontBean.isShadow){
+						var dropShadowFilter:DropShadowFilter = new DropShadowFilter(5,30,0x000000,.8);
+			            var filtersArray:Array = new Array();
+			            filtersArray.push(dropShadowFilter);
+			            labelTxt.filters = filtersArray;
+					} else {
+						labelTxt.filters = null;
+					} 
+				}
+			}
+			
+			private function saveData():void{
+				if(dataHolder!=null){
+					dataHolder[variableName] = fontBean;
+					dispatchEvent(new Event("fontBeanUpdated"));
+				}
+				closeEventHandler();
+			} 
+			
+			private function closeEventHandler(event:Event=null):void{
+				PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox width="100%">
+			<mx:Spacer width="30"/>
+			<mx:VBox width="100%"> 
+				<mx:HBox width="100%">
+					<mx:Label text="Font:" textAlign="right" width="40"/>
+					<components:CustomComboBoxComponent
+						masterList="{fontStyleArray}" labelFieldId="fontName" labelFieldName="fontName"
+						dataHolder="{fontBean}" variableName="fontStyle" customText="{getCustomTextData(fontStyleArray,fontBean)}" updateFirstElement="true"
+						change="{updateStyle()}" width="240"/>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Label text="Size:" textAlign="right" width="40"/>
+					<components:CustomComboBoxComponent
+						masterList="{fontSizeArray}" labelFieldId="id" labelFieldName="name"
+						dataHolder="{fontBean}" variableName="fontSize" customText="{getCustomTextData(fontSizeArray,fontBean)}" updateFirstElement="true"
+						change="{updateStyle()}" width="60"/>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Label text="Size:" textAlign="right" width="40"/>
+					<mx:HBox width="100%">
+						<mx:VBox>
+							<components:CustomCheckBoxComponent label="Bold"
+								dataHolder="{fontBean}" variableName="isBold" customText="{fontBean.isBold}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+							<components:CustomCheckBoxComponent label="Italic"
+								dataHolder="{fontBean}" variableName="isItalic" customText="{fontBean.isItalic}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+							<components:CustomCheckBoxComponent label="Underline"
+								dataHolder="{fontBean}" variableName="isUnderLine" customText="{fontBean.isUnderLine}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+						</mx:VBox>
+						<mx:VBox>
+							<components:CustomCheckBoxComponent label="Outline"
+								dataHolder="{fontBean}" variableName="isOutLine" customText="{fontBean.isOutLine}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+							<components:CustomCheckBoxComponent label="Shadow"
+								dataHolder="{fontBean}" variableName="isShadow" customText="{fontBean.isShadow}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+							<components:CustomCheckBoxComponent label="Condensed"
+								dataHolder="{fontBean}" variableName="isCondensed" customText="{fontBean.isCondensed}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+							<components:CustomCheckBoxComponent label="Extended"
+								dataHolder="{fontBean}" variableName="isExtended" customText="{fontBean.isExtended}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
+						</mx:VBox>
+					</mx:HBox>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:VBox width="98%" height="20%" borderStyle="solid">
+			<mx:Label id="labelTxt" text="{sampleTextString}" updateComplete="{updateStyle()}"/>
+		</mx:VBox>
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:Button label="OK" click="{saveData()}"/>
+			<mx:Button label="Cancel" click="{closeEventHandler(event)}"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>
