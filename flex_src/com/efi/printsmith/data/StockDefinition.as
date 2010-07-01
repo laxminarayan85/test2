@@ -141,6 +141,7 @@ package com.efi.printsmith.data
 		public var defaultColorCopier:CopierDefinition;
 		public var defaultLargeCopier:CopierDefinition;
 		public var jdfStockId:String = "";
+		public var excludeFromWeb:Boolean = false;
 	
 	}
 }

@@ -556,6 +556,11 @@ public class StockDefinition extends ModelBase {
   public static final String JDFSTOCKID = "JdfStockId";
 
 	/**
+   * @generated
+   */
+  public static final String EXCLUDEFROMWEB = "ExcludeFromWeb";
+
+	/**
 	 * @generated
 	 */
 	public StockDefinition() {
@@ -3487,6 +3492,26 @@ public class StockDefinition extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean excludeFromWeb;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getExcludeFromWeb(){
+    return excludeFromWeb; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setExcludeFromWeb(Boolean newVal) {
+    this.excludeFromWeb = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3620,6 +3645,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTCOLORCOPIER.equals(propertyName)) return getDefaultColorCopier();
     if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
     if (JDFSTOCKID.equals(propertyName)) return getJdfStockId();
+    if (EXCLUDEFROMWEB.equals(propertyName)) return getExcludeFromWeb();
     return super.getProperty(propertyName);
   }
 	
@@ -3757,6 +3783,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTCOLORCOPIER.equals(propertyName)) setDefaultColorCopier((CopierDefinition)newValue); else
     if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
     if (JDFSTOCKID.equals(propertyName)) setJdfStockId((String)newValue); else
+    if (EXCLUDEFROMWEB.equals(propertyName)) setExcludeFromWeb((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4022,6 +4049,8 @@ public class StockDefinition extends ModelBase {
       return new Class<?>[] {CopierDefinition.class};		
     if (JDFSTOCKID.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (EXCLUDEFROMWEB.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4160,6 +4189,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTCOLORCOPIER.equals(propertyName)) return StockDefinition.class;
     if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
     if (JDFSTOCKID.equals(propertyName)) return StockDefinition.class;
+    if (EXCLUDEFROMWEB.equals(propertyName)) return StockDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4426,6 +4456,8 @@ public class StockDefinition extends ModelBase {
     if (! SmartEquals(getDefaultLargeCopier(), objT.getDefaultLargeCopier()))
       return false;
     if (! SmartEquals(getJdfStockId(), objT.getJdfStockId()))
+      return false;
+    if (! SmartEquals(getExcludeFromWeb(), objT.getExcludeFromWeb()))
       return false;
     return true;
   }			
