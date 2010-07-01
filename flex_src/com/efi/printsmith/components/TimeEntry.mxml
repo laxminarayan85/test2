@@ -49,7 +49,7 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
 -->
 
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  
-           creationComplete="createComplete();">
+           creationComplete="createComplete();" borderStyle="inset">
 
     <mx:NumberValidator id="hourValidator" source="{hourText}" exceedsMaxError="" lowerThanMinError="" integerError=""
                         property="text" maxValue="{maxHour}" minValue="{minHour}"
