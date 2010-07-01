@@ -1162,6 +1162,7 @@
 			chkfscCertified.selected = stockDefinitions.fscCertified;
 			chksfiCertified.selected = stockDefinitions.sfiCertified
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
+			chkExcludeFromWebUpdate.selected = stockDefinitions.excludeFromWeb;
 			
 			this.charges = stockDefinitions.charges;
 			standardItemCheckEvent();
@@ -1223,7 +1224,7 @@
 	 stockDefinitions.fscCertified = chkfscCertified.selected;
 	 stockDefinitions.sfiCertified = chksfiCertified.selected;
 	 stockDefinitions.greenSealCertified = chkgreensealCertified.selected;
-	 
+	 stockDefinitions.excludeFromWeb = chkExcludeFromWebUpdate.selected;
 	 
 	 //text and textboxes
 	
@@ -1463,10 +1464,10 @@
 			<mx:Panel x="14.5" y="0" width="880.5" height="225" layout="absolute" dropShadowEnabled="false">
 				<mx:Label x="0" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Vendor')}" textAlign="right" width="98.5"/>
 				<mx:Label x="1" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.StockType')}" textAlign="right" width="97.5" id="label6"/>
-				<mx:Label x="295" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
+				<mx:Label x="276" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
 				<mx:Label x="0" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ParentSize')}" textAlign="right" width="98.5" id="label3"/>
 				<mx:Label x="246.5" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Thickness')}" textAlign="right" width="85.5" id="label11"/>
-				<mx:Label x="282" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.BasicSize')}" textAlign="right" width="85.5" id="label5"/>
+				<mx:Label x="263" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.BasicSize')}" textAlign="right" width="85.5" id="label5"/>
 				<mx:Label x="0" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsCarton')}" textAlign="right" width="98.5" id="label2"/>
 				<mx:Label x="261" y="91" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MWeight')}" textAlign="right" width="106.5" id="label1"/>
 				<mx:Label x="0" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinOrder')}" textAlign="right" width="98.5" id="label7"/>
@@ -1475,7 +1476,7 @@
 
 				<mx:ComboBox x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" labelField="name" focusOut="doStockVendor()"/>
 				<mx:ComboBox x="106.5" y="33" id="stkType" width="128" dataProvider="{stockType}" labelField="name" focusOut="doStockType()" />
-				<mx:TextInput x="375.5" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
+				<mx:TextInput x="356.5" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
 				<fc:AutoComplete x="106.5" y="60" width="132" 
 					  id="parentSize"
 					  dataProvider="{dimensions}"
@@ -1488,7 +1489,7 @@
 				<mx:TextInput x="375.5" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
 				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}"/>
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
-				<mx:Text x="375.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="103" height="22"/>
+				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="103" height="22"/>
 				<mx:ComboBox x="448" y="60" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
 				<mx:Panel x="598" y="7" width="252.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
 					<mx:Label x="26.25" y="1" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ForestManagement')}"/>
@@ -1501,6 +1502,7 @@
 					<mx:TextInput x="115.75" y="44" width="47.75" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}"/>
 
 				</mx:Panel>
+				<mx:CheckBox x="467.5" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false">
 				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right"/>
