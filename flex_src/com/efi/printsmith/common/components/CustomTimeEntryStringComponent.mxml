@@ -8,13 +8,13 @@
 			
 			private function initTEComponent():void{
 				//timeStepper.addEventListener(Event.CHANGE,updateDataEventListener);
-				hourText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
-				minuteText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+				hourText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
+				minuteText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				if(showSeconds){
-					secondText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+					secondText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				}
 				if(!is24Hour){
-					amPMText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener);
+					amPMText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				}
 			}
 			

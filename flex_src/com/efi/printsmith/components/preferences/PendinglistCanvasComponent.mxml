@@ -55,7 +55,7 @@
 					} else {
 						updateFontTextStyles(txtHeaderFont,preferencesPOS.headerFontBean);
 					}
-				});
+				},false,0,true);
 				PopUpManager.centerPopUp(fontComponent);
 			}
 			
