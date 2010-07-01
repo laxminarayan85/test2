@@ -86,6 +86,19 @@
 		PopUpManager.removePopUp(this);
 	     
 	}
+	
+	private function doEnableWebStatus():void {
+		var tempStock:StockDefinition;
+		tempStock = dataGrid.selectedItem as StockDefinition;
+		if (tempStock.vendor.name == "xpedx" || tempStock.vendor.name == "Xpedx") {
+			this.web_status.visible = true;
+			this.status_button.enabled = true;
+		} else {
+			this.web_status.visible = false;
+			this.status_button.enabled = false;
+		}
+	}
+	
   	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:Object = message.body;// as com.efi.printsmith.messaging.MessageBody;
@@ -308,7 +321,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
                              
 	<mx:Canvas width="100%" height="100%" creationPolicy="all">
 		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
-		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273">               
+		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273" change="doEnableWebStatus();">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
 		     <mx:DataGridColumn dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
@@ -395,7 +408,8 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:TextInput x="295" y="192" width="98" id="txtThickness"/>
 		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet"/>
 		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber"/>
-		<mx:Button x="358" y="10" label="Check Status" width="102" id="status_button" click="doStatus()" enabled="{(dataGrid.selectedItem != null)}"/>
+		<mx:Button x="358" y="10" label="Check Status" width="102" id="status_button" click="doStatus()"/>
+		<mx:Image x="0" y="246" width="15" height="19" source="assets/Original PS Icons/WebStatus.png" id="web_status"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
