@@ -22,54 +22,6 @@
 				return item.markup.toFixed(2);
 			}
 			
-			/* private function processOutsideServicesGridData(event:DataGridEvent):void {
-		        if (event.reason == DataGridEventReason.CANCELLED){
-		            // Do not update cell.
-		            return;
-		        }           
-				if(event.dataField == "totalCost" || event.dataField == "markup")
-				{
-					// Disable copying data back to the control.
-					event.preventDefault();
-					
-					if(event.dataField == "totalCost"){
-						outsideServicesGrid.editedItemRenderer.data.totalCost = outsideServicesGrid.selectedItem.totalCost;
-					}
-					
-					if(event.dataField == "markup"){
-						outsideServicesGrid.editedItemRenderer.data.markup = outsideServicesGrid.selectedItem.markup;
-					}
-		
-					// Close the cell editor.
-					outsideServicesGrid.destroyItemEditor();
-				}	
-				
-			}
-			
-			private function processMerchandiseGridData(event:DataGridEvent):void {
-		        if (event.reason == DataGridEventReason.CANCELLED){
-		            // Do not update cell.
-		            return;
-		        }           
-				if(event.dataField == "totalCost" || event.dataField == "markup")
-				{
-					// Disable copying data back to the control.
-					event.preventDefault();
-					
-					if(event.dataField == "totalCost"){
-						merchandiseGrid.editedItemRenderer.data.totalCost = merchandiseGrid.selectedItem.totalCost;
-					}
-					
-					if(event.dataField == "markup"){
-						merchandiseGrid.editedItemRenderer.data.markup = merchandiseGrid.selectedItem.markup;
-					}
-		
-					// Close the cell editor.
-					merchandiseGrid.destroyItemEditor();
-				}
-				
-			} */
-			
 			private function doNewMarkup(item:String):void{
 				if (item=="outside")
 				{
@@ -96,136 +48,161 @@
 			}
 		]]>
 	</mx:Script>
-
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Markups')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
 	
-	<mx:Text x="50" y="30"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markupissteppedandba')}"
-		height="38" width="488" />
+	<mx:VBox width="100%" height="100%">
+	
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Markups')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<mx:Label x="50" y="80"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}"
-		textAlign="right" />
+		<mx:HBox width="100%" height="100%">
 		
-	<mx:DataGrid x="50" id="outsideServicesGrid" dataProvider="{preferencesMarkupsArray}"
-		editable="true" top="100" bottom="80">
-		
-		<mx:columns>
-		
-			<mx:DataGridColumn
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}"
-				dataField="totalCost">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.totalCost}"/>
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomNumericTextInputComponent
-							datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-							precision="2" rounding="nearest" isItemEditor="true"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+	
+				<mx:Text
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markupissteppedandba')}"
+					height="38" width="50%"/>
+					
+				<mx:HBox width="60%" height="100%" horizontalGap="10">
 				
-			<mx:DataGridColumn
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
-				dataField="markup" labelFunction="formatNumberMarkup">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.markup}" />
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomNumericTextInputComponent
-							datagridControl="true" variableName="markup" customText="{data.markup}"
-							precision="2" rounding="nearest" isItemEditor="true"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
+					<mx:VBox width="50%" height="100%">
+					
+						<mx:Label
+							text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}"/>
+							
+						<mx:DataGrid id="outsideServicesGrid" dataProvider="{preferencesMarkupsArray}"
+							editable="true" height="80%">
+							
+							<mx:columns>
+							
+								<mx:DataGridColumn
+									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}"
+									dataField="totalCost">
+									<mx:itemRenderer>
+										<mx:Component>
+											<mx:Text selectable="false" text="{data.totalCost}"/>
+										</mx:Component>
+									</mx:itemRenderer>
+									<mx:itemEditor>
+										<mx:Component>
+											<components:CustomNumericTextInputComponent
+												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
+												precision="2" rounding="nearest" isItemEditor="true"/>
+										</mx:Component>
+									</mx:itemEditor>
+								</mx:DataGridColumn>
+									
+								<mx:DataGridColumn
+									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
+									dataField="markup" labelFunction="formatNumberMarkup">
+									<mx:itemRenderer>
+										<mx:Component>
+											<mx:Text selectable="false" text="{data.markup}" />
+										</mx:Component>
+									</mx:itemRenderer>
+									<mx:itemEditor>
+										<mx:Component>
+											<components:CustomNumericTextInputComponent
+												datagridControl="true" variableName="markup" customText="{data.markup}"
+												precision="2" rounding="nearest" isItemEditor="true"/>
+										</mx:Component>
+									</mx:itemEditor>
+								</mx:DataGridColumn>
+									
+							</mx:columns>
+							
+						</mx:DataGrid>
+						
+						<mx:HBox width="100%">
+							
+							<mx:Button width="38" height="38"
+								click="{doNewMarkup('outside')}">
+								<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
+							</mx:Button>
+							
+							<mx:Button width="38" height="38"
+								click="{doRemoveMarkup('outside',outsideServicesGrid)}">
+								<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+							</mx:Button>
+							
+						</mx:HBox>
+						
+					</mx:VBox>
+					
+					<mx:VBox width="50%" height="100%">
+					
+						<mx:Label
+							text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}"/>
+					
+						<mx:DataGrid id="merchandiseGrid" height="80%"
+							dataProvider="{preferencesMarkupsMerchandiseArray}" editable="true">
+							
+							<mx:columns>
+							
+								<mx:DataGridColumn
+									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}"
+									dataField="totalCost">
+									<mx:itemRenderer>
+										<mx:Component>
+											<mx:Text selectable="false" text="{data.totalCost}" />
+										</mx:Component>
+									</mx:itemRenderer>
+									<mx:itemEditor>
+										<mx:Component>
+											<components:CustomNumericTextInputComponent
+												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
+												precision="2" rounding="nearest" isItemEditor="true"/>
+										</mx:Component>
+									</mx:itemEditor>
+								</mx:DataGridColumn>
+									
+								<mx:DataGridColumn
+									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
+									dataField="markup" labelFunction="formatNumberMarkup">
+									<mx:itemRenderer>
+										<mx:Component>
+											<mx:Text selectable="false" text="{data.markup}" />
+										</mx:Component>
+									</mx:itemRenderer>
+									<mx:itemEditor>
+										<mx:Component>
+											<components:CustomNumericTextInputComponent
+												datagridControl="true" variableName="markup" customText="{data.markup}"
+												precision="2" rounding="nearest" isItemEditor="true"/>
+										</mx:Component>
+									</mx:itemEditor>
+								</mx:DataGridColumn>
+									
+							</mx:columns>
+							
+						</mx:DataGrid>
+						
+						<mx:HBox width="100%">
+						
+							<mx:Button width="38" height="38"
+								click="{doNewMarkup('merchandise')}">
+								<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
+							</mx:Button>
+							
+							<mx:Button width="38" height="38"
+								click="{doRemoveMarkup('merchandise',merchandiseGrid)}">
+								<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+							</mx:Button>
+						
+						</mx:HBox>
+						
+					</mx:VBox>
+					
+				</mx:HBox>
 				
-		</mx:columns>
+			</mx:VBox>
+			
+		</mx:HBox>
 		
-	</mx:DataGrid>
-	
-	<mx:Button x="50" width="38" height="38"
-		click="{doNewMarkup('outside')}" bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/new.png')
-		</mx:icon>
-	</mx:Button>
-	
-	<mx:Button x="100" width="38" height="38"
-		click="{doRemoveMarkup('outside',outsideServicesGrid)}"
-		bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/cancel.png')
-		</mx:icon>
-	</mx:Button>
-	
-	<mx:Label x="300" y="80"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}"
-		textAlign="right" />
-		
-	<mx:DataGrid x="300" id="merchandiseGrid"
-		dataProvider="{preferencesMarkupsMerchandiseArray}" editable="true"
-		top="100" bottom="80">
-		
-		<mx:columns>
-		
-			<mx:DataGridColumn
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TotalCost')}"
-				dataField="totalCost">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.totalCost}" />
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomNumericTextInputComponent
-							datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-							precision="2" rounding="nearest" isItemEditor="true"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
-				
-			<mx:DataGridColumn
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
-				dataField="markup" labelFunction="formatNumberMarkup">
-				<mx:itemRenderer>
-					<mx:Component>
-						<mx:Text selectable="false" text="{data.markup}" />
-					</mx:Component>
-				</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomNumericTextInputComponent
-							datagridControl="true" variableName="markup" customText="{data.markup}"
-							precision="2" rounding="nearest" isItemEditor="true"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
-				
-		</mx:columns>
-		
-	</mx:DataGrid>
-	
-	<mx:Button x="300" width="38" height="38"
-		click="{doNewMarkup('merchandise')}" bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/new.png')
-		</mx:icon>
-	</mx:Button>
-	
-	<mx:Button x="350" width="38" height="38"
-		click="{doRemoveMarkup('merchandise',merchandiseGrid)}"
-		bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/cancel.png')
-		</mx:icon>
-	</mx:Button>
+	</mx:VBox>
 	
 </mx:Canvas>

@@ -121,7 +121,7 @@
 				<mx:Panel layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.BlankStockPricing')}"
 					width="500" verticalGap="1">
 					
-					<mx:VBox x="5" width="100%"> 
+					<mx:VBox x="5" width="100%" verticalGap="1"> 
 					
 						<mx:HBox width="100%" horizontalGap="1">
 						

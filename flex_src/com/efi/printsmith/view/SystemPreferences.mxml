@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" creationPolicy="all" creationComplete="init();" 
+	layout="vertical" creationPolicy="all" creationComplete="init();" 
 	xmlns:fc="http://www.adobe.com/2006/fc" 
 	xmlns:vo="com.efi.printsmith.vo.*"
 	xmlns:cmp="com.efi.printsmith.components.*"
@@ -1087,7 +1087,7 @@
     	//dataServicePOS.getAll("PreferencesPOS");
 	}
 	private function handleSaveEstimatorResult(ev:ResultEvent):void {
-    	//dataServiceEstimator.getAll("preferencesEstimating");
+    	dataServiceEstimator.getAll("preferencesEstimating");
 	}
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
     	//dataServiceAccounting.getAll("PreferencesAccounting");
@@ -1355,117 +1355,150 @@
 ]]>
 
 </mx:Script>	
-	<mx:Tree width="190"  
-		id="tvPreference" 
-		dataProvider="{treeData.node}"
-		change="treeSelect(event);" labelFunction="TreeDisplayLabel" bottom="0" top="0" x="0"></mx:Tree>
 
-	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
-		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-	</mx:Button>
-	<mx:Button x="282" y="6" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
-		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-	</mx:Button>
-
-	<mx:VBox id="vbox2" left="190" top="72" height="100%" width="100%" creationPolicy="all">
-		<mx:ViewStack id="preferences_stack" width="100%" height="100%">
-			<prefcomp:BehaviourCanvasComponent id="behavior_canvas" preferencesSystem="{preferencesSystem}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:CompanyCanvasComponent id="company_canvas" preferencesSystem="{preferencesSystem}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:CalendarCanvasComponent id="calendar_canvas" preferencesSystem="{preferencesSystem}" monthsArray="{MonthsArray}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:NumbersCanvasComponent id="numbers_canvas" preferencesSystem="{preferencesSystem}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:AlternateCurrencyCanvasComponent id="alternatecurrency_canvas" preferencesSystem="{preferencesSystem}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:InternationalCanvasComponent id="international_canvas" preferencesSystem="{preferencesSystem}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:CashdrawerCanvasComponent id="cashdrawer_canvas" preferencesPOS="{preferencesPOS}"
-				receiptPrinterArray="{ReceiptPrinterArray}" baudRateArray="{BaudRateArray}" stopBitsArray="{StopBitsArray}"
-				parityArray="{ParityArray}" dataSizeArray="{DataSizeArray}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:CashRegisterCanvasComponent id="cashregister_canvas" preferencesCashRegisterArray="{PreferencesCashRegisterArray}"
-				preferencesCashRegisterDeleteArray="{PreferencesCashRegisterDeleteArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
-				taxTablesArray="{taxTablesArray}" taxCodesArray="{taxCodesArray}"
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+	<mx:HBox width="100%" height="100%" horizontalGap="0">
+	
+		<mx:VBox width="20%" height="100%">
+		
+			<mx:Tree  
+				id="tvPreference"
+				width="100%" height="100%" 
+				dataProvider="{treeData.node}"
+				change="treeSelect(event);" labelFunction="TreeDisplayLabel"/>
 			
-			<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:EstimatorBehaviorCanvasComponent id="estimatorbehavior_canvas" preferencesEstimating="{preferencesEstimating}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:EstimatorPrintingCanvasComponent id="estimatorprinting_canvas" preferencesEstimating="{preferencesEstimating}"
-				defaultInvoiceArray="{DefaultInvoiceArray}" defaultEstimateArray="{DefaultEstimateArray}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:PaperCalculatorCanvasComponent id="papercalculator_canvas" preferencesEstimating="{preferencesEstimating}"
-				runToFinishGrainArray="{RunToFinishGrainArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:JobTicketCanvasComponent id="jobticket_canvas" preferencesEstimating="{preferencesEstimating}"
-				jobTicketStylesArray="{JobTicketStylesArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:QuantityBreaksCanvasComponent id="quantitybreaks_canvas" preferencesQuantityBreaksArray="{PreferencesQuantityBreaksArray}"
-				preferencesQuantityBreaksDeleteArray="{PreferencesQuantityBreaksDeleteArray}" jobMethodsArray="{jobMethodsArray}"
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:MarkupsCanvasComponent id="markups_canvas" preferencesMarkupsArray="{PreferencesMarkupsArray}"
-				preferencesMarkupsMerchandiseArray="{PreferencesMarkupsMerchandiseArray}" preferencesMarkupsDeleteArray="{PreferencesMarkupsDeleteArray}"
-				preferencesMarkupsMerchandiseDeleteArray="{PreferencesMarkupsMerchandiseDeleteArray}" 
-				width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+		</mx:VBox>
+		
+		<mx:VBox width="80%" height="100%">
+		
+			<mx:Spacer height="1%"/>
+		
+			<mx:HBox width="100%" height="6%">
 			
-			<prefcomp:StocksizesCanvasComponent id="stocksizes_canvas" preferencesStocks="{preferencesStocks}" 
-				sizeTableArray="{SizeTableArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<mx:Spacer width="3%"/>
 				
-			<prefcomp:StockdefinitionsCanvasComponent id="stockdefinitions_canvas"
-				preferencesStockDefinitionArray="{PreferencesStockDefinitionArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<mx:Button width="5%" height="100%" click="doSave();" enabled="{enableSave}" id="btnSave">
+					<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+				</mx:Button>
+				
+				<mx:Button width="5%" height="100%" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+				
+			</mx:HBox>
 			
-			<prefcomp:PricingmethodCanvasComponent id="pricingmethod_canvas"
-				preferencesPricingMethodArray="{PreferencesPricingMethodArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
-				preferencesPricingMethodDeleteArray="{PreferencesPricingMethodDeleteArray}" estimatorTypesArray="{estimatorTypesArray}" 
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:CreditdefaultsCanvasComponent id="creditdefaults_canvas" preferencesAccounting="{preferencesAccounting}"
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:AgingperiodsCanvasComponent id="agingperiods_canvas" preferencesAccounting="{preferencesAccounting}"
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
-				
-			<prefcomp:SalescategoriesCanvasComponent id="salescategories_canvas" preferencesSalesCategoryArray="{PreferencesSalesCategoryArray}"
-				preferencesSalesCategoryDeleteArray="{PreferencesSalesCategoryDeleteArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+			<mx:HBox width="100%">
 			
-			<prefcomp:GlProfilesCanvasComponent id="glprofiles_canvas" preferencesAccounting="{preferencesAccounting}"
-				accountingPackagesArray="{AccountingPackagesArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<mx:Spacer width="3%"/>
+			
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
+					width="5%" textAlign="center"/>
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}"
+					width="5%" textAlign="center"/>
+			
+			</mx:HBox>
+			
+			<mx:ViewStack id="preferences_stack" width="100%" height="100%" creationPolicy="all">
+				<prefcomp:BehaviourCanvasComponent id="behavior_canvas" preferencesSystem="{preferencesSystem}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CompanyCanvasComponent id="company_canvas" preferencesSystem="{preferencesSystem}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CalendarCanvasComponent id="calendar_canvas" preferencesSystem="{preferencesSystem}" monthsArray="{MonthsArray}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:NumbersCanvasComponent id="numbers_canvas" preferencesSystem="{preferencesSystem}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:AlternateCurrencyCanvasComponent id="alternatecurrency_canvas" preferencesSystem="{preferencesSystem}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:InternationalCanvasComponent id="international_canvas" preferencesSystem="{preferencesSystem}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CashdrawerCanvasComponent id="cashdrawer_canvas" preferencesPOS="{preferencesPOS}"
+					receiptPrinterArray="{ReceiptPrinterArray}" baudRateArray="{BaudRateArray}" stopBitsArray="{StopBitsArray}"
+					parityArray="{ParityArray}" dataSizeArray="{DataSizeArray}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CashRegisterCanvasComponent id="cashregister_canvas" preferencesCashRegisterArray="{PreferencesCashRegisterArray}"
+					preferencesCashRegisterDeleteArray="{PreferencesCashRegisterDeleteArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
+					taxTablesArray="{taxTablesArray}" taxCodesArray="{taxCodesArray}"
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<prefcomp:CreditCardsCanvasComponent id="creditcards_canvas" preferencesAccounting="{preferencesAccounting}"
-				preferencesCreditCardArray="{PreferencesCreditCardArray}" preferencesCreditCardDeleteArray="{PreferencesCreditCardDeleteArray}" 
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:EstimatorBehaviorCanvasComponent id="estimatorbehavior_canvas" preferencesEstimating="{preferencesEstimating}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:EstimatorPrintingCanvasComponent id="estimatorprinting_canvas" preferencesEstimating="{preferencesEstimating}"
+					defaultInvoiceArray="{DefaultInvoiceArray}" defaultEstimateArray="{DefaultEstimateArray}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:PaperCalculatorCanvasComponent id="papercalculator_canvas" preferencesEstimating="{preferencesEstimating}"
+					runToFinishGrainArray="{RunToFinishGrainArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:JobTicketCanvasComponent id="jobticket_canvas" preferencesEstimating="{preferencesEstimating}"
+					jobTicketStylesArray="{JobTicketStylesArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:QuantityBreaksCanvasComponent id="quantitybreaks_canvas" preferencesQuantityBreaksArray="{PreferencesQuantityBreaksArray}"
+					preferencesQuantityBreaksDeleteArray="{PreferencesQuantityBreaksDeleteArray}" jobMethodsArray="{jobMethodsArray}"
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:MarkupsCanvasComponent id="markups_canvas" preferencesMarkupsArray="{PreferencesMarkupsArray}"
+					preferencesMarkupsMerchandiseArray="{PreferencesMarkupsMerchandiseArray}" preferencesMarkupsDeleteArray="{PreferencesMarkupsDeleteArray}"
+					preferencesMarkupsMerchandiseDeleteArray="{PreferencesMarkupsMerchandiseDeleteArray}" 
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-			<prefcomp:OrderNumberformatCanvasComponent id="ordernumberformat_canvas" preferencesAccounting="{preferencesAccounting}"
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<prefcomp:StocksizesCanvasComponent id="stocksizes_canvas" preferencesStocks="{preferencesStocks}" 
+					sizeTableArray="{SizeTableArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:StockdefinitionsCanvasComponent id="stockdefinitions_canvas"
+					preferencesStockDefinitionArray="{PreferencesStockDefinitionArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 				
-			<prefcomp:JournalEntriesCanvasComponent id="journalentries_canvas" preferencesAccounting="{preferencesAccounting}"
-				journalDocumentPreferenceArray="{JournalDocumentPreferenceArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+				<prefcomp:PricingmethodCanvasComponent id="pricingmethod_canvas"
+					preferencesPricingMethodArray="{PreferencesPricingMethodArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
+					preferencesPricingMethodDeleteArray="{PreferencesPricingMethodDeleteArray}" estimatorTypesArray="{estimatorTypesArray}" 
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CreditdefaultsCanvasComponent id="creditdefaults_canvas" preferencesAccounting="{preferencesAccounting}"
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:AgingperiodsCanvasComponent id="agingperiods_canvas" preferencesAccounting="{preferencesAccounting}"
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:SalescategoriesCanvasComponent id="salescategories_canvas" preferencesSalesCategoryArray="{PreferencesSalesCategoryArray}"
+					preferencesSalesCategoryDeleteArray="{PreferencesSalesCategoryDeleteArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 				
-			<prefcomp:FieryCanvasComponent id="fiery_canvas" preferencesIntegration="{preferencesIntegration}"
-				width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
-				
-		</mx:ViewStack>					
-	</mx:VBox>
-	<mx:Label x="214.5" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="65" textAlign="center"/>
-	<mx:Label x="266.5" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="69" textAlign="center"/>
+				<prefcomp:GlProfilesCanvasComponent id="glprofiles_canvas" preferencesAccounting="{preferencesAccounting}"
+					accountingPackagesArray="{AccountingPackagesArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:CreditCardsCanvasComponent id="creditcards_canvas" preferencesAccounting="{preferencesAccounting}"
+					preferencesCreditCardArray="{PreferencesCreditCardArray}" preferencesCreditCardDeleteArray="{PreferencesCreditCardDeleteArray}" 
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:OrderNumberformatCanvasComponent id="ordernumberformat_canvas" preferencesAccounting="{preferencesAccounting}"
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:JournalEntriesCanvasComponent id="journalentries_canvas" preferencesAccounting="{preferencesAccounting}"
+					journalDocumentPreferenceArray="{JournalDocumentPreferenceArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:FieryCanvasComponent id="fiery_canvas" preferencesIntegration="{preferencesIntegration}"
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					
+			</mx:ViewStack>
+			
+		</mx:VBox>					
+		
+	</mx:HBox>
+	
 </mx:Panel>

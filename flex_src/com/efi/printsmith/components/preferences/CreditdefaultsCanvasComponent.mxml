@@ -9,53 +9,87 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditDefaults')}"
-		textAlign="center" />
-		
-	<mx:HRule x="0" y="17" width="100%" />
+	<mx:VBox width="100%" height="100%">
 	
-	<mx:Label x="10" y="32"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}"
-		textAlign="right" width="136" />
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CreditDefaults')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<mx:Label x="10" y="62"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FinanceCharge')}"
-		textAlign="right" width="136" />
+		<mx:HBox width="100%" height="100%">
 		
-	<mx:Label x="10" y="92"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InactivePeriod')}"
-		textAlign="right" width="136" />
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+			
+				<mx:HBox width="100%">
+	
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}"
+						textAlign="right" width="136" />
+						
+					<components:CustomNumericTextInputComponent width="100"
+						dataHolder="{preferencesAccounting}" variableName="creditLimit" customText="{preferencesAccounting.creditLimit}"
+						precision="2" rounding="nearest"/>
+					
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+				
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.FinanceCharge')}"
+						textAlign="right" width="136" />
+						
+					<components:CustomNumericTextInputComponent width="100"
+						dataHolder="{preferencesAccounting}" variableName="financeChange" customText="{preferencesAccounting.financeChange}"
+						precision="2" rounding="nearest"/>
+				
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+					
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.InactivePeriod')}"
+						textAlign="right" width="136" />
+						
+					<components:CustomNumericTextInputComponent width="100"
+						dataHolder="{preferencesAccounting}" variableName="inactivePeriod" customText="{preferencesAccounting.inactivePeriod}"
+						precision="2" rounding="nearest"/>
+				
+				</mx:HBox>
+				
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Removedraftsfromdepo')}"
+					dataHolder="{preferencesAccounting}" variableName="removeDraftsFromDeposit" customText="{preferencesAccounting.removeDraftsFromDeposit}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+				
+				<mx:HBox width="100%">
+				
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}"
+						textAlign="right" width="240" />
+						
+					<components:CustomStringTextInputComponent width="145"
+						dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" customText="{preferencesAccounting.defaultSalesRep}"/>
+				
+				</mx:HBox>
+				
+				<mx:HBox width="100%">
+				
+					<mx:Label
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}"
+						textAlign="right" width="240" />
+						
+					<components:CustomStringTextInputComponent width="145"
+						dataHolder="{preferencesAccounting}" variableName="defaultShipping" customText="{preferencesAccounting.defaultShipping}" />
+				
+				</mx:HBox>
+					
+			</mx:VBox>
+			
+		</mx:HBox>
 		
-	<components:CustomCheckBoxComponent x="50" y="120" width="307"
-		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Removedraftsfromdepo')}"
-		dataHolder="{preferencesAccounting}" variableName="removeDraftsFromDeposit" customText="{preferencesAccounting.removeDraftsFromDeposit}"
-		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-		
-	<mx:Label x="10" y="152"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}"
-		textAlign="right" width="240" />
-		
-	<mx:Label x="10" y="182"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}"
-		textAlign="right" width="240" />
-		
-	<components:CustomNumericTextInputComponent x="151" y="30" width="100"
-		dataHolder="{preferencesAccounting}" variableName="creditLimit" customText="{preferencesAccounting.creditLimit}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="60" width="100"
-		dataHolder="{preferencesAccounting}" variableName="financeChange" customText="{preferencesAccounting.financeChange}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomNumericTextInputComponent x="151" y="90" width="100"
-		dataHolder="{preferencesAccounting}" variableName="inactivePeriod" customText="{preferencesAccounting.inactivePeriod}"
-		precision="2" rounding="nearest"/>
-		
-	<components:CustomStringTextInputComponent x="255" y="150" width="145"
-		dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" customText="{preferencesAccounting.defaultSalesRep}"/>
-		
-	<components:CustomStringTextInputComponent x="255" y="180" width="145"
-		dataHolder="{preferencesAccounting}" variableName="defaultShipping" customText="{preferencesAccounting.defaultShipping}" />
+	</mx:VBox>
 		
 </mx:Canvas>

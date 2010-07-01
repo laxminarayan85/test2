@@ -71,127 +71,141 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label x="0" y="0" width="100%" height="20"
-		text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}"
-		textAlign="center" />
+	<mx:VBox width="100%" height="100%">
+	
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
 		
-	<mx:HRule x="0" y="17" width="100%" />
-	
-	<mx:DataGrid id="PricingMethodGrid" dataProvider="{preferencesPricingMethodArray}"
-		itemEditEnd="{processPricingMethodGridData(event)}" editable="true" top="27" bottom="80" left="50" right="38" rowHeight="25">
-		<mx:columns>
-			<mx:DataGridColumn width="40"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Use')}"
-				dataField="used" editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-						<components:CustomCheckBoxComponent datagridControl="true" variableName="used"
-							customText="{data.used}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
+		<mx:HBox width="100%" height="100%">
+		
+			<mx:Spacer width="30"/>
 			
-			<mx:DataGridColumn width="100"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Title')}"
-				dataField="title"/>
+			<mx:VBox width="100%" height="100%">
+	
+				<mx:DataGrid id="PricingMethodGrid" dataProvider="{preferencesPricingMethodArray}"
+					itemEditEnd="{processPricingMethodGridData(event)}" editable="true" rowHeight="25" width="98%" height="90%">
+					<mx:columns>
+						<mx:DataGridColumn width="40"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Use')}"
+							dataField="used" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent datagridControl="true" variableName="used"
+										customText="{data.used}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="100"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Title')}"
+							dataField="title"/>
+							
+						<mx:DataGridColumn width="100"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Abbreviation')}"
+							dataField="abbreviation"/>
+							
+						<mx:DataGridColumn width="40"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.B')}"
+							textAlign="center" dataField="brokered"  editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent datagridControl="true" variableName="brokered"
+										customText="{data.brokered}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="40"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.T')}"
+							textAlign="center" dataField="taxable"  editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent datagridControl="true" variableName="taxable"
+										customText="{data.taxable}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="40"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.F')}"
+							textAlign="center" dataField="finished"  editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent datagridControl="true" variableName="finished"
+										customText="{data.finished}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="40"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.N')}"
+							textAlign="center" dataField="showNotes"  editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent datagridControl="true" variableName="showNotes"
+										customText="{data.showNotes}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="140"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.SalesCategory')}"
+							dataField="category" editable="true">
+							<mx:itemRenderer>
+			        			<mx:Component>
+			                		<mx:Text selectable="false" text="{data.category.name}"/>
+			        			</mx:Component>
+			    			</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomComboBoxComponent datagridControl="true" variableName="category"
+										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+										masterList="{outerDocument.salesCategoryArray}" 
+										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data)}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn width="140"
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Estimator')}"
+							dataField="estimator" editable="true">
+							<mx:itemRenderer>
+			        			<mx:Component>
+			                		<mx:Text selectable="false" text="{data.estimator.name}"/>
+			        			</mx:Component>
+			    			</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomComboBoxComponent datagridControl="true" variableName="estimator"
+										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+										masterList="{outerDocument.estimatorTypesArray}" 
+										customText="{outerDocument.getCustomTextData(outerDocument.estimatorTypesArray,data)}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
+						
+					</mx:columns>
+				</mx:DataGrid>
 				
-			<mx:DataGridColumn width="100"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Abbreviation')}"
-				dataField="abbreviation"/>
+				<mx:HBox width="100%">
 				
-			<mx:DataGridColumn width="40"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.B')}"
-				textAlign="center" dataField="brokered"  editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-						<components:CustomCheckBoxComponent datagridControl="true" variableName="brokered"
-							customText="{data.brokered}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
+					<mx:Button width="38" height="38" click="doNewPriceMethod();">
+						<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
+					</mx:Button>
+					
+					<mx:Button width="38" height="38" click="doRemovePriceMethod();">
+						<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+					</mx:Button>
+					
+				</mx:HBox>
+				
+			</mx:VBox>
 			
-			<mx:DataGridColumn width="40"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.T')}"
-				textAlign="center" dataField="taxable"  editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-						<components:CustomCheckBoxComponent datagridControl="true" variableName="taxable"
-							customText="{data.taxable}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
-			
-			<mx:DataGridColumn width="40"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.F')}"
-				textAlign="center" dataField="finished"  editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-						<components:CustomCheckBoxComponent datagridControl="true" variableName="finished"
-							customText="{data.finished}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
-			
-			<mx:DataGridColumn width="40"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.N')}"
-				textAlign="center" dataField="showNotes"  editable="false">
-				<mx:itemRenderer>
-					<mx:Component>
-						<components:CustomCheckBoxComponent datagridControl="true" variableName="showNotes"
-							customText="{data.showNotes}" selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					</mx:Component>
-				</mx:itemRenderer>
-			</mx:DataGridColumn>
-			
-			<mx:DataGridColumn width="140"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.SalesCategory')}"
-				dataField="category" editable="true">
-				<mx:itemRenderer>
-        			<mx:Component>
-                		<mx:Text selectable="false" text="{data.category.name}"/>
-        			</mx:Component>
-    			</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomComboBoxComponent datagridControl="true" variableName="category"
-							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-							masterList="{outerDocument.salesCategoryArray}" 
-							customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data)}"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
-			
-			<mx:DataGridColumn width="140"
-				headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Estimator')}"
-				dataField="estimator" editable="true">
-				<mx:itemRenderer>
-        			<mx:Component>
-                		<mx:Text selectable="false" text="{data.estimator.name}"/>
-        			</mx:Component>
-    			</mx:itemRenderer>
-				<mx:itemEditor>
-					<mx:Component>
-						<components:CustomComboBoxComponent datagridControl="true" variableName="estimator"
-							updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-							masterList="{outerDocument.estimatorTypesArray}" 
-							customText="{outerDocument.getCustomTextData(outerDocument.estimatorTypesArray,data)}"/>
-					</mx:Component>
-				</mx:itemEditor>
-			</mx:DataGridColumn>
-			
-		</mx:columns>
-	</mx:DataGrid>
-	
-	<mx:Button x="50" width="38" height="38" click="doNewPriceMethod();"
-		bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/new.png')
-		</mx:icon>
-	</mx:Button>
-	
-	<mx:Button x="100" width="38" height="38" click="doRemovePriceMethod();"
-		bottom="25">
-		<mx:icon>@Embed(source='../../../../../assets/cancel.png')
-		</mx:icon>
-	</mx:Button>
+		</mx:HBox>
+		
+	</mx:VBox>
 	
 </mx:Canvas>
