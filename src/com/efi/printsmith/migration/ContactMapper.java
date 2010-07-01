@@ -255,6 +255,8 @@ public class ContactMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
+		if (contact.getFirstName().equals("") && contact.getLastName().equals(""))
+			return null;
 		if (contact.getContactId() != null
 				&& contact.getContactId().length() > 0) {
 			PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
