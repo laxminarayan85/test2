@@ -25,7 +25,7 @@
 				if(event.dataField == "jobMethod" || event.dataField == "qtyBreak")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 		
 					// Close the cell editor.
 					quantityBreaksGrid.destroyItemEditor();

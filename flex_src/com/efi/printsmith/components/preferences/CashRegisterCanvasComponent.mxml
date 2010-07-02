@@ -27,11 +27,17 @@
 		            // Do not update cell.
 		            return;
 		        }    
+		        
+		        if(event.dataField == "rate"){
+		        	
+		        	cashRegisterGrid.destroyItemEditor();
+		        	
+		        }
 		
 				if(event.dataField == "category")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 		
 					// Close the cell editor.
 					cashRegisterGrid.destroyItemEditor();
@@ -39,7 +45,7 @@
 				if(event.dataField == "taxCodes")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 		
 					// Close the cell editor.
 					cashRegisterGrid.destroyItemEditor();
@@ -47,7 +53,7 @@
 				if(event.dataField == "taxTable")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 		
 					// Close the cell editor.
 					cashRegisterGrid.destroyItemEditor();
@@ -133,7 +139,7 @@
 								<mx:Component>
 									<components:CustomNumericTextInputComponent datagridControl="true"
 										variableName="rate" customText="{data.rate}"
-										precision="2" rounding="nearest" isItemEditor="true"/>
+										precision="2" rounding="nearest"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>

@@ -17,9 +17,33 @@
 			[Bindable] public var preferencesMarkupsMerchandiseArray:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var preferencesMarkupsMerchandiseDeleteArray:ArrayCollection = new ArrayCollection();
-		
-			private function formatNumberMarkup(item:Object, column:DataGridColumn):String {
-				return item.markup.toFixed(2);
+			
+			private function processOutSideService(event:DataGridEvent):void{
+				
+				if (event.reason == DataGridEventReason.CANCELLED){
+				    // Do not update cell.
+				    return;
+				}           
+				
+				if(event.dataField == "totalCost" || event.dataField == "markup")
+				{
+					// Close the cell editor.
+					outsideServicesGrid.destroyItemEditor();
+				}	
+			}
+			
+			private function processMerchandiseService(event:DataGridEvent):void{
+				
+				if (event.reason == DataGridEventReason.CANCELLED){
+				    // Do not update cell.
+				    return;
+				}           
+				
+				if(event.dataField == "totalCost" || event.dataField == "markup")
+				{
+					// Close the cell editor.
+					merchandiseGrid.destroyItemEditor();
+				}
 			}
 			
 			private function doNewMarkup(item:String):void{
@@ -75,7 +99,7 @@
 							text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}"/>
 							
 						<mx:DataGrid id="outsideServicesGrid" dataProvider="{preferencesMarkupsArray}"
-							editable="true" height="80%">
+							itemEditEnd="{processOutSideService(event)}" editable="true" height="80%">
 							
 							<mx:columns>
 							
@@ -91,14 +115,14 @@
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-												precision="2" rounding="nearest" isItemEditor="true"/>
+												precision="2" rounding="nearest" />
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
 									
 								<mx:DataGridColumn
 									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
-									dataField="markup" labelFunction="formatNumberMarkup">
+									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
 											<mx:Text selectable="false" text="{data.markup}" />
@@ -108,7 +132,7 @@
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="2" rounding="nearest" isItemEditor="true"/>
+												precision="2" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
@@ -139,7 +163,8 @@
 							text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}"/>
 					
 						<mx:DataGrid id="merchandiseGrid" height="80%"
-							dataProvider="{preferencesMarkupsMerchandiseArray}" editable="true">
+							dataProvider="{preferencesMarkupsMerchandiseArray}" editable="true"
+							itemEditEnd="{processMerchandiseService(event)}">
 							
 							<mx:columns>
 							
@@ -155,14 +180,14 @@
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-												precision="2" rounding="nearest" isItemEditor="true"/>
+												precision="2" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
 									
 								<mx:DataGridColumn
 									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}"
-									dataField="markup" labelFunction="formatNumberMarkup">
+									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
 											<mx:Text selectable="false" text="{data.markup}" />
@@ -172,7 +197,7 @@
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="2" rounding="nearest" isItemEditor="true"/>
+												precision="2" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>

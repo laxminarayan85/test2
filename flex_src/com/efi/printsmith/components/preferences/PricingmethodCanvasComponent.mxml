@@ -41,7 +41,7 @@
 				if(event.dataField == "category")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 				
 					// Get new category from editor.
 					//PricingMethodGrid.editedItemRenderer.data.category = SalesCategoryEditor(DataGrid(event.target).itemEditorInstance).pickCategory.selectedItem;
@@ -55,7 +55,7 @@
 				if(event.dataField == "estimator")
 				{
 					// Disable copying data back to the control.
-					event.preventDefault();
+					event.reason = DataGridEventReason.CANCELLED;
 				
 					// Get new category from editor.
 					//PricingMethodGrid.editedItemRenderer.data.estimator = EstimatorTypesEditor(DataGrid(event.target).itemEditorInstance).pickEstimator.selectedItem;
