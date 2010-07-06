@@ -591,7 +591,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
                              
 </mx:Script>	
 	<mx:Label x="10" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Name')}" width="113" textAlign="right"/>
-	<mx:Label x="10" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" textAlign="right" width="113"/>
+	<mx:Label x="10" y="156" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" textAlign="right" width="113"/>
 	<mx:DataGrid y="0" id="dataGrid" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="10">
 		<mx:columns>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
@@ -602,13 +602,13 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		</mx:columns>
 	</mx:DataGrid>
 
-	<mx:Label x="10" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OutputDescription')}" textAlign="right" width="113"/>
-	<mx:Label x="10" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.ProductionLocation')}" textAlign="right" width="113"/>
-	<mx:Label x="10" y="215" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.CostCenter')}" textAlign="right" width="113"/>
-	<mx:TextInput x="131" y="124" width="263" id="Name" text="{pressDefinition.name}" height="20"/>
-	<mx:TextInput x="131" y="168" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}" height="20"/>
-	<mx:ComboBox x="131" y="190" id="ProductionLocation" width="263" dataProvider="{productionLocationArray}" height="20" labelField="name"/>
-	<mx:ComboBox x="131" y="212" id="CostCenter" width="263" dataProvider="{costCenterArray}" height="20" labelField="name"/>
+	<mx:Label x="10" y="183" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.OutputDescription')}" textAlign="right" width="113"/>
+	<mx:Label x="10" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.ProductionLocation')}" textAlign="right" width="113"/>
+	<mx:Label x="10" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.CostCenter')}" textAlign="right" width="113"/>
+	<mx:TextInput x="131" y="124" width="263" id="Name" text="{pressDefinition.name}" height="21"/>
+	<mx:TextInput x="131" y="181" width="263" id="OutPutDescription" text="{pressDefinition.outputDescrip}"/>
+	<mx:ComboBox x="131" y="209" id="ProductionLocation" width="263" dataProvider="{productionLocationArray}" height="20" labelField="name"/>
+	<mx:ComboBox x="131" y="233" id="CostCenter" width="263" dataProvider="{costCenterArray}" height="20" labelField="name"/>
 	<mx:Label x="402" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineID')}" width="67" textAlign="right"/>
 	<mx:TextInput x="477" y="124" width="146" id="MachineId" text="{pressDefinition.machineID}" editable="true"/>
 	<mx:CheckBox x="402" y="146" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.CostingPress')}" id="CostingPress" selected="{pressDefinition.costingPress}"/>
@@ -702,5 +702,5 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SheetFed0')}" groupName="pressTypeRadioGroup" id="sheetFedRadio" selected="{pressDefinition.sheetFed}" change="doPressType()" />
 		<mx:RadioButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.RollFed0')}" groupName="pressTypeRadioGroup" id="rollFedRadio" selected="{pressDefinition.rollFed}" change="doPressType()"/>
 	</mx:Panel>
-	<mx:ComboBox x="131" y="146" id="productionPress" width="263" labelField="name" dataProvider="{productionPressArray}" height="20" change="updateMachineId()"/>
+	<mx:ComboBox x="131" y="153" id="productionPress" width="263" labelField="name" dataProvider="{productionPressArray}" height="20" change="updateMachineId()"/>
 </mx:Panel>
