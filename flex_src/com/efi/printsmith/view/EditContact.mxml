@@ -813,7 +813,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
 				<mx:CheckBox x="123" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PersonalAccount')}" id="personalAccount" selected="{contact.marketing.personalAcct}" textAlign="right"/>
 				<mx:CheckBox x="123" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Donotmail')}" id="noMail" selected="{contact.marketing.noMail}"/>
-				<mx:Panel x="377" y="10" width="292" height="190" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingDates')}" dropShadowEnabled="false">
+				<mx:Panel x="364" y="10" width="305" height="190" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingDates')}" dropShadowEnabled="false">
 					<mx:Label x="12" y="10" text="Follow Up:" textAlign="right"/>
 					<mx:Label x="10" y="38" text="Birthdate:" textAlign="right"/>
 					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>

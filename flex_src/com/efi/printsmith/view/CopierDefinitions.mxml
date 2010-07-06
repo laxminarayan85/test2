@@ -329,7 +329,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
   
 	
        		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy+ click;
-       		 machineCostperCopy.text = tempmachineCost.toPrecision(7)
+       		 machineCostperCopy.text = tempmachineCost.toPrecision(4)
   			 }
 		}
 
@@ -1011,7 +1011,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="504" y="322" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyMaintenance')}" textAlign="right" width="157"/>
 		<mx:TextInput x="671" y="320" id="monthlyMaintenance" text="{copierDefinition.monthlyMaintenance}" width="94" height="20" focusOut="doMachineCost();"/>
 		<mx:Label x="504" y="344" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostPerCopy')}" id="label4" textAlign="right" width="157"/>
-		<mx:Text x="671" y="342" id="machineCostperCopy" text = "{copierDefinition.machineCostPerCopy}" width="94" height="20"/>
+		
+		
+		<mx:Text x="671" y="342" id="machineCostperCopy" text = "{Snowmass.getCurrencyFormatter(false,4).format(copierDefinition.machineCostPerCopy)}" width="94" height="20"/>
 		<mx:Label x="264.5" y="303" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.OpenDaysYear')}" width="141" textAlign="right"/>
 		<mx:TextInput x="413.5" y="301" width="71" id="openDays" text= "{copierDefinition.daysOpen}" height="20" focusOut="doMachineCost();"/>
 		<mx:Label x="264.5" y="325" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MonthlyPayment')}" width="141" textAlign="right"/>

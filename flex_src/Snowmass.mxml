@@ -746,7 +746,9 @@
         
         public static function getCurrencyFormatter(showSymbol:Boolean, precision:Number):CurrencyFormatter {
         	var formatter:CurrencyFormatter = new CurrencyFormatter();
-        	formatter.currencySymbol = "$";
+        	if (showSymbol){
+        		formatter.currencySymbol = "$";
+        	}
         	formatter.precision = precision;
         	return formatter;
         }
