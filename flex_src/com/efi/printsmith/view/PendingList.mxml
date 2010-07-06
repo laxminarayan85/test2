@@ -402,7 +402,7 @@
 	}	
 
 	public function handleUIPickupEvent(evt:ResultEvent):void {
-		var cashRegisterPopup:CashRegister = CashRegister(PopUpManager.createPopUp(this, CashRegister, false));
+		var cashRegisterPopup:CashRegisterEdit = CashRegisterEdit(PopUpManager.createPopUp(this, CashRegisterEdit, false));
 		cashRegisterPopup.setStyle("borderAlpha", 0.9);
 	}
 

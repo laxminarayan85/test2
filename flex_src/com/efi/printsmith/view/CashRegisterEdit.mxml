@@ -3,14 +3,13 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
 	width="570" 
-	height="638" 
+	height="686" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	name="CashRegisterEdit" 
 	creationComplete="init()" 
 	xmlns:components="com.efi.printsmith.components.*" 
-	xmlns:vo="com.efi.printsmith.vo.*" 
-	showCloseButton="true">
+	xmlns:vo="com.efi.printsmith.vo.*">
 
 	<mx:CurrencyFormatter precision="2" id="currencyFormatter"/>
 	<mx:NumberFormatter precision="2" id="numberFormatter"/>
@@ -153,13 +152,14 @@
  	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
 
  	<mx:RemoteObject id="dataServiceTaxCodes" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodesResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceTaxTable" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTableResult(event)"/>
+		<mx:method name="getCurrentTaxTables" fault="handleFault(event)" result="handleLoadTaxTableResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
@@ -178,6 +178,8 @@
 	import com.efi.printsmith.data.TaxCodes;
 	import com.efi.printsmith.data.CashRegister;
 	import com.efi.printsmith.data.PreferencesSystem;
+	import com.efi.printsmith.events.AccountPickerSelectEvent;
+	import com.efi.printsmith.data.Account;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -230,7 +232,7 @@
 	
 //Data view variables
 	[Bindable]
-	private var cashRegister:com.efi.printsmith.data.CashRegister;
+	private var cashRegister:CashRegister;
 
 //Tree view XML table
 	[Bindable]
@@ -269,7 +271,8 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
-
+		cashRegister = new CashRegister();
+		cashRegister.customerAccount = new Account();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
 		//openTree();
@@ -278,7 +281,7 @@
 	
 	private function setup():void{
 		dataServiceTaxCodes.getAll("TaxCodes")	
-		dataServiceTaxTable.getAll("TaxTable")
+		dataServiceTaxTable.getCurrentTaxTables("TaxTable")
 		fillDefaultDocumentsArray(FormatArray);
 		this.addEventListener(mx.events.StateChangeEvent.CURRENT_STATE_CHANGE, paymentStateHandler);
 	}
@@ -417,6 +420,29 @@
 					
 		}
 	}	
+	private function doAccount():void{
+		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    	   	    
+	}
+	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		
+		dataService.getAccount(evt.account.id);
+			
+	}
+	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+		
+		
+	}
+	private function handleGetResult(ev:ResultEvent):void {
+	
+		cashRegister.customerAccount = ev.result as Account;
+		
+	     
+	}
 	
 	private function doSave():void{
 	}
@@ -489,7 +515,7 @@
 	
 
 	<mx:Label x="20" y="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.DEPARTMENT')}" textAlign="right"/>	
-	<mx:Tree x="0" y="50" width="130"  
+	<mx:Tree x="0" y="80" width="130"  
 		id="tvItems" 
 		dataProvider="{treeData.node}"
 		labelField="@label"
@@ -505,15 +531,15 @@
 		<mx:icon>@Embed(source='../../../../assets/InvoiceWONotes.png')</mx:icon>
 	</mx:Button>
 
-	<mx:Canvas x="130" y="50" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
-		<mx:Button x="19" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}"/>
+	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
+		<mx:Button x="19" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
 		<mx:TextInput x="158" y="10" text="{cashRegister.customerAccount.title}" width="252"/>
 		<mx:Canvas x="0" y="40" width="200" height="95" id="tax_canvas" borderStyle="inset">
 			<mx:Label x="5" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable')}"/>
 			<mx:Label x="5" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}"/>
 
-		    <mx:ComboBox x="77" y="8" id="pickTaxCodes" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
-		    <mx:ComboBox x="77" y="33" id="pickTaxTable" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
+		    <mx:ComboBox x="77" y="8" id="pickTaxCodes" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
+		    <mx:ComboBox x="77" y="33" id="pickTaxTable" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
 		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax"/>
 		</mx:Canvas>
 		<mx:Canvas x="198" y="40" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
@@ -551,4 +577,7 @@
 		</mx:Canvas>
 		<mx:CheckBox x="132" y="516" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}"/>
 	</mx:Canvas>
+	<mx:Label x="150" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}"/>
+	<mx:Label x="199" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
+	<mx:Label x="242" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'barcodeCmd.Invoice')}"/>
 </mx:TitleWindow>

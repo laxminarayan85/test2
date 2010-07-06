@@ -3,7 +3,7 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
 	import com.efi.printsmith.events.commandEvents.EditForms.EditCashRegisterEvent;
-	import com.efi.printsmith.view.CashRegister;
+	import com.efi.printsmith.view.CashRegisterEdit;
 
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
@@ -19,7 +19,7 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 		
 		public function handleUIEvent(event:EditCashRegisterEvent):void {
 			if (checkSecurity(EditCashRegisterEvent.COMMANDID)) {
-				var child:com.efi.printsmith.view.CashRegister = new com.efi.printsmith.view.CashRegister();
+				var child:com.efi.printsmith.view.CashRegisterEdit = new com.efi.printsmith.view.CashRegisterEdit();
 				var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
 				responder.result(resEvent);
 			} else {
