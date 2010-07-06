@@ -465,57 +465,75 @@
 	
 	private function fillDefaultDocumentsArray(fillArray:ArrayCollection):void{
 		var setting:Object = new Object();
+		setting.id=1;
 		setting.name="No default specified";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=2;
 		setting.name="Alternate Currency";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=3;
 		setting.name="Credit Memo";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=4;
 		setting.name="Estimate - Long Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=5;
 		setting.name="Estimate - Short Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=6;
 		setting.name="Fax Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=7;
 		setting.name="Invoice - Long Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=8;
 		setting.name="Invoice - Short Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=9;
 		setting.name="Quote Form";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=10;
 		setting.name="Quote Letter";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=11;
 		setting.name="Standard";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=12;
 		setting.name="Thank You Letter";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=13;
 		setting.name="Unit Price / each";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=14;
 		setting.name="Unit Price / thousand";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=15;
 		setting.name="[en]!TaxName !Remarks";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=16;
 		setting.name="[en]!TaxName +Remarks";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=17;
 		setting.name="[en]+TaxName !Remarks";
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.id=18;
 		setting.name="[en]+TaxName +Remarks";
 		fillArray.addItem(setting);
 	}
@@ -700,31 +718,45 @@
 		
 		//remove and or delete items from table
 		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
-			dataServiceCashRegister.deleteItem(deleteitem1, deleteitem1.id);
+			if(!isNaN(deleteitem1.id) && deleteitem1.id!=0){
+				dataServiceCashRegister.deleteItem("PreferencesCashRegister", deleteitem1.id);
+			}
 		}
 		PreferencesCashRegisterDeleteArray.removeAll();
 		for each(var deleteitem2:OutsideService in PreferencesMarkupsDeleteArray) {
-			dataServiceMarkups.deleteItem(deleteitem2, deleteitem2.id);
+			if(!isNaN(deleteitem2.id) && deleteitem2.id!=0){
+				dataServiceMarkups.deleteItem("OutsideService", deleteitem2.id);
+			}
 		}
-		PreferencesMarkupsDeleteArray.removeAll()
+		PreferencesMarkupsDeleteArray.removeAll();
 		for each(var deleteitem3:Merchandise in PreferencesMarkupsMerchandiseDeleteArray) {
-			dataServiceMarkupsMerchandise.deleteItem(deleteitem3, deleteitem3.id);
+			if(!isNaN(deleteitem3.id) && deleteitem3.id!=0){
+				dataServiceMarkupsMerchandise.deleteItem("Merchandise", deleteitem3.id);
+			}
 		}
-		PreferencesMarkupsMerchandiseDeleteArray.removeAll()
+		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
 		for each(var deleteitem4:PreferencesPricingMethod in PreferencesPricingMethodDeleteArray) {
-			dataServicePricingMethod.deleteItem(deleteitem4, deleteitem4.id);
+			if(!isNaN(deleteitem4.id) && deleteitem4.id!=0){
+				dataServicePricingMethod.deleteItem("PreferencesPricingMethod", deleteitem4.id);
+			}
 		}
-		PreferencesPricingMethodDeleteArray.removeAll()
+		PreferencesPricingMethodDeleteArray.removeAll();
 		for each(var deleteitem5:PreferencesSalesCategory in PreferencesSalesCategoryDeleteArray) {
-			dataServiceSalesCategory.deleteItem(deleteitem5, deleteitem5.id);
+			if(!isNaN(deleteitem5.id) && deleteitem5.id!=0){
+				dataServiceSalesCategory.deleteItem("PreferencesSalesCategory", deleteitem5.id);
+			}
 		}
-		PreferencesSalesCategoryDeleteArray.removeAll()
+		PreferencesSalesCategoryDeleteArray.removeAll();
 		for each(var deleteitem6:PreferencesCreditCard in PreferencesCreditCardDeleteArray) {
-			dataServiceCreditCard.deleteItem(deleteitem6, deleteitem6.id);
+			if(!isNaN(deleteitem6.id) && deleteitem6.id!=0){
+				dataServiceCreditCard.deleteItem("PreferencesCreditCard", deleteitem6.id);
+			}
 		}
-		PreferencesCreditCardDeleteArray.removeAll()
+		PreferencesCreditCardDeleteArray.removeAll();
 		for each(var deleteitem7:PreferencesQuantityBreaks in PreferencesQuantityBreaksDeleteArray) {
-			dataServiceCreditCard.deleteItem(deleteitem7, deleteitem7.id);
+			if(!isNaN(deleteitem7.id) && deleteitem7.id!=0){
+				dataServiceCreditCard.deleteItem("PreferencesQuantityBreaks", deleteitem7.id);
+			}
 		}
 		PreferencesQuantityBreaksDeleteArray.removeAll();
 
@@ -1078,62 +1110,62 @@
 
 // Data Save Handlers
 	private function handleSaveIntegrationResult(ev:ResultEvent):void {
-		//dataServiceSystem.getAll("PreferencesIntegration");
+		dataServiceIntegration.getAll("PreferencesIntegration");
 	}
 	private function handleSaveSystemResult(ev:ResultEvent):void {
-    	//dataServiceSystem.getAll("PreferencesSystem");
+    	dataServiceSystem.getAll("PreferencesSystem");
 	}
 	private function handleSavePOSResult(ev:ResultEvent):void {
-    	//dataServicePOS.getAll("PreferencesPOS");
+    	dataServicePOS.getAll("PreferencesPOS");
 	}
 	private function handleSaveEstimatorResult(ev:ResultEvent):void {
     	dataServiceEstimator.getAll("preferencesEstimating");
 	}
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
-    	//dataServiceAccounting.getAll("PreferencesAccounting");
+    	dataServiceAccounting.getAll("PreferencesAccounting");
 	}
 	private function handleSaveCountryResult(ev:ResultEvent):void {
     	/* dataServiceCountry.getAll("Country");
 		country = ev.result as Country; */
 	}
 	private function handleSaveCashRegisterResult(ev:ResultEvent):void {
-    	//dataServiceCashRegister.getAll("PreferencesCashRegister");
+    	dataServiceCashRegister.getAll("PreferencesCashRegister");
 	}
 	private function handleSaveCreditCardResult(ev:ResultEvent):void {
-    	//dataServiceCreditCard.getAll("PreferencesCreditCard");
+    	dataServiceCreditCard.getAll("PreferencesCreditCard");
 	}
 	private function handleSaveMarkupsResult(ev:ResultEvent):void {
-    	//dataServiceMarkups.getAll("OutsideServices");
+    	dataServiceMarkups.getAll("OutsideServices");
 	}
 	private function handleSaveMarkupsMerchandiseResult(ev:ResultEvent):void {
-    	//dataServiceMarkupsMerchandise.getAll("Merchandise");
+    	dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	private function handleSavePendingListResult(ev:ResultEvent):void {
-    	//dataServicePendingList.getAll("PreferencesPendingList");
+    	dataServicePendingList.getAll("PreferencesPendingList");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
-    	//dataServicePricingMethod.getAll("PreferencesPricingMethod");
+    	dataServicePricingMethod.getAll("PreferencesPricingMethod");
 	}
 	private function handleSaveQuantityBreaksResult(ev:ResultEvent):void {
-    	//dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+    	dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 	}
 	private function handleSaveSalesCategoryResult(ev:ResultEvent):void {
-    	//dataServiceSalesCategory.getAll("SalesCategory");
+    	dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
-    	//dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+    	dataServiceStockDefinition.getAll("PreferencesStockDefinition");
 	}
 	private function handleSaveStocksResult(ev:ResultEvent):void {
-    	//dataServiceStocks.getAll("PreferencesStocks");
+    	dataServiceStocks.getAll("PreferencesStocks");
 	}
 	private function handleSaveColumnNamesResult(ev:ResultEvent):void {
-    	//dataServiceColumnNames.getAll("ColumnNames");
+    	dataServiceColumnNames.getAll("ColumnNames");
 	}
 	private function handleSaveSizeTableResult(ev:ResultEvent):void {
-    	//dataServiceSizeTable.getAll("SizeTable");
+    	dataServiceSizeTable.getAll("SizeTable");
 	}
 	private function handleSaveCategoryResult(ev:ResultEvent):void {
-    	//dataServiceCategory.getAll("SalesCategory");
+    	dataServiceCategory.getAll("SalesCategory");
 	}
 
 	private function handleDeleteCashRegisterResult(ev:ResultEvent):void {

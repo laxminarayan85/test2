@@ -47,7 +47,7 @@
 						textAlign="right" width="150" />
 						
 					<components:CustomComboBoxComponent width="250"
-						masterList="{defaultInvoiceArray}" labelFieldId="name" labelFieldName="name"
+						masterList="{defaultInvoiceArray}" labelFieldId="id" labelFieldName="name"
 						dataHolder="{preferencesEstimating}" variableName="defaultInvoice" customText="{getCustomTextData(defaultInvoiceArray,preferencesEstimating)}" 
 						updateFirstElement="true"/>
 					
@@ -60,7 +60,7 @@
 						textAlign="right" width="150" />
 						
 					<components:CustomComboBoxComponent width="250"
-						masterList="{defaultEstimateArray}" labelFieldId="name" labelFieldName="name"
+						masterList="{defaultEstimateArray}" labelFieldId="id" labelFieldName="name"
 						dataHolder="{preferencesEstimating}" variableName="defaultEstimate" customText="{getCustomTextData(defaultEstimateArray,preferencesEstimating)}" 
 						updateFirstElement="true"/>
 					
