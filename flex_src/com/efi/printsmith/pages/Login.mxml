@@ -2,16 +2,19 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:event="com.efi.event.*" layout="absolute" width="522" height="427"  creationComplete="init()" borderColor="#FFFFFF" themeColor="#FFFFFF" alpha="1.0">
 	<mx:Canvas x="0" y="0" width="522" height="426" backgroundAlpha="1.0" cornerRadius="0" backgroundColor="#FFFFFF" defaultButton="{login_btn}">
 	<mx:Image x="0" y="0" width="521" height="400" id="Splash" source="assets/splash.png" scaleContent="false" autoLoad="true"/>
-	<mx:TextInput x="352" y="332" id="username"/>
+	<mx:ComboBox x="352" y="332" id="username" dataProvider="{users}" width="160" labelField="name" editable="true"/>
 	<mx:TextInput x="352" y="362" id="password" displayAsPassword="true" />
 	<mx:Label x="255" y="334" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" width="89" textAlign="right"/>
 	<mx:Label x="255" y="364" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'signonCmd.Password')}" width="89" textAlign="right"/>
 	<mx:Button id="login_btn" click="doLogin()" x="437" y="392" label="Login" width="75"/>
 	<mx:Label x="99" y="374" width="124" id="version"/>
 	</mx:Canvas>
-
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getUsers" fault="handleFaultService(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.IResponder;
 			import mx.rpc.Responder;
@@ -36,9 +39,12 @@
 			import com.efi.printsmith.security.PSSecurity;
 	[Bindable]	
 		private var application:Snowmass;
-			
+	[Bindable]	
+		private var users:ArrayCollection;
+				
 	private function init():void	{
 				application= Snowmass.getInstance();
+				dataService.getUsers("Users");
 			} 
 			
 	private function handlePasswordCancel(event:PasswordEvent):void{
@@ -56,7 +62,20 @@
 		
 		//doLogin();
 		
-	}		
+	}
+	private function handleLoadResult(ev:ResultEvent):void {
+		users = ev.result as ArrayCollection;
+	}
+	private function handleFaultService(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+			
 	private function handleLoginResult(event:ResultEvent):void	{
 	var res:Users = event.result as Users;
 		if (res) {

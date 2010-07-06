@@ -573,7 +573,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 	}	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("CopierDefinition");
+		dataService.getCopierPicker("CopierDefinition");
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  

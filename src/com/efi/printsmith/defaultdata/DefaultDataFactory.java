@@ -1280,6 +1280,7 @@ public class DefaultDataFactory {
 		Users users = new Users();
 		users.setName("admin");
 		users.setPassword("admin");
+		users.setShowUserNameLog(true);
 		users.setAccessGroup(adminaccessgroup);
 		users.setDisableUser(false);
 		try {

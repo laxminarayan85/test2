@@ -819,11 +819,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Label x="21" y="66" text="User 3:" textAlign="right"/>
 					<mx:Label x="21" y="94" text="User 4:" textAlign="right"/>
 					<mx:Label x="21" y="122" text="User 5:" textAlign="right"/>
-					<mx:DateField x="119" y="10" id="followUp" text="{contact.marketing.followup}" showToday="false" width="143"/>
-					<mx:DateField x="119" y="36" id="birthDate" text= "{contact.marketing.birthDate}" showToday="false" width="143"/>
-					<mx:DateField x="119" y="64" id="userDate3" text="{contact.marketing.user3}" showToday="false" width="143"/>
-					<mx:DateField x="119" y="92" id="userDate4" text="{contact.marketing.user4}" showToday="false" width="143"/>
-					<mx:DateField x="119" y="118" id="userDate5" text= "{contact.marketing.user5}" showToday="false" width="143"/>
+					<mx:DateField x="119" y="10" id="followUp" text="{contact.marketing.followup}" showToday="false" width="143" enabled="true" editable="true"/>
+					<mx:DateField x="119" y="36" id="birthDate" text= "{contact.marketing.birthDate}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="64" id="userDate3" text="{contact.marketing.user3}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="92" id="userDate4" text="{contact.marketing.user4}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="118" id="userDate5" text= "{contact.marketing.user5}" showToday="false" width="143" editable="true"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingTags')}" dropShadowEnabled="false">
 					<mx:Label x="28" y="10" text="Lead Source:" textAlign="right"/>
@@ -870,12 +870,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="160" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}" textAlign="right" width="75"/>
 				<mx:TextInput x="243" y="30" id="cardholder" text="{contact.creditCard.cardHolderName}"/>
 				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardNumber}"/>
-				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160"/>
+				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160" editable="true"/>
 				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address.street1}"/>
 				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
 				<fc:AutoComplete id="cardzip" x="243" y="183" width="80"  dataProvider="{zips}"  labelField="name" focusOut="doZipCredit()" lookAhead="true"/>
 					
-				<mx:ComboBox x="243" y="82" id="cardtype" dataProvider="{creditCardPreferencesArray}" labelFunction="getCreditName"></mx:ComboBox>
+				<mx:ComboBox x="243" y="82" id="cardtype" dataProvider="{creditCardPreferencesArray}" labelFunction="getCreditName" width="112"></mx:ComboBox>
 			</mx:Canvas>
 			<mx:Canvas id="canvasWeb" label="Web" width="100%" height="100%">
 			</mx:Canvas>

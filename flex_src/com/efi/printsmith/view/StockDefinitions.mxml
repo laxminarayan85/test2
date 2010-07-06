@@ -1638,7 +1638,7 @@
 				<mx:TextInput x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
 				<mx:Text x="430" y="176" width="291" id="account_name" text="{stockDefinitions.account.title}" />
-				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}" />
+				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"  editable="true"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MostRecentInventoryC')}" dropShadowEnabled="false">
 				<mx:Button x="10" y="204" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kInventoryHistoryCmd.ShowEntireHistory')}" click="doShowHistory();"/>
