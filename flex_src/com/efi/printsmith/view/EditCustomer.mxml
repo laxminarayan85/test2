@@ -37,7 +37,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 </mx:RemoteObject>
 
 <mx:RemoteObject id="taxTableDataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
+	<mx:method name="getCurrentTaxTables" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxTableResult(event)"/>
 </mx:RemoteObject>
 
@@ -461,8 +461,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			tax_code_combo.selectedIndex = findItem(account.taxCode.name, taxCodes);
 		if (account.salesRep != null)
 			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
-		if (account.taxCode!= null)
+		if (account.taxTable!= null)
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
+		
 
 		ship_to_address_editor.setAddress(account.shipToAddress);
         ship_to_contact_editor.setContact(account.contact);
@@ -497,6 +498,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
+				return array.getItemIndex(element);
 			}
 		}
 		return -1;
@@ -522,8 +524,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var taxtable:TaxTable;
 		var result:Boolean;
 		
-		if (tax_table_combo.typedText != null && tax_table_combo.typedText != "" && tax_table_combo.selectedIndex == -1) {
-			var item:int = findItem(sales_rep_combo.typedText, taxTables);
+		if (tax_table_combo.text != null && tax_table_combo.text != "" && tax_table_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.text, taxTables);
 			if (item == -1) {
 				taxtable = new TaxTable();
 				taxtable.name = tax_table_combo.text;
@@ -539,8 +541,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var taxcode:TaxCodes;
 		var result:Boolean;
 		
-		if (tax_code_combo.typedText != null && tax_code_combo.typedText != "" && tax_code_combo.selectedIndex == -1) {
-			var item:int = findItem(tax_code_combo.typedText, taxCodes);
+		if (tax_code_combo.text != null && tax_code_combo.text != "" && tax_code_combo.selectedIndex == -1) {
+			var item:int = findItem(tax_code_combo.text, taxCodes);
 			if (item == -1) {
 				taxcode = new TaxCodes();
 				taxcode.name = tax_code_combo.text;
@@ -762,7 +764,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
  		salesRepDataService.getAll("SalesRep");
 	    businessTypeDataService.getAll("BusinessType");
 	    shippingMethodDataService.getAll("ShippingMethod");
-	    taxTableDataService.getAll("TaxTable");
+	    taxTableDataService.getCurrentTaxTables("TaxTable");
 	    taxCodeDataService.getAll("TaxCodes");
  		
  	}
@@ -971,15 +973,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Panel x="353" y="38" width="303" height="186" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxSetup')}" dropShadowEnabled="false">
 					<mx:Label x="0" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" textAlign="right" width="93"/>
 					
-					<fc:AutoComplete id="tax_table_combo" x="101" y="10" width="160" dataProvider="{taxTables}"  labelField="name" focusOut="doTaxTable()" lookAhead="true" />
-					<fc:AutoComplete id="tax_code_combo" x="101" y="38" width="160" dataProvider="{taxCodes}"  labelField="name" focusOut="doTaxCode()" lookAhead="true" />
+					<mx:ComboBox id="tax_table_combo" x="101" y="10" width="160" dataProvider="{taxTables}"  labelField="name" focusOut="doTaxTable()"  />
+					<mx:ComboBox id="tax_code_combo" x="101" y="38" width="160" dataProvider="{taxCodes}"  labelField="name" focusOut="doTaxCode()" />
 			
 					<mx:Label x="0" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}" textAlign="right" width="93"/>
 					<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Resale')}" textAlign="right" width="83"/>
 					<mx:TextInput x="101" y="64" width="160" id="resale_number_edit"  text="{account.resaleNumber}"/>
 					<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CertExpires')}" textAlign="right" width="83"/>
 					<mx:CheckBox x="101" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.TaxExempt')}" width="160" id="tax_exempt_check" selected="{account.taxExempt}"/>
-					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" formatString="MM/DD/YYYY" text="{account.resaleCertExpirationDate}"/>
+					<mx:DateField x="101" y="88" width="151" id="certificate_expires_edit" formatString="MM/DD/YYYY" text="{account.resaleCertExpirationDate}" editable="true"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="318" width="397" height="103" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.PresetCharges')}" dropShadowEnabled="false">
 					<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddtoInvoicesandEsti')}" textAlign="right" width="198"/>
