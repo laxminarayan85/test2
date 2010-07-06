@@ -95,7 +95,50 @@ width="786" height="531"  creationComplete="init()"
 		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Integration');
 		fillArray.addItem(array);
 	}
+	private function printWorkLog():void {
+		var myPrintJob:FlexPrintJob = new FlexPrintJob();
 	
+		if (myPrintJob.start()) {
+			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	
+			//Set the print view properties.
+			myPrintDataGrid.width = myPrintJob.pageWidth;
+			myPrintDataGrid.height = myPrintJob.pageHeight;
+	
+			// Set the data provider of the FormPrintView component's data grid
+			// to be the data provider of the displayed data grid.
+			myPrintDataGrid.dataProvider = invoice_list.dataProvider;
+			myPrintDataGrid.columns = invoice_list.columns;
+			myPrintDataGrid.visible = false;
+			myPrintDataGrid.includeInLayout = false;
+			
+			Application.application.addChild(myPrintDataGrid);
+	
+			if(!myPrintDataGrid.validNextPage) {
+				myPrintJob.addObject(myPrintDataGrid);
+			} else {
+				myPrintJob.addObject(myPrintDataGrid);
+	
+				while(true) {
+					// Move the next page of data to the top of the print grid.
+					myPrintDataGrid.nextPage();
+	
+					if(!myPrintDataGrid.validNextPage) {
+						// This is the last page; queue it and exit the print loop.
+						myPrintJob.addObject(myPrintDataGrid);
+	
+						break;
+					} else {
+						myPrintJob.addObject(myPrintDataGrid);
+					}
+				} 
+	
+			}
+	
+			Application.application.removeChild(myPrintDataGrid);
+			myPrintJob.send();
+	 	}
+ 	}
 	private function fillSortArray(fillArray:ArrayCollection):void {
 		var array:Object=new Object();
 		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Customer');
@@ -501,6 +544,8 @@ width="786" height="531"  creationComplete="init()"
 			</mx:DataGrid>
 		</mx:Canvas>
 	</mx:ViewStack>
+	<mx:Button x="627" y="21"  width="38" height="38" icon="@Embed(source='../../../../assets/print.png')" click="printWorkLog();"/>
+	<mx:Label x="627" y="59" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}"/>
 
 </mx:Canvas>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="890" height="390" creationComplete="init()" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="890" height="430" creationComplete="init()" 
  close="PopUpManager.removePopUp(this);" showCloseButton="true"
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.StockOrder')}" 
@@ -65,7 +65,50 @@
 		
 		
 	}
+	private function doStockLog():void {
+		var myPrintJob:FlexPrintJob = new FlexPrintJob();
 	
+		if (myPrintJob.start()) {
+			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	
+			//Set the print view properties.
+			myPrintDataGrid.width = myPrintJob.pageWidth;
+			myPrintDataGrid.height = myPrintJob.pageHeight;
+	
+			// Set the data provider of the FormPrintView component's data grid
+			// to be the data provider of the displayed data grid.
+			myPrintDataGrid.dataProvider = dataGrid.dataProvider;
+			myPrintDataGrid.columns = dataGrid.columns;
+			myPrintDataGrid.visible = false;
+			myPrintDataGrid.includeInLayout = false;
+			
+			Application.application.addChild(myPrintDataGrid);
+	
+			if(!myPrintDataGrid.validNextPage) {
+				myPrintJob.addObject(myPrintDataGrid);
+			} else {
+				myPrintJob.addObject(myPrintDataGrid);
+	
+				while(true) {
+					// Move the next page of data to the top of the print grid.
+					myPrintDataGrid.nextPage();
+	
+					if(!myPrintDataGrid.validNextPage) {
+						// This is the last page; queue it and exit the print loop.
+						myPrintJob.addObject(myPrintDataGrid);
+	
+						break;
+					} else {
+						myPrintJob.addObject(myPrintDataGrid);
+					}
+				} 
+	
+			}
+	
+			Application.application.removeChild(myPrintDataGrid);
+			myPrintJob.send();
+	 	}
+ 	}
 	private function doDelete():void{
 		dataService.deleteItem("StockOrder", stockOrder.id);
 		stockSelected= false;
@@ -145,7 +188,7 @@
 	<mx:Label x="278" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="50"/>
 	<mx:Label x="348" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
 	<mx:Label x="462" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
-	<mx:DataGrid x="23" y="109" height="231" width="837" dataProvider="{stockOrders}" itemClick="doStockGridClick()" id="dataGrid">
+	<mx:DataGrid x="16.5" y="140" height="231" width="837" dataProvider="{stockOrders}" itemClick="doStockGridClick()" id="dataGrid">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Date')}" dataField="enterDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Invoice')}" dataField="invoiceNumber"/>
@@ -165,5 +208,7 @@
 			
 		</mx:columns>
 	</mx:DataGrid>
+	<mx:Button x="37" y="55"  height="38" width="38" icon="@Embed(source='../../../../assets/print.png')" click="doStockLog();"/>
+	<mx:Label x="37" y="101" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}"/>
 	
 </mx:TitleWindow>
