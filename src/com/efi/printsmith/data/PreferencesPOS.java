@@ -1076,7 +1076,7 @@ public class PreferencesPOS extends ModelBase {
     if (PARITY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (DATASIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};
+      return new Class<?>[] {String.class};		
     if (PASTDUECOLOR.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PICKUPCOLOR.equals(propertyName)) 

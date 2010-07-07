@@ -179,7 +179,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(optional=true)
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	private Address address;
 	
 	/**

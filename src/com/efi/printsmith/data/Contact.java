@@ -140,26 +140,33 @@ public class Contact extends Party {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
-	private Address shipToAddress;
+    @OneToMany(  cascade = {CascadeType.ALL})
+	@JoinTable( name = "contact_shiptoaddress")
+	private java.util.List<Address> shipToAddress;
 	
 	/**
 	 * @generated
  	 */
-	public Address getShipToAddress(){
+	public java.util.List<Address> getShipToAddress(){
     return shipToAddress; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipToAddress(Address newVal) {
+   * @generated
+   */	
+  public void addShipToAddress(Address obj) {
+    if (shipToAddress == null) {
+      shipToAddress = new java.util.ArrayList<Address>();
+    }
+    shipToAddress.add(obj);
+  }
+	/**
+   * @generated
+   */	
+  public void setShipToAddress(java.util.List<Address> newVal) {
     this.shipToAddress = newVal;
   }
-	
- 	
-	
 	/**
 	 * @generated
 	 */	
@@ -640,7 +647,7 @@ public class Contact extends Party {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (SHIPTOADDRESS.equals(propertyName)) setShipToAddress((Address)newValue); else
+    if (SHIPTOADDRESS.equals(propertyName)) setShipToAddress((java.util.List<Address>)newValue); else
     if (PARENTACCOUNT.equals(propertyName)) setParentAccount((Account)newValue); else
     if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) setWebAcctNameIncomplete((Boolean)newValue); else
     if (WEBCATALOGCHANGE.equals(propertyName)) setWebCatalogChange((Boolean)newValue); else
@@ -670,7 +677,7 @@ public class Contact extends Party {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (SHIPTOADDRESS.equals(propertyName)) 
-      return new Class<?>[] {Address.class};		
+      return new Class<?>[] {java.util.List.class, Address.class};		
     if (PARENTACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
     if (WEBACCTNAMEINCOMPLETE.equals(propertyName)) 

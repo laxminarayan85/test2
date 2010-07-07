@@ -13,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.Contact";
 		}
 				
-		public var shipToAddress:Address;
+		public var shipToAddress:ArrayCollection;
 		public var parentAccount:Account;
 		public var webAcctNameIncomplete:Boolean = false;
 		public var webCatalogChange:Boolean = false;
