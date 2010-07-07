@@ -1424,13 +1424,38 @@ public class DataService extends HibernateService {
 				this.setGradeId((Grade) object);
 			} else if (object instanceof CreditCard) {
 				this.setCreditCardId((CreditCard) object);
-			}else if (object instanceof StockOrder) {
+			} else if (object instanceof StockOrder) {
 				this.setStockOrderId((StockOrder) object);
+			} else if(object instanceof PreferencesPOS) {
+				if(((PreferencesPOS) object).getListFontBean()!=null && 
+					(((PreferencesPOS) object).getListFontBean().getId() == null || ((PreferencesPOS) object).getListFontBean().getId() == 0)
+				) {
+					((PreferencesPOS) object).getListFontBean().setId(null);
+					((PreferencesPOS) object).getListFontBean().setCreated(new Timestamp(new Date().getTime()));
+					((PreferencesPOS) object).getListFontBean().setModified(new Timestamp(new Date().getTime()));
+				}
+				if(((PreferencesPOS) object).getHeaderFontBean()!=null && 
+					(((PreferencesPOS) object).getHeaderFontBean().getId() == null || ((PreferencesPOS) object).getHeaderFontBean().getId() == 0)
+				) {
+					((PreferencesPOS) object).getHeaderFontBean().setId(null);
+					((PreferencesPOS) object).getHeaderFontBean().setCreated(new Timestamp(new Date().getTime()));
+					((PreferencesPOS) object).getHeaderFontBean().setModified(new Timestamp(new Date().getTime()));
+				}
 			}
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			try {
+				if(object instanceof PreferencesPOS) {
+					if(((PreferencesPOS) object).getListFontBean()!=null) {
+						ModelBase modelBase = em.merge(((PreferencesPOS) object).getListFontBean());
+						((PreferencesPOS) object).getListFontBean().setId(modelBase.getId());
+					}
+					if(((PreferencesPOS) object).getHeaderFontBean()!=null) {
+						ModelBase modelBase = em.merge(((PreferencesPOS) object).getHeaderFontBean());
+						((PreferencesPOS) object).getHeaderFontBean().setId(modelBase.getId());
+					}
+				}
 				object = em.merge(object);
 				tx.commit();
 				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
