@@ -106,6 +106,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]                                         
 	private var contact:Contact;
 	[Bindable]
+	private var defaultContact:Boolean = false;
+	[Bindable]
 	private var first:Boolean;	
 	[Bindable]
 	private var account:Account;
@@ -296,7 +298,29 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		creditCardPreferencesArray = ev.result as ArrayCollection;
 		
 	}	                                                                    
+	private function setDefaultContact():void{
+			if (contact.parentAccount.contact == contact){
+				defaultContact = true;
+				use_contact_check.enabled = false;
+				AccountsPicker.enabled = false;
+			}
+			else{
+				defaultContact = false;
+				use_contact_check.enabled = true;
+				AccountsPicker.enabled = true;
+			}
+			if (contact.parentAccount.billToContact == contact){
+				defaultContact = true;
+				use_contact_check.enabled = false;
+				AccountsPicker.enabled = false;
+			}
+			else{
+				defaultContact = false;
+				use_contact_check.enabled = true;
+				AccountsPicker.enabled = true;
+			}
 		
+	}	
 	private function mapToContactData():void {
 		var tempCredit:PreferencesCreditCard = new PreferencesCreditCard;
 		var tempCom: ComLink;
@@ -444,13 +468,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		ship_to_address_editor.countryDataProvider = countrys;
 		use_contact_check.selected = contact.useContactAddress;
 		
- 	address_editor.setAddress(contact.address);
+ 		address_editor.setAddress(contact.address);
 		address_editor.cityDataProvider = citys;
 		address_editor.stateDataProvider = states1;
 		address_editor.zipDataProvider = zips;
 		address_editor.countryDataProvider = countrys; 
-		if (contact.parentAccount != null)
+		if (contact.parentAccount != null){
 			accountName.text = contact.parentAccount.title;
+			setDefaultContact();
+			
+		}
 	 	if (contact.creditCard.address != null)
 			cardzip.selectedIndex = findItem(contact.creditCard.address.zip, zips);
 		else
@@ -529,6 +556,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    setContact(contact);
 	    account = new Account();
 		this.setAccount(account);
+		setDefaultContact();
 	 	
 	}  
 	private function doDelete():void {
@@ -820,7 +848,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="363" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
 				<mx:Text x="498" y="175" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
 				<ns1:AddressEditor x="343" y="244" id="ship_to_address_editor" height="157" width="325"/>
-				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check"/>
+				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check" />
+				<mx:Text x="203" visible="{defaultContact}" y="201" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact')}" width="163" />
 				
 			</mx:Canvas>
 			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%">
