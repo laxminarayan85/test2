@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <service id="remoting-service"
-	class="flex.messaging.services.RemotingService">
+	class="flex.messaging.services.RemotingService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
  <adapters>
 <!-- 	<adapter-definition id="java-object"
@@ -191,4 +191,7 @@
 			</source>
 		</properties>
 	</destination>
+	<destination id="priceListService">
+		<properties>
+			<source>com.efi.printsmith.service.PriceListService</source></properties></destination>
 </service>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="556" showCloseButton="true" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);"
+    title="Stock Availability" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="Utilities" name="Utilities"
+    verticalScrollPolicy="off" currentState="Standard">
+	<mx:states>
+		<mx:State name="Standard">
+			<mx:RemoveChild target="{datagrid1}"/>
+			<mx:SetProperty name="showCloseButton" value="true"/>
+			<mx:SetProperty name="height" value="674"/>
+			<mx:SetProperty name="width" value="596"/>
+			<mx:RemoveChild target="{image1}"/>
+			<mx:RemoveChild target="{canvas1}"/>
+			<mx:RemoveChild target="{panel1}"/>
+			<mx:SetProperty name="title" value="View Price List"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas width="581" height="609">
+					<mx:DataGrid width="101" x="22" y="95" height="495" id="qty_grid">
+						<mx:columns>
+							<mx:DataGridColumn headerText="Quantity" dataField="col1"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:DataGrid width="101" x="131" y="95" height="495" id="price_grid">
+						<mx:columns>
+							<mx:DataGridColumn headerText="1 Side" dataField="col1"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:DataGrid width="101" x="240" y="95" height="495" id="price_per_grid">
+						<mx:columns>
+							<mx:DataGridColumn headerText="2 Sides" dataField="col1"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:DataGrid width="101" x="349" y="95" height="495" id="price_two_grid">
+						<mx:columns>
+							<mx:DataGridColumn headerText="1 Side per each" dataField="col1"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:DataGrid width="101" x="458" y="95" height="495" id="price_two_per_grid">
+						<mx:columns>
+							<mx:DataGridColumn headerText="2 Sides per each" dataField="col1"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none"/>
+				</mx:Canvas>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="Extended"/>
+	</mx:states>
+	<mx:RemoteObject id="priceListService" destination="priceListService">
+		<mx:method name="priceListService"
+					fault="handleFault(event)"
+					result="handlePriceListResult(event)"/>
+	</mx:RemoteObject>
+<mx:Script>
+                                   
+<![CDATA[
+	import com.efi.printsmith.data.PressDefinition;           
+    import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
+	import mx.managers.PopUpManager;     
+	import com.efi.printsmith.data.CopierDefinition;                
+	import com.efi.printsmith.data.PressDefinition;          
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	import flash.net.FileReference;
+	import mx.rpc.Responder;
+	private var copierDefinition:CopierDefinition;
+	private var pressDefinition:PressDefinition;
+	private var qtyArray:ArrayCollection;
+	private var priceArray:ArrayCollection;
+	private var pricePerArray:ArrayCollection;
+	private	var priceTwoArray:ArrayCollection;
+	private var priceTwoPerArray:ArrayCollection;
+	private var loader:Loader;                                                     
+	private function init():void {   
+		
+	}
+	
+		
+	private function handleIOError(event:IOErrorEvent):void {
+		if (event.target != null) {
+			
+		}
+	}
+	
+	public function setCopierDefinition(copier:CopierDefinition):void {
+		copierDefinition = copier as CopierDefinition;
+		priceListService.getCopierPriceList(copierDefinition);
+		this.header_text.text = copierDefinition.name;
+	}
+	
+	public function setPressDefinition(press:PressDefinition):void {
+		pressDefinition = press as PressDefinition;
+		priceListService.getPressPriceList(pressDefinition);
+		this.header_text.text = pressDefinition.name;
+	}
+	
+	private function handlePriceListResult(evt:ResultEvent):void {
+		var resultArray:ArrayCollection = evt.result as ArrayCollection;
+		qtyArray = resultArray[0];
+		priceArray = resultArray[1];
+		pricePerArray = resultArray[2];
+		priceTwoArray = resultArray[3];
+		priceTwoPerArray = resultArray[4];
+		this.qty_grid.dataProvider = qtyArray;
+		this.price_grid.dataProvider = priceArray;
+		this.price_per_grid.dataProvider = pricePerArray;
+		this.price_two_grid.dataProvider = priceTwoArray;
+		this.price_two_per_grid.dataProvider = priceTwoPerArray;
+	}
+
+	private function handleFault(ev:FaultEvent):void {
+		var errorDetail:String="";
+		if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+			errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+		}else{
+			errorDetail = ev.fault.faultDetail;
+		}
+		Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+	}
+
+	public function handleUIEvent(evt:ResultEvent):void {
+		var child:DisplayObject = evt.result as DisplayObject;
+		addUniqueTab(child);
+	}		
+
+	private function addUniqueTab(tab:DisplayObject):void {
+			var tabFound:Boolean = false;
+			
+			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+			{
+				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+				{
+					Snowmass.getInstance().mainNavigator.selectedIndex = i;
+					tabFound = true;
+					break;
+				}
+			}
+			if (!tabFound) {
+				Snowmass.getInstance().mainNavigator.addChild(tab);
+				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+			}
+		}
+
+]]>        
+</mx:Script>
+	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF" id="image1"/>
+<mx:Spacer height="10"  id="spacer1"/>        
+	<mx:Panel width="547" height="461" layout="absolute" id="panel1">
+		<mx:DataGrid x="27.5" y="10" width="472" height="103" id="datagrid1">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Canvas x="10" y="132" width="507" height="279" id="canvas1">
+		</mx:Canvas>
+	</mx:Panel>
+
+</mx:TitleWindow>

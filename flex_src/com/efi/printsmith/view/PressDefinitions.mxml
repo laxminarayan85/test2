@@ -165,11 +165,9 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}    
 	
 	private function doPressPriceList():void {
-	  /*   var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	 	var priceListPickerWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
-	    priceListPickerWindow.itemType = "PriceList";
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPressPriceList); */
+	    priceListPickerWindow.setPressDefinition(this.pressDefinition);
 	}
 	
 	private function doSpeedTable():void {

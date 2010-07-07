@@ -587,11 +587,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
        
 	private function doCopyPriceList():void {
-		/* var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+		var titleWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.parentContainer = this;
-	    titleWindow.itemType = "PriceList";
-	    copy =  true; */
+	    titleWindow.setCopierDefinition(this.copierDefinition);
 	   	}
 	private function doStockPriceList():void {
 		/* var titleWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
