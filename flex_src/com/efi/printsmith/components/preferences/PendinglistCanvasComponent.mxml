@@ -50,82 +50,106 @@
 					fontComponent.customText = preferencesPOS.headerFontBean;
 				}
 				fontComponent.addEventListener("fontBeanUpdated",function(event:Event):void{
+					var inputArguments:Array = new Array();
 					if(valueStr=="list"){
-						updateFontTextStyles(txtListFont,preferencesPOS.listFontBean);
+						inputArguments.push(txtListFont);
+						inputArguments.push(preferencesPOS);
+						inputArguments.push('listFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+						//updateFontTextStyles(txtListFont,preferencesPOS,'listFontBean');
 					} else {
-						updateFontTextStyles(txtHeaderFont,preferencesPOS.headerFontBean);
+						inputArguments.push(txtHeaderFont);
+						inputArguments.push(preferencesPOS);
+						inputArguments.push('headerFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+						//updateFontTextStyles(txtHeaderFont,preferencesPOS,'headerFontBean');
 					}
 				},false,0,true);
 				PopUpManager.centerPopUp(fontComponent);
 			}
 			
-			private function updateFontTextStyles(labelComponent:Label, fontBeanObj:FontDefinition):void{
-				labelComponent.text = constructString(fontBeanObj);
-				setFontStyling(labelComponent,fontBeanObj);
+			public function updateFontLabels():void{
+				var listInputArguments:Array = new Array();
+				var headerInputArguments:Array = new Array();
+				listInputArguments.push(txtListFont);
+				listInputArguments.push(preferencesPOS);
+				listInputArguments.push('listFontBean');	
+				callLater(updateFontTextStyles,listInputArguments);
+				headerInputArguments.push(txtHeaderFont);
+				headerInputArguments.push(preferencesPOS);
+				headerInputArguments.push('headerFontBean');	
+				callLater(updateFontTextStyles,headerInputArguments);
 			}
 			
-			private function constructString(fontBeanObj:FontDefinition):String {
+			private function updateFontTextStyles(labelComponent:Label, dataHolder:Object, variableName:String):void{
+				if(dataHolder!=null){
+					labelComponent.text = constructString(dataHolder[variableName]);
+					setFontStyling(labelComponent,dataHolder[variableName]);
+				}
+			}
+			
+			private function constructString(fontDefinitionObj:FontDefinition):String {
 				var strVal:String = "";
-				if(fontBeanObj!=null) {
-					if(fontBeanObj.fontStyle!=null){
-						strVal = strVal+fontBeanObj.fontStyle;
+				if(fontDefinitionObj!=null) {
+					if(fontDefinitionObj.fontName!=null){
+						strVal = strVal+fontDefinitionObj.fontName;
 					}
-					if(fontBeanObj.fontSize!=0){
+					if(fontDefinitionObj.size!=0){
 						if(strVal!=""){
-							strVal = strVal+", "+fontBeanObj.fontSize;
+							strVal = strVal+", "+fontDefinitionObj.size;
 						} else {
-							strVal = strVal+fontBeanObj.fontSize+" point";
+							strVal = strVal+fontDefinitionObj.size+" point";
 						}
 					}
-					if(fontBeanObj.isBold){
+					if(fontDefinitionObj.isBold){
 						strVal = strVal+", "+"Bold";
 					}
-					if(fontBeanObj.isItalic){
+					if(fontDefinitionObj.isItalic){
 						strVal = strVal+", "+"Italic";
 					}
-					if(fontBeanObj.isUnderLine){
+					if(fontDefinitionObj.isUnderline){
 						strVal = strVal+", "+"Underline";
 					}
-					if(fontBeanObj.isOutLine){
+					if(fontDefinitionObj.isOutline){
 						strVal = strVal+", "+"Outline";
 					}
-					if(fontBeanObj.isShadow){
+					if(fontDefinitionObj.isShadow){
 						strVal = strVal+", "+"Shadow";
 					}
-					if(fontBeanObj.isCondensed){
+					if(fontDefinitionObj.isCondensed){
 						strVal = strVal+", "+"Condensed";
 					}
-					if(fontBeanObj.isExtended){
+					if(fontDefinitionObj.extended){
 						strVal = strVal+", "+"Extended";
 					}
 				}
 				return strVal;
 			}
 			
-			private function setFontStyling(labelComponent:Label, fontBeanObj:FontDefinition):void{
-				if(fontBeanObj!=null) {
-					if(fontBeanObj.fontStyle!=null){
-						labelComponent.setStyle("fontFamily",fontBeanObj.fontStyle);	
+			private function setFontStyling(labelComponent:Label, fontDefinitionObj:FontDefinition):void{
+				if(fontDefinitionObj!=null) {
+					if(fontDefinitionObj.fontName!=null){
+						labelComponent.setStyle("fontFamily",fontDefinitionObj.fontName);	
 					}
-					if(fontBeanObj.fontSize!=0) { 
-						labelComponent.setStyle("fontSize",fontBeanObj.fontSize);
+					if(fontDefinitionObj.size!=0) { 
+						labelComponent.setStyle("fontSize",fontDefinitionObj.size);
 					}
-					if(fontBeanObj.isBold){
+					if(fontDefinitionObj.isBold){
 						labelComponent.setStyle("fontWeight","bold");
 					} else {
 						labelComponent.setStyle("fontWeight","normal");
 					}
-					if(fontBeanObj.isItalic){
+					if(fontDefinitionObj.isItalic){
 						labelComponent.setStyle("fontStyle","italic");
 					} else {
 						labelComponent.setStyle("fontStyle","normal");
 					}
-					if(fontBeanObj.isUnderLine){
+					if(fontDefinitionObj.isUnderline){
 						labelComponent.setStyle("textDecoration","underline");
 					} else {
 						labelComponent.setStyle("textDecoration","none");
 					}
-					if(fontBeanObj.isShadow){
+					if(fontDefinitionObj.isShadow){
 						var dropShadowFilter:DropShadowFilter = new DropShadowFilter(5,30,0x000000,.8);
 			            var filtersArray:Array = new Array();
 			            filtersArray.push(dropShadowFilter);
@@ -175,14 +199,20 @@
 					
 				</mx:DataGrid>
 	
-				<mx:CheckBox
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ShowDocumentTypeInNu')}"/>
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ShowDocumentTypeInNu')}"
+					dataHolder="{preferencesPOS}" variableName="showDocumentType" customText="{preferencesPOS.showDocumentType}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
-				<mx:CheckBox
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.AlwaysIncludePastDue')}" />
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.AlwaysIncludePastDue')}"
+					dataHolder="{preferencesPOS}" variableName="includePastDueDocuments" customText="{preferencesPOS.includePastDueDocuments}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
-				<mx:CheckBox
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColorPastDueEntries')}" />
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ColorPastDueEntries')}"
+					dataHolder="{preferencesPOS}" variableName="colorPastDueEntries" customText="{preferencesPOS.colorPastDueEntries}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
 				<mx:HBox width="100%">
 				
@@ -246,7 +276,7 @@
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ListFont')}"
 						click="{openFontComponent('list')}" width="170" />
 						
-					<mx:Label id="txtListFont" width="400" updateComplete="{updateFontTextStyles(txtListFont,preferencesPOS.listFontBean)}"/>
+					<mx:Label id="txtListFont" width="400"/>
 					
 				</mx:HBox>
 				
@@ -256,7 +286,7 @@
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.HeaderFont')}"
 						click="{openFontComponent('header')}" width="170" />
 						
-					<mx:Label id="txtHeaderFont" width="400" updateComplete="{updateFontTextStyles(txtHeaderFont,preferencesPOS.headerFontBean)}"/>
+					<mx:Label id="txtHeaderFont" width="400"/>
 					
 				</mx:HBox>
 				

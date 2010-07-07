@@ -1221,7 +1221,10 @@
 		//var message:String;
 		//message = node.@label; 
 		//Alert.show(message, "Selected Item", 0, null, null, null, 4);                                 
-		preferences_stack.selectedIndex = node.@tag; 
+		preferences_stack.selectedIndex = node.@tag;
+		if( node.@label == "genericPrefCmd.PendingList" ) {
+			pendinglist_canvas.updateFontLabels();
+		} 
 	}
 	
 	public function doSignSymbol(text:String):void{
@@ -1466,7 +1469,8 @@
 					taxTablesArray="{taxTablesArray}" taxCodesArray="{taxCodesArray}"
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 				
-				<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPendingListArray="{PreferencesPendingListArray}" 
+				<prefcomp:PendinglistCanvasComponent id="pendinglist_canvas" preferencesPOS="{preferencesPOS}" 
+					preferencesPendingListArray="{PreferencesPendingListArray}" 
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:EstimatorBehaviorCanvasComponent id="estimatorbehavior_canvas" preferencesEstimating="{preferencesEstimating}" 

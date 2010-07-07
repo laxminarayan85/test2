@@ -7,6 +7,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.FontDefinition;
 			import mx.collections.SortField;
 			import mx.collections.Sort;
 			import flash.utils.setTimeout;
@@ -15,13 +16,12 @@
 			import mx.core.FontAsset;
 			import mx.managers.PopUpManager;
 			import mx.collections.ArrayCollection;
-			import com.efi.printsmith.data.FontDefinition;
 			
 			[Bindable] public var dataHolder:Object;
 			
 			[Bindable] public var variableName:String;
 		
-			[Bindable] public var fontBean:FontDefinition;
+			[Bindable] public var fontDefinition:FontDefinition;
 			
 			[Bindable] public var fontStyleArray:ArrayCollection = new ArrayCollection();
 			
@@ -79,40 +79,40 @@
 			public function set customText(displayValue:FontDefinition):void {
 				_customText = displayValue;
 				if(displayValue){
-					registerClassAlias("com.efi.printsmith.data",FontDefinition);
-					fontBean = ObjectUtil.copy(displayValue) as FontDefinition;
+					registerClassAlias("com.efi.printsmith.data.FontDefinition",FontDefinition);
+					fontDefinition = ObjectUtil.copy(displayValue) as FontDefinition;
 				} else {
-					fontBean = new FontDefinition();
+					fontDefinition = new FontDefinition();
 				}
 				callLater(updateStyle);
 			}
 			
 			private function updateStyle():void {
-				if(fontBean!=null) {
-					if(fontBean.fontStyle!=null){
-						labelTxt.setStyle("fontFamily",fontBean.fontStyle);	
+				if(fontDefinition!=null) {
+					if(fontDefinition.fontName!=null){
+						labelTxt.setStyle("fontFamily",fontDefinition.fontName);	
 					}
-					if(fontBean.fontSize!=0) { 
-						labelTxt.setStyle("fontSize",fontBean.fontSize);
+					if(fontDefinition.size!=0) { 
+						labelTxt.setStyle("fontSize",fontDefinition.size);
 					} else {
 						labelTxt.setStyle("fontSize",parseInt(fontSizeArray.getItemAt(0).toString()));
 					}
-					if(fontBean.isBold){
+					if(fontDefinition.isBold){
 						labelTxt.setStyle("fontWeight","bold");
 					} else {
 						labelTxt.setStyle("fontWeight","normal");
 					}
-					if(fontBean.isItalic){
+					if(fontDefinition.isItalic){
 						labelTxt.setStyle("fontStyle","italic");
 					} else {
 						labelTxt.setStyle("fontStyle","normal");
 					}
-					if(fontBean.isUnderLine){
+					if(fontDefinition.isUnderline){
 						labelTxt.setStyle("textDecoration","underline");
 					} else {
 						labelTxt.setStyle("textDecoration","none");
 					}
-					if(fontBean.isShadow){
+					if(fontDefinition.isShadow){
 						var dropShadowFilter:DropShadowFilter = new DropShadowFilter(5,30,0x000000,.8);
 			            var filtersArray:Array = new Array();
 			            filtersArray.push(dropShadowFilter);
@@ -125,7 +125,7 @@
 			
 			private function saveData():void{
 				if(dataHolder!=null){
-					dataHolder[variableName] = fontBean;
+					dataHolder[variableName] = fontDefinition;
 					dispatchEvent(new Event("fontBeanUpdated"));
 				}
 				closeEventHandler();
@@ -145,14 +145,14 @@
 					<mx:Label text="Font:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontStyleArray}" labelFieldId="fontName" labelFieldName="fontName"
-						dataHolder="{fontBean}" variableName="fontStyle" customText="{getCustomTextData(fontStyleArray,fontBean)}" updateFirstElement="true"
+						dataHolder="{fontDefinition}" variableName="fontName" customText="{getCustomTextData(fontStyleArray,fontDefinition)}" updateFirstElement="true"
 						change="{updateStyle()}" width="240"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
 					<mx:Label text="Size:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontSizeArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{fontBean}" variableName="fontSize" customText="{getCustomTextData(fontSizeArray,fontBean)}" updateFirstElement="true"
+						dataHolder="{fontDefinition}" variableName="size" customText="{getCustomTextData(fontSizeArray,fontDefinition)}" updateFirstElement="true"
 						change="{updateStyle()}" width="60"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
@@ -160,27 +160,27 @@
 					<mx:HBox width="100%">
 						<mx:VBox>
 							<components:CustomCheckBoxComponent label="Bold"
-								dataHolder="{fontBean}" variableName="isBold" customText="{fontBean.isBold}"
+								dataHolder="{fontDefinition}" variableName="isBold" customText="{fontDefinition.isBold}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 							<components:CustomCheckBoxComponent label="Italic"
-								dataHolder="{fontBean}" variableName="isItalic" customText="{fontBean.isItalic}"
+								dataHolder="{fontDefinition}" variableName="isItalic" customText="{fontDefinition.isItalic}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 							<components:CustomCheckBoxComponent label="Underline"
-								dataHolder="{fontBean}" variableName="isUnderLine" customText="{fontBean.isUnderLine}"
+								dataHolder="{fontDefinition}" variableName="isUnderline" customText="{fontDefinition.isUnderline}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 						</mx:VBox>
 						<mx:VBox>
 							<components:CustomCheckBoxComponent label="Outline"
-								dataHolder="{fontBean}" variableName="isOutLine" customText="{fontBean.isOutLine}"
+								dataHolder="{fontDefinition}" variableName="isOutline" customText="{fontDefinition.isOutline}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 							<components:CustomCheckBoxComponent label="Shadow"
-								dataHolder="{fontBean}" variableName="isShadow" customText="{fontBean.isShadow}"
+								dataHolder="{fontDefinition}" variableName="isShadow" customText="{fontDefinition.isShadow}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 							<components:CustomCheckBoxComponent label="Condensed"
-								dataHolder="{fontBean}" variableName="isCondensed" customText="{fontBean.isCondensed}"
+								dataHolder="{fontDefinition}" variableName="isCondensed" customText="{fontDefinition.isCondensed}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 							<components:CustomCheckBoxComponent label="Extended"
-								dataHolder="{fontBean}" variableName="isExtended" customText="{fontBean.isExtended}"
+								dataHolder="{fontDefinition}" variableName="extended" customText="{fontDefinition.extended}"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateStyle()}"/>
 						</mx:VBox>
 					</mx:HBox>
