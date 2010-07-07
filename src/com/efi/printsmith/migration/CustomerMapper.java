@@ -328,9 +328,17 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("inv salutation".equals(currentFieldToken)) {
 					shipToContact.setSalutation(currentImportToken);
 				} else if ("inv job title".equals(currentFieldToken)) {
-					JobTitle jobTitle = new JobTitle();
-					jobTitle.setName(currentImportToken);
-					shipToContact.setJobTitle(jobTitle);
+					if (currentImportToken.equals("") == false) {
+						JobTitle title = (JobTitle)dataService.getByName("JobTitle", currentImportToken);
+						if (title == null) {
+							title = new JobTitle();
+							title.setName(currentImportToken);
+							title = (JobTitle)dataService.addUpdate(title);
+						}
+						shipToContact.setJobTitle(title);
+					}
+					
+				
 				} else if ("inv phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
@@ -359,9 +367,17 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("bill salutation".equals(currentFieldToken)) {
 					billToContact.setSalutation(currentImportToken);
 				} else if ("bill job title".equals(currentFieldToken)) {
-					JobTitle jobTitle = new JobTitle();
-					jobTitle.setName(currentImportToken);
-					billToContact.setJobTitle(jobTitle);
+					if (currentImportToken.equals("") == false) {
+						JobTitle title = (JobTitle)dataService.getByName("JobTitle", currentImportToken);
+						if (title == null) {
+							title = new JobTitle();
+							title.setName(currentImportToken);
+							title = (JobTitle)dataService.addUpdate(title);
+						}
+						billToContact.setJobTitle(title);
+					}
+					
+					
 				} else if ("bill phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {

@@ -17,6 +17,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadComLinks(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveComLinkResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoad(event)"/>
+		
+	</mx:RemoteObject>
 	
     <mx:Canvas width="360" height="304">
     <mx:Label tabIndex="1" x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="67" textAlign="right"/>
@@ -28,7 +32,7 @@
     <mx:TextInput tabIndex="7" x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
     <mx:TextInput tabIndex="8" x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
     <mx:Label tabIndex="19" x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
-    <mx:TextInput tabIndex="20" x="85" y="180" width="265" id="job_title_edit" text="{contact.jobTitle}"/>
+    <mx:ComboBox tabIndex="20" x="85" y="180" width="265" id="job_title_edit" labelField="name" dataProvider="{jobTitles}"/>
     <mx:Label tabIndex="21" x="10" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
     <mx:TextInput tabIndex="22" x="85" y="210" width="265" id="salutation_edit" text="{contact.salutation}"/>
     <fc:AutoComplete   visible="false"  id="comlink_combo" x="10" y="240" labelField="type" dataProvider="{comLinkDataProvider}" focusOut="focusOutComLink()" lookAhead="true" width="130"/>
@@ -50,6 +54,7 @@
     </mx:Canvas>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.JobTitle;
 		import com.efi.printsmith.data.ComLink;
 		import com.efi.printsmith.data.ComLinkType;
 	import com.efi.printsmith.events.SaveContactEvent;
@@ -60,8 +65,7 @@
 	import com.efi.printsmith.data.State;
 	import com.efi.printsmith.data.Zip;
 	import com.efi.printsmith.data.ModelBase;
-	import com.efi.printsmith.data.JobTitle;
-
+	
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;                                         
 	import mx.rpc.events.ResultEvent;                                         
@@ -73,10 +77,12 @@
 
 	[Bindable]
 	public var comLinkDataProvider:ArrayCollection = null;
-	    
+	[Bindable]
+	private var jobTitles:ArrayCollection = null;    
     private var originalContact:Contact = null;
 	
 	private function init():void {
+		dataService.getAll("JobTitle");
 		comLinkDataService.getAll("ComLinkType");
 		if (contact.comLinks == null)
 			contact.comLinks = new ArrayCollection();
@@ -101,7 +107,17 @@
 	 		comlink_combo.selectedIndex = findItem (selectedItem,comLinkDataProvider);
 	 	}
 	}   
-
+	private function handleLoad(ev:ResultEvent):void {
+		var	selectedItem:JobTitle = job_title_edit.selectedItem as JobTitle;
+		jobTitles = new ArrayCollection();
+	 	jobTitles = ev.result as ArrayCollection;
+		if (selectedItem != null){
+	 		job_title_edit.selectedIndex = findItem (selectedItem.name, jobTitles);
+	 	}
+	 	else{
+	 		job_title_edit.selectedIndex = -1;
+	 	}
+	}   
 	private function handleSaveComLinkResult(ev:ResultEvent):void {
 		comLinkDataService.getAll("ComLinkType");
 	}      
@@ -142,6 +158,9 @@
 			var comLink:ComLink = this.contact.comLinks.getItemAt(0) as ComLink
 			comlink_edit.text = comLink.value;
 		} */
+		if (contact.jobTitle != null){
+	 		job_title_edit.selectedIndex = findItem (contact.jobTitle.name,jobTitles);
+		 }
 		if (contact.comLinks != null){
 			 for (var i:int =0; i < contact.comLinks.length ; i++)
 		    {	
@@ -228,10 +247,7 @@
 		tempCom = new ComLink();
 		contact.firstName = first_name_edit.text;
 		contact.lastName = last_name_edit.text;
-		if (contact.JobTitle == null) {
-			contact.jobTitle = new JobTitle();
-		}
-		contact.jobTitle.name = job_title_edit.text;
+		contact.jobTitle = job_title_edit.selectedItem as JobTitle;
 		contact.suffix = suffix_edit.text;
 		contact.prefix = prefix_edit.text;
 		contact.salutation = salutation_edit.text;
@@ -264,28 +280,48 @@
 		
 		}
 		 */
-		 	if (phone_edit.text.length >0){
+	if (phone_edit.text.length >0){
 	 		index = findCom("Phone", contact.comLinks);
-	 		if (index != 1){
+	 		if (index != -1){
+	 			
 	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
 		 		tempCom.value = phone_edit.text;
 		 		contact.comLinks.setItemAt(tempCom, index);
 		 	}
-	 		else{
+		 	else{
+		 		tempCom = new ComLink();
 	 		tempCom.value = phone_edit.text;
 	 		tempCom.type = "Phone"
 	 		contact.comLinks.addItem(tempCom);
-	 	}
+	 		}
+	 	
+	 }
+	 if (fax_edit.text.length >0){
+	 		index = findCom("Fax", contact.comLinks);
+	 		if (index != -1){
+	 			
+	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
+		 		tempCom.value = fax_edit.text;
+		 		contact.comLinks.setItemAt(tempCom, index);
+		 	}
+		 	else{
+		 		tempCom = new ComLink();
+	 		tempCom.value = fax_edit.text;
+	 		tempCom.type = "Fax"
+	 		contact.comLinks.addItem(tempCom);
+	 		}
 	 	
 	 }
 	 if (mobile_edit.text.length >0){
 	 	index = findCom("Cell", contact.comLinks);
 	 	if ( index != -1){
+	 	
 	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
 	 		tempCom.value = mobile_edit.text;
 	 		contact.comLinks.setItemAt(tempCom, index);
 	 	}
 	 	else{
+	 		tempCom = new ComLink();
 	 		tempCom.value = mobile_edit.text;
 	 		tempCom.type = "Cell"
 	 		contact.comLinks.addItem(tempCom);
@@ -300,6 +336,7 @@
 	 		contact.comLinks.setItemAt(tempCom, index);
 	 	}
 	 	else{
+	 		tempCom = new ComLink();
 	 		tempCom.value = other_edit.text;
 	 		tempCom.type = "Other"
 	 		contact.comLinks.addItem(tempCom);
@@ -313,6 +350,7 @@
 	 		contact.comLinks.setItemAt(tempCom, index);
 	 	}
 	 	else{
+	 		tempCom = new ComLink();
 	 		tempCom.value = email_edit.text;
 	 		tempCom.type = "E-Mail"
 	 		contact.comLinks.addItem(tempCom);

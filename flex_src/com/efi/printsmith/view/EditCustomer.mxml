@@ -877,7 +877,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
      ship_to_contact_editor.setContact(account.contact);
     }
     
-     
+     public function doName(item:Object):String{
+		var tmpItem:Contact ;
+		tmpItem = item as Contact;
+		var tmpString:String;
+		
+		if (tmpItem != null && tmpItem.firstName != null && tmpItem.lastName != null) {
+			tmpString = tmpItem.firstName +" "+ tmpItem.lastName
+			return(tmpString);
+		} else {
+			return "None";
+		}
+	}    
+
 	
 		
     
@@ -903,8 +915,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 				<mx:Label x="10" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:Label x="344" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
-				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelField="lastName" enabled="true" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
-				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelField="lastName" change="updateStatementContact();" width="160"/>
+				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelFunction="doName" enabled="true" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
+				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>

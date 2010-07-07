@@ -80,7 +80,7 @@
 					
 					displayContact += "\n"
 	
-					if (contact.jobTitle != null && contact.jobTitle.name != null && contact.jobTitle.name != "")
+					if (contact.jobTitle != null && contact.jobTitle.name != "")
 					{
 						displayContact+=contact.jobTitle.name + "\n";
 					}

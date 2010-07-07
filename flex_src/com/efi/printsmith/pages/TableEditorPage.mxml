@@ -109,9 +109,9 @@ import com.efi.printsmith.data.*;
 		 	case "InkColor":
 		 		tempClass = InkColor
 		 		break;
-		 	/* case "JobTitle":
+		 	case "JobTitle":
 		 		tempClass = JobTitle
-		 		break; */
+		 		break; 
 		 	case "LeadSource":
 		 		tempClass = LeadSource
 		 		break;
