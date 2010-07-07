@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.JobMethod")]
 	[Managed]
 	
-	public class JobMethod extends ModelBase
+	public dynamic class JobMethod extends ModelBase
 	{
 
 		public function JobMethod() {

@@ -139,6 +139,31 @@ public class PreferencesPOS extends ModelBase {
 	public static final String DATASIZE = "DataSize";
 
 	/**
+   * @generated
+   */
+  public static final String PASTDUECOLOR = "PastDueColor";
+	/**
+   * @generated
+   */
+  public static final String PICKUPCOLOR = "PickupColor";
+	/**
+   * @generated
+   */
+  public static final String INVOICECOLOR = "InvoiceColor";
+	/**
+   * @generated
+   */
+  public static final String ESTIMATECOLOR = "EstimateColor";
+	/**
+   * @generated
+   */
+  public static final String LISTFONTBEAN = "ListFontBean";
+	/**
+   * @generated
+   */
+  public static final String HEADERFONTBEAN = "HeaderFontBean";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesPOS() {
@@ -699,6 +724,142 @@ public class PreferencesPOS extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pastDueColor;
+
+	/**
+   * @generated
+ 	 */
+  public String getPastDueColor(){
+    return pastDueColor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPastDueColor(String newVal) {
+    this.pastDueColor = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pickupColor;
+
+	/**
+   * @generated
+ 	 */
+  public String getPickupColor(){
+    return pickupColor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPickupColor(String newVal) {
+    this.pickupColor = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String invoiceColor;
+
+	/**
+   * @generated
+ 	 */
+  public String getInvoiceColor(){
+    return invoiceColor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setInvoiceColor(String newVal) {
+    this.invoiceColor = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String estimateColor;
+
+	/**
+   * @generated
+ 	 */
+  public String getEstimateColor(){
+    return estimateColor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setEstimateColor(String newVal) {
+    this.estimateColor = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private FontDefinition listFontBean;
+
+	/**
+   * @generated
+ 	 */
+  public FontDefinition getListFontBean(){
+    return listFontBean; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setListFontBean(FontDefinition newVal) {
+    this.listFontBean = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private FontDefinition headerFontBean;
+
+	/**
+   * @generated
+ 	 */
+  public FontDefinition getHeaderFontBean(){
+    return headerFontBean; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setHeaderFontBean(FontDefinition newVal) {
+    this.headerFontBean = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -728,6 +889,12 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) return getStopBits();
     if (PARITY.equals(propertyName)) return getParity();
     if (DATASIZE.equals(propertyName)) return getDataSize();
+    if (PASTDUECOLOR.equals(propertyName)) return getPastDueColor();
+    if (PICKUPCOLOR.equals(propertyName)) return getPickupColor();
+    if (INVOICECOLOR.equals(propertyName)) return getInvoiceColor();
+    if (ESTIMATECOLOR.equals(propertyName)) return getEstimateColor();
+    if (LISTFONTBEAN.equals(propertyName)) return getListFontBean();
+    if (HEADERFONTBEAN.equals(propertyName)) return getHeaderFontBean();
     return super.getProperty(propertyName);
   }
 	
@@ -761,6 +928,12 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) setStopBits((String)newValue); else
     if (PARITY.equals(propertyName)) setParity((String)newValue); else
     if (DATASIZE.equals(propertyName)) setDataSize((String)newValue); else
+    if (PASTDUECOLOR.equals(propertyName)) setPastDueColor((String)newValue); else
+    if (PICKUPCOLOR.equals(propertyName)) setPickupColor((String)newValue); else
+    if (INVOICECOLOR.equals(propertyName)) setInvoiceColor((String)newValue); else
+    if (ESTIMATECOLOR.equals(propertyName)) setEstimateColor((String)newValue); else
+    if (LISTFONTBEAN.equals(propertyName)) setListFontBean((FontDefinition)newValue); else
+    if (HEADERFONTBEAN.equals(propertyName)) setHeaderFontBean((FontDefinition)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -818,6 +991,18 @@ public class PreferencesPOS extends ModelBase {
       return new Class<?>[] {String.class};		
     if (DATASIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (PASTDUECOLOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PICKUPCOLOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INVOICECOLOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ESTIMATECOLOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (LISTFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (HEADERFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -852,6 +1037,12 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) return PreferencesPOS.class;
     if (PARITY.equals(propertyName)) return PreferencesPOS.class;
     if (DATASIZE.equals(propertyName)) return PreferencesPOS.class;
+    if (PASTDUECOLOR.equals(propertyName)) return PreferencesPOS.class;
+    if (PICKUPCOLOR.equals(propertyName)) return PreferencesPOS.class;
+    if (INVOICECOLOR.equals(propertyName)) return PreferencesPOS.class;
+    if (ESTIMATECOLOR.equals(propertyName)) return PreferencesPOS.class;
+    if (LISTFONTBEAN.equals(propertyName)) return PreferencesPOS.class;
+    if (HEADERFONTBEAN.equals(propertyName)) return PreferencesPOS.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -910,6 +1101,18 @@ public class PreferencesPOS extends ModelBase {
     if (! SmartEquals(getParity(), objT.getParity()))
       return false;
     if (! SmartEquals(getDataSize(), objT.getDataSize()))
+      return false;
+    if (! SmartEquals(getPastDueColor(), objT.getPastDueColor()))
+      return false;
+    if (! SmartEquals(getPickupColor(), objT.getPickupColor()))
+      return false;
+    if (! SmartEquals(getInvoiceColor(), objT.getInvoiceColor()))
+      return false;
+    if (! SmartEquals(getEstimateColor(), objT.getEstimateColor()))
+      return false;
+    if (! SmartEquals(getListFontBean(), objT.getListFontBean()))
+      return false;
+    if (! SmartEquals(getHeaderFontBean(), objT.getHeaderFontBean()))
       return false;
     return true;
   }			

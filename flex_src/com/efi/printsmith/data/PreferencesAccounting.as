@@ -63,8 +63,7 @@ package com.efi.printsmith.data
 		public var merchantKey:String = "";
 		public var useAddressValidation:Boolean = false;
 		public var promptUserForValidationInfo:Boolean = false;
-		
-		public var creditCardProcessor:String="";
+		public var creditCardProcessor:String = "";
 	
 	}
 }

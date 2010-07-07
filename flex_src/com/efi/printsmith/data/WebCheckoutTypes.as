@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.WebCheckoutTypes")]
 	[Managed]
 	
-	public class WebCheckoutTypes extends ModelBase
+	public dynamic class WebCheckoutTypes extends ModelBase
 	{
 
 		public function WebCheckoutTypes() {

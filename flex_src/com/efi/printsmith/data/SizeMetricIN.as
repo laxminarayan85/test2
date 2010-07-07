@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SizeMetricIN")]
 	[Managed]
 	
-	public class SizeMetricIN extends ModelBase
+	public dynamic class SizeMetricIN extends ModelBase
 	{
 
 		public function SizeMetricIN() {

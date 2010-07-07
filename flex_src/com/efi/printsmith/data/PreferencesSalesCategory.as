@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesSalesCategory")]
 	[Managed]
 	
-	public class PreferencesSalesCategory extends ModelBase
+	public dynamic class PreferencesSalesCategory extends ModelBase
 	{
 
 		public function PreferencesSalesCategory() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesDefaultPresses")]
 	[Managed]
 	
-	public class PreferencesDefaultPresses extends ModelBase
+	public dynamic class PreferencesDefaultPresses extends ModelBase
 	{
 
 		public function PreferencesDefaultPresses() {

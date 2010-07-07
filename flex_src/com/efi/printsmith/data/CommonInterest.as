@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.CommonInterest")]
 	[Managed]
 	
-	public class CommonInterest extends ModelBase
+	public dynamic class CommonInterest extends ModelBase
 	{
 
 		public function CommonInterest() {

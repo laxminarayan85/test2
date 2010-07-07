@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Driver")]
 	[Managed]
 	
-	public class Driver extends ModelBase
+	public dynamic class Driver extends ModelBase
 	{
 
 		public function Driver() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.WasteChart")]
 	[Managed]
 	
-	public class WasteChart extends PriceListBase
+	public dynamic class WasteChart extends PriceListBase
 	{
 
 		public function WasteChart() {

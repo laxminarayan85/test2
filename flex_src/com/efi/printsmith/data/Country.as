@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Country")]
 	[Managed]
 	
-	public class Country extends ModelBase
+	public dynamic class Country extends ModelBase
 	{
 
 		public function Country() {

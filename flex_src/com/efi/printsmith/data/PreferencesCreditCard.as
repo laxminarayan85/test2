@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesCreditCard")]
 	[Managed]
 	
-	public class PreferencesCreditCard extends ModelBase
+	public dynamic class PreferencesCreditCard extends ModelBase
 	{
 
 		public function PreferencesCreditCard() {

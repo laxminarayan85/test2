@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.CTPSubstrate")]
 	[Managed]
 	
-	public class CTPSubstrate extends ModelBase
+	public dynamic class CTPSubstrate extends ModelBase
 	{
 
 		public function CTPSubstrate() {

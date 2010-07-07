@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.InkColor")]
 	[Managed]
 	
-	public class InkColor extends ModelBase
+	public dynamic class InkColor extends ModelBase
 	{
 
 		public function InkColor() {

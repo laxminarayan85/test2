@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.JDFQueueEntry")]
 	[Managed]
 	
-	public class JDFQueueEntry extends ModelBase
+	public dynamic class JDFQueueEntry extends ModelBase
 	{
 
 		public function JDFQueueEntry() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SizeUS")]
 	[Managed]
 	
-	public class SizeUS extends ModelBase
+	public dynamic class SizeUS extends ModelBase
 	{
 
 		public function SizeUS() {

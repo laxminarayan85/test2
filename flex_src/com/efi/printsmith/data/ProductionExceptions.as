@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ProductionExceptions")]
 	[Managed]
 	
-	public class ProductionExceptions extends ModelBase
+	public dynamic class ProductionExceptions extends ModelBase
 	{
 
 		public function ProductionExceptions() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Account")]
 	[Managed]
 	
-	public class Account extends ModelBase
+	public dynamic class Account extends ModelBase
 	{
 
 		public function Account() {

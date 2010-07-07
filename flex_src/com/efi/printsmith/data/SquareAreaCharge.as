@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SquareAreaCharge")]
 	[Managed]
 	
-	public class SquareAreaCharge extends Charge
+	public dynamic class SquareAreaCharge extends Charge
 	{
 
 		public function SquareAreaCharge() {

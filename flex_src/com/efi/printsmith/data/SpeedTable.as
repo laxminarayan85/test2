@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SpeedTable")]
 	[Managed]
 	
-	public class SpeedTable extends PriceListBase
+	public dynamic class SpeedTable extends PriceListBase
 	{
 
 		public function SpeedTable() {

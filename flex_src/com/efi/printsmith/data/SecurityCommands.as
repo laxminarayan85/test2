@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SecurityCommands")]
 	[Managed]
 	
-	public class SecurityCommands extends ModelBase
+	public dynamic class SecurityCommands extends ModelBase
 	{
 
 		public function SecurityCommands() {

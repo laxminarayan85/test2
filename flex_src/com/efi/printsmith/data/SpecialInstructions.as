@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SpecialInstructions")]
 	[Managed]
 	
-	public class SpecialInstructions extends ModelBase
+	public dynamic class SpecialInstructions extends ModelBase
 	{
 
 		public function SpecialInstructions() {

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.WebGraphics")]
 	[Managed]
 	
-	public class WebGraphics extends ModelBase
+	public dynamic class WebGraphics extends ModelBase
 	{
 
 		public function WebGraphics() {

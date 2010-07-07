@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.EstimateTemplate")]
 	[Managed]
 	
-	public class EstimateTemplate extends Estimate
+	public dynamic class EstimateTemplate extends Estimate
 	{
 
 		public function EstimateTemplate() {

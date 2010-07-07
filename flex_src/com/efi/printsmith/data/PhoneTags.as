@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PhoneTags")]
 	[Managed]
 	
-	public class PhoneTags extends ModelBase
+	public dynamic class PhoneTags extends ModelBase
 	{
 
 		public function PhoneTags() {

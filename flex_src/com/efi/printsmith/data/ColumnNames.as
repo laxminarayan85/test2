@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ColumnNames")]
 	[Managed]
 	
-	public class ColumnNames extends ModelBase
+	public dynamic class ColumnNames extends ModelBase
 	{
 
 		public function ColumnNames() {

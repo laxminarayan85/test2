@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.DataManager")]
 	[Managed]
 	
-	public class DataManager extends ModelBase
+	public dynamic class DataManager extends ModelBase
 	{
 
 		public function DataManager() {

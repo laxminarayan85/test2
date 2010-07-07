@@ -117,11 +117,10 @@ public class Contact extends Party {
 	 * @generated
 	 */
 	public static final String WEBSTATUS = "WebStatus";
-
 	/**
-   * @generated
-   */
-  public static final String CCIMPORTREC = "CcImportRec";
+	 * @generated
+	 */
+	public static final String CCIMPORTREC = "CcImportRec";
 
 	/**
 	 * @generated
@@ -130,18 +129,13 @@ public class Contact extends Party {
     this.created = new Date();
     this.modified = new Date();
   }
-	public Contact(long id, String firstName, String lastName, String accountID) {
-		this.id = id;
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.contactId = accountID;
-	}
+
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true )
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	private Address shipToAddress;
 	
 	/**
@@ -583,28 +577,29 @@ public class Contact extends Party {
     this.webStatus = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String ccImportRec;
-
+	private String ccImportRec;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getCcImportRec(){
+	public String getCcImportRec(){
     return ccImportRec; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCcImportRec(String newVal) {
+	 * @generated
+	 */	
+	public void setCcImportRec(String newVal) {
     this.ccImportRec = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.FoldTemplate")]
 	[Managed]
 	
-	public class FoldTemplate extends ModelBase
+	public dynamic class FoldTemplate extends ModelBase
 	{
 
 		public function FoldTemplate() {

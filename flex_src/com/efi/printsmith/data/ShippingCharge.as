@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ShippingCharge")]
 	[Managed]
 	
-	public class ShippingCharge extends Charge
+	public dynamic class ShippingCharge extends Charge
 	{
 
 		public function ShippingCharge() {

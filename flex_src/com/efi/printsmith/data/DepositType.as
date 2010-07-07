@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.DepositType")]
 	[Managed]
 	
-	public class DepositType extends ModelBase
+	public dynamic class DepositType extends ModelBase
 	{
 
 		public function DepositType() {

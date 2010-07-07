@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.TimeCard")]
 	[Managed]
 	
-	public class TimeCard extends ModelBase
+	public dynamic class TimeCard extends ModelBase
 	{
 
 		public function TimeCard() {

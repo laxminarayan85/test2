@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.TableEditor")]
 	[Managed]
 	
-	public class TableEditor extends ModelBase
+	public dynamic class TableEditor extends ModelBase
 	{
 
 		public function TableEditor() {

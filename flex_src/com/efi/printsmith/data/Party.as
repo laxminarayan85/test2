@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Party")]
 	[Managed]
 	
-	public class Party extends ModelBase
+	public dynamic class Party extends ModelBase
 	{
 
 		public function Party() {

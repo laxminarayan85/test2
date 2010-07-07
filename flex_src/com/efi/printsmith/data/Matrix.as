@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Matrix")]
 	[Managed]
 	
-	public class Matrix extends ModelBase
+	public dynamic class Matrix extends ModelBase
 	{
 
 		public function Matrix() {

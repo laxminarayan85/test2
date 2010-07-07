@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ProductionPress")]
 	[Managed]
 	
-	public class ProductionPress extends ModelBase
+	public dynamic class ProductionPress extends ModelBase
 	{
 
 		public function ProductionPress() {

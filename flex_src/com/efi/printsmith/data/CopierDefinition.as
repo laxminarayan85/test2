@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.CopierDefinition")]
 	[Managed]
 	
-	public class CopierDefinition extends ModelBase
+	public dynamic class CopierDefinition extends ModelBase
 	{
 
 		public function CopierDefinition() {

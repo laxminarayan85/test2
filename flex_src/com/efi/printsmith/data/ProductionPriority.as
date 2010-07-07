@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ProductionPriority")]
 	[Managed]
 	
-	public class ProductionPriority extends ModelBase
+	public dynamic class ProductionPriority extends ModelBase
 	{
 
 		public function ProductionPriority() {

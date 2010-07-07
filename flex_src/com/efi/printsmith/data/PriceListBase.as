@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PriceListBase")]
 	[Managed]
 	
-	public class PriceListBase extends ModelBase
+	public dynamic class PriceListBase extends ModelBase
 	{
 
 		public function PriceListBase() {

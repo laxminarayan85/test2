@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Invoice")]
 	[Managed]
 	
-	public class Invoice extends InvoiceBase
+	public dynamic class Invoice extends InvoiceBase
 	{
 
 		public function Invoice() {

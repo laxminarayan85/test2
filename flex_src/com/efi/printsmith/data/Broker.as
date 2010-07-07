@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Broker")]
 	[Managed]
 	
-	public class Broker extends Party
+	public dynamic class Broker extends Party
 	{
 
 		public function Broker() {

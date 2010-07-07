@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.WebConsole")]
 	[Managed]
 	
-	public class WebConsole extends ModelBase
+	public dynamic class WebConsole extends ModelBase
 	{
 
 		public function WebConsole() {

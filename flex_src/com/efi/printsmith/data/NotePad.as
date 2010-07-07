@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.NotePad")]
 	[Managed]
 	
-	public class NotePad extends ModelBase
+	public dynamic class NotePad extends ModelBase
 	{
 
 		public function NotePad() {

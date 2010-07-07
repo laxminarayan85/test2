@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.TaxTablesElements")]
 	[Managed]
 	
-	public class TaxTablesElements extends ModelBase
+	public dynamic class TaxTablesElements extends ModelBase
 	{
 
 		public function TaxTablesElements() {

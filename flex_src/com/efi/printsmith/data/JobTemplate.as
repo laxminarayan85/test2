@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.JobTemplate")]
 	[Managed]
 	
-	public class JobTemplate extends Job
+	public dynamic class JobTemplate extends Job
 	{
 
 		public function JobTemplate() {

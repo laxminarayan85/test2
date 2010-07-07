@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.WebCatagories")]
 	[Managed]
 	
-	public class WebCatagories extends ModelBase
+	public dynamic class WebCatagories extends ModelBase
 	{
 
 		public function WebCatagories() {

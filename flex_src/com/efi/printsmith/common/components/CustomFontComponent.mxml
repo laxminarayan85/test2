@@ -15,13 +15,13 @@
 			import mx.core.FontAsset;
 			import mx.managers.PopUpManager;
 			import mx.collections.ArrayCollection;
-			import com.efi.printsmith.model.FontBean;
+			import com.efi.printsmith.data.FontDefinition;
 			
 			[Bindable] public var dataHolder:Object;
 			
 			[Bindable] public var variableName:String;
 		
-			[Bindable] public var fontBean:FontBean;
+			[Bindable] public var fontBean:FontDefinition;
 			
 			[Bindable] public var fontStyleArray:ArrayCollection = new ArrayCollection();
 			
@@ -29,7 +29,7 @@
 			
 			[Bindable] public var sampleTextString:String = "This is a test string";
 			
-			private var _customText:FontBean;
+			private var _customText:FontDefinition;
 			
 			private function initComponent():void {
 				var collection:ArrayCollection = new ArrayCollection(Font.enumerateFonts(true));
@@ -72,17 +72,17 @@
 				fontSizeArray.addItem(fontSizeObj);
 			}
 			
-			public function get customText():FontBean {
+			public function get customText():FontDefinition {
 				return _customText;
 			}
 			
-			public function set customText(displayValue:FontBean):void {
+			public function set customText(displayValue:FontDefinition):void {
 				_customText = displayValue;
 				if(displayValue){
-					registerClassAlias("com.efi.printsmith.model",FontBean);
-					fontBean = ObjectUtil.copy(displayValue) as FontBean;
+					registerClassAlias("com.efi.printsmith.data",FontDefinition);
+					fontBean = ObjectUtil.copy(displayValue) as FontDefinition;
 				} else {
-					fontBean = new FontBean();
+					fontBean = new FontDefinition();
 				}
 				callLater(updateStyle);
 			}

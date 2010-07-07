@@ -243,6 +243,11 @@ public class PreferencesAccounting extends ModelBase {
 	public static final String PROMPTUSERFORVALIDATIONINFO = "PromptUserForValidationInfo";
 
 	/**
+   * @generated
+   */
+  public static final String CREDITCARDPROCESSOR = "CreditCardProcessor";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesAccounting() {
@@ -1408,6 +1413,28 @@ public class PreferencesAccounting extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String creditCardProcessor;
+
+	/**
+   * @generated
+ 	 */
+  public String getCreditCardProcessor(){
+    return creditCardProcessor; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCreditCardProcessor(String newVal) {
+    this.creditCardProcessor = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1463,6 +1490,7 @@ public class PreferencesAccounting extends ModelBase {
     if (MERCHANTKEY.equals(propertyName)) return getMerchantKey();
     if (USEADDRESSVALIDATION.equals(propertyName)) return getUseAddressValidation();
     if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) return getPromptUserForValidationInfo();
+    if (CREDITCARDPROCESSOR.equals(propertyName)) return getCreditCardProcessor();
     return super.getProperty(propertyName);
   }
 	
@@ -1522,6 +1550,7 @@ public class PreferencesAccounting extends ModelBase {
     if (MERCHANTKEY.equals(propertyName)) setMerchantKey((String)newValue); else
     if (USEADDRESSVALIDATION.equals(propertyName)) setUseAddressValidation((Boolean)newValue); else
     if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) setPromptUserForValidationInfo((Boolean)newValue); else
+    if (CREDITCARDPROCESSOR.equals(propertyName)) setCreditCardProcessor((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1631,6 +1660,8 @@ public class PreferencesAccounting extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (CREDITCARDPROCESSOR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1691,6 +1722,7 @@ public class PreferencesAccounting extends ModelBase {
     if (MERCHANTKEY.equals(propertyName)) return PreferencesAccounting.class;
     if (USEADDRESSVALIDATION.equals(propertyName)) return PreferencesAccounting.class;
     if (PROMPTUSERFORVALIDATIONINFO.equals(propertyName)) return PreferencesAccounting.class;
+    if (CREDITCARDPROCESSOR.equals(propertyName)) return PreferencesAccounting.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1801,6 +1833,8 @@ public class PreferencesAccounting extends ModelBase {
     if (! SmartEquals(getUseAddressValidation(), objT.getUseAddressValidation()))
       return false;
     if (! SmartEquals(getPromptUserForValidationInfo(), objT.getPromptUserForValidationInfo()))
+      return false;
+    if (! SmartEquals(getCreditCardProcessor(), objT.getCreditCardProcessor()))
       return false;
     return true;
   }			

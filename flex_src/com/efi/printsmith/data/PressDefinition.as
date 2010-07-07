@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PressDefinition")]
 	[Managed]
 	
-	public class PressDefinition extends ModelBase
+	public dynamic class PressDefinition extends ModelBase
 	{
 
 		public function PressDefinition() {

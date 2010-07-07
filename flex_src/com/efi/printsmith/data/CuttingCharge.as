@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.CuttingCharge")]
 	[Managed]
 	
-	public class CuttingCharge extends Charge
+	public dynamic class CuttingCharge extends Charge
 	{
 
 		public function CuttingCharge() {

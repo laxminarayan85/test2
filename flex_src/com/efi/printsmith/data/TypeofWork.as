@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.TypeofWork")]
 	[Managed]
 	
-	public class TypeofWork extends ModelBase
+	public dynamic class TypeofWork extends ModelBase
 	{
 
 		public function TypeofWork() {

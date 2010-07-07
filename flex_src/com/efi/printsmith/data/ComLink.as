@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ComLink")]
 	[Managed]
 	
-	public class ComLink extends ModelBase
+	public dynamic class ComLink extends ModelBase
 	{
 
 		public function ComLink() {

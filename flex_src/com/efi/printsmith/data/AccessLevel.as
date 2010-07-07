@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.AccessLevel")]
 	[Managed]
 	
-	public class AccessLevel extends ModelBase
+	public dynamic class AccessLevel extends ModelBase
 	{
 
 		public function AccessLevel() {

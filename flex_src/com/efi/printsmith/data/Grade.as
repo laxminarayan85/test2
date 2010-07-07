@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Grade")]
 	[Managed]
 	
-	public class Grade extends ModelBase
+	public dynamic class Grade extends ModelBase
 	{
 
 		public function Grade() {

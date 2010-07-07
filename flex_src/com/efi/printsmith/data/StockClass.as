@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.StockClass")]
 	[Managed]
 	
-	public class StockClass extends ModelBase
+	public dynamic class StockClass extends ModelBase
 	{
 
 		public function StockClass() {

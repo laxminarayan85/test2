@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesSequenceValues")]
 	[Managed]
 	
-	public class PreferencesSequenceValues extends ModelBase
+	public dynamic class PreferencesSequenceValues extends ModelBase
 	{
 
 		public function PreferencesSequenceValues() {

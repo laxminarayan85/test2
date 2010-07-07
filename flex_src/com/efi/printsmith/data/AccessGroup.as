@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.AccessGroup")]
 	[Managed]
 	
-	public class AccessGroup extends ModelBase
+	public dynamic class AccessGroup extends ModelBase
 	{
 
 		public function AccessGroup() {

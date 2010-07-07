@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ReportCategories")]
 	[Managed]
 	
-	public class ReportCategories extends ModelBase
+	public dynamic class ReportCategories extends ModelBase
 	{
 
 		public function ReportCategories() {

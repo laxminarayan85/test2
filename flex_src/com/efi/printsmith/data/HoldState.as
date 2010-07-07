@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.HoldState")]
 	[Managed]
 	
-	public class HoldState extends ModelBase
+	public dynamic class HoldState extends ModelBase
 	{
 
 		public function HoldState() {

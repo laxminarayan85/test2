@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Substrate")]
 	[Managed]
 	
-	public class Substrate extends ModelBase
+	public dynamic class Substrate extends ModelBase
 	{
 
 		public function Substrate() {

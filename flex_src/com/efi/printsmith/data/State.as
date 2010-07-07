@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.State")]
 	[Managed]
 	
-	public class State extends ModelBase
+	public dynamic class State extends ModelBase
 	{
 
 		public function State() {

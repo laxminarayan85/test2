@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.CustomerLog")]
 	[Managed]
 	
-	public class CustomerLog extends ModelBase
+	public dynamic class CustomerLog extends ModelBase
 	{
 
 		public function CustomerLog() {

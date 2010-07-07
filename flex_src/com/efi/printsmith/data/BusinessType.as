@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.BusinessType")]
 	[Managed]
 	
-	public class BusinessType extends ModelBase
+	public dynamic class BusinessType extends ModelBase
 	{
 
 		public function BusinessType() {

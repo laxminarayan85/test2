@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.SportsInterest")]
 	[Managed]
 	
-	public class SportsInterest extends ModelBase
+	public dynamic class SportsInterest extends ModelBase
 	{
 
 		public function SportsInterest() {

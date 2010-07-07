@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.Zip")]
 	[Managed]
 	
-	public class Zip extends ModelBase
+	public dynamic class Zip extends ModelBase
 	{
 
 		public function Zip() {

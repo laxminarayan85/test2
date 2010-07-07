@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PaperCalculator")]
 	[Managed]
 	
-	public class PaperCalculator extends ModelBase
+	public dynamic class PaperCalculator extends ModelBase
 	{
 
 		public function PaperCalculator() {

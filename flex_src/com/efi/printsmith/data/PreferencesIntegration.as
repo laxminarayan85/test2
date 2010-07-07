@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PreferencesIntegration")]
 	[Managed]
 	
-	public class PreferencesIntegration extends ModelBase
+	public dynamic class PreferencesIntegration extends ModelBase
 	{
 
 		public function PreferencesIntegration() {

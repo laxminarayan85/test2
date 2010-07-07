@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.DigitalAsset")]
 	[Managed]
 	
-	public class DigitalAsset extends ModelBase
+	public dynamic class DigitalAsset extends ModelBase
 	{
 
 		public function DigitalAsset() {

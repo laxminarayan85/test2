@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.JobJDFStatus")]
 	[Managed]
 	
-	public class JobJDFStatus extends ModelBase
+	public dynamic class JobJDFStatus extends ModelBase
 	{
 
 		public function JobJDFStatus() {

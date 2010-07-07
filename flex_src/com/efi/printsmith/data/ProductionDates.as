@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ProductionDates")]
 	[Managed]
 	
-	public class ProductionDates extends ModelBase
+	public dynamic class ProductionDates extends ModelBase
 	{
 
 		public function ProductionDates() {

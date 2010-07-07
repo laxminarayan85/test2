@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.ChargeInit")]
 	[Managed]
 	
-	public class ChargeInit extends ModelBase
+	public dynamic class ChargeInit extends ModelBase
 	{
 
 		public function ChargeInit() {
