@@ -80,6 +80,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.ContactPickerSelectEvent;
 	import com.efi.printsmith.events.CampaignEditCompleteEvent;
 	import com.efi.printsmith.data.PreferencesCreditCard;
+	import com.efi.printsmith.events.SaveAddressEvent;
+	import com.efi.printsmith.components.AddressEditorPopup;
 
 	import mx.rpc.Responder;
 	import mx.controls.Alert;                                         
@@ -126,8 +128,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var zips:ArrayCollection = new ArrayCollection();
     [Bindable]
     private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
-    
-    
+   
     [Bindable]
     private var compaigns:ArrayCollection = new ArrayCollection();
                      
@@ -220,14 +221,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				contact.address.zip = "";
 				contact.address.country = "";
 			} 
-			if (contact.shipToAddress == null) {
+		/* 	if (contact.shipToAddress == null) {
 				contact.shipToAddress = new Address();
 				contact.shipToAddress = new Address(); 
 				contact.shipToAddress.city = "";
 				contact.shipToAddress.state = "";
 				contact.shipToAddress.zip = "";
 				contact.shipToAddress.country = "";
-			}
+			} */
 			
 			if (contact.marketing == null) setMarketing();
 			if( contact.creditCard == null) setCreditCard();
@@ -335,7 +336,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.jobTitle= tmpContact.jobTitle;
 		contact.comLinks = tmpContact.comLinks;
 		contact.useContactAddress = use_contact_check.selected;
-		contact.shipToAddress = ship_to_address_editor.getAddress();
+		contact.shipToAddress = ship_to_address_editor.getAddresses();
 		contact.address = address_editor.getAddress();;
 		
 			
@@ -461,13 +462,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function mapFromContactData():void{
 		
-	 	ship_to_address_editor.setAddress(contact.shipToAddress);
+	 /*   	ship_to_address_editor.setAddress(contact.shipToAddress); */
 		ship_to_address_editor.cityDataProvider = citys;
 		ship_to_address_editor.stateDataProvider = states1;
 		ship_to_address_editor.zipDataProvider = zips;
 		ship_to_address_editor.countryDataProvider = countrys;
 		use_contact_check.selected = contact.useContactAddress;
-		
+		ship_to_address_editor.setAddresses(contact.shipToAddress)
  		address_editor.setAddress(contact.address);
 		address_editor.cityDataProvider = citys;
 		address_editor.stateDataProvider = states1;
@@ -824,7 +825,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		dataService2.getContact(contact.id);   
 	}
 	
-	 
+	private function doShipAddress(item:Object):String{
+		var temp:Address = new Address();
+		temp = item as Address;
+		if ( temp != null){
+		 	return(temp.name+" "+temp.city);
+		}
+		else{
+			return("None");
+		}
+		
+	} 
+	
 ]]>	
 
                              
@@ -841,13 +853,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="-21" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Account')}" textAlign="right" width="93"/>
 				<mx:Button x="10" y="168" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ChangeAccount')}" id="AccountsPicker" click="doAccountPicker()"/>
 				<mx:ComboBox id="sales_rep_combo" x="498" y="216" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" />
-				<ns1:AddressEditor x="10" y="244" id="address_editor" height="157" width="325" enabled="{use_contact_check.selected}"/>
+				<ns1:AddressEditor x="10" y="269" id="address_editor" height="157" width="325" enabled="{use_contact_check.selected}"/>
 				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.accountId}"/>
 				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
 				<mx:Label x="391" y="218" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
 				<mx:Label x="363" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
 				<mx:Text x="498" y="175" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
-				<ns1:AddressEditor x="343" y="244" id="ship_to_address_editor" height="157" width="325"/>
+				<ns1:AddressListEditor x="363" y="269" id="ship_to_address_editor" height="215" width="357"/>
 				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check" />
 				<mx:Text x="203" visible="{defaultContact}" y="201" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact')}" width="163" />
 				

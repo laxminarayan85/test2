@@ -2,7 +2,7 @@
 <mx:TitleWindow 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
-	width="570" 
+	width="800" 
 	height="686" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
@@ -110,6 +110,19 @@
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
+ 	 	 	</mx:AddChild>
+ 	 	 	<mx:RemoveChild target="{checkbox1}"/>
+ 	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
+ 	 	 	<mx:SetProperty target="{checkbox1}" name="x" value="267"/>
+ 	 	 	<mx:SetProperty target="{checkbox1}" name="y" value="230"/>
+ 	 	 	<mx:AddChild relativeTo="{cashregister_canvas}" position="lastChild">
+ 	 	 	 	<mx:DataGrid x="4" y="420" width="613" id="transaction_grid" dataProvider="{posTransactions}">
+ 	 	 	 	 	<mx:columns>
+ 	 	 	 	 	 	<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+ 	 	 	 	 	 	<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+ 	 	 	 	 	 	<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+ 	 	 	 	 	</mx:columns>
+ 	 	 	 	</mx:DataGrid>
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="paymentCheck" basedOn="paymentPaymentMethod">
@@ -219,6 +232,9 @@
 	private var payChange:String;
 	[Bindable]
 	private var AustrailianRounding:Boolean;
+	
+	[Bindable]
+	private var posTransactions:ArrayCollection;
 	
 //Data field arrays
 	[Bindable]
@@ -548,11 +564,11 @@
 			<mx:CheckBox x="10" y="35" id="chkPrintInvoice" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintInvoice')}"/>
 				
 		</mx:Canvas>
-		<mx:Canvas x="0" y="133" width="200" height="373" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
-			<mx:Button x="10" y="327" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.ShowTransactionWindo')}" width="176"/>
-			<mx:Button x="10" y="297" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintInvoice')}" width="176" enabled="false"/>
+		<mx:Canvas x="0" y="133" width="408" height="279" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
+			<mx:Button x="10" y="230" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.ShowTransactionWindo')}" width="176"/>
+			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintInvoice')}" width="176" enabled="false"/>
 		</mx:Canvas>
-		<mx:Canvas x="198" y="133" width="210" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="407" y="40" width="210" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}"/>
 			<mx:Button x="10" y="180" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}" width="186" id="btPayment" click="doPayment();"/>
 			<mx:RadioButtonGroup id="rgPaymentMethod" change="paymentMethodChanged(event)"/>
@@ -562,7 +578,7 @@
 			<mx:RadioButton x="131" y="60" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CHARGE')}" id="rbCharge" groupName="rgPaymentMethod"/>
 
 		</mx:Canvas>
-		<mx:Canvas x="198" y="346" width="210" height="160" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="407" y="252" width="210" height="160" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="43" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.SubTotal')}"/>
 			<mx:Label x="76" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tax')}"/>
 			<mx:Label x="69" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}"/>
@@ -575,7 +591,7 @@
 			<mx:TextInput x="110" y="114" width="86" text="{currencyFormatter.format('0.00')}"/>
 
 		</mx:Canvas>
-		<mx:CheckBox x="132" y="516" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}"/>
+		<mx:CheckBox x="132" y="516" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
 	</mx:Canvas>
 	<mx:Label x="150" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}"/>
 	<mx:Label x="199" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>

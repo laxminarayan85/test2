@@ -1774,6 +1774,12 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
+				for (int i = 0; i < contact.getShipToAddress().size(); i++) {
+					 Address add = contact.getShipToAddress().get(i);
+					if (add == null) {
+						log.error("null charge found");
+					}
+				}
 			}
 		} catch (Exception e) {
 			log.error(e);
