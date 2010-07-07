@@ -138,18 +138,6 @@ public class PreferencesPOS extends ModelBase {
 	 */
 	public static final String DATASIZE = "DataSize";
 	/**
-	 * @generated
-	 */
-	public static final String SHOWDOCUMENTTYPE = "ShowDocumentType";
-	/**
-	 * @generated
-	 */
-	public static final String INCLUDEPASTDUEDOCUMENTS = "IncludePastDueDocuments";
-	/**
-	 * @generated
-	 */
-	public static final String COLORPASTDUEENTRIES = "ColorPastDueEntries";
-	/**
    * @generated
    */
   public static final String PASTDUECOLOR = "PastDueColor";
@@ -173,6 +161,19 @@ public class PreferencesPOS extends ModelBase {
    * @generated
    */
   public static final String HEADERFONTBEAN = "HeaderFontBean";
+
+	/**
+   * @generated
+   */
+  public static final String SHOWDOCUMENTTYPE = "ShowDocumentType";
+	/**
+   * @generated
+   */
+  public static final String INCLUDEPASTDUEDOCUMENTS = "IncludePastDueDocuments";
+	/**
+   * @generated
+   */
+  public static final String COLORPASTDUEENTRIES = "ColorPastDueEntries";
 
 	/**
 	 * @generated
@@ -733,70 +734,7 @@ public class PreferencesPOS extends ModelBase {
 	public void setDataSize(String newVal) {
     this.dataSize = newVal;
   }
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean showDocumentType;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowDocumentType(){
-		return showDocumentType; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setShowDocumentType(Boolean newVal) {
-		this.showDocumentType = newVal;
-	}
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean includePastDueDocuments;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getIncludePastDueDocuments(){
-		return includePastDueDocuments; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setIncludePastDueDocuments(Boolean newVal) {
-		this.includePastDueDocuments = newVal;
-	}
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean colorPastDueEntries;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getColorPastDueEntries(){
-		return colorPastDueEntries; 
-	}
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setColorPastDueEntries(Boolean newVal) {
-		this.colorPastDueEntries = newVal;
-	}
-	
+		
 	/**
    * @generated
    */	
@@ -934,6 +872,74 @@ public class PreferencesPOS extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean showDocumentType;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getShowDocumentType(){
+    return showDocumentType; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setShowDocumentType(Boolean newVal) {
+    this.showDocumentType = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean includePastDueDocuments;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getIncludePastDueDocuments(){
+    return includePastDueDocuments; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setIncludePastDueDocuments(Boolean newVal) {
+    this.includePastDueDocuments = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean colorPastDueEntries;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getColorPastDueEntries(){
+    return colorPastDueEntries; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setColorPastDueEntries(Boolean newVal) {
+    this.colorPastDueEntries = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -963,15 +969,15 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) return getStopBits();
     if (PARITY.equals(propertyName)) return getParity();
     if (DATASIZE.equals(propertyName)) return getDataSize();
-    if (SHOWDOCUMENTTYPE.equals(propertyName)) return getShowDocumentType();
-    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return getIncludePastDueDocuments();
-    if (COLORPASTDUEENTRIES.equals(propertyName)) return getColorPastDueEntries();
     if (PASTDUECOLOR.equals(propertyName)) return getPastDueColor();
     if (PICKUPCOLOR.equals(propertyName)) return getPickupColor();
     if (INVOICECOLOR.equals(propertyName)) return getInvoiceColor();
     if (ESTIMATECOLOR.equals(propertyName)) return getEstimateColor();
     if (LISTFONTBEAN.equals(propertyName)) return getListFontBean();
     if (HEADERFONTBEAN.equals(propertyName)) return getHeaderFontBean();
+    if (SHOWDOCUMENTTYPE.equals(propertyName)) return getShowDocumentType();
+    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return getIncludePastDueDocuments();
+    if (COLORPASTDUEENTRIES.equals(propertyName)) return getColorPastDueEntries();
     return super.getProperty(propertyName);
   }
 	
@@ -1005,15 +1011,15 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) setStopBits((String)newValue); else
     if (PARITY.equals(propertyName)) setParity((String)newValue); else
     if (DATASIZE.equals(propertyName)) setDataSize((String)newValue); else
-	if (SHOWDOCUMENTTYPE.equals(propertyName)) setShowDocumentType((Boolean)newValue); else
-    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) setIncludePastDueDocuments((Boolean)newValue); else
-    if (COLORPASTDUEENTRIES.equals(propertyName)) setColorPastDueEntries((Boolean)newValue); else
     if (PASTDUECOLOR.equals(propertyName)) setPastDueColor((String)newValue); else
     if (PICKUPCOLOR.equals(propertyName)) setPickupColor((String)newValue); else
     if (INVOICECOLOR.equals(propertyName)) setInvoiceColor((String)newValue); else
     if (ESTIMATECOLOR.equals(propertyName)) setEstimateColor((String)newValue); else
     if (LISTFONTBEAN.equals(propertyName)) setListFontBean((FontDefinition)newValue); else
     if (HEADERFONTBEAN.equals(propertyName)) setHeaderFontBean((FontDefinition)newValue); else
+    if (SHOWDOCUMENTTYPE.equals(propertyName)) setShowDocumentType((Boolean)newValue); else
+    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) setIncludePastDueDocuments((Boolean)newValue); else
+    if (COLORPASTDUEENTRIES.equals(propertyName)) setColorPastDueEntries((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1071,12 +1077,6 @@ public class PreferencesPOS extends ModelBase {
       return new Class<?>[] {String.class};		
     if (DATASIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};
-    if (SHOWDOCUMENTTYPE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};
-    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};
-    if (COLORPASTDUEENTRIES.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};
     if (PASTDUECOLOR.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PICKUPCOLOR.equals(propertyName)) 
@@ -1089,6 +1089,12 @@ public class PreferencesPOS extends ModelBase {
       return new Class<?>[] {FontDefinition.class};		
     if (HEADERFONTBEAN.equals(propertyName)) 
       return new Class<?>[] {FontDefinition.class};		
+    if (SHOWDOCUMENTTYPE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COLORPASTDUEENTRIES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1123,15 +1129,15 @@ public class PreferencesPOS extends ModelBase {
     if (STOPBITS.equals(propertyName)) return PreferencesPOS.class;
     if (PARITY.equals(propertyName)) return PreferencesPOS.class;
     if (DATASIZE.equals(propertyName)) return PreferencesPOS.class;
-    if (SHOWDOCUMENTTYPE.equals(propertyName)) return PreferencesPOS.class;
-    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return PreferencesPOS.class;
-    if (COLORPASTDUEENTRIES.equals(propertyName)) return PreferencesPOS.class;
     if (PASTDUECOLOR.equals(propertyName)) return PreferencesPOS.class;
     if (PICKUPCOLOR.equals(propertyName)) return PreferencesPOS.class;
     if (INVOICECOLOR.equals(propertyName)) return PreferencesPOS.class;
     if (ESTIMATECOLOR.equals(propertyName)) return PreferencesPOS.class;
     if (LISTFONTBEAN.equals(propertyName)) return PreferencesPOS.class;
     if (HEADERFONTBEAN.equals(propertyName)) return PreferencesPOS.class;
+    if (SHOWDOCUMENTTYPE.equals(propertyName)) return PreferencesPOS.class;
+    if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return PreferencesPOS.class;
+    if (COLORPASTDUEENTRIES.equals(propertyName)) return PreferencesPOS.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1191,12 +1197,6 @@ public class PreferencesPOS extends ModelBase {
       return false;
     if (! SmartEquals(getDataSize(), objT.getDataSize()))
       return false;
-    if (! SmartEquals(getShowDocumentType(), objT.getShowDocumentType()))
-        return false;
-    if (! SmartEquals(getIncludePastDueDocuments(), objT.getIncludePastDueDocuments()))
-        return false;
-    if (! SmartEquals(getColorPastDueEntries(), objT.getColorPastDueEntries()))
-        return false;
     if (! SmartEquals(getPastDueColor(), objT.getPastDueColor()))
       return false;
     if (! SmartEquals(getPickupColor(), objT.getPickupColor()))
@@ -1208,6 +1208,12 @@ public class PreferencesPOS extends ModelBase {
     if (! SmartEquals(getListFontBean(), objT.getListFontBean()))
       return false;
     if (! SmartEquals(getHeaderFontBean(), objT.getHeaderFontBean()))
+      return false;
+    if (! SmartEquals(getShowDocumentType(), objT.getShowDocumentType()))
+      return false;
+    if (! SmartEquals(getIncludePastDueDocuments(), objT.getIncludePastDueDocuments()))
+      return false;
+    if (! SmartEquals(getColorPastDueEntries(), objT.getColorPastDueEntries()))
       return false;
     return true;
   }			

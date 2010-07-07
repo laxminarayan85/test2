@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 		public var prefix:String = "";
 		public var suffix:String = "";
 		public var salutation:String = "";
-		public var jobTitle:String = "";
+		public var jobTitle:JobTitle;
 		public var address:Address;
 		public var lastName:String = "";
 		public var firstName:String = "";

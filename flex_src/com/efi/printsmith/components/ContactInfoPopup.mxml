@@ -60,7 +60,8 @@
 	import com.efi.printsmith.data.State;
 	import com.efi.printsmith.data.Zip;
 	import com.efi.printsmith.data.ModelBase;
-	
+	import com.efi.printsmith.data.JobTitle;
+
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;                                         
 	import mx.rpc.events.ResultEvent;                                         
@@ -227,7 +228,10 @@
 		tempCom = new ComLink();
 		contact.firstName = first_name_edit.text;
 		contact.lastName = last_name_edit.text;
-		contact.jobTitle = job_title_edit.text;
+		if (contact.JobTitle == null) {
+			contact.jobTitle = new JobTitle();
+		}
+		contact.jobTitle.name = job_title_edit.text;
 		contact.suffix = suffix_edit.text;
 		contact.prefix = prefix_edit.text;
 		contact.salutation = salutation_edit.text;

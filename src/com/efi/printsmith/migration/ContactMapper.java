@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.City;
 import com.efi.printsmith.data.Contact;
+import com.efi.printsmith.data.JobTitle;
 import com.efi.printsmith.data.Marketing;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -104,7 +105,9 @@ public class ContactMapper extends ImportMapper {
 			} else if ("salutation".equals(currentFieldToken)) {
 				contact.setSalutation(currentImportToken);
 			} else if ("job title".equals(currentFieldToken)) {
-				contact.setJobTitle(currentImportToken);
+				JobTitle jobTitle = new JobTitle();
+				jobTitle.setName(currentImportToken);
+				contact.setJobTitle(jobTitle);
 			} else if ("phone".equals(currentFieldToken)) {
 				try {
 					if (currentImportToken.length() > 0 && !currentImportToken.equals(" ")) {

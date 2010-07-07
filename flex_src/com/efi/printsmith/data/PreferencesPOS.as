@@ -37,15 +37,15 @@ package com.efi.printsmith.data
 		public var stopBits:String = "";
 		public var parity:String = "";
 		public var dataSize:String = "";
-		public var showDocumentType:Boolean = false;
-		public var includePastDueDocuments:Boolean = false;
-		public var colorPastDueEntries:Boolean = false;
 		public var pastDueColor:String = "";
 		public var pickupColor:String = "";
 		public var invoiceColor:String = "";
 		public var estimateColor:String = "";
 		public var listFontBean:FontDefinition;
 		public var headerFontBean:FontDefinition;
+		public var showDocumentType:Boolean = false;
+		public var includePastDueDocuments:Boolean = false;
+		public var colorPastDueEntries:Boolean = false;
 	
 	}
 }

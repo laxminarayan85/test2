@@ -156,30 +156,30 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String jobTitle;
+ 	@ManyToOne( cascade = {CascadeType.ALL})
+	@Basic
+	private JobTitle jobTitle;
 	
 	/**
 	 * @generated
  	 */
-	public String getJobTitle(){
+	public JobTitle getJobTitle(){
     return jobTitle; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setJobTitle(String newVal) {
+   * @generated
+   */	
+  public void setJobTitle(JobTitle newVal) {
     this.jobTitle = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(optional=true)
 	private Address address;
 	
 	/**
@@ -302,7 +302,7 @@ public class Party extends ModelBase {
     if (PREFIX.equals(propertyName)) setPrefix((String)newValue); else
     if (SUFFIX.equals(propertyName)) setSuffix((String)newValue); else
     if (SALUTATION.equals(propertyName)) setSalutation((String)newValue); else
-    if (JOBTITLE.equals(propertyName)) setJobTitle((String)newValue); else
+    if (JOBTITLE.equals(propertyName)) setJobTitle((JobTitle)newValue); else
     if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
     if (LASTNAME.equals(propertyName)) setLastName((String)newValue); else
     if (FIRSTNAME.equals(propertyName)) setFirstName((String)newValue); else
@@ -323,7 +323,7 @@ public class Party extends ModelBase {
     if (SALUTATION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (JOBTITLE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {JobTitle.class};		
     if (ADDRESS.equals(propertyName)) 
       return new Class<?>[] {Address.class};		
     if (LASTNAME.equals(propertyName)) 

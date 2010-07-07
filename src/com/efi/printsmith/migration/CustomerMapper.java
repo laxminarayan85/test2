@@ -9,6 +9,7 @@ import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ComLink;
 import com.efi.printsmith.data.Contact;
+import com.efi.printsmith.data.JobTitle;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.SalesRep;
@@ -327,7 +328,9 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("inv salutation".equals(currentFieldToken)) {
 					shipToContact.setSalutation(currentImportToken);
 				} else if ("inv job title".equals(currentFieldToken)) {
-					shipToContact.setJobTitle(currentImportToken);
+					JobTitle jobTitle = new JobTitle();
+					jobTitle.setName(currentImportToken);
+					shipToContact.setJobTitle(jobTitle);
 				} else if ("inv phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
@@ -356,7 +359,9 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("bill salutation".equals(currentFieldToken)) {
 					billToContact.setSalutation(currentImportToken);
 				} else if ("bill job title".equals(currentFieldToken)) {
-					billToContact.setJobTitle(currentImportToken);
+					JobTitle jobTitle = new JobTitle();
+					jobTitle.setName(currentImportToken);
+					billToContact.setJobTitle(jobTitle);
 				} else if ("bill phone 2".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
