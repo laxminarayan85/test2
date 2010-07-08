@@ -8,40 +8,41 @@
 		<mx:State name="Standard">
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:SetProperty name="showCloseButton" value="true"/>
-			<mx:SetProperty name="height" value="564"/>
+			<mx:SetProperty name="height" value="668"/>
 			<mx:SetProperty name="width" value="596"/>
 			<mx:RemoveChild target="{image1}"/>
 			<mx:RemoveChild target="{canvas1}"/>
 			<mx:RemoveChild target="{panel1}"/>
 			<mx:SetProperty name="title" value="View Price List"/>
 			<mx:AddChild position="lastChild">
-				<mx:Canvas width="581" height="506">
-					<mx:DataGrid width="101" x="22" y="95" height="399" id="qty_grid" editable="false" enabled="false">
+				<mx:Canvas width="581" height="604">
+					<mx:DataGrid width="101" x="22" y="193" height="401" id="qty_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="Quantity" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="131" y="95" height="399" id="price_grid" editable="false" enabled="false">
+					<mx:DataGrid width="101" x="131" y="193" height="399" id="price_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="1 Side" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="240" y="95" height="399" id="price_per_grid" editable="false" enabled="false">
+					<mx:DataGrid width="101" x="240" y="193" height="399" id="price_per_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="2 Sides" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="349" y="95" height="399" id="price_two_grid" editable="false" enabled="false">
+					<mx:DataGrid width="101" x="349" y="193" height="399" id="price_two_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="1 Side per each" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="458" y="95" height="399" id="price_two_per_grid" editable="false" enabled="false">
+					<mx:DataGrid width="101" x="458" y="193" height="399" id="price_two_per_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="2 Sides per each" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none" editable="false" enabled="false" fontSize="20" textAlign="center"/>
+					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none" editable="false" enabled="true" fontSize="20" textAlign="center"/>
+					<mx:TextArea x="16" y="95" width="549" height="77" id="stock_text" borderStyle="none" editable="false" enabled="true" fontSize="10" textAlign="left"/>
 				</mx:Canvas>
 			</mx:AddChild>
 		</mx:State>
@@ -58,6 +59,7 @@
 					fault="handleFault(event)"
 					result="handlePriceListResult(event)"/>
 	</mx:RemoteObject>
+	
 <mx:Script>
                                    
 <![CDATA[
@@ -65,7 +67,7 @@
     import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.CopierDefinition;                
-	import com.efi.printsmith.data.PressDefinition;          
+	import com.efi.printsmith.data.StockDefinition;          
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;   
 	import mx.core.Container;                      
@@ -81,6 +83,7 @@
 	import mx.rpc.Responder;
 	private var copierDefinition:CopierDefinition;
 	private var pressDefinition:PressDefinition;
+	private var stockDefinition:StockDefinition;
 	private var qtyArray:ArrayCollection;
 	private var priceArray:ArrayCollection;
 	private var pricePerArray:ArrayCollection;
@@ -108,6 +111,18 @@
 		priceListService.getPressPriceList(pressDefinition);
 	}
 	
+	public function setCopierStockDefinition(stock:StockDefinition, copier:CopierDefinition):void {
+		stockDefinition = stock as StockDefinition;
+		copierDefinition = copier as CopierDefinition;
+		priceListService.getStockPriceList(stockDefinition,copierDefinition);
+	}
+	
+	public function setPressStockDefinition(stock:StockDefinition, press:PressDefinition):void {
+		stockDefinition = stock as StockDefinition;
+		pressDefinition = press as PressDefinition;
+		priceListService.getStockPriceList(stockDefinition,pressDefinition);
+	}
+	
 	private function handlePriceListResult(evt:ResultEvent):void {
 		var resultArray:ArrayCollection = evt.result as ArrayCollection;
 		qtyArray = resultArray[0];
@@ -124,6 +139,14 @@
 			this.header_text.text = this.copierDefinition.name;
 		if (this.pressDefinition != null)
 			this.header_text.text = this.pressDefinition.name;
+		if (this.stockDefinition != null) {
+			this.header_text.text = this.header_text.text + "\r" + this.stockDefinition.name;
+			this.stock_text.text = "Parent Size: " + stockDefinition.parentsize.name + " Run Size: " + stockDefinition.normalRunSize.name + " Finish Size: " + stockDefinition.parentsize.name;
+			if (this.copierDefinition != null)
+				this.stock_text.text = this.stock_text.text + "\rCopier: " + this.copierDefinition.name;
+			if (this.pressDefinition != null)
+				this.stock_text.text = this.stock_text.text + "\rPress: " + this.pressDefinition.name;
+		}
 	}
 
 	private function handleFault(ev:FaultEvent):void {

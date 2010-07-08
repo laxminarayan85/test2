@@ -42,6 +42,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionPressResult(event)"/>
 	<mx:method name="getByName" fault="handleFault(event)" result="handleGetProductionPressByName(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceStockPicker" destination="dataService">
+		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadStockResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+	</mx:RemoteObject>
 	<mx:Producer id="producer" destination="pressdefinitions"/>
 	<mx:Consumer id="consumer" destination="pressdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -56,7 +62,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.WasteChart;
 	import com.efi.printsmith.data.ProductionPress;
+	import com.efi.printsmith.data.StockDefinition;
+	import com.efi.printsmith.data.PreferencesStockDefinition;
 	import com.efi.printsmith.pages.DefaultPressPicker;
+	import com.efi.printsmith.events.StockPickerSelectEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 	import mx.controls.Alert;   
@@ -72,7 +81,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.events.ModelAddUpdateEvent;
 	import com.efi.printsmith.events.ModelGetAllEvent;
 	import com.efi.printsmith.events.ModelDeleteItemEvent;
-                   
+    [Bindable]
+    private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
+	[Bindable]                                         
+	private var stockDefinitions:StockDefinition; 
+	[Bindable]                                         
+	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();     
 	[Bindable]
     private var enableSave:Boolean = true;
     [Bindable]
@@ -128,9 +142,20 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceProductionPress.getAll("ProductionPress");
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
 	    pressDefinition = new PressDefinition();
+	    dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+		stockDefinitions = new StockDefinition;
 		doPressType();
 		updateControlState();
 	}      
+	
+	public function loadStockDefinitions():void { 
+		dataServiceStockPicker.getStockPicker("StockDefinition", preferencesStockDefinitions);
+	}
+	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
+		preferencesStockDefinitions = event.result as ArrayCollection;
+		loadStockDefinitions();
+	}
+	
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
 		var getAllEvent:ModelGetAllEvent = new ModelGetAllEvent(modelType, callbacks);
 		getAllEvent.dispatch();			
@@ -179,12 +204,32 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearSpeedTable);
 	}
 	
+	private function handleLoadStockResult(ev:ResultEvent):void {
+	     StockDefinitionArray = ev.result as ArrayCollection;
+	}
+	
 	private function doStockPriceList():void {
-	   /*  var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
-	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
-		priceListPickerWindow.itemType = "PriceList";
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectStockPriceList); */
+		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+		stockPickerWindow.setStyle("borderAlpha", 0.9);
+	    stockPickerWindow.formIsEmpty = true;
+	   	stockPickerWindow.setStockArray(StockDefinitionArray);
+	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
+	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	}
+	
+	private function handleStockPickerSelect(ev:StockPickerSelectEvent):void {
+		var titleWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPressStockDefinition(ev.stockDefinition as StockDefinition,this.pressDefinition as PressDefinition);
+	}
+	
+	private function handleStockPickerCancel(evt:StockPickerSelectEvent):void {
+		if (this.stockDefinitions == null) {
+			this.stockDefinitions = new StockDefinition;
+	    	stockDefinitions.charges = new ArrayCollection;
+	    	stockDefinitions.stockChanges = new ArrayCollection;
+		}
 	}
 
 	private function doWasteChart():void {
