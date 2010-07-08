@@ -358,12 +358,12 @@ public class DataService extends HibernateService {
 			Iterator<InvoiceBase> it = resultList.iterator();
 			while (it.hasNext()) {
 				InvoiceBase invoice = it.next();
-				List<Job> jobs = null;
+				List<JobBase> jobs = null;
 				jobs = invoice.getJobs();
 				
-				Iterator<Job> jobIt = jobs.iterator();
+				Iterator<JobBase> jobIt = jobs.iterator();
 				while (jobIt.hasNext()) {
-					Job job = jobIt.next();
+					JobBase job = jobIt.next();
 					if (job.getPricingCopier() != null &&
 							job.getPricingCopier().getOemDeviceID() != null &&
 							job.getPricingCopier().getOemDeviceID().length() > 0) {
@@ -1624,7 +1624,7 @@ public class DataService extends HibernateService {
 
 			if (invoice != null) {
 				for (int i = 0; i < invoice.getJobs().size(); i++) {
-					Job job = invoice.getJobs().get(i);
+					JobBase job = invoice.getJobs().get(i);
 					if (job != null) {
 						for (int j = 0; j < job.getCharges().size(); j++) {
 							Charge charge = job.getCharges().get(j);
@@ -1833,7 +1833,7 @@ public class DataService extends HibernateService {
 
 			if (invoice != null) {
 				for (int i = 0; i < invoice.getJobs().size(); i++) {
-					Job job = invoice.getJobs().get(i);
+					JobBase job = invoice.getJobs().get(i);
 					if (job != null) {
 						for (int j = 0; j < job.getCharges().size(); j++) {
 							Charge charge = job.getCharges().get(j);

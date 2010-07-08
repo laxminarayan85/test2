@@ -290,19 +290,8 @@ public class InvoiceBase extends ModelBase {
     this.modified = new Date();
   }
 
-	public InvoiceBase(long id,  String invoiceNumber, Account account, Contact contact) {
-		this.id = id;
-		this.setInvoiceNumber(invoiceNumber);
+ 	
 	
-		this.setAccount(account);
-		this.setContact(contact);
-	}	
-	
-	public InvoiceBase(long id,  String invoiceNumber) {
-		this.id = id;
-		this.setInvoiceNumber(invoiceNumber);
-	}	
-
 	/**
 	 * @generated
 	 */	
@@ -323,6 +312,7 @@ public class InvoiceBase extends ModelBase {
 	public void setInvoiceNumber(String newVal) {
     this.invoiceNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -345,6 +335,7 @@ public class InvoiceBase extends ModelBase {
 	public void setVersion(Long newVal) {
     this.version = newVal;
   }
+	
  	
 	
 	/**
@@ -367,6 +358,7 @@ public class InvoiceBase extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -389,6 +381,7 @@ public class InvoiceBase extends ModelBase {
 	public void setSalesRep(SalesRep newVal) {
     this.salesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -411,6 +404,7 @@ public class InvoiceBase extends ModelBase {
 	public void setCustomerPO(String newVal) {
     this.customerPO = newVal;
   }
+	
  	
 	
 	/**
@@ -433,6 +427,7 @@ public class InvoiceBase extends ModelBase {
 	public void setExpenseCode(String newVal) {
     this.expenseCode = newVal;
   }
+	
  	
 	
 	/**
@@ -455,6 +450,7 @@ public class InvoiceBase extends ModelBase {
 	public void setBillToAddress(Address newVal) {
     this.billToAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -477,6 +473,7 @@ public class InvoiceBase extends ModelBase {
 	public void setShipToAddress(Address newVal) {
     this.shipToAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -499,6 +496,7 @@ public class InvoiceBase extends ModelBase {
 	public void setContact(Contact newVal) {
     this.contact = newVal;
   }
+	
  	
 	
 	/**
@@ -521,6 +519,7 @@ public class InvoiceBase extends ModelBase {
 	public void setSalesCode(String newVal) {
     this.salesCode = newVal;
   }
+	
  	
 	
 	/**
@@ -543,6 +542,7 @@ public class InvoiceBase extends ModelBase {
 	public void setResaleId(String newVal) {
     this.resaleId = newVal;
   }
+	
  	
 	
 	/**
@@ -565,6 +565,7 @@ public class InvoiceBase extends ModelBase {
 	public void setShippingMethod(ShippingMethod newVal) {
     this.shippingMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -587,6 +588,7 @@ public class InvoiceBase extends ModelBase {
 	public void setPrintCount(Long newVal) {
     this.printCount = newVal;
   }
+	
  	
 	
 	/**
@@ -609,45 +611,47 @@ public class InvoiceBase extends ModelBase {
 	public void setAccount(Account newVal) {
     this.account = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
+    @OneToMany(  cascade = {CascadeType.ALL}, mappedBy="parentInvoice")
     @JoinTable( name = "invoicebase_jobs")
-	private java.util.List<Job> jobs;
+	private java.util.List<JobBase> jobs;
 	
 	/**
 	 * @generated
  	 */
-	public java.util.List<Job> getJobs(){
+	public java.util.List<JobBase> getJobs(){
     return jobs; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addJobs(Job obj) {
+   * @generated
+   */	
+  public void addJobs(JobBase obj) {
     if (jobs == null) {
-      jobs = new java.util.ArrayList<Job>();
+      jobs = new java.util.ArrayList<JobBase>();
     }
     jobs.add(obj);
   }
-	
+
+
 	/**
 	 * @generated
 	 */	
-	public void setJobs(java.util.List<Job> newVal) {
+	public void setJobs(java.util.List<JobBase> newVal) {
     this.jobs = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="chargesinvoicebase")
     @JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -674,13 +678,13 @@ public class InvoiceBase extends ModelBase {
 	public void setCharges(java.util.List<Charge> newVal) {
     this.charges = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="markupchargesinvoicebase")
     @JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;
 	
@@ -707,6 +711,7 @@ public class InvoiceBase extends ModelBase {
 	public void setMarkupCharges(java.util.List<ChargeDefinition> newVal) {
     this.markupCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -729,6 +734,7 @@ public class InvoiceBase extends ModelBase {
 	public void setSpecialInstructions(SpecialInstructions newVal) {
     this.specialInstructions = newVal;
   }
+	
  	
 	
 	/**
@@ -751,6 +757,7 @@ public class InvoiceBase extends ModelBase {
 	public void setNotes(NotePad newVal) {
     this.notes = newVal;
   }
+	
  	
 	
 	/**
@@ -773,6 +780,7 @@ public class InvoiceBase extends ModelBase {
 	public void setHoldState(HoldState newVal) {
     this.holdState = newVal;
   }
+	
  	
 	
 	/**
@@ -795,6 +803,7 @@ public class InvoiceBase extends ModelBase {
 	public void setOrderedDate(Date newVal) {
     this.orderedDate = newVal;
   }
+	
  	
 	
 	/**
@@ -817,6 +826,7 @@ public class InvoiceBase extends ModelBase {
 	public void setWantedDate(Date newVal) {
     this.wantedDate = newVal;
   }
+	
  	
 	
 	/**
@@ -839,6 +849,7 @@ public class InvoiceBase extends ModelBase {
 	public void setProofDate(Date newVal) {
     this.proofDate = newVal;
   }
+	
  	
 	
 	/**
@@ -861,6 +872,7 @@ public class InvoiceBase extends ModelBase {
 	public void setCompletedDate(Date newVal) {
     this.completedDate = newVal;
   }
+	
  	
 	
 	/**
@@ -883,6 +895,7 @@ public class InvoiceBase extends ModelBase {
 	public void setCustomerNotificationDate(Date newVal) {
     this.customerNotificationDate = newVal;
   }
+	
  	
 	
 	/**
@@ -905,6 +918,7 @@ public class InvoiceBase extends ModelBase {
 	public void setPickupDate(Date newVal) {
     this.pickupDate = newVal;
   }
+	
  	
 	
 	/**
@@ -927,6 +941,7 @@ public class InvoiceBase extends ModelBase {
 	public void setReorderDate(Date newVal) {
     this.reorderDate = newVal;
   }
+	
  	
 	
 	/**
@@ -949,6 +964,7 @@ public class InvoiceBase extends ModelBase {
 	public void setLocationChangeDate(Date newVal) {
     this.locationChangeDate = newVal;
   }
+	
  	
 	
 	/**
@@ -971,6 +987,7 @@ public class InvoiceBase extends ModelBase {
 	public void setDeliveryIntentDate(Date newVal) {
     this.deliveryIntentDate = newVal;
   }
+	
  	
 	
 	/**
@@ -988,19 +1005,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setShipCharges(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setShipCharges(BigDecimal newVal) {
     this.shipCharges = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setShipCharges(double newVal) {
+	 * @generated
+	 */	
+	public void setShipCharges(double newVal) {
     this.shipCharges = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1021,6 +1039,7 @@ public class InvoiceBase extends ModelBase {
 	public void setMarkups(Double newVal) {
     this.markups = newVal;
   }
+	
  	
 	
 	/**
@@ -1043,6 +1062,7 @@ public class InvoiceBase extends ModelBase {
 	public void setDiscountFactor(Double newVal) {
     this.discountFactor = newVal;
   }
+	
  	
 	
 	/**
@@ -1060,19 +1080,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setDollarDiscount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setDollarDiscount(BigDecimal newVal) {
     this.dollarDiscount = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setDollarDiscount(double newVal) {
+	 * @generated
+	 */	
+	public void setDollarDiscount(double newVal) {
     this.dollarDiscount = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1093,6 +1114,7 @@ public class InvoiceBase extends ModelBase {
 	public void setDiscount(Double newVal) {
     this.discount = newVal;
   }
+	
  	
 	
 	/**
@@ -1115,6 +1137,7 @@ public class InvoiceBase extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
  	
 	
 	/**
@@ -1132,19 +1155,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSubTotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSubTotal(BigDecimal newVal) {
     this.subTotal = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setSubTotal(double newVal) {
+	 * @generated
+	 */	
+	public void setSubTotal(double newVal) {
     this.subTotal = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1160,19 +1184,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setGrandTotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setGrandTotal(BigDecimal newVal) {
     this.grandTotal = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setGrandTotal(double newVal) {
+	 * @generated
+	 */	
+	public void setGrandTotal(double newVal) {
     this.grandTotal = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1188,19 +1213,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAmountDue(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAmountDue(BigDecimal newVal) {
     this.amountDue = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAmountDue(double newVal) {
+	 * @generated
+	 */	
+	public void setAmountDue(double newVal) {
     this.amountDue = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1216,19 +1242,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(double newVal) {
     this.totalCost = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1249,6 +1276,7 @@ public class InvoiceBase extends ModelBase {
 	public void setAddressOverriden(Boolean newVal) {
     this.addressOverriden = newVal;
   }
+	
  	
 	
 	/**
@@ -1271,6 +1299,7 @@ public class InvoiceBase extends ModelBase {
 	public void setCosted(Boolean newVal) {
     this.costed = newVal;
   }
+	
  	
 	
 	/**
@@ -1293,6 +1322,7 @@ public class InvoiceBase extends ModelBase {
 	public void setOpenNotesOnOpen(Integer newVal) {
     this.openNotesOnOpen = newVal;
   }
+	
  	
 	
 	/**
@@ -1315,6 +1345,7 @@ public class InvoiceBase extends ModelBase {
 	public void setCompleted(Boolean newVal) {
     this.completed = newVal;
   }
+	
  	
 	
 	/**
@@ -1337,6 +1368,7 @@ public class InvoiceBase extends ModelBase {
 	public void setPriceLocked(Boolean newVal) {
     this.priceLocked = newVal;
   }
+	
  	
 	
 	/**
@@ -1359,6 +1391,7 @@ public class InvoiceBase extends ModelBase {
 	public void setOnPendingList(Boolean newVal) {
     this.onPendingList = newVal;
   }
+	
  	
 	
 	/**
@@ -1381,6 +1414,7 @@ public class InvoiceBase extends ModelBase {
 	public void setLocked(Boolean newVal) {
     this.locked = newVal;
   }
+	
  	
 	
 	/**
@@ -1403,6 +1437,7 @@ public class InvoiceBase extends ModelBase {
 	public void setTaxShipping(Boolean newVal) {
     this.taxShipping = newVal;
   }
+	
  	
 	
 	/**
@@ -1425,6 +1460,7 @@ public class InvoiceBase extends ModelBase {
 	public void setPoRequired(Boolean newVal) {
     this.poRequired = newVal;
   }
+	
  	
 	
 	/**
@@ -1447,6 +1483,7 @@ public class InvoiceBase extends ModelBase {
 	public void setFileOriginals(Boolean newVal) {
     this.fileOriginals = newVal;
   }
+	
  	
 	
 	/**
@@ -1469,6 +1506,7 @@ public class InvoiceBase extends ModelBase {
 	public void setNotTaxable(Boolean newVal) {
     this.notTaxable = newVal;
   }
+	
  	
 	
 	/**
@@ -1491,6 +1529,7 @@ public class InvoiceBase extends ModelBase {
 	public void setFirmWantedByDate(Boolean newVal) {
     this.firmWantedByDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1513,6 +1552,7 @@ public class InvoiceBase extends ModelBase {
 	public void setReleasedToProduction(Boolean newVal) {
     this.releasedToProduction = newVal;
   }
+	
  	
 	
 	/**
@@ -1530,19 +1570,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPriceTotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPriceTotal(BigDecimal newVal) {
     this.priceTotal = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setPriceTotal(double newVal) {
+	 * @generated
+	 */	
+	public void setPriceTotal(double newVal) {
     this.priceTotal = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1563,6 +1604,7 @@ public class InvoiceBase extends ModelBase {
 	public void setContainsInventoriedStock(Boolean newVal) {
     this.containsInventoriedStock = newVal;
   }
+	
  	
 	
 	/**
@@ -1585,6 +1627,7 @@ public class InvoiceBase extends ModelBase {
 	public void setDiscountIsDollars(Boolean newVal) {
     this.discountIsDollars = newVal;
   }
+	
  	
 	
 	/**
@@ -1607,6 +1650,7 @@ public class InvoiceBase extends ModelBase {
 	public void setDiscountIsOneTime(Boolean newVal) {
     this.discountIsOneTime = newVal;
   }
+	
  	
 	
 	/**
@@ -1629,6 +1673,7 @@ public class InvoiceBase extends ModelBase {
 	public void setTakenBy(String newVal) {
     this.takenBy = newVal;
   }
+	
  	
 	
 	/**
@@ -1646,19 +1691,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPriceSubTotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPriceSubTotal(BigDecimal newVal) {
     this.priceSubTotal = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setPriceSubTotal(double newVal) {
+	 * @generated
+	 */	
+	public void setPriceSubTotal(double newVal) {
     this.priceSubTotal = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1674,19 +1720,20 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setShipPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setShipPrice(BigDecimal newVal) {
     this.shipPrice = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setShipPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setShipPrice(double newVal) {
     this.shipPrice = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1702,19 +1749,18 @@ public class InvoiceBase extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTax(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTax(BigDecimal newVal) {
     this.tax = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setTax(double newVal) {
+	 * @generated
+	 */	
+	public void setTax(double newVal) {
     this.tax = BigDecimal.valueOf(newVal);
   }
-
 	/**
 	 * @generated
 	 */		
@@ -1804,7 +1850,7 @@ public class InvoiceBase extends ModelBase {
     if (SHIPPINGMETHOD.equals(propertyName)) setShippingMethod((ShippingMethod)newValue); else
     if (PRINTCOUNT.equals(propertyName)) setPrintCount((Long)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (JOBS.equals(propertyName)) setJobs((java.util.List<Job>)newValue); else
+    if (JOBS.equals(propertyName)) setJobs((java.util.List<JobBase>)newValue); else
     if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
     if (MARKUPCHARGES.equals(propertyName)) setMarkupCharges((java.util.List<ChargeDefinition>)newValue); else
     if (SPECIALINSTRUCTIONS.equals(propertyName)) setSpecialInstructions((SpecialInstructions)newValue); else
@@ -1888,7 +1934,7 @@ public class InvoiceBase extends ModelBase {
     if (ACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
     if (JOBS.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, Job.class};		
+      return new Class<?>[] {java.util.List.class, JobBase.class};		
     if (CHARGES.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, Charge.class};		
     if (MARKUPCHARGES.equals(propertyName)) 

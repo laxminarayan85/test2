@@ -698,26 +698,26 @@ public class Charge extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
-	private Invoice parentInvoice;
+    @ManyToOne(fetch=FetchType.LAZY, optional=true)
+    @JoinColumn(name="parentinvoice_id", insertable=false, updatable=false)
+	private InvoiceBase parentInvoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getParentInvoice(){
+	public InvoiceBase getParentInvoice(){
     return parentInvoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setParentInvoice(InvoiceBase newVal) {
     this.parentInvoice = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -975,7 +975,7 @@ public class Charge extends ModelBase {
     if (UP.equals(propertyName)) setUp((Integer)newValue); else
     if (OVERRIDEUP.equals(propertyName)) setOverrideUp((Boolean)newValue); else
     if (PARENTJOB.equals(propertyName)) setParentJob((JobBase)newValue); else
-    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((Invoice)newValue); else
+    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     if (MINIMUMCHARGE.equals(propertyName)) setMinimumCharge((BigDecimal)newValue); else
     if (SETS.equals(propertyName)) setSets((Double)newValue); else
     if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
@@ -1038,7 +1038,7 @@ public class Charge extends ModelBase {
     if (PARENTJOB.equals(propertyName)) 
       return new Class<?>[] {JobBase.class};		
     if (PARENTINVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     if (MINIMUMCHARGE.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (SETS.equals(propertyName)) 

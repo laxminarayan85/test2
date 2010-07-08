@@ -35,7 +35,7 @@ package com.efi.printsmith.data
 		public var up:int = 0;
 		public var overrideUp:Boolean = false;
 		public var parentJob:JobBase;
-		public var parentInvoice:Invoice;
+		public var parentInvoice:InvoiceBase;
 		public var minimumCharge:Number = 0;
 		public var sets:Number = 0;
 		public var materialSets:Number = 0;

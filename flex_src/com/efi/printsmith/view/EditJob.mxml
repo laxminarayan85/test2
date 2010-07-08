@@ -774,7 +774,7 @@
 			private function doNew():void
 			{
 				job=new Job();
-				job.parentInvoice = null;//invoice as InvoiceBase;
+				job.parentInvoice = invoice as InvoiceBase;
 				setJob(job);
 			}
 			
@@ -834,7 +834,7 @@
 			public function setInvoice(invoice:Invoice):void
 			{
 				this.invoice=invoice;
-				this.job.parentInvoice;// = invoice as InvoiceBase;
+				this.job.parentInvoice = invoice as InvoiceBase;
 			}
 
 			private function doGet():void
@@ -919,6 +919,7 @@
 					job.markup = parseFloat(job_markup.text);
 				job.specialOrderStock = specialOrder.selected;
 				job.customerSuppliedStock = customer_suppliled_stock.selected;
+				job.parentInvoice = this.invoice;
 			}
 
 			private function mapFromJobData():void

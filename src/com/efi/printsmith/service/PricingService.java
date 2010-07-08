@@ -86,8 +86,8 @@ public class PricingService extends SnowmassHibernateService {
 			}
 		}
 		if (invoice.getJobs() != null) {
-			for (Job job : invoice.getJobs()) {
-				priceJob(job);
+			for (JobBase job : invoice.getJobs()) {
+				priceJob((Job)job);
 			}
 			
 			invoice.setPriceTotal(0.0);

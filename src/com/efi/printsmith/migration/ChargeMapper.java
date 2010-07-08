@@ -10,6 +10,7 @@ import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.InvoiceBase;
 
 public class ChargeMapper extends ImportMapper {
@@ -93,10 +94,10 @@ public class ChargeMapper extends ImportMapper {
 		if (documentNumber.equals("") == false && jobNumber.equals("") == false) {
 			InvoiceBase invoice = (InvoiceBase)dataService.getInvoiceByInvoiceNumber(documentNumber, documentType);
 			if (invoice != null) {
-				List<Job> jobs = invoice.getJobs();
+				List<JobBase> jobs = invoice.getJobs();
 				for (int i = 0; i < jobs.size(); i++) {
 					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
-						Job job = jobs.get(i);
+						JobBase job = jobs.get(i);
 						job.addCharges(charge);
 						dataService.addUpdate(job);
 					}
