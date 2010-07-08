@@ -43,6 +43,15 @@ import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
 import flex.messaging.io.ArrayList;
 
 public class PriceListService extends SnowmassHibernateService {
+	protected static final String PERSISTENCE_UNIT = "printsmith_db";
+
+	protected static Logger log = Logger.getLogger(PriceListService.class);
+	
+//	protected static EntityManagerFactory entityManagerFactory = null;
+	
+	public PriceListService() {
+		super();
+	}
 	@SuppressWarnings("unchecked")
 	public List getCopierPriceList(CopierDefinition copierDefinition) {
 		DataService dataService = new DataService();
@@ -53,73 +62,76 @@ public class PriceListService extends SnowmassHibernateService {
 		List sideOnePerList = new ArrayList();
 		List sideTwoPerList = new ArrayList();
 		List<PreferencesQuantityBreaks>	quantityBreaks = (List<PreferencesQuantityBreaks>)dataService.getAll("PreferencesQuantityBreaks");
+		if (quantityBreaks.size() == 0) {
+			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
+		}
 		for (int i=0;i<quantityBreaks.size();i++) {
 			long qty = quantityBreaks.get(i).getQuantity();
 			double price = 0.0;
 			qtyList.add(qty);
 			if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.TotalOfAllCopies.name())) {
 				price = getTotalAllCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getTotalAllCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.FlatRate.name())) {
 				price = getFlatRatePrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getFlatRatePrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {
 				price = getCostPlusPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getCostPlusPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
 				price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getCopiesPerOriginalPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
 				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
 				price = getTotalOfSquareAreaPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getTotalOfSquareAreaPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
 				price = getSquareAreaPerCopyPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getSquareAreaPerCopyPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
 				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
 				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(price);
-				sideOnePerList.add(price / qty);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(price);
-				sideTwoPerList.add(price / qty);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			}
 		}
 		returnList.add(qtyList);
@@ -128,6 +140,55 @@ public class PriceListService extends SnowmassHibernateService {
 		returnList.add(sideOnePerList);
 		returnList.add(sideTwoPerList);
 		return returnList;
+	}
+	
+	public List<PreferencesQuantityBreaks> defaultQuantityBreaks(List<PreferencesQuantityBreaks> breaks) {
+		PreferencesQuantityBreaks quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(1);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(10);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(50);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(100);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(250);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(500);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(750);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(1000);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(1500);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(2000);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(2500);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(5000);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(7500);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(10000);
+		breaks.add(quantityBreak);
+		quantityBreak = new PreferencesQuantityBreaks();
+		quantityBreak.setQuantity(15000);
+		breaks.add(quantityBreak);
+		return breaks;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -140,15 +201,19 @@ public class PriceListService extends SnowmassHibernateService {
 		List sideOnePerList = new ArrayList();
 		List sideTwoPerList = new ArrayList();
 		List<PreferencesQuantityBreaks>	quantityBreaks = (List<PreferencesQuantityBreaks>)dataService.getAll("PreferencesQuantityBreaks");
+		if (quantityBreaks.size() == 0) {
+			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
+		}
 		for (int i=0;i<quantityBreaks.size();i++) {
 			double price = 0.0;
 			long qty = quantityBreaks.get(i).getQuantity();
+			qtyList.add(qty);
 			price = getPrintPrice(pressDefinition, qty, false);
-			sideOneList.add(price);
-			sideOnePerList.add(price / qty);
+			sideOneList.add(new Double(Math.round(price * 100)) / 100);
+			sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 			price = getPrintPrice(pressDefinition, qty, true);
-			sideTwoList.add(price);
-			sideTwoPerList.add(price / qty);
+			sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+			sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
 		}	
 		returnList.add(qtyList);
 		returnList.add(sideOneList);
@@ -168,6 +233,9 @@ public class PriceListService extends SnowmassHibernateService {
 		List sideOnePerList = new ArrayList();
 		List sideTwoPerList = new ArrayList();
 		List<PreferencesQuantityBreaks>	quantityBreaks = (List<PreferencesQuantityBreaks>)dataService.getAll("PreferencesQuantityBreaks");
+		if (quantityBreaks.size() == 0) {
+			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
+		}
 		for (int i=0;i<quantityBreaks.size();i++) {
 			long qty = quantityBreaks.get(i).getQuantity();
 			double price = 0.0;

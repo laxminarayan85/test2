@@ -8,47 +8,53 @@
 		<mx:State name="Standard">
 			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:SetProperty name="showCloseButton" value="true"/>
-			<mx:SetProperty name="height" value="674"/>
+			<mx:SetProperty name="height" value="564"/>
 			<mx:SetProperty name="width" value="596"/>
 			<mx:RemoveChild target="{image1}"/>
 			<mx:RemoveChild target="{canvas1}"/>
 			<mx:RemoveChild target="{panel1}"/>
 			<mx:SetProperty name="title" value="View Price List"/>
 			<mx:AddChild position="lastChild">
-				<mx:Canvas width="581" height="609">
-					<mx:DataGrid width="101" x="22" y="95" height="495" id="qty_grid">
+				<mx:Canvas width="581" height="506">
+					<mx:DataGrid width="101" x="22" y="95" height="399" id="qty_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="Quantity" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="131" y="95" height="495" id="price_grid">
+					<mx:DataGrid width="101" x="131" y="95" height="399" id="price_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="1 Side" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="240" y="95" height="495" id="price_per_grid">
+					<mx:DataGrid width="101" x="240" y="95" height="399" id="price_per_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="2 Sides" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="349" y="95" height="495" id="price_two_grid">
+					<mx:DataGrid width="101" x="349" y="95" height="399" id="price_two_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="1 Side per each" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:DataGrid width="101" x="458" y="95" height="495" id="price_two_per_grid">
+					<mx:DataGrid width="101" x="458" y="95" height="399" id="price_two_per_grid" editable="false" enabled="false">
 						<mx:columns>
 							<mx:DataGridColumn headerText="2 Sides per each" dataField="col1"/>
 						</mx:columns>
 					</mx:DataGrid>
-					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none"/>
+					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none" editable="false" enabled="false" fontSize="20" textAlign="center"/>
 				</mx:Canvas>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="Extended"/>
 	</mx:states>
 	<mx:RemoteObject id="priceListService" destination="priceListService">
-		<mx:method name="priceListService"
+		<mx:method name="getCopierPriceList"
+					fault="handleFault(event)"
+					result="handlePriceListResult(event)"/>
+		<mx:method name="getPressPriceList"
+					fault="handleFault(event)"
+					result="handlePriceListResult(event)"/>
+		<mx:method name="getStockPriceList"
 					fault="handleFault(event)"
 					result="handlePriceListResult(event)"/>
 	</mx:RemoteObject>
@@ -95,13 +101,11 @@
 	public function setCopierDefinition(copier:CopierDefinition):void {
 		copierDefinition = copier as CopierDefinition;
 		priceListService.getCopierPriceList(copierDefinition);
-		this.header_text.text = copierDefinition.name;
 	}
 	
 	public function setPressDefinition(press:PressDefinition):void {
 		pressDefinition = press as PressDefinition;
 		priceListService.getPressPriceList(pressDefinition);
-		this.header_text.text = pressDefinition.name;
 	}
 	
 	private function handlePriceListResult(evt:ResultEvent):void {
@@ -116,6 +120,10 @@
 		this.price_per_grid.dataProvider = pricePerArray;
 		this.price_two_grid.dataProvider = priceTwoArray;
 		this.price_two_per_grid.dataProvider = priceTwoPerArray;
+		if (this.copierDefinition != null)
+			this.header_text.text = this.copierDefinition.name;
+		if (this.pressDefinition != null)
+			this.header_text.text = this.pressDefinition.name;
 	}
 
 	private function handleFault(ev:FaultEvent):void {

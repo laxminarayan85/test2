@@ -193,5 +193,12 @@
 	</destination>
 	<destination id="priceListService">
 		<properties>
-			<source>com.efi.printsmith.service.PriceListService</source></properties></destination>
+			<source>
+				com.efi.printsmith.service.PriceListService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
 </service>
