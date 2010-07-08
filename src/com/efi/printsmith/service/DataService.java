@@ -834,7 +834,7 @@ public class DataService extends HibernateService {
 		log.debug("** getByLocationName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from ProductionLocation where name = '" + name + "'";
+			String queryString = "from ProductionLocations where name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			ProductionLocations object = (ProductionLocations) query.getSingleResult();
 			return object;

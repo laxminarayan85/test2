@@ -1034,7 +1034,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 							prodLocation.setName(currentImportToken);
 							prodLocation = (ProductionLocations)dataService.addUpdate(prodLocation);
 						}
-						copierDefinition.setProductionLocation(currentImportToken);	
+						copierDefinition.setProductionLocation(prodLocation.getName());	
 					}
 					
 				} else if ("cost center ID".equals(currentFieldToken)) {

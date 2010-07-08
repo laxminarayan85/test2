@@ -56,8 +56,10 @@
 
 			public function saveAddressHandler(evt:SaveAddressEvent):void {
 				this.address = evt.address;
-				if (newAddress)
+				if (newAddress){
 					addresses.addItem(this.address);
+					newAddress = false;
+				}
 				//updateDisplayAddress();
 			}
 			private function doDelete():void{
@@ -76,7 +78,7 @@
 			public function setAddress(addr:Address):void
 			{
 				this.address=addr;
-				updateDisplayAddress();
+				updateDisplayAddress(addr);
 			}
 			public function setAddresses(addrs:ArrayCollection):void{
 				addresses= addrs;
@@ -85,46 +87,45 @@
 			{
 				addressLabel = labeltemp;
 			}
-			private function updateDisplayAddress():void
+			private function updateDisplayAddress(item:Object):String
 			{
 				displayAddress="";
-				if (address != null){
+				
+				if (item != null){
 					
-					if (address.name != null && address.name != "")
+					if (item.name != null && item.name != "")
 					{
-						displayAddress+=address.name + "\n";
+						displayAddress+=item.name + " \\";
 					}
 	
-					if (address.street1 != null && address.name != "")
+					if (item.street1 != null && item.name != "\\")
 					{
-						displayAddress+=address.street1 + "\n";
+						displayAddress+=item.street1 + " ";
 					}
 	
-					if (address.street2 != null && address.street2 != "")
+					if (item.street2 != null && item.street2 != "")
 					{
-						displayAddress+=address.street2 + "\n";
+						displayAddress+=item.street2 + "\\";
 					}
 	
-					if (address.city != null && address.city != null && address.city != "")
+					if (item.city != null && item.city != null && item.city != "")
 					{
-						displayAddress+=address.city + ", ";
+						displayAddress+=item.city + ", ";
 					}
 	
-					if (address.state != null && address.state != null && address.state != "")
+					if (item.state != null && item.state != null && item.state != "")
 					{
-						displayAddress+=address.state + " ";
+						displayAddress+=item.state + " ";
 					}
 	
-					if (address.zip != null && address.zip != null && address.zip != "")
+					if (item.zip != null && item.zip != null && item.zip != "")
 					{
-						displayAddress+=address.zip;
+						displayAddress+=item.zip;
 					}
 	
-					if (address.country != null && address.country != null && address.country != "")
-					{
-						displayAddress+="\n" + address.country;
-					}
+					
 				}
+				return(displayAddress);
 			}
 
 			private function activateEditAddress():void
@@ -135,12 +136,16 @@
 			private function popupClose(event:CloseEvent):void
 			{
 				address=titleWindow.getAddress();
-				updateDisplayAddress();
+				updateDisplayAddress(this.address);
 			}
 			private function doNew():void{
 					address = new Address();
 					newAddress = true;
 					doEditAddress();
+			}
+			
+			private function doselectedAddress():void{
+				address= address_list.selectedItem as Address;
 			}
 			private function doEditAddress():void
 			{
@@ -167,6 +172,7 @@
 				pos=address_panel.localToGlobal(pos);
 				titleWindow.x=pos.x;
 				titleWindow.y=pos.y;
+				
 			}
 		]]>
 	</mx:Script>
@@ -183,7 +189,7 @@
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
 					   click="doEditAddress();"/>
-		<mx:List x="21" y="10" dataProvider="{addresses}" id="address_list" labelField="name" width="291" height="131"></mx:List>
+		<mx:List x="21" y="10" dataProvider="{addresses}" click="doselectedAddress();" id="address_list" labelFunction="updateDisplayAddress" width="291" height="131"></mx:List>
 		<mx:LinkButton x="102" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();"/>
 		<mx:LinkButton x="21" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();"/>
 	</mx:Panel>

@@ -11,6 +11,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.CostCenter;
 import com.efi.printsmith.data.PreferencesSequenceValues;
+import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.PreferencesDefaultPresses;
@@ -216,7 +217,16 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("production location ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("production location".equals(currentFieldToken)) {
-				pressDefinition.setProductionLocation(currentImportToken);
+				if (currentImportToken.equals("") == false) {
+					ProductionLocations prodLocation = dataService
+							.getByLocationName(currentImportToken);
+					if (prodLocation == null){
+						prodLocation = new ProductionLocations();
+						prodLocation.setName(currentImportToken);
+						prodLocation = (ProductionLocations)dataService.addUpdate(prodLocation);
+					}
+					pressDefinition.setProductionLocation(prodLocation.getName());	
+				}
 			} else if ("cost center ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("cost center".equals(currentFieldToken)) {
