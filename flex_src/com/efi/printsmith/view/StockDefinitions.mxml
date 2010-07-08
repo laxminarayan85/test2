@@ -62,12 +62,13 @@
 			<mx:RemoveChild target="{rollweight}"/>
 			<mx:SetProperty target="{label7}" name="x" value="-23"/>
 			<mx:SetProperty target="{label7}" name="width" value="121.5"/>
-			<mx:SetProperty target="{panel1}" name="x" value="549"/>
+			<mx:SetProperty target="{panel1}" name="x" value="632"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 			<mx:SetProperty target="{pcwRecycled}" name="x" value="152"/>
 			<mx:SetProperty target="{label12}" name="width" value="134"/>
 			<mx:SetProperty target="{pcwRecycled}" name="width" value="32.5"/>
+			<mx:SetProperty target="{panel1}" name="y" value="0"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -1171,7 +1172,8 @@
 
 	private function mapStockDefinitionData():void {
 	 //stockDefinition.stockDefID = stockDefID;
-	 
+	 	var percentvalue:String;
+	 	var index:int;
 	 //combobox and select box values
 	 if (cboStockGrade != null && cboStockGrade.selectedItem != null) 
 	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
@@ -1276,7 +1278,13 @@
 	 stockDefinitions.listPerM6 = parseFloat(ListPerM6.text);
 	 
 	 stockDefinitions.forestManagement = forestMgmt.text;
-	 stockDefinitions.pcwRecycledPercent = pcwRecycled.text as Number;
+	 index = pcwRecycled.text.indexOf('%',0);
+	 if ( index == -1){
+		pcwRecycled.text = pcwRecycled.text + '%';
+		index = pcwRecycled.text.indexOf('%',0);
+		}
+	 percentvalue = pcwRecycled.text.substr(0,index);
+	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) ;
 	 
 	 stockDefinitions.normalRunSize.name = NormalRunSize.text;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
@@ -1422,7 +1430,14 @@
 		} else {
 			return "None";
 		}
-	}    
+	}  
+	private function addSymbol():void{
+		var index:int;
+		index = pcwRecycled.text.indexOf('%',0);
+		if ( index == -1){
+			pcwRecycled.text = pcwRecycled.text + '%';
+		}
+	}  
 
 ]]>
                              
@@ -1459,9 +1474,9 @@
 	<mx:RadioButton x="636" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"/>
 	<mx:RadioButton x="636" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
 
-	<mx:TabNavigator x="10" y="166" width="907" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
+	<mx:TabNavigator x="10" y="166" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SpecificationandPric')}" id="page_specification_and_pricing" width="100%" height="100%">
-			<mx:Panel x="14.5" y="0" width="880.5" height="225" layout="absolute" dropShadowEnabled="false">
+			<mx:Panel x="14.5" y="0" width="926.5" height="225" layout="absolute" dropShadowEnabled="false">
 				<mx:Label x="0" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Vendor')}" textAlign="right" width="98.5"/>
 				<mx:Label x="1" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.StockType')}" textAlign="right" width="97.5" id="label6"/>
 				<mx:Label x="276" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
@@ -1491,7 +1506,7 @@
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
 				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="103" height="22"/>
 				<mx:ComboBox x="448" y="60" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
-				<mx:Panel x="598" y="7" width="252.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
+				<mx:Panel x="667" y="-2" width="229.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
 					<mx:Label x="26.25" y="1" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ForestManagement')}"/>
 					<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PCWRecycled')}" width="97.75" textAlign="right" id="label12"/>
 					<mx:CheckBox x="10" y="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.FSCCertified')}" id="chkfscCertified" selected="{stockDefinitions.fscCertified}"/>
@@ -1499,10 +1514,10 @@
 					<mx:CheckBox x="10" y="104" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GreenSealCertified')}" id="chkgreensealCertified" selected="{stockDefinitions.greenSealCertified}"/>
 
 					<mx:TextInput x="10" y="20" width="153.5" id="forestMgmt" text="{stockDefinitions.forestManagement}"/>
-					<mx:TextInput x="115.75" y="44" width="47.75" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}"/>
+					<mx:TextInput x="115.75" y="44" width="67.75" focusOut="addSymbol()" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}%"/>
 
 				</mx:Panel>
-				<mx:CheckBox x="467.5" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
+				<mx:CheckBox x="467.5" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false">
 				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right"/>
