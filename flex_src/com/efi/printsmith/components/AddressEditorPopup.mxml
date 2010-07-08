@@ -45,8 +45,8 @@
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
     <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
-    <fc:AutoComplete  id="statecombo" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" lookAhead="true" width="46"/>
-    <mx:ComboBox id="zipcombo" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
+    <fc:AutoComplete id="statecombo" restrict="A-Z" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" lookAhead="true" width="46"/>
+    <mx:ComboBox id="zipcombo"  restrict="0-9" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
     <fc:AutoComplete id="countrycombo" x="224" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="175"/>
     	
     <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
