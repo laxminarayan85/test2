@@ -632,24 +632,10 @@
   	    stockDefinitions.parentsize = new Dimension();
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
+    	stockDefinitions.normalRunSize = new Dimension();
   	   
   	    standardItemCheckEvent();
-  	    //cej
-  	    cboStockGroup.selectedIndex = -1;
-  	    cboStockGroup.text = "";
-  	    cbostockClass.selectedIndex =-1;
-  	    cbostockClass.text = "";
-  	    cboFinish.selectedIndex = -1;
-  	    cboFinish.text = "";
-  	    cbostkcolor.selectedIndex = -1;
-  	    cbostkcolor.text = " ";
-  	    cboGenericColor.selectedIndex = -1;
-  	    cboGenericColor.text = " ";
-  	    cboStockGrade.selectedIndex = -1;
-  	    cboStockGrade.text = "";
-  	    cboVendor.selectedIndex =-1;
-  	    cboVendor.text = " ";
-  	     setStockDefinition(stockDefinitions);
+  	      setStockDefinition(stockDefinitions);
   	    
 	}       
 
@@ -1175,6 +1161,9 @@
 	 	var percentvalue:String;
 	 	var index:int;
 	 //combobox and select box values
+	 
+	 if (stkType != null && stkType.selectedItem != null)
+	 	stockDefinitions.stktype = stkType.selectedItem as StockType;
 	 if (cboStockGrade != null && cboStockGrade.selectedItem != null) 
 	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
 
