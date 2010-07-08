@@ -125,6 +125,7 @@
 	    switch (this.itemType) {
 	    case "WasteChart":
 	    	newPriceList = new WasteChart();
+	    	newPriceList.interpolate = true;
 	    	break;
 	    case "PriceList":
 	    	newPriceList = new PriceList();
