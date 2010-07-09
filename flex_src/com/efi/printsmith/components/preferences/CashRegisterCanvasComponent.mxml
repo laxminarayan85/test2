@@ -121,7 +121,7 @@
 								<mx:Component>
 									<components:CustomComboBoxComponent datagridControl="true" variableName="category"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-										masterList="{outerDocument.salesCategoryArray}" 
+										masterList="{outerDocument.salesCategoryArray}" updateFirstElement="true"
 										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data)}"/>
 								</mx:Component>
 							</mx:itemEditor>
@@ -156,7 +156,7 @@
 								<mx:Component>
 									<components:CustomComboBoxComponent datagridControl="true" variableName="taxTable"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-										masterList="{outerDocument.taxTablesArray}" 
+										masterList="{outerDocument.taxTablesArray}" updateFirstElement="true"
 										customText="{outerDocument.getCustomTextData(outerDocument.taxTablesArray,data)}"/>
 								</mx:Component>
 							</mx:itemEditor>
@@ -174,7 +174,7 @@
 								<mx:Component>
 									<components:CustomComboBoxComponent datagridControl="true" variableName="taxCodes"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-										masterList="{outerDocument.taxCodesArray}" 
+										masterList="{outerDocument.taxCodesArray}" updateFirstElement="true"
 										customText="{outerDocument.getCustomTextData(outerDocument.taxCodesArray,data)}"/>
 								</mx:Component>
 							</mx:itemEditor>
