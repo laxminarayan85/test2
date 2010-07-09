@@ -2,6 +2,7 @@
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -555,7 +556,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyLabor(BigDecimal newVal) {
     this.monthlyLabor = newVal;
-    this.monthlyLabor.setScale(2);
+    this.monthlyLabor.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -563,7 +564,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyLabor(double newVal) {
     this.monthlyLabor = BigDecimal.valueOf(newVal);
-    this.monthlyLabor.setScale(2);
+    this.monthlyLabor.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -586,7 +587,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setClickCost(BigDecimal newVal) {
     this.clickCost = newVal;
-    this.clickCost.setScale(2);
+    this.clickCost.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -594,7 +595,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setClickCost(double newVal) {
     this.clickCost = BigDecimal.valueOf(newVal);
-    this.clickCost.setScale(2);
+    this.clickCost.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -617,7 +618,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setLaborCopy(BigDecimal newVal) {
     this.laborCopy = newVal;
-    this.laborCopy.setScale(2);
+    this.laborCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -625,7 +626,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setLaborCopy(double newVal) {
     this.laborCopy = BigDecimal.valueOf(newVal);
-    this.laborCopy.setScale(2);
+    this.laborCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -736,7 +737,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyPayment(BigDecimal newVal) {
     this.monthlyPayment = newVal;
-    this.monthlyPayment.setScale(2);
+    this.monthlyPayment.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -744,7 +745,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyPayment(double newVal) {
     this.monthlyPayment = BigDecimal.valueOf(newVal);
-    this.monthlyPayment.setScale(2);
+    this.monthlyPayment.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -789,7 +790,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setHourCostRate(BigDecimal newVal) {
     this.hourCostRate = newVal;
-    this.hourCostRate.setScale(2);
+    this.hourCostRate.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -797,7 +798,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setHourCostRate(double newVal) {
     this.hourCostRate = BigDecimal.valueOf(newVal);
-    this.hourCostRate.setScale(2);
+    this.hourCostRate.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -820,7 +821,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setTonerCopy(BigDecimal newVal) {
     this.tonerCopy = newVal;
-    this.tonerCopy.setScale(2);
+    this.tonerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -828,7 +829,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setTonerCopy(double newVal) {
     this.tonerCopy = BigDecimal.valueOf(newVal);
-    this.tonerCopy.setScale(2);
+    this.tonerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -851,7 +852,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setDeveloperCopy(BigDecimal newVal) {
     this.developerCopy = newVal;
-    this.developerCopy.setScale(2);
+    this.developerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -859,7 +860,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setDeveloperCopy(double newVal) {
     this.developerCopy = BigDecimal.valueOf(newVal);
-    this.developerCopy.setScale(2);
+    this.developerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -926,7 +927,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyMaintenance(BigDecimal newVal) {
     this.monthlyMaintenance = newVal;
-    this.monthlyMaintenance.setScale(2);
+    this.monthlyMaintenance.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -934,7 +935,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyMaintenance(double newVal) {
     this.monthlyMaintenance = BigDecimal.valueOf(newVal);
-    this.monthlyMaintenance.setScale(2);
+    this.monthlyMaintenance.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -957,7 +958,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMachineCostPerCopy(BigDecimal newVal) {
     this.machineCostPerCopy = newVal;
-    this.machineCostPerCopy.setScale(2);
+    this.machineCostPerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -965,7 +966,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMachineCostPerCopy(double newVal) {
     this.machineCostPerCopy = BigDecimal.valueOf(newVal);
-    this.machineCostPerCopy.setScale(2);
+    this.machineCostPerCopy.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -1054,7 +1055,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyBurdenRate(BigDecimal newVal) {
     this.monthlyBurdenRate = newVal;
-    this.monthlyBurdenRate.setScale(2);
+    this.monthlyBurdenRate.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -1062,7 +1063,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMonthlyBurdenRate(double newVal) {
     this.monthlyBurdenRate = BigDecimal.valueOf(newVal);
-    this.monthlyBurdenRate.setScale(2);
+    this.monthlyBurdenRate.setScale(2, RoundingMode.HALF_UP);
   }
 
 	/**

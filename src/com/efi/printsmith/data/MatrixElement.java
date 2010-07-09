@@ -2,6 +2,7 @@
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -179,7 +180,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice1(BigDecimal newVal) {
     this.price1 = newVal;
-    this.price1.setScale(4);
+    this.price1.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -188,7 +189,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice1(double newVal) {
     this.price1 = BigDecimal.valueOf(newVal);
-    this.price1.setScale(4);
+    this.price1.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -212,7 +213,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice12(BigDecimal newVal) {
     this.price12 = newVal;
-    this.price12.setScale(4);
+    this.price12.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -221,7 +222,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice12(double newVal) {
     this.price12 = BigDecimal.valueOf(newVal);
-    this.price12.setScale(4);
+    this.price12.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -245,7 +246,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice2(BigDecimal newVal) {
     this.price2 = newVal;
-    this.price2.setScale(4);
+    this.price2.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -254,7 +255,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice2(double newVal) {
     this.price2 = BigDecimal.valueOf(newVal);
-    this.price2.setScale(4);
+    this.price2.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -278,7 +279,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice13(BigDecimal newVal) {
     this.price13 = newVal;
-    this.price13.setScale(4);
+    this.price13.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -287,7 +288,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice13(double newVal) {
     this.price13 = BigDecimal.valueOf(newVal);
-    this.price13.setScale(4);
+    this.price13.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -311,7 +312,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice3(BigDecimal newVal) {
     this.price3 = newVal;
-    this.price3.setScale(4);
+    this.price3.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -320,7 +321,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice3(double newVal) {
     this.price3 = BigDecimal.valueOf(newVal);
-    this.price3.setScale(4);
+    this.price3.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -344,7 +345,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice14(BigDecimal newVal) {
     this.price14 = newVal;
-    this.price14.setScale(4);
+    this.price14.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -353,7 +354,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice14(double newVal) {
     this.price14 = BigDecimal.valueOf(newVal);
-    this.price14.setScale(4);
+    this.price14.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -377,7 +378,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice4(BigDecimal newVal) {
     this.price4 = newVal;
-    this.price4.setScale(4);
+    this.price4.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -386,7 +387,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice4(double newVal) {
     this.price4 = BigDecimal.valueOf(newVal);
-    this.price4.setScale(4);
+    this.price4.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -410,7 +411,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice15(BigDecimal newVal) {
     this.price15 = newVal;
-    this.price15.setScale(4);
+    this.price15.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -419,7 +420,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice15(double newVal) {
     this.price15 = BigDecimal.valueOf(newVal);
-    this.price15.setScale(4);
+    this.price15.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -443,7 +444,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice5(BigDecimal newVal) {
     this.price5 = newVal;
-    this.price5.setScale(4);
+    this.price5.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -452,7 +453,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice5(double newVal) {
     this.price5 = BigDecimal.valueOf(newVal);
-    this.price5.setScale(4);
+    this.price5.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -476,7 +477,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice16(BigDecimal newVal) {
     this.price16 = newVal;
-    this.price16.setScale(4);
+    this.price16.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -485,7 +486,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice16(double newVal) {
     this.price16 = BigDecimal.valueOf(newVal);
-    this.price16.setScale(4);
+    this.price16.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -509,7 +510,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice6(BigDecimal newVal) {
     this.price6 = newVal;
-    this.price6.setScale(4);
+    this.price6.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -518,7 +519,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice6(double newVal) {
     this.price6 = BigDecimal.valueOf(newVal);
-    this.price6.setScale(4);
+    this.price6.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -542,7 +543,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice17(BigDecimal newVal) {
     this.price17 = newVal;
-    this.price17.setScale(4);
+    this.price17.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -551,7 +552,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice17(double newVal) {
     this.price17 = BigDecimal.valueOf(newVal);
-    this.price17.setScale(4);
+    this.price17.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -575,7 +576,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice7(BigDecimal newVal) {
     this.price7 = newVal;
-    this.price7.setScale(4);
+    this.price7.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -584,7 +585,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice7(double newVal) {
     this.price7 = BigDecimal.valueOf(newVal);
-    this.price7.setScale(4);
+    this.price7.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -608,7 +609,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice18(BigDecimal newVal) {
     this.price18 = newVal;
-    this.price18.setScale(4);
+    this.price18.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -617,7 +618,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice18(double newVal) {
     this.price18 = BigDecimal.valueOf(newVal);
-    this.price18.setScale(4);
+    this.price18.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -641,7 +642,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice8(BigDecimal newVal) {
     this.price8 = newVal;
-    this.price8.setScale(4);
+    this.price8.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -650,7 +651,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice8(double newVal) {
     this.price8 = BigDecimal.valueOf(newVal);
-    this.price8.setScale(4);
+    this.price8.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -674,7 +675,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice19(BigDecimal newVal) {
     this.price19 = newVal;
-    this.price19.setScale(4);
+    this.price19.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -683,7 +684,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice19(double newVal) {
     this.price19 = BigDecimal.valueOf(newVal);
-    this.price19.setScale(4);
+    this.price19.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -707,7 +708,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice9(BigDecimal newVal) {
     this.price9 = newVal;
-    this.price9.setScale(4);
+    this.price9.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -716,7 +717,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice9(double newVal) {
     this.price9 = BigDecimal.valueOf(newVal);
-    this.price9.setScale(4);
+    this.price9.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -740,7 +741,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice20(BigDecimal newVal) {
     this.price20 = newVal;
-    this.price20.setScale(4);
+    this.price20.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -749,7 +750,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice20(double newVal) {
     this.price20 = BigDecimal.valueOf(newVal);
-    this.price20.setScale(4);
+    this.price20.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -773,7 +774,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice10(BigDecimal newVal) {
     this.price10 = newVal;
-    this.price10.setScale(4);
+    this.price10.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -782,7 +783,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice10(double newVal) {
     this.price10 = BigDecimal.valueOf(newVal);
-    this.price10.setScale(4);
+    this.price10.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -806,7 +807,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice11(BigDecimal newVal) {
     this.price11 = newVal;
-    this.price11.setScale(4);
+    this.price11.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -815,7 +816,7 @@ public class MatrixElement extends ModelBase {
    */	
   public void setPrice11(double newVal) {
     this.price11 = BigDecimal.valueOf(newVal);
-    this.price11.setScale(4);
+    this.price11.setScale(4, RoundingMode.HALF_UP);
   }
 
 
