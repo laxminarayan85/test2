@@ -26,24 +26,67 @@ import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
 import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
+import com.efi.printsmith.data.enums.CopierPricingMethod;
 
 public class CopierService extends SnowmassHibernateService {
-
-	protected static final String PERSISTENCE_UNIT = "printsmith_db";
-
 	protected static Logger log = Logger.getLogger(CopierService.class);
-	
-	protected static EntityManagerFactory entityManagerFactory = null;
 	
 	public CopierService() {
 		super();
-		try {
-			if (entityManagerFactory == null) {
-				entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-			}
-		} catch (RuntimeException e) {
-			log.error(e);
-		}	
+	}
+	
+	private Matrix newCopierMatrix() {
+		Matrix copierMatrix = new Matrix();
+		copierMatrix.setHeader1(0L);
+		copierMatrix.setHeader2(0L);
+		copierMatrix.setHeader3(0L);
+		copierMatrix.setHeader4(0L);
+		copierMatrix.setHeader5(0L);
+		copierMatrix.setHeader6(0L);
+		copierMatrix.setHeader7(0L);
+		copierMatrix.setHeader8(0L);
+		copierMatrix.setHeader9(0L);
+		copierMatrix.setHeader10(0L);
+
+		for (int i=0; i<15; i++) {
+			copierMatrix.addElements(newMatrixElement());
+		}
+		return copierMatrix;
+	}
+	
+	private MatrixElement newMatrixElement() {
+		MatrixElement element = new MatrixElement();
+		
+		element.setPrice1(0.0);
+		element.setPrice2(0.0);
+		element.setPrice3(0.0);
+		element.setPrice4(0.0);
+		element.setPrice5(0.0);
+		element.setPrice6(0.0);
+		element.setPrice7(0.0);
+		element.setPrice8(0.0);
+		element.setPrice9(0.0);
+		element.setPrice10(0.0);
+		element.setPrice11(0.0);
+		element.setPrice12(0.0);
+		element.setPrice13(0.0);
+		element.setPrice14(0.0);
+		element.setPrice15(0.0);
+		element.setPrice16(0.0);
+		element.setPrice17(0.0);
+		element.setPrice18(0.0);
+		element.setPrice19(0.0);
+		element.setPrice20(0.0);
+		return element;
+		
+	}
+	public CopierDefinition newCopier() {
+		CopierDefinition copierDefinition = new CopierDefinition();
+		
+		copierDefinition.setMethod(CopierPricingMethod.CostPlus.toString());
+		copierDefinition.setLargeFormat(false);
+		copierDefinition.setCopierMatrix(newCopierMatrix());
+		return copierDefinition;
 	}
 	
 	public double calculateMachineCostPerCopy(CopierDefinition copierDefinition) {

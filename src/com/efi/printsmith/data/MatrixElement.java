@@ -139,7 +139,7 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+ 	@Basic  	
 	private Integer qty;
 	
 	/**
@@ -163,6 +163,7 @@ public class MatrixElement extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+ 	@Column(name="price1", precision=19, scale=4)
 	private BigDecimal price1;
 	
 	/**
@@ -194,7 +195,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+ 	@Basic  	
+ 	@Column(name="price12", precision=19, scale=4)
 	private BigDecimal price12;
 	
 	/**
@@ -226,7 +228,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+ 	@Basic  	
+ 	@Column(name="price2", precision=19, scale=4)
 	private BigDecimal price2;
 	
 	/**
@@ -258,7 +261,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price13", precision=19, scale=4)
 	private BigDecimal price13;
 	
 	/**
@@ -290,7 +294,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price3", precision=19, scale=4)
 	private BigDecimal price3;
 	
 	/**
@@ -322,7 +327,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price14", precision=19, scale=4)
 	private BigDecimal price14;
 	
 	/**
@@ -354,7 +360,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price4", precision=19, scale=4)
 	private BigDecimal price4;
 	
 	/**
@@ -386,7 +393,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price15", precision=19, scale=4)
 	private BigDecimal price15;
 	
 	/**
@@ -418,7 +426,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price5", precision=19, scale=4)
 	private BigDecimal price5;
 	
 	/**
@@ -450,7 +459,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price16", precision=19, scale=4)
 	private BigDecimal price16;
 	
 	/**
@@ -482,7 +492,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price6", precision=19, scale=4)
 	private BigDecimal price6;
 	
 	/**
@@ -514,7 +525,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price17", precision=19, scale=4)
 	private BigDecimal price17;
 	
 	/**
@@ -546,7 +558,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price7", precision=19, scale=4)
 	private BigDecimal price7;
 	
 	/**
@@ -578,7 +591,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price18", precision=19, scale=4)
 	private BigDecimal price18;
 	
 	/**
@@ -610,7 +624,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price8", precision=19, scale=4)
 	private BigDecimal price8;
 	
 	/**
@@ -642,7 +657,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price19", precision=19, scale=4)
 	private BigDecimal price19;
 	
 	/**
@@ -674,7 +690,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price9", precision=19, scale=4)
 	private BigDecimal price9;
 	
 	/**
@@ -706,7 +723,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price20", precision=19, scale=4)
 	private BigDecimal price20;
 	
 	/**
@@ -738,7 +756,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price10", precision=19, scale=4)
 	private BigDecimal price10;
 	
 	/**
@@ -770,7 +789,8 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+	@Basic  	
+ 	@Column(name="price11", precision=19, scale=4)
 	private BigDecimal price11;
 	
 	/**

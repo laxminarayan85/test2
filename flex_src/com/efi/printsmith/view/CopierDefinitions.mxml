@@ -40,6 +40,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="copierService" destination="copierService">
+	<mx:method name="newCopier" fault="handleFault(event)" result="handleNewCopier(event)"/>
+</mx:RemoteObject>
 	<mx:RemoteObject id="chargeDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -149,9 +152,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceProductionLocation.getAll("ProductionLocations");
 		dataServiceProductionCopiers.getAll("ProductionCopiers");
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+		copierService.newCopier();
 		stockDefinitions = new StockDefinition;
 		doNew();
-	    copierDefinition = initNewCopierDefinition();
 	}
 	
 	public function loadStockDefinitions():void { 
@@ -160,105 +163,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
 		loadStockDefinitions();
-	}
-	
-	private function initNewCopierDefinition():CopierDefinition {
-		var localCopierDefinition:CopierDefinition = new CopierDefinition();
-	
-		
-		
-		
-		localCopierDefinition.largeFormat = false;
-		localCopierDefinition.copierMatrix = new com.efi.printsmith.data.Matrix;
-		localCopierDefinition.copierMatrix.header1 = 1;
-		localCopierDefinition.copierMatrix.header2 = 5;
-		localCopierDefinition.copierMatrix.header3 = 10;
-		localCopierDefinition.copierMatrix.header4 = 20;
-		localCopierDefinition.copierMatrix.header5 = 50;
-		localCopierDefinition.copierMatrix.header6 = 100;
-		localCopierDefinition.copierMatrix.header7 = 250;
-		localCopierDefinition.copierMatrix.header8 = 0;
-		localCopierDefinition.copierMatrix.header9 = 0;
-		localCopierDefinition.copierMatrix.header10 = 0;
-		
-	    localCopierDefinition.copierMatrix.elements = new ArrayCollection();
-	    var matrixElement:MatrixElement = new MatrixElement();
-	    matrixElement.qty = 1;
-	    matrixElement.price1 = .02;
-	    matrixElement.price2 = .019;
-	    matrixElement.price3 = .0183;
-	    matrixElement.price4 = .0179;
-	    matrixElement.price5 = .0175;
-	    matrixElement.price6 = .0165;
-	    matrixElement.price7 = .0150;
-	    matrixElement.price8 = .0145;
-	    matrixElement.price9 = .0140;
-	    matrixElement.price10 = .0135;
-	    
-	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
-	   	
-	   	matrixElement = new MatrixElement();
-	   	
-	    matrixElement.qty = 10;
-	    matrixElement.price1 = .02;
-	    matrixElement.price2 = .019;
-	    matrixElement.price3 = .0183;
-	    matrixElement.price4 = .0179;
-	    matrixElement.price5 = .0175;
-	    matrixElement.price6 = .0165;
-	    matrixElement.price7 = .0150;
-	    matrixElement.price8 = .0145;
-	    matrixElement.price9 = .0140;
-	    matrixElement.price10 = .0135;
-	    
-	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
-	   	
-	   	matrixElement = new MatrixElement();
-	    matrixElement.qty = 100;
-	    matrixElement.price1 = .02;
-	    matrixElement.price2 = .019;
-	    matrixElement.price3 = .0183;
-	    matrixElement.price4 = .0179;
-	    matrixElement.price5 = .0175;
-	    matrixElement.price6 = .0165;
-	    matrixElement.price7 = .0150;
-	    matrixElement.price8 = .0145;
-	    matrixElement.price9 = .0140;
-	    matrixElement.price10 = .0135;
-	    
-	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
-	   	
-	   	matrixElement = new MatrixElement();
-	    matrixElement.qty = 1000;
-	    matrixElement.price1 = .02;
-	    matrixElement.price2 = .019;
-	    matrixElement.price3 = .0183;
-	    matrixElement.price4 = .0179;
-	    matrixElement.price5 = .0175;
-	    matrixElement.price6 = .0165;
-	    matrixElement.price7 = .0150;
-	    matrixElement.price8 = .0145;
-	    matrixElement.price9 = .0140;
-	    matrixElement.price10 = .0135;
-	    
-	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
-
-	   	matrixElement = new MatrixElement();
-	    matrixElement.qty = 5000;
-	    matrixElement.price1 = .02;
-	    matrixElement.price2 = .019;
-	    matrixElement.price3 = .0183;
-	    matrixElement.price4 = .0179;
-	    matrixElement.price5 = .0175;
-	    matrixElement.price6 = .0165;
-	    matrixElement.price7 = .0150;
-	    matrixElement.price8 = .0145;
-	    matrixElement.price9 = .0140;
-	    matrixElement.price10 = .0135;
-	    
-	   	localCopierDefinition.copierMatrix.elements.addItem(matrixElement);
-	   	
-	    return localCopierDefinition;
 	}
 	
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -554,12 +458,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}       
 
 	private function doNew():void {
+		this.enabled = false;		
 		pricing_method_combo.selectedIndex = -1;
 		pricing_method_combo.text = "";
 		
-		
-	    copierDefinition = this.initNewCopierDefinition();
-	 	updateMethodBox();
+		copierService.newCopier();
 	}       
 
 	private function doDelete():void {
@@ -597,6 +500,13 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleLoadResult(ev:ResultEvent):void {
 	     copierDefinitionArray = ev.result as ArrayCollection;
 	}
+	
+	private function handleNewCopier(ev:ResultEvent):void {
+		this.copierDefinition = ev.result as CopierDefinition;
+	 	updateMethodBox();
+	 	this.enabled = true;
+	}
+	
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
 		if (systemPreferencesArray.length > 0)
@@ -671,14 +581,15 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 
 	private function doCopierMatrix():void {
-		/* Read in the copierMatrix - the handler for this call will actually open the EditMatrix window */
-		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
-			var token:AsyncToken = dataService.getMatrix(copierDefinition.copierMatrix.id);
-			token.operation = "getPricingMatrix";
-		} else if (copierDefinition != null) {
-			copierDefinition.copierMatrix = createCopierMatrix();
-			this.openEditMatrixWindow();			
-		}
+		this.openEditMatrixWindow();
+//		/* Read in the copierMatrix - the handler for this call will actually open the EditMatrix window */
+//		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
+//			var token:AsyncToken = dataService.getMatrix(copierDefinition.copierMatrix.id);
+//			token.operation = "getPricingMatrix";
+//		} else if (copierDefinition != null) {
+//			copierDefinition.copierMatrix = createCopierMatrix();
+//			this.openEditMatrixWindow();			
+//		}
 	}
 	
 	private function createCopierMatrix():com.efi.printsmith.data.Matrix {

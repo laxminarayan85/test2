@@ -1750,6 +1750,17 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
+				
+				Matrix matrix = copierDefinition.getCopierMatrix();
+				
+				if (matrix != null) {
+					for (int i = 0; i < matrix.getElements().size(); i++) {
+						MatrixElement element = matrix.getElements().get(i);
+						if (element == null) {
+							log.error("null matrix element found");
+						}
+					}
+				}
 			}
 		} catch (Exception e) {
 			log.error(e);

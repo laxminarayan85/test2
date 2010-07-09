@@ -539,6 +539,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="monthlyLabor", precision=19, scale=2)
 	private BigDecimal monthlyLabor;
 	
 	/**
@@ -569,6 +570,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="clickCost", precision=19, scale=2)
 	private BigDecimal clickCost;
 	
 	/**
@@ -599,6 +601,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="laborCopy", precision=19, scale=2)
 	private BigDecimal laborCopy;
 	
 	/**
@@ -717,6 +720,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="monthlyPayment", precision=19, scale=2)
 	private BigDecimal monthlyPayment;
 	
 	/**
@@ -769,6 +773,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="hourCostRate", precision=19, scale=2)
 	private BigDecimal hourCostRate;
 	
 	/**
@@ -799,6 +804,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="tonerCopy", precision=19, scale=2)
 	private BigDecimal tonerCopy;
 	
 	/**
@@ -829,6 +835,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="developerCopy", precision=19, scale=2)
 	private BigDecimal developerCopy;
 	
 	/**
@@ -903,6 +910,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="monthlyMaintenance", precision=19, scale=2)
 	private BigDecimal monthlyMaintenance;
 	
 	/**
@@ -933,6 +941,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="machineCostPerCopy", precision=19, scale=2)
 	private BigDecimal machineCostPerCopy;
 	
 	/**
@@ -1029,6 +1038,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="monthlyBurdenRate", precision=19, scale=2)
 	private BigDecimal monthlyBurdenRate;
 	
 	/**
