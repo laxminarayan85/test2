@@ -242,6 +242,7 @@
     import mx.core.Application;
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;
+    import mx.formatters.NumberBaseRoundType;
                    
 	[Bindable]                                         
     private var enableSave:Boolean = true;
@@ -1406,8 +1407,10 @@
 		}
 		
 	}
-	private function UpdateAvailable():void {
-		Available.text = (parseInt(OnHand.text)-parseInt(Committed.text)).toString();  
+	private function UpdateAvailable(evt:FocusEvent):void {
+		doRound(evt);
+		Available.text = (parseInt(OnHand.text)-parseInt(Committed.text)).toString(); 
+		 
 	 	//stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
 	}
 	public function getParentsizename(item:Object):String{
@@ -1426,13 +1429,81 @@
 		if ( index == -1){
 			pcwRecycled.text = pcwRecycled.text + '%';
 		}
-	}  
+	} 
+private function doRound(evt:FocusEvent):void{
+		var temp:String;
+		if (evt.currentTarget == sheetsPerCarton) {
+			temp = numberFormatter.format(sheetsPerCarton.text)
+			sheetsPerCarton.text = temp;
+		} else if (evt.currentTarget == minOrder) {
+			temp = numberFormatter.format(minOrder.text)
+			minOrder.text = temp;
+		}else if (evt.currentTarget == SheetsPerSet) {
+			temp = numberFormatter.format(SheetsPerSet.text)
+			SheetsPerSet.text = temp;
+		}else if (evt.currentTarget == Qtybreak6) {
+			temp = numberFormatter.format(Qtybreak6.text)
+			Qtybreak6.text = temp;
+		}else if (evt.currentTarget == Qtybreak5) {
+			temp = numberFormatter.format(Qtybreak5.text)
+			Qtybreak5.text = temp;
+		}else if (evt.currentTarget == Qtybreak4) {
+			temp = numberFormatter.format(Qtybreak4.text)
+			Qtybreak4.text = temp;
+		}else if (evt.currentTarget == Qtybreak3) {
+			temp = numberFormatter.format(Qtybreak3.text)
+			Qtybreak3.text = temp;
+		}else if (evt.currentTarget == Qtybreak2) {
+			temp = numberFormatter.format(Qtybreak2.text)
+			Qtybreak2.text = temp;
+		}else if (evt.currentTarget == Qtybreak1) {
+			temp = numberFormatter.format(Qtybreak1.text)
+			Qtybreak1.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty6) {
+			temp = numberFormatter.format(BlankSheetqty6.text)
+			BlankSheetqty6.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty5) {
+			temp = numberFormatter.format(BlankSheetqty5.text)
+			BlankSheetqty5.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty4) {
+			temp = numberFormatter.format(BlankSheetqty4.text)
+			BlankSheetqty4.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty3) {
+			temp = numberFormatter.format(BlankSheetqty3.text)
+			BlankSheetqty3.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty2) {
+			temp = numberFormatter.format(BlankSheetqty2.text)
+			BlankSheetqty2.text = temp;
+		}else if (evt.currentTarget == BlankSheetqty1) {
+			temp = numberFormatter.format(BlankSheetqty1.text)
+			BlankSheetqty1.text = temp;
+		}else if (evt.currentTarget == OnOrder) {
+			temp = numberFormatter.format(OnOrder.text)
+			OnOrder.text = temp;
+		}else if (evt.currentTarget == TargetLevel) {
+			temp = numberFormatter.format(TargetLevel.text)
+			TargetLevel.text = temp;
+		}else if (evt.currentTarget == ReOrderPoint) {
+			temp = numberFormatter.format(ReOrderPoint.text)
+			ReOrderPoint.text = temp;
+		}else if (evt.currentTarget == MinOrderQty) {
+			temp = numberFormatter.format(MinOrderQty.text)
+			MinOrderQty.text = temp;
+		}else if (evt.currentTarget == OnHand) {
+			temp = numberFormatter.format(OnHand.text)
+			OnHand.text = temp;
+		}
+		
+		super.focusOutHandler(evt);
+		
+		
+	}
 
 ]]>
                              
 </mx:Script>	
 <vo:StockDefinition id="stock"/>                           
-
+<mx:NumberFormatter id="numberFormatter" rounding="nearest" precision="0" />
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
@@ -1487,11 +1558,11 @@
 					  labelFunction="getParentsizename"
 					   focusOut="handleFocusOutEvent(event)"
 				/>
-				<mx:TextInput x="337" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
-				<mx:TextInput x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}"/>
-				<mx:TextInput x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
-				<mx:TextInput x="375.5" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
-				<mx:TextInput x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}"/>
+				<mx:TextInput  restrict="0-9\." x="337" y="60" width="103" id="thickNess" text="{stockDefinitions.thickness}"/>
+				<mx:TextInput  restrict="0-9\." x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}" focusOut="doRound(event)"/>
+				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
+				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
+				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="doRound(event);"/>
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
 				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="103" height="22"/>
 				<mx:ComboBox x="448" y="60" id="cboUom"  dataProvider="{stockUom}" width="93" labelField="name"/>
@@ -1519,39 +1590,39 @@
 				<mx:Label x="19" y="137" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PriceExpires')}" width="127" textAlign="right"/>
 				<mx:CheckBox x="450" y="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostisinSets')}" id="chkCostIsInSets" width="194" enabled="{parseInt(SheetsPerSet.text) > 1}"/>
 
-				<mx:TextInput x="225" y="30" width="66" id="Qtybreak1" text="{stockDefinitions.qtybreak1}"/>
-				<mx:TextInput x="225" y="50" width="66" id="Cost1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost1)}"/>
-				<mx:TextInput x="225" y="70" width="66" id="Cwt1" text="{stockDefinitions.cwt1}"/>
-				<mx:TextInput x="225" y="91" width="66" id="Markup1" text="{stockDefinitions.markup1}"/>
-				<mx:TextInput x="225" y="112" width="66" id="ListPerM1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM1)}"/>
-				<mx:TextInput x="288" y="30" width="66" id="Qtybreak2" text="{stockDefinitions.qtybreak2}"/>
-				<mx:TextInput x="288" y="50" width="66" id="Cost2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost2)}"/>
-				<mx:TextInput x="288" y="70" width="66" id="Cwt2" text="{stockDefinitions.cwt2}"/>
-				<mx:TextInput x="288" y="91" width="66" id="Markup2" text="{stockDefinitions.markup2}"/>
-				<mx:TextInput x="288" y="112" width="66" id="ListPerM2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM2)}"/>
-				<mx:TextInput x="351" y="30" width="66" id="Qtybreak3" text="{stockDefinitions.qtybreak3}"/>
-				<mx:TextInput x="351" y="50" width="66" id="Cost3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost3)}"/>
-				<mx:TextInput x="351" y="70" width="66" id="Cwt3" text="{stockDefinitions.cwt3}"/>
-				<mx:TextInput x="351" y="91" width="66" id="Markup3" text="{stockDefinitions.markup3}"/>
-				<mx:TextInput x="351" y="112" width="66" id="ListPerM3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM3)}"/>
-				<mx:TextInput x="412.5" y="30" width="66" id="Qtybreak4" text="{stockDefinitions.qtybreak4}"/>
-				<mx:TextInput x="412.5" y="50" width="66" id="Cost4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost4)}"/>
-				<mx:TextInput x="412.5" y="70" width="66" id="Cwt4" text="{stockDefinitions.cwt4}"/>
-				<mx:TextInput x="412.5" y="91" width="66" id="Markup4" text="{stockDefinitions.markup4}"/>
-				<mx:TextInput x="412.5" y="112" width="66" id="ListPerM4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM4)}"/>
-				<mx:TextInput x="476" y="30" width="66" id="Qtybreak5" text="{stockDefinitions.qtybreak5}"/>
-				<mx:TextInput x="476" y="50" width="66" id="Cost5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost5)}"/>
-				<mx:TextInput x="476" y="70" width="66" id="Cwt5" text="{stockDefinitions.cwt5}"/>
-				<mx:TextInput x="476" y="91" width="66" id="Markup5" text="{stockDefinitions.markup5}"/>
-				<mx:TextInput x="476" y="112" width="66" id="ListPerM5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM5)}"/>
-				<mx:TextInput x="540" y="30" width="66" id="Qtybreak6" text="{stockDefinitions.qtybreak6}"/>
-				<mx:TextInput x="540" y="50" width="66" id="Cost6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost6)}"/>
-				<mx:TextInput x="540" y="70" width="66" id="Cwt6" text="{stockDefinitions.cwt6}"/>
-				<mx:TextInput x="540" y="91" width="66" id="Markup6" text="{stockDefinitions.markup6}"/>
-				<mx:TextInput x="540" y="112" width="66" id="ListPerM6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM6)}"/>
-				<mx:TextInput x="157" y="2" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>
-				<mx:TextInput x="352" y="2" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}"/>
-				<mx:DateField x="154" y="135" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="30" width="66" id="Qtybreak1" text="{stockDefinitions.qtybreak1}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="225" y="50" width="66" id="Cost1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost1)}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="70" width="66" id="Cwt1" text="{stockDefinitions.cwt1}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="91" width="66" id="Markup1" text="{stockDefinitions.markup1}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="112" width="66" id="ListPerM1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM1)}"/>
+				<mx:TextInput restrict="0-9\." x="288" y="30" width="66" id="Qtybreak2" text="{stockDefinitions.qtybreak2}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\."  x="288" y="50" width="66" id="Cost2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost2)}"/>
+				<mx:TextInput restrict="0-9\." x="288" y="70" width="66" id="Cwt2" text="{stockDefinitions.cwt2}"/>
+				<mx:TextInput restrict="0-9\." x="288" y="91" width="66" id="Markup2" text="{stockDefinitions.markup2}"/>
+				<mx:TextInput restrict="0-9\." x="288" y="112" width="66" id="ListPerM2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM2)}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="30" width="66" id="Qtybreak3" text="{stockDefinitions.qtybreak3}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="351" y="50" width="66" id="Cost3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost3)}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="70" width="66" id="Cwt3" text="{stockDefinitions.cwt3}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="91" width="66" id="Markup3" text="{stockDefinitions.markup3}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="112" width="66" id="ListPerM3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM3)}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="30" width="66" id="Qtybreak4" text="{stockDefinitions.qtybreak4}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="50" width="66" id="Cost4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost4)}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="70" width="66" id="Cwt4" text="{stockDefinitions.cwt4}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="91" width="66" id="Markup4" text="{stockDefinitions.markup4}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="112" width="66" id="ListPerM4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM4)}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="30" width="66" id="Qtybreak5" text="{stockDefinitions.qtybreak5}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="476" y="50" width="66" id="Cost5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost5)}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="70" width="66" id="Cwt5" text="{stockDefinitions.cwt5}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="91" width="66" id="Markup5" text="{stockDefinitions.markup5}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="112" width="66" id="ListPerM5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM5)}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="30" width="66" id="Qtybreak6" text="{stockDefinitions.qtybreak6}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="540" y="50" width="66" id="Cost6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost6)}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="70" width="66" id="Cwt6" text="{stockDefinitions.cwt6}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="91" width="66" id="Markup6" text="{stockDefinitions.markup6}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="112" width="66" id="ListPerM6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM6)}"/>
+				<mx:TextInput restrict="0-9\." x="157" y="2" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>
+				<mx:TextInput restrict="0-9\." x="352" y="2" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}" focusOut="doRound(event);"/>
+				<mx:DateField restrict="0-9\." x="154" y="135" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="441" width="746.5" height="93" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Comment')}" dropShadowEnabled="false">
 				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
@@ -1573,26 +1644,26 @@
 				  text="{stockDefinitions.normalRunSize}"
 				  focusOut="handleFocusOutEvent(event)"
 			/>
-			<mx:TextInput x="313" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
-			<mx:TextInput x="508" y="9" width="50" id="MinCutCharge" text="{stockDefinitions.minCutCharge}"/>
+			<mx:TextInput restrict="0-9\." x="313" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
+			<mx:TextInput restrict="0-9\." x="508" y="9" width="50" id="MinCutCharge" text="{stockDefinitions.minCutCharge}"/>
 
 			<mx:Label x="10" y="11" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.NormalRunSize')}" width="115" textAlign="right" id="label10"/>
 			<mx:Label x="226" y="11" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Cut100')}" width="79" textAlign="right" id="label9"/>
 			<mx:Label x="387" y="11" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinCutChg')}" width="113" textAlign="right" id="label8"/>
 
 			<mx:Panel x="10" y="125" width="690" height="108" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PricingforBlankSheet')}" dropShadowEnabled="false">
-				<mx:TextInput x="68" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}"/>
-				<mx:TextInput x="146" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}"/>
-				<mx:TextInput x="224" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}"/>
-				<mx:TextInput x="302" y="2" width="80" id="BlankSheetqty4" text="{stockDefinitions.blankSheetqty4}"/>
-				<mx:TextInput x="381" y="2" width="80" id="BlankSheetqty5" text="{stockDefinitions.blankSheetqty5}"/>
-				<mx:TextInput x="459" y="2" width="80" id="BlankSheetqty6" text="{stockDefinitions.blankSheetqty6}"/>
-				<mx:TextInput x="68" y="23" width="80" id="BlankSheetPrice1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice1)}"/>
-				<mx:TextInput x="146" y="23" width="80" id="BlankSheetPrice2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice2)}"/>
-				<mx:TextInput x="224" y="23" width="80" id="BlankSheetPrice3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice3)}"/>
-				<mx:TextInput x="302" y="23" width="80" id="BlankSheetPrice4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice4)}"/>
-				<mx:TextInput x="381" y="23" width="80" id="BlankSheetPrice5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice5)}"/>
-				<mx:TextInput x="459" y="23" width="80" id="BlankSheetPrice6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice6)}"/>
+				<mx:TextInput restrict="0-9\."  x="68" y="2" width="80" id="BlankSheetqty1" text="{stockDefinitions.blankSheetqty1}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="146" y="2" width="80" id="BlankSheetqty2" text="{stockDefinitions.blankSheetqty2}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\."  x="224" y="2" width="80" id="BlankSheetqty3" text="{stockDefinitions.blankSheetqty3}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="302" y="2" width="80" id="BlankSheetqty4" text="{stockDefinitions.blankSheetqty4}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="381" y="2" width="80" id="BlankSheetqty5" text="{stockDefinitions.blankSheetqty5}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="459" y="2" width="80" id="BlankSheetqty6" text="{stockDefinitions.blankSheetqty6}" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="68" y="23" width="80" id="BlankSheetPrice1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice1)}"/>
+				<mx:TextInput restrict="0-9\." x="146" y="23" width="80" id="BlankSheetPrice2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice2)}"/>
+				<mx:TextInput restrict="0-9\." x="224" y="23" width="80" id="BlankSheetPrice3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice3)}"/>
+				<mx:TextInput restrict="0-9\." x="302" y="23" width="80" id="BlankSheetPrice4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice4)}"/>
+				<mx:TextInput restrict="0-9\." x="381" y="23" width="80" id="BlankSheetPrice5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice5)}"/>
+				<mx:TextInput restrict="0-9\." x="459" y="23" width="80" id="BlankSheetPrice6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.blankSheetPrice6)}"/>
 
 				<mx:Label x="3" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Quantity')}" textAlign="right" width="57"/>
 				<mx:Label x="0" y="25" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Price')}" textAlign="right" width="60"/>
@@ -1604,9 +1675,9 @@
 				<mx:Label x="24" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" textAlign="right" width="93"/>
 				<mx:Label x="31" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" textAlign="right"/>
 
-				<mx:TextInput x="125" y="3" width="90" id="DefaultBW" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier1PricePerSheet)}"/>
-				<mx:TextInput x="125" y="28" width="90" id="DefaultColor" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier2PricePerSheet)}"/>
-				<mx:TextInput x="125" y="53" width="90" id="DefaultLargeFormat" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier3PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="3" width="90" id="DefaultBW" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier1PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="28" width="90" id="DefaultColor" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier2PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="53" width="90" id="DefaultLargeFormat" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier3PricePerSheet)}"/>
 				<mx:ComboBox x="223" y="3" width="201" id="defaultBWCopier" focusOut="doCopierDefinitionBW();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
@@ -1633,13 +1704,13 @@
 				<mx:Button x="430" y="148" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AssignCustomerAccoun')}" enabled="false" id="btnAssignCustomerAccount" click="doAccount();"/>
 				<mx:CheckBox x="518" y="116" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Evenincrementslikere')}" enabled="false" id="chkEvenIncrements" width="203"/>
 
-				<mx:TextInput x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false" focusOut="UpdateAvailable();"/>
-				<mx:TextInput x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false" focusOut="UpdateAvailable();"/>
-				<mx:TextInput x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22" enabled="false"/>
-				<mx:TextInput x="426" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false"/>
-				<mx:TextInput x="426" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false"/>
-				<mx:TextInput x="426" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false"/>
-				<mx:TextInput x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false"/>
+				<mx:TextInput restrict="0-9\." x="122" y="28" width="84" id="OnHand" text="{stockDefinitions.onHand}" enabled="false" focusOut="UpdateAvailable(event);"/>
+				<mx:TextInput restrict="0-9\." x="122" y="56" width="84" id="Committed" text="{stockDefinitions.committed}" enabled="false" focusOut="UpdateAvailable(event);"/>
+				<mx:TextInput restrict="0-9\." x="122" y="86" width="84" id="Available" text="{stockDefinitions.available}" height="22" enabled="false"/>
+				<mx:TextInput restrict="0-9\." x="426" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="426" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="426" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false" focusOut="doRound(event)"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
 				<mx:Text x="430" y="176" width="291" id="account_name" text="{stockDefinitions.account.title}" />
 				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"  editable="true"/>
