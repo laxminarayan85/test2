@@ -919,8 +919,8 @@
 			if (payloadType == "PreferencesCreditCard") {
 				dataServiceCreditCard.getAll("PreferencesCreditCard");
 			}
-			if (payloadType == "OutsideServices") {
-				dataServiceMarkups.getAll("OutsideServices");
+			if (payloadType == "OutsideService") {
+				dataServiceMarkups.getAll("OutsideService");
 			}
 			if (payloadType == "Merchandise") {
 				dataServiceMarkupsMerchandise.getAll("Merchandise")
@@ -1034,9 +1034,17 @@
 		PreferencesEstimatingArray = ev.result as ArrayCollection;
 		if( PreferencesEstimatingArray.length >0)
 			preferencesEstimating = PreferencesEstimatingArray.getItemAt(0,0) as PreferencesEstimating;
+			if(preferencesEstimating.gripLocation==null || preferencesEstimating.gripLocation==""){
+				preferencesEstimating.gripLocation = 'Top';
+			}
+			if(preferencesEstimating.folioLocation==null || preferencesEstimating.folioLocation==""){
+				preferencesEstimating.folioLocation = 'Top';
+			}
 		if (preferencesEstimating == null)
 		{
 			preferencesEstimating = new PreferencesEstimating();
+			preferencesEstimating.gripLocation = 'Top';
+			preferencesEstimating.folioLocation = 'Top';
 		}
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
@@ -1135,7 +1143,7 @@
     	dataServiceCreditCard.getAll("PreferencesCreditCard");
 	}
 	private function handleSaveMarkupsResult(ev:ResultEvent):void {
-    	dataServiceMarkups.getAll("OutsideServices");
+    	dataServiceMarkups.getAll("OutsideService");
 	}
 	private function handleSaveMarkupsMerchandiseResult(ev:ResultEvent):void {
     	dataServiceMarkupsMerchandise.getAll("Merchandise");
@@ -1176,7 +1184,7 @@
 	}
 	
 	private function handleDeleteMarkupsResult(ev:ResultEvent):void {
-    	//dataServiceMarkups.getAll("OutsideServices");
+    	//dataServiceMarkups.getAll("OutsideService");
 	}
 	
 	private function handleDeleteMarkupsMerchandiseResult(ev:ResultEvent):void {
