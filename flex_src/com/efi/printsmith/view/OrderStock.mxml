@@ -66,7 +66,8 @@
     private var stockColor:ArrayCollection = new ArrayCollection(); 
     [Bindable]                                
     private var stockFinish:ArrayCollection = new ArrayCollection();   
-    
+    [Bindable]
+    private var webWorthy:Boolean;
     
     
     
@@ -77,11 +78,19 @@
 		loadUnitsArray();
 	    loadStockColor();
 	    loadStockFinish();
+	    webWorthy = false;
 	    
 	}
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
 	}
+	private function doStatus():void{
+		var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
+		statusWindow.setStyle("borderAlpha", 0.9);
+		var temp:StockDefinition;
+		temp = this.stockDefinitions;
+	 	statusWindow.setStock(temp);
+	 }
 	public function loadStockDefinitions():void { 
 		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
 	}
@@ -275,6 +284,10 @@
 		cost_edit.editable = false
 		per_edit.editable = false;
 		
+		if (stockDefinitions.vendor.name == "xpedx" || stockDefinitions.vendor.name == "Xpedx")
+			webWorthy = true;
+		else
+			webWorthy = false;
 	}
 	public function getParentsizename(item:Object):String{
 		var tmpItem:Dimension ;
@@ -368,7 +381,7 @@
 	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
 	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')" click="doReport()">
 	</mx:Button>
-	<mx:Button x="489" y="10"  width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')"/>
+	<mx:Button x="489" y="10"  width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" enabled="{webWorthy}"/>
 	<mx:Label x="32" y="56" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Order')}"/>
 	<mx:Label x="177" y="56" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.AutoOrder')}"/>
 	<mx:Label x="284" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.SelectStock')}"/>
@@ -426,5 +439,6 @@
 	<mx:CheckBox x="32" y="490" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}" id="allow_mod"/>
 	<mx:Label x="321" y="139"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" width="74" fontWeight="bold"/>
 	<mx:TextInput x="397" y="139" text="{stockDefinitions.stocknumber}" id="stock_number_edit"/>
+	<mx:Button x="531" y="278" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="145" id="status_button" click="doStatus()"/>
 
 </mx:TitleWindow>

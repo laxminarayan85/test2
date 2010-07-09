@@ -32,6 +32,8 @@ import com.efi.printsmith.integration.xpedx.xsd.request.XpedxStockCheckWSRequest
 import com.efi.printsmith.integration.xpedx.xsd.response.XpedxStockCheckWSResponseDocument;
 import com.efi.printsmith.migration.Utilities;
 
+import com.efi.printsmith.data.StockOrder;
+
 import flex.messaging.io.ArrayList;
 
 public class XpedxIntegrationService extends SnowmassHibernateService {
@@ -101,6 +103,10 @@ public class XpedxIntegrationService extends SnowmassHibernateService {
 			log.error(e);
 			throw e;
 		}
+	}
+	
+	public static boolean submitOrder(StockOrder stockOrder) {
+		return true;
 	}
 	
 	@SuppressWarnings("unchecked")
