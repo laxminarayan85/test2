@@ -452,10 +452,10 @@ public class DataService extends HibernateService {
 		columnstring = "a.id, a.name, a.machineID, a.machineName";
 		try {
 			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a";
+					+ columnstring + ") from " + className + " a" + " order by a.id";
 			Query query = em.createQuery(queryString);
-
 			resultList = query.getResultList();
+			
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
