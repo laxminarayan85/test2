@@ -10,7 +10,6 @@
 			<mx:RemoveChild target="{CutsPer100}"/>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{NormalRunSize}"/>
-			<mx:RemoveChild target="{label10}"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 		</mx:State>
@@ -123,10 +122,11 @@
 			<mx:SetProperty target="{cboDefaultPress}" name="enabled" value="false"/>
 			<mx:SetProperty target="{button1}" name="enabled" value="false"/>
 			<mx:RemoveChild target="{rollweight}"/>
-			<mx:SetProperty target="{label7}" name="x" value="-22"/>
+			<mx:SetProperty target="{label7}" name="x" value="10"/>
 			<mx:SetProperty target="{label7}" name="width" value="120.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
+			<mx:SetProperty target="{minOrder}" name="x" value="131.5"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
@@ -1376,7 +1376,8 @@
 		}
 		else{
 			label5.visible =true;
-			Basicsize.text = stockDefinitions.stktype.size
+			if ( stockDefinitions.stktype != null)
+				Basicsize.text = stockDefinitions.stktype.size
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
 			cboUom.enabled = true;
 		}
@@ -1508,7 +1509,7 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
 	<mx:ComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
-	<mx:ComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()"/>
+	<mx:ComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()" editable="true"/>
 	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
