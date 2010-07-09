@@ -108,7 +108,7 @@
 						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
 							dataHolder="{preferencesStocks}" variableName="microns" customText="{preferencesStocks.microns}" width="172" />
 							
-						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfinh')}"
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfin')}"
 							textAlign="right" />
 							
 						<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
