@@ -1723,7 +1723,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="231" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Excludedfromworkflow')}" id="excluded_from_workflow_check" selected="{charge.excludedFromWorkflow}"/>
 					<mx:CheckBox x="231" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.TrackerPreProduction')}" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
 					<mx:CheckBox x="375" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignoreGlobalPriceChanges}"/>
-					<mx:CheckBox x="231" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}" enabled="false"/>
+					<mx:CheckBox  visible="false" x="231" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}" enabled="false"/>
 					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
 					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
 					<mx:HRule x="3" y="194" width="555" height="8" id="hrule1"/>
