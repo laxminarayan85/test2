@@ -1026,7 +1026,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.visible = true;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;

@@ -723,24 +723,24 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:TextInput x="131" y="272" id="MaxRollWidth" text="{pressDefinition.maxRollWidth}" height="20" width="171"/>
 	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20"/>
 	<mx:TextInput x="131" y="294" id="MinRollWidth" text="{pressDefinition.minRollWidth}" height="20"/>
-	<mx:TextInput  restrict="0-9" x="131" y="316" width="76" id="LaborRate" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.laborRate)}" height="20"/>
-	<mx:TextInput  restrict="0-9" x="131" y="338" width="92" id="MinLabor" text="{pressDefinition.minLabor}" height="20" focusOut="doRound(event);"/>
-	<mx:TextInput restrict="0-9"  x="131" y="360" width="92" id="SetupMin" text="{pressDefinition.setupMin}" height="20" focusOut="doRound(event);"/>
-	<mx:TextInput  restrict="0-9" x="131" y="382" width="92" id="SetupAddRun" text="{pressDefinition.setupAddRun}" height="20" focusOut="doRound(event);"/>
-	<mx:TextInput  restrict="0-9" x="187" y="404" id="SetupAddSig" text="{pressDefinition.setupAddSig}" height="20" width="82" focusOut="doRound(event);"/>
-	<mx:TextInput  restrict="0-9" x="187" y="426" id="WorkTurn" text="{pressDefinition.workTurnSetup}" height="20" width="82" focusOut="doRound(event);"/>
+	<mx:TextInput   restrict="0-9\." x="131" y="316" width="76" id="LaborRate" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.laborRate)}" height="20"/>
+	<mx:TextInput   restrict="0-9\." x="131" y="338" width="92" id="MinLabor" text="{pressDefinition.minLabor}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput  restrict="0-9\."  x="131" y="360" width="92" id="SetupMin" text="{pressDefinition.setupMin}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput   restrict="0-9\." x="131" y="382" width="92" id="SetupAddRun" text="{pressDefinition.setupAddRun}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput   restrict="0-9\." x="187" y="404" id="SetupAddSig" text="{pressDefinition.setupAddSig}" height="20" width="82" focusOut="doRound(event);"/>
+	<mx:TextInput   restrict="0-9\." x="187" y="426" id="WorkTurn" text="{pressDefinition.workTurnSetup}" height="20" width="82" focusOut="doRound(event);"/>
 	<mx:Label x="231" y="340" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.minutes')}" width="114"/>
 	<mx:Label x="231" y="362" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Heads')}" width="51"/>
 	<mx:TextInput restrict="0-9" x="290" y="360" width="37" id="NumberHeads" text="{pressDefinition.numberHeads}" height="20"/>
 	<mx:TextInput x="493" y="272" width="106" id="AvgImpressPerhour" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour)}" height="20"/>
-	<mx:TextInput restrict="0-9" x="492" y="316" width="106" id="laborMarkup" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.laborMarkup)}" height="20"/>
-	<mx:TextInput restrict="0-9" x="492" y="338" width="79" id="FixedWaste" text="{pressDefinition.fixedWaste}" height="20"/>
-	<mx:TextInput restrict="0-9" x="492" y="360" width="79" id="setupAddHead" text="{pressDefinition.setupAddHead}" height="20" focusOut="doRound(event);"/>
-	<mx:TextInput restrict="0-9" x="492" y="382" width="106" id="WashupFee" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.washupFee)}" height="20"/>
-	<mx:TextInput restrict="0-9" x="492" y="404" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput  restrict="0-9\." x="492" y="316" width="106" id="laborMarkup" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.laborMarkup)}" height="20"/>
+	<mx:TextInput  restrict="0-9\." x="492" y="338" width="79" id="FixedWaste" text="{pressDefinition.fixedWaste}" height="20"/>
+	<mx:TextInput restrict="0-9\." x="492" y="360" width="79" id="setupAddHead" text="{pressDefinition.setupAddHead}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput  restrict="0-9\." x="492" y="382" width="106" id="WashupFee" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.washupFee)}" height="20"/>
+	<mx:TextInput  restrict="0-9\." x="492" y="404" width="106" id="AddSigAddHead" text="{pressDefinition.addSigAddHead}" height="20" focusOut="doRound(event);"/>
 	<mx:Label x="609" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.perwash')}" id="per_wash_label"/>
-	<mx:TextInput restrict="0-9" x="492" y="448" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20" change="doWashUpPerFountain();" focusOut="doRound(event);"/>
-	<mx:TextInput restrict="0-9" x="492" y="426" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20" focusOut="doRound(event);"/>
+	<mx:TextInput  restrict="0-9\." x="492" y="448" width="106" id="WashupTimeFountain" text="{pressDefinition.washupPerFountain}" height="20" change="doWashUpPerFountain();" focusOut="doRound(event);"/>
+	<mx:TextInput restrict="0-9\." x="492" y="426" width="106" id="WashupMin" text="{pressDefinition.washupMin}" height="20" focusOut="doRound(event);"/>
 	<mx:Label x="335" y="274" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AvgImpressionsHour')}" textAlign="right" width="149"/>
 	<mx:Label x="335" y="318" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.LaborMarkup')}" textAlign="right" width="149"/>
 	<mx:Label x="353" y="340"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.FixedWaste')}" textAlign="right" width="131"/>
