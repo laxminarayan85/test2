@@ -1337,6 +1337,13 @@
 	}
 	
 	private function doRevert():void{
+		PreferencesCashRegisterDeleteArray.removeAll();
+		PreferencesMarkupsDeleteArray.removeAll();
+		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
+		PreferencesPricingMethodDeleteArray.removeAll();
+		PreferencesSalesCategoryDeleteArray.removeAll();
+		PreferencesCreditCardDeleteArray.removeAll();
+		PreferencesQuantityBreaksDeleteArray.removeAll();
 		getPreferencesData();
 		mapFromPreferencesAllData();
 	}
