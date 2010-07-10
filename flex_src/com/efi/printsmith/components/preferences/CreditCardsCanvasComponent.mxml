@@ -16,7 +16,7 @@
 			
 			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
 			
-			private function updateComp(preferencesAccounting:PreferencesAccounting):void{
+			public function updateComp(preferencesAccounting:PreferencesAccounting):void{
 				if(preferencesAccounting && !updated){
 					if(preferencesAccounting.useSkipJackProcessor){
 						this.currentState="SkipJackSetup"; 

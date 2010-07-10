@@ -177,6 +177,8 @@
 
 	[Bindable]
 	private var enableSave:Boolean = true;
+	
+	[Bindable] private var isReverted:Boolean = false;
 
 	[Bindable]
 	private var currentnumberstext:String = "";
@@ -1056,6 +1058,12 @@
 			preferencesAccounting = new PreferencesAccounting();
 		} 
 		mapFromPreferencesAccountingData();
+		if(isReverted){
+			creditcards_canvas.updated = false;
+			creditcards_canvas.updateComp(preferencesAccounting);
+		}
+		isReverted = false;
+		
 	}
 	
 	private function handleLoadCountryResult(ev:ResultEvent):void {
@@ -1345,6 +1353,8 @@
 	}
 	
 	private function doRevert():void{
+		isReverted = true;
+		var updateCompInputArray:Array = new Array();
 		PreferencesCashRegisterDeleteArray.removeAll();
 		PreferencesMarkupsDeleteArray.removeAll();
 		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
