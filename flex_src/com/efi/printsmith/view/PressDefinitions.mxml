@@ -324,7 +324,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 pressDefinition.setupAddSig= parseInt(SetupAddSig.text);
 		 pressDefinition.workTurnSetup= parseInt(WorkTurn.text);
 		 pressDefinition.setupAddHead = parseInt(setupAddHead.text);
-		 pressDefinition.washupFee = parseInt(WashupFee.text);
+		 pressDefinition.washupFee = parseFloat(WashupFee.text);
 		 pressDefinition.addSigAddHead= parseInt(AddSigAddHead.text);
 		 pressDefinition.washupMin = parseInt(WashupMin.text);
 		 pressDefinition.washupPerFountain = parseInt(WashupTimeFountain.text);
@@ -380,6 +380,13 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
 		pressDefinition = ev.result as PressDefinition;
+		if (pressDefinition.speedTable != null){
+			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			AvgImpressPerhour.enabled = false;
+		}else{
+			AvgImpressPerhour.enabled = true;
+			AvgImpressPerhour.text = Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour)
+		}
     	loadPressDefinitions();
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
@@ -444,7 +451,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			AvgImpressPerhour.enabled = false;
 		}else{
 			AvgImpressPerhour.enabled = true;
-			AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
+			AvgImpressPerhour.text = Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour)
 		}
 	    doWashUpPerFountain(); 
 	}
@@ -540,7 +547,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		pressDefinition.speedTable = null;
 		speed = false;
 		AvgImpressPerhour.enabled = true;
-		AvgImpressPerhour.text = pressDefinition.avgImpressPerHour.toString();
+		AvgImpressPerhour.text = Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour);
     }
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {

@@ -571,7 +571,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="clickCost", precision=19, scale=2)
+	@Column(name="clickCost", precision=19, scale=4)
 	private BigDecimal clickCost;
 	
 	/**
@@ -587,7 +587,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setClickCost(BigDecimal newVal) {
     this.clickCost = newVal;
-    this.clickCost.setScale(2, RoundingMode.HALF_UP);
+    this.clickCost.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -595,7 +595,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setClickCost(double newVal) {
     this.clickCost = BigDecimal.valueOf(newVal);
-    this.clickCost.setScale(2, RoundingMode.HALF_UP);
+    this.clickCost.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**

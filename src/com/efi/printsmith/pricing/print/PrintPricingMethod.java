@@ -7,6 +7,7 @@ import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.WasteChart;
+import java.math.BigDecimal;
 
 public class PrintPricingMethod {
 	public Job pricePrintJob(Job job) {
@@ -21,14 +22,14 @@ public class PrintPricingMethod {
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		double stockPrice = priceStockEngine.priceStock(job);
 		double pressPrice = 0.0;
-		long pressSpeed = 0;
+		BigDecimal pressSpeed;
 		if (pressDefinition.getSpeedTable() != null) {
-			pressSpeed = new Double(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions())).longValue();
+			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions()));
 		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		float runHours = job.getTotalImpositions() / new Double(pressSpeed).floatValue();
+		float runHours = job.getTotalImpositions() / pressSpeed.longValue();
 		float setupHours = pressDefinition.getSetupMin().floatValue() / 60;
 		//float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
 		float totalHours = runHours + setupHours;

@@ -347,14 +347,14 @@ public class PriceListService extends SnowmassHibernateService {
 	
 	public double getPrintPrice(PressDefinition pressDefinition, long qty, boolean doubleSided) {
 		double price = 0.0;
-		long pressSpeed = 0;
+		BigDecimal pressSpeed;
 		if (pressDefinition.getSpeedTable() != null) {
-			pressSpeed = new Double(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), qty)).longValue();
+			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), qty));
 		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		float runHours = qty / new Double(pressSpeed).floatValue();
+		float runHours = qty /pressSpeed.floatValue();
 		float setupHours = pressDefinition.getSetupMin().floatValue() / 60;
 		float totalHours = runHours + setupHours;
 		float minimumHours = pressDefinition.getMinLabor().floatValue() / 60;

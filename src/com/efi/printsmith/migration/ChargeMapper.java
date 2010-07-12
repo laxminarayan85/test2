@@ -79,7 +79,7 @@ public class ChargeMapper extends ImportMapper {
 				}
 			} else if ("production location".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
-					ProductionLocations location = (ProductionLocations)dataService.getByName("Location", currentImportToken);
+					ProductionLocations location = (ProductionLocations)dataService.getByLocationName(currentImportToken);
 					if (location == null) {
 						location = new ProductionLocations();
 						location.setName(currentImportToken);

@@ -776,24 +776,33 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double gripEdge;
+	@Column(name="gripEdge", precision=19, scale=4)
+	private BigDecimal gripEdge;
 	
 	/**
 	 * @generated
  	 */
-	public Double getGripEdge(){
+	public BigDecimal getGripEdge(){
     return gripEdge; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setGripEdge(Double newVal) {
+   * @generated
+   */	
+  public void setGripEdge(BigDecimal newVal) {
     this.gripEdge = newVal;
+    this.gripEdge.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setGripEdge(double newVal) {
+    this.gripEdge = BigDecimal.valueOf(newVal);
+    this.gripEdge.setScale(4, RoundingMode.HALF_UP);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -820,24 +829,30 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Long avgImpressPerHour;
+	private BigDecimal avgImpressPerHour;
 	
 	/**
 	 * @generated
  	 */
-	public Long getAvgImpressPerHour(){
+	public BigDecimal getAvgImpressPerHour(){
     return avgImpressPerHour; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAvgImpressPerHour(Long newVal) {
+   * @generated
+   */	
+  public void setAvgImpressPerHour(BigDecimal newVal) {
     this.avgImpressPerHour = newVal;
   }
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setAvgImpressPerHour(double newVal) {
+    this.avgImpressPerHour = BigDecimal.valueOf(newVal);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -1233,9 +1248,9 @@ public class PressDefinition extends ModelBase {
     if (ADDSIGADDHEAD.equals(propertyName)) setAddSigAddHead((Long)newValue); else
     if (WASHUPMIN.equals(propertyName)) setWashupMin((Long)newValue); else
     if (WASHUPPERFOUNTAIN.equals(propertyName)) setWashupPerFountain((BigDecimal)newValue); else
-    if (GRIPEDGE.equals(propertyName)) setGripEdge((Double)newValue); else
+    if (GRIPEDGE.equals(propertyName)) setGripEdge((BigDecimal)newValue); else
     if (PERFECTOR.equals(propertyName)) setPerfector((Boolean)newValue); else
-    if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((Long)newValue); else
+    if (AVGIMPRESSPERHOUR.equals(propertyName)) setAvgImpressPerHour((BigDecimal)newValue); else
     if (NUMBERHEADS.equals(propertyName)) setNumberHeads((Long)newValue); else
     if (SETUPADDRUN.equals(propertyName)) setSetupAddRun((Long)newValue); else
     if (SHEETFED.equals(propertyName)) setSheetFed((Boolean)newValue); else
@@ -1306,11 +1321,11 @@ public class PressDefinition extends ModelBase {
     if (WASHUPPERFOUNTAIN.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (GRIPEDGE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (PERFECTOR.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (AVGIMPRESSPERHOUR.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (NUMBERHEADS.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (SETUPADDRUN.equals(propertyName)) 
