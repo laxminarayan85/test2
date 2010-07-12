@@ -1,52 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="556" showCloseButton="true" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="616" height="666" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="Stock Availability" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
     verticalScrollPolicy="off" currentState="Standard">
 	<mx:states>
 		<mx:State name="Standard">
-			<mx:RemoveChild target="{datagrid1}"/>
 			<mx:SetProperty name="showCloseButton" value="true"/>
 			<mx:SetProperty name="height" value="668"/>
 			<mx:SetProperty name="width" value="596"/>
-			<mx:RemoveChild target="{image1}"/>
-			<mx:RemoveChild target="{canvas1}"/>
-			<mx:RemoveChild target="{panel1}"/>
 			<mx:SetProperty name="title" value="View Price List"/>
-			<mx:AddChild position="lastChild">
-				<mx:Canvas width="581" height="604">
-					<mx:DataGrid width="101" x="22" y="193" height="401" id="qty_grid" editable="false" enabled="false">
-						<mx:columns>
-							<mx:DataGridColumn headerText="Quantity" dataField="col1"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid width="101" x="131" y="193" height="399" id="price_grid" editable="false" enabled="false">
-						<mx:columns>
-							<mx:DataGridColumn headerText="1 Side" dataField="col1"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid width="101" x="240" y="193" height="399" id="price_per_grid" editable="false" enabled="false">
-						<mx:columns>
-							<mx:DataGridColumn headerText="2 Sides" dataField="col1"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid width="101" x="349" y="193" height="399" id="price_two_grid" editable="false" enabled="false">
-						<mx:columns>
-							<mx:DataGridColumn headerText="1 Side per each" dataField="col1"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid width="101" x="458" y="193" height="399" id="price_two_per_grid" editable="false" enabled="false">
-						<mx:columns>
-							<mx:DataGridColumn headerText="2 Sides per each" dataField="col1"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none" editable="false" enabled="true" fontSize="20" textAlign="center"/>
-					<mx:TextArea x="16" y="95" width="549" height="77" id="stock_text" borderStyle="none" editable="false" enabled="true" fontSize="10" textAlign="left"/>
-				</mx:Canvas>
-			</mx:AddChild>
 		</mx:State>
-		<mx:State name="Extended"/>
 	</mx:states>
 	<mx:RemoteObject id="priceListService" destination="priceListService">
 		<mx:method name="getCopierPriceList"
@@ -91,7 +55,7 @@
 	private var priceTwoPerArray:ArrayCollection;
 	private var loader:Loader;                                                     
 	private function init():void {   
-		
+		this.currentState = "Standard";
 	}
 	
 		
@@ -124,6 +88,7 @@
 	}
 	
 	private function handlePriceListResult(evt:ResultEvent):void {
+		this.currentState = "Standard"
 		var resultArray:ArrayCollection = evt.result as ArrayCollection;
 		qtyArray = resultArray[0];
 		priceArray = resultArray[1];
@@ -184,18 +149,35 @@
 
 ]]>        
 </mx:Script>
-	<mx:Image source="images/Xpdex_Logo.jpg" scaleContent="true" autoLoad="true" width="97" height="25" themeColor="#009DFF" id="image1"/>
 <mx:Spacer height="10"  id="spacer1"/>        
-	<mx:Panel width="547" height="461" layout="absolute" id="panel1">
-		<mx:DataGrid x="27.5" y="10" width="472" height="103" id="datagrid1">
+	<mx:Canvas width="578" height="604">
+		<mx:DataGrid width="101" x="22" y="193" height="401" id="qty_grid" editable="false" enabled="false">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
-				<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
-				<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+				<mx:DataGridColumn headerText="Quantity" dataField="col1"/>
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:Canvas x="10" y="132" width="507" height="279" id="canvas1">
-		</mx:Canvas>
-	</mx:Panel>
+		<mx:DataGrid width="101" x="131" y="193" height="399" id="price_grid" editable="false" enabled="false">
+			<mx:columns>
+				<mx:DataGridColumn headerText="1 Side" dataField="col1"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid width="101" x="240" y="193" height="399" id="price_per_grid" editable="false" enabled="false">
+			<mx:columns>
+				<mx:DataGridColumn headerText="2 Sides" dataField="col1"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid width="101" x="349" y="193" height="399" id="price_two_grid" editable="false" enabled="false">
+			<mx:columns>
+				<mx:DataGridColumn headerText="1 Side per each" dataField="col1"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid width="101" x="458" y="193" height="399" id="price_two_per_grid" editable="false" enabled="false">
+			<mx:columns>
+				<mx:DataGridColumn headerText="2 Sides per each" dataField="col1"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:TextArea x="10" y="10" width="549" height="77" id="header_text" borderStyle="none" editable="false" enabled="true" fontSize="20" textAlign="center"/>
+		<mx:TextArea x="16" y="95" width="549" height="77" id="stock_text" borderStyle="none" editable="false" enabled="true" fontSize="10" textAlign="left"/>
+	</mx:Canvas>
 
 </mx:TitleWindow>
