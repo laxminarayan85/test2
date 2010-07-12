@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="846" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
+width="949" height="647" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
+creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -194,7 +194,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			employee.active = false;
 			
 		
-		employee.rate= parseInt(rate_edit.text); 
+		employee.rate= parseFloat(rate_edit.text); 
 		employee.allowOverrideCost = override_cost_check.selected;
 		employee.costingAmounts = hide_cost_amount_check.selected;
 		employee.hideNonReleaseProduction = hide_non_production_items.selected;
@@ -458,7 +458,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 ]]>
 
 </mx:Script>
-	<mx:Canvas width="100%" height="100%">
+	<mx:Canvas width="100%" height="100%"  verticalScrollPolicy="auto">
 		<mx:Button x="10" y="10" width="38" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
@@ -487,7 +487,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		</mx:Button>
 		<mx:Label x="483" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
 		<mx:Label x="263" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
-		<mx:TabNavigator x="0" y="80" width="895" height="100%" creationPolicy="all">
+		<mx:TabNavigator x="0" y="80" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
 				<mx:Text x="143" y="17" id="employeeID" text="{employee.employeeId}" width="106" />
@@ -515,11 +515,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:RadioButton x="10" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Inactive')}" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettin')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePin')}" id="requirePin" selected="{employee.pinRequired}"/>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" id="requirePin" selected="{employee.pinRequired}" width="282"/>
 					<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PIN')}"/>
 					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>
 				</mx:Panel>
-				<mx:TextInput x="54" y="40" id="rate_edit" text="{employee.rate}"/>
+				<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>
 				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EditableProductionOp')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowedtooverridecos')}" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
 					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hidecostingamounts')}" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
@@ -540,7 +540,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
 					<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="532" width="796" height="185" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
+				<mx:Panel x="10" y="522" width="796" height="173" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
 					<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
 					<mx:CheckBox x="10" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockIN')}" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
 					<mx:CheckBox x="239" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockOU')}" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>

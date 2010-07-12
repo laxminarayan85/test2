@@ -606,6 +606,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.contact = new Contact();
 		 contact_editor.setContact(contact);
 		contact.creditCard = new CreditCard();
+		contact.shipToAddress = new ArrayCollection();
 		setMarketing();
 		setCreditCard();
 		this.setContact(contact);

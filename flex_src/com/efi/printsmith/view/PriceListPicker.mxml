@@ -148,8 +148,10 @@
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(newPriceList);
+	    doSelect();
 		PopUpManager.removePopUp(this);
 		dataService.getAll(this.itemType);
+	
 		
 	}
 
@@ -163,6 +165,7 @@
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(dataGrid.selectedItem as PriceListBase);
+	    doSelect();
 		PopUpManager.removePopUp(this);
 	}
 		

@@ -82,8 +82,8 @@
     private var originalContact:Contact = null;
 	
 	private function init():void {
-		dataService.getAll("JobTitle");
-		comLinkDataService.getAll("ComLinkType");
+		/* dataService.getAll("JobTitle");*/
+		comLinkDataService.getAll("ComLinkType"); 
 		if (contact.comLinks == null)
 			contact.comLinks = new ArrayCollection();
 		
@@ -148,6 +148,18 @@
 		}
 		return -1;
 	}
+	
+	public function setJobTitles(tempArray:ArrayCollection):void{
+		jobTitles = tempArray;
+		if (job_title_edit.selectedItem != null){
+	 		job_title_edit.selectedIndex = findItem (job_title_edit.selectedItem.name, jobTitles);
+	 	}
+	 	else{
+	 		job_title_edit.selectedIndex = -1;
+	 	}
+	}
+	
+	
 	public function setContact(addr:Contact):void {
 		
 		var tempCom:ComLink;

@@ -36,7 +36,7 @@
     <mx:Canvas width="409" height="167">
     <mx:Label x="10" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Street')}" width="67" textAlign="right"/>
     <mx:Label x="10" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.City')}" width="67" textAlign="right"/>
-    <mx:Label x="306" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.State')}" width="39" textAlign="right"/>
+    <mx:Label x="296" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.State')}" width="39" textAlign="right"/>
     <mx:Label x="10" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Zip')}" width="67" textAlign="right"/>
     <mx:Label x="164" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Country')}" width="57" textAlign="right"/>
             
@@ -44,9 +44,9 @@
     <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}"/>
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
-    <fc:AutoComplete id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()" lookAhead="true" width="164"/>
-    <fc:AutoComplete id="statecombo" restrict="A-Z" x="353" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" lookAhead="true" width="46"/>
-    <mx:ComboBox id="zipcombo"  restrict="0-9" x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
+    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="164"/>
+    <mx:ComboBox id="statecombo" restrict="A-Z" x="343" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="56"/>
+    <mx:ComboBox id="zipcombo"  x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
     <fc:AutoComplete id="countrycombo" x="224" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="175"/>
     	
     <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
@@ -243,8 +243,8 @@
 		var city:City;
 		var result:Boolean;
 		
-			if (citycombo.typedText != null && citycombo.typedText != "" && citycombo.selectedIndex == -1) {
-				var item:int = findItem(citycombo.typedText, cityDataProvider);
+			if (citycombo.text != null && citycombo.text != "" && citycombo.selectedIndex == -1) {
+				var item:int = findItem(citycombo.text, cityDataProvider);
 				if (item == -1) {
 					city = new City();
 					city.name = citycombo.text;
@@ -265,8 +265,8 @@
 		var state:com.efi.printsmith.data.State;
 		var result:Boolean;
 		       
-		if (statecombo.typedText != null && statecombo.typedText != "" && statecombo.selectedIndex == -1) {
-			var item:int = findItem(statecombo.typedText, stateDataProvider);
+		if (statecombo.text != null && statecombo.text != "" && statecombo.selectedIndex == -1) {
+			var item:int = findItem(statecombo.text, stateDataProvider);
 			if (item == -1) {
 				state = new com.efi.printsmith.data.State();
 				state.name = statecombo.text;

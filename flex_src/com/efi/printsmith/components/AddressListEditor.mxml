@@ -120,7 +120,11 @@
 	
 					if (item.zip != null && item.zip != null && item.zip != "")
 					{
-						displayAddress+=item.zip;
+						displayAddress+=item.zip + " ";
+					}
+					if (item.country != null && item.country != null && item.country != "")
+					{
+						displayAddress+=item.country;
 					}
 	
 					

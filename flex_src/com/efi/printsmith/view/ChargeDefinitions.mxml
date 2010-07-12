@@ -1427,6 +1427,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.itemType = "PriceList";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	   
 	}
 
 	private function doPriceList():void {
@@ -1435,6 +1436,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.itemType = "PriceList";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
 	}
 
 	private function doWasteChart():void {
@@ -1443,6 +1445,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.itemType = "WasteChart";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
+	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
 	}
 	
 	private function doPresetInfo():void {
@@ -1467,15 +1470,26 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			charge.wasteChart = evt.priceList as WasteChart;
+			waste_chart_link.label = wasteChartLabel();
 		} else {
 			charge.wasteChart = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}  
     }
-    
+    private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
+		charge.wasteChart = null;
+		waste_chart_link.label = wasteChartLabel();
+		
+    }
+     private function handleClearPriceList(evt:PriceListPickerSelectEvent):void {
+		charge.priceList = null;
+		price_list_link.label = priceListLabel();
+		
+    }
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
  		if (evt.priceList != null) {
 			charge.priceList = evt.priceList as PriceList;
+			price_list_link.label = priceListLabel();	
 		} else {
 			charge.priceList = null;
 			Alert.show("Price List Picker returned a null price list", "Error");

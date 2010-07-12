@@ -19,7 +19,7 @@
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
 			<mx:RemoveChild target="{label4}"/>
 			<mx:RemoveChild target="{textinput1}"/>
-			<mx:SetProperty target="{label1}" name="x" value="233"/>
+			<mx:SetProperty target="{label1}" name="x" value="306"/>
 			<mx:SetProperty target="{label1}" name="y" value="118"/>
 			<mx:SetProperty target="{label7}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinOrderweight')}"/>
 			<mx:RemoveChild target="{MinCutCharge}"/>
@@ -48,12 +48,16 @@
 			<mx:SetProperty target="{DefaultLargeFormat}" name="enabled" value="false"/>
 			<mx:SetProperty target="{chkAutocalcblankstock}" name="enabled" value="false"/>
 			<mx:RemoveChild target="{mWeight}"/>
-			<mx:SetProperty target="{rollweight}" name="y" value="114"/>
+			<mx:SetProperty target="{rollweight}" name="y" value="116"/>
 			<mx:SetProperty target="{rollweight}" name="width" value="139.5"/>
-			<mx:SetProperty target="{label7}" name="x" value="-20"/>
+			<mx:SetProperty target="{label7}" name="x" value="10"/>
 			<mx:SetProperty target="{label7}" name="width" value="118.5"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
+			<mx:SetProperty target="{minOrder}" name="x" value="131.5"/>
+			<mx:SetProperty target="{rollweight}" name="x" value="420.5"/>
+			<mx:SetProperty target="{sheetsPerCarton}" name="x" value="131.5"/>
+			<mx:SetProperty target="{label2}" name="x" value="25"/>
 		</mx:State>
 		<mx:State name="SheetStock">
 			<mx:SetProperty target="{mWeight}" name="enabled" value="false"/>
@@ -80,12 +84,15 @@
 			<mx:RemoveChild target="{label2}"/>
 			<mx:SetProperty target="{label7}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MinOrderarea')}"/>
 			<mx:RemoveChild target="{rollweight}"/>
-			<mx:SetProperty target="{label7}" name="x" value="-24"/>
+			<mx:SetProperty target="{label7}" name="x" value="1"/>
 			<mx:SetProperty target="{label7}" name="width" value="122.5"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 			<mx:SetProperty target="{chkIsMetric}" name="x" value="513"/>
 			<mx:SetProperty target="{chkIsMetric}" name="y" value="62"/>
+			<mx:SetProperty target="{minOrder}" name="x" value="131.5"/>
+			<mx:SetProperty target="{minOrder}" name="y" value="153"/>
+			<mx:SetProperty target="{label7}" name="y" value="157"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
@@ -698,6 +705,7 @@
 				stockclass.name = cbostockClass.text;
 				stockClassDataService.addUpdate(stockclass);
 				stockDefinitions.stkclass = stockclass;
+			
 			}
 			else {
 				cbostockClass.selectedItem = item;
@@ -975,11 +983,14 @@
 	}
 	private function handleLoadStockClass(ev:ResultEvent):void {
 		stockClass = ev.result as ArrayCollection;
-		 
+		 if ( stockDefinitions.stkclass != null){
+		 	cbostockClass.selectedIndex = findItem(stockDefinitions.stkclass.name, stockClass);
+		 } 
 	}
 	
 	private function handleLoadVendor(ev:ResultEvent):void {
 		 stockVendor = ev.result as ArrayCollection;
+		 
 		 if ( stockDefinitions.vendor != null){
 		 	cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
 		 }
@@ -1641,7 +1652,7 @@ private function doRound(evt:FocusEvent):void{
 			<fc:AutoComplete x="133" y="9" width="85" 
 				  id="NormalRunSize"
 				  dataProvider="{dimensions}"
-				  labelField="name"
+				   labelFunction="getParentsizename"
 				  text="{stockDefinitions.normalRunSize}"
 				  focusOut="handleFocusOutEvent(event)"
 			/>
