@@ -40,7 +40,7 @@
 					<components:CustomComboBoxComponent
 						masterList="{receiptPrinterArray}" labelFieldId="name" labelFieldName="name"
 						dataHolder="{preferencesPOS}" variableName="receiptPrinterStatus" customText="{getCustomTextData(receiptPrinterArray,preferencesPOS)}" 
-						updateFirstElement="true" width="120" />
+						updateFirstElement="true" width="120" enabled="{!preferencesPOS.lockSettings}"/>
 						
 				</mx:HBox>
 				
@@ -51,7 +51,8 @@
 						textAlign="right" width="120"/>
 						
 					<components:CustomStringTextInputComponent width="200"
-						dataHolder="{preferencesPOS}" variableName="defaultPrinter" customText="{preferencesPOS.defaultPrinter}" />
+						dataHolder="{preferencesPOS}" variableName="defaultPrinter" customText="{preferencesPOS.defaultPrinter}"
+						enabled="{preferencesPOS.receiptPrinterStatus=='Named Graphics Printer' || preferencesPOS.receiptPrinterStatus=='Names Serial Port'}"/>
 						
 				</mx:HBox>
 				
@@ -62,12 +63,14 @@
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.EnableCashDrawer')}"
 							dataHolder="{preferencesPOS}" variableName="enableCashDrawer" customText="{preferencesPOS.enableCashDrawer}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false"
+							enabled="{!preferencesPOS.lockSettings}"/>
 							
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintReceipts')}"
 							dataHolder="{preferencesPOS}" variableName="printReceipts" customText="{preferencesPOS.printReceipts}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false"
+							enabled="{preferencesPOS.receiptPrinterStatus!='Off' &amp;&amp; !preferencesPOS.lockSettings}"/>
 							
 						<mx:HBox width="100%">
 						
@@ -78,12 +81,14 @@
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCreditCards')}"
 									dataHolder="{preferencesPOS}" variableName="print2forCreditCards" customText="{preferencesPOS.print2forCreditCards}"
-									selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									selectedValue="true" deSelectedValue="false" defaultValue="false"
+									enabled="{preferencesPOS.receiptPrinterStatus!='Off' &amp;&amp; !preferencesPOS.lockSettings &amp;&amp; preferencesPOS.printReceipts}"/>
 									
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Print2forCash')}"
 									dataHolder="{preferencesPOS}" variableName="print2forCash" customText="{preferencesPOS.print2forCash}"
-									selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									selectedValue="true" deSelectedValue="false" defaultValue="false"
+									enabled="{preferencesPOS.receiptPrinterStatus!='Off' &amp;&amp; !preferencesPOS.lockSettings &amp;&amp; preferencesPOS.printReceipts}"/>
 									
 							</mx:VBox>	
 							
@@ -92,7 +97,7 @@
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.PrintInvoices')}"
 							dataHolder="{preferencesPOS}" variableName="printInvoices" customText="{preferencesPOS.printInvoices}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>
 							
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.LockSettings')}"
@@ -106,12 +111,12 @@
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.UseMastersDrawer')}"
 							dataHolder="{preferencesPOS}" variableName="useMasterDrawer" customText="{preferencesPOS.useMasterDrawer}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>
 							
 						<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}"
 							dataHolder="{preferencesPOS}" variableName="keepLocalSettings" customText="{preferencesPOS.keepLocalSettings}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>
 							
 					
 					</mx:VBox>
@@ -189,7 +194,7 @@
 							<components:CustomComboBoxComponent
 								masterList="{baudRateArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="baudRate" customText="{getCustomTextData(baudRateArray,preferencesPOS)}" 
-								updateFirstElement="true" width="90" enabled="false"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
 								
 						</mx:HBox>
 						
@@ -202,7 +207,7 @@
 							<components:CustomComboBoxComponent
 								masterList="{parityArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="parity" customText="{getCustomTextData(parityArray,preferencesPOS)}" 
-								updateFirstElement="true" width="90" enabled="false"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
 							
 						</mx:HBox>
 						
@@ -219,7 +224,7 @@
 							<components:CustomComboBoxComponent
 								masterList="{stopBitsArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="stopBits" customText="{getCustomTextData(stopBitsArray,preferencesPOS)}" 
-								updateFirstElement="true" width="90" enabled="false"/>							
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>							
 							
 						</mx:HBox>
 						
@@ -232,7 +237,7 @@
 							<components:CustomComboBoxComponent
 								masterList="{dataSizeArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="dataSize" customText="{getCustomTextData(dataSizeArray,preferencesPOS)}" 
-								updateFirstElement="true" width="90" enabled="false"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
 					
 						</mx:HBox>
 						
