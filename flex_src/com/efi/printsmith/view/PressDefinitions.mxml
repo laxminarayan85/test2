@@ -765,7 +765,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Button x="10" y="546" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.AddCharges')}" width="98" click="doAddCharge();"/>
 	<mx:CheckBox x="371" y="491" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Label x="537" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" width="92"/>
-	<mx:TextInput x="637" y="491" id="GripEdge" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.gripEdge)}" height="20" width="104"/>
+	<mx:TextInput x="637" y="491" id="GripEdge" text="{Snowmass.getCurrencyFormatter(false,4).format(pressDefinition.gripEdge)}" height="20" width="104"/>
 	<mx:Text x="132" y="520" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195" click="doclickwaste(event);"/>
 	<mx:Text x="132" y="493" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195" click="doclickSpeedTable(event);"/>
 	<mx:Text x="501" y="619" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>

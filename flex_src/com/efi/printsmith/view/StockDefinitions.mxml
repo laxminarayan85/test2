@@ -65,13 +65,13 @@
 			<mx:RemoveChild target="{rollweight}"/>
 			<mx:SetProperty target="{label7}" name="x" value="-23"/>
 			<mx:SetProperty target="{label7}" name="width" value="121.5"/>
-			<mx:SetProperty target="{panel1}" name="x" value="632"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 			<mx:SetProperty target="{pcwRecycled}" name="x" value="152"/>
 			<mx:SetProperty target="{label12}" name="width" value="134"/>
 			<mx:SetProperty target="{pcwRecycled}" name="width" value="32.5"/>
-			<mx:SetProperty target="{panel1}" name="y" value="0"/>
+			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
+			<mx:SetProperty target="{tab_pages}" name="y" value="161"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -1145,7 +1145,8 @@
 		}
 		if ( stockDefinitions.parentsize != null)
 			parentSize.selectedIndex = findItem(stockDefinitions.parentsize.name, dimensions);
-			
+		if ( stockDefinitions.normalRunSize != null)
+			NormalRunSize.selectedIndex = findItem(stockDefinitions.normalRunSize.name, dimensions);	
 		if (stockDefinitions.priceExpires != null)
 			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
 		if (stockDefinitions.expires != null)
@@ -1437,6 +1438,7 @@
 	}  
 	private function addSymbol():void{
 		var index:int;
+	
 		index = pcwRecycled.text.indexOf('%',0);
 		if ( index == -1){
 			pcwRecycled.text = pcwRecycled.text + '%';
@@ -1586,10 +1588,10 @@ private function doRound(evt:FocusEvent):void{
 					<mx:CheckBox x="10" y="104" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GreenSealCertified')}" id="chkgreensealCertified" selected="{stockDefinitions.greenSealCertified}"/>
 
 					<mx:TextInput x="10" y="20" width="153.5" id="forestMgmt" text="{stockDefinitions.forestManagement}"/>
-					<mx:TextInput x="115.75" y="44" width="67.75" focusOut="addSymbol()" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}%"/>
+					<mx:TextInput restrict="0-9" x="115.75" y="44" width="67.75" focusOut="addSymbol()" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}%"/>
 
 				</mx:Panel>
-				<mx:CheckBox x="467.5" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
+				<mx:CheckBox x="457.5" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false">
 				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right"/>
@@ -1634,7 +1636,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:TextInput restrict="0-9\." x="540" y="112" width="66" id="ListPerM6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM6)}"/>
 				<mx:TextInput restrict="0-9\." x="157" y="2" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>
 				<mx:TextInput restrict="0-9\." x="352" y="2" width="81" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}" focusOut="doRound(event);"/>
-				<mx:DateField restrict="0-9\." x="154" y="135" id="PriceExpires" text="{stockDefinitions.priceExpires}"/>
+				<mx:DateField restrict="0-9\." x="154" y="135" id="PriceExpires" editable="true" text="{stockDefinitions.priceExpires}"/>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="441" width="746.5" height="93" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Comment')}" dropShadowEnabled="false">
 				<mx:TextArea x="0" y="0" width="665.5" height="53" id="Comments" text="{stockDefinitions.comments}"/>
@@ -1652,9 +1654,8 @@ private function doRound(evt:FocusEvent):void{
 			<fc:AutoComplete x="133" y="9" width="85" 
 				  id="NormalRunSize"
 				  dataProvider="{dimensions}"
-				   labelFunction="getParentsizename"
-				  text="{stockDefinitions.normalRunSize}"
-				  focusOut="handleFocusOutEvent(event)"
+				  labelFunction="getParentsizename"
+				 focusOut="handleFocusOutEvent(event)"
 			/>
 			<mx:TextInput restrict="0-9\." x="313" y="9" width="50" id="CutsPer100" text="{stockDefinitions.cutsPer100}"/>
 			<mx:TextInput restrict="0-9\." x="508" y="9" width="50" id="MinCutCharge" text="{stockDefinitions.minCutCharge}"/>
