@@ -178,6 +178,9 @@
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceCashPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegPreferencesResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="cashregister"/>
 	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
@@ -213,6 +216,9 @@
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 
+	[Bindable]
+	private var systemCashPreferencesArray:ArrayCollection = new ArrayCollection();
+	
 	[Bindable]
 	private var itemQty:String;
 	[Bindable]
@@ -271,7 +277,9 @@
 	private function handleLoadTaxCodesResult(ev:ResultEvent):void {
 	     TaxCodesArray = ev.result as ArrayCollection;
 	}
-
+	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
+		systemCashPreferencesArray = ev.result as ArrayCollection;
+	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
 		if (systemPreferencesArray.length > 0)
@@ -290,7 +298,7 @@
 		cashRegister = new CashRegister();
 		cashRegister.customerAccount = new Account();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
-
+		dataServiceCashPreferences.getAll("PreferencesCashRegister");
 		//openTree();
 		setup();
 	}
@@ -556,7 +564,7 @@
 
 		    <mx:ComboBox x="77" y="8" id="pickTaxCodes" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
 		    <mx:ComboBox x="77" y="33" id="pickTaxTable" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
-		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax"/>
+		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax" />
 		</mx:Canvas>
 		<mx:Canvas x="198" y="40" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}"/>
@@ -584,11 +592,11 @@
 			<mx:Label x="69" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}"/>
 			<mx:Label x="44" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tendered')}"/>
 			<mx:Label x="54" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Change')}"/>
-			<mx:TextInput x="110" y="10" width="86" text="{currencyFormatter.format('0.00')}"/>
-			<mx:TextInput x="110" y="36" width="86" text="{currencyFormatter.format('0.00')}"/>
-			<mx:TextInput x="110" y="62" width="86" text="{currencyFormatter.format('0.00')}"/>
-			<mx:TextInput x="110" y="88" width="86" text="{currencyFormatter.format('0.00')}"/>
-			<mx:TextInput x="110" y="114" width="86" text="{currencyFormatter.format('0.00')}"/>
+			<mx:TextInput x="110" y="10" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.subtotal)}"/>
+			<mx:TextInput x="110" y="36" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.taxamount)}"/>
+			<mx:TextInput x="110" y="62" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.totalprice)}"/>
+			<mx:TextInput x="110" y="88" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.tendered)}"/>
+			<mx:TextInput x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.change)}"/>
 
 		</mx:Canvas>
 		<mx:CheckBox x="132" y="516" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>

@@ -1667,6 +1667,30 @@ public class DataService extends HibernateService {
 		}
 		return stockDefinition;
 	}	
+	public Grade getGrade(Long id) throws Exception {
+		log.debug("** getGrade called.");
+		Grade grade = null;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Grade.byId");
+			query.setParameter("id", id);
+			grade = (Grade) query.getSingleResult();
+
+			if (grade != null) {
+				for (int i = 0; i < grade.getCampaigns().size(); i++) {
+					 Campaigns camp = grade.getCampaigns().get(i);
+					if (camp == null) {
+						log.error("null camp found");
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return grade;
+	}	
 
 	public PressDefinition getPressDefinition(Long id) throws Exception {
 		log.debug("** getPressDefinition called.");

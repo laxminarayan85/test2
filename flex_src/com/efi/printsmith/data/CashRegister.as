@@ -30,6 +30,7 @@ package com.efi.printsmith.data
 		public var refNumber:String = "";
 		public var paymentAmount:Number = 0;
 		public var checkNumber:String = "";
+		public var cashRegisterDept:PreferencesCashRegister;
 	
 	}
 }

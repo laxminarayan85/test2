@@ -112,6 +112,11 @@ public class CashRegister extends ModelBase {
 	public static final String CHECKNUMBER = "CheckNumber";
 
 	/**
+   * @generated
+   */
+  public static final String CASHREGISTERDEPT = "CashRegisterDept";
+
+	/**
 	 * @generated
 	 */
 	public CashRegister() {
@@ -546,6 +551,28 @@ public class CashRegister extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private PreferencesCashRegister cashRegisterDept;
+
+	/**
+   * @generated
+ 	 */
+  public PreferencesCashRegister getCashRegisterDept(){
+    return cashRegisterDept; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCashRegisterDept(PreferencesCashRegister newVal) {
+    this.cashRegisterDept = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -568,6 +595,7 @@ public class CashRegister extends ModelBase {
     if (REFNUMBER.equals(propertyName)) return getRefNumber();
     if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
     if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
+    if (CASHREGISTERDEPT.equals(propertyName)) return getCashRegisterDept();
     return super.getProperty(propertyName);
   }
 	
@@ -594,6 +622,7 @@ public class CashRegister extends ModelBase {
     if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
     if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((BigDecimal)newValue); else
     if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
+    if (CASHREGISTERDEPT.equals(propertyName)) setCashRegisterDept((PreferencesCashRegister)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -637,6 +666,8 @@ public class CashRegister extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (CHECKNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (CASHREGISTERDEPT.equals(propertyName)) 
+      return new Class<?>[] {PreferencesCashRegister.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -664,6 +695,7 @@ public class CashRegister extends ModelBase {
     if (REFNUMBER.equals(propertyName)) return CashRegister.class;
     if (PAYMENTAMOUNT.equals(propertyName)) return CashRegister.class;
     if (CHECKNUMBER.equals(propertyName)) return CashRegister.class;
+    if (CASHREGISTERDEPT.equals(propertyName)) return CashRegister.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -708,6 +740,8 @@ public class CashRegister extends ModelBase {
     if (! SmartEquals(getPaymentAmount(), objT.getPaymentAmount()))
       return false;
     if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
+      return false;
+    if (! SmartEquals(getCashRegisterDept(), objT.getCashRegisterDept()))
       return false;
     return true;
   }			

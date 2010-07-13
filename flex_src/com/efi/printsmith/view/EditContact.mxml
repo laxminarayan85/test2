@@ -44,6 +44,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="accountDataService" destination="dataService">
 	<mx:method name="getById" fault="handleFault(event)" result="handleLoadAccountById(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="GradedataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGradeResult(event)"/>
+	
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="contacts"/>
 <mx:Consumer id="consumer" destination="salesreps"  message="messageHandler(event.message)"/>
@@ -76,9 +80,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.Grade;
 	import com.efi.printsmith.data.Marketing;
 	import com.efi.printsmith.data.SalesRep;  
+	import com.efi.printsmith.pages.GradePicker;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.ContactPickerSelectEvent;
 	import com.efi.printsmith.events.CampaignEditCompleteEvent;
+	import com.efi.printsmith.events.GradeSelectEvent;
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.events.SaveAddressEvent;
 	import com.efi.printsmith.components.AddressEditorPopup;
@@ -131,7 +137,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
    
     [Bindable]
     private var compaigns:ArrayCollection = new ArrayCollection();
-                     
+      [Bindable]            
+    private var gradesarray:ArrayCollection = new ArrayCollection();
+                    
     private var formIsValid:Boolean = false;
     
     private var focussedFormControl:DisplayObject;
@@ -149,7 +157,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		//stateDataService.getAll("State");
 		//countryDataService.getAll("Country");
 	//	zipDataService.getAll("Zip"); 
-		campaignDataService.getAll("Campaigns");  
+		campaignDataService.getAll("Campaigns"); 
+		GradedataService.getAll("Grade");  
 		
 		
 		var eventAddress:ContactsAddressPanelEvent = new ContactsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
@@ -168,7 +177,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		eventWeb.dispatch();
 		    
 	}      
-
+	private function handleLoadGradeResult(ev:ResultEvent):void {
+		gradesarray = ev.result as ArrayCollection; 
+		
+	}
 	public function handleUIPanelEvent(evt:ResultEvent):void {
 		evt.result.panel.enabled = evt.result.enabled;
 	}		
@@ -188,7 +200,28 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		account = new Account();
 		this.setAccount(account);
 	}
-	
+	private function handleGradePickerCancel(evt:GradeSelectEvent):void {
+		
+	}
+	private function handleGradePickerSelect(evt:GradeSelectEvent):void {
+		var tempGrade:Grade;
+		var index:int
+		var tempCamp:Campaigns;
+		var tempCamp2:Campaigns;
+		tempGrade= 	evt.grade
+		for( var t:int;t < compaigns.length; t++){
+			tempCamp = compaigns.getItemAt(index) as Campaigns;
+			tempCamp.applied = false;
+			compaigns.setItemAt(tempCamp,index);
+		}
+		for (var i:int= 0; i< tempGrade.campaigns.length;i++){
+			tempCamp2 = tempGrade.campaigns.getItemAt(i) as Campaigns;
+			index = findItem(tempCamp2.name,compaigns)
+			tempCamp = compaigns.getItemAt(index) as Campaigns;
+			tempCamp.applied = true;
+			compaigns.setItemAt(tempCamp,index);
+		}
+	}
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		if (evt.account != null) {
 			this.setAccount(evt.account);
@@ -803,14 +836,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     }
     private function handleCampaignSave(ev:CampaignEditCompleteEvent):void {
 		campaignDataService.getAll("Campaigns");
+	
 	}     
 	private function setApplied():void{
 		var i:int;
-		for (i=0; i<contact.campaigns.length; i++) {
-			checkbox1.dataField
-			dataGrid.selectedItem
-			var tmpcampaigns:Campaigns = contact.campaigns.getItemAt(i) as Campaigns;
-		}
+		var tmpcampaigns:Campaigns
+		
+			tmpcampaigns = dataGrid.selectedItem as Campaigns
+			i = findItem(tmpcampaigns.name, compaigns)
+			
+			if (tmpcampaigns.applied)
+				tmpcampaigns.applied = false;
+			else
+				tmpcampaigns.applied = true;
+			
+			compaigns.setItemAt(tmpcampaigns,i);
+		
 			
 	}
 	public function getCreditName(item:Object):String{
@@ -837,6 +878,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		
 	} 
+	private function doGrade():void{
+	var GradePickerWindow:GradePicker = GradePicker(PopUpManager.createPopUp(this, GradePicker, true));
+	    GradePickerWindow.setStyle("borderAlpha", 0.9);
+	    GradePickerWindow.setGrades(gradesarray);
+	    GradePickerWindow.addEventListener(GradeSelectEvent.CANCELSELECTGRADE, handleGradePickerCancel);
+	    GradePickerWindow.addEventListener(GradeSelectEvent.SELECTGRADE, handleGradePickerSelect);
+	    	
+	}
 	
 ]]>	
 
@@ -906,13 +955,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			</mx:Canvas>
 			<mx:Canvas id="canvasCampaigns" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" width="100%" height="100%">
 				<mx:Button x="384" y="63" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.EditCampaigns')}" id="camp_edit" click="editCampaigns();"/>
-				<mx:Button x="384" y="117" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ApplyGrade')}" id="grade_select" width="113"/>
+				<mx:Button x="384" y="117"  click="doGrade()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ApplyGrade')}" id="grade_select" width="113"/>
 				<mx:TextArea x="384" y="171" height="90" width="225">  
 					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Thecampaignfeatureal')}</mx:text>
 				</mx:TextArea>
-				<mx:DataGrid y="10" id="dataGrid" dataProvider="{compaigns}" height="353"  showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="10" right="320" change="setApplied();">
+				<mx:DataGrid y="10" id="dataGrid" dataProvider="{compaigns}" height="353"  showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="10" right="401" change="setApplied();">
 				<mx:columns>
-					<mx:DataGridColumn  id="checkbox1" width="50" sortable="false" textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Apply')}" dataField="applied" editorDataField="selected" rendererIsEditor="false" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"/>
+					<mx:DataGridColumn id="checkbox1" width="50" sortable="false" textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Apply')}" dataField="applied" editorDataField="selected" rendererIsEditor="false" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" dataField="name"/>
 				</mx:columns>
 				</mx:DataGrid>
