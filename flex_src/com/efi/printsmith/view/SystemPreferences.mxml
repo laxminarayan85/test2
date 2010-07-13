@@ -1255,6 +1255,7 @@
 		if( node.@label == "genericPrefCmd.POS" ) return;
 		if( node.@label == "genericPrefCmd.Estimator" ) return;
 		if( node.@label == "genericPrefCmd.Accounting" ) return;
+		if( node.@label == "genericPrefCmd.Integration" ) return;
 
 		//var message:String;
 		//message = node.@label; 
