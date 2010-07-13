@@ -864,6 +864,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						baseratelabel.visible =true;
 						baseRate_edit.visible = true;
 						baseRate_edit.enabled = true;
+						baseRate_edit.text = machineCostperCopy.text;
 						interpolatematrix.enabled = true;
 						break;
 					case "CopyCost":
@@ -871,6 +872,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						copyMarkup2.visible = true;
 						baseratelabel.visible =false;
 						baseRate_edit.visible = false;
+						baseRate_edit.text = machineCostperCopy.text;
 						interpolatematrix.enabled = true;
 						break;
 					case "StepTable":
@@ -878,6 +880,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						copyMarkup2.visible = true;
 						baseratelabel.visible =false;
 						baseRate_edit.visible = false;
+						baseRate_edit.text = machineCostperCopy.text;
 						interpolatematrix.enabled = false;
 						break;
 					case "MarkupTable":
@@ -886,6 +889,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 						baseratelabel.visible =true;
 						baseRate_edit.enabled = false;
 						baseRate_edit.visible = true;
+						baseRate_edit.text = machineCostperCopy.text;
 						interpolatematrix.enabled = true;
 						break;
 					
