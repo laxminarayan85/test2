@@ -14,6 +14,7 @@ import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.data.CreditCard;
+import com.efi.printsmith.data.CreditCardTransactions;
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.Contact;
@@ -33,10 +34,10 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
-		log.info("Entering ChargeCostingMapper->importFile");
+		log.info("Entering CreditCardTransactionsMapper->importFile");
 		DataService dataService = new DataService();
 		CreditCard creditCard = new CreditCard();
-		
+		CreditCardTransactions creditCardTransaction = new CreditCardTransactions();
 		Contact contact = null;
 		for (int i = 0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -49,6 +50,12 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				creditCard.setCreated(Utilities.tokenToDate(currentImportToken));
 			else if ("card type".equals(currentFieldToken))
 				creditCard.setType(currentImportToken);
+			else if ("transaction type".equals(currentFieldToken))
+				creditCardTransaction.setTransactionType(currentImportToken);
+			else if ("transaction status".equals(currentFieldToken))
+				creditCardTransaction.setTransactionStatus(currentImportToken);
+			else if ("transaction results".equals(currentFieldToken))
+				creditCardTransaction.setTransactionResults(currentImportToken);
 			else if ("encryption".equals(currentFieldToken))
 				creditCard.setEncryption(currentImportToken);
 			else if ("address ID".equals(currentFieldToken)) {
@@ -61,7 +68,47 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				creditCard.setCardNumber(currentImportToken);
 			else if ("CC Number Display".equals(currentFieldToken))
 				creditCard.setCardDisplayNumber(currentImportToken);
+			else if ("amount".equals(currentFieldToken))
+				creditCardTransaction.setAmount(Utilities.tokenToDouble(currentImportToken));
+			else if ("taxInAmount".equals(currentFieldToken))
+				creditCardTransaction.setTaxInAmount(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("user name".equals(currentFieldToken))
+				creditCardTransaction.setUserName(currentImportToken);
+			else if ("PO number".equals(currentFieldToken)) 
+				creditCardTransaction.setPoNumber(currentImportToken);
+			else if ("reference number".equals(currentFieldToken))
+				creditCardTransaction.setReferenceNumber(currentImportToken);
+			else if ("approval code".equals(currentFieldToken))
+				creditCardTransaction.setApprovalCode(currentImportToken);
+			else if ("approval date".equals(currentFieldToken))
+				creditCardTransaction.setApprovalDate(Utilities.tokenToDate(currentImportToken));
+			else if ("message".equals(currentFieldToken))
+				creditCardTransaction.setMessage(currentImportToken);
+			else if ("manual code".equals(currentFieldToken))
+				creditCardTransaction.setManualCode(currentImportToken);
+			else if ("failedAVS".equals(currentFieldToken))
+				creditCardTransaction.setFailedAVS(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("hasCVV2data".equals(currentFieldToken))
+				creditCardTransaction.setHasCVVdata(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("trackDataUsed".equals(currentFieldToken))
+				creditCardTransaction.setTrackDataUsed(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("taxExempt".equals(currentFieldToken))
+				creditCardTransaction.setTaxExempt(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("tax".equals(currentFieldToken))
+				creditCardTransaction.setTax(Utilities.tokenToDouble(currentImportToken));
+			else if ("tax code".equals(currentFieldToken)) {
+				TaxCodes taxCode = (TaxCodes)dataService.getByName("TaxCodes", currentImportToken);
+				if (taxCode != null)
+					creditCardTransaction.setTaxCode(taxCode);
+			}
+			else if ("tax table".equals(currentFieldToken)) {
+				TaxTable taxTable = (TaxTable)dataService.getByName("TaxTable", currentImportToken);
+				if (taxTable != null)
+					creditCardTransaction.setTaxTable(taxTable);
+			}
 		}
+		creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);
+		creditCard.addCreditCardTransactions(creditCardTransaction);
 		creditCard = (CreditCard)dataService.addUpdate(creditCard);
 		if (contact != null) {
 			contact.setCreditCard(creditCard);
