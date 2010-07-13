@@ -113,6 +113,14 @@
 	<mx:RemoteObject id="dataServiceJobMethods" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadJobMethodsResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceSalesReps" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesRepsResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceShippingMethods" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethodsResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
@@ -312,6 +320,10 @@
 	[Bindable] public var taxCodesArray:ArrayCollection = new ArrayCollection();
 	
 	[Bindable] public var jobMethodsArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var salesRepsArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var shippingMethodsArray:ArrayCollection = new ArrayCollection();
 	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
@@ -708,6 +720,8 @@
 		dataServiceTaxTables.getAll("TaxTable");
 		dataServiceTaxCodes.getAll("TaxCodes");
 		dataServiceJobMethods.getAll("JobMethod");
+		dataServiceSalesReps.getAll("SalesRep");
+		dataServiceShippingMethods.getAll("ShippingMethod");
 	}
 
 	private function updatePreferencesData():void{
@@ -1000,6 +1014,14 @@
 	
 	private function handleLoadJobMethodsResult(event:ResultEvent):void {
 		jobMethodsArray = event.result as ArrayCollection;
+	}
+	
+	private function handleLoadSalesRepsResult(event:ResultEvent):void {
+		salesRepsArray = event.result as ArrayCollection;
+	}
+	
+	private function handleLoadShippingMethodsResult(event:ResultEvent):void {
+		shippingMethodsArray = event.result as ArrayCollection;
 	}
 
 	private function handleLoadIntegrationResult(ev:ResultEvent):void {
@@ -1532,6 +1554,7 @@
 					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:CreditdefaultsCanvasComponent id="creditdefaults_canvas" preferencesAccounting="{preferencesAccounting}"
+					salesRepArray="{salesRepsArray}" shippingMethodArray="{shippingMethodsArray}"
 					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:AgingperiodsCanvasComponent id="agingperiods_canvas" preferencesAccounting="{preferencesAccounting}"

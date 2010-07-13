@@ -2,10 +2,18 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:components="com.efi.printsmith.common.components.*">
 	
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesAccounting;
+			
 			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
+			
+			[Bindable] public var salesRepArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var shippingMethodArray:ArrayCollection = new ArrayCollection();
 		]]>
 	</mx:Script>
 	
@@ -70,8 +78,10 @@
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultsalesrepforne')}"
 						textAlign="right" width="240" />
 						
-					<components:CustomStringTextInputComponent width="145"
-						dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" customText="{preferencesAccounting.defaultSalesRep}"/>
+					<components:CustomComboBoxComponent width="145"
+						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
+						masterList="{salesRepArray}" dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" 
+						customText="{getCustomTextData(salesRepArray,preferencesAccounting)}"/>
 				
 				</mx:HBox>
 				
@@ -81,8 +91,10 @@
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultshippingforne')}"
 						textAlign="right" width="240" />
 						
-					<components:CustomStringTextInputComponent width="145"
-						dataHolder="{preferencesAccounting}" variableName="defaultShipping" customText="{preferencesAccounting.defaultShipping}" />
+					<components:CustomComboBoxComponent width="145"
+						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
+						masterList="{shippingMethodArray}" dataHolder="{preferencesAccounting}" variableName="defaultShipping" 
+						customText="{getCustomTextData(shippingMethodArray,preferencesAccounting)}"/>
 				
 				</mx:HBox>
 					
