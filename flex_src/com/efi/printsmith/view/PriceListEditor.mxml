@@ -53,15 +53,15 @@
 		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
-		<mx:SetProperty target="{chkInterpolate}" name="y" value="37"/>
+		<mx:SetProperty target="{chkInterpolate}" name="y" value="38"/>
 		<mx:SetProperty name="width" value="894"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="643"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="675"/>
 		<mx:SetProperty target="{dataGrid}" name="x" value="368"/>
 		<mx:SetProperty target="{select_button}" name="x" value="659"/>
 		<mx:SetProperty target="{clear_button}" name="x" value="764"/>
-		<mx:SetProperty target="{chkInterpolate}" name="x" value="724"/>
-		<mx:SetProperty target="{title_edit}" name="x" value="724"/>
+		<mx:SetProperty target="{chkInterpolate}" name="x" value="687.5"/>
+		<mx:SetProperty target="{title_edit}" name="x" value="687.5"/>
 		<mx:SetProperty target="{label1}" name="x" value="597"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 			<mx:LineChart x="36" y="13" id="linechart0" height="289" dataProvider="{priceList.elements}" showDataTips="true" width="315">
@@ -90,6 +90,8 @@
 			</mx:LineChart>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="864"/>
+		<mx:SetProperty target="{title_edit}" name="width" value="176.5"/>
+		<mx:SetProperty target="{label1}" name="width" value="82.5"/>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
