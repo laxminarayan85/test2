@@ -1318,10 +1318,10 @@
 		}
 		tvPreference.selectedIndex = 1;
 		preferences_stack.selectedIndex = 0;
-		for(var i:int=1; i <=1; i++) {
-			var n:XML = node[i]; 
-			selectedSection = n.@label;
-			selectedIndexSelection = n.@tag;
+		for(var j:int=1; j <=1; j++) {
+			var nodeVal:XML = node[j]; 
+			selectedSection = nodeVal.@label;
+			selectedIndexSelection = nodeVal.@tag;
 		}
 		  
 	}
