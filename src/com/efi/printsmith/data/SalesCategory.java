@@ -48,6 +48,11 @@ public class SalesCategory extends ModelBase {
 	public static final String NAME = "Name";
 
 	/**
+   * @generated
+   */
+  public static final String GLACCOUNT = "GlAccount";
+
+	/**
 	 * @generated
 	 */
 	public SalesCategory() {
@@ -79,12 +84,35 @@ public class SalesCategory extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String glAccount;
+
+	/**
+   * @generated
+ 	 */
+  public String getGlAccount(){
+    return glAccount; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setGlAccount(String newVal) {
+    this.glAccount = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
+    if (GLACCOUNT.equals(propertyName)) return getGlAccount();
     return super.getProperty(propertyName);
   }
 	
@@ -95,6 +123,7 @@ public class SalesCategory extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (GLACCOUNT.equals(propertyName)) setGlAccount((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -105,6 +134,8 @@ public class SalesCategory extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (GLACCOUNT.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
@@ -117,6 +148,7 @@ public class SalesCategory extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return SalesCategory.class;
+    if (GLACCOUNT.equals(propertyName)) return SalesCategory.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -129,6 +161,8 @@ public class SalesCategory extends ModelBase {
       return false;
     SalesCategory objT = (SalesCategory)obj;
     if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getGlAccount(), objT.getGlAccount()))
       return false;
     return true;
   }			
