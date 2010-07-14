@@ -552,7 +552,7 @@
                              
 
                              
-	<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Canvas width="100%" height="441" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 		<mx:Button label="Import Customers &amp; Customer Contacts" id="import_customers" enabled="true" click="doImportCustomers();"  width="256" x="12" y="160"/>
 		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="256" x="10" y="40"/>
 		<mx:Button label="Import Charges" id="import_charge" enabled="true" click="doImportCharge();"  width="256" x="276" y="160"/>
@@ -574,7 +574,7 @@
 		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="12" y="70"/>
 		<mx:Button x="274" y="350" label="TableEditor" width="258" click="doTableEditor();"/>
 		<mx:Button x="10" y="130" label="Import Charge Costing" width="256" id="import_charge_costing" click="doImportChargeCosting();"/>
-		<mx:ProgressBar x="171" y="410" id="progress_bar" label="Importing Data..." indeterminate="true"/>
+		<mx:ProgressBar x="171" y="407" id="progress_bar" label="Importing Data..." indeterminate="true" height="31"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
