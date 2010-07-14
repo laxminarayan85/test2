@@ -52,7 +52,7 @@
     <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
     <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
-    <mx:ZipCodeValidator  id="ZipCodeValidator"  domain="US or Canada"  source="{zipcombo}" property="text"/>
+    <mx:ZipCodeValidator  id="ZipCodeValidator"  domain="US or Canada" required="false"  source="{zipcombo}" property="text"/>
 
 <mx:Script>
 	<![CDATA[

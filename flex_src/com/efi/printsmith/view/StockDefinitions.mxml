@@ -1137,6 +1137,8 @@
 
 		if (stockDefinitions.uom != null)
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+			if (cboUom.selectedIndex == -1)
+				cboUom.selectedIndex = 0;
 			
 		if (stockDefinitions.stockunit != -1){
 			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);

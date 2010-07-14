@@ -6,10 +6,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name= "deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
 <mx:RemoteObject id="GradedataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGradeResult(event)"/>
+	<mx:method name="getGrade" fault="handleFault(event)" result="handleGetGradeResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGradeResult(event)"/>
 </mx:RemoteObject>
 
@@ -59,12 +61,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		campaign = new Campaigns();
 		grade = new Grade();
 		campaignGradearray = new ArrayCollection();
+		
 	}      
 
 	private function doNew():void {
-		campaign_name.text = "";
-		
 		campaign = new Campaigns();
+		campaignsarray.addItem(campaign);
 	
 	}  
 	private function  Close():void{
@@ -73,7 +75,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		PopUpManager.removePopUp(this);
 	}
 	private function doDelete():void {
-	 
+	 var tempCamp:Campaigns
+	 var index:int;
+	tempCamp =  dataGrid.selectedItem as Campaigns
+	if (isNaN(tempCamp.id)){
+		index = findItem(tempCamp.name, campaignsarray);
+			campaignsarray.removeItemAt(index);
+		}
+		else
+			dataService.deleteItem("Campaigns", tempCamp.id);
 	 	
 	}  
 	private function doGet():void{
@@ -83,15 +93,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}    
 		
 	private function doSave():void {
-		if (campaign !=null){
-			campaign.name = campaign_name.text;
-			campaign.applied = false;
-			if (campaign.id == 0 || isNaN(campaign.id))
-				newCamp =  true;
-			dataService.addUpdate(campaign);
-		}
-	
-		                                    		
+		for (var i:int = 0; i < campaignsarray.length; i++) 
+	 		dataService.addUpdate(campaignsarray.getItemAt(i));
+			
+			                                    		
 	}   
 	private function doSaveGrade():void{
 		if (gradeList.selectedItem != null){
@@ -120,16 +125,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}  
 	
 	 private function handleSaveResult(ev:ResultEvent):void {
-		this.campaign = ev.result as Campaigns;
-		if ( newCamp){
-			campaignsarray.addItem(campaign);
-			newCamp = false;
-		}
-		campaign= null;
-	
+		dataService.getAll("Campaigns")
 	}
 
-	
+	private function handleDeleteResult(ev:ResultEvent):void{
+		dataService.getAll("Campaigns"); 
+	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		campaignsarray = ev.result as ArrayCollection; 
 		
@@ -139,9 +140,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.grade = ev.result as Grade;
 		gradesarray.addItem(this.grade);
 		
-	//	var selectEvent:CampaignEditCompleteEvent = new CampaignEditCompleteEvent(CampaignEditCompleteEvent.SAVE, this.campaign );
-	//	dispatchEvent(selectEvent);
-	//	PopUpManager.removePopUp(this);
 	
 	}
 
@@ -155,6 +153,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function handleLoadGradeResult(ev:ResultEvent):void {
 		gradesarray = ev.result as ArrayCollection; 
+		gradeList.selectedIndex = -1;
 		
 	}
 	private function handleFault(ev:FaultEvent):void {  
@@ -189,11 +188,26 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (tempIndex == -1)
 			campaignGradearray.addItem(tempCamp);
 	}
+	
+	
+	
+	
+	private function handleGetGradeResult(ev:ResultEvent):void {
+		
+		grade = ev.result as Grade
+		grade_ID.text = grade.gradeId;
+		campaignGradearray = this.grade.campaigns;
+		
+	}
+	
+	
+	
 	private function updateGrade():void{
 		if (gradeList.selectedItem != null){
 			this.grade = gradeList.selectedItem as Grade;
-			grade_ID.text = this.grade.gradeId;
-			campaignGradearray = this.grade.campaigns;
+			
+			 GradedataService.getGrade(this.grade.id)
+		
 		}
 		
 	}
@@ -203,13 +217,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 </mx:Script>
 
 <mx:Canvas width="100%" height="523">
-		<mx:TabNavigator x="0" y="-3" width="100%" height="474" creationPolicy="all">
+		<mx:TabNavigator x="0" y="10" width="100%" height="462" creationPolicy="all">
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" width="100%" height="100%">
 				<mx:TextInput x="87" y="105" id="campaign_name" text="{campaign.name}"/>
 				<mx:Label x="44" y="107" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableConfigureCommand.Title')}" textAlign="right"/>
-				<mx:DataGrid x="44" y="149" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" >
+				<mx:DataGrid x="44" y="149" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" editable="true"  height="271">
 					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Slot')}" dataField="campaignId" width="40"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Slot')}"  editable="false" dataField="campaignId" width="40"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Global')}" dataField="globalCampaign" width="50" textAlign="center"
 							editorDataField="selected" 
 								itemEditor="mx.controls.CheckBox">
@@ -225,11 +239,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Button x="44" y="10" width="38" height="38"  click="doSave();" id="campsave">
 					<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 				</mx:Button>
-				<mx:Button x="90" y="10" width="38" height="38" click="doNew();" id="campnew">
-					<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-				</mx:Button>
 				<mx:Label x="44" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-				<mx:Label x="90" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}"  width="38" textAlign="center"/>
+				<mx:LinkButton x="244"
+							   id="remove_item_button"
+							   click="doDelete();"
+							   icon="@Embed(source='../../../../assets/delete16.png')"
+							   width="24"
+							   bottom="249"/>
+				<mx:LinkButton x="244"
+							   id="add_item_button"
+							   click="doNew()"
+							   icon="@Embed(source='../../../../assets/add16.png')"
+							   width="24"
+							   bottom="270"/>
 				
 			</mx:Canvas>
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Grades')}" width="100%" height="100%">
