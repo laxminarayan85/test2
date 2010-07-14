@@ -190,11 +190,9 @@
 						</mx:icon>
 					</mx:Button>
 					
-					<mx:Button width="38" height="38"
-						click="{doRemoveCashRegister()}">
-						<mx:icon>@Embed(source='../../../../../assets/delete.png')
-						</mx:icon>
-					</mx:Button>
+					<components:CustomDeleteButtonComponent width="38" height="38"
+						clickFuncName="doRemoveCashRegister" dataGridComp="{cashRegisterGrid}" 
+						deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.CashRegister')}"/>
 					
 				</mx:HBox>
 				

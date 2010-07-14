@@ -196,9 +196,9 @@
 						<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
 					</mx:Button>
 					
-					<mx:Button width="38" height="38" click="doRemovePriceMethod();">
-						<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
-					</mx:Button>
+					<components:CustomDeleteButtonComponent width="38" height="38"
+						clickFuncName="doRemovePriceMethod" dataGridComp="{PricingMethodGrid}" 
+						deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}"/>
 					
 				</mx:HBox>
 				

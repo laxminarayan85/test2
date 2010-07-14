@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*" creationComplete="{initMarkUpComp()}">
 
 	<mx:Script>
 		<![CDATA[
@@ -17,6 +17,17 @@
 			[Bindable] public var preferencesMarkupsMerchandiseArray:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var preferencesMarkupsMerchandiseDeleteArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var merchandiseInputArray:Array = new Array();
+			
+			[Bindable] public var outsideServiceInputArray:Array = new Array();
+			
+			private function initMarkUpComp():void{
+				outsideServiceInputArray.push("outside");
+				outsideServiceInputArray.push(outsideServicesGrid);
+				merchandiseInputArray.push("merchandise");
+				merchandiseInputArray.push(merchandiseGrid);
+			}
 			
 			private function processOutSideService(event:DataGridEvent):void{
 				
@@ -148,10 +159,9 @@
 								<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
 							</mx:Button>
 							
-							<mx:Button width="38" height="38"
-								click="{doRemoveMarkup('outside',outsideServicesGrid)}">
-								<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
-							</mx:Button>
+							<components:CustomDeleteButtonComponent width="38" height="38"
+								clickFuncName="doRemoveMarkup" dataGridComp="{outsideServicesGrid}" inputArgumnets="{outsideServiceInputArray}"
+								deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.OutsideServices')}"/>
 							
 						</mx:HBox>
 						
@@ -213,10 +223,9 @@
 								<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
 							</mx:Button>
 							
-							<mx:Button width="38" height="38"
-								click="{doRemoveMarkup('merchandise',merchandiseGrid)}">
-								<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
-							</mx:Button>
+							<components:CustomDeleteButtonComponent width="38" height="38"
+								clickFuncName="doRemoveMarkup" dataGridComp="{merchandiseGrid}" inputArgumnets="{merchandiseInputArray}"
+								deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Merchandise')}"/>
 						
 						</mx:HBox>
 						

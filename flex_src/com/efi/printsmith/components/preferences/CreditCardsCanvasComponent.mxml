@@ -263,9 +263,9 @@
 							<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
 						</mx:Button>
 						
-						<mx:Button click="{doRemoveCreditCard()}">
-							<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
-						</mx:Button>
+						<components:CustomDeleteButtonComponent
+							clickFuncName="doRemoveCreditCard" dataGridComp="{creditCardGrid}" 
+							deleteLabel="Credit Card"/>
 					
 					</mx:HBox>
 				
