@@ -192,7 +192,7 @@
 					
 					<mx:Button width="38" height="38"
 						click="{doRemoveCashRegister()}">
-						<mx:icon>@Embed(source='../../../../../assets/cancel.png')
+						<mx:icon>@Embed(source='../../../../../assets/delete.png')
 						</mx:icon>
 					</mx:Button>
 					

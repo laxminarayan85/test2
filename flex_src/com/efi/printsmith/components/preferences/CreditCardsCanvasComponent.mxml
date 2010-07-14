@@ -264,7 +264,7 @@
 						</mx:Button>
 						
 						<mx:Button click="{doRemoveCreditCard()}">
-							<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+							<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
 						</mx:Button>
 					
 					</mx:HBox>

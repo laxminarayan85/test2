@@ -150,7 +150,7 @@
 							
 							<mx:Button width="38" height="38"
 								click="{doRemoveMarkup('outside',outsideServicesGrid)}">
-								<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+								<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
 							</mx:Button>
 							
 						</mx:HBox>
@@ -215,7 +215,7 @@
 							
 							<mx:Button width="38" height="38"
 								click="{doRemoveMarkup('merchandise',merchandiseGrid)}">
-								<mx:icon>@Embed(source='../../../../../assets/cancel.png')</mx:icon>
+								<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
 							</mx:Button>
 						
 						</mx:HBox>
