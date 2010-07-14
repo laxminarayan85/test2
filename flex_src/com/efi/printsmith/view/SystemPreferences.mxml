@@ -1568,12 +1568,8 @@
 	}
 	
 	private function doSave():void{
-		if(validate(this)){
-			mapToPreferencesAllData();
-			updatePreferencesData();
-		} else {
-			Alert.show("Validation Error");
-		}		
+		mapToPreferencesAllData();
+		updatePreferencesData();
 	}
 	
 	private function doRevert():void{
