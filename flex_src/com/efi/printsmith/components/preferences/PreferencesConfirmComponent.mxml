@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="400" height="170"
+	creationComplete="{initConfirmWindow()}">
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.components.preferences.events.ConfirmStatusEvent;
+			import mx.managers.PopUpManager;
+			[Bindable] public var labelTxt:String = "";
+			
+			private function initConfirmWindow():void{
+				this.setStyle("backgroundColor", 0xffffff);
+				this.setStyle("backgroundAlpha", 0.50);
+				this.setStyle("borderColor", 0xffffff);
+				this.setStyle("borderAlpha", 0.75);
+				this.setStyle("color", 0x000000);
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function setConfirmStatus(status:int):void{
+				var eventObj:ConfirmStatusEvent = new ConfirmStatusEvent("confirmStatus",status);
+				dispatchEvent(eventObj);
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function setConfirmText(labelTxt:String):String{
+				return "Do you want to save the changes you made to the document \nPreferences "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,labelTxt)+"?";
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="Save changes before closing"/>
+	<mx:Label text="{setConfirmText(labelTxt)}" height="40"/>
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button label="Don't Save" click="{setConfirmStatus(1)}"/>
+		<mx:Button label="Cancel" click="{setConfirmStatus(2)}"/>
+		<mx:Button label="Save" click="{setConfirmStatus(3)}"/>
+	</mx:HBox>
+</mx:TitleWindow>

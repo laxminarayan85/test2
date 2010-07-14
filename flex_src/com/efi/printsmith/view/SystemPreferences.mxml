@@ -14,6 +14,7 @@
 	xmlns:ns1="com.efi.printsmith.components.*">
 	
 	<mx:Script source="../common/scripts/Validation.as"/>
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
 
  	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
@@ -127,6 +128,9 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.components.preferences.events.ConfirmStatusEvent;
+	import com.efi.printsmith.components.preferences.PreferencesConfirmComponent;
+	import mx.utils.ObjectUtil;
 	import com.efi.printsmith.common.components.CustomStringTextInputComponent;
 	import mx.formatters.NumberFormatter;
 	import mx.formatters.CurrencyFormatter;
@@ -201,21 +205,37 @@
 	[Bindable]
 	private var PreferencesCashRegisterArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
+	private var PreferencesCashRegisterOrigArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
 	private var PreferencesCreditCardArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesCreditCardOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesMarkupsArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
+	private var PreferencesMarkupsOrigArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
 	private var PreferencesMarkupsMerchandiseArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesMarkupsMerchandiseOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesPendingListArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
+	private var PreferencesPendingListOrigArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
 	private var PreferencesPricingMethodArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
+	private var PreferencesPricingMethodOrigArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
 	private var PreferencesQuantityBreaksArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesQuantityBreaksOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesSalesCategoryArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesStockDefinitionOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesStocksArray:ArrayCollection = new ArrayCollection();
 
@@ -289,24 +309,45 @@
 //Data view variables
 	[Bindable]
 	private var preferencesSystem:PreferencesSystem;
+	
+	[Bindable]
+	private var preferencesSystemOrigObj:PreferencesSystem;
 
 	[Bindable]                                         
 	private var preferencesPOS:PreferencesPOS;
+	
+	[Bindable]                                         
+	private var preferencesPOSOrigObj:PreferencesPOS;
 
 	[Bindable]                                         
 	private var preferencesEstimating:PreferencesEstimating;
+	
+	[Bindable]                                         
+	private var preferencesEstimatingOrigObj:PreferencesEstimating;
 
 	[Bindable]                                         
 	private var preferencesAccounting:PreferencesAccounting;
+	
+	[Bindable]                                         
+	private var preferencesAccountingOrigObj:PreferencesAccounting;
 
 	[Bindable]
 	private var preferencesStocks:PreferencesStocks;
 	
 	[Bindable]
+	private var preferencesStocksOrigObj:PreferencesStocks;
+	
+	[Bindable]
 	private var preferencesCashRegister:PreferencesCashRegister;
+	
+	[Bindable]
+	private var preferencesCashRegisterOrigObj:PreferencesCashRegister;
 		
 	[Bindable]
 	private var preferencesIntegration:PreferencesIntegration;
+	
+	[Bindable]
+	private var preferencesIntegrationOrigObj:PreferencesIntegration;
 	
 	[Bindable]
 	private var country:Country;
@@ -325,6 +366,10 @@
 	
 	[Bindable] public var shippingMethodsArray:ArrayCollection = new ArrayCollection();
 	
+	[Bindable] public var selectedSection:String="";
+	
+	[Bindable] public var selectedIndexSelection:int;
+	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
 	private var euro:String = "€";
@@ -333,7 +378,7 @@
 	[Bindable]
 	private var treeData:XML =
     	<root>
-			<node label="genericPrefCmd.System" command="CMD_Preferences_System">
+			<node label="genericPrefCmd.System" isBranch="true" command="CMD_Preferences_System">
 				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0" command="CMD_Preferences_Behavior"/>
 				<node label="genericPrefCmd.Company" isBranch="false" tag="1" command="CMD_Preferences_Company"/>
 				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2" command="CMD_Preferences_BusinessCalendar"/>
@@ -342,13 +387,13 @@
 				<node label="genericPrefCmd.International" isBranch="false" tag="5" command="CMD_Preferences_International"/>
 				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6" command="CMD_Preferences_AddressFormatting"/>
 			</node>
-			<node label="genericPrefCmd.POS" command="CMD_Preferences_POS">
+			<node label="genericPrefCmd.POS" isBranch="true" command="CMD_Preferences_POS">
 				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7" command="CMD_Preferences_Receipt"/>
 				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8" command="CMD_Preferences_CashDrawer"/>
 				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9" command="CMD_Preferences_CashRegister"/>
 				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10" command="CMD_Preferences_PendingList"/>
 			</node>
-			<node label="genericPrefCmd.Estimator" command="CMD_Preferences_Estimator">
+			<node label="genericPrefCmd.Estimator" isBranch="true" command="CMD_Preferences_Estimator">
 				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11" command="CMD_Preferences_EstimatorBehavior"/>
 				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12" command="CMD_Preferences_EstimatorPrinting"/>
 				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13" command="CMD_Preferences_PaperCalculator"/>
@@ -359,7 +404,7 @@
 				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18" command="CMD_Preferences_StockDefinitions"/>
 				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19" command="CMD_Preferences_PricingMethod"/>
 			</node>			
-			<node label="genericPrefCmd.Accounting" command="CMD_Preferences_Accounting">
+			<node label="genericPrefCmd.Accounting" isBranch="true" command="CMD_Preferences_Accounting">
 				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20" command="CMD_Preferences_CreditDefaults"/>
 				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21" command="CMD_Preferences_AgingPeriods"/>
 				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22" command="CMD_Preferences_SalesCategories"/>
@@ -368,7 +413,7 @@
 				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command=""/>
 				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="CMD_Preferences_JournalEntries"/>
 			</node>
-			<node label="genericPrefCmd.Integration" command="CMD_Preferences_Integration">
+			<node label="genericPrefCmd.Integration" isBranch="true" command="CMD_Preferences_Integration">
 				<node label="genericPrefCmd.Integration" isBranch="false" tag="27" command="CMD_Preferences_Fiery"/>
 			</node>
 		</root>;
@@ -1033,6 +1078,9 @@
 			preferencesIntegration = new PreferencesIntegration();
 		}
 		mapFromPrefereincesIntegrationData();
+		registerClassAlias("com.efi.printsmith.data.PreferencesIntegration",PreferencesIntegration);
+		preferencesIntegrationOrigObj = ObjectUtil.copy(preferencesIntegration) as PreferencesIntegration;
+		
 	}
 	
 	private function handleLoadSystemResult(ev:ResultEvent):void {
@@ -1044,6 +1092,8 @@
 			preferencesSystem = new PreferencesSystem();
 		}
 		mapFromPreferencesSystemData();
+		registerClassAlias("com.efi.printsmith.data.PreferencesSystem",PreferencesSystem);
+		preferencesSystemOrigObj = ObjectUtil.copy(preferencesSystem) as PreferencesSystem;
 	}
 	private function handleLoadPOSResult(ev:ResultEvent):void {
 		var preferencesPOSArray:ArrayCollection = ev.result as ArrayCollection;
@@ -1053,6 +1103,8 @@
 		{
 			preferencesPOS = new PreferencesPOS();
 		}
+		registerClassAlias("com.efi.printsmith.data.PreferencesPOS",PreferencesPOS);
+		preferencesPOSOrigObj = ObjectUtil.copy(preferencesPOS) as PreferencesPOS;
 	}
 	private function handleLoadEstimatorResult(ev:ResultEvent):void {
 		PreferencesEstimatingArray = ev.result as ArrayCollection;
@@ -1070,6 +1122,8 @@
 			preferencesEstimating.gripLocation = 'Top';
 			preferencesEstimating.folioLocation = 'Top';
 		}
+		registerClassAlias("com.efi.printsmith.data.PreferencesEstimating",PreferencesEstimating);
+		preferencesEstimatingOrigObj = ObjectUtil.copy(preferencesEstimating) as PreferencesEstimating;
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
 		PreferencesAccountingArray = ev.result as ArrayCollection;
@@ -1085,7 +1139,8 @@
 			creditcards_canvas.updateComp(preferencesAccounting);
 		}
 		isReverted = false;
-		
+		registerClassAlias("com.efi.printsmith.data.PreferencesAccounting",PreferencesAccounting);
+		preferencesAccountingOrigObj = ObjectUtil.copy(preferencesAccounting) as PreferencesAccounting;
 	}
 	
 	private function handleLoadCountryResult(ev:ResultEvent):void {
@@ -1093,39 +1148,57 @@
 	}
 	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
 		PreferencesCashRegisterArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesCashRegisterOrigArray = ObjectUtil.copy(PreferencesCashRegisterArray) as ArrayCollection;
 		if ( PreferencesCashRegisterArray.length >0)
 			preferencesCashRegister = PreferencesCashRegisterArray.getItemAt(0,0) as PreferencesCashRegister;
 		if (preferencesCashRegister == null)
 		{
 			preferencesCashRegister = new PreferencesCashRegister();
 		} 
+		registerClassAlias("com.efi.printsmith.data.PreferencesCashRegister",PreferencesCashRegister);
+		preferencesCashRegisterOrigObj = ObjectUtil.copy(preferencesCashRegister) as PreferencesCashRegister;
 	}
 	private function handleLoadIntegrationPreferencesResult(ev:ResultEvent):void {
 		//preferencesIntegration.fieryConnectorURL = this.txtFieryURL.text;
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesCreditCardOrigArray = ObjectUtil.copy(PreferencesCreditCardArray) as ArrayCollection;
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
 	}
 	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
 		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
 	}
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
 		PreferencesPendingListArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesPendingListOrigArray = ObjectUtil.copy(PreferencesPendingListArray) as ArrayCollection;
 	}
 	private function handleLoadPricingMethodResult(ev:ResultEvent):void {
 		PreferencesPricingMethodArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesPricingMethodOrigArray = ObjectUtil.copy(PreferencesPricingMethodArray) as ArrayCollection;
 	}
 	private function handleLoadQuantityBreaksResult(ev:ResultEvent):void {
 		PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesQuantityBreaksOrigArray = ObjectUtil.copy(PreferencesQuantityBreaksArray) as ArrayCollection;
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
 		PreferencesSalesCategoryArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
 		PreferencesStockDefinitionArray = ev.result as ArrayCollection;
+		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		PreferencesStockDefinitionOrigArray = ObjectUtil.copy(PreferencesStockDefinitionArray) as ArrayCollection;
 	}
 	private function handleLoadStocksResult(ev:ResultEvent):void {
 		PreferencesStocksArray = ev.result as ArrayCollection;
@@ -1135,6 +1208,8 @@
 		{
 			preferencesStocks = new PreferencesStocks();
 		}
+		registerClassAlias("com.efi.printsmith.data.PreferencesStocks",PreferencesStocks);
+		preferencesStocksOrigObj = ObjectUtil.copy(preferencesStocks) as PreferencesStocks;
 	}
 	private function handleLoadColumnNamesResult(ev:ResultEvent):void {
 	     ColumnNamesArray = ev.result as ArrayCollection;
@@ -1242,20 +1317,146 @@
 			}
 		}
 		tvPreference.selectedIndex = 1;
-		preferences_stack.selectedIndex = 0; 
+		preferences_stack.selectedIndex = 0;
+		for(var i:int=1; i <=1; i++) {
+			var n:XML = node[i]; 
+			selectedSection = n.@label;
+			selectedIndexSelection = n.@tag;
+		}
+		  
 	}
 
 	private function treeSelect(event:Event):void {
+		var isObjEqual:Boolean = true;
 		this.currentState = "";
 		
 		var node:XML = XML(event.currentTarget.selectedItem);
-		if( node == null ) return;
 		
 		if( node.@label == "genericPrefCmd.System" ) return;
 		if( node.@label == "genericPrefCmd.POS" ) return;
 		if( node.@label == "genericPrefCmd.Estimator" ) return;
 		if( node.@label == "genericPrefCmd.Accounting" ) return;
-		if( node.@label == "genericPrefCmd.Integration" ) return;
+		if( node.@label == "genericPrefCmd.Integration" && node.@isBranch == "true") return;
+		
+		if(!validate(preferences_stack.selectedChild)) {
+			tvPreference.selectedIndex = selectedIndexSelection;
+			Alert.show("Validation Error");
+			return;
+		}
+		
+		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
+			selectedSection == "genericPrefCmd.AddressFormatting") {
+			if(!compareObject(preferencesSystem,preferencesSystemOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			if(!compareObject(preferencesPOS,preferencesPOSOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			if(!compareObject(PreferencesCashRegisterArray,PreferencesCashRegisterOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.PendingList"){
+			if(!compareObject(preferencesPOS,preferencesPOSOrigObj) || !compareObject(PreferencesPendingListArray,PreferencesPendingListOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			if(!compareObject(preferencesEstimating,preferencesEstimatingOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			if(!compareObject(PreferencesQuantityBreaksArray,PreferencesQuantityBreaksOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.Markups"){
+			if(!compareObject(PreferencesMarkupsArray,PreferencesMarkupsOrigArray) || !compareObject(PreferencesMarkupsMerchandiseArray,PreferencesMarkupsMerchandiseOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			if(!compareObject(preferencesStocks,preferencesStocksOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			if(!compareObject(PreferencesStockDefinitionArray,PreferencesStockDefinitionOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			if(!compareObject(PreferencesPricingMethodArray,PreferencesPricingMethodOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
+			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
+			selectedSection == "genericPrefCmd.JournalEntries"){
+			if(!compareObject(preferencesAccounting,preferencesAccountingOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			if(!compareObject(preferencesAccounting,preferencesAccountingOrigObj) || !compareObject(PreferencesCreditCardArray,PreferencesCreditCardOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.Integration"){
+			if(!compareObject(preferencesIntegration,preferencesIntegrationOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(!isObjEqual){
+			var confirmWindow:PreferencesConfirmComponent = PopUpManager.createPopUp(this,PreferencesConfirmComponent,true) as PreferencesConfirmComponent;
+			confirmWindow.labelTxt = selectedSection;
+			confirmWindow.addEventListener(ConfirmStatusEvent.CONFIRM_STATUS,function(event:ConfirmStatusEvent):void{
+				if(event.confirmStatus==1){
+					doRevert();
+					changeSelectedSection(node); 
+				} else if(event.confirmStatus==2) {
+					tvPreference.selectedIndex = selectedIndexSelection;
+				} else if(event.confirmStatus==3) {
+					doSave();
+					changeSelectedSection(node);
+				}
+			},false,0,true);
+		}
+			
+		
+		if(isObjEqual){
+			changeSelectedSection(node);
+		}
+		
+	}
+	
+	private function changeSelectedSection(node:XML):void{
+		if( node == null ) return;
+		
+		if(node.@isBranch == "false") {
+			selectedSection = node.@label;
+			selectedIndexSelection = tvPreference.selectedIndex;
+		}
 
 		//var message:String;
 		//message = node.@label; 
