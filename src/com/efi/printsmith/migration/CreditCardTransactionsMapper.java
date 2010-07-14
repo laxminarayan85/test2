@@ -39,6 +39,7 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 		CreditCard creditCard = new CreditCard();
 		CreditCardTransactions creditCardTransaction = new CreditCardTransactions();
 		Contact contact = null;
+		boolean permanent = false;
 		for (int i = 0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -106,9 +107,13 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				if (taxTable != null)
 					creditCardTransaction.setTaxTable(taxTable);
 			}
+			else if ("permanent".equals(currentFieldToken))
+				permanent = true;
 		}
-		creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);
-		creditCard.addCreditCardTransactions(creditCardTransaction);
+		if (permanent != true) {
+			creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);
+			creditCard.addCreditCardTransactions(creditCardTransaction);
+		}
 		creditCard = (CreditCard)dataService.addUpdate(creditCard);
 		if (contact != null) {
 			contact.setCreditCard(creditCard);
