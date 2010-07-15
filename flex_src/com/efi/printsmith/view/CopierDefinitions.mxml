@@ -617,7 +617,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function handleWastePickerSelect(evt:PriceListPickerSelectEvent):void {
 		copierDefinition.wasteChart = evt.priceList as WasteChart;
-		wasteName.text = copierDefinition.wasteChart.name;
+		if (copierDefinition.wasteChart != null)
+			wasteName.text = copierDefinition.wasteChart.name;
 	}
 	
 	private function handleWastePickerNew(evt:PriceListPickerSelectEvent):void {

@@ -336,6 +336,7 @@
 			this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Wastechart');
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Spoilage');
+			this.chkInterpolate.selected = priceList.interpolate;
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
 			this.currentState = "Speed Table";
@@ -448,8 +449,10 @@
 			else
 				priceList = ev.result as PriceList;
 		} else if (itemType == "WasteChart") {
-			if (ev.result == null)
+			if (ev.result == null) {
 				priceList = new WasteChart();
+				priceList.interpolate = true;
+			}
 			else
 				priceList = ev.result as WasteChart;
 		} else if (itemType == "SpeedTable") {
