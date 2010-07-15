@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
+	creationComplete="{initErrorWindow()}" title="Error" width="400">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var errorStringLabel:String;
+			
+			private function initErrorWindow():void {
+				this.setStyle("backgroundColor", 0xffffff);
+				this.setStyle("backgroundAlpha", 0.50);
+				this.setStyle("borderColor", 0xffffff);
+				this.setStyle("borderAlpha", 0.75);
+				this.setStyle("color", 0x000000);
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+	
+		<mx:Text text="{errorStringLabel}" color="0xff0000" width="100%" textAlign="center"/>
+				
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+	
+		<mx:Button label="Ok" click="{closeWindow()}"/>
+	
+	</mx:HBox>
+	
+</mx:TitleWindow>
