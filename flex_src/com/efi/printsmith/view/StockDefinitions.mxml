@@ -630,7 +630,7 @@
 			standardItemCheckEvent();
 			
 		}else {
-			showMessage(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.FSCCertified'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'importCmd.Save')  );
+			showMessage(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Unabletosavestockdef'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'importCmd.Save')  );
 		}
 	}
 

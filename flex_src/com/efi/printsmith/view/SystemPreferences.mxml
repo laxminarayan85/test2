@@ -1108,7 +1108,7 @@
 	}
 	private function handleLoadEstimatorResult(ev:ResultEvent):void {
 		PreferencesEstimatingArray = ev.result as ArrayCollection;
-		if( PreferencesEstimatingArray.length >0)
+		if( PreferencesEstimatingArray.length >0){
 			preferencesEstimating = PreferencesEstimatingArray.getItemAt(0,0) as PreferencesEstimating;
 			if(preferencesEstimating.gripLocation==null || preferencesEstimating.gripLocation==""){
 				preferencesEstimating.gripLocation = 'Top';
@@ -1116,6 +1116,7 @@
 			if(preferencesEstimating.folioLocation==null || preferencesEstimating.folioLocation==""){
 				preferencesEstimating.folioLocation = 'Top';
 			}
+		}
 		if (preferencesEstimating == null)
 		{
 			preferencesEstimating = new PreferencesEstimating();
