@@ -637,6 +637,10 @@ public class StockDefinitionMapper extends ImportMapper {
 			}
 			else if ("inventory order is even".equals(currentFieldToken)) {
 				stockDefinition.setEvenIncrements(Utilities.tokenToBooleanValue(currentImportToken));
+				if (stockDefinition.getEvenIncrements() == true)
+					stockDefinition.setEvenIncrements(false);
+				else
+					stockDefinition.setEvenIncrements(true);
 			}
 			
 		}
