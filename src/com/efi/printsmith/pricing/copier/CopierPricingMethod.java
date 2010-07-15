@@ -2,7 +2,10 @@ package com.efi.printsmith.pricing.copier;
 
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public abstract class CopierPricingMethod {
 	public Job priceCopierJob(Job job) {
@@ -15,14 +18,27 @@ public abstract class CopierPricingMethod {
 	
 	private void calculateTotalCopies(Job job) {
 		long totalCopies = job.getQtyOrdered() * job.getInSetsOf() * job.getSheets();
-		
-		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
-		wasteSheets *= job.getSheets();		
-		
+			
 		job.setNumCopies(totalCopies / (job.getSheets() / (job.getNumUp() / job.getNumOn())));
+		calculateEstWaste(job);
+		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
+		wasteSheets *= job.getSheets();	
 		job.setTotalCopies(totalCopies / (job.getNumUp() / job.getNumOn()) + (wasteSheets * (job.getNumUp() / job.getNumOn())));
 		if (job.getDoubleSided()) {
 			job.setTotalCopies(job.getTotalCopies() * 2);
+		}
+	}
+	
+	private void calculateEstWaste(Job job) {
+		CopierDefinition copierDefinition = job.getPricingCopier();
+		if (copierDefinition != null) {
+			double estWaste = 0.0;
+			WasteChart wasteChart = copierDefinition.getWasteChart();
+			if (wasteChart != null) {
+				double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies());
+				estWaste = (job.getNumCopies() * wastePct);
+			}
+			job.setEstWaste(new Double(estWaste).longValue());
 		}
 	}
 	
