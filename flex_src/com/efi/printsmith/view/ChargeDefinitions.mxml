@@ -1596,7 +1596,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function UpdatePriceMethod(): void{
 		if (pricing_method.selectedValue == "CostPlus") {
 			markup_edit.text = charge.markup.toString();
-			//sale_price_per_unit_edit.text
+			sale_price_per_unit_edit.text = costPricingString;
 			rate_edit.text = "";
 			material_edit.text= "";
 			setup_edit.text= "";
