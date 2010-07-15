@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Delivery Ticket Edit" name="Delivery Ticket Edit"
+width="100%" height="100%"  creationComplete="init()"  
+     title="Delivery Ticket Edit" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
+	
+<mx:Script>                                   
+<![CDATA[
+	import mx.rpc.events.ResultEvent;
+
+	import com.efi.printsmith.data.DeliveryTicketJobs;
+	import com.efi.printsmith.data.Broker;
+	import com.efi.printsmith.data.DeliveryTicket;
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.controls.Alert;
+	
+	public function init():void{
+		
+	}
+	
+	private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+]]>
+                             
+</mx:Script>
+	<mx:Canvas width="606" height="126">
+		<mx:Button x="10" y="10" label="File"/>
+		<mx:Button x="79" y="10" label="Close"/>
+		<mx:Button x="460" y="10" label="Delete"/>
+		<mx:Button x="532" y="10" label="Cancel"/>
+		<mx:TextInput x="135" y="55" width="104"/>
+		<mx:Label x="10" y="57" text="Ticket Number" width="117" textAlign="right"/>
+		<mx:TextInput x="135" y="83" width="461"/>
+		<mx:Label x="10" y="85" text="Description" width="117" textAlign="right"/>
+		<mx:Label x="335" y="57" text="Delivery Date" width="117" textAlign="right"/>
+		<mx:DateField x="460" y="55" width="136"/>
+	</mx:Canvas>
+
+	<mx:TabNavigator width="100%" height="378" y="90">
+		<mx:Canvas label="Delivery What" width="100%" height="100%">
+			<mx:DataGrid  id="dataGrid" x="10" y="10" width="590" dataProvider="" doubleClick="" height="296">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Inv/Job" labelFunction="getTicket"/>
+					<mx:DataGridColumn headerText="Order Qty" labelFunction="getInvJob"/>
+					<mx:DataGridColumn headerText="Shipped Qty" labelFunction="getAccountName"/>
+					<mx:DataGridColumn headerText="Description" labelFunction="getShipVia"/>
+					<mx:DataGridColumn headerText="Weight" labelFunction="getDriver"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Button x="10" y="309" label="Add…" width="94"/>
+			<mx:TextInput x="391" y="313"/>
+			<mx:Label x="307" y="317" text="Total Weight"/>
+		</mx:Canvas>
+		<mx:Canvas label="Deliver Where" width="100%" height="100%">
+			<ns1:AddressEditor x="10" y="56" id="ship_to_address_editor" addressLabel="Address" height="157" width="214"/>
+			<ns1:ContactInfoEditor x="466" y="56" height="157" width="268" id="ship_to_contact_editor" contactLabel="Contact"/>
+			<mx:ComboBox x="64" y="29"></mx:ComboBox>
+			<mx:Label x="23" y="31" text="From"/>
+			<ns1:AddressEditor x="232" y="56" id="ship_to_address_editor0" addressLabel="Address" height="157" width="214"/>
+			<mx:ComboBox x="286" y="29"></mx:ComboBox>
+			<mx:Label x="243" y="33" text="To"/>
+			<mx:ComboBox x="509" y="2"></mx:ComboBox>
+			<mx:Label x="466" y="6" text="Attn"/>
+			<mx:ComboBox x="523" y="29" width="146"></mx:ComboBox>
+			<mx:Label x="466" y="33" text="Address"/>
+			<mx:CheckBox x="23" y="221" label="Other"/>
+			<mx:CheckBox x="175" y="300" label="Other"/>
+			<mx:CheckBox x="243" y="221" label="Other"/>
+			<mx:CheckBox x="480" y="221" label="Other"/>
+			<mx:TextInput x="175" y="270"/>
+			<mx:Label x="23" y="272" text="Email Address" width="124" textAlign="right"/>
+		</mx:Canvas>
+		<mx:Canvas label="Deliver How" width="100%" height="100%">
+			<mx:TextInput x="58.5" y="228" width="530" height="53"/>
+			<mx:TextInput x="99" y="66"/>
+			<mx:TextInput x="99" y="96"/>
+			<mx:TextInput x="380" y="36"/>
+			<mx:TextInput x="380" y="66"/>
+			<mx:TextInput x="380" y="96"/>
+			<mx:TextInput x="380" y="126"/>
+			<mx:ComboBox x="99" y="36"></mx:ComboBox>
+			<mx:ComboBox x="99" y="126"></mx:ComboBox>
+			<mx:Label x="17" y="38" text="Ship Via" textAlign="right" width="74"/>
+			<mx:Label x="17" y="68" text="Cost" textAlign="right" width="74"/>
+			<mx:Label x="17" y="98" text="Tracking" textAlign="right" width="74"/>
+			<mx:Label x="278" y="36" text="Customer PO" textAlign="right" width="94"/>
+			<mx:Label x="298" y="66" text="Order No." textAlign="right" width="74"/>
+			<mx:Label x="298" y="96" text="Part No." textAlign="right" width="74"/>
+			<mx:Label x="298" y="126" text="Reference" textAlign="right" width="74"/>
+			<mx:Label x="17" y="128" text="Driver" textAlign="right" width="74"/>
+			<mx:Label x="58.5" y="202" text="Delivery Comments" textAlign="left" width="194"/>
+			<mx:CheckBox x="99" y="156" label="COD"/>
+		</mx:Canvas>
+		
+		<mx:Canvas label="Printing" width="100%" height="100%">
+			<mx:Button x="28" y="10" height="38" width="38" click="doArchive()"	>
+				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
+			</mx:Button>
+			<mx:Button x="28" y="71" height="38" width="38" click="doArchive()"	>
+				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="100" y="20" text="Format"/>
+			<mx:ComboBox x="152" y="18"></mx:ComboBox>
+			<mx:Label x="100" y="81" text="Label Format"/>
+			<mx:ComboBox x="186" y="79"></mx:ComboBox>
+			<mx:VDividedBox x="28" y="56" height="2" width="461">
+			</mx:VDividedBox>
+			<mx:Button x="363" y="79" label="Define Label" width="99"/>
+			<mx:TextInput x="152" y="130" width="64"/>
+			<mx:Label x="39" y="130" text="Carton Count" width="105" textAlign="right"/>
+			<mx:TextInput x="152" y="158" width="64"/>
+			<mx:TextInput x="152" y="184" width="64"/>
+			<mx:TextInput x="325" y="130" width="64"/>
+			<mx:Label x="235" y="132" text="Start Number" width="82" textAlign="right"/>
+			<mx:TextInput x="325" y="158" width="64"/>
+			<mx:Label x="235" y="160" text="Skip Count" width="82" textAlign="right"/>
+			<mx:Label x="39" y="186" text="Total Items" width="105" textAlign="right"/>
+			<mx:Label x="39" y="158" text="Items per carton" width="105" textAlign="right"/>
+			<mx:CheckBox x="61" y="221" label="Attention Name" width="177"/>
+			<mx:CheckBox x="285" y="221" label="Delivery Comments" width="177"/>
+			<mx:CheckBox x="61" y="244" label="Customer Name" width="177"/>
+			<mx:CheckBox x="61" y="269" label="Address" width="177"/>
+			<mx:CheckBox x="61" y="291" label="Order Number" width="177"/>
+			<mx:CheckBox x="285" y="291" label="PO Number" width="177"/>
+			<mx:CheckBox x="61" y="313" label="Delivery Description" width="177"/>
+			<mx:CheckBox x="285" y="313" label="Estimated Weight" width="177"/>
+			<mx:RadioButtonGroup id="radiogroup1"/>
+			<mx:RadioButton x="285" y="243" label="Todays Date" groupName="radiogroup1"/>
+			<mx:RadioButton x="285" y="269" label="Delivery Date" groupName="radiogroup1"/>
+			
+		</mx:Canvas>
+		
+		<mx:Canvas label="Status" width="100%" height="100%">
+			<mx:TextInput x="34" y="29" width="455" height="58"/>
+			<mx:Label x="34" y="10" text="Follow up Comments" width="136"/>
+			<mx:Label x="34" y="117" text="Change Location" width="136" fontWeight="bold"/>
+			<mx:Label x="34" y="143" text="Location" width="86" textAlign="right"/>
+			<mx:TextInput x="137" y="141" width="307"/>
+			<mx:DataGrid x="34" y="169" width="455">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Delivered" dataField="col1"/>
+					<mx:DataGridColumn headerText="Inv/Job" dataField="col2"/>
+					<mx:DataGridColumn headerText="Description" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Button x="34" y="313" label="Update location on selected items" width="304"/>
+			
+		</mx:Canvas>
+	</mx:TabNavigator>
+	
+</mx:Panel>
