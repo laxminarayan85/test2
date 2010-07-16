@@ -117,7 +117,7 @@ package com.efi.printsmith.data
 		public var sheet_lift_check:Boolean = false;
 		public var ship_markup_check:Boolean = false;
 		public var coverlbInk:Number = 0;
-		public var sheetliftCut:int = 0;
+		public var sheetliftCut:Number = 0;
 		public var shipMarkup:Number = 0;
 		public var descriptionLabel:String = "";
 		public var notesLabel:String = "";

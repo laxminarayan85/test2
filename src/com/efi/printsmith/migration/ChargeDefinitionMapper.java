@@ -352,7 +352,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 									.tokenToDouble(currentImportToken));
 						} else if (method.equals("7")) {
 							chargeDefinition.setSheetliftCut(Utilities
-									.tokenToInt(currentImportToken));
+									.tokenToDouble(currentImportToken));
 							chargeDefinition.setSheet_lift_check(true);
 						} else if (method.equals("8")) {
 							chargeDefinition.setCoverlbInk(Utilities

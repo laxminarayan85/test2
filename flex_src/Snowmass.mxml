@@ -752,6 +752,7 @@
         		formatter.currencySymbol = "";
         	}
         	formatter.precision = precision;
+        	
         	return formatter;
         }
         

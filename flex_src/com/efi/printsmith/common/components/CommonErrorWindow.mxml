@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
-	creationComplete="{initErrorWindow()}" title="Error" width="400">
+	creationComplete="{initErrorWindow()}" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEISIntegrationLogCmd.Error')}" width="400">
 
 	<mx:Script>
 		<![CDATA[

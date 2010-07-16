@@ -2841,46 +2841,57 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double coverlbInk;
+	@Column(name="coverlbInk", precision=19, scale=4)
+	private BigDecimal coverlbInk;
 	
 	/**
 	 * @generated
  	 */
-	public Double getCoverlbInk(){
+	public BigDecimal getCoverlbInk(){
     return coverlbInk; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCoverlbInk(Double newVal) {
+   * @generated
+   */	
+  public void setCoverlbInk(BigDecimal newVal) {
     this.coverlbInk = newVal;
+    this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setCoverlbInk(double newVal) {
+    this.coverlbInk = BigDecimal.valueOf(newVal);
+    this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
+  }
+
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Integer sheetliftCut;
+	private Double sheetliftCut;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getSheetliftCut(){
+	public Double getSheetliftCut(){
     return sheetliftCut; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSheetliftCut(Integer newVal) {
+   * @generated
+   */	
+  public void setSheetliftCut(Double newVal) {
     this.sheetliftCut = newVal;
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -3497,8 +3508,8 @@ public class ChargeDefinition extends ModelBase {
     if (COVERLB_CHECK.equals(propertyName)) setCoverlb_check((Boolean)newValue); else
     if (SHEET_LIFT_CHECK.equals(propertyName)) setSheet_lift_check((Boolean)newValue); else
     if (SHIP_MARKUP_CHECK.equals(propertyName)) setShip_markup_check((Boolean)newValue); else
-    if (COVERLBINK.equals(propertyName)) setCoverlbInk((Double)newValue); else
-    if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Integer)newValue); else
+    if (COVERLBINK.equals(propertyName)) setCoverlbInk((BigDecimal)newValue); else
+    if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Double)newValue); else
     if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
     if (DESCRIPTIONLABEL.equals(propertyName)) setDescriptionLabel((String)newValue); else
     if (NOTESLABEL.equals(propertyName)) setNotesLabel((String)newValue); else
@@ -3731,9 +3742,9 @@ public class ChargeDefinition extends ModelBase {
     if (SHIP_MARKUP_CHECK.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (COVERLBINK.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (SHEETLIFTCUT.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Double.class};		
     if (SHIPMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (DESCRIPTIONLABEL.equals(propertyName)) 
