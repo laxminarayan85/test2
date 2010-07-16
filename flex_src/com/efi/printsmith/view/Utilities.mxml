@@ -63,9 +63,6 @@
 		this.import_credit_card_transactions.enabled = false;
 		this.progress_bar.visible = false;
 	}
-	
-	private function handleLoadFileComplete(event:Event):void {
-	}
 		
 	private function handleIOError(event:IOErrorEvent):void {
 		if (event.target != null) {
@@ -180,8 +177,13 @@
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
 		uploadFile("TableEditor");
 	}
+	
+	private function handleLoadFileComplete(event:Event):void {
+		progress_bar.visible = false;
+	}
 
 	private function uploadFile(fileType:String):void {
+		progress_bar.visible = true;
 		var urlVariables:URLVariables = new URLVariables();
 		urlVariables.importType = fileType;
 		servletTarget.data = urlVariables;
@@ -210,7 +212,6 @@
 	}
 	
 	private function uploadFiles(evt:Event): void {
-		progress_bar.visible = true;
 		var index:int = -1;
 		index = fileNameArray.getItemIndex("DL Price Lists Data.txt");
 		if (index.valueOf() > -1) {
@@ -223,7 +224,7 @@
 		if (index.valueOf() > -1) {
 			fileReference = fileArray.getItemAt(index) as FileReference;
 			if (fileReference != null) {
-				handleSelectChargeCostingFile(evt);
+				handleSelectChargeDefinitionsFile(evt);
 			}
 		}
 		index = fileNameArray.getItemIndex("DL TaxTable DB Data.txt");
@@ -331,7 +332,6 @@
 				handleSelectTableEditorFile(evt);
 			}
 		}
-		progress_bar.visible = false;
 	}
 	
 	private function handleCancelFile(evt:Event):void {
