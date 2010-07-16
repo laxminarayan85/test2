@@ -289,6 +289,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private function handleChargeCostingComplete(evt:ChargeCostingEvent):void {
  		if (evt.chargeCost != null) {
 			charge.chargeCost = evt.chargeCost;
+			chargeService.calculateChargeCostingRate(charge, null);	
 		} else {
 			Alert.show("Charge Cost Dialog returned a null charge cost record", "Error");
 		}     	
@@ -853,8 +854,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = true;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = true;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			
@@ -892,8 +893,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = true;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = true;
 			cut_prepress_radio.visible = true;
 			Ignorecuts_radio.visible =true;
 			charge_group_2.enabled = false;
@@ -929,8 +930,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = false;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
-			minimum_charge_check.visible = false;
-			minimum_time_check.visible = false;
+			minimum_charge_check.enabled = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -965,8 +966,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
@@ -998,12 +999,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cover_ink_edit.visible = true;
 			ship_markup_check.visible = false;
 			ship_markup_edit.visible = false;
-			fixed_spoilage_edit.visible = false;
-			label4.visible = false;
+			fixed_spoilage_edit.visible = true;
+			label4.visible = true;
 			finished_area_radio.visible = true;
 			run_area_radio.visible = true;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
@@ -1039,8 +1040,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = true;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -1075,8 +1076,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			label4.visible = true;
 			finished_area_radio.visible = true;
 			run_area_radio.visible = true;
-			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_charge_check.enabled = true;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
@@ -1108,12 +1109,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cover_ink_edit.visible = false;
 			ship_markup_check.visible = false;
 			ship_markup_edit.visible = false;
-			fixed_spoilage_edit.visible = false;
-			label4.visible = false;
+			fixed_spoilage_edit.visible = true;
+			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -1149,7 +1150,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -1185,7 +1186,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -1216,12 +1217,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cover_ink_edit.visible = false;
 			ship_markup_check.visible = true;
 			ship_markup_edit.visible = true;
-			fixed_spoilage_edit.visible = false;
-			label4.visible = false;
+			fixed_spoilage_edit.visible = true;
+			label4.visible = true;
 			finished_area_radio.visible = false;
 			run_area_radio.visible = false;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
@@ -1252,18 +1253,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cover_ink_edit.visible = false;
 			ship_markup_check.visible = false;
 			ship_markup_edit.visible = false;
-			fixed_spoilage_edit.visible = false;
-			label4.visible = false;
+			fixed_spoilage_edit.visible = true;
+			label4.visible = true;
 			finished_area_radio.visible = true;
 			run_area_radio.visible = true;
 			minimum_charge_check.visible = true;
-			minimum_time_check.visible = false;
+			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
 			break;
 		}
-		price_calc_stack.selectedChild = newCanvas;		
+		price_calc_stack.selectedChild = newCanvas;	
+		UpdatePriceMethod();	
 	}
 	private function changeChargeMethod(event:Event):void {
 		updateControlState();
@@ -1473,6 +1475,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleChargePresetInfoOK(evt:ChargePresetInfoEvent):void {
 		if (evt.chargeDefinition != null) {
 			charge = evt.chargeDefinition;
+			
 			if (charge != null) {
 				chargeService.calculateChargeCostingRate(charge, null);
 			}		
@@ -1638,23 +1641,67 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		else
 		{
-			markup_edit.text = "";
-			sale_price_per_unit_edit.text = "";
-								
-			rate_check.enabled = true;
-			rate_check.selected = charge.useRate;
-			if (rate_check.selected)
-				rate_edit.text = charge.rate.toString();
-			
-			setup_check.enabled= true
-			setup_check.selected = charge.useSetup;
-			
-			material_check.enabled = true;
-			material_check.selected = charge.useMaterial;
-			if (material_check.selected)
-				material_edit.text= charge.material.toString();
-			
-		}
+			switch (charge_method_combo.selectedItem) {
+				case ChargeMethod.FLATRATE:
+				case ChargeMethod.MARKUP:
+					markup_edit.text = "";
+					sale_price_per_unit_edit.text = "";
+					cost_plus_radio.enabled= false;					
+					rate_check.enabled = true;
+					if( charge != null)
+						rate_check.selected = charge.useRate;
+					if (rate_check.selected)
+						if( charge != null)
+							rate_edit.text = charge.rate.toString();
+					
+					setup_check.enabled= false;
+					setup_check.selected = false;
+					
+					material_check.enabled = false;
+					material_check.selected = false;
+					if (material_check.selected)
+						if( charge != null)
+							material_edit.text= charge.material.toString();
+					break;
+					
+					
+				case ChargeMethod.ASK: 
+				case ChargeMethod.CUT:
+				case ChargeMethod.FOLD:
+				case ChargeMethod.JOBAWARE:
+				case ChargeMethod.LINEAR:
+				case ChargeMethod.INK:
+				case ChargeMethod.PRICELIST:
+				case ChargeMethod.RATELIST:
+				case ChargeMethod.SHIPPING:
+				case ChargeMethod.SQUAREAREA:
+					markup_edit.text = "";
+					sale_price_per_unit_edit.text = "";
+					cost_plus_radio.enabled =true;					
+					rate_check.enabled = true;
+					if( charge != null)
+						rate_check.selected = charge.useRate;
+					if (rate_check.selected)
+						if( charge != null)
+							rate_edit.text = charge.rate.toString();
+					
+					setup_check.enabled= true
+					if( charge != null)
+						setup_check.selected = charge.useSetup;
+					
+					material_check.enabled = true;
+					if( charge != null)
+						material_check.selected = charge.useMaterial;
+					if (material_check.selected)
+						if( charge != null)
+							material_edit.text= charge.material.toString();
+					break;
+				}
+			}
+	}
+	private function UpdateChargeCosting():void{
+		charge.markup = parseFloat(markup_edit.text)
+		chargeService.calculateChargeCostingRate(charge, null);
 	}
 ]]>
                              
@@ -1774,7 +1821,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus" />
 					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice" />
-					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}"/>
+					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}" focusOut="UpdateChargeCosting();"/>
 					<mx:Text x="422" y="282" width="291" id="sale_price_per_unit_edit" text="{costPricingString}" height="17"/>
 					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
 					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.setupPrice)}"/>

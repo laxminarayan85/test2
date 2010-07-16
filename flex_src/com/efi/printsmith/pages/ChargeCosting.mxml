@@ -79,7 +79,12 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.unitMaterials = parseFloat(unit_materials_edit.text);
     	chargeCost.modified = lastChangeDate.text as Date;
     }                              
-    
+    private function  CalculateTotalUnit():void{
+    	var tempCost:Number;
+    	tempCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
+    	tempCost = tempCost +parseFloat(fixed_materials_edit.text)+ parseFloat(unit_cost_edit.text);
+    	
+    }
 	private function creationCompleteHandler():void { 
 		costing_method_combo.selectedItem = chargeCost.costingMethod as String;
 		UpdateControlState();

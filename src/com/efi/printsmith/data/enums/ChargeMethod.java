@@ -6,7 +6,6 @@ import javax.persistence.Table;
 /**
  */
 public enum ChargeMethod {
-	 None,
 	 JobAware,
 	 Markup,
 	 FlatRate,

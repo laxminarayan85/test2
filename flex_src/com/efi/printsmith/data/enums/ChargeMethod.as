@@ -5,7 +5,6 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargeMethod")]
 	public class ChargeMethod
 	{
-	 	public static const NONE:String = "None";
 	 	public static const JOBAWARE:String = "JobAware";
 	 	public static const MARKUP:String = "Markup";
 	 	public static const FLATRATE:String = "FlatRate";
