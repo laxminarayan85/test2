@@ -120,7 +120,8 @@
 	private function doSave():void{
 	}
 	
-	private function doRevert():void{
+	private function doCancel():void{
+		PopUpManager.removePopUp(this)
 	}
 
 	private function doGrid(): void{ 
@@ -147,7 +148,7 @@
 	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="274" y="6" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+	<mx:Button x="274" y="6" width="38" height="38" click="doCancel();" id="btnCancel">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 
@@ -160,7 +161,7 @@
 			</mx:columns>
 		</mx:DataGrid>
 	
-		<mx:DataGrid x="194" y="49" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
+		<mx:DataGrid x="190" y="95" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
 			itemClick="doTimeCardGrid()">
 			<mx:columns>
 				<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period" />
@@ -171,5 +172,7 @@
 				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable"/>
 			</mx:columns>
 		</mx:DataGrid>
+		<mx:Label x="231" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
+		<mx:Label x="277" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
 </mx:TitleWindow>
 

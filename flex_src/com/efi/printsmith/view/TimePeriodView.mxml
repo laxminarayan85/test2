@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="534" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="580" 
 	title="Time Periods" 
 	label="Time Periods" 
 	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
@@ -94,7 +94,8 @@
 	private function doSave():void{
 	}
 	
-	private function doRevert():void{
+	private function doCancel():void{
+		PopUpManager.removePopUp(this)
 	}
 
 	private function doClosePeriod():void{
@@ -147,7 +148,7 @@
 	<mx:Button x="10" y="446" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="446" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+	<mx:Button x="56" y="446" width="38" height="38" click="doCancel();" id="btnCancel">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 
@@ -156,8 +157,8 @@
 		<mx:TextArea x="76" y="10" id="txtPeriodNumber" height="19" width="63" text="{period.periodNumber}"/>
 		<mx:Label x="36" y="57" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"/>
 		<mx:Label x="50" y="81" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"/>
-		<mx:DateField x="76" y="55" id="txtCurrentFrom" text="{period.fromDate}"/>
-		<mx:DateField x="76" y="79" id="txtCurrentTo" text="{period.toDate}"/>
+		<mx:DateField x="76" y="55" id="txtCurrentFrom"  editable="true" text="{period.fromDate}"/>
+		<mx:DateField x="76" y="79" id="txtCurrentTo"  editable="true" text="{period.toDate}"/>
 		
 		<mx:Button x="19.5" y="124" id="cmdCloseCurrentPeriod" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Closecurrentperiod')}" click="doClosePeriod();"/>
 		
@@ -177,12 +178,14 @@
 		<mx:RadioButton x="10" y="120" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}" groupName="opgPeriodType" id="opbCustom" click="doClickPeriod(opbCustom);"/>
 		<mx:Label x="34" y="147" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"/>
 		<mx:Label x="48" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"/>
-		<mx:DateField x="80" y="145" id="txtCustomFrom" text="{period.customfromDate}" enabled="false"/>
-		<mx:DateField x="80" y="168" id="txtCustomTo" text="{period.customtoDate}" enabled="false"/>
+		<mx:DateField x="80" y="145" id="txtCustomFrom" editable="true" text="{period.customfromDate}" enabled="false"/>
+		<mx:DateField x="80" y="168" id="txtCustomTo"  editable="true" text="{period.customtoDate}" enabled="false"/>
 	</mx:Panel>
 	<mx:Panel x="10" y="301" width="402" height="137" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Comment')}">
-		<mx:TextArea x="0" y="0" width="100%" height="100%" id="txtComment" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Timeperiodscontrolth')}"/>
+		<mx:TextArea x="0" y="0" width="100%" height="100%" id="txtComment" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Timeperiodscontrolth')}" editable="false"/>
 	</mx:Panel>
+	<mx:Label x="13" y="492" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
+	<mx:Label x="59" y="492" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
 
 </mx:TitleWindow>
 

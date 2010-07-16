@@ -89,7 +89,8 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 		                         
 		PopUpManager.removePopUp(this);
 		dataService.getAll("Users");
-		dataGrid.invalidateList();
+	
+		
 		newUser = true;
 		
 		send();                                  
@@ -224,6 +225,7 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 	}       
 	private function handleLoadResult(ev:ResultEvent):void {
 		userslist = ev.result as ArrayCollection;
+		dataGrid.invalidateList();
 	}
 	private function handleLoadAccessGroupResult(ev:ResultEvent):void {
 		accessGroups = ev.result as ArrayCollection;
