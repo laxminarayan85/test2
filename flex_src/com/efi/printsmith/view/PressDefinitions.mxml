@@ -392,7 +392,11 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		salesCategories = ev.result as ArrayCollection;
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
-	     pressDefinitionArray = ev.result as ArrayCollection;
+		var selectedIndex:int = new int(dataGrid.selectedIndex);
+		var verticalScrollPosition:int = new int(dataGrid.verticalScrollPosition);
+	    pressDefinitionArray = ev.result as ArrayCollection;
+		dataGrid.selectedIndex = selectedIndex;
+		dataGrid.verticalScrollPosition = verticalScrollPosition;
 	}
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 	     costCenterArray = ev.result as ArrayCollection;

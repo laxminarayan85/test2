@@ -99,7 +99,7 @@ public class DigitalAsset extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private Job job;
 	
 	/**

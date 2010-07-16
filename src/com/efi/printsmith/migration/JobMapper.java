@@ -1150,6 +1150,7 @@ public class JobMapper extends ImportMapper {
 		if (invoiceNumber.equals("") == false && docType.equals("") == false) {
 			InvoiceBase invoice = (InvoiceBase)dataService.getInvoiceByInvoiceNumber(invoiceNumber, docType);
 			if (invoice != null) {
+				job.setParentInvoice(invoice);
 				invoice.addJobs(job);
 				dataService.addUpdate(invoice);
 			}

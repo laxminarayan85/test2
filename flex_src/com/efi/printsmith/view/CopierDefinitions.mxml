@@ -124,14 +124,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var copierDefinitionArray:ArrayCollection = new ArrayCollection();
 	[Bindable]                                
 	private var methodType:ArrayCollection = new ArrayCollection();
-	
 	[Bindable]
 	private var charges:ArrayCollection=new ArrayCollection();
-	
 	[Bindable]
-		private var matrixTypeRadioValue:String = "CopyCost";
+	private var matrixTypeRadioValue:String = "CopyCost";
 	[Bindable]
-		private var areaTypeRadioValue:String = "AreaRunSize";
+	private var areaTypeRadioValue:String = "AreaRunSize";
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -140,7 +138,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var productionLocationArray:ArrayCollection = new ArrayCollection();  
 	[Bindable]
 	private var productionCopiersArray:ArrayCollection = new ArrayCollection();
-
+	
+	private var selectedCopierId:Number = -1;
+	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();   
@@ -284,10 +284,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleGetResult(ev:ResultEvent):void {
 		if (ev.token.operation == "getCopierDefinition") {
 			copierDefinition = ev.result as CopierDefinition;
-			if ( copierDefinition.largeFormat)
-				this.currentState = "Large Format";
-			else
-				this.currentState = "";
+			if (copierDefinition != null) {
+				if ( copierDefinition.largeFormat)
+					this.currentState = "Large Format";
+				else
+					this.currentState = "";
+			}
 			updateMethodBox();
 			
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
@@ -391,10 +393,16 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 		//copierDefinition.copyDefID = CopierDefID;
 		copierDefinition.name = Name.text;
-		copierDefinition.machineName = productionCopiers.selectedItem.name as String;
+		if (productionCopiers.selectedItem != null && productionCopiers.selectedItem.name != null) {
+			copierDefinition.machineName = productionCopiers.selectedItem.name as String;
+		}
 		copierDefinition.outputDescrip = OutPutDescription.text;
-		copierDefinition.productionLocation = ProductionLocation.selectedItem.name as String;
-		copierDefinition.costCenter = CostCenter.selectedItem.name as String;
+		if (ProductionLocation.selectedItem != null && ProductionLocation.selectedItem.name != null) {
+			copierDefinition.productionLocation = ProductionLocation.selectedItem.name as String;
+		}
+		if (CostCenter.selectedItem != null && CostCenter.selectedItem.name != null) {
+			copierDefinition.costCenter = CostCenter.selectedItem.name as String;
+		}
 		copierDefinition.oemDeviceID = OEMDeviceID.text;
 		copierDefinition.copyID = parseInt(copyID.text); 
 		copierDefinition.costingCopy = CostingCopier.selected;
@@ -419,7 +427,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.toString();
 		if (price_2_side.selectedItem != null)
 			copierDefinition.priceTwoSide = price_2_side.selectedItem.toString();	
-		 	
+		
 		copierDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 		
 		
@@ -470,6 +478,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		selectedCopierId = (ev.result as CopierDefinition).id;
+		
 		dataService.getCopierPicker("CopierDefinition");
 	}
 
@@ -497,8 +507,28 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     	}
 	}
 
+	private function getSelectedCopierIndex(id:Number):int {
+		var i:int = 0;
+		
+		for (i=0; i<copierDefinitionArray.length; i++) {
+			if ((copierDefinitionArray.getItemAt(i) as CopierDefinition).id == id) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 	private function handleLoadResult(ev:ResultEvent):void {
-	     copierDefinitionArray = ev.result as ArrayCollection;
+		var selectedIndex:int = new int(dataGrid.selectedIndex);
+		var verticalScrollPosition:int = new int(dataGrid.verticalScrollPosition);
+		copierDefinitionArray = ev.result as ArrayCollection;
+		dataGrid.selectedIndex = selectedIndex;
+		dataGrid.verticalScrollPosition = verticalScrollPosition;
+		if (selectedCopierId != -1) {
+			if (getSelectedCopierIndex(selectedCopierId) != -1) {
+				 
+			}
+		}
 	}
 	
 	private function handleNewCopier(ev:ResultEvent):void {

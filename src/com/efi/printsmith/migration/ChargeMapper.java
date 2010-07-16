@@ -98,6 +98,7 @@ public class ChargeMapper extends ImportMapper {
 				for (int i = 0; i < jobs.size(); i++) {
 					if (jobs.get(i).getJobNumber().equals(jobNumber)) {
 						JobBase job = jobs.get(i);
+						charge.setParentJob(job);
 						job.addCharges(charge);
 						dataService.addUpdate(job);
 					}
