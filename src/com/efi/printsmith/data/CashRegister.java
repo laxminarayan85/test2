@@ -89,14 +89,6 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String TENDERED = "Tendered";
-	/**
-	 * @generated
-	 */
-	public static final String CHANGE = "Change";
-	/**
-	 * @generated
-	 */
 	public static final String CREDITCARD = "CreditCard";
 	/**
 	 * @generated
@@ -115,6 +107,11 @@ public class CashRegister extends ModelBase {
    * @generated
    */
   public static final String CASHREGISTERDEPT = "CashRegisterDept";
+
+	/**
+   * @generated
+   */
+  public static final String NOTAX = "NoTax";
 
 	/**
 	 * @generated
@@ -410,52 +407,6 @@ public class CashRegister extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private Double tendered;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getTendered(){
-    return tendered; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTendered(Double newVal) {
-    this.tendered = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Double change;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getChange(){
-    return change; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setChange(Double newVal) {
-    this.change = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
     @ManyToOne()
 	private PreferencesCreditCard creditCard;
 	
@@ -573,6 +524,28 @@ public class CashRegister extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean noTax;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getNoTax(){
+    return noTax; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNoTax(Boolean newVal) {
+    this.noTax = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -589,13 +562,12 @@ public class CashRegister extends ModelBase {
     if (PAYMENTMETHOD.equals(propertyName)) return getPaymentMethod();
     if (SUBTOTAL.equals(propertyName)) return getSubtotal();
     if (TAXAMOUNT.equals(propertyName)) return getTaxamount();
-    if (TENDERED.equals(propertyName)) return getTendered();
-    if (CHANGE.equals(propertyName)) return getChange();
     if (CREDITCARD.equals(propertyName)) return getCreditCard();
     if (REFNUMBER.equals(propertyName)) return getRefNumber();
     if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
     if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
     if (CASHREGISTERDEPT.equals(propertyName)) return getCashRegisterDept();
+    if (NOTAX.equals(propertyName)) return getNoTax();
     return super.getProperty(propertyName);
   }
 	
@@ -616,13 +588,12 @@ public class CashRegister extends ModelBase {
     if (PAYMENTMETHOD.equals(propertyName)) setPaymentMethod((String)newValue); else
     if (SUBTOTAL.equals(propertyName)) setSubtotal((BigDecimal)newValue); else
     if (TAXAMOUNT.equals(propertyName)) setTaxamount((BigDecimal)newValue); else
-    if (TENDERED.equals(propertyName)) setTendered((Double)newValue); else
-    if (CHANGE.equals(propertyName)) setChange((Double)newValue); else
     if (CREDITCARD.equals(propertyName)) setCreditCard((PreferencesCreditCard)newValue); else
     if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
     if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((BigDecimal)newValue); else
     if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
     if (CASHREGISTERDEPT.equals(propertyName)) setCashRegisterDept((PreferencesCashRegister)newValue); else
+    if (NOTAX.equals(propertyName)) setNoTax((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -654,10 +625,6 @@ public class CashRegister extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (TAXAMOUNT.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (TENDERED.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (CHANGE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
     if (CREDITCARD.equals(propertyName)) 
       return new Class<?>[] {PreferencesCreditCard.class};		
     if (REFNUMBER.equals(propertyName)) 
@@ -668,6 +635,8 @@ public class CashRegister extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CASHREGISTERDEPT.equals(propertyName)) 
       return new Class<?>[] {PreferencesCashRegister.class};		
+    if (NOTAX.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -689,13 +658,12 @@ public class CashRegister extends ModelBase {
     if (PAYMENTMETHOD.equals(propertyName)) return CashRegister.class;
     if (SUBTOTAL.equals(propertyName)) return CashRegister.class;
     if (TAXAMOUNT.equals(propertyName)) return CashRegister.class;
-    if (TENDERED.equals(propertyName)) return CashRegister.class;
-    if (CHANGE.equals(propertyName)) return CashRegister.class;
     if (CREDITCARD.equals(propertyName)) return CashRegister.class;
     if (REFNUMBER.equals(propertyName)) return CashRegister.class;
     if (PAYMENTAMOUNT.equals(propertyName)) return CashRegister.class;
     if (CHECKNUMBER.equals(propertyName)) return CashRegister.class;
     if (CASHREGISTERDEPT.equals(propertyName)) return CashRegister.class;
+    if (NOTAX.equals(propertyName)) return CashRegister.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -729,10 +697,6 @@ public class CashRegister extends ModelBase {
       return false;
     if (! SmartEquals(getTaxamount(), objT.getTaxamount()))
       return false;
-    if (! SmartEquals(getTendered(), objT.getTendered()))
-      return false;
-    if (! SmartEquals(getChange(), objT.getChange()))
-      return false;
     if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
       return false;
     if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
@@ -742,6 +706,8 @@ public class CashRegister extends ModelBase {
     if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
       return false;
     if (! SmartEquals(getCashRegisterDept(), objT.getCashRegisterDept()))
+      return false;
+    if (! SmartEquals(getNoTax(), objT.getNoTax()))
       return false;
     return true;
   }			

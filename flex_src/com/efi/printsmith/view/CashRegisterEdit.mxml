@@ -47,8 +47,8 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
  	 	 	 	<mx:TextInput x="105" y="133" width="75" id="txtInvoiceStillDue"/>
  	 	 	</mx:AddChild>
- 	 	 	<mx:SetProperty target="{pickTaxCodes}" name="enabled" value="false"/>
  	 	 	<mx:SetProperty target="{pickTaxTable}" name="enabled" value="false"/>
+ 	 	 	<mx:SetProperty target="{pickTaxCode}" name="enabled" value="false"/>
  	 	 	<mx:SetEventHandler target="{tax_canvas1}" name="activate"/>
  	 	 	<mx:SetProperty target="{chkNonTax}" name="enabled" value="false"/>
 
@@ -193,6 +193,7 @@
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.data.TaxCodes;
 	import com.efi.printsmith.data.CashRegister;
+	import com.efi.printsmith.data.CashRegisterBatch;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.data.Account;
@@ -255,11 +256,10 @@
 	private var FormatArray:ArrayCollection = new ArrayCollection();
 	
 //Data view variables
-	
+	[Bindable]
+	private var batch:CashRegisterBatch;
 	[Bindable]
 	private var cashRegister:CashRegister;
-	[Bindable]
-	private var cashRegister2:CashRegister;
 	[Bindable]
 	private var payment:CashRegister;
 //Tree view XML table
@@ -290,19 +290,23 @@
 		cashRegister = ev.result as CashRegister;
 		tempString = numberFormatter.format(cashRegister.subtotal + cashRegister.taxamount);
 		cashRegister.totalprice = parseFloat(tempString);
-		cashRegister.change = cashRegister.tendered - cashRegister.totalprice;
+		
+		batch.subTotal = batch.subTotal+ cashRegister.subtotal;
+		batch.totalPrice= batch.totalPrice+ cashRegister.totalprice;
+		batch.taxAmount = batch.taxAmount + cashRegister.taxamount;
+		batch.change = batch.tendered - batch.totalPrice;
 			
 		
 	}	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
+		batch = new CashRegisterBatch();
 		cashRegister = new CashRegister();
 		cashRegister.cashRegisterDept = new PreferencesCashRegister();
-		cashRegister.cashRegisterDept.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS');
-		cashRegister2 = new CashRegister();
-
+		//batch.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS');
 		cashRegister.customerAccount = new Account();
+
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCashPreferences.getAll("PreferencesCashRegister");
 		//openTree();
@@ -358,17 +362,23 @@
 		var tempString:String;
 		temp = parseFloat(txtPaymentUnitPrice.text)* parseFloat(txtPaymentQuantity.text)
 		txtPaymentTotal.text = numberFormatter.format(temp) ;
-		cashRegister.taxTable = pickTaxCodes.selectedItem as TaxTable;
+		cashRegister.taxTable = pickTaxTable.selectedItem as TaxTable;
+		cashRegister.taxCode = pickTaxCode.selectedItem as TaxCodes;
 		cashRegister.subtotal = temp;
 		//subtotal_edit.text = txtPaymentTotal.text;
-		
-		taxCalculatorService.calculateTax(cashRegister);
+		if (chkNonTax.selected){
+			batch.subTotal = batch.subTotal+ cashRegister.subtotal;
+			batch.totalPrice= batch.totalPrice+ cashRegister.totalprice;
+			batch.change = batch.tendered - batch.totalPrice;
+		}
+		else
+			taxCalculatorService.calculateTax(cashRegister);
 	}
 	
 	private function openTree():void {
 		var nodeList:XMLListCollection = 
 			tvItems.dataProvider as XMLListCollection;
-		tvItems.selectedIndex = 0;
+		tvItems.selectedIndex = -1;
 
 		var node:XML = XML(tvItems.selectedItem);
 	}
@@ -386,8 +396,8 @@
 		txtPaymentDescription.text = treeItem.title;
 		txtPaymentQuantity.text ="";
 		txtPaymentTotal.text = "";
-		cashRegister2 = new CashRegister;
-		cashRegister2.cashRegisterDept = treeItem;
+		cashRegister = new CashRegister;
+		cashRegister.cashRegisterDept = treeItem;
 	
 	}
 
@@ -466,7 +476,8 @@
 				payment.subtotal = parseFloat(payment_cash_edit.text);
 				UpdateCashRegister();
 		}
-		cashRegisterTransacations.addItem(payment);
+		batch.transactions.addItem(payment);
+		//cashRegisterTransacations.addItem(payment);
 	}	
 	private function doAccount():void{
 		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
@@ -509,17 +520,14 @@
 	}
 	private function doAccept():void{
 	
-		cashRegister2.quantity = parseInt(txtPaymentQuantity.text);
-		cashRegister2.unitprice = parseFloat(txtPaymentUnitPrice.text);
-		cashRegister2.subtotal = parseFloat(txtPaymentTotal.text);
-		if (cashRegisterTransacations.length ==0)
-			cashRegisterTransacations.addItem(cashRegister);
-		else{
-			cashRegister.subtotal = cashRegister.subtotal + cashRegister2.subtotal
-		}
-			
-		cashRegisterTransacations.addItem(cashRegister2);
+		cashRegister.quantity = parseInt(txtPaymentQuantity.text);
+		cashRegister.unitprice = parseFloat(txtPaymentUnitPrice.text);
+		cashRegister.subtotal = parseFloat(txtPaymentTotal.text);
+		
+		batch.transactions.addItem(cashRegister);			
+		
 		this.currentState = "";
+		openTree();
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
@@ -626,9 +634,9 @@
 			<mx:Label x="5" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable')}"/>
 			<mx:Label x="5" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}"/>
 
-		    <mx:ComboBox x="77" y="8" id="pickTaxCodes" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
-		    <mx:ComboBox x="77" y="33" id="pickTaxTable" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
-		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax" />
+		    <mx:ComboBox x="77" y="8" change="UpdateCashRegister()" id="pickTaxTable" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
+		    <mx:ComboBox x="77" y="33" change="UpdateCashRegister()" id="pickTaxCode" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
+		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax"  change="UpdateCashRegister()"/>
 		</mx:Canvas>
 		<mx:Canvas x="198" y="40" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}"/>
@@ -656,11 +664,11 @@
 			<mx:Label x="69" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}"/>
 			<mx:Label x="44" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tendered')}"/>
 			<mx:Label x="54" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Change')}"/>
-			<mx:TextInput   id="subtotal_edit" x="110" y="10" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.subtotal)}"/>
-			<mx:TextInput id="tax_edit" x="110" y="36" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.taxamount)}"/>
-			<mx:TextInput  id="total_edit" x="110" y="62" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.totalprice)}"/>
-			<mx:TextInput id="tender_edit" x="110" y="88" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.tendered)}"/>
-			<mx:TextInput  id="change_edit" x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(cashRegister.change)}"/>
+			<mx:TextInput   id="subtotal_edit" x="110" y="10" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.subTotal)}"/>
+			<mx:TextInput id="tax_edit" x="110" y="36" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.taxAmount)}"/>
+			<mx:TextInput  id="total_edit" x="110" y="62" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.totalPrice)}"/>
+			<mx:TextInput id="tender_edit" x="110" y="88" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.tendered)}"/>
+			<mx:TextInput  id="change_edit" x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.change)}"/>
 
 		</mx:Canvas>
 		<mx:DataGrid x="4" y="414" width="613" id="cashReg_grid" dataProvider="{cashRegisterTransacations}">

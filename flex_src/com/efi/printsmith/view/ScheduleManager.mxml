@@ -3,7 +3,7 @@
 	layout="absolute" width="376" height="642" 
 	creationComplete="init()" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" 
-	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager')}">
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}">
 
 <mx:Script>  	
 <![CDATA[

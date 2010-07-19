@@ -24,13 +24,12 @@ package com.efi.printsmith.data
 		public var paymentMethod:String = "";
 		public var subtotal:Number = 0;
 		public var taxamount:Number = 0;
-		public var tendered:Number = 0;
-		public var change:Number = 0;
 		public var creditCard:PreferencesCreditCard;
 		public var refNumber:String = "";
 		public var paymentAmount:Number = 0;
 		public var checkNumber:String = "";
 		public var cashRegisterDept:PreferencesCashRegister;
+		public var noTax:Boolean = false;
 	
 	}
 }
