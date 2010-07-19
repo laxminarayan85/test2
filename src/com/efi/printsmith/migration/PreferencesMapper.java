@@ -33,27 +33,47 @@ import com.efi.printsmith.service.DataService;
 public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		org.w3c.dom.Document doc = db.parse(uploadedFile);
-		doc.getDocumentElement().normalize();
-		NodeList groupNodes = doc.getElementsByTagName("Group");
-		for (int i=0;i<groupNodes.getLength();i++) {
-			NodeList itemNodes = groupNodes.item(i).getChildNodes();
-			NamedNodeMap groupAttributes = groupNodes.item(i).getAttributes();
-			Node groupTitleNode = groupAttributes.getNamedItem("Title");
-			for(int x=0;x<itemNodes.getLength();x++) {
-				if (itemNodes.item(x).getNodeType() == Node.ELEMENT_NODE) {
-					NamedNodeMap itemAttributes = itemNodes.item(x).getAttributes();
-					Node titleNode = itemAttributes.getNamedItem("Title");
-					Node valueNode = itemAttributes.getNamedItem("Value");
-					Node keyNode = itemAttributes.getNamedItem("Key");
-					if (groupTitleNode.getNodeValue().equals("Sales Category List")) {
-						importSalesCategoryListRecord(keyNode.getNodeValue(), valueNode.getNodeValue());
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			org.w3c.dom.Document doc = db.parse(uploadedFile);
+			doc.getDocumentElement().normalize();
+			NodeList groupNodes = doc.getElementsByTagName("Group");
+			for (int i=0;i<groupNodes.getLength();i++) {
+				NodeList itemNodes = groupNodes.item(i).getChildNodes();
+				NamedNodeMap groupAttributes = groupNodes.item(i).getAttributes();
+				Node groupTitleNode = groupAttributes.getNamedItem("Title");
+				for(int x=0;x<itemNodes.getLength();x++) {
+					if (itemNodes.item(x).getNodeType() == Node.ELEMENT_NODE) {
+						NamedNodeMap itemAttributes = itemNodes.item(x).getAttributes();
+						Node titleNode = null;
+						Node valueNode = null;
+						Node keyNode = null;
+						String keyValue = "";
+						String valueValue = "";
+						String titleValue = "";
+						try {
+							titleNode = itemAttributes.getNamedItem("Title");
+							valueNode = itemAttributes.getNamedItem("Value");
+							keyNode = itemAttributes.getNamedItem("Key");
+						} catch (Exception e) {
+							/* One of the above nodes does not exist. */
+						}
+						if (titleNode != null)
+							titleValue = titleNode.getNodeValue();
+						if (valueNode != null)
+							valueValue = valueNode.getNodeValue();
+						if (keyNode != null)
+							keyValue = keyNode.getNodeValue();
+						if (groupTitleNode.getNodeValue().equals("Sales Category List")) {
+							importSalesCategoryListRecord(keyValue, valueValue);
+						}
+						this.importField(groupTitleNode.getNodeValue(), keyValue, titleValue, valueValue);
 					}
-					this.importField(groupTitleNode.getNodeValue(), keyNode.getNodeValue(), titleNode.getNodeValue(), valueNode.getNodeValue());
 				}
 			}
+		} catch (Exception e) {
+			log.error(e);
 		}
 	}
 	private void importField(String group, String key, String fieldName, String fieldValue) throws Exception {
