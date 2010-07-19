@@ -39,6 +39,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	private var modifiedString:String = "";                      
 	[Bindable]
 	public var totalCost:Number = 0;
+	[Bindable]
+	private var totalSetup:Number= 0;
 		       
 	[Bindable]
 	// Holds a reference to the currently focussed control on the form.
@@ -71,24 +73,34 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
     	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
     //	chargeCost.rateTable
-    	chargeCost.setupCost = parseFloat(setup_cost_edit.text);
+    	chargeCost.setupCost = totalSetup;
     	chargeCost.setupMinutes = parseFloat(setup_minutes_edit.text);
   //  	chargeCost.speedTable
-    	chargeCost.totalUnitCost= parseFloat(total_cost_text.text);
+    	chargeCost.totalUnitCost= totalCost;
     	chargeCost.unitCost = parseFloat(unit_cost_edit.text);
     	chargeCost.unitMaterials = parseFloat(unit_materials_edit.text);
     	chargeCost.modified = lastChangeDate.text as Date;
     }                              
     private function  CalculateTotalUnit():void{
-    	var tempCost:Number;
-    	tempCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
-    	tempCost = tempCost +parseFloat(fixed_materials_edit.text)+ parseFloat(unit_cost_edit.text);
+    	
+    	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
+    	totalCost = totalCost + parseFloat(fixed_materials_edit.text)+ parseFloat(unit_materials_edit.text);
+    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text))
+    	if (totalSetup >0)
+    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost)+ " + " + Snowmass.getCurrencyFormatter(false, 2).format(totalSetup)
+    	else
+    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost);
+    		
+    	if(ChargeCostMethod.UNITCOST != costing_method_combo.selectedItem as String)
+    		setup_cost_edit.text ="";
+    	
     	
     }
 	private function creationCompleteHandler():void { 
 		costing_method_combo.selectedItem = chargeCost.costingMethod as String;
 		UpdateControlState();
 		updateDates();
+		CalculateTotalUnit();
 	}
 	                                
 	private function resetFocus():void {                           
@@ -197,7 +209,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
                              
 
                              
-<mx:CurrencyValidator id="setupCostValidator" source="{setup_cost_edit}" property="text"/>
+<mx:CurrencyValidator id="setupCostValidator" source="{setup_cost_edit}"  required="false" property="text"/>
 <mx:CurrencyValidator id="unitCostValidator" source="{unit_cost_edit}" property="text"/>
 <mx:CurrencyValidator id="fixedMaterialsValidator" source="{fixed_materials_edit}" property="text"/>
 <mx:CurrencyValidator id="unitMaterialsValidator" source="{unit_materials_edit}" property="text"/>
@@ -209,14 +221,14 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.SetupCost')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitCost')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
-		<mx:TextInput x="144" y="62" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
+		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right" height="20" />
+		<mx:TextInput x="144" y="62" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right" height="20" />
 		<mx:Label x="10" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.FixedMaterials')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{chargeCost.fixedMaterials}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
+		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{Snowmass.getCurrencyFormatter(false,2).format(chargeCost.fixedMaterials)}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="173" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitMaterials')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="171" width="186" id="unit_materials_edit" text="{chargeCost.unitMaterials}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
+		<mx:TextInput x="144" y="171" width="186" id="unit_materials_edit" text="{Snowmass.getCurrencyFormatter(false,2).format(chargeCost.unitMaterials)}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LaborRate')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="195" width="186" id="labor_rate_edit" text="{chargeCost.laborRate}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
+		<mx:TextInput x="144" y="195" width="186" id="labor_rate_edit" text="{Snowmass.getCurrencyFormatter(false,2).format(chargeCost.laborRate)}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="221" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Setupminutes')}" textAlign="right" width="126"/>
 		<mx:TextInput x="144" y="219" width="186" id="setup_minutes_edit" text="{chargeCost.setupMinutes}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="245" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.PiecesHour')}" textAlign="right" width="126"/>
