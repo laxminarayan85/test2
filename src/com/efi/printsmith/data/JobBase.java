@@ -445,6 +445,70 @@ public class JobBase extends ModelBase {
    */
   public static final String DIGITALASSETS = "DigitalAssets";
 	/**
+   * @generated
+   */
+  public static final String TYPESETTINGDATE = "TypeSettingDate";
+	/**
+   * @generated
+   */
+  public static final String PROOFBACKDATE = "ProofBackDate";
+	/**
+   * @generated
+   */
+  public static final String BLUELINEDATE = "BluelineDate";
+	/**
+   * @generated
+   */
+  public static final String BLUELINEBACKDATE = "BluelineBackDate";
+	/**
+   * @generated
+   */
+  public static final String STOCKCUTDATE = "StockCutDate";
+	/**
+   * @generated
+   */
+  public static final String ATPRESSDATE = "AtPressDate";
+	/**
+   * @generated
+   */
+  public static final String PRINTEDDATE = "PrintedDate";
+	/**
+   * @generated
+   */
+  public static final String COPIEDDATE = "CopiedDate";
+	/**
+   * @generated
+   */
+  public static final String BINDERYDATE = "BinderyDate";
+	/**
+   * @generated
+   */
+  public static final String CUTDATE = "CutDate";
+	/**
+   * @generated
+   */
+  public static final String FOLDEDDATE = "FoldedDate";
+	/**
+   * @generated
+   */
+  public static final String FINISHEDDATE = "FinishedDate";
+	/**
+   * @generated
+   */
+  public static final String MAILINGDATE = "MailingDate";
+	/**
+   * @generated
+   */
+  public static final String OUTSIDESERVICEDATE = "OutsideServiceDate";
+	/**
+   * @generated
+   */
+  public static final String OTHERDATE = "OtherDate";
+	/**
+   * @generated
+   */
+  public static final String DELIVEREDDATE = "DeliveredDate";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -2715,6 +2779,357 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date typeSettingDate;
+	/**
+   * @generated
+ 	 */
+  public Date getTypeSettingDate(){
+    return typeSettingDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTypeSettingDate(Date newVal) {
+    this.typeSettingDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date proofBackDate;
+	/**
+   * @generated
+ 	 */
+  public Date getProofBackDate(){
+    return proofBackDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProofBackDate(Date newVal) {
+    this.proofBackDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date bluelineDate;
+	/**
+   * @generated
+ 	 */
+  public Date getBluelineDate(){
+    return bluelineDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBluelineDate(Date newVal) {
+    this.bluelineDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date bluelineBackDate;
+	/**
+   * @generated
+ 	 */
+  public Date getBluelineBackDate(){
+    return bluelineBackDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBluelineBackDate(Date newVal) {
+    this.bluelineBackDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date stockCutDate;
+	/**
+   * @generated
+ 	 */
+  public Date getStockCutDate(){
+    return stockCutDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStockCutDate(Date newVal) {
+    this.stockCutDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date atPressDate;
+	/**
+   * @generated
+ 	 */
+  public Date getAtPressDate(){
+    return atPressDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAtPressDate(Date newVal) {
+    this.atPressDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date printedDate;
+	/**
+   * @generated
+ 	 */
+  public Date getPrintedDate(){
+    return printedDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPrintedDate(Date newVal) {
+    this.printedDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date copiedDate;
+	/**
+   * @generated
+ 	 */
+  public Date getCopiedDate(){
+    return copiedDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCopiedDate(Date newVal) {
+    this.copiedDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date binderyDate;
+	/**
+   * @generated
+ 	 */
+  public Date getBinderyDate(){
+    return binderyDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setBinderyDate(Date newVal) {
+    this.binderyDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date cutDate;
+	/**
+   * @generated
+ 	 */
+  public Date getCutDate(){
+    return cutDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCutDate(Date newVal) {
+    this.cutDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date foldedDate;
+	/**
+   * @generated
+ 	 */
+  public Date getFoldedDate(){
+    return foldedDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFoldedDate(Date newVal) {
+    this.foldedDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date finishedDate;
+	/**
+   * @generated
+ 	 */
+  public Date getFinishedDate(){
+    return finishedDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinishedDate(Date newVal) {
+    this.finishedDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date mailingDate;
+	/**
+   * @generated
+ 	 */
+  public Date getMailingDate(){
+    return mailingDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMailingDate(Date newVal) {
+    this.mailingDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date outsideServiceDate;
+	/**
+   * @generated
+ 	 */
+  public Date getOutsideServiceDate(){
+    return outsideServiceDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOutsideServiceDate(Date newVal) {
+    this.outsideServiceDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date otherDate;
+	/**
+   * @generated
+ 	 */
+  public Date getOtherDate(){
+    return otherDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOtherDate(Date newVal) {
+    this.otherDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date deliveredDate;
+	/**
+   * @generated
+ 	 */
+  public Date getDeliveredDate(){
+    return deliveredDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setDeliveredDate(Date newVal) {
+    this.deliveredDate = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2819,6 +3234,22 @@ public class JobBase extends ModelBase {
     if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
     if (ROOTCHARGERECORD.equals(propertyName)) return getRootChargeRecord();
     if (DIGITALASSETS.equals(propertyName)) return getDigitalAssets();
+    if (TYPESETTINGDATE.equals(propertyName)) return getTypeSettingDate();
+    if (PROOFBACKDATE.equals(propertyName)) return getProofBackDate();
+    if (BLUELINEDATE.equals(propertyName)) return getBluelineDate();
+    if (BLUELINEBACKDATE.equals(propertyName)) return getBluelineBackDate();
+    if (STOCKCUTDATE.equals(propertyName)) return getStockCutDate();
+    if (ATPRESSDATE.equals(propertyName)) return getAtPressDate();
+    if (PRINTEDDATE.equals(propertyName)) return getPrintedDate();
+    if (COPIEDDATE.equals(propertyName)) return getCopiedDate();
+    if (BINDERYDATE.equals(propertyName)) return getBinderyDate();
+    if (CUTDATE.equals(propertyName)) return getCutDate();
+    if (FOLDEDDATE.equals(propertyName)) return getFoldedDate();
+    if (FINISHEDDATE.equals(propertyName)) return getFinishedDate();
+    if (MAILINGDATE.equals(propertyName)) return getMailingDate();
+    if (OUTSIDESERVICEDATE.equals(propertyName)) return getOutsideServiceDate();
+    if (OTHERDATE.equals(propertyName)) return getOtherDate();
+    if (DELIVEREDDATE.equals(propertyName)) return getDeliveredDate();
     return super.getProperty(propertyName);
   }
 	
@@ -2927,6 +3358,22 @@ public class JobBase extends ModelBase {
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     if (ROOTCHARGERECORD.equals(propertyName)) setRootChargeRecord((String)newValue); else
     if (DIGITALASSETS.equals(propertyName)) setDigitalAssets((java.util.List<DigitalAsset>)newValue); else
+    if (TYPESETTINGDATE.equals(propertyName)) setTypeSettingDate((Date)newValue); else
+    if (PROOFBACKDATE.equals(propertyName)) setProofBackDate((Date)newValue); else
+    if (BLUELINEDATE.equals(propertyName)) setBluelineDate((Date)newValue); else
+    if (BLUELINEBACKDATE.equals(propertyName)) setBluelineBackDate((Date)newValue); else
+    if (STOCKCUTDATE.equals(propertyName)) setStockCutDate((Date)newValue); else
+    if (ATPRESSDATE.equals(propertyName)) setAtPressDate((Date)newValue); else
+    if (PRINTEDDATE.equals(propertyName)) setPrintedDate((Date)newValue); else
+    if (COPIEDDATE.equals(propertyName)) setCopiedDate((Date)newValue); else
+    if (BINDERYDATE.equals(propertyName)) setBinderyDate((Date)newValue); else
+    if (CUTDATE.equals(propertyName)) setCutDate((Date)newValue); else
+    if (FOLDEDDATE.equals(propertyName)) setFoldedDate((Date)newValue); else
+    if (FINISHEDDATE.equals(propertyName)) setFinishedDate((Date)newValue); else
+    if (MAILINGDATE.equals(propertyName)) setMailingDate((Date)newValue); else
+    if (OUTSIDESERVICEDATE.equals(propertyName)) setOutsideServiceDate((Date)newValue); else
+    if (OTHERDATE.equals(propertyName)) setOtherDate((Date)newValue); else
+    if (DELIVEREDDATE.equals(propertyName)) setDeliveredDate((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3134,6 +3581,38 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (DIGITALASSETS.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, DigitalAsset.class};		
+    if (TYPESETTINGDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (PROOFBACKDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (BLUELINEDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (BLUELINEBACKDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (STOCKCUTDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (ATPRESSDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (PRINTEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (COPIEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (BINDERYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CUTDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (FOLDEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (FINISHEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (MAILINGDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (OUTSIDESERVICEDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (OTHERDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (DELIVEREDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3243,6 +3722,22 @@ public class JobBase extends ModelBase {
     if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
     if (ROOTCHARGERECORD.equals(propertyName)) return JobBase.class;
     if (DIGITALASSETS.equals(propertyName)) return JobBase.class;
+    if (TYPESETTINGDATE.equals(propertyName)) return JobBase.class;
+    if (PROOFBACKDATE.equals(propertyName)) return JobBase.class;
+    if (BLUELINEDATE.equals(propertyName)) return JobBase.class;
+    if (BLUELINEBACKDATE.equals(propertyName)) return JobBase.class;
+    if (STOCKCUTDATE.equals(propertyName)) return JobBase.class;
+    if (ATPRESSDATE.equals(propertyName)) return JobBase.class;
+    if (PRINTEDDATE.equals(propertyName)) return JobBase.class;
+    if (COPIEDDATE.equals(propertyName)) return JobBase.class;
+    if (BINDERYDATE.equals(propertyName)) return JobBase.class;
+    if (CUTDATE.equals(propertyName)) return JobBase.class;
+    if (FOLDEDDATE.equals(propertyName)) return JobBase.class;
+    if (FINISHEDDATE.equals(propertyName)) return JobBase.class;
+    if (MAILINGDATE.equals(propertyName)) return JobBase.class;
+    if (OUTSIDESERVICEDATE.equals(propertyName)) return JobBase.class;
+    if (OTHERDATE.equals(propertyName)) return JobBase.class;
+    if (DELIVEREDDATE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3451,6 +3946,38 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getRootChargeRecord(), objT.getRootChargeRecord()))
       return false;
     if (! SmartEquals(getDigitalAssets(), objT.getDigitalAssets()))
+      return false;
+    if (! SmartEquals(getTypeSettingDate(), objT.getTypeSettingDate()))
+      return false;
+    if (! SmartEquals(getProofBackDate(), objT.getProofBackDate()))
+      return false;
+    if (! SmartEquals(getBluelineDate(), objT.getBluelineDate()))
+      return false;
+    if (! SmartEquals(getBluelineBackDate(), objT.getBluelineBackDate()))
+      return false;
+    if (! SmartEquals(getStockCutDate(), objT.getStockCutDate()))
+      return false;
+    if (! SmartEquals(getAtPressDate(), objT.getAtPressDate()))
+      return false;
+    if (! SmartEquals(getPrintedDate(), objT.getPrintedDate()))
+      return false;
+    if (! SmartEquals(getCopiedDate(), objT.getCopiedDate()))
+      return false;
+    if (! SmartEquals(getBinderyDate(), objT.getBinderyDate()))
+      return false;
+    if (! SmartEquals(getCutDate(), objT.getCutDate()))
+      return false;
+    if (! SmartEquals(getFoldedDate(), objT.getFoldedDate()))
+      return false;
+    if (! SmartEquals(getFinishedDate(), objT.getFinishedDate()))
+      return false;
+    if (! SmartEquals(getMailingDate(), objT.getMailingDate()))
+      return false;
+    if (! SmartEquals(getOutsideServiceDate(), objT.getOutsideServiceDate()))
+      return false;
+    if (! SmartEquals(getOtherDate(), objT.getOtherDate()))
+      return false;
+    if (! SmartEquals(getDeliveredDate(), objT.getDeliveredDate()))
       return false;
     return true;
   }			

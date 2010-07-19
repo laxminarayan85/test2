@@ -112,6 +112,22 @@ package com.efi.printsmith.data
 		public var parentInvoice:InvoiceBase;
 		public var rootChargeRecord:String = "";
 		public var digitalAssets:ArrayCollection;
+		public var typeSettingDate:Date = new Date();
+		public var proofBackDate:Date = new Date();
+		public var bluelineDate:Date = new Date();
+		public var bluelineBackDate:Date = new Date();
+		public var stockCutDate:Date = new Date();
+		public var atPressDate:Date = new Date();
+		public var printedDate:Date = new Date();
+		public var copiedDate:Date = new Date();
+		public var binderyDate:Date = new Date();
+		public var cutDate:Date = new Date();
+		public var foldedDate:Date = new Date();
+		public var finishedDate:Date = new Date();
+		public var mailingDate:Date = new Date();
+		public var outsideServiceDate:Date = new Date();
+		public var otherDate:Date = new Date();
+		public var deliveredDate:Date = new Date();
 	
 	}
 }
