@@ -209,18 +209,18 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.SetupCost')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitCost')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right" height="20"/>
-		<mx:TextInput x="144" y="62" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
+		<mx:TextInput x="144" y="62" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.FixedMaterials')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{chargeCost.fixedMaterials}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{chargeCost.fixedMaterials}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="173" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitMaterials')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="171" width="186" id="unit_materials_edit" text="{chargeCost.unitMaterials}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="171" width="186" id="unit_materials_edit" text="{chargeCost.unitMaterials}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="197" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LaborRate')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="195" width="186" id="labor_rate_edit" text="{chargeCost.laborRate}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="195" width="186" id="labor_rate_edit" text="{chargeCost.laborRate}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="221" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Setupminutes')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="219" width="186" id="setup_minutes_edit" text="{chargeCost.setupMinutes}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="219" width="186" id="setup_minutes_edit" text="{chargeCost.setupMinutes}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="245" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.PiecesHour')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="243" width="186" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right" height="20"/>
+		<mx:TextInput x="144" y="243" width="186" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right" height="20" focusOut="CalculateTotalUnit()"/>
 		<mx:Label x="10" y="267" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Totalunitcost')}" textAlign="right" width="126"/>
 		<mx:Button x="12" y="90" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Rate')}" width="93"/>
 		<mx:LinkButton x="144" y="91" id="rate_table_link" width="186"/>

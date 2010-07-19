@@ -177,6 +177,9 @@
 	<mx:RemoteObject id="dataServiceCashPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegPreferencesResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="taxCalculatorService" destination="taxService">
+		<mx:method name="calculateTax" fault="handleFault(event)" result="handleTaxResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="cashregister"/>
 	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
@@ -281,7 +284,16 @@
 		}
 
 	}	                                 
+	private function handleTaxResult(ev:ResultEvent):void{
+		var tax:Number;
+		var tempString:String;
+		cashRegister = ev.result as CashRegister;
+		tempString = numberFormatter.format(cashRegister.subtotal + cashRegister.taxamount);
+		cashRegister.totalprice = parseFloat(tempString);
+		cashRegister.change = cashRegister.tendered - cashRegister.totalprice;
+			
 		
+	}	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
@@ -346,11 +358,11 @@
 		var tempString:String;
 		temp = parseFloat(txtPaymentUnitPrice.text)* parseFloat(txtPaymentQuantity.text)
 		txtPaymentTotal.text = numberFormatter.format(temp) ;
+		cashRegister.taxTable = pickTaxCodes.selectedItem as TaxTable;
 		cashRegister.subtotal = temp;
 		//subtotal_edit.text = txtPaymentTotal.text;
-		tempString = numberFormatter.format(cashRegister.subtotal + cashRegister.taxamount);
-		cashRegister.totalprice = parseFloat(tempString);
-		cashRegister.change = cashRegister.tendered - cashRegister.totalprice;
+		
+		taxCalculatorService.calculateTax(cashRegister);
 	}
 	
 	private function openTree():void {

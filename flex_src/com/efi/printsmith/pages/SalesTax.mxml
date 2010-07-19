@@ -167,7 +167,7 @@
 		taxTable.taxShipping = tax_shipping_check.selected;
 		taxTable.taxInPrice = tax_inPrice_check.selected;
 		taxTable.effectiveTaxRate = parseFloat(effect_rate.text);
-		taxTable.minAmount = parseFloat(min_edit.text);
+		taxTable.minAmount = parseFloat(min_tax.text);
 		taxTable.abbr = Abbr_edit.text;
 		taxTable.name = name_edit.text;
 		taxTable.disableTable = disable_check.selected;
@@ -230,8 +230,8 @@
 	<mx:CheckBox x="293" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
 	<mx:CheckBox x="151" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
 	<mx:CheckBox x="6" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
-	<mx:TextInput x="315" y="449" id="effect_rate" text="{taxTable.effectiveTaxRate}" editable="false"/>
-	<mx:TextInput x="315" y="475" id="min_tax" text="{taxTable.minAmount}" width="116" height="21"/>
+	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{taxTable.effectiveTaxRate}" editable="false"/>
+	<mx:TextInput x="312.5" y="473"  restrict="0-9/." id="min_tax" text="{Snowmass.getCurrencyFormatter(false ,2).format(taxTable.minAmount)}" width="116" height="21"/>
 	<mx:DataGrid x="-1" y="564" width="286"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="141">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}" labelFunction="doDefault" width="50"/>

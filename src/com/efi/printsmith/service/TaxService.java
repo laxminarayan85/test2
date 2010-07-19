@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.efi.printsmith.data.*;
-import com.efi.printsmith.data.enums.CopierPricingMethod;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -28,12 +27,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
-import com.efi.printsmith.pricing.charge.PriceChargeEngine;
-import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
-import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
-import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
-import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
-import com.efi.printsmith.pricing.job.PriceJobEngine;
+import com.efi.printsmith.data.CashRegister;
 
 public class TaxService extends SnowmassHibernateService {
 
@@ -41,9 +35,21 @@ public class TaxService extends SnowmassHibernateService {
 
 	protected static Logger log = Logger.getLogger(TaxService.class);
 	
-//	protected static EntityManagerFactory entityManagerFactory = null;
-	
+	//protected static EntityManagerFactory entityManagerFactory = null;
 	public TaxService() {
-		super();
+
+	}
+	
+	public CashRegister calculateTax(CashRegister cashRegister) {
+		BigDecimal tax= new BigDecimal(0) ;
+		
+		if ( cashRegister.getSubtotal().compareTo(cashRegister.getTaxTable().getMinAmount()) < 0 ){
+			tax.equals(new BigDecimal(0));
+		}
+		else{
+			tax = cashRegister.getSubtotal().multiply(cashRegister.getTaxTable().getEffectiveTaxRate());
+		}
+		cashRegister.setTaxamount(tax);
+		return cashRegister;
 	}
 }
