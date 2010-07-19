@@ -213,6 +213,20 @@
 	
 	private function uploadFiles(evt:Event): void {
 		var index:int = -1;
+		index = fileNameArray.getItemIndex("Preferences.XML");
+		if (index.valueOf() > -1) {
+			fileReference = fileArray.getItemAt(index) as FileReference;
+			if (fileReference != null) {
+				handleSelectPreferencesFile(evt);
+			}
+		}
+		index = fileNameArray.getItemIndex("TableEditor.XML");
+		if (index.valueOf() > -1) {
+			fileReference = fileArray.getItemAt(index) as FileReference;
+			if (fileReference != null) {
+				handleSelectTableEditorFile(evt);
+			}
+		}
 		index = fileNameArray.getItemIndex("DL Price Lists Data.txt");
 		if (index.valueOf() > -1) {
 			fileReference = fileArray.getItemAt(index) as FileReference;
@@ -283,7 +297,7 @@
 				handleSelectStockDefinitionsFile(evt);
 			}
 		}
-		index = fileNameArray.getItemIndex("DL Invoices Data.txt");
+		index = fileNameArray.getItemIndex("DL Invoice Data.txt");
 		if (index.valueOf() > -1) {
 			fileReference = fileArray.getItemAt(index) as FileReference;
 			if (fileReference != null) {
@@ -311,25 +325,11 @@
 				handleSelectCustomerLogsFile(evt);
 			}
 		}
-		index = fileNameArray.getItemIndex("Preferences.xml");
-		if (index.valueOf() > -1) {
-			fileReference = fileArray.getItemAt(index) as FileReference;
-			if (fileReference != null) {
-				handleSelectPreferencesFile(evt);
-			}
-		}
 		index = fileNameArray.getItemIndex("DL Credit Card Transactions Data.txt");
 		if (index.valueOf() > -1) {
 			fileReference = fileArray.getItemAt(index) as FileReference;
 			if (fileReference != null) {
 				handleSelectCreditCardTransactionsFile(evt);
-			}
-		}
-		index = fileNameArray.getItemIndex("TableEditor.xml");
-		if (index.valueOf() > -1) {
-			fileReference = fileArray.getItemAt(index) as FileReference;
-			if (fileReference != null) {
-				handleSelectTableEditorFile(evt);
 			}
 		}
 	}
