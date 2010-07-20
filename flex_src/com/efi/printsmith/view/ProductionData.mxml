@@ -83,8 +83,6 @@ width="726" height="431"  creationComplete="init()"
 		this.production_run.text = job.pressQty.toString();
 		this.requires.text = job.sheets.toString();
 		this.sheets_purchased.text = job.qtyOrdered.toString();
-		this.copier.text = job.pricingCopier.name;
-		this.copier_speed.text = job.pricingCopier.copyMinutes.toString();
 		this.area.text = (job.parentSize.height * job.parentSize.width).toString();
 		this.per.text = "1,000";
 		this.markup.text = job.markup.toString();
@@ -93,11 +91,15 @@ width="726" height="431"  creationComplete="init()"
 		dimensionDataService.getAll("Dimension");
 		
 		if (job.pricingCopier != null) {
+			this.copier.text = job.pricingCopier.name;
+			this.copier_speed.text = job.pricingCopier.copyMinutes.toString();
 			this.copier_label.visible = true;
 			this.copier_speed_label.visible = true;
 			this.press_label.visible = false;
 			this.press_speed_label.visible = false;
 		} else {
+			this.copier.text = job.pricingPress.name;
+			this.copier_speed.text = job.pricingPress.avgImpressPerHour();
 			this.copier_label.visible = false;
 			this.copier_speed_label.visible = false;
 			this.press_label.visible = true;
