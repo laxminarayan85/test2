@@ -112,10 +112,10 @@
  	 	 	 	<mx:Label x="72" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Ref')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:ComboBox x="76" y="88" width="120"></mx:ComboBox>
+ 	 	 	 	<mx:ComboBox x="76" y="88" width="120"  labelField="name" dataProvider="{creditCardPreferencesArray}" id="card_type"></mx:ComboBox>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
+ 	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="x" value="267"/>
@@ -126,7 +126,7 @@
  	 	 	 	<mx:Label x="62" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Check')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
+ 	 	 	 	<mx:TextInput x="121" y="114" width="75" id="check_num"/>
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="paymentCharge" basedOn="paymentPaymentMethod"/>
@@ -180,12 +180,15 @@
 	<mx:RemoteObject id="taxCalculatorService" destination="taxService">
 		<mx:method name="calculateTax" fault="handleFault(event)" result="handleTaxResult(event)"/>
 	</mx:RemoteObject>
-
+<mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
+</mx:RemoteObject>
 	<mx:Producer id="producer" destination="cashregister"/>
 	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.hillelcoren.utils.ArrayCollectionUtils;
 	import com.efi.printsmith.data.PreferencesCashRegister;
 	import mx.events.StateChangeEvent;
 	import mx.controls.Text;
@@ -254,7 +257,9 @@
 	private var TaxCodesArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var FormatArray:ArrayCollection = new ArrayCollection();
-	
+	[Bindable]
+    private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
+   
 //Data view variables
 	[Bindable]
 	private var batch:CashRegisterBatch;
@@ -302,6 +307,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		batch = new CashRegisterBatch();
+		batch.transactions = new ArrayCollection();
 		cashRegister = new CashRegister();
 		cashRegister.cashRegisterDept = new PreferencesCashRegister();
 		//batch.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS');
@@ -309,6 +315,7 @@
 
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCashPreferences.getAll("PreferencesCashRegister");
+		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		//openTree();
 		setup();
 	}
@@ -335,7 +342,10 @@
 			}
 		}
 	}
-     
+      private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
+		creditCardPreferencesArray = ev.result as ArrayCollection;
+		
+	}	            
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -398,9 +408,20 @@
 		txtPaymentTotal.text = "";
 		cashRegister = new CashRegister;
 		cashRegister.cashRegisterDept = treeItem;
+		if (treeItem.taxTable != null)
+			pickTaxTable.selectedIndex = findItem(treeItem.taxTable.name, TaxTableArray);
+		if (treeItem.taxCodes != null)
+			pickTaxCode.selectedIndex = findItem(treeItem.taxCodes.name, TaxCodesArray)
 	
 	}
-
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	private function doInvoice():void {
 		this.currentState = "invoiceState";
 	}
@@ -457,6 +478,7 @@
 				this.currentState = "paymentCharge";
 			}
 		}
+		btPayment.enabled = true;
 	}
 	
 	private function paymentStateHandler (e:Event):void {
@@ -471,13 +493,19 @@
 		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
 			
 		}else{
-				cashRegister.tendered = parseFloat(payment_cash_edit.text);	
-				payment.tendered = parseFloat(payment_cash_edit.text);	
-				payment.subtotal = parseFloat(payment_cash_edit.text);
-				UpdateCashRegister();
-		}
+			
+				payment.paymentAmount = parseFloat(payment_cash_edit.text);	
+				//payment.subtotal = parseFloat(payment_cash_edit.text);
+				batch.tendered = batch.tendered+ payment.paymentAmount;
+				batch.change = batch.tendered - batch.totalPrice;
+	
 		batch.transactions.addItem(payment);
-		//cashRegisterTransacations.addItem(payment);
+		}
+		this.currentState = "";
+		openTree();
+		rgPaymentMethod.selection = null;
+		btPayment.enabled= false;
+		payment_cash_edit.text ="";
 	}	
 	private function doAccount():void{
 		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
@@ -495,20 +523,27 @@
 	private function doTotalPrice(item:Object,column:DataGridColumn):String{
 		var temp:CashRegister;
 		temp = item as CashRegister;
-		return(numberFormatter.format(temp.totalprice));
+		if (temp.paymentAmount > 0)
+			return("");
+		else
+			return(numberFormatter.format(temp.totalprice));
 		
 	}
 	private function doSubtotalPrice(item:Object,column:DataGridColumn):String{
 		var temp:CashRegister;
 		temp = item as CashRegister;
-		return(numberFormatter.format(temp.subtotal));
+		
+		if (temp.subtotal == 0)
+			 return(numberFormatter.format(temp.paymentAmount));
+		else
+			return(numberFormatter.format(temp.subtotal));
 		
 	}
 	private function doDescript(item:Object, column:DataGridColumn):String{
 		var temp:CashRegister;
 		var tempString:String;
 		temp = item as CashRegister;
-		if (temp.paymentMethod != "" && temp.tendered >0){
+		if (temp.paymentMethod != "" && temp.paymentAmount >0){
 			tempString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')+" " + temp.paymentMethod
 		}else{
 			if ( temp.cashRegisterDept.title != resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS'))
@@ -650,7 +685,7 @@
 		</mx:Canvas>
 		<mx:Canvas x="407" y="40" width="210" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}"/>
-			<mx:Button x="10" y="180" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')}" width="186" id="btPayment" click="doPayment();"/>
+			<mx:Button x="10" y="180" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')}" width="186" id="btPayment" click="doPayment();" enabled="false"/>
 			<mx:RadioButtonGroup id="rgPaymentMethod" change="paymentMethodChanged(event)"/>
 			<mx:RadioButton x="10" y="34" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CASH')}" id="rbCash" groupName="rgPaymentMethod" value="Cash"/>
 			<mx:RadioButton x="10" y="60" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CRCARD')}" id="rbCreditCard" groupName="rgPaymentMethod" value="Credit Card"/>
@@ -671,11 +706,11 @@
 			<mx:TextInput  id="change_edit" x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.change)}"/>
 
 		</mx:Canvas>
-		<mx:DataGrid x="4" y="414" width="613" id="cashReg_grid" dataProvider="{cashRegisterTransacations}">
+		<mx:DataGrid x="2" y="408" width="613" id="cashReg_grid" dataProvider="{batch.transactions}">
 			<mx:columns>
-				<mx:DataGridColumn headerText="Column 1" labelFunction="doDescript"/>
-				<mx:DataGridColumn headerText="Column 3" labelFunction="doSubtotalPrice"/>
-				<mx:DataGridColumn headerText="Column 2"  labelFunction="doTotalPrice" />
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Total')}"  labelFunction="doTotalPrice" />
 			</mx:columns>
 		</mx:DataGrid>
 	</mx:Canvas>

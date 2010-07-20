@@ -126,6 +126,7 @@ public class TaxTable extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="effectiveTaxRate", precision=19, scale=4)
 	private BigDecimal effectiveTaxRate;
 	
 	/**
@@ -141,6 +142,7 @@ public class TaxTable extends ModelBase {
    */	
   public void setEffectiveTaxRate(BigDecimal newVal) {
     this.effectiveTaxRate = newVal;
+    this.effectiveTaxRate.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -149,6 +151,7 @@ public class TaxTable extends ModelBase {
    */	
   public void setEffectiveTaxRate(double newVal) {
     this.effectiveTaxRate = BigDecimal.valueOf(newVal);
+    this.effectiveTaxRate.setScale(4, RoundingMode.HALF_UP);
   }
 
 
