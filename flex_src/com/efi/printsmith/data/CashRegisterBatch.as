@@ -20,7 +20,7 @@ package com.efi.printsmith.data
 		public var taxAmount:Number = 0;
 		public var totalPrice:Number = 0;
 		public var transactions:ArrayCollection;
-		public var name:int = 0;
+		public var name:String = "";
 	
 	}
 }

@@ -13,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.Employee";
 		}
 				
-		public var sSN:String = "";
+		public var socialSecurity:String = "";
 		public var exportCode:int = 0;
 		public var clockIn:Boolean = false;
 		public var clockOut:Boolean = false;

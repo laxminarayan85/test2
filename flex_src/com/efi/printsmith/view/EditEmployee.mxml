@@ -228,7 +228,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		employee.autoMin = parseInt(minute_edit.text);
 		employee.message = message.text;
 		employee.exportCode = parseInt(export_code_edit.text);
-		employee.sSN = ssn_edit.text;
+		employee.socialSecurity = ssn_edit.text;
 	
 			
 	}
@@ -510,7 +510,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 				<mx:TextInput x="127" y="134" id="phone_edit"/>
 				<mx:TextInput x="127" y="162" id="mobile_edit"/>
 				<mx:TextInput x="127" y="188" id="email_edit"/>
-				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.sSN}"/>
+				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.socialSecurity}"/>
 				<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
 			</mx:Canvas>
 			<mx:Canvas id="canvasPersonal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Personal')}" width="100%" height="100%">	

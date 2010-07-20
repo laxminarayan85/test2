@@ -43,9 +43,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "employee")
 public class Employee extends Party {
 	/**
-	 * @generated
-	 */
-	public static final String SSN = "SSN";
+   * @generated
+   */
+  public static final String SOCIALSECURITY = "SocialSecurity";
 	/**
 	 * @generated
 	 */
@@ -218,28 +218,28 @@ public class Employee extends Party {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String sSN;
-	
+  private String socialSecurity;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getSSN(){
-    return sSN; 
+  public String getSocialSecurity(){
+    return socialSecurity; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setSSN(String newVal) {
-    this.sSN = newVal;
+   * @generated
+   */	
+  public void setSocialSecurity(String newVal) {
+    this.socialSecurity = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -1221,7 +1221,7 @@ public class Employee extends Party {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (SSN.equals(propertyName)) return getSSN();
+    if (SOCIALSECURITY.equals(propertyName)) return getSocialSecurity();
     if (EXPORTCODE.equals(propertyName)) return getExportCode();
     if (CLOCKIN.equals(propertyName)) return getClockIn();
     if (CLOCKOUT.equals(propertyName)) return getClockOut();
@@ -1271,7 +1271,7 @@ public class Employee extends Party {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (SSN.equals(propertyName)) setSSN((String)newValue); else
+    if (SOCIALSECURITY.equals(propertyName)) setSocialSecurity((String)newValue); else
     if (EXPORTCODE.equals(propertyName)) setExportCode((Integer)newValue); else
     if (CLOCKIN.equals(propertyName)) setClockIn((Boolean)newValue); else
     if (CLOCKOUT.equals(propertyName)) setClockOut((Boolean)newValue); else
@@ -1321,7 +1321,7 @@ public class Employee extends Party {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (SSN.equals(propertyName)) 
+    if (SOCIALSECURITY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (EXPORTCODE.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
@@ -1413,7 +1413,7 @@ public class Employee extends Party {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (SSN.equals(propertyName)) return Employee.class;
+    if (SOCIALSECURITY.equals(propertyName)) return Employee.class;
     if (EXPORTCODE.equals(propertyName)) return Employee.class;
     if (CLOCKIN.equals(propertyName)) return Employee.class;
     if (CLOCKOUT.equals(propertyName)) return Employee.class;
@@ -1465,7 +1465,7 @@ public class Employee extends Party {
     if (! super.deepEquals(obj))
       return false;
     Employee objT = (Employee)obj;
-    if (! SmartEquals(getSSN(), objT.getSSN()))
+    if (! SmartEquals(getSocialSecurity(), objT.getSocialSecurity()))
       return false;
     if (! SmartEquals(getExportCode(), objT.getExportCode()))
       return false;

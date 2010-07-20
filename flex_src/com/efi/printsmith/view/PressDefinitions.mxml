@@ -329,7 +329,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 pressDefinition.washupPerFountain = parseInt(WashupTimeFountain.text);
 		 pressDefinition.gripEdge = parseFloat(GripEdge.text);
 		 pressDefinition.perfector = Perfector.selected;
-		 pressDefinition.avgImpressPerHour = parseFloat(AvgImpressPerhour.text);
+		 pressDefinition.avgImpressPerHour = parseFloat(AvgImpressPerhour.text.replace(",",""));
 		 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 		 pressDefinition.numberHeads= parseInt(NumberHeads.text);
 		 if ( charge_sales_category_combo.selectedItem != null)
