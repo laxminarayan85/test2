@@ -29,7 +29,7 @@
 					<mx:Label text="Fiery Connector URL:"/>
 					
 					<components:CustomStringTextInputComponent width="365" allowSpecialCharacters="true"
-						dataHolder="{preferencesIntegration}" variableName="fieryConnectorURL"
+						dataHolder="{preferencesIntegration}" variableName="fieryConnectorURL" required="false"
 						customText="{preferencesIntegration.fieryConnectorURL}" validatorClass="{new URLValidator()}"/>
 		
 				</mx:HBox>

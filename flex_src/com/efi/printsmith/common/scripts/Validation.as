@@ -119,6 +119,7 @@ public function validateStringComponent(customStringTextInputComponent:CustomStr
 		var customValidate:Validator = customStringTextInputComponent.validatorClass;
 		customValidate.source = customStringTextInputComponent;
 		customValidate.property = "text";
+		customValidate.required = customStringTextInputComponent.required;
 		var customStringValidateEvent:ValidationResultEvent  = customValidate.validate(customStringTextInputComponent.text);
 		if (customStringValidateEvent.type  == ValidationResultEvent.INVALID ) {
 			return false;

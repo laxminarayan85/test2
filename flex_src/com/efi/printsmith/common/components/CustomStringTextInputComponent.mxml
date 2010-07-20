@@ -144,6 +144,7 @@
 						}
 						
 						if(validatorClass) {
+							validatorClass.required = required;
 							validateEvent = validatorClass.validate(this.text);
 							if(validateEvent.type==ValidationResultEvent.INVALID){
 								if(data!=null){
