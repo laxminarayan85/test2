@@ -99,7 +99,7 @@ width="726" height="431"  creationComplete="init()"
 			this.press_speed_label.visible = false;
 		} else {
 			this.copier.text = job.pricingPress.name;
-			this.copier_speed.text = job.pricingPress.avgImpressPerHour();
+			this.copier_speed.text = job.pricingPress.avgImpressPerHour.toString();
 			this.copier_label.visible = false;
 			this.copier_speed_label.visible = false;
 			this.press_label.visible = true;
