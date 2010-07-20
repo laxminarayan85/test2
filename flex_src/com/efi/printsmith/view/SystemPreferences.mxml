@@ -1149,7 +1149,7 @@
 	}
 	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
 		PreferencesCashRegisterArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesCashRegister",PreferencesCashRegister);
 		PreferencesCashRegisterOrigArray = ObjectUtil.copy(PreferencesCashRegisterArray) as ArrayCollection;
 		if ( PreferencesCashRegisterArray.length >0)
 			preferencesCashRegister = PreferencesCashRegisterArray.getItemAt(0,0) as PreferencesCashRegister;
@@ -1165,32 +1165,32 @@
 	}
 	private function handleLoadCreditCardResult(ev:ResultEvent):void {
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesCreditCard",PreferencesCreditCard);
 		PreferencesCreditCardOrigArray = ObjectUtil.copy(PreferencesCreditCardArray) as ArrayCollection;
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
 		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
 	}
 	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
 		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
 		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
 	}
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
 		PreferencesPendingListArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesPendingList",PreferencesPendingList);
 		PreferencesPendingListOrigArray = ObjectUtil.copy(PreferencesPendingListArray) as ArrayCollection;
 	}
 	private function handleLoadPricingMethodResult(ev:ResultEvent):void {
 		PreferencesPricingMethodArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesPricingMethod",PreferencesPricingMethod);
 		PreferencesPricingMethodOrigArray = ObjectUtil.copy(PreferencesPricingMethodArray) as ArrayCollection;
 	}
 	private function handleLoadQuantityBreaksResult(ev:ResultEvent):void {
 		PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesQuantityBreaks",PreferencesQuantityBreaks);
 		PreferencesQuantityBreaksOrigArray = ObjectUtil.copy(PreferencesQuantityBreaksArray) as ArrayCollection;
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
@@ -1198,7 +1198,7 @@
 	}
 	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
 		PreferencesStockDefinitionArray = ev.result as ArrayCollection;
-		registerClassAlias("mx.collections.ArrayCollection",ArrayCollection);
+		registerClassAlias("com.efi.printsmith.data.PreferencesStockDefinition",PreferencesStockDefinition);
 		PreferencesStockDefinitionOrigArray = ObjectUtil.copy(PreferencesStockDefinitionArray) as ArrayCollection;
 	}
 	private function handleLoadStocksResult(ev:ResultEvent):void {

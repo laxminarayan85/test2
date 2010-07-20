@@ -104,12 +104,12 @@
 							dataField="jobMethod" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{data.jobmethod.name}" />
+									<mx:Text selectable="false" text="{data.jobMethod.name}" />
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
 								<mx:Component>
-									<components:CustomComboBoxComponent datagridControl="true" variableName="jobmethod"
+									<components:CustomComboBoxComponent datagridControl="true" variableName="jobMethod"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.jobMethodsArray}" updateFirstElement="true"
 										customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data)}"/>
