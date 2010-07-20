@@ -822,8 +822,7 @@
 			{
 				var productionDataWindow:ProductionData=ProductionData(PopUpManager.createPopUp(this, ProductionData, true));
 				productionDataWindow.setStyle("borderAlpha", 0.9);
-//			    jobMethodPicker.addEventListener(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, handleJobMethodPickerCancel);
-// 			   	jobMethodPicker.addEventListener(JobMethodSelectEvent.SELECTJOBMETHOD, handleJobMethodPickerSelect);				
+				productionDataWindow.setJob(this.job);	
 			}
 			
 			public function getInvoice():InvoiceBase
