@@ -1266,25 +1266,35 @@ public class PreferencesEstimating extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Double defaultPressCuttOff;
+	@Column(name="defaultPressCuttOff", precision=19, scale=4)
+	private BigDecimal defaultPressCuttOff;
 	
 	/**
 	 * @generated
  	 */
-	public Double getDefaultPressCuttOff(){
+	public BigDecimal getDefaultPressCuttOff(){
     return defaultPressCuttOff; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDefaultPressCuttOff(Double newVal) {
+   * @generated
+   */	
+  public void setDefaultPressCuttOff(BigDecimal newVal) {
     this.defaultPressCuttOff = newVal;
+    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-	
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setDefaultPressCuttOff(double newVal) {
+    this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
+    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
+  }
+
+
 	/**
 	 * @generated
 	 */	
@@ -1649,7 +1659,7 @@ public class PreferencesEstimating extends ModelBase {
     if (BLEEDTOP.equals(propertyName)) setBleedTop((Double)newValue); else
     if (BLEEDRIGHT.equals(propertyName)) setBleedRight((Double)newValue); else
     if (BLEEDBOTTOM.equals(propertyName)) setBleedBottom((Double)newValue); else
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) setDefaultPressCuttOff((Double)newValue); else
+    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) setDefaultPressCuttOff((BigDecimal)newValue); else
     if (BACKTRIMPARENT.equals(propertyName)) setBackTrimParent((Boolean)newValue); else
     if (TRIMFOURSIDES.equals(propertyName)) setTrimFourSides((Boolean)newValue); else
     if (WORKANDTUMBLE.equals(propertyName)) setWorkandTumble((Boolean)newValue); else
@@ -1757,7 +1767,7 @@ public class PreferencesEstimating extends ModelBase {
     if (BLEEDBOTTOM.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (DEFAULTPRESSCUTTOFF.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (BACKTRIMPARENT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (TRIMFOURSIDES.equals(propertyName)) 

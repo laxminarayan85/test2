@@ -1487,6 +1487,8 @@
 		var number3:Number = -1234.567890
 		var number4:Number = 0.555555
 		var str:String = currentnumberstext;
+		if ( str == null)
+			str = new String();
 		if (str.substr(str.indexOf(";")).length > 0){
 			str = str.substr(0,str.indexOf(";"))
 		}
