@@ -272,7 +272,7 @@
 				}
 			}
 		}
-		if (fileName == "DL ChargeDefinitions Data.txt") {
+		if (fileName == "DL Charge Definitions Data.txt") {
 			index = fileNameArray.getItemIndex("DL Charge Definitions Data.txt");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
