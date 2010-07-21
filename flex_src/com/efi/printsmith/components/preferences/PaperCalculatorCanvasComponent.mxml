@@ -469,7 +469,7 @@
 								<mx:GridItem>
 									
 								<components:CustomNumericTextInputComponent width="93"
-									dataHolder="{preferencesEstimating}" variableName="defaultPressCuttOff" customText="{preferencesEstimating.defaultPressCuttOff}"
+									dataHolder="{preferencesEstimating}" variableName="defaultPressCuttOff" customText="{Snowmass.getCurrencyFormatter(false, 4).format(preferencesEstimating.defaultPressCuttOff)}"
 									precision="2" rounding="nearest"/>
 									
 								</mx:GridItem>
