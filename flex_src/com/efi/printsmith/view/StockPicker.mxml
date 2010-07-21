@@ -133,7 +133,8 @@
 		
 		var temp:StockDefinition
 		temp = dataGrid.selectedItem as StockDefinition;
-		dataService.getById("StockDefinition", temp.id );
+		if (temp != null)
+			dataService.getById("StockDefinition", temp.id );
 		
 	}     
 	

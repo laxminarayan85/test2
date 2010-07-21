@@ -871,42 +871,42 @@
 		preferencesSystem.enablePricingSystem = true;
 		preferencesSystem.lineItemTaxes = true;
 		company_canvas.address_editor.setAddress(preferencesSystem.companyAddress);
-		
-		if (preferencesSystem.numbersIntegers.length == 0){
-			preferencesSystem.numbersIntegers = "###,###,###,###";
-		}
-		
-		if (preferencesSystem.numbersPercentages.length == 0){
-			preferencesSystem.numbersPercentages = "###,##0.###%;-###,##0.###%;0%";
-		}
-		
-		if (preferencesSystem.numbersAmount.length == 0) {
-			preferencesSystem.numbersAmount = "###,###,###,##0.00";
-		}
-		
-		if (preferencesSystem.numbersTaxRate.length == 0) {
-			preferencesSystem.numbersTaxRate = "###,###,###%;-###,###,###%;0%";
-		}
-		
-		if (preferencesSystem.numbersRate.length == 0) {
-			preferencesSystem.numbersRate = "###,###,###,##0.00##";
-		}
-		
-		if (preferencesSystem.numbersFactor.length == 0) {
-			preferencesSystem.numbersFactor = "###,###,###,##0.####;-###,###,###,##.####;0"
-		}
-		
-		if (preferencesSystem.numbersInvoice.length == 0) {
-			preferencesSystem.numbersInvoice = "###,###,###,##0.00";
-		}
-		
-		if (preferencesSystem.numbersShortPercent.length == 0) {
-			preferencesSystem.numbersShortPercent = "#####0%";
-		}
-		
-		if (preferencesSystem.displayFormat.length == 0){
-			preferencesSystem.displayFormat = "'e'###,###,###,##0.00";
-		}
+		if(preferencesSystem.numbersIntegers !=null)
+			if (preferencesSystem.numbersIntegers.length == 0){
+				preferencesSystem.numbersIntegers = "###,###,###,###";
+			}
+		if (preferencesSystem.numbersPercentages !=null)
+			if (preferencesSystem.numbersPercentages.length == 0){
+				preferencesSystem.numbersPercentages = "###,##0.###%;-###,##0.###%;0%";
+			}
+		if (preferencesSystem.numbersAmount !=null)
+			if (preferencesSystem.numbersAmount.length == 0) {
+				preferencesSystem.numbersAmount = "###,###,###,##0.00";
+			}
+		if (preferencesSystem.numbersTaxRate !=null)
+			if (preferencesSystem.numbersTaxRate.length == 0) {
+				preferencesSystem.numbersTaxRate = "###,###,###%;-###,###,###%;0%";
+			}
+		if (preferencesSystem.numbersRate !=null)
+			if (preferencesSystem.numbersRate.length == 0) {
+				preferencesSystem.numbersRate = "###,###,###,##0.00##";
+			}
+		if (preferencesSystem.numbersFactor !=null)
+			if (preferencesSystem.numbersFactor.length == 0) {
+				preferencesSystem.numbersFactor = "###,###,###,##0.####;-###,###,###,##.####;0"
+			}
+		if (preferencesSystem.numbersInvoice !=null)
+			if (preferencesSystem.numbersInvoice.length == 0) {
+				preferencesSystem.numbersInvoice = "###,###,###,##0.00";
+			}
+		if (preferencesSystem.numbersShortPercent !=null)
+			if (preferencesSystem.numbersShortPercent.length == 0) {
+				preferencesSystem.numbersShortPercent = "#####0%";
+			}
+		if (preferencesSystem.displayFormat !=null)
+			if (preferencesSystem.displayFormat.length == 0){
+				preferencesSystem.displayFormat = "'e'###,###,###,##0.00";
+			}
 		
 		if (preferencesSystem.conversionFactor < 0){
 			preferencesSystem.conversionFactor = 1.18;
