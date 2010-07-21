@@ -602,7 +602,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="laborCopy", precision=19, scale=2)
+	@Column(name="laborCopy", precision=19, scale=4)
 	private BigDecimal laborCopy;
 	
 	/**
@@ -618,7 +618,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setLaborCopy(BigDecimal newVal) {
     this.laborCopy = newVal;
-    this.laborCopy.setScale(2, RoundingMode.HALF_UP);
+    this.laborCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -626,7 +626,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setLaborCopy(double newVal) {
     this.laborCopy = BigDecimal.valueOf(newVal);
-    this.laborCopy.setScale(2, RoundingMode.HALF_UP);
+    this.laborCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -805,7 +805,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="tonerCopy", precision=19, scale=2)
+	@Column(name="tonerCopy", precision=19, scale=4)
 	private BigDecimal tonerCopy;
 	
 	/**
@@ -821,7 +821,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setTonerCopy(BigDecimal newVal) {
     this.tonerCopy = newVal;
-    this.tonerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.tonerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -829,14 +829,14 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setTonerCopy(double newVal) {
     this.tonerCopy = BigDecimal.valueOf(newVal);
-    this.tonerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.tonerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="developerCopy", precision=19, scale=2)
+	@Column(name="developerCopy", precision=19, scale=4)
 	private BigDecimal developerCopy;
 	
 	/**
@@ -852,7 +852,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setDeveloperCopy(BigDecimal newVal) {
     this.developerCopy = newVal;
-    this.developerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.developerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -860,7 +860,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setDeveloperCopy(double newVal) {
     this.developerCopy = BigDecimal.valueOf(newVal);
-    this.developerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.developerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
