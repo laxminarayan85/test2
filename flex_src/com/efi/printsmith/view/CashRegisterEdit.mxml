@@ -117,9 +117,9 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref"/>
  	 	 	</mx:AddChild>
- 	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
+ 	 	 	<!--<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="x" value="267"/>
- 	 	 	<mx:SetProperty target="{checkbox1}" name="y" value="230"/>
+ 	 	 	<mx:SetProperty target="{checkbox1}" name="y" value="230"/>-->
  	 	</mx:State>
  	 	<mx:State name="paymentCheck" basedOn="paymentPaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
