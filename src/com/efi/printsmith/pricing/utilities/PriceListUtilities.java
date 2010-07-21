@@ -226,7 +226,7 @@ public class PriceListUtilities {
 				 if (speedTable.getInterpolate()) {
 					qty = qty - elementToUse.getQuantity();
 					
-					if (qty!= 0) {
+					if (qty!= 0 && lastElement != null) {
 						long qtyRange = elementToUse.getQuantity() - lastElement.getQuantity();
 						long lookupRange = qty - lastElement.getQuantity();
 						double priceRange = lastElement.getAmount().doubleValue() - retVal;

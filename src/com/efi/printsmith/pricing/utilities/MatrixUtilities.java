@@ -169,13 +169,18 @@ public class MatrixUtilities {
 				break;
 			}
 			if (i >= elements.size()) i = i - 1;
-			lastQty = elements.get(i).getQty();
-			lastPrice = elements.get(i).getPrice1().doubleValue();
+			if (i > 0) {
+				lastQty = elements.get(i-1).getQty();
+				lastPrice = elements.get(i-1).getPrice1().doubleValue();
+			} else {
+				lastQty = 0;
+				lastPrice = 0.0;
+			}
 		}
 		if (lastQty > 0 && i > 0) {
-			long qtyRange = elements.get(i-1).getQty() - lastQty;
+			long qtyRange = elements.get(i).getQty() - lastQty;
 			long lookupRange = lookup - lastQty;
-			double priceRange = (elements.get(i-1).getPrice1().doubleValue() - lastPrice);
+			double priceRange = (elements.get(i).getPrice1().doubleValue() - lastPrice);
 			retVal = ((lookupRange * priceRange) / qtyRange) + lastPrice;
 		} else {
 			retVal = elements.get(i).getPrice1().doubleValue();
