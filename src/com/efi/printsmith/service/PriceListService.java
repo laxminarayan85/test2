@@ -65,73 +65,80 @@ public class PriceListService extends SnowmassHibernateService {
 		if (quantityBreaks.size() == 0) {
 			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
 		}
+		boolean firstQuantity = true;
 		for (int i=0;i<quantityBreaks.size();i++) {
 			long qty = quantityBreaks.get(i).getQuantity();
 			double price = 0.0;
-			qtyList.add(qty);
-			if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.TotalOfAllCopies.name())) {
-				price = getTotalAllCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getTotalAllCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.FlatRate.name())) {
-				price = getFlatRatePrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getFlatRatePrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {
-				price = getCostPlusPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCostPlusPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
-				price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCopiesPerOriginalPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
-				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
-				price = getTotalOfSquareAreaPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getTotalOfSquareAreaPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
-				price = getSquareAreaPerCopyPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaPerCopyPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
-				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
-				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			if (qty == 0 && firstQuantity != true) {
+				break;
+			}
+			firstQuantity = false;
+			if (qty != 0) {
+				qtyList.add(qty);
+				if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.TotalOfAllCopies.name())) {
+					price = getTotalAllCopiesPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getTotalAllCopiesPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.FlatRate.name())) {
+					price = getFlatRatePrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getFlatRatePrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {
+					price = getCostPlusPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCostPlusPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
+					price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCopiesPerOriginalPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
+					price = getCopiesPlusOriginalsPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCopiesPlusOriginalsPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
+					price = getTotalOfSquareAreaPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getTotalOfSquareAreaPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
+					price = getSquareAreaPerCopyPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaPerCopyPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
+					price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
+					price = getSquareAreaAndCopiesPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaAndCopiesPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				}
 			}
 		}
 		returnList.add(qtyList);
@@ -204,16 +211,23 @@ public class PriceListService extends SnowmassHibernateService {
 		if (quantityBreaks.size() == 0) {
 			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
 		}
+		boolean firstQuantity = true;
 		for (int i=0;i<quantityBreaks.size();i++) {
 			double price = 0.0;
 			long qty = quantityBreaks.get(i).getQuantity();
-			qtyList.add(qty);
-			price = getPrintPrice(pressDefinition, qty, false);
-			sideOneList.add(new Double(Math.round(price * 100)) / 100);
-			sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			price = getPrintPrice(pressDefinition, qty, true);
-			sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-			sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			if (qty == 0 && firstQuantity != true) {
+				break;
+			}
+			firstQuantity = false;
+			if (qty != 0) {
+				qtyList.add(qty);
+				price = getPrintPrice(pressDefinition, qty, false);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				price = getPrintPrice(pressDefinition, qty, true);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			}
 		}	
 		returnList.add(qtyList);
 		returnList.add(sideOneList);
@@ -236,73 +250,80 @@ public class PriceListService extends SnowmassHibernateService {
 		if (quantityBreaks.size() == 0) {
 			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
 		}
+		boolean firstQuantity = true;
 		for (int i=0;i<quantityBreaks.size();i++) {
 			long qty = quantityBreaks.get(i).getQuantity();
 			double price = 0.0;
-			qtyList.add(qty);
-			if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.TotalOfAllCopies.name())) {
-				price = getTotalAllCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getTotalAllCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.FlatRate.name())) {
-				price = getFlatRatePrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getFlatRatePrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {
-				price = getCostPlusPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCostPlusPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
-				price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCopiesPerOriginalPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
-				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getCopiesPlusOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
-				price = getTotalOfSquareAreaPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getTotalOfSquareAreaPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
-				price = getSquareAreaPerCopyPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaPerCopyPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
-				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
-				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,false);
-				sideOneList.add(new Double(Math.round(price * 100)) / 100);
-				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				price = getSquareAreaAndCopiesPrice(copierDefinition,qty,true);
-				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			if (qty == 0 && firstQuantity != true) {
+				break;
+			}
+			firstQuantity = false;
+			if (qty != 0) {
+				qtyList.add(qty);
+				if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.TotalOfAllCopies.name())) {
+					price = getTotalAllCopiesPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getTotalAllCopiesPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.FlatRate.name())) {
+					price = getFlatRatePrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getFlatRatePrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {
+					price = getCostPlusPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCostPlusPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
+					price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCopiesPerOriginalPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
+					price = getCopiesPlusOriginalsPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getCopiesPlusOriginalsPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
+					price = getTotalOfSquareAreaPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getTotalOfSquareAreaPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaPerCopy.name())) {
+					price = getSquareAreaPerCopyPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaPerCopyPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
+					price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaAndOriginalsPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
+					price = getSquareAreaAndCopiesPrice(copierDefinition,qty,false);
+					sideOneList.add(new Double(Math.round(price * 100)) / 100);
+					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+					price = getSquareAreaAndCopiesPrice(copierDefinition,qty,true);
+					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				}
 			}
 		}
 		returnList.add(qtyList);
@@ -326,16 +347,23 @@ public class PriceListService extends SnowmassHibernateService {
 		if (quantityBreaks.size() == 0) {
 			quantityBreaks = defaultQuantityBreaks(quantityBreaks);
 		}
+		boolean firstQuantity = true;
 		for (int i=0;i<quantityBreaks.size();i++) {
 			double price = 0.0;
 			long qty = quantityBreaks.get(i).getQuantity();
-			qtyList.add(qty);
-			price = getPrintPrice(pressDefinition, qty, false);
-			sideOneList.add(new Double(Math.round(price * 100)) / 100);
-			sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-			price = getPrintPrice(pressDefinition, qty, true);
-			sideTwoList.add(new Double(Math.round(price * 100)) / 100);
-			sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			if (qty == 0 && firstQuantity != true) {
+				break;
+			}
+			firstQuantity = false;
+			if (qty != 0) {
+				qtyList.add(qty);
+				price = getPrintPrice(pressDefinition, qty, false);
+				sideOneList.add(new Double(Math.round(price * 100)) / 100);
+				sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+				price = getPrintPrice(pressDefinition, qty, true);
+				sideTwoList.add(new Double(Math.round(price * 100)) / 100);
+				sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
+			}
 		}	
 		returnList.add(qtyList);
 		returnList.add(sideOneList);
