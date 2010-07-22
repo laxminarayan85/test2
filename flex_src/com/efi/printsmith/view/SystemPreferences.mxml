@@ -38,45 +38,39 @@
 	</mx:RemoteObject>
 	 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegisterResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashRegisterResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteCashRegisterResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveCashRegisterResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceCreditCard" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCreditCardResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteCreditCardResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveCreditCardResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceMarkups" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteMarkupsResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveMarkupsResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceMarkupsMerchandise" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadMarkupsMerchandiseResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveMarkupsMerchandiseResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteMarkupsMerchandiseResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveMarkupsMerchandiseResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
 		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePricingMethod" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPricingMethodResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSavePricingMethodResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeletePricingMethodResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSavePricingMethodResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceQuantityBreaks" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadQuantityBreaksResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveQuantityBreaksResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveQuantityBreaksResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceSalesCategory" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesCategoryResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesCategoryResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteSalesCategoryResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveSalesCategoryResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStockDefinition" destination="dataService">
 		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockDefinitionResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveStockDefinitionResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStocks" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStocksResult(event)"/>
@@ -123,9 +117,9 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethodsResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:Producer id="producer" destination="systempreferences"/>
+	<!--<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
-	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.components.preferences.events.ConfirmStatusEvent;
@@ -232,6 +226,8 @@
 	private var PreferencesQuantityBreaksOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesSalesCategoryArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var PreferencesSalesCategoryOrigArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var PreferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -507,17 +503,68 @@
 		var setting:Object = new Object();
 		setting.name="300";
 		BaudRateArray.addItem(setting);
-
+		setting = new Object();
+		setting.name="600";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="1200";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="1800";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="2400";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="3600";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="4800";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="7200";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="9600";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="19200";
+		BaudRateArray.addItem(setting);
+		setting = new Object();
+		setting.name="57600";
+		BaudRateArray.addItem(setting);
+		
 		setting=new Object();
 		setting.name="1 bit";
+		StopBitsArray.addItem(setting);
+		setting=new Object();
+		setting.name="1.5 bit";
+		StopBitsArray.addItem(setting);
+		setting=new Object();
+		setting.name="2 bit";
 		StopBitsArray.addItem(setting);
 
 		setting=new Object();
 		setting.name="None";
 		ParityArray.addItem(setting);
+		setting=new Object();
+		setting.name="Odd";
+		ParityArray.addItem(setting);
+		setting=new Object();
+		setting.name="Even";
+		ParityArray.addItem(setting);
 
 		setting=new Object();
 		setting.name="5 Bits";
+		DataSizeArray.addItem(setting);
+		setting=new Object();
+		setting.name="6 Bits";
+		DataSizeArray.addItem(setting);
+		setting=new Object();
+		setting.name="7 Bits";
+		DataSizeArray.addItem(setting);
+		setting=new Object();
+		setting.name="8 Bits";
 		DataSizeArray.addItem(setting);
 
 	}
@@ -646,8 +693,6 @@
 	}
 		
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();
 
 		this.currentState="";
 
@@ -750,7 +795,6 @@
 		dataServiceEstimator.getAll("PreferencesEstimating");
 		dataServiceAccounting.getAll("PreferencesAccounting");
 		dataServiceCashRegister.getAll("PreferencesCashRegister");
-		dataServiceCashRegister.getAll("PreferencesCashRegister");
 		dataServiceCreditCard.getAll("PreferencesCreditCard");
 		dataServiceMarkups.getAll("OutsideService");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
@@ -770,96 +814,88 @@
 	}
 
 	private function updatePreferencesData():void{
-		dataServiceSystem.addUpdate(preferencesSystem);
-		dataServicePOS.addUpdate(preferencesPOS);
-		dataServiceEstimator.addUpdate(preferencesEstimating);
-		dataServiceAccounting.addUpdate(preferencesAccounting);
-		dataServiceStocks.addUpdate(preferencesStocks);
-		dataServiceIntegration.addUpdate(preferencesIntegration);
-		
-		//remove and or delete items from table
-		for each(var deleteitem1:PreferencesCashRegister in PreferencesCashRegisterDeleteArray) {
-			if(!isNaN(deleteitem1.id) && deleteitem1.id!=0){
-				dataServiceCashRegister.deleteItem("PreferencesCashRegister", deleteitem1.id);
-			}
-		}
-		PreferencesCashRegisterDeleteArray.removeAll();
-		for each(var deleteitem2:OutsideService in PreferencesMarkupsDeleteArray) {
-			if(!isNaN(deleteitem2.id) && deleteitem2.id!=0){
-				dataServiceMarkups.deleteItem("OutsideService", deleteitem2.id);
-			}
-		}
-		PreferencesMarkupsDeleteArray.removeAll();
-		for each(var deleteitem3:Merchandise in PreferencesMarkupsMerchandiseDeleteArray) {
-			if(!isNaN(deleteitem3.id) && deleteitem3.id!=0){
-				dataServiceMarkupsMerchandise.deleteItem("Merchandise", deleteitem3.id);
-			}
-		}
-		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
-		for each(var deleteitem4:PreferencesPricingMethod in PreferencesPricingMethodDeleteArray) {
-			if(!isNaN(deleteitem4.id) && deleteitem4.id!=0){
-				dataServicePricingMethod.deleteItem("PreferencesPricingMethod", deleteitem4.id);
-			}
-		}
-		PreferencesPricingMethodDeleteArray.removeAll();
-		for each(var deleteitem5:PreferencesSalesCategory in PreferencesSalesCategoryDeleteArray) {
-			if(!isNaN(deleteitem5.id) && deleteitem5.id!=0){
-				dataServiceSalesCategory.deleteItem("PreferencesSalesCategory", deleteitem5.id);
-			}
-		}
-		PreferencesSalesCategoryDeleteArray.removeAll();
-		for each(var deleteitem6:PreferencesCreditCard in PreferencesCreditCardDeleteArray) {
-			if(!isNaN(deleteitem6.id) && deleteitem6.id!=0){
-				dataServiceCreditCard.deleteItem("PreferencesCreditCard", deleteitem6.id);
-			}
-		}
-		PreferencesCreditCardDeleteArray.removeAll();
-		for each(var deleteitem7:PreferencesQuantityBreaks in PreferencesQuantityBreaksDeleteArray) {
-			if(!isNaN(deleteitem7.id) && deleteitem7.id!=0){
-				dataServiceCreditCard.deleteItem("PreferencesQuantityBreaks", deleteitem7.id);
-			}
-		}
-		PreferencesQuantityBreaksDeleteArray.removeAll();
-
-		// commit changes add or updates to table
 		var counter:int = 1;
-
-		for each(var item1:PreferencesCashRegister in PreferencesCashRegisterArray) {
-			dataServiceCashRegister.addUpdate(item1);
+		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
+			selectedSection == "genericPrefCmd.AddressFormatting") {
+			dataServiceSystem.addUpdate(preferencesSystem);
 		}
-		counter = 1;
-		for each(var item2:PreferencesPendingList in PreferencesPendingListArray) {
-			if (item2.columnOrder != counter){
-				item2.columnOrder = counter;
+		
+		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			dataServicePOS.addUpdate(preferencesPOS);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			dataServiceCashRegister.addUpdateDeleteList(PreferencesCashRegisterArray,PreferencesCashRegisterDeleteArray);
+			PreferencesCashRegisterDeleteArray.removeAll();
+		}
+		
+		if(selectedSection == "genericPrefCmd.PendingList"){
+			dataServicePOS.addUpdate(preferencesPOS);
+			for each(var preferencesPendingList:PreferencesPendingList in PreferencesPendingListArray){
+				if (preferencesPendingList.columnOrder != counter){
+					preferencesPendingList.columnOrder = counter;
+				}
+				counter = counter + 1;
 			}
-			dataServicePendingList.addUpdate(item2);
-			counter = counter + 1;
+			dataServicePendingList.addUpdateDeleteList(PreferencesPendingListArray,null);
 		}
-		for each(var item3:OutsideService in PreferencesMarkupsArray) {
-			dataServiceMarkups.addUpdate(item3);
+		
+		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			dataServiceEstimator.addUpdate(preferencesEstimating);
 		}
-		for each(var item4:Merchandise in PreferencesMarkupsMerchandiseArray) {
-			dataServiceMarkupsMerchandise.addUpdate(item4);
+		
+		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			dataServiceQuantityBreaks.addUpdateDeleteList(PreferencesQuantityBreaksArray,PreferencesQuantityBreaksDeleteArray);
+			PreferencesQuantityBreaksDeleteArray.removeAll();
 		}
-		counter = 1;
-		for each(var item5:PreferencesStockDefinition in PreferencesStockDefinitionArray) {
-			if (item5.columnOrder != counter){
-				item5.columnOrder = counter;
+		
+		if(selectedSection == "genericPrefCmd.Markups"){
+			dataServiceMarkups.addUpdateDeleteList(PreferencesMarkupsArray,PreferencesMarkupsDeleteArray);
+			PreferencesMarkupsDeleteArray.removeAll();
+			dataServiceMarkupsMerchandise.addUpdateDeleteList(PreferencesMarkupsMerchandiseArray,PreferencesMarkupsMerchandiseDeleteArray);
+			PreferencesMarkupsMerchandiseDeleteArray.removeAll();
+		}
+		
+		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			dataServiceStocks.addUpdate(preferencesStocks);
+		}
+		
+		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			for each(var preferencesStockDefinition:PreferencesStockDefinition in PreferencesStockDefinitionArray){
+				if (preferencesStockDefinition.columnOrder != counter){
+					preferencesStockDefinition.columnOrder = counter;
+				}
+				counter = counter + 1;
 			}
-			dataServiceStockDefinition.addUpdate(item5);
-			counter = counter + 1;
+			dataServiceStockDefinition.addUpdateDeleteList(PreferencesStockDefinitionArray,null);
 		}
-		for each(var item6:PreferencesPricingMethod in PreferencesPricingMethodArray) {
-			dataServicePricingMethod.addUpdate(item6);
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			dataServicePricingMethod.addUpdateDeleteList(PreferencesPricingMethodArray,PreferencesPricingMethodDeleteArray);
+			PreferencesPricingMethodDeleteArray.removeAll();
 		}
-		for each(var item7:SalesCategory in PreferencesSalesCategoryArray) {
-			dataServiceSalesCategory.addUpdate(item7);
+		
+		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
+			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
+			selectedSection == "genericPrefCmd.JournalEntries"){
+				dataServiceAccounting.addUpdate(preferencesAccounting);
 		}
-		for each(var item8:PreferencesCreditCard in PreferencesCreditCardArray) {
-			dataServiceCreditCard.addUpdate(item8);
+		
+		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			dataServiceAccounting.addUpdate(preferencesAccounting);
+			dataServiceCreditCard.addUpdateDeleteList(PreferencesCreditCardArray,PreferencesCreditCardDeleteArray);
+			PreferencesCreditCardDeleteArray.removeAll();
 		}
-		for each(var item9:PreferencesQuantityBreaks in PreferencesQuantityBreaksArray) {
-			dataServiceQuantityBreaks.addUpdate(item9);
+		
+		if(selectedSection == "genericPrefCmd.Integration"){
+			dataServiceIntegration.addUpdate(preferencesIntegration);
+		}
+		
+		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			dataServiceSalesCategory.addUpdateDeleteList(PreferencesSalesCategoryArray,PreferencesSalesCategoryDeleteArray);
+			PreferencesSalesCategoryDeleteArray.removeAll();
 		}
 
 	}
@@ -975,9 +1011,6 @@
 			if (payloadType == "PreferencesCashRegister") {
 				dataServiceCashRegister.getAll("PreferencesCashRegister");
 			}
-			if (payloadType == "PreferencesCashRegister") {
-				dataServiceCashRegister.getAll("PreferencesCashRegister");
-			}
 			if (payloadType == "PreferencesCreditCard") {
 				dataServiceCreditCard.getAll("PreferencesCreditCard");
 			}
@@ -988,7 +1021,7 @@
 				dataServiceMarkupsMerchandise.getAll("Merchandise")
 			}
 			if (payloadType == "PreferencesPendingList") {
-				dataServicePendingList.getAll("PreferencesPendingList");
+				dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 			}
 			if (payloadType == "PreferencesPricingMethod") {
 				dataServicePricingMethod.getAll("PreferencesPricingMethod");
@@ -1000,7 +1033,7 @@
 				dataServiceSalesCategory.getAll("SalesCategory");
 			}
 			if (payloadType == "PreferencesStockDefinition") {
-				dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+				dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 			}
 			if (payloadType == "PreferencesStocks") {
 				dataServiceStocks.getAll("PreferencesStocks");
@@ -1196,6 +1229,8 @@
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
 		PreferencesSalesCategoryArray = ev.result as ArrayCollection;
+		registerClassAlias("com.efi.printsmith.data.SalesCategory",SalesCategory);
+		PreferencesSalesCategoryOrigArray = ObjectUtil.copy(PreferencesSalesCategoryArray) as ArrayCollection;
 	}
 	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
 		PreferencesStockDefinitionArray = ev.result as ArrayCollection;
@@ -1256,7 +1291,7 @@
     	dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	private function handleSavePendingListResult(ev:ResultEvent):void {
-    	dataServicePendingList.getAll("PreferencesPendingList");
+    	dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
     	dataServicePricingMethod.getAll("PreferencesPricingMethod");
@@ -1268,7 +1303,7 @@
     	dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
-    	dataServiceStockDefinition.getAll("PreferencesStockDefinition");
+    	dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 	}
 	private function handleSaveStocksResult(ev:ResultEvent):void {
     	dataServiceStocks.getAll("PreferencesStocks");
@@ -1320,11 +1355,16 @@
 		}
 		tvPreference.selectedIndex = 1;
 		preferences_stack.selectedIndex = 0;
-		for(var j:int=1; j <=1; j++) {
-			var nodeVal:XML = node[j]; 
-			selectedSection = nodeVal.@label;
-			selectedIndexSelection = nodeVal.@tag;
+		for(var j:int=0; j <=0; j++) {
+			var nodeVal:XML = node[j];
+			if(nodeVal.children() !=null) {
+				for each(var childNode:XML in nodeVal.children()) {
+					selectedSection = childNode.@label;
+					break;
+				}
+			} 
 		}
+		selectedIndexSelection = 1;
 		  
 	}
 
@@ -1429,6 +1469,12 @@
 			}
 		}
 		
+		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			if(!compareObject(PreferencesSalesCategoryArray,PreferencesSalesCategoryOrigArray)){
+				isObjEqual = false;
+			}
+		}
+		
 		if(!isObjEqual){
 			var confirmWindow:PreferencesConfirmComponent = PopUpManager.createPopUp(this,PreferencesConfirmComponent,true) as PreferencesConfirmComponent;
 			confirmWindow.labelTxt = selectedSection;
@@ -1528,7 +1574,7 @@
 		var number3:Number = -1234.567890;
 		var number4:Number = 0.555555;
 		var str:String = currentnumberstext;
-		if(str == null)
+		if ( str == null)
 			str = new String();
 		if (str.substr(str.indexOf(";")).length > 0){
 			str = str.substr(0,str.indexOf(";"))
@@ -1580,7 +1626,6 @@
 	
 	private function doRevert():void{
 		isReverted = true;
-		var updateCompInputArray:Array = new Array();
 		PreferencesCashRegisterDeleteArray.removeAll();
 		PreferencesMarkupsDeleteArray.removeAll();
 		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
@@ -1588,7 +1633,69 @@
 		PreferencesSalesCategoryDeleteArray.removeAll();
 		PreferencesCreditCardDeleteArray.removeAll();
 		PreferencesQuantityBreaksDeleteArray.removeAll();
-		getPreferencesData();
+		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
+			selectedSection == "genericPrefCmd.AddressFormatting") {
+			dataServiceSystem.getAll("PreferencesSystem");
+		}
+		
+		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			dataServicePOS.getAll("PreferencesPOS");
+		}
+		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			dataServiceCashRegister.getAll("PreferencesCashRegister");
+		}
+		
+		if(selectedSection == "genericPrefCmd.PendingList"){
+			dataServicePOS.getAll("PreferencesPOS");
+			dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
+		}
+		
+		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			dataServiceEstimator.getAll("PreferencesEstimating");
+		}
+		
+		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
+		}
+		
+		if(selectedSection == "genericPrefCmd.Markups"){
+			dataServiceMarkups.getAll("OutsideService");
+			dataServiceMarkupsMerchandise.getAll("Merchandise");
+		}
+		
+		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			dataServiceStocks.getAll("PreferencesStocks");
+		}
+		
+		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
+		}
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			dataServicePricingMethod.getAll("PreferencesPricingMethod");
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
+			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
+			selectedSection == "genericPrefCmd.JournalEntries"){
+			dataServiceAccounting.getAll("PreferencesAccounting");
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			dataServiceAccounting.getAll("PreferencesAccounting");
+			dataServiceCreditCard.getAll("PreferencesCreditCard");
+		}
+		
+		if(selectedSection == "genericPrefCmd.Integration"){
+			dataServiceIntegration.getAll("PreferencesIntegration");
+		}
+		
+		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			dataServiceSalesCategory.getAll("SalesCategory");
+		}
 		mapFromPreferencesAllData();
 	}
 	
