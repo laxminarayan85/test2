@@ -50,7 +50,7 @@
 						
 						<mx:DataGridColumn
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}"
-							dataField="accountNumber" />
+							dataField="glAccount" />
 							
 					</mx:columns>
 				</mx:DataGrid>

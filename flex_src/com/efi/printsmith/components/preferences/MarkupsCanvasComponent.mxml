@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*" creationComplete="{initMarkUpComp()}">
 
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.OutsideService;
@@ -119,7 +121,7 @@
 									dataField="totalCost">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{data.totalCost}"/>
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}"/>
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
@@ -136,14 +138,14 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{data.markup}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(4,true,'nearest',data.markup)}" />
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="2" rounding="nearest"/>
+												precision="4" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
@@ -183,7 +185,7 @@
 									dataField="totalCost">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{data.totalCost}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}" />
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
@@ -200,14 +202,14 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{data.markup}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(4,true,'nearest',data.markup)}" />
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="2" rounding="nearest"/>
+												precision="4" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>

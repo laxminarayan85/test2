@@ -29,7 +29,7 @@
 	        public var required:Boolean;
 	        
 	        [Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
-	        [Bindable]public var useThousandsSeparator:Boolean;
+	        [Bindable]public var useThousandsSeparator:Boolean = true;
 	        [Inspectable(defaultValue=false, enumeration="true,false", verbose=1, category="Checking the component is independent or in the datasgrid")]
 	        public var datagridControl:Boolean;
 			[Bindable]public var check:Boolean=false;
@@ -38,9 +38,9 @@
 			[Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
 			[Bindable]public var allowZero:Boolean = true;
 			[Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
-			[Bindable]public var defaultZero:Boolean;
+			[Bindable]public var defaultZero:Boolean = true;
 			[Bindable]public var numberLengthBeforeDecimal:int;
-			[Bindable]public var appendZeroes:Boolean=false;
+			[Bindable]public var appendZeroes:Boolean=true;
 			[Bindable]public var repeaterElement:Boolean=false;
 			[Bindable]public var allowSymbol:Boolean=false;
 			[Bindable]public var symbolString:String;

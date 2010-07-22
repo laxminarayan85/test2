@@ -75,7 +75,7 @@
 							dataField="quantity" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{data.quantity}" />
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,false,'nearest',data.quantity)}" />
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>

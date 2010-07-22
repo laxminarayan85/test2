@@ -64,27 +64,27 @@
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup1" customText="{preferencesStocks.stdMarkup1}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup2" customText="{preferencesStocks.stdMarkup2}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup3" customText="{preferencesStocks.stdMarkup3}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup4" customText="{preferencesStocks.stdMarkup4}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup5" customText="{preferencesStocks.stdMarkup5}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 									
 								<components:CustomNumericTextInputComponent width="50"
 									dataHolder="{preferencesStocks}" variableName="stdMarkup6" customText="{preferencesStocks.stdMarkup6}"
-									precision="2" rounding="nearest"/>
+									precision="4" rounding="nearest"/>
 								
 							</mx:HBox>
 						
@@ -161,27 +161,27 @@
 						
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup1" customText="{preferencesStocks.blankMarkup1}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup2" customText="{preferencesStocks.blankMarkup2}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup3" customText="{preferencesStocks.blankMarkup3}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup4" customText="{preferencesStocks.blankMarkup4}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup5" customText="{preferencesStocks.blankMarkup5}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="blankMarkup6" customText="{preferencesStocks.blankMarkup6}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 								
 						</mx:HBox>
 					
@@ -200,7 +200,7 @@
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="customerCost" customText="{preferencesStocks.customerCost}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 						
 						</mx:HBox>
 						
@@ -224,7 +224,7 @@
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="customerMarkup" customText="{preferencesStocks.customerMarkup}"
-								precision="2" rounding="nearest"/>
+								precision="4" rounding="nearest"/>
 							
 						</mx:HBox>
 							

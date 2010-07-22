@@ -132,7 +132,7 @@
 							dataField="rate" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{data.rate}" textAlign="right"/>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.rate)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
