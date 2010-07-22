@@ -562,6 +562,11 @@ public class StockDefinition extends ModelBase {
   public static final String EXCLUDEFROMWEB = "ExcludeFromWeb";
 
 	/**
+   * @generated
+   */
+  public static final String WEBENABLED = "WebEnabled";
+
+	/**
 	 * @generated
 	 */
 	public StockDefinition() {
@@ -3513,6 +3518,26 @@ public class StockDefinition extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean webEnabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWebEnabled(){
+    return webEnabled; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebEnabled(Boolean newVal) {
+    this.webEnabled = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3647,6 +3672,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTLARGECOPIER.equals(propertyName)) return getDefaultLargeCopier();
     if (JDFSTOCKID.equals(propertyName)) return getJdfStockId();
     if (EXCLUDEFROMWEB.equals(propertyName)) return getExcludeFromWeb();
+    if (WEBENABLED.equals(propertyName)) return getWebEnabled();
     return super.getProperty(propertyName);
   }
 	
@@ -3785,6 +3811,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTLARGECOPIER.equals(propertyName)) setDefaultLargeCopier((CopierDefinition)newValue); else
     if (JDFSTOCKID.equals(propertyName)) setJdfStockId((String)newValue); else
     if (EXCLUDEFROMWEB.equals(propertyName)) setExcludeFromWeb((Boolean)newValue); else
+    if (WEBENABLED.equals(propertyName)) setWebEnabled((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4052,6 +4079,8 @@ public class StockDefinition extends ModelBase {
       return new Class<?>[] {String.class};		
     if (EXCLUDEFROMWEB.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (WEBENABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4191,6 +4220,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTLARGECOPIER.equals(propertyName)) return StockDefinition.class;
     if (JDFSTOCKID.equals(propertyName)) return StockDefinition.class;
     if (EXCLUDEFROMWEB.equals(propertyName)) return StockDefinition.class;
+    if (WEBENABLED.equals(propertyName)) return StockDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4459,6 +4489,8 @@ public class StockDefinition extends ModelBase {
     if (! SmartEquals(getJdfStockId(), objT.getJdfStockId()))
       return false;
     if (! SmartEquals(getExcludeFromWeb(), objT.getExcludeFromWeb()))
+      return false;
+    if (! SmartEquals(getWebEnabled(), objT.getWebEnabled()))
       return false;
     return true;
   }			
