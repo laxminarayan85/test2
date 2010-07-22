@@ -42,6 +42,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.data.ProductionLocations;
 	import com.efi.printsmith.data.ChargeCommand;
 	import com.efi.printsmith.data.ProductionPress;
@@ -164,6 +165,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var index:int;
 		var i:int;
 		var tempArray:Array = new Array();
+		var tempCom:ComLink;
 		address_editor.setAddress(employee.address);
 		title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees') + "  " + employee.firstName + " "+ employee.lastName;
 		customerWantType = employee.customerWant;
@@ -177,13 +179,44 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		 	tempArray.push(index);
 		}
 		charge_types.selectedIndices = tempArray
+		
+		if (employee.comLinks != null){
+			phone_edit.text = "";
+			mobile_edit.text = "";
+			email_edit.text = "";
+			
+			
+			 for (var t:int =0; t < employee.comLinks.length ; t++)
+		    {	
+		    	tempCom = employee.comLinks.getItemAt(t) as ComLink;
+		    	switch (tempCom.type){
+		    		case "Phone" :
+		    			phone_edit.text = tempCom.value;
+		    			break;
+		    		case "Cell":
+		    			mobile_edit.text = tempCom.value;
+		    			break;
+		    		/* case "Fax":
+		    			fax_edit.text = tempCom.value;
+		    			break; */
+		    		case "E-Mail":
+		    			email_edit.text = tempCom.value;
+		    			break;
+		    		/* case "Other":
+		    			other_edit.text = tempCom.value;
+		    			break; */
+		    	}
+		    }
+		}
+		
 	}	
 	
 	private function doRevert():void{
 		dataService.getEmployee(employee.id);
 	}
 	private function mapToEmployeeData():void {
-	
+		var tempCom:ComLink;
+		var index:int;
 		
 		employee.firstName = firstName_edit.text;
 		employee.lastName = lastName_edit.text;
@@ -230,7 +263,64 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		employee.exportCode = parseInt(export_code_edit.text);
 		employee.socialSecurity = ssn_edit.text;
 	
+		if (phone_edit.text.length >0){
+	 		index = findCom("Phone", employee.comLinks);
+	 		if (index != -1){
+	 			
+	 			tempCom = employee.comLinks.getItemAt(index) as ComLink;
+		 		tempCom.value = phone_edit.text;
+		 		employee.comLinks.setItemAt(tempCom, index);
+		 	}
+		 	else{
+		 		tempCom = new ComLink();
+	 		tempCom.value = phone_edit.text;
+	 		tempCom.type = "Phone"
+	 		employee.comLinks.addItem(tempCom);
+	 		}
+	 	
+	 }
+	 if (mobile_edit.text.length >0){
+	 	index = findCom("Cell", employee.comLinks);
+	 	if ( index != -1){
+	 	
+	 		tempCom = employee.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = mobile_edit.text;
+	 		employee.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom = new ComLink();
+	 		tempCom.value = mobile_edit.text;
+	 		tempCom.type = "Cell"
+	 		employee.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
+	 
+	 if (email_edit.text.length >0){
+	 	index = findCom("E-Mail", employee.comLinks);
+	 	if ( index != -1){
+	 		tempCom = employee.comLinks.getItemAt(index) as ComLink;
+	 		tempCom.value = email_edit.text;
+	 		employee.comLinks.setItemAt(tempCom, index);
+	 	}
+	 	else{
+	 		tempCom = new ComLink();
+	 		tempCom.value = email_edit.text;
+	 		tempCom.type = "E-Mail"
+	 		employee.comLinks.addItem(tempCom);
+	 		
+	 	}
+	 }
+	
 			
+	}
+	private function findCom(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.type) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
 	}
 	
 	private function doSave():void {

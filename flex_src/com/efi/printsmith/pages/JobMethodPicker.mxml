@@ -85,6 +85,8 @@
 
 			private function doCancel():void
 			{
+				var selectedEvent:JobMethodSelectEvent=new JobMethodSelectEvent(JobMethodSelectEvent.CANCELSELECTJOBMETHOD, null);
+				dispatchEvent(selectedEvent);
 				PopUpManager.removePopUp(this);
 			}
 		]]>

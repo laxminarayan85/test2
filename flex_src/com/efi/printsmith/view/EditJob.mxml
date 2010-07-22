@@ -744,7 +744,7 @@
 			}
 			
 			private function handleJobMethodPickerCancel(evt:JobMethodSelectEvent):void {
-				// Currently no need to do anything on cancel.
+				PopUpManager.removePopUp(this);
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int

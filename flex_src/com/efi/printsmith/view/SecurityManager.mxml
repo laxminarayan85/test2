@@ -27,6 +27,7 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="SecuritydataService" destination="dataService">
 	<mx:method name="getByAccessGroup" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
@@ -107,15 +108,18 @@
 	private function handleSaveResult(ev:ResultEvent):void {
 		mapToSecurityData();
 	}	
-
+	private function handleDeleteResult(ev:ResultEvent):void{
+		dataService.getAll("AccessGroup");
+	}
 	private function handleSaveSecurityResult(ev:ResultEvent):void {
 	}	
 	
 	private function handleLoadSecurityResult(ev:ResultEvent):void {
 		securitySetupLists = ev.result as ArrayCollection;
-		if (securitySetupLists.length == 0){
-			addCommands();
-		}
+		if (securitySetupLists != null)
+			if (securitySetupLists.length == 0){
+				addCommands();
+			}
 		securitySetupLists.filterFunction=filterForTestData;
 		dataGrid.invalidateDisplayList();
 		ArrayCollection(dataGrid.dataProvider).refresh();
@@ -231,6 +235,8 @@
 		var index:int;
 		index = findItem(access.name, accessGroupLists);
 		accessGroupLists.removeItemAt(index);
+		dataService.deleteItem("AccessGroup", access.id);
+		
 	}
 	private function addItem(itemName:String):void {
 		this.currentState = "";

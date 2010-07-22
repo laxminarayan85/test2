@@ -1027,6 +1027,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="rate", precision=19, scale=4)
 	private BigDecimal rate;
 	
 	/**
@@ -1042,6 +1043,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setRate(BigDecimal newVal) {
     this.rate = newVal;
+    this.rate.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -1050,6 +1052,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
+    this.rate.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -1057,6 +1060,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="material", precision=19, scale=4)
 	private BigDecimal material;
 	
 	/**
@@ -1072,6 +1076,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setMaterial(BigDecimal newVal) {
     this.material = newVal;
+    this.material.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -1080,6 +1085,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setMaterial(double newVal) {
     this.material = BigDecimal.valueOf(newVal);
+    this.material.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -3160,6 +3166,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="setupPrice", precision=19, scale=4)
 	private BigDecimal setupPrice;
 	
 	/**
@@ -3175,6 +3182,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setSetupPrice(BigDecimal newVal) {
     this.setupPrice = newVal;
+    this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
 
 
@@ -3183,6 +3191,7 @@ public class ChargeDefinition extends ModelBase {
    */	
   public void setSetupPrice(double newVal) {
     this.setupPrice = BigDecimal.valueOf(newVal);
+    this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
 
 
