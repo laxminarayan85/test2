@@ -1,11 +1,18 @@
 package com.efi.printsmith.service;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 
 import com.efi.printsmith.data.*;
@@ -926,4 +933,20 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		return(results);
 	} /* CalculateCutCounts */		
 
+	public byte[] GeneratePaperCalculatorImage(int width, int height) {
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = image.createGraphics();
+		g2d.drawRect(20, 20, 30, 50);
+		g2d.dispose();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+		//	ImageIO.write(image, "PNG", new File("/Users/bknabel/BRADSEXCELLENTPNG.png"));
+			ImageIO.write(image, "PNG", out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		byte[] imageBytes = out.toByteArray(); 
+		return imageBytes;
+	}
 }
