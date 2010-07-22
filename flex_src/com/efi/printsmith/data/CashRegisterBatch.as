@@ -21,6 +21,8 @@ package com.efi.printsmith.data
 		public var totalPrice:Number = 0;
 		public var transactions:ArrayCollection;
 		public var name:String = "";
+		public var posted:Boolean = false;
+		public var postedDate:Date = new Date();
 	
 	}
 }

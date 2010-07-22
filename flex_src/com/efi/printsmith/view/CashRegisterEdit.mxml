@@ -117,6 +117,8 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref"/>
  	 	 	</mx:AddChild>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="y" value="414"/>
  	 	 	<!--<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="x" value="267"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="y" value="230"/>-->
@@ -163,7 +165,9 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
-
+	<mx:RemoteObject id="dataServiceCashRegisterBatch" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleBatchSaveResult(event)"/>
+	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceTaxCodes" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodesResult(event)"/>
 	</mx:RemoteObject>
@@ -199,6 +203,7 @@
 	import com.efi.printsmith.data.CashRegisterBatch;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
+	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.data.Account;
 
 	import mx.controls.Alert;                                         
@@ -228,7 +233,9 @@
 	[Bindable]
 	private var itemQty:String;
 	[Bindable]
-	private var itemUnitPrice:String;
+	private var customerAccount:Account;
+	[Bindable]
+	private var itemUnitPrice:Number;
 	[Bindable]
 	private var itemTotal:String;
 
@@ -366,7 +373,10 @@
 	private function handleSaveResult(ev:ResultEvent):void {
     	//dataService.getAll("PreferencesSystem");
 	}
-
+	private function handleBatchSaveResult(ev:ResultEvent):void{
+		batch = new CashRegisterBatch();
+		batch.transactions = new ArrayCollection();
+	}
 	private function UpdateCashRegister():void{
 		var temp:Number;
 		var tempString:String;
@@ -402,7 +412,7 @@
 		
 		this.currentState = "paymentState";
 		treeStateString = this.currentState;
-		txtPaymentUnitPrice.text = treeItem.rate.toString()
+		txtPaymentUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(treeItem.rate);
 		txtPaymentDescription.text = treeItem.title;
 		txtPaymentQuantity.text ="";
 		txtPaymentTotal.text = "";
@@ -441,6 +451,7 @@
 			{
 				this.currentState = "paymentCash";
 			}
+			btPayment.enabled = true;
 		}
 		if (rbvalue == "Credit Card")
 		{
@@ -453,6 +464,7 @@
 			{
 				this.currentState = "paymentCreditCard";
 			}
+			btPayment.enabled = true;
 		}
 		if (rbvalue == "Check")
 		{
@@ -465,20 +477,28 @@
 			{
 				this.currentState = "paymentCheck";
 			}
+			btPayment.enabled = true;
 		}
 		if (rbvalue == "Charge")
 		{
-			payment.paymentMethod= "Charge"
-			if (treeStateString == "invoiceState")
-			{
-				this.currentState = "invoiceCharge";
-			} 
-			else 
-			{
-				this.currentState = "paymentCharge";
+			if (customerAccount == null){
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'messages.149'));
+				btPayment.enabled = false;
+			}
+			else{
+				payment.paymentMethod= "Charge"
+				if (treeStateString == "invoiceState")
+				{
+					this.currentState = "invoiceCharge";
+				} 
+				else 
+				{
+					this.currentState = "paymentCharge";
+				}
+				btPayment.enabled = true;
 			}
 		}
-		btPayment.enabled = true;
+		
 	}
 	
 	private function paymentStateHandler (e:Event):void {
@@ -493,13 +513,25 @@
 		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
 			
 		}else{
-			
-				payment.paymentAmount = parseFloat(payment_cash_edit.text);	
-				//payment.subtotal = parseFloat(payment_cash_edit.text);
-				batch.tendered = batch.tendered+ payment.paymentAmount;
-				batch.change = batch.tendered - batch.totalPrice;
-	
-		batch.transactions.addItem(payment);
+			payment.paymentAmount = parseFloat(payment_cash_edit.text);	
+			//payment.subtotal = parseFloat(payment_cash_edit.text);
+			batch.tendered = batch.tendered+ payment.paymentAmount;
+			batch.change = batch.tendered - batch.totalPrice;
+			if (payment.paymentMethod=="Check"){
+				payment.checkNumber = check_num.text;
+			}
+			if (payment.paymentMethod=="Credit Card"){
+				payment.creditCard = card_type.selectedItem as PreferencesCreditCard;
+				payment.refNumber = card_ref.text;
+			}
+			if (payment.paymentMethod=="Charge"){
+				customerAccount.balance=  customerAccount.balance+ payment.paymentAmount;
+				dataService.addUpdate(customerAccount);
+				payment.customerAccount = customerAccount;
+				
+				
+			}
+			batch.transactions.addItem(payment);
 		}
 		this.currentState = "";
 		openTree();
@@ -569,16 +601,21 @@
 		
 	}
 	private function handleGetResult(ev:ResultEvent):void {
-	
-		cashRegister.customerAccount = ev.result as Account;
+		customerAccount = new Account();
+		customerAccount = ev.result as Account;
 		
 	     
 	}
 	
 	private function doSave():void{
+		batch.posted = true;
+		batch.postedDate = new Date();
+		dataServiceCashRegisterBatch.addUpdate(batch);
 	}
 	
 	private function doRevert():void{
+		batch = new CashRegisterBatch();
+		batch.transactions = new ArrayCollection();
 	}
 	
 	private function fillDefaultDocumentsArray(fillArray:ArrayCollection):void{
@@ -664,7 +701,7 @@
 
 	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 		<mx:Button x="19" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
-		<mx:TextInput x="158" y="10" text="{cashRegister.customerAccount.title}" width="252"/>
+		<mx:TextInput x="158" y="10" text="{customerAccount.title}" width="252"/>
 		<mx:Canvas x="0" y="40" width="200" height="95" id="tax_canvas" borderStyle="inset">
 			<mx:Label x="5" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable')}"/>
 			<mx:Label x="5" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}"/>

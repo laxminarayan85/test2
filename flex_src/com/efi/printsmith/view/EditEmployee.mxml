@@ -520,7 +520,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:RadioButton x="10" y="19" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Active')}" groupName="employee_status" width="78" value="Active"/>
 					<mx:RadioButton x="10" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Inactive')}" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
-				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettin')}">
+				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettings')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" id="requirePin" selected="{employee.pinRequired}" width="282"/>
 					<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PIN')}"/>
 					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>

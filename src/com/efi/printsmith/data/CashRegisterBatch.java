@@ -77,6 +77,15 @@ public class CashRegisterBatch extends ModelBase {
   public static final String NAME = "Name";
 
 	/**
+   * @generated
+   */
+  public static final String POSTED = "Posted";
+	/**
+   * @generated
+   */
+  public static final String POSTEDDATE = "PostedDate";
+
+	/**
 	 * @generated
 	 */
 	public CashRegisterBatch() {
@@ -245,7 +254,7 @@ public class CashRegisterBatch extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "cashregisterbatch_transactions")
 	private java.util.List<CashRegister> transactions;
 	
@@ -296,6 +305,51 @@ public class CashRegisterBatch extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean posted;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPosted(){
+    return posted; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPosted(Boolean newVal) {
+    this.posted = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date postedDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getPostedDate(){
+    return postedDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPostedDate(Date newVal) {
+    this.postedDate = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -309,6 +363,8 @@ public class CashRegisterBatch extends ModelBase {
     if (TOTALPRICE.equals(propertyName)) return getTotalPrice();
     if (TRANSACTIONS.equals(propertyName)) return getTransactions();
     if (NAME.equals(propertyName)) return getName();
+    if (POSTED.equals(propertyName)) return getPosted();
+    if (POSTEDDATE.equals(propertyName)) return getPostedDate();
     return super.getProperty(propertyName);
   }
 	
@@ -326,6 +382,8 @@ public class CashRegisterBatch extends ModelBase {
     if (TOTALPRICE.equals(propertyName)) setTotalPrice((BigDecimal)newValue); else
     if (TRANSACTIONS.equals(propertyName)) setTransactions((java.util.List<CashRegister>)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (POSTED.equals(propertyName)) setPosted((Boolean)newValue); else
+    if (POSTEDDATE.equals(propertyName)) setPostedDate((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -351,6 +409,10 @@ public class CashRegisterBatch extends ModelBase {
       return new Class<?>[] {java.util.List.class, CashRegister.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (POSTED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (POSTEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -369,6 +431,8 @@ public class CashRegisterBatch extends ModelBase {
     if (TOTALPRICE.equals(propertyName)) return CashRegisterBatch.class;
     if (TRANSACTIONS.equals(propertyName)) return CashRegisterBatch.class;
     if (NAME.equals(propertyName)) return CashRegisterBatch.class;
+    if (POSTED.equals(propertyName)) return CashRegisterBatch.class;
+    if (POSTEDDATE.equals(propertyName)) return CashRegisterBatch.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -395,6 +459,10 @@ public class CashRegisterBatch extends ModelBase {
     if (! SmartEquals(getTransactions(), objT.getTransactions()))
       return false;
     if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getPosted(), objT.getPosted()))
+      return false;
+    if (! SmartEquals(getPostedDate(), objT.getPostedDate()))
       return false;
     return true;
   }			
