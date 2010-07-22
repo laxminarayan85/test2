@@ -1426,36 +1426,11 @@ public class DataService extends HibernateService {
 				this.setCreditCardId((CreditCard) object);
 			} else if (object instanceof StockOrder) {
 				this.setStockOrderId((StockOrder) object);
-			} else if(object instanceof PreferencesPOS) {
-				if(((PreferencesPOS) object).getListFontBean()!=null && 
-					(((PreferencesPOS) object).getListFontBean().getId() == null || ((PreferencesPOS) object).getListFontBean().getId() == 0)
-				) {
-					((PreferencesPOS) object).getListFontBean().setId(null);
-					((PreferencesPOS) object).getListFontBean().setCreated(new Timestamp(new Date().getTime()));
-					((PreferencesPOS) object).getListFontBean().setModified(new Timestamp(new Date().getTime()));
-				}
-				if(((PreferencesPOS) object).getHeaderFontBean()!=null && 
-					(((PreferencesPOS) object).getHeaderFontBean().getId() == null || ((PreferencesPOS) object).getHeaderFontBean().getId() == 0)
-				) {
-					((PreferencesPOS) object).getHeaderFontBean().setId(null);
-					((PreferencesPOS) object).getHeaderFontBean().setCreated(new Timestamp(new Date().getTime()));
-					((PreferencesPOS) object).getHeaderFontBean().setModified(new Timestamp(new Date().getTime()));
-				}
 			}
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			try {
-				if(object instanceof PreferencesPOS) {
-					if(((PreferencesPOS) object).getListFontBean()!=null) {
-						ModelBase modelBase = em.merge(((PreferencesPOS) object).getListFontBean());
-						((PreferencesPOS) object).getListFontBean().setId(modelBase.getId());
-					}
-					if(((PreferencesPOS) object).getHeaderFontBean()!=null) {
-						ModelBase modelBase = em.merge(((PreferencesPOS) object).getHeaderFontBean());
-						((PreferencesPOS) object).getHeaderFontBean().setId(modelBase.getId());
-					}
-				}
 				object = em.merge(object);
 				tx.commit();
 				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
@@ -1485,6 +1460,27 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return object;
+	}
+	
+	/**
+	 * Method used to perform CRUD operations on the List
+	 * @param addUpdateList
+	 * @param deleteList
+	 * @throws Exception
+	 */
+	public void addUpdateDeleteList(List<ModelBase> addUpdateList, List<ModelBase> deleteList) throws Exception {
+		if(deleteList!=null) {
+			for (ModelBase modelBase : deleteList) {
+				if(modelBase.getId()!=null && modelBase.getId().longValue()!=0) {
+					int classNameIndex=modelBase.getClass().getName().lastIndexOf ('.') + 1;
+				    String className = modelBase.getClass().getName().substring(classNameIndex);
+					deleteItem(className, modelBase.getId());
+				}
+			}
+		}
+		for (ModelBase modelBase : addUpdateList) {
+			addUpdate(modelBase);
+		}
 	}
 
 	public ChargeCategory addChargeCategoryToCommand(ChargeCategory category,
