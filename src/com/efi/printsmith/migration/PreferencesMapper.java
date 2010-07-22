@@ -56,8 +56,8 @@ public class PreferencesMapper extends ImportMapper {
 						String titleValue = "";
 						try {
 							titleNode = itemAttributes.getNamedItem("Title");
-							valueNode = itemAttributes.getNamedItem("Value");
 							keyNode = itemAttributes.getNamedItem("Key");
+							valueNode = itemAttributes.getNamedItem("Value");
 						} catch (Exception e) {
 							/* One of the above nodes does not exist. */
 						}
@@ -83,7 +83,7 @@ public class PreferencesMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		List<PreferencesPricingMethod> pricingMethods = (List<PreferencesPricingMethod>)dataService.getAll("PreferencesPricingMethod");
 		for (int i=0;i<pricingMethods.size();i++) {
-			dataService.delete(pricingMethods.get(i),true);
+			dataService.deleteItem("PreferencesPricingMethod", pricingMethods.get(i).getId());
 		}
 	}
 	private void importField(String group, String key, String fieldName, String fieldValue) throws Exception {
@@ -158,6 +158,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPricingMethod.setTaxable(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("brokered"))
 			preferencesPricingMethod.setBrokered(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("enabled"))
+			preferencesPricingMethod.setUsed(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesPricingMethod);
 	}
 	private void importPreferencesStocksField(String group, String key, String name, String value) throws NumberFormatException, ParseException {
