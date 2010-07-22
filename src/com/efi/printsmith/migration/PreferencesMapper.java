@@ -2,6 +2,7 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,6 +35,7 @@ public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		try {
+			deletePricingMethods();
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			org.w3c.dom.Document doc = db.parse(uploadedFile);
@@ -74,6 +76,14 @@ public class PreferencesMapper extends ImportMapper {
 			}
 		} catch (Exception e) {
 			log.error(e);
+		}
+	}
+	@SuppressWarnings({"unchecked"})
+	private void deletePricingMethods() {
+		DataService dataService = new DataService();
+		List<PreferencesPricingMethod> pricingMethods = (List<PreferencesPricingMethod>)dataService.getAll("PreferencesPricingMethod");
+		for (int i=0;i<pricingMethods.size();i++) {
+			dataService.delete(pricingMethods.get(i),true);
 		}
 	}
 	private void importField(String group, String key, String fieldName, String fieldValue) throws Exception {
