@@ -1288,7 +1288,7 @@
 		index = pcwRecycled.text.indexOf('%',0);
 		}
 	 percentvalue = pcwRecycled.text.substr(0,index);
-	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) ;
+	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
 	 
 	 stockDefinitions.normalRunSize.name = NormalRunSize.text;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
@@ -1590,7 +1590,7 @@ private function doRound(evt:FocusEvent):void{
 					<mx:CheckBox x="10" y="104" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GreenSealCertified')}" id="chkgreensealCertified" selected="{stockDefinitions.greenSealCertified}"/>
 
 					<mx:TextInput x="10" y="20" width="153.5" id="forestMgmt" text="{stockDefinitions.forestManagement}"/>
-					<mx:TextInput restrict="0-9" x="115.75" y="44" width="67.75" focusOut="addSymbol()" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent}%"/>
+					<mx:TextInput restrict="0-9" x="115.75" y="44" width="67.75" focusOut="addSymbol()" id="pcwRecycled" text="{stockDefinitions.pcwRecycledPercent * 100}%"/>
 
 				</mx:Panel>
 				<mx:CheckBox x="457.5" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
@@ -1608,32 +1608,32 @@ private function doRound(evt:FocusEvent):void{
 
 				<mx:TextInput restrict="0-9\." x="225" y="30" width="66" id="Qtybreak1" text="{stockDefinitions.qtybreak1}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="225" y="50" width="66" id="Cost1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost1)}"/>
-				<mx:TextInput restrict="0-9\." x="225" y="70" width="66" id="Cwt1" text="{stockDefinitions.cwt1}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="70" width="66" id="Cwt1" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt1)}"/>
 				<mx:TextInput restrict="0-9\." x="225" y="91" width="66" id="Markup1" text="{stockDefinitions.markup1}"/>
 				<mx:TextInput restrict="0-9\." x="225" y="112" width="66" id="ListPerM1" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM1)}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="30" width="66" id="Qtybreak2" text="{stockDefinitions.qtybreak2}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\."  x="288" y="50" width="66" id="Cost2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost2)}"/>
-				<mx:TextInput restrict="0-9\." x="288" y="70" width="66" id="Cwt2" text="{stockDefinitions.cwt2}"/>
+				<mx:TextInput restrict="0-9\." x="288" y="70" width="66" id="Cwt2" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt2)}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="91" width="66" id="Markup2" text="{stockDefinitions.markup2}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="112" width="66" id="ListPerM2" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM2)}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="30" width="66" id="Qtybreak3" text="{stockDefinitions.qtybreak3}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="351" y="50" width="66" id="Cost3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost3)}"/>
-				<mx:TextInput restrict="0-9\." x="351" y="70" width="66" id="Cwt3" text="{stockDefinitions.cwt3}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="70" width="66" id="Cwt3" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt3)}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="91" width="66" id="Markup3" text="{stockDefinitions.markup3}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="112" width="66" id="ListPerM3" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM3)}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="30" width="66" id="Qtybreak4" text="{stockDefinitions.qtybreak4}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="50" width="66" id="Cost4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost4)}"/>
-				<mx:TextInput restrict="0-9\." x="412.5" y="70" width="66" id="Cwt4" text="{stockDefinitions.cwt4}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="70" width="66" id="Cwt4" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt4)}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="91" width="66" id="Markup4" text="{stockDefinitions.markup4}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="112" width="66" id="ListPerM4" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM4)}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="30" width="66" id="Qtybreak5" text="{stockDefinitions.qtybreak5}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="476" y="50" width="66" id="Cost5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost5)}"/>
-				<mx:TextInput restrict="0-9\." x="476" y="70" width="66" id="Cwt5" text="{stockDefinitions.cwt5}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="70" width="66" id="Cwt5" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt5)}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="91" width="66" id="Markup5" text="{stockDefinitions.markup5}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="112" width="66" id="ListPerM5" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM5)}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="30" width="66" id="Qtybreak6" text="{stockDefinitions.qtybreak6}" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="540" y="50" width="66" id="Cost6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.cost6)}"/>
-				<mx:TextInput restrict="0-9\." x="540" y="70" width="66" id="Cwt6" text="{stockDefinitions.cwt6}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="70" width="66" id="Cwt6" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt6)}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="91" width="66" id="Markup6" text="{stockDefinitions.markup6}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="112" width="66" id="ListPerM6" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.listPerM6)}"/>
 				<mx:TextInput restrict="0-9\." x="157" y="2" width="87" id="Costunits" text="{stockDefinitions.costunits}"/>

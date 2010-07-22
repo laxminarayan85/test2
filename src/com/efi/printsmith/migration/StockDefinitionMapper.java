@@ -490,22 +490,24 @@ public class StockDefinitionMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == true)
 					stockDefinition.setUom("Caliper");
 				if (currentImportToken.equals("1") == true)
-					stockDefinition.setUom("Microns");
+					stockDefinition.setUom("Caliper");
 				if (currentImportToken.equals("2") == true)
-					stockDefinition.setUom("Points");
+					stockDefinition.setUom("Microns");
 				if (currentImportToken.equals("3") == true)
-					stockDefinition.setUom("Mils");
+					stockDefinition.setUom("Points");
 				if (currentImportToken.equals("4") == true)
-					stockDefinition.setUom("Thous");
+					stockDefinition.setUom("Mils");
 				if (currentImportToken.equals("5") == true)
-					stockDefinition.setUom("Plies");
+					stockDefinition.setUom("Thous");
 				if (currentImportToken.equals("6") == true)
+					stockDefinition.setUom("Plies");
+				if (currentImportToken.equals("7") == true)
 					stockDefinition.setUom("Millimeters");
 			}  else if ("markup flags".equals(currentFieldToken)) {
 				/* TODO */
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
 				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
-			}  else if ("forest managment ID".equals(currentFieldToken)) {
+			}  else if ("forest managment".equals(currentFieldToken)) {
 				stockDefinition.setForestManagement(currentImportToken);
 			}  else if ("coc expand 1".equals(currentFieldToken)) {
 				/* TODO */
