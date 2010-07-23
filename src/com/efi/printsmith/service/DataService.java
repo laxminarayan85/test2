@@ -1456,6 +1456,7 @@ public class DataService extends HibernateService {
 			}
 		} catch (Exception e) {
 			log.error("Exception caught");
+			throw new Exception(e.getMessage());
 		} finally {
 			em.close();
 		}
