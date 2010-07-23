@@ -1478,6 +1478,19 @@
 			var outsideService:OutsideService = new OutsideService();
 			outsideService.above = true;
 			PreferencesMarkupsArray.addItem(outsideService);
+		} else {
+			var abovePresent:Boolean = false;
+			for each(var outsideServiceObj:OutsideService in PreferencesMarkupsArray) {
+				if(outsideServiceObj.above){
+					abovePresent = true;
+					break;
+				}
+			}
+			if(!abovePresent){
+				var outsideServiceObject:OutsideService = new OutsideService();
+				outsideServiceObject.above = true;
+				PreferencesMarkupsArray.addItem(outsideServiceObject);
+			}
 		}
 		registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
 		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
@@ -1503,6 +1516,19 @@
 			var merchandise:Merchandise = new Merchandise();
 			merchandise.above = true;
 			PreferencesMarkupsMerchandiseArray.addItem(merchandise);
+		} else {
+			var abovePresent:Boolean = false;
+			for each(var merchandiseObj:Merchandise in PreferencesMarkupsMerchandiseArray) {
+				if(merchandiseObj.above){
+					abovePresent = true;
+					break;
+				}
+			}
+			if(!abovePresent){
+				var merchandiseObject:Merchandise = new Merchandise();
+				merchandiseObject.above = true;
+				PreferencesMarkupsMerchandiseArray.addItem(merchandiseObject);
+			}
 		}
 		registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
 		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
