@@ -1,5 +1,6 @@
 // ActionScript file
 import mx.collections.ArrayCollection;
+import mx.controls.Alert;
 import mx.formatters.NumberFormatter;
 
 
@@ -68,4 +69,68 @@ public function formatValuesWithAppendZeros(precison:Number,useThousandsSeparato
 		return numberFormatter.format(0);
 	}
 	return number;
+}
+
+public function formatValuesWithAppendZerosPrecision(precison:Number,viewablePrecision:int,useThousandsSeparator:Boolean,rounding:String,value:Object):String{
+	var number:String;
+	var numberFormatter:NumberFormatter = new NumberFormatter();
+	numberFormatter.precision=precison;
+	numberFormatter.rounding=rounding;
+	numberFormatter.useThousandsSeparator=useThousandsSeparator;
+	if(isNaN(Number(value))){
+		number = numberFormatter.format(0);
+	} else {
+		number = numberFormatter.format(value);
+		if(Number(number) == 0){
+			number = numberFormatter.format(0);
+		}
+	}
+	if(viewablePrecision>0 && !(viewablePrecision>=precison)){
+		if(number.indexOf(".")!=-1){
+			if(Number(number.split(".")[1])==0){
+				number =  number.split(".")[0]+".";
+				for(var i:int=0;i<viewablePrecision;i++){
+					number = number+"0";
+				}
+			} else {
+				number = formatDecimalsWithPrecision(number,viewablePrecision);
+			}
+		}
+	}
+	return number;
+}
+
+private function formatDecimalsWithPrecision(formattedString:String,viewablePrecision:int):String{
+	var index:Number=0;
+	var formattedNumber:String="";
+	if(formattedString.indexOf(".")!=-1){
+		for(var i:int=formattedString.length-1;i>=formattedString.indexOf(".");i--){
+			if(formattedString.charAt(i)=="0"){
+				index=i;
+			}
+			else {
+				break;
+			}
+		}
+		if(index==0){
+			formattedNumber = formattedString;
+		}
+		else {
+			if(formattedString.substring(index-1,index)=="."){
+				formattedNumber = formattedString.substring(0,index-1);
+			}
+			else {
+				formattedNumber = formattedString.substring(0,index);
+			}
+		}
+		if(formattedNumber.split(".")[1].length<viewablePrecision){
+			for(var j:int=0;j<(viewablePrecision-formattedNumber.split(".")[1].length);j++){
+				formattedNumber = formattedNumber+"0";
+			}
+		}
+	}
+	else {
+		formattedNumber = formattedString;
+	}
+	return formattedNumber;
 }

@@ -47,7 +47,7 @@
 						
 					<components:CustomNumericTextInputComponent width="75"
 						dataHolder="{preferencesSystem}" variableName="conversionFactor" customText="{preferencesSystem.conversionFactor}"
-						precision="2" rounding="nearest"/>
+						precision="6" rounding="nearest" viewablePrecision="1"/>
 						
 				</mx:HBox>
 				

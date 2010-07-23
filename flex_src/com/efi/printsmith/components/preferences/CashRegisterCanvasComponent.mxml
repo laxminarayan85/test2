@@ -132,14 +132,14 @@
 							dataField="rate" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.rate)}" textAlign="right"/>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,2,true,'nearest',data.rate)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
 								<mx:Component>
 									<components:CustomNumericTextInputComponent datagridControl="true"
 										variableName="rate" customText="{data.rate}"
-										precision="2" rounding="nearest"/>
+										precision="4" rounding="nearest" viewablePrecision="2"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>

@@ -138,14 +138,14 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(4,true,'nearest',data.markup)}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}" />
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="4" rounding="nearest"/>
+												precision="4" viewablePrecision="1" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
@@ -202,14 +202,14 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(4,true,'nearest',data.markup)}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}" />
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
 											<components:CustomNumericTextInputComponent
 												datagridControl="true" variableName="markup" customText="{data.markup}"
-												precision="4" rounding="nearest"/>
+												precision="4" viewablePrecision="1" rounding="nearest"/>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>

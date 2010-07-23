@@ -98,7 +98,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="gripEdgeGap" customText="{preferencesEstimating.gripEdgeGap}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 									
 								</mx:GridItem>
 								
@@ -154,7 +154,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="folioEdge" customText="{preferencesEstimating.folioEdge}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 									
 								</mx:GridItem>
 								
@@ -210,7 +210,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="colorBar" customText="{preferencesEstimating.colorBar}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -252,7 +252,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="whiteSpace" customText="{preferencesEstimating.whiteSpace}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -260,7 +260,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="whiteSpaceTop" customText="{preferencesEstimating.whiteSpaceTop}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -296,7 +296,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="whiteSpaceRight" customText="{preferencesEstimating.whiteSpaceRight}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -304,7 +304,7 @@
 								
 									<components:CustomNumericTextInputComponent x="151" y="250" width="93"
 										dataHolder="{preferencesEstimating}" variableName="whiteSpaceBottom" customText="{preferencesEstimating.whiteSpaceBottom}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -346,7 +346,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="gutter" customText="{preferencesEstimating.gutter}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -354,7 +354,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="gutterHorizontal" customText="{preferencesEstimating.gutterHorizontal}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -396,7 +396,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="bleed" customText="{preferencesEstimating.bleed}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -404,7 +404,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="bleedTop" customText="{preferencesEstimating.bleedTop}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -440,7 +440,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="bleedRight" customText="{preferencesEstimating.bleedRight}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -448,7 +448,7 @@
 								
 									<components:CustomNumericTextInputComponent width="93"
 										dataHolder="{preferencesEstimating}" variableName="bleedBottom" customText="{preferencesEstimating.bleedBottom}"
-										precision="4" rounding="nearest"/>
+										precision="4" viewablePrecision="1" rounding="nearest"/>
 								
 								</mx:GridItem>
 								
@@ -470,7 +470,7 @@
 									
 								<components:CustomNumericTextInputComponent width="93"
 									dataHolder="{preferencesEstimating}" variableName="defaultPressCuttOff" customText="{preferencesEstimating.defaultPressCuttOff}"
-									precision="4" rounding="nearest"/>
+									precision="4" viewablePrecision="1" rounding="nearest"/>
 									
 								</mx:GridItem>
 								

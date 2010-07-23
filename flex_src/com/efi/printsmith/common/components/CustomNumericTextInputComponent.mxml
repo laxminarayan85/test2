@@ -47,6 +47,10 @@
 			[Bindable]public var isFocusInEventTrigerred:Boolean=false;
 			[Bindable]public var showToolTip:Boolean=false;
 			[Bindable]public var isInteger:Boolean=false;
+			[Bindable]public var suffix:Boolean=false;
+			[Bindable]public var prefix:Boolean=false;
+			[Inspectable(defaultValue=0, enumeration="0,1,2,3,4,5,6,7,8,9,10", verbose=1, category="Formatting & Validations")] 
+	        public var viewablePrecision:int;
 			private var _customText:String;	
 			public var variableName:String;
 			
@@ -100,10 +104,14 @@
 				    	if(!isFocusInEventTrigerred){
 					        formattedString=numbFormatter.format(_customText);
 					        if(allowSymbol && Number(formattedString)!=0){
-					        	formattedString = symbolString+formattedString;
+					        	if(prefix){
+					        		formattedString = symbolString+appendZeroesFunctionality(formattedString);
+					        	} else if(suffix){
+					        		formattedString = appendZeroesFunctionality(formattedString)+symbolString;
+					        	}
 					        }
 					        if(appendZeroes){
-					        	text = formattedString;	
+					        	text = appendZeroesFunctionality(formattedString);
 					        }
 					        else {
 					        	text=formatDecimals(formattedString);
@@ -127,10 +135,14 @@
 			    	if(!isFocusInEventTrigerred){
 				        formattedString=numbFormatter.format(_customText);
 				        if(allowSymbol && Number(formattedString)!=0){
-				        	formattedString = symbolString+formattedString;
+				        	if(prefix){
+				        		formattedString = symbolString+appendZeroesFunctionality(formattedString);
+				        	} else if(suffix){
+				        		formattedString = appendZeroesFunctionality(formattedString)+symbolString;
+				        	}
 				        }
 					    if(appendZeroes){
-					        text = formattedString;	
+					       text = appendZeroesFunctionality(formattedString);
 				        }
 				        else {
 				        	text=formatDecimals(formattedString);
@@ -141,9 +153,13 @@
 			     	if(this.text == "" || Number(this.text) == 0) {
 						if(defaultZero) {
 							if(allowSymbol){
-								this.text = symbolString+numbFormatter.format("0");	
+								if(prefix){
+					        		this.text = symbolString+appendZeroesFunctionality(numbFormatter.format("0"));	
+					        	} else if(suffix){
+					        		this.text = appendZeroesFunctionality(numbFormatter.format("0"))+symbolString;	
+					        	}
 							} else {
-								this.text = numbFormatter.format("0");
+								this.text = appendZeroesFunctionality(numbFormatter.format("0"));
 							}
 						}
 						else {
@@ -195,9 +211,13 @@
         		if(this.text == "" || Number(this.text) == 0) {
 					if(defaultZero) {
 						if(allowSymbol){
-							this.text = symbolString+numbFormatter.format("0");	
+							if(prefix){
+				        		this.text = symbolString+appendZeroesFunctionality(numbFormatter.format("0"));	
+				        	} else if(suffix){
+				        		this.text = appendZeroesFunctionality(numbFormatter.format("0"))+symbolString;	
+				        	}	
 						} else {
-							this.text = numbFormatter.format("0");
+							this.text = appendZeroesFunctionality(numbFormatter.format("0"));
 						}
 					}
 					else {
@@ -255,7 +275,7 @@
 	    			}
 					if(this.text == "" || Number(this.text) == 0) {
 						if(defaultZero) {
-							this.text = numbFormatter.format("0");
+							this.text = appendZeroesFunctionality(numbFormatter.format("0"));
 						}
 						if(!allowZero) {
 							this.errorString = "Please enter a value.";	
@@ -302,11 +322,15 @@
 		    		formattedString = numbFormatter.format(dataFromControl);
 		    		if(allowSymbol && formattedString!="" && formattedString.length!=0){
 		    			if(Number(formattedString)!=0){
-			        		formattedString = symbolString+formattedString;
+		    				if(prefix){
+				        		formattedString = symbolString+appendZeroesFunctionality(formattedString);	
+				        	} else if(suffix){
+				        		formattedString = appendZeroesFunctionality(formattedString)+symbolString;	
+				        	}
 			      		}
 			        }
 		    		if(appendZeroes){
-			        	text = formattedString;	
+			        	text = appendZeroesFunctionality(formattedString);	
 			        }
 			        else {
 			        	this.text=formatDecimals(formattedString);
@@ -349,6 +373,57 @@
 						}
 						else {
 							formattedNumber = formattedString.substring(0,index);
+						}
+					}
+				}
+				else {
+					formattedNumber = formattedString;
+				}
+				return formattedNumber;
+			}
+			
+			private function appendZeroesFunctionality(formattedString:String):String {
+				if(viewablePrecision>0 && !(viewablePrecision>=precision)){
+					if(formattedString.indexOf(".")!=-1){
+						if(Number(formattedString.split(".")[1])==0){
+							formattedString =  formattedString.split(".")[0]+".";
+							for(var i:int=0;i<viewablePrecision;i++){
+								formattedString = formattedString+"0";
+							}
+						} else {
+							formattedString = formatDecimalsWithPrecision(formattedString);
+						}
+					}
+	        	}
+	        	return formattedString;
+			}
+			
+			private function formatDecimalsWithPrecision(formattedString:String):String{
+				var index:Number=0;
+				var formattedNumber:String="";
+				if(formattedString.indexOf(".")!=-1){
+					for(var i:int=formattedString.length-1;i>=formattedString.indexOf(".");i--){
+						if(formattedString.charAt(i)=="0"){
+							index=i;
+						}
+						else {
+							break;
+						}
+					}
+					if(index==0){
+						formattedNumber = formattedString;
+					}
+					else {
+						if(formattedString.substring(index-1,index)=="."){
+							formattedNumber = formattedString.substring(0,index-1);
+						}
+						else {
+							formattedNumber = formattedString.substring(0,index);
+						}
+					}
+					if(formattedNumber.split(".")[1].length<viewablePrecision){
+						for(var j:int=0;j<(viewablePrecision-formattedNumber.split(".")[1].length);j++){
+							formattedNumber = formattedNumber+"0";
 						}
 					}
 				}
