@@ -656,7 +656,7 @@ public class PreferencesSystem extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL})
 	private Address companyAddress;
 	
 	/**
