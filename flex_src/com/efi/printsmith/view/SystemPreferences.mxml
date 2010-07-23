@@ -746,7 +746,7 @@
 		openTree();
 		setup();
 		
-		var eventbehavior:SystemPreferencesBehaviorPanelEvent = new SystemPreferencesBehaviorPanelEvent(behavior_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
+		/*var eventbehavior:SystemPreferencesBehaviorPanelEvent = new SystemPreferencesBehaviorPanelEvent(behavior_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventbehavior.dispatch();
 		var eventcompany:SystemPreferencesCompanyPanelEvent = new SystemPreferencesCompanyPanelEvent(company_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventcompany.dispatch();
@@ -797,7 +797,7 @@
 		var eventcreditcards:SystemPreferencesCreditCardInfoPanelEvent = new SystemPreferencesCreditCardInfoPanelEvent(creditcards_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventcreditcards.dispatch();
 		var eventjournalentries:SystemPreferencesJournalEntriesPanelEvent = new SystemPreferencesJournalEntriesPanelEvent(journalentries_canvas, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
-		eventjournalentries.dispatch();
+		eventjournalentries.dispatch();*/
 		    
 	}      
 
@@ -1655,6 +1655,9 @@
 		if (preferencesStocks == null)
 		{
 			preferencesStocks = new PreferencesStocks();
+		}
+		if(SizeTableArray!=null && SizeTableArray.length>0 && preferencesStocks.sizeTable==null){
+			preferencesStocks.sizeTable = SizeTableArray.getItemAt(0) as SizeTable;
 		}
 		registerClassAlias("com.efi.printsmith.data.PreferencesStocks",PreferencesStocks);
 		preferencesStocksOrigObj = ObjectUtil.copy(preferencesStocks) as PreferencesStocks;
